@@ -5,7 +5,7 @@ const config = require('./config.json');
 const { existsSync } = require("fs");
 prefix = config.prefix;
 
-var usos = 86, usos_anterior = usos;
+var usos = 120, usos_anterior = 0;
 
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
@@ -38,11 +38,12 @@ bot.on('message', async message => {
     
     var content = message.content;
 
-    if (!content.startsWith(prefix) || message.author.bot) return;
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
+    if (!content.startsWith(prefix) || message.author.bot)
+        return;
+    else
+        usos++;
 
-    usos++;
-    
     if(content == "ãc")
         content = "ãcurio";
     else if(content == "ãb")
