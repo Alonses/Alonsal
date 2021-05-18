@@ -41,6 +41,8 @@ bot.on('message', async message => {
     if (!content.startsWith(prefix) || message.author.bot) return;
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
 
+    usos++;
+    
     if(content == "ãc")
         content = "ãcurio";
     else if(content == "ãb")
@@ -154,7 +156,6 @@ bot.on('message', async message => {
     if(usos == usos_anterior)
         message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`);
 
-    usos++;
     usos_anterior = usos;
 });
 
