@@ -7,7 +7,6 @@ prefix = config.prefix;
 
 var usos = 86, usos_anterior = usos;
 
-
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
 
