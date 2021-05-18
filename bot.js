@@ -5,21 +5,8 @@ const config = require('./config.json');
 const { existsSync } = require("fs");
 prefix = config.prefix;
 
-// console.log('No value for FOO yet:', process.env.FOO);
+var usos = 86, usos_anterior = usos;
 
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config();
-// }
-
-// console.log('Now the value for FOO is:', process.env.FOO);
-
-var usos = 120, usos_anterior = usos;
-
-// var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
-// var server_host = process.env.YOUR_HOST || '0.0.0.0';
-// server.listen(server_port, server_host, function() {
-//     console.log('Conectado à porta: %d', server_port);
-// });
 
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
