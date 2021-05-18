@@ -1,14 +1,17 @@
 const Discord = require('discord.js');
-const { existsSync } = require("fs");
 const bot = new Discord.Client();
-const prefix = 'ã';
+const config = require('./config.json');
+
+const { existsSync } = require("fs");
+prefix = config.prefix;
+
 var usos = 86, usos_anterior = 0;
 
-bot.login('ODMzMzQ5OTQzNTM5NTMxODA2.YHxDnQ.jCaT2TwDW2_dtnBwmVxQcQhcff8');
 // Ativar o bot [ npm test ]
+// Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
 
-bot.on('ready', () => {
-    console.log('Caldeiras aquecidas!\n');
+bot.on("ready", () => {
+    console.log(`Caldeiras aquecidas!`);
 
     bot.user.setActivity('Vapor p/ fora!', 'COMPETING')
     let activities = [
@@ -21,12 +24,23 @@ bot.on('ready', () => {
     setInterval(() => bot.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
 });
 
-bot.on('message', message => {
+bot.on("guildCreate", guild => {
+    console.log(`O Bot entrou no servidor: ${guild.name} ( ID: ${guild.id} ), que contém: ${guild.memberCount} membros`);
+    bot.user.setActivity(`Estou em ${bot.guilds.size}`);
+});
 
+bot.on("guildDelete", guild => {
+    console.log(`O Bot foi removido de um servidor: ${guild.name} ( ID: ${guild.id} )`);
+    bot.user.setActivity(`Estou em ${bot.guilds.size}`);
+});
+
+bot.on('message', async message => {
+    
     var content = message.content;
 
     if (!content.startsWith(prefix) || message.author.bot) return;
-    
+    // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
+
     if(content == "ãc")
         content = "ãcurio";
     else if(content == "ãb")
@@ -164,4 +178,7 @@ bot.on('message', message => {
     }
 
     usos_anterior = usos;
-})
+});
+
+// Token do bot
+bot.login(config.token);

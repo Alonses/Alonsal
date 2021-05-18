@@ -2,16 +2,15 @@
   "name": "alonsal-bot",
   "version": "1.0.0",
   "description": "bot teste",
-  "main": "index.js",
+  "main": "bot.js",
   "scripts": {
     "test": "nodemon start.js",
     "start": "node start.js"
   },
-  "author": "",
+  "author": "665002572926681128",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "localStorage": "^1.0.4",
-    "node-localstorage": "^2.1.6"
+    "dotenv-prompt": "^0.1.0"
   }
 }
