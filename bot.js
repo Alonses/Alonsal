@@ -5,13 +5,21 @@ const config = require('./config.json');
 const { existsSync } = require("fs");
 prefix = config.prefix;
 
-var usos = 86, usos_anterior = 0;
+// console.log('No value for FOO yet:', process.env.FOO);
 
-var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
-var server_host = process.env.YOUR_HOST || '0.0.0.0';
-server.listen(server_port, server_host, function() {
-    console.log('Conectado à porta: %d', server_port);
-});
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config();
+// }
+
+// console.log('Now the value for FOO is:', process.env.FOO);
+
+var usos = 120, usos_anterior = usos;
+
+// var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
+// var server_host = process.env.YOUR_HOST || '0.0.0.0';
+// server.listen(server_port, server_host, function() {
+//     console.log('Conectado à porta: %d', server_port);
+// });
 
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
@@ -74,15 +82,11 @@ bot.on('message', async message => {
     console.log('Comando: '+ content + ", Canal: "+ canal);
 
     const path = `./comandos/${command}.js`
-    if (existsSync(path)) {
-        usos++;
-
+    if (existsSync(path))
         require(path)({bot, message, args});
-    }
+
 
     if(content == 'ã'){
-        usos++;
-
         const comando = new Discord.MessageAttachment('arquivos/img/sem_comando.jpg');
 
         message.channel.send(`${message.author} Kd o comando fiote!`, comando);
@@ -90,23 +94,16 @@ bot.on('message', async message => {
 
     if(content == 'ãda' || content == 'ãdado'){
 
-        usos++;
-
         var dado = 1 + Math.round(5 * Math.random());
 
         message.channel.send('O dado caiu no [ '+ dado + ' ]');
     }
 
-    if(content == 'ãpaz' || content == 'ãpz'){
-
-        usos++;
-
+    if(content == 'ãpaz' || content == 'ãpz')
         message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
-    }
+    
 
     if(content == 'ãsf' || content == 'ãsfiha'){
-
-        usos++;
 
         message.channel.send(`Vai uma esfiha ae? :yum: :yum: :yum:`);
         message.channel.send('https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713');
@@ -114,15 +111,11 @@ bot.on('message', async message => {
 
     if(content == 'ãpi' || content == 'ãpiao'){
 
-        usos++;
-
         message.channel.send(`Roda o pião! ${message.author}`);
         message.channel.send('https://tenor.com/view/pi%C3%A3o-da-casa-propria-silvio-santos-dona-maria-slondo-loop-gif-21153780');
     }
 
     if(content == 'ãbaidu' || content == 'ãdu'){
-
-        usos++;
 
         const baidu = new Discord.MessageAttachment('arquivos/img/baidu.png');
 
@@ -130,7 +123,6 @@ bot.on('message', async message => {
     }
 
     if(content == 'ãho' || content == 'ãhora'){
-        usos++;
 
         const hora = new Discord.MessageAttachment('arquivos/sng/hora_certa.mp3');
 
@@ -138,8 +130,6 @@ bot.on('message', async message => {
     }
 
     if(content.includes("ãrep")){
-
-        usos++;
 
         content = content.replace("ãrep", "");
 
@@ -150,8 +140,6 @@ bot.on('message', async message => {
 
     if(content.includes('ãcoin') || content.includes('ãco')){
         
-        usos++;
-
         if(typeof args[0] != "undefined"){
             var possibilidades = ["cara", "coroa"];
             var moeda = Math.round(1 * Math.random())
@@ -169,8 +157,6 @@ bot.on('message', async message => {
 
     if(content == 'ãinfo' || content == 'ãi'){
 
-        usos++;
-
         const embed = new Discord.MessageEmbed()
         .setTitle('Alonsal')
         .setColor(0x29BB8E)
@@ -179,10 +165,10 @@ bot.on('message', async message => {
         message.channel.send(embed);
     }
 
-    if(usos == usos_anterior){
+    if(usos == usos_anterior)
         message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`);
-    }
 
+    usos++;
     usos_anterior = usos;
 });
 

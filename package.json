@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2",
     "dotenv-prompt": "^0.1.0"
   }
 }
