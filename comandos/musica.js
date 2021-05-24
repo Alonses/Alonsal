@@ -2,7 +2,7 @@ const ytdl = require('ytdl-core');
 const Discord = require('discord.js');
 const getThumb = require('video-thumbnail-url');
 
-var prefixos = "p st pl sk h re ra ds rp np";
+var prefixos = "p st pl sk h re ra ds rp np fd";
 
 var serverID = 0;
 var _ativo = 0;
@@ -10,6 +10,7 @@ var _queue = [];
 var _DJ = [];
 let _em_canal = 0;
 var repeteco = 0;
+var feedback_faixa = 1;
 
 module.exports = async function({message, args}) {
     var rand = 0;
@@ -21,7 +22,7 @@ module.exports = async function({message, args}) {
         const iniciaStream = () => {
             dispatcher = connection.play(ytdl(_queue[0], {filter: "audioonly", quality: "highestaudio" }));
             
-            if(repeteco != 1 || _queue.length > 5){
+            if(repeteco != 1 || _queue.length > 5 && feedback_faixa == 1){
                 ytdl.getInfo(_queue[0]).then(info => {
                     var titulo_faixa = info.videoDetails.title;
                     message.channel.send(":notes: Tocando agora [ `"+ titulo_faixa +"` ]");
@@ -68,7 +69,7 @@ module.exports = async function({message, args}) {
         if(args[0] == "h"){
             const embed = new Discord.MessageEmbed()
             .setColor('#29BB8E')
-            .setDescription("> COMANDOS DAS MÚSICAS :musical_note:\n**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`ãst url`** | **`ãst`** - Entra num canal de voz e toca um url\n:page_with_curl: **`ãst pl`** - Mostra a playlist atual\n:fast_forward: **`ãst sk`** - Pula a faixa que está tocando\n:track_next: **`ãst sk all`** - Pula todas as faixas\n:repeat: **`ãst rp`** - Ativa/desativa o repeteco\n:radio: **`ãst np`** - Informações da faixa atual\n:wave: **`ãst ds`** - Desconecta o Alonso do canal de voz\n:cd: **`ãst ra`** | **`ãst ra 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`ãst re`** | **`ãst re 10`** - Escolhe uma ou várias músicas aleatórias zueiras");
+            .setDescription("> COMANDOS DAS MÚSICAS :musical_note:\n**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`ãst url`** | **`ãst`** - Entra num canal de voz e toca um url\n:page_with_curl: **`ãst pl`** - Mostra a playlist atual\n:fast_forward: **`ãst sk`** - Pula a faixa que está tocando\n:track_next: **`ãst sk all`** - Pula todas as faixas\n:repeat: **`ãst rp`** - Ativa/desativa o repeteco\n:loudspeaker: **`ãst fd`** - Ativa/desativa o anúncio de faixas\n:radio: **`ãst np`** - Informações da faixa atual\n:wave: **`ãst ds`** - Desconecta o Alonso do canal de voz\n:cd: **`ãst ra`** | **`ãst ra 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`ãst re`** | **`ãst re 10`** - Escolhe uma ou várias músicas aleatórias zueiras");
             // \n**`ãst st`** - Pausa a reprodução\n**`ãst p`** - Resume a reprodução
 
             message.channel.send(embed);
@@ -97,6 +98,16 @@ module.exports = async function({message, args}) {
                 }else{
                     repeteco = 0;
                     message.channel.send(":arrow_forward: Repeteco desativado, use `ãst rp` para ativar.");
+                }
+            }
+
+            if(args[0] == "fd"){
+                if(feedback_faixa == 0){
+                    feedback_faixa = 1;
+                    message.channel.send(":loudspeaker: Irei anunciar as faixas que começarem a tocar");
+                }else{
+                    feedback_faixa = 0;
+                    message.channel.send("Ok, sem anúncios das faixas que começarem a tocar");
                 }
             }
 
