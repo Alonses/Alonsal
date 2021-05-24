@@ -5,20 +5,27 @@ const config = require('./config.json');
 const { existsSync } = require("fs");
 prefix = config.prefix;
 
-var usos = 120, usos_anterior = 0;
+var usos = 586, usos_anterior = 0;
+const talkedRecently = new Set();
+const log_alonsal = 846151364492001280;
 
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
 
 bot.on("ready", () => {
     console.log(`Caldeiras aquecidas!`);
-    console.log(`Ativo para ${bot.users.size} usuários em ${bot.channels.size} canais em ${bot.guilds.size} servidores diferentes!`);
+    console.log(`Ativo para ${bot.users.cache.size} usuários em ${bot.channels.cache.size} canais em ${bot.guilds.cache.size} servidores diferentes!`);
 
     bot.user.setActivity('Vapor p/ fora!', 'COMPETING')
     let activities = [
         "ãh | ãhelp",
-        "Carvão na fogueira",
-        "Fumaça para o mundo",
+        "Binário na fogueira",
+        "Músicas no ar",
+        "Mesas p/ cima",
+        "ãh | ãhelp",
+        "Código morse para o mundo",
+        "Bugs infinitos no sistema",
+        "Vapor p/ fora!"
     ]
     
     i = 0;
@@ -27,35 +34,53 @@ bot.on("ready", () => {
 
 bot.on("guildCreate", guild => {
     console.log(`O Bot entrou no servidor: ${guild.name} ( ID: ${guild.id} ), que contém: ${guild.memberCount} membros`);
-    bot.user.setActivity(`Estou em ${bot.guilds.size}`);
+    bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
 });
 
 bot.on("guildDelete", guild => {
     console.log(`O Bot foi removido de um servidor: ${guild.name} ( ID: ${guild.id} )`);
-    bot.user.setActivity(`Estou em ${bot.guilds.size}`);
+    bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
 });
 
-bot.on('message', message => {
+bot.on('message', (message) => {
     
     var content = message.content;
 
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
     if (!content.startsWith(prefix) || message.author.bot) return;
+    if (!message.channel.name) return;
+
+    if(talkedRecently.has(message.author.id) && message.author.id != "665002572926681128"){
+        message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
+        return;
+    }else{
+        talkedRecently.add(message.author.id);
+        setTimeout(() => {
+            talkedRecently.delete(message.author.id);
+        }, 3000);
+    }
 
     if(content == "ãc")
         content = "ãcurio";
     else if(content == "ãi"){
         content = "ãinfo";
-        
         content += " "+ usos;
     }else if(content == "ãb")
         content = "ãbriga";
+    else if(content.includes("ãst"))
+        content = content.replace("ãst", "ãmusica");
     else if(content == "ãj")
         content = "ãjoke";
     else if(content == "ãh")
         content = "ãhelp";
     else if(content == "ãcaz")
         content = "ãcazalbe";
+    else if(content.includes("ãw") && !content.includes("ãwiki"))
+        content = content.replace("ãw", "ãwiki");
+    else if(content.includes("ãm") && !content.includes("ãmorse"))
+        content = content.replace("ãm", "ãmorse");
+    else if(content.includes("ãb") && !content.includes("ãbinario"))
+        content = content.replace("ãb", "ãbinario");
     else if(content.includes("ãco"))
         content = content.replace("ãco", "ãcoin");
     else if(content.includes("ãjkp"))
@@ -68,16 +93,10 @@ bot.on('message', message => {
     const args = content.slice(prefix.length).trim().split(' ');
     const command = args.shift().toLowerCase();
     
-    var canal = message.channel.name;
-    if(typeof canal == "undefined")
-        canal = "Chat privado";
-
-    console.log('Comando: '+ content + ", Canal: "+ canal);
-
-    const path = `./comandos/${command}.js`
+    const path = `./comandos/${command}.js`;
     if (existsSync(path)){
         usos++;
-        require(path)({bot, message, args});
+        require(path)({ bot, message, args });
     }
 
     if(content == 'ã'){
@@ -115,7 +134,7 @@ bot.on('message', message => {
         message.channel.send('https://tenor.com/view/pi%C3%A3o-da-casa-propria-silvio-santos-dona-maria-slondo-loop-gif-21153780');
     }
 
-    if(content == 'ãbaidu' || content == 'ãdu'){
+    if(content == "ãbaidu" || content == "ãdu"){
 
         usos++;
         const baidu = new Discord.MessageAttachment('arquivos/img/baidu.png');
@@ -141,8 +160,51 @@ bot.on('message', message => {
            });
     }
 
-    if(usos == usos_anterior)
-        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`);
+    if(content == "ãsds"){
+        usos++;
+        const silvio = new Discord.MessageAttachment('arquivos/img/sss.png');
+
+        message.channel.send(silvio);
+    }
+
+    if(content.includes("ãceira") || content.includes("ceira")){
+        usos++;
+
+        message.channel.send("Sai pra lá com essa ceira!\nIsso é trabalho do <@843623764570800148> :v");
+    }
+
+    if(usos == usos_anterior){
+        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `ãh` ou `ãhelp` caso queira ver todos os comandos ;)");
+    }else{
+
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var d = new Date();
+        var day = days[d.getDay()];
+        var hr = d.getHours();
+        var min = d.getMinutes();
+
+        if (min < 10) {
+            min = "0" + min;
+        }
+        
+        var ampm = "am";
+        if( hr > 12 ) {
+            hr -= 12;
+            ampm = "pm";
+        }
+
+        var date = d.getDate();
+        var month = months[d.getMonth()];
+        var year = d.getFullYear();
+
+        const embed = new Discord.MessageEmbed()
+        .setTitle("> Command used")
+        .setColor(0x29BB8E)
+        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
+
+        bot.channels.cache.get("846151364492001280").send(embed);
+    }
 
     usos_anterior = usos;
 });

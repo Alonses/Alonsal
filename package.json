@@ -10,8 +10,15 @@
   "author": "665002572926681128",
   "license": "ISC",
   "dependencies": {
+    "discord-anti-spam": "^2.5.1",
+    "discord-youtube-api": "^0.1.0",
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.2",
-    "dotenv-prompt": "^0.1.0"
+    "dotenv-prompt": "^0.1.0",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.3.0",
+    "opusscript": "0.0.8",
+    "video-thumbnail-url": "^1.0.1",
+    "ytdl-core": "^4.8.0"
   }
 }

@@ -8,7 +8,7 @@ module.exports = async ({ message, args }) => {
     
     if(escolha == "cara" || escolha == "coroa"){
         if(escolha == possibilidades[moeda])
-            message.channel.send("[ :coin: ] Deu "+ escolha +"! Hack!");
+            message.channel.send("[ :coin: ] Deu "+ escolha +"! Você acertou!");
         else
             message.channel.send("[ :coin: ] Deu "+ possibilidades[moeda] +", perdeu playboy :v");
     }else

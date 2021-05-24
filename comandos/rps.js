@@ -25,6 +25,5 @@ module.exports = async ({ message, args }) => {
             message.channel.send("Você ganhou!");
         else
             message.channel.send("Você perdeu!");
-    }else
-        message.channel.send("Sai pra lá com essa ceira!\nIsso é trabalho do <@843623764570800148> :v");
+    }
 }
