@@ -213,4 +213,4 @@ bot.on('message', (message) => {
     usos_anterior = usos;
 });
 
-bot.login(process.env.TOKEN);
+module.exports = bot;
