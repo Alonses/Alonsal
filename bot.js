@@ -1,13 +1,17 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
-const config = require('./config.json');
-
 const { existsSync } = require("fs");
-prefix = config.prefix;
+const config = require('./config.json');
+const bot = new Discord.Client();
+require('dotenv').config();
 
-var usos = 586, usos_anterior = 0;
+prefix = config.prefix;
+log_alonsal = config.log_alonsal;
+usos = config.usos;
+usos_anterior = config.usos_anteriores;
+
 const talkedRecently = new Set();
-const log_alonsal = 846151364492001280;
+
+const PORT = process.env.PORT || 3000;
 
 // Ativar o bot [ npm test ]
 // Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
@@ -33,12 +37,12 @@ bot.on("ready", () => {
 });
 
 bot.on("guildCreate", guild => {
-    console.log(`O Bot entrou no servidor: ${guild.name} ( ID: ${guild.id} ), que contém: ${guild.memberCount} membros`);
+    console.log(`O Alonso entrou no servidor: ${guild.name} ( ID: ${guild.id} ), que contém: ${guild.memberCount} membros`);
     bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
 });
 
 bot.on("guildDelete", guild => {
-    console.log(`O Bot foi removido de um servidor: ${guild.name} ( ID: ${guild.id} )`);
+    console.log(`O Alonso foi removido de um servidor: ${guild.name} ( ID: ${guild.id} )`);
     bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
 });
 
@@ -199,15 +203,14 @@ bot.on('message', (message) => {
         var year = d.getFullYear();
 
         const embed = new Discord.MessageEmbed()
-        .setTitle("> Command used")
+        .setTitle("> New interaction")
         .setColor(0x29BB8E)
         .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
 
-        bot.channels.cache.get("846151364492001280").send(embed);
+        bot.channels.cache.get(log_alonsal).send(embed);
     }
 
     usos_anterior = usos;
 });
 
-// Token do bot
-bot.login(config.token);
+bot.login(process.env.TOKEN);
