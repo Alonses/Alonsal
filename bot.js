@@ -1,11 +1,10 @@
 const Discord = require('discord.js');
-const { existsSync } = require("fs");
+const { fs, existsSync } = require('fs');
 const config = require('./config.json');
 const bot = new Discord.Client();
 require('dotenv').config();
 
 prefix = config.prefix;
-log_alonsal = config.log_alonsal;
 usos = config.usos;
 usos_anterior = config.usos_anteriores;
 
@@ -13,8 +12,9 @@ const talkedRecently = new Set();
 
 const PORT = process.env.PORT || 3000;
 
-// Ativar o bot [ npm test ]
-// Hospedando ${bot.users.size} usuários em ${bot.channels.size} canais e em ${bot.guilds.size} servidores diferentes!
+const comandos = ["help", "curio", "musica", "info", "briga", "joke", "cazalbe", "morse", "binario", "ping", "dado", "reproducao", "wiki", "hora", "mail", "baidu", "rps", "coin", "paz", "esfiha", "gado", "ceira", "piao"];
+const aliases = ["h", "c", "st", "i", "b", "j", "caz", "m", "b", "p", "da", "rep", "w", "ho", "ma", "du", "jkp", "co", "pz", "sf", "ga", "ceira", "pi"];
+const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
 
 bot.on("ready", () => {
     console.log(`Caldeiras aquecidas!`);
@@ -22,11 +22,11 @@ bot.on("ready", () => {
 
     bot.user.setActivity('Vapor p/ fora!', 'COMPETING')
     let activities = [
-        "ãh | ãhelp",
+        ".h | .help",
         "Binário na fogueira",
         "Músicas no ar",
         "Mesas p/ cima",
-        "ãh | ãhelp",
+        ".h | .help",
         "Código morse para o mundo",
         "Bugs infinitos no sistema",
         "Vapor p/ fora!"
@@ -37,13 +37,21 @@ bot.on("ready", () => {
 });
 
 bot.on("guildCreate", guild => {
-    console.log(`O Alonso entrou no servidor: ${guild.name} ( ID: ${guild.id} ), que contém: ${guild.memberCount} membros`);
-    bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
+    const embed_sv = new Discord.MessageEmbed()
+        .setTitle("> Server update ( New )")
+        .setColor(0x29BB8E)
+        .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `+${guild.memberCount}`+ "`");
+
+    bot.channels.cache.get(config.log_servers).send(embed_sv);
 });
 
 bot.on("guildDelete", guild => {
-    console.log(`O Alonso foi removido de um servidor: ${guild.name} ( ID: ${guild.id} )`);
-    bot.user.setActivity(`Estou em ${bot.guilds.cache.size}`);
+    const embed_sv = new Discord.MessageEmbed()
+        .setTitle("> Server update ( Left )")
+        .setColor(0xd4130d)
+        .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `-${guild.memberCount}`+ "`");
+
+    bot.channels.cache.get(config.log_servers).send(embed_sv);
 });
 
 bot.on('message', (message) => {
@@ -64,122 +72,42 @@ bot.on('message', (message) => {
         }, 3000);
     }
 
-    if(content == "ãc")
-        content = "ãcurio";
-    else if(content == "ãi"){
-        content = "ãinfo";
-        content += " "+ usos;
-    }else if(content == "ãb")
-        content = "ãbriga";
-    else if(content.includes("ãst"))
-        content = content.replace("ãst", "ãmusica");
-    else if(content == "ãj")
-        content = "ãjoke";
-    else if(content == "ãh")
-        content = "ãhelp";
-    else if(content == "ãcaz")
-        content = "ãcazalbe";
-    else if(content.includes("ãw") && !content.includes("ãwiki"))
-        content = content.replace("ãw", "ãwiki");
-    else if(content.includes("ãm") && !content.includes("ãmorse"))
-        content = content.replace("ãm", "ãmorse");
-    else if(content.includes("ãb") && !content.includes("ãbinario"))
-        content = content.replace("ãb", "ãbinario");
-    else if(content.includes("ãco"))
-        content = content.replace("ãco", "ãcoin");
-    else if(content.includes("ãjkp"))
-        content = content.replace("ãjkp", "ãrps");
-    else if(content.includes("ãga") && !content.includes("ãgado"))
-        content = content.replace("ãga", "ãgado");
-    else if(content == "ãp")
-        content = "ãping";
-
     const args = content.slice(prefix.length).trim().split(' ');
-    const command = args.shift().toLowerCase();
-    
-    const path = `./comandos/${command}.js`;
-    if (existsSync(path)){
-        usos++;
-        require(path)({ bot, message, args });
+
+    for(var i = 0; i < comandos.length; i++){
+        if(aliases[i] == args[0]){
+            args[0] = comandos[i];
+            break;
+        }
     }
 
-    if(content == 'ã'){
+    const command = args.shift().toLowerCase();    
+    for(var i = 0; i < pastas.length; i++){
+        path = `./comandos/${pastas[i]}/${command}.js`;
+        if (existsSync(path)){
+            usos++;
+            require(path)({ bot, message, args });
+            break;
+        }
+    }
+
+    if(content == prefix){
 
         const comando = new Discord.MessageAttachment('arquivos/img/sem_comando.jpg');
 
         message.channel.send(`${message.author} Kd o comando fiote!`, comando);
     }
 
-    if(content == 'ãda' || content == 'ãdado'){
-        
-        usos++;
-        var dado = 1 + Math.round(5 * Math.random());
-
-        message.channel.send('O dado caiu no [ '+ dado + ' ]');
-    }
-
-    if(content == 'ãpaz' || content == 'ãpz'){
-        
-        usos++;
-        message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
-    }
-
-    if(content == 'ãsf' || content == 'ãsfiha'){
-
-        usos++;
-        message.channel.send(`Vai uma esfiha ae? :yum: :yum: :yum:`);
-        message.channel.send('https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713');
-    }
-
-    if(content == 'ãpi' || content == 'ãpiao'){
-
-        usos++;
-        message.channel.send(`Roda o pião! ${message.author}`);
-        message.channel.send('https://tenor.com/view/pi%C3%A3o-da-casa-propria-silvio-santos-dona-maria-slondo-loop-gif-21153780');
-    }
-
-    if(content == "ãbaidu" || content == "ãdu"){
-
-        usos++;
-        const baidu = new Discord.MessageAttachment('arquivos/img/baidu.png');
-
-        message.channel.send(`${message.author} Louvado seja!!`, baidu);
-    }
-
-    if(content == 'ãho' || content == 'ãhora'){
-
-        usos++;
-        const hora = new Discord.MessageAttachment('arquivos/sng/hora_certa.mp3');
-
-        message.channel.send(`${message.author} Hora certa!`, hora);
-    }
-
-    if(content.includes("ãrep")){
-
-        usos++;
-        content = content.replace("ãrep", "");
-
-        message.channel.send(content, {
-            tts: true
-           });
-    }
-
-    if(content == "ãsds"){
-        usos++;
-        const silvio = new Discord.MessageAttachment('arquivos/img/sss.png');
-
-        message.channel.send(silvio);
-    }
-
-    if(content.includes("ãceira") || content.includes("ceira")){
-        usos++;
-
-        message.channel.send("Sai pra lá com essa ceira!\nIsso é trabalho do <@843623764570800148> :v");
-    }
-
     if(usos == usos_anterior){
-        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `ãh` ou `ãhelp` caso queira ver todos os comandos ;)");
+        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.h` ou `.help` caso queira ver todos os comandos ;)");
     }else{
+
+        try{
+            var data = fs.readFileSync("usos.txt", 'utf8');
+            console.log(data.toString());
+        }catch(e){
+            console.log('Não foi possível abrir o arquivo');
+        }
 
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -205,9 +133,9 @@ bot.on('message', (message) => {
         const embed = new Discord.MessageEmbed()
         .setTitle("> New interaction")
         .setColor(0x29BB8E)
-        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
+        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
 
-        bot.channels.cache.get(log_alonsal).send(embed);
+        bot.channels.cache.get(config.log_commands).send(embed);
     }
 
     usos_anterior = usos;
