@@ -1,2 +1,0 @@
-module.exports = require("./src/YouTube.js");
-module.exports.Video = require("./src/Video.js");
