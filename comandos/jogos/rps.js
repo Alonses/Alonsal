@@ -1,29 +1,16 @@
-
-
 module.exports = async ({ message, args }) => {
-    
-    var num = Math.round(2 * Math.random());
-    var jooj = ["pedra", "papel", "tesoura"];
+    let jooj = ["pedra", "papel", "tesoura", "pedra"];
+    let player = Math.round(2 * Math.random())
+    let bot = Math.round(2 * Math.random())
+    let ganhador = "Perdeu!"
 
-    if(typeof args[0] != "undefined")
-        var escolha = args[0];
-    else{
-        var num2 = Math.round(2 * Math.random());
-        var escolha = jooj[num2];
-    }
+    if (player == 0) player = 3
+    if (bot == 0) bot = 3
 
-    if(!escolha.includes("ceira") && !escolha.includes("Ceira")){
-        const maquina = jooj[num].charAt(0).toUpperCase() + jooj[num].slice(1)
-        const format = escolha.charAt(0).toUpperCase() + escolha.slice(1);
-        
-        message.channel.send("Jokenpô!\nAlonso: [ "+ maquina + " ]");
-        message.channel.send('Você: [ '+ format +' ]');
+    if (bot < player) ganhador = "Ganhou!"
+    if (bot == player) ganhador = "Empatou!"
 
-        if(escolha == jooj[num])
-            message.channel.send("Empate :v");
-        else if((escolha == "pedra" && jooj[num] == "tesoura") || (escolha == "tesoura" && jooj[num] == "papel") || (escolha == "papel" && jooj[num] == "pedra"))
-            message.channel.send("Você ganhou!");
-        else
-            message.channel.send("Você perdeu!");
-    }
+    const mensagem = "Jokenpo! \nBot[" + jooj[bot] + "]\n" + "Voce[" + jooj[player] + "]\nVoce " + ganhador
+
+    await message.channel.send(mensagem)
 }
