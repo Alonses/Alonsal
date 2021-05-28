@@ -15,6 +15,9 @@ var _em_canal = 0;
 var repeteco = 0;
 var feedback_faixa = 1;
 var trava_pl = 0;
+var fator_renatos = 0;
+var trava_renatao = 0;
+var trava_sk = 0;
 
 module.exports = async function({message, args}) {
     var rand = 0;
@@ -25,14 +28,36 @@ module.exports = async function({message, args}) {
 
         const iniciaStream = () => {
 
-            try{
-                dispatcher = connection.play(ytdl(_queue[0], {filter: "audioonly", quality: "highestaudio" }));
-            }catch(error){
-                message.channel.send(":no_entry_sign:"+ `${message.author} não foi possível reproduzir esta faixa.`);
-                dispatcher.end();
+            fator_renatos = 1;
+
+            if(trava_renatao == 0)
+                fator_renatos = Math.round(2 * Math.random());
+
+            if(fator_renatos > 0){
+                try{
+                    console.log(_queue[0]);
+                    dispatcher = connection.play(ytdl(_queue[0], {filter: "audioonly", quality: "highestaudio" }));
+                }catch(error){
+                    message.channel.send(":no_entry_sign:"+ `${message.author} não foi possível reproduzir este vídeo ${_queue[0]}`);
+                    dispatcher.end();
+                }
+            }else if(trava_renatao == 0){
+                trava_renatao = 1;
+                trava_sk = 1;
+
+                setTimeout(() => { // Libera a propaganda para aparecer novamente
+                    trava_renatao = 0;
+                }, 1800000);
+
+                setTimeout(() => { // Trava o pulo da propaganda 
+                    trava_sk = 0;
+                }, 32000);
+
+                message.channel.send(":cool: Patrocinador Alonsal");
+                dispatcher = connection.play(ytdl("https://youtu.be/NRW-hLmGHX4", {filter: "audioonly", quality: "highestaudio" }))
             }
 
-            if((repeteco != 1 || _queue.length > 5 ) && feedback_faixa == 1){
+            if((repeteco != 1 || _queue.length > 5 ) && feedback_faixa == 1 && fator_renatos != 0){
                 ytdl.getInfo(_queue[0]).then(info => {
                     var titulo_faixa = info.videoDetails.title;
                     message.channel.send(":notes: Tocando agora [ `"+ titulo_faixa +"` ]");
@@ -46,24 +71,28 @@ module.exports = async function({message, args}) {
             }
 
             dispatcher.on("finish", (msg) => {
+
+                console.log("aq");
+                console.log(fator_renatos);
+
                 var faixa_atual = _queue[0];
                 var nome_faixa = _queue_names[0];
 
-                if(msg == null){
+                if(msg == null && fator_renatos > 0){
                     _queue.shift();
                     _DJ.shift();
                     _queue_names.shift();
                 }
                 
-                if(repeteco == 1){
+                if(repeteco == 1 && fator_renatos > 0){
                     _queue.push(faixa_atual);
                     _queue_names.push(nome_faixa);
                     return iniciaStream();
                 }
                 
-                if(_queue.length)
+                if(_queue.length){
                     return iniciaStream();
-                else{
+                }else{
                     _ativo = 0;
                     repeteco = 0;
                     
@@ -84,7 +113,7 @@ module.exports = async function({message, args}) {
         if(args[0] == "h"){
             const embed = new Discord.MessageEmbed()
             .setColor('#29BB8E')
-            .setDescription("> COMANDOS DAS MÚSICAS :musical_note:\n**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`ãst url`** | **`ãst`** - Entra num canal de voz e toca um url\n:page_with_curl: **`ãst pl`** - Mostra a playlist atual\n:fast_forward: **`ãst sk`** - Pula a faixa que está tocando\n:track_next: **`ãst sk all`** - Pula todas as faixas\n:repeat: **`ãst rp`** - Ativa/desativa o repeteco\n:loudspeaker: **`ãst fd`** - Ativa/desativa o anúncio de faixas\n:radio: **`ãst np`** - Informações da faixa atual\n:wave: **`ãst ds`** - Desconecta o Alonso do canal de voz\n:cd: **`ãst ra`** | **`ãst ms 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`ãst re`** | **`ãst me 10`** - Escolhe uma ou várias músicas aleatórias zueiras\n:cd: **`ãst jg`** | **`ãst jg 10`** - Escolhe uma ou várias trilhas sonoras de jogos");
+            .setDescription("> COMANDOS DAS MÚSICAS :musical_note:\n**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`ãst url`** | **`ãst`** - Entra num canal de voz e toca um url\n:page_with_curl: **`ãst pl`** - Mostra a playlist atual\n:fast_forward: **`ãst sk`** - Pula a faixa que está tocando\n:track_next: **`ãst sk all`** - Pula todas as faixas\n:repeat: **`ãst rp`** - Ativa/desativa o repeteco\n:loudspeaker: **`ãst fd`** - Ativa/desativa o anúncio de faixas\n:radio: **`ãst np`** - Informações da faixa atual\n:wave: **`ãst ds`** - Desconecta o Alonso do canal de voz\n:cd: **`ãst ms`** | **`ãst ms 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`ãst me`** | **`ãst me 10`** - Escolhe uma ou várias músicas aleatórias zueiras\n:cd: **`ãst jg`** | **`ãst jg 10`** - Escolhe uma ou várias trilhas sonoras de jogos");
             // \n**`ãst st`** - Pausa a reprodução\n**`ãst p`** - Resume a reprodução
 
             message.channel.send(embed);
@@ -164,9 +193,9 @@ module.exports = async function({message, args}) {
 
             if(args[0] == "ms" || args[0] == "me" || args[0] == "jg"){
                 if(args[0] == "ms")
-                    var faixas = ["https://youtu.be/WlTlUseVt7E", "https://youtu.be/2IA7QExh-NQ", "https://youtu.be/41nJVmBoQHM", "https://youtu.be/N3zf9q8mbWs", "https://youtu.be/pDJKgi2e-Aw", "https://youtu.be/iDH4p8UblI0", "https://youtu.be/CPQYhQlalgc", "https://youtu.be/Ndzln1UEyf0", "https://youtu.be/VONvSk9qEu8", "https://youtu.be/vCVRfvQxQQ4", "https://youtu.be/2vATGqooQMM", "https://youtu.be/Ij65wvAGX-c", "https://youtu.be/_66Y0KYCd_s", "https://youtu.be/G1rs6a8QILM", "https://youtu.be/iApyBcSg-WA", "https://youtu.be/7_9EQenu8mQ", "https://youtu.be/gNRNzOERHuY", "https://youtu.be/NF-kLy44Hls", "https://youtu.be/NFDmyNiTamQ", "https://youtu.be/lWxQ55EsOVs", "https://youtu.be/yl3TsqL0ZPw", "https://youtu.be/_mTRvJ9fugM", "https://youtu.be/JJHeEfe2uYw", "https://youtu.be/DeumyOzKqgI", "https://youtu.be/0siKyXL_h08", "https://youtu.be/h6o38MN8yqE", "https://youtu.be/7Mnm59MOwl4", "https://youtu.be/YCQYdgYG7uY", "https://youtu.be/d77gTBvX0K8", "https://youtu.be/fHI8X4OXluQ", "https://youtu.be/0wnuTGGuAVs", "https://youtu.be/sV1CaBtBMBg", "https://youtu.be/QIVyjLy4noE", "https://youtu.be/hqYYudHutsE", "https://youtu.be/4LJJNt2Rkgw", "https://youtu.be/PAUlCK8kuGU", "https://youtu.be/Lmh6KD1r3yc", "https://youtu.be/mSZXWdKSQNM", "https://youtu.be/TnlPtaPxXfc", "https://youtu.be/Qp6D71kQRhA", "https://youtu.be/r6oLw5gpO44", "https://youtu.be/mzkF-TZzoK0", "https://youtu.be/eWzPU_p7I7g", "https://youtu.be/udldOUORlPw", "https://youtu.be/emjLXdsj6xA", "https://youtu.be/v8Psvxk9tjA", "https://youtu.be/DCkkv89fHy0", "https://youtu.be/XleOeDOLi5Y", "https://youtu.be/cZag0E32is0", "https://youtu.be/e1FN047_LT0", "https://youtu.be/G2z7jgFN97w", "https://youtu.be/zz8frWcmthA", "https://youtu.be/2-ptLktOjrY", "https://youtu.be/BsrBxX9bRHg", "https://youtu.be/a0IqWr8srnA", "https://youtu.be/qglh-WA-5hM", "https://youtu.be/A-3dHwjFkG4", "https://youtu.be/8LeRAZae1zs", "https://youtu.be/QAo_Ycocl1E", "https://youtu.be/CVxMTl6cUSE", "https://youtu.be/JMKi9qVrGWM", "https://youtu.be/CAJWmkNXqlM", "https://youtu.be/tVOycFbfIDA", "https://youtu.be/OvzJZTkWYoY", "https://youtu.be/Xwy-3aI435o", "https://youtu.be/kDERlmd2NS4", "https://youtu.be/NR0UmZcf89E", "https://youtu.be/wuJIqmha2Hk", "https://youtu.be/-rD-0tlGGPo", "https://youtu.be/9t5OWixuUI8", "https://youtu.be/LrjdpNDfZLo", "https://youtu.be/NxxjLD2pmlk", "https://youtu.be/ASO_zypdnsQ", "https://youtu.be/i5_asj1BGFs", "https://youtu.be/izGwDsrQ1eQ", "https://youtu.be/rftTxmcLSfY", "https://youtu.be/atY7ymXAcRQ", "https://youtu.be/fGdUhosUwKc", "https://youtu.be/iTf-4of477Y", "https://youtu.be/pqrUQrAcfo4", "https://youtu.be/Qra0UnykZmI", "https://youtu.be/U3YZTYXftzg", "https://youtu.be/QgKYZWRH4DA", "https://youtu.be/7L_s2Udr0TQ", "https://youtu.be/Op9XFHzVZlo", "https://youtu.be/XsMpXczOIPs", "https://youtu.be/cDq6YksYw04", "https://youtu.be/ricvj03PHSU", "https://youtu.be/njvA03rMHx4"];
+                    var faixas = ["https://youtu.be/WlTlUseVt7E", "https://youtu.be/2IA7QExh-NQ", "https://youtu.be/41nJVmBoQHM", "https://youtu.be/N3zf9q8mbWs", "https://youtu.be/pDJKgi2e-Aw", "https://youtu.be/iDH4p8UblI0", "https://youtu.be/CPQYhQlalgc", "https://youtu.be/Ndzln1UEyf0", "https://youtu.be/VONvSk9qEu8", "https://youtu.be/vCVRfvQxQQ4", "https://youtu.be/2vATGqooQMM", "https://youtu.be/Ij65wvAGX-c", "https://youtu.be/_66Y0KYCd_s", "https://youtu.be/G1rs6a8QILM", "https://youtu.be/iApyBcSg-WA", "https://youtu.be/7_9EQenu8mQ", "https://youtu.be/gNRNzOERHuY", "https://youtu.be/NF-kLy44Hls", "https://youtu.be/NFDmyNiTamQ", "https://youtu.be/lWxQ55EsOVs", "https://youtu.be/yl3TsqL0ZPw", "https://youtu.be/_mTRvJ9fugM", "https://youtu.be/JJHeEfe2uYw", "https://youtu.be/DeumyOzKqgI", "https://youtu.be/0siKyXL_h08", "https://youtu.be/h6o38MN8yqE", "https://youtu.be/7Mnm59MOwl4", "https://youtu.be/YCQYdgYG7uY", "https://youtu.be/d77gTBvX0K8", "https://youtu.be/fHI8X4OXluQ", "https://youtu.be/0wnuTGGuAVs", "https://youtu.be/sV1CaBtBMBg", "https://youtu.be/QIVyjLy4noE", "https://youtu.be/hqYYudHutsE", "https://youtu.be/4LJJNt2Rkgw", "https://youtu.be/PAUlCK8kuGU", "https://youtu.be/Lmh6KD1r3yc", "https://youtu.be/mSZXWdKSQNM", "https://youtu.be/TnlPtaPxXfc", "https://youtu.be/Qp6D71kQRhA", "https://youtu.be/r6oLw5gpO44", "https://youtu.be/mzkF-TZzoK0", "https://youtu.be/eWzPU_p7I7g", "https://youtu.be/udldOUORlPw", "https://youtu.be/emjLXdsj6xA", "https://youtu.be/v8Psvxk9tjA", "https://youtu.be/DCkkv89fHy0", "https://youtu.be/XleOeDOLi5Y", "https://youtu.be/cZag0E32is0", "https://youtu.be/e1FN047_LT0", "https://youtu.be/G2z7jgFN97w", "https://youtu.be/zz8frWcmthA", "https://youtu.be/2-ptLktOjrY", "https://youtu.be/BsrBxX9bRHg", "https://youtu.be/a0IqWr8srnA", "https://youtu.be/qglh-WA-5hM", "https://youtu.be/A-3dHwjFkG4", "https://youtu.be/8LeRAZae1zs", "https://youtu.be/QAo_Ycocl1E", "https://youtu.be/CVxMTl6cUSE", "https://youtu.be/JMKi9qVrGWM", "https://youtu.be/CAJWmkNXqlM", "https://youtu.be/tVOycFbfIDA", "https://youtu.be/OvzJZTkWYoY", "https://youtu.be/Xwy-3aI435o", "https://youtu.be/kDERlmd2NS4", "https://youtu.be/NR0UmZcf89E", "https://youtu.be/wuJIqmha2Hk", "https://youtu.be/-rD-0tlGGPo", "https://youtu.be/9t5OWixuUI8", "https://youtu.be/LrjdpNDfZLo", "https://youtu.be/NxxjLD2pmlk", "https://youtu.be/ASO_zypdnsQ", "https://youtu.be/i5_asj1BGFs", "https://youtu.be/izGwDsrQ1eQ", "https://youtu.be/rftTxmcLSfY", "https://youtu.be/atY7ymXAcRQ", "https://youtu.be/fGdUhosUwKc", "https://youtu.be/iTf-4of477Y", "https://youtu.be/pqrUQrAcfo4", "https://youtu.be/Qra0UnykZmI", "https://youtu.be/U3YZTYXftzg", "https://youtu.be/QgKYZWRH4DA", "https://youtu.be/7L_s2Udr0TQ", "https://youtu.be/Op9XFHzVZlo", "https://youtu.be/XsMpXczOIPs", "https://youtu.be/cDq6YksYw04", "https://youtu.be/ricvj03PHSU", "https://youtu.be/njvA03rMHx4", "https://youtu.be/85_FaBP3LvE", "https://youtu.be/v6ry27hut3M", "https://youtu.be/K1FlAphL2p8", "https://youtu.be/6nxls_nTUCE", "https://youtu.be/PJvsC2OFSZ0", "https://youtu.be/ReEgXh-wURs", "https://youtu.be/xOazTYPrt64", "https://youtu.be/FtXfOU07kfs"];
                 else if(args[0] == "me")
-                    var faixas = ["https://youtu.be/MmLPhOrPgPk", "https://youtu.be/aKdcUM2M5z4", "https://youtu.be/MwymbuznQH0", "https://youtu.be/rQzSiiRe6YM", "https://youtu.be/IipjAt4gz7s", "https://youtu.be/kcMV3c2MaOg", "https://youtu.be/wRvJh0dIHy0", "https://youtu.be/kD3dZTDCa4U", "https://youtu.be/hQW1knSPP3I", "https://youtu.be/6Xc5-SmHQaM", "https://youtu.be/EtrodNQKZ8I", "https://youtu.be/cPJUBQd-PNM", "https://youtu.be/WZIGwN-5Ioo", "https://youtu.be/-ZZ2JZArJH4", "https://youtu.be/ZMFX84cZpPM", "https://youtu.be/NBmESMFmDPE", "https://youtu.be/hH9M-m3WD0g", "https://youtu.be/HjGp2aJ_EMA", "https://youtu.be/LvkKOXkgUEc", "https://youtu.be/0q6yphdZhUA", "https://youtu.be/Fxh1rd_LTdg", "https://youtu.be/l5hvakZf8qw", "https://youtu.be/yyjUmv1gJEg", "https://youtu.be/F7LmomKM2rI", "https://youtu.be/FQxzx4JX13c", "https://youtu.be/NRW-hLmGHX4", "https://youtu.be/kVGIIvnG1_E", "https://youtu.be/BtKg458XAHk", "https://youtu.be/FWAYD0c3AwE", "https://youtu.be/dv13gl0a-FA", "https://youtu.be/ljwUlY9WW1I", "https://youtu.be/n--UDPEG_Xc", "https://youtu.be/3V7wWemZ_cs", "https://youtu.be/j9V78UbdzWI", "https://youtu.be/Na6r5_XPOtk", "https://youtu.be/DI9T_vmNMpI", "https://youtu.be/O2unuzTR5GI", "https://youtu.be/8Bywna-xbgY"];
+                    var faixas = ["https://youtu.be/MmLPhOrPgPk", "https://youtu.be/aKdcUM2M5z4", "https://youtu.be/MwymbuznQH0", "https://youtu.be/rQzSiiRe6YM", "https://youtu.be/IipjAt4gz7s", "https://youtu.be/kcMV3c2MaOg", "https://youtu.be/wRvJh0dIHy0", "https://youtu.be/kD3dZTDCa4U", "https://youtu.be/hQW1knSPP3I", "https://youtu.be/6Xc5-SmHQaM", "https://youtu.be/EtrodNQKZ8I", "https://youtu.be/cPJUBQd-PNM", "https://youtu.be/WZIGwN-5Ioo", "https://youtu.be/-ZZ2JZArJH4", "https://youtu.be/ZMFX84cZpPM", "https://youtu.be/NBmESMFmDPE", "https://youtu.be/hH9M-m3WD0g", "https://youtu.be/HjGp2aJ_EMA", "https://youtu.be/LvkKOXkgUEc", "https://youtu.be/0q6yphdZhUA", "https://youtu.be/Fxh1rd_LTdg", "https://youtu.be/l5hvakZf8qw", "https://youtu.be/yyjUmv1gJEg", "https://youtu.be/F7LmomKM2rI", "https://youtu.be/FQxzx4JX13c", "https://youtu.be/kVGIIvnG1_E", "https://youtu.be/BtKg458XAHk", "https://youtu.be/FWAYD0c3AwE", "https://youtu.be/dv13gl0a-FA", "https://youtu.be/ljwUlY9WW1I", "https://youtu.be/n--UDPEG_Xc", "https://youtu.be/3V7wWemZ_cs", "https://youtu.be/j9V78UbdzWI", "https://youtu.be/Na6r5_XPOtk", "https://youtu.be/DI9T_vmNMpI", "https://youtu.be/O2unuzTR5GI", "https://youtu.be/8Bywna-xbgY", "https://youtu.be/hw0yaHubcrQ", "https://youtu.be/v6oHMrhe5yA"];
                 else
                     var faixas = ["https://youtu.be/DTLfV7Ru5VY", "https://youtu.be/x23I8f9PwlI", "https://youtu.be/ehMCqtBBUXU", "https://youtu.be/jPE73zebjY8", "https://youtu.be/NktuYfIqWuA", "https://youtu.be/0d2scH8lBvA", "https://youtu.be/cy5PvLJW4PA", "https://youtu.be/atgjKEgSqSU", "https://youtu.be/0E5l2GHBxB8", "https://youtu.be/xLfm2nnCOpc", "https://youtu.be/-a4iQjoggfA", "https://youtu.be/wy74G4jIrFQ", "https://youtu.be/HcvKHX6kK6M", "https://youtu.be/YjQO9GOpx98", "https://youtu.be/OBQE_TNI7zw", "https://youtu.be/W4VTq0sa9yg", "https://youtu.be/jqE8M2ZnFL8", "https://youtu.be/JpTecQBxgIk", "https://youtu.be/2vRBjHY7ReE", "https://youtu.be/_3ngiSxVCBs", "https://youtu.be/7hT04AB1JU4", "https://youtu.be/ZkFpUQc3Y2o", "https://youtu.be/l7I8dYKeke8", "https://youtu.be/LOADdASJnak", "https://youtu.be/8KT7jcB72fQ", "https://youtu.be/b5kEK5B_WjA", "https://youtu.be/GyVG4vzOugc", "https://youtu.be/LFmnZ6VMd_4", "https://youtu.be/4NNsObVabcY"];
 
@@ -199,14 +228,14 @@ module.exports = async function({message, args}) {
                         message.channel.send("Escolhendo uma música aleatória");
                     else if(args[0] == "me")
                         message.channel.send("Escolhendo uma zueira aleatória");
-                else
-                    message.channel.send("Escolhendo umas trilhas sonoras aleatoriamente");
+                    else
+                        message.channel.send("Escolhendo uma trilha sonora aleatória");
 
                 do{
                     faixa = Math.round((faixas.length) * Math.random());
                     
                     if(faixas_selecionadas > 0){
-                        if(!_queue.includes(faixas[faixa])){
+                        if(!_queue.includes(faixas[faixa]) && faixas[faixa] != null){
                             _queue.push(faixas[faixa]);
                             contador++;
                         }
@@ -268,12 +297,15 @@ module.exports = async function({message, args}) {
                             if(typeof _queue[faixa_in + 1] != "undefined"){
                                 try{
                                     if(_queue_names.length < _queue.length){
-                                        faixas_ = await ytdl.getInfo(_queue[faixa_in + 1]).then(info => info.videoDetails.title);
-                                        
+                                        if(_queue.length < 10) // Para playlists menores que 10 faixas
+                                            faixas_ = await ytdl.getInfo(_queue[faixa_in + 1]).then(info => info.videoDetails.title);
+                                        else // Para playlist maiores de 10 faixas
+                                            faixas_ = await ytdl.getInfo(_queue[faixa_in]).then(info => info.videoDetails.title);
+
                                         if(!_queue_names.includes(faixas_))
                                             _queue_names.push(faixas_);
                                     }
-                                }catch(err){
+                                }catch(e){
                                     console.log(":construction: Erro ao buscar informações de uma faixa");
                                     return;
                                 }
@@ -299,13 +331,25 @@ module.exports = async function({message, args}) {
                         m.edit(`:page_with_curl: Tudo certo ${message.author}, a playlist está abaixo //`, embed);
 
                         trava_pl = 0;
-                    }else
+                    }else{
                         message.channel.send("Não há nenhuma faixa tocando no momento.");
+                        trava_pl = 0;
+                    }
                 }else
                     message.channel.send(`:name_badge: ${message.author} um momento, estou processando a playlist ainda.`);
 
                     return;
             }else if(args[0] == "sk"){
+
+                if(trava_sk == 1){
+                    if(message.author.id == "665002572926681128"){
+                        fator_renatos = 1;
+                        iniciaStream();
+                    }else
+                        message.channel.send(`${message.author} Ouve o nosso patrocinador meo!`);
+                    
+                    return;
+                }
 
                 var pular_para;
 
@@ -363,9 +407,10 @@ module.exports = async function({message, args}) {
                         if(_queue.length > 0)
                             return iniciaStream();
                         else
-                            if(repeteco != 1)
+                            if(repeteco != 1){
                                 message.channel.send(":free: Playlist finalizada!");
-                        
+                                trava_pl = 0;
+                            }
                         return;
                     }else{
                         if(_queue.length > 0){
