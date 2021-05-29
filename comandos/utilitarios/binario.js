@@ -31,10 +31,10 @@ module.exports = async function({message, args}) {
             }
         }
 
-        // Montando
+        // Montando 
         var texto_ordenado = "";
         for(var i = 0; i < texto.length; i++){
-            texto_ordenado += texto[i] + " ";
+            texto_ordenado += texto[i];
         }
         
         var titulo = ":one: Sua mensagem codificada em binário";
