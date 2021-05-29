@@ -1,16 +1,14 @@
 const Discord = require('discord.js');
 
-module.exports = async ({message, args}) => {
+module.exports = async ({client, message, args}) => {
 
-    content = content.split(" ");
+    content = args;
     mensagem = "";
 
-    
     if(message.author.id == "665002572926681128"){
-
         try{
-            tipo = content[1];
-            id_alvo = content[2];
+            tipo = content[0];
+            id_alvo = content[1];
 
             id_alvo = id_alvo.toString();
         }catch(e){
@@ -18,7 +16,7 @@ module.exports = async ({message, args}) => {
             return;
         }
 
-        for(var i = 3; i < content.length; i++){
+        for(var i = 2; i < content.length; i++){
             mensagem += content[i] + " ";
         }
 
@@ -26,17 +24,17 @@ module.exports = async ({message, args}) => {
 
         try{
             if(tipo == "u")
-                bot.users.cache.get(id_alvo).send(mensagem);
+                client.users.cache.get(id_alvo).send(mensagem);
             else if(tipo == "c")
-                bot.channels.cache.get(id_alvo).send(mensagem);
+                client.channels.cache.get(id_alvo).send(mensagem);
 
-            message.channel.send(`${message.author} mensagem enviada :incoming_envelope:`);
+            message.channel.send(`${message.author} mensagem enviada para [ ${id_alvo} ] :incoming_envelope:`);
         }catch(err){
             message.channel.send(`:octagonal_sign: ${message.author} não foi possível enviar a mensagem para este ID`);
             return;
         }
     }else{
-        for(var i = 1; i < content.length; i++){
+        for(var i = 0; i < content.length; i++){
             mensagem += content[i] + " ";
         }
         
@@ -49,8 +47,8 @@ module.exports = async ({message, args}) => {
         .setDescription("-----------------------\nEnviada por `"+ message.author.id +"`\n\n Mensagem: `"+ mensagem + "`");
 
         try{
-            bot.channels.cache.get("847191471379578970").send(msg_user);
-            message.channel.send(`${message.author} mensagem enviada :incoming_envelope:`);
+            client.channels.cache.get("847191471379578970").send(msg_user);
+            message.channel.send(`${message.author} mensagem enviada para o Alonsal :incoming_envelope:`);
         }catch(err){
             message.channel.send(`:octagonal_sign: ${message.author} não foi possível enviar a mensagem para este ID`);
             return;
