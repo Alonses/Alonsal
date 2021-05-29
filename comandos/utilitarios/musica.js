@@ -4,7 +4,7 @@ const getThumb = require('video-thumbnail-url');
 
 var getyoutubelinks = require("@joshyzou/getyoutubelinks");
 
-var prefixos = ["p", "st", "pl", "sk", "h", "re", "ra", "ds", "rp", "np", "fd"];
+var prefixos = ["p", "st", "pl", "sk", "re", "ra", "ds", "rp", "np", "fd"];
 
 var serverID = 0;
 var _ativo = 0;
@@ -108,16 +108,6 @@ module.exports = async function({message, args}) {
                     }, 90000);
                 }
             });
-        }
-
-        if(args[0] == "h"){
-            const embed = new Discord.MessageEmbed()
-            .setColor('#29BB8E')
-            .setDescription("> COMANDOS DAS MÚSICAS :musical_note:\n**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`ãst url`** | **`ãst`** - Entra num canal de voz e toca um url\n:page_with_curl: **`ãst pl`** - Mostra a playlist atual\n:fast_forward: **`ãst sk`** - Pula a faixa que está tocando\n:track_next: **`ãst sk all`** - Pula todas as faixas\n:repeat: **`ãst rp`** - Ativa/desativa o repeteco\n:loudspeaker: **`ãst fd`** - Ativa/desativa o anúncio de faixas\n:radio: **`ãst np`** - Informações da faixa atual\n:wave: **`ãst ds`** - Desconecta o Alonso do canal de voz\n:cd: **`ãst ms`** | **`ãst ms 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`ãst me`** | **`ãst me 10`** - Escolhe uma ou várias músicas aleatórias zueiras\n:cd: **`ãst jg`** | **`ãst jg 10`** - Escolhe uma ou várias trilhas sonoras de jogos");
-            // \n**`ãst st`** - Pausa a reprodução\n**`ãst p`** - Resume a reprodução
-
-            message.channel.send(embed);
-            return;
         }
 
         if(message.member.voice.channel){
