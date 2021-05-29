@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
-const { fs, existsSync } = require('fs');
+const { existsSync } = require('fs');
 const config = require('./config.json');
-const bot = new Discord.Client();
+const commands = require('./comandos.json');
+const client = new Discord.Client();
 require('dotenv').config();
 
 prefix = config.prefix;
@@ -9,18 +10,13 @@ usos = config.usos;
 usos_anterior = config.usos_anteriores;
 
 const talkedRecently = new Set();
-
-const PORT = process.env.PORT || 3000;
-
-const comandos = ["help", "curio", "musica", "info", "briga", "joke", "cazalbe", "morse", "binario", "ping", "dado", "reproducao", "wiki", "hora", "mail", "baidu", "rps", "coin", "paz", "esfiha", "gado", "ceira", "piao"];
-const aliases = ["h", "c", "st", "i", "b", "j", "caz", "m", "b", "p", "da", "rep", "w", "ho", "ma", "du", "jkp", "co", "pz", "sf", "ga", "ceira", "pi"];
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
 
-bot.on("ready", () => {
+client.on("ready", () => {
     console.log(`Caldeiras aquecidas!`);
-    console.log(`Ativo para ${bot.users.cache.size} usuários em ${bot.channels.cache.size} canais em ${bot.guilds.cache.size} servidores diferentes!`);
+    console.log(`Ativo para ${client.users.cache.size} usuários em ${client.channels.cache.size} canais em ${client.guilds.cache.size} servidores diferentes!`);
 
-    bot.user.setActivity('Vapor p/ fora!', 'COMPETING')
+    client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     let activities = [
         ".h | .help",
         "Binário na fogueira",
@@ -33,28 +29,28 @@ bot.on("ready", () => {
     ]
     
     i = 0;
-    setInterval(() => bot.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
+    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
 });
 
-bot.on("guildCreate", guild => {
+client.on("guildCreate", guild => {
     const embed_sv = new Discord.MessageEmbed()
         .setTitle("> Server update ( New )")
         .setColor(0x29BB8E)
         .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `+${guild.memberCount}`+ "`");
 
-    bot.channels.cache.get(config.log_servers).send(embed_sv);
+    client.channels.cache.get(config.log_servers).send(embed_sv);
 });
 
-bot.on("guildDelete", guild => {
+client.on("guildDelete", guild => {
     const embed_sv = new Discord.MessageEmbed()
         .setTitle("> Server update ( Left )")
         .setColor(0xd4130d)
         .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `-${guild.memberCount}`+ "`");
 
-    bot.channels.cache.get(config.log_servers).send(embed_sv);
+    client.channels.cache.get(config.log_servers).send(embed_sv);
 });
 
-bot.on('message', (message) => {
+client.on('message', (message) => {
     
     var content = message.content;
 
@@ -74,41 +70,25 @@ bot.on('message', (message) => {
 
     const args = content.slice(prefix.length).trim().split(' ');
 
-    for(var i = 0; i < comandos.length; i++){
-        if(aliases[i] == args[0]){
-            args[0] = comandos[i];
-            break;
-        }
-    }
-
-    const command = args.shift().toLowerCase();    
+    const command = args.shift().toLowerCase();
     for(var i = 0; i < pastas.length; i++){
-        path = `./comandos/${pastas[i]}/${command}.js`;
+        path = `./comandos/${pastas[i]}/${commands[command]}`;
         if (existsSync(path)){
             usos++;
-            require(path)({ bot, message, args });
+            require(path)({ client, message, args });
             break;
         }
     }
 
     if(content == prefix){
-
         const comando = new Discord.MessageAttachment('arquivos/img/sem_comando.jpg');
 
         message.channel.send(`${message.author} Kd o comando fiote!`, comando);
     }
 
-    if(usos == usos_anterior){
+    if(usos == usos_anterior)
         message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.h` ou `.help` caso queira ver todos os comandos ;)");
-    }else{
-
-        try{
-            var data = fs.readFileSync("usos.txt", 'utf8');
-            console.log(data.toString());
-        }catch(e){
-            console.log('Não foi possível abrir o arquivo');
-        }
-
+    else{
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         var d = new Date();
@@ -116,12 +96,12 @@ bot.on('message', (message) => {
         var hr = d.getHours();
         var min = d.getMinutes();
 
-        if (min < 10) {
+        if(min < 10){
             min = "0" + min;
         }
         
         var ampm = "am";
-        if( hr > 12 ) {
+        if(hr > 12){
             hr -= 12;
             ampm = "pm";
         }
@@ -135,10 +115,10 @@ bot.on('message', (message) => {
         .setColor(0x29BB8E)
         .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
 
-        bot.channels.cache.get(config.log_commands).send(embed);
+        client.channels.cache.get(config.log_commands).send(embed);
     }
 
     usos_anterior = usos;
 });
 
-module.exports = bot;
+client.login(process.env.TOKEN);
