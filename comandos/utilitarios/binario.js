@@ -46,6 +46,7 @@ module.exports = async function({message, args}) {
 
             const embed = new Discord.MessageEmbed()
             .setTitle(titulo)
+            .setAuthor(message.author.username)
             .setColor(0x29BB8E)
             .setDescription("`" + texto_ordenado + "`");
 
