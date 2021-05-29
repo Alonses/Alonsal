@@ -4,6 +4,7 @@ const morse = require('./morse.json');
 module.exports = async function({message, args}) {
 
     var ordena = "";
+    var aviso = "";
     tipo_texto = 0;
 
     if(args.length > 0){
@@ -14,11 +15,6 @@ module.exports = async function({message, args}) {
         // Remove o último espaço
         entrada = ordena.slice(0, -1).toLowerCase();
     
-        while(entrada.includes("<") || entrada.includes(">")){
-            entrada = entrada.replace("<", "");
-            entrada = entrada.replace(">", "");
-        }
-
         var texto = entrada.split(' ');
 
         if(Object.keys(morse).find(key => morse[key] === texto[0]))
@@ -29,6 +25,10 @@ module.exports = async function({message, args}) {
             for(var carac = 0; carac < texto.length; carac++){
                 if(morse[texto[carac]])
                     texto[carac] = morse[texto[carac]] + " ";
+                else{
+                    texto[carac] = "";
+                    aviso = "Alguns caracteres não foram incluídos pois não existem no morse!";
+                }
             }
         }else{
             for(var carac = 0; carac < texto.length; carac++){
@@ -54,6 +54,7 @@ module.exports = async function({message, args}) {
             .setTitle(titulo)
             .setAuthor(message.author.username)
             .setColor(0x29BB8E)
+            .setFooter(aviso)
             .setDescription("`" + texto_ordenado + "`");
 
             m.edit(embed);
