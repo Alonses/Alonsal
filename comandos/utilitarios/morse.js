@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
-
-var caracteres = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", ",", "?", "'", "!", "/", "(", ")", "&", ":", ";", "=", "-", "_", "$", "@", "ä", "æ", "à", "å", "ç", "ĉ", "ü", "ŭ", "+", "ã", "é", "ê", "á", "ó", "ô", "¿", "¡"];
-var morse = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----", ".-.-.-", "--..--", "..--..", ".----.", "-.-.--", "-..-.", "-.--.", "-.--.-", ".-...", "---...", "-.-.-.", "-...-", "-....-", "..--.-", "...-..-", ".--.-.", ".-.-", ".-.-", ".--.-", ".--.-", "-.-...", "-.-...", "..---", "..---", ".-.-.", ".--.-", "..-..", "-..-.", ".--.-", "---.", "---.", "..-.-", "--...-"];
+const morse = require('./morse.json');
 
 module.exports = async function({message, args}) {
 
@@ -16,44 +14,26 @@ module.exports = async function({message, args}) {
         // Remove o último espaço
         entrada = ordena.slice(0, -1).toLowerCase();
     
-        for(var x = 0; x < morse.length; x++){
-            if(entrada.includes(morse[x])){
-                tipo_texto = 1;
-            }
-        }
-
         while(entrada.includes("<") || entrada.includes(">")){
             entrada = entrada.replace("<", "");
             entrada = entrada.replace(">", "");
         }
 
+        var texto = entrada.split(' ');
+
+        if(Object.keys(morse).find(key => morse[key] === texto[0]))
+            tipo_texto = 1;
+        
         if(tipo_texto == 0){
             var texto = entrada.split('');
-
             for(var carac = 0; carac < texto.length; carac++){
-                for(var i = 0; i < caracteres.length; i++){
-                    if(texto[carac] == " "){
-                        texto[carac] = "/ ";
-                        break;
-                    }if(texto[carac] == caracteres[i]){
-                        texto[carac] = morse[i] + " ";
-                        break;
-                    }
-                }
+                if(morse[texto[carac]])
+                    texto[carac] = morse[texto[carac]] + " ";
             }
         }else{
-            var texto = entrada.split(' ');
-
             for(var carac = 0; carac < texto.length; carac++){
-                for(var i = 0; i < morse.length; i++){
-                    if(texto[carac] == "/"){
-                        texto[carac] = " ";
-                        break;
-                    }if(texto[carac] == morse[i]){
-                        texto[carac] = caracteres[i];
-                        break;
-                    }
-                }
+                if(Object.keys(morse).find(key => morse[key] === texto[carac]))
+                    texto[carac] = Object.keys(morse).find(key => morse[key] === texto[carac]);
             }
         }
 
@@ -63,15 +43,16 @@ module.exports = async function({message, args}) {
             texto_ordenado += texto[i];
         }
         
-        if(tipo_texto == 0)
-            var titulo = "Sua mensagem codificada em morse";
-        else
-            var titulo = "Sua mensagem decodificada do morse";
+        var titulo = ":symbols: Sua mensagem codificada em morse";
+
+        if(tipo_texto == 1)
+            titulo = ":symbols: Sua mensagem decodificada do morse";
 
             const m = await message.channel.send(`${message.author}`);
 
             const embed = new Discord.MessageEmbed()
             .setTitle(titulo)
+            .setAuthor(message.author.username)
             .setColor(0x29BB8E)
             .setDescription("`" + texto_ordenado + "`");
 
