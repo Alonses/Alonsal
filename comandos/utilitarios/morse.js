@@ -27,7 +27,7 @@ module.exports = async function({message, args}) {
                     texto[carac] = morse[texto[carac]] + " ";
                 else{
                     texto[carac] = "";
-                    aviso = "Alguns caracteres não foram incluídos pois não existem no morse!";
+                    aviso = "Alguns caracteres não foram codificados pois não existem no morse";
                 }
             }
         }else{
@@ -44,20 +44,23 @@ module.exports = async function({message, args}) {
         }
         
         var titulo = ":symbols: Sua mensagem codificada em morse";
-
+ 
         if(tipo_texto == 1)
-            titulo = ":symbols: Sua mensagem decodificada do morse";
+        titulo = ":symbols: Sua mensagem decodificada do morse";
+        
+        if(texto_ordenado.length == 0){
+            texto_ordenado = "Caracteres inválidos";
+            titulo = ":warning: Houve um problema ao codificar";
+        }
 
-            const m = await message.channel.send(`${message.author}`);
+        const embed = new Discord.MessageEmbed()
+        .setTitle(titulo)
+        .setAuthor(message.author.username)
+        .setColor(0x29BB8E)
+        .setFooter(aviso)
+        .setDescription("`" + texto_ordenado + "`");
 
-            const embed = new Discord.MessageEmbed()
-            .setTitle(titulo)
-            .setAuthor(message.author.username)
-            .setColor(0x29BB8E)
-            .setFooter(aviso)
-            .setDescription("`" + texto_ordenado + "`");
-
-            m.edit(embed);
+        message.channel.send(`${message.author}`, embed);
     }else
         message.channel.send("Envie como `ãm texto` para codificar em morse\nou `ãm .- .-.. --- -. ... .- .-..` para decodificar do morse.");
 }
