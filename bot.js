@@ -75,7 +75,11 @@ client.on('message', (message) => {
         path = `./comandos/${pastas[i]}/${commands[command]}`;
         if (existsSync(path)){
             usos++;
-            require(path)({ client, message, args });
+
+            if(message.content == prefix +"i" || message.content == prefix +"info")
+                args.push(usos);
+
+            require(path)({ client, message, args});
             break;
         }
     }
