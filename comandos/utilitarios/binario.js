@@ -42,15 +42,13 @@ module.exports = async function({message, args}) {
         if(tipo_texto == 1)
             titulo = ":zero: Sua mensagem decodificada do binário";
 
-            const m = await message.channel.send(`${message.author}`);
+        const embed = new Discord.MessageEmbed()
+        .setTitle(titulo)
+        .setAuthor(message.author.username)
+        .setColor(0x29BB8E)
+        .setDescription("`" + texto_ordenado + "`");
 
-            const embed = new Discord.MessageEmbed()
-            .setTitle(titulo)
-            .setAuthor(message.author.username)
-            .setColor(0x29BB8E)
-            .setDescription("`" + texto_ordenado + "`");
-
-            m.edit(embed);
+        message.channel.send(`${message.author}`, embed);
     }else
         message.channel.send("Envie como `ãbn texto` para codificar em binário\nou `ãbn 11100011` para decodificar do binário.");
 }
