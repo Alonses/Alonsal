@@ -11,10 +11,10 @@ module.exports = async ({ message, args }) => {
     if (player == 0) player = 3
     if (bot == 0) bot = 3
 
-    if (bot < player) ganhador = "Ganhou!"
-    if (bot == player) ganhador = "Empatou!"
+    if (bot < player || (player == 1 && bot == 3)) ganhador = "Ganhou!"
+    if (bot == player) ganhador = "Empate!"
 
-    const mensagem = "Jokenpo! \nBot[" + jooj[bot] + "]\n" + "Voce[" + jooj[player] + "]\nVoce " + ganhador
+    const mensagem = "Jokenpô! \nBot [" + jooj[bot] + "]\n" + "Você [" + jooj[player] + "]\nResultado: " + ganhador
 
     await message.channel.send(mensagem)
 }
