@@ -47,5 +47,7 @@
     "w": "wiki.js",
     "buscar": "wiki.js",
     "git": "git.js",
-    "g": "git.js"
+    "g": "git.js",
+    "convite": "convite.js",
+    "cvv": "convite.js"
 }
