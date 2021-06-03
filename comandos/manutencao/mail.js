@@ -45,7 +45,8 @@ module.exports = async ({client, message, args}) => {
         .setTitle("> New Message :mailbox_with_mail:")
         .setFooter("Author: "+ message.author.username)
         .setColor(0xffffff)
-        .setDescription("-----------------------\nEnviada por `"+ message.author.id +"`\n\n Mensagem: `"+ mensagem + "`");
+        .setDescription("-----------------------\nEnviada por `"+ message.author.id +"`\n\n Mensagem: `"+ mensagem + "`")
+        .setTimestamp();
 
         try{
             client.channels.cache.get("847191471379578970").send(msg_user)
@@ -67,8 +68,8 @@ module.exports = async ({client, message, args}) => {
     const embed = new Discord.MessageEmbed()
     .setTitle(':mailbox: Sua mensagem foi entregue!')
     .setColor(0x29BB8E)
-    .setAuthor("Alonsal", "https://i.imgur.com/K61ShGX.png")
     .setDescription("Sua mensagem foi entregue para o/a `"+ tipo +"`\n\nO Conteúdo da mensagem é :: \n`"+ mensagem +"`")
+    .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
     .setTimestamp();
     
     client.users.cache.get(message.author.id).send(embed);
