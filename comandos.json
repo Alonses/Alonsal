@@ -49,5 +49,6 @@
     "git": "git.js",
     "g": "git.js",
     "convite": "convite.js",
-    "cvv": "convite.js"
+    "cvv": "convite.js",
+    "rev": "reverse.js"
 }
