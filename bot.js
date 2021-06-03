@@ -2,12 +2,15 @@ const Discord = require('discord.js');
 const { existsSync } = require('fs');
 const config = require('./config.json');
 const commands = require('./comandos.json');
+const ping_me_gif = require('./ping_me.json');
 const client = new Discord.Client();
 require('dotenv').config();
 
 prefix = config.prefix;
 usos = config.usos;
 usos_anterior = config.usos_anteriores;
+local_server = config.log_servers;
+local_comando = config.log_commands;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
@@ -33,26 +36,26 @@ client.on("ready", () => {
 });
 
 client.on("guildCreate", guild => {
-    const embed_sv = new Discord.MessageEmbed()
-        .setTitle("> Server update ( New )")
-        .setColor(0x29BB8E)
-        .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `+${guild.memberCount}`+ "`");
+    var caso = 'New';
 
-    client.channels.cache.get(config.log_servers).send(embed_sv);
+    require("./adm/servers.js")({client, caso, guild, local_server});
 });
 
 client.on("guildDelete", guild => {
-    const embed_sv = new Discord.MessageEmbed()
-        .setTitle("> Server update ( Left )")
-        .setColor(0xd4130d)
-        .setDescription(":globe_with_meridians: (ID) Server: `"+ `${guild.id}` +"`\n:label: Server name: `"+ `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `"+ `-${guild.memberCount}`+ "`");
+    var caso = 'Left';
 
-    client.channels.cache.get(config.log_servers).send(embed_sv);
+    require("./adm/servers.js")({client, caso, guild, local_server});
 });
 
 client.on('message', (message) => {
     
     var content = message.content;
+
+    if((content == "<@!846472827212136498>" || content == "<@846472827212136498>") && !message.author.bot){
+        var ping_me = 1 + Math.round(9 * Math.random())
+        ping_me = ping_me.toString()
+        message.channel.send(ping_me_gif[ping_me])
+    }
 
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
     if (!content.startsWith(prefix) || message.author.bot) return;
@@ -79,7 +82,7 @@ client.on('message', (message) => {
             if(message.content == prefix +"i" || message.content == prefix +"info")
                 args.push(usos);
 
-            require(path)({ client, message, args});
+            require(path)({client, message, args});
             break;
         }
     }
@@ -92,35 +95,8 @@ client.on('message', (message) => {
 
     if(usos == usos_anterior)
         message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.h` ou `.help` caso queira ver todos os comandos ;)");
-    else{
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var d = new Date();
-        var day = days[d.getDay()];
-        var hr = d.getHours();
-        var min = d.getMinutes();
-
-        if(min < 10){
-            min = "0" + min;
-        }
-        
-        var ampm = "am";
-        if(hr > 12){
-            hr -= 12;
-            ampm = "pm";
-        }
-
-        var date = d.getDate();
-        var month = months[d.getMonth()];
-        var year = d.getFullYear();
-
-        const embed = new Discord.MessageEmbed()
-        .setTitle("> New interaction")
-        .setColor(0x29BB8E)
-        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
-
-        client.channels.cache.get(config.log_commands).send(embed);
-    }
+    else
+        require('./adm/log.js')({client, message, content, local_comando});
 
     usos_anterior = usos;
 });
