@@ -1,8 +1,10 @@
-module.exports = async({message, args}) => {
+module.exports = async({message}) => {
 
     message.channel.send(`Reprodução solicitada por [ ${message.author} ]`);
 
-    message.channel.send(message, {
+    mensagem = message.content.replace(".arep", "")
+
+    message.channel.send(mensagem, {
         tts: true
     });
 }
