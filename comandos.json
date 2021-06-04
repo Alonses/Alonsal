@@ -36,10 +36,6 @@
     "mail": "mail.js",
     "morse": "morse.js",
     "m": "morse.js",
-    "musica": "musica.js",
-    "st": "musica.js",
-    "musicah": "help_musica.js",
-    "sth": "help_musica.js",
     "ping": "ping.js",
     "p": "ping.js",
     "rep": "reproducao.js",
@@ -50,5 +46,19 @@
     "g": "git.js",
     "convite": "convite.js",
     "cvv": "convite.js",
-    "rev": "reverse.js"
+    "rev": "reverse.js",
+
+    "s": "musicas/play.js",
+    "sh": "help_musica.js",
+    "sp": "musicas/pause.js",
+    "sr": "musicas/resume.js",
+    "ssk": "musicas/play.js",
+    "spl": "musicas/play.js",
+    "snp": "musicas/play.js",
+    "sra": "musicas/play.js",
+    "sfd": "musicas/play.js",
+    "srp": "musicas/play.js",
+    "sds": "musicas/play.js",
+    "srs": "musicas/play.js",
+    "srm": "musicas/play.js"
 }
