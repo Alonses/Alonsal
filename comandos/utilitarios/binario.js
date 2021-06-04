@@ -50,5 +50,5 @@ module.exports = async function({message, args}) {
 
         message.channel.send(`${message.author}`, embed);
     }else
-        message.channel.send("Envie como `ãbn texto` para codificar em binário\nou `ãbn 11100011` para decodificar do binário.");
+        message.channel.send("Envie como `.abn texto` para codificar em binário\nou `.abn 11100011` para decodificar do binário.");
 }

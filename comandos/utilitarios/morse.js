@@ -62,5 +62,5 @@ module.exports = async function({message, args}) {
 
         message.channel.send(`${message.author}`, embed);
     }else
-        message.channel.send("Envie como `ãm texto` para codificar em morse\nou `ãm .- .-.. --- -. ... .- .-..` para decodificar do morse.");
+        message.channel.send("Envie como `.am texto` para codificar em morse\nou `.am .- .-.. --- -. ... .- .-..` para decodificar do morse.");
 }
