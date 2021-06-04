@@ -1,3 +1,7 @@
+const Discord = require('discord.js')
+
 module.exports = async({message}) => {
-    message.channel.send("Sai pra lá com essa ceira!\nIsso é trabalho do <@843623764570800148> :v");
+
+    const ceira = new Discord.MessageAttachment('arquivos/img/ceira.png');
+    message.channel.send("Press :regional_indicator_f: :pensive: :fist:", ceira);
 }
