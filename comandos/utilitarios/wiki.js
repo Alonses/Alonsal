@@ -66,5 +66,5 @@ module.exports = async function({message, args}) {
             message.channel.send("Não encontrei nada relacionado a sua pesquisa [ " + args +" ], tente novamente ;)");
         }
     }else
-        message.channel.send(`${message.author} informe algo para pesquisar, por exemplo como `+ '`ãw Alonsal` ;)');
+        message.channel.send(`${message.author} informe algo para pesquisar, como por exemplo `+ '`.aw Alonsal` ;)');
 }
