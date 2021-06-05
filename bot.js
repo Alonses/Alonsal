@@ -15,7 +15,7 @@ const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
 
 client.on("ready", () => {
-    require("./adm/servers.js")({client})
+    require("./adm/status.js")({client})
 });
 
 client.on("guildCreate", guild => {
