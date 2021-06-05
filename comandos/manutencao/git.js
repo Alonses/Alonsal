@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports = async function({message}){
+module.exports = async function({client, message}){
 
     const embed = new Discord.MessageEmbed()
     .setColor(0x29BB8E)
@@ -10,5 +10,6 @@ module.exports = async function({message}){
     .setImage('https://i.imgur.com/0tV3IQr.png')
     .setDescription("Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:");
 
-    message.channel.send(`${message.author}`, embed);
+    message.channel.send(`${message.author} despachei a ceira mais recente no seu privado :handshake:`)
+    client.users.cache.get(message.author.id).send(embed)
 }

@@ -6,8 +6,8 @@ const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
 prefix = config.prefix;
-usos = config.usos;
-usos_anterior = config.usos_anteriores;
+usos = 1308;
+usos_anterior = 1308;
 local_server = config.log_servers;
 local_comando = config.log_commands;
 
@@ -77,7 +77,7 @@ client.on('message', (message) => {
     }
 
     if(usos == usos_anterior)
-        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `ãh` ou `ãhelp` caso queira ver todos os comandos ;)");
+        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.ah` ou `.ajuda` para ver todos os comandos.");
     else
         require('./adm/log.js')({client, message, content, local_comando})
 
