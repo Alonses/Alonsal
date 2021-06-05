@@ -1,4 +1,4 @@
-module.exports = sync function({client}){
+module.exports = async function({client}){
 
     console.log(`Caldeiras aquecidas!`);
     console.log(`Ativo para ${client.users.cache.size} usuários em ${client.channels.cache.size} canais em ${client.guilds.cache.size} servidores diferentes!`);
