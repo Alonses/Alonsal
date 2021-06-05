@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { existsSync } = require("fs");
 const config = require('./config.json');
 const commands = require('./comandos.json');
-const ping_me_gif = require('./ping_me.json');
+const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
 prefix = config.prefix;
