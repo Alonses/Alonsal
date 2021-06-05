@@ -11,5 +11,6 @@ module.exports = async function({message}){
     .setTimestamp()
     .setFooter("Alonsal");
     
-    message.channel.send(`${message.author}`, embed);
+    message.channel.send(`${message.author} despachei o convite no seu privado :love_you_gesture:`)
+    client.users.cache.get(message.author.id).send(embed)
 }
