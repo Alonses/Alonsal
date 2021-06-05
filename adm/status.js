@@ -5,12 +5,12 @@ module.exports = async function({client}){
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     let activities = [
-        ".h | .help",
+        ".ah | .ajuda",
         "Binário na fogueira",
         "Músicas no ar",
         "Mesas p/ cima",
         "Baidu premium em servidores",
-        ".h | .help",
+        ".ah | .ajuda",
         "Código morse para o mundo",
         "Bugs infinitos no sistema",
         "Vapor p/ fora!",
