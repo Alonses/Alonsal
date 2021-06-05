@@ -7,11 +7,16 @@ module.exports = async({message, args}) => {
         
         const gado = args[0];
         var alvo = gado.replace("!", "")
+    
+        if(alvo == "<@833349943539531806>"){
+            message.channel.send(`${message.author} sai pra lá seu GA :cow: DO, teste isso com outro usuário`)
+            return
+        }
 
         if(alvo != `${message.author}`)
-            message.channel.send("O "+ gado +" "+ frases[num]);
+            message.channel.send("O "+ gado +" "+ frases[num])
         else
-            message.channel.send(`Você ${message.author}`+" "+ frases[num]);
+            message.channel.send(`Você ${message.author}`+" "+ frases[num])
     }else
-        message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`);
+        message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`)
 }

@@ -55,7 +55,7 @@ module.exports = async function({message, args}) {
 
         const embed = new Discord.MessageEmbed()
         .setTitle(titulo)
-        .setAuthor(message.author.username)
+        .setAuthor(message.author.username, message.author.avatarURL({ dynamic:true }))
         .setColor(0x29BB8E)
         .setFooter(aviso)
         .setDescription("`" + texto_ordenado + "`");

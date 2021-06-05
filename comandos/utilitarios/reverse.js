@@ -20,7 +20,7 @@ module.exports = async function({message, args}){
 
         const embed = new Discord.MessageEmbed()
             .setTitle(':arrow_backward: Sua mensagem ao contrário')
-            .setAuthor(message.author.username)
+            .setAuthor(message.author.username, message.author.avatarURL({ dynamic:true }))
             .setColor(0x29BB8E)
             .setDescription("`" + texto_ordenado + "`");
 
