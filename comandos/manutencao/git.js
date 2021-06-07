@@ -10,6 +10,8 @@ module.exports = async function({client, message}){
     .setImage('https://i.imgur.com/0tV3IQr.png')
     .setDescription("Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:");
 
-    message.channel.send(`${message.author} despachei a ceira mais recente no seu privado :handshake:`)
+    const m = await message.channel.send(`${message.author} despachei a ceira mais recente no seu privado :handshake:`)
+    m.react('📫')
+
     client.users.cache.get(message.author.id).send(embed)
 }
