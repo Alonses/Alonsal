@@ -53,6 +53,11 @@ client.on('message', (message) => {
         }, 3000);
     }
 
+    if(content == prefix){
+        require("./adm/comando.js")({message});
+        return
+    }
+    
     const args = content.slice(prefix.length).trim().split(' ')
     
     const command = args.shift().toLowerCase()
@@ -67,14 +72,6 @@ client.on('message', (message) => {
             require(path)({ client, message, args})
             break
         }
-    }
-
-    if(content == prefix){
-        const comando = new Discord.MessageAttachment('arquivos/img/sem_comando.jpg')
-
-        message.channel.send(`${message.author} Kd o comando fiote!`, comando)
-        message.react('🤡')
-        return
     }
 
     if(usos == usos_anterior)
