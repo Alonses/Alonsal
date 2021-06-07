@@ -31,7 +31,6 @@ module.exports = async ({client, message, args}) => {
 
             message.channel.send(`${message.author}`+ " mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:")
         }catch(err){
-            message.react('🛑')
             message.channel.send(`:octagonal_sign: ${message.author} não foi possível enviar a mensagem para este ID`)
             return
         }
@@ -73,8 +72,11 @@ module.exports = async ({client, message, args}) => {
     .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
     .setTimestamp();
     
-    message.react('📫')
     client.users.cache.get(message.author.id).send(embed);
+    const permissions = message.channel.permissionsFor(message.client.user);
 
-    message.delete()
+    if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+        message.delete()
+    else
+        message.channel.send(":tools: Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.")
 }
