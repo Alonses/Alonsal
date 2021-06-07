@@ -6,8 +6,8 @@ const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
 prefix = config.prefix;
-usos = 1333;
-usos_anterior = 1333;
+usos = 1396;
+usos_anterior = 1396;
 local_server = config.log_servers;
 local_comando = config.log_commands;
 
@@ -73,7 +73,7 @@ client.on('message', (message) => {
         const comando = new Discord.MessageAttachment('arquivos/img/sem_comando.jpg')
 
         message.channel.send(`${message.author} Kd o comando fiote!`, comando)
-        return
+        message.react('🤡')
     }
 
     if(usos == usos_anterior)
