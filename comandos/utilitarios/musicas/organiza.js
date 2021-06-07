@@ -18,7 +18,7 @@ module.exports = async function({client, message, args, playlists, id_canal, rep
     
     if(message.content == ".asrp"){
         if(repeteco_ == 0){
-            repeteco.set(id_canal, 1)
+            await repeteco.set(id_canal, 1)
             message.channel.send(":repeat: Repeteco ativado, use `.asrp` novamente para desativar.")
 
             if(queue_local.length < 6)
@@ -26,7 +26,7 @@ module.exports = async function({client, message, args, playlists, id_canal, rep
             else
                 message.channel.send(`${message.author} use`+ " `.asfd` para desligar o anúncio de novas faixas :thumbsup:")
         }else{
-            repeteco.set(id_canal, 0)
+            await repeteco.set(id_canal, 0)
             message.channel.send(":arrow_forward: Repeteco desativado, use `.asrp` para ativar.")
         }
 
@@ -37,9 +37,9 @@ module.exports = async function({client, message, args, playlists, id_canal, rep
         msg = ":loudspeaker: Irei anunciar as faixas que começarem a tocar"
 
         if(feedback == 0)
-            feedback_faixa.set(id_canal, 1)
+            await feedback_faixa.set(id_canal, 1)
         else{
-            feedback_faixa.set(id_canal, 0)
+            await feedback_faixa.set(id_canal, 0)
             msg = "Ok, sem anúncios de faixas que começarem a tocar"
         }
         

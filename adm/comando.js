@@ -15,6 +15,6 @@ module.exports = async ({message}) => {
 
     // Imagem
     if(num != 6 && num != 2)
-        message.channel.send(comando[num + 6])
+        message.channel.send(comando[num + 7])
 
 }
