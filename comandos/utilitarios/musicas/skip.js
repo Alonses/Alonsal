@@ -19,7 +19,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                     return
                 }
 
-                message.channel.send(":fast_forward: Pulando para a faixa `"+ pular_para +"`")
+                message.channel.send(":fast_forward: Pulando para a `"+ pular_para +"°` faixa")
 
                 if(pular_para <= queue_local.length){
                     for(var i = 1; i < pular_para; i++){

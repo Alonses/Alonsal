@@ -63,30 +63,33 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
             titulo = await ytdl.getInfo(queue_local[0]).then(info => info.videoDetails.title);
 
             if(!queue_faixas.includes(titulo))
-                queue_faixas.unshift(titulo);
+                queue_faixas.unshift(titulo)
 
             for(var tfp = 1; tfp < queue_faixas.length; tfp++){
-                faixas_demonst += "**`"+ (tfp + 1) +"`** - `" + queue_faixas[tfp] + "`\n"
+                faixas_demonst += "**`"+ (tfp + 1) +"`** - **`" + queue_faixas[tfp] + "`**\n"
             }
 
+            server_name = message.guild.name
+
             const embed = new Discord.MessageEmbed()
-            .setTitle('Playlist')
+            .setTitle(':radio: Playlist de '+ server_name)
             .setColor('#29BB8E')
             .setThumbnail('https://maxcdn.icons8.com/Color/PNG/512/Music/playlist-512.png')
-            .setDescription("> **Tocando Agora** :notes:\n **`1`** - [ `"+ titulo +"` ]"+ faixas_demonst)
-            .setAuthor(message.author.username);
+            .setDescription("> **Tocando Agora** :notes:\n **`1`** - [ **`"+ titulo +"`** ]"+ faixas_demonst)
+            .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }))
+            .setTimestamp();
             
             m.edit(`:page_with_curl: Tudo certo ${message.author}, a playlist está abaixo //`, embed);
 
             trava_pl_l = 0
         }else{
-            message.channel.send("Não há nenhuma faixa tocando no momento.")
+            message.channel.send(":free: Não há nenhuma faixa tocando no momento.")
             trava_pl_l = 0
         }
     }else
         message.channel.send(`:name_badge: ${message.author} um momento, estou processando a playlist ainda.`)
 
-    playlists.set(id_canal, queue_local)
-    nome_faixas.set(id_canal, queue_faixas)
-    trava_pl.set(id_canal, trava_pl_l)
+    await playlists.set(id_canal, queue_local)
+    await nome_faixas.set(id_canal, queue_faixas)
+    await trava_pl.set(id_canal, trava_pl_l)
 }
