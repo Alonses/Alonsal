@@ -74,6 +74,7 @@ client.on('message', (message) => {
 
         message.channel.send(`${message.author} Kd o comando fiote!`, comando)
         message.react('🤡')
+        return
     }
 
     if(usos == usos_anterior)
