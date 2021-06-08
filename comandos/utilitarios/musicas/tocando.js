@@ -13,15 +13,27 @@ module.exports = async function({message, playlists}){
 
     titulo = dados_np.title
     descricao = dados_np.description
+    segundos = dados_np.lengthSeconds
+
+    segundos = dados_np.lengthSeconds
+    tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
+
+    tempo = tempo.replace("00:", "")
+
+    // Limitar o tamanho da descricao
+    trimString = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str);
+    descricao = trimString(descricao, 90)
 
     if(descricao == null)
-        descricao = "Sem descrição";
-        
+        descricao = "Vídeo sem descrição :books:";
+    
     const embed_np = new Discord.MessageEmbed()
         .setTitle('Tocando agora :notes:')
         .setColor('#29BB8E')
         .setThumbnail(thumb)
-        .setDescription("-----------------------------\n**"+ titulo +"**\nLink: "+ queue_local[0] +"\n\n"+ dados_np.description);
+        .setDescription("-----------------------------\n**"+ titulo +"**\nLink: "+ queue_local[0] +"\n\n"+ descricao + "\n\n**Duração: `"+ tempo +"`**")
+        .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }))
+        .setTimestamp();
     
-    await message.channel.send(embed_np)
+    message.channel.send(embed_np)
 }

@@ -40,9 +40,6 @@ module.exports = async ({client, message, args}) => {
         trava_pl.set(id_canal, 0)
     }
 
-    if(typeof client.ativo == "undefined")
-        client.ativo = 0;
-    
     queue_local = playlists.get(id_canal)
     
     if(typeof queue_local == "undefined")
@@ -58,9 +55,6 @@ module.exports = async ({client, message, args}) => {
     }else if(message.content == ".asds"){
         require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot})
         return
-    }else if(message.content.includes(".asfd") || message.content.includes(".asrp")){
-        require('./organiza')({client, message, args, playlists, id_canal, repeteco, feedback_faixa})
-        return
     }else if(message.content.includes(".assk")){
         require('./skip')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal})
         return
@@ -73,13 +67,13 @@ module.exports = async ({client, message, args}) => {
     }else if(message.content.includes(".asra")){
         require('./random')({client, message, args, playlists, atividade_bot, feedback_faixa, id_canal})
         return
-    }else if(message.content.includes(".asrs")){
+    }else if(message.content == ".asrs" || message.content == ".asfd" || message.content == ".asrp"){
         require('./organiza')({client, message, args, playlists, id_canal, repeteco, feedback_faixa, nome_faixas, atividade_bot, tocar})
         return
     }
 
     if(message.content == ".as"){
-        message.channel.send("Informe algo além do `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`")
+        message.channel.send("Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`")
         return
     }
 
@@ -107,18 +101,19 @@ module.exports = async ({client, message, args}) => {
             link = args[0];
         }
 
+        
         if(queue_local.length > 0){
+            if(queue_local.includes(link)){
+                message.channel.send("Essa faixa já está tocando ou na fila, guentae!")
+                return
+            }
+
             ytdl.getInfo(link)
             .then(info => {
                 var titulo_faixa_preview = info.videoDetails.title;
                 message.channel.send(":cd: [ `"+ titulo_faixa_preview +"` ] adicionado a fila");
             });
         }
-    }
-
-    if(queue_local.includes(link)){
-        message.channel.send("Essa faixa já está tocando ou na fila, guentae!")
-        return
     }
 
     queue_local.push(link)
