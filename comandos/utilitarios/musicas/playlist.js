@@ -46,14 +46,15 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
                     try{
                         if(queue_faixas.length != queue_local.length){
                             if(queue_local.length < 10) // Para playlists menores que 10 faixas
-                                faixas_ = await ytdl.getInfo(queue_local[faixa_in + 1]).then(info => info.videoDetails.title);
+                                faixas_ = await ytdl.getInfo(queue_local[faixa_in + 1]).then(info => 
+                                    info.videoDetails.title);
                             else // Para playlist maiores de 10 faixas
                                 faixas_ = await ytdl.getInfo(queue_local[faixa_in]).then(info => info.videoDetails.title);
 
                             if(!queue_faixas.includes(faixas_))
                             queue_faixas.push(faixas_)
                         }
-                    }catch(e){
+                    }catch(err){
                         message.channel.send("Erro ao buscar informações de uma faixa")
                         return
                     }
@@ -75,7 +76,7 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
             .setTitle(':radio: Playlist de '+ server_name)
             .setColor('#29BB8E')
             .setThumbnail('https://maxcdn.icons8.com/Color/PNG/512/Music/playlist-512.png')
-            .setDescription("> **Tocando Agora** :notes:\n **`1`** - [ **`"+ titulo +"`** ]"+ faixas_demonst)
+            .setDescription("> **Tocando agora** :notes:\n **`1`** - [ **`"+ titulo +"`** ]"+ faixas_demonst)
             .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }))
             .setTimestamp();
             
