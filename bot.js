@@ -6,8 +6,8 @@ const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
 prefix = config.prefix;
-usos = 1449;
-usos_anterior = 1449;
+usos = 1573;
+usos_anterior = 1573;
 local_server = config.log_servers;
 local_comando = config.log_commands;
 

@@ -68,7 +68,6 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
             dispatcher.end()
 
         if(cond_auto != "end"){
-
             if(feedback_f == 1 && (repeteco_ == 0 || queue_interna.length > 5))
             ytdl.getInfo(queue_interna[0]).then(info => {
                 getThumb(queue_interna[0]).then(thumb_url => {
@@ -105,9 +104,13 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
             if(cond_auto != "end")
                 playlists.set(id_canal, queue_interna)
 
-            if(queue_interna.length > 0 && cond_auto != "end")
-                return tocar_faixa()
-            else
+            if(queue_interna.length > 0 && cond_auto != "end"){
+                setTimeout(() => {
+                    return tocar_faixa()
+                }, 1000)
+                
+                return
+            }else
                 atividade_bot.set(id_canal, 0)
 
             inativo = setTimeout(() => {
