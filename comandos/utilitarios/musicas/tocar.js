@@ -75,11 +75,14 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
 
         if(cond_auto != "end"){
             requisicao_ativa = 1
+
             queue_interna = playlists.get(id_canal)
-            music = ytdl(queue_interna[0]);
+            music = ytdl(queue_interna[0])
+
+            message.channel.send(":tools: Tentando tocar: "+ queue_interna[0])
         }
 
-        let dispatcher = connection.play(music, {bitrate: 192000 /* 192kbps */})
+        let dispatcher = connection.play(music)
 
         setTimeout(() => {
             requisicao_ativa = 0
@@ -133,7 +136,7 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
             if(queue_interna.length > 0 && cond_auto != "end"){
                 setTimeout(() => {
                     requisicoes.push(id_canal)
-                    return requisita()
+                    requisita()
                 }, 1000)
                 
                 return
