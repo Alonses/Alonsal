@@ -10,6 +10,7 @@ if(typeof requisicao_ativa == "undefined")
 
 module.exports = async (message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
+    
     let Vchannel = message.member.voice.channel
     let connection = await Vchannel.join()
     
@@ -57,9 +58,7 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
     else
         requisicoes.push(id_canal)
 
-    function requisita(){ // Fila de requisições para serem acionadas
-        console.log("Requisições: "+ requisicoes +"\nStatus: "+ requisicao_ativa)
-
+    function requisita(){ // Fila de requisições para serem processadas
         if(requisicao_ativa == 0){
             tocar_faixa(requisicoes[0])
             requisicoes.shift()
@@ -77,11 +76,10 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
         if(cond_auto != "end"){
             requisicao_ativa = 1
             queue_interna = playlists.get(id_canal)
-            // message.channel.send("Tentando tocar agora: "+ queue_interna[0])
             music = ytdl(queue_interna[0]);
         }
 
-        let dispatcher = connection.play(music)
+        let dispatcher = connection.play(music, {bitrate: 192000 /* 192kbps */})
 
         setTimeout(() => {
             requisicao_ativa = 0
@@ -101,15 +99,14 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
                     segundos = info.videoDetails.lengthSeconds
                     tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
                     
-                    tempo_c = tempo.parseInt()
-
-                    if(tempo_c < 216000)
+                    tempo_c = tempo.split(":")
+                    if(tempo_c[0] == "00")
                         tempo = tempo.replace("00:", "")
 
                     const embed = new Discord.MessageEmbed()
                     .setTitle('Começando agora :loud_sound: :notes:')
                     .setColor('#29BB8E')
-                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\nUtilize `.asfd` para desativar o anúncio de faixas")
+                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
                     .setThumbnail(thumb_url)
                     .setTimestamp();
 

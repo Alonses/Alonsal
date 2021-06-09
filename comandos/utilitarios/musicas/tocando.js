@@ -18,7 +18,9 @@ module.exports = async function({message, playlists}){
     segundos = dados_np.lengthSeconds
     tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
 
-    tempo = tempo.replace("00:", "")
+    tempo_c = tempo.split(":")
+    if(tempo_c[0] == "00")
+        tempo = tempo.replace("00:", "")
 
     // Limitar o tamanho da descricao
     trimString = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str);
