@@ -1,6 +1,8 @@
-const ytdl = require('ytdl-core');
+const Discord = require('discord.js')
+const ytdl = require('ytdl-core')
 const tocar = require('./tocar.js')
-const getyoutubelinks = require("@joshyzou/getyoutubelinks");
+const getThumb = require('video-thumbnail-url')
+const getyoutubelinks = require("@joshyzou/getyoutubelinks")
 
 module.exports = async ({client, message, args}) => {
 
@@ -93,14 +95,14 @@ module.exports = async ({client, message, args}) => {
 
             link = await getyoutubelinks(pesquisa).catch(e => {
                 message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);
-                return;
             });
 
-            link = link.link;
-        }else{
-            link = args[0];
-        }
+            if(typeof link == "undefined")
+                return
 
+            link = link.link;
+        }else
+            link = args[0];
         
         if(queue_local.length > 0){
             if(queue_local.includes(link)){
@@ -108,16 +110,40 @@ module.exports = async ({client, message, args}) => {
                 return
             }
 
-            ytdl.getInfo(link)
-            .then(info => {
-                var titulo_faixa_preview = info.videoDetails.title;
-                message.channel.send(":cd: [ `"+ titulo_faixa_preview +"` ] adicionado a fila");
+            ytdl.getInfo(link).then(info => {
+                getThumb(link).then(thumb_url => {
+
+                    segundos = info.videoDetails.lengthSeconds
+                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
+                    
+                    tempo_c = tempo.split(":")
+                    if(tempo_c[0] == "00")
+                        tempo = tempo.replace("00:", "")
+                    
+                    const embed = new Discord.MessageEmbed()
+                    .setTitle(':cd: Adicionado a fila')
+                    .setColor('#29BB8E')
+                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:fast_forward: Utilize `.assk "+ queue_local.length +"` para pular até ela")
+                    .setThumbnail(thumb_url)
+                    .setTimestamp();
+
+                    message.channel.send(embed);
+                });
             });
         }
     }
 
-    queue_local.push(link)
+    if(typeof link != "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
+        info = await ytdl.getInfo(link)
+        .catch(err => { message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);});
 
+        if(typeof info != "undefined")
+            queue_local.push(link)
+        else
+            return
+    }else
+        message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`)
+        
     playlists.set(id_canal, queue_local)
 
     ativo_att = atividade_bot.get(id_canal)
