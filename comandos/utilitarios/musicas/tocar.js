@@ -2,6 +2,12 @@ const Discord = require('discord.js')
 const ytdl = require('ytdl-core');
 const getThumb = require('video-thumbnail-url');
 
+if(typeof requisicoes == "undefined")
+    requisicoes = []
+
+if(typeof requisicao_ativa == "undefined")
+    requisicao_ativa = 0
+
 module.exports = async (message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
     let Vchannel = message.member.voice.channel
@@ -46,9 +52,21 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
         }
     }
 
-    tocar_faixa()
-   
-    function tocar_faixa(){
+    if(requisicao_ativa == 0)
+        tocar_faixa(id_canal)
+    else
+        requisicoes.push(id_canal)
+
+    function requisita(){ // Fila de requisições para serem acionadas
+        console.log("Requisições: "+ requisicoes +"\nStatus: "+ requisicao_ativa)
+
+        if(requisicao_ativa == 0){
+            tocar_faixa(requisicoes[0])
+            requisicoes.shift()
+        }
+    }
+
+    function tocar_faixa(id_canal){
         atividade_bot.set(id_canal, 1)
 
         if(typeof inativo != "undefined") // Desativa o desligamento
@@ -57,12 +75,20 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
         let music = ''
 
         if(cond_auto != "end"){
+            requisicao_ativa = 1
             queue_interna = playlists.get(id_canal)
             // message.channel.send("Tentando tocar agora: "+ queue_interna[0])
             music = ytdl(queue_interna[0]);
         }
 
-        let dispatcher = connection.play(music);
+        let dispatcher = connection.play(music)
+
+        setTimeout(() => {
+            requisicao_ativa = 0
+
+            if(requisicoes.length > 0)
+                requisita()
+        }, 1000)
 
         if(cond_auto == "end")
             dispatcher.end()
@@ -75,7 +101,10 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
                     segundos = info.videoDetails.lengthSeconds
                     tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
                     
-                    tempo = tempo.replace("00:", "")
+                    tempo_c = tempo.parseInt()
+
+                    if(tempo_c < 216000)
+                        tempo = tempo.replace("00:", "")
 
                     const embed = new Discord.MessageEmbed()
                     .setTitle('Começando agora :loud_sound: :notes:')
@@ -106,7 +135,8 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
 
             if(queue_interna.length > 0 && cond_auto != "end"){
                 setTimeout(() => {
-                    return tocar_faixa()
+                    requisicoes.push(id_canal)
+                    return requisita()
                 }, 1000)
                 
                 return
