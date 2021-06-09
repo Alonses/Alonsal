@@ -18,7 +18,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
         var contador = 0;
         var faixas_selecionadas = 0;
         alvo = "musicas"
-        num_caso = 111
+        num_caso = 122
 
         if(args[0] == "me"){
             alvo = "memes"

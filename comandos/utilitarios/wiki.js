@@ -13,7 +13,6 @@ module.exports = async function({message, args}) {
         content = content.substr(0, (content.length - 1)); // Remove o espaço no último caractere
 
         try{
-
             const url = 'https://api.duckduckgo.com/?q='+encodeURI(content)+'&format=json&pretty=0&skip_disambig=1&no_html=1';
 
             var termo_pesquisado_cc = content.slice(1);
