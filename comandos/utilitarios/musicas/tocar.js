@@ -79,7 +79,7 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
             queue_interna = playlists.get(id_canal)
             music = ytdl(queue_interna[0])
 
-            message.channel.send(":tools: Tentando tocar: "+ queue_interna[0])
+            // message.channel.send(":tools: Tentando tocar: "+ queue_interna[0])
         }
 
         let dispatcher = connection.play(music)
