@@ -43,7 +43,7 @@ module.exports = async function({message, args}) {
         if(tipo_texto == 1)
             titulo = ":zero: Sua mensagem decodificada do binário";
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new MessageEmbed()
         .setTitle(titulo)
         .setAuthor(message.author.username, message.author.avatarURL({ dynamic:true }))
         .setColor(0x29BB8E)
