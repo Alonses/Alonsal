@@ -5,8 +5,8 @@ const commands = require('./comandos.json');
 const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
-usos = 1664;
-usos_anterior = 1664;
+usos = 1708;
+usos_anterior = 1708;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
