@@ -1,7 +1,7 @@
 const { MessageEmbed }= require('discord.js');
 const { version } = require('../../config.json');
 
-module.exports = async ({message}) => {
+module.exports = async ({message, args}) => {
 
     const embed = new MessageEmbed()
     .setTitle('Patinando entre as linhas bugadas :man_golfing:')

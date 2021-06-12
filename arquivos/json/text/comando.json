@@ -3,6 +3,9 @@
     [
         { "autor_msg Kd o comando fiote?" :
         "https://i.imgur.com/XVgR4O8.jpg" },
+        
+        { "autor_msg digite `.ajuda` para ver a lista de comandos": 
+        null },
 
         { "O autor_msg parece tonto usando só o prefixo :v":
         null},
