@@ -1,27 +1,27 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = async function({client, message, content, local_comando}){
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var d = new Date();
-    var day = days[d.getDay()];
-    var hr = d.getHours();
-    var min = d.getMinutes();
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const d = new Date();
+    const day = days[d.getDay()];
+    let hr = d.getHours();
+    let min = d.getMinutes();
 
     if(min < 10)
         min = "0" + min;
-    
-    var ampm = "am";
+
+    let ampm = "am";
     if(hr > 12){
         hr -= 12;
         ampm = "pm";
     }
 
-    var date = d.getDate();
-    var month = months[d.getMonth()];
-    var year = d.getFullYear();
+    const date = d.getDate();
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
     .setTitle("> New interaction")
     .setColor(0x29BB8E)
     .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");

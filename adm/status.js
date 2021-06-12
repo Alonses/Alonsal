@@ -4,7 +4,7 @@ module.exports = async function({client}){
     console.log(`Ativo para ${client.users.cache.size} usuários em ${client.channels.cache.size} canais em ${client.guilds.cache.size} servidores diferentes!`);
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
-    let activities = [
+    const activities = [
         ".ah | .ajuda",
         "Binário na fogueira",
         "Músicas no ar",
@@ -15,8 +15,8 @@ module.exports = async function({client}){
         "Bugs infinitos no sistema",
         "Vapor p/ fora!",
         "Ceira para todo o lado"
-    ]
-    
-    i = 0;
+    ];
+
+    let i = 0;
     setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
 }
