@@ -1,8 +1,8 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = async function({client, message}){
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
     .setColor(0x29BB8E)
     .setAuthor('GitHub')
     .setTitle("> Repositório Alonsal")

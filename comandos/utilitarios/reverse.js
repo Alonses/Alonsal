@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { MessageEmbed } = require('discord.js')
 
 module.exports = async function({message, args}){
 
@@ -18,7 +18,7 @@ module.exports = async function({message, args}){
             texto_ordenado += texto[i];
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle(':arrow_backward: Sua mensagem ao contrário')
             .setAuthor(message.author.username, message.author.avatarURL({ dynamic:true }))
             .setColor(0x29BB8E)

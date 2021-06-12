@@ -3,10 +3,10 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = async function({message, args}) {
     let content = '';
-    var counter = 0;
+    let counter = 0;
 
-    for(var i = 0; i < args.length; i++){
-        content += args[i] + " ";
+    for(let i = 0; i < args.length; i++){
+        content += args[i] + ' ';
     }
 
     if(args.length > 0){
@@ -15,7 +15,7 @@ module.exports = async function({message, args}) {
         try{
             const url = 'https://api.duckduckgo.com/?q='+encodeURI(content)+'&format=json&pretty=0&skip_disambig=1&no_html=1';
 
-            var termo_pesquisado_cc = content.slice(1);
+            const termo_pesquisado_cc = content.slice(1);
             const username = `${message.author.username}`;
 
             fetch(url, {headers:{"accept-language": "en-US"}})

@@ -1,10 +1,10 @@
-const frases = require('./gado.json')
+const { messages } = require("../../arquivos/json/text/gado.json")
 
 module.exports = async({message, args}) => {
 
     if(typeof args[0] != "undefined" && args[0].includes("<@")){
-        let num = 1 + Math.round(31 * Math.random())
-        
+        const num = 1 + Math.round(31 * Math.random());
+
         const gado = args[0];
         const alvo = gado.replace("!", "")
     
@@ -14,9 +14,9 @@ module.exports = async({message, args}) => {
         }
 
         if(alvo !== `${message.author}`)
-            message.channel.send("O "+ gado +" "+ frases[num])
+            message.channel.send("O "+ gado +" "+ messages[num])
         else
-            message.channel.send(`Você ${message.author}`+" "+ frases[num])
+            message.channel.send(`Você ${message.author}`+" "+ messages[num])
     }else
         message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`)
 }
