@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
 const { existsSync } = require("fs");
-const { token, prefix, local_server, local_comando, ids_ignorados, usos_a, usos_anterior_a } = require('./config.json');
+const { token, prefix, local_server, local_comando, ids_ignorados } = require('./config.json');
 const commands = require('./comandos.json');
 const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
 
-usos = usos_a;
-usos_anterior = usos_anterior_a;
+usos = 1708;
+usos_anterior = 1708;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
