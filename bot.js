@@ -1,13 +1,9 @@
 const Discord = require('discord.js');
 const { existsSync } = require("fs");
-const { token, prefix, local_server, local_comando } = require('./config.json');
+const { token, prefix, local_server, local_comando, ids_ignorados, usos, usos_anterior } = require('./config.json');
 const commands = require('./comandos.json');
 const ping_me_gif = require('./adm/ping_me.json');
 const client = new Discord.Client();
-
-usos = 1708;
-usos_anterior = 1708;
-ids_ignorados = ["852589532993683467", "665002572926681128", "597926883069394996", "434089428160348170"];
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
