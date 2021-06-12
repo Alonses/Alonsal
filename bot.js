@@ -1,12 +1,12 @@
 const { Client } = require('discord.js');
 const { existsSync } = require("fs");
-const { token, prefix, local_server, local_comando } = require('./config.json');
+const { token, prefix, local_server, local_comando, ids_ignorados } = require('./config.json');
 const commands = require('./comandos.json');
 const ping_me_gif = require('./adm/ping_me.json');
 const client = new Client();
 
-usos = 1664;
-usos_anterior = 1664;
+usos = 1708;
+usos_anterior = 1708;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
@@ -42,7 +42,7 @@ client.on('message', (message) => {
     if (!content.startsWith(prefix) || message.author.bot) return
     if (!message.channel.name) return
     
-    if(talkedRecently.has(message.author.id) && message.author.id !== "665002572926681128"){
+    if(talkedRecently.has(message.author.id) && !ids_ignorados.includes(message.author.id)){
         message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
         return
     }else{
