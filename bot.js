@@ -7,6 +7,7 @@ const client = new Discord.Client();
 
 usos = 1708;
 usos_anterior = 1708;
+ids_ignorados = ["852589532993683467", "665002572926681128", "597926883069394996", "434089428160348170"];
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
@@ -42,7 +43,7 @@ client.on('message', (message) => {
     if (!content.startsWith(prefix) || message.author.bot) return
     if (!message.channel.name) return
     
-    if(talkedRecently.has(message.author.id) && message.author.id !== "665002572926681128"){
+    if(talkedRecently.has(message.author.id) && !ids_ignorados.includes(message.author.id)){
         message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
         return
     }else{
