@@ -1,8 +1,8 @@
-const jokes = require("./joke.json");
+const { messages } = require("../../arquivos/json/text/joke.json")
 
 module.exports = async ({ message }) => {
 
-    let num = 1 + Math.round(50 * Math.random());
+    const num = 1 + Math.round(50 * Math.random());
 
-    message.channel.send(":black_joker: "+ jokes[num]);
+    message.channel.send(":black_joker: "+ messages[num]);
 }

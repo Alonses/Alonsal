@@ -1,9 +1,9 @@
-const Discord = require('discord.js');
+const { MessageEmbed }= require('discord.js');
 const { version } = require('../../config.json');
 
-module.exports = async ({message, args}) => {
+module.exports = async ({message}) => {
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
     .setTitle('Patinando entre as linhas bugadas :man_golfing:')
     .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
     .setColor('#29BB8E')
