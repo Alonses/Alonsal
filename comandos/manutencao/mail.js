@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = async ({client, message, args}) => {
 
@@ -41,7 +41,7 @@ module.exports = async ({client, message, args}) => {
         
         mensagem = mensagem.substr(0, (mensagem.length - 1));
 
-        const msg_user = new Discord.MessageEmbed()
+        const msg_user = new MessageEmbed()
         .setTitle("> New Message :mailbox_with_mail:")
         .setFooter("Author: "+ message.author.username)
         .setColor(0xffffff)
@@ -65,7 +65,7 @@ module.exports = async ({client, message, args}) => {
     if(tipo !== "Alonsal")
         mensagem = mensagem.substr(0, (mensagem.length - 1));
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
     .setTitle(':mailbox: Sua mensagem foi entregue!')
     .setColor(0x29BB8E)
     .setDescription("Sua mensagem foi entregue para o/a `"+ tipo +"`\n\nO Conteúdo da mensagem é :: \n`"+ mensagem +"`")
