@@ -47,7 +47,8 @@
     "convite": "convite.js",
     "cvv": "convite.js",
     "rev": "reverse.js",
-
+    "mor": "casal.js",
+    
     "s": "musicas/play.js",
     "sh": "help_musica.js",
     "sp": "musicas/pause.js",
