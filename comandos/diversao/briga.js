@@ -2,11 +2,8 @@ const { gifs } = require("../../arquivos/json/gifs/briga.json")
 
 module.exports = async ({ message }) => {
 
-    let num = Math.round(gifs.length * Math.random());
+    const num = Math.round((gifs.length - 1) * Math.random());
     
-    if(num === gifs.length)
-        num = 0;
-
     if(num === 0)
         message.channel.send("ESFIHADA!");
 

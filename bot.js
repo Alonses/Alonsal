@@ -1,8 +1,8 @@
 const { Client } = require('discord.js');
 const { existsSync } = require("fs");
+const { ping_me_gif } = require('./arquivos/json/text/ping_me.json');
 const { token, prefix, local_server, local_comando, ids_ignorados } = require('./config.json');
 const commands = require('./comandos.json');
-const ping_me_gif = require('./adm/ping_me.json');
 const client = new Client();
 
 usos = 1708;
@@ -30,13 +30,11 @@ client.on("guildDelete", guild => {
 client.on('message', (message) => {
     
     let content = message.content;
-
-    if((content === "<@!833349943539531806>" || content === "<@833349943539531806>") && !message.author.bot){
-        let ping_me = 1 + Math.round(10 * Math.random());
-        ping_me = ping_me.toString();
-        message.channel.send(ping_me_gif[ping_me]);
+   
+    if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
+        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
+        message.channel.send(ping_me_gif[ping_me])
     }
-
 
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
     if (!content.startsWith(prefix) || message.author.bot) return
