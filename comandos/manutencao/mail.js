@@ -2,11 +2,11 @@ const Discord = require('discord.js');
 
 module.exports = async ({client, message, args}) => {
 
-    content = args
-    mensagem = ""
-    tipo = "Alonsal"
+    let content = args
+    let mensagem = ""
+    let tipo = "Alonsal"
 
-    if(message.author.id == "665002572926681128"){
+    if(message.author.id === "665002572926681128"){
         try{
             tipo = content[0]
             id_alvo = content[1]
@@ -17,16 +17,16 @@ module.exports = async ({client, message, args}) => {
             return
         }
 
-        for(var i = 2; i < content.length; i++){
+        for(let i = 2; i < content.length; i++){
             mensagem += content[i] + " ";
         }
 
         mensagem = mensagem.replace(id_alvo, "")
 
         try{
-            if(tipo == "u")
+            if(tipo === "u")
                 client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal")
-            else if(tipo == "c")
+            else if(tipo === "c")
                 client.channels.cache.get(id_alvo).send(mensagem)
 
             message.channel.send(`${message.author}`+ " mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:")
@@ -35,7 +35,7 @@ module.exports = async ({client, message, args}) => {
             return
         }
     }else{
-        for(var i = 0; i < content.length; i++){
+        for(let i = 0; i < content.length; i++){
             mensagem += content[i] + " ";
         }
         
@@ -57,12 +57,12 @@ module.exports = async ({client, message, args}) => {
         }
     }
 
-    if(tipo == "c")
+    if(tipo === "c")
         tipo = client.channels.cache.get(id_alvo).name;
-    else if(tipo == "u")
+    else if(tipo === "u")
         tipo = client.users.cache.get(id_alvo).username;
 
-    if(tipo != "Alonsal")
+    if(tipo !== "Alonsal")
         mensagem = mensagem.substr(0, (mensagem.length - 1));
 
     const embed = new Discord.MessageEmbed()
