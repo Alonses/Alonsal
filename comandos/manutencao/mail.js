@@ -5,8 +5,8 @@ module.exports = async ({client, message, args}) => {
     let content = args
     let mensagem = ""
     let tipo = "Alonsal"
-
-    if(message.author.id === "665002572926681128"){
+    
+    if(message.author.id === "665002572926681128" || message.author.id === "852589532993683467"){
         try{
             tipo = content[0]
             id_alvo = content[1]
