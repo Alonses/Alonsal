@@ -1,9 +1,9 @@
-const Discord = require('discord.js');
+const { Client } = require('discord.js');
 const { existsSync } = require("fs");
 const { token, prefix, local_server, local_comando } = require('./config.json');
 const commands = require('./comandos.json');
 const ping_me_gif = require('./adm/ping_me.json');
-const client = new Discord.Client();
+const client = new Client();
 
 usos = 1664;
 usos_anterior = 1664;
@@ -60,7 +60,7 @@ client.on('message', (message) => {
     const args = content.slice(prefix.length).trim().split(' ');
     
     const command = args.shift().toLowerCase();
-    for(var i = 0; i < pastas.length; i++){
+    for(let i = 0; i < pastas.length; i++){
         path = `./comandos/${pastas[i]}/${commands[command]}`;
         if (existsSync(path)){
             usos++;

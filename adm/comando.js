@@ -2,11 +2,11 @@ const comando = require("./comando.json")
 
 module.exports = async ({message}) => {
 
-    num = 1 + Math.round(5 * Math.random())
+    let num = 1 + Math.round(5 * Math.random())
 
-    frase = comando[num]
+    let frase = comando[num]
 
-    marcacao = "<@"+ message.author.id + ">"
+    let marcacao = "<@" + message.author.id + ">"
     frase = frase.replace("autor_msg", marcacao)
     
     // Frase
@@ -14,7 +14,7 @@ module.exports = async ({message}) => {
     await message.channel.send(frase)
 
     // Imagem
-    if(num != 6 && num != 2)
+    if(num !== 6 && num !== 2)
         message.channel.send(comando[num + 7])
 
 }
