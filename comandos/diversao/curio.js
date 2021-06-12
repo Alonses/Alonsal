@@ -1,4 +1,4 @@
-const { messages } = require("../../arquivos/json/gifs/curio.json")
+const { messages } = require("../../arquivos/json/text/curio.json")
 
 module.exports = async ({ message }) => {
 

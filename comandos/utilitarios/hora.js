@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 
 module.exports = async({message}) => {
 
