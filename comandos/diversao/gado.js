@@ -1,9 +1,9 @@
-const { messages } = require("../../arquivos/json/text/gado.json")
+const { messages } = require("../../arquivos/json/text/gado.json");
 
 module.exports = async({message, args}) => {
 
     if(typeof args[0] != "undefined" && args[0].includes("<@")){
-        const num = 1 + Math.round(31 * Math.random());
+        const num = Math.round((messages.length - 1) * Math.random());
 
         const gado = args[0];
         const alvo = gado.replace("!", "")
