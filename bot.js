@@ -5,8 +5,8 @@ const { token, prefix, local_server, local_comando, ids_ignorados } = require('.
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 1708;
-usos_anterior = 1708;
+usos = 1735;
+usos_anterior = 1735;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
