@@ -10,6 +10,7 @@ usos_anterior = 1735;
 
 const talkedRecently = new Set();
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
+const aliases_info = [".ai", ".ainfo", ".ah", ".ahelp", ".ajuda"];
 
 client.on("ready", () => {
     require("./adm/status.js")({client});
@@ -63,7 +64,7 @@ client.on('message', (message) => {
         if (existsSync(path)){
             usos++;
 
-            if(message.content === prefix +"i" || message.content === prefix + "info")
+            if(aliases_info.includes(message.content))
                 args.push(usos);
 
             require(path)({ client, message, args});
