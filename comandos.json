@@ -46,6 +46,8 @@
     "g": "git.js",
     "convite": "convite.js",
     "cvv": "convite.js",
+    "invite": "convite.js",
+    "reverso": "reverse.js",
     "rev": "reverse.js",
     "mor": "casal.js",
     
