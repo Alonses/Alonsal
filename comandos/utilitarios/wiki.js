@@ -40,7 +40,7 @@ module.exports = async function({message, args}) {
             if(fields.length > 2){
                 fields.length = fields.length > 5 ? 5 : fields.length
                 const Embed = new MessageEmbed()
-                .setColor('#29BB8E')
+                .setColor(0x29BB8E)
                 .setTitle(res.Heading)
                 .setAuthor(res.AbstractSource)
                 .setDescription(res.AbstractText)
