@@ -90,7 +90,7 @@ module.exports = async({message, args}) => {
             aguarda_reacao(mensagem)
         })
         .catch(collected => {
-            message.reply('Você não utilizou o menu, envie novamente `.ah` caso queira navegar novamente');
+            message.reply('Você não utilizou o menu, envie `.ah` caso queira navegar novamente');
         });
 
         limpa_reacoes = setTimeout(() => {
