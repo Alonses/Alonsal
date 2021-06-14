@@ -5,7 +5,20 @@ module.exports = async({message, args}) => {
 
     if(typeof args[0] === "undefined")
         args[0] = 1;
+
     if(args.length > 0){
+
+        args[0] = parseInt(args[0])
+        
+        if(typeof args[1] !== "undefined"){
+            args[1] = parseInt(args[1])
+
+            if(isNaN(args[0]) || isNaN(args[1])){
+                message.channel.send(`:warning: ${message.author} informe apenas números para a quantidade e faces dos dados.`);
+                return
+            }
+        }
+        
         if(args[0] > 50){
             message.channel.send(`:warning: ${message.author} não é possivel rodar mais que 50 dados ao mesmo tempo.`);
             return
@@ -46,10 +59,10 @@ module.exports = async({message, args}) => {
     if(att_auto == 1)
         args[1]++
     
-    let mensagem = 'foram rodados `'+ args[0] +'` dados com `'+ parseInt(args[1]) +'` faces\n\n Resultados [ '+ resultado +' ]';
+    let mensagem = 'foram rodados `'+ args[0] +'` dados com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
 
     if(args[0] == 1)
-        mensagem = 'foi rodado `'+ args[0] +'` dado com `'+ parseInt(args[1]) +'` faces\n\n Resultado [ '+ resultado +' ]';
+        mensagem = 'foi rodado `'+ args[0] +'` dado com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
 
     message.channel.send(`:game_die: ${message.author}, `+ mensagem);
 }
