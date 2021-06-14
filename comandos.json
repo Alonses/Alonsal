@@ -47,6 +47,7 @@
     "reverso": "reverse.js",
     "rev": "reverse.js",
     "mor": "casal.js",
+    "fk": "afk.js",
     
     "s": "musicas/play.js",
     "sh": "help_musica.js",

@@ -9,6 +9,8 @@ usos = 1735;
 usos_anterior = 1735;
 
 const talkedRecently = new Set();
+const usuarios_inativos = new Set();
+
 const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
 const aliases_info = [".ai", ".ainfo", ".ah", ".ahelp", ".ajuda"];
 
@@ -31,7 +33,27 @@ client.on("guildDelete", guild => {
 client.on('message', (message) => {
     
     let content = message.content;
-   
+    
+    for(const element of usuarios_inativos) {
+        if(message.author.id === element[0]){
+            usuarios_inativos.delete(element);
+            message.channel.send(`${message.author} modo afk desligado :dizzy:`)
+            .then(msg => {
+                msg.delete({ timeout: 5000 });
+            })
+
+            return
+        }
+    }
+
+    if(content.includes("<@")){
+        let requisicao_auto = 1
+        const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto})
+
+        if(afk)
+            return
+    }
+
     if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
         message.channel.send(ping_me_gif[ping_me])
@@ -67,7 +89,7 @@ client.on('message', (message) => {
             if(aliases_info.includes(message.content))
                 args.push(usos);
 
-            require(path)({ client, message, args});
+            require(path)({ client, message, args, usuarios_inativos});
             break
         }
     }
