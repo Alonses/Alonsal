@@ -13,6 +13,11 @@ module.exports = async({message, args}) => {
 
         if(typeof args[1] === "undefined")
             args[1] = 5;
+        else
+            if(args[1] > 10000){
+                message.channel.send(`:warning: ${message.author} não é possivel rodar dados com mais de 10.000 faces.`);
+                return
+            }
 
         for(let i = 0; i < args[0]; i++){
             dado.push(1 + Math.round(args[1] * Math.random()))
