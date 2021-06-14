@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const { version } = require('../../config.json');
 
 module.exports = async({message, args}) => {
-
+    
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
     .setColor(0x29BB8E)
@@ -89,9 +89,18 @@ module.exports = async({message, args}) => {
 
             aguarda_reacao(mensagem)
         })
+        .catch(collected => {
+            message.reply('Você não utilizou o menu, envie novamente `.ah` caso queira navegar novamente');
+        });
 
         limpa_reacoes = setTimeout(() => {
-            mensagem.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
+
+            const permissions = message.channel.permissionsFor(message.client.user);
+
+            if(permissions.has("MANAGE_MESSAGES"))
+                mensagem.reactions.removeAll();
+            else
+                message.channel.send(":tools: Não foi possivel remover o menu automaticamente, para isto preciso de permissões para gerenciar as mensagens.")
         }, 20000)
     }
 }
