@@ -5,8 +5,8 @@ const { token, prefix, local_server, local_comando, ids_ignorados } = require('.
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 1735;
-usos_anterior = 1735;
+usos = 1843;
+usos_anterior = 1843;
 
 const talkedRecently = new Set();
 const usuarios_inativos = new Set();
@@ -46,17 +46,18 @@ client.on('message', (message) => {
         }
     }
 
+    if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
+        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
+        message.channel.send(ping_me_gif[ping_me])
+        return
+    }
+
     if(content.includes("<@")){
         let requisicao_auto = 1
         const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto})
 
         if(afk)
             return
-    }
-
-    if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
-        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
-        message.channel.send(ping_me_gif[ping_me])
     }
 
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
