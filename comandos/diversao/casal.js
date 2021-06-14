@@ -22,11 +22,11 @@ module.exports = async ({message, args}) => {
 
     if(args[0] !== args[1]){
         if(num == 100)
-            titulo = "Praticamente Casados :heart_on_fire:"
+            titulo = "Praticamente casados :heart_on_fire:"
         else if(num > 90)
             titulo = "Meu casal :smiling_face_with_3_hearts:"
         else if(num > 80)
-            titulo = "Praticamente amantes :revolving_hearts:"
+            titulo = "Literalmente amantes :revolving_hearts:"
         else if(num > 60)
             titulo = "Tá rolando um clima :hot_face:"
         else if(num > 40)

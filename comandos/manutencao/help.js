@@ -18,7 +18,7 @@ module.exports = async({message, args}) => {
     const embed_utilitarios = new MessageEmbed()
     .setTitle('Comandos de Utilitários :compass:')
     .setColor(0x29BB8E)
-    .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte ou desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:clock1230: **`.ahora`** - Mostra a hora")
+    .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de alguma cidade")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_jogos = new MessageEmbed()
@@ -37,11 +37,11 @@ module.exports = async({message, args}) => {
     .setTitle('Patinando entre as linhas bugadas :man_golfing:')
     .setColor(0x29BB8E)
     .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-    .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
-    .setDescription('Este bot é patrocinado por Baidu e Renato\'s lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\nJá fui invocado _'+ args +'_ vezes :zany_face:\n [ _Versão '+ version + '_ ]');
+    .setDescription('Este bot é patrocinado por Baidu e Renato\'s lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\nJá fui invocado _'+ args +'_ vezes :zany_face:\n [ _Versão '+ version + '_ ]')
+    .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
 
     const embed_musical = new MessageEmbed()
-    .setTitle('Comandos das Músicas :musical_note:')
+    .setTitle('Comandos Musicais :musical_note:')
     .setColor(0x29BB8E)
     .setDescription("**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`.as url`** | **`.as`** - Entra num canal de voz e toca um url\n:mag: **`.as finca chimia`** - Pesquisa por um vídeo no Ytb\n:page_with_curl: **`.aspl`** - Mostra a playlist atual\n:pause_button: **`.asp`** - Pausa a reprodução\n:arrow_forward: **`.asr`** - Resume a reprodução\n:fast_forward: **`.assk`** | **`.assk 5`** - Pula a faixa que está tocando/ou para a n° faixa\n:track_next: **`.assk all`** - Pula todas as faixas\n:repeat: **`.asrp`** - Ativa/desativa o repeteco\n:loudspeaker: **`.asfd`** - Ativa/desativa o anúncio de faixas\n:radio: **`.asnp`** - Informações da faixa atual\n:wastebasket: **`.asrm 5`** - Remove uma faixa da playlist\n:wave: **`.asds`** - Desconecta o Alonso do canal de voz\n:cd: **`.asra ms`** | **`.asra ms 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`.asra me`** | **`.asra me 10`** - Escolhe uma ou várias músicas aleatórias zueiras\n:cd: **`.asra jg`** | **`.asra jg 10`** - Escolhe uma ou várias trilhas sonoras de jogos\n:cd: **`.asra op`** | **`.asra op 10`** - Escolhe uma ou várias músicas clássicas");
 
@@ -90,7 +90,7 @@ module.exports = async({message, args}) => {
             aguarda_reacao(mensagem)
         })
         .catch(collected => {
-            message.reply('Finalizei o menu, envie `.ah` caso queira navegar novamente');
+            return
         });
 
         limpa_reacoes = setTimeout(() => {
