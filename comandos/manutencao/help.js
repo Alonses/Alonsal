@@ -24,7 +24,7 @@ module.exports = async({message, args}) => {
     const embed_jogos = new MessageEmbed()
     .setTitle('Comandos de Jogos :golf:')
     .setColor(0x29BB8E)
-    .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada`** - Roda um dado")
+    .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada 10 16`** - Roda um ou vários dados com várias faces")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_manutencao = new MessageEmbed()
