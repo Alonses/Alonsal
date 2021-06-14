@@ -32,7 +32,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
         
         if(args[0] == "jg"){
             alvo = "trilhas"
-            num_caso = 45
+            num_caso = 49
         }
 
         if(args[0] == "op"){
