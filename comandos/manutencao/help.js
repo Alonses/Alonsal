@@ -10,15 +10,15 @@ module.exports = async({message, args}) => {
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_diversao = new MessageEmbed()
-    .setTitle('Comandos de Diversão :zany_face:')
+    .setTitle('Comandos Divertidos :zany_face:')
     .setColor(0x29BB8E)
     .setDescription(":innocent: **`.apaz`** | **`.apz`** - União\n:yum: **`.asfiha`** | **`.asf`** - Servidos?\n:rage: **`.abriga`** | **`.ab`** - Porradaria!\n:cow: **`.agado @Alonsal`** | **`.aga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`.amor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`.abaidu`** - Louvado seja!\n:chess_pawn: **`.apiao`** - Roda o pião Dona Maria!\n:blue_book: **`.acurio`** | **`.ac`** - Uma curiosidade aleatória\n:black_joker: **`.ajoke`** | **`.aj`** - Invoca uma piada\n:clown: **`.acazalbe`** | **`.acaz`** - Cazalbe!")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_utilitarios = new MessageEmbed()
-    .setTitle('Comandos de Utilitários :compass:')
+    .setTitle('Comandos Utilitários :compass:')
     .setColor(0x29BB8E)
-    .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de alguma cidade")
+    .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de alguma cidade\n:sleeping: **`.afk`** | **`.afk jogando FF`** - Avisa outros membros caso marquem você")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_jogos = new MessageEmbed()
