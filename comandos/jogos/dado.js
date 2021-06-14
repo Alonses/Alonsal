@@ -8,16 +8,16 @@ module.exports = async({message, args}) => {
 
     if(args.length > 0){
 
-        args[0] = parseInt(args[0])
-        
-        if(typeof args[1] !== "undefined"){
-            args[1] = parseInt(args[1])
+        if(isNaN(parseInt(args[0]))){
+            message.channel.send(`:warning: ${message.author} informe **apenas números** para a quantidade de dados e número de faces.`);
+            return
+        }
 
-            if(isNaN(args[0]) || isNaN(args[1])){
-                message.channel.send(`:warning: ${message.author} informe apenas números para a quantidade e faces dos dados.`);
+        if(typeof args[1] !== "undefined")
+            if(isNaN(parseInt(args[1]))){
+                message.channel.send(`:warning: ${message.author} informe **apenas números** para a quantidade de dados e número de faces.`);
                 return
             }
-        }
         
         if(args[0] > 50){
             message.channel.send(`:warning: ${message.author} não é possivel rodar mais que 50 dados ao mesmo tempo.`);
