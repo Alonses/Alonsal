@@ -12,13 +12,13 @@ module.exports = async({message, args}) => {
     const embed_diversao = new MessageEmbed()
     .setTitle('Comandos de Diversão :zany_face:')
     .setColor(0x29BB8E)
-    .setDescription(":innocent: **`.apaz`** | **`.apz`** - União\n:yum: **`.asfiha`** | **`.asf`** - Servidos?\n:rage: **`.abriga`** | **`.ab`** - Porradaria!\n:cow: **`.agado @Alonsal`** | **`.aga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`.amor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`.abaidu`** | **`.adu`** - Louvado seja!\n:chess_pawn: **`.apiao`** | **`.api`** - Roda o pião Dona Maria!\n:blue_book: **`.acuri`** | **`.ac`** - Uma curiosidade aleatória\n:black_joker: **`.ajoke`** | **`.aj`** - Invoca uma piada\n:clown: **`.acazalbe`** | **`.acaz`** - Cazalbe!")
+    .setDescription(":innocent: **`.apaz`** | **`.apz`** - União\n:yum: **`.asfiha`** | **`.asf`** - Servidos?\n:rage: **`.abriga`** | **`.ab`** - Porradaria!\n:cow: **`.agado @Alonsal`** | **`.aga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`.amor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`.abaidu`** - Louvado seja!\n:chess_pawn: **`.apiao`** - Roda o pião Dona Maria!\n:blue_book: **`.acurio`** | **`.ac`** - Uma curiosidade aleatória\n:black_joker: **`.ajoke`** | **`.aj`** - Invoca uma piada\n:clown: **`.acazalbe`** | **`.acaz`** - Cazalbe!")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_utilitarios = new MessageEmbed()
     .setTitle('Comandos de Utilitários :compass:')
     .setColor(0x29BB8E)
-    .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:musical_note: **`.ash`** - Comandos de música\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Converte em morse e traduz\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Converte em binário e traduz\n:arrow_backward: **`.arev Alonso`** - Inverte o texto digitado\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:clock1230: **`.ahora`** | **`.aho`** - Mostra a hora")
+    .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte ou desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:clock1230: **`.ahora`** - Mostra a hora")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_jogos = new MessageEmbed()
@@ -90,7 +90,7 @@ module.exports = async({message, args}) => {
             aguarda_reacao(mensagem)
         })
         .catch(collected => {
-            message.reply('Você não utilizou o menu, envie `.ah` caso queira navegar novamente');
+            message.reply('Finalizei o menu, envie `.ah` caso queira navegar novamente');
         });
 
         limpa_reacoes = setTimeout(() => {
