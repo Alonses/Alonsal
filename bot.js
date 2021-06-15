@@ -5,8 +5,8 @@ const { token, prefix, local_server, local_comando, ids_ignorados } = require('.
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 1843;
-usos_anterior = 1843;
+usos = 2064;
+usos_anterior = 2064;
 
 const talkedRecently = new Set();
 const usuarios_inativos = new Set();
@@ -52,7 +52,7 @@ client.on('message', (message) => {
         return
     }
 
-    if(content.includes("<@")){
+    if(content.includes("<@") && (!content.includes(".aga") || !content.includes(".amor"))){
         let requisicao_auto = 1
         const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto})
 
