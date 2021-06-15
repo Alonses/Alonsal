@@ -17,31 +17,31 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
         return
     }
 
-    if(args[0] == "ms" || args[0] == "me" || args[0] == "jg" || args[0] == "op"){
+    if(args[0] === "ms" || args[0] === "me" || args[0] === "jg" || args[0] === "op"){
         
         let faixa = 0;
         let contador = 0;
         let faixas_selecionadas = 0;
         let alvo = "musicas"
 
-        if(args[0] == "me")
+        if(args[0] === "me")
             alvo = "memes"
         
-        if(args[0] == "jg")
+        if(args[0] === "jg")
             alvo = "trilhas"
 
-        if(args[0] == "op")
+        if(args[0] === "op")
             alvo = "classicos"
 
         if(typeof args[1] != "undefined"){ // Usado para coletar o número de faixas que serão adicionadas de uma vez
             faixas_selecionadas = parseInt(args[1]);
             
             if(faixas_selecionadas > 10){
-                if(args[0] == "ms")
+                if(args[0] === "ms")
                     message.channel.send(`${message.author} posso escolher até 10 músicas aleatórias por vez, informe um número menor :P`);
-                else if(args[0] == "me")
+                else if(args[0] === "me")
                     message.channel.send(`${message.author} posso escolher até 10 músicas de memes aleatórias por vez, informe um número menor :P`);
-                else if(args[0] == "jg")
+                else if(args[0] === "jg")
                     message.channel.send(`${message.author} posso escolher até 10 trilhas sonoras aleatórias por vez, informe um número menor :P`);
                 else
                     message.channel.send(`${message.author} posso escolher até 10 músicas clássicas aleatórias por vez, informe um número menor :P`);
@@ -55,12 +55,12 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
             }
         }
 
-        if(typeof args[1] == "undefined")
-            if(args[0] == "ms")
+        if(typeof args[1] === "undefined")
+            if(args[0] === "ms")
                 message.channel.send("Escolhendo uma música aleatória");
-            else if(args[0] == "me")
+            else if(args[0] === "me")
                 message.channel.send("Escolhendo uma zueira aleatória");
-            else if(args[0] == "jg")
+            else if(args[0] === "jg")
                 message.channel.send("Escolhendo uma trilha sonora aleatória");
             else
                 message.channel.send("Escolhendo uma composição clássica aleatória");
@@ -94,19 +94,19 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 message.channel.send(`${message.author} `+ faixas_selecionadas + " músicas clássicas foram adicionadas automaticamente na playlist, use `.aspl` para ver elas.");
         }
 
-        if(faixas_selecionadas == 0 && queue_local.length > 1)
+        if(faixas_selecionadas === 0 && queue_local.length > 1)
             message.channel.send(`:cd: Faixa aleatória adicionada a fila`)
 
         playlists.set(id_canal, queue_local)
 
-        if(_ativo == 0){
+        if(_ativo === 0){
             message.member.voice.channel.join()
             .then(connect => {
 
                 connection = connect;
                 atividade_bot.set(id_canal, 1)
 
-                if(args[0] != "op")
+                if(args[0] !== "op")
                     message.channel.send("Ok, som na caixa DJ :sunglasses: :metal:")
                 else
                     message.channel.send("Ok, aprecie com moderação :musical_note:")
