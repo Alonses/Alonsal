@@ -52,7 +52,7 @@ client.on('message', (message) => {
         return
     }
 
-    if(content.includes("<@") && (!content.includes(".aga") || !content.includes(".amor"))){
+    if(content.includes("<@") && (!content.includes(".aga") && !content.includes(".amor"))){
         let requisicao_auto = 1
         const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto})
 
