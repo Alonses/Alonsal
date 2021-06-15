@@ -1,23 +1,23 @@
-module.exports = async function({client, message, args, playlists, id_canal, repeteco, feedback_faixa, nome_faixas, atividade_bot, tocar}){
+module.exports = async function({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar}){
 
     repeteco_ = repeteco.get(id_canal)
     feedback = feedback_faixa.get(id_canal)
     queue_local = playlists.get(id_canal)
 
-    if(message.content == ".asrs" && message.author.id == "665002572926681128"){
+    if(message.content === ".asrs" && message.author.id === "665002572926681128"){
         
         await playlists.set(id_canal, [])
         await nome_faixas.set(id_canal, [])
         await repeteco.set(id_canal, 0)
         await atividade_bot.set(id_canal, 0)
 
-        tocar(message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, "end")
+        tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end")
         message.channel.send(':recycle: Reiniciando as configs Alonsais para músicas e playlists')
         return
     }
     
-    if(message.content == ".asrp"){
-        if(repeteco_ == 0){
+    if(message.content === ".asrp"){
+        if(repeteco_ === 0){
             await repeteco.set(id_canal, 1)
             message.channel.send(":repeat: Repeteco ativado, use `.asrp` novamente para desativar.")
 
@@ -33,10 +33,10 @@ module.exports = async function({client, message, args, playlists, id_canal, rep
         return
     }
 
-    if(message.content == ".asfd"){
+    if(message.content === ".asfd"){
         msg = ":loudspeaker: Irei anunciar as faixas que começarem a tocar"
 
-        if(feedback == 0)
+        if(feedback === 0)
             await feedback_faixa.set(id_canal, 1)
         else{
             await feedback_faixa.set(id_canal, 0)
