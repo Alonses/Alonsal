@@ -70,11 +70,11 @@ module.exports = async ({client, message, args}) => {
         require('./random')({client, message, args, playlists, atividade_bot, feedback_faixa, id_canal})
         return
     }else if(message.content == ".asrs" || message.content == ".asfd" || message.content == ".asrp"){
-        require('./organiza')({client, message, args, playlists, id_canal, repeteco, feedback_faixa, nome_faixas, atividade_bot, tocar})
+        require('./organiza')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar})
         return
     }
 
-    if(message.content == ".as"){
+    if(message.content === ".as"){
         message.channel.send("Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`")
         return
     }
@@ -117,7 +117,7 @@ module.exports = async ({client, message, args}) => {
                     tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
                     
                     tempo_c = tempo.split(":")
-                    if(tempo_c[0] == "00")
+                    if(tempo_c[0] === "00")
                         tempo = tempo.replace("00:", "")
                     
                     const embed = new Discord.MessageEmbed()
@@ -133,11 +133,11 @@ module.exports = async ({client, message, args}) => {
         }
     }
 
-    if(typeof link != "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
+    if(typeof link !== "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
         info = await ytdl.getInfo(link)
         .catch(err => { message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);});
 
-        if(typeof info != "undefined")
+        if(typeof info !== "undefined")
             queue_local.push(link)
         else
             return
@@ -149,8 +149,8 @@ module.exports = async ({client, message, args}) => {
     ativo_att = atividade_bot.get(id_canal)
 
     // Toca a url informada
-    if(ativo_att == 0){
+    if(ativo_att === 0){
         message.channel.send("Ok, som na caixa DJ :sunglasses: :metal:");
-        tocar(message, client, args, playlists, atividade_bot, repeteco, feedback_faixa)
+        tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa)
     }
 }

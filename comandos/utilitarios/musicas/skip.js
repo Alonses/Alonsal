@@ -1,17 +1,17 @@
 module.exports = async function({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal}){
 
-    queue_local = playlists.get(id_canal)
-    queue_faixas = nome_faixas.get(id_canal)
+    queue_local = playlists.get(id_canal);
+    queue_faixas = nome_faixas.get(id_canal);
 
-    if(typeof queue_faixas == "undefined")
-        queue_faixas = []
+    if(typeof queue_faixas === "undefined")
+        queue_faixas = [];
 
-    var pular_para
+    let pular_para;
 
     if(queue_local.length > 0){
-        if(args[0] != "all"){
+        if(args[0] !== "all"){
 
-            if(typeof args[0] != "undefined"){
+            if(typeof args[0] !== "undefined"){
                 pular_para = parseInt(args[0])
                 
                 if(pular_para == 1){
@@ -30,7 +30,8 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                         queue_local.shift()
                         queue_faixas.shift()
 
-                        if(repeteco.get(id_canal) == 1 && !queue_local.includes(faixa_atual) && i != pular_para - 1){
+                        // Insere novamente as faixas na playlist em caso de skip com a repetição ativa
+                        if(repeteco.get(id_canal) === 1 && !queue_local.includes(faixa_atual) && i !== pular_para - 1){
                             queue_local.push(faixa_atual)
                             queue_faixas.push(nome_faixa)
                         }
@@ -47,20 +48,20 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 queue_faixas.shift()
             }
 
-            if(repeteco.get(id_canal) == 1){
+            if(repeteco.get(id_canal) === 1){
                 queue_local.push(faixa_atual)
                 queue_faixas.push(nome_faixa)
             }
 
-            if(queue_local.length > 0 && typeof pular_para != "number")
+            if(queue_local.length > 0 && typeof pular_para !== "number")
                 message.channel.send(":fast_forward: Pulando para a próxima faixa")
             
             if(queue_local.length > 0){
                 atividade_bot.set(id_canal, 0)
-                tocar(message, client, args, playlists, atividade_bot, repeteco, feedback_faixa)
-            }else if(repeteco.get(id_canal) != 1){
+                tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa)
+            }else if(repeteco.get(id_canal) !== 1){
                 message.channel.send(":free: Playlist finalizada!");
-                tocar(message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, "end")
+                tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end")
             }
             
             return
@@ -73,11 +74,11 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 await repeteco.set(id_canal, 0)
                 await atividade_bot.set(id_canal, 0)
                 
-                tocar(message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, "end")
+                tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end")
                 return
             }
         }
-    }else if(message.content == ".assk"){
+    }else if(message.content === ".assk"){
         message.channel.send("Inicie alguma música com `.as url` ou `.asra` para poder pular.");
         return
     }

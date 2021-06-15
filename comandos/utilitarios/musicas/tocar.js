@@ -1,19 +1,21 @@
 const Discord = require('discord.js')
 const ytdl = require('ytdl-core');
 const getThumb = require('video-thumbnail-url');
+const skip = require('./skip');
 
-if(typeof requisicoes == "undefined")
+if(typeof requisicoes === "undefined")
     requisicoes = []
 
-if(typeof requisicao_ativa == "undefined")
+if(typeof requisicao_ativa === "undefined")
     requisicao_ativa = 0
 
-module.exports = async (message, client, args, playlists, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
-    
+module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
     let Vchannel = message.member.voice.channel
     let connection = await Vchannel.join()
-    
+    let feedback_f = 1;
+    let queue_local = [];
+    let repeteco_ = 0;
     if(!Vchannel){
         await message.channel.send('Entre em um canal de voz p/ utilizar estes comandos')
         return
@@ -23,28 +25,22 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
     id_canal = id_canal.toString()
     cond_auto = "init"
 
-    if(condicao_auto == "end" && typeof condicao_auto != "undefined")
+    if(condicao_auto === "end" && typeof condicao_auto !== "undefined")
         cond_auto = "end"
 
     if(typeof repeteco != "undefined")
         repeteco_ = repeteco.get(id_canal)
-    else
-        repeteco_ = 0
 
-    if(typeof feedback_faixa != "undefined")
+    if(typeof feedback_faixa !== "undefined")
         feedback_f = feedback_faixa.get(id_canal)
-    else
-        feedback_f = 1
     
-    if(cond_auto != "end")
+    if(cond_auto !== "end")
         queue_local = playlists.get(id_canal)
-    else
-        queue_local = []
 
-    if(condicao_auto == "updt") // Utilizado para atualizar os valores
+    if(condicao_auto === "updt") // Utilizado para atualizar os valores
         return
     
-    if(cond_auto != "end"){
+    if(cond_auto !== "end"){
         if(!ytdl.validateURL(queue_local[0])){
             await message.channel.send('Informe um link adequado')
             client.queue.shift()
@@ -53,13 +49,13 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
         }
     }
 
-    if(requisicao_ativa == 0)
+    if(requisicao_ativa === 0)
         tocar_faixa(id_canal)
     else
         requisicoes.push(id_canal)
 
     function requisita(){ // Fila de requisições para serem processadas
-        if(requisicao_ativa == 0){
+        if(requisicao_ativa === 0){
             tocar_faixa(requisicoes[0])
             requisicoes.shift()
         }
@@ -68,18 +64,27 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
     function tocar_faixa(id_canal){
         atividade_bot.set(id_canal, 1)
 
-        if(typeof inativo != "undefined") // Desativa o desligamento
+        if(typeof inativo !== "undefined") // Desativa o desligamento
             clearTimeout(inativo);
 
-        let music = ''
+        let music;
+        let faixa_atual;
+        let queue_interna;
+        let faixa_interna = [];
 
-        if(cond_auto != "end"){
-            requisicao_ativa = 1
+        if(cond_auto !== "end"){
+            requisicao_ativa = 1;
 
-            queue_interna = playlists.get(id_canal)
-            music = ytdl(queue_interna[0])
-
-            // message.channel.send(":tools: Tentando tocar: "+ queue_interna[0])
+            queue_interna = playlists.get(id_canal);
+            music = ytdl(queue_interna[0]);
+          
+            if(typeof nome_faixas !== "undefined" && nome_faixas.get(id_canal) !== 1){
+                faixa_interna = nome_faixas.get(id_canal);
+                if(typeof faixa_interna !== "undefined")
+                    faixa_atual = faixa_interna[0];
+                else
+                    faixa_interna = []
+            }
         }
 
         let dispatcher = connection.play(music)
@@ -91,25 +96,32 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
                 requisita()
         }, 1000)
 
-        if(cond_auto == "end")
+        if(cond_auto === "end")
             dispatcher.end()
 
-        if(cond_auto != "end"){
-            if(feedback_f == 1 && (repeteco_ == 0 || queue_interna.length > 5))
+        if(cond_auto !== "end"){
+            if(feedback_f === 1 && (repeteco_ === 0 || queue_interna.length > 5))
             ytdl.getInfo(queue_interna[0]).then(info => {
                 getThumb(queue_interna[0]).then(thumb_url => {
+                    
+                    faixa_atual = info.videoDetails.title;
+
+                    faixa_interna[0] = faixa_atual;
+                    nome_faixas.set(id_canal, faixa_interna);
+
+                    // console.log(nome_faixas.get(id_canal))
 
                     segundos = info.videoDetails.lengthSeconds
                     tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
                     
                     tempo_c = tempo.split(":")
-                    if(tempo_c[0] == "00")
+                    if(tempo_c[0] === "00")
                         tempo = tempo.replace("00:", "")
 
                     const embed = new Discord.MessageEmbed()
                     .setTitle('Começando agora :loud_sound: :notes:')
                     .setColor('#29BB8E')
-                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
+                    .setDescription(faixa_atual +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
                     .setThumbnail(thumb_url)
                     .setTimestamp();
 
@@ -119,21 +131,27 @@ module.exports = async (message, client, args, playlists, atividade_bot, repetec
         }
 
         dispatcher.on("finish", () => {
-
-            if(typeof queue_interna == "undefined")
+            
+            if(typeof queue_interna === "undefined")
                 return
             
-            if(repeteco_ == 1){
-                faixa_atual = queue_interna[0]
-                queue_interna.shift()
-                queue_interna.push(faixa_atual)
-            }else
-                queue_interna.shift()
-            
-            if(cond_auto != "end")
-                playlists.set(id_canal, queue_interna)
+            if(repeteco_ === 1){
+                let url_atual = queue_interna[0];
+                queue_interna.shift();
+                queue_interna.push(url_atual);
 
-            if(queue_interna.length > 0 && cond_auto != "end"){
+                faixa_interna.shift();
+                faixa_interna.push(faixa_atual);
+            }else{
+                queue_interna.shift()
+                faixa_interna.shift();
+            }
+
+            playlists.set(id_canal, queue_interna);
+            nome_faixas.set(id_canal, faixa_interna);
+
+            if(queue_interna.length > 0 && cond_auto !== "end"){
+
                 setTimeout(() => {
                     requisicoes.push(id_canal)
                     requisita()
