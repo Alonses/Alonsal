@@ -3,8 +3,8 @@ const tocar = require('./tocar.js')
 
 module.exports = async function({client, message, args, playlists, nome_faixas, atividade_bot, feedback_faixa, id_canal}){
 
-    queue_local = playlists.get(id_canal)
-    _ativo = atividade_bot.get(id_canal)
+    let queue_local = playlists.get(id_canal)
+    let _ativo = atividade_bot.get(id_canal)
 
     if(typeof queue_local == "undefined")
         queue_local = []
@@ -19,26 +19,19 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
 
     if(args[0] == "ms" || args[0] == "me" || args[0] == "jg" || args[0] == "op"){
         
-        var faixa = 0;
-        var contador = 0;
-        var faixas_selecionadas = 0;
-        alvo = "musicas"
-        num_caso = 122
+        let faixa = 0;
+        let contador = 0;
+        let faixas_selecionadas = 0;
+        let alvo = "musicas"
 
-        if(args[0] == "me"){
+        if(args[0] == "me")
             alvo = "memes"
-            num_caso = 38
-        }
         
-        if(args[0] == "jg"){
+        if(args[0] == "jg")
             alvo = "trilhas"
-            num_caso = 49
-        }
 
-        if(args[0] == "op"){
+        if(args[0] == "op")
             alvo = "classicos"
-            num_caso = 32
-        }
 
         if(typeof args[1] != "undefined"){ // Usado para coletar o número de faixas que serão adicionadas de uma vez
             faixas_selecionadas = parseInt(args[1]);
@@ -56,7 +49,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 return;
             }
 
-            if(queue_local.length >= 20){
+            if(queue_local.length > 20){
                 message.channel.send(`:minidisc: ${message.author} Albúm completo! Vamos ouvir todas essas faixas antes de adicionar outras? :P`);
                 return;
             }
@@ -73,10 +66,8 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 message.channel.send("Escolhendo uma composição clássica aleatória");
 
         do{
-            faixa = 1 + Math.round(num_caso * Math.random())
+            faixa = 1 + Math.round((faixas[alvo].length - 1) * Math.random())
             
-            faixa = faixa.toString()
-
             if(faixas_selecionadas > 0){
                 if(!queue_local.includes(faixas[alvo][faixa]) && faixas[alvo][faixa] != null){
                     queue_local.push(faixas[alvo][faixa]);
