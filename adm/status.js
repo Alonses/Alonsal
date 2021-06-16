@@ -4,12 +4,12 @@ const { MessageEmbed } = require('discord.js')
 module.exports = async function({client}){
 
     const embed = new MessageEmbed()
-    .setTitle('Caldeiras aquecidas')
+    .setTitle(':steam_locomotive: Caldeiras aquecidas')
     .setColor(0x29BB8E)
     .addFields(
         { name: ':globe_with_meridians: **Servidores**', value: "**Ativo em: **`"+ client.guilds.cache.size +"`", inline: true },
         { name: ':card_box: **Canais**', value: "**Ativo em: **`"+ client.channels.cache.size +"`", inline: true },
-        { name: ':busts_in_silhouette: **Usuários**', value: "**Ativo em: **`"+ client.users.cache.size +"`", inline: true },
+        { name: ':busts_in_silhouette: **Usuários**', value: "**Conhecidos: **`"+ client.users.cache.size +"`", inline: true },
     )
     .addField(':white_small_square: Versão', '`'+ version +'`', false)
     .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");

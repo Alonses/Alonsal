@@ -1,8 +1,14 @@
 const { MessageEmbed } = require('discord.js');
 const { version } = require('../../config.json');
 
-module.exports = async({message, args}) => {
+module.exports = async({client, message, args}) => {
     
+    function emoji(id){
+        return client.emojis.cache.get(id).toString();
+    }
+
+    emoji_pula = emoji('854761681917575198')
+
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
     .setColor(0x29BB8E)
@@ -24,7 +30,7 @@ module.exports = async({message, args}) => {
     const embed_jogos = new MessageEmbed()
     .setTitle('Comandos de Jogos :golf:')
     .setColor(0x29BB8E)
-    .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada 10 16`** - Roda um ou vários dados com várias faces")
+    .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada 10 16`** - Roda um ou vários dados com várias faces\n"+ emoji_pula +" **`.apula`** | **`.apredios`** - Jogo do Pula Prédios!")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_manutencao = new MessageEmbed()
