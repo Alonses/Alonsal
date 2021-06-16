@@ -7,7 +7,7 @@ module.exports = async({client, message, args}) => {
         return client.emojis.cache.get(id).toString();
     }
 
-    emoji_pula = emoji('854761681917575198')
+    emoji_pula = emoji('824127093751283722')
 
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
