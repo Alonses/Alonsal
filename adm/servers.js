@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
+const { id_canais } = require('../config.json');
 
-module.exports = async function({client, caso, guild, local_server}){
+module.exports = async function({client, caso, guild}){
 
     var ocasiao = "> Server update ( New )";
     var cor = 0x29BB8E;
@@ -18,5 +19,5 @@ module.exports = async function({client, caso, guild, local_server}){
         .setDescription(":globe_with_meridians: (ID) Server: `" + `${guild.id}` + "`\n:label: Server name: `" + `${guild.name}` + "`\n\n:busts_in_silhouette: Members: `" + `${qtd_users}` + "`")
         .setTimestamp();
 
-    client.channels.cache.get(local_server).send(embed_sv);
+    client.channels.cache.get(id_canais[0]).send(embed_sv);
 }
