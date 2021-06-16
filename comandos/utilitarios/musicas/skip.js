@@ -1,4 +1,4 @@
-module.exports = async function({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal}){
+module.exports = async ({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal}) => {
 
     queue_local = playlists.get(id_canal);
     queue_faixas = nome_faixas.get(id_canal);

@@ -8,7 +8,7 @@ const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?key=";
 
 const meses = ['', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
-module.exports = async({message, args}) => {
+module.exports = async ({message, args}) => {
 
     let pesquisa = "";
 

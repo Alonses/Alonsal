@@ -1,6 +1,6 @@
 const ytdl = require('ytdl-core')
 
-module.exports = async function({message, args, playlists, nome_faixas, id_canal}){
+module.exports = async ({message, args, playlists, nome_faixas, id_canal}) => {
 
     if(typeof playlists != "undefined"){
 

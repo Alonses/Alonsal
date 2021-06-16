@@ -1,4 +1,4 @@
-module.exports = async({message}) => {
+module.exports = async ({message}) => {
 
     message.channel.send(`Reprodução solicitada por [ ${message.author} ]`);
 

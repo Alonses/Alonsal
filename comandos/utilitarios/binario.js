@@ -1,7 +1,7 @@
 const { MessageEmbed }  = require('discord.js');
 const binario = require('./binario.json');
 
-module.exports = async function({message, args}) {
+module.exports = async ({message, args}) => {
 
     let texto;
     let ordena = "";

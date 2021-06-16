@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { id_canais } = require('../config.json');
 
-module.exports = async function({client, caso, guild}){
+module.exports = async ({client, caso, guild}) => {
 
     var ocasiao = "> Server update ( New )";
     var cor = 0x29BB8E;

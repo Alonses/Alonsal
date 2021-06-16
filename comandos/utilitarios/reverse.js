@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 
-module.exports = async function({message, args}){
+module.exports = async ({message, args}) => {
 
     if(args.length != 0){
         ordena = ""

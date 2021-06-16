@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const morse = require('./morse.json');
 
-module.exports = async function({message, args}) {
+module.exports = async ({message, args}) => {
 
     let ordena = "";
     let aviso = "";

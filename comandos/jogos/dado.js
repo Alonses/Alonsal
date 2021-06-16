@@ -1,4 +1,4 @@
-module.exports = async({message, args}) => {
+module.exports = async ({message, args}) => {
     let dado = []; 
     let resultado = "";
     let att_auto = 0;

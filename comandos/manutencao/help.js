@@ -1,14 +1,15 @@
 const { MessageEmbed } = require('discord.js');
 const { version } = require('../../config.json');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
 
-module.exports = async({client, message, args}) => {
+module.exports = async ({client, message, args}) => {
     
     function emoji(id){
         return client.emojis.cache.get(id).toString();
     }
 
-    emoji_pula = emoji('824127093751283722');
-    emoji_rainha = emoji('854171515641659402');
+    emoji_pula = emoji(emojis.pula);
+    emoji_rainha = emoji(emojis.elizabeth);
 
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
