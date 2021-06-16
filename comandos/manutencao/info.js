@@ -1,7 +1,7 @@
 const { MessageEmbed }= require('discord.js');
 const { version } = require('../../config.json');
 
-module.exports = async ({message, args}) => {
+module.exports = async ({client, message, args}) => {
 
     function emoji(id){
         return client.emojis.cache.get(id).toString();
