@@ -1,4 +1,4 @@
-module.exports = async function({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar}){
+module.exports = async ({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar}) => {
 
     repeteco_ = repeteco.get(id_canal)
     feedback = feedback_faixa.get(id_canal)

@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = async({message}) => {
+module.exports = async ({message}) => {
   
     const embed = new MessageEmbed()
     .setTitle('Comandos Musicais :musical_note:')

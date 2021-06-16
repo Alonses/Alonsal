@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core')
+const { emojis } = require('../../../arquivos/json/text/emojis.json');
 
-module.exports = async function({client, message, playlists, nome_faixas, repeteco, trava_pl}){
+module.exports = async ({client, message, playlists, nome_faixas, repeteco, trava_pl}) => {
 
     if(typeof playlists.get(id_canal) != "undefined")
         queue_local = playlists.get(id_canal)
@@ -23,8 +24,10 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
     if(trava_pl_l === 0){
         trava_pl.set(id_canal, 1)
         
+        let carregando_pl = client.emojis.cache.get(emojis.carregando).toString();
+
         if(queue_local.length > 0){
-            const m = await message.channel.send(":control_knobs: Ordenando as músicas da playlist, aguarde um pouco :P");
+            const m = await message.channel.send(carregando_pl +" Ordenando as músicas da playlist, aguarde um pouco :P"+ carregando_pl);
 
             let faixas_demonst = "";
 
@@ -39,9 +42,6 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
             // Controla a posicao que irá começar a buscar novamente
             let indice_seg = 0;
             
-            // console.log("URLs: "+ queue_local.length)
-            // console.log("Faixas: "+ queue_faixas.length)
-
             while(queue_faixas.length > queue_local.length){
                 queue_faixas.shift();
             }
@@ -72,7 +72,7 @@ module.exports = async function({client, message, playlists, nome_faixas, repete
             const embed = new Discord.MessageEmbed()
             .setTitle(':radio: Playlist atual de '+ message.guild.name)
             .setColor(0x29BB8E)
-            .setThumbnail('https://maxcdn.icons8.com/Color/PNG/512/Music/playlist-512.png')
+            .setThumbnail('https://images-ext-1.discordapp.net/external/3IKYR-a4akS8XRmEhkD8hQK0JaXcKatEckJm1gaVaJc/https/i.gifer.com/ZTOH.gif')
             .setDescription("> **Tocando agora** :notes:\n **`1`** - [ **`"+ queue_faixas[0] +"`** ]"+ faixas_demonst)
             .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }))
             .setTimestamp();

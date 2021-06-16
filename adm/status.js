@@ -1,7 +1,7 @@
 const { id_canais, version } = require('../config.json')
 const { MessageEmbed } = require('discord.js')
 
-module.exports = async function({client}){
+module.exports = async ({client}) => {
 
     const embed = new MessageEmbed()
     .setTitle(':steam_locomotive: Caldeiras aquecidas')
@@ -14,7 +14,8 @@ module.exports = async function({client}){
     .addField(':white_small_square: Versão', '`'+ version +'`', false)
     .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
     
-    client.channels.cache.get(id_canais[2]).send(embed); // Avisa que está online em um canal
+    if(client.user.id !== "846472827212136498")
+        client.channels.cache.get(id_canais[2]).send(embed); // Avisa que está online em um canal
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [

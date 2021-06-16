@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js')
 
-module.exports = async function({message, args}) {
+module.exports = async ({message, args}) => {
     let content = '';
     let counter = 0;
 

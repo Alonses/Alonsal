@@ -1,6 +1,6 @@
 const { messages } = require("../../arquivos/json/text/gado.json");
 
-module.exports = async({message, args}) => {
+module.exports = async ({message, args}) => {
 
     if(typeof args[0] != "undefined" && args[0].includes("<@")){
         const num = Math.round((messages.length - 1) * Math.random());

@@ -1,13 +1,10 @@
-const { MessageEmbed }= require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { version } = require('../../config.json');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = async ({client, message, args}) => {
 
-    function emoji(id){
-        return client.emojis.cache.get(id).toString();
-    }
-
-    emoji_rainha = emoji('854171515641659402');
+    emoji_rainha = client.emojis.cache.get(emojis.elizabeth).toString();
 
     const embed = new MessageEmbed()
     .setTitle('Patinando entre as linhas bugadas :man_golfing:')

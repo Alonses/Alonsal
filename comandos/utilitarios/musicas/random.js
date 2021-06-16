@@ -1,7 +1,7 @@
 const faixas = require('./faixas.json');
 const tocar = require('./tocar.js')
 
-module.exports = async function({client, message, args, playlists, nome_faixas, atividade_bot, feedback_faixa, id_canal}){
+module.exports = async ({client, message, args, playlists, nome_faixas, atividade_bot, feedback_faixa, id_canal}) => {
 
     let queue_local = playlists.get(id_canal)
     let _ativo = atividade_bot.get(id_canal)

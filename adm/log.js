@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { id_canais } = require('../config.json');
 
-module.exports = async function({client, message, content}){
+module.exports = async ({client, message, content}) => {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const d = new Date();

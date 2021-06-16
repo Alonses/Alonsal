@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core')
 const getThumb = require('video-thumbnail-url');
 
-module.exports = async function({message, playlists}){
+module.exports = async ({message, playlists}) => {
     
     queue_local = playlists.get(id_canal)
     dados_np = await ytdl.getInfo(queue_local[0]).then(info => info.videoDetails);

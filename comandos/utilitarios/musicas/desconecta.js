@@ -1,4 +1,4 @@
-module.exports = async function({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot}){
+module.exports = async ({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot}) => {
     
     message.member.voice.channel.leave()
     message.channel.send("Até mais :stuck_out_tongue_winking_eye: :call_me: ")
