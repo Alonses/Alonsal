@@ -1,7 +1,20 @@
+const { id_canais, version } = require('../config.json')
+const MessageEmbed = require('discord.js')
+
 module.exports = async function({client}){
 
-    console.log(`Caldeiras aquecidas!`);
-    console.log(`Ativo para ${client.users.cache.size} usuários em ${client.channels.cache.size} canais em ${client.guilds.cache.size} servidores diferentes!`);
+    const embed = new MessageEmbed()
+    .setTitle('Caldeiras aquecidas')
+    .setColor(0x29BB8E)
+    .addFields(
+        { name: ':globe_with_meridians: **Servidores**', value: "**Ativo em: **`"+ client.guilds.cache.size +"`", inline: true },
+        { name: ':card_box: **Canais**', value: "**Ativo em: **`"+ client.channels.cache.size +"`", inline: true },
+        { name: ':busts_in_silhouette: **Usuários**', value: "**Ativo em: **`"+ client.users.cache.size +"`", inline: true },
+    )
+    .addField(':white_small_square: Versão', '`'+ version +'`', false)
+    .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
+    
+    client.channels.cache.get(id_canais[2]).send(embed); // Avisa que está online em um canal
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [

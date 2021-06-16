@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
+const { id_canais } = require('../config.json');
 
-module.exports = async function({client, message, content, local_comando}){
+module.exports = async function({client, message, content}){
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const d = new Date();
@@ -26,5 +27,5 @@ module.exports = async function({client, message, content, local_comando}){
     .setColor(0x29BB8E)
     .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Date/time: `"+ day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year +"`");
 
-    client.channels.cache.get(local_comando).send(embed);
+    client.channels.cache.get(id_canais[1]).send(embed); // Envia o log com os comandos do usuário
 }

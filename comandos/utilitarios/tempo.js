@@ -62,7 +62,7 @@ module.exports = async({message, args}) => {
                 const cidade_encontrada = new MessageEmbed()
                 .setTitle(':boom: Tempo agora em '+ res.name + ' - '+ res.sys.country + ' '+ bandeira_pais)
                 .setColor(0x29BB8E)
-                .setDescription('**'+ tempo_atual[res.weather[0].id] +'** | '+ relogio_emoji +' **Hora local:** `'+ horario_local +'`')
+                .setDescription('**'+ tempo_atual[res.weather[0].id] +'**\n'+ relogio_emoji +'**Hora local:** `'+ horario_local +'`')
                 .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
                 .addFields(
                     { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Máxima:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Mínima:** `"+ res.main.temp_min +"°C`", inline: true },

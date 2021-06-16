@@ -6,7 +6,7 @@ module.exports = async({message, args}) => {
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
     .setColor(0x29BB8E)
-    .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos de Diversão`\n\n:compass: - `Comandos de Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Comandos de Manutenção`\n\n:musical_note: - `Comandos Musicais`\n\n:information_source: - `Informações do Alonsal`")
+    .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Comandos de Manutenção`\n\n:musical_note: - `Comandos Musicais`\n\n:information_source: - `Informações do Alonsal`")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_diversao = new MessageEmbed()

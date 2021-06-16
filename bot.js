@@ -1,33 +1,28 @@
 const { Client } = require('discord.js');
 const { existsSync } = require("fs");
-const { ping_me_gif } = require('./arquivos/json/text/ping_me.json');
-const { token, prefix, local_server, local_comando, ids_ignorados } = require('./config.json');
+const { ping_me_gif } = require('./arquivos/json/gifs/ping_me.json');
+const { token, prefix, ids_ignorados, pastas, aliases_info } = require('./config.json');
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 2152;
-usos_anterior = 2152;
+usos = 2194;
+usos_anterior = 2194;
 
 const talkedRecently = new Set();
 const usuarios_inativos = new Set();
-
-const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
-const aliases_info = [".ai", ".ainfo", ".ah", ".ahelp", ".ajuda"];
 
 client.on("ready", () => {
     require("./adm/status.js")({client});
 });
 
 client.on("guildCreate", guild => {
-    if(local_server === null) return;
     let caso = 'New';
-    require("./adm/servers.js")({client, caso, guild, local_server});
+    require("./adm/servers.js")({client, caso, guild});
 });
 
 client.on("guildDelete", guild => {
-    if(local_server === null) return;
     let caso = 'Left';
-    require("./adm/servers.js")({client, caso, guild, local_server});
+    require("./adm/servers.js")({client, caso, guild});
 });
 
 client.on('message', (message) => {
@@ -98,8 +93,7 @@ client.on('message', (message) => {
     if(usos === usos_anterior)
         message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.ah` ou `.ajuda` para ver todos os comandos.");
     else
-        if (local_comando !== null)
-            require('./adm/log.js')({client, message, content, local_comando});
+        require('./adm/log.js')({client, message, content});
 
     usos_anterior = usos;
 });
