@@ -10,11 +10,12 @@ module.exports = async ({client, message, args}) => {
 
     emoji_pula = emoji(emojis.pula);
     emoji_rainha = emoji(emojis.elizabeth);
+    emoji_bolo = emoji(emojis.bolo);
 
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
     .setColor(0x29BB8E)
-    .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Comandos de Manutenção`\n\n:musical_note: - `Comandos Musicais`\n\n:information_source: - `Informações do Alonsal`")
+    .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Manutenção do Alonsal`\n\n:musical_note: - `Comandos Musicais`\n\n:information_source: - `Informações do Alonsal`")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_diversao = new MessageEmbed()
@@ -36,16 +37,16 @@ module.exports = async ({client, message, args}) => {
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_manutencao = new MessageEmbed()
-    .setTitle('Comandos de Manutenção :tools:')
+    .setTitle('Manutenção do Alonsal :tools:')
     .setColor(0x29BB8E)
-    .setDescription(":information_source: **`.ainfo`** | **`.ai`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal")
+    .setDescription(":information_source: **`.ainfo`** | **`.ai`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal")
     .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
 
     const embed_infos = new MessageEmbed()
     .setTitle('Patinando entre as linhas bugadas :man_golfing:')
     .setColor(0x29BB8E)
     .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-    .setDescription('Este bot é patrocinado por Baidu e Renato\'s lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.\n'+ emoji_rainha +' **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal.\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\nJá fui invocado _'+ args +'_ vezes :zany_face:\n [ _Versão '+ version + '_ ]')
+    .setDescription('Este bot é patrocinado por Baidu e Renato\'s lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.\n'+ emoji_rainha +' **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal.\n'+ emoji_bolo +' **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\nJá fui invocado _'+ args +'_ vezes :zany_face:\n [ _Versão '+ version + '_ ]')
     .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
 
     const embed_musical = new MessageEmbed()
