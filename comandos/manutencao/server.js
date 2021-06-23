@@ -6,7 +6,7 @@ module.exports = async ({client, message}) => {
         return client.emojis.cache.get(id).toString();
     }
     
-    emoji_rainha = emoji('854171515641659402')
+    let emoji_rainha = emoji('854171515641659402');
 
     const embed = new MessageEmbed()
     .setColor(0x29BB8E)
@@ -16,7 +16,7 @@ module.exports = async ({client, message}) => {
     .setDescription("Um server várias utilidades, o Hub do Alonsal é uma central de informações, chega+ e se divirta!");
 
     const m = await message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`)
-    m.react('📫')
+    m.react('📫');
 
-    client.users.cache.get(message.author.id).send(embed)
+    client.users.cache.get(message.author.id).send(embed);
 }

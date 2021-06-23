@@ -33,7 +33,7 @@ module.exports = async ({message, args}) => {
             message.channel.send(`${message.author} não encontrei nada relacionado a \``+ pesquisa +`\`, tente novamente`);
         else{
             let url_hora = time_url +""+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
-            
+
             fetch(url_hora) // Buscando o horário local
             .then(response => response.json())
             .then( async res_hora => {
