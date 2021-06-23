@@ -5,8 +5,8 @@ const { token, prefix, ids_ignorados, pastas, aliases_info } = require('./config
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 2194;
-usos_anterior = 2194;
+usos = 2203;
+usos_anterior = 2203;
 
 const talkedRecently = new Set();
 const usuarios_inativos = new Set();
@@ -37,31 +37,31 @@ client.on('message', (message) => {
                 msg.delete({ timeout: 5000 });
             })
 
-            return
+            return;
         }
     }
 
     if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
-        message.channel.send(ping_me_gif[ping_me])
-        return
+        message.channel.send(ping_me_gif[ping_me]);
+        return;
     }
 
     if(content.includes("<@") && (!content.includes(".aga") && !content.includes(".amor"))){
-        let requisicao_auto = 1
-        const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto})
+        let requisicao_auto = 1;
+        const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto});
 
         if(afk)
-            return
+            return;
     }
 
     // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
-    if (!content.startsWith(prefix) || message.author.bot) return
-    if (!message.channel.name) return
+    if (!content.startsWith(prefix) || message.author.bot) return;
+    if (!message.channel.name) return;
     
     if(talkedRecently.has(message.author.id) && !ids_ignorados.includes(message.author.id)){
         message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
-        return
+        return;
     }else{
         talkedRecently.add(message.author.id);
         setTimeout(() => {
@@ -86,7 +86,7 @@ client.on('message', (message) => {
                 args.push(usos);
 
             require(path)({ client, message, args, usuarios_inativos});
-            break
+            break;
         }
     }
 

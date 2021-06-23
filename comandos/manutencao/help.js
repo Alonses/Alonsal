@@ -8,9 +8,9 @@ module.exports = async ({client, message, args}) => {
         return client.emojis.cache.get(id).toString();
     }
 
-    emoji_pula = emoji(emojis.pula);
-    emoji_rainha = emoji(emojis.elizabeth);
-    emoji_bolo = emoji(emojis.bolo);
+    let emoji_pula = emoji(emojis.pula);
+    let emoji_rainha = emoji(emojis.elizabeth);
+    let emoji_bolo = emoji(emojis.bolo);
 
     const embed_inicial = new MessageEmbed()
     .setTitle('Boas vindas ao Ajuda! :boomerang:')
