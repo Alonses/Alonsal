@@ -45,9 +45,8 @@ module.exports = async ({message, args}) => {
                 let minutos = ("0" + horario_local.getMinutes()).substr(-2); // Preserva o digito 0
                 let hora = ("0" + horario_local.getHours()).substr(-2); // Preserva o digito 0
                 let dia = horario_local.getDate();
-                let mes = horario_local.getMonth() + 1;
-
-                mes = meses[mes];
+                
+                mes = meses[horario_local.getMonth() + 1];
                 hours = horario_local.getHours();
 
                 hours = hours % 12;

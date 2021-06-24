@@ -5,8 +5,8 @@ const { token, prefix, ids_ignorados, pastas, aliases_info } = require('./config
 const commands = require('./comandos.json');
 const client = new Client();
 
-usos = 2203;
-usos_anterior = 2203;
+usos = 2206;
+usos_anterior = 2206;
 
 const talkedRecently = new Set();
 const usuarios_inativos = new Set();

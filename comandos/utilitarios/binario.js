@@ -22,8 +22,10 @@ module.exports = async ({message, args}) => {
         if(tipo_texto == 0){
             texto = entrada.split('');
             for(let carac = 0; carac < texto.length; carac++){
-                if(binario[texto[carac]])
-                    texto[carac] = binario[texto[carac]] + " ";
+                texto[carac] = "0"+ texto[carac].charCodeAt().toString(2);
+
+                if(texto[carac + 1] != undefined)
+                    texto[carac] += " ";
             }
         }else{
             for(let carac = 0; carac < texto.length; carac++){
