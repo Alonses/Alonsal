@@ -27,7 +27,7 @@ module.exports = async ({client, message, playlists, nome_faixas, repeteco, trav
         let carregando_pl = client.emojis.cache.get(emojis.carregando).toString();
 
         if(queue_local.length > 0){
-            const m = await message.channel.send(carregando_pl +" Ordenando as músicas da playlist, aguarde um pouco :P"+ carregando_pl);
+            const m = await message.channel.send(carregando_pl +" Ordenando as músicas da playlist, aguarde um pouco :P "+ carregando_pl);
 
             let faixas_demonst = "";
 
