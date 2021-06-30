@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const ytdl = require('ytdl-core');
 const getThumb = require('video-thumbnail-url');
-const skip = require('./skip');
 
 if(typeof requisicoes === "undefined")
     requisicoes = []
@@ -11,6 +10,12 @@ if(typeof requisicao_ativa === "undefined")
 
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
+    function emoji(id){
+        return client.emojis.cache.get(id).toString();
+    }
+    
+    let emoji_dancando = emoji('852873085664362507');
+
     let Vchannel = message.member.voice.channel
     let connection = await Vchannel.join()
     let feedback_f = 1;
@@ -88,16 +93,19 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         }
 
         let dispatcher = connection.play(music)
-
+        // .catch(() => {
+        //     message.channel.send(`${message.author} `+"Não foi possível tocar o URL [ "+ queue_interna[0] +" ]");
+        // });
+    
         setTimeout(() => {
-            requisicao_ativa = 0
+            requisicao_ativa = 0;
 
             if(requisicoes.length > 0)
-                requisita()
-        }, 1000)
+                requisita();
+        }, 1000);
 
         if(cond_auto === "end")
-            dispatcher.end()
+            dispatcher.end();
 
         if(cond_auto !== "end"){
             if(feedback_f === 1 && (repeteco_ === 0 || queue_interna.length > 5))
@@ -130,6 +138,10 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             });
         }
 
+        dispatcher.on("error", () => {
+            message.channel.send(`${message.author} `+"Não foi possível tocar o URL [ "+ queue_interna[0] +" ]")
+        });
+
         dispatcher.on("finish", () => {
             
             if(typeof queue_interna === "undefined")
@@ -158,8 +170,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                 }, 1000)
                 
                 return
-            }else
+            }else{
                 atividade_bot.set(id_canal, 0)
+            
+                message.channel.send(`${message.author}`+" Estou sem faixas para tocar, bora ouvir mais? "+ emoji_dancando);
+            }
 
             inativo = setTimeout(() => {
                 message.channel.send(`${message.author} Desconectei por inatividade`+" use `.as` novamente para tocarmos algo :call_me:")
