@@ -1,82 +1,82 @@
-const Discord = require('discord.js')
-const ytdl = require('ytdl-core')
-const tocar = require('./tocar.js')
-const getThumb = require('video-thumbnail-url')
-const getyoutubelinks = require("@joshyzou/getyoutubelinks")
+const Discord = require('discord.js');
+const ytdl = require('ytdl-core');
+const tocar = require('./tocar.js');
+const getThumb = require('video-thumbnail-url');
+const getyoutubelinks = require("@joshyzou/getyoutubelinks");
 
 module.exports = async ({client, message, args}) => {
 
     if(!message.member.voice.channel){
-        message.channel.send("Entre em um canal de voz para utilizar estes comandos")
-        return
+        message.channel.send("Entre em um canal de voz para utilizar estes comandos");
+        return;
     }
 
-    let Vchannel = message.member.voice.channel
+    let Vchannel = message.member.voice.channel;
 
-    id_canal = Vchannel.id
-    id_canal = id_canal.toString()
+    id_canal = Vchannel.id;
+    id_canal = id_canal.toString();
 
     if(typeof nome_faixas == "undefined")
-        nome_faixas = new Map()
+        nome_faixas = new Map();
 
     if(typeof playlists == "undefined")
-        playlists = new Map()
+        playlists = new Map();
 
     if(typeof atividade_bot == "undefined"){
-        atividade_bot = new Map()
-        atividade_bot.set(id_canal, 0)        
+        atividade_bot = new Map();
+        atividade_bot.set(id_canal, 0);
     }
 
     if(typeof repeteco == "undefined"){
-        repeteco = new Map()
-        repeteco.set(id_canal, 0)
+        repeteco = new Map();
+        repeteco.set(id_canal, 0);
     }
     
     if(typeof feedback_faixa == "undefined"){
-        feedback_faixa = new Map()
-        feedback_faixa.set(id_canal, 1)
+        feedback_faixa = new Map();
+        feedback_faixa.set(id_canal, 1);
     }
 
     if(typeof trava_pl == "undefined"){
-        trava_pl = new Map()
-        trava_pl.set(id_canal, 0)
+        trava_pl = new Map();
+        trava_pl.set(id_canal, 0);
     }
 
-    queue_local = playlists.get(id_canal)
+    queue_local = playlists.get(id_canal);
     
     if(typeof queue_local == "undefined")
-        queue_local = []
+        queue_local = [];
     
     if(message.content.includes(".asrm")){
         if(queue_local.length > 1)
-            require('./remove')({message, args, playlists, nome_faixas, id_canal})
+            require('./remove')({message, args, playlists, nome_faixas, id_canal});
         else
-            message.channel.send("Use `.assk` para pular a faixa atual")
+            message.channel.send("Use `.assk` para pular a faixa atual");
 
-        return
-    }else if(message.content == ".asds"){
-        require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot})
-        return
+        return;
+    }else if(message.content.includes(".asds")){
+        require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot});
+        return;
     }else if(message.content.includes(".assk")){
-        require('./skip')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal})
-        return
-    }else if(message.content == ".asnp"){
-        require('./tocando')({message, playlists})
-        return
-    }else if(message.content == ".aspl"){
-        require('./playlist')({client, message, playlists, nome_faixas, repeteco, trava_pl})
-        return
+        require('./skip')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal});
+        return;
+    }else if(message.content.includes(".asnp")){
+        require('./tocando')({message, playlists});
+        return;
+    }else if(message.content.includes(".aspl")){
+        require('./playlist')({client, message, playlists, nome_faixas, repeteco, trava_pl});
+        return;
     }else if(message.content.includes(".asra")){
-        require('./random')({client, message, args, playlists, atividade_bot, feedback_faixa, id_canal})
-        return
-    }else if(message.content == ".asrs" || message.content == ".asfd" || message.content == ".asrp"){
-        require('./organiza')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar})
-        return
+        require('./random')({client, message, args, playlists, atividade_bot, feedback_faixa, id_canal});
+        return;
+    }else if(message.content.includes(".asrs") || message.content.includes(".asfd") || message.content.includes(".asrp")){
+        require('./organiza')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar});
+        return;
     }
 
     if(message.content === ".as"){
-        message.channel.send("Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`")
-        return
+        message.channel.send("Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`");
+        return;
     }
 
     var pesquisa = "";
@@ -98,7 +98,7 @@ module.exports = async ({client, message, args}) => {
             });
 
             if(typeof link == "undefined")
-                return
+                return;
 
             link = link.link;
         }else
@@ -106,19 +106,19 @@ module.exports = async ({client, message, args}) => {
         
         if(queue_local.length > 0){
             if(queue_local.includes(link)){
-                message.channel.send("Essa faixa já está tocando ou na fila, guentae!")
-                return
+                message.channel.send("Essa faixa já está tocando ou na fila, guentae!");
+                return;
             }
 
             ytdl.getInfo(link).then(info => {
                 getThumb(link).then(thumb_url => {
 
-                    segundos = info.videoDetails.lengthSeconds
-                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
+                    segundos = info.videoDetails.lengthSeconds;
+                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8);
                     
-                    tempo_c = tempo.split(":")
+                    tempo_c = tempo.split(":");
                     if(tempo_c[0] === "00")
-                        tempo = tempo.replace("00:", "")
+                        tempo = tempo.replace("00:", "");
                     
                     const embed = new Discord.MessageEmbed()
                     .setTitle(':cd: Adicionado a fila')
@@ -138,19 +138,19 @@ module.exports = async ({client, message, args}) => {
         .catch(err => { message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);});
 
         if(typeof info !== "undefined")
-            queue_local.push(link)
+            queue_local.push(link);
         else
-            return
+            return;
     }else
-        message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`)
+        message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);
         
-    playlists.set(id_canal, queue_local)
+    playlists.set(id_canal, queue_local);
 
-    ativo_att = atividade_bot.get(id_canal)
+    ativo_att = atividade_bot.get(id_canal);
 
     // Toca a url informada
     if(ativo_att === 0){
         message.channel.send("Ok, som na caixa DJ :sunglasses: :metal:");
-        tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa)
+        tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa);
     }
 }

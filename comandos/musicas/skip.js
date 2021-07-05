@@ -65,6 +65,8 @@ module.exports = async ({client, message, args, playlists, nome_faixas, repeteco
                 atividade_bot.set(id_canal, 0);
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa);
             }else if(repeteco.get(id_canal) !== 1){
+                atividade_bot.set(id_canal, 0);
+                
                 message.channel.send(":free: Playlist finalizada!");
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end");
             }
