@@ -79,7 +79,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         let faixa_interna = [];
 
         queue_interna = playlists.get(id_canal);
-        console.log("queue_interna: "+ queue_interna +"\n\n");
+        // console.log("queue_interna: "+ queue_interna +"\n\n");
 
         music = ytdl(queue_interna[0]);
 

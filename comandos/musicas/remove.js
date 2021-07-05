@@ -22,7 +22,7 @@ module.exports = async ({client, message, args, playlists, nome_faixas, repeteco
         if(rm_faixa !== 1){
             if(args[0] === "all" && queue_local.length >= 2){
                 
-                console.log("aaaaaaaa");
+                // console.log("aaaaaaaa");
 
                 let faixa_atual = queue_local[0];
                 let nome_faixa = "";
@@ -59,8 +59,8 @@ module.exports = async ({client, message, args, playlists, nome_faixas, repeteco
         playlists.set(id_canal, queue_local)
         nome_faixas.set(id_canal, nome_faixas_l)
         
-        console.log(playlists.get(id_canal));
-        console.log(nome_faixas.get(id_canal));
+        // console.log(playlists.get(id_canal));
+        // console.log(nome_faixas.get(id_canal));
         
         tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "updt");
     }

@@ -81,7 +81,7 @@ module.exports = async ({client, message, args, playlists, nome_faixas, repeteco
                 await repeteco.set(id_canal, 0);
                 await atividade_bot.set(id_canal, 0);
                 
-                console.log("playlists: "+ playlists);
+                // console.log("playlists: "+ playlists);
                 
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end");
                 return;
