@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core')
-const { emojis } = require('../../../arquivos/json/text/emojis.json');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = async ({client, message, playlists, nome_faixas, repeteco, trava_pl}) => {
 
