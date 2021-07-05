@@ -139,7 +139,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         }
 
         dispatcher.on("error", () => {
-            message.channel.send(`${message.author} `+"Não foi possível tocar o URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nVocê pode ajudar a filtrar URL's quebradas enviando uma mensagem com `.amail <url>`! :D");
+            message.channel.send(`${message.author} `+"Não foi possível tocar o URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nVocê pode ajudar a filtrar URL's quebradas enviando uma mensagem com `.amail <url>` :D");
         });
 
         dispatcher.on("finish", () => {
