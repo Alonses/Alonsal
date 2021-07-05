@@ -16,11 +16,12 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
     
     let emoji_dancando = emoji('852873085664362507');
 
-    let Vchannel = message.member.voice.channel
-    let connection = await Vchannel.join()
+    let Vchannel = message.member.voice.channel;
+    let connection = await Vchannel.join();
     let feedback_f = 1;
     let queue_local = [];
     let repeteco_ = 0;
+
     if(!Vchannel){
         await message.channel.send('Entre em um canal de voz p/ utilizar estes comandos')
         return
@@ -77,35 +78,29 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         let queue_interna;
         let faixa_interna = [];
 
+        queue_interna = playlists.get(id_canal);
+        music = ytdl(queue_interna[0]);
+
         if(cond_auto !== "end"){
             requisicao_ativa = 1;
 
-            queue_interna = playlists.get(id_canal);
-            music = ytdl(queue_interna[0]);
-          
             if(typeof nome_faixas !== "undefined" && nome_faixas.get(id_canal) !== 1){
                 faixa_interna = nome_faixas.get(id_canal);
                 if(typeof faixa_interna !== "undefined")
                     faixa_atual = faixa_interna[0];
                 else
-                    faixa_interna = []
+                    faixa_interna = [];
             }
         }
 
-        let dispatcher = connection.play(music)
-        // .catch(() => {
-        //     message.channel.send(`${message.author} `+"Não foi possível tocar o URL [ "+ queue_interna[0] +" ]");
-        // });
-    
+        let dispatcher = connection.play(music);
+        
         setTimeout(() => {
             requisicao_ativa = 0;
 
             if(requisicoes.length > 0)
                 requisita();
         }, 1000);
-
-        if(cond_auto === "end")
-            dispatcher.end();
 
         if(cond_auto !== "end"){
             if(feedback_f === 1 && (repeteco_ === 0 || queue_interna.length > 5))
@@ -117,14 +112,12 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                     faixa_interna[0] = faixa_atual;
                     nome_faixas.set(id_canal, faixa_interna);
 
-                    // console.log(nome_faixas.get(id_canal))
-
-                    segundos = info.videoDetails.lengthSeconds
-                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8)
+                    segundos = info.videoDetails.lengthSeconds;
+                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8);
                     
-                    tempo_c = tempo.split(":")
+                    tempo_c = tempo.split(":");
                     if(tempo_c[0] === "00")
-                        tempo = tempo.replace("00:", "")
+                        tempo = tempo.replace("00:", "");
 
                     const embed = new Discord.MessageEmbed()
                     .setTitle('Começando agora :loud_sound: :notes:')
@@ -136,15 +129,17 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                     message.channel.send(embed);
                 });
             });
-        }
+        }else // Encerra tudo em caso de playlist vazia
+            dispatcher.end();
 
         dispatcher.on("error", () => {
-            message.channel.send(`${message.author} `+"Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nVocê pode ajudar a filtrar URL's quebradas enviando uma mensagem com `.amail <url>` :D");
+            if(cond_auto !== "end")
+                message.channel.send(`${message.author} `+"Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nVocê pode ajudar a filtrar URL's quebradas enviando uma mensagem com `.amail <url>` :D");
         });
 
         dispatcher.on("finish", () => {
             if(typeof queue_interna === "undefined")
-                return
+                return;
             
             if(repeteco_ === 1){
                 let url_atual = queue_interna[0];
@@ -154,7 +149,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                 faixa_interna.shift();
                 faixa_interna.push(faixa_atual);
             }else{
-                queue_interna.shift()
+                queue_interna.shift();
                 faixa_interna.shift();
             }
 
@@ -164,27 +159,27 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             if(queue_interna.length > 0 && cond_auto !== "end"){
 
                 setTimeout(() => {
-                    requisicoes.push(id_canal)
-                    requisita()
-                }, 1000)
+                    requisicoes.push(id_canal);
+                    requisita();
+                }, 1000);
                 
-                return
+                return;
             }else{
-                atividade_bot.set(id_canal, 0)
+                atividade_bot.set(id_canal, 0);
             
                 message.channel.send(`${message.author}`+" Estou sem faixas para tocar, bora ouvir mais? "+ emoji_dancando);
             }
 
             inativo = setTimeout(() => {
-                message.channel.send(`${message.author} Desconectei por inatividade`+" use `.as` novamente para tocarmos algo :call_me:")
-                connection.disconnect()
+                message.channel.send(`${message.author} Desconectei por inatividade`+" use `.as` novamente para tocarmos algo :call_me:");
+                connection.disconnect();
 
-                repeteco.set(id_canal, 0)
-                atividade_bot.set(id_canal, 0)
+                repeteco.set(id_canal, 0);
+                atividade_bot.set(id_canal, 0);
             }, 180000);
-        })
+        });
     }
 
     if(!client.VConnections) client.VConnections = {}
-        client.VConnections[Vchannel.id] = connection 
+        client.VConnections[Vchannel.id] = connection
 }
