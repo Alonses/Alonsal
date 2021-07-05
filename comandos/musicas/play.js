@@ -48,11 +48,11 @@ module.exports = async ({client, message, args}) => {
         queue_local = [];
     
     if(message.content.includes(".asrm")){
-        if(queue_local.length > 1)
-            require('./remove')({message, args, playlists, nome_faixas, id_canal});
+        if(queue_local.length != 0)
+            require('./remove')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal});
         else
-            message.channel.send("Use `.assk` para pular a faixa atual");
-
+            message.channel.send(":octagonal_sign: Inclua mais URL's na playlist para poder remover elas");
+        
         return;
     }else if(message.content.includes(".asds")){
         require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot});
