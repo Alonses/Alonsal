@@ -65,6 +65,17 @@ module.exports = async ({client, message, args}) => {
     if(tipo !== "Alonsal")
         mensagem = mensagem.substr(0, (mensagem.length - 1));
 
+    mensagem2 = mensagem;
+
+    graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
+
+    if(graves > 0){
+        while(graves > 0){
+            mensagem = mensagem.replace("`", "\'");
+            graves--;
+        }
+    }
+
     const embed = new MessageEmbed()
     .setTitle(':mailbox: Sua mensagem foi entregue!')
     .setColor(0x29BB8E)
