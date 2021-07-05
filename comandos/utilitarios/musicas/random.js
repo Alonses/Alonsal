@@ -1,4 +1,4 @@
-const faixas = require('./faixas.json');
+const faixas = require('../../../arquivos/json/text/faixas.json');
 const tocar = require('./tocar.js')
 
 module.exports = async ({client, message, args, playlists, nome_faixas, atividade_bot, feedback_faixa, id_canal}) => {
