@@ -1,12 +1,12 @@
-const Discord = require('discord.js')
+const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const getThumb = require('video-thumbnail-url');
 
 if(typeof requisicoes === "undefined")
-    requisicoes = []
+    requisicoes = [];
 
 if(typeof requisicao_ativa === "undefined")
-    requisicao_ativa = 0
+    requisicao_ativa = 0;
 
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
@@ -23,52 +23,52 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
     let repeteco_ = 0;
 
     if(!Vchannel){
-        await message.channel.send('Entre em um canal de voz p/ utilizar estes comandos')
-        return
+        await message.channel.send('Entre em um canal de voz p/ utilizar estes comandos');
+        return;
     }
 
-    id_canal = Vchannel.id
-    id_canal = id_canal.toString()
-    cond_auto = "init"
+    id_canal = Vchannel.id;
+    id_canal = id_canal.toString();
+    cond_auto = "init";
 
     if(condicao_auto === "end" && typeof condicao_auto !== "undefined")
-        cond_auto = "end"
+        cond_auto = "end";
 
-    if(typeof repeteco != "undefined")
-        repeteco_ = repeteco.get(id_canal)
+    if(typeof repeteco !== "undefined")
+        repeteco_ = repeteco.get(id_canal);
 
     if(typeof feedback_faixa !== "undefined")
-        feedback_f = feedback_faixa.get(id_canal)
+        feedback_f = feedback_faixa.get(id_canal);
     
     if(cond_auto !== "end")
-        queue_local = playlists.get(id_canal)
+        queue_local = playlists.get(id_canal);
 
-    if(condicao_auto === "updt") // Utilizado para atualizar os valores
-        return
-    
-    if(cond_auto !== "end"){
+    if(cond_auto !== "end" && cond_auto !== "updt"){
         if(!ytdl.validateURL(queue_local[0])){
-            await message.channel.send('Informe um link adequado')
-            client.queue.shift()
+            await message.channel.send('Informe um link adequado');
+            client.queue.shift();
             
-            return
+            return;
         }
     }
 
+    if(condicao_auto === "updt") // Utilizado para atualizar os valores
+        return;
+
     if(requisicao_ativa === 0)
-        tocar_faixa(id_canal)
+        tocar_faixa(id_canal);
     else
-        requisicoes.push(id_canal)
+        requisicoes.push(id_canal);
 
     function requisita(){ // Fila de requisições para serem processadas
         if(requisicao_ativa === 0){
-            tocar_faixa(requisicoes[0])
-            requisicoes.shift()
+            tocar_faixa(requisicoes[0]);
+            requisicoes.shift();
         }
     }
 
     function tocar_faixa(id_canal){
-        atividade_bot.set(id_canal, 1)
+        atividade_bot.set(id_canal, 1);
 
         if(typeof inativo !== "undefined") // Desativa o desligamento
             clearTimeout(inativo);
@@ -79,6 +79,8 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         let faixa_interna = [];
 
         queue_interna = playlists.get(id_canal);
+        console.log("queue_interna: "+ queue_interna +"\n\n");
+
         music = ytdl(queue_interna[0]);
 
         if(cond_auto !== "end"){
@@ -141,6 +143,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             if(typeof queue_interna === "undefined")
                 return;
             
+            if(queue_interna != playlists.get(id_canal)){ // Sincroniza os dados atualizados
+                queue_interna = playlists.get(id_canal)
+                faixa_interna = nome_faixas.get(id_canal);
+            }
+
             if(repeteco_ === 1){
                 let url_atual = queue_interna[0];
                 queue_interna.shift();
