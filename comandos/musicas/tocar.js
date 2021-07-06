@@ -135,8 +135,13 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             dispatcher.end();
 
         dispatcher.on("error", () => {
-            if(cond_auto !== "end")
-                message.channel.send(`${message.author} `+"Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nVocê pode ajudar a filtrar URL's quebradas enviando uma mensagem com `.amail <url>` :D");
+            if(cond_auto !== "end"){
+                message.channel.send(`${message.author} `+"Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nUm relatório do problema foi despachado para correção.");
+
+                let relatorio = "Não é possível reproduzir a URL [ "+ queue_interna[0] +" ], atualize ela para evitar futuros travamentos";
+
+                client.channels.cache.get("862015290433994752").send(relatorio);
+            }
         });
 
         dispatcher.on("finish", () => {
