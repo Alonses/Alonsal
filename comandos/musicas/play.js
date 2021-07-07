@@ -67,7 +67,7 @@ module.exports = async ({client, message, args}) => {
         require('./playlist')({client, message, playlists, nome_faixas, repeteco, trava_pl});
         return;
     }else if(message.content.includes(".asra")){
-        require('./random')({client, message, args, playlists, atividade_bot, feedback_faixa, id_canal});
+        require('./random')({client, message, args, playlists, atividade_bot, repeteco, feedback_faixa, id_canal});
         return;
     }else if(message.content.includes(".asrs") || message.content.includes(".asfd") || message.content.includes(".asrp")){
         require('./organiza')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar});
