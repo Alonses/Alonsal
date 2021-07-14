@@ -61,7 +61,7 @@ module.exports = async ({client, message, args}) => {
         require('./skip')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal});
         return;
     }else if(message.content.includes(".asnp")){
-        require('./tocando')({message, playlists});
+        require('./tocando')({message, playlists, id_canal});
         return;
     }else if(message.content.includes(".aspl")){
         require('./playlist')({client, message, playlists, nome_faixas, repeteco, trava_pl});
