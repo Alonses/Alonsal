@@ -13,6 +13,8 @@ const usuarios_inativos = new Set();
 
 client.on("ready", () => {
     require("./adm/status.js")({client});
+
+    // require("./adm/banco.js");
 });
 
 client.on("guildCreate", guild => {
@@ -29,6 +31,8 @@ client.on('message', (message) => {
     
     let content = message.content;
     
+    console.log(content);
+
     for(const element of usuarios_inativos) {
         if(message.author.id === element[0]){
             usuarios_inativos.delete(element);
@@ -41,13 +45,13 @@ client.on('message', (message) => {
         }
     }
 
-    if((content == "<@833349943539531806>" || content == "<@!833349943539531806>") && !message.author.bot){
+    if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
         message.channel.send(ping_me_gif[ping_me]);
         return;
     }
 
-    if(content.includes("<@") && (!content.includes(".aga") && !content.includes(".amor"))){
+    if(content.includes("<@") && (!content.includes(".aga") && !content.includes(".amor") && !content.includes(".amail"))){
         let requisicao_auto = 1;
         const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto});
 
