@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const morse = require('./morse.json');
+const morse = require('../../arquivos/json/text/morse.json');
 
 module.exports = async ({message, args}) => {
 

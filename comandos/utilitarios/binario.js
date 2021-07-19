@@ -1,5 +1,5 @@
 const { MessageEmbed }  = require('discord.js');
-const binario = require('./binario.json');
+const binario = require('../../arquivos/json/text/binario.json');
 
 module.exports = async ({message, args}) => {
 
