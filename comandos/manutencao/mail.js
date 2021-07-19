@@ -39,11 +39,9 @@ module.exports = async ({client, message, args}) => {
         try{
             if(tipo === "games"){
 
-                console.log(args[4]);
-
                 let url = "";
 
-                if (message.attachments.size > 0){
+                if(message.attachments.size > 0){
                     message.attachments.forEach(attachment => {
                         url = attachment.url;
                     });
@@ -61,10 +59,18 @@ module.exports = async ({client, message, args}) => {
 
                 if(args[4].includes("gog.com")){
                     logo_plat = emoji(emojis.gog);
-                    plataforma = "Gog";
+                    plataforma = "GOG";
                 }
 
-                console.log(logo_plat);
+                if(args[4].includes("humblebundle.com")){
+                    logo_plat = emoji(emojis.humble);
+                    plataforma = "Humble Bundle";
+                }
+
+                if(args[4].includes("ubisoft.com")){
+                    logo_plat = emoji(emojis.ubisoft);
+                    plataforma = "Ubisoft";
+                }
 
                 let msg_game = new MessageEmbed()
                 .setColor(0x29BB8E)
@@ -83,8 +89,8 @@ module.exports = async ({client, message, args}) => {
                     client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
                 else if(tipo === "c")
                     client.channels.cache.get(id_alvo).send(mensagem);
-                    
-                message.channel.send(`${message.author}`+ " mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:")
+                
+                message.channel.send(`${message.author}`+ " mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:");
             }
             
         }catch(err){
