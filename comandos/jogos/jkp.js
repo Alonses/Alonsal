@@ -3,7 +3,7 @@ module.exports = {
     description: "Jokenpô",
     aliases: [ "jkp" ],
     usage: ".ajkp papel",
-    cooldown: 5,
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
             
