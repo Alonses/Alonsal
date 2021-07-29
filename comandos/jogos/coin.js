@@ -2,7 +2,7 @@ module.exports = {
     name: "moeda",
     description: "Cara ou coroa?",
     aliases: [ "co" ],
-    usage: ".aco cara",
+    usage: "co cara",
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {

@@ -2,7 +2,7 @@ module.exports = {
     name: "reproducao",
     description: "Faça o Alonsal falar algo",
     aliases: [ "rep" ],
-    usage: ".arep <message>",
+    usage: "rep <suamensagem>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {

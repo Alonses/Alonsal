@@ -2,11 +2,11 @@ module.exports = {
     name: "gado",
     description: "Teste a gadisse de alguém",
     aliases: [ "ga" ],
-    usage: ".agado <@>",
+    usage: "gado <@>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
+        
         const { gadisissimo } = require("../../arquivos/json/text/gado.json");
 
         if(typeof args[0] != "undefined" && args[0].includes("<@")){

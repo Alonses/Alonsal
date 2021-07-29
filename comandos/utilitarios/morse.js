@@ -2,11 +2,11 @@ module.exports = {
     name: "morse",
     description: "Codifique e decodifique do morse",
     aliases: [ "m" ],
-    usage: ".am Alonsal",
+    usage: "m Alonsal",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
+        
         const { MessageEmbed } = require('discord.js');
         const morse = require('../../arquivos/json/text/morse.json');
 
@@ -69,7 +69,6 @@ module.exports = {
                 .setDescription("`" + texto_ordenado + "`");
 
             message.channel.send(`${message.author}`, embed);
-        } else
-            message.channel.send("Envie como `.am texto` para codificar em morse\nou `.am .- .-.. --- -. ... .- .-..` para decodificar do morse.");
+        }
     }
 };
