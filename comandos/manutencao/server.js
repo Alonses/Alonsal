@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "hub" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
 
@@ -21,8 +21,8 @@ module.exports = {
         .setImage('https://i.imgur.com/Lr6cChX.png')
         .setDescription("Um server várias utilidades, o Hub do Alonsal é uma central de informações, chega+ e se divirta!");
 
-        message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`);
-        // m.react('📫');
+        const m = await message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`);
+        m.react('📫');
 
         client.users.cache.get(message.author.id).send(embed);
     }

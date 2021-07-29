@@ -13,13 +13,11 @@ const commandConfig = new handler.CommandConfig(
     true,
     "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente.",
     "você não tem a permissão `%PERM%` para executar este comando",
-    "uso correto deste comando tem é :: `%USAGE%`");
+    "uso correto deste comando é :: `%USAGE%`");
 
 handler.setup(commandConfig);
 
 client.on("ready", async () => {
-
-    handler.useDefaultHelp(handler);
 
     require("./adm/status.js")({client});
 
@@ -30,12 +28,12 @@ client.on("ready", async () => {
             handler.addCommand(command);
         }
     }
-    
-    // require("./adm/banco.js");
 });
 
 client.on('message', message => {
 
+    if(message.author.bot) return;
+    
     let content = message.content;
 
     if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){
@@ -44,9 +42,15 @@ client.on('message', message => {
         return;
     }
 
-    handler.messageReceived(message);
+    if(content != ".a") // Previne que comandos sem aliases sejam acionados
+        handler.messageReceived(message);
+    else{
+        require('./adm/comando.js')({client, message, content});
+        return;
+    }
 
-    require('./adm/log.js')({client, message, content});
+    if(content.startsWith(".a"))
+        require('./adm/log.js')({client, message, content});
 });
 
 client.on("guildCreate", guild => {
