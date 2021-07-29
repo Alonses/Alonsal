@@ -1,22 +1,29 @@
-const { MessageEmbed } = require('discord.js');
+module.exports = {
+    name: "server",
+    description: "O Hub multiconectado do alonsal",
+    aliases: [ "hub" ],
+    cooldown: 5,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
 
-module.exports = async ({client, message}) => {
+        const { MessageEmbed } = require('discord.js');
 
-    function emoji(id){
-        return client.emojis.cache.get(id).toString();
+        function emoji(id){
+            return client.emojis.cache.get(id).toString();
+        }
+        
+        let emoji_rainha = emoji('854171515641659402');
+
+        const embed = new MessageEmbed()
+        .setColor(0x29BB8E)
+        .setTitle("> Hub do Alonsal "+ emoji_rainha)
+        .setURL('https://discord.gg/MPyTzWa')
+        .setImage('https://i.imgur.com/Lr6cChX.png')
+        .setDescription("Um server várias utilidades, o Hub do Alonsal é uma central de informações, chega+ e se divirta!");
+
+        message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`);
+        // m.react('📫');
+
+        client.users.cache.get(message.author.id).send(embed);
     }
-    
-    let emoji_rainha = emoji('854171515641659402');
-
-    const embed = new MessageEmbed()
-    .setColor(0x29BB8E)
-    .setTitle("> Hub do Alonsal "+ emoji_rainha)
-    .setURL('https://discord.gg/MPyTzWa')
-    .setImage('https://i.imgur.com/Lr6cChX.png')
-    .setDescription("Um server várias utilidades, o Hub do Alonsal é uma central de informações, chega+ e se divirta!");
-
-    const m = await message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`)
-    m.react('📫');
-
-    client.users.cache.get(message.author.id).send(embed);
-}
+};

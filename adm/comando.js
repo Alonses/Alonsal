@@ -12,7 +12,7 @@ module.exports = async ({message}) => {
     // Frase
     message.react('🤡')
     await message.channel.send(frase)
-
+    
     // Imagem
     if(messages[num][key] !== null)
         message.channel.send(messages[num][key]);

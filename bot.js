@@ -1,20 +1,52 @@
-const { Client } = require('discord.js');
-const { existsSync } = require("fs");
+const handler = require("wax-command-handler");
+const discord = require("discord.js");
+
+const { readdirSync } = require("fs");
 const { ping_me_gif } = require('./arquivos/json/gifs/ping_me.json');
-const { token, prefix, ids_ignorados, pastas, aliases_info } = require('./config.json');
-const commands = require('./comandos.json');
-const client = new Client();
+const { token, prefix, pastas } = require('./config.json');
+const client = new discord.Client();
 
-usos = 2545;
-usos_anterior = 2545;
+// (client: Discord.Client, prefix: string, ignore_bot: boolean, cooldown_message: string, permission_message: string, wrong_usage_message: string)
+const commandConfig = new handler.CommandConfig(
+    client,
+    prefix,
+    true,
+    "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente.",
+    "você não tem a permissão `%PERM%` para executar este comando",
+    "uso correto deste comando tem é :: `%USAGE%`");
 
-const talkedRecently = new Set();
-const usuarios_inativos = new Set();
+handler.setup(commandConfig);
 
-client.on("ready", () => {
+client.on("ready", async () => {
+
+    handler.useDefaultHelp(handler);
+
     require("./adm/status.js")({client});
 
+    for(let i = 0; i < pastas.length; i++){
+        for(const file of readdirSync(__dirname + `/comandos/${pastas[i]}`).filter(file => file.endsWith('.js'))) {
+            const command = require(`./comandos/${pastas[i]}/${file}`);
+
+            handler.addCommand(command);
+        }
+    }
+    
     // require("./adm/banco.js");
+});
+
+client.on('message', message => {
+
+    let content = message.content;
+
+    if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){
+        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
+        message.channel.send(ping_me_gif[ping_me]);
+        return;
+    }
+
+    handler.messageReceived(message);
+
+    require('./adm/log.js')({client, message, content});
 });
 
 client.on("guildCreate", guild => {
@@ -25,81 +57,6 @@ client.on("guildCreate", guild => {
 client.on("guildDelete", guild => {
     let caso = 'Left';
     require("./adm/servers.js")({client, caso, guild});
-});
-
-client.on('message', (message) => {
-    
-    let content = message.content;
-    
-    console.log(content);
-
-    for(const element of usuarios_inativos) {
-        if(message.author.id === element[0]){
-            usuarios_inativos.delete(element);
-            message.channel.send(`${message.author} modo afk desligado :dizzy:`)
-            .then(msg => {
-                msg.delete({ timeout: 5000 });
-            })
-
-            return;
-        }
-    }
-
-    if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){
-        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
-        message.channel.send(ping_me_gif[ping_me]);
-        return;
-    }
-
-    if(content.includes("<@") && (!content.includes(".aga") && !content.includes(".amor") && !content.includes(".amail"))){
-        let requisicao_auto = 1;
-        const afk = require("./comandos/utilitarios/afk.js")({message, usuarios_inativos, requisicao_auto});
-
-        if(afk)
-            return;
-    }
-
-    // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
-    if (!content.startsWith(prefix) || message.author.bot) return;
-    if (!message.channel.name) return;
-    
-    if(talkedRecently.has(message.author.id) && !ids_ignorados.includes(message.author.id)){
-        message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
-        return;
-    }else{
-        talkedRecently.add(message.author.id);
-        setTimeout(() => {
-            talkedRecently.delete(message.author.id);
-        }, 3000);
-    }
-
-    if(content === prefix){
-        require("./adm/comando.js")({message});
-        return;
-    }
-    
-    const args = content.slice(prefix.length).trim().split(' ');
-    
-    const command = args.shift().toLowerCase();
-    for(let i = 0; i < pastas.length; i++){
-        path = `./comandos/${pastas[i]}/${commands[command]}`;
-        if (existsSync(path)){
-            usos++;
-
-            if(aliases_info.includes(message.content))
-                args.push(usos);
-
-            require(path)({ client, message, args, usuarios_inativos});
-            break;
-        }
-    }
-
-    if(usos === usos_anterior)
-        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.ah` ou `.ajuda` para ver todos os comandos.");
-    else
-        require('./adm/log.js')({client, message, content});
-
-    usos_anterior = usos;
 });
 
 client.login(token);
