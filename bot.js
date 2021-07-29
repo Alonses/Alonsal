@@ -11,9 +11,9 @@ const commandConfig = new handler.CommandConfig(
     client,
     prefix,
     true,
-    "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente.",
+    "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente",
     "você não tem a permissão `%PERM%` para executar este comando",
-    "uso correto deste comando é :: `%USAGE%`");
+    "o uso correto deste comando é `%USAGE%`");
 
 handler.setup(commandConfig);
 
