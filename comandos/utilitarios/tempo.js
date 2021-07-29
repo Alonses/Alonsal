@@ -6,7 +6,7 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
+        
         const { MessageEmbed } = require('discord.js');
         const fetch = require('node-fetch');
         const { weather_key, time_key } = require('../../config.json');
@@ -60,6 +60,21 @@ module.exports = {
                     if(minutos >= 30)
                         hours += "30";
                     
+                    // Sensação térmica dinâmica
+                    emoji_sensacao_termica = ":hot_face:";
+
+                    if(res.main.feels_like >= 15 && res.main.feels_like < 25)
+                        emoji_sensacao_termica = ":ok_hand:";    
+
+                    if(res.main.feels_like < 15)
+                        emoji_sensacao_termica = ":cold_face:";
+
+                    if(res.main.feels_like < 0)
+                        emoji_sensacao_termica = ":snowman2:";
+
+                    if(res.main.feels_like > 39)
+                        emoji_sensacao_termica = ":fire:";
+                    
                     horario_local = hora +":"+ minutos +" | "+ dia +" de "+ mes;
                     let relogio_emoji = ":clock"+ hours +":";
 
@@ -73,7 +88,7 @@ module.exports = {
                         { name: ':sweat_drops: **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
                         { name: ':wind_chime: **Velocidade do vento**', value: " **Atual: **`"+ res.wind.speed +" km/h`", inline: true },
                     )
-                    .addField(':fire: **Sensação Térmica**', '**Atual: **`'+ res.main.feels_like +'°C`', true)
+                    .addField(emoji_sensacao_termica +' **Sensação Térmica**', '**Atual: **`'+ res.main.feels_like +'°C`', true)
                     .addField(':compression: **Pressão do ar**', '**Atual: **`'+ res.main.pressure +' kPA`', true);
 
                     message.channel.send(cidade_encontrada);
