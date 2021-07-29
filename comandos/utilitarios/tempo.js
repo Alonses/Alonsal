@@ -94,7 +94,7 @@ module.exports = {
                     if(res.clouds.all < 31){
                         emoji_nuvens = ":sunny:";
 
-                        if(hora > 18 || hora < 6) // Noite
+                        if(hora > 17 || hora < 7) // Noite
                             emoji_nuvens = ":full_moon_with_face:";
                     }
 
