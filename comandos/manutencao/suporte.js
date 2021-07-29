@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "support", "patrocinio", "money", "premium" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
         const { emojis } = require('../../arquivos/json/text/emojis.json');
@@ -23,8 +23,8 @@ module.exports = {
         .setDescription("Escaneie ou clique no Titulo acima para doar e ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D")
         .setImage("https://i.imgur.com/incYvy2.jpg");
 
-        message.channel.send(`${message.author} Obrigado pela consideração!\nDespachei as infos no seu privado `+ vergonha);
-        // m.react('📫');
+        const m = await message.channel.send(`${message.author} Obrigado pela consideração!\nDespachei as infos no seu privado `+ vergonha);
+        m.react('📫');
 
         client.users.cache.get(message.author.id).send(embed);
     }

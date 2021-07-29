@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "g", "repositorio" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
 
@@ -16,7 +16,8 @@ module.exports = {
         .setImage('https://i.imgur.com/0tV3IQr.png')
         .setDescription("Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:");
 
-        message.channel.send(`${message.author} despachei a ceira mais recente no seu privado :handshake:`);
+        const m = await message.channel.send(`${message.author} despachei a ceira mais recente no seu privado :handshake:`);
+        m.react('📫');
 
         client.users.cache.get(message.author.id).send(embed);
     }

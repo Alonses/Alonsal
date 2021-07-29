@@ -1,10 +1,10 @@
 module.exports = {
     name: "menu",
     description: "Menu com os comandos do alonsal",
-    aliases: [ "juda", "comandos", "commands" ],
+    aliases: [ "h", "juda", "comandos", "commands" ],
     cooldown: 5,
-    permissions: [ "ADMINISTRATOR" ],
-    execute(client, message, args) {
+    permissions: [ "SEND_MESSAGES" ],
+    async execute(client, message, args) {
         
         const { MessageEmbed } = require('discord.js');
         const { version } = require('../../config.json');
@@ -21,7 +21,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Manutenção do Alonsal`\n\n:musical_note: - `Comandos Musicais`\n\n:information_source: - `Informações do Alonsal`")
+        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:tools: - `Manutenção do Alonsal`\n\n:information_source: - `Informações do Alonsal`")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -66,31 +66,24 @@ module.exports = {
             embed_utilitarios,
             embed_jogos,
             embed_manutencao,
-            embed_musical,
             embed_infos
         ];
 
-        emojiList = ['🤪', '🧭', '⛳', '🛠️', '🎵', 'ℹ️'];
+        emojiList = ['🤪', '🧭', '⛳', '🛠️', 'ℹ️'];
         
-        // let mensagem = message.channel.send(embed_inicial);
+        let mensagem = await message.channel.send(embed_inicial);
 
-        message.channel.send(embed_diversao);
-        message.channel.send(embed_utilitarios);
-        message.channel.send(embed_jogos);
-        message.channel.send(embed_manutencao);
-        message.channel.send(embed_infos);
-
-        // for(let i = 0; i < emojiList.length; i++){
-        //     mensagem.react(emojiList[i]);
-        // }
+        for(let i = 0; i < emojiList.length; i++){
+            await mensagem.react(emojiList[i]);
+        }
 
         const filter = (reaction, user) => {
-            return ['🤪', '🧭', '⛳', '🛠️', '🎵', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
+            return ['🤪', '🧭', '⛳', '🛠️', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
         };
 
-        aguarda_reacao(mensagem);
+        aguardar_reacao(mensagem);
 
-        function aguarda_reacao(mensagem){
+        function aguardar_reacao(mensagem){
 
             if(typeof limpa_reacoes != "undefined")
                 clearTimeout(limpa_reacoes);
@@ -108,7 +101,7 @@ module.exports = {
                     reaction.users.remove(message.author.id).catch(error => message.channel.send(":tools: Não foi possivel remover suas reações automaticamente, para isto preciso de permissões para gerenciar as mensagens."));
                 }
 
-                aguarda_reacao(mensagem);
+                aguardar_reacao(mensagem);
             })
             .catch(collected => {
                 return;

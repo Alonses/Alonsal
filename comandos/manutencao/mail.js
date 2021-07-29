@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
         const { aliases_user, ids_canais_games, ids_cargos_games } = require('../../config.json');

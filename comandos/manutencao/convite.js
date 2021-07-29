@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "cvv", "invite" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
         
         const { MessageEmbed } = require('discord.js');
 
@@ -17,8 +17,8 @@ module.exports = {
         .setTimestamp()
         .setFooter("Alonsal");
         
-        message.channel.send(`${message.author} despachei o convite no seu privado :love_you_gesture:`);
-        // m.react('📫');
+        const m = await message.channel.send(`${message.author} despachei o convite no seu privado :love_you_gesture:`);
+        m.react('📫');
         
         client.users.cache.get(message.author.id).send(embed);
     }

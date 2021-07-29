@@ -14,7 +14,6 @@
     "@joshyzou/getyoutubelinks": "^1.1.9",
     "discord.js": "^12.5.3",
     "ffmpeg-static": "^4.3.0",
-    "lowdb": "^2.1.0",
     "video-thumbnail-url": "^1.0.1",
     "wax-command-handler": "^1.0.8",
     "ytdl-core": "^4.8.3"
