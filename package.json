@@ -16,6 +16,7 @@
     "discord.js": "^12.5.3",
     "ffmpeg-static": "^4.3.0",
     "i18n-country-code": "^1.0.1",
+    "sqlite3": "^5.0.2",
     "video-thumbnail-url": "^1.0.1",
     "wax-command-handler": "^1.0.8",
     "ytdl-core": "^4.8.3"
