@@ -3,7 +3,7 @@ module.exports = {
     description: "Rode um ou vários dados de várias faces",
     aliases: [ "da" ],
     usage: ".ada 10 6",
-    cooldown: 5,
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 

@@ -1,7 +1,7 @@
 module.exports = {
     name: "pulapredios",
     description: "O Jogo do pula!",
-    aliases: [ "" ],
+    aliases: [ "pula", "jogo" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
