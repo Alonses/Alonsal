@@ -19,7 +19,7 @@ module.exports = {
         const m = await message.channel.send("Ping?");
         let delay = m.createdTimestamp - message.createdTimestamp;
 
-        let mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tá lagado um poco tô renderizando vídeo '+ emoji_barata;
+        let mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tá lagado um poko tô renderizando vídeo '+ emoji_barata;
         
         if(delay < 200)
             mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tudo numa boa!';
