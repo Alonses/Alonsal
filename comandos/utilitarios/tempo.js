@@ -8,10 +8,13 @@ module.exports = {
     execute(client, message, args) {
         
         const { MessageEmbed } = require('discord.js');
+        
         const fetch = require('node-fetch');
         const { weather_key, time_key } = require('../../config.json');
-        const { codigos_tempo } = require('../../arquivos/json/text/codigos_tempo.json');
 
+        const translations = require("i18n-country-code/locales/pt.json");
+        const getCountryISO3 = require("country-iso-2-to-3");
+        
         const base_url = "http://api.openweathermap.org/data/2.5/weather?";
         const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
@@ -29,7 +32,7 @@ module.exports = {
                 pesquisa += " ";
         }
 
-        let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric";
+        let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
         
         fetch(url_completa)
         .then(response => response.json())
@@ -43,6 +46,12 @@ module.exports = {
                 .then(response => response.json())
                 .then( async res_hora => {
                     let bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
+                    
+                    let cod_pais = getCountryISO3(res.sys.country);
+                    let nome_pais = translations[cod_pais];
+                    
+                    let tempo_atual = res.weather[0].description; // Clima atual
+                    tempo_atual = tempo_atual.charAt(0).toUpperCase() + tempo_atual.slice(1);
 
                     let horario_local = res_hora.formatted;
                     horario_local = new Date(horario_local);
@@ -59,7 +68,32 @@ module.exports = {
 
                     if(minutos >= 30)
                         hours += "30";
+
+                    // Umidade
+                    emoji_umidade = ":sweat_drops:";
+
+                    if(res.main.humidity < 60)
+                        emoji_umidade = ":droplet:";
                     
+                    if(res.main.humidity < 30)
+                        emoji_umidade = ":cactus:";
+
+                    // Nuvens
+                    emoji_nuvens = ":cloud:";
+
+                    if(res.clouds.all < 60)
+                        emoji_nuvens = ":white_sun_cloud:"
+
+                    if(res.clouds.all < 41)
+                        emoji_nuvens = ":white_sun_small_cloud:";
+
+                    if(res.clouds.all < 31){
+                        emoji_nuvens = ":sunny:";
+
+                        if(hora > 18 || hora < 6) // Noite
+                            emoji_nuvens = ":full_moon_with_face:";
+                    }
+
                     // Sensação térmica dinâmica
                     emoji_sensacao_termica = ":hot_face:";
 
@@ -79,17 +113,21 @@ module.exports = {
                     let relogio_emoji = ":clock"+ hours +":";
 
                     const cidade_encontrada = new MessageEmbed()
-                    .setTitle(':boom: Tempo agora em '+ res.name + ' - '+ res.sys.country + ' '+ bandeira_pais)
+                    .setTitle(':boom: Tempo agora em '+ res.name + ' - '+ nome_pais + ' '+ bandeira_pais)
                     .setColor(0x29BB8E)
-                    .setDescription('**'+ codigos_tempo[res.weather[0].id] +'**\n'+ relogio_emoji +' **Hora local:** `'+ horario_local +'`')
+                    .setDescription(relogio_emoji +' **Hora local:** `'+ horario_local +'` | **'+ tempo_atual +'**')
                     .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
                     .addFields(
                         { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Máxima:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Mínima:** `"+ res.main.temp_min +"°C`", inline: true },
-                        { name: ':sweat_drops: **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
+                        { name: emoji_umidade +' **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
                         { name: ':wind_chime: **Velocidade do vento**', value: " **Atual: **`"+ res.wind.speed +" km/h`", inline: true },
                     )
-                    .addField(emoji_sensacao_termica +' **Sensação Térmica**', '**Atual: **`'+ res.main.feels_like +'°C`', true)
-                    .addField(':compression: **Pressão do ar**', '**Atual: **`'+ res.main.pressure +' kPA`', true);
+                    .addFields(
+                        { name: emoji_sensacao_termica +' **Sensação Térmica**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
+                        { name: emoji_nuvens +' **Nuvens no céu**', value: '**Atual: **`'+ res.clouds.all +'%`', inline: true},
+                        { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
+
+                    );
 
                     message.channel.send(cidade_encontrada);
                 });
