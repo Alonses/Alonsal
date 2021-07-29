@@ -19,6 +19,8 @@ handler.setup(commandConfig);
 
 client.on("ready", async () => {
 
+    console.log("Caldeiras aquecidas, pronto para operar");
+
     require("./adm/status.js")({client});
 
     for(let i = 0; i < pastas.length; i++){
@@ -42,14 +44,15 @@ client.on('message', message => {
         return;
     }
 
-    if(content != ".a") // Previne que comandos sem aliases sejam acionados
+    if(content !== prefix && content.includes(prefix)) // Previne que comandos sem aliases sejam acionados
         handler.messageReceived(message);
     else{
-        require('./adm/comando.js')({client, message, content});
+        if(content === prefix)
+            require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
         return;
     }
 
-    if(content.startsWith(".a"))
+    if(content.startsWith(prefix))
         require('./adm/log.js')({client, message, content});
 });
 

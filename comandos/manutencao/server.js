@@ -12,7 +12,7 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
         
-        let emoji_rainha = emoji('854171515641659402');
+        let emoji_rainha = emoji('854830529928757269');
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)

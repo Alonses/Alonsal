@@ -7,10 +7,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { frases_gadais } = require("../../arquivos/json/text/gado.json");
+        const { gadisissimo } = require("../../arquivos/json/text/gado.json");
 
         if(typeof args[0] != "undefined" && args[0].includes("<@")){
-            const num = Math.round((frases_gadais.length - 1) * Math.random());
+            const num = Math.round((gadisissimo.length - 1) * Math.random());
 
             const gado = args[0];
             const alvo = gado.replace("!", "");
@@ -21,9 +21,9 @@ module.exports = {
             }
 
             if(alvo !== `${message.author}`)
-                message.channel.send("O "+ gado +" "+ frases_gadais[num]);
+                message.channel.send("O "+ gado +" "+ gadisissimo[num]);
             else
-                message.channel.send(`Você ${message.author}`+" "+ frases_gadais[num]);
+                message.channel.send(`Você ${message.author}`+" "+ gadisissimo[num]);
         }else
             message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`);
     }

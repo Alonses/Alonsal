@@ -20,7 +20,7 @@ module.exports = {
         .setColor(0x29BB8E)
         .setTitle("> Apoie o Alonsal! "+ bolo)
         .setURL("https://picpay.me/slondo")
-        .setDescription("Escaneie ou clique no Titulo acima para doar e ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D")
+        .setDescription("Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D")
         .setImage("https://i.imgur.com/incYvy2.jpg");
 
         const m = await message.channel.send(`${message.author} Obrigado pela consideração!\nDespachei as infos no seu privado `+ vergonha);
