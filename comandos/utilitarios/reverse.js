@@ -1,8 +1,8 @@
 module.exports = {
     name: "reverso",
     description: "Inverta ou desinverta caracteres",
-    aliases: [ "rev", "inverso" ],
-    usage: ".arev Alonsal",
+    aliases: [ "rev", "inverso", "reverter" ],
+    usage: "rev Alonsal",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
@@ -33,7 +33,6 @@ module.exports = {
                 .setDescription("`" + texto_ordenado + "`");
 
             message.channel.send(`${message.author}`, embed);
-        }else
-            message.channel.send("Envie como `.arev alonsal` inverter seu texto\nou como `.arev lasnola` para reverter.");
+        }
     }
 };

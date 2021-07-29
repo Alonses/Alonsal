@@ -2,7 +2,7 @@ module.exports = {
     name: "binario",
     description: "Codifique e decodifique do binário",
     aliases: [ "bn" ],
-    usage: ".abn texto",
+    usage: "bn texto",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
@@ -59,7 +59,6 @@ module.exports = {
             .setDescription("`" + texto_ordenado + "`");
 
             message.channel.send(`${message.author}`, embed);
-        }else
-            message.channel.send("Envie como `.abn texto` para codificar em binário\nou `.abn 11100011` para decodificar do binário.");
+        }
     },
 };

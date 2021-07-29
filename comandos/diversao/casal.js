@@ -2,7 +2,7 @@ module.exports = {
     name: "casal",
     description: "Teste o nível de afeto entre duas pessoas",
     aliases: [ "mor" ],
-    usage: ".amor <@><@>",
+    usage: "mor <@><@>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {

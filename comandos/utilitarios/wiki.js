@@ -2,13 +2,14 @@ module.exports = {
     name: "wiki",
     description: "Pesquisa sobre algo na wiki",
     aliases: [ "w", "buscar", "busca" ],
-    usage: ".aw slondo",
-    cooldown: 5,
+    usage: "w slondo",
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
         const fetch = require('node-fetch');
         const { MessageEmbed } = require('discord.js');
+        const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
         let content = '';
         let counter = 0;
@@ -16,6 +17,9 @@ module.exports = {
         for(let i = 0; i < args.length; i++){
             content += args[i] + ' ';
         }
+
+        const qtd_emojis_erro = Math.round((emojis_negativos.length - 1) * Math.random());
+        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[qtd_emojis_erro]).toString();
 
         if(args.length > 0){
             content = content.substr(0, (content.length - 1)); // Remove o espaço no último caractere
@@ -64,15 +68,13 @@ module.exports = {
                     if(content.includes("slondo") || content.includes("Slondo"))
                         message.channel.send("Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:");
                     else if(username.includes(termo_pesquisado_cc))
-                        message.channel.send("Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
+                        message.channel.send(emoji_nao_encontrado +" Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
                     else
-                        message.channel.send("Não encontrei nada relacionado a sua pesquisa [ " + args +" ], tente novamente ;)");
-                })
-
+                        message.channel.send(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
+                });
             }catch(e){
-                message.channel.send("Não encontrei nada relacionado a sua pesquisa [ " + args +" ], tente novamente ;)");
+                message.channel.send(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
             }
-        }else
-            message.channel.send(`${message.author} informe algo para pesquisar, como por exemplo `+ '`.aw Alonsal` ;)');
+        }
     }
 };

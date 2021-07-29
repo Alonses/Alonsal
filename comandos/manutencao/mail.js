@@ -2,6 +2,7 @@ module.exports = {
     name: "mail",
     description: "Envie mensagens para o alonsal",
     aliases: [ "" ],
+    usage: "mail <suamensagem>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {

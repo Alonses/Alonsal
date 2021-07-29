@@ -2,8 +2,8 @@ module.exports = {
     name: "tempo",
     description: "Veja informações do tempo em alguma cidade",
     aliases: [ "tp", "t", "clima", "previsao" ],
-    usage: ".at brasil",
-    cooldown: 5,
+    usage: "t Brasil",
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
@@ -11,6 +11,7 @@ module.exports = {
         
         const fetch = require('node-fetch');
         const { weather_key, time_key } = require('../../config.json');
+        const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
         const translations = require("i18n-country-code/locales/pt.json");
         const getCountryISO3 = require("country-iso-2-to-3");
@@ -19,6 +20,9 @@ module.exports = {
         const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
         let pesquisa = "";
+
+        const qtd_emojis_erro = Math.round((emojis_negativos.length - 1) * Math.random());
+        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[qtd_emojis_erro]).toString();
 
         if(args.length < 1){
             message.channel.send(`${message.author} informe o nome de alguma cidade para buscar\nPor exemplo como \`.at sao paulo\``);
@@ -38,7 +42,7 @@ module.exports = {
         .then(response => response.json())
         .then( async res => {
             if(res.cod == '404')
-                message.channel.send(`${message.author} não encontrei nada relacionado a \``+ pesquisa +`\`, tente novamente`);
+                message.channel.send(emoji_nao_encontrado +` ${message.author} não encontrei nada relacionado com \``+ pesquisa +`\`, tente novamente`);
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
 

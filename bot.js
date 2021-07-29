@@ -13,7 +13,7 @@ const commandConfig = new handler.CommandConfig(
     true,
     "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente",
     "você não tem a permissão `%PERM%` para executar este comando",
-    "o uso correto deste comando é `%USAGE%`");
+    "o uso correto deste comando é `"+ prefix +"%USAGE%`");
 
 handler.setup(commandConfig);
 
