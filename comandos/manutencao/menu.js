@@ -17,13 +17,14 @@ module.exports = {
         let emoji_pula = emoji(emojis.pula);
         let emoji_rainha = emoji(emojis.elizabeth);
         let emoji_bolo = emoji(emojis.bolo);
+        let emoji_mc = emoji(emojis.mc_earth);
 
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: **`.ahm`** - `Menu dos moderadores`\n\n:tools: - `Manutenção do Alonsal`\n\n:information_source: - `Informações do Alonsal`")
+        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:information_source: - `Informações do Alonsal`")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -35,13 +36,13 @@ module.exports = {
         const embed_utilitarios = new MessageEmbed()
         .setTitle('Comandos Utilitários :compass:')
         .setColor(0x29BB8E)
-        .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji")
+        .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_jogos = new MessageEmbed()
         .setTitle('Comandos de Jogos :golf:')
         .setColor(0x29BB8E)
-        .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada 10 16`** - Roda um ou vários dados com várias faces\n"+ emoji_pula +" **`.apula`** | **`.apredios`** - Jogo do Pula Prédios!")
+        .setDescription(":scissors: **`.ajkp papel`** | **`.ajkp`** - Jokenpô\n:coin: **`.acoin cara`** | **`.aco coroa`** - Teste sua sorte\n:game_die: **`.adado`** | **`.ada 10 16`** - Roda um ou vários dados com várias faces\n"+ emoji_pula +" **`.apula`** | **`.apredios`** - Jogo do Pula Prédios!\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_manutencao = new MessageEmbed()
