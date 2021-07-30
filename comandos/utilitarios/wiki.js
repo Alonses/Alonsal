@@ -68,12 +68,12 @@ module.exports = {
                     if(content.includes("slondo") || content.includes("Slondo"))
                         message.lineReply("Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:");
                     else if(username.includes(termo_pesquisado_cc))
-                        message.lineReply(emoji_nao_encontrado +" Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
+                        message.lineReply(emoji_nao_encontrado +" | Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
                     else
-                        message.lineReply(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
+                        message.lineReply(emoji_nao_encontrado +" | Não encontrei nada relacionado com sua pesquisa [ `" + args +"` ], tente novamente");
                 });
             }catch(e){
-                message.lineReply(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
+                message.lineReply(emoji_nao_encontrado +" | Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente");
             }
         }
     }

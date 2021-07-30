@@ -82,7 +82,7 @@ module.exports = {
             // Remover emojis
             if(message.content.startsWith(".armoji") || message.content.startsWith(".aremovemoji")){
                 if(args.length < 1){
-                    message.lineReply(":warning: | Inclua o emoji para apagar\nPor exemplo, `.armoji `"+ emoji_nao_encontrado +"` `");
+                    message.lineReply(":warning: | Inclua o emoji para remover\nPor exemplo, `.armoji `"+ emoji_nao_encontrado +"` `");
                     return;
                 }
 

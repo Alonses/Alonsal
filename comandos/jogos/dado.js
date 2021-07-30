@@ -2,7 +2,7 @@ module.exports = {
     name: "dado",
     description: "Rode um ou vários dados de várias faces",
     aliases: [ "da" ],
-    usage: "da 10 6",
+    usage: "da 5 6",
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {

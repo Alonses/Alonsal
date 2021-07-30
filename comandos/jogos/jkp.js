@@ -2,11 +2,10 @@ module.exports = {
     name: "jokenpo",
     description: "Jokenpô",
     aliases: [ "jkp" ],
-    usage: "jkp papel",
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-            
+        
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
         let emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
         let player = Math.round(2 * Math.random());

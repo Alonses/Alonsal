@@ -7,8 +7,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        message.lineReply(`Reprodução solicitada por [ ${message.author} ]`);
-        
+        message.lineReply(`Reprodução solicitada por [ ${message.author} ]`);    
         mensagem = message.content.replace(".arep", "")
 
         message.channel.send(mensagem, {
