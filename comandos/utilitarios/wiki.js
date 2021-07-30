@@ -63,17 +63,17 @@ module.exports = {
                     .setFooter('DuckDuckGo api')
                     .setURL(res.AbstractURL);
 
-                    await message.channel.send(Embed);
+                    await message.lineReply(Embed);
                 }else
                     if(content.includes("slondo") || content.includes("Slondo"))
-                        message.channel.send("Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:");
+                        message.lineReply("Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:");
                     else if(username.includes(termo_pesquisado_cc))
-                        message.channel.send(emoji_nao_encontrado +" Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
+                        message.lineReply(emoji_nao_encontrado +" Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
                     else
-                        message.channel.send(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
+                        message.lineReply(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
                 });
             }catch(e){
-                message.channel.send(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
+                message.lineReply(emoji_nao_encontrado +" Não encontrei nada relacionado a sua pesquisa [ `" + args +"` ], tente novamente ;)");
             }
         }
     }

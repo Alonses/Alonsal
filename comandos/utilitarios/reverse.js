@@ -32,7 +32,7 @@ module.exports = {
                 .setColor(0x29BB8E)
                 .setDescription("`" + texto_ordenado + "`");
 
-            message.channel.send(`${message.author}`, embed);
+            message.lineReply(`${message.author}`, embed);
         }
     }
 };

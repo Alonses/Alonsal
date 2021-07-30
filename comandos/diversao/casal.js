@@ -13,7 +13,7 @@ module.exports = {
             args.splice(1, 1);
 
         if(args.length != 2 || !args[0].includes("<@") || !args[1].includes("<@")){
-            message.channel.send(`${message.author} marque duas pessoas para testar\nPor exemplo, \`.amor @Alonsal @Slondo\``);
+            message.lineReply(`${message.author} marque duas pessoas para testar\nPor exemplo, \`.amor @Alonsal @Slondo\``);
             return;
         }
         
@@ -64,6 +64,6 @@ module.exports = {
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
         .setTimestamp();
 
-        message.channel.send(`${message.author}`, embed);
+        message.lineReply(`${message.author}`, embed);
     }
 };

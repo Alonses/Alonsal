@@ -16,7 +16,7 @@ module.exports = {
         emoji_steve = emoji(emojis.steve_dancando);
         emoji_pare = emoji(emojis.pare_agr);
 
-        const m = await message.channel.send("Ping?");
+        const m = await message.lineReply("Ping?");
         let delay = m.createdTimestamp - message.createdTimestamp;
 
         let mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tá lagado um poko tô renderizando vídeo '+ emoji_barata;

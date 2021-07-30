@@ -25,7 +25,7 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[qtd_emojis_erro]).toString();
 
         if(args.length < 1){
-            message.channel.send(`${message.author} informe o nome de alguma cidade para buscar\nPor exemplo como \`.at sao paulo\``);
+            message.lineReply(`${message.author} informe o nome de alguma cidade para buscar\nPor exemplo como \`.at sao paulo\``);
             return;
         }
 
@@ -42,7 +42,7 @@ module.exports = {
         .then(response => response.json())
         .then( async res => {
             if(res.cod == '404')
-                message.channel.send(emoji_nao_encontrado +` ${message.author} não encontrei nada relacionado com \``+ pesquisa +`\`, tente novamente`);
+                message.lineReply(emoji_nao_encontrado +` ${message.author} não encontrei nada relacionado com \``+ pesquisa +`\`, tente novamente`);
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
 
@@ -133,7 +133,7 @@ module.exports = {
 
                     );
 
-                    message.channel.send(cidade_encontrada);
+                    message.lineReply(cidade_encontrada);
                 });
             }
         });
