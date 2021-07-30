@@ -33,7 +33,7 @@ module.exports = {
         const embed_utilitarios = new MessageEmbed()
         .setTitle('Comandos Utilitários :compass:')
         .setColor(0x29BB8E)
-        .setDescription(":musical_note: **`.ash`** - Comandos musicais\n:ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de alguma cidade\n:sleeping: **`.afk`** | **`.afk jogando FF`** - Avisa outros membros caso marquem você")
+        .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de alguma cidade")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_jogos = new MessageEmbed()

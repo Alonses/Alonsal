@@ -2,7 +2,7 @@ module.exports = {
     name: "ping",
     description: "Veja seu ping local",
     aliases: [ "" ],
-    cooldown: 5,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
