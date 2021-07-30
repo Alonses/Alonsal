@@ -3,7 +3,7 @@ module.exports = {
     description: "Veja informações do tempo em alguma cidade",
     aliases: [ "tp", "t", "clima", "previsao" ],
     usage: "t Brasil",
-    cooldown: 2,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         

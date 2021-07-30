@@ -51,8 +51,8 @@ module.exports = {
                 }
             }
 
-            for(let i = 0; i < args[0]; i++){
-                dado.push(1 + Math.round(args[1] * Math.random()));
+            for(let i = 0; i < args[0]; i++){ // Rodar os dados
+                dado.push(1 + Math.round((args[1] - 1) * Math.random()));
             }
         }
 

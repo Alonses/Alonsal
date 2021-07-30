@@ -3,7 +3,7 @@ module.exports = {
     description: "Inverta ou desinverta caracteres",
     aliases: [ "rev", "inverso", "reverter" ],
     usage: "rev Alonsal",
-    cooldown: 5,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 

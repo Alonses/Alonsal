@@ -3,7 +3,7 @@ module.exports = {
     description: "Faça o Alonsal falar algo",
     aliases: [ "rep" ],
     usage: "rep <suamensagem>",
-    cooldown: 5,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
