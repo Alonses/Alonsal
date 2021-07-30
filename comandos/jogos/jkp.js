@@ -15,7 +15,7 @@ module.exports = {
             player = jooj.indexOf(args[0].toLowerCase());
 
         if(player === -1){
-            message.channel.send("Envie como `.ajkp papel` ou como `.ajkp` para uma partida randômica.");
+            message.lineReply("Envie como `.ajkp papel` ou como `.ajkp` para uma partida randômica.");
             return;
         }
 
@@ -33,6 +33,6 @@ module.exports = {
 
         const mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
 
-        message.channel.send(mensagem);
+        message.lineReply(mensagem);
     }
 };

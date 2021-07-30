@@ -20,7 +20,7 @@ module.exports = {
             escolha = args[0].toLowerCase();
 
         if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined") {
-            message.channel.send('Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!');
+            message.lineReply('Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!');
             return;
         }
         
@@ -30,8 +30,8 @@ module.exports = {
             emoji_exib = ":crown:";
 
         if(escolha === possibilidades[moeda])
-            message.channel.send("[ "+ emoji_exib +" ] Deu " + escolha + "! Você acertou! "+ emoji_dancando);
+            message.lineReply("[ "+ emoji_exib +" ] Deu " + escolha + "! Você acertou! "+ emoji_dancando);
         else
-            message.channel.send("[ "+ emoji_exib +" ] Deu " + possibilidades[moeda] + ", perdeu playboy "+ emoji_epic_embed_fail );
+            message.lineReply("[ "+ emoji_exib +" ] Deu " + possibilidades[moeda] + ", perdeu playboy "+ emoji_epic_embed_fail );
     }
 };

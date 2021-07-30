@@ -19,6 +19,6 @@ module.exports = {
         .setDescription("O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!")
         .setFooter('O jogo pode não rodar direito em celulares.');
         
-        message.channel.send(embed);
+        message.lineReply(embed);
     }
 };

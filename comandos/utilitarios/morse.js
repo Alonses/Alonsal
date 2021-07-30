@@ -68,7 +68,7 @@ module.exports = {
                 .setFooter(aviso)
                 .setDescription("`" + texto_ordenado + "`");
 
-            message.channel.send(`${message.author}`, embed);
+            message.lineReply(`${message.author}`, embed);
         }
     }
 };

@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if(content.length == 0){
-            message.channel.send("Sua mensagem está vazia, escreva algo para enviar");
+            message.lineReply(":warning: | Sua mensagem está vazia, escreva algo para enviar");
             return;
         }
 
@@ -33,7 +33,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.channel.send(`:octagonal_sign: ${message.author} há um erro em sua mensagem, tente novamente.`);
+                message.lineReply(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.");
                 return;
             }
 
@@ -90,18 +90,18 @@ module.exports = {
                         client.channels.cache.get(ids_canais_games[i]).send("<@&"+ ids_cargos_games[i] +">", msg_game);
                     }
                     
-                    message.channel.send(`${message.author} atualização enviada para todos os canais de games`);
+                    message.lineReply("A atualização foi enviada à todos os canais de games");
                 }else{
                     if(tipo === "u")
                         client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
                     else if(tipo === "c")
                         client.channels.cache.get(id_alvo).send(mensagem);
                     
-                    message.channel.send(`${message.author}`+ " mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:");
+                        message.lineReply("Mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:");
                 }
                 
             }catch(err){
-                message.channel.send(`:octagonal_sign: ${message.author} não foi possível enviar a mensagem para este ID`);
+                message.lineReply(`:octagonal_sign: | Não foi possível enviar a mensagem para este ID`);
                 return;
             }
         }else{
@@ -120,9 +120,9 @@ module.exports = {
 
             try{
                 client.channels.cache.get("847191471379578970").send(msg_user);
-                message.channel.send(`${message.author} mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
+                message.lineReply(`Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
             }catch(err){
-                message.channel.send(`:octagonal_sign: ${message.author} não foi possível enviar a mensagem sua mensagem no momento, tente novamente mais tarde`);
+                message.lineReply(`:octagonal_sign: | Não foi possível enviar a mensagem sua mensagem no momento, tente novamente mais tarde`);
                 return;
             }
         }
@@ -159,6 +159,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.channel.send(":tools: Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
+            message.lineReply(":tools: | Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
     }
 };

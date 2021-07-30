@@ -66,11 +66,11 @@ module.exports = {
         if(att_auto == 1)
             args[1]++;
         
-        let mensagem = 'foram rodados `'+ args[0] +'` dados com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
+        let mensagem = 'Foram rodados `'+ args[0] +'` dados com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
 
         if(args[0] == 1)
-            mensagem = 'foi rodado `'+ args[0] +'` dado com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
+            mensagem = 'Foi rodado `'+ args[0] +'` dado com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
         
-        message.channel.send(`:game_die: ${message.author}, `+ mensagem);
+        message.lineReply(":game_die: "+ mensagem);
     }
 };
