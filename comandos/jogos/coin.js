@@ -2,7 +2,6 @@ module.exports = {
     name: "moeda",
     description: "Cara ou coroa?",
     aliases: [ "co" ],
-    usage: "co cara",
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
@@ -20,7 +19,7 @@ module.exports = {
             escolha = args[0].toLowerCase();
 
         if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined") {
-            message.lineReply('Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!');
+            message.lineReply(':warning: | Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!');
             return;
         }
         
