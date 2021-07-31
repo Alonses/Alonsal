@@ -7,6 +7,9 @@ module.exports = {
     async execute(client, message, args) {
 
       const permissions = message.channel.permissionsFor(message.client.user);
+      const { emojis } = require('../../arquivos/json/text/emojis.json');
+
+      let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
 
       if(!permissions.has("MANAGE_MESSAGES")){ // Permissão para gerenciar mensagens
         message.lineReply(':octagonal_sign: | Eu não tenho permissão para gerenciar mensagens');
@@ -30,20 +33,20 @@ module.exports = {
 
       message.lineReply('Apagando `'+ args[0] +' '+ texto +'` em 2 segundos');
 
-      texto = "mensagens` foram removidas";
+      texto = "mensagens` foram removidas, aplicando alterações... "+ emoji_carregando;
 
       if(args[0] == 1)
-        texto = "mensagem` foi removida";
+        texto = "mensagem` foi removida, aplicando alterações... "+ emoji_carregando;
 
       setTimeout( async () => {
             message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
             message.channel.bulkDelete(parseInt(args[0]));
 
-            const m = await message.channel.send(`${message.author}, \``+ args[0] +' '+ texto +' :white_check_mark:');
+            const m = await message.channel.send(`${message.author}, \``+ args[0] +' '+ texto);
 
             setTimeout(() => {
               m.delete();
-            }, 3000);
+            }, 6000);
       }, 2000);
     }
 };
