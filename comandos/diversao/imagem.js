@@ -42,6 +42,17 @@ module.exports = {
             height = attachment.height;
             width = attachment.width;
             
+            if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp")){
+                const arquivo_invalido = new Discord.MessageAttachment(url);
+
+                let infos_adds = "";
+                if(message.attachments.size > 1)
+                    infos_adds = "\n\nAlguns dos seus arquivos podem não ter sido processados, devido à um arquivo inesperado, por favor, utilize o comando novamente.";
+
+                message.lineReply(':octagonal_sign: | Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)' + infos_adds, arquivo_invalido);
+                return;
+            }
+
             message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
 
             if(args[0] == "bw"){
