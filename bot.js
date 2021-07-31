@@ -37,7 +37,6 @@ client.on('message', message => {
 
     if(message.author.bot) return;
 
-    
     let content = message.content;
     
     if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){

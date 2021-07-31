@@ -36,7 +36,7 @@ module.exports = {
         texto = "mensagem` foi removida";
 
       setTimeout( async () => {
-            await message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
+            message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
             message.channel.bulkDelete(parseInt(args[0]));
 
             const m = await message.channel.send(`${message.author}, \``+ args[0] +' '+ texto +' :white_check_mark:');
