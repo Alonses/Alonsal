@@ -1,1 +1,0 @@
-// sync via mobile

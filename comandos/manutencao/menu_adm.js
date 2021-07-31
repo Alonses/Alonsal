@@ -16,7 +16,7 @@ module.exports = {
         const embed = new MessageEmbed()
         .setTitle('Comandos Moderativos :scroll:')
         .setColor(0x29BB8E)
-        .setDescription(emoji_dancando +' **`.addemoji `'+ emoji_dancando +'` dancando`** - Adiciona um emoji ao servidor\n'+ emoji_nao_encontrado +' **`.armoji `'+ emoji_nao_encontrado +'` `** - Remove um emoji do servidor\n')
+        .setDescription(emoji_dancando +' **`.addemoji `'+ emoji_dancando +'` dancando`** - Adiciona um emoji ao servidor\n'+ emoji_nao_encontrado +' **`.armoji `'+ emoji_nao_encontrado +'` `** - Remove um emoji do servidor\n:wastebasket: **`.acl 10`** - Remove várias mensagens de uma vez')
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         
         message.lineReply(embed);
