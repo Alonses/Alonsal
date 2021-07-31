@@ -1,0 +1,17 @@
+module.exports = {
+    name: "clear",
+    description: "apaga mensagens de chat",
+    aliases: [ "cl", "limpar", "apagar" ],
+    usage: "cl 20",
+    cooldown: 5,
+    permissions: [ "ADMINISTRATOR" ],
+    async execute(client, message, args) {
+
+    message.lineReply('Apagando '+ args[0] +' mensagens em 2 segundos');
+
+   setTimeout(() = {
+     message.channel.bulkDelete(args[0]);
+   }, 2000 );
+    
+    }
+};
