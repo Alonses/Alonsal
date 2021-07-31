@@ -14,6 +14,7 @@ client.on("ready", async () => {
 
     require("./adm/status.js")({client});
 
+    // Configurando o wax e salvando os comandos para uso posterior
     let commandConfig = new handler.CommandConfig(
         client,
         prefix,
@@ -23,7 +24,7 @@ client.on("ready", async () => {
         "o uso correto deste comando é `"+ prefix +"%USAGE%`");
     
     handler.setup(commandConfig);
-
+    
     for(let i = 0; i < pastas.length; i++){
         for(const file of readdirSync(__dirname + `/comandos/${pastas[i]}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${pastas[i]}/${file}`);
@@ -39,21 +40,21 @@ client.on('message', message => {
 
     let content = message.content;
     
-    if(content.includes("833349943539531806") && !message.author.bot){
+    if(content.includes("833349943539531806")){ // Responde mensagens que é marcado
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
         message.channel.send(ping_me_gif[ping_me]);
         return;
     }
 
     if(content !== prefix && content.includes(prefix)) // Previne que comandos sem aliases sejam acionados
-        handler.messageReceived(message);
+        handler.messageReceived(message); // Invoca o comando
     else{
         if(content === prefix)
             require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
         return;
     }
 
-    if(content.startsWith(prefix))
+    if(content.startsWith(prefix)) // Registra num log todos os comandos
         require('./adm/log.js')({client, message, content});
 });
 
