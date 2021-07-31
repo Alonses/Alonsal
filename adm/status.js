@@ -24,7 +24,7 @@ module.exports = async ({client}) => {
         "Mesas p/ cima",
         "Baidu premium em servidores",
         ".ah | .ajuda",
-        "Código morse para o mundo",
+        "Imagens em preto e branco",
         "Bugs infinitos no sistema",
         "Vapor p/ fora!"
     ];

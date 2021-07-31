@@ -1,20 +1,34 @@
-const { DiscordAPIError } = require('discord.js');
-
 module.exports = {
     name: "imagem",
     description: "Edite imagens através de comandos",
-    aliases: [ "img", "edit", "dit" ],
+    aliases: [ "img", "edit", "dit", "i", "ih" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
   
+        const Discord = require('discord.js');
+        const Canvas = require('canvas');
+
         const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
         let emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
+        if(message.content == ".aih"){
+
+            const embed_imagens = new Discord.MessageEmbed()
+            .setTitle('Manipulação de Ibagens :frame_photo:')
+            .setColor(0x29BB8E)
+            .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
+            .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancante +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !")
+            .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
+            
+            message.lineReply(embed_imagens);
+            return; 
+        }
+
         if(message.attachments.size < 1){
-            message.lineReply(':warning: | Insira uma imagem junto do comando para poder editar ela');
+            message.lineReply(':warning: | Insira uma imagem junto do comando e seu efeito para poder editar ela\nPor exemplo, `.ai bw <img>`\n\nVocê pode ver todos os estilos usando o comando `.aih`');
             return;
         }
 
@@ -23,17 +37,14 @@ module.exports = {
             return;
         }
 
-        if(args[0] == "bw"){
+        message.attachments.forEach(async attachment => {
+            url = attachment.url;
+            height = attachment.height;
+            width = attachment.width;
+            
             message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
 
-            const Discord = require('discord.js');
-            const Canvas = require('canvas');
-
-            message.attachments.forEach(async attachment => {
-                url = attachment.url;
-                height = attachment.height;
-                width = attachment.width;
-
+            if(args[0] == "bw"){
                 if(height == 4000 && width == 1894){
                     let inverte = width;
                     width = height;
@@ -63,8 +74,9 @@ module.exports = {
                 const imagem_editada = new Discord.MessageAttachment(canvas.toBuffer(), 'new_image.png');
 
                 message.lineReply('', imagem_editada);
-            });
-        }else
-            message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
+
+            }else
+                message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
+        });
     }
 };

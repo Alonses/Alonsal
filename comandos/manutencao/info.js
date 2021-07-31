@@ -1,7 +1,7 @@
 module.exports = {
     name: "info",
     description: "Informações secundárias do alonsal",
-    aliases: [ "i" ],
+    aliases: [ "" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
