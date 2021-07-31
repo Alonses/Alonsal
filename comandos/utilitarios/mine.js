@@ -9,7 +9,6 @@ module.exports = {
         const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
         const { lista_itens } = require("../../arquivos/json/dados/itens_mine.json");
         const { MessageEmbed } = require('discord.js');
-        const fetch = require('node-fetch');
         let pesquisa = "";
 
         emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
@@ -17,6 +16,8 @@ module.exports = {
         args.forEach(value => {
             pesquisa += value + " ";
         });
+        
+        let nome_interno = pesquisa.slice(0, -1).split(" ").join("_"); // Pesquisa usando nome em inglês/interno
 
         if(pesquisa.includes("ardosia"))
             pesquisa = pesquisa.replace("ardosia", "ardósia");
@@ -30,7 +31,7 @@ module.exports = {
             random = true;
 
         for(var i = 0; i < lista_itens.length; i++){
-            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random){
+            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno){
                 
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
