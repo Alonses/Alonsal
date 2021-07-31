@@ -24,7 +24,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:information_source: - `Informações do Alonsal`")
+        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:frame_photo: - `Manipulação de imagens`\n\n:information_source: - `Informações do Alonsal`")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -36,7 +36,7 @@ module.exports = {
         const embed_utilitarios = new MessageEmbed()
         .setTitle('Comandos Utilitários :compass:')
         .setColor(0x29BB8E)
-        .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft")
+        .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft\n:frame_photo: **`.aih`** - Comandos de imagens")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_jogos = new MessageEmbed()
@@ -48,7 +48,14 @@ module.exports = {
         const embed_manutencao = new MessageEmbed()
         .setTitle('Manutenção do Alonsal :tools:')
         .setColor(0x29BB8E)
-        .setDescription(":information_source: **`.ainfo`** | **`.ai`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal")
+        .setDescription(":information_source: **`.ainfo`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal")
+        .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
+
+        const embed_imagens = new MessageEmbed()
+        .setTitle('Manipulação de Ibagens :frame_photo:')
+        .setColor(0x29BB8E)
+        .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
+        .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancando +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !\n\n:man_tipping_hand: _DICA - Você pode abrir este menu utilizando o comando `.aih`_")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_infos = new MessageEmbed()
@@ -58,21 +65,17 @@ module.exports = {
         .setDescription('Este bot é patrocinado por Baidu e Renato\'s lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.\n'+ emoji_rainha +' **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal.\n'+ emoji_bolo +' **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n[ _Versão '+ version + '_ ]')
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
 
-        const embed_musical = new MessageEmbed()
-        .setTitle('Comandos Musicais :musical_note:')
-        .setColor(0x29BB8E)
-        .setDescription("**Atenção: Por enquanto só aceito URL's do Youtube**\n-----------------------------\n:postal_horn: **`.as url`** | **`.as`** - Entra num canal de voz e toca um url\n:mag: **`.as finca chimia`** - Pesquisa por um vídeo no Ytb\n:page_with_curl: **`.aspl`** - Mostra a playlist atual\n:pause_button: **`.asp`** - Pausa a reprodução\n:arrow_forward: **`.asr`** - Resume a reprodução\n:fast_forward: **`.assk`** | **`.assk 5`** - Pula a faixa que está tocando/ou para a n° faixa\n:track_next: **`.assk all`** - Pula todas as faixas\n:repeat: **`.asrp`** - Ativa/desativa o repeteco\n:loudspeaker: **`.asfd`** - Ativa/desativa o anúncio de faixas\n:radio: **`.asnp`** - Informações da faixa atual\n:wastebasket: **`.asrm 5`** | **`.asrm all`** - Remove uma ou todas as faixas da playlist\n:wave: **`.asds`** - Desconecta o Alonsal do canal de voz\n:cd: **`.asra ms`** | **`.asra ms 10`** - Escolhe uma ou várias músicas aleatórias\n:cd: **`.asra me`** | **`.asra me 10`** - Escolhe uma ou várias músicas aleatórias zueiras\n:cd: **`.asra jg`** | **`.asra jg 10`** - Escolhe uma ou várias trilhas sonoras de jogos\n:cd: **`.asra op`** | **`.asra op 10`** - Escolhe uma ou várias músicas clássicas");
-
         pages = [
             embed_inicial,
             embed_diversao,
             embed_utilitarios,
             embed_jogos,
             embed_manutencao,
+            embed_imagens,
             embed_infos
         ];
 
-        emojiList = ['🤪', '🧭', '⛳', '🛠️', 'ℹ️'];
+        emojiList = ['🤪', '🧭', '⛳', '🛠️', '🖼️', 'ℹ️'];
         
         let mensagem = await message.channel.send(embed_inicial);
 
@@ -81,7 +84,7 @@ module.exports = {
         }
 
         const filter = (reaction, user) => {
-            return ['🤪', '🧭', '⛳', '🛠️', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
+            return ['🤪', '🧭', '⛳', '🛠️', '🖼️', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
         };
 
         aguardar_reacao(mensagem);
