@@ -39,7 +39,7 @@ client.on('message', message => {
 
     let content = message.content;
     
-    if((content === "<@833349943539531806>" || content === "<@!833349943539531806>") && !message.author.bot){
+    if(content.includes("833349943539531806") && !message.author.bot){
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
         message.channel.send(ping_me_gif[ping_me]);
         return;

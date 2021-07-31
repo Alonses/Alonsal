@@ -16,8 +16,8 @@ module.exports = {
         args.forEach(value => {
             pesquisa += value + " ";
         });
-        
-        let nome_interno = pesquisa.slice(0, -1).split(" ").join("_"); // Pesquisa usando nome em inglês/interno
+
+        let nome_interno = pesquisa.slice(0, -1).split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
 
         if(pesquisa.includes("ardosia"))
             pesquisa = pesquisa.replace("ardosia", "ardósia");
