@@ -24,7 +24,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:frame_photo: - `Manipulação de imagens`\n\n:information_source: - `Informações do Alonsal`")
+        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:frame_photo: - `Manipulação de imagens`\n\n:information_source: - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -55,9 +55,9 @@ module.exports = {
         .setTitle('Manipulação de Ibagens :frame_photo:')
         .setColor(0x29BB8E)
         .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-        .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancando +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !\n\n:man_tipping_hand: _DICA - Você pode abrir este menu utilizando o comando `.aih`_")
+        .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancando +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !\n\n:man_tipping_hand: | _Você pode abrir este menu com o comando `.aih`_")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
-
+        
         const embed_infos = new MessageEmbed()
         .setTitle('Patinando entre as linhas bugadas :man_golfing:')
         .setColor(0x29BB8E)
