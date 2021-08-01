@@ -7,6 +7,12 @@ const { ping_me_gif } = require('./arquivos/json/gifs/ping_me.json');
 let { token, prefix, pastas } = require('./config.json');
 const client = new discord.Client();
 
+let ultima_message;
+
+function alerta_user(){ // Método rutes
+    ultima_message.lineReply(':octagonal_sign: | O limite de emojis foi atingido, remova alguns para poder adicionar novos');
+};
+
 // (client: Discord.Client, prefix: string, ignore_bot: boolean, cooldown_message: string, permission_message: string, wrong_usage_message: string)
 client.on("ready", async () => {
 
@@ -54,6 +60,8 @@ client.on('message', message => {
         return;
     }
 
+    ultima_message = message;
+
     if(content.startsWith(prefix)) // Registra num log todos os comandos
         require('./adm/log.js')({client, message, content});
 });
@@ -66,6 +74,10 @@ client.on("guildCreate", guild => {
 client.on("guildDelete", guild => {
     let caso = 'Left';
     require("./adm/servers.js")({client, caso, guild});
+});
+
+process.on('unhandledRejection', res => { // Notifica em caso de erro por limite de emojis atingidos
+    alerta_user();
 });
 
 client.login(token);
