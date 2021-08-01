@@ -27,13 +27,18 @@ module.exports = {
             return; 
         }
 
+        if(args.length < 1){ // Sem o estilo descrito
+            message.lineReply(':warning: | Insira um estilo de edição para sua imagem\nPor exemplo, `.adit bw <imagem>`');
+            return;
+        }
+
         if(message.attachments.size < 1){
             message.lineReply(':warning: | Insira uma imagem junto do comando e seu efeito para poder editar ela\nPor exemplo, `.ai bw <img>`\n\nVocê pode ver todos os estilos usando o comando `.aih`');
             return;
         }
 
-        if(args.length < 1){
-            message.lineReply(':warning: | Insira um estilo de edição para sua imagem\nPor exemplo, `.adit bw <imagem>`');
+        if(message.attachments.size > 3){ // Quantidade > 3
+            message.lineReply(':octagonal_sign: | Não é possível editar mais que três imagens por vez, diminua a quantidade e tente novamente');
             return;
         }
 
@@ -55,20 +60,32 @@ module.exports = {
                 return;
             }
 
-            if(args[0] == "bw"){
-                if(height == 4000 && width == 1894){
-                    let inverte = width;
-                    width = height;
-                    height = inverte;
+            if(height > 4500 || width > 4500){ // Verificando se a imagem possui muitos pixeis
+                message.lineReply(':octagonal_sign: | Por favor, envie imagens com menos pixels!');
+                return;
+            }
+
+            if(height >= 4000 && width == 1894){ // Verificando se a imagem é muito grande e se existem vários arquivos
+                if(message.attachments.size > 1){
+                    message.lineReply(':octagonal_sign: | Por favor, envie apenas uma imagem grande por vez');
+                    return;
                 }
 
-                const canvas = Canvas.createCanvas(width, height);
-                const context = canvas.getContext('2d');
+                let inverte = width;
+                width = height;
+                height = inverte;
+            }
 
-                const background = await Canvas.loadImage(url);
+            // Criando o canvas e desenhando a imagem recebida nele
+            const canvas = Canvas.createCanvas(width, height);
+            const context = canvas.getContext('2d');
+
+            const background = await Canvas.loadImage(url);
+
+            if(args[0] == "bw"){ // Filtro de Branco e Preto
 
                 context.drawImage(background, 0, 0, canvas.width, canvas.height);
-                
+
                 let imgData = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
                 let pixels = imgData.data;
                 for (var i = 0; i < pixels.length; i += 4) {
@@ -85,9 +102,9 @@ module.exports = {
                 const imagem_editada = new Discord.MessageAttachment(canvas.toBuffer(), 'new_image.png');
 
                 message.lineReply('', imagem_editada);
-
             }else
                 message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
+                return;
         });
     }
 };
