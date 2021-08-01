@@ -28,5 +28,5 @@ module.exports = {
             
             message.lineReply(embed);
         });
-    } 
+    }
 };
