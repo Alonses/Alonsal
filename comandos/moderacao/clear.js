@@ -5,48 +5,48 @@ module.exports = {
     cooldown: 3,
     permissions: [ "ADMINISTRATOR" ],
     async execute(client, message, args) {
+  
+        const permissions = message.channel.permissionsFor(message.client.user);
+        const { emojis } = require('../../arquivos/json/text/emojis.json');
 
-      const permissions = message.channel.permissionsFor(message.client.user);
-      const { emojis } = require('../../arquivos/json/text/emojis.json');
-
-      let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
-
-      if(!permissions.has("MANAGE_MESSAGES")){ // Permissão para gerenciar mensagens
-        message.lineReply(':octagonal_sign: | Eu não tenho permissão para gerenciar mensagens');
-        return;
-      }
-
-      let texto = "mensagens";
-
-      if(args.length != 1 || isNaN(args[0])){
-        message.lineReply("Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`");
-        return;
-      }
-
-      if(args[0] < 1 || args[0] > 100){
-        message.lineReply(':warning: | Informe um número entre `0` e `100` para remover');
-        return;
-      }
-
-      if(args[0] == 1)
-        texto = "mensagem";
-
-      message.lineReply('Apagando `'+ args[0] +' '+ texto +'` em 2 segundos');
-
-      texto = "mensagens` foram removidas, aplicando alterações... "+ emoji_carregando;
-
-      if(args[0] == 1)
-        texto = "mensagem` foi removida, aplicando alterações... "+ emoji_carregando;
-
-      setTimeout( async () => {
-            message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
-            message.channel.bulkDelete(parseInt(args[0]));
-
+        let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
+        
+        if(!permissions.has("MANAGE_MESSAGES")){ // Permissão para gerenciar mensagens
+            message.lineReply(':octagonal_sign: | Eu não tenho permissão para gerenciar mensagens');
+            return;
+        }
+    
+        let texto = "mensagens";
+    
+        if(args.length != 1 || isNaN(args[0])){
+            message.lineReply("Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`");
+            return;
+        }
+    
+        if(args[0] < 1 || args[0] > 100){
+            message.lineReply(':warning: | Informe um número entre `0` e `100` para remover');
+            return;
+        }
+    
+        if(args[0] == 1)
+            texto = "mensagem";
+    
+        message.lineReply('Apagando `'+ args[0] +' '+ texto +'` em 2 segundos');
+    
+        texto = "mensagens` foram removidas, aplicando alterações... "+ emoji_carregando;
+    
+        if(args[0] == 1)
+            texto = "mensagem` foi removida, aplicando alterações... "+ emoji_carregando;
+    
+        message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
+        message.channel.bulkDelete(parseInt(args[0]));
+    
+        setTimeout(async () => {
             const m = await message.channel.send(`${message.author}, \``+ args[0] +' '+ texto);
 
             setTimeout(() => {
-              m.delete();
-            }, 6000);
-      }, 2000);
+                m.delete();
+            }, 4000);
+        }, 2000);
     }
 };

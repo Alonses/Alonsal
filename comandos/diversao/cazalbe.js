@@ -6,6 +6,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
+        message.delete();
+        
         const { gifs } = require("../../arquivos/json/gifs/cazalbe.json");
 
         let num = Math.round((gifs.length - 1) * Math.random());
