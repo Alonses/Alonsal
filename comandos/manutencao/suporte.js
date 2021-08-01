@@ -14,7 +14,7 @@ module.exports = {
         }
 
         let vergonha = emoji(emojis.vergonha);
-        let bolo = emoji(emojis.bolo);
+        let bolo = emoji(emojis.mc_bolo);
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)

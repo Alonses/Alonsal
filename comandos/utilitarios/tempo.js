@@ -21,8 +21,8 @@ module.exports = {
 
         let pesquisa = "";
 
-        const qtd_emojis_erro = Math.round((emojis_negativos.length - 1) * Math.random());
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[qtd_emojis_erro]).toString();
+        const num_esc = Math.round((emojis_negativos.length - 1) * Math.random());
+        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[num_esc]).toString();
 
         if(args.length < 1){
             message.lineReply(":warning: | Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`");

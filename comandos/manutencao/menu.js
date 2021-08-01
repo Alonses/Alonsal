@@ -15,8 +15,8 @@ module.exports = {
         }
 
         let emoji_pula = emoji(emojis.pula);
-        let emoji_rainha = emoji(emojis.elizabeth);
-        let emoji_bolo = emoji(emojis.bolo);
+        let emoji_rainha = emoji(emojis.dancando_elizabeth);
+        let emoji_bolo = emoji(emojis.mc_bolo);
         let emoji_mc = emoji(emojis.mc_earth);
 
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();

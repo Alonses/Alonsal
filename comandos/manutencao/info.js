@@ -10,8 +10,8 @@ module.exports = {
         const { version } = require('../../config.json');
         const { emojis } = require('../../arquivos/json/text/emojis.json');
 
-        emoji_rainha = client.emojis.cache.get(emojis.elizabeth).toString();
-        emoji_bolo = client.emojis.cache.get(emojis.bolo).toString();
+        emoji_rainha = client.emojis.cache.get(emojis.dancando_elizabeth).toString();
+        emoji_bolo = client.emojis.cache.get(emojis.mc_bolo).toString();
 
         const embed = new MessageEmbed()
         .setTitle('Patinando entre as linhas bugadas :man_golfing:')
