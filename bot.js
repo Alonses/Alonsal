@@ -39,8 +39,8 @@ client.on('message', message => {
     if(message.author.bot) return;
 
     let content = message.content;
-    
-    if(content.includes("833349943539531806")){ // Responde mensagens que é marcado
+
+    if(content.includes("<@833349943539531806>") || content.includes("<@!833349943539531806>")){ // Responde mensagens que é marcado
         const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
         message.channel.send(ping_me_gif[ping_me]);
         return;
