@@ -10,7 +10,11 @@ module.exports = {
 
         const { MessageEmbed } = require("discord.js")
         
-        const user = message.mentions.users.first() || message.author;
+        if(!isNaN(args[0])) // Coleta por ID numérico no chat
+            user = client.users.cache.get(args[0]);
+        else
+            user = message.mentions.users.first() || message.author;
+
         let avatar = user.displayAvatarURL({ size: 512 }); 
         
         url = 'https://cdn.discordapp.com/avatars/'+ user.id +'/'+ user.avatar +'.gif?size=512';
