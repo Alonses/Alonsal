@@ -7,17 +7,12 @@ module.exports = {
     async execute(client, message, args) {
   
         const permissions = message.channel.permissionsFor(message.client.user);
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
 
-        let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
-        
         if(!permissions.has("MANAGE_MESSAGES")){ // Permissão para gerenciar mensagens
             message.lineReply(':octagonal_sign: | Eu não tenho permissão para gerenciar mensagens');
             return;
         }
-    
-        let texto = "mensagens";
-    
+
         if(args.length != 1 || isNaN(args[0])){
             message.lineReply("Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`");
             return;
@@ -28,25 +23,18 @@ module.exports = {
             return;
         }
     
-        if(args[0] == 1)
-            texto = "mensagem";
-    
-        message.lineReply('Apagando `'+ args[0] +' '+ texto +'` em 2 segundos');
-    
-        texto = "mensagens` foram removidas, aplicando alterações... "+ emoji_carregando;
+        texto = "mensagens` foram removidas";
     
         if(args[0] == 1)
-            texto = "mensagem` foi removida, aplicando alterações... "+ emoji_carregando;
+            texto = "mensagem` foi removida";
     
-        message.channel.bulkDelete(2); // apaga a mensagem do comando e o aviso
-        message.channel.bulkDelete(parseInt(args[0]));
-    
-        setTimeout(async () => {
-            const m = await message.channel.send(`${message.author}, \``+ args[0] +' '+ texto);
+        message.delete() // apaga a mensagem do comando
+        message.channel.bulkDelete(parseInt(args[0])); // Apaga as mensagens restantes aos lotes
+        
+        const m = await message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto, );
 
-            setTimeout(() => {
-                m.delete();
-            }, 4000);
-        }, 2000);
+        setTimeout(() => {
+            m.delete();
+        }, 3000);
     }
 };
