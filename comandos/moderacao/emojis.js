@@ -2,7 +2,7 @@ module.exports = {
     name: "Emojis",
     description: "Adicione e remova emojis",
     aliases: [ "moji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
-    cooldown: 3,
+    cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
@@ -48,16 +48,17 @@ module.exports = {
             message.lineReply(":octagonal_sign: | Você não possui permissões para gerenciar emojis neste servidor");
             return;
         }
-
-        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){ // Verificar permissões do bot  
+        
+        // Verificar permissões do bot
+        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){  
 
             let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
-            if (!match && args.length > 0)
-            return message.lineReply(":octagonal_sign: | Inclua um emoji customizado em seu comando! :P");
-
+            if (!match && args.length > 0 && !message.content.includes("https://cdn.discordapp.com/emojis"))
+                return message.lineReply(":octagonal_sign: | Inclua um emoji customizado em seu comando! :P");
+            
             if(message.content.startsWith(".addemoji") || message.content.startsWith(".adicionaremoji")){
-                
-                if(args.length < 2 && !message.content.includes("https://cdn.discordapp.com/emojis")){
+
+                if(args.length != 2 && !message.content.includes("https://cdn.discordapp.com/emojis")){
                     message.lineReply(":warning: | Insira um emoji e o nome dele\nPor exemplo, `.addemoji `"+ emoji_dancando +"` requebrando`");
                     return;
                 }
@@ -77,6 +78,11 @@ module.exports = {
 
                     message.lineReply(`${novo_emoji} | O Emoji foi adicionado!`);
                 });
+
+                process.on('unhandledRejection', () => { // Notifica em caso de erro por limite atingido
+                    message.lineReply(':octagonal_sign: | O limite de emojis foi atingido, remova alguns para poder adicionar novos');
+                    return;
+                });
             }
             
             // Remover emojis
@@ -86,19 +92,24 @@ module.exports = {
                     return;
                 }
 
-                try{
-                    emoji = client.emojis.cache.get(match[3]).toString();
-                }catch(err){
-                    message.lineReply(":warning: | Informe um emoji customizado deste servidor para ser removido");
+                emoji = client.emojis.cache.get(match[3]);
+               
+                process.on('unhandledRejection', () => { // Notifica em caso de erro por emoji inválido
+                    message.lineReply(':warning: | Informe um emoji customizado deste servidor para ser removido');
+                    return;
+                });
+
+                if(typeof emoji.guild.id == "undefined") // Evita mensagens duplicadas
+                    return;
+                
+                if(message.guild.id != emoji.guild.id){ // Verifica se o emoji é de outro servidor e cancela operação
+                    message.lineReply(':warning: | Informe um emoji customizado deste servidor para ser removido');
                     return;
                 }
 
-                const emoji_alvo = client.emojis.cache.find(emoji => emoji.name === match[2]);
-
-                emoji_alvo.delete().then(() => {
-                    message.lineReply(`:wastebasket: | O Emoji foi removido do servidor`);
+                emoji.delete().then(() => {
+                    message.lineReply(':wastebasket: | O Emoji foi removido do servidor');
                 });
-                
             }
         }else
             message.lineReply(":octagonal_sign: | Eu não possuo permissões para gerenciar emojis neste servidor \':(");
