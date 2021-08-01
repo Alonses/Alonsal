@@ -12,7 +12,7 @@ module.exports = {
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-
+        
         if(message.content.includes(".amoji")){
             if(typeof args[0] !== "undefined"){
                 let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
@@ -78,11 +78,6 @@ module.exports = {
 
                     message.lineReply(`${novo_emoji} | O Emoji foi adicionado!`);
                 });
-
-                process.on('unhandledRejection', () => { // Notifica em caso de erro por limite atingido
-                    message.lineReply(':octagonal_sign: | O limite de emojis foi atingido, remova alguns para poder adicionar novos');
-                    return;
-                });
             }
             
             // Remover emojis
@@ -93,25 +88,17 @@ module.exports = {
                 }
 
                 emoji = client.emojis.cache.get(match[3]);
-               
-                process.on('unhandledRejection', () => { // Notifica em caso de erro por emoji inválido
-                    message.lineReply(':warning: | Informe um emoji customizado deste servidor para ser removido');
-                    return;
-                });
-
-                if(typeof emoji.guild.id == "undefined") // Evita mensagens duplicadas
-                    return;
                 
-                if(message.guild.id != emoji.guild.id){ // Verifica se o emoji é de outro servidor e cancela operação
+                if(typeof emoji == "undefined" || message.guild.id != emoji.guild.id){ // Evita mensagens duplicadas
                     message.lineReply(':warning: | Informe um emoji customizado deste servidor para ser removido');
                     return;
                 }
-
+                
                 emoji.delete().then(() => {
                     message.lineReply(':wastebasket: | O Emoji foi removido do servidor');
                 });
             }
         }else
-            message.lineReply(":octagonal_sign: | Eu não possuo permissões para gerenciar emojis neste servidor \':(");
+            message.lineReply(":octagonal_sign: | Eu não possuo permissões para `gerenciar emojis` neste servidor \':(");
     }
 };
