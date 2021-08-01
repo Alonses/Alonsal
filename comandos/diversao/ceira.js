@@ -6,6 +6,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
+        message.delete();
+        
         const { MessageAttachment } = require('discord.js');
 
         const ceira = new MessageAttachment('arquivos/img/ceira.png');
