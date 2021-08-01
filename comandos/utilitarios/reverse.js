@@ -10,7 +10,7 @@ module.exports = {
         const { MessageEmbed } = require('discord.js');
 
         if(args.length != 0){
-            ordena = "";
+            let ordena = "";
 
             for(var x = 0; x < args.length; x++){
                 ordena += args[x] + " ";
@@ -18,7 +18,7 @@ module.exports = {
 
             ordena = ordena.slice(0, -1).toLowerCase();
 
-            texto = ordena.split('');
+            let texto = ordena.split('');
             texto = texto.reverse();
 
             var texto_ordenado = "";

@@ -55,27 +55,27 @@ module.exports = {
                     }
                     
                     if(args[4].includes("epicgames.com")){
-                        logo_plat = emoji(emojis.epicgames);
+                        logo_plat = emoji(emojis.lg_epicgames);
                         plataforma = "Epic";
                     }
 
                     if(args[4].includes("store.steam")){
-                        logo_plat = emoji(emojis.steam);
+                        logo_plat = emoji(emojis.lg_steam);
                         plataforma = "Steam";
                     }
 
                     if(args[4].includes("gog.com")){
-                        logo_plat = emoji(emojis.gog);
+                        logo_plat = emoji(emojis.lg_gog);
                         plataforma = "GOG";
                     }
 
                     if(args[4].includes("humblebundle.com")){
-                        logo_plat = emoji(emojis.humble);
+                        logo_plat = emoji(emojis.lg_humble);
                         plataforma = "Humble Bundle";
                     }
 
                     if(args[4].includes("ubisoft.com")){
-                        logo_plat = emoji(emojis.ubisoft);
+                        logo_plat = emoji(emojis.lg_ubisoft);
                         plataforma = "Ubisoft";
                     }
 

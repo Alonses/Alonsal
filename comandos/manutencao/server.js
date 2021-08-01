@@ -7,12 +7,8 @@ module.exports = {
     async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
-
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-        
-        let emoji_rainha = emoji('854830529928757269');
+   
+        let emoji_rainha = client.emojis.cache.get('854830529928757269').toString();
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)

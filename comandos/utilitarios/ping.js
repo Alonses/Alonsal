@@ -12,9 +12,9 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        emoji_barata = emoji(emojis.barata);
-        emoji_steve = emoji(emojis.steve_dancando);
-        emoji_pare = emoji(emojis.pare_agr);
+        const emoji_barata = emoji(emojis.barata);
+        const emoji_steve = emoji(emojis.dancando_steve);
+        const emoji_pare = emoji(emojis.pare_agr);
 
         const m = await message.lineReply("Ping?");
         let delay = m.createdTimestamp - message.createdTimestamp;
