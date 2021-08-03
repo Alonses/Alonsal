@@ -13,10 +13,16 @@ module.exports = {
         let texto;
         let ordena = "";
         let tipo_texto = 0;
+        let reverso = false;
 
         if(args.length > 0){
             for(let x = 0; x < args.length; x++){
                 ordena += args[x] + " ";
+            }
+
+            if(ordena.indexOf("rev") !== -1){
+                ordena = ordena.replace("rev ", "");
+                reverso = true;
             }
 
             // Remove o último espaço
@@ -40,13 +46,20 @@ module.exports = {
                         texto[carac] = Object.keys(binario).find(key => binario[key] === texto[carac]);
                 }
             }
-            
+
+            if(reverso) // Inverte os caracteres
+                texto = texto.reverse();
+
             // Montando 
             var texto_ordenado = "";
             for(let i = 0; i < texto.length; i++){
-                texto_ordenado += texto[i];
-            }
 
+                texto_ordenado += texto[i];
+                
+                if(reverso && tipo_texto == 0 && i == 0)
+                    texto_ordenado += " ";
+            }
+            
             let titulo = ":one: Sua mensagem codificada em binário";
 
             if(tipo_texto == 1)
