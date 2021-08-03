@@ -52,9 +52,11 @@ client.on('message', message => {
         return;
     }
 
-    if(content !== prefix && content.includes(prefix)) // Previne que comandos sem aliases sejam acionados
+    if(content !== prefix && content.includes(prefix)){ // Previne que comandos sem aliases sejam acionados
+        console.log("Comando exec: "+ content); // Temporário
+
         handler.messageReceived(message); // Invoca o comando
-    else{
+    }else{
         if(content === prefix)
             require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
         return;
