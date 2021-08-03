@@ -30,7 +30,7 @@ module.exports = {
         const embed_diversao = new MessageEmbed()
         .setTitle('Comandos Divertidos :zany_face:')
         .setColor(0x29BB8E)
-        .setDescription(":innocent: **`.apaz`** | **`.apz`** - União\n:yum: **`.asfiha`** | **`.asf`** - Servidos?\n:rage: **`.abriga`** | **`.ab`** - Porradaria!\n:cow: **`.agado @Alonsal`** | **`.aga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`.amor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`.abaidu`** - Louvado seja!\n:chess_pawn: **`.apiao`** - Roda o pião Dona Maria!\n:blue_book: **`.acurio`** | **`.ac`** - Uma curiosidade aleatória\n:black_joker: **`.ajoke`** | **`.aj`** - Invoca uma piada\n:clown: **`.acazalbe`** | **`.acaz`** - Cazalbe!")
+        .setDescription(":innocent: **`.apaz`** | **`.apz`** - União\n:yum: **`.asfiha`** | **`.asf`** - Servidos?\n:rage: **`.abriga`** | **`.ab`** - Porradaria!\n:cow: **`.agado @Alonsal`** | **`.aga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`.amor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:bust_in_silhouette: **`.avatar`** | **`.avatar <@>`** - Ver seu avatar ou de outro usuário\n:raised_hands: **`.abaidu`** - Louvado seja!\n:chess_pawn: **`.apiao`** - Roda o pião Dona Maria!\n:blue_book: **`.acurio`** | **`.ac`** - Uma curiosidade aleatória\n:black_joker: **`.ajoke`** | **`.aj`** - Invoca uma piada\n:clown: **`.acazalbe`** | **`.acaz`** - Cazalbe!")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_utilitarios = new MessageEmbed()
@@ -75,7 +75,7 @@ module.exports = {
             embed_infos
         ];
 
-        emojiList = ['🤪', '🧭', '⛳', '🛠️', '🖼️', 'ℹ️'];
+        emojiList = ['◀️', '▶️'];
         
         let mensagem = await message.channel.send(embed_inicial);
 
@@ -84,8 +84,10 @@ module.exports = {
         }
 
         const filter = (reaction, user) => {
-            return ['🤪', '🧭', '⛳', '🛠️', '🖼️', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
+            return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
         };
+
+        let embed_atual = 0;
 
         aguardar_reacao(mensagem);
 
@@ -94,13 +96,20 @@ module.exports = {
             if(typeof limpa_reacoes != "undefined")
                 clearTimeout(limpa_reacoes);
 
-            mensagem.awaitReactions(filter, { max: 1, time: 20000, errors: ['time'] })
+            mensagem.awaitReactions(filter, { max: 1, time: 10000, errors: ['time'] })
             .then(collected => {
                 const reaction = collected.first();
 
-                let embed_escolhido = emojiList.indexOf(reaction.emoji.name) + 1; // Escolhe o embed para exibir
-                mensagem.edit(pages[embed_escolhido]);
-            
+                if(reaction.emoji.name == "▶️")
+                    if(embed_atual < pages.length - 1)
+                        embed_atual++;
+                
+                if(reaction.emoji.name == "◀️")
+                    if(embed_atual >= 1)
+                        embed_atual--;
+                
+                mensagem.edit(pages[embed_atual]);
+
                 const userReactions = mensagem.reactions.cache.filter(reaction => reaction.users.cache.has(message.author.id));
 
                 for (const reaction of userReactions.values()) {
