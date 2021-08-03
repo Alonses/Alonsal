@@ -46,9 +46,16 @@ client.on('message', message => {
 
     let content = message.content;
 
+    const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
+
+    let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+
     if(content.includes("<@833349943539531806>") || content.includes("<@!833349943539531806>")){ // Responde mensagens que é marcado
-        const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
-        message.channel.send(ping_me_gif[ping_me]);
+        
+        message.lineReply(dancando +' | Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D');
+
+        // const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
+        // message.channel.send(ping_me_gif[ping_me]);
         return;
     }
 
