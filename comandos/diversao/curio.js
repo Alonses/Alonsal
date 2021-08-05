@@ -11,7 +11,7 @@ module.exports = {
         
         let key = Object.keys(curiosidades[num]);
 
-        message.channel.send(":clipboard: "+ key);
+        message.channel.send(":clipboard: | "+ key);
         
         if(curiosidades[num][key] !== null)
             message.channel.send(curiosidades[num][key]);

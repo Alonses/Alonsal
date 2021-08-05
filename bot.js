@@ -3,17 +3,12 @@ const discord = require("discord.js");
 require('discord-reply');
 
 const { readdirSync } = require("fs");
-const { ping_me_gif } = require('./arquivos/json/gifs/ping_me.json');
 let { token, prefix, pastas } = require('./config.json');
 const client = new discord.Client();
+const { MessageEmbed } = require('discord.js');
 
-let ultima_message;
+let ult_comand = "";
 
-function alerta_user(){ // Método rutes
-    ultima_message.lineReply(':octagonal_sign: | O limite de emojis foi atingido, remova alguns para poder adicionar novos');
-};
-
-// (client: Discord.Client, prefix: string, ignore_bot: boolean, cooldown_message: string, permission_message: string, wrong_usage_message: string)
 client.on("ready", async () => {
 
     console.log("Caldeiras aquecidas, pronto para operar");
@@ -42,25 +37,22 @@ client.on("ready", async () => {
 
 client.on('message', message => {
 
-    if(message.author.bot) return;
+    if(message.author.bot || message.webhookId) return;
 
     let content = message.content;
 
-    const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
-
-    let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-
-    if(content.includes("<@833349943539531806>") || content.includes("<@!833349943539531806>")){ // Responde mensagens que é marcado
+    if(content == "<@833349943539531806>" || content == "<@!833349943539531806>"){ // Responde mensagens que é marcado
         
-        message.lineReply(dancando +' | Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D');
+        const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
+        let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        // const ping_me = Math.round((ping_me_gif.length - 1) * Math.random());
-        // message.channel.send(ping_me_gif[ping_me]);
+        message.lineReply(dancando + " | Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D");
         return;
     }
 
     if(content !== prefix && content.includes(prefix)){ // Previne que comandos sem aliases sejam acionados
         console.log("Comando exec: "+ content); // Temporário
+        ult_comand = content;
 
         handler.messageReceived(message); // Invoca o comando
     }else{
@@ -68,8 +60,6 @@ client.on('message', message => {
             require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
         return;
     }
-
-    ultima_message = message;
 
     if(content.startsWith(prefix)) // Registra num log todos os comandos
         require('./adm/log.js')({client, message, content});
@@ -85,8 +75,14 @@ client.on("guildDelete", guild => {
     require("./adm/servers.js")({client, caso, guild});
 });
 
-process.on('unhandledRejection', res => { // Notifica em caso de erro por limite de emojis atingidos
-    alerta_user();
+client.on("rateLimit", limit => {
+
+    const embed = new MessageEmbed()
+    .setTitle("> RateLimit :name_badge:")
+    .setColor(0xff0000)
+    .setDescription("Command: `"+ ult_comand +"`\nTimeout: `"+ limit.timeout +"`\nLimit: `"+ limit.limit +"`\nMethod: `"+ limit.method +"`\n\nPath: `"+ limit.path +"`\nRoute: `"+ limit.route +"`");
+
+    client.channels.cache.get('872865396200452127').send(embed);
 });
 
 client.login(token);

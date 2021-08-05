@@ -53,6 +53,7 @@ module.exports = {
         if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){  
 
             let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
+
             if (!match && args.length > 0 && !message.content.includes("https://cdn.discordapp.com/emojis"))
                 return message.lineReply(":octagonal_sign: | Inclua um emoji customizado em seu comando! :P");
             
@@ -73,10 +74,15 @@ module.exports = {
                 }else
                     url = args[0];
                 
-                message.guild.emojis.create(url, args[1]).then(newEmoji => {
+                // Criando o emoji no servidor
+                message.guild.emojis.create(url, args[1])
+                .then(newEmoji => {
                     novo_emoji = client.emojis.cache.get(newEmoji.id).toString();
-
+                    
                     message.lineReply(`${novo_emoji} | O Emoji foi adicionado!`);
+                })
+                .catch(err => {
+                    message.lineReply(":octagonal_sign: | O Limite de emojis para este servidor foi atingido, remova alguns antes de adicionar novos");
                 });
             }
             
@@ -87,15 +93,20 @@ module.exports = {
                     return;
                 }
 
+                // Coletando o emoji do cache do bot
                 emoji = client.emojis.cache.get(match[3]);
                 
-                if(typeof emoji == "undefined" || message.guild.id != emoji.guild.id){ // Evita mensagens duplicadas
+                if(typeof emoji == "undefined" || message.guild.id != emoji.guild.id){
                     message.lineReply(':warning: | Informe um emoji customizado deste servidor para ser removido');
                     return;
                 }
                 
-                emoji.delete().then(() => {
+                emoji.delete()
+                .then(() => {
                     message.lineReply(':wastebasket: | O Emoji foi removido do servidor');
+                })
+                .catch(err => {
+                    message.lineReply(':octagonal_sign: | Não foi possível remover este emoji, tente novamente');
                 });
             }
         }else

@@ -7,8 +7,7 @@ module.exports = {
     execute(client, message, args) {
 
         const { piadas } = require("../../arquivos/json/text/joke.json");
-
-        const num = Math.round((piadas.length - 1) * Math.random());
-        message.channel.send(":black_joker: "+ piadas[num]);
+    
+        message.lineReply(":black_joker: | "+ piadas[Math.round((piadas.length - 1) * Math.random())]);
     }
 };
