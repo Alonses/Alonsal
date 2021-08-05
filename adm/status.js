@@ -30,5 +30,5 @@ module.exports = async ({client}) => {
     ];
 
     let i = 0;
-    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
+    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 6000);
 }

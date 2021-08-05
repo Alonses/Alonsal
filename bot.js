@@ -76,7 +76,6 @@ client.on("guildDelete", guild => {
 });
 
 client.on("rateLimit", limit => {
-
     const embed = new MessageEmbed()
     .setTitle("> RateLimit :name_badge:")
     .setColor(0xff0000)
