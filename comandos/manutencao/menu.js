@@ -24,7 +24,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: - `Comandos Divertidos`\n\n:compass: - `Comandos Utilitários`\n\n:golf: - `Comandos de Jogos`\n\n:scroll: - `Menu dos moderadores` | **`.ahm`**\n\n:tools: - `Manutenção do Alonsal`\n\n:frame_photo: - `Manipulação de imagens`\n\n:information_source: - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
+        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n**`.ah 1`** - `Comandos Divertidos`\n\n**`.ah 2`** - `Comandos Utilitários`\n\n**`.ah 3`** - `Comandos de Jogos`\n\n**`.ah 4`** - `Manutenção do Alonsal`\n\n**`.ah 5`** - `Manipulação de imagens`\n\n**`.ahm`** - `Menu dos moderadores`\n\n**`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -71,66 +71,19 @@ module.exports = {
             embed_utilitarios,
             embed_jogos,
             embed_manutencao,
-            embed_imagens,
-            embed_infos
+            embed_imagens
         ];
-
-        emojiList = ['◀️', '▶️'];
         
-        let mensagem = await message.channel.send(embed_inicial);
-
-        for(let i = 0; i < emojiList.length; i++){
-            await mensagem.react(emojiList[i]);
+        if(args.length < 1){
+            message.lineReply(embed_inicial);
+            return;
         }
 
-        const filter = (reaction, user) => {
-            return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
-
-        let embed_atual = 0;
-
-        aguardar_reacao(mensagem);
-
-        function aguardar_reacao(mensagem){
-
-            if(typeof limpa_reacoes != "undefined")
-                clearTimeout(limpa_reacoes);
-
-            mensagem.awaitReactions(filter, { max: 1, time: 10000, errors: ['time'] })
-            .then(collected => {
-                const reaction = collected.first();
-
-                if(reaction.emoji.name == "▶️")
-                    if(embed_atual < pages.length - 1)
-                        embed_atual++;
-                
-                if(reaction.emoji.name == "◀️")
-                    if(embed_atual >= 1)
-                        embed_atual--;
-                
-                mensagem.edit(pages[embed_atual]);
-
-                const userReactions = mensagem.reactions.cache.filter(reaction => reaction.users.cache.has(message.author.id));
-
-                for (const reaction of userReactions.values()) {
-                    reaction.users.remove(message.author.id).catch(error => message.channel.send(":tools: Não foi possivel remover suas reações automaticamente, para isto preciso de permissões para gerenciar as mensagens."));
-                }
-
-                aguardar_reacao(mensagem);
-            })
-            .catch(collected => {
-                return;
-            });
-
-            limpa_reacoes = setTimeout(() => {
-
-                const permissions = message.channel.permissionsFor(message.client.user);
-
-                if(permissions.has("MANAGE_MESSAGES"))
-                    mensagem.reactions.removeAll();
-                else
-                    message.channel.send(":tools: Não foi possivel remover o menu automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
-            }, 20000);
+        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 5)){
+            message.lineReply(":warning: | Informe um número entre 1 e 5 para navegar pelas páginas do menu");
+            return;
         }
+
+        message.channel.send(pages[args[0]]);
     }
 };
