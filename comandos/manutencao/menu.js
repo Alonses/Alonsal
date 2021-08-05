@@ -23,7 +23,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os emojis abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n**`.ah 1`** - `Comandos Divertidos`\n\n**`.ah 2`** - `Comandos Utilitários`\n\n**`.ah 3`** - `Comandos de Jogos`\n\n**`.ah 4`** - `Manutenção do Alonsal`\n\n**`.ah 5`** - `Manipulação de imagens`\n\n**`.ahm`** - `Menu dos moderadores`\n\n**`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
+        .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n**`.ah 1`** - `Comandos Divertidos`\n\n**`.ah 2`** - `Comandos Utilitários`\n\n**`.ah 3`** - `Comandos de Jogos`\n\n**`.ah 4`** - `Manutenção do Alonsal`\n\n**`.ah 5`** - `Manipulação de imagens`\n\n**`.ahm`** - `Menu dos moderadores`\n\n**`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()
@@ -76,6 +76,6 @@ module.exports = {
             return;
         }
 
-        message.channel.send(pages[args[0]]);
+        message.lineReply(pages[args[0]]);
     }
 };
