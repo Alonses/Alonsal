@@ -59,11 +59,35 @@ module.exports = {
             
             if(message.content.startsWith(".addemoji") || message.content.startsWith(".adicionaremoji")){
 
-                if(args.length != 2 && !message.content.includes("https://cdn.discordapp.com/emojis")){
+                if(args.length < 2 && !message.content.includes("https://cdn.discordapp.com/emojis")){
                     message.lineReply(":warning: | Insira um emoji e o nome dele\nPor exemplo, `.addemoji `"+ emoji_dancando +"` requebrando`");
                     return;
                 }
                 
+                // if(args.length > 2 && !isNaN(args[2])){ // Verifica se é um servidor externo
+                //     const servidor = client.guilds.cache.get(args[2]);
+                    
+                //     if(typeof servidor == "undefined"){
+                //         message.lineReply(":octagonal_sign: | Este servidor não existe, ou eu não estou nele :(");
+                //         return;
+                //     }
+
+                //     let author = message.author;
+
+                    // console.log(author);
+
+                    // console.log(servidor.members.cache);
+
+                    // console.log(servidor.members.cache.has("MANAGE_EMOJIS"));
+
+                    // console.log(servidor.member.has("MANAGE_EMOJIS"));
+
+                    // if(servidor.member.hasPermission("MANAGE_EMOJIS"))
+                        // message.lineReply('Tem permissão');
+                    // else
+                        // message.lineReply('Não tem permissão');
+                // }
+
                 if(!message.content.includes("https://cdn.discordapp.com/emojis/")){
                     match[2] = args[1]; // altera com o novo nome
 

@@ -1,9 +1,9 @@
 module.exports = {
-    name: "reproducao",
+    name: "rep",
     description: "Faça o Alonsal falar algo",
-    aliases: [ "rep" ],
-    usage: "rep <suamensagem>",
-    cooldown: 3,
+    aliases: [ "" ],
+    usage: "rep <sua_mensagem>",
+    cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
