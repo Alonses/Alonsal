@@ -43,7 +43,8 @@ module.exports = {
         }
 
         const feedbc = await message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
-        
+        let img_edit = 0;
+
         message.attachments.forEach(async attachment => {
             url = attachment.url;
             height = attachment.height;
@@ -102,11 +103,13 @@ module.exports = {
                 const imagem_editada = new Discord.MessageAttachment(canvas.toBuffer(), 'new_image.png');
 
                 message.lineReply('', imagem_editada);
+                img_edit++;
+
+                if(img_edit == message.attachments.size) // Apaga o aviso quando termina de processar todas as imagens
+                    feedbc.delete();
             }else
                 message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
                 return;
         });
-
-        feedbc.delete();
     }
 };
