@@ -42,7 +42,7 @@ module.exports = {
             return;
         }
 
-        message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
+        const feedbc = await message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
         
         message.attachments.forEach(async attachment => {
             url = attachment.url;
@@ -106,5 +106,7 @@ module.exports = {
                 message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
                 return;
         });
+
+        feedbc.delete();
     }
 };
