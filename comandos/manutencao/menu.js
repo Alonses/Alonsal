@@ -2,7 +2,7 @@ module.exports = {
     name: "menu",
     description: "Menu com os comandos do alonsal",
     aliases: [ "h", "juda", "comandos", "commands" ],
-    cooldown: 5,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
         
