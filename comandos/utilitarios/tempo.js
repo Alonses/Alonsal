@@ -101,10 +101,10 @@ module.exports = {
                     // Sensação térmica dinâmica
                     emoji_sensacao_termica = ":hot_face:";
 
-                    if(res.main.feels_like >= 15 && res.main.feels_like < 25)
+                    if(res.main.feels_like >= 10 && res.main.feels_like < 25)
                         emoji_sensacao_termica = ":ok_hand:";    
 
-                    if(res.main.feels_like < 15)
+                    if(res.main.feels_like < 10)
                         emoji_sensacao_termica = ":cold_face:";
 
                     if(res.main.feels_like < 0)
