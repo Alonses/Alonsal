@@ -49,6 +49,8 @@ module.exports = {
             height = attachment.height;
             width = attachment.width;
             
+            console.log(attachment);
+            
             if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp")){
                 const arquivo_invalido = new Discord.MessageAttachment(url);
 
