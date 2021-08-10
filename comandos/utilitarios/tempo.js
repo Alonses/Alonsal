@@ -43,6 +43,8 @@ module.exports = {
         .then(async res => {
             if(res.cod == '404')
                 message.lineReply(emoji_nao_encontrado +" | Não encontrei nenhum local chamado \`"+ pesquisa +"\`, tente novamente");
+            else if(res.cod == '429')
+                message.lineReply(emoji_nao_encontrado +" | Houve algum erro com a API de clima e não é possível pesquisar por climas no momento");
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
 
@@ -50,19 +52,27 @@ module.exports = {
                 .then(response => response.json())
                 .then( async res_hora => {
 
-                    let bandeira_pais = null;
- 
-                    if(typeof res.sys.country != "undefined")
+                    let bandeira_pais = "";
+                    let nome_pais = "";
+                    let aviso_continente = "Estes dados são uma média de todos os valores do continente pesquisado";
+                    let horario_local;
+
+                    if(typeof res.sys.country != "undefined"){
                         bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
                     
-                    let cod_pais = getCountryISO3(res.sys.country);
-                    let nome_pais = translations[cod_pais];
-                    
+                        let cod_pais = getCountryISO3(res.sys.country);
+                        nome_pais = " - "+ translations[cod_pais];
+                        aviso_continente = "";
+
+                        horario_local = res_hora.formatted;
+                        horario_local = new Date(horario_local);
+                    }else{
+
+                        horario_local = new Date(res.dt * 1000);
+                    }
+
                     let tempo_atual = res.weather[0].description; // Clima atual
                     tempo_atual = tempo_atual.charAt(0).toUpperCase() + tempo_atual.slice(1);
-
-                    let horario_local = res_hora.formatted;
-                    horario_local = new Date(horario_local);
 
                     let minutos = ("0" + horario_local.getMinutes()).substr(-2); // Preservar o digito 0
                     let hora = ("0" + horario_local.getHours()).substr(-2); // Preservar o digito 0
@@ -105,10 +115,10 @@ module.exports = {
                     // Sensação térmica dinâmica
                     emoji_sensacao_termica = ":hot_face:";
 
-                    if(res.main.feels_like >= 10 && res.main.feels_like < 25)
+                    if(res.main.feels_like >= 13 && res.main.feels_like < 25)
                         emoji_sensacao_termica = ":ok_hand:";    
 
-                    if(res.main.feels_like < 10)
+                    if(res.main.feels_like < 13)
                         emoji_sensacao_termica = ":cold_face:";
 
                     if(res.main.feels_like < 0)
@@ -117,13 +127,19 @@ module.exports = {
                     if(res.main.feels_like > 39)
                         emoji_sensacao_termica = ":fire:";
                     
-                    horario_local = hora +":"+ minutos +" | "+ dia +" de "+ mes;
-                    let relogio_emoji = ":clock"+ hours +":";
+                    horario_local = ":clock"+ hours +": **Horário local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
+
+                    let nome_local = "na "+ res.name;
+
+                    if(typeof res.sys.country != "undefined")
+                        nome_local = nome_local.replace("na", "em");
+                    else
+                        horario_local = horario_local.replace("Horário local", "Dados de");
 
                     const cidade_encontrada = new MessageEmbed()
-                    .setTitle(':boom: Tempo agora em '+ res.name + ' - '+ nome_pais + ' '+ bandeira_pais)
+                    .setTitle(':boom: Tempo agora '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
                     .setColor(0x29BB8E)
-                    .setDescription(relogio_emoji +' **Hora local:** `'+ horario_local +'` | **'+ tempo_atual +'**')
+                    .setDescription(horario_local +'` | **'+ tempo_atual +'**')
                     .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
                     .addFields(
                         { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Máxima:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Mínima:** `"+ res.main.temp_min +"°C`", inline: true },
@@ -135,7 +151,8 @@ module.exports = {
                         { name: emoji_nuvens +' **Nuvens no céu**', value: '**Atual: **`'+ res.clouds.all +'%`', inline: true},
                         { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
 
-                    );
+                    )
+                    .setFooter(aviso_continente);
 
                     message.lineReply(cidade_encontrada);
                 });
