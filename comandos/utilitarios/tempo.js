@@ -68,18 +68,23 @@ module.exports = {
 
                     if(typeof res.sys.country != "undefined"){
                         bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
-                    
+                        
                         let cod_pais = getCountryISO3(res.sys.country);
                         nome_pais = " - "+ translations[cod_pais];
                         aviso_continente = "";
+
+                        if(nome_pais.includes(res.name)){
+                            nome_pais = "";
+                            aviso_continente = "Estes dados são uma média de todos os valores do país pesquisado";
+                        }
 
                         horario_local = res_hora.formatted;
                         horario_local = new Date(horario_local);
                     }else
                         horario_local = new Date(res.dt * 1000);
                     
-                    nascer_sol = new Date((res.sys.sunrise + res.timezone) * 1000);
-                    por_sol = new Date((res.sys.sunset + res.timezone) * 1000);
+                    let nascer_sol = new Date((res.sys.sunrise + res.timezone) * 1000);
+                    let por_sol = new Date((res.sys.sunset + res.timezone) * 1000);
 
                     nascer_sol = ("0" + nascer_sol.getHours()).substr(-2) +":"+ ("0" + nascer_sol.getMinutes()).substr(-2);
                     por_sol = ("0" + por_sol.getHours()).substr(-2) +":"+ ("0" + por_sol.getMinutes()).substr(-2);
@@ -156,19 +161,28 @@ module.exports = {
                     else
                         horario_local = horario_local.replace("Hora local", "Dados de");
 
+                    let infos_chuva = "";
+
+                    if(typeof res.rain != "undefined"){
+                        infos_chuva = "\n **Chuva 1H:** `"+ res.rain["1h"]+ "mm`";
+                    
+                        if(typeof res.rain["3h"] != "undefined")
+                        infos_chuva += "\n **Chuva 3H:** `"+ res.rain["3h"]+ "mm`";
+                    }
+                    
                     const cidade_encontrada = new MessageEmbed()
                     .setTitle(':boom: Tempo agora '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
                     .setColor(0x29BB8E)
                     .setDescription(horario_local +'` | **'+ tempo_atual +'**')
                     .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
                     .addFields(
-                        { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Máxima:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Mínima:** `"+ res.main.temp_min +"°C`", inline: true },
+                        { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
                         { name: emoji_ceu_atual +' **Céu no momento**', value: emoji_nuvens +' **Nuvens: **`'+ res.clouds.all +'%`\n:sunrise: **Na. do sol: **`'+ nascer_sol +"`\n:city_sunset: **Pôr do sol: **`"+ por_sol +"`", inline: true},
                         { name: ':wind_chime: **Vento**', value: ":airplane: **Velo.: **`"+ res.wind.speed +" km/h`\n:compass: **Direção: ** `"+ direcao_vento +"`", inline: true },
                     )
                     .addFields(
-                        { name: emoji_sensacao_termica +' **Sensação Térmica**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
-                        { name: emoji_umidade +' **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
+                        { name: emoji_sensacao_termica +' **Sensação Térm.**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
+                        { name: emoji_umidade +' **Umidade do ar**', value: "**Atual: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
                         { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
                     )
                     .setFooter(aviso_continente);
