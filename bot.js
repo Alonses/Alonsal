@@ -51,7 +51,6 @@ client.on('message', message => {
     }
 
     if(content !== prefix && content.includes(prefix)){ // Previne que comandos sem aliases sejam acionados
-        console.log("Comando exec: "+ content); // Temporário
         ult_comand = content;
 
         handler.messageReceived(message); // Invoca o comando
