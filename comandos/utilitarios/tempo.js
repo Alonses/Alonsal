@@ -40,7 +40,7 @@ module.exports = {
         
         fetch(url_completa)
         .then(response => response.json())
-        .then( async res => {
+        .then(async res => {
             if(res.cod == '404')
                 message.lineReply(emoji_nao_encontrado +" | Não encontrei nenhum local chamado \`"+ pesquisa +"\`, tente novamente");
             else{
@@ -49,7 +49,11 @@ module.exports = {
                 fetch(url_hora) // Buscando o horário local
                 .then(response => response.json())
                 .then( async res_hora => {
-                    let bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
+
+                    let bandeira_pais = null;
+ 
+                    if(typeof res.sys.country != "undefined")
+                        bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
                     
                     let cod_pais = getCountryISO3(res.sys.country);
                     let nome_pais = translations[cod_pais];
