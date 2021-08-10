@@ -7,6 +7,15 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
+        function direcao_cardial(degrees){
+            let direcao = parseInt((degrees / 22.5) +.5);
+
+            const cards = ["Norte","N/NL","Nordeste","L/NL","Leste","L/SL", "Sudeste", "S/SL","Sul","S/SO","Sudoeste","O/SO","Oeste","O/NO","Noroeste","N/NO"]
+            direcao = cards[direcao % 16];
+
+            return direcao;
+        }
+
         const { MessageEmbed } = require('discord.js');
         
         const fetch = require('node-fetch');
@@ -66,10 +75,14 @@ module.exports = {
 
                         horario_local = res_hora.formatted;
                         horario_local = new Date(horario_local);
-                    }else{
-
+                    }else
                         horario_local = new Date(res.dt * 1000);
-                    }
+                    
+                    nascer_sol = new Date(res.sys.sunrise * 1000);
+                    por_sol = new Date(res.sys.sunset * 1000);
+
+                    nascer_sol = ("0" + nascer_sol.getHours()).substr(-2) +":"+ ("0" + nascer_sol.getMinutes()).substr(-2);
+                    por_sol = ("0" + por_sol.getHours()).substr(-2) +":"+ ("0" + por_sol.getMinutes()).substr(-2);
 
                     let tempo_atual = res.weather[0].description; // Clima atual
                     tempo_atual = tempo_atual.charAt(0).toUpperCase() + tempo_atual.slice(1);
@@ -86,6 +99,8 @@ module.exports = {
 
                     if(minutos >= 30)
                         hours += "30";
+
+                    emoji_ceu_atual = ":park:";
 
                     // Umidade
                     emoji_umidade = ":sweat_drops:";
@@ -112,10 +127,13 @@ module.exports = {
                             emoji_nuvens = ":full_moon_with_face:";
                     }
 
+                    if(hora > 17 || hora < 7)
+                        emoji_ceu_atual = ":milky_way:";
+
                     // Sensação térmica dinâmica
                     emoji_sensacao_termica = ":hot_face:";
 
-                    if(res.main.feels_like >= 13 && res.main.feels_like < 25)
+                    if(res.main.feels_like >= 13 && res.main.feels_like <= 30)
                         emoji_sensacao_termica = ":ok_hand:";    
 
                     if(res.main.feels_like < 13)
@@ -124,17 +142,19 @@ module.exports = {
                     if(res.main.feels_like < 0)
                         emoji_sensacao_termica = ":snowman2:";
 
-                    if(res.main.feels_like > 39)
+                    if(res.main.feels_like >= 35)
                         emoji_sensacao_termica = ":fire:";
                     
-                    horario_local = ":clock"+ hours +": **Horário local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
+                    horario_local = ":clock"+ hours +": **Hora local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
+
+                    let direcao_vento = direcao_cardial(res.wind.deg);
 
                     let nome_local = "na "+ res.name;
 
                     if(typeof res.sys.country != "undefined")
                         nome_local = nome_local.replace("na", "em");
                     else
-                        horario_local = horario_local.replace("Horário local", "Dados de");
+                        horario_local = horario_local.replace("Hora local", "Dados de");
 
                     const cidade_encontrada = new MessageEmbed()
                     .setTitle(':boom: Tempo agora '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
@@ -143,14 +163,13 @@ module.exports = {
                     .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
                     .addFields(
                         { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Máxima:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Mínima:** `"+ res.main.temp_min +"°C`", inline: true },
-                        { name: emoji_umidade +' **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
-                        { name: ':wind_chime: **Velocidade do vento**', value: " **Atual: **`"+ res.wind.speed +" km/h`", inline: true },
+                        { name: emoji_ceu_atual +' **Céu no momento**', value: emoji_nuvens +' **Nuvens: **`'+ res.clouds.all +'%`\n:sunrise: **Na. do sol: **`'+ nascer_sol +"`\n:city_sunset: **Pôr do sol: **`"+ por_sol +"`", inline: true},
+                        { name: ':wind_chime: **Vento**', value: ":airplane: **Velo.: **`"+ res.wind.speed +" km/h`\n:compass: **Direção: ** `"+ direcao_vento +"`", inline: true },
                     )
                     .addFields(
                         { name: emoji_sensacao_termica +' **Sensação Térmica**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
-                        { name: emoji_nuvens +' **Nuvens no céu**', value: '**Atual: **`'+ res.clouds.all +'%`', inline: true},
+                        { name: emoji_umidade +' **Umidade**', value: "**Atual: **`"+ res.main.humidity +"%`", inline: true },
                         { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
-
                     )
                     .setFooter(aviso_continente);
 
