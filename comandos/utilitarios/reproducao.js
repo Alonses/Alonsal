@@ -2,7 +2,6 @@ module.exports = {
     name: "rep",
     description: "Faça o Alonsal falar algo",
     aliases: [ "" ],
-    usage: "",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
