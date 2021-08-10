@@ -78,8 +78,8 @@ module.exports = {
                     }else
                         horario_local = new Date(res.dt * 1000);
                     
-                    nascer_sol = new Date(res.sys.sunrise * 1000);
-                    por_sol = new Date(res.sys.sunset * 1000);
+                    nascer_sol = new Date((res.sys.sunrise + res.timezone) * 1000);
+                    por_sol = new Date((res.sys.sunset + res.timezone) * 1000);
 
                     nascer_sol = ("0" + nascer_sol.getHours()).substr(-2) +":"+ ("0" + nascer_sol.getMinutes()).substr(-2);
                     por_sol = ("0" + por_sol.getHours()).substr(-2) +":"+ ("0" + por_sol.getMinutes()).substr(-2);
