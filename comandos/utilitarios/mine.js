@@ -37,6 +37,7 @@ module.exports = {
         for(var i = 0; i < lista_itens.length; i++){
 
             let auto_compl = lista_itens[i].auto_compl;
+            auto_compl = auto_compl.toLocaleLowerCase();
 
             if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno || lista_itens[i].descricao == "[&r"+ pesquisa || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                 
