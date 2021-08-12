@@ -30,6 +30,8 @@ module.exports = {
         if(delay > 600)
             mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Pode jogar fora esse teu roteador! '+ emoji_pare;
 
+        mensagem += "\nLatência do Alonsal [ **`"+ Math.round(client.ws.ping) + "ms`** ]";
+
         m.edit(mensagem);
     }
 };

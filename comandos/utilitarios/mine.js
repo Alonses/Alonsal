@@ -11,10 +11,14 @@ module.exports = {
         const { MessageEmbed } = require('discord.js');
         let pesquisa = "";
 
+        String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+            return this.split(needle).join(replacement);
+        };
+
         emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
 
         args.forEach(value => {
-            pesquisa += value + " ";
+            pesquisa += value +" ";
         });
 
         let nome_interno = pesquisa.slice(0, -1).split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
@@ -31,13 +35,17 @@ module.exports = {
             random = true;
 
         for(var i = 0; i < lista_itens.length; i++){
-            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno){
+
+            let auto_compl = lista_itens[i].auto_compl;
+
+            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno || lista_itens[i].descricao == "[&r"+ pesquisa || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                 
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
 
                 url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_img;
-                
+    
+                let nome_item = lista_itens[i].nome_item;
                 let colet_suv = "Sim";
                 let empilhavel = "Até "+ lista_itens[i].empilhavel;
                 let renovavel = "Sim";
@@ -59,8 +67,42 @@ module.exports = {
                 if(lista_itens[i].coletavel == 0)
                     colet_suv = "Não";
 
+                let fields = [];
+
+                if(lista_itens[i].descricao != null){
+                    if(lista_itens[i].descricao.includes("[&")){ // Poções
+
+                        let valores_item = lista_itens[i].descricao;
+                        
+                        let descricao_tipo = ":magic_wand: Efeitos Aplicados";
+
+                        if(!nome_item.includes("Poção") && !nome_item.includes("Frasco"))
+                            descricao_tipo = ":receipt: Atributos";
+                        
+                        if(nome_item == "Disco musical"){
+                            valores_item = valores_item.replace("[&r", "");
+                            nome_item += " | "+ valores_item;
+                        }else{
+
+                            valores_item = valores_item.replace("[&s[&3Efeito aplicado: ", "");
+                            valores_item = valores_item.replaceAll(") ", ")");
+                            valores_item = valores_item.replace("[&s[&r", "\n");
+                            valores_item = valores_item.replace("&s[&r", "\n");
+                            valores_item = valores_item.replaceAll("[&1", "\n");
+                            valores_item = valores_item.replaceAll("[&2", "\n");
+                            valores_item = valores_item.replaceAll("&2", "\n");
+                            valores_item = valores_item.replaceAll("[&4", "\n");
+                            valores_item = valores_item.replaceAll("[&3", "\n");
+
+                            valores_item = valores_item.substr(1);
+
+                            fields.push({ name: descricao_tipo, value: "`"+ valores_item +"`"});
+                        }
+                    }
+                }
+
                 const embed = new MessageEmbed()
-                .setTitle(lista_itens[i].nome_item)
+                .setTitle(nome_item)
                 .setColor(0x29BB8E)
                 .setImage(url)
                 .addFields(
@@ -71,7 +113,7 @@ module.exports = {
                 .addFields(
                     { name: ':abacus: **Empilhável**', value: "`"+ empilhavel +"`", inline: true },
                     { name: ':herb: **Renovável**', value: "`"+ renovavel +"`", inline: true },
-                    { name: ':link: **Nome interno**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true },
+                    { name: ':link: **Nome interno**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
                 );
                 
                 message.lineReply(embed);
