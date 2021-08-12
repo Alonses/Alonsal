@@ -76,7 +76,7 @@ module.exports = {
                         
                         let descricao_tipo = ":magic_wand: Efeitos Aplicados";
 
-                        if(!nome_item.includes("Poção") && !nome_item.includes("Frasco"))
+                        if(!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha"))
                             descricao_tipo = ":receipt: Atributos";
                         
                         if(nome_item == "Disco musical"){
