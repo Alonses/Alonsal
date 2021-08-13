@@ -36,10 +36,19 @@ module.exports = {
 
         for(var i = 0; i < lista_itens.length; i++){
 
-            let auto_compl = lista_itens[i].auto_compl;
+            let descri = false;
+
+            let auto_compl = lista_itens[i].nome_item;
             auto_compl = auto_compl.toLocaleLowerCase();
 
-            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno || lista_itens[i].descricao == "[&r"+ pesquisa || auto_compl.includes(pesquisa.toLocaleLowerCase())){
+            if(lista_itens[i].descricao !== null){
+                descr_pesquisa = lista_itens[i].descricao.toLocaleLowerCase();
+                            
+                if(descr_pesquisa.includes("[&r"+ pesquisa.toLocaleLowerCase()))
+                    descri = true;
+            }
+
+            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                 
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
@@ -81,6 +90,10 @@ module.exports = {
                             descricao_tipo = ":receipt: Atributos";
                         
                         if(nome_item == "Disco musical"){
+                            valores_item = valores_item.replace("[&r", "");
+                            nome_item += " | "+ valores_item;
+
+                        }else if(nome_item == "Livro encantado"){
                             valores_item = valores_item.replace("[&r", "");
                             nome_item += " | "+ valores_item;
                         }else{
