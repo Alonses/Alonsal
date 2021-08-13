@@ -43,8 +43,8 @@ module.exports = {
 
             if(lista_itens[i].descricao !== null){
                 descr_pesquisa = lista_itens[i].descricao.toLocaleLowerCase();
-                            
-                if(descr_pesquisa.includes("[&r"+ pesquisa.toLocaleLowerCase()))
+
+                if(descr_pesquisa.includes(pesquisa.toLocaleLowerCase()))
                     descri = true;
             }
 
