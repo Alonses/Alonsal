@@ -53,7 +53,7 @@ module.exports = {
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
 
-                url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_img;
+                url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_img;
     
                 let nome_item = lista_itens[i].nome_item;
                 let colet_suv = "Sim";
