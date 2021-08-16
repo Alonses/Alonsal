@@ -2,7 +2,7 @@ module.exports = {
     name: "binario",
     description: "Codifique e decodifique do binário",
     aliases: [ "bn" ],
-    usage: "bn texto",
+    usage: "bn <suamensagem>",
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {

@@ -2,7 +2,7 @@ module.exports = {
     name: "morse",
     description: "Codifique e decodifique do morse",
     aliases: [ "m" ],
-    usage: "m Alonsal",
+    usage: "m <suamensagem>",
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
