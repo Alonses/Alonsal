@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if(content.length == 0){
-            message.lineReply(":warning: | Sua mensagem está vazia, escreva algo para enviar");
+            message.channel.send(":warning: | Sua mensagem está vazia, escreva algo para enviar");
             return;
         }
 
@@ -33,7 +33,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.lineReply(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.");
+                message.channel.send(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.");
                 return;
             }
 
@@ -90,18 +90,33 @@ module.exports = {
                         client.channels.cache.get(ids_canais_games[i]).send("<@&"+ ids_cargos_games[i] +">", msg_game);
                     }
                     
-                    message.lineReply("A atualização foi enviada à todos os canais de games");
+                    message.channel.send("A atualização foi enviada à todos os canais de games");
                 }else{
                     if(tipo === "u")
                         client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
-                    else if(tipo === "c")
-                        client.channels.cache.get(id_alvo).send(mensagem);
-                    
-                        message.lineReply("Mensagem enviada para [ `"+ id_alvo +"` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:");
+                    else if(tipo === "c"){
+
+                        let canal_alvo = client.channels.cache.get(id_alvo);
+                        let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal informado
+
+                        if(permissoes.has("SEND_MESSAGES")){
+                            canal_alvo.send(mensagem);
+
+                            message.channel.send(`Mensagem enviada para [ \`${id_alvo}\`, \`${canal_alvo.name}\` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
+                        }else{
+                            const feedbc = await message.channel.send(`:hotsprings: | Eu não posso enviar mensagens para o canal \`${canal_alvo.name}\` :(`);
+
+                            setTimeout(() => {
+                                feedbc.delete();
+                            }, 5000);
+
+                            message.delete();
+                            return;
+                        }
+                    }    
                 }
-                
             }catch(err){
-                message.lineReply(`:octagonal_sign: | Não foi possível enviar a mensagem para este ID`);
+                message.channel.send(`:octagonal_sign: | Não foi possível enviar a mensagem para este ID`);
                 return;
             }
         }else{
@@ -118,13 +133,9 @@ module.exports = {
             .setDescription("-----------------------\nEnviada por `"+ message.author.id +"`\n\n Mensagem: `"+ mensagem + "`")
             .setTimestamp();
 
-            try{
-                client.channels.cache.get("847191471379578970").send(msg_user);
-                message.lineReply(`Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
-            }catch(err){
-                message.lineReply(`:octagonal_sign: | Não foi possível enviar a mensagem sua mensagem no momento, tente novamente mais tarde`);
-                return;
-            }
+            client.channels.cache.get("847191471379578970").send(msg_user);
+            
+            message.channel.send(`Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
         }
 
         if(tipo === "c")
@@ -159,6 +170,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.lineReply(":tools: | Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
+            message.channel.send(":tools: | Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
     }
 };
