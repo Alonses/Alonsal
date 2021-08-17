@@ -113,7 +113,7 @@ module.exports = {
                             message.delete();
                             return;
                         }
-                    }    
+                    }
                 }
             }catch(err){
                 message.channel.send(`:octagonal_sign: | Não foi possível enviar a mensagem para este ID`);
