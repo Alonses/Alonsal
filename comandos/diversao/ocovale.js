@@ -2,7 +2,7 @@ module.exports = {
     name: "ocovale",
     description: "ocovale!",
     aliases: [ "covale" ],
-    cooldown: 5,
+    cooldown: 30,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
