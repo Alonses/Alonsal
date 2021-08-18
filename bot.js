@@ -41,7 +41,7 @@ client.on('message', message => {
 
     let content = message.content;
 
-    if(content == "<@833349943539531806>" || content == "<@!833349943539531806>"){ // Responde mensagens que é marcado
+    if(message.content == "<@833349943539531806>" || message.content == "<@!833349943539531806>"){ // Responde mensagens que é marcado
         
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
