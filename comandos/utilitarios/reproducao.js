@@ -41,6 +41,13 @@ module.exports = {
             return;
         }
 
+        if(conteudo == ".arep malakoi"){
+            const malakoi = new Discord.MessageAttachment("arquivos/songs/malakoi.mp3");
+            message.channel.send(malakoi);
+
+            return;
+        }
+
         if(conteudo == ".arep kadu"){
             const kadu = new Discord.MessageAttachment("arquivos/songs/kadu.mp3");
             message.channel.send(kadu);
