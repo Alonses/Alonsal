@@ -13,9 +13,9 @@ module.exports = {
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
         .setTitle("> Hub do Alonsal "+ emoji_rainha)
-        .setURL('https://discord.gg/MPyTzWa')
-        .setImage('https://i.imgur.com/Lr6cChX.png')
-        .setDescription("Um server várias utilidades, o Hub do Alonsal é uma central de informações, chega+ e se divirta!");
+        .setURL('https://discord.gg/ZxHnxQDNwn')
+        .setImage('https://i.imgur.com/NqmwCA9.png')
+        .setDescription("Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!");
 
         const m = await message.channel.send(`${message.author} despachei o convite para o Hub alonsal no seu privado :handshake:`);
         m.react('📫');
