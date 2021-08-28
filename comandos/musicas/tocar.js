@@ -2,8 +2,8 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const getThumb = require('video-thumbnail-url');
 
-var fator_renatos = 0;
-var trava_renatao = 0;
+let fator_renatos = 0;
+let trava_renatao = 0;
 
 if(typeof requisicoes === "undefined")
     requisicoes = [];
@@ -127,9 +127,9 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         }, 1000);
 
         if(cond_auto !== "end"){
-            if(feedback_f === 1 && ((repeteco_ === 0 || queue_interna.length > 5 ) && trava_renatao == 0))
-            ytdl.getInfo(queue_interna[0]).then(info => {
-                getThumb(queue_interna[0]).then(thumb_url => {
+            if(feedback_f === 1 && ((repeteco_ === 0 || queue_interna.length > 5 ) && fator_renatos > 0))
+            ytdl.getInfo(queue_interna[0][0]).then(info => {
+                getThumb(queue_interna[0][0]).then(thumb_url => {
                     
                     faixa_atual = info.videoDetails.title;
 
@@ -158,11 +158,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         dispatcher.on("error", () => {
             if(cond_auto !== "end"){
-                // message.channel.send(`${message.author} `+"Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa\nUm relatório do problema foi despachado para correção.");
-
-                // let relatorio = "Não é possível reproduzir a URL [ "+ queue_interna[0] +" ], atualize ela para evitar futuros travamentos";
-
-                // client.channels.cache.get("862015290433994752").send(relatorio);
+                message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa.");
             }
         });
 
@@ -171,7 +167,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                 return;
             
             if(queue_interna != playlists.get(id_canal)){ // Sincroniza os dados atualizados
-                queue_interna = playlists.get(id_canal)
+                queue_interna = playlists.get(id_canal);
                 faixa_interna = nome_faixas.get(id_canal);
             }
 
@@ -214,6 +210,6 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         });
     }
 
-    if(!client.VConnections) client.VConnections = {}
-        client.VConnections[Vchannel.id] = connection
+    if(!client.VConnections) client.VConnections = {};
+        client.VConnections[Vchannel.id] = connection;
 }
