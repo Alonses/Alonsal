@@ -1,85 +1,86 @@
-const { Client } = require('discord.js');
-const { existsSync } = require("fs");
-const { token, prefix, local_server, local_comando, ids_ignorados } = require('./config.json');
-const commands = require('./comandos.json');
-const ping_me_gif = require('./adm/ping_me.json');
-const client = new Client();
+const handler = require("wax-command-handler");
+const discord = require("discord.js");
+require('discord-reply');
 
-usos = 1708;
-usos_anterior = 1708;
+const { readdirSync } = require("fs");
+let { token, prefix, pastas } = require('./config.json');
+const client = new discord.Client();
+const { MessageEmbed } = require('discord.js');
 
-const talkedRecently = new Set();
-const pastas = ["diversao", "jogos", "manutencao", "utilitarios"];
+let ult_comand = "";
 
-client.on("ready", () => {
+client.on("ready", async () => {
+
+    console.log("Caldeiras aquecidas, pronto para operar");
+
     require("./adm/status.js")({client});
+
+    // Configurando o wax e salvando os comandos para uso posterior
+    let commandConfig = new handler.CommandConfig(
+        client,
+        prefix,
+        true,
+        "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente",
+        "você não tem a permissão `%PERM%` para executar este comando",
+        "o uso correto deste comando é `"+ prefix +"%USAGE%`");
+    
+    handler.setup(commandConfig);
+    
+    for(let i = 0; i < pastas.length; i++){
+        for(const file of readdirSync(__dirname + `/comandos/${pastas[i]}`).filter(file => file.endsWith('.js'))) {
+            const command = require(`./comandos/${pastas[i]}/${file}`);
+
+            handler.addCommand(command);
+        }
+    }
+});
+
+client.on('message', message => {
+
+    if(message.author.bot || message.webhookId) return;
+
+    let content = message.content;
+
+    if(message.content == "<@833349943539531806>" || message.content == "<@!833349943539531806>"){ // Responde mensagens que é marcado
+        
+        const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
+        let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+
+        message.lineReply(dancando + " | Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D");
+        return;
+    }
+
+    if(content !== prefix && content.includes(prefix)){ // Previne que comandos sem aliases sejam acionados
+        ult_comand = content;
+
+        handler.messageReceived(message); // Invoca o comando
+    }else{
+        if(content === prefix)
+            require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
+        return;
+    }
+
+    if(content.startsWith(prefix)) // Registra num log todos os comandos
+        require('./adm/log.js')({client, message, content});
 });
 
 client.on("guildCreate", guild => {
-    if(local_server === null) return;
     let caso = 'New';
-    require("./adm/servers.js")({client, caso, guild, local_server});
+    require("./adm/servers.js")({client, caso, guild});
 });
 
 client.on("guildDelete", guild => {
-    if(local_server === null) return;
     let caso = 'Left';
-    require("./adm/servers.js")({client, caso, guild, local_server});
+    require("./adm/servers.js")({client, caso, guild});
 });
 
-client.on('message', (message) => {
-    
-    let content = message.content;
+client.on("rateLimit", limit => {
+    const embed = new MessageEmbed()
+    .setTitle("> RateLimit :name_badge:")
+    .setColor(0xff0000)
+    .setDescription("Command: `"+ ult_comand +"`\nTimeout: `"+ limit.timeout +"`\nLimit: `"+ limit.limit +"`\nMethod: `"+ limit.method +"`\n\nPath: `"+ limit.path +"`\nRoute: `"+ limit.route +"`");
 
-    if((content === "<@!833349943539531806>" || content === "<@833349943539531806>") && !message.author.bot){
-        let ping_me = 1 + Math.round(10 * Math.random());
-        ping_me = ping_me.toString();
-        message.channel.send(ping_me_gif[ping_me]);
-    }
-
-
-    // impede que o bot responda outros bots e ignora mensagens que não começem com o prefixo
-    if (!content.startsWith(prefix) || message.author.bot) return
-    if (!message.channel.name) return
-    
-    if(talkedRecently.has(message.author.id) && !ids_ignorados.includes(message.author.id)){
-        message.channel.send(`:name_badge: ${message.author} Aguarde 3 segundos para enviar um comando novamente.`);
-        return
-    }else{
-        talkedRecently.add(message.author.id);
-        setTimeout(() => {
-            talkedRecently.delete(message.author.id);
-        }, 3000);
-    }
-
-    if(content === prefix){
-        require("./adm/comando.js")({message});
-        return;
-    }
-    
-    const args = content.slice(prefix.length).trim().split(' ');
-    
-    const command = args.shift().toLowerCase();
-    for(let i = 0; i < pastas.length; i++){
-        path = `./comandos/${pastas[i]}/${commands[command]}`;
-        if (existsSync(path)){
-            usos++;
-
-            if(message.content === prefix +"i" || message.content === prefix + "info")
-                args.push(usos);
-
-            require(path)({ client, message, args});
-            break
-        }
-    }
-
-    if(usos === usos_anterior)
-        message.channel.send(`${message.author} erroooouuuuuuuuuuuuuuuuu`+ " use `.ah` ou `.ajuda` para ver todos os comandos.");
-    else
-        if (local_comando !== null)
-            require('./adm/log.js')({client, message, content, local_comando});
-
-    usos_anterior = usos;
+    client.channels.cache.get('872865396200452127').send(embed);
 });
 
 client.login(token);

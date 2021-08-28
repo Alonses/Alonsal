@@ -1,8 +1,13 @@
-const { messages } = require("../../arquivos/json/text/joke.json")
+module.exports = {
+    name: "piadas",
+    description: "piadócas do cazalbe",
+    aliases: [ "piada", "joke", "risos" ],
+    cooldown: 5,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
 
-module.exports = async ({ message }) => {
-
-    const num = 1 + Math.round(50 * Math.random());
-
-    message.channel.send(":black_joker: "+ messages[num]);
-}
+        const { piadas } = require("../../arquivos/json/text/joke.json");
+    
+        message.lineReply(":black_joker: | "+ piadas[Math.round((piadas.length - 1) * Math.random())]);
+    }
+};

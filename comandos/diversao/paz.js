@@ -1,3 +1,13 @@
-module.exports = async({message}) => {
-    message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
-}
+module.exports = {
+    name: "paz",
+    description: "Faça amor não faça ódio",
+    aliases: [ "pz" ],
+    cooldown: 5,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
+
+        message.delete();
+        
+        message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
+    }
+};

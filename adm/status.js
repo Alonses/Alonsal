@@ -1,22 +1,34 @@
-module.exports = async function({client}){
+const { id_canais, version } = require('../config.json')
+const { MessageEmbed } = require('discord.js')
 
-    console.log(`Caldeiras aquecidas!`);
-    console.log(`Ativo para ${client.users.cache.size} usuários em ${client.channels.cache.size} canais em ${client.guilds.cache.size} servidores diferentes!`);
+module.exports = async ({client}) => {
+
+    const embed = new MessageEmbed()
+    .setTitle(':steam_locomotive: Caldeiras aquecidas')
+    .setColor(0x29BB8E)
+    .addFields(
+        { name: ':globe_with_meridians: **Servidores**', value: "**Ativo em: **`"+ client.guilds.cache.size +"`", inline: true },
+        { name: ':card_box: **Canais**', value: "**Observando: **`"+ client.channels.cache.size +"`", inline: true },
+        { name: ':busts_in_silhouette: **Usuários**', value: "**Conhecidos: **`"+ client.users.cache.size +"`", inline: true },
+    )
+    .addField(':white_small_square: Versão', '`'+ version +'`', false)
+    .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
+    
+    if(client.user.id !== "846472827212136498")
+        client.channels.cache.get(id_canais[2]).send(embed); // Avisa que está online em um canal
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [
         ".ah | .ajuda",
         "Binário na fogueira",
-        "Músicas no ar",
         "Mesas p/ cima",
         "Baidu premium em servidores",
         ".ah | .ajuda",
-        "Código morse para o mundo",
+        "Imagens em preto e branco",
         "Bugs infinitos no sistema",
-        "Vapor p/ fora!",
-        "Ceira para todo o lado"
+        "Vapor p/ fora!"
     ];
 
     let i = 0;
-    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 5000);
+    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 6000);
 }

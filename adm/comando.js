@@ -1,20 +1,19 @@
-const comando = require("./comando.json")
+const { messages } = require("../arquivos/json/text/comando.json")
 
 module.exports = async ({message}) => {
 
-    let num = 1 + Math.round(5 * Math.random())
+    const num = Math.round((messages.length - 1) * Math.random())
 
-    let frase = comando[num]
+    let key = Object.keys(messages[num]);
 
-    let marcacao = "<@" + message.author.id + ">"
-    frase = frase.replace("autor_msg", marcacao)
+    let marcacao = "<@" + message.author.id + ">";
+    frase = key[0].replace("autor_msg", marcacao);
     
     // Frase
     message.react('🤡')
     await message.channel.send(frase)
-
+    
     // Imagem
-    if(num !== 6 && num !== 2)
-        message.channel.send(comando[num + 7])
-
+    if(messages[num][key] !== null)
+        message.channel.send(messages[num][key]);
 }

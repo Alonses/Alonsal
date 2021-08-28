@@ -1,13 +1,19 @@
-const { messages } = require("../../arquivos/json/text/curio.json")
+module.exports = {
+    name: "curiosidades",
+    description: "Curiosidades aleatórias",
+    aliases: [ "curio", "c" ],
+    cooldown: 2,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
 
-module.exports = async ({ message }) => {
+        const { curiosidades } = require("../../arquivos/json/text/curio.json");
+        const num = Math.round((curiosidades.length - 1) * Math.random());
+        
+        let key = Object.keys(curiosidades[num]);
 
-    let num = 1 + Math.round(messages.length * Math.random());
-
-    let key = Object.keys(messages[num]);
-
-    message.channel.send(":clipboard: "+ key);
-    
-    if(messages[num][key] !== null)
-        message.channel.send(messages[num][key]);
-}
+        message.channel.send(":clipboard: | "+ key);
+        
+        if(curiosidades[num][key] !== null)
+            message.channel.send(curiosidades[num][key]);
+    }
+};

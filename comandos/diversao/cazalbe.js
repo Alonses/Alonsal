@@ -1,10 +1,17 @@
-const { gifs } = require("../../arquivos/json/gifs/cazalbe.json");
+module.exports = {
+    name: "cazalbe",
+    description: "Cazalbé!",
+    aliases: [ "caz" ],
+    cooldown: 5,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
 
-module.exports = async({message}) => {
-    let num = Math.round(gifs.length * Math.random());
+        message.delete();
+        
+        const { gifs } = require("../../arquivos/json/gifs/cazalbe.json");
+
+        let num = Math.round((gifs.length - 1) * Math.random());
     
-    if(num === gifs.length)
-        num = 0;
-
-    message.channel.send(gifs[num]);
-}
+        message.channel.send(gifs[num]);
+    }
+};

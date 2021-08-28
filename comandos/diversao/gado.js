@@ -1,22 +1,31 @@
-const { messages } = require("../../arquivos/json/text/gado.json")
+module.exports = {
+    name: "gado",
+    description: "Teste a gadisse de alguém",
+    aliases: [ "ga" ],
+    usage: "gado <@>",
+    cooldown: 5,
+    permissions: [ "SEND_MESSAGES" ],
+    execute(client, message, args) {
+        
+        const { gadisissimo } = require("../../arquivos/json/text/gado.json");
 
-module.exports = async({message, args}) => {
+        const num = Math.round((gadisissimo.length - 1) * Math.random());
 
-    if(typeof args[0] != "undefined" && args[0].includes("<@")){
-        const num = 1 + Math.round(31 * Math.random());
+        const alvo = message.mentions.users.first();
 
-        const gado = args[0];
-        const alvo = gado.replace("!", "")
-    
-        if(alvo === "<@833349943539531806>"){
-            message.channel.send(`${message.author} sai pra lá seu GA :cow: DO, teste isso com outro usuário`)
-            return
+        if(typeof alvo == "undefined"){
+            message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`);
+            return;
         }
 
-        if(alvo !== `${message.author}`)
-            message.channel.send("O "+ gado +" "+ messages[num])
+        if(alvo.id == "833349943539531806"){
+            message.channel.send(`${message.author} sai pra lá seu GA :cow: DO, teste isso com outro usuário`);
+            return;
+        }
+
+        if(alvo.id !== message.author.id)
+            message.channel.send("O <@"+ alvo.id +"> "+ gadisissimo[num]);
         else
-            message.channel.send(`Você ${message.author}`+" "+ messages[num])
-    }else
-        message.channel.send(`O SEU GADO ${message.author} :cow:, kd o @ do usuário?`)
-}
+            message.channel.send(`Você ${message.author}`+" "+ gadisissimo[num]);
+    }
+};

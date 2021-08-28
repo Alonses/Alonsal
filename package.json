@@ -1,32 +1,22 @@
 {
-  "name": "alonsal-bot",
-  "version": "1.3.0",
-  "description": "Viva a automação!",
+  "name": "alonsal",
+  "version": "1.5.5",
+  "description": "Automatiza!",
   "main": "bot.js",
   "scripts": {
-    "test": "node .",
+    "test": "nodemon test",
     "start": "node ."
   },
   "author": "665002572926681128",
   "license": "ISC",
   "dependencies": {
-    "@joshyzou/getyoutubelinks": "^1.1.9",
-    "asynckit": "^0.4.0",
-    "bluebird": "^3.7.2",
-    "combined-stream": "^1.0.8",
-    "delayed-stream": "^1.0.0",
-    "discord-youtube-api": "^0.1.0",
+    "canvas": "^2.8.0",
+    "country-iso-2-to-3": "^1.1.0",
+    "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
-    "ffmpeg-static": "^4.3.0",
-    "fs": "0.0.1-security",
-    "m3u8stream": "^0.8.4",
-    "mime-types": "^2.1.31",
-    "miniget": "^4.2.1",
-    "node-fetch": "^2.6.1",
-    "opusscript": "0.0.8",
-    "request-promise": "^4.2.6",
-    "sax": "^1.2.4",
-    "video-thumbnail-url": "^1.0.1",
-    "ytdl-core": "^4.8.2"
+    "i18n-country-code": "^1.0.1",
+    "nodemon": "^2.0.12",
+    "sqlite3": "^5.0.2",
+    "wax-command-handler": "^1.0.8"
   }
 }
