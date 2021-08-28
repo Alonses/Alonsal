@@ -1,4 +1,4 @@
-const ytdl = require('ytdl-core')
+const ytdl = require('ytdl-core');
 
 module.exports = async function({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal}){
 

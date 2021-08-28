@@ -54,7 +54,7 @@ client.on('message', message => {
         ult_comand = content;
 
         if(content.includes(prefix))
-            console.log("Comando exec: "+ content);
+            console.log("Comando exec: "+ message.author.username +", "+ message.guild.name +", "+ content);
 
         let comando_musical = content.replace(".a", "");
         comando_musical = comando_musical.split(" ");

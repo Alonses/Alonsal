@@ -10,7 +10,7 @@ module.exports = {
         const num = Math.round((curiosidades.length - 1) * Math.random());
         
         let key = Object.keys(curiosidades[num]);
-
+        
         message.channel.send(":clipboard: | "+ key);
         
         if(curiosidades[num][key] !== null)
