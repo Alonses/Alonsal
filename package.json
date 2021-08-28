@@ -10,13 +10,18 @@
   "author": "665002572926681128",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/opus": "^0.6.0",
+    "@joshyzou/getyoutubelinks": "^1.1.9",
     "canvas": "^2.8.0",
     "country-iso-2-to-3": "^1.1.0",
     "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
+    "ffmpeg-static": "^4.4.0",
     "i18n-country-code": "^1.0.1",
     "nodemon": "^2.0.12",
     "sqlite3": "^5.0.2",
-    "wax-command-handler": "^1.0.8"
+    "video-thumbnail-url": "^1.0.1",
+    "wax-command-handler": "^1.0.8",
+    "ytdl-core": "^4.9.1"
   }
 }
