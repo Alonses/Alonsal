@@ -23,7 +23,7 @@ module.exports = {
         const embed_inicial = new MessageEmbed()
         .setTitle('Boas vindas ao Ajuda! :boomerang:')
         .setColor(0x29BB8E)
-        .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n**`.ah 1`** - `Comandos Divertidos`\n\n**`.ah 2`** - `Comandos Utilitários`\n\n**`.ah 3`** - `Comandos de Jogos`\n\n**`.ah 4`** - `Manutenção do Alonsal`\n\n**`.ah 5`** - `Manipulação de imagens`\n\n**`.ahm`** - `Menu dos moderadores`\n\n**`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo serão excluídas automaticamente._")
+        .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **`.ah 1`** - `Comandos Divertidos`\n\n:compass: **`.ah 2`** - `Comandos Utilitários`\n\n:golf: **`.ah 3`** - `Comandos de Jogos`\n\n:musical_note: **`.ash`** - `Comandos Músicais`\n\n:tools: **`.ah 4`** - `Manutenção do Alonsal`\n\n:frame_photo: **`.ah 5`** -  `Manipulação de imagens`\n\n:scroll: **`.ahm`** - `Comandos moderativos`\n\n:information_source: **`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._")
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
         const embed_diversao = new MessageEmbed()

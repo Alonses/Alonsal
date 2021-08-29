@@ -27,14 +27,14 @@ module.exports = {
     
         if(args[0] == 1)
             texto = "mensagem` foi removida";
-    
-        message.delete() // apaga a mensagem do comando
-        message.channel.bulkDelete(parseInt(args[0])); // Apaga as mensagens restantes aos lotes
         
-        const m = await message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto, );
+        message.delete() // apaga a mensagem do comando
 
-        setTimeout(() => {
-            m.delete();
-        }, 3000);
+        message.channel.bulkDelete(parseInt(args[0]))
+        .then(() => {
+            message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto, ).then(message => message.delete({timeout: 3000}));
+        })
+        .catch(err =>
+            message.reply(":octagonal_sign: | Não foi possível executar este comando, pois há mensagens fixadas ou mensagens muito antigas, diminua o valor e tente novamente").then(message => message.delete({timeout: 3000})));
     }
 };
