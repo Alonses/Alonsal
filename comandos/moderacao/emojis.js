@@ -147,9 +147,7 @@ module.exports = {
                     return;
                 }
 
-                console.log(typeof match);
-
-                if(!match){
+                if(!match){ // Confirma que a entrada é um emoji
                     message.lineReply(":octagonal_sign: | Informe um emoji para ser removido");
                     return;
                 }
