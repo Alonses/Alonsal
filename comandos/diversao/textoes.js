@@ -2,7 +2,7 @@ module.exports = {
     name: "textoes",
     description: "textoes gratuitos",
     aliases: [ "text", "txt"],
-    cooldown: 20,
+    cooldown: 30,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
