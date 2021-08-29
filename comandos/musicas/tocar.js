@@ -96,6 +96,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         }
 
         fator_renatos = 1;
+        let dispatcher
 
         if(trava_renatao == 0)
             fator_renatos = Math.round(2 * Math.random());
@@ -104,8 +105,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             try{
                 dispatcher = connection.play(ytdl(queue_interna[0], {filter: "audioonly", quality: "highestaudio" }));
             }catch(error){
-                message.lineReply(":no_entry_sign: | não foi possível reproduzir este vídeo "+ queue_interna[0]);
-                dispatcher.end();
+                message.lineReply(":no_entry_sign: | não foi possível reproduzir este vídeo [ "+ queue_interna[0] +" ]");
             }
         }else if(trava_renatao == 0){
             trava_renatao = 1;

@@ -19,6 +19,7 @@
     "ffmpeg-static": "^4.4.0",
     "i18n-country-code": "^1.0.1",
     "nodemon": "^2.0.12",
+    "opusscript": "0.0.8",
     "sqlite3": "^5.0.2",
     "video-thumbnail-url": "^1.0.1",
     "wax-command-handler": "^1.0.8",
