@@ -147,6 +147,13 @@ module.exports = {
                     return;
                 }
 
+                console.log(typeof match);
+
+                if(!match){
+                    message.lineReply(":octagonal_sign: | Informe um emoji para ser removido");
+                    return;
+                }
+
                 // Coletando o emoji do cache do bot
                 emoji = client.emojis.cache.get(match[3]);
                 
