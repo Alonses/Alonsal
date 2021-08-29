@@ -36,22 +36,18 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 if(nome_faixa !== "")
                     nome_faixas_l.push(nome_faixa);
 
-                message.lineReply(`:wastebasket: | todas as próximas faixas foram removidas.`);
+                message.lineReply(`:wastebasket: | Todas as próximas faixas foram removidas.`);
             }else{
                 // Removendo a faixa informada do array
                 link_removido = queue_local.splice(rm_faixa - 1, 1);
                 let faixa_removida;
                  
-                console.log("link_removido "+ link_removido);
-                console.log("nome_faixas_l "+ nome_faixas_l, nome_faixas_l.length);
-                console.log("queue_local"+ queue_local.length);
-
                 if(typeof nome_faixas_l !== "undefined" && nome_faixas_l.length == queue_local.length)
                     faixa_removida = nome_faixas_l.splice(rm_faixa - 1, 1);
                 else
                     faixa_removida = await ytdl.getInfo(link_removido).then(info => info.videoDetails.title);
 
-                message.lineReply(":wastebasket: A faixa [ `"+ faixa_removida +"` ] foi removida da playlist.");
+                message.lineReply(":wastebasket: | A faixa [ `"+ faixa_removida +"` ] foi removida da playlist.");
             }
         }else{
             message.lineReply("Use `.assk` para pular a faixa atual antes de remover ela");
