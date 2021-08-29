@@ -8,24 +8,24 @@ module.exports = async ({client, message, playlists, nome_faixas, repeteco, trav
     let id_canal = Vchannel.id;
     
     if(typeof playlists.get(id_canal) != "undefined")
-        queue_local = playlists.get(id_canal)
+        queue_local = playlists.get(id_canal);
     else{
-        message.channel.send("Não há faixas na playlist, adicione algumas para poder acessar este comando")
-        return
+        message.channel.send("Não há faixas na playlist, adicione algumas para poder acessar este comando");
+        return;
     }
 
-    queue_faixas = nome_faixas.get(id_canal)
-    repeteco_ = repeteco.get(id_canal)
-    trava_pl_l = trava_pl.get(id_canal)
+    queue_faixas = nome_faixas.get(id_canal);
+    repeteco_ = repeteco.get(id_canal);
+    trava_pl_l = trava_pl.get(id_canal);
     
     if(typeof queue_faixas === "undefined")
-        queue_faixas = []
+        queue_faixas = [];
 
     if(typeof trava_pl_l === "undefined")
-        trava_pl_l = 0
+        trava_pl_l = 0;
 
     if(trava_pl_l === 0){
-        trava_pl.set(id_canal, 1)
+        trava_pl.set(id_canal, 1);
         
         let carregando_pl = client.emojis.cache.get(emojis.carregando).toString();
 
@@ -63,7 +63,7 @@ module.exports = async ({client, message, playlists, nome_faixas, repeteco, trav
                         }
                     }catch(err){
                         message.channel.send(":octagonal_sign: Erro ao buscar informações do vídeo [ `"+ queue_local[faixa_in] +"` ]");
-                        return
+                        return;
                     }
                 }
             }
@@ -82,15 +82,15 @@ module.exports = async ({client, message, playlists, nome_faixas, repeteco, trav
             
             m.edit(`:page_with_curl: Tudo certo ${message.author}, a playlist está abaixo //`, embed);
 
-            trava_pl_l = 0
+            trava_pl_l = 0;
         }else{
-            message.channel.send(":free: Não há nenhuma faixa tocando no momento.")
-            trava_pl_l = 0
+            message.channel.send(":free: Não há nenhuma faixa tocando no momento.");
+            trava_pl_l = 0;
         }
     }else
-        message.channel.send(`:name_badge: ${message.author} um momento, estou processando a playlist ainda.`)
+        message.channel.send(`:name_badge: ${message.author} um momento, estou processando a playlist ainda.`);
 
-    await playlists.set(id_canal, queue_local)
-    await nome_faixas.set(id_canal, queue_faixas)
-    await trava_pl.set(id_canal, trava_pl_l)
+    await playlists.set(id_canal, queue_local);
+    await nome_faixas.set(id_canal, queue_faixas);
+    await trava_pl.set(id_canal, trava_pl_l);
 }

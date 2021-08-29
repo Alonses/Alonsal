@@ -24,9 +24,9 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                     return;
                 }
 
-                message.channel.send(":fast_forward: Pulando para a `"+ pular_para +"°` faixa");
-
                 if(pular_para <= queue_local.length){
+
+                    message.channel.send(":fast_forward: Pulando para a `"+ pular_para +"°` faixa");
                     for(var i = 1; i < pular_para; i++){
 
                         var faixa_atual = queue_local[0];
@@ -80,9 +80,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 await nome_faixas.set(id_canal, []);
                 await repeteco.set(id_canal, 0);
                 await atividade_bot.set(id_canal, 0);
-                
-                // console.log("playlists: "+ playlists);
-                
+                                
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end");
                 return;
             }

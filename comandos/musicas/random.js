@@ -1,12 +1,17 @@
 const faixas = require('../../arquivos/json/text/faixas.json');
-const tocar = require('./tocar.js')
+const tocar = require('./tocar.js');
 
 module.exports = async function({message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, id_canal}){
+    
     let queue_local = playlists.get(id_canal);
+    let faixas_locais = nome_faixas.get(id_canal);
     let _ativo = atividade_bot.get(id_canal);
 
-    if(typeof queue_local == "undefined")
+    if(typeof queue_local === "undefined")
         queue_local = [];
+    
+    if(typeof faixas_locais === "undefined")
+        faixas_locais = [];
 
     if(typeof _ativo == "undefined")
         _ativo = 0;
@@ -59,31 +64,40 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
 
         if(typeof quantidade_faixas === "undefined" || faixas_selecionadas === 1)
             if(tipo_random === "ms")
-                message.lineReply("Escolhendo uma música aleatória");
+                message.channel.send("Escolhendo uma música aleatória");
             else if(tipo_random === "me")
-                message.lineReply("Escolhendo uma zueira aleatória");
+                message.channel.send("Escolhendo uma zueira aleatória");
             else if(tipo_random === "jg")
-                message.lineReply("Escolhendo uma trilha sonora aleatória");
+                message.channel.send("Escolhendo uma trilha sonora aleatória");
             else
-                message.lineReply("Escolhendo uma composição clássica aleatória");
+                message.channel.send("Escolhendo uma composição clássica aleatória");
 
+        let url_escolhida = "";
+        
         do{
             faixa = 1 + Math.round((faixas[alvo].length - 1) * Math.random());
             
+            url_escolhida = Object.keys(faixas[alvo][faixa]);
+            let nome_faixa = faixas[alvo][faixa][url_escolhida];
+
+            url_escolhida = url_escolhida[0];
+
             if(faixas_selecionadas > 0){
-                if(!queue_local.includes(faixas[alvo][faixa]) && faixas[alvo][faixa] != null){
-                    queue_local.push(faixas[alvo][faixa]);
+                if(!queue_local.includes(url_escolhida)){
+                    queue_local.push(url_escolhida);
+                    faixas_locais.push(nome_faixa);
                     contador++;
                 }
             }else{
-                queue_local.push(faixas[alvo][faixa]);
+                queue_local.push(url_escolhida);
+                faixas_locais.push(nome_faixa);
                 break;
             }
 
             if(contador == faixas_selecionadas) // Encerra o loop caso tenha escolhido todas as faixas
                 break;
 
-        }while(queue_local.includes(faixas[alvo][faixa]) || contador < faixas_selecionadas);
+        }while(queue_local.includes(url_escolhida) || contador < faixas_selecionadas);
 
         if(faixas_selecionadas > 1){
             if((args.includes("ms")))
@@ -100,6 +114,7 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
             message.lineReply(":cd: Faixa aleatória adicionada a fila");
 
         playlists.set(id_canal, queue_local);
+        nome_faixas.set(id_canal, faixas_locais);
 
         if(_ativo === 0){
             message.member.voice.channel.join()
@@ -109,9 +124,9 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
                 atividade_bot.set(id_canal, 1);
 
                 if(tipo_random !== "op")
-                    message.lineReply("Ok, som na caixa DJ :sunglasses: :metal:");
+                    message.lineReply("Som na caixa DJ :sunglasses: :metal:");
                 else
-                    message.lineReply("Ok, aprecie com moderação :musical_note:");
+                    message.lineReply("Aprecie com moderação :musical_note:");
 
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa);
             });
