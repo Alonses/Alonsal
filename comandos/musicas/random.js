@@ -80,6 +80,8 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
             url_escolhida = Object.keys(faixas[alvo][faixa]);
             let nome_faixa = faixas[alvo][faixa][url_escolhida];
 
+            url_escolhida = url_escolhida[0];
+
             if(faixas_selecionadas > 0){
                 if(!queue_local.includes(url_escolhida)){
                     queue_local.push(url_escolhida);

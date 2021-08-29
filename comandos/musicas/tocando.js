@@ -6,9 +6,9 @@ module.exports = async function({message, playlists, id_canal}){
     
     queue_local = playlists.get(id_canal);
 
-    dados_np = await ytdl.getInfo(queue_local[0][0]).then(info => info.videoDetails);
+    dados_np = await ytdl.getInfo(queue_local[0]).then(info => info.videoDetails);
 
-    thumb = await getThumb(queue_local[0][0]).then(thumb_url => {
+    thumb = await getThumb(queue_local[0]).then(thumb_url => {
         return thumb_url;
     });
 

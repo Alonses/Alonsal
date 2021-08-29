@@ -30,9 +30,9 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         return;
     }
 
-    id_canal = Vchannel.id;
+    let id_canal = Vchannel.id;
     id_canal = id_canal.toString();
-    cond_auto = "init";
+    let cond_auto = "init";
 
     if(condicao_auto === "end" && typeof condicao_auto !== "undefined")
         cond_auto = "end";
@@ -46,7 +46,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
     if(cond_auto !== "end")
         queue_local = playlists.get(id_canal);
 
-    if(cond_auto !== "end" && cond_auto !== "updt"){
+    if(cond_auto !== "end" && condicao_auto !== "updt"){
         if(!ytdl.validateURL(queue_local[0])){
             await message.lineReply(":octagonal_sign: | Informe um link adequado");
             client.queue.shift();
@@ -79,10 +79,9 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         let faixa_atual;
         let queue_interna;
         let faixa_interna = [];
+        feedback_f = feedback_faixa.get(id_canal);
 
         queue_interna = playlists.get(id_canal);
-
-        let music = ytdl(queue_interna[0]);
 
         if(cond_auto !== "end"){
             requisicao_ativa = 1;
@@ -128,38 +127,38 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         if(cond_auto !== "end"){
             if(feedback_f === 1 && ((repeteco_ === 0 || queue_interna.length > 5 ) && fator_renatos > 0))
-            ytdl.getInfo(queue_interna[0][0]).then(info => {
-                getThumb(queue_interna[0][0]).then(thumb_url => {
-                    
-                    faixa_atual = info.videoDetails.title;
+                ytdl.getInfo(queue_interna[0]).then(info => {
+                    getThumb(queue_interna[0]).then(thumb_url => {
+                        
+                        faixa_atual = info.videoDetails.title;
 
-                    faixa_interna[0] = faixa_atual;
-                    nome_faixas.set(id_canal, faixa_interna);
+                        faixa_interna[0] = faixa_atual;
+                        nome_faixas.set(id_canal, faixa_interna);
 
-                    segundos = info.videoDetails.lengthSeconds;
-                    tempo = new Date(segundos * 1000).toISOString().substr(11, 8);
-                    
-                    tempo_c = tempo.split(":");
-                    if(tempo_c[0] === "00")
-                        tempo = tempo.replace("00:", "");
+                        segundos = info.videoDetails.lengthSeconds;
+                        tempo = new Date(segundos * 1000).toISOString().substr(11, 8);
+                        
+                        tempo_c = tempo.split(":");
+                        if(tempo_c[0] === "00")
+                            tempo = tempo.replace("00:", "");
 
-                    const embed = new Discord.MessageEmbed()
-                    .setTitle('Começando agora :loud_sound: :notes:')
-                    .setColor('#29BB8E')
-                    .setDescription(faixa_atual +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
-                    .setThumbnail(thumb_url)
-                    .setTimestamp();
+                        const embed = new Discord.MessageEmbed()
+                        .setTitle('Começando agora :loud_sound: :notes:')
+                        .setColor('#29BB8E')
+                        .setDescription(faixa_atual +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
+                        .setThumbnail(thumb_url)
+                        .setTimestamp();
 
-                    message.channel.send(embed);
+                        message.channel.send(embed);
+                    });
                 });
-            });
         }else // Encerra tudo em caso de playlist vazia
             dispatcher.end();
 
         dispatcher.on("error", () => {
-            if(cond_auto !== "end"){
-                message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa.");
-            }
+            // if(cond_auto !== "end"){
+            //     message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa.");
+            // }
         });
 
         dispatcher.on("finish", () => {
