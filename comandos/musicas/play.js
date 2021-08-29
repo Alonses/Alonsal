@@ -72,6 +72,12 @@ module.exports = async function({message, client, args}){
     }else if(message.content.includes(".asrs") || message.content.includes(".asfd") || message.content.includes(".asrp")){
         require('./organiza')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, tocar});
         return;
+    }else if(message.content.includes(".asp")){
+        require('./pause.js')({client, message});
+        return;
+    }else if(message.content.includes(".asr")){
+        require('./resume.js')({client, message});
+        return;
     }
 
     if(message.content === ".as"){
@@ -87,14 +93,14 @@ module.exports = async function({message, client, args}){
     let link = "";
 
     if(message.content.includes(".as") && args.length > 0){
-        if(!pesquisa.includes("https:") && !pesquisa.includes(".com/watch?v=") && !pesquisa.includes("//youtu.be/")){
+        if(!pesquisa.includes("https://") && !pesquisa.includes(".com/watch?v=") && !pesquisa.includes("//youtu.be/")){
 
             pesquisa = pesquisa.slice(2, -1).toLowerCase();
 
             message.channel.send(":mag: Procurando por `"+ pesquisa +"`");
 
             link = await getyoutubelinks(pesquisa).catch(e => {
-                message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);
+                message.channel.send(":no_entry_sign: | "+ `${message.author} vídeo não encontrado`);
             });
 
             if(typeof link == "undefined")
@@ -102,7 +108,7 @@ module.exports = async function({message, client, args}){
 
             link = link.link;
         }else
-            link = args[0];
+            link = args[1];
         
         if(queue_local.length > 0){
             if(queue_local.includes(link)){
