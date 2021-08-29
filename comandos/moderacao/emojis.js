@@ -94,7 +94,7 @@ module.exports = {
                             return;
                         }
                             
-                        if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp")){
+                        if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")){
                             message.lineReply(':warning: | Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)');
                             return;
                         }
