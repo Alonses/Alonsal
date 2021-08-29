@@ -86,14 +86,14 @@ module.exports = {
                         return;
                     }
 
-                    message.attachments.forEach(attachment => {
+                    await message.attachments.forEach(attachment => {
                         url = attachment.url;
 
-                        if(attachment.size > 350000){
+                        if(attachment.size > 260000){
                             message.lineReply(":octagonal_sign: | Envie uma imagem com tamanho menor que 250kb para usar de emoji");
                             return;
                         }
-                            
+
                         if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")){
                             message.lineReply(':warning: | Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)');
                             return;
