@@ -53,7 +53,7 @@ client.on('message', message => {
     if(content !== prefix && content.includes(prefix)){ // Previne que mensagens aleatórias acionem comandos
         ult_comand = content;
 
-        if(content.includes(prefix))
+        if(content.startsWith(prefix))
             console.log("Comando exec: "+ message.author.username +", "+ message.guild.name +", "+ content);
 
         let comando_musical = content.replace(".a", "");
@@ -63,7 +63,7 @@ client.on('message', message => {
             const args = content.slice(prefix.length).trim().split(' ');
             require('./comandos/musicas/play.js')({message, client, args});
         }else
-            if(content.includes(prefix))
+            if(content.startsWith(prefix))
                 handler.messageReceived(message); // Invoca o comando
     }else{
         if(content === prefix)
