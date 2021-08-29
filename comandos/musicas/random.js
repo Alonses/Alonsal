@@ -2,14 +2,15 @@ const faixas = require('../../arquivos/json/text/faixas.json');
 const tocar = require('./tocar.js');
 
 module.exports = async function({message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, id_canal}){
+    
     let queue_local = playlists.get(id_canal);
     let faixas_locais = nome_faixas.get(id_canal);
     let _ativo = atividade_bot.get(id_canal);
 
-    if(typeof queue_local == "undefined")
+    if(typeof queue_local === "undefined")
         queue_local = [];
     
-    if(typeof faixas_locais == "undefined")
+    if(typeof faixas_locais === "undefined")
         faixas_locais = [];
 
     if(typeof _ativo == "undefined")
@@ -63,13 +64,13 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
 
         if(typeof quantidade_faixas === "undefined" || faixas_selecionadas === 1)
             if(tipo_random === "ms")
-                message.lineReply("Escolhendo uma música aleatória");
+                message.channel.send("Escolhendo uma música aleatória");
             else if(tipo_random === "me")
-                message.lineReply("Escolhendo uma zueira aleatória");
+                message.channel.send("Escolhendo uma zueira aleatória");
             else if(tipo_random === "jg")
-                message.lineReply("Escolhendo uma trilha sonora aleatória");
+                message.channel.send("Escolhendo uma trilha sonora aleatória");
             else
-                message.lineReply("Escolhendo uma composição clássica aleatória");
+                message.channel.send("Escolhendo uma composição clássica aleatória");
 
         let url_escolhida = "";
         
