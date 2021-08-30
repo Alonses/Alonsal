@@ -6,7 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        message.delete();
+        const permissions = message.channel.permissionsFor(message.client.user);
+
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
         
         const { gifs } = require("../../arquivos/json/gifs/rasputia.json");
 
