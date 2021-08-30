@@ -12,7 +12,7 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        const emoji_barata = emoji(emojis.barata);
+        const emoji_barata = emoji(emojis.dancando_barata);
         const emoji_steve = emoji(emojis.dancando_steve);
         const emoji_pare = emoji(emojis.pare_agr);
 

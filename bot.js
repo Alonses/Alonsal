@@ -3,7 +3,7 @@ const discord = require("discord.js");
 require('discord-reply');
 
 const { readdirSync } = require("fs");
-let { token, prefix, pastas } = require('./config.json');
+let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const client = new discord.Client();
 const { MessageEmbed } = require('discord.js');
 
@@ -41,7 +41,7 @@ client.on('message', message => {
 
     let content = message.content;
 
-    if(message.content == "<@833349943539531806>" || message.content == "<@!833349943539531806>"){ // Responde mensagens que é marcado
+    if(message.content == "<@"+ client.user.id + ">" || message.content == "<@!"+ client.user.id + ">"){ // Responde mensagens que é marcado
         
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
@@ -50,10 +50,21 @@ client.on('message', message => {
         return;
     }
 
-    if(content !== prefix && content.includes(prefix)){ // Previne que comandos sem aliases sejam acionados
+    if(content !== prefix && content.includes(prefix)){ // Previne que mensagens aleatórias acionem comandos
         ult_comand = content;
 
-        handler.messageReceived(message); // Invoca o comando
+        if(content.startsWith(prefix))
+            console.log("Comando exec: "+ message.author.username +", "+ message.guild.name +", "+ content);
+
+        let comando_musical = content.replace(".a", "");
+        comando_musical = comando_musical.split(" ");
+
+        if(comandos_musicais.includes(comando_musical[0])){ // Apenas utilizado em comandos musicais
+            const args = content.slice(prefix.length).trim().split(' ');
+            require('./comandos/musicas/play.js')({message, client, args});
+        }else
+            if(content.startsWith(prefix))
+                handler.messageReceived(message); // Invoca o comando
     }else{
         if(content === prefix)
             require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando

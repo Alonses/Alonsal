@@ -2,7 +2,7 @@ module.exports = {
     name: "menu_adm",
     description: "Informações secundárias do alonsal",
     aliases: [ "hm", "menuadm", "dm", "moderador", "mod" ],
-    cooldown: 3,
+    cooldown: 20,
     permissions: [ "ADMINISTRATOR" ],
     execute(client, message, args) {
 
