@@ -242,7 +242,10 @@
         {"https://youtu.be/po-0n1BKW2w" : "Nintendo Wii - Mii Channel Theme"},
         {"https://youtu.be/8fSpEYQUNpQ" : "Moskau"},
         {"https://youtu.be/k6LB6nrkoJU" : "Omae Wa Mou"},
-        {"https://youtu.be/1mrGdGMNsv0" : "Spooky Scary Skeletons (Remix) (Extended Mix) (Spooktober Theme Song)"}
+        {"https://youtu.be/1mrGdGMNsv0" : "Spooky Scary Skeletons (Remix) (Extended Mix) (Spooktober Theme Song)"},
+        {"https://youtu.be/AKfCZv7B_50" : "MEU GORDO E MARROM Paródia Justin Timberlake Suit Tie"},
+        {"https://youtu.be/Rbk5ysEzFgA" : "Mc Gorila - sujo meu pau foi de coco"},
+        {"https://youtu.be/gJqCb-EIUIo" : "Nunes Filho - Fogo Do Amor"}
     ],
     "trilhas": [
         {"https://youtu.be/DTLfV7Ru5VY" : "Donkey Kong Country - Simian Segue [Restored]"},
@@ -342,5 +345,11 @@
         {"https://youtu.be/cF-c9iuHxqk" : "The Blue Danube"},
         {"https://youtu.be/Mo9ndTg3ako" : "Satie - Gymnopédie No.  1"},
         {"https://youtu.be/9phF9iqRXWo" : "The Four Seasons, Concerto No. 4 in F Minor, RV 297 \"Winter\": I. Allegro non molto"}
+    ],
+    "propagandas": [
+        "https://youtu.be/PZ4aKpQguz0",
+        "https://youtu.be/NRW-hLmGHX4",
+        "https://youtu.be/tfD4V1pyG5w",
+        "https://youtu.be/fGWSM9pvJ0Q"
     ]
 }
