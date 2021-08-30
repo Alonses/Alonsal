@@ -4,8 +4,6 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
     feedback = feedback_faixa.get(id_canal);
     queue_local = playlists.get(id_canal);
 
-    console.log(message.content);
-
     if(message.content === ".asrs"){
         
         await playlists.set(id_canal, []);

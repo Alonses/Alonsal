@@ -103,30 +103,6 @@ module.exports = {
                     });
                 }
                 
-                // if(args.length > 2 && !isNaN(args[2])){ // Verifica se é um servidor externo
-                //     const servidor = client.guilds.cache.get(args[2]);
-                    
-                //     if(typeof servidor == "undefined"){
-                //         message.lineReply(":octagonal_sign: | Este servidor não existe, ou eu não estou nele :(");
-                //         return;
-                //     }
-
-                //     let author = message.author;
-
-                    // console.log(author);
-
-                    // console.log(servidor.members.cache);
-
-                    // console.log(servidor.members.cache.has("MANAGE_EMOJIS"));
-
-                    // console.log(servidor.member.has("MANAGE_EMOJIS"));
-
-                    // if(servidor.member.hasPermission("MANAGE_EMOJIS"))
-                        // message.lineReply('Tem permissão');
-                    // else
-                        // message.lineReply('Não tem permissão');
-                // }
-
                 if(nome_emoji != null && url != null){ // Criando o emoji no servidor
                     message.guild.emojis.create(url, nome_emoji)
                     .then(newEmoji => {

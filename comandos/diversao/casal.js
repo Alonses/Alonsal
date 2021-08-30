@@ -7,7 +7,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { MessageEmbed } = require ('discord.js');
+        const { MessageEmbed } = require('discord.js');
 
         if(args[1] === "" && args[2].includes("<@"))
             args.splice(1, 1);
