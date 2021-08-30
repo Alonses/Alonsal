@@ -14,6 +14,7 @@ Possuo diversas áreas com vários comandos, sendo elas://
 - Comprovar a gadisse de alguém
 - Adicionar e remover emojis do servidor
 - Apagar mensagens do servidor
+
 _E outros vários comandos que estão a pronta demanda para vx!_
 
 💬 Para me chamar apenas use `.ah`, `.help` ou `.ajuda`
@@ -23,4 +24,4 @@ Estou em constante evolução e a cada dia aprendo a fazer uma coisa nova! Novos
 🌐 Por enquanto só sei falar português, mas pretendo aprender outros idiomas :P
 
 Me convide para um servidor utilizando o link abaixo ;D 
-https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1611004992
+https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1614150720
