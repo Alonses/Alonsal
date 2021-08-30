@@ -98,7 +98,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
         }
 
         fator_renatos = 1;
-        let dispatcher
+        let dispatcher;
 
         if(trava_renatao == 0)
             fator_renatos = Math.round(2 * Math.random());
@@ -106,7 +106,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         if(fator_renatos > 0){
             try{
-                dispatcher = connection.play(ytdl(queue_interna[0], {filter: "audioonly", quality: "highestaudio" }));
+                dispatcher = connection.play(ytdl(queue_interna[0], {
+                    filter: "audioonly",
+                    quality: "highestaudio",
+                    highWaterMark: 1 << 25
+                }));
             }catch(error){
                 message.lineReply(":no_entry_sign: | não foi possível reproduzir este vídeo [ "+ queue_interna[0] +" ]");
             }
@@ -118,7 +122,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             }, 1800000);
 
             message.channel.send(":cool: Patrocinador Alonsal!");
-            dispatcher = connection.play(ytdl(propagandas[Math.round((propagandas.length - 1) * Math.random())], {filter: "audioonly", quality: "highestaudio" }))
+            dispatcher = connection.play(ytdl(propagandas[Math.round((propagandas.length - 1) * Math.random())], {
+                filter: "audioonly",
+                quality: "highestaudio",
+                highWaterMark: 1 << 25
+            }));
         }
         
         setTimeout(() => {
