@@ -13,6 +13,8 @@ if(typeof requisicao_ativa === "undefined")
 
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
+    const { propagandas } = require("../../arquivos/json/text/faixas.json");
+
     function emoji(id){
         return client.emojis.cache.get(id).toString();
     }
@@ -100,6 +102,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         if(trava_renatao == 0)
             fator_renatos = Math.round(2 * Math.random());
+            // fator_renatos = 0;
 
         if(fator_renatos > 0){
             try{
@@ -115,7 +118,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             }, 1800000);
 
             message.channel.send(":cool: Patrocinador Alonsal!");
-            dispatcher = connection.play(ytdl("https://youtu.be/NRW-hLmGHX4", {filter: "audioonly", quality: "highestaudio" }))
+            dispatcher = connection.play(ytdl(propagandas[Math.round((propagandas.length - 1) * Math.random())], {filter: "audioonly", quality: "highestaudio" }))
         }
         
         setTimeout(() => {
