@@ -35,6 +35,6 @@ module.exports = {
             message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto, ).then(message => message.delete({timeout: 3000}));
         })
         .catch(err =>
-            message.reply(":octagonal_sign: | Não foi possível executar este comando, pois há mensagens fixadas ou mensagens muito antigas, diminua o valor e tente novamente").then(message => message.delete({timeout: 3000})));
+            message.reply(":octagonal_sign: | Não foi possível executar este comando, pois há mensagens fixadas ou mensagens muito antigas, diminua a quantidade e tente novamente").then(message => message.delete({timeout: 3000})));
     }
 };
