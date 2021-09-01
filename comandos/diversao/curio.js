@@ -6,14 +6,17 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
+        const { MessageAttachment } = require('discord.js');
+        let imagem = "";
+
         const { curiosidades } = require("../../arquivos/json/text/curio.json");
         const num = Math.round((curiosidades.length - 1) * Math.random());
         
         let key = Object.keys(curiosidades[num]);
         
-        message.channel.send(":clipboard: | "+ key);
-        
         if(curiosidades[num][key] !== null)
-            message.channel.send(curiosidades[num][key]);
+           imagem = new MessageAttachment(curiosidades[num][key]);
+
+        message.channel.send(key, imagem);
     }
 };
