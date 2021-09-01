@@ -11,7 +11,7 @@ module.exports = {
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
         .setTitle("> Site Alonsal")
-        .setURL('https://alonsal.glitch.me/#')
+        .setURL('https://alonsal.glitch.me')
         .setImage('https://i.imgur.com/6yac4yR.png')
         .setDescription("Veja os comandos, me convide ou acesse meu servidor pelo site!");
 

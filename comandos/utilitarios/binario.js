@@ -35,7 +35,7 @@ module.exports = {
             if(tipo_texto == 0){
                 texto = entrada.split('');
                 for(let carac = 0; carac < texto.length; carac++){
-                    texto[carac] = "0"+ texto[carac].charCodeAt().toString(2);
+                    texto[carac] = texto[carac].charCodeAt().toString(2);
 
                     if(texto[carac + 1] != undefined)
                         texto[carac] += " ";
