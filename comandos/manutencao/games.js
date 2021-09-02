@@ -91,7 +91,10 @@ module.exports = {
 
                 let nome_jogo_2 = args[4].replaceAll("_", " ");
 
-                texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ ids_cargos_games[i] +">";
+                texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
+
+                if(typeof ids_cargos_games[i] !== "undefined")
+                    texto_anuncio += " <@&"+ ids_cargos_games[i] +">";
 
                 if(typeof args[6] !== "undefined")
                     texto_anuncio += "\n"+ nome_jogo +" << <"+ args[3] +"> >>\n\n"+ nome_jogo_2 +" << <"+ args[6] +"> >>";
