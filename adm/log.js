@@ -3,7 +3,7 @@ const { id_canais } = require('../config.json');
 
 module.exports = async ({client, message, content}) => {
 
-    if(client.id == "833349943539531806"){
+    if(client.user.id == "833349943539531806"){
         const d = new Date();
         const day = d.toLocaleString('en-US', { weekday: 'long' });
         
