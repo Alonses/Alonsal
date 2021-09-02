@@ -8,23 +8,11 @@ module.exports = {
     async execute(client, message, args) {
 
         const { MessageEmbed } = require('discord.js');
-        const { aliases_user, ids_canais_games, ids_cargos_games } = require('../../config.json');
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
+        const { aliases_user } = require('../../config.json');
 
         let content = args;
         let mensagem = "";
         let tipo = "Alonsal";
-        let plataforma = "";
-        let logo_plat = "";
-
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-
-        if(content.length == 0){
-            message.channel.send(":warning: | Sua mensagem está vazia, escreva algo para enviar");
-            return;
-        }
 
         if(aliases_user.includes(message.author.id)){
             try{
@@ -33,7 +21,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.channel.send(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.");
+                message.lineReply(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.").then(message => message.delete());
                 return;
             }
 
@@ -44,79 +32,26 @@ module.exports = {
             mensagem = mensagem.replace(id_alvo, "");
 
             try{
-                if(tipo === "games"){
+                if(tipo === "u")
+                    client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
+                else if(tipo === "c"){
 
-                    let url = "";
+                    let canal_alvo = client.channels.cache.get(id_alvo);
+                    let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal informado
 
-                    if(message.attachments.size > 0){
-                        message.attachments.forEach(attachment => {
-                            url = attachment.url;
-                        });
-                    }
-                    
-                    if(args[4].includes("epicgames.com")){
-                        logo_plat = emoji(emojis.lg_epicgames);
-                        plataforma = "Epic";
-                    }
+                    if(permissoes.has("SEND_MESSAGES")){
+                        canal_alvo.send(mensagem);
 
-                    if(args[4].includes("store.steam")){
-                        logo_plat = emoji(emojis.lg_steam);
-                        plataforma = "Steam";
-                    }
+                        message.lineReply(`:hotsprings: | Mensagem enviada para [ \`${id_alvo}\`, \`${canal_alvo.name}\` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`).then(message => message.delete({timeout: 5000}));
+                    }else{
+                        message.lineReply(`:hotsprings: | Eu não posso enviar mensagens no canal \`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));;
 
-                    if(args[4].includes("gog.com")){
-                        logo_plat = emoji(emojis.lg_gog);
-                        plataforma = "GOG";
-                    }
-
-                    if(args[4].includes("humblebundle.com")){
-                        logo_plat = emoji(emojis.lg_humble);
-                        plataforma = "Humble Bundle";
-                    }
-
-                    if(args[4].includes("ubisoft.com")){
-                        logo_plat = emoji(emojis.lg_ubisoft);
-                        plataforma = "Ubisoft";
-                    }
-
-                    let msg_game = new MessageEmbed()
-                    .setColor(0x29BB8E)
-                    .setTitle(logo_plat +" Game gratuito!")
-                    .setURL(args[4])
-                    .setDescription('Há novos conteúdos gratuitos pela `'+ plataforma + '`.\n\nResgate antes das `'+ args[1] +'` do dia `'+ args[2] +'` para poupar `'+ args[3] +'` e garantir em sua conta Eternamente!')
-                    .setImage(url);
-
-                    for(let i = 0; i < ids_canais_games.length; i++){
-                        client.channels.cache.get(ids_canais_games[i]).send("<@&"+ ids_cargos_games[i] +">", msg_game);
-                    }
-                    
-                    message.channel.send("A atualização foi enviada à todos os canais de games");
-                }else{
-                    if(tipo === "u")
-                        client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
-                    else if(tipo === "c"){
-
-                        let canal_alvo = client.channels.cache.get(id_alvo);
-                        let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal informado
-
-                        if(permissoes.has("SEND_MESSAGES")){
-                            canal_alvo.send(mensagem);
-
-                            message.channel.send(`Mensagem enviada para [ \`${id_alvo}\`, \`${canal_alvo.name}\` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
-                        }else{
-                            const feedbc = await message.channel.send(`:hotsprings: | Eu não posso enviar mensagens para o canal \`${canal_alvo.name}\` :(`);
-
-                            setTimeout(() => {
-                                feedbc.delete();
-                            }, 5000);
-
-                            message.delete();
-                            return;
-                        }
+                        message.delete();
+                        return;
                     }
                 }
             }catch(err){
-                message.channel.send(`:octagonal_sign: | Não foi possível enviar a mensagem para este ID`);
+                message.lineReply(':octagonal_sign: | Não foi possível enviar a mensagem para este ID');
                 return;
             }
         }else{
@@ -135,7 +70,7 @@ module.exports = {
 
             client.channels.cache.get("847191471379578970").send(msg_user);
             
-            message.channel.send(`Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`);
+            message.lineReply(':hotsprings: | Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:').then(message => message.delete({timeout: 5000}));
         }
 
         if(tipo === "c")
