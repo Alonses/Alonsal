@@ -100,7 +100,7 @@ module.exports = async function({message, client, args}){
             message.channel.send(":mag: Procurando por `"+ pesquisa +"`");
 
             link = await getyoutubelinks(pesquisa).catch(e => {
-                message.channel.send(":no_entry_sign: | "+ `${message.author} vídeo não encontrado`);
+                message.lineReply(":no_entry_sign: | Vídeo não encontrado");
             });
 
             if(typeof link == "undefined")
@@ -141,15 +141,19 @@ module.exports = async function({message, client, args}){
 
     if(typeof link !== "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
         info = await ytdl.getInfo(link)
-        .catch(err => { message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);});
-
+        .catch(err => { 
+            message.lineReply(":no_entry_sign: | Vídeo não encontrado");
+        });
+        
         if(typeof info !== "undefined")
             queue_local.push(link);
         else
             return;
-    }else
-        message.channel.send(":no_entry_sign: "+ `${message.author} vídeo não encontrado`);
-        
+    }else{
+        message.lineReply(":no_entry_sign: | Vídeo não encontrado");
+        return;
+    }
+
     playlists.set(id_canal, queue_local);
 
     ativo_att = atividade_bot.get(id_canal);

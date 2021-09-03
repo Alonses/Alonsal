@@ -120,7 +120,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
             setTimeout(() => { // Libera a propaganda para aparecer novamente
                 trava_renatao = 0;
-            }, 100);
+            }, 900000);
 
             let propaganda_atual;
 
@@ -176,11 +176,9 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             dispatcher.end();
 
         dispatcher.on("error", () => {
-            if(cond_auto !== "end"){
-                message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nPulando para a próxima faixa.").then(() => {
-                    dispatcher.end();
-                });
-            }
+            message.lineReply("Não foi possível reproduzir a URL [ <"+ queue_interna[0] +"> ]\nPulando para a próxima faixa.").then(() => {
+                dispatcher.end();
+            });
         });
 
         dispatcher.on("finish", () => {
