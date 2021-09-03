@@ -4,6 +4,7 @@ const getThumb = require('video-thumbnail-url');
 
 let fator_renatos = 0;
 let trava_renatao = 0;
+let ultima_prop = null;
 
 if(typeof requisicoes === "undefined")
     requisicoes = [];
@@ -119,10 +120,18 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
             setTimeout(() => { // Libera a propaganda para aparecer novamente
                 trava_renatao = 0;
-            }, 1800000);
+            }, 100);
 
-            message.channel.send(":cool: Patrocinador Alonsal!");
-            dispatcher = connection.play(ytdl(propagandas[Math.round((propagandas.length - 1) * Math.random())], {
+            let propaganda_atual;
+
+            do{
+                propaganda_atual = propagandas[Math.round((propagandas.length - 1) * Math.random())];
+            }while(propaganda_atual == ultima_prop);
+
+            ultima_prop = propaganda_atual;
+
+            message.channel.send(":cool: _Patrocinador Alonsal!_");
+            dispatcher = connection.play(ytdl(propaganda_atual , {
                 filter: "audioonly",
                 quality: "highestaudio",
                 highWaterMark: 1 << 25
@@ -167,9 +176,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             dispatcher.end();
 
         dispatcher.on("error", () => {
-            // if(cond_auto !== "end"){
-            //     message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nUtilize `.assk` para pular para a próxima faixa.");
-            // }
+            if(cond_auto !== "end"){
+                message.lineReply("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ]\nPulando para a próxima faixa.").then(() => {
+                    dispatcher.end();
+                });
+            }
         });
 
         dispatcher.on("finish", () => {
