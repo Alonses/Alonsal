@@ -142,7 +142,7 @@ module.exports = async function({message, client, args}){
     if(typeof link !== "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
         info = await ytdl.getInfo(link)
         .catch(err => { 
-            message.lineReply(":no_entry_sign: | Vídeo não encontrado");
+            message.lineReply(":no_entry_sign: | Há um problema com este URL, por favor, insira um diferente");
         });
         
         if(typeof info !== "undefined")
