@@ -126,10 +126,15 @@ module.exports = async function({message, client, args}){
                     if(tempo_c[0] === "00")
                         tempo = tempo.replace("00:", "");
                     
+                    let pular_para = "";
+                    
+                    if(queue_local.length > 2)
+                        pular_para = " "+ queue_local.length;
+
                     const embed = new Discord.MessageEmbed()
                     .setTitle(':cd: Adicionado a fila')
                     .setColor('#29BB8E')
-                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:fast_forward: Utilize `.assk "+ queue_local.length +"` para pular até ela")
+                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:fast_forward: Utilize `.assk"+ pular_para +"` para pular até ela")
                     .setThumbnail(thumb_url)
                     .setTimestamp();
 
