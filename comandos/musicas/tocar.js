@@ -176,9 +176,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             dispatcher.end();
 
         dispatcher.on("error", () => {
-            message.lineReply("Não foi possível reproduzir a URL [ <"+ queue_interna[0] +"> ]\nUtilize `.assk` para pular para a próxima música");
+            if(typeof queue_interna[0] !== "undefined"){
+                message.lineReply("Não foi possível reproduzir a URL [ <"+ queue_interna[0] +"> ]\nUtilize `.assk` para pular para a próxima música");
 
-            client.channels.cache.get('862015290433994752').send("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ], atualize o link para evitar futuros erros.");
+                client.channels.cache.get('862015290433994752').send("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ], atualize o link para evitar futuros erros.");
+            }
         });
 
         dispatcher.on("finish", () => {

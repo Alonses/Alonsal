@@ -26,7 +26,6 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
 
     if(tipo_random === "ms" || tipo_random === "me" || tipo_random === "jg" || tipo_random === "op"){
         
-        let faixa = 0;
         let contador = 0;
         let faixas_selecionadas = 0;
         let alvo = "musicas";
@@ -75,7 +74,7 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
         let url_escolhida = "";
         
         do{
-            faixa = 1 + Math.round((faixas[alvo].length - 1) * Math.random());
+            let faixa = Math.round((faixas[alvo].length - 1) * Math.random());
             
             url_escolhida = Object.keys(faixas[alvo][faixa]);
             let nome_faixa = faixas[alvo][faixa][url_escolhida];
