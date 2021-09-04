@@ -7,7 +7,12 @@ let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const client = new discord.Client();
 const { MessageEmbed } = require('discord.js');
 
-let ult_comand = "";
+let ult_comand;
+let ult_message;
+let conexoes_ativas = 0;
+
+canais_conectados = new Map();
+servers_conectados = new Map();
 
 client.on("ready", async () => {
 
@@ -60,6 +65,8 @@ client.on('message', message => {
         comando_musical = comando_musical.split(" ");
 
         if(comandos_musicais.includes(comando_musical[0])){ // Apenas utilizado em comandos musicais
+            ult_message = message;
+
             const args = content.slice(prefix.length).trim().split(' ');
             require('./comandos/musicas/play.js')({message, client, args});
         }else
@@ -83,6 +90,34 @@ client.on("guildCreate", guild => {
 client.on("guildDelete", guild => {
     let caso = 'Left';
     require("./adm/servers.js")({client, caso, guild});
+});
+
+client.on("voiceStateUpdate", guild => {
+        
+    if(guild.guild.client.voice.connections.size < conexoes_ativas){
+        // Processa quando o bot é desconectado do canal por um usuário manualmente
+        conexoes_ativas--;
+
+        const id_canal_desconectado = guild.channelID;
+        
+        let id_canal_comando = servers_conectados.get(guild.guild.id); 
+        let id_mensagem = canais_conectados.get(guild.guild.id);
+        
+        const channel = client.channels.cache.get(id_canal_comando);
+        const message = channel.messages.cache.get(id_mensagem);
+
+        const args = message.content.slice(prefix.length).trim().split(' ');
+        
+        require('./comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
+
+        servers_conectados.set(guild.guild.id, []);
+        canais_conectados.set(guild.guild.id, []);
+    }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
+        conexoes_ativas = guild.guild.client.voice.connections.size;
+    
+        servers_conectados.set(ult_message.guild.id, ult_message.channel.id);
+        canais_conectados.set(ult_message.guild.id, ult_message.id);
+    }
 });
 
 client.on("rateLimit", limit => {

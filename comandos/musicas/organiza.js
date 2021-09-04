@@ -4,7 +4,8 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
     feedback = feedback_faixa.get(id_canal);
     queue_local = playlists.get(id_canal);
 
-    if(message.content === ".asrs"){
+
+    if(message.content == ".asrs"){
         
         await playlists.set(id_canal, []);
         await nome_faixas.set(id_canal, []);
@@ -12,7 +13,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
         await atividade_bot.set(id_canal, 0);
 
         tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, "end");
-        message.lineReply(':recycle: Reiniciando as configs Alonsais para músicas e playlists');
+        message.lineReply(":recycle: | Reiniciando as configs Alonsais para músicas e playlists");
         return;
     }
     
