@@ -4,7 +4,7 @@ const tocar = require('./tocar.js');
 const getThumb = require('video-thumbnail-url');
 const getyoutubelinks = require("@joshyzou/getyoutubelinks");
 
-module.exports = async function({message, client, args}){
+module.exports = async function({message, client, args, id_canal_desconectado}){
 
     let Vchannel = message.member.voice.channel;
 
@@ -13,7 +13,13 @@ module.exports = async function({message, client, args}){
         return;
     }
 
-    let id_canal = Vchannel.id;
+    let id_canal;
+
+    if(typeof id_canal_desconectado == "undefined")
+        id_canal = Vchannel.id;
+    else
+        id_canal = id_canal_desconectado;
+
     id_canal = id_canal.toString();
 
     if(typeof nome_faixas == "undefined")
@@ -54,8 +60,8 @@ module.exports = async function({message, client, args}){
             message.channel.send(":octagonal_sign: Inclua mais URL's na playlist para poder remover elas");
         
         return;
-    }else if(message.content.includes(".asds")){
-        require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot});
+    }else if(message.content.includes(".asds") || typeof id_canal_desconectado !== "undefined"){
+        require('./desconecta')({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, id_canal_desconectado});
         return;
     }else if(message.content.includes(".assk")){
         require('./skip')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal});

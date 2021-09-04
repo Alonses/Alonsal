@@ -15,12 +15,9 @@ if(typeof requisicao_ativa === "undefined")
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
     const { propagandas } = require("../../arquivos/json/text/faixas.json");
+    const { emojis_dancantes } = require("../../arquivos/json/text/emojis.json");
 
-    function emoji(id){
-        return client.emojis.cache.get(id).toString();
-    }
-    
-    let emoji_dancando = emoji('852873085664362507');
+    let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
     let Vchannel = message.member.voice.channel;
     let connection = await Vchannel.join();
@@ -218,7 +215,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             }else{
                 atividade_bot.set(id_canal, 0);
             
-                message.lineReply("Estou sem faixas para tocar, bora ouvir mais? "+ emoji_dancando);
+                message.lineReply("Estou sem faixas, bora ouvir mais? "+ emoji_dancando);
             }
 
             inativo = setTimeout(() => {

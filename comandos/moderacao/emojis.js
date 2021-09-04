@@ -1,7 +1,7 @@
 module.exports = {
     name: "Emojis",
     description: "Adicione e remova emojis",
-    aliases: [ "moji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
+    aliases: [ "moji", "ddmoji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
     cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
