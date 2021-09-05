@@ -17,7 +17,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
     let permissoes = canal_alvo.permissionsFor(message.client.user);
 
-    if(!permissoes.has("CONNECT") || !permissoes.has("SPEAK") || !permissoes.has("STREAM")){    
+    if(!permissoes.has("CONNECT") || !permissoes.has("SPEAK") || !permissoes.has("STREAM") || !permissoes.has("VIEW_CHANNEL")){    
         message.lineReply(":octagonal_sign: | Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos");
         return;
     }
