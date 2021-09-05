@@ -14,14 +14,6 @@ if(typeof requisicao_ativa === "undefined")
 
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
-    let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
-    let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal
-
-    if(!permissoes.has("CONNECT")){    
-        message.lineReply(":octagonal_sign: | Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos");
-        return;
-    }
-    
     const { propagandas } = require("../../arquivos/json/text/faixas.json");
     const { emojis_dancantes } = require("../../arquivos/json/text/emojis.json");
 
