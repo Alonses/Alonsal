@@ -16,7 +16,7 @@ module.exports = {
         const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         
         const embed = new MessageEmbed()
         .setTitle('Seus comandos Moderativos :scroll:')

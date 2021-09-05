@@ -25,8 +25,7 @@ module.exports = {
             return;
         }
 
-        const qtd_emojis_erro = Math.round((emojis_negativos.length - 1) * Math.random());
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[qtd_emojis_erro]).toString();
+        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length > 0){
             content = content.substr(0, (content.length - 1)); // Remove o espaço no último caractere

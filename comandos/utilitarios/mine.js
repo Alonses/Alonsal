@@ -15,7 +15,7 @@ module.exports = {
             return this.split(needle).join(replacement);
         };
 
-        emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
+        let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
 
         args.forEach(value => {
             pesquisa += value +" ";
