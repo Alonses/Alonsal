@@ -20,7 +20,6 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
     let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
     let Vchannel = message.member.voice.channel;
-
     let connection = await Vchannel.join();
 
     let feedback_f = 1;

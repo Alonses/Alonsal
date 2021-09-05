@@ -10,7 +10,7 @@ module.exports = {
         function direcao_cardial(degrees){
             let direcao = parseInt((degrees / 22.5) +.5);
 
-            const cards = ["Norte","N/NL","Nordeste","L/NL","Leste","L/SL", "Sudeste", "S/SL","Sul","S/SO","Sudoeste","O/SO","Oeste","O/NO","Noroeste","N/NO"]
+            const cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"]
             direcao = cards[direcao % 16];
 
             return direcao;
@@ -29,9 +29,7 @@ module.exports = {
         const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
         let pesquisa = "";
-
-        const num_esc = Math.round((emojis_negativos.length - 1) * Math.random());
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[num_esc]).toString();
+        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length < 1){
             message.lineReply(":warning: | Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`");
