@@ -6,6 +6,14 @@ const getyoutubelinks = require("@joshyzou/getyoutubelinks");
 
 module.exports = async function({message, client, args, id_canal_desconectado}){
 
+    let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
+    let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal
+
+    if(!permissoes.has("CONNECT")){    
+        message.lineReply(":octagonal_sign: | Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos");
+        return;
+    }
+
     let Vchannel = message.member.voice.channel;
 
     if(!Vchannel){

@@ -98,9 +98,9 @@ client.on("voiceStateUpdate", guild => {
         // Processa quando o bot é desconectado do canal por um usuário manualmente
         conexoes_ativas--;
 
-        const id_canal_desconectado = guild.channelID;
+        const id_canal_desconectado = guild.channelID; // Canal de voz
         
-        let id_canal_comando = servers_conectados.get(guild.guild.id); 
+        let id_canal_comando = servers_conectados.get(guild.guild.id); // Canal de texto 
         let id_mensagem = canais_conectados.get(guild.guild.id);
         
         const channel = client.channels.cache.get(id_canal_comando);
