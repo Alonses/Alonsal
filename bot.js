@@ -113,10 +113,12 @@ client.on("voiceStateUpdate", guild => {
         servers_conectados.set(guild.guild.id, []);
         canais_conectados.set(guild.guild.id, []);
     }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
-        conexoes_ativas = guild.guild.client.voice.connections.size;
-    
-        servers_conectados.set(ult_message.guild.id, ult_message.channel.id);
-        canais_conectados.set(ult_message.guild.id, ult_message.id);
+        if(typeof ult_message.guild.id !== "undefined"){
+            conexoes_ativas = guild.guild.client.voice.connections.size;
+        
+            servers_conectados.set(ult_message.guild.id, ult_message.channel.id);
+            canais_conectados.set(ult_message.guild.id, ult_message.id);
+        }
     }
 });
 
