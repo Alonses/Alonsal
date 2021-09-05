@@ -3,6 +3,14 @@ const tocar = require('./tocar.js');
 
 module.exports = async function({message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, id_canal}){
     
+    let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
+    let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal
+
+    if(!permissoes.has("CONNECT")){    
+        message.lineReply(":octagonal_sign: | Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos");
+        return;
+    }
+    
     let queue_local = playlists.get(id_canal);
     let faixas_locais = nome_faixas.get(id_canal);
     let _ativo = atividade_bot.get(id_canal);
