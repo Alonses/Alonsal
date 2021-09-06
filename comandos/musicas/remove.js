@@ -2,17 +2,21 @@ const ytdl = require('ytdl-core');
 
 module.exports = async function({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal}){
 
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
     if(typeof playlists !== "undefined"){
 
         if(args.length !== 2){
-            message.lineReply(":octagonal_sign: | Informe o número de uma faixa para remover, utilize o `.aspl` para ver sua playlist.");
+            message.lineReply(":octagonal_sign: | "+ musicas[7]["aviso_1"]);
             return;
         }
 
         let rm_faixa = parseInt(args[1]);
         
         if(isNaN(rm_faixa) && args[1] !== "all"){
-            message.lineReply("Informe o número de uma faixa para poder remover");
+            message.lineReply(musicas[7]["aviso_2"]);
             return;
         }
 
@@ -36,7 +40,7 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 if(nome_faixa !== "")
                     nome_faixas_l.push(nome_faixa);
 
-                message.lineReply(`:wastebasket: | Todas as próximas faixas foram removidas.`);
+                message.lineReply(":wastebasket: | "+ musicas[7]["removido_1"]);
             }else{
                 // Removendo a faixa informada do array
                 link_removido = queue_local.splice(rm_faixa - 1, 1);
@@ -47,10 +51,10 @@ module.exports = async function({client, message, args, playlists, nome_faixas, 
                 else
                     faixa_removida = await ytdl.getInfo(link_removido).then(info => info.videoDetails.title);
 
-                message.lineReply(":wastebasket: | A faixa [ `"+ faixa_removida +"` ] foi removida da playlist.");
+                message.lineReply(":wastebasket: | "+ musicas[7]["removido_2"] +" [ `"+ faixa_removida +"` ] "+ musicas[7]["removido_3"]);
             }
         }else{
-            message.lineReply("Use `.assk` para pular a faixa atual antes de remover ela");
+            message.lineReply(musicas[7]["aviso_3"]);
             return;
         }
 

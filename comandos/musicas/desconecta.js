@@ -1,6 +1,13 @@
 module.exports = async ({client, message, args, playlists, nome_faixas, id_canal, repeteco, feedback_faixa, atividade_bot, id_canal_desconectado}) => {
     
-    const frases = ["Até mais :call_me:", "Hasta la vista, baby :alien:", "Ovo dormir :zzz:", "Dá um alô dps :v:"];
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const idioma_selecionado = idioma_servers[message.guild.id];
+
+    frases = ["Até mais :call_me:", "Hasta la vista, baby :alien:", "Ovo dormir :zzz:", "Dá um alô dps :v:"];
+
+    if(idioma_selecionado == "en-us")
+        frases = ["See you later :call_me:", "Hasta la vista, baby :alien:", "I am going to sleep :zzz:", "Call me later :v:"];
 
     message.member.voice.channel.leave();
 
@@ -8,7 +15,10 @@ module.exports = async ({client, message, args, playlists, nome_faixas, id_canal
 
     if(typeof id_canal_desconectado !== "undefined"){
         id_alvo = id_canal_desconectado;
-        message.lineReply("Mi derrubaram aq ó :crocodile:");
+        if(idioma_selecionado == "pt-br")
+            message.lineReply("Mi derrubaram aq ó :crocodile:");
+        else
+            message.lineReply("They knocked me down here :crocodile:");
     }else
         message.lineReply(frases[Math.round((frases.length - 1) * Math.random())]);
 

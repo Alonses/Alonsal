@@ -2,7 +2,13 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     
     var reload = require('auto-reload');
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
+    const { moderacao } = require('../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
     let idioma_selecionado;
+
+    if(!message.member.hasPermission('MANAGE_SERVER')){
+        message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
+        return;
+    }
 
     const fs = require('fs');
     
@@ -38,14 +44,14 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     }
 
     if(typeof requisicao_auto == "undefined"){
-        let idioma_alterado = "Idioma alterado para `Português Brasileiro`";
+        let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
 
         if(args[1] == "pt")
             idioma_selecionado = "pt-br";
 
         if(args[1] == "en"){
             idioma_selecionado = "en-us";
-            idioma_alterado = "Language switched to `American English`";
+            idioma_alterado = ":flag_us: | Language switched to `American English`";
         }
 
         for(let i = 0; i < outputArray.length; i++){ // Procura pelo ID do server e altera o idioma

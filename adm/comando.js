@@ -1,6 +1,9 @@
-const { messages } = require("../arquivos/json/text/comando.json");
-
 module.exports = async ({message}) => {
+
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
+
+    const { messages } = require("../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/comando.json");
 
     const num = Math.round((messages.length - 1) * Math.random());
 

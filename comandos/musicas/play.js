@@ -6,10 +6,14 @@ const getyoutubelinks = require("@joshyzou/getyoutubelinks");
 
 module.exports = async function({message, client, args, id_canal_desconectado}){
 
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+    
     let Vchannel = message.member.voice.channel;
 
     if(!Vchannel){
-        message.channel.send("Entre em um canal de voz para utilizar estes comandos");
+        message.channel.send(musicas[0]["aviso_1"]);
         return;
     }
     
@@ -18,7 +22,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     let permissoes = canal_alvo.permissionsFor(message.client.user);
 
     if(!permissoes.has("CONNECT") || !permissoes.has("SPEAK") || !permissoes.has("STREAM") || !permissoes.has("VIEW_CHANNEL")){    
-        message.lineReply(":octagonal_sign: | Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos");
+        message.lineReply(":octagonal_sign: | "+ musicas[0]["error_1"]);
         return;
     }
 
@@ -66,7 +70,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
         if(queue_local.length != 0)
             require('./remove')({client, message, args, playlists, nome_faixas, repeteco, feedback_faixa, atividade_bot, tocar, id_canal});
         else
-            message.channel.send(":octagonal_sign: Inclua mais URL's na playlist para poder remover elas");
+            message.channel.send(":octagonal_sign: "+ musicas[0]["aviso_2"]);
         
         return;
     }else if(message.content.includes(".asds") || typeof id_canal_desconectado !== "undefined"){
@@ -96,7 +100,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     }
 
     if(message.content === ".as"){
-        message.channel.send("Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`");
+        message.channel.send(musicas[0]["aviso_3"]);
         return;
     }
 
@@ -112,10 +116,10 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
 
             pesquisa = pesquisa.slice(2, -1).toLowerCase();
 
-            message.channel.send(":mag: Procurando por `"+ pesquisa +"`");
+            message.channel.send(musicas[0]["procurando"] +" `"+ pesquisa +"`");
 
             link = await getyoutubelinks(pesquisa).catch(e => {
-                message.lineReply(":no_entry_sign: | Vídeo não encontrado");
+                message.lineReply(":no_entry_sign: | "+ musicas[0]["nao_encontrado"]);
             });
 
             if(typeof link == "undefined")
@@ -127,7 +131,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
         
         if(queue_local.length > 0){
             if(queue_local.includes(link)){
-                message.channel.send("Essa faixa já está tocando ou na fila, guentae!");
+                message.channel.send(musicas[0]["tocando_url"]);
                 return;
             }
 
@@ -147,9 +151,9 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
                         pular_para = " "+ queue_local.length;
 
                     const embed = new Discord.MessageEmbed()
-                    .setTitle(':cd: Adicionado a fila')
+                    .setTitle(musicas[0]["adicionado"])
                     .setColor('#29BB8E')
-                    .setDescription(info.videoDetails.title +"\n\n**Duração: `"+ tempo +"`**\n:fast_forward: Utilize `.assk"+ pular_para +"` para pular até ela")
+                    .setDescription(info.videoDetails.title +"\n\n**"+ musicas[0]["duracao"] +": `"+ tempo +"`**\n:fast_forward: "+ musicas[0]["pular_ate_1"] +" `.assk"+ pular_para +"` "+ musicas[0]["pular_ate_2"])
                     .setThumbnail(thumb_url)
                     .setTimestamp();
 
@@ -162,7 +166,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     if(typeof link !== "undefined"){ // Confirma se o link do vídeo não está quebrado antes de adicionar
         info = await ytdl.getInfo(link)
         .catch(err => { 
-            message.lineReply(":no_entry_sign: | Há um problema com este URL, por favor, insira um diferente");
+            message.lineReply(":no_entry_sign: | "+ musicas[0]["error_2"]);
         });
         
         if(typeof info !== "undefined")
@@ -170,7 +174,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
         else
             return;
     }else{
-        message.lineReply(":no_entry_sign: | Vídeo não encontrado");
+        message.lineReply(":no_entry_sign: | "+ musicas[0]["nao_encontrado"]);
         return;
     }
 
@@ -180,7 +184,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
 
     // Toca a url informada
     if(ativo_att === 0){
-        message.channel.send("Ok, som na caixa DJ :sunglasses: :metal:");
+        message.channel.send(musicas[0]["iniciando_repro"]);
         tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa);
     }
 }

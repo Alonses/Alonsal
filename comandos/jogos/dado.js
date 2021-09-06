@@ -1,10 +1,15 @@
 module.exports = {
     name: "dado",
     description: "Rode um ou vários dados com várias faces",
-    aliases: [ "da" ],
+    aliases: [ "da", "dice", "di" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        let idioma_definido = idioma_servers[message.guild.id];
 
         let dado = []; 
         let resultado = "";
@@ -15,23 +20,23 @@ module.exports = {
 
         if(args.length > 0){
             if(isNaN(args[0])){
-                message.lineReply(`:warning: | informe **apenas números** para a quantidade de dados e número de faces.`);
+                message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
                 return;
             }
 
             if(typeof args[1] !== "undefined")
                 if(isNaN(args[1])){
-                    message.lineReply(`:warning: | Informe **apenas números** para a quantidade de dados e número de faces.`);
+                    message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
                     return;
                 }
             
             if(args[0] > 50){
-                message.lineReply(`:warning: | Não é possivel rodar mais que 50 dados ao mesmo tempo.`);
+                message.lineReply(":warning: | "+ jogos[2]["error_1"]);
                 return;
             }
 
             if(args[0] < 1){
-                message.lineReply(`:warning: | Informe pelo menos 1 dado como \`.ada 1 <faces>\` para poder rodar.`);
+                message.lineReply(":warning: | "+ jogos[2]["aviso_2"]);
                 return;
             }
 
@@ -40,12 +45,12 @@ module.exports = {
                 att_auto = 1;
             }else{
                 if(args[1] > 10000){
-                    message.lineReply(`:warning: | Não é possivel rodar sólidos geométricos com mais de 10.000 faces.`);
+                    message.lineReply(":warning: | "+ jogos[2]["error_2"]);
                     return;
                 }
             
                 if(args[1] < 4){
-                    message.lineReply(`:warning: | Não é possivel rodar sólidos geométricos com menos de 4 faces.`);
+                    message.lineReply(":warning: | "+ jogos[2]["error_3"]);
                     return;
                 }
             }
@@ -67,9 +72,16 @@ module.exports = {
         
         let mensagem = 'Foram rodados `'+ args[0] +'` sólidos geométricos com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
 
-        if(args[0] == 1)
+        if(idioma_definido == "en-us")
+            mensagem = 'Rotated `'+ args[0] +'` geometric solids with `'+ args[1] +'` faces\n\n Results [ '+ resultado +' ]';
+        
+        if(args[0] == 1){
             mensagem = 'Foi rodado `1` sólido geométrico com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
         
+            if(idioma_definido == "en-us")
+                mensagem = 'Run `1` geometric solid with `'+ args[1] +'` faces\n\n Result [ '+ resultado +' ]';
+        }
+
         message.lineReply(":game_die: "+ mensagem);
     }
 };

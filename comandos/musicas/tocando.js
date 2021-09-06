@@ -4,12 +4,16 @@ const getThumb = require('video-thumbnail-url');
 
 module.exports = async function({client, message, playlists, id_canal}){
     
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
     queue_local = playlists.get(id_canal);
 
     if(typeof queue_local !== "undefined"){
 
         if(typeof queue_local[0] == "undefined"){
-            message.lineReply(':hotsprings: | Não há nenhuma música sendo reproduzida no momento').then(message => message.delete({timeout: 3000}));
+            message.lineReply(":hotsprings: | "+ musicas[3]["aviso_1"]).then(message => message.delete({timeout: 3000}));
             return;
         }
 
@@ -40,15 +44,15 @@ module.exports = async function({client, message, playlists, id_canal}){
         if(descricao != null)
             descricao = trimString(descricao, 90);
         else
-            descricao = "Vídeo sem descrição :roll_of_paper: "+ emoji_negativo;
+            descricao = musicas[3]["sem_descricao"] +" "+ emoji_negativo;
         
         const embed_np = new Discord.MessageEmbed()
-            .setTitle('Tocando agora :notes:')
+            .setTitle(musicas[3]["tocando"])
             .setColor('#29BB8E')
             .setThumbnail(thumb)
-            .setDescription("-----------------------------\n**"+ titulo +"**\nLink: "+ queue_local[0] +"\n\n"+ descricao + "\n\n**Duração: `"+ tempo +"`**");
+            .setDescription("-----------------------------\n**"+ titulo +"**\nLink: "+ queue_local[0] +"\n\n"+ descricao + "\n\n**"+ musicas[0]["duracao"] +": `"+ tempo +"`**");
         
         message.lineReply(embed_np);
     }else
-        message.lineReply(':hotsprings: | Não há nenhuma música sendo reproduzida no momento').then(message => message.delete({timeout: 3000}));
+        message.lineReply(":hotsprings: | "+ musicas[3]["aviso_1"]).then(message => message.delete({timeout: 3000}));
 }
