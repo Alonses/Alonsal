@@ -13,6 +13,7 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
 
+        var reload = require('auto-reload');
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { textoes } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/textoes.json");
         const num = Math.round((textoes.length - 1) * Math.random());
