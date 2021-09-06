@@ -3,6 +3,10 @@ const tocar = require('./tocar.js');
 
 module.exports = async function({message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, id_canal}){
         
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
     let queue_local = playlists.get(id_canal);
     let faixas_locais = nome_faixas.get(id_canal);
     let _ativo = atividade_bot.get(id_canal);
@@ -17,7 +21,7 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
         _ativo = 0;
     
     if(args.length == 1){
-        message.lineReply("Escreva como `.asra ms 2`, `.asra me 7`, `.asra jg 5` ou `.asra op 10` ;)");
+        message.lineReply(musicas[2]["aviso_1"]);
         return;
     }
 
@@ -44,32 +48,32 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
             
             if(faixas_selecionadas > 15){
                 if(tipo_random === "ms")
-                    message.lineReply("Posso escolher até 15 músicas aleatórias por vez, informe um número menor :P");
+                    message.lineReply(musicas[2]["aviso_2"]);
                 else if(tipo_random === "me")
-                    message.lineReply("Posso escolher até 15 músicas de memes aleatórias por vez, informe um número menor :P");
+                    message.lineReply(musicas[2]["aviso_3"]);
                 else if(tipo_random === "jg")
-                    message.lineReply("Posso escolher até 15 trilhas sonoras aleatórias por vez, informe um número menor :P");
+                    message.lineReply(musicas[2]["aviso_4"]);
                 else
-                    message.lineReply("Posso escolher até 15 músicas clássicas aleatórias por vez, informe um número menor :P");
+                    message.lineReply(musicas[2]["aviso_5"]);
 
                 return;
             }
 
             if(queue_local.length > 15){
-                message.lineReply(":minidisc: | Albúm completo! Vamos ouvir todas essas faixas antes de adicionar outras? :P");
+                message.lineReply(":minidisc: | "+ musicas[2]["album_completo"]);
                 return;
             }
         }
 
         if(typeof quantidade_faixas === "undefined" || faixas_selecionadas === 1)
             if(tipo_random === "ms")
-                message.channel.send("Escolhendo uma música aleatória");
+                message.channel.send(musicas[2]["escolhendo_1"]);
             else if(tipo_random === "me")
-                message.channel.send("Escolhendo uma zueira aleatória");
+                message.channel.send(musicas[2]["escolhendo_2"]);
             else if(tipo_random === "jg")
-                message.channel.send("Escolhendo uma trilha sonora aleatória");
+                message.channel.send(musicas[2]["escolhendo_3"]);
             else
-                message.channel.send("Escolhendo uma composição clássica aleatória");
+                message.channel.send(musicas[2]["escolhendo_4"]);
 
         let url_escolhida = "";
         
@@ -100,17 +104,17 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
 
         if(faixas_selecionadas > 1){
             if((args.includes("ms")))
-                message.lineReply(faixas_selecionadas + " faixas escolhidas automaticamente estão na playlist, use `.aspl` para ver elas.");
+                message.lineReply(faixas_selecionadas +" "+ musicas[2]["escolhidas_1"]);
             else if(args.includes("me"))
-                message.lineReply(faixas_selecionadas + " faixas zueiras adicionadas automaticamente na playlist, use `.aspl` para ver elas.");
+                message.lineReply(faixas_selecionadas +" "+ musicas[2]["escolhidas_2"]);
             else if(args.includes("jg"))
-                message.lineReply(faixas_selecionadas + " trilhas sonoras adicionadas automaticamente na playlist, use `.aspl` para ver elas.");
+                message.lineReply(faixas_selecionadas +" "+ musicas[2]["escolhidas_3"]);
             else
-                message.lineReply(faixas_selecionadas + " músicas clássicas foram adicionadas automaticamente na playlist, use `.aspl` para ver elas.");
+                message.lineReply(faixas_selecionadas +" "+ musicas[2]["escolhidas_4"]);
         }
 
         if(faixas_selecionadas === 0 && queue_local.length > 1)
-            message.lineReply(":cd: Faixa aleatória adicionada a fila");
+            message.lineReply(musicas[2]["adicionado"]);
 
         playlists.set(id_canal, queue_local);
         nome_faixas.set(id_canal, faixas_locais);
@@ -123,9 +127,9 @@ module.exports = async function({message, client, args, playlists, nome_faixas, 
                 atividade_bot.set(id_canal, 1);
 
                 if(tipo_random !== "op")
-                    message.lineReply("Som na caixa DJ :sunglasses: :metal:");
+                    message.lineReply(musicas[0]["iniciando_repro"]);
                 else
-                    message.lineReply("Aprecie com moderação :musical_note:");
+                    message.lineReply(musicas[0]["aprecie"]);
 
                 tocar(message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa);
             });

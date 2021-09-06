@@ -9,7 +9,10 @@ module.exports = {
         const { MessageAttachment } = require('discord.js');
         let imagem = "";
 
-        const { curiosidades } = require("../../arquivos/json/text/curio.json");
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        
+        const { curiosidades } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/curio.json");
         const num = Math.round((curiosidades.length - 1) * Math.random());
         
         let key = Object.keys(curiosidades[num]);

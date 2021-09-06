@@ -17,6 +17,36 @@
             "20perc" : "Friendzone :people_hugging:",
             "0perc" : "São inimigos públicos :angry:",
             "teste" : "O teste retornou"
+        },
+        {
+            "gado" : "Ô SEU GADO",
+            "error_1" : "kd o @ do usuário?",
+            "error_2" : "sai pra lá seu GA :cow: DO, teste isso com outro usuário"
+        },
+        {
+            "ocovale" : "A vida com Ocovale é mais deliciosa"
+        },
+        {
+            "peao" : "Roda o pião"
+        }
+    ],
+    "jogos" : [
+        {
+            "conteudo" : "O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!",
+            "rodape" : "O jogo pode não rodar direito em celulares."
+        },
+        {
+            "aviso_1" : "Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!"
+        },
+        {
+            "aviso_1" : "Informe **apenas números** para a quantidade de dados e número de faces.",
+            "aviso_2" : "Informe pelo menos 1 dado como `.ada 1 <faces>` para poder rodar.",
+            "error_1" : "Não é possível rodar mais que 50 dados ao mesmo tempo.",
+            "error_2" : "Não é possível rodar sólidos geométricos com mais de 10.000 faces.",
+            "error_3" : "Não é possível rodar sólidos geométricos com menos de 4 faces."
+        },
+        {
+            "aviso_1" : "Envie como `.ajkp papel` ou como `.ajkp` para uma partida randômica."
         }
     ],
     "manutencao" : [
@@ -39,7 +69,7 @@
         {
             "aviso_1" : "Há um erro em sua mensagem, tente novamente.",
             "aviso_2" : ":mailbox: Sua mensagem foi entregue!",
-            "aviso_3" : "Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.",
+            "aviso_3" : "Não foi possível excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.",
             "aviso_4" : "Mensagem enviada para",
             "aviso_5" : ":incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
             "aviso_6" : "Eu não posso enviar mensagens no canal",
@@ -62,6 +92,9 @@
             "hubalonsal" : "> Hub do Alonsal",
             "info" : "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!",
             "despachei" : "despachei o convite para o Hub alonsal no seu privado :handshake:"
+        },
+        {
+            "aviso_1" : "Informe um número entre 1 e 5 para navegar pelas páginas do menu"
         }
     ],
     "moderacao" : [
@@ -91,6 +124,9 @@
             "error_1" : "Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)",
             "error_2" : "O Limite de emojis para este servidor foi atingido, remova alguns antes de adicionar novos",
             "error_3" : "Não foi possível remover este emoji, tente novamente"
+        },
+        {
+            "permissao_1" : "Você não possui permissões para gerenciar o servidor"
         }
     ],
     "utilitarios" : [
@@ -153,6 +189,100 @@
             "tente_novamente" : ", tente novamente",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
             "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado"
+        }
+    ],
+    "musicas" : [
+        {
+            "aviso_1" : "Entre em um canal de voz p/ utilizar estes comandos",
+            "aviso_2" : "Inclua mais URL's na playlist para poder remover elas",
+            "aviso_3" : "Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`",
+            "error_1" : "Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos",
+            "error_2" : "Há um problema com este URL, por favor, insira um diferente",
+            "procurando" : ":mag: Procurando por",
+            "nao_encontrado" : "Vídeo não encontrado",
+            "tocando_url" : "Essa faixa já está tocando ou na fila, guentae!",
+            "adicionado" : ":cd: Adicionado a fila",
+            "iniciando_repro" : "Ok, som na caixa DJ :sunglasses: :metal:",
+            "aprecie" : "Aprecie com moderação :musical_note:",
+            "duracao" : "Duração",
+            "pular_ate_1" : "Utilize",
+            "pular_ate_2" : "para pular até ela",
+            "retomando" : "Retomando, digite `.asp` para pausar.",
+            "pausando" : "Pausado, digite `.asr` para retomar."
+        },
+        {
+            "aviso_1" : "Não há faixas na playlist, adicione algumas para poder acessar este comando",
+            "ordenando" : "Ordenando as músicas da playlist, aguarde um pouco :P",
+            "proximas" : "Próximas",
+            "repeteco" : "O Repeteco está ativo",
+            "playlist_1" : "Playlist atual de",
+            "playlist_2" : "Tudo certo",
+            "playlist_3" : "a playlist está abaixo",
+            "tocando" : "Tocando agora",
+            "free" : ":free: Não há nenhuma faixa tocando no momento.",
+            "processando" : "um momento, estou processando a playlist ainda.",
+            "error_1" : "Erro ao buscar informações do vídeo"
+        },
+        {
+            "album_completo" : "Albúm completo! Vamos ouvir todas essas faixas antes de adicionar outras? :P",
+            "aviso_1" : "Escreva como `.asra ms 2`, `.asra me 7`, `.asra jg 5` ou `.asra op 10` ;)",
+            "aviso_2" : "Posso escolher até 15 músicas aleatórias por vez, informe um número menor :P",
+            "aviso_3" : "Posso escolher até 15 músicas de memes aleatórias por vez, informe um número menor :P",
+            "aviso_4" : "Posso escolher até 15 trilhas sonoras aleatórias por vez, informe um número menor :P",
+            "aviso_5" : "Posso escolher até 15 músicas clássicas aleatórias por vez, informe um número menor :P",
+            "escolhendo_1" : "Escolhendo uma música aleatória",
+            "escolhendo_2" : "Escolhendo uma zueira aleatória",
+            "escolhendo_3" : "Escolhendo uma trilha sonora aleatória",
+            "escolhendo_4" : "Escolhendo uma composição clássica aleatória",
+            "escolhidas_1" : "faixas escolhidas automaticamente estão na playlist, use `.aspl` para ver elas.",
+            "escolhidas_2" : "faixas zueiras adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
+            "escolhidas_3" : "trilhas sonoras adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
+            "escolhidas_4" : "músicas clássicas foram adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
+            "adicionado" : ":cd: Faixa aleatória adicionada a fila"
+        },
+        {
+            "tocando" : "Tocando agora :notes:",
+            "sem_descricao" : "Vídeo sem descrição :roll_of_paper:",
+            "aviso_1" : "Não há nenhuma música sendo reproduzida no momento"
+        },
+        {
+            "patrocinador" : ":cool: _Patrocinador Alonsal!_",
+            "comecando" : "Começando agora :loud_sound: :notes:",
+            "anuncio_faixas" : "Utilize `.asfd` para desativar o anúncio de faixas",
+            "aviso_1" : "Informe um link adequado",
+            "error_1" : "Não foi possível reproduzir este vídeo",
+            "error_2" : "Não foi possível reproduzir a URL",
+            "skip" : "Utilize `.assk` para pular para a próxima música",
+            "sem_faixas" : "Estou sem faixas, bora ouvir mais?",
+            "desconectado" : "Desconectei por inatividade use `.as` novamente para tocarmos algo :call_me:"
+        },
+        {
+            "pulando_1" : "Pulando para a próxima faixa",
+            "pulando_2" : "Pulando todas as faixas",
+            "pulando_3" : "",
+            "playlist" : ":free: Playlist finalizada!",
+            "aviso_1" : "informe o número de uma faixa para poder pular",
+            "aviso_2" : "não tem como pular para a faixa atual :v",
+            "aviso_3" : "Inicie alguma música com `.as url` ou `.asra` para poder pular.",
+            "error_1" : "O número informado é maior que a playlist atual"
+        },
+        {
+            "reiniciando" : "Reiniciando as configs Alonsais para músicas e playlists",
+            "repeteco_1" : "Repeteco ativado, use `.asrp` novamente para desativar.",
+            "repeteco_2" : "Repeteco desativado, use `.asrp` para ativar.",
+            "playlist_pequena" : "Playlist pequena, irei parar de falar o nome das músicas quando elas iniciarem :man_detective:",
+            "sem_faixas" : "Sem faixas na playlist, insira algumas pesquisando ou usando o random",
+            "anuncio_faixas" : "Use `.asfd` para desligar o anúncio de novas faixas :thumbsup:",
+            "anuncios_1" : "Irei anunciar as faixas que começarem a tocar",
+            "anuncios_2" : "Ok, sem anúncios de faixas que começarem a tocar"
+        },
+        {
+            "removido_1" : "Todas as próximas faixas foram removidas.",
+            "removido_2" : "A faixa",
+            "removido_3" : "foi removida da playlist.",
+            "aviso_1" : "Informe o número de uma faixa para remover, utilize o `.aspl` para ver sua playlist.",
+            "aviso_2" : "Informe o número de uma faixa para poder remover",
+            "aviso_3" : "Use `.assk` para pular a faixa atual antes de remover ela"
         }
     ]
 }

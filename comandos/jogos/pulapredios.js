@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const { MessageEmbed } = require('discord.js');
         const { emojis } = require('../../arquivos/json/text/emojis.json');
 
@@ -16,8 +20,8 @@ module.exports = {
         .setTitle("> Pula Prédios "+ emoji_pula)
         .setURL('https://gamejolt.com/games/pula-predios/613946')
         .setImage('https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp')
-        .setDescription("O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!")
-        .setFooter('O jogo pode não rodar direito em celulares.');
+        .setDescription(jogos[0]["conteudo"])
+        .setFooter(jogos[0]["rodape"]);
         
         message.lineReply(embed);
     }

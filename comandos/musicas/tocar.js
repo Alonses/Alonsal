@@ -14,6 +14,10 @@ if(typeof requisicao_ativa === "undefined")
 
 module.exports = async (message, client, args, playlists, nome_faixas, atividade_bot, repeteco, feedback_faixa, condicao_auto) => {
     
+    const reload = require('auto-reload');
+    const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+    const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
     const { propagandas } = require("../../arquivos/json/text/faixas.json");
     const { emojis_dancantes } = require("../../arquivos/json/text/emojis.json");
 
@@ -27,7 +31,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
     let repeteco_ = 0;
 
     if(!Vchannel){
-        await message.lineReply("Entre em um canal de voz p/ utilizar estes comandos");
+        await message.lineReply(musicas[0]["aviso_1"]);
         return;
     }
 
@@ -49,7 +53,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
     if(cond_auto !== "end" && condicao_auto !== "updt"){
         if(!ytdl.validateURL(queue_local[0])){
-            await message.lineReply(":octagonal_sign: | Informe um link adequado");
+            await message.lineReply(":octagonal_sign: | "+ musicas[4]["aviso_1"]);
             client.queue.shift();
             
             return;
@@ -111,7 +115,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                     highWaterMark: 1 << 25
                 }));
             }catch(error){
-                message.lineReply(":no_entry_sign: | não foi possível reproduzir este vídeo [ "+ queue_interna[0] +" ]");
+                message.lineReply(":no_entry_sign: | "+ musicas[4]["error_1"] +" [ "+ queue_interna[0] +" ]");
             }
         }else if(trava_renatao == 0){
             trava_renatao = 1;
@@ -128,7 +132,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
             ultima_prop = propaganda_atual;
 
-            message.channel.send(":cool: _Patrocinador Alonsal!_");
+            message.channel.send(musicas[4]["patrocinador"]);
             dispatcher = connection.play(ytdl(propaganda_atual , {
                 filter: "audioonly",
                 quality: "highestaudio",
@@ -161,9 +165,9 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
                             tempo = tempo.replace("00:", "");
 
                         const embed = new Discord.MessageEmbed()
-                        .setTitle('Começando agora :loud_sound: :notes:')
+                        .setTitle(musicas[4]["comecando"])
                         .setColor('#29BB8E')
-                        .setDescription(faixa_atual +"\n\n**Duração: `"+ tempo +"`**\n:loudspeaker: Utilize `.asfd` para desativar o anúncio de faixas")
+                        .setDescription(faixa_atual +"\n\n**"+ musicas[0]["duracao"] +": `"+ tempo +"`**\n:loudspeaker: "+ musicas[4]["anuncio_faixas"])
                         .setThumbnail(thumb_url)
                         .setTimestamp();
 
@@ -175,7 +179,7 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         dispatcher.on("error", () => {
             if(typeof queue_interna[0] !== "undefined"){
-                message.lineReply("Não foi possível reproduzir a URL [ <"+ queue_interna[0] +"> ]\nUtilize `.assk` para pular para a próxima música");
+                message.lineReply(musicas[4]["error_2"] +" [ <"+ queue_interna[0] +"> ]\n"+ musicas[4]["skip"]);
 
                 client.channels.cache.get('862015290433994752').send("Não foi possível reproduzir a URL [ "+ queue_interna[0] +" ], atualize o link para evitar futuros erros.");
             }
@@ -216,11 +220,11 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
             }else{
                 atividade_bot.set(id_canal, 0);
             
-                message.lineReply("Estou sem faixas, bora ouvir mais? "+ emoji_dancando);
+                message.lineReply(musicas[4]["sem_faixas"] +" "+ emoji_dancando);
             }
 
             inativo = setTimeout(() => {
-                message.lineReply("Desconectei por inatividade use `.as` novamente para tocarmos algo :call_me:");
+                message.lineReply(musicas[4]["desconectado"]);
                 connection.disconnect();
 
                 repeteco.set(id_canal, 0);

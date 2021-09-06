@@ -5,6 +5,9 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
+        
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
 
         const { MessageAttachment } = require('discord.js');
 
@@ -85,13 +88,21 @@ module.exports = {
 
         for(let i = 0; i < ids_canais_games.length; i++){ // Envia a mensagem para vários canais pré-definidos
 
+            let idioma_definido = idioma_servers[ids_canais_games[i]];
+
             let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
+
+            if(idioma_definido == "en-us")
+                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and secure a copy on your account "+ plataforma +" <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
 
             if(args.length > 4){
 
                 let nome_jogo_2 = args[4].replaceAll("_", " ");
 
                 texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
+
+                if(idioma_definido == "en-us")
+                    texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and secure a copy on your account "+ plataforma;
 
                 if(typeof ids_cargos_games[i] !== "undefined")
                     texto_anuncio += " <@&"+ ids_cargos_games[i] +">";
