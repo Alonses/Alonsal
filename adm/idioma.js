@@ -2,7 +2,13 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     
     var reload = require('auto-reload');
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
-    const { moderacao } = require('../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
+    idioma_padrao = "pt-br"; // O idioma padrão do Alonsal
+
+    if(typeof idioma_servers[message.guild.id] != "undefined")
+        idioma_padrao = idioma_servers[message.guild.id];
+
+    const { moderacao } = require('../arquivos/idiomas/'+ idioma_padrao +'.json');
     let idioma_selecionado;
 
     if(!message.member.hasPermission('MANAGE_SERVER')){
