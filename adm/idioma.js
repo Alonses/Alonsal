@@ -1,5 +1,7 @@
 module.exports = async function({client, message, args, requisicao_auto}) {
     
+    console.log('requisitando');
+
     var reload = require('auto-reload');
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
 
@@ -11,9 +13,11 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     const { moderacao } = require('../arquivos/idiomas/'+ idioma_padrao +'.json');
     let idioma_selecionado;
 
-    if(!message.member.hasPermission('MANAGE_GUILD')){
-        message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
-        return;
+    if(typeof requisicao_auto == "undefined"){
+        if(!message.member.hasPermission('MANAGE_GUILD')){
+            message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
+            return;
+        }
     }
 
     const fs = require('fs');
@@ -72,12 +76,8 @@ module.exports = async function({client, message, args, requisicao_auto}) {
         }
         
         message.lineReply(idioma_alterado);
-    }else{
-        outputArray.push(constructJson(message.guild.id, idioma_selecionado));   
-        
-    
-        message.lineReply(":flag_br: | O Idioma deste servidor está definido como `Português Brasileiro`\n_Use the command `.alang en` to switch to `american english`_");
-    }
+    }else
+        outputArray.push(constructJson(message.guild.id, idioma_selecionado));
 
     idioma_servidor = JSON.stringify(outputArray, null, 5);
 

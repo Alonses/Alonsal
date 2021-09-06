@@ -47,17 +47,16 @@ client.on('message', message => {
     let content = message.content;
     const args = content.slice(prefix.length).trim().split(' ');
 
-    const { idioma_servers } = require('./arquivos/json/dados/idioma_servers.json');
+    var reload = require('auto-reload');
+    const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
 
     if(typeof idioma_servers[message.guild.id] == "undefined"){
         let requisicao_auto = true;
         require('./adm/idioma.js')({client, message, args, requisicao_auto});
-        return;    
+        return;
     }
 
-    if(content.startsWith(".alang")){
-        console.log(message.guild.name);
-        
+    if(content.startsWith(".alang")){    
         require('./adm/idioma.js')({client, message, args});  
         return;
     }
