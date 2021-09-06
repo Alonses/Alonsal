@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const fetch = require('node-fetch');
 
         const { MessageEmbed } = require("discord.js")
@@ -16,7 +20,7 @@ module.exports = {
             try{
                 user = message.guild.members.cache.get(args[0]).user;
             }catch(err){
-                message.lineReply(emoji_nao_encontrado + ' | Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:');
+                message.lineReply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
                 return;
             }
         }else

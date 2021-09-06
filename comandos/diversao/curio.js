@@ -14,6 +14,8 @@ module.exports = {
         
         let key = Object.keys(curiosidades[num]);
         
+        console.log(key);
+        
         if(curiosidades[num][key] !== null)
            imagem = new MessageAttachment(curiosidades[num][key]);
 

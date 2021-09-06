@@ -45,13 +45,36 @@ client.on('message', message => {
     if(message.author.bot || message.webhookId) return;
 
     let content = message.content;
+    const args = content.slice(prefix.length).trim().split(' ');
+
+    const { idioma_servers } = require('./arquivos/json/dados/idioma_servers.json');
+
+    if(typeof idioma_servers[message.guild.id] == "undefined"){
+        let requisicao_auto = true;
+        require('./adm/idioma.js')({client, message, args, requisicao_auto});
+        return;    
+    }
+
+    if(content.startsWith(".alang")){
+        console.log(message.guild.name);
+        
+        require('./adm/idioma.js')({client, message, args});  
+        return;
+    }
+
+    if(content.startsWith(".aram")){
+        require('./adm/memoria.js')({message});  
+        return;
+    }
 
     if(message.content == "<@"+ client.user.id + ">" || message.content == "<@!"+ client.user.id + ">"){ // Responde mensagens que é marcado
         
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        message.lineReply(dancando + " | Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D");
+        const { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        
+        message.lineReply(dancando + " | "+ inicio[0]["menciona"]);
         return;
     }
 
@@ -66,8 +89,7 @@ client.on('message', message => {
 
         if(comandos_musicais.includes(comando_musical[0])){ // Apenas utilizado em comandos musicais
             ult_message = message;
-
-            const args = content.slice(prefix.length).trim().split(' ');
+            
             require('./comandos/musicas/play.js')({message, client, args});
         }else
             if(content.startsWith(prefix))

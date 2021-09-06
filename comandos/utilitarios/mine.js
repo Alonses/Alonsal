@@ -53,7 +53,7 @@ module.exports = {
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
 
-                url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_img;
+                url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_icon;
     
                 let nome_item = lista_itens[i].nome_item;
                 let colet_suv = "Sim";
@@ -122,7 +122,7 @@ module.exports = {
                 .addFields(
                     { name: emoji_suv +' **Coletável**', value: "`"+ colet_suv +"`", inline: true },
                     { name: ':label: **Tipo**', value: "`"+ tipo_item +"`", inline: true },
-                    { name: ':bookmark_tabs: **Versão adicionada**', value: "`"+ lista_itens[i].versao_add +"`", inline: true },
+                    { name: ':bookmark_tabs: **Versão adicionada**', value: "`1."+ lista_itens[i].versao_add +"`", inline: true },
                 )
                 .addFields(
                     { name: ':abacus: **Empilhável**', value: "`"+ empilhavel +"`", inline: true },

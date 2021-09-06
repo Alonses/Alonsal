@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const { MessageEmbed } = require('discord.js');
         const { emojis } = require('../../arquivos/json/text/emojis.json');
 
@@ -18,12 +22,12 @@ module.exports = {
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
-        .setTitle("> Apoie o Alonsal! "+ bolo)
+        .setTitle(manutencao[5]["apoie"] +" "+ bolo)
         .setURL("https://picpay.me/slondo")
-        .setDescription("Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D")
+        .setDescription(manutencao[5]["escaneie"])
         .setImage("https://i.imgur.com/incYvy2.jpg");
 
-        const m = await message.channel.send(`${message.author} Obrigado pela consideração!\nDespachei as infos no seu privado `+ vergonha);
+        const m = await message.channel.send(`${message.author} `+  manutencao[5]["despachei"] +` `+ vergonha);
         m.react('📫');
 
         client.users.cache.get(message.author.id).send(embed);

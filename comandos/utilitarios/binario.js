@@ -7,6 +7,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const { MessageEmbed } = require('discord.js');
         const binario = require('../../arquivos/json/text/binario.json');
         
@@ -60,10 +64,10 @@ module.exports = {
                     texto_ordenado += " ";
             }
             
-            let titulo = ":one: Sua mensagem codificada em binário";
+            let titulo = utilitarios[3]["codificado"];
 
             if(tipo_texto == 1)
-                titulo = ":zero: Sua mensagem decodificada do binário";
+                titulo = utilitarios[3]["decodificado"];
 
             const embed = new MessageEmbed()
             .setTitle(titulo)

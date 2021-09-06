@@ -68,7 +68,7 @@ module.exports = {
         let mensagem = 'Foram rodados `'+ args[0] +'` sólidos geométricos com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
 
         if(args[0] == 1)
-            mensagem = 'Foi rodado `'+ args[0] +'` sólido geométrico com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
+            mensagem = 'Foi rodado `1` sólido geométrico com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
         
         message.lineReply(":game_die: "+ mensagem);
     }
