@@ -7,6 +7,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        
         const { MessageEmbed } = require('discord.js');
         const morse = require('../../arquivos/json/text/morse.json');
 
@@ -41,7 +45,7 @@ module.exports = {
                         texto[carac] = morse[texto[carac]] + " ";
                     else{
                         texto[carac] = "";
-                        aviso = "Alguns caracteres não foram codificados pois não existem no morse";
+                        aviso = utilitarios[2]["caracteres"];
                     }
                 }
             }else{
@@ -60,14 +64,14 @@ module.exports = {
                 texto_ordenado += texto[i];
             }
 
-            let titulo = ":symbols: Sua mensagem codificada em morse";
+            let titulo = utilitarios[2]["codificado"];
 
             if(tipo_texto == 1)
-                titulo = ":symbols: Sua mensagem decodificada do morse";
+                titulo = utilitarios[2]["decodificado"];
 
             if(texto_ordenado.length == 0){
-                texto_ordenado = "Caracteres inválidos";
-                titulo = ":warning: Houve um problema ao codificar";
+                texto_ordenado = utilitarios[2]["carac_invalidos"];
+                titulo = utilitarios[2]["error"];
             }
 
             const embed = new MessageEmbed()

@@ -1,6 +1,158 @@
 {
+    "inicio" : [
+        { "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n_Você pode alterar meu idioma para português com o comando `.alang pt`_"}
+    ],
     "diversao" : [
         { "baidu" : "Praise be to!!" },
-        { "asf" : "Do you want a sfiha?" }
+        { "asf" : "Do you want a sfiha?" },
+        {
+            "aviso_1" : "tag two people to test\nFor example, `.alove @Alonsal @Slondo`",
+            "limda" : "Beautiful :gift_heart:",
+            "rodape" : "Love yourself is what matters :heartpulse:",
+            "100perc" : "Practically married :heart_on_fire:",
+            "90perc" : "My couple :smiling_face_with_3_hearts:",
+            "80perc" : "literally lovers :revolving_hearts:",
+            "60perc" : "There's a mood going on :hot_face:",
+            "40perc" : "Will be? :eyes:",
+            "20perc" : "Friendzone :people_hugging:",
+            "0perc" : "Are public enemies :angry:",
+            "teste" : "The test returned"
+        }
+    ],
+    "manutencao" : [
+        {
+            "titulo" : "> Oh open up the way I want to go :notes:",
+            "convite" : "Invite me by clicking here!",
+            "despachei": "I sent the invitation in your dm :love_you_gesture:"
+        },
+        {
+            "repositorio" : "> Alonsal Repository",
+            "link" : "Contribute by reporting bugs or stealing codes from Alonsal :pray_tone2:",
+            "despachei" : "I shipped the most recent wax in your dm :handshake:"
+        },
+        {
+            "infos" : "Skating between the wax lines :man_golfing:",
+            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository.",
+            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub",
+            "conteudo_3" : "**`.asuporte`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`.aga`** | **`.agado`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTES\nPhrases from **`.atext`** do not represent the ideas of the creators of Alonsal, therefore, they are for comic purposes only.\n\n[ _Version"
+        },
+        {
+            "aviso_1" : "There is an error in your message, try again.",
+            "aviso_2" : ":mailbox: Your message has been delivered!",
+            "aviso_3" : "It was not possible to delete your message automatically, for this I need permissions to manage the messages.",
+            "aviso_4" : "Message sent to",
+            "aviso_5" : ":incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
+            "aviso_6" : "I can't send messages to this channel",
+            "error_1" : "Could not send a message to this ID",
+            "sucesso_1" : "Message sent to Alonsal :incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
+            "sucesso_2" : "",
+            "conteudo_1" : "Your message has been delivered to the",
+            "conteudo_2" : "The content of the message is"
+        },
+        {
+            "comandos" : "See the commands, invite me or access my server through the website!",
+            "despachei" : "I sent the link to my site in your dm :handshake:"
+        },
+        {
+            "apoie" : "> Support Alonsal!",
+            "escaneie" : "Scan or click on the Title above to donate\nand help maintain and develop Alonsal!\nAll help is ultra Welcome ;D",
+            "despachei" : "Thanks for your consideration!\nI sent the infos in your dm"
+        },
+        {
+            "hubalonsal" : "> Alonsal Hub",
+            "info" : "Enter my server right now, whether to ask questions, or use the commands, the server is free for everyone!",
+            "despachei" : "I sent the invitation to Alonsal Hub in your dm :handshake:"
+        }
+    ],
+    "moderacao" : [
+        { "error" : "Informe como `.alang en` ou `.alang pt`" },
+        {
+            "permissao" : "I don't have permission to manage messages",
+            "aviso_1" : "Enter the number of messages you want to remove\nFor example, `.acl 20`",
+            "aviso_2" : ":warning: | Enter a number between `0` and `100` to remove",
+            "apagado_1" : "messages` have been removed",
+            "apagado_2" : "message` has been removed",
+            "error" : "Unable to execute this command because there are messages pinned or messages that are too old, decrease the quantity and try again"
+        },
+        {
+            "aviso_1" : "Add a custom emoji to your command! :P",
+            "aviso_2" : "Enter an emoji to be viewed\nFor example,",
+            "aviso_3" : "Enter an emoji and its name\nFor example,",
+            "aviso_4" : "Send only 1 emoji at a time :P",
+            "aviso_5" : "Upload an image smaller than 250kb to use as an emoji",
+            "aviso_6" : "Include emoji to remove\nFor example,",
+            "aviso_7" : "Enter an emoji to be removed",
+            "aviso_8" : "Enter a custom emoji from this server to be removed",
+            "permissao_1" : "You do not have permissions to manage emojis on this server",
+            "permissao_2" : "I don't have permissions to `manage emojis` on this server",
+            "requebrando" : "dancing",
+            "sucesso_1" : "Emoji has been added!",
+            "sucesso_2" : "Emoji has been removed from the server",
+            "error_1" : "Unable to process this file\nSend an image file for me to manipulate ;)",
+            "error_2" : "Emoji limit for this server has been reached, remove some before adding new ones",
+            "error_3" : "Could not remove this emoji, try again"
+        }
+    ],
+    "utilitarios" : [
+        {
+            "ping_1" : "It's a bit laggy, I'm rendering a video!",
+            "ping_2" : "Everything alright!",
+            "ping_3" : "You can even play with your eyes closed!",
+            "ping_4" : "You can throw away your router!",
+            "latencia" : "Alonsal latency"
+        },
+        {
+            "wiki_slondo" : "This bum is not on the wiki, look for something else! :sunglasses:",
+            "topicos_rel" : "Related Topics",
+            "sem_dados" : "I didn't find anything related to your search",
+            "tente_novamente" : "try again",
+            "auto_pesquisa" : "Why are you researching yourself? There's nothing about you here"
+        },
+        {
+            "caracteres" : "Some characters were not encoded as they do not exist in morse",
+            "codificado" : ":symbols: Your message encoded in morse",
+            "decodificado" : ":symbols: Your decoded morse message",
+            "carac_invalidos" : "Invalid characters",
+            "error" : ":warning: There was a problem coding"
+        },
+        {
+            "codificado" : ":one: Your binary encoded message",
+            "decodificado" : ":zero: Your message decoded from the binary"
+        },
+        {
+            "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:"
+        },
+        {
+            "reverso" : "Your message in reverse"
+        },
+        {
+            "aviso_1" : "Write something or send a file to me and I will return it",
+            "aviso_2" : "Only upload 1 file at a time",
+            "hora_certa" : "Right Time!",
+            "reproducao_1" : "Reproduction requested by",
+            "reproducao_2" : "File sent by"
+        },
+        {
+            "manipu_imagens" : "Image manipulation :frame_photo:",
+            "conteudo_menu" : ":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Makes one or more images black and white",
+            "sugestao" : " | Suggest top effects for Alonsal using `.amail <your_top_effect>` !",
+            "carregando" : "Wait a moment while I process your files....",
+            "aviso_1" : "Enter an editing style for your image\nFor example, `.adit bw <image>`",
+            "aviso_2" : "Insert an image with the command and its effect so that you can edit it\nFor example, `.ai bw <img>`\n\nYou can see all styles using the command `.aih`",
+            "aviso_3" : "Cannot edit more than three images at a time, decrease the amount and try again",
+            "aviso_4" : "Please send images with less pixels!",
+            "aviso_5" : "Please send only one large image at a time.", 
+            "error_1" : "\n\nSome of your files may not have been processed due to an unexpected file, please use the command again.",
+            "error_2" : "Unable to process this file\nSend an image file for me to manipulate ;)",
+            "efeito_errado" : "This effect does not exist! Suggest effects to Alonsal using `.amail <your_top_effect>`"
+        },
+        {
+            "aviso_1" : "Enter the name of some city to search\nFor example, as `.at los angeles`",
+            "aviso_2" : "I didn't find any place called",
+            "aviso_3" : "There was an error with the weather API and it is not possible to search for weather at the moment",
+            "tente_novamente" : ", try again",
+            "aviso_continente" : "These data are an average of all values for the continent surveyed",
+            "aviso_pais" : "These data are an average of all values in the country surveyed"
+        }
     ]
 }

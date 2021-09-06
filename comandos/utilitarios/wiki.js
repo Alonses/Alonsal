@@ -1,11 +1,15 @@
 module.exports = {
     name: "wiki",
     description: "Pesquisa sobre algo na wiki",
-    aliases: [ "w", "buscar", "busca" ],
-    usage: "w slondo",
+    aliases: [ "w", "buscar", "busca", "search", "wikipedia" ],
+    usage: "w Slondo",
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const fetch = require('node-fetch');
         const { MessageEmbed } = require('discord.js');
@@ -21,7 +25,7 @@ module.exports = {
         content = content.toLowerCase();
 
         if(content.includes("slondo")){
-            message.lineReply("Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:");
+            message.lineReply(utilitarios[1]["wiki_slondo"]);
             return;
         }
 
@@ -35,14 +39,14 @@ module.exports = {
             const termo_pesquisado_cc = content.slice(1);
             const username = `${message.author.username}`;
 
-            fetch(url, {headers:{"accept-language": "pt-BR"}})
+            fetch(url, {headers:{"accept-language": idioma_servers}})
             .then(response => response.json())
             .then(async res => {
             
             const fields = [];
             
             if(res.RelatedTopics.length > 0)
-                fields.push({ name: ":books: Tópicos relacionados", value: "\u200B" });
+                fields.push({ name: ":books: "+ utilitarios[1]["topicos_rel"], value: "\u200B" });
 
             for(const topic of res.RelatedTopics){
                 counter++;
@@ -76,12 +80,12 @@ module.exports = {
                 message.lineReply(Embed);
             }else
                 if(username.includes(termo_pesquisado_cc))
-                    message.lineReply(emoji_nao_encontrado +" | Pq vc está se pesquisando? Não tem nada sobre vc aq :v");
+                    message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["auto_pesquisa"] +" :v");
                 else
-                    message.lineReply(emoji_nao_encontrado +" | Não encontrei nada relacionado com sua pesquisa [ `" + content +"` ], tente novamente");
+                    message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
             })
             .catch(err => {
-                message.lineReply(emoji_nao_encontrado +" | Não encontrei nada relacionado a sua pesquisa [ `" + content +"` ], tente novamente");
+                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
             });
         }
     }

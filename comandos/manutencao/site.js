@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        
         const { MessageEmbed } = require('discord.js');
 
         const embed = new MessageEmbed()
@@ -13,9 +17,9 @@ module.exports = {
         .setTitle("> Site Alonsal")
         .setURL('https://alonsal.glitch.me')
         .setImage('https://i.imgur.com/6yac4yR.png')
-        .setDescription("Veja os comandos, me convide ou acesse meu servidor pelo site!");
+        .setDescription(manutencao[4]["comandos"]);
 
-        const m = await message.channel.send(`${message.author} despachei o link do meu site no seu privado :handshake:`);
+        const m = await message.channel.send(`${message.author} `+ manutencao[4]["despachei"]);
         m.react('📫');
 
         client.users.cache.get(message.author.id).send(embed);

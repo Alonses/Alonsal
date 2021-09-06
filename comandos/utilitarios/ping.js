@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const { emojis } = require('../../arquivos/json/text/emojis.json');
         
         function emoji(id){
@@ -19,18 +23,18 @@ module.exports = {
         const m = await message.lineReply("Ping?");
         let delay = m.createdTimestamp - message.createdTimestamp;
 
-        let mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tá lagado um poko tô renderizando vídeo '+ emoji_barata;
+        let mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] '+ utilitarios[0]["ping_1"] +' '+ emoji_barata;
         
         if(delay < 200)
-            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Tudo numa boa!';
+            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] '+ utilitarios[0]["ping_2"];
 
         if(delay < 100)
-            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Dá até para jogar de olhos fechados! '+ emoji_steve;
+            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] '+ utilitarios[0]["ping_3"] +' '+ emoji_steve;
 
         if(delay > 600)
-            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] Pode jogar fora esse teu roteador! '+ emoji_pare;
+            mensagem = ':ping_pong: Pong! [ **`'+ delay +'ms`** ] '+ utilitarios[0]["ping_4"] +' '+ emoji_pare;
 
-        mensagem += "\nLatência do Alonsal [ **`"+ Math.round(client.ws.ping) + "ms`** ]";
+        mensagem += "\n"+ utilitarios[0]["latencia"] +" [ **`"+ Math.round(client.ws.ping) + "ms`** ]";
 
         m.edit(mensagem);
     }

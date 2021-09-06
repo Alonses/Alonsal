@@ -6,9 +6,13 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
   
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const Discord = require('discord.js');
         const Canvas = require('canvas');
-
+        
         const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
@@ -17,10 +21,10 @@ module.exports = {
         if(message.content == ".aih"){
 
             const embed_imagens = new Discord.MessageEmbed()
-            .setTitle('Manipulação de Ibagens :frame_photo:')
+            .setTitle(utilitarios[7]["manipu_imagens"])
             .setColor(0x29BB8E)
             .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-            .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancante +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !")
+            .setDescription(utilitarios[7]["conteudo_menu"] +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"])
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
             
             message.lineReply(embed_imagens);
@@ -28,21 +32,21 @@ module.exports = {
         }
 
         if(args.length < 1){ // Sem o estilo descrito
-            message.lineReply(':warning: | Insira um estilo de edição para sua imagem\nPor exemplo, `.adit bw <imagem>`');
+            message.lineReply(":warning: | "+ utilitarios[7]["aviso_1"]);
             return;
         }
 
         if(message.attachments.size < 1){
-            message.lineReply(':warning: | Insira uma imagem junto do comando e seu efeito para poder editar ela\nPor exemplo, `.ai bw <img>`\n\nVocê pode ver todos os estilos usando o comando `.aih`');
+            message.lineReply(":warning: | "+ utilitarios[7]["aviso_2"]);
             return;
         }
 
         if(message.attachments.size > 3){ // Quantidade > 3
-            message.lineReply(':octagonal_sign: | Não é possível editar mais que três imagens por vez, diminua a quantidade e tente novamente');
+            message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_3"]);
             return;
         }
 
-        const feedbc = await message.lineReply(emoji_carregando + ' | Aguarde um momento enquanto processo seus arquivos...');
+        const feedbc = await message.lineReply(emoji_carregando +" | "+ utilitarios[7]["carregando"]);
         let img_edit = 0;
 
         message.attachments.forEach(async attachment => {
@@ -57,20 +61,20 @@ module.exports = {
 
                 let infos_adds = "";
                 if(message.attachments.size > 1)
-                    infos_adds = "\n\nAlguns dos seus arquivos podem não ter sido processados, devido à um arquivo inesperado, por favor, utilize o comando novamente.";
+                    infos_adds = utilitarios[7]["error_1"];
 
-                message.lineReply(':octagonal_sign: | Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)' + infos_adds, arquivo_invalido);
+                message.lineReply(":octagonal_sign: | "+ utilitarios[7]["error_2"] +""+ infos_adds, arquivo_invalido);
                 return;
             }
 
             if(height > 4500 || width > 4500){ // Verificando se a imagem possui muitos pixeis
-                message.lineReply(':octagonal_sign: | Por favor, envie imagens com menos pixels!');
+                message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_4"]);
                 return;
             }
 
             if(height >= 4000 && width == 1894){ // Verificando se a imagem é muito grande e se existem vários arquivos
                 if(message.attachments.size > 1){
-                    message.lineReply(':octagonal_sign: | Por favor, envie apenas uma imagem grande por vez');
+                    message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_5"]);
                     return;
                 }
 
@@ -110,7 +114,7 @@ module.exports = {
                 if(img_edit == message.attachments.size) // Apaga o aviso quando termina de processar todas as imagens
                     feedbc.delete();
             }else
-                message.lineReply(':mag: | Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`'+ emoji_dancante +'` `');
+                message.lineReply(":mag: | "+ utilitarios[7]["efeito_errado"] +""+ emoji_dancante +"` `");
                 return;
         });
     }

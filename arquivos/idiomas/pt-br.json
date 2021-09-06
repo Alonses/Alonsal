@@ -1,6 +1,158 @@
-{
+{   
+    "inicio" : [
+        { "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n_You can change my language to english using the command `.alang en`_"}
+    ],
     "diversao" : [
         { "baidu" : "Louvado seja!!" },
-        { "asf" : "Vai uma esfiha ae?" }
+        { "asf" : "Vai uma esfiha ae?" },
+        {
+            "aviso_1" : "marque duas pessoas para testar\nPor exemplo, `.amor @Alonsal @Slondo`",
+            "limda" : "Limda :gift_heart:",
+            "rodape" : "Amor a si próprio é oq importa :heartpulse:",
+            "100perc" : "Praticamente casados :heart_on_fire:",
+            "90perc" : "Meu casal :smiling_face_with_3_hearts:",
+            "80perc" : "Literalmente amantes :revolving_hearts:",
+            "60perc" : "Tá rolando um clima :hot_face:",
+            "40perc" : "Será? :eyes:",
+            "20perc" : "Friendzone :people_hugging:",
+            "0perc" : "São inimigos públicos :angry:",
+            "teste" : "O teste retornou"
+        }
+    ],
+    "manutencao" : [
+        {
+            "titulo" : "> Ó Abre alas que eu queru passsaa :notes:",
+            "convite" : "Convide-me clicando aqui!",
+            "despachei": "despachei o convite no seu privado :love_you_gesture:"
+        },
+        {
+            "repositorio" : "> Repositório Alonsal",
+            "link" : "Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:",
+            "despachei" : "despachei a ceira mais recente no seu privado :handshake:"
+        },
+        {
+            "infos" : "Patinando entre as linhas bugadas :man_golfing:",
+            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal.",
+            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal",
+            "conteudo_3" : "**`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTAS\nFrases do **`.atext`** não representam as ideias dos criadores do Alonsal, sendo assim, são apenas para fins cômicos.\n\n[ _Versão"
+        },
+        {
+            "aviso_1" : "Há um erro em sua mensagem, tente novamente.",
+            "aviso_2" : ":mailbox: Sua mensagem foi entregue!",
+            "aviso_3" : "Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.",
+            "aviso_4" : "Mensagem enviada para",
+            "aviso_5" : ":incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
+            "aviso_6" : "Eu não posso enviar mensagens no canal",
+            "error_1" : "Não foi possível enviar a mensagem para este ID",
+            "sucesso_1" : "Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
+            "sucesso_2" : "",
+            "conteudo_1" : "Sua mensagem foi entregue para o/a",
+            "conteudo_2" : "O Conteúdo da mensagem é"
+        },
+        {
+            "comandos" : "Veja os comandos, me convide ou acesse meu servidor pelo site!",
+            "despachei" : "despachei o link do meu site no seu privado :handshake:"
+        },
+        {
+            "apoie" : "> Apoie o Alonsal!",
+            "escaneie" : "Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D",
+            "despachei" : "Obrigado pela consideração!\nDespachei as infos no seu privado"
+        },
+        {
+            "hubalonsal" : "> Hub do Alonsal",
+            "info" : "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!",
+            "despachei" : "despachei o convite para o Hub alonsal no seu privado :handshake:"
+        }
+    ],
+    "moderacao" : [
+        { "error" : "Enter as `.alang en` or `.alang en`" },
+        {
+            "permissao" : "Eu não tenho permissão para gerenciar mensagens",
+            "aviso_1" : "Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`",
+            "aviso_2" : ":warning: | Informe um número entre `0` e `100` para remover",
+            "apagado_1" : "mensagens` foram removidas",
+            "apagado_2" : "mensagem` foi removida",
+            "error" : "Não foi possível executar este comando, pois há mensagens fixadas ou mensagens muito antigas, diminua a quantidade e tente novamente"
+        },
+        {
+            "aviso_1" : "Inclua um emoji customizado em seu comando! :P",
+            "aviso_2" : "Informe um emoji para ser visualizado\nPor exemplo,",
+            "aviso_3" : "Insira um emoji e o nome dele\nPor exemplo,",
+            "aviso_4" : "Envie apenas 1 emoji por vez :P",
+            "aviso_5" : "Envie uma imagem com tamanho menor que 250kb para usar de emoji",
+            "aviso_6" : "Inclua o emoji para remover\nPor exemplo,",
+            "aviso_7" : "Informe um emoji para ser removido",
+            "aviso_8" : "Informe um emoji customizado deste servidor para ser removido",
+            "permissao_1" : "Você não possui permissões para gerenciar emojis neste servidor",
+            "permissao_2" : "Eu não possuo permissões para `gerenciar emojis` neste servidor",
+            "requebrando" : "requebrando",
+            "sucesso_1" : "O Emoji foi adicionado!",
+            "sucesso_2" : "O Emoji foi removido do servidor",
+            "error_1" : "Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)",
+            "error_2" : "O Limite de emojis para este servidor foi atingido, remova alguns antes de adicionar novos",
+            "error_3" : "Não foi possível remover este emoji, tente novamente"
+        }
+    ],
+    "utilitarios" : [
+        {
+            "ping_1" : "Tá lagado um poko tô renderizando vídeo",
+            "ping_2" : "Tudo numa boa!",
+            "ping_3" : "Dá até para jogar de olhos fechados!",
+            "ping_4" : "Pode jogar fora esse teu roteador!",
+            "latencia" : "Latência do Alonsal"
+        },
+        {
+            "wiki_slondo" : "Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:",
+            "topicos_rel" : "Tópicos relacionados",
+            "sem_dados" : "Não encontrei nada relacionado a sua pesquisa",
+            "tente_novamente" : "tente novamente",
+            "auto_pesquisa" : "Pq vc está se pesquisando? Não tem nada sobre vc aq"
+        },
+        {
+            "caracteres" : "Alguns caracteres não foram codificados pois não existem no morse",
+            "codificado" : ":symbols: Sua mensagem codificada em morse",
+            "decodificado" : ":symbols: Sua mensagem decodificada do morse",
+            "carac_invalidos" : "Caracteres inválidos",
+            "error" : ":warning: Houve um problema ao codificar"
+        },
+        {
+            "codificado" : ":one: Sua mensagem codificada em binário",
+            "decodificado" : ":zero: Sua mensagem decodificada do binário"
+        },
+        {
+            "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:"
+        },
+        {
+            "reverso" : "Sua mensagem ao contrário"
+        },
+        {
+            "aviso_1" : "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
+            "aviso_2" : "Envie apenas 1 arquivo por vez",
+            "hora_certa" : "Hora Certa!",
+            "reproducao_1" : "Reprodução solicitada por",
+            "reproducao_2" : "Arquivo enviado por"
+        },
+        {
+            "manipu_imagens" : "Manipulação de Ibagens :frame_photo:",
+            "conteudo_menu" : ":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca",
+            "sugestao" : " | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !",
+            "carregando" : "Aguarde um momento enquanto processo seus arquivos...",
+            "aviso_1" : "Insira um estilo de edição para sua imagem\nPor exemplo, `.adit bw <imagem>`",
+            "aviso_2" : "Insira uma imagem junto do comando e seu efeito para poder editar ela\nPor exemplo, `.ai bw <img>`\n\nVocê pode ver todos os estilos usando o comando `.aih`",
+            "aviso_3" : "Não é possível editar mais que três imagens por vez, diminua a quantidade e tente novamente",
+            "aviso_4" : "Por favor, envie imagens com menos pixels!",
+            "aviso_5" : "Por favor, envie apenas uma imagem grande por vez", 
+            "error_1" : "\n\nAlguns dos seus arquivos podem não ter sido processados, devido à um arquivo inesperado, por favor, utilize o comando novamente.",
+            "error_2" : "Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)",
+            "efeito_errado" : "Este efeito não existe! Sugira efeitos para o Alonsal usando o `.amail <seu_efeito_top>`"
+        },
+        {
+            "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`",
+            "aviso_2" : "Não encontrei nenhum local chamado",
+            "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
+            "tente_novamente" : ", tente novamente",
+            "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
+            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado"
+        }
     ]
 }

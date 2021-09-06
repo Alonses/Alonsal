@@ -7,10 +7,19 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const idioma_adotado = idioma_servers[message.guild.id];
+
         function direcao_cardial(degrees){
             let direcao = parseInt((degrees / 22.5) +.5);
 
-            const cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"]
+            if(idioma_adotado == "pt-br")
+                cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
+            else
+                cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
+            
             direcao = cards[direcao % 16];
 
             return direcao;
@@ -22,7 +31,11 @@ module.exports = {
         const { weather_key, time_key } = require('../../config.json');
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
-        const translations = require("i18n-country-code/locales/pt.json");
+        if(idioma_adotado == "pt-br")
+            translations = require("i18n-country-code/locales/pt.json");
+        else
+            translations = require("i18n-country-code/locales/en.json");
+
         const getCountryISO3 = require("country-iso-2-to-3");
         
         const base_url = "http://api.openweathermap.org/data/2.5/weather?";
@@ -32,7 +45,7 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length < 1){
-            message.lineReply(":warning: | Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`");
+            message.lineReply(":warning: | "+ utilitarios[8]["aviso_1"]);
             return;
         }
 
@@ -45,13 +58,16 @@ module.exports = {
 
         let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
         
+        if(idioma_adotado == "en-us")
+            url_completa = url_completa.replace("&lang=pt", "");
+        
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
             if(res.cod == '404')
-                message.lineReply(emoji_nao_encontrado +" | Não encontrei nenhum local chamado \`"+ pesquisa +"\`, tente novamente");
+                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +"\`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
             else if(res.cod == '429')
-                message.lineReply(emoji_nao_encontrado +" | Houve algum erro com a API de clima e não é possível pesquisar por climas no momento");
+                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
 
@@ -61,7 +77,7 @@ module.exports = {
 
                     let bandeira_pais = "";
                     let nome_pais = "";
-                    let aviso_continente = "Estes dados são uma média de todos os valores do continente pesquisado";
+                    let aviso_continente = utilitarios[8]["aviso_continente"];
                     let horario_local;
 
                     if(typeof res.sys.country != "undefined"){
@@ -73,7 +89,7 @@ module.exports = {
 
                         if(nome_pais.includes(res.name)){
                             nome_pais = "";
-                            aviso_continente = "Estes dados são uma média de todos os valores do país pesquisado";
+                            aviso_continente = utilitarios[8]["aviso_pais"];
                         }
 
                         horario_local = res_hora.formatted;
@@ -95,6 +111,10 @@ module.exports = {
                     let dia = horario_local.getDate();
                     
                     mes = horario_local.toLocaleString('pt', { month: 'long' });
+                    
+                    if(idioma_adotado == "en-us")
+                        mes = horario_local.toLocaleString('en', { month: 'long' });
+
                     hours = horario_local.getHours();
 
                     hours = hours % 12;
@@ -150,40 +170,78 @@ module.exports = {
                     
                     horario_local = ":clock"+ hours +": **Hora local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
 
+                    if(idioma_adotado == "en-us"){
+                        horario_local = horario_local.replace("Hora local", "Local time");
+                        horario_local = horario_local.replace("de", "of");
+                    }
+
                     let direcao_vento = direcao_cardial(res.wind.deg);
 
                     let nome_local = "na "+ res.name;
 
+                    if(idioma_adotado == "en-us")
+                        nome_local = nome_local.replace("na", "in");
                     if(typeof res.sys.country != "undefined")
-                        nome_local = nome_local.replace("na", "em");
+                        if(idioma_adotado == "pt-br")
+                            nome_local = nome_local.replace("na", "em");
+                    
                     else
-                        horario_local = horario_local.replace("Hora local", "Dados de");
+                        if(idioma_adotado == "pt-br")
+                            horario_local = horario_local.replace("Hora local", "Dados de");
+                        else
+                            horario_local = horario_local.replace("Local time", "Data from");
 
                     let infos_chuva = "";
 
                     if(typeof res.rain != "undefined"){
                         infos_chuva = "\n **Chuva 1H:** `"+ res.rain["1h"]+ "mm`";
                     
-                        if(typeof res.rain["3h"] != "undefined")
-                        infos_chuva += "\n **Chuva 3H:** `"+ res.rain["3h"]+ "mm`";
+                        if(idioma_adotado == "en-us")
+                            infos_chuva = infos_chuva.replace("Chuva", "Rain");
+
+                        if(typeof res.rain["3h"] != "undefined"){
+                            infos_chuva += "\n **Chuva 3H:** `"+ res.rain["3h"]+ "mm`";
+
+                            if(idioma_adotado == "en-us")
+                                infos_chuva = infos_chuva.replace("Chuva", "Rain");
+                        }
                     }
                     
-                    const cidade_encontrada = new MessageEmbed()
-                    .setTitle(':boom: Tempo agora '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
-                    .setColor(0x29BB8E)
-                    .setDescription(horario_local +'` | **'+ tempo_atual +'**')
-                    .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
-                    .addFields(
-                        { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
-                        { name: emoji_ceu_atual +' **Céu no momento**', value: emoji_nuvens +' **Nuvens: **`'+ res.clouds.all +'%`\n:sunrise: **Na. do sol: **`'+ nascer_sol +"`\n:city_sunset: **Pôr do sol: **`"+ por_sol +"`", inline: true},
-                        { name: ':wind_chime: **Vento**', value: ":airplane: **Velo.: **`"+ res.wind.speed +" km/h`\n:compass: **Direção: ** `"+ direcao_vento +"`", inline: true },
-                    )
-                    .addFields(
-                        { name: emoji_sensacao_termica +' **Sensação Térm.**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
-                        { name: emoji_umidade +' **Umidade do ar**', value: "**Atual: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
-                        { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
-                    )
-                    .setFooter(aviso_continente);
+                    if(idioma_adotado == "pt-br"){
+                        cidade_encontrada = new MessageEmbed()
+                        .setTitle(":boom: Tempo agora "+ nome_local +""+ nome_pais +" "+ bandeira_pais)
+                        .setColor(0x29BB8E)
+                        .setDescription(horario_local +"` | **"+ tempo_atual +"**")
+                        .setThumbnail("http://openweathermap.org/img/wn/"+ res.weather[0].icon +"@2x.png")
+                        .addFields(
+                            { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
+                            { name: emoji_ceu_atual +' **Céu no momento**', value: emoji_nuvens +' **Nuvens: **`'+ res.clouds.all +'%`\n:sunrise: **Na. do sol: **`'+ nascer_sol +"`\n:city_sunset: **Pôr do sol: **`"+ por_sol +"`", inline: true},
+                            { name: ':wind_chime: **Vento**', value: ":airplane: **Velo.: **`"+ res.wind.speed +" km/h`\n:compass: **Direção: ** `"+ direcao_vento +"`", inline: true },
+                        )
+                        .addFields(
+                            { name: emoji_sensacao_termica +' **Sensação Térm.**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
+                            { name: emoji_umidade +' **Umidade do ar**', value: "**Atual: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
+                            { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
+                        )
+                        .setFooter(aviso_continente);
+                    }else{
+                        cidade_encontrada = new MessageEmbed()
+                        .setTitle(':boom: Weather now '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
+                        .setColor(0x29BB8E)
+                        .setDescription(horario_local +'` | **'+ tempo_atual +'**')
+                        .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
+                        .addFields(
+                            { name: ':thermometer: **Temperature**', value: ":small_orange_diamond: **Current**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
+                            { name: emoji_ceu_atual +' **Sky at the moment**', value: emoji_nuvens +' **Clouds: **`'+ res.clouds.all +'%`\n:sunrise: **Sunrise: **`'+ nascer_sol +"`\n:city_sunset: **Sunset: **`"+ por_sol +"`", inline: true},
+                            { name: ':wind_chime: **Wind**', value: ":airplane: **Vel.: **`"+ res.wind.speed +" km/h`\n:compass: **Direction: ** `"+ direcao_vento +"`", inline: true },
+                        )
+                        .addFields(
+                            { name: emoji_sensacao_termica +' **Thermal sens.**', value: '**Current: **`'+ res.main.feels_like +'°C`', inline: true},
+                            { name: emoji_umidade +' **Air humidity**', value: "**Current: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
+                            { name: ':compression: **Air pressure**', value: '**Current: **`'+ res.main.pressure +' kPA`', inline: true}
+                        )
+                        .setFooter(aviso_continente);
+                    }
 
                     message.lineReply(cidade_encontrada);
                 });

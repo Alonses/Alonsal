@@ -1,11 +1,15 @@
 module.exports = {
     name: "casal",
     description: "Teste o nível de afeto entre duas pessoas",
-    aliases: [ "mor" ],
+    aliases: [ "mor", "love" ],
     usage: "mor <@><@>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const { MessageEmbed } = require('discord.js');
 
@@ -13,14 +17,14 @@ module.exports = {
             args.splice(1, 1);
 
         if(args.length != 2 || !args[0].includes("<@") || !args[1].includes("<@")){
-            message.lineReply(`${message.author} marque duas pessoas para testar\nPor exemplo, \`.amor @Alonsal @Slondo\``);
+            message.lineReply(`${message.author} `+ diversao[2]["aviso_1"]);
             return;
         }
         
-        let titulo = "Limda :gift_heart:";
+        let titulo = diversao[2]["limda"];
         let num = 100;
         let porcentagem = "";
-        let aviso = "Amor a si próprio é oq importa :heartpulse:";
+        let aviso = diversao[2]["rodape"];
 
         if(args[0] !== args[1]){
             num = Math.round(Math.random() * 100);
@@ -29,19 +33,19 @@ module.exports = {
 
         if(args[0] !== args[1]){
             if(num == 100)
-                titulo = "Praticamente casados :heart_on_fire:";
+                titulo = diversao[2]["100perc"];
             else if(num > 90)
-                titulo = "Meu casal :smiling_face_with_3_hearts:";
+                titulo = diversao[2]["90perc"];
             else if(num > 80)
-                titulo = "Literalmente amantes :revolving_hearts:";
+                titulo = diversao[2]["80perc"];
             else if(num > 60)
-                titulo = "Tá rolando um clima :hot_face:";
+                titulo = diversao[2]["60perc"];
             else if(num > 40)
-                titulo = "Será? :eyes:";
+                titulo = diversao[2]["40perc"];
             else if(num > 20)
-                titulo = "Friendzone :people_hugging:";
+                titulo = diversao[2]["20perc"];
             else
-                titulo = "São inimigos públicos :angry:";
+                titulo = diversao[2]["0perc"];
         }
 
         if(args[0] === args[1])
@@ -60,7 +64,7 @@ module.exports = {
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
         .setTitle(titulo)
-        .setDescription(`O teste retornou ${num}%!\n${porcentagem}\n\n${aviso}`)
+        .setDescription( diversao[2]["teste"] +` ${num}%!\n${porcentagem}\n\n${aviso}`)
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
         .setTimestamp();
 

@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
@@ -14,10 +18,10 @@ module.exports = {
         const Discord = require('discord.js');
 
         if(message.attachments.size > 1 || (message.attachments.size == 0 && args.length < 1)){
-            let text_aviso = ":hotsprings: | Escreva algo ou envie um arquivo para mim e eu retornarei ele";
+            let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
 
             if(message.attachments.size > 1)
-                text_aviso = ":hotsprings: | Envie apenas 1 arquivo por vez";
+                text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_2"];
 
             const aviso = await message.channel.send(text_aviso);
 
@@ -30,9 +34,9 @@ module.exports = {
 
         let conteudo = (message.content).toLowerCase();
 
-        if(conteudo.includes("hora certa")){
+        if(conteudo.includes("hora certa") || conteudo.includes("right time")){
             const hora_certa = new Discord.MessageAttachment("arquivos/songs/hora_certa.mp3");
-            message.channel.send("Hora Certa!", hora_certa);
+            message.channel.send(utilitarios[6]["hora_certa"], hora_certa);
 
             return;
         }
@@ -60,7 +64,7 @@ module.exports = {
 
         if(message.attachments.size == 0){
 
-            message.channel.send(`Reprodução solicitada por [ ${message.author} ]`);    
+            message.channel.send(utilitarios[6]["reproducao_1"] +` [ ${message.author} ]`);    
             let mensagem = message.content.replace(".arep", "")
 
             message.channel.send(mensagem, {
@@ -70,7 +74,7 @@ module.exports = {
             message.attachments.forEach(attachment => {
                 
                 const arquivo_atach = new Discord.MessageAttachment(attachment.url);
-                message.channel.send(`Arquivo enviado por [ ${message.author} ]`, arquivo_atach);
+                message.channel.send(utilitarios[6]["reproducao_2"] +` [ ${message.author} ]`, arquivo_atach);
             });
         }
     }

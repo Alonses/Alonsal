@@ -7,6 +7,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const { MessageEmbed } = require('discord.js');
         const { aliases_user } = require('../../config.json');
 
@@ -21,7 +25,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.lineReply(":octagonal_sign: | Há um erro em sua mensagem, tente novamente.").then(message => message.delete());
+                message.lineReply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete());
                 return;
             }
 
@@ -42,16 +46,16 @@ module.exports = {
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
 
-                        message.lineReply(`:hotsprings: | Mensagem enviada para [ \`${id_alvo}\`, \`${canal_alvo.name}\` ] :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:`).then(message => message.delete({timeout: 5000}));
+                        message.lineReply(":hotsprings: | "+ manutencao[2]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[2]["aviso_5"]).then(message => message.delete({timeout: 5000}));
                     }else{
-                        message.lineReply(`:hotsprings: | Eu não posso enviar mensagens no canal \`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));;
+                        message.lineReply(":hotsprings: | "+ manutencao[2]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
 
                         message.delete();
                         return;
                     }
                 }
             }catch(err){
-                message.lineReply(':octagonal_sign: | Não foi possível enviar a mensagem para este ID');
+                message.lineReply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
                 return;
             }
         }else{
@@ -65,12 +69,12 @@ module.exports = {
             .setTitle("> New Message :mailbox_with_mail:")
             .setFooter("Author: "+ message.author.username)
             .setColor(0xffffff)
-            .setDescription("-----------------------\nEnviada por `"+ message.author.id +"`\n\n Mensagem: `"+ mensagem + "`")
+            .setDescription("-----------------------\nSent by `"+ message.author.id +"`\n\n Message: `"+ mensagem + "`")
             .setTimestamp();
 
             client.channels.cache.get("847191471379578970").send(msg_user);
             
-            message.lineReply(':hotsprings: | Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:').then(message => message.delete({timeout: 5000}));
+            message.lineReply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(message => message.delete({timeout: 5000}));
         }
 
         if(tipo === "c")
@@ -93,9 +97,9 @@ module.exports = {
         }
 
         const embed = new MessageEmbed()
-        .setTitle(':mailbox: Sua mensagem foi entregue!')
+        .setTitle(manutencao[2]["aviso_2"])
         .setColor(0x29BB8E)
-        .setDescription("Sua mensagem foi entregue para o/a `"+ tipo +"`\n\nO Conteúdo da mensagem é :: \n`"+ mensagem +"`")
+        .setDescription(manutencao[2]["conteudo_1"] +" `"+ tipo +"`\n\n"+ manutencao[2]["conteudo_2"] +" :: \n`"+ mensagem +"`")
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
         .setTimestamp();
         
@@ -105,6 +109,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.channel.send(":tools: | Não foi possivel excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.");
+            message.channel.send(":tools: | "+ manutencao[2]["aviso_3"]);
     }
 };
