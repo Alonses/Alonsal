@@ -11,7 +11,7 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     const { moderacao } = require('../arquivos/idiomas/'+ idioma_padrao +'.json');
     let idioma_selecionado;
 
-    if(!message.member.hasPermission('MANAGE_SERVER')){
+    if(!message.member.hasPermission('MANAGE_GUILD')){
         message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
         return;
     }
