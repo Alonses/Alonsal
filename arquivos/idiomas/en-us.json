@@ -189,6 +189,10 @@
             "tente_novamente" : ", try again",
             "aviso_continente" : "These data are an average of all values for the continent surveyed",
             "aviso_pais" : "These data are an average of all values in the country surveyed"
+        },
+        {
+            "nao_encontrado" : "I didn't find any item or block with the name",
+            "tente_novamente" : "try again"
         }
     ],
     "musicas" : [
