@@ -109,18 +109,14 @@ module.exports = async (message, client, args, playlists, nome_faixas, atividade
 
         if(fator_renatos > 0){
             try{
-                dispatcher = connection.play(ytdl(queue_interna[0], {
-                    filter: "audioonly",
-                    quality: "highestaudio",
-                    highWaterMark: 1 << 25
-                }));
+                dispatcher = connection.play(ytdl(queue_interna[0], { filter: "audioonly" }));
             }catch(error){
                 message.lineReply(":no_entry_sign: | "+ musicas[4]["error_1"] +" [ "+ queue_interna[0] +" ]");
             }
         }else if(trava_renatao == 0){
             trava_renatao = 1;
 
-            setTimeout(() => { // Libera a propaganda para aparecer novamente
+            setTimeout(() => { // Libera as propagandas para aparecerem novamente
                 trava_renatao = 0;
             }, 900000);
 
