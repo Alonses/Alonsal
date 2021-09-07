@@ -189,6 +189,10 @@
             "tente_novamente" : ", tente novamente",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
             "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado"
+        },
+        {
+            "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
+            "tente_novamente" : "tente novamente"
         }
     ],
     "musicas" : [
