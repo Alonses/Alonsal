@@ -1,7 +1,7 @@
 module.exports = {
     name: "menu",
     description: "Menu com os comandos do alonsal",
-    aliases: [ "h", "juda", "comandos", "commands" ],
+    aliases: [ "h", "juda", "comandos", "commands", "help" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
@@ -84,7 +84,7 @@ module.exports = {
             embed_jogos = new MessageEmbed()
             .setTitle('Game Commands :golf:')
             .setColor(0x29BB8E)
-            .setDescription(":scissors: **`.ajkp paper`** | **`.ajkp`** - Jokenpo\n:coin: **`.acoin tails`** | **`.aco heads`** - Test your luck\n:game_die: **`.adado`** | **`.ada 10 16`** - Roll one or more dice with multiple faces\n"+ emoji_pula +" **`.apula`** | **`.apredios`** - Pula Buildings Game!\n"+ emoji_mc + " **`.amc`** | **`.amc diamond`** - Display info for a Minecraft item")
+            .setDescription(":scissors: **`.ajkp paper`** | **`.ajkp`** - Jokenpo\n:coin: **`.acoin tails`** | **`.aco heads`** - Test your luck\n:game_die: **`.adice`** | **`.adi 10 16`** - Roll one or more dice with multiple faces\n"+ emoji_pula +" **`.apula`** | **`.apredios`** - Pula Buildings Game!\n"+ emoji_mc + " **`.amc`** | **`.amc diamond`** - Display info for a Minecraft item")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_manutencao = new MessageEmbed()

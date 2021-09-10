@@ -183,7 +183,7 @@
             "efeito_errado" : "This effect does not exist! Suggest effects to Alonsal using `.amail <your_top_effect>`"
         },
         {
-            "aviso_1" : "Enter the name of some city to search\nFor example, as `.at los angeles`",
+            "aviso_1" : "Enter the name of some city to search\nFor example, as `.awe los angeles`",
             "aviso_2" : "I didn't find any place called",
             "aviso_3" : "There was an error with the weather API and it is not possible to search for weather at the moment",
             "tente_novamente" : ", try again",
