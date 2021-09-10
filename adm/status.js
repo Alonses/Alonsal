@@ -23,7 +23,7 @@ module.exports = async ({client}) => {
         ".ah | .ajuda",
         "Músicas nas calls",
         ".alang pt | .alang en",
-        "Ceira supresa em servidores",
+        "Ceira suprema em servidores",
         ".ah | .ajuda",
         "Translation worldwide",
         "7 Crashs ou+ todo dia",
