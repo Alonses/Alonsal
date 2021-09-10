@@ -21,12 +21,12 @@ module.exports = async ({client}) => {
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [
         ".ah | .ajuda",
-        "Binário na fogueira",
-        "Mesas p/ cima",
-        "Baidu premium em servidores",
+        "Músicas nas calls",
+        ".alang pt | .alang en",
+        "Ceira supresa em servidores",
         ".ah | .ajuda",
-        "Imagens em preto e branco",
-        "Bugs infinitos no sistema",
+        "Translation worldwide",
+        "7 Crashs ou+ todo dia",
         "Vapor p/ fora!"
     ];
 
