@@ -60,7 +60,7 @@ module.exports = {
             let nome_emoji = null;
             let url = null;
             
-            if(message.content.startsWith(".addemoji") || message.content.startsWith(".adicionaremoji")){
+            if(message.content.startsWith(".addemoji") || message.content.startsWith(".adicionaremoji") || message.content.startsWith(".addmoji")){
 
                 if(message.attachments.size < 1){
 

@@ -5,14 +5,6 @@ require('discord-reply');
 const { readdirSync } = require("fs");
 let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const client = new discord.Client();
-const { MessageEmbed } = require('discord.js');
-
-let ult_comand;
-let ult_message;
-let conexoes_ativas = 0;
-
-canais_conectados = new Map();
-servers_conectados = new Map();
 
 client.on("ready", async () => {
 
@@ -49,25 +41,16 @@ client.on('message', message => {
 
     var reload = require('auto-reload');
     const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
-
-    if(typeof idioma_servers[message.guild.id] == "undefined"){
-        let requisicao_auto = true;
-        require('./adm/idioma.js')({client, message, args, requisicao_auto});
-        return;
-    }
-
-    if(content.startsWith(".alang")){    
-        require('./adm/idioma.js')({client, message, args});  
-        return;
-    }
-
-    if(content.startsWith(".aram")){
-        require('./adm/memoria.js')({message});  
-        return;
-    }
-
-    if(message.content == "<@"+ client.user.id + ">" || message.content == "<@!"+ client.user.id + ">"){ // Responde mensagens que é marcado
         
+    if(content.startsWith(".alang") || content.startsWith(".aram") || typeof idioma_servers[message.guild.id] == "undefined"){
+        let requisicao_auto = true;
+
+        require('./adm/requisitor.js')({client, message, args, requisicao_auto});  
+        return;
+    }
+
+    if(message.content.includes(client.user.id)){ // Responde as mensagens em que é marcado
+            
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
@@ -78,17 +61,25 @@ client.on('message', message => {
     }
 
     if(content !== prefix && content.includes(prefix)){ // Previne que mensagens aleatórias acionem comandos
-        ult_comand = content;
+        
+        let auto = true;
+        let ult_comand = content;
+        require('./adm/eventos.js')({client, auto, ult_comand});
 
-        if(content.startsWith(prefix))
-            console.log("Comando exec: "+ message.author.username +", "+ message.guild.name +", "+ content);
+        if(content.startsWith(prefix)){
+         
+            let hora_comando = message.createdTimestamp;
+            data = new Date(hora_comando);
 
+            console.log("Comando exec/ Autor: "+ message.author.username +", Server: "+ message.guild.name +", Hora: "+ data +", Comando: "+ content);
+        }
         let comando_musical = content.replace(".a", "");
         comando_musical = comando_musical.split(" ");
 
         if(comandos_musicais.includes(comando_musical[0])){ // Apenas utilizado em comandos musicais
-            ult_message = message;
-            
+            let ult_message = message;
+            require('./adm/eventos.js')({client, auto, ult_message});
+
             require('./comandos/musicas/play.js')({message, client, args});
         }else
             if(content.startsWith(prefix))
@@ -103,53 +94,7 @@ client.on('message', message => {
         require('./adm/log.js')({client, message, content});
 });
 
-client.on("guildCreate", guild => {
-    let caso = 'New';
-    require("./adm/servers.js")({client, caso, guild});
-});
-
-client.on("guildDelete", guild => {
-    let caso = 'Left';
-    require("./adm/servers.js")({client, caso, guild});
-});
-
-client.on("voiceStateUpdate", guild => {
-        
-    if(guild.guild.client.voice.connections.size < conexoes_ativas){
-        // Processa quando o bot é desconectado do canal por um usuário manualmente
-        conexoes_ativas--;
-
-        const id_canal_desconectado = guild.channelID; // Canal de voz
-        
-        let id_canal_comando = servers_conectados.get(guild.guild.id); // Canal de texto 
-        let id_mensagem = canais_conectados.get(guild.guild.id);
-        
-        const channel = client.channels.cache.get(id_canal_comando);
-        const message = channel.messages.cache.get(id_mensagem);
-
-        const args = message.content.slice(prefix.length).trim().split(' ');
-        
-        require('./comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
-
-        servers_conectados.set(guild.guild.id, []);
-        canais_conectados.set(guild.guild.id, []);
-    }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
-        if(typeof ult_message !== "undefined"){
-            conexoes_ativas = guild.guild.client.voice.connections.size;
-        
-            servers_conectados.set(ult_message.guild.id, ult_message.channel.id);
-            canais_conectados.set(ult_message.guild.id, ult_message.id);
-        }
-    }
-});
-
-client.on("rateLimit", limit => {
-    const embed = new MessageEmbed()
-    .setTitle("> RateLimit :name_badge:")
-    .setColor(0xff0000)
-    .setDescription("Command: `"+ ult_comand +"`\nTimeout: `"+ limit.timeout +"`\nLimit: `"+ limit.limit +"`\nMethod: `"+ limit.method +"`\n\nPath: `"+ limit.path +"`\nRoute: `"+ limit.route +"`");
-
-    client.channels.cache.get('872865396200452127').send(embed);
-});
+// Eventos secundários
+require('./adm/eventos.js')({client});
 
 client.login(token);
