@@ -10,11 +10,6 @@ module.exports = {
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const idioma_adotado = idioma_servers[message.guild.id];
         
-        const permissions = message.channel.permissionsFor(message.client.user);
-
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
-
         const { MessageEmbed } = require('discord.js');
 
         const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
@@ -37,5 +32,10 @@ module.exports = {
         }
 
         client.users.cache.get(message.author.id).send(embed);
+
+        const permissions = message.channel.permissionsFor(message.client.user);
+
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
     }
 };
