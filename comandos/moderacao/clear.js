@@ -32,13 +32,13 @@ module.exports = {
         if(args[0] == 1)
             texto = moderacao[1]["apagado_2"];
         
-        message.delete() // apaga a mensagem do comando
-
         message.channel.bulkDelete(parseInt(args[0]))
         .then(() => {
             message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto).then(message => message.delete({timeout: 3000}));
         })
         .catch(err =>
             message.reply(":octagonal_sign: | "+ moderacao[1]["error"]).then(message => message.delete({timeout: 3000})));
+        
+        message.delete() // apaga a mensagem do comando
     }
 };
