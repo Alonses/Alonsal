@@ -9,15 +9,15 @@ module.exports = {
         const reload = require('auto-reload');
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        
-        const permissions = message.channel.permissionsFor(message.client.user);
-    
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
-        
+            
         const { MessageAttachment } = require('discord.js');
         
         const baidu = new MessageAttachment('arquivos/img/baidu.png');
         message.lineReply(diversao[0]["baidu"], baidu);
+
+        const permissions = message.channel.permissionsFor(message.client.user);
+        
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
     }
 };

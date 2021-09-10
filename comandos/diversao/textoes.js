@@ -8,14 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
-
-        var reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
-        const { textoes } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/textoes.json");
+        const { textoes } = require("../../arquivos/json/text/textoes.json");
         const num = Math.round((textoes.length - 1) * Math.random());
 
         let key = Object.keys(textoes[num]);
@@ -24,5 +17,10 @@ module.exports = {
         
         if(textoes[num][key] !== null)
             message.channel.send(textoes[num][key]);
+
+        const permissions = message.channel.permissionsFor(message.client.user);
+    
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
     }
 };

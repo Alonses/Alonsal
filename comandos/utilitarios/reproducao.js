@@ -10,11 +10,6 @@ module.exports = {
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
-
         const Discord = require('discord.js');
 
         if(message.attachments.size > 1 || (message.attachments.size == 0 && args.length < 1)){
@@ -77,5 +72,10 @@ module.exports = {
                 message.channel.send(utilitarios[6]["reproducao_2"] +` [ ${message.author} ]`, arquivo_atach);
             });
         }
+
+        const permissions = message.channel.permissionsFor(message.client.user);
+
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
     }
 };
