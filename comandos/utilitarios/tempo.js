@@ -1,7 +1,7 @@
 module.exports = {
     name: "tempo",
     description: "Veja informações do tempo em alguma cidade",
-    aliases: [ "t", "clima", "previsao", "weather" ],
+    aliases: [ "t", "clima", "previsao", "weather", "we" ],
     usage: "t Brasil",
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],

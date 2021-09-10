@@ -11,7 +11,7 @@ module.exports = {
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
         const fetch = require('node-fetch');
-        const { MessageEmbed } = require('discord.js');
+        const { MessageAttachment } = require('discord.js');
         const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
@@ -33,14 +33,10 @@ module.exports = {
 
                     if(res.status != 200) // Emoji externo não é animado // URL não existe
                         url = url.replace(".gif", ".png");
+                    
+                    imagem_emoji = new MessageAttachment(url);
 
-                    const embed = new MessageEmbed()
-                    .setTitle(':mag: Emoji '+ match[2])
-                    .setColor(0x29BB8E)
-                    .setURL(url)
-                    .setImage(url);
-    
-                    message.lineReply(embed);
+                    message.lineReply(imagem_emoji);
                 });
             }else
                 message.lineReply( moderacao[2]["aviso_2"] +" `.amoji `"+ emoji_dancando +"` `");

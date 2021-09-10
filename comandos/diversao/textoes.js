@@ -1,5 +1,3 @@
-const { Guild } = require("discord.js");
-
 module.exports = {
     name: "textoes",
     description: "textoes gratuitos",
