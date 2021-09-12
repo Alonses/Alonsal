@@ -88,21 +88,22 @@ module.exports = {
 
         for(let i = 0; i < ids_canais_games.length; i++){ // Envia a mensagem para vários canais pré-definidos
 
-            let idioma_definido = idioma_servers[ids_canais_games[i]];
+            let servidor = client.channels.cache.get(ids_canais_games[i]);
+            servidor = servidor.guild.id;
+            let idioma_definido = idioma_servers[servidor];
 
             let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
 
             if(idioma_definido == "en-us")
-                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and secure a copy on your account "+ plataforma +" <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
+                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
 
             if(args.length > 4){
-
                 let nome_jogo_2 = args[4].replaceAll("_", " ");
 
                 texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
 
                 if(idioma_definido == "en-us")
-                    texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and secure a copy on your account "+ plataforma;
+                    texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
 
                 if(typeof ids_cargos_games[i] !== "undefined")
                     texto_anuncio += " <@&"+ ids_cargos_games[i] +">";
@@ -118,6 +119,6 @@ module.exports = {
         
         await message.lineReply("A atualização foi enviada à todos os canais de games").then(message => message.delete({timeout: 5000}));
 
-        message.delete();
+        // message.delete();
     }
 }

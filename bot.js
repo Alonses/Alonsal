@@ -36,6 +36,10 @@ client.on('message', message => {
 
     if(message.author.bot || message.webhookId) return;
 
+    const permissions = message.channel.permissionsFor(message.client.user);  
+    if(!permissions.has("SEND_MESSAGES")) // Permissão para enviar mensagens no canal
+        return;
+
     let content = message.content;
     const args = content.slice(prefix.length).trim().split(' ');
 
