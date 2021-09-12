@@ -25,7 +25,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.lineReply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete());
+                message.lineReply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
                 return;
             }
 
@@ -50,7 +50,6 @@ module.exports = {
                     }else{
                         message.lineReply(":hotsprings: | "+ manutencao[2]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
 
-                        message.delete();
                         return;
                     }
                 }
