@@ -31,11 +31,8 @@ module.exports = {
         const { weather_key, time_key } = require('../../config.json');
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
-        if(idioma_adotado == "pt-br")
-            translations = require("i18n-country-code/locales/pt.json");
-        else
-            translations = require("i18n-country-code/locales/en.json");
-
+        translations = require("i18n-country-code/locales/"+ idioma_adotado.slice(0, 2) +".json");
+        
         const getCountryISO3 = require("country-iso-2-to-3");
         
         const base_url = "http://api.openweathermap.org/data/2.5/weather?";

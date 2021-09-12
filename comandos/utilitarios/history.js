@@ -1,8 +1,11 @@
+let ult_valor = null;
+let ult_data = null;
+
 module.exports = {
     name: "history",
     description: "Fatos que ocorreram no mundo em determinada data",
-    aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con" ],
-    cooldown: 3,
+    aliases: [ "hs", "hoj", "today", "historia", "fato", "contecimento", "con" ],
+    cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
     
@@ -20,7 +23,7 @@ module.exports = {
         let data = new Date();
         const ano = data.getFullYear();
 
-        const meses = [".jan.", ".fev.", ".mar.", ".abr.", ".mai.", ".jun.", ".jul.", ".ago.", ".set.", ".out.", ".nov.", ".dez."];
+        const meses = [".jan.", ".fev.", ".mar.", ".abr.", ".maio.", ".jun.", ".jul.", ".ago.", ".set.", ".out.", ".nov.", ".dez."];
         const nome_mes = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
         let url_completa = "https://history.uol.com.br/hoje-na-historia/";
@@ -76,8 +79,11 @@ module.exports = {
                 let data_ajustada = alvos[i].slice(0, 11); // Organizando o nome dos meses
                 data_ajustada = data_ajustada.toLowerCase(); // Evita erros com abreviaturas de meses
 
-                let local = meses.indexOf(data_ajustada.slice(2, 7));
-
+                if(!data_ajustada.includes("maio"))
+                    local = meses.indexOf(data_ajustada.slice(2, 7));
+                else
+                    local = meses.indexOf(data_ajustada.slice(2, 8));
+                
                 data_ajustada = data_ajustada.replace(meses[local], " de "+ nome_mes[local] +" de ");
                 datas.push(data_ajustada);
                 
@@ -102,7 +108,23 @@ module.exports = {
             }
 
             if(datas.length > 0){
-                const num = Math.round((datas.length - 1) * Math.random()); // Enviando o evento
+
+                if(ult_data != datas[0].split("de")[1]) // Compara os meses da pesquisa, caso diferentes reseta o último valor retirado
+                    ult_valor = null;
+
+                ult_data = datas[0].split("de")[1];
+
+                const importancia = Math.round(1 * Math.random());
+
+                do{ // Sorteando o evento
+                    if(importancia > 1)
+                        num = Math.round((datas.length - 1) * Math.random());
+                    else
+                        num = Math.round(2 * Math.random());
+                }while(num == ult_valor);
+
+                ult_valor = num;
+
                 message.lineReply(":bookmark: | `"+ datas[num] + "`, "+ acontecimento_final[num] +"\nFonte: "+ fontes[num]);
             }else
                 message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"]);
