@@ -76,15 +76,19 @@ module.exports = {
             for(let i = 0; i < alvos.length; i++){
                 alvos[i] = alvos[i].slice(0, 200);
                 
-                let data_ajustada = alvos[i].slice(0, 11); // Organizando o nome dos meses
+                if(!alvos[i].includes("Maio"))
+                    data_ajustada = alvos[i].slice(0, 11); // Organizando o nome dos meses
+                else
+                    data_ajustada = alvos[i].slice(0, 12);
+
                 data_ajustada = data_ajustada.toLowerCase(); // Evita erros com abreviaturas de meses
 
                 if(!data_ajustada.includes("maio"))
-                    local = meses.indexOf(data_ajustada.slice(2, 7));
+                    indice_mes = meses.indexOf(data_ajustada.slice(2, 7));
                 else
-                    local = meses.indexOf(data_ajustada.slice(2, 8));
+                    indice_mes = meses.indexOf(data_ajustada.slice(2, 8));
                 
-                data_ajustada = data_ajustada.replace(meses[local], " de "+ nome_mes[local] +" de ");
+                data_ajustada = data_ajustada.replace(meses[indice_mes], " de "+ nome_mes[indice_mes] +" de ");
                 datas.push(data_ajustada);
                 
                 acontecimento.push(alvos[i].split("<h1 class=\"hstBlock__title\">"));
