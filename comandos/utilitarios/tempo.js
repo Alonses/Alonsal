@@ -5,7 +5,7 @@ module.exports = {
     usage: "t Brasil",
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
         
         const reload = require('auto-reload');
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
@@ -67,8 +67,6 @@ module.exports = {
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
-
-            console.log(res);
 
             if(res.cod == '404' || res.cod == '400')
                 message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
