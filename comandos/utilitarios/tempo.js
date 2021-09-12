@@ -50,12 +50,15 @@ module.exports = {
         }
 
         for(let i = 0; i < args.length; i++){
-            pesquisa += args[i].normalize("NFD").replace(/[^a-zA-Zs]/g, "");
+            if(isNaN(args[i]))
+                pesquisa += args[i].normalize("NFD").replace(/[^a-zA-Zs]/g, "");
+            else
+                pesquisa += args[i];
 
             if(args[i + 1] !== undefined)
                 pesquisa += " ";
         }
-
+        
         let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
         
         if(idioma_adotado == "en-us")
@@ -64,8 +67,11 @@ module.exports = {
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
-            if(res.cod == '404')
-                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +"\`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
+
+            console.log(res);
+
+            if(res.cod == '404' || res.cod == '400')
+                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
             else if(res.cod == '429')
                 message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
             else{
@@ -73,7 +79,7 @@ module.exports = {
 
                 fetch(url_hora) // Buscando o horário local
                 .then(response => response.json())
-                .then( async res_hora => {
+                .then(async res_hora => {
 
                     let bandeira_pais = "";
                     let nome_pais = "";

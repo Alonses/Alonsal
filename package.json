@@ -1,6 +1,6 @@
 {
   "name": "alonsal",
-  "version": "1.5.5",
+  "version": "1.7",
   "description": "Automatiza!",
   "main": "bot.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "i18n-country-code": "^1.0.1",
     "nodemon": "^2.0.12",
     "opusscript": "0.0.8",
-    "sqlite3": "^5.0.2",
     "video-thumbnail-url": "^1.0.1",
     "wax-command-handler": "^1.0.8",
     "ytdl-core": "^4.9.1"
