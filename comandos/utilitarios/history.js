@@ -6,8 +6,6 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
     
-        return;
-        
         const reload = require('auto-reload');
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');

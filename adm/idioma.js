@@ -1,7 +1,5 @@
 module.exports = async function({client, message, args, requisicao_auto}) {
     
-    console.log('requisitando');
-
     var reload = require('auto-reload');
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
 

@@ -26,10 +26,13 @@ module.exports = {
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         if(idioma_selecionado == "pt-br"){
+
+            bandeira_trad = ":flag_us:";
+
             embed_inicial = new MessageEmbed()
             .setTitle('Boas vindas ao Ajuda! :boomerang:')
             .setColor(0x29BB8E)
-            .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **`.ah 1`** - `Comandos Divertidos`\n\n:compass: **`.ah 2`** - `Comandos Utilitários`\n\n:golf: **`.ah 3`** - `Comandos de Jogos`\n\n:musical_note: **`.ash`** - `Comandos Músicais`\n\n:tools: **`.ah 4`** - `Manutenção do Alonsal`\n\n:frame_photo: **`.ah 5`** -  `Manipulação de imagens`\n\n:scroll: **`.ahm`** - `Comandos moderativos`\n\n:information_source: **`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n:flag_us: | _Use the command `.alang en` to switch to `american english`_")
+            .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **`.ah 1`** - `Comandos Divertidos`\n\n:compass: **`.ah 2`** - `Comandos Utilitários`\n\n:golf: **`.ah 3`** - `Comandos de Jogos`\n\n:musical_note: **`.ash`** - `Comandos Músicais`\n\n:tools: **`.ah 4`** - `Manutenção do Alonsal`\n\n:frame_photo: **`.ah 5`** -  `Manipulação de imagens`\n\n:scroll: **`.ahm`** - `Comandos moderativos`\n\n:information_source: **`.ainfo`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n"+ bandeira_trad +" | _Use the command `.alang en` to switch to `american english`_")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_diversao = new MessageEmbed()
@@ -53,7 +56,7 @@ module.exports = {
             embed_manutencao = new MessageEmbed()
             .setTitle('Manutenção do Alonsal :tools:')
             .setColor(0x29BB8E)
-            .setDescription(":information_source: **`.ainfo`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n:flag_us: **`.alang en`** | **`.alang pt`** - Altera o idioma do Alonsal")
+            .setDescription(":information_source: **`.ainfo`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Altera o idioma do Alonsal")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_imagens = new MessageEmbed()
@@ -63,10 +66,13 @@ module.exports = {
             .setDescription(":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Torna uma ou várias imagens preta e branca\n\n"+ emoji_dancando +" | Sugira efeitos tops para o Alonsal usando o `.amail <seu_efeito_top>` !\n\n:man_tipping_hand: | _Você pode abrir este menu com o comando `.aih`_")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         }else{ // Inglês
+
+            bandeira_trad = ":flag_br:";
+
             embed_inicial = new MessageEmbed()
             .setTitle('Welcome to Help! :boomerang:')
             .setColor(0x29BB8E)
-            .setDescription("Use the numbers below to navigate between sections of Alonsais commands :stuck_out_tongue_winking_eye:\n\n:zany_face: **`.ah 1`** - `Funny Commands`\n\n:compass: **`.ah 2`** - `Utility Commands`\n\n:golf: **`.ah 3`** - `Game Commands`\n\n:musical_note: **`.ash`** - `Musical Commands`\n\n:tools: **`.ah 4`** - `Alonsal Maintenance`\n\n:frame_photo: **`.ah 5`** -  `Image manipulation`\n\n:scroll: **`.ahm`** - `Moderative Commands`\n\n:information_source: **`.ainfo`** - `My informations`\n\n :hotsprings: | _Messages with this symbol are automatically deleted.._\n:flag_br: | _Use o comando `.alang pt` para trocar para o `português brasileiro`_")
+            .setDescription("Use the numbers below to navigate between sections of Alonsais commands :stuck_out_tongue_winking_eye:\n\n:zany_face: **`.ah 1`** - `Funny Commands`\n\n:compass: **`.ah 2`** - `Utility Commands`\n\n:golf: **`.ah 3`** - `Game Commands`\n\n:musical_note: **`.ash`** - `Musical Commands`\n\n:tools: **`.ah 4`** - `Alonsal Maintenance`\n\n:frame_photo: **`.ah 5`** -  `Image manipulation`\n\n:scroll: **`.ahm`** - `Moderative Commands`\n\n:information_source: **`.ainfo`** - `My informations`\n\n :hotsprings: | _Messages with this symbol are automatically deleted.._\n"+ bandeira_trad +" | _Use o comando `.alang pt` para trocar para o `português brasileiro`_")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_diversao = new MessageEmbed()
@@ -90,7 +96,7 @@ module.exports = {
             embed_manutencao = new MessageEmbed()
             .setTitle('Alonsal Maintenance :tools:')
             .setColor(0x29BB8E)
-            .setDescription(":information_source: **`.ainfo`** - My informations\n:envelope: **`.amail <sua msg>`** - Send a message to me! :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Invite me to a server!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub\n"+ emoji_bolo +" **`.asuporte`** - Help maintain and develop the Alonsal\n:flag_us: **`.alang en`** | **`.alang pt`** - Change Alonsal's language")
+            .setDescription(":information_source: **`.ainfo`** - My informations\n:envelope: **`.amail <sua msg>`** - Send a message to me! :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Invite me to a server!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub\n"+ emoji_bolo +" **`.asuporte`** - Help maintain and develop the Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Change Alonsal's language")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_imagens = new MessageEmbed()
