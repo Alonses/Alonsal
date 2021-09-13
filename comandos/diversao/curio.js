@@ -2,24 +2,28 @@ module.exports = {
     name: "curiosidades",
     description: "Curiosidades aleatórias",
     aliases: [ "curio", "c" ],
-    cooldown: 2,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const { MessageAttachment } = require('discord.js');
         let imagem = "";
-
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         
-        const { curiosidades } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/curio.json");
+        const { curiosidades } = require("../../arquivos/json/text/curio.json");
         const num = Math.round((curiosidades.length - 1) * Math.random());
         
         let key = Object.keys(curiosidades[num]);
-                
-        if(curiosidades[num][key] !== null)
-           imagem = new MessageAttachment(curiosidades[num][key]);
+        
+        if(curiosidades[num][key] !== null && !curiosidades[num][key].includes("youtu.be")){
+        imagem = new MessageAttachment(curiosidades[num][key]);
 
-        message.channel.send(":clipboard: | "+ key, imagem);
+            await message.channel.send(":clipboard: | "+ key, imagem);
+        }else{
+            if(curiosidades[num][key] !== null)
+                imagem = curiosidades[num][key];
+
+            await message.channel.send(":clipboard: | "+ key + "\n"+ imagem);
+        }
     }
+    
 };
