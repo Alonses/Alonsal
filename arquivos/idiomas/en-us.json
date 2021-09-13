@@ -75,7 +75,6 @@
             "aviso_6" : "I can't send messages to this channel",
             "error_1" : "Could not send a message to this ID",
             "sucesso_1" : "Message sent to Alonsal :incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
-            "sucesso_2" : "",
             "conteudo_1" : "Your message has been delivered to the",
             "conteudo_2" : "The content of the message is"
         },
