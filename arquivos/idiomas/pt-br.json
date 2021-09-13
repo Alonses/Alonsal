@@ -75,7 +75,6 @@
             "aviso_6" : "Eu não posso enviar mensagens no canal",
             "error_1" : "Não foi possível enviar a mensagem para este ID",
             "sucesso_1" : "Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
-            "sucesso_2" : "",
             "conteudo_1" : "Sua mensagem foi entregue para o/a",
             "conteudo_2" : "O Conteúdo da mensagem é"
         },

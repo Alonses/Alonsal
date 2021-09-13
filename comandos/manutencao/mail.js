@@ -46,9 +46,9 @@ module.exports = {
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
 
-                        message.lineReply(":hotsprings: | "+ manutencao[2]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[2]["aviso_5"]).then(message => message.delete({timeout: 5000}));
+                        message.lineReply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(message => message.delete({timeout: 5000}));
                     }else{
-                        message.lineReply(":hotsprings: | "+ manutencao[2]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
+                        message.lineReply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
 
                         return;
                     }
@@ -96,9 +96,9 @@ module.exports = {
         }
 
         const embed = new MessageEmbed()
-        .setTitle(manutencao[2]["aviso_2"])
+        .setTitle(manutencao[3]["aviso_2"])
         .setColor(0x29BB8E)
-        .setDescription(manutencao[2]["conteudo_1"] +" `"+ tipo +"`\n\n"+ manutencao[2]["conteudo_2"] +" :: \n`"+ mensagem +"`")
+        .setDescription(manutencao[3]["conteudo_1"] +" `"+ tipo +"`\n\n"+ manutencao[3]["conteudo_2"] +" :: \n`"+ mensagem +"`")
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
         .setTimestamp();
         
@@ -108,6 +108,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.channel.send(":tools: | "+ manutencao[2]["aviso_3"]);
+            message.channel.send(":tools: | "+ manutencao[3]["aviso_3"]);
     }
 };
