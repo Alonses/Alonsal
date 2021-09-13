@@ -4,7 +4,7 @@ let ult_data = null;
 module.exports = {
     name: "history",
     description: "Fatos que ocorreram no mundo em determinada data",
-    aliases: [ "hs", "hoj", "today", "historia", "fato", "contecimento", "con" ],
+    aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con" ],
     cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
