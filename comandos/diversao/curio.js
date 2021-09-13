@@ -16,12 +16,10 @@ module.exports = {
         const num = Math.round((curiosidades.length - 1) * Math.random());
         
         let key = Object.keys(curiosidades[num]);
-        
-        console.log(key);
-        
+                
         if(curiosidades[num][key] !== null)
            imagem = new MessageAttachment(curiosidades[num][key]);
 
-        message.channel.send(key, imagem);
+        message.channel.send(":clipboard: | "+ key, imagem);
     }
 };
