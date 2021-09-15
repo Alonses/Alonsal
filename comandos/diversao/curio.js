@@ -25,5 +25,4 @@ module.exports = {
             await message.channel.send(":clipboard: | "+ key + "\n"+ imagem);
         }
     }
-    
 };
