@@ -12,6 +12,11 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     
     let Vchannel = message.member.voice.channel;
 
+    if(Vchannel.permissionOverwrites.size > Vchannel.userLimit){
+        message.lineReply(musicas[0]["aviso_4"]);
+        return;
+    }
+
     if(!Vchannel){
         message.channel.send(musicas[0]["aviso_1"]);
         return;
@@ -20,6 +25,8 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     // Permissões de conexão e stream para o canal
     let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
     let permissoes = canal_alvo.permissionsFor(message.client.user);
+
+    console.log(Vchannel);
 
     if(!permissoes.has("CONNECT") || !permissoes.has("SPEAK") || !permissoes.has("STREAM") || !permissoes.has("VIEW_CHANNEL")){    
         message.lineReply(":octagonal_sign: | "+ musicas[0]["error_1"]);
