@@ -260,7 +260,7 @@
             "anuncio_faixas" : "Utilize `.asfd` para desativar o anúncio de faixas",
             "aviso_1" : "Informe um link adequado",
             "error_1" : "Não foi possível reproduzir este vídeo",
-            "error_2" : "Não foi possível reproduzir a URL",
+            "error_2" : "Houve um erro e não foi possível continuar reproduzindo esta URL",
             "skip" : "Utilize `.assk` para pular para a próxima música",
             "sem_faixas" : "Estou sem faixas, bora ouvir mais?",
             "desconectado" : "Desconectei por inatividade use `.as` novamente para tocarmos algo :call_me:"
