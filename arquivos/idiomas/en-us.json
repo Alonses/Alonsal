@@ -205,6 +205,7 @@
             "aviso_2" : "Add more URL's to the playlist to be able to remove them",
             "aviso_3" : "Enter something other than `.a`\nFor example `.as simian segue` or as `.as https://youtu.be/yBLdQ1a4-JI`",
             "aviso_4" : "Voice channel full, change channels or increase user limit.",
+            "aviso_5" : "The songs are off for a few days, these commands will be back soon!",
             "error_1" : "I cannot connect to this channel, switch channels or update my permissions to use these commands",
             "error_2" : "There is a problem with this URL, please enter a different one",
             "procurando" : ":mag: Looking for",

@@ -10,6 +10,8 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
     const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
     
+    return message.lineReply(":octagonal_sign: | "+ musicas[0]["aviso_5"]);
+
     let Vchannel = message.member.voice.channel;
 
     if(Vchannel.permissionOverwrites.size > Vchannel.userLimit && Vchannel.userLimit != 0){
@@ -25,8 +27,6 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     // Permissões de conexão e stream para o canal
     let canal_alvo = client.channels.cache.get(message.member.voice.channelID);
     let permissoes = canal_alvo.permissionsFor(message.client.user);
-
-    console.log(Vchannel);
 
     if(!permissoes.has("CONNECT") || !permissoes.has("SPEAK") || !permissoes.has("STREAM") || !permissoes.has("VIEW_CHANNEL")){    
         message.lineReply(":octagonal_sign: | "+ musicas[0]["error_1"]);
