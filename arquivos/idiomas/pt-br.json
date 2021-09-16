@@ -205,6 +205,7 @@
             "aviso_2" : "Inclua mais URL's na playlist para poder remover elas",
             "aviso_3" : "Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`",
             "aviso_4" : "Canal de voz cheio, troque de canal ou aumente o limite de usuários.",
+            "aviso_5" : "As músicas estão desabilitadas por uns dias, estes comandos voltarão em breve!",
             "error_1" : "Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos",
             "error_2" : "Há um problema com este URL, por favor, insira um diferente",
             "procurando" : ":mag: Procurando por",
