@@ -260,7 +260,7 @@
             "anuncio_faixas" : "Use `.asfd` to disable posting of new tracks",
             "aviso_1" : "Enter a suitable link",
             "error_1" : "Unable to play this video",
-            "error_2" : "Could not play URL",
+            "error_2" : "An error occurred and we could not continue playing this URL",
             "skip" : "Use `.assk` to skip to the next song",
             "sem_faixas" : "I'm out of songs, let's hear more?",
             "desconectado" : "I disconnected due to inactivity use `.as` again to play something :call_me:"
