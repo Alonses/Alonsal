@@ -12,9 +12,7 @@ module.exports = async function({message, client, args, id_canal_desconectado}){
     
     let Vchannel = message.member.voice.channel;
 
-    console.log(Vchannel.permissionOverwrites.size, Vchannel.userLimit);
-
-    if(Vchannel.permissionOverwrites.size > Vchannel.userLimit){
+    if(Vchannel.permissionOverwrites.size > Vchannel.userLimit && Vchannel.userLimit != 0){
         message.lineReply(musicas[0]["aviso_4"]);
         return;
     }
