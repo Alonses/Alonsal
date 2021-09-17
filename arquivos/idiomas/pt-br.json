@@ -97,7 +97,7 @@
         }
     ],
     "moderacao" : [
-        { "error" : "Enter as `.alang en` or `.alang en`" },
+        { "error" : "Enter as `.alang pt` or `.alang en`" },
         {
             "permissao" : "Eu não tenho permissão para gerenciar mensagens",
             "aviso_1" : "Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`",
