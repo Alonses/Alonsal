@@ -12,13 +12,12 @@ module.exports = {
         const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const { MessageEmbed } = require('discord.js');
-        const { aliases_user } = require('../../config.json');
 
         let content = args;
         let mensagem = "";
         let tipo = "Alonsal";
 
-        if(aliases_user.includes(message.author.id)){
+        if(message.author.id === "665002572926681128"){
             try{
                 tipo = content[0];
                 id_alvo = content[1];
