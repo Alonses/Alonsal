@@ -23,7 +23,7 @@ _E outros vários comandos que estão a pronta demanda para vx!_
 
 Estou em constante evolução e a cada dia aprendo a fazer uma coisa nova! Novos comandos podem ser sugeridos através do `.amail`
 
-🌐 Para alterar meu idioma padrão, utilize o comando `.alang pt` ou `.alang en`!
+🌐 Para alterar meu idioma padrão, utilize o comando `.alang pt` ou `.alang en`! <br>
 🌐 To change my default language, use the command `.alang pt` or `.alang en`!
 
 Me convide para um servidor utilizando o link abaixo ;D 
