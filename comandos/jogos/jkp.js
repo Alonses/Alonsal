@@ -22,10 +22,8 @@ module.exports = {
         if(typeof args[0] != "undefined")
             player = jooj.indexOf(args[0].toLowerCase());
 
-        if(player === -1){
-            message.lineReply(jogos[3]["aviso_1"]);
-            return;
-        }
+        if(player === -1) // Valor não encontrado
+            return message.lineReply(jogos[3]["aviso_1"]);
 
         let bot = Math.round(2 * Math.random());
         let ganhador = ":thumbsdown:";

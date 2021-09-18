@@ -21,10 +21,8 @@ module.exports = {
             if(typeof args[0] !== "undefined"){
                 let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
 
-                if(!match){
-                    message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
-                    return;
-                }
+                if(!match) // Padrão de emoji incorreto
+                    return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
                 
                 let url = "https://cdn.discordapp.com/emojis/"+ match[3] + ".gif";
 
@@ -44,10 +42,8 @@ module.exports = {
             return;
         }
 
-        if(!message.member.hasPermission('MANAGE_EMOJIS')){
-            message.lineReply(":octagonal_sign: | "+ moderacao[2]["permissao_1"]);
-            return;
-        }
+        if(!message.member.hasPermission('MANAGE_EMOJIS')) // Permissão do usuário para gerenciar emojis
+            return message.lineReply(":octagonal_sign: | "+ moderacao[2]["permissao_1"]);
         
         // Verificar permissões do bot
         if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){  
@@ -60,13 +56,11 @@ module.exports = {
 
                 if(message.attachments.size < 1){
 
-                    if(!match && args.length > 0 && !message.content.includes("https://cdn.discordapp.com/emojis"))
+                    if(!match && args.length > 0 && !message.content.includes("https://cdn.discordapp.com/emojis")) // Mais que um emoji, padrão incorreto ou link incorreto
                         return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
 
-                    if(args.length < 2 && !message.content.includes("https://cdn.discordapp.com/emojis")){
-                        message.lineReply(":warning: | "+ moderacao[2]["aviso_3"] +" `.addemoji `"+ emoji_dancando +"` "+ moderacao[2]["requebrando"] +"`");
-                        return;
-                    }
+                    if(args.length < 2 && !message.content.includes("https://cdn.discordapp.com/emojis")) // Apenas um emoji e link de emoji
+                        return message.lineReply(":warning: | "+ moderacao[2]["aviso_3"] +" `.addemoji `"+ emoji_dancando +"` "+ moderacao[2]["requebrando"] +"`");
 
                     if(!message.content.includes("https://cdn.discordapp.com/emojis/")){
                         match[2] = args[1]; // altera com o novo nome
@@ -81,23 +75,17 @@ module.exports = {
                     nome_emoji = args[1];
                 }else{
 
-                    if(message.attachments.size > 1){
-                        message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_4"]);
-                        return;
-                    }
+                    if(message.attachments.size > 1) // Mais de um arquivo enviado
+                        return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_4"]);
 
                     await message.attachments.forEach(attachment => {
                         url = attachment.url;
 
-                        if(attachment.size > 260000){
-                            message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_5"]);
-                            return;
-                        }
+                        if(attachment.size > 260000) // Tamanho do arquivo maior que 250kb
+                            return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_5"]);
 
-                        if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")){
-                            message.lineReply(":warning: | "+ moderacao[2]["error_1"]);
-                            return;
-                        }
+                        if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")) // Extensão do arquivo incorreta
+                            return message.lineReply(":warning: | "+ moderacao[2]["error_1"]);
 
                         nome_emoji = args[0];
                     });
@@ -118,23 +106,17 @@ module.exports = {
             
             // Remover emojis
             if(message.content.startsWith(".armoji") || message.content.startsWith(".aremovemoji")){
-                if(args.length < 1){
-                    message.lineReply(":warning: | "+ moderacao[2]["aviso_6"] +" `.armoji `"+ emoji_nao_encontrado +"` `");
-                    return;
-                }
+                if(args.length < 1) // Argumentos insuficientes
+                    return message.lineReply(":warning: | "+ moderacao[2]["aviso_6"] +" `.armoji `"+ emoji_nao_encontrado +"` `");
 
-                if(!match){ // Confirma que a entrada é um emoji
-                    message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_7"]);
-                    return;
-                }
+                if(!match) // Confirma que a entrada é um emoji
+                    return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_7"]);
 
                 // Coletando o emoji do cache do bot
                 emoji = client.emojis.cache.get(match[3]);
                 
-                if(typeof emoji == "undefined" || message.guild.id != emoji.guild.id){
-                    message.lineReply(":warning: | "+ moderacao[2]["aviso_8"]);
-                    return;
-                }
+                if(typeof emoji == "undefined" || message.guild.id != emoji.guild.id) // Emoji indefinido e emoji pertencente ao servidor o qual o comando foi acionado
+                    return message.lineReply(":warning: | "+ moderacao[2]["aviso_8"]);
                 
                 emoji.delete()
                 .then(() => {

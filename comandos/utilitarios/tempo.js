@@ -41,10 +41,8 @@ module.exports = {
         let pesquisa = "";
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        if(args.length < 1){
-            message.lineReply(":warning: | "+ utilitarios[8]["aviso_1"]);
-            return;
-        }
+        if(args.length < 1) // Pesquisa sem argumentos
+            return message.lineReply(":warning: | "+ utilitarios[8]["aviso_1"]);
 
         for(let i = 0; i < args.length; i++){
             if(isNaN(args[i]))

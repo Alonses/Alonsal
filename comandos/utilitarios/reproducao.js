@@ -31,30 +31,22 @@ module.exports = {
 
         if(conteudo.includes("hora certa") || conteudo.includes("right time")){
             const hora_certa = new Discord.MessageAttachment("arquivos/songs/hora_certa.mp3");
-            message.channel.send(utilitarios[6]["hora_certa"], hora_certa);
-
-            return;
+            return message.channel.send(utilitarios[6]["hora_certa"], hora_certa);
         }
 
         if(conteudo == ".arep avast"){
             const avast = new Discord.MessageAttachment("arquivos/songs/avast.mp3");
-            message.channel.send( avast);
-
-            return;
+            return message.channel.send( avast);
         }
 
         if(conteudo == ".arep malakoi"){
             const malakoi = new Discord.MessageAttachment("arquivos/songs/malakoi.mp3");
-            message.channel.send(malakoi);
-
-            return;
+            return message.channel.send(malakoi);
         }
 
         if(conteudo == ".arep kadu"){
             const kadu = new Discord.MessageAttachment("arquivos/songs/kadu.mp3");
-            message.channel.send(kadu);
-
-            return;
+            return message.channel.send(kadu);
         }
 
         if(message.attachments.size == 0){

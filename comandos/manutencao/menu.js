@@ -44,7 +44,7 @@ module.exports = {
             embed_utilitarios = new MessageEmbed()
             .setTitle('Comandos Utilitários :compass:')
             .setColor(0x29BB8E)
-            .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji\n:radio: **`.arep 9?`** - O Alonsal falará em TTS\n:bust_in_silhouette: **`.avatar`** | **`.avatar <@>`** - Ver seu avatar ou de outro usuário\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft\n:frame_photo: **`.aih`** - Comandos de imagens")
+            .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Calcula seu ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Codifica e decodifica do morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Codifica e decodifica do binário\n:arrow_backward: **`.arev Alonso`** - Inverte e desinverte o texto\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Pesquisa na wikipedia (en-US)\n:white_sun_small_cloud: **`.at`** | **`.atempo sao paulo`** - Clima atual de algum local\n:classical_building: **`.acon`** | **`.acon 21-01`** - Um acontecimento numa data\n"+ emoji_dancando +" **`.amoji <emoji>`** - Aumenta o tamanho do emoji\n:radio: **`.arep 9?`** - O Alonsal falará em TTS\n:bust_in_silhouette: **`.avatar`** | **`.avatar <@>`** - Ver seu avatar ou de outro usuário\n"+ emoji_mc + " **`.amc`** | **`.amc diamante`** - Exibe infos de um item do Minecraft\n:frame_photo: **`.aih`** - Comandos de imagens")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_jogos = new MessageEmbed()
@@ -84,7 +84,7 @@ module.exports = {
             embed_utilitarios = new MessageEmbed()
             .setTitle('Utility Commands :compass:')
             .setColor(0x29BB8E)
-            .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Show your ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Encodes and decodes morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Encodes and decodes binary\n:arrow_backward: **`.arev Alonso`** - Reverse text characters\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Search on wikipedia\n:white_sun_small_cloud: **`.at`** | **`.aweather los angeles`** - Current weather somewhere\n"+ emoji_dancando +" **`.amoji <emoji>`** - Increase emoji size\n:radio: **`.arep 9?`** - Alonsal will speak in TTS\n:bust_in_silhouette: **`.avatar`** | **`.avatar <@>`** - View your avatar or another user's\n"+ emoji_mc + " **`.amc`** | **`.amc diamond`** - Display info for a Minecraft item\n:frame_photo: **`.aih`** - Image commands")
+            .setDescription(":ping_pong: **`.aping`** | **`.ap`** - Show your ping\n:symbols: **`.am 8&7!`** | **`.am ---.. .-... --...`** - Encodes and decodes morse\n:one: **`.abn Alonso`** | **`.abn 11100011`** - Encodes and decodes binary\n:arrow_backward: **`.arev Alonso`** - Reverse text characters\n:mag: **`.awiki Alonso`** | **`.aw Alonso`** - Search on wikipedia\n:white_sun_small_cloud: **`.at`** | **`.aweather los angeles`** - Current weather somewhere\n:classical_building: **`.acon`** | **`.acon 01-21`** - An event on a date\n"+ emoji_dancando +" **`.amoji <emoji>`** - Increase emoji size\n:radio: **`.arep 9?`** - Alonsal will speak in TTS\n:bust_in_silhouette: **`.avatar`** | **`.avatar <@>`** - View your avatar or another user's\n"+ emoji_mc + " **`.amc`** | **`.amc diamond`** - Display info for a Minecraft item\n:frame_photo: **`.aih`** - Image commands")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_jogos = new MessageEmbed()
@@ -116,15 +116,11 @@ module.exports = {
             embed_imagens
         ];
         
-        if(args.length < 1){
-            message.lineReply(embed_inicial);
-            return;
-        }
+        if(args.length < 1)
+            return message.lineReply(embed_inicial);
 
-        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 5)){
-            message.lineReply(":warning: | "+ manutencao[7]["aviso_1"]);
-            return;
-        }
+        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 5))
+            return message.lineReply(":warning: | "+ manutencao[7]["aviso_1"]);
 
         message.lineReply(pages[args[0]]);
     }

@@ -19,40 +19,28 @@ module.exports = {
             args[0] = 1;
 
         if(args.length > 0){
-            if(isNaN(args[0])){
-                message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
-                return;
-            }
-
-            if(typeof args[1] !== "undefined")
-                if(isNaN(args[1])){
-                    message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
-                    return;
-                }
+            if(isNaN(args[0])) // Caracteres de texto
+                return message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
             
-            if(args[0] > 50){
-                message.lineReply(":warning: | "+ jogos[2]["error_1"]);
-                return;
-            }
+            if(typeof args[1] !== "undefined")
+                if(isNaN(args[1])) // Caracteres de texto
+                    return message.lineReply(":warning: | "+ jogos[2]["aviso_1"]);
+                  
+            if(args[0] > 50) // Mais que 50 dados
+                return message.lineReply(":warning: | "+ jogos[2]["error_1"]);
 
-            if(args[0] < 1){
-                message.lineReply(":warning: | "+ jogos[2]["aviso_2"]);
-                return;
-            }
+            if(args[0] < 1) // Menos que 0 dados
+                return message.lineReply(":warning: | "+ jogos[2]["aviso_2"]);
 
             if(typeof args[1] === "undefined"){
                 args[1] = 5;
                 att_auto = 1;
             }else{
-                if(args[1] > 10000){
-                    message.lineReply(":warning: | "+ jogos[2]["error_2"]);
-                    return;
-                }
-            
-                if(args[1] < 4){
-                    message.lineReply(":warning: | "+ jogos[2]["error_3"]);
-                    return;
-                }
+                if(args[1] > 10000) // Mais que 10.000 faces
+                    return message.lineReply(":warning: | "+ jogos[2]["error_2"]);
+                
+                if(args[1] < 4) // Menos que 4 faces
+                    return message.lineReply(":warning: | "+ jogos[2]["error_3"]);
             }
 
             for(let i = 0; i < args[0]; i++){ // Rodar os dados

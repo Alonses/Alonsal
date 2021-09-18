@@ -24,10 +24,8 @@ module.exports = {
 
         content = content.toLowerCase();
 
-        if(content.includes("slondo")){
-            message.lineReply(utilitarios[1]["wiki_slondo"]);
-            return;
-        }
+        if(content.includes("slondo")) // Pesquisa por slondo
+            return message.lineReply(utilitarios[1]["wiki_slondo"]);
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 

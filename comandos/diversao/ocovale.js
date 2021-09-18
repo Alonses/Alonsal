@@ -10,10 +10,7 @@ module.exports = {
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
-        const Discord = require('discord.js');
-
-        const ocovale = new Discord.MessageAttachment("arquivos/videos/ocovale.mp4");
-        message.channel.send( diversao[4]["ocovale"] +"!", ocovale);
+        message.channel.send( diversao[4]["ocovale"] +"!\n https://youtu.be/Z2ddENsLssE");
 
         const permissions = message.channel.permissionsFor(message.client.user);
         

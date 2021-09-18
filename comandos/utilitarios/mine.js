@@ -198,8 +198,7 @@ module.exports = {
                     );
                 }
 
-                message.lineReply(embed);
-                return;
+                return message.lineReply(embed);
             }
         }
 

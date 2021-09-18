@@ -18,7 +18,7 @@ module.exports = {
         let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
         let emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        if(message.content == ".aih"){
+        if(message.content == ".aih"){ // Menu de efeitos
 
             const embed_imagens = new Discord.MessageEmbed()
             .setTitle(utilitarios[7]["manipu_imagens"])
@@ -27,24 +27,17 @@ module.exports = {
             .setDescription(utilitarios[7]["conteudo_menu"] +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"])
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
             
-            message.lineReply(embed_imagens);
-            return; 
+            return message.lineReply(embed_imagens);
         }
 
-        if(args.length < 1){ // Sem o estilo descrito
-            message.lineReply(":warning: | "+ utilitarios[7]["aviso_1"]);
-            return;
-        }
+        if(args.length < 1) // Sem o estilo informado
+            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_1"]);
 
-        if(message.attachments.size < 1){
-            message.lineReply(":warning: | "+ utilitarios[7]["aviso_2"]);
-            return;
-        }
+        if(message.attachments.size < 1) // Nenhum arquivo anexado
+            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_2"]);
 
-        if(message.attachments.size > 3){ // Quantidade > 3
-            message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_3"]);
-            return;
-        }
+        if(message.attachments.size > 3) // Quantidade > 3
+            return message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_3"]);
 
         const feedbc = await message.lineReply(emoji_carregando +" | "+ utilitarios[7]["carregando"]);
         let img_edit = 0;
@@ -53,30 +46,23 @@ module.exports = {
             url = attachment.url;
             height = attachment.height;
             width = attachment.width;
-            
-            console.log(attachment);
-            
-            if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp")){
+                        
+            if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp")){ // Extensão de arquivo incorreta
                 const arquivo_invalido = new Discord.MessageAttachment(url);
 
                 let infos_adds = "";
                 if(message.attachments.size > 1)
                     infos_adds = utilitarios[7]["error_1"];
 
-                message.lineReply(":octagonal_sign: | "+ utilitarios[7]["error_2"] +""+ infos_adds, arquivo_invalido);
-                return;
+                return message.lineReply(":octagonal_sign: | "+ utilitarios[7]["error_2"] +""+ infos_adds, arquivo_invalido); 
             }
 
-            if(height > 4500 || width > 4500){ // Verificando se a imagem possui muitos pixeis
-                message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_4"]);
-                return;
-            }
+            if(height > 4500 || width > 4500) // Verificando se a imagem possui muitos pixeis
+                return message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_4"]);
 
             if(height >= 4000 && width == 1894){ // Verificando se a imagem é muito grande e se existem vários arquivos
-                if(message.attachments.size > 1){
-                    message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_5"]);
-                    return;
-                }
+                if(message.attachments.size > 1) // Muitos arquivos enviados
+                    return message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_5"]);
 
                 let inverte = width;
                 width = height;
@@ -113,9 +99,8 @@ module.exports = {
 
                 if(img_edit == message.attachments.size) // Apaga o aviso quando termina de processar todas as imagens
                     feedbc.delete();
-            }else
-                message.lineReply(":mag: | "+ utilitarios[7]["efeito_errado"] +""+ emoji_dancante +"` `");
-                return;
+            }else // Efeito não encontrado
+                return message.lineReply(":mag: | "+ utilitarios[7]["efeito_errado"] +""+ emoji_dancante +"` `");
         });
     }
 };
