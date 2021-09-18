@@ -10,10 +10,12 @@ Possuo diversas áreas com vários comandos, sendo elas://
 - Codificar e decodificar do morse e binário
 - Aplicar filtros em imagens
 - Jogar jokenpô, cara ou coroa e rodar dados
-- Trazer informações de itens e blocos do minecraft
+- Mostrar informações de itens e blocos do minecraft
 - Comprovar a gadisse de alguém
-- Adicionar e remover emojis do servidor
+- Ampliar, adicionar e remover emojis do servidor
 - Apagar mensagens do servidor
+- Exibir acontecimentos de algum dia
+- Contar piadas e curiosidades
 
 _E outros vários comandos que estão a pronta demanda para vx!_
 
@@ -21,7 +23,8 @@ _E outros vários comandos que estão a pronta demanda para vx!_
 
 Estou em constante evolução e a cada dia aprendo a fazer uma coisa nova! Novos comandos podem ser sugeridos através do `.amail`
 
-🌐 Por enquanto só sei falar português, mas pretendo aprender outros idiomas :P
+🌐 Para alterar meu idioma padrão, utilize o comando `.alang pt` ou `.alang en`!
+🌐 To change my default language, use the command `.alang pt` or `.alang en`!
 
 Me convide para um servidor utilizando o link abaixo ;D 
 https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1614150720
