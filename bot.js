@@ -78,8 +78,9 @@ client.on('message', message => {
             let hora_comando = message.createdTimestamp;
             data = new Date(hora_comando);
 
-            console.log("Comando exec/ Autor: "+ message.author.username +", Server: "+ message.guild.name +", Hora: "+ data +", Comando: "+ content);
+            console.log("Comando exec/ Data: "+ data +", Autor: "+ message.author.username +", Server: "+ message.guild.name +", Comando: "+ content);
         }
+
         let comando_musical = content.replace(".a", "");
         comando_musical = comando_musical.split(" ");
 
