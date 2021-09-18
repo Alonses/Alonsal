@@ -12,20 +12,14 @@ module.exports = {
 
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        if(!permissions.has("MANAGE_MESSAGES")){ // Permissão para gerenciar mensagens
-            message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
-            return;
-        }
+        if(!permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            return message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
 
-        if(args.length != 1 || isNaN(args[0])){
-            message.lineReply(moderacao[1]["aviso_1"]);
-            return;
-        }
+        if(args.length != 1 || isNaN(args[0])) // Caracteres de texto ou sem entradas suficientes
+            return message.lineReply(moderacao[1]["aviso_1"]);
     
-        if(args[0] < 1 || args[0] > 100){
-            message.lineReply(moderacao[1]["aviso_2"]);
-            return;
-        }
+        if(args[0] < 1 || args[0] > 100) // Valor maior que 100 ou menor que 1
+            return message.lineReply(moderacao[1]["aviso_2"]);
     
         texto = moderacao[1]["apagado_1"];
     

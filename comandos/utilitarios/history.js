@@ -29,32 +29,25 @@ module.exports = {
         let url_completa = "https://history.uol.com.br/hoje-na-historia/";
 
         if(args.length > 0){
-            if(!args[0].includes("-")){
-                message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"]);
-                return;
-            }
+            if(!args[0].includes("-")) // Formato incorreto
+                return message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"]);
 
             let data_pesquisada = args[0].split("-");
             let dia = data_pesquisada[0];
             let mes = data_pesquisada[1];
 
-            if(isNaN(dia) || isNaN(mes)){
-                message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
-                return;
-            }
+            if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
+                return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
+            
 
             if(idioma_definido == "pt-br"){
-                if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes == 2 && dia > 29)){
-                    message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
-                    return;
-                }
+                if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes == 2 && dia > 29)) // Verificando dias e meses
+                    return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
                 
                 url_completa += ano +"-"+ mes +"-"+ dia;
             }else{
-                if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia == 2)){
-                    message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
-                    return;
-                }
+                if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia == 2)) // Verificando dias e meses ( padrão inglês )
+                    return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
             
                 url_completa += ano +"-"+ dia +"-"+ mes;
             }

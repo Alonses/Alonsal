@@ -63,8 +63,7 @@ client.on('message', message => {
 
         const { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
-        message.lineReply(dancando + " | "+ inicio[0]["menciona"]);
-        return;
+        return message.lineReply(dancando + " | "+ inicio[0]["menciona"]);
     }
 
     if(content !== prefix && content.includes(prefix)){ // Previne que mensagens aleatórias acionem comandos

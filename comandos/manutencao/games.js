@@ -24,10 +24,8 @@ module.exports = {
         if(message.author.id != "852589532993683467" && message.author.id != "665002572926681128")
             return;
 
-        if(args.length < 4 || args.length > 7){
-            message.lineReply("Informe como `.amg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `.amg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
-            return;
-        }
+        if(args.length < 4 || args.length > 7)
+            return message.lineReply("Informe como `.amg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `.amg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
         
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -46,10 +44,8 @@ module.exports = {
             message.attachments.forEach(attachment => {
                 url = attachment.url;
             });
-        }else{
-            message.lineReply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(message => message.delete({timeout: 3000}));
-            return;
-        }
+        }else
+            return message.lineReply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(message => message.delete({timeout: 3000}));
         
         if(args[3].includes("epicgames.com")){
             logo_plat = emoji(emojis.lg_epicgames);

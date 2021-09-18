@@ -19,9 +19,8 @@ module.exports = {
         if(!isNaN(args[0])){ // Coleta por ID numérico no chat
             try{
                 user = message.guild.members.cache.get(args[0]).user;
-            }catch(err){
-                message.lineReply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
-                return;
+            }catch(err){ // Usuário não encontrado
+                return message.lineReply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
             }
         }else
             user = message.mentions.users.first() || message.author;

@@ -27,10 +27,8 @@ module.exports = {
         if(typeof args[0] != "undefined")
             escolha = args[0].toLowerCase();
 
-        if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined") {
-            message.lineReply(":warning: | "+ jogos[1]["aviso_1"]);
-            return;
-        }
+        if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined")
+            return message.lineReply(":warning: | "+ jogos[1]["aviso_1"]);
         
         let emoji_exib = ":coin:";
 
