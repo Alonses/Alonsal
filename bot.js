@@ -8,8 +8,6 @@ const client = new discord.Client();
 
 client.on("ready", async () => {
 
-    console.log("Caldeiras aquecidas, pronto para operar");
-
     require("./adm/status.js")({client});
 
     // Configurando o wax e salvando os comandos para uso posterior
@@ -30,6 +28,8 @@ client.on("ready", async () => {
             handler.addCommand(command);
         }
     }
+
+    console.log("Caldeiras aquecidas, pronto para operar");
 });
 
 client.on('message', message => {
@@ -77,7 +77,7 @@ client.on('message', message => {
             let hora_comando = message.createdTimestamp;
             data = new Date(hora_comando);
 
-            console.log("Comando exec/ Data: "+ data +", Autor: "+ message.author.username +", Server: "+ message.guild.name +", Comando: "+ content);
+            console.log("Comando -> Data: "+ data +", Autor: "+ message.author.username +", Server: "+ message.guild.name +", Comando: "+ content);
         }
 
         let comando_musical = content.replace(".a", "");
