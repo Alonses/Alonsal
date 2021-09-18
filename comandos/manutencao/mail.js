@@ -102,7 +102,7 @@ module.exports = {
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
         .setTimestamp();
         
-        client.users.cache.get(message.author.id).send(embed);
+        await client.users.cache.get(message.author.id).send(embed);
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
