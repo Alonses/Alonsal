@@ -11,6 +11,7 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const Discord = require('discord.js');
+        const permissions = message.channel.permissionsFor(message.client.user);
 
         if(message.attachments.size > 1 || (message.attachments.size == 0 && args.length < 1)){
             let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
@@ -36,7 +37,7 @@ module.exports = {
 
         if(conteudo == ".arep avast"){
             const avast = new Discord.MessageAttachment("arquivos/songs/avast.mp3");
-            return message.channel.send( avast);
+            return message.channel.send(avast);
         }
 
         if(conteudo == ".arep malakoi"){
@@ -50,22 +51,21 @@ module.exports = {
         }
 
         if(message.attachments.size == 0){
+            if(!permissions.has("SEND_TTS_MESSAGES"))
+                return message.lineReply(":octagonal_sign: | "+ utilitarios[6]["error_1"]);
 
             message.channel.send(utilitarios[6]["reproducao_1"] +` [ ${message.author} ]`);    
-            let mensagem = message.content.replace(".arep", "")
+            let mensagem = message.content.replace(".arep", "");
 
             message.channel.send(mensagem, {
                 tts: true
             });
         }else{
             message.attachments.forEach(attachment => {
-                
                 const arquivo_atach = new Discord.MessageAttachment(attachment.url);
                 message.channel.send(utilitarios[6]["reproducao_2"] +` [ ${message.author} ]`, arquivo_atach);
             });
         }
-
-        const permissions = message.channel.permissionsFor(message.client.user);
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
