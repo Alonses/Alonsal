@@ -163,6 +163,7 @@
         {
             "aviso_1" : "Write something or send a file to me and I will return it",
             "aviso_2" : "Only upload 1 file at a time",
+            "error_1" : "I can't talk in TTS in this chat",
             "hora_certa" : "Right Time!",
             "reproducao_1" : "Reproduction requested by",
             "reproducao_2" : "File sent by"

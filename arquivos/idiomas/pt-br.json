@@ -163,6 +163,7 @@
         {
             "aviso_1" : "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
             "aviso_2" : "Envie apenas 1 arquivo por vez",
+            "error_1" : "Não posso falar em TTS neste chat",
             "hora_certa" : "Hora Certa!",
             "reproducao_1" : "Reprodução solicitada por",
             "reproducao_2" : "Arquivo enviado por"
