@@ -51,13 +51,15 @@ client.on('message', message => {
         
     if(content.startsWith(".alang") || content.startsWith(".aram") || typeof idioma_servers[message.guild.id] == "undefined"){
         let requisicao_auto = true;
-
+        
         require('./adm/requisitor.js')({client, message, args, requisicao_auto});  
         return;
     }
 
     if(message.content.includes(client.user.id)){ // Responde as mensagens em que é marcado
-            
+        
+        // require('./adm/auto_anuncio.js')({client, message, args});
+
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
