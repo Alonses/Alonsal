@@ -1,5 +1,6 @@
-let ult_valor = null;
+let valores_esc = [];
 let ult_data = null;
+let ult_server = null;
 
 module.exports = {
     name: "history",
@@ -16,9 +17,9 @@ module.exports = {
 
         const fetch = require('node-fetch');
         let datas = [];
+        let fontes = [];
         let acontecimento = [];
         let acontecimento_final = [];
-        let fontes = [];
 
         let data = new Date();
         const ano = data.getFullYear();
@@ -105,23 +106,23 @@ module.exports = {
             }
 
             if(datas.length > 0){
-
-                if(ult_data != datas[0].split("de")[1]) // Compara os meses da pesquisa, caso diferentes reseta o último valor retirado
-                    ult_valor = null;
+                if(ult_data != datas[0].split("de")[1] || valores_esc.length == datas.length || ult_server != message.guild.id) // Compara os meses da pesquisa, caso diferentes reseta o último valor retirado
+                    valores_esc = [];
 
                 ult_data = datas[0].split("de")[1];
 
-                const importancia = Math.round(1 * Math.random());
-
                 do{ // Sorteando o evento
-                    if(importancia > 1)
+                    let importancia = Math.round(1 * Math.random());
+
+                    if(importancia > 0)
                         num = Math.round((datas.length - 1) * Math.random());
                     else
                         num = Math.round(2 * Math.random());
-                }while(num == ult_valor);
-
-                ult_valor = num;
-
+                }while(valores_esc.includes(num));
+                
+                ult_server = message.guild.id;
+                valores_esc.push(num);
+                
                 message.lineReply(":bookmark: | `"+ datas[num] + "`, "+ acontecimento_final[num] +"\nFonte: "+ fontes[num]);
             }else
                 message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"]);
