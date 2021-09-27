@@ -6,7 +6,7 @@ module.exports = {
     name: "history",
     description: "Fatos que ocorreram no mundo em determinada data",
     aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con" ],
-    cooldown: 1,
+    cooldown: 4,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
     
@@ -115,9 +115,11 @@ module.exports = {
                 ult_server = message.guild.id;
                 valores_esc.push(num);
                 
-                fetch(fontes[num])
+                fetch("https://history.uol.com.br/hoje-na-historia/entra-em-operacao-o-primeiro-trem-para-transporte-de-passageiros")
                 .then(response => response.text())
                 .then(async res_artigo => {
+
+                    // console.log(fontes[num]);
 
                     let imagem = res_artigo.split("<div class=\"field field--name-field-thumbnail field--type-entity-reference field--label-hidden field--item\">")[1];
                     imagem = imagem.split("<img src=\"")[1];
@@ -128,11 +130,13 @@ module.exports = {
                         imagem = "https://assets.historyplay.tv/br/public" + imagem;
                     }
                     
-                    let descricao = res_artigo.split("<div class=\"clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item\"><p>")[1];
+                    let descricao = res_artigo.split("<div class=\"clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item\">")[1];
                     
                     descricao = descricao.split("</p>")[0]; 
                     descricao = descricao.slice(0, 350) +"...";
-                    
+                    descricao = descricao.replace("<p>", "");
+                    descricao = descricao.replace("<div>", "");
+                
                     acontecimento = new MessageEmbed()
                     .setTitle(acontecimento_final[num])
                     .setAuthor("History")
