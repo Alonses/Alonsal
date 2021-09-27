@@ -115,12 +115,10 @@ module.exports = {
                 ult_server = message.guild.id;
                 valores_esc.push(num);
                 
-                fetch("https://history.uol.com.br/hoje-na-historia/entra-em-operacao-o-primeiro-trem-para-transporte-de-passageiros")
+                fetch(fontes[num])
                 .then(response => response.text())
                 .then(async res_artigo => {
-
-                    // console.log(fontes[num]);
-
+                    
                     let imagem = res_artigo.split("<div class=\"field field--name-field-thumbnail field--type-entity-reference field--label-hidden field--item\">")[1];
                     imagem = imagem.split("<img src=\"")[1];
                     imagem = imagem.split("\"")[0];
