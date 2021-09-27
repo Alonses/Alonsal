@@ -15,27 +15,23 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_definido = idioma_servers[message.guild.id];
 
+        const { MessageEmbed } = require('discord.js');
+
         const fetch = require('node-fetch');
         let datas = [];
         let fontes = [];
-        let acontecimento = [];
         let acontecimento_final = [];
 
         let data = new Date();
-        const ano = data.getFullYear();
-
-        const meses = [".jan.", ".fev.", ".mar.", ".abr.", ".maio.", ".jun.", ".jul.", ".ago.", ".set.", ".out.", ".nov.", ".dez."];
-        const nome_mes = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-
-        let url_completa = "https://history.uol.com.br/hoje-na-historia/";
+        let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
 
         if(args.length > 0){
             if(!args[0].includes("-")) // Formato incorreto
                 return message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"]);
 
             let data_pesquisada = args[0].split("-");
-            let dia = data_pesquisada[0];
-            let mes = data_pesquisada[1];
+            dia = data_pesquisada[0];
+            mes = data_pesquisada[1];
 
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
                 return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
@@ -45,64 +41,60 @@ module.exports = {
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes == 2 && dia > 29)) // Verificando dias e meses
                     return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
                 
-                url_completa += ano +"-"+ mes +"-"+ dia;
+                url_completa += dia +"/"+ mes;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia == 2)) // Verificando dias e meses ( padrão inglês )
                     return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
             
-                url_completa += ano +"-"+ dia +"-"+ mes;
+                url_completa += mes +"/"+ dia;
+
+                let troca = dia;
+                dia = mes;
+                mes = troca;
             }
+
+            data_mes = new Date();
+            data_mes.setMonth(mes - 1);
+
+            if(idioma_definido == "pt-br")
+                mes = data_mes.toLocaleString('pt', { month: 'long' });
+            else
+                mes = data_mes.toLocaleString('en', { month: 'long' });
+        }else{
+            if(idioma_definido == "pt-br")
+                mes = new Date().toLocaleString('pt', { month: 'long' });
+            else
+                mes = new Date().toLocaleString('en', { month: 'long' });
+
+            dia = new Date().getDate();
         }
 
         fetch(url_completa)
         .then(response => response.text())
         .then(async res => {
 
-            alvos =  res.split("<span class=\"hstBlock__category \">");
-
-            // Link do artigo completo
-            url = res.split("<a href=\"");
-
-            for(let i = 0; i < 8; i++){
-                url.shift();
-            }
-
-            for(let i = 0; i < alvos.length; i++){
-                alvos[i] = alvos[i].slice(0, 200);
+            alvos = res.split("<div class=\"card-img-overlay\">");
+            alvos.shift();
+            
+            for(let i = 0; i < alvos.length; i++){ // Separando os valores
                 
-                if(!alvos[i].includes("Maio"))
-                    data_ajustada = alvos[i].slice(0, 11); // Organizando o nome dos meses
+                data = alvos[i].split("<div class=\"field field--name-field-date field--type-datetime field--label-hidden field__item\">")[1];
+                let ano_materia = data.slice(0, 4);
+
+                acontece = alvos[i].split("hreflang=\"pt-br\">")[1];
+                acontece = acontece.split("</a>")[0];
+
+                link_materia = alvos[i].split("hreflang=\"pt-br\">")[0];
+                link_materia = link_materia.split("<a href=\"")[1];
+                link_materia = link_materia.replace("\"", "");
+
+                if(idioma_definido == "pt-br")
+                    datas.push(`${dia} de ${mes} de ${ano_materia}`);
                 else
-                    data_ajustada = alvos[i].slice(0, 12);
+                    datas.push(`${mes} ${dia}, ${ano_materia}`);
 
-                data_ajustada = data_ajustada.toLowerCase(); // Evita erros com abreviaturas de meses
-
-                if(!data_ajustada.includes("maio"))
-                    indice_mes = meses.indexOf(data_ajustada.slice(2, 7));
-                else
-                    indice_mes = meses.indexOf(data_ajustada.slice(2, 8));
-                
-                data_ajustada = data_ajustada.replace(meses[indice_mes], " de "+ nome_mes[indice_mes] +" de ");
-                datas.push(data_ajustada);
-                
-                acontecimento.push(alvos[i].split("<h1 class=\"hstBlock__title\">"));
-            }
-
-            acontecimento.shift(); // Removendo o primeiro elemento
-
-            for(let i = 0; i < acontecimento.length; i++){
-                let aconteciment = acontecimento[i][1]; // Organizando a descrição do evento ocorrido
-                
-                let titulo = aconteciment.split("</h1>")
-
-                acontecimento_final.push(titulo[0]);
-            }
-
-            datas.shift(); // Removendo o primeiro elemento
-
-            for(let i = 0; i < datas.length; i++){ // Salva o link dos artigos
-                link = url[i].split("\">\n");
-                fontes.push("https://history.uol.com.br"+ link[0]);
+                acontecimento_final.push(acontece);
+                fontes.push("https://history.uol.com.br"+ link_materia);
             }
 
             if(datas.length > 0){
@@ -123,7 +115,35 @@ module.exports = {
                 ult_server = message.guild.id;
                 valores_esc.push(num);
                 
-                message.lineReply(":bookmark: | `"+ datas[num] + "`, "+ acontecimento_final[num] +"\nFonte: "+ fontes[num]);
+                fetch(fontes[num])
+                .then(response => response.text())
+                .then(async res_artigo => {
+
+                    let imagem = res_artigo.split("<div class=\"field field--name-field-thumbnail field--type-entity-reference field--label-hidden field--item\">")[1];
+                    imagem = imagem.split("<img src=\"")[1];
+                    imagem = imagem.split("\"")[0];
+
+                    if(!imagem.includes("https")){ // Imagens com links antigos
+                        imagem = imagem.slice(9, imagem.length);
+                        imagem = "https://assets.historyplay.tv/br/public" + imagem;
+                    }
+                    
+                    let descricao = res_artigo.split("<div class=\"clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item\"><p>")[1];
+                    
+                    descricao = descricao.split("</p>")[0]; 
+                    descricao = descricao.slice(0, 350) +"...";
+                    
+                    acontecimento = new MessageEmbed()
+                    .setTitle(acontecimento_final[num])
+                    .setAuthor("History")
+                    .setURL(fontes[num])
+                    .setColor(0x29BB8E)
+                    .setDescription(descricao)
+                    .setFooter(datas[num], message.author.avatarURL({ dynamic:true }))
+                    .setImage(imagem);
+
+                    message.lineReply(acontecimento);
+                });
             }else
                 message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"]);
         });
