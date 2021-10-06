@@ -6,7 +6,7 @@ module.exports = {
     name: "history",
     description: "Fatos que ocorreram no mundo em determinada data",
     aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con" ],
-    cooldown: 4,
+    cooldown: 6,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
     
@@ -68,6 +68,8 @@ module.exports = {
 
             dia = new Date().getDate();
         }
+
+        const aviso = await message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_3"]);
 
         fetch(url_completa)
         .then(response => response.text())
@@ -145,9 +147,12 @@ module.exports = {
                     .setImage(imagem);
 
                     message.lineReply(acontecimento);
+                    aviso.delete();
                 });
-            }else
+            }else{
                 message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"]);
+                aviso.delete();
+            }
         });
     }
 }

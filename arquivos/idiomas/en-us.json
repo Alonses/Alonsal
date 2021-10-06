@@ -24,9 +24,6 @@
             "error_2" : "get out of here your CAT :cow: TLE, test it with another user"
         },
         {
-            "ocovale" : "Life with Ocovale is more delicious"
-        },
-        {
             "peao" : "Rotate the pawn"
         }
     ],
@@ -197,6 +194,7 @@
         {
             "aviso_1" : "Submit as `.ahs 01-31` to be able to search on a specific date\nOr just use `.ahs` to see events on today's date from history",
             "aviso_2" : "Values entered are wrong, please enter correct numerical values for day and month",
+            "aviso_3": "Looking for an event...",
             "sem_entradas" : "There are no events for this date, please enter a different date `.acon 01-21`"
         },
         {

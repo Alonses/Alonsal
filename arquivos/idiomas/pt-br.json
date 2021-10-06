@@ -24,9 +24,6 @@
             "error_2" : "sai pra lá seu GA :cow: DO, teste isso com outro usuário"
         },
         {
-            "ocovale" : "A vida com Ocovale é mais deliciosa"
-        },
-        {
             "peao" : "Roda o pião"
         }
     ],
@@ -197,6 +194,7 @@
         {
             "aviso_1" : "Envie como `.acon 31-01` para poder pesquisar em uma data específica\nOu use apenas `.acon` para ver acontecimentos na data de hoje pela história",
             "aviso_2" : "Os valores informados estão errados, por favor, insira valores numéricos corretos para dia e mês",
+            "aviso_3": "Procurando um acontecimento...",
             "sem_entradas" : "Não há acontecimentos para esta data, insira uma data diferente `.acon 21-01`"
         },
         {
