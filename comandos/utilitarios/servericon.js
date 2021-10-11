@@ -9,7 +9,7 @@ module.exports = {
         const fetch = require('node-fetch');
         const { MessageEmbed } = require("discord.js")
 
-        let icone_server = message.guild.iconURL();
+        let icone_server = message.guild.iconURL({ size: 2048 });
         icone_server = icone_server.replace(".webp", ".gif");
 
         fetch(icone_server)
@@ -18,6 +18,7 @@ module.exports = {
                 icone_server = icone_server.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
+            .setAuthor(message.guild.name)
             .setTitle('Baixar a icone')
             .setURL(icone_server)
             .setColor(0x29BB8E)
