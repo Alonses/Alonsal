@@ -178,7 +178,6 @@ module.exports = {
                         { name: ':link: **Nome interno**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
                     );
                 }else{
-
                     nome_item = lista_itens[i].nome_interno.charAt(0).toUpperCase() + lista_itens[i].nome_interno.slice(1);
                     nome_item = nome_item.replaceAll("_", " ");
 
