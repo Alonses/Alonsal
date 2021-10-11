@@ -1,6 +1,12 @@
 {   
     "inicio" : [
-        { "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n_You can change my language to english using the command `.alang en`_"}
+        {
+            "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n_You can change my language to english using the command `.alang en`_",
+            "aguarde": "Aguarde",
+            "cooldown" : "segundos para executar esse comando novamente",
+            "permissao_1" : "você não tem a permissão",
+            "permissao_2" : "para executar este comando."
+        }
     ],
     "diversao" : [
         { "baidu" : "Louvado seja!!" },
