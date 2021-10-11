@@ -56,7 +56,7 @@ module.exports = {
             embed_manutencao = new MessageEmbed()
             .setTitle('Manutenção do Alonsal :tools:')
             .setColor(0x29BB8E)
-            .setDescription(":information_source: **`.ainfo`** - Informações do bot\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Altera o idioma do Alonsal")
+            .setDescription(":information_source: **`.ainfo`** - Informações do bot\n:computer: **`.asite`** - O meu site com diversos comandos\n:envelope: **`.amail <sua msg>`** - Envie uma mensagem para o bot :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Convide-me para um Servidor!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal\n"+ emoji_bolo +" **`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Altera o idioma do Alonsal")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_imagens = new MessageEmbed()
@@ -96,7 +96,7 @@ module.exports = {
             embed_manutencao = new MessageEmbed()
             .setTitle('Alonsal Maintenance :tools:')
             .setColor(0x29BB8E)
-            .setDescription(":information_source: **`.ainfo`** - My informations\n:envelope: **`.amail <sua msg>`** - Send a message to me! :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Invite me to a server!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub\n"+ emoji_bolo +" **`.asuporte`** - Help maintain and develop the Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Change Alonsal's language")
+            .setDescription(":information_source: **`.ainfo`** - My informations\n:computer: **`.asite`** - My website with several commands\n:envelope: **`.amail <sua msg>`** - Send a message to me! :P\n:love_letter: **`.acvv`** | **`.aconvite`** - Invite me to a server!\n"+ emoji_rainha +" **`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub\n"+ emoji_bolo +" **`.asuporte`** - Help maintain and develop the Alonsal\n"+ bandeira_trad +" **`.alang en`** | **`.alang pt`** - Change Alonsal's language")
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
 
             embed_imagens = new MessageEmbed()

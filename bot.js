@@ -6,20 +6,18 @@ const { readdirSync } = require("fs");
 let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const client = new discord.Client();
 
+// Configurando o wax e salvando os comandos para uso posterior
+const commandConfig = new handler.CommandConfig(
+    client,
+    prefix,
+    true,
+);
+
+handler.setup(commandConfig);
+
 client.on("ready", async () => {
 
     require("./adm/status.js")({client});
-
-    // Configurando o wax e salvando os comandos para uso posterior
-    let commandConfig = new handler.CommandConfig(
-        client,
-        prefix,
-        true,
-        "aguarde %TIME% segundos para enviar o comando `.a%CMD%` novamente",
-        "você não tem a permissão `%PERM%` para executar este comando",
-        "o uso correto deste comando é `"+ prefix +"%USAGE%`");
-    
-    handler.setup(commandConfig);
     
     for(let i = 0; i < pastas.length; i++){
         for(const file of readdirSync(__dirname + `/comandos/${pastas[i]}`).filter(file => file.endsWith('.js'))) {
@@ -63,7 +61,7 @@ client.on('message', message => {
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        const { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
         return message.lineReply(dancando + " | "+ inicio[0]["menciona"]);
     }
@@ -105,5 +103,23 @@ client.on('message', message => {
 
 // Eventos secundários
 require('./adm/eventos.js')({client});
+
+handler.events.on("command_error", e => {
+    console.log(e);
+});
+
+handler.events.on("cooldown", (message, timeleft) => {
+    var reload = require('auto-reload');
+    const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
+    let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+    message.lineReply(`${inicio[0]["aguarde"]} \`${timeleft}\` ${inicio[0]["cooldown"]}`);
+});
+
+handler.events.on("no_perm", (message, permission) => {
+    var reload = require('auto-reload');
+    const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
+    let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+    message.lineReply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
+});
 
 client.login(token);
