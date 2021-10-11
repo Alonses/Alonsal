@@ -12,7 +12,7 @@ module.exports = {
 
         const fetch = require('node-fetch');
 
-        const { MessageEmbed } = require("discord.js")
+        const { MessageEmbed } = require("discord.js");
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
@@ -37,6 +37,8 @@ module.exports = {
                 avatar = avatar.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
+            .setTitle('Baixar o avatar')
+            .setURL(avatar)
             .setColor(0x29BB8E)
             .setImage(avatar);
             
