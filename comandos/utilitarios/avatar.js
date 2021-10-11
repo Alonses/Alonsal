@@ -37,7 +37,7 @@ module.exports = {
                 avatar = avatar.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
-            .setTitle('Baixar o avatar')
+            .setTitle(':bust_in_silhouette: Baixar o avatar')
             .setURL(avatar)
             .setColor(0x29BB8E)
             .setImage(avatar);
