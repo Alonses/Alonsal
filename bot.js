@@ -49,11 +49,8 @@ client.on('message', message => {
     }
 
     let content = message.content;
-
-    if(typeof prefix != "undefined")
-        args = content.slice(prefix.length).trim().split(' ');
-    else return;
-
+    const args = content.slice(prefix.length).trim().split(' ');
+    
     var reload = require('auto-reload');
     const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
     
