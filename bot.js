@@ -35,9 +35,9 @@ client.on("ready", async () => {
     console.log("Caldeiras aquecidas, pronto para operar");
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 
-    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    let prefix = await client.prefixManager.getPrefix(message.guild.id);
 
     if(message.author.bot || message.webhookId) return;
 
@@ -49,8 +49,10 @@ client.on('message', message => {
     }
 
     let content = message.content;
-    const args = content.slice(prefix.length).trim().split(' ');
-    
+    if(typeof prefix != "undefined")
+        args = content.slice(prefix.length).trim().split(' ');
+    else return console.log("Ignorando comando");
+        
     var reload = require('auto-reload');
     const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
     
