@@ -12,7 +12,9 @@ module.exports = {
         let idioma_definido = idioma_servers[message.guild.id];
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        if(!prefix)
+            prefix = ".a";
+
         let dado = []; 
         let resultado = "";
         let att_auto = 0;

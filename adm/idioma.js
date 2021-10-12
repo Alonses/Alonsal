@@ -4,7 +4,9 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
-    
+    if(!prefix)
+        prefix = ".a";
+
     idioma_padrao = "pt-br"; // O idioma padrão do Alonsal
 
     if(typeof idioma_servers[message.guild.id] != "undefined")

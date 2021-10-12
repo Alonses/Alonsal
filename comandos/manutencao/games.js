@@ -10,6 +10,8 @@ module.exports = {
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
+        if(!prefix)
+            prefix = ".a";
 
         const { MessageAttachment } = require('discord.js');
 

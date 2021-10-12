@@ -19,7 +19,6 @@ module.exports = {
         let reverso = false;
 
         let entrada;
-        console.log(args.length);
         
         if(args.length > 0){
             for(let x = 0; x < args.length; x++){

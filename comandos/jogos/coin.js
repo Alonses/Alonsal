@@ -17,7 +17,9 @@ module.exports = {
         let emoji_dancando = client.emojis.cache.get(emojis.dancando_esqueleto).toString();
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-
+        if(!prefix)
+            prefix = ".a";
+            
         let possibilidades = ["cara", "coroa"];
 
         if(idioma_definido == "en-us")

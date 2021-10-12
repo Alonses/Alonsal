@@ -12,7 +12,9 @@ module.exports = {
         let idioma_definido = idioma_servers[message.guild.id];
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-
+        if(!prefix)
+            prefix = ".a";
+            
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
         if(idioma_definido == "en-us")

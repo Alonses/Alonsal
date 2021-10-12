@@ -39,12 +39,8 @@ client.on('message', message => {
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
     
-    console.log(typeof prefix);
-
     if(typeof prefix == "undefined")
         prefix = ".a";
-
-    console.log(typeof prefix, prefix);
 
     if(message.author.bot || message.webhookId) return;
 
@@ -99,14 +95,9 @@ client.on('message', message => {
 
             require('./comandos/musicas/play.js')({message, client, args});
         }else
-            if(content.startsWith(prefix)){
-                console.log("Executando o comando");
+            if(content.startsWith(prefix))
                 handler.messageReceived(message); // Invoca o comando
-            }
     }else{
-
-        console.log("Comando recursado: ", content, prefix);
-
         if(content === prefix){
             require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando o comando
             return;
