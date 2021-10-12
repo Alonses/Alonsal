@@ -1,3 +1,7 @@
+const fetch = require('node-fetch');
+const { MessageEmbed } = require('discord.js');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "wiki",
     description: "Pesquisa sobre algo na wiki",
@@ -7,13 +11,9 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const fetch = require('node-fetch');
-        const { MessageEmbed } = require('discord.js');
-        const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
         let content = '';
         let counter = 0;
@@ -25,7 +25,7 @@ module.exports = {
         content = content.toLowerCase();
 
         if(content.includes("slondo")) // Pesquisa por slondo
-            return message.lineReply(utilitarios[1]["wiki_slondo"]);
+            return message.reply(utilitarios[1]["wiki_slondo"]);
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
@@ -69,21 +69,21 @@ module.exports = {
                 .setTitle(res.Heading)
                 .setAuthor(res.AbstractSource)
                 .setDescription(res.AbstractText)
-                .setThumbnail(res.Image != '' ? 'https://api.duckduckgo.com'+res.Image : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
+                .setThumbnail(res.Image !== '' ? 'https://api.duckduckgo.com'+res.Image : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
                 .addFields(fields)
                 .setTimestamp()
                 .setFooter('DuckDuckGo API', message.author.avatarURL({dynamic:true}))
                 .setURL(res.AbstractURL);
 
-                message.lineReply(Embed);
+                message.reply({ embeds: [Embed] });
             }else
                 if(username.includes(termo_pesquisado_cc))
-                    message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["auto_pesquisa"] +" :v");
+                    message.reply(emoji_nao_encontrado +" | "+ utilitarios[1]["auto_pesquisa"] +" :v");
                 else
-                    message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
+                    message.reply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
             })
             .catch(err => {
-                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
+                message.reply(emoji_nao_encontrado +" | "+ utilitarios[1]["sem_dados"] +" [ `" + content +"` ], "+ utilitarios[1]["tente_novamente"]);
             });
         }
     }

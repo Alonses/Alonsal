@@ -1,3 +1,5 @@
+const { MessageAttachment } = require('discord.js');
+
 module.exports = {
     name: "mail_games",
     description: "Envie atualizações de jogos",
@@ -5,15 +7,10 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
-
-        const { MessageAttachment } = require('discord.js');
 
         String.prototype.replaceAll = function(de, para){
             var str = this;
@@ -25,11 +22,11 @@ module.exports = {
             return (str);
         }
 
-        if(message.author.id != "852589532993683467" && message.author.id != "665002572926681128")
+        if(message.author.id !== "852589532993683467" && message.author.id !== "665002572926681128")
             return;
 
         if(args.length < 4 || args.length > 7)
-            return message.lineReply("Informe como `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
+            return message.reply("Informe como `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
         
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -44,12 +41,12 @@ module.exports = {
         let logo_plat = "";
         let url = "";
 
-        if(message.attachments.size == 1){
+        if(message.attachments.size === 1){
             message.attachments.forEach(attachment => {
                 url = attachment.url;
             });
         }else
-            return message.lineReply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(message => message.delete({timeout: 3000}));
+            return message.reply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(message => message.delete({timeout: 3000}));
         
         if(args[3].includes("epicgames.com")){
             logo_plat = emoji(emojis.lg_epicgames);
@@ -94,7 +91,7 @@ module.exports = {
 
             let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
 
-            if(idioma_definido == "en-us")
+            if(idioma_definido === "en-us")
                 texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ ids_cargos_games[i] +">\n<< <"+ args[3] +"> >>";
 
             if(args.length > 4){
@@ -102,7 +99,7 @@ module.exports = {
 
                 texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
 
-                if(idioma_definido == "en-us")
+                if(idioma_definido === "en-us")
                     texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
 
                 if(typeof ids_cargos_games[i] !== "undefined")
@@ -117,7 +114,7 @@ module.exports = {
             client.channels.cache.get(ids_canais_games[i]).send(texto_anuncio, img_game);
         }
         
-        await message.lineReply("A atualização foi enviada à todos os canais de games").then(message => message.delete({timeout: 5000}));
+        await message.reply("A atualização foi enviada à todos os canais de games").then(message => message.delete({timeout: 5000}));
 
         // message.delete();
     }

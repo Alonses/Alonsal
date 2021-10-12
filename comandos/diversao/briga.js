@@ -1,3 +1,5 @@
+const { gifs } = require("../../arquivos/json/gifs/briga.json");
+
 module.exports = {
     name: "briga",
     description: "Porradaria!",
@@ -5,9 +7,6 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
-        const { gifs } = require("../../arquivos/json/gifs/briga.json");
-
         const num = Math.round((gifs.length - 1) * Math.random());
         
         if(num === 0)

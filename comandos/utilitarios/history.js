@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const fetch = require('node-fetch');
+
 let valores_esc = [];
 let ult_data = null;
 let ult_server = null;
@@ -9,9 +12,7 @@ module.exports = {
     cooldown: 6,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-    
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_definido = idioma_servers[message.guild.id];
 
@@ -19,9 +20,6 @@ module.exports = {
         if(!prefix)
             prefix = ".a";
 
-        const { MessageEmbed } = require('discord.js');
-
-        const fetch = require('node-fetch');
         let datas = [];
         let fontes = [];
         let acontecimento_final = [];
@@ -41,13 +39,13 @@ module.exports = {
                 return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
             
 
-            if(idioma_definido == "pt-br"){
-                if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes == 2 && dia > 29)) // Verificando dias e meses
+            if(idioma_definido === "pt-br"){
+                if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
                     return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
                 
                 url_completa += dia +"/"+ mes;
             }else{
-                if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia == 2)) // Verificando dias e meses ( padrão inglês )
+                if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
                     return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
             
                 url_completa += mes +"/"+ dia;
@@ -60,12 +58,12 @@ module.exports = {
             data_mes = new Date();
             data_mes.setMonth(mes - 1);
 
-            if(idioma_definido == "pt-br")
+            if(idioma_definido === "pt-br")
                 mes = data_mes.toLocaleString('pt', { month: 'long' });
             else
                 mes = data_mes.toLocaleString('en', { month: 'long' });
         }else{
-            if(idioma_definido == "pt-br")
+            if(idioma_definido === "pt-br")
                 mes = new Date().toLocaleString('pt', { month: 'long' });
             else
                 mes = new Date().toLocaleString('en', { month: 'long' });
@@ -73,7 +71,7 @@ module.exports = {
             dia = new Date().getDate();
         }
 
-        const aviso = await message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_3"]);
+        const aviso = await message.reply(":hotsprings: | "+ utilitarios[10]["aviso_3"]);
 
         fetch(url_completa)
         .then(response => response.text())
@@ -94,7 +92,7 @@ module.exports = {
                 link_materia = link_materia.split("<a href=\"")[1];
                 link_materia = link_materia.replace("\"", "");
 
-                if(idioma_definido == "pt-br")
+                if(idioma_definido === "pt-br")
                     datas.push(`${dia} de ${mes} de ${ano_materia}`);
                 else
                     datas.push(`${mes} ${dia}, ${ano_materia}`);
@@ -104,13 +102,15 @@ module.exports = {
             }
 
             if(datas.length > 0){
-                if(ult_data != datas[0].split("de")[1] || valores_esc.length == datas.length || ult_server != message.guild.id) // Compara os meses da pesquisa, caso diferentes reseta o último valor retirado
+                if(ult_data !== datas[0].split("de")[1] || valores_esc.length === datas.length || ult_server !== message.guild.id) // Compara os meses da pesquisa, caso diferentes reseta o último valor retirado
                     valores_esc = [];
 
                 ult_data = datas[0].split("de")[1];
 
+                let num = 0;
+
                 do{ // Sorteando o evento
-                    let importancia = Math.round(1 * Math.random());
+                    let importancia = Math.round(Math.random());
 
                     if(importancia > 0)
                         num = Math.round((datas.length - 1) * Math.random());
@@ -141,7 +141,7 @@ module.exports = {
                     descricao = descricao.replace("<p>", "");
                     descricao = descricao.replace("<div>", "");
                 
-                    acontecimento = new MessageEmbed()
+                    const acontecimento = new MessageEmbed()
                     .setTitle(acontecimento_final[num])
                     .setAuthor("History")
                     .setURL(fontes[num])
@@ -150,11 +150,11 @@ module.exports = {
                     .setFooter(datas[num], message.author.avatarURL({ dynamic:true }))
                     .setImage(imagem);
 
-                    message.lineReply(acontecimento);
+                    message.reply({ embeds: [acontecimento] });
                     aviso.delete();
                 });
             }else{
-                message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"].replaceAll(".a", prefix));
+                message.reply(":mag: | "+ utilitarios[10]["sem_entradas"].replaceAll(".a", prefix));
                 aviso.delete();
             }
         });

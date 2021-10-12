@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "server",
     description: "O Hub multiconectado do alonsal",
@@ -6,11 +8,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-
-        const { MessageEmbed } = require('discord.js');
    
         let emoji_rainha = client.emojis.cache.get('854830529928757269').toString();
 
@@ -24,6 +23,6 @@ module.exports = {
         const m = await message.channel.send(`${message.author} `+ manutencao[6]["despachei"]);
         m.react('📫');
 
-        client.users.cache.get(message.author.id).send(embed);
+        client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }
 };

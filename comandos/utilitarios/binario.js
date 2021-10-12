@@ -5,9 +5,7 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const { MessageEmbed } = require('discord.js');
@@ -35,12 +33,12 @@ module.exports = {
             if(Object.keys(binario).find(key => binario[key] === texto[0]))
                 tipo_texto = 1;
             
-            if(tipo_texto == 0){
+            if(tipo_texto === 0){
                 texto = entrada.split('');
                 for(let carac = 0; carac < texto.length; carac++){
                     texto[carac] = texto[carac].charCodeAt().toString(2);
 
-                    if(texto[carac + 1] != undefined)
+                    if(texto[carac + 1] !== undefined)
                         texto[carac] += " ";
                 }
             }else{
@@ -59,13 +57,13 @@ module.exports = {
 
                 texto_ordenado += texto[i];
                 
-                if(reverso && tipo_texto == 0 && i == 0)
+                if(reverso && tipo_texto === 0 && i === 0)
                     texto_ordenado += " ";
             }
             
             let titulo = utilitarios[3]["codificado"];
 
-            if(tipo_texto == 1)
+            if(tipo_texto === 1)
                 titulo = utilitarios[3]["decodificado"];
 
             const embed = new MessageEmbed()
@@ -74,11 +72,11 @@ module.exports = {
             .setColor(0x29BB8E)
             .setDescription("`" + texto_ordenado + "`");
 
-            message.lineReply(embed)
+            message.reply({ embeds: [embed] })
             .catch(() => {
-                message.lineReply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
+                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({ timeout: 5000 }));
             });
         }else
-            return message.lineReply(utilitarios[3]["aviso"]);
+            return message.reply(utilitarios[3]["aviso"]);
     },
 };

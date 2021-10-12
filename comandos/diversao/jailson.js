@@ -1,3 +1,5 @@
+const { gifs } = require("../../arquivos/json/gifs/jailson.json");
+
 module.exports = {
     name: "jailson",
     description: "Jailson",
@@ -5,8 +7,6 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        
-        const { gifs } = require("../../arquivos/json/gifs/jailson.json");
 
         let num = Math.round((gifs.length - 1) * Math.random());
     

@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const morse = require('../../arquivos/json/text/morse.json');
+
 module.exports = {
     name: "morse",
     description: "Codifique e decodifique do morse",
@@ -5,13 +8,9 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        
-        const { MessageEmbed } = require('discord.js');
-        const morse = require('../../arquivos/json/text/morse.json');
 
         let ordena = "";
         let aviso = "";
@@ -38,7 +37,7 @@ module.exports = {
             if(Object.keys(morse).find(key => morse[key] === texto[0]))
                 tipo_texto = 1;
 
-            if(tipo_texto == 0){
+            if(tipo_texto === 0){
                 texto = entrada.split('');
                 for(let carac = 0; carac < texto.length; carac++){
                     if(morse[texto[carac]])
@@ -66,10 +65,10 @@ module.exports = {
 
             let titulo = utilitarios[2]["codificado"];
 
-            if(tipo_texto == 1)
+            if(tipo_texto === 1)
                 titulo = utilitarios[2]["decodificado"];
 
-            if(texto_ordenado.length == 0){
+            if(texto_ordenado.length === 0){
                 texto_ordenado = utilitarios[2]["carac_invalidos"];
                 titulo = utilitarios[2]["error"];
             }
@@ -81,11 +80,11 @@ module.exports = {
                 .setFooter(aviso)
                 .setDescription("`" + texto_ordenado + "`");
 
-            message.lineReply(embed)
+            message.reply({ embeds: [embed] })
             .catch(() => {
-                message.lineReply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));;
+                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
             });
         }else
-            return message.lineReply(utilitarios[3]["aviso"]);
+            return message.reply(utilitarios[3]["aviso"]);
     }
 };

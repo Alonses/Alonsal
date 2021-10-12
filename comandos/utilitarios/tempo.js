@@ -6,9 +6,7 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_adotado = idioma_servers[message.guild.id];
 
@@ -17,9 +15,9 @@ module.exports = {
             prefix = ".a";
             
         function direcao_cardial(degrees){
-            let direcao = parseInt((degrees / 22.5) +.5);
+            let direcao = parseInt((degrees / 22.5) + 0.5);
 
-            if(idioma_adotado == "pt-br")
+            if(idioma_adotado === "pt-br")
                 cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
             else
                 cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
@@ -35,7 +33,7 @@ module.exports = {
         const { weather_key, time_key } = require('../../config.json');
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
-        translations = require("i18n-country-code/locales/"+ idioma_adotado.slice(0, 2) +".json");
+        const translations = require("i18n-country-code/locales/"+ idioma_adotado.slice(0, 2) +".json");
         
         const getCountryISO3 = require("country-iso-2-to-3");
         
@@ -46,7 +44,7 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length < 1) // Pesquisa sem argumentos
-            return message.lineReply(":warning: | "+ utilitarios[8]["aviso_1"].replaceAll(".a", prefix));
+            return message.reply(":warning: | "+ utilitarios[8]["aviso_1"].replaceAll(".a", prefix));
 
         for(let i = 0; i < args.length; i++){
             if(isNaN(args[i]))
@@ -60,16 +58,16 @@ module.exports = {
         
         let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
         
-        if(idioma_adotado == "en-us")
+        if(idioma_adotado === "en-us")
             url_completa = url_completa.replace("&lang=pt", "");
         
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
 
-            if(res.cod == '404' || res.cod == '400')
+            if(res.cod === '404' || res.cod === '400')
                 message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
-            else if(res.cod == '429')
+            else if(res.cod === '429')
                 message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
@@ -113,12 +111,12 @@ module.exports = {
                     let hora = ("0" + horario_local.getHours()).substr(-2); // Preservar o digito 0
                     let dia = horario_local.getDate();
                     
-                    mes = horario_local.toLocaleString('pt', { month: 'long' });
+                    let mes = horario_local.toLocaleString('pt', { month: 'long' });
                     
-                    if(idioma_adotado == "en-us")
+                    if(idioma_adotado === "en-us")
                         mes = horario_local.toLocaleString('en', { month: 'long' });
 
-                    hours = horario_local.getHours();
+                    let hours = horario_local.getHours();
 
                     hours = hours % 12;
                     hours = hours ? hours : 12;
@@ -126,10 +124,10 @@ module.exports = {
                     if(minutos >= 30)
                         hours += "30";
 
-                    emoji_ceu_atual = ":park:";
+                    let emoji_ceu_atual = ":park:";
 
                     // Umidade
-                    emoji_umidade = ":sweat_drops:";
+                    let emoji_umidade = ":sweat_drops:";
 
                     if(res.main.humidity < 60)
                         emoji_umidade = ":droplet:";
@@ -138,7 +136,7 @@ module.exports = {
                         emoji_umidade = ":cactus:";
 
                     // Nuvens
-                    emoji_nuvens = ":cloud:";
+                    let emoji_nuvens = ":cloud:";
 
                     if(res.clouds.all < 60)
                         emoji_nuvens = ":white_sun_cloud:"
@@ -157,7 +155,7 @@ module.exports = {
                         emoji_ceu_atual = ":milky_way:";
 
                     // Sensação térmica dinâmica
-                    emoji_sensacao_termica = ":hot_face:";
+                    let emoji_sensacao_termica = ":hot_face:";
 
                     if(res.main.feels_like >= 13 && res.main.feels_like <= 30)
                         emoji_sensacao_termica = ":ok_hand:";    
@@ -173,7 +171,7 @@ module.exports = {
                     
                     horario_local = ":clock"+ hours +": **Hora local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
 
-                    if(idioma_adotado == "en-us"){
+                    if(idioma_adotado === "en-us"){
                         horario_local = horario_local.replace("Hora local", "Local time");
                         horario_local = horario_local.replace("de", "of");
                     }
@@ -182,14 +180,14 @@ module.exports = {
 
                     let nome_local = "na "+ res.name;
 
-                    if(idioma_adotado == "en-us")
+                    if(idioma_adotado === "en-us")
                         nome_local = nome_local.replace("na", "in");
                     if(typeof res.sys.country != "undefined")
-                        if(idioma_adotado == "pt-br")
+                        if(idioma_adotado === "pt-br")
                             nome_local = nome_local.replace("na", "em");
                     
                     else
-                        if(idioma_adotado == "pt-br")
+                        if(idioma_adotado === "pt-br")
                             horario_local = horario_local.replace("Hora local", "Dados de");
                         else
                             horario_local = horario_local.replace("Local time", "Data from");
@@ -199,18 +197,20 @@ module.exports = {
                     if(typeof res.rain != "undefined"){
                         infos_chuva = "\n **Chuva 1H:** `"+ res.rain["1h"]+ "mm`";
                     
-                        if(idioma_adotado == "en-us")
+                        if(idioma_adotado === "en-us")
                             infos_chuva = infos_chuva.replace("Chuva", "Rain");
 
                         if(typeof res.rain["3h"] != "undefined"){
                             infos_chuva += "\n **Chuva 3H:** `"+ res.rain["3h"]+ "mm`";
 
-                            if(idioma_adotado == "en-us")
+                            if(idioma_adotado === "en-us")
                                 infos_chuva = infos_chuva.replace("Chuva", "Rain");
                         }
                     }
-                    
-                    if(idioma_adotado == "pt-br"){
+
+                    let cidade_encontrada;
+
+                    if(idioma_adotado === "pt-br"){
                         cidade_encontrada = new MessageEmbed()
                         .setTitle(":boom: Tempo agora "+ nome_local +""+ nome_pais +" "+ bandeira_pais)
                         .setColor(0x29BB8E)
@@ -246,7 +246,7 @@ module.exports = {
                         .setFooter(aviso_continente);
                     }
 
-                    message.lineReply(cidade_encontrada);
+                    message.reply({ embeds: [cidade_encontrada] });
                 });
             }
         });

@@ -1,3 +1,7 @@
+const fetch = require('node-fetch');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const { MessageEmbed } = require("discord.js");
+
 module.exports = {
     name: "avatar",
     description: "mostra o avatar de um usuário",
@@ -5,28 +9,22 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
-
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const fetch = require('node-fetch');
-
-        const { MessageEmbed } = require("discord.js");
-        const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         let user = message.mentions.users.first(); // Coleta o ID do usuário
 
         if(!user && args[0] != null){
             if(isNaN(args[0]))
-                return message.lineReply(":octagonal_sign: | "+ utilitarios[4]["id_user"]);
+                return message.reply(":octagonal_sign: | "+ utilitarios[4]["id_user"]);
 
             try{
                 user = await message.guild.members.fetch(args[0]);
                 user = user.user; // Pega o usuário pelo ID
             }catch(e){
-                return message.lineReply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
+                return message.reply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
             }
         }
         
@@ -35,13 +33,13 @@ module.exports = {
 
         let avatar = user.displayAvatarURL({ size: 2048 }); 
         
-        url = 'https://cdn.discordapp.com/avatars/'+ user.id +'/'+ user.avatar +'.gif?size=512';
+        const url = 'https://cdn.discordapp.com/avatars/'+ user.id +'/'+ user.avatar +'.gif?size=512';
         avatar = url;
 
         fetch(url)
         .then(res => {
             
-            if(res.status != 200)
+            if(res.status !== 200)
                 avatar = avatar.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
@@ -50,7 +48,7 @@ module.exports = {
             .setColor(0x29BB8E)
             .setImage(avatar);
             
-            message.lineReply(embed);
+            message.reply({ embeds: [embed] });
         });
     }
 };
