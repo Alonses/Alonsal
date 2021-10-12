@@ -38,6 +38,8 @@ client.on("ready", async () => {
 client.on('message', async message => {
 
     let prefix = await client.prefixManager.getPrefix(message.guild.id);
+    if(typeof prefix == "undefined")
+        prefix = ".a";
 
     if(message.author.bot || message.webhookId) return;
 
@@ -49,10 +51,8 @@ client.on('message', async message => {
     }
 
     let content = message.content;
-    if(typeof prefix != "undefined")
-        args = content.slice(prefix.length).trim().split(' ');
-    else return console.log("Ignorando comando");
-        
+    args = content.slice(prefix.length).trim().split(' ');
+    
     var reload = require('auto-reload');
     const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
     
@@ -109,7 +109,7 @@ client.on('message', async message => {
 // Eventos secundários
 require('./adm/eventos.js')({client});
 
-handler.events.on("command_error", e => { console.log(e); });
+handler.events.on("command_error", e => { client.channels.cache.get('862015290433994752').send(e); console.log(e); });
 
 handler.events.on("cooldown", (message, timeleft) => {
     var reload = require('auto-reload');
