@@ -1,13 +1,12 @@
 module.exports = {
     name: "piao",
     description: "Roda o pião dona maria!",
-    aliases: [ "" ],
+    aliases: [ ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
         message.channel.send( diversao[4]["peao"] +"!"+` ${message.author}`);

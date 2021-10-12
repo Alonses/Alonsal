@@ -5,9 +5,8 @@ module.exports = {
     cooldown: 3,
     permissions: [ "ADMINISTRATOR" ],
     async execute(client, message, args) {
-  
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -17,17 +16,17 @@ module.exports = {
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if(!permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            return message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
+            return message.reply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
 
-        if(args.length != 1 || isNaN(args[0])) // Caracteres de texto ou sem entradas suficientes
-            return message.lineReply(moderacao[1]["aviso_1"].replaceAll(".a", prefix));
+        if(args.length !== 1 || isNaN(args[0])) // Caracteres de texto ou sem entradas suficientes
+            return message.reply(moderacao[1]["aviso_1"].replaceAll(".a", prefix));
     
         if(args[0] < 1 || args[0] > 100) // Valor maior que 100 ou menor que 1
-            return message.lineReply(moderacao[1]["aviso_2"]);
+            return message.reply(moderacao[1]["aviso_2"]);
     
         texto = moderacao[1]["apagado_1"];
     
-        if(args[0] == 1)
+        if(args[0] === 1)
             texto = moderacao[1]["apagado_2"];
         
         message.channel.bulkDelete(parseInt(args[0]))

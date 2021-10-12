@@ -3,7 +3,7 @@ const { id_canais } = require('../config.json');
 
 module.exports = async ({client, message, content}) => {
 
-    if(client.user.id == "833349943539531806"){
+    if(client.user.id === "833349943539531806"){
         const d = new Date();
         const day = d.toLocaleString('en-US', { weekday: 'long' });
         
@@ -25,6 +25,6 @@ module.exports = async ({client, message, content}) => {
         .setColor(0x29BB8E)
         .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Time/date: `"+ hr +":"+ min + ampm +" | "+ day +" - "+ date +" "+ month +" "+ year +"`");
 
-        client.channels.cache.get(id_canais[1]).send(embed); // Envia o log com os comandos do usuário
+        client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
     }
 }

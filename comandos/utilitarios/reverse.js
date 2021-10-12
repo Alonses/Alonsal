@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "reverso",
     description: "Inverta ou desinverta caracteres",
@@ -6,12 +8,8 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-
-        const { MessageEmbed } = require('discord.js');
 
         if(args.length > 0){
             let ordena = "";
@@ -36,11 +34,11 @@ module.exports = {
                 .setColor(0x29BB8E)
                 .setDescription("`" + texto_ordenado + "`");
 
-            message.lineReply(embed)
+            message.reply({ embeds: [embed] })
             .catch(() => {
-                message.lineReply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
+                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
             });
         }else
-            return message.lineReply(utilitarios[3]["aviso"]);
+            return message.reply(utilitarios[3]["aviso"]);
     }
 };

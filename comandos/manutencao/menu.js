@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "menu",
     description: "Menu com os comandos do alonsal",
@@ -5,14 +8,10 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_selecionado = idioma_servers[message.guild.id];
-
-        const { MessageEmbed } = require('discord.js');
-        const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -28,10 +27,17 @@ module.exports = {
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
-            
-        if(idioma_selecionado == "pt-br"){
 
-            bandeira_trad = ":flag_us:";
+        let embed_inicial,
+            embed_diversao,
+            embed_utilitarios,
+            embed_jogos,
+            embed_manutencao,
+            embed_imagens;
+            
+        if(idioma_selecionado === "pt-br"){
+
+            let bandeira_trad = ":flag_us:";
 
             embed_inicial = new MessageEmbed()
             .setTitle('Boas vindas ao Ajuda! :boomerang:')
@@ -71,7 +77,7 @@ module.exports = {
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         }else{ // Inglês
 
-            bandeira_trad = ":flag_br:";
+            let bandeira_trad = ":flag_br:";
 
             embed_inicial = new MessageEmbed()
             .setTitle('Welcome to Help! :boomerang:')
@@ -111,7 +117,7 @@ module.exports = {
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         }
 
-        pages = [
+        const pages = [
             embed_inicial,
             embed_diversao,
             embed_utilitarios,
@@ -121,11 +127,11 @@ module.exports = {
         ];
         
         if(args.length < 1)
-            return message.lineReply(embed_inicial);
+            return message.reply({ embeds: [embed_inicial] });
 
         if(isNaN(args[0]) || (args[0] < 0 || args[0] > 5))
-            return message.lineReply(":warning: | "+ manutencao[7]["aviso_1"]);
+            return message.reply(":warning: | "+ manutencao[7]["aviso_1"]);
 
-        message.lineReply(pages[args[0]]);
+        message.reply({ embeds: [pages[args[0]]] });
     }
 };
