@@ -110,7 +110,7 @@ client.on('message', message => {
 // Eventos secundários
 require('./adm/eventos.js')({client});
 
-handler.events.on("command_error", e => { client.channels.cache.get("862015290433994752").send(e) });
+handler.events.on("command_error", e => { console.log(e); });
 
 handler.events.on("cooldown", (message, timeleft) => {
     var reload = require('auto-reload');
