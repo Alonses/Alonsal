@@ -15,11 +15,7 @@ module.exports = {
         const { lista_itens } = require("../../arquivos/json/dados/itens_mine.json");
         const { MessageEmbed } = require('discord.js');
         let pesquisa = "";
-
-        String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
-            return this.split(needle).join(replacement);
-        };
-
+        
         let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
 
         args.forEach(value => {

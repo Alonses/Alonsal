@@ -12,7 +12,7 @@
         { "baidu" : "Praise be to!!" },
         { "asf" : "Do you want a sfiha?" },
         {
-            "aviso_1" : "tag two people to test\nFor example, `.alove @Alonsal @Slondo`",
+            "aviso_1" : "Tag two people to test\nFor example, `.alove @Alonsal @Slondo`",
             "limda" : "Beautiful :gift_heart:",
             "rodape" : "Love yourself is what matters :heartpulse:",
             "100perc" : "Practically married :heart_on_fire:",
@@ -91,7 +91,7 @@
             "despachei" : "Thanks for your consideration!\nI sent the infos in your dm"
         },
         {
-            "hubalonsal" : "> Alonsal Hub",
+            "hub_alonsal" : "> Alonsal Hub",
             "info" : "Enter my server right now, whether to ask questions, or use the commands, the server is free for everyone!",
             "despachei" : "I sent the invitation to Alonsal Hub in your dm :handshake:"
         },
@@ -129,6 +129,19 @@
         },
         {
             "permissao_1" : "You don't have permissions to manage the server"
+        },
+        {
+            "user_id" : "Enter a user ID",
+            "razao" : "Reason not informed",
+            "error_1" : "Stop there, you bastard! This member is also an administrator.",
+            "error_2" : "Invalid User!",
+            "error_ban" : "Unable to ban user",
+            "error_kick" : "Unable to expel user",
+            "banido" : "was removed!"
+        },
+        {
+            "error_1" : "Enter a prefix to be used, for example, ",
+            "att_prefix" : "The prefix for this server changed to :"
         }
     ],
     "utilitarios" : [
@@ -155,10 +168,15 @@
         },
         {
             "codificado" : ":one: Your binary encoded message",
-            "decodificado" : ":zero: Your message decoded from the binary"
+            "decodificado" : ":zero: Your message decoded from the binary",
+            "aviso": "Type something to use this command",
+            "error_1" : "Unable to convert, maximum size exceeded!"
         },
         {
-            "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:"
+            "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:",
+            "baixar_avatar" : "Download the avatar",
+            "baixar_icone" : "Download the icon",
+            "id_user" : "Enter a user ID"
         },
         {
             "reverso" : "Your message in reverse"

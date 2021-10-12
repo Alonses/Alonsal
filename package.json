@@ -20,6 +20,6 @@
     "i18n-country-code": "^1.0.1",
     "nodemon": "^2.0.13",
     "opusscript": "0.0.8",
-    "wax-command-handler": "^1.1.1-fix"
+    "wax-command-handler": "^1.1.2"
   }
 }

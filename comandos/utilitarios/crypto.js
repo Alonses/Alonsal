@@ -11,8 +11,10 @@ module.exports = {
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        
         if(args.length < 2)
-            return message.lineReply(utilitarios[11]["aviso_1"]);
+            return message.lineReply(utilitarios[11]["aviso_1"].replaceAll(".a", prefix));
 
         let texto = "";
 

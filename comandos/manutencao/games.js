@@ -9,6 +9,8 @@ module.exports = {
         const reload = require('auto-reload');
         const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+
         const { MessageAttachment } = require('discord.js');
 
         String.prototype.replaceAll = function(de, para){
@@ -25,7 +27,7 @@ module.exports = {
             return;
 
         if(args.length < 4 || args.length > 7)
-            return message.lineReply("Informe como `.amg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `.amg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
+            return message.lineReply("Informe como `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
         
         function emoji(id){
             return client.emojis.cache.get(id).toString();

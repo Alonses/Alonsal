@@ -12,6 +12,8 @@ module.exports = {
 
         const Discord = require('discord.js');
         const permissions = message.channel.permissionsFor(message.client.user);
+        
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if(message.attachments.size > 1 || (message.attachments.size == 0 && args.length < 1)){
             let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
@@ -35,17 +37,17 @@ module.exports = {
             return message.channel.send(utilitarios[6]["hora_certa"], hora_certa);
         }
 
-        if(conteudo == ".arep avast"){
+        if(conteudo == prefix+"rep avast"){
             const avast = new Discord.MessageAttachment("arquivos/songs/avast.mp3");
             return message.channel.send(avast);
         }
 
-        if(conteudo == ".arep malakoi"){
+        if(conteudo == prefix+"rep malakoi"){
             const malakoi = new Discord.MessageAttachment("arquivos/songs/malakoi.mp3");
             return message.channel.send(malakoi);
         }
 
-        if(conteudo == ".arep kadu"){
+        if(conteudo == prefix+"rep kadu"){
             const kadu = new Discord.MessageAttachment("arquivos/songs/kadu.mp3");
             return message.channel.send(kadu);
         }
@@ -55,7 +57,7 @@ module.exports = {
                 return message.lineReply(":octagonal_sign: | "+ utilitarios[6]["error_1"]);
 
             message.channel.send(utilitarios[6]["reproducao_1"] +` [ ${message.author} ]`);    
-            let mensagem = message.content.replace(".arep", "");
+            let mensagem = message.content.replace(prefix+"rep", "");
 
             message.channel.send(mensagem, {
                 tts: true

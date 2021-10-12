@@ -13,13 +13,13 @@ module.exports = {
 
         const { MessageEmbed } = require('discord.js');
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        
         if(args[1] === "" && args[2].includes("<@"))
             args.splice(1, 1);
 
-        if(args.length != 2 || !args[0].includes("<@") || !args[1].includes("<@")){
-            message.lineReply(`${message.author} `+ diversao[2]["aviso_1"]);
-            return;
-        }
+        if(args.length != 2 || !args[0].includes("<@") || !args[1].includes("<@"))
+            return message.lineReply(diversao[2]["aviso_1"].replaceAll(".a", prefix));
         
         let titulo = diversao[2]["limda"];
         let num = 100;

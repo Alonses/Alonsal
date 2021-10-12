@@ -91,7 +91,7 @@
             "despachei" : "Obrigado pela consideração!\nDespachei as infos no seu privado"
         },
         {
-            "hubalonsal" : "> Hub do Alonsal",
+            "hub_alonsal" : "> Hub do Alonsal",
             "info" : "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!",
             "despachei" : "despachei o convite para o Hub alonsal no seu privado :handshake:"
         },
@@ -129,6 +129,19 @@
         },
         {
             "permissao_1" : "Você não possui permissões para gerenciar o servidor"
+        },
+        {
+            "user_id" : "Informe o ID de um usuário",
+            "razao" : "Razão não informada",
+            "error_1" : "Parado ai seu salafrário! Este membro é um Administrador também",
+            "error_2" : "Usuário inválido!",
+            "error_ban" : "Não foi possível banir o usuário",
+            "error_kick" : "Não foi possível expulsar o usuário",
+            "banido" : "tomou uma esfihada!"
+        },
+        {
+            "error_1" : "Informe um prefixo para ser usado, por exemplo, ",
+            "att_prefix" : "Prefixo deste servidor alterado para :"
         }
     ],
     "utilitarios" : [
@@ -155,10 +168,15 @@
         },
         {
             "codificado" : ":one: Sua mensagem codificada em binário",
-            "decodificado" : ":zero: Sua mensagem decodificada do binário"
+            "decodificado" : ":zero: Sua mensagem decodificada do binário",
+            "aviso": "Escreva algo para utilizar este comando",
+            "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
         },
         {
-            "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:"
+            "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
+            "baixar_avatar" : "Baixar o avatar",
+            "baixar_icone" : "Baixar o icone",
+            "id_user" : "Informe o ID de um usuário"
         },
         {
             "reverso" : "Sua mensagem ao contrário"
@@ -279,7 +297,6 @@
         {
             "pulando_1" : "Pulando para a próxima faixa",
             "pulando_2" : "Pulando todas as faixas",
-            "pulando_3" : "",
             "playlist" : ":free: Playlist finalizada!",
             "aviso_1" : "informe o número de uma faixa para poder pular",
             "aviso_2" : "não tem como pular para a faixa atual :v",

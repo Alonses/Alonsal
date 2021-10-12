@@ -16,7 +16,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
-        .setTitle(manutencao[6]["hubalosal"] +" "+ emoji_rainha)
+        .setTitle(manutencao[6]["hub_alonsal"] +" "+ emoji_rainha)
         .setURL('https://discord.gg/ZxHnxQDNwn')
         .setImage('https://i.imgur.com/NqmwCA9.png')
         .setDescription(manutencao[6]["info"]);

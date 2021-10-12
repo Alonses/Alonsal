@@ -13,7 +13,7 @@ module.exports = {
 
         const { MessageEmbed } = require('discord.js');
 
-        if(args.length != 0){
+        if(args.length > 0){
             let ordena = "";
 
             for(var x = 0; x < args.length; x++){
@@ -36,7 +36,11 @@ module.exports = {
                 .setColor(0x29BB8E)
                 .setDescription("`" + texto_ordenado + "`");
 
-            message.lineReply(embed);
-        }
+            message.lineReply(embed)
+            .catch(() => {
+                message.lineReply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
+            });
+        }else
+            return message.lineReply(utilitarios[3]["aviso"]);
     }
 };
