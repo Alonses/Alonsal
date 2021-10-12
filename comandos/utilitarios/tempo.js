@@ -13,7 +13,9 @@ module.exports = {
         const idioma_adotado = idioma_servers[message.guild.id];
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        if(!prefix)
+            prefix = ".a";
+            
         function direcao_cardial(degrees){
             let direcao = parseInt((degrees / 22.5) +.5);
 

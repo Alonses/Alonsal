@@ -14,7 +14,9 @@ module.exports = {
         const permissions = message.channel.permissionsFor(message.client.user);
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-
+        if(!prefix)
+            prefix = ".a";
+            
         if(message.attachments.size > 1 || (message.attachments.size == 0 && args.length < 1)){
             let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
 

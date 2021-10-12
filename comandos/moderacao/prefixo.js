@@ -12,7 +12,7 @@ module.exports = {
         
         if(args.length != 1)
             message.lineReply(moderacao[5]["error_1"] +" `+px`");
-    
+        
         client.prefixManager.setPrefix(message.guild.id, args[0])
         message.lineReply(moderacao[5]["att_prefix"] +" `"+ args[0] +"`");
     }

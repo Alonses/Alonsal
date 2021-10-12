@@ -11,7 +11,9 @@ module.exports = {
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        if(!prefix)
+            prefix = ".a";
+            
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if(!permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens

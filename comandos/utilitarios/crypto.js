@@ -12,7 +12,9 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        if(!prefix)
+            prefix = ".a";
+            
         if(args.length < 2)
             return message.lineReply(utilitarios[11]["aviso_1"].replaceAll(".a", prefix));
 

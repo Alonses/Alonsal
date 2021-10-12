@@ -16,6 +16,8 @@ module.exports = {
         const idioma_definido = idioma_servers[message.guild.id];
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
+        if(!prefix)
+            prefix = ".a";
 
         const { MessageEmbed } = require('discord.js');
 

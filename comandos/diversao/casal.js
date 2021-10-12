@@ -14,7 +14,9 @@ module.exports = {
         const { MessageEmbed } = require('discord.js');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        if(!prefix)
+            prefix = ".a";
+            
         if(args[1] === "" && args[2].includes("<@"))
             args.splice(1, 1);
 

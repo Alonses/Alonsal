@@ -18,6 +18,8 @@ module.exports = {
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
+        if(!prefix)
+            prefix = ".a";
 
         if(message.content.includes(prefix +"moji")){
             if(typeof args[0] !== "undefined"){
