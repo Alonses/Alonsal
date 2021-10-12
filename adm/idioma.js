@@ -3,6 +3,8 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     var reload = require('auto-reload');
     const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
 
+    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    
     idioma_padrao = "pt-br"; // O idioma padrão do Alonsal
 
     if(typeof idioma_servers[message.guild.id] != "undefined")
@@ -12,18 +14,12 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     let idioma_selecionado;
 
     if(typeof requisicao_auto == "undefined"){
-        if(!message.member.hasPermission('MANAGE_GUILD')){
-            message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
-            return;
-        }
+        if(!message.member.hasPermission('MANAGE_GUILD'))
+            return message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
     }
 
     const fs = require('fs');
     
-    String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
-        return this.split(needle).join(replacement);
-    };
-
     function constructJson(jsonKey, jsonValue){
         var jsonObj = { [jsonKey] : jsonValue };
         return jsonObj;
@@ -32,10 +28,8 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     if(typeof requisicao_auto == "undefined"){
         let { moderacao } = require('../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        if(args[1] != "pt" && args[1] != "en"){
-            message.lineReply(moderacao[0]["error"]);
-            return;
-        }
+        if(args[1] != "pt" && args[1] != "en")
+            return message.lineReply(moderacao[0]["error"].replaceAll(".a", prefix));
     }else
         idioma_selecionado = "pt-br";
 

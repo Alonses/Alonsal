@@ -17,24 +17,25 @@ module.exports = {
 
         let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
         let emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-
-        if(message.content == ".aih"){ // Menu de efeitos
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        
+        if(message.content == prefix+"ih"){ // Menu de efeitos
 
             const embed_imagens = new Discord.MessageEmbed()
             .setTitle(utilitarios[7]["manipu_imagens"])
             .setColor(0x29BB8E)
             .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-            .setDescription(utilitarios[7]["conteudo_menu"] +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"])
+            .setDescription(utilitarios[7]["conteudo_menu"].replaceAll(".a", prefix) +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"].replaceAll(".a", prefix))
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
             
             return message.lineReply(embed_imagens);
         }
 
         if(args.length < 1) // Sem o estilo informado
-            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_1"]);
+            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_1"].replaceAll(".a", prefix));
 
         if(message.attachments.size < 1) // Nenhum arquivo anexado
-            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_2"]);
+            return message.lineReply(":warning: | "+ utilitarios[7]["aviso_2"].replaceAll(".a", prefix));
 
         if(message.attachments.size > 3) // Quantidade > 3
             return message.lineReply(":octagonal_sign: | "+ utilitarios[7]["aviso_3"]);
@@ -100,7 +101,7 @@ module.exports = {
                 if(img_edit == message.attachments.size) // Apaga o aviso quando termina de processar todas as imagens
                     feedbc.delete();
             }else // Efeito não encontrado
-                return message.lineReply(":mag: | "+ utilitarios[7]["efeito_errado"] +""+ emoji_dancante +"` `");
+                return message.lineReply(":mag: | "+ utilitarios[7]["efeito_errado"].replaceAll(".a", prefix) +""+ emoji_dancante +"` `");
         });
     }
 };

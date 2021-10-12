@@ -16,6 +16,8 @@ module.exports = {
         let emoji_epic_embed_fail = client.emojis.cache.get(emojis.epic_embed_fail).toString();
         let emoji_dancando = client.emojis.cache.get(emojis.dancando_esqueleto).toString();
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+
         let possibilidades = ["cara", "coroa"];
 
         if(idioma_definido == "en-us")
@@ -28,7 +30,7 @@ module.exports = {
             escolha = args[0].toLowerCase();
 
         if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined")
-            return message.lineReply(":warning: | "+ jogos[1]["aviso_1"]);
+            return message.lineReply(":warning: | "+ jogos[1]["aviso_1"].replaceAll(".a", prefix));
         
         let emoji_exib = ":coin:";
 

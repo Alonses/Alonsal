@@ -6,11 +6,16 @@ const { readdirSync } = require("fs");
 let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const client = new discord.Client();
 
+String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+    return this.split(needle).join(replacement);
+};
+
 // Configurando o wax e salvando os comandos para uso posterior
 const commandConfig = new handler.CommandConfig(
     client,
     prefix,
     true,
+    __dirname + "\\prefixes"
 );
 
 handler.setup(commandConfig);
@@ -32,6 +37,8 @@ client.on("ready", async () => {
 
 client.on('message', message => {
 
+    let prefix = client.prefixManager.getPrefix(message.guild.id);
+
     if(message.author.bot || message.webhookId) return;
 
     if(message.channel.type == "text"){
@@ -42,28 +49,28 @@ client.on('message', message => {
     }
 
     let content = message.content;
-    const args = content.slice(prefix.length).trim().split(' ');
+
+    if(typeof prefix != "undefined")
+        args = content.slice(prefix.length).trim().split(' ');
+    else return;
 
     var reload = require('auto-reload');
     const { idioma_servers } = reload('./arquivos/json/dados/idioma_servers.json');
-        
-    if(content.startsWith(".alang") || content.startsWith(".aram") || typeof idioma_servers[message.guild.id] == "undefined"){
+    
+    if(content.startsWith(prefix+"lang") || content.startsWith(prefix+"ram") || typeof idioma_servers[message.guild.id] == "undefined"){
         let requisicao_auto = true;
-        
-        require('./adm/requisitor.js')({client, message, args, requisicao_auto});  
-        return;
+
+        return require('./adm/requisitor.js')({client, message, args, requisicao_auto});  
     }
 
     if(message.content.includes(client.user.id)){ // Responde as mensagens em que é marcado
         
-        // require('./adm/auto_anuncio.js')({client, message, args});
-
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
-        return message.lineReply(dancando + " | "+ inicio[0]["menciona"]);
+        return message.lineReply(dancando + " | "+ inicio[0]["menciona"].replaceAll(".a", prefix));
     }
 
     if(content !== prefix && content.includes(prefix)){ // Previne que mensagens aleatórias acionem comandos
@@ -80,7 +87,7 @@ client.on('message', message => {
             console.log("Comando -> Data: "+ data +", Autor: "+ message.author.username +", Server: "+ message.guild.name +", Comando: "+ content);
         }
 
-        let comando_musical = content.replace(".a", "");
+        let comando_musical = content.replace(prefix, "");
         comando_musical = comando_musical.split(" ");
 
         if(comandos_musicais.includes(comando_musical[0])){ // Apenas utilizado em comandos musicais
@@ -91,10 +98,9 @@ client.on('message', message => {
         }else
             if(content.startsWith(prefix))
                 handler.messageReceived(message); // Invoca o comando
-    }else{
+        }else{
         if(content === prefix)
-            require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
-        return;
+            return require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
     }
 
     if(content.startsWith(prefix)) // Registra num log todos os comandos
@@ -104,9 +110,7 @@ client.on('message', message => {
 // Eventos secundários
 require('./adm/eventos.js')({client});
 
-handler.events.on("command_error", e => {
-    console.log(e);
-});
+handler.events.on("command_error", e => { client.channels.cache.get("862015290433994752").send(e) });
 
 handler.events.on("cooldown", (message, timeleft) => {
     var reload = require('auto-reload');

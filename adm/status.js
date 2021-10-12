@@ -20,13 +20,13 @@ module.exports = async ({client}) => {
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [
-        ".ah | .ajuda",
-        "Músicas nas calls",
+        "Me pingue para o prefixo!",
+        "Bugs fora",
         ".alang pt | .alang en",
         "Ceira suprema em servidores",
-        ".ah | .ajuda",
+        "Ping me for prefix!",
         "Translation worldwide",
-        "7 Crashs ou+ todo dia",
+        "2 dias sem erros! :D",
         "Vapor p/ fora!"
     ];
 

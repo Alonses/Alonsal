@@ -11,6 +11,8 @@ module.exports = {
         const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         let idioma_definido = idioma_servers[message.guild.id];
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        
         let dado = []; 
         let resultado = "";
         let att_auto = 0;
@@ -30,7 +32,7 @@ module.exports = {
                 return message.lineReply(":warning: | "+ jogos[2]["error_1"]);
 
             if(args[0] < 1) // Menos que 0 dados
-                return message.lineReply(":warning: | "+ jogos[2]["aviso_2"]);
+                return message.lineReply(":warning: | "+ jogos[2]["aviso_2"].replaceAll(".a", prefix));
 
             if(typeof args[1] === "undefined"){
                 args[1] = 5;

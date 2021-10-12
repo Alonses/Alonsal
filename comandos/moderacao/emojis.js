@@ -17,7 +17,9 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         
-        if(message.content.includes(".amoji")){
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+
+        if(message.content.includes(prefix +"moji")){
             if(typeof args[0] !== "undefined"){
                 let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
 
@@ -37,7 +39,7 @@ module.exports = {
                     message.lineReply(imagem_emoji);
                 });
             }else
-                message.lineReply( moderacao[2]["aviso_2"] +" `.amoji `"+ emoji_dancando +"` `");
+                message.lineReply(moderacao[2]["aviso_2"] +" `"+ prefix+"moji `"+ emoji_dancando +"` `");
             
             return;
         }
@@ -52,7 +54,7 @@ module.exports = {
             let nome_emoji = null;
             let url = null;
             
-            if(message.content.startsWith(".addemoji") || message.content.startsWith(".adicionaremoji") || message.content.startsWith(".addmoji")){
+            if(message.content.startsWith(prefix +"ddemoji") || message.content.startsWith(prefix +"dicionaremoji") || message.content.startsWith(prefix +"ddmoji")){
 
                 if(message.attachments.size < 1){
 
@@ -60,7 +62,7 @@ module.exports = {
                         return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
 
                     if(args.length < 2 && !message.content.includes("https://cdn.discordapp.com/emojis")) // Apenas um emoji e link de emoji
-                        return message.lineReply(":warning: | "+ moderacao[2]["aviso_3"] +" `.addemoji `"+ emoji_dancando +"` "+ moderacao[2]["requebrando"] +"`");
+                        return message.lineReply(":warning: | "+ moderacao[2]["aviso_3"] +" `"+ prefix +"ddemoji `"+ emoji_dancando +"` "+ moderacao[2]["requebrando"] +"`");
 
                     if(!message.content.includes("https://cdn.discordapp.com/emojis/")){
                         match[2] = args[1]; // altera com o novo nome
@@ -105,9 +107,9 @@ module.exports = {
             }
             
             // Remover emojis
-            if(message.content.startsWith(".armoji") || message.content.startsWith(".aremovemoji")){
+            if(message.content.startsWith(prefix +"rmoji") || message.content.startsWith(prefix +"removemoji")){
                 if(args.length < 1) // Argumentos insuficientes
-                    return message.lineReply(":warning: | "+ moderacao[2]["aviso_6"] +" `.armoji `"+ emoji_nao_encontrado +"` `");
+                    return message.lineReply(":warning: | "+ moderacao[2]["aviso_6"] +" `"+ prefix +"rmoji `"+ emoji_nao_encontrado +"` `");
 
                 if(!match) // Confirma que a entrada é um emoji
                     return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_7"]);

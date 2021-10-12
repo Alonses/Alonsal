@@ -11,6 +11,8 @@ module.exports = {
         const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         let idioma_definido = idioma_servers[message.guild.id];
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
         if(idioma_definido == "en-us")
@@ -23,7 +25,7 @@ module.exports = {
             player = jooj.indexOf(args[0].toLowerCase());
 
         if(player === -1) // Valor não encontrado
-            return message.lineReply(jogos[3]["aviso_1"]);
+            return message.lineReply(jogos[3]["aviso_1"].replaceAll(".a", prefix));
 
         let bot = Math.round(2 * Math.random());
         let ganhador = ":thumbsdown:";

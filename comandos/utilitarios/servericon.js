@@ -6,6 +6,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
+        const reload = require('auto-reload');
+        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+
         const fetch = require('node-fetch');
         const { MessageEmbed } = require("discord.js")
 
@@ -19,7 +23,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setAuthor(message.guild.name)
-            .setTitle('Baixar a icone')
+            .setTitle(utilitarios[4]["baixar_icone"])
             .setURL(icone_server)
             .setColor(0x29BB8E)
             .setImage(icone_server);

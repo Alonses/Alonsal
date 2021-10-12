@@ -16,14 +16,22 @@ module.exports = {
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        if(!isNaN(args[0])){ // Coleta por ID numérico no chat
+        let user = message.mentions.users.first(); // Coleta o ID do usuário
+
+        if(!user && args[0] != null){
+            if(isNaN(args[0]))
+                return message.lineReply(":octagonal_sign: | "+ utilitarios[4]["id_user"]);
+
             try{
-                user = message.guild.members.cache.get(args[0]).user;
-            }catch(err){ // Usuário não encontrado
+                user = await message.guild.members.fetch(args[0]);
+                user = user.user; // Pega o usuário pelo ID
+            }catch(e){
                 return message.lineReply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
             }
-        }else
-            user = message.mentions.users.first() || message.author;
+        }
+        
+        if(!user)
+            user = message.author;
 
         let avatar = user.displayAvatarURL({ size: 2048 }); 
         
@@ -37,7 +45,7 @@ module.exports = {
                 avatar = avatar.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
-            .setTitle(':bust_in_silhouette: Baixar o avatar')
+            .setTitle(':bust_in_silhouette: '+ utilitarios[4]["baixar_avatar"])
             .setURL(avatar)
             .setColor(0x29BB8E)
             .setImage(avatar);

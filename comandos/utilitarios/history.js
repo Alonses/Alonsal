@@ -15,6 +15,8 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_definido = idioma_servers[message.guild.id];
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+
         const { MessageEmbed } = require('discord.js');
 
         const fetch = require('node-fetch');
@@ -27,7 +29,7 @@ module.exports = {
 
         if(args.length > 0){
             if(!args[0].includes("-")) // Formato incorreto
-                return message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"]);
+                return message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"].replaceAll(".a", prefix));
 
             let data_pesquisada = args[0].split("-");
             dia = data_pesquisada[0];
@@ -150,7 +152,7 @@ module.exports = {
                     aviso.delete();
                 });
             }else{
-                message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"]);
+                message.lineReply(":mag: | "+ utilitarios[10]["sem_entradas"].replaceAll(".a", prefix));
                 aviso.delete();
             }
         });
