@@ -35,19 +35,23 @@ client.on("ready", async () => {
     console.log("Caldeiras aquecidas, pronto para operar");
 });
 
-client.on('message', async message => {
+client.on('message', message => {
 
-    let prefix = await client.prefixManager.getPrefix(message.guild.id);
-    if(typeof prefix == "undefined")
+    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    
+    console.log(typeof prefix);
+
+    if(typeof prefix == "undefined"){
+        client.prefixManager.setPrefix(message.guild.id, ".a");    
         prefix = ".a";
+    }
 
     if(message.author.bot || message.webhookId) return;
 
     if(message.channel.type == "text"){
         const permissions = message.channel.permissionsFor(message.client.user);
         
-        if(!permissions.has("SEND_MESSAGES")) // Permissão para enviar mensagens no canal
-            return;
+        if(!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
 
     let content = message.content;
@@ -97,9 +101,11 @@ client.on('message', async message => {
         }else
             if(content.startsWith(prefix))
                 handler.messageReceived(message); // Invoca o comando
-        }else{
-        if(content === prefix)
-            return require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
+    }else{
+        if(content === prefix){
+            require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando
+            return;
+        }
     }
 
     if(content.startsWith(prefix)) // Registra num log todos os comandos
