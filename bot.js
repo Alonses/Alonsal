@@ -4,7 +4,6 @@ const { Client, MessageEmbed, Intents } = require("discord.js");
 const { readdirSync } = require("fs");
 let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const {idioma_servers} = require("./arquivos/json/dados/idioma_servers.json");
-const {emojis_dancantes} = require("./arquivos/json/text/emojis.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -20,7 +19,7 @@ const commandConfig = new handler.CommandConfig(
     client,
     prefix,
     true,
-    __dirname + "\\prefixes"
+    __dirname + "/prefixes"
 );
 
 handler.setup(commandConfig);
