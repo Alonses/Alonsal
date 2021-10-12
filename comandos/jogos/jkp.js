@@ -5,19 +5,16 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         let idioma_definido = idioma_servers[message.guild.id];
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
             
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
-        if(idioma_definido == "en-us")
+        if(idioma_definido === "en-us")
             jooj = ["rock", "paper", "scissors", "rock"];
 
         let emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
@@ -41,11 +38,11 @@ module.exports = {
         if (bot < player || (player === 1 && bot === 3)) ganhador = ":trophy:";
         if (bot === player) ganhador = ":infinity:";
 
-        mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
+        let mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
 
-        if(idioma_definido == "en-us")
+        if(idioma_definido === "en-us")
             mensagem = "Jokenpo! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- You\n[ " + ganhador +" ]";
 
-        message.lineReply(mensagem);
+        message.reply(mensagem);
     }
 };

@@ -1,3 +1,7 @@
+const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const { lista_itens } = require("../../arquivos/json/dados/itens_mine.json");
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "mine",
     description: "Pesquise por itens e blocos do jogo pixelado",
@@ -5,15 +9,10 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_selecionado = idioma_servers[message.guild.id];
 
-        const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-        const { lista_itens } = require("../../arquivos/json/dados/itens_mine.json");
-        const { MessageEmbed } = require('discord.js');
         let pesquisa = "";
         
         let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
@@ -32,7 +31,7 @@ module.exports = {
         
         let random = false;
 
-        if(pesquisa == "") // random
+        if(pesquisa === "") // random
             random = true;
 
         for(var i = 0; i < lista_itens.length; i++){
@@ -49,7 +48,7 @@ module.exports = {
                     descri = true;
             }
 
-            if((pesquisa == lista_itens[i].nome_item || pesquisa == lista_itens[i].nome_interno) || random || nome_interno == lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
+            if((pesquisa === lista_itens[i].nome_item || pesquisa === lista_itens[i].nome_interno) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                 
                 if(random)
                     i = Math.round((lista_itens.length - 1) * Math.random());
@@ -61,7 +60,7 @@ module.exports = {
                 let empilhavel = "Até "+ lista_itens[i].empilhavel;
                 let renovavel = "Sim";
 
-                if(idioma_selecionado == "en-us"){
+                if(idioma_selecionado === "en-us"){
                     colet_suv = "Yes";
                     empilhavel = "Up to "+ lista_itens[i].empilhavel;
                     renovavel = "Yes";  
@@ -69,38 +68,38 @@ module.exports = {
 
                 let tipo_item = lista_itens[i].tipo_item;
 
-                if(lista_itens[i].tipo_item == "Construcao"){
+                if(lista_itens[i].tipo_item === "Construcao"){
                     tipo_item = "Construção";
                     
-                    if(idioma_selecionado == "en-us")
+                    if(idioma_selecionado === "en-us")
                         tipo_item = "Construction";
                 }
                 
-                if(lista_itens[i].tipo_item == "Pocoes"){
+                if(lista_itens[i].tipo_item === "Pocoes"){
                     tipo_item = "Poções";
                 
-                    if(idioma_selecionado == "en-us")
+                    if(idioma_selecionado === "en-us")
                         tipo_item = "Potions";
                 }
                 
-                if(lista_itens[i].renovavel == 0){
+                if(lista_itens[i].renovavel === 0){
                     renovavel = "Não";
                 
-                    if(idioma_selecionado == "en-us")
+                    if(idioma_selecionado === "en-us")
                         renovavel = "No";
                 }
 
-                if(lista_itens[i].empilhavel == 0){
+                if(lista_itens[i].empilhavel === 0){
                     empilhavel = "Não";
                 
-                    if(idioma_selecionado == "en-us")
+                    if(idioma_selecionado === "en-us")
                         empilhavel = "No";
                 }
 
-                if(lista_itens[i].coletavel == 0){
+                if(lista_itens[i].coletavel === 0){
                     colet_suv = "Não";
 
-                    if(idioma_selecionado == "en-us")
+                    if(idioma_selecionado === "en-us")
                         colet_suv = "No";
                 }
 
@@ -113,28 +112,28 @@ module.exports = {
                         
                         let descricao_tipo = ":magic_wand: Efeitos Aplicados";
 
-                        if(idioma_selecionado == "en-us")
+                        if(idioma_selecionado === "en-us")
                             descricao_tipo = ":magic_wand: Applied Effects";
 
                         if(!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha")){
                             descricao_tipo = ":receipt: Atributos";
                         
-                            if(idioma_selecionado == "en-us")
+                            if(idioma_selecionado === "en-us")
                                 descricao_tipo = ":receipt: Attributes";
                         }
 
 
-                        if(nome_item == "Disco musical"){
+                        if(nome_item === "Disco musical"){
 
-                            if(idioma_selecionado == "en-us")
+                            if(idioma_selecionado === "en-us")
                                 nome_item = "Musical disc";
 
                             valores_item = valores_item.replace("[&r", "");
                             nome_item += " | "+ valores_item;
 
-                        }else if(nome_item == "Livro encantado"){
+                        }else if(nome_item === "Livro encantado"){
 
-                            if(idioma_selecionado == "en-us")
+                            if(idioma_selecionado === "en-us")
                                 nome_item = "Enchanted book";
 
                             valores_item = valores_item.replace("[&r", "");
@@ -158,7 +157,9 @@ module.exports = {
                     }
                 }
 
-                if(idioma_selecionado == "pt-br"){
+                let embed;
+
+                if(idioma_selecionado === "pt-br"){
                     embed = new MessageEmbed()
                     .setTitle(nome_item)
                     .setColor(0x29BB8E)
@@ -193,12 +194,12 @@ module.exports = {
                     );
                 }
 
-                return message.lineReply(embed);
+                return message.reply({ embeds: [embed] });
             }
         }
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[9]["nao_encontrado"] +" `"+ pesquisa +"`, "+ utilitarios[9]["tente_novamente"]);
+        message.reply(emoji_nao_encontrado +" | "+ utilitarios[9]["nao_encontrado"] +" `"+ pesquisa +"`, "+ utilitarios[9]["tente_novamente"]);
     }
 };

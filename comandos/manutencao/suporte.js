@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "suporte",
     description: "Dê suporte ao Alonsal",
@@ -6,12 +9,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-
-        const { MessageEmbed } = require('discord.js');
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
 
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -30,6 +29,6 @@ module.exports = {
         const m = await message.channel.send(`${message.author} `+  manutencao[5]["despachei"] +` `+ vergonha);
         m.react('📫');
 
-        client.users.cache.get(message.author.id).send(embed);
+        client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }
 };

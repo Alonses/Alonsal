@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "pulapredios",
     description: "O Jogo do pula!",
@@ -6,14 +9,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const { MessageEmbed } = require('discord.js');
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
-
-        emoji_pula = client.emojis.cache.get(emojis.pula).toString();
+        const emoji_pula = client.emojis.cache.get(emojis.pula).toString();
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
@@ -23,6 +22,6 @@ module.exports = {
         .setDescription(jogos[0]["conteudo"])
         .setFooter(jogos[0]["rodape"]);
         
-        message.lineReply(embed);
+        message.reply({ embeds: [embed] });
     }
 };

@@ -1,3 +1,5 @@
+const { textoes }  = require("../../arquivos/json/text/textoes.json");
+
 module.exports = {
     name: "textoes",
     description: "textoes gratuitos",
@@ -6,15 +8,14 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { textoes } = require("../../arquivos/json/text/textoes.json");
         const num = Math.round((textoes.length - 1) * Math.random());
 
         let key = Object.keys(textoes[num]);
 
-        message.channel.send(key);
-        
+        message.channel.send(key.toString());
+
         if(textoes[num][key] !== null)
-            message.channel.send(textoes[num][key]);
+            message.channel.send(textoes[num][key].toString());
 
         const permissions = message.channel.permissionsFor(message.client.user);
     

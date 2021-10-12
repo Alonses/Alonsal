@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "casal",
     description: "Teste o nível de afeto entre duas pessoas",
@@ -7,21 +9,16 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const { MessageEmbed } = require('discord.js');
-
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
             
         if(args[1] === "" && args[2].includes("<@"))
             args.splice(1, 1);
 
-        if(args.length != 2 || !args[0].includes("<@") || !args[1].includes("<@"))
-            return message.lineReply(diversao[2]["aviso_1"].replaceAll(".a", prefix));
+        if(args.length !== 2 || !args[0].includes("<@") || !args[1].includes("<@"))
+            return message.reply(diversao[2]["aviso_1"].replaceAll(".a", prefix));
         
         let titulo = diversao[2]["limda"];
         let num = 100;
@@ -34,7 +31,7 @@ module.exports = {
         }
 
         if(args[0] !== args[1]){
-            if(num == 100)
+            if(num === 100)
                 titulo = diversao[2]["100perc"];
             else if(num > 90)
                 titulo = diversao[2]["90perc"];
@@ -70,6 +67,6 @@ module.exports = {
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
         .setTimestamp();
 
-        message.lineReply(`${message.author}`, embed);
+        message.reply({ content: `${message.author}`, embeds: [embed] });
     }
 };
