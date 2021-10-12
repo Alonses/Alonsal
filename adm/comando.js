@@ -1,7 +1,6 @@
 module.exports = async ({message}) => {
 
-    const reload = require('auto-reload');
-    const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
+    const { idioma_servers } = require('../arquivos/json/dados/idioma_servers.json');
 
     const { messages } = require("../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/comando.json");
 

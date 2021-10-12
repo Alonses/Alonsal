@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = async ({client}) => {
 
-    if(client.user.id == "833349943539531806"){
+    if(client.user.id === "833349943539531806"){
         const embed = new MessageEmbed()
         .setTitle(':steam_locomotive: Caldeiras aquecidas')
         .setColor(0x29BB8E)
@@ -15,7 +15,7 @@ module.exports = async ({client}) => {
         .addField(':white_small_square: Versão', '`'+ version +'`', false)
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
         
-        client.channels.cache.get(id_canais[2]).send(embed); // Avisa que está online em um canal
+        client.channels.cache.get(id_canais[2]).send({ embeds: [embed] }); // Avisa que está online em um canal
     }
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')

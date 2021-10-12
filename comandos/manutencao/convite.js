@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "convite",
     description: "Convide o alonsal para um servidor",
@@ -5,12 +7,9 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
-        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        const { MessageEmbed } = require('discord.js');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
+        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
@@ -24,6 +23,6 @@ module.exports = {
         const m = await message.channel.send(`${message.author} `+ manutencao[0]["despachei"]);
         m.react('📫');
         
-        client.users.cache.get(message.author.id).send(embed);
+        client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }
 };

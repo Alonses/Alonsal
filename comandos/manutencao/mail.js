@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "mail",
     description: "Envie mensagens para o alonsal",
@@ -7,15 +9,13 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-
-        const { MessageEmbed } = require('discord.js');
 
         let content = args;
         let mensagem = "";
         let tipo = "Alonsal";
+        let id_alvo;
 
         if(message.author.id === "665002572926681128"){
             try{
@@ -24,7 +24,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.lineReply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
+                message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
                 return;
             }
 
@@ -70,9 +70,9 @@ module.exports = {
             .setDescription("-----------------------\nSent by `"+ message.author.id +"`\n\n Message: `"+ mensagem + "`")
             .setTimestamp();
 
-            client.channels.cache.get("847191471379578970").send(msg_user);
+            client.channels.cache.get("847191471379578970").send({ embeds: [msg_user] });
             
-            message.lineReply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(message => message.delete({timeout: 5000}));
+            message.reply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(message => message.delete({timeout: 5000}));
         }
 
         if(tipo === "c")
@@ -83,9 +83,9 @@ module.exports = {
         if(tipo !== "Alonsal")
             mensagem = mensagem.substr(0, (mensagem.length - 1));
 
-        mensagem2 = mensagem;
+        const mensagem2 = mensagem;
 
-        graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
+        let graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
 
         if(graves > 0){
             while(graves > 0){
@@ -101,12 +101,12 @@ module.exports = {
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
         .setTimestamp();
         
-        await client.users.cache.get(message.author.id).send(embed);
+        await client.users.cache.get(message.author.id).send({ embeds: [embed] });
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.channel.send(":tools: | "+ manutencao[3]["aviso_3"]);
+            message.channel.send(":tools: | " + manutencao[3]["aviso_3"]);
     }
 };

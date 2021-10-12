@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "menu_adm",
     description: "Informações secundárias do alonsal",
@@ -6,24 +9,19 @@ module.exports = {
     permissions: [ "ADMINISTRATOR" ],
     execute(client, message, args) {
 
-        const reload = require('auto-reload');
-        const { idioma_servers } = reload('../../arquivos/json/dados/idioma_servers.json');
+        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const idioma_adotado = idioma_servers[message.guild.id];
-        
-        const { MessageEmbed } = require('discord.js');
-
-        const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
 
-        if(idioma_adotado == "pt-br"){
+        let embed;
 
-            bandeira_trad = ":flag_us:";
+        if(idioma_adotado === "pt-br"){
+
+            const bandeira_trad = ":flag_us:";
             
             embed = new MessageEmbed()
             .setTitle("Seus comandos Moderativos :scroll:")
@@ -32,7 +30,7 @@ module.exports = {
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         }else{
 
-            bandeira_trad = ":flag_br:";
+            const bandeira_trad = ":flag_br:";
 
             embed = new MessageEmbed()
             .setTitle("Your Moderative Commands :scroll:")
@@ -41,7 +39,7 @@ module.exports = {
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
         }
 
-        client.users.cache.get(message.author.id).send(embed);
+        client.users.cache.get(message.author.id).send({ embeds: [embed] });
 
         const permissions = message.channel.permissionsFor(message.client.user);
 

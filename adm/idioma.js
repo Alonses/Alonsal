@@ -1,11 +1,8 @@
 module.exports = async function({client, message, args, requisicao_auto}) {
-    
-    var reload = require('auto-reload');
-    const { idioma_servers } = reload('../arquivos/json/dados/idioma_servers.json');
+
+    const { idioma_servers } = require('../arquivos/json/dados/idioma_servers.json');
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
-    if(!prefix)
-        prefix = ".a";
 
     idioma_padrao = "pt-br"; // O idioma padrão do Alonsal
 
@@ -23,15 +20,14 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     const fs = require('fs');
     
     function constructJson(jsonKey, jsonValue){
-        var jsonObj = { [jsonKey] : jsonValue };
-        return jsonObj;
+        return { [jsonKey] : jsonValue }
     }
 
     if(typeof requisicao_auto == "undefined"){
         let { moderacao } = require('../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        if(args[1] != "pt" && args[1] != "en")
-            return message.lineReply(moderacao[0]["error"].replaceAll(".a", prefix));
+        if(args[1] !== "pt" && args[1] !== "en")
+            return message.reply(moderacao[0]["error"].replaceAll(".a", prefix));
     }else
         idioma_selecionado = "pt-br";
 
@@ -50,10 +46,10 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     if(typeof requisicao_auto == "undefined"){
         let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
 
-        if(args[1] == "pt")
+        if(args[1] === "pt")
             idioma_selecionado = "pt-br";
 
-        if(args[1] == "en"){
+        if(args[1] === "en"){
             idioma_selecionado = "en-us";
             idioma_alterado = ":flag_us: | Language switched to `American English`";
         }
@@ -63,13 +59,13 @@ module.exports = async function({client, message, args, requisicao_auto}) {
 
             let key = Object.keys(idioma_servers);
 
-            if(key[i] == message.guild.id){
+            if(key[i] === message.guild.id){
                 obj[message.guild.id] = idioma_selecionado;
                 break;
             }
         }
         
-        message.lineReply(idioma_alterado);
+        message.reply(idioma_alterado);
     }else
         outputArray.push(constructJson(message.guild.id, idioma_selecionado));
 

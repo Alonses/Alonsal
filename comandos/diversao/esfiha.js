@@ -1,3 +1,5 @@
+const { diversao } = require("../../arquivos/idiomas/pt-br.json");
+
 module.exports = {
     name: "esfiha",
     description: "Esfihas do grande rogério!",
@@ -6,8 +8,6 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { diversao } = require("../../arquivos/idiomas/pt-br.json");
-        
         message.channel.send( diversao[1]["asf"] +' :yum: :yum: :yum:');
         message.channel.send('https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713');
 
