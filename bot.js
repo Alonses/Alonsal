@@ -51,7 +51,8 @@ client.on("messageCreate", message => {
 
         message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
 
-        return delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
+        delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
+        return;
     }
 
     handler.messageReceived(message);
