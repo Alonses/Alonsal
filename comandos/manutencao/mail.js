@@ -96,9 +96,9 @@ module.exports = {
         .setTimestamp();
         
         await client.users.cache.get(message.author.id).send({ embeds: [embed] });
-        const permissions = message.channel.permissionsFor(message.client.user);
+        const permissions = await message.channel.permissionsFor(message.client.user);
 
-        if(permissions.has(Permissions.MANAGE_MESSAGES)) // Permissão para gerenciar mensagens
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
             message.reply(":tools: | " + manutencao[3]["aviso_3"]).then(message => message.delete({timeout: 5000}));
