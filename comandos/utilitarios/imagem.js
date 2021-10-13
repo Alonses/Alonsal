@@ -27,7 +27,7 @@ module.exports = {
             .setDescription(utilitarios[7]["conteudo_menu"].replaceAll(".a", prefix) +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"].replaceAll(".a", prefix))
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
             
-            return message.reply(embed_imagens);
+            return message.reply({embeds: [embed_imagens]});
         }
 
         if(args.length < 1) // Sem o estilo informado
