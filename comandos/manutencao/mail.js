@@ -24,12 +24,11 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
-                return;
+                return message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
             }
 
             for(let i = 2; i < content.length; i++){
-                mensagem += content[i] + " ";
+                mensagem += content[i] +" ";
             }
 
             mensagem = mensagem.replace(id_alvo, "");
@@ -45,16 +44,12 @@ module.exports = {
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
 
-                        message.lineReply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(message => message.delete({timeout: 5000}));
-                    }else{
-                        message.lineReply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
-
-                        return;
-                    }
+                        message.reply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(message => message.delete({timeout: 5000}));
+                    }else
+                        return message.reply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
                 }
             }catch(err){
-                message.lineReply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
-                return;
+                return message.reply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
             }
         }else{
             for(let i = 0; i < content.length; i++){
@@ -87,12 +82,11 @@ module.exports = {
 
         let graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
 
-        if(graves > 0){
+        if(graves > 0)
             while(graves > 0){
                 mensagem = mensagem.replace("`", "\'");
                 graves--;
             }
-        }
 
         const embed = new MessageEmbed()
         .setTitle(manutencao[3]["aviso_2"])
@@ -107,6 +101,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.channel.send(":tools: | " + manutencao[3]["aviso_3"]);
+            message.reply(":tools: | " + manutencao[3]["aviso_3"]).then(message => message.delete({timeout: 5000}));
     }
 };
