@@ -4,4 +4,4 @@ a.zip
 .idea/
 idioma_servers.json
 package-lock.json
-./prefixes
+prefixes/
