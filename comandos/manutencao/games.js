@@ -114,8 +114,6 @@ module.exports = {
             client.channels.cache.get(ids_canais_games[i]).send(texto_anuncio, img_game);
         }
         
-        await message.reply("A atualização foi enviada à todos os canais de games").then(message => message.delete({timeout: 5000}));
-
-        // message.delete();
+        message.reply("A atualização foi enviada à todos os canais de games").then(message => message.delete({timeout: 5000}));
     }
 }
