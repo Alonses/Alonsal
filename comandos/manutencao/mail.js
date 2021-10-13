@@ -96,7 +96,7 @@ module.exports = {
         .setTimestamp();
         
         await client.users.cache.get(message.author.id).send({ embeds: [embed] });
-        const permissions = await message.channel.permissionsFor(message.client.user);
+        const permissions = message.channel.permissionsFor(message.client.user);
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
