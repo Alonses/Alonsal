@@ -66,10 +66,10 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
     if (message.author.bot || message.webhookId) return;
 
-    if (message.channel.type === "GUILD_TEXT") {
+    if (message.channel.type === "text") {
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        if (!permissions.has(Permissions.FLAGS.SEND_MESSAGES)) return; // Permissão para enviar mensagens no canal
+        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
 
     const content = message.content;
