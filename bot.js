@@ -66,10 +66,10 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
     if (message.author.bot || message.webhookId) return;
 
-    if (message.channel.type === "text") {
+    if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+        if (!permissions.has(Permissions.FLAGS.SEND_MESSAGES)) return; // Permissão para enviar mensagens no canal
     }
 
     const content = message.content;
@@ -83,7 +83,7 @@ handler.events.on("command_executed", async (command, discord_client, message, a
         let hora_comando = message.createdTimestamp;
         const data = new Date(hora_comando);
 
-        console.log("Comando -> Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
+        console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
 
         let comando_musical = content.replace(prefix, "");
         comando_musical = comando_musical.split(" ");
