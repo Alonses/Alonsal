@@ -25,9 +25,7 @@ module.exports = {
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
-
+        
         let embed_inicial,
             embed_diversao,
             embed_utilitarios,
