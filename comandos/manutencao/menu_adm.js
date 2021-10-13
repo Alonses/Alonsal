@@ -20,7 +20,6 @@ module.exports = {
         let embed;
 
         if(idioma_adotado === "pt-br"){
-
             const bandeira_trad = ":flag_us:";
             
             embed = new MessageEmbed()

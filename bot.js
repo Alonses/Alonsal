@@ -42,6 +42,8 @@ client.on("ready", async () => {
 client.on("messageCreate", message => {
     if (message.content.includes(client.user.id)) { // Responde as mensagens em que é marcado
 
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        
         const {emojis_dancantes} = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
@@ -70,7 +72,6 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     const content = message.content;
 
     if (content !== prefix) { // Previne que mensagens aleatórias acionem comandos
-
         let auto = true;
         let ult_comand = content;
 
