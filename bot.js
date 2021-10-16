@@ -115,7 +115,7 @@ handler.events.on("command_error", async e => {
         title: "CeiraException",
         description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
         color: "RED"
-    })
+    });
 
     await channel.send({ embeds: [embed] });
 });
