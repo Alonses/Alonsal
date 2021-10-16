@@ -1275,7 +1275,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 1
+        "programmer_art": 0
     },
     {
         "id_item": 87,
@@ -2348,7 +2348,7 @@
         "tipo_item": "Ferramentas",
         "nome_item": "Rel\u00f3gio",
         "coletavel": 1,
-        "nome_interno": "clock",
+        "nome_interno": "Clock",
         "empilhavel": 64,
         "versao_add": 0,
         "renovavel": 1,
@@ -2713,7 +2713,7 @@
         "coletavel": 1,
         "nome_interno": "sculk_sensor",
         "empilhavel": 64,
-        "versao_add": 18,
+        "versao_add": 19,
         "renovavel": 0,
         "aliases": null,
         "descricao": null,
@@ -4458,7 +4458,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 289,
@@ -12669,7 +12669,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 813,
@@ -12684,7 +12684,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 814,
@@ -12699,7 +12699,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 815,
@@ -12714,7 +12714,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 816,
@@ -12729,7 +12729,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 817,
@@ -12744,7 +12744,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 818,
@@ -12759,7 +12759,7 @@
         "aliases": null,
         "descricao": null,
         "oculto_invt": 0,
-        "programmer_art": 0
+        "programmer_art": 1
     },
     {
         "id_item": 819,
@@ -21742,6 +21742,141 @@
         "descricao": null,
         "oculto_invt": 0,
         "programmer_art": 1
+    },
+    {
+        "id_item": 1390,
+        "nome_icon": "mud_block.png",
+        "tipo_item": "Construcao",
+        "nome_item": "Barro",
+        "coletavel": 1,
+        "nome_interno": "mud",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 1,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1391,
+        "nome_icon": "sculk_block.gif",
+        "tipo_item": "Decorativos",
+        "nome_item": "Bloco de sculk",
+        "coletavel": 1,
+        "nome_interno": "sculk_block",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 1,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1392,
+        "nome_icon": "sculk_catalyser.png",
+        "tipo_item": "Decorativos",
+        "nome_item": "Catalisador de sculk",
+        "coletavel": 1,
+        "nome_interno": "sculk_catalyser",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 0,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1393,
+        "nome_icon": "Sculk_Vein.gif",
+        "tipo_item": "Decorativos",
+        "nome_item": "Veios de sculk",
+        "coletavel": 1,
+        "nome_interno": "Sculk_Vein.gif",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 1,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1394,
+        "nome_icon": "Sculk_Shrieker.gif",
+        "tipo_item": "Decorativos",
+        "nome_item": "Alerta de sculk",
+        "coletavel": 1,
+        "nome_interno": "Sculk_Shrieker",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 0,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1395,
+        "nome_icon": "Warden_Spawn_Egg.png",
+        "tipo_item": "Diversos",
+        "nome_item": "Ovo gerador de warden",
+        "coletavel": 0,
+        "nome_interno": "warden_spawn_egg",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 0,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1396,
+        "nome_icon": "mangrove_roots.png",
+        "tipo_item": "Decorativos",
+        "nome_item": "Ra\u00edzes de manguezal",
+        "coletavel": 1,
+        "nome_interno": "mangrove_roots",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 1,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1397,
+        "nome_icon": "mangrove_planks.png",
+        "tipo_item": "Construcao",
+        "nome_item": "T\u00e1buas de manguezal",
+        "coletavel": 1,
+        "nome_interno": "mangrove_planks",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 1,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
+    },
+    {
+        "id_item": 1398,
+        "nome_icon": "Unknown_frame_block.png",
+        "tipo_item": "Decorativos",
+        "nome_item": "Bloco de quadro",
+        "coletavel": 1,
+        "nome_interno": "unknown_frame_block",
+        "empilhavel": 64,
+        "versao_add": 19,
+        "renovavel": 0,
+        "aliases": null,
+        "descricao": null,
+        "oculto_invt": 0,
+        "programmer_art": 0
     }
 ]
 }
