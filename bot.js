@@ -4,11 +4,17 @@ const { Client, MessageEmbed, Intents } = require("discord.js");
 const { readdirSync } = require("fs");
 let { token, prefix, pastas, comandos_musicais } = require('./config.json');
 const {idioma_servers} = require("./arquivos/json/dados/idioma_servers.json");
+const { Options } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS] });
+    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS],
+    makeCache: Options.cacheWithLimits({
+        MessageManager: 200,
+        PresenceManager: 0,
+    }),
+});
 
 String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
     return this.split(needle).join(replacement);
@@ -39,7 +45,7 @@ client.on("ready", async () => {
     console.log("Caldeiras aquecidas, pronto para operar");
 });
 
-client.on("messageCreate", message => {
+client.on("messageCreate", async message => {
     if (message.content.includes(client.user.id)) { // Responde as mensagens em que é marcado
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -64,6 +70,9 @@ require('./adm/eventos.js')({client});
 handler.events.on("command_executed", async (command, discord_client, message, args) => {
     let prefix = client.prefixManager.getPrefix(message.guild.id);
 
+    await message.guild.channels.fetch();
+    console.log(message.guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size);
+    
     if (message.author.bot || message.webhookId) return;
 
     if (message.channel.type === "text") {
@@ -104,7 +113,7 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     await require('./adm/log.js')({client, message, content});
 
     delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
-})
+});
 
 handler.events.on("command_error", async e => {
     console.log(e);
