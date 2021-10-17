@@ -213,7 +213,23 @@
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
-            "tente_novamente" : "tente novamente"
+            "tente_novamente" : "tente novamente",
+            "error_1" : "Não foi possível carregar a base de itens no momento, tente novamente mais tarde",
+            "coletavel" : "Coletável",
+            "tipo" : "Tipo",
+            "versao_add" : "Versão adicionada",
+            "empilhavel" : "Empilhável",
+            "renovavel" : "Renovável",
+            "nome_interno" : "Nome interno",
+            "construcao" : "Construção",
+            "pocoes" : "Poções",
+            "efeitos_aplicados" : "Efeitos Aplicados",
+            "atributos" : "Atributos",
+            "disco_musical" : "Disco musical",
+            "livro_encantado" : "Livro encantado",
+            "sim" : "Sim",
+            "nao" : "Não",
+            "ate" : "Até"
         },
         {
             "aviso_1" : "Envie como `.acon 31-01` para poder pesquisar em uma data específica\nOu use apenas `.acon` para ver acontecimentos na data de hoje pela história",

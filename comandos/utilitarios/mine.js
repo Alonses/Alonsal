@@ -1,6 +1,6 @@
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-const { lista_itens } = require("../../arquivos/json/dados/itens_mine.json");
 const { MessageEmbed } = require('discord.js');
+const fetch = require('node-fetch');
 
 module.exports = {
     name: "mine",
@@ -34,172 +34,145 @@ module.exports = {
         if(pesquisa === "") // random
             random = true;
 
-        for(var i = 0; i < lista_itens.length; i++){
-
-            let descri = false;
-
-            let auto_compl = lista_itens[i].nome_item;
-            auto_compl = auto_compl.toLocaleLowerCase();
-
-            if(lista_itens[i].descricao !== null){
-                descr_pesquisa = lista_itens[i].descricao.toLocaleLowerCase();
-
-                if(descr_pesquisa.includes(pesquisa.toLocaleLowerCase()))
-                    descri = true;
-            }
-
-            if((pesquisa === lista_itens[i].nome_item || pesquisa === lista_itens[i].nome_interno) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
+        fetch('https://raw.githubusercontent.com/brnd-21/inventario-mine/main/JSON/dados_locais.json')
+        .then(response => response.json())
+        .then(async lista_itens => {
+            for(let i = 0; i < lista_itens.length; i++){
                 
-                if(random)
-                    i = Math.round((lista_itens.length - 1) * Math.random());
+                let descri = false;
 
-                url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_icon;
-    
-                let nome_item = lista_itens[i].nome_item;
-                let colet_suv = "Sim";
-                let empilhavel = "Até "+ lista_itens[i].empilhavel;
-                let renovavel = "Sim";
+                let auto_compl = lista_itens[i].nome_item;
+                auto_compl = auto_compl.toLocaleLowerCase();
 
-                if(idioma_selecionado === "en-us"){
-                    colet_suv = "Yes";
-                    empilhavel = "Up to "+ lista_itens[i].empilhavel;
-                    renovavel = "Yes";  
+                if(lista_itens[i].descricao !== null){
+                    descr_pesquisa = lista_itens[i].descricao.toLocaleLowerCase();
+
+                    if(descr_pesquisa.includes(pesquisa.toLocaleLowerCase()))
+                        descri = true;
                 }
 
-                let tipo_item = lista_itens[i].tipo_item;
-
-                if(lista_itens[i].tipo_item === "Construcao"){
-                    tipo_item = "Construção";
+                if((pesquisa === lista_itens[i].nome_item || pesquisa === lista_itens[i].nome_interno) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                     
-                    if(idioma_selecionado === "en-us")
-                        tipo_item = "Construction";
-                }
-                
-                if(lista_itens[i].tipo_item === "Pocoes"){
-                    tipo_item = "Poções";
-                
-                    if(idioma_selecionado === "en-us")
-                        tipo_item = "Potions";
-                }
-                
-                if(lista_itens[i].renovavel === 0){
-                    renovavel = "Não";
-                
-                    if(idioma_selecionado === "en-us")
-                        renovavel = "No";
-                }
+                    if(random)
+                        i = Math.round((lista_itens.length - 1) * Math.random());
 
-                if(lista_itens[i].empilhavel === 0){
-                    empilhavel = "Não";
-                
-                    if(idioma_selecionado === "en-us")
-                        empilhavel = "No";
-                }
+                    url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_icon;
+        
+                    let nome_item = lista_itens[i].nome_item;
+                    let colet_suv = utilitarios[9]["sim"];
+                    let empilhavel = utilitarios[9]["ate"]  +" "+ lista_itens[i].empilhavel;
+                    let renovavel = utilitarios[9]["sim"];
 
-                if(lista_itens[i].coletavel === 0){
-                    colet_suv = "Não";
+                    let tipo_item = lista_itens[i].tipo_item;
 
-                    if(idioma_selecionado === "en-us")
-                        colet_suv = "No";
-                }
+                    if(lista_itens[i].tipo_item === "Construcao")
+                        tipo_item = utilitarios[9]["construcao"];
+                    
+                    if(lista_itens[i].tipo_item === "Pocoes")
+                        tipo_item = utilitarios[9]["pocoes"];
+                    
+                    if(lista_itens[i].renovavel === 0)
+                        renovavel = utilitarios[9]["nao"];
 
-                let fields = [];
+                    if(lista_itens[i].empilhavel === 0)
+                        empilhavel = utilitarios[9]["nao"];
 
-                if(lista_itens[i].descricao != null){
-                    if(lista_itens[i].descricao.includes("[&")){ // Poções
+                    if(lista_itens[i].coletavel === 0)
+                        colet_suv = utilitarios[9]["nao"];
 
-                        let valores_item = lista_itens[i].descricao;
-                        
-                        let descricao_tipo = ":magic_wand: Efeitos Aplicados";
+                    let fields = [];
 
-                        if(idioma_selecionado === "en-us")
-                            descricao_tipo = ":magic_wand: Applied Effects";
+                    if(lista_itens[i].descricao != null){
+                        if(lista_itens[i].descricao.includes("[&")){ // Poções
 
-                        if(!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha")){
-                            descricao_tipo = ":receipt: Atributos";
-                        
-                            if(idioma_selecionado === "en-us")
-                                descricao_tipo = ":receipt: Attributes";
-                        }
+                            let valores_item = lista_itens[i].descricao;                            
+                            
+                            let descricao_tipo = ":magic_wand: "+ utilitarios[9]["efeitos_aplicados"];
 
+                            if(!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha"))
+                                descricao_tipo = ":receipt: "+ utilitarios[9]["atributos"];
 
-                        if(nome_item === "Disco musical"){
+                            if(nome_item === "Disco musical"){
+                                nome_item = utilitarios[9]["disco_musical"];
 
-                            if(idioma_selecionado === "en-us")
-                                nome_item = "Musical disc";
+                                valores_item = valores_item.replace("[&r", "");
+                                nome_item += " | "+ valores_item;
 
-                            valores_item = valores_item.replace("[&r", "");
-                            nome_item += " | "+ valores_item;
+                            }else if(nome_item === "Livro encantado"){
+                                nome_item = utilitarios[9]["livro_encantado"];
 
-                        }else if(nome_item === "Livro encantado"){
+                                valores_item = valores_item.replace("[&r", "");
+                                nome_item += " | "+ valores_item;
+                            }else{
 
-                            if(idioma_selecionado === "en-us")
-                                nome_item = "Enchanted book";
+                                valores_item = valores_item.replace("[&s[&3Efeito aplicado: ", "");
+                                valores_item = valores_item.replaceAll(") ", ")");
+                                valores_item = valores_item.replace("[&s[&r", "\n");
+                                valores_item = valores_item.replace("&s[&r", "\n");
+                                valores_item = valores_item.replaceAll("[&1", "\n");
+                                valores_item = valores_item.replaceAll("[&2", "\n");
+                                valores_item = valores_item.replaceAll("&2", "\n");
+                                valores_item = valores_item.replaceAll("[&4", "\n");
+                                valores_item = valores_item.replaceAll("[&3", "\n");
+                                valores_item = valores_item.replaceAll("&r", "");
+                                valores_item = valores_item.substr(1);
+                                
+                                if(idioma_selecionado === "en-us" || nome_interno == lista_itens[i].nome_interno)
+                                    nome_item = lista_itens[i].nome_interno.replaceAll("_", " ").replace(/^\w/, (c) => c.toUpperCase());
 
-                            valores_item = valores_item.replace("[&r", "");
-                            nome_item += " | "+ valores_item;
-                        }else{
+                                if(idioma_selecionado == "en-us"){
+                                    let traduz_descri = valores_item.split("\n");
 
-                            valores_item = valores_item.replace("[&s[&3Efeito aplicado: ", "");
-                            valores_item = valores_item.replaceAll(") ", ")");
-                            valores_item = valores_item.replace("[&s[&r", "\n");
-                            valores_item = valores_item.replace("&s[&r", "\n");
-                            valores_item = valores_item.replaceAll("[&1", "\n");
-                            valores_item = valores_item.replaceAll("[&2", "\n");
-                            valores_item = valores_item.replaceAll("&2", "\n");
-                            valores_item = valores_item.replaceAll("[&4", "\n");
-                            valores_item = valores_item.replaceAll("[&3", "\n");
-                            valores_item = valores_item.replaceAll("&r", "");
-                            valores_item = valores_item.substr(1);
+                                    for(let k = 0; k < traduz_descri.length; k++){
 
-                            fields.push({ name: descricao_tipo, value: "`"+ valores_item +"`"});
+                                        if(!descricao_tipo.includes(":magic_wand:")){
+                                            alvo = traduz_descri[k].split(":")[0];
+                                            alvo_json = alvo.replaceAll(" ", "_").normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+                                        }else{ // Traduzindo efeitos de poções e flechas
+                                            alvo = traduz_descri[k].split(" (")[0];
+                                            alvo_json = alvo.split(" ")[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+
+                                            if(alvo_json.includes(":"))
+                                                alvo_json = alvo_json.split(":")[0];
+
+                                            nome_item += " of "+ utilitarios[9]["detalhes"][alvo_json];
+                                        }
+
+                                        traducao_alvo = utilitarios[9]["detalhes"][alvo_json];    
+                                        valores_item = valores_item.replaceAll(alvo, traducao_alvo);
+                                    }
+                                }
+
+                                fields.push({ name: descricao_tipo, value: "`"+ valores_item +"`"});
+                            }
                         }
                     }
-                }
 
-                let embed;
-
-                if(idioma_selecionado === "pt-br"){
-                    embed = new MessageEmbed()
+                    const embed = new MessageEmbed()
                     .setTitle(nome_item)
                     .setColor(0x29BB8E)
                     .setImage(url)
                     .addFields(
-                        { name: emoji_suv +' **Coletável**', value: "`"+ colet_suv +"`", inline: true },
-                        { name: ':label: **Tipo**', value: "`"+ tipo_item +"`", inline: true },
-                        { name: ':bookmark_tabs: **Versão adicionada**', value: "`1."+ lista_itens[i].versao_add +"`", inline: true },
+                        { name: emoji_suv +' **'+ utilitarios[9]["coletavel"] +'**', value: "`"+ colet_suv +"`", inline: true },
+                        { name: ':label: **'+ utilitarios[9]["tipo"] +'**', value: "`"+ tipo_item +"`", inline: true },
+                        { name: ':bookmark_tabs: **'+ utilitarios[9]["versao_add"] +'**', value: "`1."+ lista_itens[i].versao_add +"`", inline: true },
                     )
                     .addFields(
-                        { name: ':abacus: **Empilhável**', value: "`"+ empilhavel +"`", inline: true },
-                        { name: ':herb: **Renovável**', value: "`"+ renovavel +"`", inline: true },
-                        { name: ':link: **Nome interno**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
+                        { name: ':abacus: **'+ utilitarios[9]["empilhavel"] +'**', value: "`"+ empilhavel +"`", inline: true },
+                        { name: ':herb: **'+ utilitarios[9]["renovavel"] +'**', value: "`"+ renovavel +"`", inline: true },
+                        { name: ':link: **'+ utilitarios[9]["nome_interno"] +'**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
                     );
-                }else{
-                    nome_item = lista_itens[i].nome_interno.charAt(0).toUpperCase() + lista_itens[i].nome_interno.slice(1);
-                    nome_item = nome_item.replaceAll("_", " ");
 
-                    embed = new MessageEmbed()
-                    .setTitle(nome_item)
-                    .setColor(0x29BB8E)
-                    .setImage(url)
-                    .addFields(
-                        { name: emoji_suv +' **Collectable**', value: "`"+ colet_suv +"`", inline: true },
-                        { name: ':label: **Type**', value: "`"+ tipo_item +"`", inline: true },
-                        { name: ':bookmark_tabs: **Version added**', value: "`1."+ lista_itens[i].versao_add +"`", inline: true },
-                    )
-                    .addFields(
-                        { name: ':abacus: **Stackable**', value: "`"+ empilhavel +"`", inline: true },
-                        { name: ':herb: **Renewable**', value: "`"+ renovavel +"`", inline: true },
-                        { name: ':link: **Internal name**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
-                    );
+                    return message.reply({ embeds: [embed] });
                 }
-
-                return message.reply({ embeds: [embed] });
             }
-        }
 
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+            let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        message.reply(emoji_nao_encontrado +" | "+ utilitarios[9]["nao_encontrado"] +" `"+ pesquisa +"`, "+ utilitarios[9]["tente_novamente"]);
+            message.reply(emoji_nao_encontrado +" | "+ utilitarios[9]["nao_encontrado"] +" `"+ pesquisa +"`, "+ utilitarios[9]["tente_novamente"]);
+        })
+        .catch(() => {
+            return message.reply(":octagonal_sign: | "+ utilitarios[9]["error_1"]);
+        });
     }
 };
