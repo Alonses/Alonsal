@@ -70,9 +70,6 @@ require('./adm/eventos.js')({client});
 handler.events.on("command_executed", async (command, discord_client, message, args) => {
     let prefix = client.prefixManager.getPrefix(message.guild.id);
 
-    await message.guild.channels.fetch();
-    console.log(message.guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size);
-    
     if (message.author.bot || message.webhookId) return;
 
     if (message.channel.type === "text") {
