@@ -1,11 +1,9 @@
 module.exports = async ({message}) => {
 
     const { idioma_servers } = require('../arquivos/json/dados/idioma_servers.json');
-
     const { messages } = require("../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/comando.json");
 
     const num = Math.round((messages.length - 1) * Math.random());
-
     let key = Object.keys(messages[num]);
 
     let marcacao = "<@" + message.author.id + ">";

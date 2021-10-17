@@ -1,18 +1,21 @@
-module.exports = async function({client, message, args, requisicao_auto}) {
+module.exports = async function({client, message, args, guild}) {
 
     const { idioma_servers } = require('../arquivos/json/dados/idioma_servers.json');
-
-    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    let prefix;
 
     idioma_padrao = "pt-br"; // O idioma padrão do Alonsal
 
-    if(typeof idioma_servers[message.guild.id] != "undefined")
-        idioma_padrao = idioma_servers[message.guild.id];
+    if(typeof guild == "undefined"){
+        prefix = client.prefixManager.getPrefix(message.guild.id);
+
+        if(typeof idioma_servers[message.guild.id] != "undefined")
+            idioma_padrao = idioma_servers[message.guild.id];
+    }
 
     const { moderacao } = require('../arquivos/idiomas/'+ idioma_padrao +'.json');
     let idioma_selecionado;
 
-    if(typeof requisicao_auto == "undefined"){
+    if(typeof guild == "undefined"){
         if(!message.member.hasPermission('MANAGE_GUILD'))
             return message.lineReply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
     }
@@ -23,7 +26,7 @@ module.exports = async function({client, message, args, requisicao_auto}) {
         return { [jsonKey] : jsonValue }
     }
 
-    if(typeof requisicao_auto == "undefined"){
+    if(typeof guild == "undefined"){
         let { moderacao } = require('../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
         if(args[1] !== "pt" && args[1] !== "en")
@@ -31,7 +34,16 @@ module.exports = async function({client, message, args, requisicao_auto}) {
     }else
         idioma_selecionado = "pt-br";
 
-    id_server = message.guild.id;
+    let nome_server;
+    if(typeof guild.id == "undefined"){
+        id_server = message.guild.id;
+        nome_server = message.guild.name;
+    }else{
+        id_server = guild.id;
+        nome_server = guild.name;
+    }
+
+    console.log(guild);
 
     var outputArray = []; // Transfere todos os dados do JSON para um array
     for(let element in idioma_servers){
@@ -43,7 +55,7 @@ module.exports = async function({client, message, args, requisicao_auto}) {
         );
     }
 
-    if(typeof requisicao_auto == "undefined"){
+    if(typeof guild == "undefined"){
         let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
 
         if(args[1] === "pt")
@@ -67,7 +79,7 @@ module.exports = async function({client, message, args, requisicao_auto}) {
         
         message.reply(idioma_alterado);
     }else
-        outputArray.push(constructJson(message.guild.id, idioma_selecionado));
+        outputArray.push(constructJson(id_server, idioma_selecionado));
 
     idioma_servidor = JSON.stringify(outputArray, null, 5);
 
@@ -82,6 +94,6 @@ module.exports = async function({client, message, args, requisicao_auto}) {
 
     fs.writeFile('./arquivos/json/dados/idioma_servers.json', idioma_servidor, (err) => {
         if (err) throw err;
-        console.log("Idioma do servidor [ "+ message.guild.name +" ] atualizado para "+ idioma_selecionado);
+        console.log("Idioma do servidor [ "+ nome_server +" ] atualizado para "+ idioma_selecionado);
     });
 }
