@@ -270,6 +270,22 @@
             "chave" : "Key",
             "aviso_1" : "Enter a key and the text to be encrypted\nFor example, `.acr slondo Hello World!`, or `.acr slondo U2FsdG~~`",
             "error_1" : "Incorrect key, unable to decrypt\nIf you are trying to encrypt, add more spaces to your text"
+        },
+        {
+            "id_server" : "Server ID",
+            "membros" : "Members",
+            "dono" : "Owner",
+            "canais" : "Channels",
+            "categorias" : "Categories",
+            "texto" : "Text",
+            "voz" : "Voice",
+            "entrada" : "Alonsal entrance",
+            "criacao" : "Creation"
+        },
+        {
+            "id_user" : "User ID",
+            "entrada" : "Entered the server on",
+            "conta_criada" : "Account created"
         }
     ],
     "musicas" : [
