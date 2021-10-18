@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
-
+const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
+ 
 module.exports = {
     name: "serverinfo",
     description: "Veja detalhes do servidor",
@@ -8,27 +9,33 @@ module.exports = {
     cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-    
-        return;
-        
+
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_selecionado = idioma_servers[message.guild.id];
 
+        function emoji(id){
+            return client.emojis.cache.get(id).toString();
+        }
+
+        let boost_sv = emoji(emojis.boost);
+        let emoji_dancando = emoji(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]);
+        let figurinhas = emoji(emojis.bigchad);
+
         const guild = message.guild;
 
         let dono_sv = guild.ownerId;
-        dono_membro = await guild.members.cache.get(dono_sv);
+        dono_membro = await guild.members.fetch(dono_sv);
         dono_sv = "`"+ dono_membro.user.username + "#"+ dono_membro.user.discriminator +"`\n`"+ dono_sv +"`";
 
         let icone_server = guild.iconURL({ size: 2048 });
 
-        let qtd_canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
         let canais_texto = guild.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
         let canais_voz = guild.channels.cache.filter((c) => c.type === "GUILD_VOICE").size;
         let categorias = guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size;
-
-        let qtd_membros = guild.memberCount - 1; 
+        let qtd_canais = canais_texto + canais_voz;
+        
+        let qtd_membros = guild.memberCount; 
 
         let data_entrada = new Date(guild.joinedTimestamp); // Entrada do bot no server
         if(idioma_selecionado == "pt-br")
@@ -59,7 +66,7 @@ module.exports = {
         .setThumbnail(icone_server)
         .addFields(
             { name: ':globe_with_meridians: **'+ utilitarios[12]["id_server"] +'**', value: "`"+ guild.id +"`", inline: true },
-            { name: ':busts_in_silhouette: **'+ utilitarios[12]["membros"] +'**', value: ':bust_in_silhouette: **Atual:** `'+ qtd_membros +'`', inline: true},
+            { name: ':busts_in_silhouette: **'+ utilitarios[12]["membros"] +'**', value: ':bust_in_silhouette: **'+ utilitarios[12]["atual"] +':** `'+ qtd_membros.toLocaleString('pt-BR') +'`\n:arrow_up: **Max: **`'+ guild.maximumMembers.toLocaleString('pt-BR') +"`", inline: true},
             { name: ':unicorn: **'+ utilitarios[12]["dono"] +'**', value: dono_sv, inline: true},
         )
         .addFields(
@@ -67,8 +74,20 @@ module.exports = {
             { name: ':vulcan: **'+ utilitarios[12]["entrada"] +'**', value: `\`${data_entrada}\``, inline: true},
             { name: ':birthday: **'+ utilitarios[12]["criacao"] +'**', value: `\`${data_criacao}\``, inline: true}
         )
-        .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
+        .addFields(
+            { name: ':shield: **'+ utilitarios[12]["verificacao"] +'**', value: `**${utilitarios[12][guild.verificationLevel]}**`, inline: true},
+            { name: emoji_dancando +' **Emojis ( '+ guild.emojis.cache.size +' )**', value: figurinhas +' **'+ utilitarios[12]["figurinhas"] +' ('+  guild.stickers.cache.size +')**', inline: true}
+        );
         
+        if(guild.premiumSubscriptionCount > 0)
+            infos_sv.addFields(
+                { name: boost_sv +'**Boosts ( '+ guild.premiumSubscriptionCount +' )**', value: '⠀', inline: true}
+            )
+        else
+            infos_sv.addFields(
+                { name: '⠀', value: '⠀', inline: true}
+            )
+
         return message.reply({embeds: [infos_sv]});
     }
 }
