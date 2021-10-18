@@ -3,8 +3,6 @@ const { id_canais } = require('../config.json');
 
 module.exports = async ({client, caso, guild}) => {
 
-    console.log(guild.memberCount, typeof guild.memberCount);
-
     let ocasiao = "> Server update ( New )";
     let cor = 0x29BB8E;
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
@@ -12,7 +10,6 @@ module.exports = async ({client, caso, guild}) => {
     if(caso === "Left"){
         ocasiao = "> Server update ( Left )";
         cor = 0xd4130d;
-        canais = "?";
     }
 
     const embed_sv = new MessageEmbed()
