@@ -8,6 +8,9 @@ module.exports = {
     cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
+    
+        return;
+        
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_selecionado = idioma_servers[message.guild.id];
@@ -17,7 +20,7 @@ module.exports = {
         let dono_sv = guild.ownerId;
         dono_membro = await guild.members.cache.get(dono_sv);
         dono_sv = "`"+ dono_membro.user.username + "#"+ dono_membro.user.discriminator +"`\n`"+ dono_sv +"`";
-        
+
         let icone_server = guild.iconURL({ size: 2048 });
 
         let qtd_canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
