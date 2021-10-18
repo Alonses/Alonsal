@@ -241,6 +241,22 @@
             "chave": "Chave",
             "aviso_1" : "Informe uma chave e o texto para ser criptografado\nPor exemplo, `.acr slondo Hello World!`, ou `.acr slondo U2FsdG~~`",
             "error_1" : "Chave errada, não foi possível descriptografar\nCaso esteja tentando criptografar, adicione mais espaços em seu texto"
+        },
+        {
+            "id_server" : "ID do server",
+            "membros" : "Membros",
+            "dono" : "Dono",
+            "canais" : "Canais",
+            "categorias" : "Categorias",
+            "texto" : "Texto",
+            "voz" : "Voz",
+            "entrada" : "Entrada alonsal",
+            "criacao" : "Criação"
+        },
+        {
+            "id_user" : "ID do usuário",
+            "entrada" : "Entrou no servidor",
+            "conta_criada" : "Conta criada"
         }
     ],
     "musicas" : [
