@@ -43,9 +43,7 @@ module.exports = async function({client, message, args, guild}) {
         nome_server = guild.name;
     }
 
-    console.log(guild);
-
-    var outputArray = []; // Transfere todos os dados do JSON para um array
+    let outputArray = []; // Transfere todos os dados do JSON para um array
     for(let element in idioma_servers){
 
         idioma = idioma_servers[element];

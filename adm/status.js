@@ -2,8 +2,6 @@ const { id_canais, version } = require('../config.json')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = async ({client}) => {
-
-    return
     
     const canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
     const canais_voz = client.channels.cache.filter((c) => c.type === "GUILD_VOICE").size;

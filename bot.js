@@ -2,7 +2,7 @@ const handler = require("wax-command-handler");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-let { token, prefix, pastas, comandos_musicais } = require('./config.json');
+let { token_2, prefix, pastas, comandos_musicais } = require('./config.json');
 const {idioma_servers} = require("./arquivos/json/dados/idioma_servers.json");
 const { Options } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
@@ -52,8 +52,12 @@ client.on("messageCreate", async message => {
 
         const {emojis_dancantes} = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-
-        let {inicio} = require('./arquivos/idiomas/' + idioma_servers[message.guild.id] + '.json');
+        let idioma_selecionado = idioma_servers[message.guild.id]
+        
+        if(typeof idioma_selecionado == "undefined")
+            idioma_selecionado = "pt-br";
+            
+        let {inicio} = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
 
         message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
 
@@ -148,4 +152,4 @@ handler.events.on("no_perm", (message, permission) => {
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
 
-client.login(token);
+client.login(token_2);
