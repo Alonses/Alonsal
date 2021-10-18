@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { MessageEmbed, MessageSelectMenu } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: "serverinfo",
@@ -15,8 +15,9 @@ module.exports = {
         const guild = message.guild;
 
         let dono_sv = guild.ownerId;
-        dono_sv = "`"+ await client.users.cache.get(dono_sv).username  + "#"+ client.users.cache.get(dono_sv).discriminator +"`\n`"+ dono_sv +"`";
-
+        dono_membro = await guild.members.cache.get(dono_sv);
+        dono_sv = "`"+ dono_membro.user.username + "#"+ dono_membro.user.discriminator +"`\n`"+ dono_sv +"`";
+        
         let icone_server = guild.iconURL({ size: 2048 });
 
         let qtd_canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
