@@ -209,7 +209,18 @@
             "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
             "tente_novamente" : ", tente novamente",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
-            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado"
+            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado",
+            "tempo_agora" : "Tempo agora",
+            "vento" : "Vento",
+            "nuvens" : "Nuvens",
+            "direcao" : "Direção",
+            "ceu_momento" : "Céu no momento",
+            "temperatura" : "Temperatura",
+            "por_sol" : "Pôr do sol",
+            "nas_sol" : "Na. do sol",
+            "sensacao_termica" : "Sensação Térm",
+            "umidade_ar" : "Umidade do ar",
+            "pressao_ar" : "Pressão do ar"
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
@@ -250,8 +261,16 @@
             "categorias" : "Categorias",
             "texto" : "Texto",
             "voz" : "Voz",
+            "atual" : "Atual",
             "entrada" : "Entrada alonsal",
-            "criacao" : "Criação"
+            "criacao" : "Criação",
+            "verificacao" : "Verificação",
+            "figurinhas" : "Figurinhas",
+            "NONE" : ":white_large_square: Nenhum",
+            "LOW" : ":blue_square: Baixo",
+            "MEDIUM" : ":green_square: Médio",
+            "HIGH" : ":orange_square: Alto",
+            "HIGHEST" : ":red_square: Máximo"
         },
         {
             "id_user" : "ID do usuário",

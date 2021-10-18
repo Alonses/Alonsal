@@ -94,12 +94,22 @@ handler.events.on("command_executed", async (command, discord_client, message, a
         let comando_musical = content.replace(prefix, "");
         comando_musical = comando_musical.split(" ");
 
-        if (comandos_musicais.includes(comando_musical[0])) { // Apenas utilizado em comandos musicais
-            let ult_message = message;
-            await require('./adm/eventos.js')({client, auto, ult_message});
+        try{
+            if (comandos_musicais.includes(comando_musical[0])) { // Apenas utilizado em comandos musicais
+                let ult_message = message;
+                await require('./adm/eventos.js')({client, auto, ult_message});
 
-            await require('./comandos/musicas/play.js')({message, client, args});
-        } else await handler.executeCommand(command, discord_client, message, args);
+                await require('./comandos/musicas/play.js')({message, client, args});
+            } else await handler.executeCommand(command, discord_client, message, args);
+        }catch(err){
+            const embed = new MessageEmbed({
+                title: "CeiraException",
+                description: `\`\`\`${err.toString().substring(0, 2000)}\`\`\``,
+                color: "RED"
+            });
+        
+            await channel.send({ embeds: [embed] });
+        }
     } else {
         if (content === prefix) {
             await require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando o comando

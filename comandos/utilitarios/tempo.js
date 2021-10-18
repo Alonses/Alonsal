@@ -207,45 +207,24 @@ module.exports = {
                                 infos_chuva = infos_chuva.replace("Chuva", "Rain");
                         }
                     }
-
-                    let cidade_encontrada;
-
-                    if(idioma_adotado === "pt-br"){
-                        cidade_encontrada = new MessageEmbed()
-                        .setTitle(":boom: Tempo agora "+ nome_local +""+ nome_pais +" "+ bandeira_pais)
-                        .setColor(0x29BB8E)
-                        .setDescription(horario_local +"` | **"+ tempo_atual +"**")
-                        .setThumbnail("http://openweathermap.org/img/wn/"+ res.weather[0].icon +"@2x.png")
-                        .addFields(
-                            { name: ':thermometer: **Temperatura**', value: ":small_orange_diamond: **Atual**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
-                            { name: emoji_ceu_atual +' **Céu no momento**', value: emoji_nuvens +' **Nuvens: **`'+ res.clouds.all +'%`\n:sunrise: **Na. do sol: **`'+ nascer_sol +"`\n:city_sunset: **Pôr do sol: **`"+ por_sol +"`", inline: true},
-                            { name: ':wind_chime: **Vento**', value: ":airplane: **Velo.: **`"+ res.wind.speed +" km/h`\n:compass: **Direção: ** `"+ direcao_vento +"`", inline: true },
-                        )
-                        .addFields(
-                            { name: emoji_sensacao_termica +' **Sensação Térm.**', value: '**Atual: **`'+ res.main.feels_like +'°C`', inline: true},
-                            { name: emoji_umidade +' **Umidade do ar**', value: "**Atual: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
-                            { name: ':compression: **Pressão do ar**', value: '**Atual: **`'+ res.main.pressure +' kPA`', inline: true}
-                        )
-                        .setFooter(aviso_continente);
-                    }else{
-                        cidade_encontrada = new MessageEmbed()
-                        .setTitle(':boom: Weather now '+ nome_local +''+ nome_pais +' '+ bandeira_pais)
-                        .setColor(0x29BB8E)
-                        .setDescription(horario_local +'` | **'+ tempo_atual +'**')
-                        .setThumbnail('http://openweathermap.org/img/wn/'+ res.weather[0].icon +'@2x.png')
-                        .addFields(
-                            { name: ':thermometer: **Temperature**', value: ":small_orange_diamond: **Current**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
-                            { name: emoji_ceu_atual +' **Sky at the moment**', value: emoji_nuvens +' **Clouds: **`'+ res.clouds.all +'%`\n:sunrise: **Sunrise: **`'+ nascer_sol +"`\n:city_sunset: **Sunset: **`"+ por_sol +"`", inline: true},
-                            { name: ':wind_chime: **Wind**', value: ":airplane: **Vel.: **`"+ res.wind.speed +" km/h`\n:compass: **Direction: ** `"+ direcao_vento +"`", inline: true },
-                        )
-                        .addFields(
-                            { name: emoji_sensacao_termica +' **Thermal sens.**', value: '**Current: **`'+ res.main.feels_like +'°C`', inline: true},
-                            { name: emoji_umidade +' **Air humidity**', value: "**Current: **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
-                            { name: ':compression: **Air pressure**', value: '**Current: **`'+ res.main.pressure +' kPA`', inline: true}
-                        )
-                        .setFooter(aviso_continente);
-                    }
-
+       
+                    let cidade_encontrada = new MessageEmbed()
+                    .setTitle(":boom: "+ utilitarios[8]["tempo_agora"] +" "+ nome_local +""+ nome_pais +" "+ bandeira_pais)
+                    .setColor(0x29BB8E)
+                    .setDescription(horario_local +"` | **"+ tempo_atual +"**")
+                    .setThumbnail("http://openweathermap.org/img/wn/"+ res.weather[0].icon +"@2x.png")
+                    .addFields(
+                        { name: ':thermometer: **'+ utilitarios[8]["temperatura"] +'**', value: ":small_orange_diamond: **"+ utilitarios[12]["atual"] +"**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
+                        { name: emoji_ceu_atual +' **'+ utilitarios[8]["ceu_momento"] +'**', value: emoji_nuvens +' **'+ utilitarios[8]["nuvens"] +': **`'+ res.clouds.all +'%`\n:sunrise: **'+ utilitarios[8]["nas_sol"] +': **`'+ nascer_sol +"`\n:city_sunset: **"+ utilitarios[8]["por_sol"] +": **`"+ por_sol +"`", inline: true},
+                        { name: ':wind_chime: **'+ utilitarios[8]["vento"] +'**', value: ":airplane: **Vel.: **`"+ res.wind.speed +" km/h`\n:compass: **"+ utilitarios[8]["direcao"] +": ** `"+ direcao_vento +"`", inline: true },
+                    )
+                    .addFields(
+                        { name: emoji_sensacao_termica +' **'+ utilitarios[8]["sensacao_termica"] +'.**', value: '**'+ utilitarios[12]["atual"] +': **`'+ res.main.feels_like +'°C`', inline: true},
+                        { name: emoji_umidade +' **'+ utilitarios[8]["umidade_ar"] +'**', value: "**"+ utilitarios[12]["atual"] +": **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
+                        { name: ':compression: **'+ utilitarios[8]["pressao_ar"] +'**', value: '**'+ utilitarios[12]["atual"] +': **`'+ res.main.pressure +' kPA`', inline: true}
+                    )
+                    .setFooter(aviso_continente);
+                   
                     message.reply({ embeds: [cidade_encontrada] });
                 });
             }
