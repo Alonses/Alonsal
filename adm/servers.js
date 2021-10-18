@@ -20,6 +20,6 @@ module.exports = async ({client, caso, guild}) => {
 
     client.channels.cache.get(id_canais[0]).send({ embeds : [embed_sv] });
     
-    if(ocasiao !== "Left")
+    if(caso !== "Left")
         await require('./idioma.js')({client, guild});
 }
