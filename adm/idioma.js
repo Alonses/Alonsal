@@ -1,5 +1,7 @@
 module.exports = async function({client, message, args, guild}) {
 
+    console.log("aq");
+
     const { idioma_servers } = require('../arquivos/json/dados/idioma_servers.json');
     let prefix;
 
@@ -92,6 +94,7 @@ module.exports = async function({client, message, args, guild}) {
 
     fs.writeFile('./arquivos/json/dados/idioma_servers.json', idioma_servidor, (err) => {
         if (err) throw err;
-        console.log("Idioma do servidor [ "+ nome_server +" ] atualizado para "+ idioma_selecionado);
+        
+        client.channels.cache.get('872865396200452127').send(idioma_alterado.slice(0, 9) +" | Idioma do servidor ( `"+ nome_server +"` | `"+ id_server +"` ) atualizado para `"+ idioma_selecionado +"`");
     });
 }

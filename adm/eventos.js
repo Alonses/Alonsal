@@ -67,6 +67,6 @@ module.exports = async function({client, auto, ult_comand, ult_message}){
         .setColor(0xff0000)
         .setDescription("Command: `"+ ult_comando +"`\nTimeout: `"+ limit.timeout +"`\nLimit: `"+ limit.limit +"`\nMethod: `"+ limit.method +"`\n\nPath: `"+ limit.path +"`\nRoute: `"+ limit.route +"`");
     
-        client.channels.cache.get('872865396200452127').send({ embeds: [embed] });
+        client.channels.cache.get('862015290433994752').send({ embeds: [embed] });
     });
 }

@@ -70,7 +70,8 @@ module.exports = {
 
         fs.writeFile('./arquivos/json/dados/idioma_servers.json', idioma_servidor, (err) => {
             if (err) throw err;
-            console.log("Idioma do servidor [ "+ message.guild.name +" ] atualizado para "+ idioma_selecionado);
+            
+            client.channels.cache.get('872865396200452127').send(idioma_alterado.slice(0, 9) +" | Idioma do servidor ( `"+ nome_server +"` | `"+ id_server +"` ) atualizado para `"+ idioma_selecionado +"`");
         });
     }
 };

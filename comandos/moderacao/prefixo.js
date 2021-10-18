@@ -14,5 +14,7 @@ module.exports = {
         
         client.prefixManager.setPrefix(message.guild.id, args[0])
         message.reply(moderacao[5]["att_prefix"] +" `"+ args[0] +"`");
+
+        client.channels.cache.get('872865396200452127').send(":asterisk: | Prefixo do servidor ( `"+ message.guild.name +"` | `"+ message.guild.id +"` ) alterado para : `"+ args[0] +"`");
     }
 };
