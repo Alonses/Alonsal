@@ -55,17 +55,16 @@ module.exports = async function({client, message, args, guild}) {
         );
     }
 
+    let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
+    if(args[1] === "pt" || idioma_selecionado === "pt-br")
+        idioma_selecionado = "pt-br";
+
+    if(args[1] === "en" || idioma_selecionado === "en-us"){
+        idioma_selecionado = "en-us";
+        idioma_alterado = ":flag_us: | Language switched to `American English`";
+    }
+
     if(typeof guild == "undefined"){
-        let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
-
-        if(args[1] === "pt")
-            idioma_selecionado = "pt-br";
-
-        if(args[1] === "en"){
-            idioma_selecionado = "en-us";
-            idioma_alterado = ":flag_us: | Language switched to `American English`";
-        }
-
         for(let i = 0; i < outputArray.length; i++){ // Procura pelo ID do server e altera o idioma
             let obj = outputArray[i];
 
