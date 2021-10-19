@@ -5,15 +5,20 @@ const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 module.exports = {
     name: "userinfo",
     description: "Veja detalhes de algum usuario",
-    aliases: [ "usinfo" ],
-    cooldown: 1,
+    aliases: [ "usinfo", "usuarioinfo", "usif" ],
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
+        
+        const getDateDiff = require('../../adm/diffdatas.js');
+
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         const idioma_selecionado = idioma_servers[message.guild.id];
-
+        const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170"];
+        
         let user = message.mentions.users.first(); // Coleta o ID do usuário
+        let nota_rodape = "";
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
@@ -34,12 +39,14 @@ module.exports = {
             user = message.author;
 
         let avatar_user = user.displayAvatarURL({ size: 2048 }); 
-    
+        
         const url = 'https://cdn.discordapp.com/avatars/'+ user.id +'/'+ user.avatar +'.gif?size=512';
         avatar_user = url;
+        const data_atual = new Date();
 
         let membro_sv = message.guild.members.cache.get(user.id); // Coleta dados como membro
-        data_entrada = new Date(membro_sv.joinedTimestamp);
+        let data_entrada = new Date(membro_sv.joinedTimestamp);
+        let diferenca_entrada = getDateDiff(data_entrada, data_atual, utilitarios);
 
         if(idioma_selecionado == "pt-br")
             data_entrada = data_entrada.getDate() +" de "+ data_entrada.toLocaleString('pt', { month: 'long' }) +" de "+ data_entrada.getFullYear() +" às "+ ("0"+ data_entrada.getHours()).substr(-2) +":"+ ("0"+ data_entrada.getMinutes()).substr(-2);
@@ -47,6 +54,8 @@ module.exports = {
             data_entrada = data_entrada.toLocaleString('en', { month: 'long' }) +" "+ data_entrada.getDate() +", "+ data_entrada.getFullYear() +" at "+ ("0"+ data_entrada.getHours()).substr(-2) +":"+ ("0"+ data_entrada.getMinutes()).substr(-2);
 
         let data_criacao = new Date(user.createdAt); // Criação do servidor
+        let diferenca_criacao = getDateDiff(data_criacao, data_atual, utilitarios);
+
         if(idioma_selecionado == "pt-br")
             data_criacao = data_criacao.getDate() +" de "+ data_criacao.toLocaleString('pt', { month: 'long' }) +" de "+ data_criacao.getFullYear() +" às "+ ("0"+ data_criacao.getHours()).substr(-2) +":"+ ("0"+ data_criacao.getMinutes()).substr(-2);
         else
@@ -63,16 +72,41 @@ module.exports = {
         }else
             avatar_user = "";
 
+        let apelido = user.username;
+        if(membro_sv.nickname != null)
+            apelido = membro_sv.nickname;
+
+        if(user.bot)
+            apelido = ":robot: "+ apelido;
+
+        if(membro_sv.permissions.has("ADMINISTRATOR")){
+            apelido = ":shield: "+ apelido;
+            nota_rodape = utilitarios[13]["moderador"];
+        }
+
+        if(user.id == client.user.id)
+            nota_rodape = utilitarios[13]["alonsal"];
+        
+        if(ids_enceirados.includes(user.id)){
+            if(nota_rodape != "")
+                nota_rodape += ", ";
+            
+            nota_rodape += utilitarios[13]["enceirado"];
+        }
+
+        diferenca_entrada = diferenca_entrada.slice(0, -1);
+        diferenca_criacao = diferenca_criacao.slice(0, -1);
+
         let infos_user = new MessageEmbed()
-        .setTitle(user.username +"#"+ user.discriminator)
+        .setTitle(apelido)
         .setColor(0x29BB8E)
         .setThumbnail(avatar_user)
         .addFields(
-            { name: ':globe_with_meridians: **'+ utilitarios[13]["id_user"] +'**', value: "`"+ user.id +"`", inline: true },
-            { name: ':parachute: **'+ utilitarios[13]["entrada"] +'**', value: `\`${data_entrada}\``, inline: true},
-            { name: ':birthday: **'+ utilitarios[13]["conta_criada"] +'**', value: `\`${data_criacao}\``, inline: true}
+            { name: ':globe_with_meridians: **Discord**', value: "`"+ user.username +"#"+ user.discriminator +"`\n`"+ user.id +"`", inline: true },
+            { name: ':parachute: **'+ utilitarios[13]["entrada"] +'**', value: `\`${data_entrada}\`\n[ \`${diferenca_entrada}\` ]`, inline: true},
+            { name: ':birthday: **'+ utilitarios[13]["conta_criada"] +'**', value: `\`${data_criacao}\`\n[ \`${diferenca_criacao}\` ]`, inline: true}
         )
-        .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));
+        .setFooter(nota_rodape);
         
         return message.reply({embeds: [infos_user]});
     }

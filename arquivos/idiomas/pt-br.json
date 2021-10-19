@@ -274,8 +274,26 @@
         },
         {
             "id_user" : "ID do usuário",
-            "entrada" : "Entrou no servidor",
-            "conta_criada" : "Conta criada"
+            "entrada" : "Entrou em",
+            "conta_criada" : "Conta criada",
+            "alonsal" : "Ó eu ai!",
+            "enceirado" : "eternamente enceirado",
+            "moderador" : "Este membro é um administrador neste servidor"
+        },
+        {
+            "anos" : " anos ",
+            "ano" : " ano ",
+            "meses" : " meses ",
+            "mes" : "mês",
+            "dias" : " dias ",
+            "dia" : " dia ",
+            "horas" : " horas ",
+            "hora" : " hora ",
+            "minutos" : " minutos ",
+            "minuto" : " minuto ",
+            "segundos" : " segundos ",
+            "segundo" : " segundo ",
+            "e" : "e "
         }
     ],
     "musicas" : [
