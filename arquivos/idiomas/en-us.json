@@ -303,8 +303,26 @@
         },
         {
             "id_user" : "User ID",
-            "entrada" : "Entered the server on",
-            "conta_criada" : "Account created"
+            "entrada" : "Entered in",
+            "conta_criada" : "Account created",
+            "alonsal" : "Look at me there!",
+            "enceirado" : "eternally waxed",
+            "moderador" : "This member is an administrator on this server"
+        },
+        {
+            "anos" : " years ",
+            "ano" : " year ",
+            "meses" : " months ",
+            "mes" : "month",
+            "dias" : " days ",
+            "dia" : " day ",
+            "horas" : " hours ",
+            "hora" : " hour ",
+            "minutos" : " minutes ",
+            "minuto" : " minute ",
+            "segundos" : " seconds ",
+            "segundo" : " second ",
+            "e" : "and "
         }
     ],
     "musicas" : [

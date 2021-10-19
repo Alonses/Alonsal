@@ -5,7 +5,7 @@ const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text
 module.exports = {
     name: "Emojis",
     description: "Adicione e remova emojis",
-    aliases: [ "addemoji", "moji", "ddmoji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
+    aliases: [ "addemoji", "addmoji", "moji", "ddmoji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
     cooldown: 1,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
