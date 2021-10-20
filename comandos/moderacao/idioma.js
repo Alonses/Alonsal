@@ -17,8 +17,8 @@ module.exports = {
 
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_padrao +'.json');
 
-        if(!message.member.permissions.has('MANAGE_GUILD'))
-            return message.reply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]);
+        if(!message.member.permissions.has('MANAGE_GUILD') && message.author.id !== "665002572926681128")
+            return message.reply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]); // Libera configuração para o Slondo e adms apenas
 
         let idioma_selecionado;
 
@@ -54,7 +54,7 @@ module.exports = {
         }
 
         message.reply(idioma_alterado);
-
+        
         let idioma_servidor = JSON.stringify(outputArray, null, 5);
 
         idioma_servidor = idioma_servidor.replace("[", "");
