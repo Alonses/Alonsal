@@ -146,7 +146,8 @@
         },
         {
             "aviso_1" : "Informe um cargo para ser notificado",
-            "anuncio_games" : "A partir de agora, este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando `.angm rem` para remover as atualizações.",
+            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando ",
+            "anuncio_games_2" : " para remover as atualizações.",
             "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
         }
     ],
