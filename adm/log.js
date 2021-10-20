@@ -16,6 +16,8 @@ module.exports = async ({client, message, content}) => {
             ampm = "pm";
         }
 
+        const comando_inserido = content.replaceAll("`", "'");
+
         const date = d.getDate();
         const month = d.toLocaleString('en-US', { month: 'long' });
         const year = d.getFullYear();
@@ -23,7 +25,7 @@ module.exports = async ({client, message, content}) => {
         const embed = new MessageEmbed()
         .setTitle("> New interaction")
         .setColor(0x29BB8E)
-        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ content +"`\n:alarm_clock: Time/date: `"+ hr +":"+ min + ampm +" | "+ day +" - "+ date +" "+ month +" "+ year +"`");
+        .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ comando_inserido +"`\n:alarm_clock: Time/date: `"+ hr +":"+ min + ampm +" | "+ day +" - "+ date +" "+ month +" "+ year +"`");
 
         client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
     }
