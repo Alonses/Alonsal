@@ -41,6 +41,13 @@ client.on("ready", async () => {
 });
 
 client.on("messageCreate", async message => {
+
+    if (message.channel.type === "text") {
+        const permissions = message.channel.permissionsFor(message.client.user);
+
+        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+    }
+    
     if (message.content.includes(client.user.id) && !message.content.includes("usinfo") && !message.content.includes("userinfo")) { // Responde as mensagens em que é marcado
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
