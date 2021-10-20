@@ -1,7 +1,7 @@
 module.exports = {
     name: "anungames",
     description: "receba atts de jogos gratuitos sempre que houver",
-    aliases: [ "angm" ],
+    aliases: [ "angm", "ngm" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
