@@ -79,7 +79,7 @@ module.exports = {
             client.channels.cache.get('872865396200452127').send(mensagem);
         });
 
-        let feedback_user = moderacao[6]["anuncio_games"] +"`"+ prefix +"angm rem`"+ moderacao[6]["anuncio_games_2"];
+        let feedback_user = moderacao[6]["anuncio_games"] +"`"+ prefix +"ngm rem`"+ moderacao[6]["anuncio_games_2"];
 
         if(args[0] === "rem")
             feedback_user = moderacao[6]["anuncio_off"];
