@@ -3,12 +3,14 @@ module.exports = {
     description: "alterar o prefixo do alonsal",
     cooldown: 5,
     aliases: [ "setprefix", "prefix", "px" ],
-    permissions: [ "ADMINISTRATOR" ],
+    permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
         
+        if(!message.member.permissions.has("ADMINISTRATOR") && message.author.id !== "665002572926681128") return message.reply(moderacao[5]["moderadores"]); // Libera configuração para o Slondo e adms apenas
+
         if(args.length !== 1)
             message.reply(moderacao[5]["error_1"] +" `+px`");
         

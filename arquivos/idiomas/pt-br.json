@@ -141,7 +141,13 @@
         },
         {
             "error_1" : "Informe um prefixo para ser usado, por exemplo, ",
-            "att_prefix" : "Prefixo deste servidor alterado para :"
+            "att_prefix" : "Prefixo deste servidor alterado para :",
+            "moderadores" : "Apenas moderadores podem executar este comando"
+        },
+        {
+            "aviso_1" : "Informe um cargo para ser notificado",
+            "anuncio_games" : "A partir de agora, este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando `.angm rem` para remover as atualizações.",
+            "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
         }
     ],
     "utilitarios" : [
@@ -294,6 +300,10 @@
             "segundos" : " segundos ",
             "segundo" : " segundo ",
             "e" : "e "
+        },
+        {
+            "id_canal" : "ID do canal",
+            "idioma" : "Idioma favorito"
         }
     ],
     "musicas" : [

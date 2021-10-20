@@ -8,11 +8,11 @@ module.exports = {
         
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        if(!permissions.has(['KICK_MEMBERS', 'BAN_MEMBERS'])) // Permissão para gerenciar banir e expulsar membros
-            return message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
-
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        
+        if(!permissions.has(['KICK_MEMBERS', 'BAN_MEMBERS'])) // Permissão para gerenciar banir e expulsar membros
+            return message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
 
         let alvo = message.guild.member(message.mentions.members.first()) 
         

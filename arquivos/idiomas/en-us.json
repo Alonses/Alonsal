@@ -141,7 +141,14 @@
         },
         {
             "error_1" : "Enter a prefix to be used, for example, ",
-            "att_prefix" : "The prefix for this server changed to :"
+            "att_prefix" : "The prefix for this server changed to :",
+            "moderadores" : "Only moderators can run this command"
+        },
+        {
+            "aviso_1" : "Enter a tag to be notified",
+            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command ",
+            "anuncio_games_2" : " to disable these updates.",
+            "anuncio_off" : "Game notifications turned off for this channel/server"
         }
     ],
     "utilitarios" : [
@@ -323,6 +330,10 @@
             "segundos" : " seconds ",
             "segundo" : " second ",
             "e" : "and "
+        },
+        {
+            "id_canal" : "Channel ID",
+            "idioma" : "Favorite language"
         }
     ],
     "musicas" : [
