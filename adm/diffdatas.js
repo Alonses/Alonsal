@@ -1,21 +1,22 @@
 module.exports = (date1, date2, utilitarios) => {
 
-    const now = new Date(date1); // Data de hoje
-    const past = new Date(date2); // Outra data no passado
+    const now = new Date(date2); // Data de hoje
+    const past = new Date(date1); // Outra data no passado
     const timediff = Math.abs(now.getTime() - past.getTime()); // Subtrai uma data pela outra
  
     let diferencas = [];
+    const diferenca_datas = new Date(timediff);
+    
+    diferencas.push(diferenca_datas.getYear()); // Ano 0
+    diferencas.push(diferenca_datas.getMonth()); // Mes 1
+    diferencas.push(diferenca_datas.getDate()); // Dia 2
+    diferencas.push(diferenca_datas.getHours()); // Hora 3
+    diferencas.push(diferenca_datas.getMinutes()); // Minuto 4
+    diferencas.push(diferenca_datas.getSeconds()); // Segundo 5
 
-    diferencas.push(Math.floor(timediff / (1000 * 60 * 60 * 24 * 30 * 12))); // Ano 0
-    diferencas.push(Math.floor(timediff / (1000 * 60 * 60 * 24 * 30) % 12)); // Mes 1
-    diferencas.push(Math.floor(timediff / 1000 / 60 / (60 * 24))); // Dia 2
-    diferencas.push(Math.floor(timediff / (1000 * 60 * 60) % 24)); // Hora 3
-    diferencas.push(Math.floor(timediff / (1000 * 60) % 60)); // Minuto 4
-    diferencas.push(Math.floor((timediff / 1000) % 60)); // Segundo 5
+    diferencas[0] = diferencas[0] - 70;
 
     let retorno_ajustado = "";
-
-    diferencas[2] = diferencas[2] % 30;
 
     if(diferencas[0] > 1)
         retorno_ajustado = diferencas[0] +""+ utilitarios[14]["anos"];

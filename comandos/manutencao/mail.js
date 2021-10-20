@@ -101,7 +101,7 @@ module.exports = {
 
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
-        else    
-            await message.reply(":tools: | " + manutencao[3]["aviso_3"]).then(message => message.delete({timeout: 5000}));
+        else
+            message.reply(":tools: | " + manutencao[3]["aviso_3"]);
     }
 };
