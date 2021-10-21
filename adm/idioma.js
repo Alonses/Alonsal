@@ -39,5 +39,13 @@ module.exports = async function({client, message, args, guild}) {
         client.channels.cache.get('872865396200452127').send(bandeira_pais +" | Idioma do servidor ( `"+ guild.name +"` | `"+ guild.id +"` ) definido como `"+ idioma_definido +"`");
     });
     
-    client.channels.cache.get(guild.systemChannelId).send("Obrigado por me adicionar! Utilize o `.ah` para ver minha lista de comandos, você também pode alterar meu prefixo com o `.apx <prefixo>` ou meu idioma com o `.alang en`!\n\nThanks for adding me! Use `.ah` to see my command list, you can also change my prefix with `.apx <prefix>` or my language with `.alang pt`!");
+    let canal = client.channels.cache.get(guild.systemChannelId)
+    
+    if (canal.type === "GUILD_TEXT") {
+        const permissions = canal.permissionsFor(client.user);
+
+        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+    }
+    
+    canal.send("Obrigado por me adicionar! Utilize o `.ah` para ver minha lista de comandos, você também pode alterar meu prefixo com o `.apx <prefixo>` ou meu idioma com o `.alang en`!\n\nThanks for adding me! Use `.ah` to see my command list, you can also change my prefix with `.apx <prefix>` or my language with `.alang pt`!");
 }
