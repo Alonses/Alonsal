@@ -45,8 +45,6 @@ module.exports = async function({client, message, args, guild}) {
     
     let canal = await client.channels.cache.get(guild.systemChannelId);
     
-    console.log(canal.type);
-    
     if (canal.type === "GUILD_TEXT") {
         const permissions = canal.permissionsFor(client.user);
 
