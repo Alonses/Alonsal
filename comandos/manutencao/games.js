@@ -1,4 +1,4 @@
-const { MessageAttachment, MessageManager } = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 
 module.exports = {
     name: "mail_games",
@@ -116,7 +116,14 @@ module.exports = {
                     texto_anuncio += "\n<< <"+ args[3] +"> >>";
             }
 
-            client.channels.cache.get(resultado[i]).send({content: texto_anuncio, files: [img_game] });
+            let canal_alvo = client.channels.cache.get(resultado[i]);
+
+            if(canal_alvo.type === "GUILD_TEXT"){
+                const permissions = canal_alvo.permissionsFor(client.user);
+        
+                if(permissions.has("SEND_MESSAGES")) 
+                    canal_alvo.send({content: texto_anuncio}); // Permissão para enviar mensagens no canal
+            }
 
             i++;
         };

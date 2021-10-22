@@ -6,6 +6,10 @@ module.exports = async function({client, message, args, guild}) {
     let idioma_definido = guild.preferredLocale.toLocaleLowerCase();
     let bandeira_pais = ":flag_"+ idioma_definido.slice(3, 7) +":";
 
+    let prefix = client.prefixManager.getPrefix(guild.id);
+    if(!prefix)
+        prefix = ".a";
+    
     function constructJson(jsonKey, jsonValue){
         return { [jsonKey] : jsonValue }
     }
@@ -47,5 +51,5 @@ module.exports = async function({client, message, args, guild}) {
         if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
     
-    canal.send("Obrigado por me adicionar! Utilize o `.ah` para ver minha lista de comandos, você também pode alterar meu prefixo com o `.apx <prefixo>` ou meu idioma com o `.alang en`!\n\nThanks for adding me! Use `.ah` to see my command list, you can also change my prefix with `.apx <prefix>` or my language with `.alang pt`!");
+    canal.send("Obrigado por me adicionar! Utilize o `"+ prefix +"h` para ver minha lista de comandos, você também pode alterar meu prefixo com o `"+ prefix +"px <prefixo>` ou meu idioma com o `"+ prefix +"lang en`!\n\nThanks for adding me! Use `"+ prefix +"h` to see my command list, you can also change my prefix with `"+ prefix +"px <prefix>` or my language with `"+ prefix +"lang pt`!");
 }

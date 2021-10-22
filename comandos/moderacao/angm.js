@@ -5,7 +5,7 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-         
+       
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 

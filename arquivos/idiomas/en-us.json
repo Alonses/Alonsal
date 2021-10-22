@@ -334,6 +334,18 @@
         {
             "id_canal" : "Channel ID",
             "idioma" : "Favorite language"
+        },
+        {
+            "undefined" : "Unknow",
+            "error_1" : "Profile not found",
+            "error_2" : "This profile exists but there was an error loading it",
+            "rodape" : "Some (or all) of this user's data is not available in his profile",
+            "nivel" : "Level",
+            "jogos" : "Games",
+            "jogos_perfeitos" : "Completed games",
+            "conquistas" : "Achievements",
+            "porcentagem" : "Percentage",
+            "insignias" : "Badges"
         }
     ],
     "musicas" : [

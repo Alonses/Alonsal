@@ -305,6 +305,18 @@
         {
             "id_canal" : "ID do canal",
             "idioma" : "Idioma favorito"
+        },
+        {
+            "undefined" : "Desconhecido",
+            "error_1" : "Perfil não encontrado",
+            "error_2" : "Este perfil existe mas houve um erro ao carregar ele",
+            "rodape" : "Alguns (ou todos os) dados deste usuário não estão disponíveis no perfil do mesmo",
+            "nivel" : "Nível",
+            "jogos" : "Jogos",
+            "jogos_perfeitos" : "Jogos perfeitos",
+            "conquistas" : "Conquistas",
+            "porcentagem" : "Porcentagem",
+            "insignias" : "Insígnias"
         }
     ],
     "musicas" : [
