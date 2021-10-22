@@ -11,8 +11,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
 
         let content = '';
@@ -37,7 +36,7 @@ module.exports = {
             const termo_pesquisado_cc = content.slice(1);
             const username = `${message.author.username}`;
 
-            fetch(url, {headers:{"accept-language": idioma_servers}})
+            fetch(url, {headers:{"accept-language": client.idioma.getLang(message.guild.id)}})
             .then(response => response.json())
             .then(async res => {
             

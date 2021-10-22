@@ -6,8 +6,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { piadas } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/joke.json");
+        const { piadas } = require("../../arquivos/json/text/" + client.idioma.getLang(message.guild.id) + "/joke.json");
     
         message.reply(":black_joker: | "+ piadas[Math.round((piadas.length - 1) * Math.random())]);
     }

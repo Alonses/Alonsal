@@ -1,6 +1,4 @@
-const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
-const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
  
 module.exports = {
     name: "channelinfo",
@@ -10,8 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let nsfw = utilitarios[9]["nao"];
         if(message.channel.nsfw)
