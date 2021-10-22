@@ -345,7 +345,8 @@
             "jogos_perfeitos" : "Completed games",
             "conquistas" : "Achievements",
             "porcentagem" : "Percentage",
-            "insignias" : "Badges"
+            "insignias" : "Badges",
+            "suspeito" : "This user may be using illegal means to get achievements"
         }
     ],
     "musicas" : [
