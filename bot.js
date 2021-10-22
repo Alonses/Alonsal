@@ -2,7 +2,7 @@ const handler = require("wax-command-handler");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-let { token, prefix, pastas, comandos_musicais } = require('./config.json');
+let { token, token_2, prefix, pastas, comandos_musicais } = require('./config.json');
 const {idioma_servers} = require("./arquivos/json/dados/idioma_servers.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
@@ -155,4 +155,4 @@ handler.events.on("no_perm", (message, permission) => {
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
 
-client.login(token);
+client.login(token_2);

@@ -11,6 +11,7 @@ module.exports = {
         
         const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const idioma_definido = idioma_servers[message.guild.id];
 
         let buscar_id = "https://www.steamidfinder.com/lookup/"+ args[0];
         let id_usuario, usuario_alvo;
@@ -39,8 +40,16 @@ module.exports = {
                     
                     if(status === "Error") return message.reply(utilitarios[16]["error_1"]);
 
-                    let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, porcentagem_conquistas, capturas_user, videos_user;
+                    // const fs = require('fs');
+
+                    // fs.writeFile('./comandos/utilitarios/site2.html', res, (err) => {
+                    //     if (err) throw err;
+                    // });
+                    
+                    let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, porcentagem_conquistas, capturas_user, videos_user, artes_user;
+                    let jogo_favorito = "", tempo_jogado = "";
                     let nota_rodape = message.author.username;
+                    let anos_servico = "";
 
                     try{
                         bandeira_user = res.split("<img class=\"profile_flag\"")[1];
@@ -88,6 +97,12 @@ module.exports = {
                         jogos_user = parseInt(jogos_user);
                     }catch(err){
                         jogos_user = "-";
+
+                        if(res.includes("<div class=\"label\">Games Owned</div>")){
+                            jogos_user = res.split("<div class=\"label\">Games Owned</div>")[0];
+                            jogos_user = jogos_user.slice(jogos_user.length - 120).split("<div class=\"value\">")[1];
+                            jogos_user = parseInt(jogos_user.split("</div>")[0]);
+                        }
                     }
 
                     try{
@@ -99,9 +114,13 @@ module.exports = {
                     }
                     
                     try{
-                        conquistas_user = res.split("<div class=\"label\">Achievements</div>")[0];
-                        conquistas_user = conquistas_user.split("<div class=\"value\">")[1];
-                        conquistas_user = conquistas_user.split("</div>")[0];
+                        if(res.includes("<div class=\"label\">Achievements</div>")){
+                            conquistas_user = res.split("<div class=\"label\">Achievements</div>")[0];
+                            conquistas_user = conquistas_user.slice(conquistas_user.length - 120);
+                            conquistas_user = conquistas_user.split("<div class=\"value\">")[1];
+                            conquistas_user = conquistas_user.split("</div>")[0];
+                        }else
+                            conquistas_user = "-";
                     }catch(err){
                         conquistas_user = "-";
                     }
@@ -148,29 +167,81 @@ module.exports = {
                         videos_user = "-";
                     }
 
-                    if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || videos_user === "-")
+                    try{
+                        artes_user = res.split("<span class=\"count_link_label\">Artwork</span>&nbsp;")[1];
+                        artes_user = artes_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0];
+                        artes_user = parseInt(artes_user);
+                    }catch(err){
+                        artes_user = "-";
+                    }
+
+                    if(res.includes("<div class=\"showcase_item_detail_title\">")){
+                        let dados_jogo_fav = res.split("<div class=\"showcase_item_detail_title\">")[1];
+
+                        jogo_favorito = dados_jogo_fav;
+                        jogo_favorito = jogo_favorito.split("</a>")[0];
+                        jogo_favorito = jogo_favorito.split("\">")[1];
+                        jogo_favorito = jogo_favorito.replaceAll(/\t/g, "");
+
+                        jogo_favorito = jogo_favorito.replaceAll(/[\n\r]/g, "");
+
+                        tempo_jogado = dados_jogo_fav.split("<div class=\"showcase_stat\">")[1];
+                        tempo_jogado = tempo_jogado.split("</div>")[0];
+                        tempo_jogado = tempo_jogado.replace("<div class=\"value\">", "");
+                        tempo_jogado = tempo_jogado.replace(",", ".");
+
+                        descriminador_tempo = dados_jogo_fav.split("<div class=\"label\">")[1];
+                        descriminador_tempo = descriminador_tempo.split("</div>")[0];
+                        descriminador_tempo = descriminador_tempo.split(" ")[0].toLocaleLowerCase();
+
+                        if(idioma_definido === "pt-br")
+                            descriminador_tempo = utilitarios[16][descriminador_tempo];
+
+                        tempo_jogado = parseFloat(tempo_jogado);
+
+                        tempo_jogado = tempo_jogado +" "+ descriminador_tempo;
+                    }
+
+                    if(res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")){
+
+                        anos_servico = res.split(" data-tooltip-html=\"Years of Service&lt;br&gt;")[1];
+                        anos_servico = anos_servico.split(".\" >")[0];
+                        anos_servico = anos_servico.split("Member since ")[1];
+                    }
+
+                    if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || videos_user === "-" || artes_user == "-")
                         nota_rodape = utilitarios[16]["rodape"];
 
                     if(jogos_user < jogos_perfeitos)
                         nota_rodape = utilitarios[16]["suspeito"];
 
-                    const usuario_steam = new MessageEmbed()
+                    let usuario_steam = new MessageEmbed()
                     .setTitle(nome_user +""+ bandeira_user)
                     .setURL(usuario_alvo)
                     .setThumbnail(avatar_user)
                     .setColor(0x29BB8E)
                     .addFields(
                         { name: ":ninja: "+ utilitarios[16]["nivel"], value: `**`+ utilitarios[12]["atual"] +`: **\`${nivel_user}\``, inline: true},
-                        { name: ":video_game: "+ utilitarios[16]["jogos"] +" ( "+ jogos_user +" )", value: `:pencil: **Reviews: **\`${reviews_user}\``, inline: true},
+                        { name: ":video_game: "+ utilitarios[16]["jogos"] +" ( "+ jogos_user +" )", value: `:pencil: **`+ utilitarios[16]["analises"] +`: **\`${reviews_user}\``, inline: true},
                         { name: ":red_envelope: "+ utilitarios[16]["insignias"], value: `**Total: **\`${insignias_user}\``, inline: true},
                     )
                     .addFields(
-                        { name: ":trophy: "+ utilitarios[16]["conquistas"], value: `**Total :** \`${conquistas_user}\`\n**`+ utilitarios[16]["porcentagem"] +`:** \`${porcentagem_conquistas}\`\n**`+ utilitarios[16]["jogos_perfeitos"] +`:** \`${jogos_perfeitos}\``, inline: true},
-                        { name: ":piñata: Criações", value: `:frame_photo: **Screenshots: ** \`${capturas_user}\`\n:film_frames: **Videos: **\`${videos_user}\``, inline: true},
+                        { name: ":trophy: "+ utilitarios[16]["conquistas"], value: `**Total: **\`${conquistas_user}\`\n**`+ utilitarios[16]["porcentagem"] +`:** \`${porcentagem_conquistas}\`\n**`+ utilitarios[16]["jogos_perfeitos"] +`: **\`${jogos_perfeitos}\``, inline: true},
+                        { name: ":piñata: "+ utilitarios[16]["criacoes"], value: `:frame_photo: **Screenshots: ** \`${capturas_user}\`\n:film_frames: **Videos: **\`${videos_user}\`\n:paintbrush: **`+ utilitarios[16]["artes"] +`: **\`${artes_user}\``, inline: true},
                         { name: ":mobile_phone_off: Status", value: `\`${status_atual}\``, inline: true}
                     )
                     .setFooter(nota_rodape, message.author.avatarURL({ dynamic:true }));
 
+                    if(jogo_favorito !== "")
+                        usuario_steam.addFields(
+                            { name: ":star: "+ utilitarios[16]["jogo_favorito"], value: `**`+ utilitarios[16]["nome"] +`: **\`${jogo_favorito}\`\n:alarm_clock: **`+ utilitarios[16]["tempo_jogado"] +`: **\`${tempo_jogado}\``, inline: false}
+                        )
+
+                    if(anos_servico !== "")
+                        usuario_steam.addFields(
+                            { name: ":birthday: "+ utilitarios[13]["entrada"] , value: `\`${anos_servico}\``, inline: true}
+                        )
+                    
                     message.reply({ embeds: [usuario_steam] });
                 });
             });

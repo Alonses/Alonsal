@@ -340,13 +340,19 @@
             "error_1" : "Profile not found",
             "error_2" : "This profile exists but there was an error loading it",
             "rodape" : "Some (or all) of this user's data is not available in his profile",
+            "analises" : "Reviews",
             "nivel" : "Level",
             "jogos" : "Games",
             "jogos_perfeitos" : "Completed games",
             "conquistas" : "Achievements",
             "porcentagem" : "Percentage",
             "insignias" : "Badges",
-            "suspeito" : "This user may be using illegal means to get achievements"
+            "criacoes" : "Creations",
+            "artes" : "Artworks",
+            "suspeito" : "This user may be using illegal means to get achievements",
+            "jogo_favorito" : "Favorite game",
+            "nome" : "Name",
+            "tempo_jogado" : "Time played"
         }
     ],
     "musicas" : [
