@@ -11,10 +11,9 @@ module.exports = {
     async execute(client, message, args) {
         
         const getDateDiff = require('../../adm/diffdatas.js');
+        const idioma_selecionado = client.idioma.getLang(message.guild.id);
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_selecionado +'.json');
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        const idioma_selecionado = idioma_servers[message.guild.id];
         const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170"];
         
         let user = message.mentions.users.first(); // Coleta o ID do usuário
@@ -84,11 +83,11 @@ module.exports = {
             nota_rodape = utilitarios[13]["moderador"];
         }
 
-        if(user.id == client.user.id)
+        if(user.id === client.user.id)
             nota_rodape = utilitarios[13]["alonsal"];
         
         if(ids_enceirados.includes(user.id)){
-            if(nota_rodape != "")
+            if(nota_rodape !== "")
                 nota_rodape += ", ";
             
             nota_rodape += utilitarios[13]["enceirado"];

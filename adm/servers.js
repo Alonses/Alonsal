@@ -19,7 +19,15 @@ module.exports = async ({client, caso, guild}) => {
         .setTimestamp();
 
     client.channels.cache.get(id_canais[0]).send({ embeds : [embed_sv] });
-    
-    if(caso !== "Left")
-        await require('./idioma.js')({client, guild});
+
+    const canal = await client.channels.cache.get(guild.systemChannelId);
+    const prefix = client.prefixManager.getPrefix(guild.id)
+
+    if (canal.type === "GUILD_TEXT") {
+        const permissions = canal.permissionsFor(client.user);
+
+        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+
+        canal.send("Obrigado por me adicionar! Utilize o `"+ prefix +"h` para ver minha lista de comandos, você também pode alterar meu prefixo com o `"+ prefix +"px <prefixo>` ou meu idioma com o `"+ prefix +"lang en`!\n\nThanks for adding me! Use `"+ prefix +"h` to see my command list, you can also change my prefix with `"+ prefix +"px <prefix>` or my language with `"+ prefix +"lang pt`!");
+    }
 }

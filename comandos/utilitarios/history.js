@@ -12,13 +12,10 @@ module.exports = {
     cooldown: 6,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        const idioma_definido = idioma_servers[message.guild.id];
+        const idioma_definido = client.idioma.getLang(message.guild.id);
+        const { utilitarios } = require('../../arquivos/idiomas/'+  idioma_definido +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
 
         let datas = [];
         let fontes = [];
@@ -29,24 +26,24 @@ module.exports = {
 
         if(args.length > 0){
             if(!args[0].includes("-")) // Formato incorreto
-                return message.lineReply(":warning: | "+ utilitarios[10]["aviso_1"].replaceAll(".a", prefix));
+                return message.reply(":warning: | "+ utilitarios[10]["aviso_1"].replaceAll(".a", prefix));
 
             let data_pesquisada = args[0].split("-");
             dia = data_pesquisada[0];
             mes = data_pesquisada[1];
 
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
-                return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
+                return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
             
 
             if(idioma_definido === "pt-br"){
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
-                    return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
+                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
                 
                 url_completa += dia +"/"+ mes;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
-                    return message.lineReply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
+                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
             
                 url_completa += mes +"/"+ dia;
 

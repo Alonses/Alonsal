@@ -8,8 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { musicas } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { musicas } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
         
         return message.reply(":octagonal_sign: | "+ musicas[0]["aviso_5"]);
         

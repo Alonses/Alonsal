@@ -9,14 +9,13 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        let user = message.mentions.users.first(); // Coleta o ID do usuário
+        let user = message.mentions.users.first() || message.author; // Coleta o ID do usuário
 
-        if(!user && args[0] != null){
+        if(!user && args[0] !== null){
             if(isNaN(args[0]))
                 return message.reply(":octagonal_sign: | "+ utilitarios[4]["id_user"]);
 

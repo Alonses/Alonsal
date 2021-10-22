@@ -5,11 +5,10 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-       
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
 
-        if(args.length != 1) return message.reply(moderacao[6]["aviso_1"]);
+        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+
+        if(args.length !== 1) return message.reply(moderacao[6]["aviso_1"]);
 
         if(!message.member.permissions.has("ADMINISTRATOR") && message.author.id !== "665002572926681128") return message.reply(moderacao[5]["moderadores"]); // Libera configuração para o Slondo e adms apenas
 
@@ -78,6 +77,8 @@ module.exports = {
 
             client.channels.cache.get('872865396200452127').send(mensagem);
         });
+
+        delete require.cache[require.resolve('../../arquivos/json/dados/canal_games.json')];
 
         let feedback_user = moderacao[6]["anuncio_games"] +"`"+ prefix +"ngm rem`"+ moderacao[6]["anuncio_games_2"];
 

@@ -10,7 +10,7 @@ module.exports = {
 
         if(message.author.id !== "665002572926681128") return;
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
+        const lang = client.idioma.getLang(message.guild.id);
         const { canal_games } = require('../../arquivos/json/dados/canal_games.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -92,11 +92,10 @@ module.exports = {
             
             let servidor = client.channels.cache.get(resultado[i]);
             servidor = servidor.guild.id;
-            let idioma_definido = idioma_servers[servidor];
 
             let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ resultado[i + 1] +">\n<< <"+ args[3] +"> >>";
 
-            if(idioma_definido === "en-us")
+            if(lang === "en-us")
                 texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ resultado[i + 1] +">\n<< <"+ args[3] +"> >>";
 
             if(args.length > 4){
@@ -104,7 +103,7 @@ module.exports = {
 
                 texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
 
-                if(idioma_definido === "en-us")
+                if(lang === "en-us")
                     texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
 
                 if(typeof resultado[i + 1] !== "undefined")
@@ -126,11 +125,11 @@ module.exports = {
             }
 
             i++;
-        };
+        }
         
         let aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ resultado.length/2 +"` canais clientes";
 
-        if(resultado.length/2 == 1)
+        if(resultado.length === 2)
             aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ resultado.length/2 +"` canal cliente";
 
         client.channels.cache.get('872865396200452127').send(aviso);
