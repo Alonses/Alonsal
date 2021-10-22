@@ -6,8 +6,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
         
         if(!message.member.permissions.has("ADMINISTRATOR") && message.author.id !== "665002572926681128") return message.reply(moderacao[5]["moderadores"]); // Libera configuração para o Slondo e adms apenas
 

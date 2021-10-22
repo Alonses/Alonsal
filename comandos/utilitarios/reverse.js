@@ -8,13 +8,12 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+  client.idioma.getLang(message.guild.id) +'.json');
 
         if(args.length > 0){
             let ordena = "";
 
-            for(var x = 0; x < args.length; x++){
+            for(let x = 0; x < args.length; x++){
                 ordena += args[x] + " ";
             }
 
@@ -23,8 +22,8 @@ module.exports = {
             let texto = ordena.split('');
             texto = texto.reverse();
 
-            var texto_ordenado = "";
-            for(var i = 0; i < texto.length; i++){
+            let texto_ordenado = "";
+            for(let i = 0; i < texto.length; i++){
                 texto_ordenado += texto[i];
             }
 

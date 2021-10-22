@@ -6,8 +6,7 @@ module.exports = {
     permissions: [ "ADMINISTRATOR" ],
     async execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)

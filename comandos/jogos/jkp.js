@@ -5,16 +5,15 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+        const lang = client.idioma.getLang(message.guild.id);
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        let idioma_definido = idioma_servers[message.guild.id];
+        const { jogos } = require('../../arquivos/idiomas/'+ lang +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
             
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
-        if(idioma_definido === "en-us")
+        if(lang === "en-us")
             jooj = ["rock", "paper", "scissors", "rock"];
 
         let emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
@@ -24,7 +23,7 @@ module.exports = {
             player = jooj.indexOf(args[0].toLowerCase());
 
         if(player === -1) // Valor não encontrado
-            return message.lineReply(jogos[3]["aviso_1"].replaceAll(".a", prefix));
+            return message.reply(jogos[3]["aviso_1"].replaceAll(".a", prefix));
 
         let bot = Math.round(2 * Math.random());
         let ganhador = ":thumbsdown:";
@@ -40,7 +39,7 @@ module.exports = {
 
         let mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
 
-        if(idioma_definido === "en-us")
+        if(lang === "en-us")
             mensagem = "Jokenpo! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- You\n[ " + ganhador +" ]";
 
         message.reply(mensagem);

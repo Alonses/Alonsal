@@ -9,8 +9,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { utilitarios } = require('../../arquivos/idiomas/'+  client.idioma.getLang(message.guild.id) +'.json');
 
         let ordena = "";
         let aviso = "";

@@ -10,22 +10,19 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
 
         if(message.content.includes(prefix +"moji")){
             if(typeof args[0] !== "undefined"){
                 let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
 
                 if(!match) // Padrão de emoji incorreto
-                    return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
+                    return message.reply(":octagonal_sign: | "+ moderacao[2]["aviso_1"]);
                 
                 let url = "https://cdn.discordapp.com/emojis/"+ match[3] + ".gif";
 
@@ -40,7 +37,7 @@ module.exports = {
                     message.reply({ attachments: [imagem_emoji] });
                 });
             }else
-                message.lineReply(moderacao[2]["aviso_2"] +" `"+ prefix+"moji `"+ emoji_dancando +"` `");
+                message.reply(moderacao[2]["aviso_2"] +" `"+ prefix+"moji `"+ emoji_dancando +"` `");
             
             return;
         }
@@ -110,10 +107,10 @@ module.exports = {
             // Remover emojis
             if(message.content.startsWith(prefix +"rmoji") || message.content.startsWith(prefix +"removemoji")){
                 if(args.length < 1) // Argumentos insuficientes
-                    return message.lineReply(":warning: | "+ moderacao[2]["aviso_6"] +" `"+ prefix +"rmoji `"+ emoji_nao_encontrado +"` `");
+                    return message.reply(":warning: | "+ moderacao[2]["aviso_6"] +" `"+ prefix +"rmoji `"+ emoji_nao_encontrado +"` `");
 
                 if(!match) // Confirma que a entrada é um emoji
-                    return message.lineReply(":octagonal_sign: | "+ moderacao[2]["aviso_7"]);
+                    return message.reply(":octagonal_sign: | "+ moderacao[2]["aviso_7"]);
 
                 // Coletando o emoji do cache do bot
                 emoji = client.emojis.cache.get(match[3]);

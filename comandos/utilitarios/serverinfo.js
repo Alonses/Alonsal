@@ -11,10 +11,8 @@ module.exports = {
     async execute(client, message, args) {
 
         const getDateDiff = require('../../adm/diffdatas.js');
-
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        const idioma_selecionado = idioma_servers[message.guild.id];
+        const idioma_selecionado = client.idioma.getLang(message.guild.id);
+        const { utilitarios } = require('../../arquivos/idiomas/'+  idioma_selecionado +'.json');
 
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -27,7 +25,7 @@ module.exports = {
         const guild = message.guild;
 
         let dono_sv = guild.ownerId;
-        dono_membro = await guild.members.fetch(dono_sv);
+        let dono_membro = await guild.members.fetch(dono_sv);
         dono_sv = "`"+ dono_membro.user.username + "#"+ dono_membro.user.discriminator +"`\n`"+ dono_sv +"`";
 
         let icone_server = guild.iconURL({ size: 2048 });
@@ -43,7 +41,7 @@ module.exports = {
         let data_entrada = new Date(guild.joinedTimestamp); // Entrada do bot no server
         let diferenca_entrada = getDateDiff(data_entrada, data_atual, utilitarios);
 
-        if(idioma_selecionado == "pt-br")
+        if(idioma_selecionado === "pt-br")
             data_entrada = data_entrada.getDate() +" de "+ data_entrada.toLocaleString('pt', { month: 'long' }) +" de "+ data_entrada.getFullYear() +" às "+ ("0"+ data_entrada.getHours()).substr(-2) +":"+ ("0"+ data_entrada.getMinutes()).substr(-2);
         else
             data_entrada = data_entrada.toLocaleString('en', { month: 'long' }) +" "+ data_entrada.getDate() +", "+ data_entrada.getFullYear() +" at "+ ("0"+ data_entrada.getHours()).substr(-2) +":"+ ("0"+ data_entrada.getMinutes()).substr(-2);
@@ -51,7 +49,7 @@ module.exports = {
         let data_criacao = new Date(guild.createdAt); // Criação do servidor
         let diferenca_criacao = getDateDiff(data_criacao, data_atual, utilitarios);
 
-        if(idioma_selecionado == "pt-br")
+        if(idioma_selecionado === "pt-br")
             data_criacao = data_criacao.getDate() +" de "+ data_criacao.toLocaleString('pt', { month: 'long' }) +" de "+ data_criacao.getFullYear() +" às "+ ("0"+ data_criacao.getHours()).substr(-2) +":"+ ("0"+ data_criacao.getMinutes()).substr(-2);
         else
             data_criacao = data_criacao.toLocaleString('en', { month: 'long' }) +" "+ data_criacao.getDate() +", "+ data_criacao.getFullYear() +" at "+ ("0"+ data_criacao.getHours()).substr(-2) +":"+ ("0"+ data_criacao.getMinutes()).substr(-2);

@@ -1,9 +1,9 @@
 const handler = require("wax-command-handler");
+const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-let { token, token_2, prefix, pastas, comandos_musicais } = require('./config.json');
-const {idioma_servers} = require("./arquivos/json/dados/idioma_servers.json");
+let { token, prefix } = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -20,7 +20,7 @@ const commandConfig = new handler.CommandConfig(
     client,
     prefix,
     true,
-    __dirname + "/prefixes"
+    __dirname + "/arquivos/data/prefixes"
 );
 
 handler.setup(commandConfig);
@@ -29,13 +29,18 @@ client.on("ready", async () => {
 
     await require("./adm/status.js")({client});
     
-    for(let i = 0; i < pastas.length; i++){
-        for(const file of readdirSync(__dirname + `/comandos/${pastas[i]}`).filter(file => file.endsWith('.js'))) {
-            const command = require(`./comandos/${pastas[i]}/${file}`);
+    for(const folder of readdirSync(__dirname + "/comandos/")){
+        for(const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
+            const command = require(`./comandos/${folder}/${file}`);
 
             handler.addCommand(command);
         }
     }
+
+    idioma.setPath(__dirname + "/arquivos/data/idiomas");
+    idioma.setDefault("pt-br");
+
+    client.idioma = idioma;
 
     console.log("Caldeiras aquecidas, pronto para operar");
 });
@@ -43,7 +48,6 @@ client.on("ready", async () => {
 client.on("messageCreate", async message => {
 
     if (message.channel.type === "GUILD_TEXT") {
-
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
@@ -55,14 +59,11 @@ client.on("messageCreate", async message => {
 
         const {emojis_dancantes} = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-        let idioma_selecionado = idioma_servers[message.guild.id]
-        
-        if(typeof idioma_selecionado == "undefined")
-            idioma_selecionado = "pt-br";
+        let idioma_selecionado = idioma.getLang(message.guild.id);
 
         let {inicio} = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
 
-        message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
+        await message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
 
         delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
         return;
@@ -96,37 +97,15 @@ handler.events.on("command_executed", async (command, discord_client, message, a
         let hora_comando = message.createdTimestamp;
         const data = new Date(hora_comando);
 
+        await handler.executeCommand(command, discord_client, message, args);
+
         console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
-
-        let comando_musical = content.replace(prefix, "");
-        comando_musical = comando_musical.split(" ");
-
-        try{
-            if (comandos_musicais.includes(comando_musical[0])) { // Apenas utilizado em comandos musicais
-                let ult_message = message;
-                await require('./adm/eventos.js')({client, auto, ult_message});
-
-                await require('./comandos/musicas/play.js')({message, client, args});
-            } else await handler.executeCommand(command, discord_client, message, args);
-        }catch(err){
-            const embed = new MessageEmbed({
-                title: "CeiraException",
-                description: `\`\`\`${err.toString().substring(0, 2000)}\`\`\``,
-                color: "RED"
-            });
-        
-            await channel.send({ embeds: [embed] });
-        }
     } else {
-        if (content === prefix) {
-            await require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando o comando
-            return;
-        }
+        await require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando o comando
+        return;
     }
 
     await require('./adm/log.js')({client, message, content});
-
-    delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
 });
 
 handler.events.on("command_error", async e => {
@@ -144,14 +123,12 @@ handler.events.on("command_error", async e => {
 });
 
 handler.events.on("cooldown", (message, timeleft) => {
-    const { idioma_servers } = require('./arquivos/json/dados/idioma_servers.json');
-    let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+    let { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
     message.reply(`${inicio[0]["aguarde"]} \`${timeleft}\` ${inicio[0]["cooldown"]}`);
 });
 
 handler.events.on("no_perm", (message, permission) => {
-    const { idioma_servers } = require('./arquivos/json/dados/idioma_servers.json');
-    let { inicio } = require('./arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
 

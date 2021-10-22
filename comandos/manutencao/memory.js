@@ -5,12 +5,10 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-
         const used = process.memoryUsage();
         let text = 'Uso de RAM:\n';
 
-        if(idioma_servers[message.guild.id] === "en-us")
+        if(client.idioma.getLang(message.guild.id) === "en-us")
             text = 'RAM usage:\n';
 
         for (let key in used) {

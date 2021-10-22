@@ -7,9 +7,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { diversao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        const { gadisissimo } = require("../../arquivos/json/text/"+ idioma_servers[message.guild.id] +"/gado.json");
+        const lang = client.idioma.getLang(message.guild.id);
+
+        const { diversao } = require('../../arquivos/idiomas/' + lang + '.json');
+        const { gadisissimo } = require("../../arquivos/json/text/" + lang + "/gado.json");
 
         const num = Math.round((gadisissimo.length - 1) * Math.random());
 
@@ -26,12 +27,12 @@ module.exports = {
         }
 
         if(alvo.id !== message.author.id)
-            if(idioma_servers[message.guild.id] === "pt-br")
+            if(lang === "pt-br")
                 message.channel.send("O <@"+ alvo.id +"> "+ gadisissimo[num]);
             else
                 message.channel.send("The <@"+ alvo.id +"> "+ gadisissimo[num]);
         else
-            if(idioma_servers[message.guild.id] === "pt-br")
+            if(lang === "pt-br")
                 message.channel.send(`Você ${message.author}`+" "+ gadisissimo[num]);
             else
                 message.channel.send(`You ${message.author}`+" "+ gadisissimo[num]);
