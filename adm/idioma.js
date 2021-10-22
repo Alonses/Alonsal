@@ -43,7 +43,9 @@ module.exports = async function({client, message, args, guild}) {
         client.channels.cache.get('872865396200452127').send(bandeira_pais +" | Idioma do servidor ( `"+ guild.name +"` | `"+ guild.id +"` ) definido como `"+ idioma_definido +"`");
     });
     
-    let canal = client.channels.cache.get(guild.systemChannelId)
+    let canal = await client.channels.cache.get(guild.systemChannelId);
+    
+    console.log(canal.type);
     
     if (canal.type === "GUILD_TEXT") {
         const permissions = canal.permissionsFor(client.user);

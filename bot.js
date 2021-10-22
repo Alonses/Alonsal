@@ -155,4 +155,4 @@ handler.events.on("no_perm", (message, permission) => {
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
 
-client.login(token);
+client.login(token_2);
