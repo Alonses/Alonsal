@@ -316,7 +316,8 @@
             "jogos_perfeitos" : "Jogos perfeitos",
             "conquistas" : "Conquistas",
             "porcentagem" : "Porcentagem",
-            "insignias" : "Insígnias"
+            "insignias" : "Insígnias",
+            "suspeito" : "Este usuário pode estar usando de meios ilegais para conseguir conquistas"
         }
     ],
     "musicas" : [

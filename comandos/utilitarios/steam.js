@@ -151,6 +151,9 @@ module.exports = {
                     if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || videos_user === "-")
                         nota_rodape = utilitarios[16]["rodape"];
 
+                    if(jogos_user < jogos_perfeitos)
+                        nota_rodape = utilitarios[16]["suspeito"];
+
                     const usuario_steam = new MessageEmbed()
                     .setTitle(nome_user +""+ bandeira_user)
                     .setURL(usuario_alvo)
@@ -173,7 +176,7 @@ module.exports = {
             });
         }catch(err){
             client.channels.cache.get('862015290433994752').send(err);
-            message.reply(utilitarios[16]["error_2"] +"\n <"+ usuario_alvo +">");
+            message.reply(utilitarios[16]["error_2"] +"\n<"+ usuario_alvo +">");
         }
     }
 }
