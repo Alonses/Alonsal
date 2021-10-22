@@ -9,8 +9,7 @@ module.exports = {
     permissions: [ "ADMINISTRATOR" ],
     execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const idioma_adotado = idioma_servers[message.guild.id];
+        const idioma_adotado = client.idioma.getLang(message.guild.id);
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();

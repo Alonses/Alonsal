@@ -8,10 +8,8 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
-        
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        const idioma_definido = idioma_servers[message.guild.id];
+        const idioma_definido = client.idioma.getLang(message.guild.id);
+        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_definido +'.json');
 
         let buscar_id = "https://www.steamidfinder.com/lookup/"+ args[0];
         let id_usuario, usuario_alvo;

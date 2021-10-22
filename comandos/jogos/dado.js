@@ -5,10 +5,8 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { jogos } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
-        let idioma_definido = idioma_servers[message.guild.id];
+        const idioma_definido = client.idioma.getLang(message.guild.id);
+        const { jogos } = require('../../arquivos/idiomas/'+ idioma_definido +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 

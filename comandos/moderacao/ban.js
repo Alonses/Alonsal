@@ -8,11 +8,10 @@ module.exports = {
         
         const permissions = message.channel.permissionsFor(message.client.user);
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { moderacao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
         
         if(!permissions.has(['KICK_MEMBERS', 'BAN_MEMBERS'])) // Permissão para gerenciar banir e expulsar membros
-            return message.lineReply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
+            return message.reply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
 
         let alvo = message.guild.member(message.mentions.members.first()) 
         
@@ -23,7 +22,7 @@ module.exports = {
             alvo = await message.guild.members.fetch(args[0]); // Pega o usuário pelo ID
         }
 
-        if(alvo.hasPermission(['BAN_MEMBERS'], ['KICK_MEMBERS']))
+        if(alvo.permissions.has(['BAN_MEMBERS'], ['KICK_MEMBERS']))
             return message.reply(moderacao[4]["error_1"]);
 
         if(!alvo) return message.reply(":hotsprings: | "+ moderacao[4]["error_2"]).then(message => message.delete({timeout: 3000}));

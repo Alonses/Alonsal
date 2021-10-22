@@ -8,8 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { idioma_servers } = require('../../arquivos/json/dados/idioma_servers.json');
-        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_servers[message.guild.id] +'.json');
+        const { manutencao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
    
         let emoji_rainha = client.emojis.cache.get('854830529928757269').toString();
 

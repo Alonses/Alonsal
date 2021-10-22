@@ -38,9 +38,9 @@ module.exports = (date1, date2, utilitarios) => {
     else if(diferencas[3] > 0 && diferencas[0] < 1)
         retorno_ajustado += diferencas[3] +""+ utilitarios[14]["hora"];
 
-    if(diferencas[4] > 1 && diferencas[1] == 0)
+    if(diferencas[4] > 1 && diferencas[1] === 0)
         retorno_ajustado += diferencas[4] +""+ utilitarios[14]["minutos"];
-    else if(diferencas[4] > 0 && diferencas[1] == 0)
+    else if(diferencas[4] > 0 && diferencas[1] === 0)
         retorno_ajustado += diferencas[4] +""+ utilitarios[14]["minuto"];
 
     if(diferencas[5] > 1 && diferencas[3] < 24 && diferencas[2] < 1)
