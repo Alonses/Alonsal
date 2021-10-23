@@ -65,8 +65,6 @@ client.on("messageCreate", async message => {
         let { inicio } = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
 
         await message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
-
-        delete require.cache[require.resolve("./arquivos/json/dados/idioma_servers.json")];
         return;
     }
 

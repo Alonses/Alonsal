@@ -110,10 +110,10 @@ module.exports = {
             let servidor = client.channels.cache.get(canais_clientes[i]);
             servidor = servidor.guild.id;
 
-            let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
+            let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +"\n<< <"+ args[3] +"> >>";
 
             if(lang === "en-us")
-                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
+                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account\n<< <"+ args[3] +"> >>";
 
             if(args.length > 4){
                 let nome_jogo_2 = args[4].replaceAll("_", " ");
@@ -123,8 +123,8 @@ module.exports = {
                 if(lang === "en-us")
                     texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
 
-                if(typeof canais_clientes[i + 1] !== "undefined")
-                    texto_anuncio += " <@&"+ canais_clientes[i + 1] +">";
+                // if(typeof canais_clientes[i + 1] !== "undefined")
+                    // texto_anuncio += " <@&"+ canais_clientes[i + 1] +">";
 
                 if(typeof args[6] !== "undefined")
                     texto_anuncio += "\n"+ nome_jogo +" << <"+ args[3] +"> >>\n\n"+ nome_jogo_2 +" << <"+ args[6] +"> >>";
@@ -138,7 +138,7 @@ module.exports = {
                 const permissions = canal_alvo.permissionsFor(client.user);
         
                 if(permissions.has("SEND_MESSAGES")) 
-                    canal_alvo.send({content: texto_anuncio, files: [img_game]}); // Permissão para enviar mensagens no canal
+                    await canal_alvo.send({content: texto_anuncio, files: [img_game]}); // Permissão para enviar mensagens no canal
             }
 
             i++;
