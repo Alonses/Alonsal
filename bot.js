@@ -3,7 +3,7 @@ const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-let { token, token_2, prefix } = require('./config.json');
+const {token, token_2, prefix, owner_id} = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -27,7 +27,7 @@ handler.setup(commandConfig);
 
 client.on("ready", async () => {
 
-    await require("./adm/status.js")({client});
+    await require("./adm/status.js")(client);
     
     for(const folder of readdirSync(__dirname + "/comandos/")){
         for(const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
@@ -41,6 +41,7 @@ client.on("ready", async () => {
     idioma.setDefault("pt-br");
 
     client.idioma = idioma;
+    client.owners = owner_id;
 
     console.log("Caldeiras aquecidas, pronto para operar");
 });
@@ -69,7 +70,10 @@ client.on("messageCreate", async message => {
         return;
     }
 
-    handler.messageReceived(message);
+    if (message.content !== prefix)
+        handler.messageReceived(message);
+    else
+        await require('./adm/comando.js')(client, message);
 });
 
 // Eventos secundários
@@ -88,25 +92,19 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
     const content = message.content;
 
-    if (content !== prefix) { // Previne que mensagens aleatórias acionem comandos
-        let auto = true;
-        let ult_comand = content;
+    let ult_comand = content;
 
-        await require('./adm/eventos.js')({client, auto, ult_comand});
+    await require('./adm/eventos.js')({client, auto: true, ult_comand});
 
-        let hora_comando = message.createdTimestamp;
-        const data = new Date(hora_comando);
+    let hora_comando = message.createdTimestamp;
+    const data = new Date(hora_comando);
 
-        await handler.executeCommand(command, discord_client, message, args);
+    await handler.executeCommand(command, discord_client, message, args);
 
-        console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
-    } else {
-        await require('./adm/comando.js')({client, message, content}); // Alerta o usuário que está faltando o comando
-        return;
-    }
+    console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
 
-    await require('./adm/log.js')({client, message, content});
-});
+    await require('./adm/log.js')(client, message, content);
+})
 
 handler.events.on("command_error", async e => {
     console.log(e);
@@ -131,5 +129,9 @@ handler.events.on("no_perm", (message, permission) => {
     const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
+
+handler.events.on("no_args", (message, command) => {
+    message.reply("Errrrou, o uso correto do comando é: `" + prefix + command.usage + "`");
+})
 
 client.login(token);

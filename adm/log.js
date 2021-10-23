@@ -1,9 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 const { id_canais } = require('../config.json');
 
-module.exports = async ({client, message, content}) => {
+module.exports = async (client, message, content) => {
 
-    if(client.user.id === "833349943539531806"){
+    if(client.owners.contains(message.author.id)){
         const d = new Date();
         const day = d.toLocaleString('en-US', { weekday: 'long' });
         

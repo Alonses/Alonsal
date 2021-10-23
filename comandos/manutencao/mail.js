@@ -16,7 +16,7 @@ module.exports = {
         let tipo = "Alonsal";
         let id_alvo;
 
-        if(message.author.id === "665002572926681128"){
+        if(client.owners.contains(message.author.id)){
             try{
                 tipo = content[0];
                 id_alvo = content[1];
