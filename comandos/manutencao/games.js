@@ -8,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        if(message.author.id !== "665002572926681128") return;
+        if(!client.owners.contains(message.author.id)) return;
 
         const lang = client.idioma.getLang(message.guild.id);
         const { canal_games } = require('../../arquivos/json/dados/canal_games.json');
