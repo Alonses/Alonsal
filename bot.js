@@ -73,7 +73,7 @@ client.on("messageCreate", async message => {
     if (message.content !== prefix)
         handler.messageReceived(message);
     else
-        await require('./adm/comando.js')(client, message);
+        await require('./adm/comando.js')({client, message});
 });
 
 // Eventos secundários
@@ -102,7 +102,7 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
     console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
 
-    await require('./adm/log.js')(client, message, content);
+    await require('./adm/log.js')({client, message, content});
 })
 
 handler.events.on("command_error", async e => {
