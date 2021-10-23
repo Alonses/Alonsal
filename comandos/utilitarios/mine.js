@@ -13,7 +13,8 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_selecionado +'.json');
 
         let pesquisa = "";
-        
+        let nota_rodape = "";
+
         let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
 
         args.forEach(value => {
@@ -147,6 +148,9 @@ module.exports = {
                         }
                     }
 
+                    if(lista_itens[i].versao_add > 17)
+                        nota_rodape = utilitarios[9]["nota_rodape"];
+                    
                     const embed = new MessageEmbed()
                     .setTitle(nome_item)
                     .setColor(0x29BB8E)
@@ -160,7 +164,8 @@ module.exports = {
                         { name: ':abacus: **'+ utilitarios[9]["empilhavel"] +'**', value: "`"+ empilhavel +"`", inline: true },
                         { name: ':herb: **'+ utilitarios[9]["renovavel"] +'**', value: "`"+ renovavel +"`", inline: true },
                         { name: ':link: **'+ utilitarios[9]["nome_interno"] +'**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
-                    );
+                    )
+                    .setFooter(nota_rodape);
 
                     return message.reply({ embeds: [embed] });
                 }

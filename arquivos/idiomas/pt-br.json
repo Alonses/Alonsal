@@ -245,6 +245,7 @@
             "atributos" : "Atributos",
             "disco_musical" : "Disco musical",
             "livro_encantado" : "Livro encantado",
+            "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
             "sim" : "Sim",
             "nao" : "Não",
             "ate" : "Até"
