@@ -15,7 +15,7 @@ module.exports = {
         let idioma_selecionado;
 
         if(args[0] !== "pt" && args[0] !== "en")
-            return message.reply(moderacao[0]["error"].replaceAll(".a", prefix));
+            return message.reply(":interrobang: | "+ moderacao[0]["error"].replaceAll(".a", prefix));
         else
             idioma_selecionado = "pt-br";
 

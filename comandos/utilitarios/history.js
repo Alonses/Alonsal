@@ -33,17 +33,17 @@ module.exports = {
             mes = data_pesquisada[1];
 
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
-                return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(message => message.delete({timeout: 6000}));
+                return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(msg => setTimeout(() => msg.delete(), 6000));
             
 
             if(idioma_definido === "pt-br"){
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
-                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
+                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 6000));
                 
                 url_completa += dia +"/"+ mes;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
-                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(message => message.delete({timeout: 6000}));
+                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 6000));
             
                 url_completa += mes +"/"+ dia;
 

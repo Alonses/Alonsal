@@ -10,13 +10,13 @@ module.exports = {
 
         if(args.length !== 1) return message.reply(moderacao[6]["aviso_1"]);
 
-        if(!message.member.permissions.has("ADMINISTRATOR") && !client.owners.contains(message.author.id)) return message.reply(moderacao[5]["moderadores"]); // Libera configuração para o Slondo e adms apenas
+        if(!message.member.permissions.has("ADMINISTRATOR") && !client.owners.contains(message.author.id)) return message.reply(moderacao[5]["moderadores"]); // Libera configuração para proprietários e adms apenas
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
 
-        const { canal_games } = require('../../arquivos/json/dados/canal_games.json');
+        const { canal_games } = require('../../arquivos/data/games/canal_games.json');
         const fs = require('fs');
 
         function constructJson(jsonGuild, arrayValores){
@@ -67,7 +67,7 @@ module.exports = {
         canal_servidor = JSON.parse(canal_servidor); // Ajusta o arquivo
         canal_servidor = JSON.stringify(canal_servidor, null, 4);
         
-        fs.writeFile('./arquivos/json/dados/canal_games.json', canal_servidor, (err) => {
+        fs.writeFile('./arquivos/data/games/canal_games.json', canal_servidor, (err) => {
             if (err) throw err;
             
             let mensagem = ":video_game: | O Servidor ( `"+ message.guild.name +"` | `"+ message.guild.id +"` ) agora recebe atts de jogos grátis";
@@ -78,7 +78,7 @@ module.exports = {
             client.channels.cache.get('872865396200452127').send(mensagem);
         });
 
-        delete require.cache[require.resolve('../../arquivos/json/dados/canal_games.json')];
+        delete require.cache[require.resolve('../../arquivos/data/games/canal_games.json')];
 
         let feedback_user = moderacao[6]["anuncio_games"] +"`"+ prefix +"ngm rem`"+ moderacao[6]["anuncio_games_2"];
 

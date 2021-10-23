@@ -3,7 +3,7 @@ const CryptoJS = require("crypto-js");
 module.exports = {
     name: "crypto",
     description: "Criptografia",
-    aliases: [ "cr", "dr" ],
+    aliases: [ "cr", "dr", "cripto" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
@@ -35,9 +35,7 @@ module.exports = {
         if(resultado === "")
             resultado = utilitarios[11]["error_1"];
 
-        await message.reply(":hotsprings: | "+ resultado).then(msg => {
-            setTimeout(() => msg.delete(), 10000);
-        });
+        await message.reply(":hotsprings: | "+ resultado).then(msg => setTimeout(() => msg.delete(), 10000));
 
         const permissions = message.channel.permissionsFor(message.client.user);
         
