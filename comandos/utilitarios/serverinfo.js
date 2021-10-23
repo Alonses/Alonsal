@@ -68,25 +68,53 @@ module.exports = {
         diferenca_entrada = diferenca_entrada.slice(0, -1);
         diferenca_criacao = diferenca_criacao.slice(0, -1);
 
-        let infos_sv = new MessageEmbed()
-        .setTitle(guild.name)
-        .setColor(0x29BB8E)
-        .setThumbnail(icone_server)
-        .addFields(
-            { name: ':globe_with_meridians: **'+ utilitarios[12]["id_server"] +'**', value: "`"+ guild.id +"`", inline: true },
-            { name: ':busts_in_silhouette: **'+ utilitarios[12]["membros"] +'**', value: ':bust_in_silhouette: **'+ utilitarios[12]["atual"] +':** `'+ qtd_membros.toLocaleString('pt-BR') +'`\n:arrow_up: **Max: **`'+ guild.maximumMembers.toLocaleString('pt-BR') +"`", inline: true},
-            { name: ':unicorn: **'+ utilitarios[12]["dono"] +'**', value: dono_sv, inline: true},
-        )
-        .addFields(
-            { name: ':placard: **'+ utilitarios[12]["canais"] +' ( '+ qtd_canais +' )**', value: ':card_box: **'+ utilitarios[12]["categorias"] +':** `'+ categorias +'`\n:notepad_spiral: **'+ utilitarios[12]["texto"] +':** `'+ canais_texto +'` \n:speaking_head: **'+ utilitarios[12]["voz"] +':** `'+ canais_voz +'`', inline: true},
-            { name: ':vulcan: **'+ utilitarios[12]["entrada"] +'**', value: `\`${data_entrada}\`\n[ \`${diferenca_entrada}\` ]`, inline: true},
-            { name: ':birthday: **'+ utilitarios[12]["criacao"] +'**', value: `\`${data_criacao}\`\n[ \`${diferenca_criacao}\` ]`, inline: true}
-        )
-        .addFields(
-            { name: ':shield: **'+ utilitarios[12]["verificacao"] +'**', value: `**${utilitarios[12][guild.verificationLevel]}**`, inline: true},
-            { name: emoji_dancando +' **Emojis ( '+ guild.emojis.cache.size +' )**', value: figurinhas +' **'+ utilitarios[12]["figurinhas"] +' ('+  guild.stickers.cache.size +')**', inline: true}
-        );
-        
+        const infos_sv = new MessageEmbed()
+            .setTitle(guild.name)
+            .setColor(0x29BB8E)
+            .setThumbnail(icone_server)
+            .addFields(
+                {
+                    name: ':globe_with_meridians: **' + utilitarios[12]["id_server"] + '**',
+                    value: "`" + guild.id + "`",
+                    inline: true
+                },
+                {
+                    name: ':busts_in_silhouette: **' + utilitarios[12]["membros"] + '**',
+                    value: ':bust_in_silhouette: **' + utilitarios[12]["atual"] + ':** `' + qtd_membros.toLocaleString('pt-BR') + '`\n:arrow_up: **Max: **`' + guild.maximumMembers.toLocaleString('pt-BR') + "`",
+                    inline: true
+                },
+                {name: ':unicorn: **' + utilitarios[12]["dono"] + '**', value: dono_sv, inline: true},
+            )
+            .addFields(
+                {
+                    name: ':placard: **' + utilitarios[12]["canais"] + ' ( ' + qtd_canais + ' )**',
+                    value: ':card_box: **' + utilitarios[12]["categorias"] + ':** `' + categorias + '`\n:notepad_spiral: **' + utilitarios[12]["texto"] + ':** `' + canais_texto + '` \n:speaking_head: **' + utilitarios[12]["voz"] + ':** `' + canais_voz + '`',
+                    inline: true
+                },
+                {
+                    name: ':vulcan: **' + utilitarios[12]["entrada"] + '**',
+                    value: `\`${data_entrada}\`\n[ \`${diferenca_entrada}\` ]`,
+                    inline: true
+                },
+                {
+                    name: ':birthday: **' + utilitarios[12]["criacao"] + '**',
+                    value: `\`${data_criacao}\`\n[ \`${diferenca_criacao}\` ]`,
+                    inline: true
+                }
+            )
+            .addFields(
+                {
+                    name: ':shield: **' + utilitarios[12]["verificacao"] + '**',
+                    value: `**${utilitarios[12][guild.verificationLevel]}**`,
+                    inline: true
+                },
+                {
+                    name: emoji_dancando + ' **Emojis ( ' + guild.emojis.cache.size + ' )**',
+                    value: figurinhas + ' **' + utilitarios[12]["figurinhas"] + ' (' + guild.stickers.cache.size + ')**',
+                    inline: true
+                }
+            );
+
         if(guild.premiumSubscriptionCount > 0)
             infos_sv.addFields(
                 { name: boost_sv +'**Boosts ( '+ guild.premiumSubscriptionCount +' )**', value: '⠀', inline: true}

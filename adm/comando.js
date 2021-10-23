@@ -6,10 +6,10 @@ module.exports = async ({client, message}) => {
     let key = Object.keys(messages[num]);
 
     let marcacao = "<@" + message.author.id + ">";
-    frase = key[0].replace("autor_msg", marcacao);
+    const frase = key[0].replace("autor_msg", marcacao);
     
     // Frase
-    message.react('🤡');
+    await message.react('🤡');
     await message.channel.send(frase);
     
     // Imagem

@@ -4,8 +4,8 @@ let conexoes_ativas = 0;
 
 let { prefix } = require('../config.json');
 
-canais_conectados = new Map();
-servers_conectados = new Map();
+const canais_conectados = new Map();
+const servers_conectados = new Map();
 
 module.exports = async function({client, auto, ult_comand, ult_message}){
 
