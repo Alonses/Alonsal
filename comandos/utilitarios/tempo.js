@@ -65,9 +65,9 @@ module.exports = {
         .then(async res => {
 
             if(res.cod === '404' || res.cod === '400')
-                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
+                message.reply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
             else if(res.cod === '429')
-                message.lineReply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
+                message.reply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
             else{
                 let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
 
