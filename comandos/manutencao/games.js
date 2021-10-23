@@ -25,10 +25,15 @@ module.exports = {
                 return message.reply(":octagonal_sign: Sem canais clientes");
             
             for(let i = 0; i < canais_clientes.length; i++){
-                let nome_canal = await client.channels.cache.get(canais_clientes[i]);
 
-                if(nome_canal !== undefined)
-                    nome_canais += "\n`" + nome_canal.name + "` | `" + nome_canal.guild.name + "`";
+                try{
+                    let nome_canal = await client.channels.cache.get(canais_clientes[i]);
+
+                    if(nome_canal !== undefined)
+                        nome_canais += "\n:globe_with_meridians: `"+ nome_canal.guild.name +"` -> :placard: `"+ nome_canal.name +"`";
+                }catch(err){
+                    message.reply("Não foi posível buscar os dados do canal :: `"+ canais_clientes[i] +"`");
+                }
             }
 
             nome_canais = nome_canais.substr(0, 1950);
