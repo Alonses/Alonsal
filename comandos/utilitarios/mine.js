@@ -23,9 +23,6 @@ module.exports = {
 
         let nome_interno = pesquisa.slice(0, -1).split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
 
-        if(pesquisa.includes("ardosia"))
-            pesquisa = pesquisa.replace("ardosia", "ardósia");
-
         pesquisa = pesquisa.charAt(0).toUpperCase() + pesquisa.slice(1);
         pesquisa = pesquisa.slice(0, -1);
         
@@ -41,7 +38,9 @@ module.exports = {
                 
                 let descri = false;
 
-                let auto_compl = lista_itens[i].nome_item;
+                let nome_simplificado = lista_itens[i].nome_item.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+
+                let auto_compl = nome_simplificado;
                 auto_compl = auto_compl.toLocaleLowerCase();
 
                 if(lista_itens[i].descricao !== null){
@@ -51,7 +50,7 @@ module.exports = {
                         descri = true;
                 }
 
-                if((pesquisa === lista_itens[i].nome_item || pesquisa === lista_itens[i].nome_interno) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
+                if((pesquisa === nome_simplificado || pesquisa === lista_itens[i].nome_interno) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl.includes(pesquisa.toLocaleLowerCase())){
                     
                     if(random)
                         i = Math.round((lista_itens.length - 1) * Math.random());
