@@ -23,7 +23,7 @@ module.exports = {
 
                 id_alvo = id_alvo.toString();
             }catch(e){
-                return await message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(message => message.delete({timeout: 5000}));
+                return await message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
             }
 
             for(let i = 2; i < content.length; i++){
@@ -43,9 +43,9 @@ module.exports = {
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
 
-                        await message.reply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(message => message.delete({timeout: 5000}));
+                        await message.reply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(msg => setTimeout(() => msg.delete(), 5000));
                     }else
-                        return await message.reply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(message => message.delete({timeout: 5000}));
+                        return await message.reply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(msg => setTimeout(() => msg.delete(), 5000));
                 }
             }catch(err){
                 return message.reply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
@@ -66,7 +66,7 @@ module.exports = {
 
             client.channels.cache.get("847191471379578970").send({ embeds: [msg_user] });
             
-            await message.reply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(message => message.delete({timeout: 5000}));
+            await message.reply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
         }
 
         if(tipo === "c")

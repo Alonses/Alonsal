@@ -5,7 +5,8 @@
             "aguarde": "Aguarde",
             "cooldown" : "segundos para executar esse comando novamente",
             "permissao_1" : "você não tem a permissão",
-            "permissao_2" : "para executar este comando."
+            "permissao_2" : "para executar este comando.",
+            "error_1" : "Errrrou, o uso correto do comando é"
         }
     ],
     "diversao" : [

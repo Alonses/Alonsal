@@ -58,11 +58,11 @@ client.on("messageCreate", async message => {
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        const {emojis_dancantes} = require('./arquivos/json/text/emojis.json');
+        const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         let idioma_selecionado = idioma.getLang(message.guild.id);
 
-        let {inicio} = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
+        let { inicio } = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
 
         await message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
 
@@ -80,7 +80,6 @@ client.on("messageCreate", async message => {
 require('./adm/eventos.js')({client});
 
 handler.events.on("command_executed", async (command, discord_client, message, args) => {
-    let prefix = client.prefixManager.getPrefix(message.guild.id);
 
     if (message.author.bot || message.webhookId) return;
 
@@ -131,7 +130,8 @@ handler.events.on("no_perm", (message, permission) => {
 });
 
 handler.events.on("no_args", (message, command) => {
-    message.reply("Errrrou, o uso correto do comando é: `" + prefix + command.usage + "`");
+    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
+    message.reply( inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
 })
 
 client.login(token);

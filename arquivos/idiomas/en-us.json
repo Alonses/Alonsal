@@ -5,7 +5,8 @@
             "aguarde": "Wait",
             "cooldown" : "seconds to run this command again.",
             "permissao_1" : "you don't have the permission",
-            "permissao_2" : "to run this command."
+            "permissao_2" : "to run this command.",
+            "error_1" : "Wrrrooong, the correct use of the command is"
         }
     ],
     "diversao" : [

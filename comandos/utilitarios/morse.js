@@ -81,7 +81,7 @@ module.exports = {
 
             message.reply({ embeds: [embed] })
             .catch(() => {
-                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(message => message.delete({timeout: 5000}));
+                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
             });
         }else
             return message.reply(utilitarios[3]["aviso"]);

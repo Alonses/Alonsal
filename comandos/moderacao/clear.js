@@ -30,10 +30,11 @@ module.exports = {
         
         message.channel.bulkDelete(parseInt(args[0]))
         .then(() => {
-            message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto).then(message => message.delete({timeout: 3000}));
+            message.channel.send(`:hotsprings: | ${message.author}, \``+ args[0] +' '+ texto).then(msg => setTimeout(() => msg.delete(), 3000));
         })
-        .catch(err =>
-            message.reply(":octagonal_sign: | "+ moderacao[1]["error"]).then(message => message.delete({timeout: 3000})));
+        .catch(err => {
+            message.reply(":octagonal_sign: | "+ moderacao[1]["error"]).then(msg => setTimeout(() => msg.delete(), 3000))
+        });
         
         message.delete() // apaga a mensagem do comando
     }
