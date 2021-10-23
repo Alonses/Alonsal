@@ -245,6 +245,7 @@
             "atributos" : "Attributes",
             "disco_musical" : "Musical disc",
             "livro_encantado" : "Enchanted bool",
+            "nota_rodape" : "This item has not been officially implemented yet, your data is unofficial",
             "sim" : "Yes",
             "nao" : "No",
             "ate" : "Up to",
