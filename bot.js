@@ -27,7 +27,7 @@ handler.setup(commandConfig);
 
 client.on("ready", async () => {
 
-    await require("./adm/status.js")(client);
+    await require("./adm/status.js")({client});
     
     for(const folder of readdirSync(__dirname + "/comandos/")){
         for(const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
