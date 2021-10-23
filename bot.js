@@ -101,7 +101,7 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
 
     await require('./adm/log.js')({client, message, content});
-})
+});
 
 handler.events.on("command_error", async e => {
     console.log(e);
@@ -130,6 +130,6 @@ handler.events.on("no_perm", (message, permission) => {
 handler.events.on("no_args", (message, command) => {
     const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
     message.reply( inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
-})
+});
 
 client.login(token);

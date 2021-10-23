@@ -1,4 +1,4 @@
-const { MessageAttachment } = require('discord.js');
+const { MessageAttachment, MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: "mail_games",
@@ -105,49 +105,64 @@ module.exports = {
             }
         }
 
+        let canais_recebidos = 0;
+
         for(let i = 0; i < canais_clientes.length; i++){ // Envia a mensagem para vários canais clientes
             
-            let servidor = client.channels.cache.get(canais_clientes[i]);
-            servidor = servidor.guild.id;
+            try{
+                let servidor = client.channels.cache.get(canais_clientes[i]);
+                servidor = servidor.guild.id;
 
-            let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +"\n<< <"+ args[3] +"> >>";
-
-            if(lang === "en-us")
-                texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account\n<< <"+ args[3] +"> >>";
-
-            if(args.length > 4){
-                let nome_jogo_2 = args[4].replaceAll("_", " ");
-
-                texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma;
+                let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
 
                 if(lang === "en-us")
-                    texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
+                    texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
 
-                // if(typeof canais_clientes[i + 1] !== "undefined")
-                    // texto_anuncio += " <@&"+ canais_clientes[i + 1] +">";
+                if(args.length > 4){
+                    let nome_jogo_2 = args[4].replaceAll("_", " ");
 
-                if(typeof args[6] !== "undefined")
-                    texto_anuncio += "\n"+ nome_jogo +" << <"+ args[3] +"> >>\n\n"+ nome_jogo_2 +" << <"+ args[6] +"> >>";
-                else
-                    texto_anuncio += "\n<< <"+ args[3] +"> >>";
-            }
+                    texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ canais_clientes[i + 1] +">";
 
-            let canal_alvo = client.channels.cache.get(canais_clientes[i]);
+                    if(lang === "en-us")
+                        texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
 
-            if(canal_alvo.type === "GUILD_TEXT"){
-                const permissions = canal_alvo.permissionsFor(client.user);
-        
-                if(permissions.has("SEND_MESSAGES")) 
-                    await canal_alvo.send({content: texto_anuncio, files: [img_game]}); // Permissão para enviar mensagens no canal
+                    if(typeof canais_clientes[i + 1] !== "undefined")
+                        texto_anuncio += " <@&"+ canais_clientes[i + 1] +">";
+
+                    if(typeof args[6] !== "undefined")
+                        texto_anuncio += "\n"+ nome_jogo +" << <"+ args[3] +"> >>\n\n"+ nome_jogo_2 +" << <"+ args[6] +"> >>";
+                    else
+                        texto_anuncio += "\n<< <"+ args[3] +"> >>";
+                }
+
+                let canal_alvo = client.channels.cache.get(canais_clientes[i]);
+
+                if(canal_alvo.type === "GUILD_TEXT" || canal_alvo.type === "GUILD_NEWS"){
+                    const permissions = canal_alvo.permissionsFor(client.user);
+            
+                    if(permissions.has("SEND_MESSAGES")){
+                        canal_alvo.send({content: texto_anuncio, files: [img_game]}); // Permissão para enviar mensagens no canal
+                    
+                        canais_recebidos++;
+                    }
+                }
+            }catch(err){
+                const embed = new MessageEmbed({
+                    title: ":video_game: | CeiraException",
+                    description: `\`\`\`Canal/Servidores desconhecidos, considere apagar este campo >>manualmente<< :: ${canais_clientes[i]} :)\n${err.toString().substring(0, 2000)}\`\`\``,
+                    color: "RED"
+                });
+
+                client.channels.cache.get('862015290433994752').send({ embeds: [embed] });
             }
 
             i++;
         }
         
-        let aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_clientes.length/2 +"` canais clientes";
+        let aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_recebidos +"` canais clientes";
 
-        if(canais_clientes.length === 2)
-            aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_clientes.length/2 +"` canal cliente";
+        if(canais_recebidos === 1)
+            aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_recebidos +"` canal cliente";
 
         client.channels.cache.get('872865396200452127').send(aviso);
         const mensagem = await message.reply("A atualização foi enviada à todos os canais de games");
