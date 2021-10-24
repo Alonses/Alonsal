@@ -13,6 +13,8 @@ module.exports = {
         let escolhas = "";
         let nota_rodape = "";
 
+        if(args.length < 1) return message.reply(jogos[4]["aviso_2"]);
+
         if(!args[0].includes("[")){
             if(args.length < 2) return message.reply(jogos[4]["aviso_1"]);
         
