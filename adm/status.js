@@ -31,13 +31,11 @@ module.exports = async ({client}) => {
         "Me pingue para o prefixo!",
         "Bugs fora",
         ".alang pt | .alang en",
-        "Ceira suprema em servidores",
+        "Seria ceira ceira seria?",
         "Ping me for prefix!",
         "Translation worldwide",
-        "2 dias sem erros! :D",
-        "Vapor p/ fora!"
     ];
 
     let i = 0;
-    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 6000);
+    setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 10000);
 }
