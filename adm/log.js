@@ -11,7 +11,7 @@ module.exports = async ({client, message, content}) => {
         qtd_comandos = parseInt(data);
         qtd_comandos++;
         
-        if(client.user.id === "833349943539531806"){
+        // if(client.user.id === "833349943539531806"){
             
             const d = new Date();
             const day = d.toLocaleString('en-US', { weekday: 'long' });
@@ -34,10 +34,10 @@ module.exports = async ({client, message, content}) => {
             const embed = new MessageEmbed()
             .setTitle("> New interaction")
             .setColor(0x29BB8E)
-            .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ comando_inserido +"`\n:notepad_spiral: Command N°: `"+ qtd_comandos +"`\n:alarm_clock: Time/date: `"+ hr +":"+ min + ampm +" | "+ day +" - "+ date +" "+ month +" "+ year +"`");
+            .setDescription(":man_raising_hand: (ID) User: `"+ message.author +"`\n:label: Username: `"+ message.author.username +"`\n\n:link: (ID) Server: `"+ message.guild.id +"`\n:label: Server name: `"+ message.guild.name +"`\n:link: (ID) Channel: `"+ message.channel.id + "`\n:label: Channel name: `"+ message.channel.name +"`\n:link: (ID) Message: `"+ message.id +"`\n\n:pencil: Command: `"+ comando_inserido +"`\n:notepad_spiral: Command N°: `"+ qtd_comandos.toLocaleString('pt-BR') +"`\n:alarm_clock: Time/date: `"+ hr +":"+ min + ampm +" | "+ day +" - "+ date +" "+ month +" "+ year +"`");
 
             client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
-        }
+        // }
 
         fs.writeFile('./arquivos/data/status/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
             if (err) throw err;
