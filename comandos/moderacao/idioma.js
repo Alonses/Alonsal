@@ -1,6 +1,6 @@
 module.exports = {
     name: "idioma",
-    description: "Veja seu ping local",
+    description: "Altere o idioma do alonsal",
     aliases: [ "language", "lang" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
@@ -9,7 +9,7 @@ module.exports = {
 
         const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) + '.json');
 
-        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.contains(message.owner.id))
+        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.owner.id))
             return message.reply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]); // Libera configuração para o Slondo e adms apenas
 
         let idioma_selecionado;
