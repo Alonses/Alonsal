@@ -15,7 +15,7 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        let emoji_pula = emoji(emojis.pula);
+        let emoji_pula = emoji(emojis.pula_2);
         let emoji_rainha = emoji(emojis.dancando_elizabeth);
         let emoji_bolo = emoji(emojis.mc_bolo);
         let emoji_mc = emoji(emojis.mc_earth);

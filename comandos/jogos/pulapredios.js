@@ -11,7 +11,7 @@ module.exports = {
 
         const { jogos } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
-        const emoji_pula = client.emojis.cache.get(emojis.pula).toString();
+        const emoji_pula = client.emojis.cache.get(emojis.pula_2).toString();
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
