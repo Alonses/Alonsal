@@ -5,8 +5,9 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+        
         const idioma_definido = client.idioma.getLang(message.guild.id);
-        const { jogos } = require('../../arquivos/idiomas/'+ idioma_definido +'.json');
+        const { jogos } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 
@@ -48,7 +49,7 @@ module.exports = {
         }
 
         for(let i = 0; i < dado.length; i++){
-            resultado += "`"+ dado[i] +"`";
+            resultado += "`"+ dado[i].toLocaleString('pt-BR') +"`";
 
             if(typeof dado[i + 1] != "undefined")
                 resultado += ", ";
@@ -57,16 +58,16 @@ module.exports = {
         if(att_auto === 1)
             args[1]++;
         
-        let mensagem = 'Foram rodados `'+ args[0] +'` sólidos geométricos com `'+ args[1] +'` faces\n\n Resultados [ '+ resultado +' ]';
+        let mensagem = 'Foram rodados `'+ args[0] +'` sólidos geométricos com `'+ parseInt(args[1]).toLocaleString('pt-BR') +'` faces\n\n Resultados [ '+ resultado +' ]';
 
         if(idioma_definido === "en-us")
-            mensagem = 'Rotated `'+ args[0] +'` geometric solids with `'+ args[1] +'` faces\n\n Results [ '+ resultado +' ]';
+            mensagem = 'Rotated `'+ args[0] +'` geometric solids with `'+ parseInt(args[1]).toLocaleString('pt-BR') +'` faces\n\n Results [ '+ resultado +' ]';
         
         if(args[0] === 1){
-            mensagem = 'Foi rodado `1` sólido geométrico com `'+ args[1] +'` faces\n\n Resultado [ '+ resultado +' ]';
+            mensagem = 'Foi rodado `1` sólido geométrico com `'+ parseInt(args[1]).toLocaleString('pt-BR') +'` faces\n\n Resultado [ '+ resultado +' ]';
         
             if(idioma_definido === "en-us")
-                mensagem = 'Run `1` geometric solid with `'+ args[1] +'` faces\n\n Result [ '+ resultado +' ]';
+                mensagem = 'Run `1` geometric solid with `'+ parseInt(args[1]).toLocaleString('pt-BR') +'` faces\n\n Result [ '+ resultado +' ]';
         }
 
         message.reply(":game_die: "+ mensagem);

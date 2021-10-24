@@ -51,6 +51,12 @@
         },
         {
             "aviso_1" : "Write as `.ajkp paper` or `.ajkp` for a random match."
+        },
+        {
+            "aviso_1" : "Inform at least 2 items for me to choose",
+            "aviso_2" : "Enter a quantity in numbers such as `.ach [2 s a l 4 d @` and a value greater than zero",
+            "escolho_todos" : "You entered a number greater than the number of options, I choose all!",
+            "escolho" : "I choose..."
         }
     ],
     "manutencao" : [
