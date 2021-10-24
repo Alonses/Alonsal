@@ -39,11 +39,11 @@ module.exports = {
             .setTitle('Boas vindas ao Ajuda! :boomerang:')
             .setColor(0x29BB8E)
             .setDescription("Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **`"+ prefix +"h 1`** - `Comandos Divertidos`\n\n:compass: **`"+ prefix +"h 2`** - `Comandos Utilitários`\n\n:golf: **`"+ prefix +"h 3`** - `Comandos de Jogos`\n\n:musical_note: **`"+ prefix +"sh`** - `Comandos Músicais`\n\n:tools: **`"+ prefix +"h 4`** - `Manutenção do Alonsal`\n\n:frame_photo: **`"+ prefix +"h 5`** -  `Manipulação de imagens`\n\n:scroll: **`"+ prefix +"hm`** - `Comandos moderativos`\n\n:information_source: **`"+ prefix +"info`** - `Informações do Alonsal`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n"+ bandeira_trad +" | _Use the command `"+ prefix +"lang en` to switch to `american english`_");
-
+            
             embed_diversao = new MessageEmbed()
             .setTitle('Comandos Divertidos :zany_face:')
             .setColor(0x29BB8E)
-            .setDescription(":innocent: **`"+ prefix +"paz`** | **`"+ prefix +"pz`** - União\n:yum: **`"+ prefix +"sfiha`** | **`"+ prefix +"sf`** - Servidos?\n:rage: **`"+ prefix +"briga`** | **`"+ prefix +"b`** - Porradaria!\n:cow: **`"+ prefix +"gado @Alonsal`** | **`"+ prefix +"ga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`"+ prefix +"mor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`"+ prefix +"baidu`** - Louvado seja!\n:chess_pawn: **`"+ prefix +"piao`** - Roda o pião Dona Maria!\n:radio: **`"+ prefix +"rep 9?`** - O Alonsal falará em TTS\n:blue_book: **`"+ prefix +"curio`** | **`"+ prefix +"c`** - Uma curiosidade aleatória\n:black_joker: **`"+ prefix +"joke`** | **`"+ prefix +"j`** - Invoca uma piada\n:clown: **`"+ prefix +"cazalbe`** | **`"+ prefix +"caz`** - Cazalbe!\n:tropical_drink: **`"+ prefix +"jailson`** | **`"+ prefix +"ja`** - Jaílson!\n:pizza: **`"+ prefix +"rasputia`** | **`"+ prefix +"ra`** - Rasputia!");
+            .setDescription(":cow: **`"+ prefix +"gado @Alonsal`** | **`"+ prefix +"ga @Alonsal`** - Teste a Gadisse de alguém\n:sparkling_heart: **`"+ prefix +"mor @Slondo @Alonsal`** - Teste o amor entre duas pessoas\n:raised_hands: **`"+ prefix +"baidu`** - Louvado seja!\n:radio: **`"+ prefix +"rep 9?`** - O Alonsal falará em TTS\n:blue_book: **`"+ prefix +"curio`** | **`"+ prefix +"c`** - Uma curiosidade aleatória\n:black_joker: **`"+ prefix +"joke`** | **`"+ prefix +"j`** - Invoca uma piada");
 
             embed_utilitarios = new MessageEmbed()
             .setTitle('Comandos Utilitários :compass:')
@@ -77,7 +77,7 @@ module.exports = {
             embed_diversao = new MessageEmbed()
             .setTitle('Funny Commands :zany_face:')
             .setColor(0x29BB8E)
-            .setDescription(":innocent: **`"+ prefix +"paz`** | **`"+ prefix +"pz`** - Union\n:yum: **`"+ prefix +"sfiha`** | **`"+ prefix +"sf`** - Served?\n:rage: **`"+ prefix +"briga`** | **`"+ prefix +"b`** - Breaking!\n:cow: **`"+ prefix +"gado @Alonsal`** | **`"+ prefix +"ga @Alonsal`** - Test someone's livestock level\n:sparkling_heart: **`"+ prefix +"mor @Slondo @Alonsal`** - Test the love between two people\n:raised_hands: **`"+ prefix +"baidu`** - Praise be!\n:chess_pawn: **`"+ prefix +"piao`** - Rotate the pawn Ms. Maria!\n:radio: **`"+ prefix +"rep 9?`** - Alonsal will speak in TTS\n:blue_book: **`"+ prefix +"curio`** | **`"+ prefix +"c`** - A random curiosity\n:black_joker: **`"+ prefix +"joke`** | **`"+ prefix +"j`** - Invoke a joke\n:clown: **`"+ prefix +"cazalbe`** | **`"+ prefix +"caz`** - Cazalbe!\n:tropical_drink: **`"+ prefix +"jailson`** | **`"+ prefix +"ja`** - Jaílson!\n:pizza: **`"+ prefix +"rasputia`** | **`"+ prefix +"ra`** - Rasputia!");
+            .setDescription(":cow: **`"+ prefix +"gado @Alonsal`** | **`"+ prefix +"ga @Alonsal`** - Test someone's livestock level\n:sparkling_heart: **`"+ prefix +"mor @Slondo @Alonsal`** - Test the love between two people\n:raised_hands: **`"+ prefix +"baidu`** - Praise be!\n:radio: **`"+ prefix +"rep 9?`** - Alonsal will speak in TTS\n:blue_book: **`"+ prefix +"curio`** | **`"+ prefix +"c`** - A random curiosity\n:black_joker: **`"+ prefix +"joke`** | **`"+ prefix +"j`** - Invoke a joke");
 
             embed_utilitarios = new MessageEmbed()
             .setTitle('Utility Commands :compass:')
