@@ -13,21 +13,21 @@ module.exports = {
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        let user = message.mentions.users.first() || message.author; // Coleta o ID do usuário
+        let user = message.mentions.users.first(); // Coleta o ID do usuário mencionado
 
-        if(!user && args[0] !== null){
-            if(isNaN(args[0]))
+        if(!user && args[0] !== null){ 
+            if(isNaN(args[0])) // Verifica se é um ID realmente
                 return message.reply(":octagonal_sign: | "+ utilitarios[4]["id_user"]);
 
-            try{
+            try{ // Busca pelo usuário no server inteiro
                 user = await message.guild.members.fetch(args[0]);
-                user = user.user; // Pega o usuário pelo ID
+                user = user.user; // Separa os dados de usuário
             }catch(e){
                 return message.reply(emoji_nao_encontrado + " | "+ utilitarios[4]["nao_conhecido"]);
             }
         }
         
-        if(!user)
+        if(!user) // Usa o autor do comando como alvo em último caso
             user = message.author;
 
         let avatar = user.displayAvatarURL({ size: 2048 }); 
