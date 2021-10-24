@@ -140,13 +140,13 @@ module.exports = {
                 
                     const acontecimento = new MessageEmbed()
                     .setTitle(acontecimento_final[num])
-                    .setAuthor("History")
+                    .setAuthor("History", "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png")
                     .setURL(fontes[num])
                     .setColor(0x29BB8E)
                     .setDescription(descricao)
                     .setFooter(datas[num], message.author.avatarURL({ dynamic:true }))
                     .setImage(imagem);
-
+                    
                     message.reply({ embeds: [acontecimento] });
                     aviso.delete();
                 });
