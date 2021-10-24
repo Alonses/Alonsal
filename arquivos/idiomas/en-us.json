@@ -66,9 +66,12 @@
         },
         {
             "infos" : "Skating between the wax lines :man_golfing:",
-            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository.",
+            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository",
             "conteudo_2" : "**`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub",
-            "conteudo_3" : "**`.asuporte`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`.aga`** | **`.agado`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTES\nPhrases from **`.atext`** do not represent the ideas of the creators of Alonsal, therefore, they are for comic purposes only.\n\n[ _Version"
+            "conteudo_3" : "**`.asuporte`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`.aga`** | **`.agado`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTES\nPhrases from **`.atext`** do not represent the ideas of the creators of Alonsal, therefore, they are for comic purposes only.",
+            "invocado_1" : "I've already been invoked",
+            "invocado_2" : "times",
+            "versao" : "Version"
         },
         {
             "aviso_1" : "There is an error in your message, try again.",

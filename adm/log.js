@@ -3,10 +3,13 @@ const { id_canais } = require('../config.json');
 
 module.exports = async ({client, message, content}) => {
 
+    var fs = require('fs');
+
     if(client.user.id === "833349943539531806"){
+        
         const d = new Date();
         const day = d.toLocaleString('en-US', { weekday: 'long' });
-        
+
         let min = ("0" + d.getMinutes()).substr(-2); // Preservar o digito 0
         let hr = ("0" + d.getHours()).substr(-2); // Preservar o digito 0
 
@@ -29,4 +32,15 @@ module.exports = async ({client, message, content}) => {
 
         client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
     }
+
+    fs.readFile('./arquivos/data/status/comandos.txt', 'utf8', function(err, data) {
+        if (err) throw err;
+    
+        qtd_comandos = parseInt(data);
+        qtd_comandos++;
+        
+        fs.writeFile('./arquivos/data/status/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
+            if (err) throw err;
+        });
+    });
 }
