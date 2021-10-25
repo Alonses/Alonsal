@@ -34,7 +34,7 @@ module.exports = {
             }
         }
 
-        const avatar_user = 'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.gif?size=512';
+        let avatar_user = 'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.gif?size=512';
         const data_atual = new Date();
 
         const membro_sv = message.guild.members.cache.get(user.id); // Coleta dados como membro
@@ -89,6 +89,9 @@ module.exports = {
 
         diferenca_entrada = diferenca_entrada.slice(0, -1);
         diferenca_criacao = diferenca_criacao.slice(0, -1);
+
+        // const permissoes_user = user.member.permissions.toArray();
+        // console.log(permissoes_user);
 
         const infos_user = new MessageEmbed()
             .setTitle(apelido)
