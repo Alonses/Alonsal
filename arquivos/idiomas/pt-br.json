@@ -112,7 +112,8 @@
     "moderacao" : [
         { "error" : "Enter as `.alang pt` or `.alang en`" },
         {
-            "permissao" : "Eu não tenho permissão para gerenciar mensagens",
+            "permissao_1" : "Você não possui permissões para gerenciar mensagens",
+            "permissao_2" : "Eu não tenho permissão para gerenciar mensagens",
             "aviso_1" : "Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`",
             "aviso_2" : ":warning: | Informe um número entre `0` e `100` para remover",
             "apagado_1" : "mensagens` foram removidas",
@@ -164,7 +165,8 @@
             "canal" : "Canal",
             "lock" : "bloqueado\nUtilize `.aunlk` para desbloquear",
             "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
-            "permissao" : "Eu não posso configurar este canal, eu preciso da permissão `Gerenciar Canais` para isto"
+            "permissao_1" : "Você não possuí permissões para gerenciar este canal",
+            "permissao_2" : "Eu não posso configurar este canal, eu preciso da permissão `Gerenciar Canais` para isto"
         }
     ],
     "utilitarios" : [

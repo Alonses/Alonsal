@@ -6,7 +6,7 @@ module.exports = {
     name: "Emojis",
     description: "Adicione e remova emojis",
     aliases: [ "addemoji", "addmoji", "moji", "ddmoji", "ddemoji", "rmoji", "removemoji", "dicionaremoji" ],
-    cooldown: 1,
+    cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
@@ -42,11 +42,11 @@ module.exports = {
             return;
         }
 
-        if(!message.member.permissions.has('MANAGE_EMOJIS')) // Permissão do usuário para gerenciar emojis
-            return message.reply(":octagonal_sign: | "+ moderacao[2]["permissao_1"]);
+        if(!message.member.permissions.has('MANAGE_EMOJIS')) // Permissão do membro para gerenciar emojis
+            return message.reply(":octagonal_sign: | "+ moderacao[2]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
         
         // Verificar permissões do bot
-        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){  
+        if(message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'MANAGE_EMOJIS'])){
 
             let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
             let nome_emoji = null;
@@ -127,6 +127,6 @@ module.exports = {
                 });
             }
         }else
-            message.reply(":octagonal_sign: | "+ moderacao[2]["permissao_2"] +" \':(");
+            message.reply(":octagonal_sign: | "+ moderacao[2]["permissao_2"] +" \':(").then(msg => setTimeout(() => msg.delete(), 5000));
     }
 };
