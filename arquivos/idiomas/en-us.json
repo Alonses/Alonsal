@@ -112,8 +112,8 @@
     "moderacao" : [
         { "error" : "Informe como `.alang en` ou `.alang pt`" },
         {
-            "permissao_1" : "You don't have permissions to manage messages",
-            "permissao_2" : "I don't have permission to manage messages",
+            "permissao_1" : "You do not have `Manage messages` permission",
+            "permissao_2" : "I don't have `Manage Messages` permission",
             "aviso_1" : "Enter the number of messages you want to remove\nFor example, `.acl 20`",
             "aviso_2" : ":warning: | Enter a number between `0` and `100` to remove",
             "apagado_1" : "messages` have been removed",
@@ -142,6 +142,8 @@
             "permissao_1" : "You don't have permissions to manage the server"
         },
         {
+            "permissao_1" : "You cannot ban or kick members.",
+            "permissao_2" : "I cannot ban or kick members",
             "user_id" : "Enter a user ID",
             "razao" : "Reason not informed",
             "error_1" : "Stop there, you bastard! This member is also an administrator.",
@@ -166,7 +168,7 @@
             "lock" : "locked\nUse `.aunlk` to unlock",
             "unlock" : "unlocked\nUse `.alock` to lock",
             "permissao_1" : "You do not have permissions to manage this channel.",
-            "permissao_2" : "I can't configure this channel, I need `Manage Channels` permission for this"
+            "permissao_2" : "I can't block this channel, I need `Manage channels` and `Manage roles` permissions for this"
         }
     ],
     "utilitarios" : [

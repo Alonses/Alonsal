@@ -7,14 +7,14 @@ module.exports = {
     async execute(client, message, args) {
         
         const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
-        const permissions_user = message.channel.permissionsFor(message.author);
-        const permissions_bot = message.channel.permissionsFor(message.client.user);
+        const permissions_user = await message.guild.members.fetch(message.author);
+        const permissions_bot = await message.guild.members.fetch(message.client.user.id);
         
-        if(!permissions_user.has(['KICK_MEMBERS'], ['BAN_MEMBERS']))
-            return message.reply(':octagonal_sign: | '+ moderacao[1]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+        if(!permissions_user.permissions.has('KICK_MEMBERS') || !permissions_user.permissions.has('BAN_MEMBERS'))
+            return message.reply(':octagonal_sign: | '+ moderacao[4]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
 
-        if(!permissions_bot.has(['KICK_MEMBERS'], ['BAN_MEMBERS']))
-            return message.reply(':octagonal_sign: | '+ moderacao[1]["permissao_2"]).then(msg => setTimeout(() => msg.delete(), 5000));
+        if(!permissions_bot.permissions.has('KICK_MEMBERS') || !permissions_bot.permissions.has('BAN_MEMBERS'))
+            return message.reply(':octagonal_sign: | '+ moderacao[4]["permissao_2"]).then(msg => setTimeout(() => msg.delete(), 5000));
         
         const emoji_ban = client.emojis.cache.get("901560597307613214").toString();
         let alvo = message.guild.member(message.mentions.members.first());
@@ -26,7 +26,7 @@ module.exports = {
             alvo = await message.guild.members.fetch(args[0]); // Pega o usuário pelo ID
         }
 
-        if(alvo.permissions.has(['BAN_MEMBERS'], ['KICK_MEMBERS']))
+        if(alvo.permissions.has('BAN_MEMBERS') || alvo.permissions.has('KICK_MEMBERS'))
             return message.reply(moderacao[4]["error_1"]);
 
         if(!alvo) return message.reply(":hotsprings: | "+ moderacao[4]["error_2"]).then(msg => setTimeout(() => msg.delete(), 3000));
