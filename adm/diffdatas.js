@@ -1,4 +1,4 @@
-module.exports = ({date1, date2, utilitarios}) => {
+module.exports = (date1, date2, utilitarios) => {
 
     const now = new Date(date2); // Data de hoje
     const past = new Date(date1); // Outra data no passado
