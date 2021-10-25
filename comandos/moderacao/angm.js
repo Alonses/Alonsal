@@ -9,7 +9,7 @@ module.exports = {
         const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         if(args.length !== 1) return message.reply(moderacao[6]["aviso_1"]);
-
+        
         if(!message.member.permissions.has("ADMINISTRATOR") && !client.owners.includes(message.author.id)) return message.reply(moderacao[5]["moderadores"]); // Libera configuração para proprietários e adms apenas
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);

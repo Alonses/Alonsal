@@ -3,17 +3,20 @@ module.exports = {
     description: "expulsa ou bane algum usuário do servidor",
     aliases: [ "kick" ],
     cooldown: 3,
-    permissions: [ "ADMINISTRATOR" ],
+    permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         
-        const permissions = message.channel.permissionsFor(message.client.user);
         const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const permissions_user = message.channel.permissionsFor(message.author);
+        const permissions_bot = message.channel.permissionsFor(message.client.user);
+        
+        if(!permissions_user.has(['KICK_MEMBERS'], ['BAN_MEMBERS']))
+            return message.reply(':octagonal_sign: | '+ moderacao[1]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+
+        if(!permissions_bot.has(['KICK_MEMBERS'], ['BAN_MEMBERS']))
+            return message.reply(':octagonal_sign: | '+ moderacao[1]["permissao_2"]).then(msg => setTimeout(() => msg.delete(), 5000));
         
         const emoji_ban = client.emojis.cache.get("901560597307613214").toString();
-        
-        if(!permissions.has(['KICK_MEMBERS', 'BAN_MEMBERS'])) // Permissão para gerenciar banir e expulsar membros
-            return message.reply(':octagonal_sign: | ' + moderacao[1]["permissao"]);
-
         let alvo = message.guild.member(message.mentions.members.first());
         
         if(!alvo){
