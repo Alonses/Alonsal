@@ -8,7 +8,7 @@ module.exports = {
     aliases: [ "usinfo", "usuarioinfo", "usif" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
-    execute: async function (client, message, args) {
+    async execute(client, message, args) {
 
         const getDateDiff = require('../../adm/diffdatas.js');
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
@@ -90,8 +90,21 @@ module.exports = {
         diferenca_entrada = diferenca_entrada.slice(0, -1);
         diferenca_criacao = diferenca_criacao.slice(0, -1);
 
-        // const permissoes_user = user.member.permissions.toArray();
-        // console.log(permissoes_user);
+        const permissoes_user = membro_sv.permissions.toArray();
+        let permissoes_fn = "";
+
+        for(let i = 0; i < permissoes_user.length; i++){
+
+            if(typeof permissoes_user[i + 1] === "undefined")
+                permissoes_fn += " & ";
+
+            permissoes_fn += "`"+ permissoes_user[i] +"`";
+
+            if(typeof permissoes_user[i + 2] !== "undefined")
+                permissoes_fn += ", ";
+        }
+
+        permissoes_fn = permissoes_fn.slice(0, 2000);
 
         const infos_user = new MessageEmbed()
             .setTitle(apelido)
@@ -116,6 +129,37 @@ module.exports = {
             )
             .setFooter(nota_rodape);
 
-        return message.reply({embeds: [infos_user]});
+        const permissoes = new MessageEmbed()
+        .setTitle(apelido)
+        .setColor(0x29BB8E)
+        .setThumbnail(avatar_user)
+        .addFields({
+            name: "Permissões", value: `${permissoes_fn}`, inline: true
+        })
+        .setFooter(nota_rodape);
+
+        let paginas = [
+            infos_user,
+            permissoes
+        ];
+
+        message.reply({embeds: [paginas[0]]});
+        // let reacoes = ['◀️', '▶️'];
+
+        // reacoes.forEach(async reacao => {
+        //     await embed_pags.react(reacao);
+        // });
+        
+        // const filter = (reaction, user) => ['◀️', '▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
+        // embed_pags.awaitReactions({ filter, max: 2, time: 20000, errors: ['time'] })
+        // .then(collected => {
+        //     const reaction = collected.first();
+    
+        //     if (reaction.emoji.name === '▶️')
+        //         embed_pags.edit({embeds: [paginas[1]]});
+        //     else
+        //         embed_pags.edit({embeds: [paginas[0]]});
+        // })
+        // .catch(() => embed_pags.reactions.removeAll());
     }
 }

@@ -159,6 +159,12 @@
             "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando ",
             "anuncio_games_2" : " para remover as atualizações.",
             "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
+        },
+        {
+            "canal" : "Canal",
+            "lock" : "bloqueado\nUtilize `.aunlk` para desbloquear",
+            "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
+            "permissao" : "Eu não posso configurar este canal, eu preciso da permissão `Gerenciar Canais` para isto"
         }
     ],
     "utilitarios" : [

@@ -159,6 +159,12 @@
             "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command ",
             "anuncio_games_2" : " to disable these updates.",
             "anuncio_off" : "Game notifications turned off for this channel/server"
+        },
+        {
+            "canal" : "Channel",
+            "lock" : "locked\nUse `.aunlk` to unlock",
+            "unlock" : "unlocked\nUse `.alock` to lock",
+            "permissao" : "I can't configure this channel, I need `Manage Channels` permission for this"
         }
     ],
     "utilitarios" : [
