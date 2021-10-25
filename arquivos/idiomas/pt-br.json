@@ -112,8 +112,8 @@
     "moderacao" : [
         { "error" : "Enter as `.alang pt` or `.alang en`" },
         {
-            "permissao_1" : "Você não possui permissões para gerenciar mensagens",
-            "permissao_2" : "Eu não tenho permissão para gerenciar mensagens",
+            "permissao_1" : "Você não possui a permissão `Gerenciar mensagens`",
+            "permissao_2" : "Eu não tenho permissão a permissão `Gerenciar mensagens`",
             "aviso_1" : "Informe o número de mensagens q deseja remover\nPor exemplo, `.acl 20`",
             "aviso_2" : ":warning: | Informe um número entre `0` e `100` para remover",
             "apagado_1" : "mensagens` foram removidas",
@@ -142,6 +142,8 @@
             "permissao_1" : "Você não possui permissões para gerenciar o servidor"
         },
         {
+            "permissao_1" : "Você não pode banir ou expulsar membros",
+            "permissao_2" : "Eu não posso banir ou expulsar membros",
             "user_id" : "Informe o ID de um usuário",
             "razao" : "Razão não informada",
             "error_1" : "Parado ai seu salafrário! Este membro é um Administrador também",
@@ -166,7 +168,7 @@
             "lock" : "bloqueado\nUtilize `.aunlk` para desbloquear",
             "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
             "permissao_1" : "Você não possuí permissões para gerenciar este canal",
-            "permissao_2" : "Eu não posso configurar este canal, eu preciso da permissão `Gerenciar Canais` para isto"
+            "permissao_2" : "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
         }
     ],
     "utilitarios" : [

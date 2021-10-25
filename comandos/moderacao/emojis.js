@@ -46,7 +46,7 @@ module.exports = {
             return message.reply(":octagonal_sign: | "+ moderacao[2]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
         
         // Verificar permissões do bot
-        if(message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'MANAGE_EMOJIS'])){
+        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){
 
             let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
             let nome_emoji = null;
