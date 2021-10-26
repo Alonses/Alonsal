@@ -19,8 +19,8 @@ module.exports = {
     
         string = string.slice(0, -1);
 
-        if(string.includes("nk "))
-            string = string.replace("nk ", "");
+        // if(string.includes("nk "))
+        //     string = string.replace("nk ", "");
 
         function duplicateCount(string) {
             const charMap = {};
@@ -80,17 +80,17 @@ module.exports = {
 
         message.reply({embeds: [anagrama]});
 
-        if(args[0] === "nk"){
-            const permissions_bot = await message.guild.members.fetch(message.client.user.id);
+        // if(args[0] === "nk"){
+        //     const permissions_bot = await message.guild.members.fetch(message.client.user.id);
 
-            if(!permissions_bot.permissions.has("MANAGE_NICKNAMES"))
-                return message.reply(":interrobang: | O anagrama foi criado, mas eu não posso alterar seu apelido pois não tenho a permissão `Gerenciar apelidos` :(");
+        //     if(!permissions_bot.permissions.has("MANAGE_NICKNAMES"))
+        //         return message.reply(":interrobang: | O anagrama foi criado, mas eu não posso alterar seu apelido pois não tenho a permissão `Gerenciar apelidos` :(");
 
-            if(message.author.id === message.guild.ownerId)
-                return message.reply("Eu não posso alterar o seu apelido automaticamente :(");
+        //     if(message.author.id === message.guild.ownerId)
+        //         return message.reply("Eu não posso alterar o seu apelido automaticamente :(");
 
-            message.member.setNickname(anagrama_formado);
-            message.reply("Seu apelido neste servidor foi alterado");
-        }
+        //     message.member.setNickname(anagrama_formado);
+        //     message.reply("Seu apelido neste servidor foi alterado");
+        // }
     }
 }
