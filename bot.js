@@ -48,15 +48,23 @@ client.on("ready", async () => {
 
 client.on("messageCreate", async message => {
 
+    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    if(!prefix)
+        prefix = ".a";
+
+    if(client.user.id !== message.author.id){
+        if (message.author.bot || message.webhookId) return;
+
+        client.channels.cache.get("903289286546296842").send(":detective: | "+ message.content);
+    }
+
     if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user);
 
         if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
     
-    if (message.content.includes(client.user.id) && !message.content.includes("usinfo") && !message.content.includes("userinfo")) { // Responde as mensagens em que é marcado
-
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+    if (message.content.includes(client.user.id) && !message.content.startsWith(prefix +"usinfo") && !message.content.startsWith(prefix +"userinfo") && !message.content.startsWith(prefix +"gado") && !message.content.startsWith(prefix +"ga")) { // Responde as mensagens em que é marcado
 
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();

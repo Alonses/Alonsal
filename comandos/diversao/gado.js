@@ -5,7 +5,7 @@ module.exports = {
     usage: "gado <@>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
 
         const lang = client.idioma.getLang(message.guild.id);
 
@@ -13,18 +13,19 @@ module.exports = {
         const { gadisissimo } = require("../../arquivos/json/text/" + lang + "/gado.json");
 
         const num = Math.round((gadisissimo.length - 1) * Math.random());
+        let alvo;
 
-        const alvo = message.mentions.users.first();
+        if(args.length < 1)
+            return message.channel.send(diversao[3]["gado"] +` ${message.author} :cow:, `+ diversao[3]["error_1"]);
+        
+        if(isNaN(args[0]))
+            alvo = message.mentions.users.first();
 
-        if(typeof alvo == "undefined"){
-            message.channel.send(diversao[3]["gado"] +` ${message.author} :cow:, `+ diversao[3]["error_1"]);
-            return;
-        }
+        if(!isNaN(args[0]))
+            alvo = await message.guild.members.fetch(args[0]);
 
-        if(client.user.id === alvo.id){
-            message.channel.send(`${message.author} `+ diversao[3]["error_2"]);
-            return;
-        }
+        if(client.user.id === alvo.id)
+            return message.channel.send(`${message.author} `+ diversao[3]["error_2"]);
 
         if(alvo.id !== message.author.id)
             if(lang === "pt-br")
@@ -36,5 +37,10 @@ module.exports = {
                 message.channel.send(`Você ${message.author}`+" "+ gadisissimo[num]);
             else
                 message.channel.send(`You ${message.author}`+" "+ gadisissimo[num]);
+
+        const permissions = message.channel.permissionsFor(message.client.user);
+        
+        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+            message.delete();
     }
 };

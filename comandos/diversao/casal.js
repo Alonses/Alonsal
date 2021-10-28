@@ -7,28 +7,38 @@ module.exports = {
     usage: "mor <@><@>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    async execute(client, message, args) {
         const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-            
+        
         if(args[1] === "" && args[2].includes("<@"))
             args.splice(1, 1);
 
-        if(args.length !== 2 || !args[0].includes("<@") || !args[1].includes("<@"))
+        if(args.length !== 2)
             return message.reply(diversao[2]["aviso_1"].replaceAll(".a", prefix));
-        
+
+        if(!args[0].includes("<@")){
+            args[0] = await message.guild.members.fetch(args[0]);
+            args[0] = args[0].user.id;
+        }
+
+        if(!args[1].includes("<@")){
+            args[1] = await message.guild.members.fetch(args[1]);  
+            args[1] = args[1].user.id;
+        }
+
         let titulo = diversao[2]["limda"];
         let num = 100;
         let porcentagem = "";
         let aviso = diversao[2]["rodape"];
 
-        if(args[0] !== args[1]){
+        if(!args[0].includes(args[1]) && !args[1].includes(args[0])){
             num = Math.round(Math.random() * 100);
             aviso = "";
         }
 
-        if(args[0] !== args[1]){
+        if(!args[0].includes(args[1]) && !args[1].includes(args[0])){
             if(num === 100)
                 titulo = diversao[2]["100perc"];
             else if(num > 90)
@@ -45,12 +55,17 @@ module.exports = {
                 titulo = diversao[2]["0perc"];
         }
 
-        if(args[0] === args[1])
-            porcentagem = ":sparkling_heart: ";
-        else
-            porcentagem = args[0] +" e "+ args[1] + "\n\n";
+        if(!args[0].includes(args[1]) && !args[1].includes(args[0])){
+            if(!isNaN(args[0]))
+                args[0] = "<@"+ args[0] +">";
 
-        for(let i = 0; i <= num - 10; i = i + 10){
+            if(!isNaN(args[1]))
+                args[1] = "<@"+ args[1] +">";
+            
+            porcentagem = args[0] +" e "+ args[1] + "\n\n";
+        }
+
+        for(let i = 0; i <= num - 10; i += 10){
             porcentagem += ":sparkling_heart: ";
         }
 
@@ -65,6 +80,6 @@ module.exports = {
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
         .setTimestamp();
 
-        message.reply({ content: `${message.author}`, embeds: [embed] });
+        message.reply({ embeds: [embed] });
     }
 };
