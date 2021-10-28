@@ -37,18 +37,22 @@ module.exports = {
                     status = status.replace("Steam Community :: ", "");
                     
                     if(status === "Error") return message.reply(utilitarios[16]["error_1"]);
-
-                    // const fs = require('fs');
-
-                    // fs.writeFile('./comandos/utilitarios/site2.html', res, (err) => {
-                    //     if (err) throw err;
-                    // });
                     
-                    let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, porcentagem_conquistas, capturas_user, videos_user, artes_user;
+                    let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas;
                     let jogo_favorito = "", tempo_jogado = "";
                     let nota_rodape = message.author.username;
                     let anos_servico = "";
+                    let background_user = "";
 
+                    if(res.includes("<video playsinline autoplay muted loop poster=\"")){
+                        background_user = res.split("<video playsinline autoplay muted loop poster=\"")[1];
+                        background_user = background_user.split("\">")[0];
+                    }else if(res.includes("<div class=\"no_header profile_page has_profile_background")){
+                        background_user = res.split("<div class=\"no_header profile_page has_profile_background")[1];
+                        background_user = background_user.split("' );\">")[0];
+                        background_user = background_user.split("url( '")[1];
+                    }
+                    
                     try{
                         bandeira_user = res.split("<img class=\"profile_flag\"")[1];
                         bandeira_user = bandeira_user.split("\">")[0];
@@ -113,7 +117,23 @@ module.exports = {
                     
                     try{
                         if(res.includes("<div class=\"label\">Achievements</div>")){
-                            conquistas_user = res.split("<div class=\"label\">Achievements</div>")[0];
+                            let blocos_conquistas = res.split("<div class=\"label\">Achievements</div>");
+
+                            conquistas_user = blocos_conquistas[0];
+
+                            if(blocos_conquistas.length > 2){
+                                conquistas_favoritas = conquistas_user.slice(conquistas_user.length - 120);
+                                conquistas_favoritas = conquistas_favoritas.split("<div class=\"value\">")[1];
+                                conquistas_favoritas = conquistas_favoritas.split("</div>")[0];
+
+                                total_conquistas_favoritas = res.split("&nbsp; <span class=\"ellipsis\">"+ conquistas_favoritas)[1];
+                                total_conquistas_favoritas = total_conquistas_favoritas.split("</span>")[0];
+                                total_conquistas_favoritas = total_conquistas_favoritas.replace("of ", "");
+                            }
+
+                            if(blocos_conquistas.length > 2)
+                                conquistas_user = blocos_conquistas[1];
+
                             conquistas_user = conquistas_user.slice(conquistas_user.length - 120);
                             conquistas_user = conquistas_user.split("<div class=\"value\">")[1];
                             conquistas_user = conquistas_user.split("</div>")[0];
@@ -121,6 +141,22 @@ module.exports = {
                             conquistas_user = "-";
                     }catch(err){
                         conquistas_user = "-";
+                    }
+
+                    try{
+                        tempo_semanas = res.split("<div class=\"recentgame_quicklinks recentgame_recentplaytime\">")[1];
+                        tempo_semanas = tempo_semanas.split("</h2>")[0];
+                        tempo_semanas = tempo_semanas.replace("<h2>", "");
+
+                        let descriminador_tempo_2 = tempo_semanas.split(" ")[1];
+                        tempo_semanas = parseFloat(tempo_semanas.split(" ")[0]);
+
+                        if(idioma_definido === "pt-br")
+                            tempo_semanas = tempo_semanas +" "+ utilitarios[16][descriminador_tempo_2];
+                        else
+                            tempo_semanas = tempo_semanas +" "+ descriminador_tempo_2;
+                    }catch(err){
+                        tempo_semanas = "-";
                     }
 
                     try{
@@ -183,20 +219,27 @@ module.exports = {
 
                         jogo_favorito = jogo_favorito.replaceAll(/[\n\r]/g, "");
 
-                        tempo_jogado = dados_jogo_fav.split("<div class=\"showcase_stat\">")[1];
-                        tempo_jogado = tempo_jogado.split("</div>")[0];
-                        tempo_jogado = tempo_jogado.replace("<div class=\"value\">", "");
-                        tempo_jogado = tempo_jogado.replace(",", ".");
+                        try{
+                            tempo_jogado = dados_jogo_fav.split("<div class=\"showcase_stat\">")[1];
+                            tempo_jogado = tempo_jogado.split("</div>")[0];
+                            tempo_jogado = tempo_jogado.replace("<div class=\"value\">", "");
+                        }catch(err){
+                            tempo_jogado = "-";
+                        }
 
-                        descriminador_tempo = dados_jogo_fav.split("<div class=\"label\">")[1];
-                        descriminador_tempo = descriminador_tempo.split("</div>")[0];
-                        descriminador_tempo = descriminador_tempo.split(" ")[0].toLocaleLowerCase();
+                        try{
+                            descriminador_tempo = dados_jogo_fav.split("<div class=\"label\">")[1];
+                            descriminador_tempo = descriminador_tempo.split("</div>")[0];
+                            descriminador_tempo = descriminador_tempo.split(" ")[0].toLocaleLowerCase();
+                        }catch(err){
+                            descriminador_tempo = "-";
+                        }
 
+                        if(conquistas_favoritas)
                         if(idioma_definido === "pt-br")
                             descriminador_tempo = utilitarios[16][descriminador_tempo];
 
-                        tempo_jogado = parseFloat(tempo_jogado);
-
+                        tempo_jogado = tempo_jogado.replace(",", ".").replace(/\s+/g, '');
                         tempo_jogado = tempo_jogado +" "+ descriminador_tempo;
                     }
 
@@ -207,17 +250,21 @@ module.exports = {
                         anos_servico = anos_servico.split("Member since ")[1];
                     }
 
-                    if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || videos_user === "-" || artes_user == "-")
+                    if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || videos_user === "-" || artes_user == "-" || tempo_semanas === "-")
                         nota_rodape = utilitarios[16]["rodape"];
 
                     if(jogos_user < jogos_perfeitos)
                         nota_rodape = utilitarios[16]["suspeito"];
+
+                    if(typeof conquistas_favoritas == "undefined" && typeof total_conquistas_favoritas == "undefined")
+                        jogo_favorito = "";
 
                     let usuario_steam = new MessageEmbed()
                     .setTitle(nome_user +""+ bandeira_user)
                     .setURL(usuario_alvo)
                     .setAuthor("Steam", "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0")
                     .setThumbnail(avatar_user)
+                    .setImage(background_user)
                     .setColor(0x29BB8E)
                     .addFields(
                         { name: ":ninja: "+ utilitarios[16]["nivel"], value: `**`+ utilitarios[12]["atual"] +`: **\`${nivel_user}\``, inline: true},
@@ -227,13 +274,13 @@ module.exports = {
                     .addFields(
                         { name: ":trophy: "+ utilitarios[16]["conquistas"], value: `**Total: **\`${conquistas_user}\`\n**`+ utilitarios[16]["porcentagem"] +`:** \`${porcentagem_conquistas}\`\n**`+ utilitarios[16]["jogos_perfeitos"] +`: **\`${jogos_perfeitos}\``, inline: true},
                         { name: ":piñata: "+ utilitarios[16]["criacoes"], value: `:frame_photo: **Screenshots: ** \`${capturas_user}\`\n:film_frames: **Videos: **\`${videos_user}\`\n:paintbrush: **`+ utilitarios[16]["artes"] +`: **\`${artes_user}\``, inline: true},
-                        { name: ":mobile_phone_off: Status", value: `\`${status_atual}\``, inline: true}
+                        { name: ":mobile_phone_off: Status", value: `\`${status_atual}\`\n:clock: **2 Semanas: **\`${tempo_semanas}\``, inline: true}
                     )
                     .setFooter(nota_rodape, message.author.avatarURL({ dynamic:true }));
 
                     if(jogo_favorito !== "")
                         usuario_steam.addFields(
-                            { name: ":star: "+ utilitarios[16]["jogo_favorito"], value: `**`+ utilitarios[16]["nome"] +`: **\`${jogo_favorito}\`\n:alarm_clock: **`+ utilitarios[16]["tempo_jogado"] +`: **\`${tempo_jogado}\``, inline: false}
+                            { name: ":star: "+ utilitarios[16]["jogo_favorito"], value: `**`+ utilitarios[16]["nome"] +`: **\`${jogo_favorito}\`\n:trophy: **`+ utilitarios[16]["conquistas"] +`: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **`+ utilitarios[16]["tempo_jogado"] +`: **\`${tempo_jogado}\``, inline: false}
                         )
 
                     if(anos_servico !== "")
