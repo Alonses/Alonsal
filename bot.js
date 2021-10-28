@@ -52,11 +52,11 @@ client.on("messageCreate", async message => {
     if(!prefix)
         prefix = ".a";
 
-    if(client.user.id !== message.author.id){
-        if (message.author.bot || message.webhookId) return;
+    // if(client.user.id !== message.author.id){
+    //     if (message.author.bot || message.webhookId) return;
 
-        client.channels.cache.get("903289286546296842").send(":detective: | "+ message.content);
-    }
+    //     client.channels.cache.get("903289286546296842").send(":detective: | "+ message.content);
+    // }
 
     if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user);
