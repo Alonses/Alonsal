@@ -347,6 +347,11 @@
             "tempo_jogado" : "Tempo jogado",
             "hours" : "horas",
             "minutes" : "minutos"
+        },
+        {
+            "aviso_1" : "Informe pelo menos uma operação básica para calcular",
+            "resultado" : "Resultado",
+            "error" : "Deu pt aq ao processar essa budega"
         }
     ],
     "musicas" : [
