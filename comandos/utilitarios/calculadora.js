@@ -39,10 +39,10 @@ module.exports = {
                 if(resultado < 0)
                     emoji_res = ":chart_with_downwards_trend:";
 
-                if(operacao == "2 - 1" || operacao == "1 - 2")
+                if(operacao === "2 - 1" || operacao === "1 - 2")
                     return message.reply(`:chart_with_upwards_trend: | ${utilitarios[17]["resultado"]}: \`3\``);
 
-                message.reply(emoji_res +`:chart_with_upwards_trend: | ${utilitarios[17]["resultado"]}: \`${resultado}\``);
+                message.reply(`${emoji_res} | ${utilitarios[17]["resultado"]}: \`${resultado}\``);
             }catch(err){
                 message.reply(`:octagonal_sign: | ${utilitarios[17]["error"]}: \`${operacao}\``);
             }
