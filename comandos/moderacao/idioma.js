@@ -28,6 +28,8 @@ module.exports = {
             idioma_alterado = ":flag_us: | Language switched to `American English`";
         }
 
+        client.channels.cache.get('872865396200452127').send(idioma_alterado.slice(0, 9) +" | Idioma do servidor ( `"+ message.guild.name +"` | `"+ message.guild.id +"` ) atualizado para `"+ idioma_selecionado +"`");
+
         client.idioma.setLang(message.guild.id, idioma_selecionado);
         message.reply(idioma_alterado);
     }
