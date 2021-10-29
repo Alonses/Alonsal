@@ -9,6 +9,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
+        return;
+        
         if(message.attachments.size != 1) return message.reply(":warning: | Inclua uma imagem junto do comando");
 
         let imagem = message.attachments.first();
