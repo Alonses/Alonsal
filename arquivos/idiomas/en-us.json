@@ -374,6 +374,11 @@
             "jogo_favorito" : "Favorite game",
             "nome" : "Name",
             "tempo_jogado" : "Time played"
+        },
+        {
+            "aviso_1" : "Enter at least one basic operation to calculate",
+            "resultado" : "Result",
+            "error" : "An error occurred while processing this operation"
         }
     ],
     "musicas" : [

@@ -16,6 +16,7 @@
     "crypto-js": "^4.1.1",
     "discord.js": "^13.2.0",
     "i18n-country-code": "^1.0.1",
+    "mathjs": "^2.1.1",
     "node-fetch": "^2.6.5",
     "nodemon": "^2.0.13",
     "opusscript": "0.0.8",
