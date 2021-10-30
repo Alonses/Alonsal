@@ -8,7 +8,7 @@ module.exports = {
         
         const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) + '.json');
 
-        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.owner.id))
+        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id))
             return message.reply(":octagonal_sign: | "+ moderacao[3]["permissao_1"]).then(msg => setTimeout(() => msg.delete(), 5000)); // Libera configuração para o Slondo e adms apenas
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
