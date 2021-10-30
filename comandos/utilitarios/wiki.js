@@ -13,15 +13,8 @@ module.exports = {
 
         const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
 
-
-        let content = '';
         let counter = 0;
-
-        for(let i = 0; i < args.length; i++){
-            content += args[i] +' ';
-        }
-
-        content = content.toLowerCase();
+        let content = args.join(" ").toLowerCase();
 
         if(content.includes("slondo")) // Pesquisa por slondo
             return message.reply(utilitarios[1]["wiki_slondo"]);
@@ -29,13 +22,11 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length > 0){
-            content = content.substr(0, (content.length - 1)); // Remove o espaço no último caractere
-
             const url = 'https://api.duckduckgo.com/?q='+ encodeURI(content) +'&format=json&pretty=0&skip_disambig=1&no_html=1';
 
             const termo_pesquisado_cc = content.slice(1);
             const username = `${message.author.username}`;
-
+            
             fetch(url, {headers:{"accept-language": client.idioma.getLang(message.guild.id)}})
             .then(response => response.json())
             .then(async res => {

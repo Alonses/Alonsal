@@ -45,16 +45,12 @@ module.exports = {
         if(args.length < 1) // Pesquisa sem argumentos
             return message.reply(":warning: | "+ utilitarios[8]["aviso_1"].replaceAll(".a", prefix));
 
-        for(let i = 0; i < args.length; i++){
-            if(isNaN(args[i]))
-                pesquisa += args[i].normalize("NFD").replace(/[^a-zA-Zs]/g, "");
-            else
-                pesquisa += args[i];
+        let indices = [];
+        args.forEach(valor => {
+            indices.push(valor.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
+        });
 
-            if(args[i + 1] !== undefined)
-                pesquisa += " ";
-        }
-        
+        pesquisa = indices.join(" ");
         let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
         
         if(idioma_adotado === "en-us")

@@ -15,11 +15,10 @@ module.exports = {
         if (args[0] !== "encode" && args[0] !== "decode") return message.reply(utilitarios[3]["aviso"]);
 
         let operation = args[0];
-
-        args.shift();
-
         let embed;
 
+        args.shift();
+        
         switch (operation) {
             case "encode":
                 embed = new MessageEmbed()

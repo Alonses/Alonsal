@@ -12,19 +12,12 @@ module.exports = {
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_selecionado +'.json');
 
-        let pesquisa = "";
         let nota_rodape = "";
-
         let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
 
-        args.forEach(value => {
-            pesquisa += value +" ";
-        });
-
-        let nome_interno = pesquisa.slice(0, -1).split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
-
+        let pesquisa = args.join(" ");
+        let nome_interno = pesquisa.split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
         pesquisa = pesquisa.charAt(0).toUpperCase() + pesquisa.slice(1);
-        pesquisa = pesquisa.slice(0, -1);
         
         let random = false;
 

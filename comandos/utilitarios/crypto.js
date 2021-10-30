@@ -19,13 +19,9 @@ module.exports = {
         let resultado = "";
 
         if(args.length > 2){
-            for(let i = 1; i < args.length; i++){
-                texto += args[i];
-
-                if(typeof args[i+1] !== "undefined")
-                    texto += " ";
-            }
-
+            texto = args.join(" ");
+            texto = texto.replace(args[0], "");
+            
             resultado = utilitarios[11]["chave"] +": `"+ args[0] +"` :: "+ CryptoJS.AES.encrypt(texto, args[0]).toString();
         }else if(args.length === 2){
             let bytes = CryptoJS.AES.decrypt(args[1], args[0]);

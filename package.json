@@ -20,7 +20,6 @@
     "node-fetch": "^2.6.5",
     "nodemon": "^2.0.13",
     "opusscript": "0.0.8",
-    "tesseract.js": "^2.1.5",
     "wax-command-handler": "^1.1.4"
   }
 }

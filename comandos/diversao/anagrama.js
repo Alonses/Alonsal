@@ -1,26 +1,20 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Util } = require('discord.js');
 
 module.exports = {
     name: "anagrama",
     description: "Anagramas",
     aliases: [ "na", "anagram" ],
-    cooldown: 3,
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
+        const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+
         if(args.length < 1)
-            return message.reply("Informe algo além do comando, por exemplo `.ana alonsal > odnols`");
+            return message.reply(diversao[5]["aviso_1"]);
 
-        let string = "";
-
-        args.forEach(value => {
-            string += value +" ";
-        });
-    
-        string = string.slice(0, -1);
-
-        // if(string.includes("nk "))
-        //     string = string.replace("nk ", "");
+        let string = args.join(" ");
+        let cor_embed = 0x29BB8E;
 
         function duplicateCount(string) {
             const charMap = {};
@@ -68,29 +62,30 @@ module.exports = {
             return arr;
         }
 
-        let anagrama_formado = await shuffleArray(fatori_fix);
-        anagrama_formado = anagrama_formado.join('');
+        let anagrama_formado = [];
+        let exib_formatado = "";
+        let qtd_quebras = [];
+
+        for(let i = 0; i < 3; i++){
+            anagrama_formado.push(await shuffleArray(fatori_fix).join(''));
+
+            exib_formatado += "**-** `"+ anagrama_formado[i] +"`\n";
+            qtd_quebras = exib_formatado.split(anagrama_formado[i]);
+
+            if(qtd_quebras.length > 2 && fatori_fix.length > 4)
+                cor_embed = 0xfbff3d;
+        }
+
+        if(cor_embed == 0xfbff3d)
+            exib_formatado += "\n:four_leaf_clover: | _"+ diversao[5]["sorte"] +"_";
 
         const anagrama = new MessageEmbed()
-        .setTitle(":abc: Seu anagrama")
+        .setTitle(":abc: "+ diversao[5]["anagrama"])
         .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
-        .setColor(0x29BB8E)
-        .setDescription("Entrada original: `"+ string +"`\nCombinação possível: `" + anagrama_formado + "`")
-        .setFooter("Sua sequência de caracteres produz outras "+ result.toLocaleString('pt-BR') +" combinações!");
+        .setColor(cor_embed)
+        .setDescription(diversao[5]["entrada"] +": `"+ string +"`\n"+ diversao[5]["combinacao"] +": \n"+ exib_formatado)
+        .setFooter(diversao[5]["sequencia"] +" "+ result.toLocaleString('pt-BR') +" "+ diversao[5]["combinacoes"]);
 
         message.reply({embeds: [anagrama]});
-
-        // if(args[0] === "nk"){
-        //     const permissions_bot = await message.guild.members.fetch(message.client.user.id);
-
-        //     if(!permissions_bot.permissions.has("MANAGE_NICKNAMES"))
-        //         return message.reply(":interrobang: | O anagrama foi criado, mas eu não posso alterar seu apelido pois não tenho a permissão `Gerenciar apelidos` :(");
-
-        //     if(message.author.id === message.guild.ownerId)
-        //         return message.reply("Eu não posso alterar o seu apelido automaticamente :(");
-
-        //     message.member.setNickname(anagrama_formado);
-        //     message.reply("Seu apelido neste servidor foi alterado");
-        // }
     }
 }
