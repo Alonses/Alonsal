@@ -29,11 +29,18 @@ client.on("ready", async () => {
 
     await require("./adm/status.js")({client});
     
+    // handler.useSlashHandler();
+    // handler.useDefaultHelp(handler);
+
     for(const folder of readdirSync(__dirname + "/comandos/")){
         for(const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`);
-
             handler.addCommand(command);
+
+            // if(command.slash) handler.addSlashCommand(command);
+        
+            // // IF THE COMMAND IS REGISTERED USE THIS INSTEANDED
+            // if(command.slash) handler.listSlashCommand(command);
         }
     }
 
@@ -75,6 +82,10 @@ client.on("messageCreate", async message => {
     else
         await require('./adm/comando.js')({client, message});
 });
+
+// client.ws.on("INTERACTION_CREATE", async data => {
+//     handler.wsInteractionReceived(data);
+// });
 
 // Eventos secundários
 require('./adm/eventos.js')({client});
@@ -121,7 +132,7 @@ handler.events.on("command_error", async e => {
 
 handler.events.on("cooldown", (message, timeleft) => {
     let { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
-    message.reply(`${inicio[0]["aguarde"]} \`${timeleft}\` ${inicio[0]["cooldown"]}`);
+    message.reply(`${inicio[0]["aguarde"]} \`${timeleft.toFixed(2)}\` ${inicio[0]["cooldown"]}`);
 });
 
 handler.events.on("no_perm", (message, permission) => {

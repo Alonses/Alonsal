@@ -9,25 +9,19 @@ module.exports = {
     async execute(client, message, args) {
 
         const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
-
         const permissions = message.channel.permissionsFor(message.client.user);
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
-            
+        
         if(message.attachments.size > 1 || (message.attachments.size === 0 && args.length < 1)){
             let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
 
             if(message.attachments.size > 1)
                 text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_2"];
 
-            const aviso = await message.channel.send(text_aviso);
-
-            setTimeout(() => {
-                aviso.delete();
-            }, 5000);
-
+            await message.channel.send(text_aviso).then(msg => setTimeout(() => msg.delete(), 5000))
             return;
         }
 
@@ -35,22 +29,22 @@ module.exports = {
 
         if(conteudo.includes("hora certa") || conteudo.includes("right time")){
             const hora_certa = new MessageAttachment("arquivos/songs/hora_certa.mp3");
-            return message.channel.send(utilitarios[6]["hora_certa"], hora_certa);
+            return message.channel.send({content: utilitarios[6]["hora_certa"], files: [hora_certa]});
         }
 
-        if(conteudo === prefix+"rep avast"){
+        if(conteudo === prefix +"rep avast"){
             const avast = new MessageAttachment("arquivos/songs/avast.mp3");
-            return message.channel.send(avast);
+            return message.channel.send({files: [avast]});
         }
 
-        if(conteudo === prefix+"rep malakoi"){
+        if(conteudo === prefix +"rep malakoi"){
             const malakoi = new MessageAttachment("arquivos/songs/malakoi.mp3");
-            return message.channel.send(malakoi);
+            return message.channel.send({files: [malakoi]});
         }
 
-        if(conteudo === prefix+"rep kadu"){
+        if(conteudo === prefix +"rep kadu"){
             const kadu = new MessageAttachment("arquivos/songs/kadu.mp3");
-            return message.channel.send(kadu);
+            return message.channel.send({files: [kadu]});
         }
 
         if(message.attachments.size === 0){
@@ -66,7 +60,7 @@ module.exports = {
         }else{
             message.attachments.forEach(attachment => {
                 const arquivo_atach = new MessageAttachment(attachment.url);
-                message.channel.send({ content: utilitarios[6]["reproducao_2"] +` [ ${message.author} ]`, attachments: [arquivo_atach] });
+                message.channel.send({content: utilitarios[6]["reproducao_2"] +` ( \`${message.author.username}\` | \`${message.author.id}\` )`, files: [arquivo_atach]});
             });
         }
 

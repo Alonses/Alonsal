@@ -12,14 +12,8 @@ module.exports = {
 
         if(args.length < 1) return message.reply(utilitarios[17]["aviso_1"]);
         
-        let operacao = "";
-
         try{
-            args.forEach(value => {
-                operacao += value +" ";
-            });
-
-            operacao = operacao.slice(0, -1);
+            let operacao = args.join(" ");
             let resultado = math.evaluate(operacao);
             let emoji_res = ":chart_with_upwards_trend:";
 

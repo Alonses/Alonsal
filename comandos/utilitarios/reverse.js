@@ -11,13 +11,7 @@ module.exports = {
         const { utilitarios } = require('../../arquivos/idiomas/'+  client.idioma.getLang(message.guild.id) +'.json');
 
         if(args.length > 0){
-            let ordena = "";
-
-            for(let x = 0; x < args.length; x++){
-                ordena += args[x] + " ";
-            }
-
-            ordena = ordena.slice(0, -1).toLowerCase();
+            let ordena = args.join(" ").toLowerCase();
 
             let texto = ordena.split('');
             texto = texto.reverse();

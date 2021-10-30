@@ -19,17 +19,13 @@ module.exports = {
         let entrada;
         
         if(args.length > 0){
-            for(let x = 0; x < args.length; x++){
-                ordena += args[x] + " ";
-            }
-     
+            ordena = args.join(" ");
+            entrada = ordena;
+            
             if(ordena.indexOf("rev") !== -1){
                 ordena = ordena.replace("rev ", "");
                 reverso = true;
             }
-
-            // Remove o último espaço
-            entrada = ordena.slice(0, -1).toLowerCase();
 
             let texto = entrada.split(' ');
 

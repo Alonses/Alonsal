@@ -32,6 +32,15 @@
         },
         {
             "peao" : "Roda o pião"
+        },
+        {
+            "aviso_1" : "Informe algo além do comando, por exemplo `.ana alonsal > odnols`",
+            "anagrama" : "Seu anagrama",
+            "entrada" : "Entrada original",
+            "combinacao" : "Possiveis combinações",
+            "sequencia" : "Sua sequência de caracteres produz",
+            "combinacoes" : "combinações!",
+            "sorte" : "Houve uma repetição de palavras! Seria sorte?"
         }
     ],
     "jogos" : [
