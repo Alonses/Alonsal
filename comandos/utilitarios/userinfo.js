@@ -111,7 +111,7 @@ module.exports = {
             .setColor(0x29BB8E)
             .setThumbnail(avatar_user)
             .addFields(
-                {
+{
                     name: ':globe_with_meridians: **Discord**',
                     value: "`" + user.username + "#" + user.discriminator + "`\n`" + user.id + "`",
                     inline: true
