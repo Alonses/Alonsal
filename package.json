@@ -20,6 +20,6 @@
     "node-fetch": "^2.6.5",
     "nodemon": "^2.0.13",
     "opusscript": "0.0.8",
-    "wax-command-handler": "^1.2.0"
+    "wax-command-handler": "^1.3.2"
   }
 }
