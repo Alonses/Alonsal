@@ -144,4 +144,4 @@ handler.events.on("no_args", (message, command) => {
     message.reply(inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
 });
 
-client.login(token);
+client.login(token_2);
