@@ -3,7 +3,7 @@ const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-const {token, prefix, owner_id} = require('./config.json');
+const {token, token_2, prefix, owner_id} = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -50,6 +50,9 @@ client.on("ready", async () => {
 });
 
 client.on("messageCreate", async message => {
+
+    if (message.author.bot || message.webhookId) return;
+    require('./adm/ranking.js')({client, message}); // Ranking de XP
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
     if(!prefix)
