@@ -3,7 +3,7 @@ const { id_canais } = require('../config.json');
 
 module.exports = async ({client, message, content}) => {
 
-    var fs = require('fs');
+    let fs = require('fs');
 
     fs.readFile('./arquivos/data/status/comandos.txt', 'utf8', function(err, data) {
         if (err) throw err;
