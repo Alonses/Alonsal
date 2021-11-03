@@ -53,7 +53,12 @@ module.exports = {
             let lista_final_exp = "";
             let medalhas = [":first_place:", ":second_place:", ":third_place:", ":medal:", ":medal:", ":medal:"];
 
-            for(let i = 0; i < 5; i++){ // Exibe apenas os 6 usuários com mais exp
+            let qtd_entradas = 5;
+
+            if(lista_usuarios.length < 5)
+                qtd_entradas = lista_usuarios.length;
+
+            for(let i = 0; i < qtd_entradas; i++){ // Exibe apenas os 6 usuários com mais exp
                 lista_final_nomes += medalhas[i] +` \`${lista_usuarios[i]}\`\n`;
                 lista_final_exp += `\`${experiencia[i]}\`\n`;
             }
