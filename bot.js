@@ -3,7 +3,7 @@ const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-const {token, token_2, prefix, owner_id} = require('./config.json');
+const {token, prefix, owner_id} = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -29,18 +29,14 @@ client.on("ready", async () => {
 
     await require("./adm/status.js")({client});
     
-    // handler.useSlashHandler();
-    // handler.useDefaultHelp(handler);
+    await handler.useSlashHandler();
 
-    for(const folder of readdirSync(__dirname + "/comandos/")){
-        for(const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
+    for (const folder of readdirSync(__dirname + "/comandos/")){
+        for (const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`);
             handler.addCommand(command);
 
-            // if(command.slash) handler.addSlashCommand(command);
-        
-            // // IF THE COMMAND IS REGISTERED USE THIS INSTEANDED
-            // if(command.slash) handler.listSlashCommand(command);
+            if(command.slash) handler.addSlashCommand(command);
         }
     }
 
@@ -83,9 +79,9 @@ client.on("messageCreate", async message => {
         await require('./adm/comando.js')({client, message});
 });
 
-// client.ws.on("INTERACTION_CREATE", async data => {
-//     handler.wsInteractionReceived(data);
-// });
+client.ws.on("INTERACTION_CREATE", async data => {
+    handler.wsInteractionReceived(data);
+});
 
 // Eventos secundários
 require('./adm/eventos.js')({client});
