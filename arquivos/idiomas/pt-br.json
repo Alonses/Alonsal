@@ -41,6 +41,9 @@
             "sequencia" : "Sua sequência de caracteres produz",
             "combinacoes" : "combinações!",
             "sorte" : "Houve uma repetição de palavras! Seria sorte?"
+        },
+        {
+            "nsfw_jaja" : "Devido ao excesso de delícia este comando só pode ser usado num canal NSFW"
         }
     ],
     "jogos" : [

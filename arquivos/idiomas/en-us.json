@@ -41,6 +41,9 @@
             "sequencia" : "Your entered characters produce",
             "combinacoes" : "combinations!",
             "sorte" : "There was a repetition of words! Lucky you?"
+        },
+        {
+            "nsfw_jaja" : "Due to the excess of delight, this command can only be used on an NSFW channel."
         }
     ],
     "jogos" : [
