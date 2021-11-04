@@ -2,7 +2,7 @@ module.exports = {
     name: "gado",
     description: "Teste a gadisse de alguém",
     aliases: [ "ga" ],
-    usage: "gado <@>",
+    usage: "gado <member>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
@@ -13,16 +13,8 @@ module.exports = {
         const { gadisissimo } = require("../../arquivos/json/text/" + lang + "/gado.json");
 
         const num = Math.round((gadisissimo.length - 1) * Math.random());
-        let alvo;
 
-        if(args.length < 1)
-            return message.channel.send(diversao[3]["gado"] +` ${message.author} :cow:, `+ diversao[3]["error_1"]);
-        
-        if(isNaN(args[0]))
-            alvo = message.mentions.users.first();
-
-        if(!isNaN(args[0]))
-            alvo = await message.guild.members.fetch(args[0]);
+        const alvo = args[0].value;
 
         if(client.user.id === alvo.id)
             return message.channel.send(`${message.author} `+ diversao[3]["error_2"]);
