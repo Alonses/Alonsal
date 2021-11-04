@@ -144,4 +144,9 @@ handler.events.on("no_args", (message, command) => {
     message.reply(inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
 });
 
+handler.events.on("invalid_args", (args, message, command) => {
+    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
+    message.reply(inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
+});
+
 client.login(token);
