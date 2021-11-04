@@ -5,7 +5,6 @@ module.exports = {
     description: "Informe vários itens, o alonsal escolherá um",
     aliases: [ "ch", "escolha", "decida", "selecione" ],
     cooldown: 3,
-    permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         
         const { jogos } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
