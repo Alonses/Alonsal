@@ -4,14 +4,11 @@ module.exports = {
     name: "anagrama",
     description: "Anagramas",
     aliases: [ "na", "anagram" ],
+    usage: "na <any>",
     cooldown: 2,
-    permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
         const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
-
-        if(args.length < 1)
-            return message.reply(diversao[5]["aviso_1"]);
 
         let string = args.join(" ");
         let cor_embed = 0x29BB8E;
