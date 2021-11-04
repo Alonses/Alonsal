@@ -52,7 +52,7 @@ client.on("ready", async () => {
 client.on("messageCreate", async message => {
 
     if (message.author.bot || message.webhookId) return;
-    require('./adm/ranking.js')({client, message}); // Ranking de XP
+    // require('./adm/ranking.js')({client, message}); // Ranking de XP
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
     if(!prefix)
