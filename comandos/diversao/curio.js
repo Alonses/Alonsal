@@ -5,7 +5,7 @@ module.exports = {
     name: "curiosidades",
     description: "Curiosidades aleatórias",
     aliases: [ "curio", "c" ],
-    cooldown: 1,
+    cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 

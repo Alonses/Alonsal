@@ -13,11 +13,11 @@ module.exports = {
         if(num === 0)
             message.channel.send("ESFIHADA!");
 
-        message.channel.send(gifs[num]);
+        message.channel.send(gifs[num]).then(() => {
+            const permissions = message.channel.permissionsFor(message.client.user);
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-        
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
+            if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+                message.delete();
+        });
     }
 };

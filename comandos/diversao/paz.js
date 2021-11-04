@@ -6,11 +6,11 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
                 
-        message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
+        message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263').then(() => {
+            const permissions = message.channel.permissionsFor(message.client.user);
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-        
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
+            if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+                message.delete();
+        });
     }
 };

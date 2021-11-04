@@ -12,12 +12,11 @@ module.exports = {
 
         if(!message.channel.nsfw) return message.reply(":tropical_drink: | "+ diversao[6]["nsfw_jaja"]);
 
-        let num = Math.round((gifs.length - 1) * Math.random());
-        message.channel.send(gifs[num]);
+        message.channel.send(gifs[Math.round((gifs.length - 1) * Math.random())]).then(() => {
+            const permissions = message.channel.permissionsFor(message.client.user);
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-        
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
+            if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
+                message.delete();
+        });
     }
 };
