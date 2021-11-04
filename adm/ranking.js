@@ -142,8 +142,6 @@ module.exports = async ({client, message}) => {
             return;
         }
 
-        console.log("Atualizando o usuário");
-
         // Limpa o cache para reiniciar os valores
         delete require.cache[require.resolve('../arquivos/data/rank/ranking.json')];
     }
