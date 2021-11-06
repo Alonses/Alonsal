@@ -1,5 +1,4 @@
 const { MessageAttachment, MessageEmbed } = require('discord.js');
-
 module.exports = {
     name: "mail_games",
     description: "Envie atualizações de jogos",
@@ -10,41 +9,64 @@ module.exports = {
 
         if(!client.owners.includes(message.author.id)) return;
 
-        const lang = client.idioma.getLang(message.guild.id);
         const { emojis } = require('../../arquivos/json/text/emojis.json');
         const { canal_games } = require('../../arquivos/data/games/canal_games.json');
+        const formata_anun = require('../../adm/funcoes/formatagames.js');
+        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        var canais_clientes = [];
 
-        let canais_clientes = [];
+        let tipo_anun = "";
         percorrer(canal_games);
 
-        if(args[0] === "list"){
+        function percorrer(obj) { // Coleta os valores de canais e cargos
+            for (var propriedade in obj) {
+                if (obj.hasOwnProperty(propriedade)) {
+                    if (typeof obj[propriedade] == "object") {
+                        percorrer(obj[propriedade]);
+                    } else {
+                        canais_clientes.push(obj[propriedade]);
+                    }
+                }
+            }
+        }
 
+        if(args[0] === "list"){
             let nome_canais = "";
 
             if(canais_clientes.length == 0)
                 return message.reply(":octagonal_sign: Sem canais clientes");
             
             for(let i = 0; i < canais_clientes.length; i++){
-
                 try{
                     let nome_canal = await client.channels.cache.get(canais_clientes[i]);
 
                     if(nome_canal !== undefined)
-                        nome_canais += "\n:globe_with_meridians: `"+ nome_canal.guild.name +"` -> :placard: `"+ nome_canal.name +"`";
+                        nome_canais += `\n:globe_with_meridians: \`${nome_canal.guild.name}\` -> :placard: \`${nome_canal.name}\``;
                 }catch(err){
-                    message.reply("Não foi posível buscar os dados do canal :: `"+ canais_clientes[i] +"`");
+                    message.reply(`Não foi posível buscar os dados do canal :: \`${canais_clientes[i]}\``);
                 }
             }
 
             nome_canais = nome_canais.substr(0, 1950);
 
-            return message.reply("Canais clientes: `" + canais_clientes.length/2 + "`\n\nCanais: "+ nome_canais);
+            return message.reply(`Canais clientes: \`${canais_clientes.length/2}\`\n\nCanais: ${nome_canais}`);
         }
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        if(args[0] === "h"){
+            const embed_fomatacao = new MessageEmbed()
+            .setTitle("Notificações de Games & DLC's")
+            .setDescription(`:one: Game - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:two: Games - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>\`\n:cloud_tornado: DLC - \`${prefix}mg dlc <nome_dlc> 21/01 50,00 <url> <img_anexo>\`\n:rotating_light: Anúncio urgente - \`${prefix}mg u <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:placard: Canais clientes - \`${prefix}mg list\``);
+            
+            return message.reply({embeds: [embed_fomatacao]});
+        }
+        
+        if(args[0] == "u" || args[0] == "dlc"){
+            tipo_anun = args[0];
+            args.shift();
+        }
 
-        if(args.length < 4 || args.length > 7)
-            return message.reply("Informe como `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <img_anexo>`\nOu, `"+ prefix +"mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>`");
+        if(args.length < 4)
+            return message.reply(`Informe pelo menos como \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\nOu utilize o comando\`${prefix}mg h\` para ver os aliases deste comando`);
         
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -95,50 +117,34 @@ module.exports = {
             valor_total += parseFloat((args[5]).replace(",", "."));
         
         let img_game = new MessageAttachment(url);
-        
+
         valor_total = valor_total.toFixed(2);
-
-        function percorrer(obj) { // Coleta os valores de canais e cargos
-            for (var propriedade in obj) {
-                if (obj.hasOwnProperty(propriedade)) {
-                    if (typeof obj[propriedade] == "object") {
-                        percorrer(obj[propriedade]);
-                    } else {
-                        canais_clientes.push(obj[propriedade]);
-                    }
-                }
-            }
-        }
-
         let canais_recebidos = 0;
 
         for(let i = 0; i < canais_clientes.length; i++){ // Envia a mensagem para vários canais clientes
-            
             try{
-                let servidor = client.channels.cache.get(canais_clientes[i]);
-                servidor = servidor.guild.id;
+                let nome_jogo_2 = "";
+                let link_1 = args[3];
+                let link_2 = "";
 
-                let texto_anuncio = "( "+ logo_plat +" ) O Game _`"+ nome_jogo +"`_ está gratuito até o dia `"+ args[1] +"` por lá\n\nResgate ele antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
-
-                if(lang === "en-us")
-                    texto_anuncio = "( "+ logo_plat +" ) The Game _`"+ nome_jogo +"`_ it's free until the day `"+ args[1] +"` over there\n\nRedeem it before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account <@&"+ canais_clientes[i + 1] +">\n<< <"+ args[3] +"> >>";
-
-                if(args.length > 4){
-                    let nome_jogo_2 = args[4].replaceAll("_", " ");
-
-                    texto_anuncio = "( "+ logo_plat +" ) Os Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ estão gratuitos até o dia `"+ args[1] +"` por lá\n\nResgate ambos antes da data para poupar `R$"+ valor_total +"` e garantir uma cópia em sua conta "+ plataforma +" <@&"+ canais_clientes[i + 1] +">";
-
-                    if(lang === "en-us")
-                        texto_anuncio = "( "+ logo_plat +" ) The Games _`"+ nome_jogo +"`_ & _`"+ nome_jogo_2 +"`_ are free until the day `"+ args[1] +"` over there\n\nRedeem both before date to save `R$"+ valor_total +"` and get a copy in your "+ plataforma +" account";
-
-                    if(typeof canais_clientes[i + 1] !== "undefined")
-                        texto_anuncio += " <@&"+ canais_clientes[i + 1] +">";
-
-                    if(typeof args[6] !== "undefined")
-                        texto_anuncio += "\n"+ nome_jogo +" << <"+ args[3] +"> >>\n\n"+ nome_jogo_2 +" << <"+ args[6] +"> >>";
-                    else
-                        texto_anuncio += "\n<< <"+ args[3] +"> >>";
+                if(typeof args[4] !== "undefined"){
+                    nome_jogo_2 = args[4];
+                    link_2 = args[6];
                 }
+
+                let servidor = await client.channels.cache.get(canais_clientes[i]);
+                servidor = servidor.guild.id;
+                
+                let lang_server = await client.idioma.getLang(message.guild.id);
+                texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1], valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
+                
+                if(typeof canais_clientes[i + 1] !== "undefined")
+                    texto_anuncio += ` <@&${canais_clientes[i + 1]}>`;
+
+                if(link_2 !== "")
+                    texto_anuncio += `\n${nome_jogo} << <${link_1}> >>\n\n${nome_jogo_2} << <${link_2}> >>`;
+                else
+                    texto_anuncio += `\n<< <${link_1}> >>`;
 
                 let canal_alvo = client.channels.cache.get(canais_clientes[i]);
 
@@ -158,18 +164,19 @@ module.exports = {
                     color: "RED"
                 });
 
+                console.log(err);
                 client.channels.cache.get('862015290433994752').send({ embeds: [embed] });
             }
 
             i++;
         }
         
-        let aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_recebidos +"` canais clientes";
+        let aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canais clientes`;
 
         if(canais_recebidos === 1)
-            aviso = ":white_check_mark: | Aviso de Jogo gratuito enviado para `"+ canais_recebidos +"` canal cliente";
+            aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canal cliente`;
 
-        client.channels.cache.get('872865396200452127').send(aviso);
+        // client.channels.cache.get('872865396200452127').send(aviso);
         const mensagem = await message.reply("A atualização foi enviada à todos os canais de games");
 
         setTimeout(() => {

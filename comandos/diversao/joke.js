@@ -8,6 +8,6 @@ module.exports = {
 
         const { piadas } = require("../../arquivos/json/text/joke.json");
     
-        message.reply(":black_joker: | "+ piadas[Math.round((piadas.length - 1) * Math.random())]);
+        message.reply(`:black_joker: | ${piadas[Math.round((piadas.length - 1) * Math.random())]}`);
     }
 };

@@ -5,11 +5,11 @@ module.exports = {
     name: "servericon",
     description: "mostra o avatar do servidor",
     aliases: [ "svicon", "icon" ],
-    cooldown: 3,
+    cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
-        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let icone_server = message.guild.iconURL({ size: 2048 });
         icone_server = icone_server.replace(".webp", ".gif");

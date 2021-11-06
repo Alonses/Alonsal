@@ -9,7 +9,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { utilitarios } = require('../../arquivos/idiomas/'+  client.idioma.getLang(message.guild.id) +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let ordena = "";
         let aviso = "";
@@ -53,11 +53,7 @@ module.exports = {
                 texto = texto.reverse();
             
             // Montando 
-            let texto_ordenado = "";
-            for(let i = 0; i < texto.length; i++){
-                texto_ordenado += texto[i];
-            }
-
+            let texto_ordenado = texto.join("");
             let titulo = utilitarios[2]["codificado"];
 
             if(tipo_texto === 1)
@@ -73,11 +69,11 @@ module.exports = {
                 .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
                 .setColor(0x29BB8E)
                 .setFooter(aviso)
-                .setDescription("`" + texto_ordenado + "`");
+                .setDescription(`\`${texto_ordenado}\``);
 
             message.reply({ embeds: [embed] })
             .catch(() => {
-                message.reply(":octagonal_sign: | "+ utilitarios[3]["error_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+                message.reply(`:octagonal_sign: | ${utilitarios[3]["error_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             });
         }else
             return message.reply(utilitarios[3]["aviso"]);

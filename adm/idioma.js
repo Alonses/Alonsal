@@ -12,12 +12,12 @@ function setDefault(lang) {
 }
 
 function setLang(guildId, lang) {
-    writeFileSync(datapath + "/" + guildId + ".txt", lang);
+    writeFileSync(`${datapath}/${guildId}.txt`, lang);
 }
 
 function getLang(guildId) {
     try {
-        return readFileSync(datapath + "/" + guildId + ".txt", "utf-8") || default_lang;
+        return readFileSync(`${datapath}/${guildId}.txt`, "utf-8") || default_lang;
     }
     catch (e) {
         return default_lang;

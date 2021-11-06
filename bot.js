@@ -20,19 +20,19 @@ const commandConfig = new handler.CommandConfig(
     client,
     prefix,
     true,
-    __dirname + "/arquivos/data/prefixes"
+    `${__dirname}/arquivos/data/prefixes`
 );
 
 handler.setup(commandConfig);
 
 client.on("ready", async () => {
 
-    await require("./adm/status.js")({client});
+    await require("./adm/internos/status.js")({client});
     
     await handler.useSlashHandler();
 
-    for (const folder of readdirSync(__dirname + "/comandos/")){
-        for (const file of readdirSync(__dirname + "/comandos/" + folder).filter(file => file.endsWith('.js'))) {
+    for (const folder of readdirSync(`${__dirname}/comandos/`)){
+        for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`);
             handler.addCommand(command);
 
@@ -40,7 +40,7 @@ client.on("ready", async () => {
         }
     }
 
-    idioma.setPath(__dirname + "/arquivos/data/idiomas");
+    idioma.setPath(`${__dirname}/arquivos/data/idiomas`);
     idioma.setDefault("pt-br");
 
     client.idioma = idioma;
@@ -64,22 +64,21 @@ client.on("messageCreate", async message => {
         if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
     
-    if (message.content.includes(client.user.id) && !message.content.startsWith(prefix +"usinfo") && !message.content.startsWith(prefix +"userinfo") && !message.content.startsWith(prefix +"gado") && !message.content.startsWith(prefix +"ga")) { // Responde as mensagens em que é marcado
+    if (message.content.includes(client.user.id) && !message.content.startsWith(`${prefix}usinfo`) && !message.content.startsWith(`${prefix}userinfo`) && !message.content.startsWith(`${prefix}gado`) && !message.content.startsWith(`${prefix}ga`)) { // Responde as mensagens em que é marcado
 
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
         let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         let idioma_selecionado = idioma.getLang(message.guild.id);
 
-        let { inicio } = require('./arquivos/idiomas/' + idioma_selecionado + '.json');
+        let { inicio } = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
 
-        await message.reply(dancando + " | " + inicio[0]["menciona"].replaceAll(".a", prefix));
-        return;
+        return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
     }
 
     if (message.content !== prefix)
         handler.messageReceived(message);
     else
-        await require('./adm/comando.js')({client, message});
+        await require('./adm/internos/comando.js')({client, message});
 });
 
 client.ws.on("INTERACTION_CREATE", async data => {
@@ -87,7 +86,7 @@ client.ws.on("INTERACTION_CREATE", async data => {
 });
 
 // Eventos secundários
-require('./adm/eventos.js')({client});
+require('./adm/internos/eventos.js')({client});
 
 handler.events.on("command_executed", async (command, discord_client, message, args) => {
 
@@ -103,16 +102,16 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
     let ult_comand = content;
 
-    await require('./adm/eventos.js')({client, auto: true, ult_comand});
+    await require('./adm/internos/eventos.js')({client, auto: true, ult_comand});
 
     let hora_comando = message.createdTimestamp;
     const data = new Date(hora_comando);
 
     await handler.executeCommand(command, discord_client, message, args);
 
-    console.log("Comando - Data: " + data + ", Autor: " + message.author.username + ", Server: " + message.guild.name + ", Comando: " + content);
+    console.log(`Ordem - Data: ${data}, Autor: ${message.author.username}, Server: ${message.guild.name}, Comando: ${content}`);
 
-    await require('./adm/log.js')({client, message, content});
+    await require('./adm/internos/log.js')({client, message, content});
 });
 
 handler.events.on("command_error", async e => {
@@ -130,23 +129,23 @@ handler.events.on("command_error", async e => {
 });
 
 handler.events.on("cooldown", (message, timeleft) => {
-    let { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
+    const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
     message.reply(`${inicio[0]["aguarde"]} \`${timeleft.toFixed(2)}\` ${inicio[0]["cooldown"]}`);
 });
 
 handler.events.on("no_perm", (message, permission) => {
-    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
+    const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
     message.reply(`${inicio[0]["permissao_1"]} \`${permission}\` ${inicio[0]["permissao_2"]}`);
 });
 
 handler.events.on("no_args", (message, command) => {
-    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
-    message.reply(inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
+    const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
+    message.reply(`${inicio[0]["error_1"]}: \`${prefix}${command.usage}\``);
 });
 
 handler.events.on("invalid_args", (args, message, command) => {
-    const { inicio } = require('./arquivos/idiomas/'+ idioma.getLang(message.guild.id) +'.json');
-    message.reply(inicio[0]["error_1"] + ": `" + prefix + command.usage + "`");
+    const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
+    message.reply(`${inicio[0]["error_1"]}: \`${prefix}${command.usage}\``);
 });
 
 client.login(token);

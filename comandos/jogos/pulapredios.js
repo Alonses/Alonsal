@@ -9,7 +9,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
 
-        const { jogos } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         const emoji_pula = client.emojis.cache.get(emojis.pula_2).toString();
 

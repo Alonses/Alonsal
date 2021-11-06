@@ -60,7 +60,7 @@ module.exports = {
             qtd_entradas = lista_usuarios.length;
 
         for(let i = 0; i < qtd_entradas; i++){ // Exibe apenas os 6 usuários com mais exp
-            lista_final_nomes += medalhas[i] +` \`${lista_usuarios[i].replace(/ /g, "")}\`\n`;
+            lista_final_nomes += `${medalhas[i]} \`${lista_usuarios[i].replace(/ /g, "")}\`\n`;
             lista_final_exp += `\`${experiencia[i]}\`\n`;
         }
 

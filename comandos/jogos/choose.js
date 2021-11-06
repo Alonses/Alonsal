@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 3,
     execute(client, message, args) {
         
-        const { jogos } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let escolhas = "";
         let nota_rodape = "";
@@ -25,7 +25,7 @@ module.exports = {
             let opcoes = args;
             qtd_pers = args[0].replace("[", "");
 
-            if(qtd_pers == 0 || isNaN(qtd_pers)) return message.reply(":octagonal_sign: | "+ jogos[4]["aviso_2"]);
+            if(qtd_pers == 0 || isNaN(qtd_pers)) return message.reply(`:octagonal_sign: | ${jogos[4]["aviso_2"]}`);
 
             opcoes.shift(); // Remove o indicador de qtd de escolhas
 
@@ -40,7 +40,7 @@ module.exports = {
                     escolhas += " & ";
 
                 let item = opcoes[Math.round((opcoes.length - 1) * Math.random())];
-                escolhas += "`"+ item +"`";
+                escolhas += `\`${item}\``;
 
                 if(i + 2 < qtd_pers)
                     escolhas += ", ";
@@ -50,7 +50,7 @@ module.exports = {
         }
 
         const resultados = new MessageEmbed()
-        .setTitle(":ballot_box: "+ jogos[4]["escolho"])
+        .setTitle(`:ballot_box: ${jogos[4]["escolho"]}`)
         .setColor(0x29BB8E)
         .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
         .setDescription(escolhas)

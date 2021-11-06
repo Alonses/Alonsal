@@ -8,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const permissions = message.channel.permissionsFor(message.client.user);
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -16,10 +16,10 @@ module.exports = {
             prefix = ".a";
         
         if(message.attachments.size > 1 || (message.attachments.size === 0 && args.length < 1)){
-            let text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_1"];
+            let text_aviso = `:hotsprings: | ${utilitarios[6]["aviso_1"]}`;
 
             if(message.attachments.size > 1)
-                text_aviso = ":hotsprings: | "+ utilitarios[6]["aviso_2"];
+                text_aviso = `:hotsprings: | ${utilitarios[6]["aviso_2"]}`;
 
             await message.channel.send(text_aviso).then(msg => setTimeout(() => msg.delete(), 5000))
             return;
@@ -32,27 +32,27 @@ module.exports = {
             return message.channel.send({content: utilitarios[6]["hora_certa"], files: [hora_certa]});
         }
 
-        if(conteudo === prefix +"rep avast"){
+        if(conteudo === `${prefix}rep avast`){
             const avast = new MessageAttachment("arquivos/songs/avast.mp3");
             return message.channel.send({files: [avast]});
         }
 
-        if(conteudo === prefix +"rep malakoi"){
+        if(conteudo === `${prefix}rep malakoi`){
             const malakoi = new MessageAttachment("arquivos/songs/malakoi.mp3");
             return message.channel.send({files: [malakoi]});
         }
 
-        if(conteudo === prefix +"rep kadu"){
+        if(conteudo === `${prefix}rep kadu`){
             const kadu = new MessageAttachment("arquivos/songs/kadu.mp3");
             return message.channel.send({files: [kadu]});
         }
 
         if(message.attachments.size === 0){
             if(!permissions.has("SEND_TTS_MESSAGES"))
-                return message.reply(":octagonal_sign: | "+ utilitarios[6]["error_1"]);
+                return message.reply(`:octagonal_sign: | ${utilitarios[6]["error_1"]}`);
 
-            message.channel.send(utilitarios[6]["reproducao_1"] +` [ ${message.author} ]`);    
-            let mensagem = message.content.replace(prefix+"rep", "");
+            message.channel.send(`${utilitarios[6]["reproducao_1"]} [ ${message.author} ]`);    
+            let mensagem = message.content.replace(`${prefix}rep`, "");
 
             message.channel.send(mensagem, {
                 tts: true
@@ -60,7 +60,7 @@ module.exports = {
         }else{
             message.attachments.forEach(attachment => {
                 const arquivo_atach = new MessageAttachment(attachment.url);
-                message.channel.send({content: utilitarios[6]["reproducao_2"] +` ( \`${message.author.username}\` | \`${message.author.id}\` )`, files: [arquivo_atach]});
+                message.channel.send({content: `${utilitarios[6]["reproducao_2"]} ( \`${message.author.username}\` | \`${message.author.id}\` )`, files: [arquivo_atach]});
             });
         }
 

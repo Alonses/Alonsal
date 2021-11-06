@@ -1,4 +1,4 @@
-const { emojis } = require('../../arquivos/json/text/emojis.json');
+const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "moeda",
@@ -8,10 +8,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const idioma_definido = client.idioma.getLang(message.guild.id);
-        const { jogos } = require('../../arquivos/idiomas/'+ idioma_definido +'.json');
+        const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         let emoji_epic_embed_fail = client.emojis.cache.get(emojis.epic_embed_fail2).toString();
-        let emoji_dancando = client.emojis.cache.get(emojis.dancando_esqueleto).toString();
+        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
@@ -29,7 +29,7 @@ module.exports = {
             escolha = args[0].toLowerCase();
 
         if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined")
-            return message.reply(":warning: | "+ jogos[1]["aviso_1"].replaceAll(".a", prefix));
+            return message.reply(`:warning: | ${jogos[1]["aviso_1"].replaceAll(".a", prefix)}`);
         
         let emoji_exib = ":coin:";
 
@@ -38,18 +38,18 @@ module.exports = {
 
         if(escolha === possibilidades[moeda]){ // Acertou
 
-            let resultado = "[ "+ emoji_exib +" ] Deu " + escolha + "! Você acertou! "+ emoji_dancando;
+            let resultado = `[ ${emoji_exib} ] Deu ${escolha}! Você acertou! ${emoji_dancando}`;
 
             if(idioma_definido === "en-us")
-                resultado = "[ "+ emoji_exib +" ] It gave " + escolha + "! You're right! "+ emoji_dancando;
+                resultado = `[ ${emoji_exib} ] It gave ${escolha}! You're right! ${emoji_dancando}`;
 
             message.reply(resultado);
         }else{
 
-            let resultado = "[ "+ emoji_exib +" ] Deu " + possibilidades[moeda] + ", perdeu playboy "+ emoji_epic_embed_fail;
+            let resultado = `[ ${emoji_exib} ] Deu ${possibilidades[moeda]}, perdeu playboy ${emoji_epic_embed_fail}`;
 
             if(idioma_definido === "en-us")
-                resultado = "[ "+ emoji_exib +" ] It gave " + possibilidades[moeda] + ", You missed "+ emoji_epic_embed_fail;
+                resultado = `[ ${emoji_exib} ] It gave ${possibilidades[moeda]}, You missed ${emoji_epic_embed_fail}`;
 
             message.reply(resultado);
 

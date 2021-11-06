@@ -8,7 +8,7 @@ module.exports = {
     cooldown: 2,
     async execute(client, message, args){
 
-        const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let string = args.join(" ");
         let cor_embed = 0x29BB8E;
@@ -66,7 +66,7 @@ module.exports = {
         for(let i = 0; i < 3; i++){
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''));
 
-            exib_formatado += "**-** `"+ anagrama_formado[i] +"`\n";
+            exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`;
             qtd_quebras = exib_formatado.split(anagrama_formado[i]);
 
             if(qtd_quebras.length > 2 && fatori_fix.length > 4)
@@ -74,14 +74,14 @@ module.exports = {
         }
 
         if(cor_embed == 0xfbff3d)
-            exib_formatado += "\n:four_leaf_clover: | _"+ diversao[5]["sorte"] +"_";
+            exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`;
 
         const anagrama = new MessageEmbed()
         .setTitle(":abc: "+ diversao[5]["anagrama"])
         .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
         .setColor(cor_embed)
-        .setDescription(diversao[5]["entrada"] +": `"+ string +"`\n"+ diversao[5]["combinacao"] +": \n"+ exib_formatado)
-        .setFooter(diversao[5]["sequencia"] +" "+ result.toLocaleString('pt-BR') +" "+ diversao[5]["combinacoes"]);
+        .setDescription(`${diversao[5]["entrada"]}: \`${string}\`\n${diversao[5]["combinacao"]}:\n${exib_formatado}`)
+        .setFooter(`${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${diversao[5]["combinacoes"]}`);
 
         message.reply({embeds: [anagrama]});
     },
@@ -94,9 +94,9 @@ module.exports = {
     async slash(client, handler, data, params) {
 
         const lang = client.idioma.getLang(data.guild_id);
+        const { diversao } = require(`../../arquivos/idiomas/${lang}.json`);
+        
         const anagrama = params.get("anagrama");
-
-        const { diversao } = require('../../arquivos/idiomas/'+ lang +'.json');
     
         if(typeof anagrama == "undefined")
             return handler.postSlashMessage(data, diversao[5]["aviso_1"]);
@@ -156,7 +156,7 @@ module.exports = {
         for(let i = 0; i < 3; i++){
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''));
 
-            exib_formatado += "**-** `"+ anagrama_formado[i] +"`\n";
+            exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`;
             qtd_quebras = exib_formatado.split(anagrama_formado[i]);
 
             if(qtd_quebras.length > 2 && fatori_fix.length > 4)
@@ -164,7 +164,7 @@ module.exports = {
         }
 
         if(cor_embed == 0xfbff3d)
-            exib_formatado += "\n:four_leaf_clover: | _"+ diversao[5]["sorte"] +"_";
+            exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`;
 
         const anagramas_possiveis = `:abc: ${diversao[5]["anagrama"]}\n\n${diversao[5]["entrada"]}: \`${anagrama}\`\n ${diversao[5]["combinacao"]}: \n${exib_formatado}\n${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${diversao[5]["combinacoes"]}`;
         

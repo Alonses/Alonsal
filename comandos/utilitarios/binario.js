@@ -8,7 +8,7 @@ module.exports = {
     usage: "bn <decode/encode> <text>",
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
-        const {utilitarios} = require('../../arquivos/idiomas/' + client.idioma.getLang(message.guild.id) + '.json');
+        const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if (args.length < 2) return message.reply(utilitarios[3]["aviso"]);
 
@@ -25,7 +25,7 @@ module.exports = {
                     .setTitle(utilitarios[3]["codificado"])
                     .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
                     .setColor(0x29BB8E)
-                    .setDescription("`" + textToBinary(args.join(' ')) + "`");
+                    .setDescription(`\`${textToBinary(args.join(' '))}\``);
                 break;
             case "decode":
                 let text = '';
@@ -40,12 +40,12 @@ module.exports = {
                     .setTitle(utilitarios[3]["decodificado"])
                     .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
                     .setColor(0x29BB8E)
-                    .setDescription("`" + text + "`");
+                    .setDescription(`\`${text}\``);
                 break;
         }
 
         message.reply({embeds: [embed]}).catch(() => {
-            message.reply(":octagonal_sign: | " + utilitarios[3]["error_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+            message.reply(`:octagonal_sign: | ${utilitarios[3]["error_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
         });
     }
 };

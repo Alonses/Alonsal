@@ -34,7 +34,7 @@ module.exports = {
         .setTitle(":bust_in_silhouette: O Avatar do Alonsal foi alterado")
         .setColor(0x29BB8E)
         .setImage(novo_perfil)
-        .setDescription("**Alterado por** ( `"+ message.author.username +"` | `"+ message.author.id +"` )");
+        .setDescription(`**Alterado por** ( \`${message.author.username}\` | \`${message.author.id}\` )`);
 
         client.channels.cache.get('872865396200452127').send({embeds: [att_avatar]});
     }

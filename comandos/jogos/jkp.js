@@ -6,8 +6,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const lang = client.idioma.getLang(message.guild.id);
-
-        const { jogos } = require('../../arquivos/idiomas/'+ lang +'.json');
+        const { jogos } = require(`../../arquivos/idiomas/${lang}.json`);
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
             
@@ -37,10 +36,10 @@ module.exports = {
         if (bot < player || (player === 1 && bot === 3)) ganhador = ":trophy:";
         if (bot === player) ganhador = ":infinity:";
 
-        let mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
+        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]`;
 
         if(lang === "en-us")
-            mensagem = "Jokenpo! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- You\n[ " + ganhador +" ]";
+            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]`;
 
         message.reply(mensagem);
     },
@@ -52,10 +51,9 @@ module.exports = {
     }],
     slash(client, handler, data, params) {
         const lang = client.idioma.getLang(data.guild_id);
+        const { jogos } = require(`../../arquivos/idiomas/${lang}.json`);
+
         const escolha = params.get("escolha");
-
-        const { jogos } = require('../../arquivos/idiomas/'+ lang +'.json');
-
         let prefix = client.prefixManager.getPrefix(data.guild_id);
 
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
@@ -84,10 +82,10 @@ module.exports = {
         if (bot < player || (player === 1 && bot === 3)) ganhador = ":trophy:";
         if (bot === player) ganhador = ":infinity:";
 
-        let mensagem = "Jokenpô! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- Você\n[ " + ganhador +" ]";
+        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]`;
 
         if(lang === "en-us")
-            mensagem = "Jokenpo! \n[ " + emojis[bot] + " ] Bot\n" + "[ " + emojis[player] + " ] <- You\n[ " + ganhador +" ]";
+            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]`;
 
         handler.postSlashMessage(data, mensagem);
     }

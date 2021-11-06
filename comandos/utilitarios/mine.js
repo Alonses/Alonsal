@@ -10,7 +10,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_selecionado +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
 
         let nota_rodape = "";
         let emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
@@ -48,11 +48,11 @@ module.exports = {
                     if(random)
                         i = Math.round((lista_itens.length - 1) * Math.random());
 
-                    url = "https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/"+ lista_itens[i].tipo_item + "/" + lista_itens[i].nome_icon;
+                    url = `https://raw.githubusercontent.com/brnd-21/inventario-mine/main/IMG/Itens/new/${lista_itens[i].tipo_item}/${lista_itens[i].nome_icon}`;
         
                     let nome_item = lista_itens[i].nome_item;
                     let colet_suv = utilitarios[9]["sim"];
-                    let empilhavel = utilitarios[9]["ate"]  +" "+ lista_itens[i].empilhavel;
+                    let empilhavel = `${utilitarios[9]["ate"]} ${lista_itens[i].empilhavel}`;
                     let renovavel = utilitarios[9]["sim"];
 
                     let tipo_item = lista_itens[i].tipo_item;
@@ -79,22 +79,22 @@ module.exports = {
 
                             let valores_item = lista_itens[i].descricao;                            
                             
-                            let descricao_tipo = ":magic_wand: "+ utilitarios[9]["efeitos_aplicados"];
+                            let descricao_tipo = `:magic_wand: ${utilitarios[9]["efeitos_aplicados"]}`;
 
                             if(!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha"))
-                                descricao_tipo = ":receipt: "+ utilitarios[9]["atributos"];
+                                descricao_tipo = `:receipt: ${utilitarios[9]["atributos"]}`;
 
                             if(nome_item === "Disco musical"){
                                 nome_item = utilitarios[9]["disco_musical"];
 
                                 valores_item = valores_item.replace("[&r", "");
-                                nome_item += " | "+ valores_item;
+                                nome_item += ` | ${valores_item}`;
 
                             }else if(nome_item === "Livro encantado"){
                                 nome_item = utilitarios[9]["livro_encantado"];
 
                                 valores_item = valores_item.replace("[&r", "");
-                                nome_item += " | "+ valores_item;
+                                nome_item += ` | ${valores_item}`;
                             }else{
 
                                 valores_item = valores_item.replace("[&s[&3Efeito aplicado: ", "");
@@ -127,7 +127,7 @@ module.exports = {
                                             if(alvo_json.includes(":"))
                                                 alvo_json = alvo_json.split(":")[0];
 
-                                            nome_item += " of "+ utilitarios[9]["detalhes"][alvo_json];
+                                            nome_item += ` of ${utilitarios[9]["detalhes"][alvo_json]}`;
                                         }
 
                                         traducao_alvo = utilitarios[9]["detalhes"][alvo_json];    
@@ -135,7 +135,7 @@ module.exports = {
                                     }
                                 }
 
-                                fields.push({ name: descricao_tipo, value: "`"+ valores_item +"`"});
+                                fields.push({ name: descricao_tipo, value: `\`${valores_item}\``});
                             }
                         }
                     }
@@ -148,14 +148,14 @@ module.exports = {
                     .setColor(0x29BB8E)
                     .setImage(url)
                     .addFields(
-                        { name: emoji_suv +' **'+ utilitarios[9]["coletavel"] +'**', value: "`"+ colet_suv +"`", inline: true },
-                        { name: ':label: **'+ utilitarios[9]["tipo"] +'**', value: "`"+ tipo_item +"`", inline: true },
-                        { name: ':bookmark_tabs: **'+ utilitarios[9]["versao_add"] +'**', value: "`1."+ lista_itens[i].versao_add +"`", inline: true },
+                        { name: `${emoji_suv}** ${utilitarios[9]["coletavel"]}**`, value: `\`${colet_suv}\``, inline: true },
+                        { name: `:label: **${utilitarios[9]["tipo"]}**`, value: `\`${tipo_item}\``, inline: true },
+                        { name: `:bookmark_tabs: **${utilitarios[9]["versao_add"]}**`, value: `\`1.${lista_itens[i].versao_add}\``, inline: true },
                     )
                     .addFields(
-                        { name: ':abacus: **'+ utilitarios[9]["empilhavel"] +'**', value: "`"+ empilhavel +"`", inline: true },
-                        { name: ':herb: **'+ utilitarios[9]["renovavel"] +'**', value: "`"+ renovavel +"`", inline: true },
-                        { name: ':link: **'+ utilitarios[9]["nome_interno"] +'**', value: " **`minecraft:"+ lista_itens[i].nome_interno +"`** ", inline: true }, fields
+                        { name: `:abacus: **${utilitarios[9]["empilhavel"]}**`, value: `\`${empilhavel}\``, inline: true },
+                        { name: `:herb: **${utilitarios[9]["renovavel"]}**`, value: `\`${renovavel}\``, inline: true },
+                        { name: `:link: **${utilitarios[9]["nome_interno"]}**`, value: `**\`minecraft:${lista_itens[i].nome_interno}\`**`, inline: true }, fields
                     )
                     .setFooter(nota_rodape);
 
@@ -165,10 +165,10 @@ module.exports = {
 
             let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-            message.reply(emoji_nao_encontrado +" | "+ utilitarios[9]["nao_encontrado"] +" `"+ pesquisa +"`, "+ utilitarios[9]["tente_novamente"]);
+            message.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`);
         })
         .catch(() => {
-            return message.reply(":octagonal_sign: | "+ utilitarios[9]["error_1"]);
+            return message.reply(`:octagonal_sign: | ${utilitarios[9]["error_1"]}`);
         });
     }
 };

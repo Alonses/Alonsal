@@ -8,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { utilitarios } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let nsfw = utilitarios[9]["nao"];
         if(message.channel.nsfw)
@@ -18,8 +18,8 @@ module.exports = {
         .setTitle(message.channel.name)
         .setColor(0x29BB8E)
         .addFields(
-            { name: ':globe_with_meridians: **'+ utilitarios[15]["id_canal"] +'**', value: "`"+ message.channel.id +"`", inline: true },
-            { name: ':earth_americas: **'+ utilitarios[15]["idioma"] +'**', value: "`"+ message.guild.preferredLocale +"` :flag_"+ message.guild.preferredLocale.toLocaleLowerCase().slice(3, 7) +":", inline: true },
+            { name: `:globe_with_meridians: **${utilitarios[15]["id_canal"]}**`, value: `\`${message.channel.id}\``, inline: true },
+            { name: `:earth_americas: **${utilitarios[15]["idioma"]}**`, value: `\`${message.guild.preferredLocale}\` :flag_${message.guild.preferredLocale.toLocaleLowerCase().slice(3, 7)}:`, inline: true },
             { name: ':underage: NSFW', value: `\`${nsfw}\``, inline: true}
         )
         .setFooter(message.author.username, message.author.avatarURL({ dynamic:true }));

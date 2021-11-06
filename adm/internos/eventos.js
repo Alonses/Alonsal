@@ -2,7 +2,8 @@ let ult_comando;
 let ult_mensagem;
 let conexoes_ativas = 0;
 
-let { prefix } = require('../config.json');
+let { prefix } = require('../../config.json');
+const { MessageEmbed } = require('discord.js');
 
 const canais_conectados = new Map();
 const servers_conectados = new Map();
@@ -19,8 +20,6 @@ module.exports = async function({client, auto, ult_comand, ult_message}){
         return;
     }
 
-    const { MessageEmbed } = require('discord.js');
-    
     client.on("guildCreate", guild => {
         let caso = 'New';
         require("./servers.js")({client, caso, guild});
@@ -46,9 +45,9 @@ module.exports = async function({client, auto, ult_comand, ult_message}){
             const message = channel.messages.cache.get(id_mensagem);
     
             const args = message.content.slice(prefix.length).trim().split(' ');
+
+            require('../../comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
             
-            require('../comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
-    
             servers_conectados.set(guild.guild.id, []);
             canais_conectados.set(guild.guild.id, []);
         }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
@@ -65,7 +64,7 @@ module.exports = async function({client, auto, ult_comand, ult_message}){
         const embed = new MessageEmbed()
         .setTitle("> RateLimit :name_badge:")
         .setColor(0xff0000)
-        .setDescription("Command: `"+ ult_comando +"`\nTimeout: `"+ limit.timeout +"`\nLimit: `"+ limit.limit +"`\nMethod: `"+ limit.method +"`\n\nPath: `"+ limit.path +"`\nRoute: `"+ limit.route +"`");
+        .setDescription(`Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``);
     
         client.channels.cache.get('862015290433994752').send({ embeds: [embed] });
     });

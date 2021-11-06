@@ -8,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
 
-        const {utilitarios} = require('../../arquivos/idiomas/' + client.idioma.getLang(message.guild.id) + '.json');
+        const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if(args.length < 1) return message.reply(utilitarios[17]["aviso_1"]);
         

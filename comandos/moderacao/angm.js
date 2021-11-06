@@ -1,3 +1,6 @@
+const { canal_games } = require('../../arquivos/data/games/canal_games.json');
+const fs = require('fs');
+
 module.exports = {
     name: "anungames",
     description: "receba atts de jogos gratuitos sempre que houver",
@@ -6,7 +9,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { moderacao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if(args.length !== 1) return message.reply(moderacao[6]["aviso_1"]);
         
@@ -15,9 +18,6 @@ module.exports = {
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
-
-        const { canal_games } = require('../../arquivos/data/games/canal_games.json');
-        const fs = require('fs');
 
         function constructJson(jsonGuild, arrayValores){
             return { [jsonGuild] : arrayValores } 
@@ -62,7 +62,7 @@ module.exports = {
 
         canal_servidor = canal_servidor.replaceAll("{", "");
         canal_servidor = canal_servidor.replaceAll("}", "");
-        canal_servidor = "{ \"canal_games\" : {" + canal_servidor + "} }";
+        canal_servidor = `{ \"canal_games\" : { ${canal_servidor} } }`;
 
         canal_servidor = JSON.parse(canal_servidor); // Ajusta o arquivo
         canal_servidor = JSON.stringify(canal_servidor, null, 4);
@@ -70,20 +70,20 @@ module.exports = {
         fs.writeFile('./arquivos/data/games/canal_games.json', canal_servidor, (err) => {
             if (err) throw err;
             
-            let mensagem = ":video_game: | O Servidor ( `"+ message.guild.name +"` | `"+ message.guild.id +"` ) agora recebe atts de jogos grátis";
+            let mensagem = `:video_game: | O Servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) agora recebe atts de jogos grátis`;
 
             if(args[0] === "rem")
-                mensagem = ":video_game: | O Servidor ( `"+ message.guild.name +"` | `"+ message.guild.id +"` ) não recebe mais atts de jogos grátis";
+                mensagem = `:video_game: | O Servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) não recebe mais atts de jogos grátis`;
 
             client.channels.cache.get('872865396200452127').send(mensagem);
         });
 
         delete require.cache[require.resolve('../../arquivos/data/games/canal_games.json')];
 
-        let feedback_user = moderacao[6]["anuncio_games"] +"`"+ prefix +"ngm rem`"+ moderacao[6]["anuncio_games_2"];
+        let feedback_user = `${moderacao[6]["anuncio_games"]}\`${prefix}ngm rem\`${moderacao[6]["anuncio_games_2"]}`;
 
         if(args[0] === "rem")
-            feedback_user = ":mobile_phone_off: | "+ moderacao[6]["anuncio_off"];
+            feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`;
 
         message.reply(feedback_user);
     }
