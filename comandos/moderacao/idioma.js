@@ -2,7 +2,7 @@ module.exports = {
     name: "idioma",
     description: "Altere o idioma do alonsal",
     aliases: [ "language", "lang" ],
-    cooldown: 3,
+    cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         
@@ -13,6 +13,8 @@ module.exports = {
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         let idioma_selecionado;
+        
+        console.log(args[0]);
 
         if(args[0] !== "pt" && args[0] !== "en")
             return message.reply(`:interrobang: | ${moderacao[0]["error"].replaceAll(".a", prefix)}`);
