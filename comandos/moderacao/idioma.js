@@ -14,6 +14,8 @@ module.exports = {
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         let idioma_selecionado;
         
+        console.log(args, message.content);
+
         if(args[0] !== "pt" && args[0] !== "en")
             return message.reply(`:interrobang: | ${moderacao[0]["error"].replaceAll(".a", prefix)}`);
         else
