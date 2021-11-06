@@ -1,5 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js');
 const Canvas = require('canvas');
+const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "imagem",
@@ -8,36 +9,34 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        const { utilitarios } = require('../../arquivos/idiomas/'+  client.idioma.getLang(message.guild.id) +'.json');
-        
-        const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let emoji_carregando = client.emojis.cache.get(emojis.loading2).toString();
         let emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         let prefix = client.prefixManager.getPrefix(message.guild.id);
             
-        if(message.content === prefix +"ih"){ // Menu de efeitos
+        if(message.content === `${prefix}ih`){ // Menu de efeitos
 
             const embed_imagens = new MessageEmbed()
             .setTitle(utilitarios[7]["manipu_imagens"])
             .setColor(0x29BB8E)
             .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-            .setDescription(utilitarios[7]["conteudo_menu"].replaceAll(".a", prefix) +"\n\n"+ emoji_dancante +""+ utilitarios[7]["sugestao"].replaceAll(".a", prefix))
+            .setDescription(`${utilitarios[7]["conteudo_menu"].replaceAll(".a", prefix)}\n\n${emoji_dancante}${utilitarios[7]["sugestao"].replaceAll(".a", prefix)}`)
             .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
             
             return message.reply({embeds: [embed_imagens]});
         }
 
         if(args.length < 1) // Sem o estilo informado
-            return message.reply(":warning: | "+ utilitarios[7]["aviso_1"].replaceAll(".a", prefix));
+            return message.reply(`:warning: | ${utilitarios[7]["aviso_1"].replaceAll(".a", prefix)}`);
 
         if(message.attachments.size < 1) // Nenhum arquivo anexado
-            return message.reply(":warning: | "+ utilitarios[7]["aviso_2"].replaceAll(".a", prefix));
+            return message.reply(`:warning: | ${utilitarios[7]["aviso_2"].replaceAll(".a", prefix)}`);
 
         if(message.attachments.size > 3) // Quantidade > 3
-            return message.reply(":octagonal_sign: | "+ utilitarios[7]["aviso_3"]);
+            return message.reply(`:octagonal_sign: | ${utilitarios[7]["aviso_3"]}`);
 
-        const feedbc = await message.reply(emoji_carregando +" | "+ utilitarios[7]["carregando"]);
+        const feedbc = await message.reply(`${emoji_carregando} | ${utilitarios[7]["carregando"]}`);
         let img_edit = 0;
 
         let attachment = message.attachments.first();
@@ -54,15 +53,15 @@ module.exports = {
                 if(message.attachments.size > 1)
                     infos_adds = utilitarios[7]["error_1"];
 
-                message.reply(":octagonal_sign: | " + utilitarios[7]["error_2"] + "" + infos_adds, arquivo_invalido);
+                message.reply(`:octagonal_sign: | ${utilitarios[7]["error_2"]}${infos_adds}`, arquivo_invalido);
             }
 
             if(height > 4500 || width > 4500) // Verificando se a imagem possui muitos pixeis
-                message.reply(":octagonal_sign: | " + utilitarios[7]["aviso_4"]);
+                message.reply(`:octagonal_sign: | ${utilitarios[7]["aviso_4"]}`);
 
             if(height >= 4000 && width === 1894){ // Verificando se a imagem é muito grande e se existem vários arquivos
                 if(message.attachments.size > 1) // Muitos arquivos enviados
-                    message.reply(":octagonal_sign: | " + utilitarios[7]["aviso_5"]);
+                    message.reply(`:octagonal_sign: | ${utilitarios[7]["aviso_5"]}`);
 
                 let inverte = width;
                 width = height;

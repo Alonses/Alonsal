@@ -8,7 +8,7 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 
@@ -38,7 +38,7 @@ module.exports = {
             else
                 titulo = diversao[2]["0perc"];
             
-            porcentagem = args[0] +" e "+ args[1] + "\n\n";
+            porcentagem = `${args[0]} e ${args[1]}\n\n`;
         }
 
         for(let i = 0; i <= num - 10; i += 10){
@@ -52,7 +52,7 @@ module.exports = {
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
         .setTitle(titulo)
-        .setDescription( diversao[2]["teste"] +` ${num}%!\n${porcentagem}\n\n${aviso}`)
+        .setDescription(`${diversao[2]["teste"]} ${num}%!\n${porcentagem}\n\n${aviso}`)
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
         .setTimestamp();
 

@@ -9,10 +9,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
         const idioma_definido = client.idioma.getLang(message.guild.id);
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_definido +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         try{
-            let usuario_alvo = "https://steamcommunity.com/id/"+ args[0];
+            let usuario_alvo = `https://steamcommunity.com/id/${args[0]}`;
 
             fetch(usuario_alvo)
             .then(response => response.text())
@@ -46,7 +46,7 @@ module.exports = {
                     bandeira_user = bandeira_user.replace(".gif", "");
                     bandeira_user = bandeira_user.slice(bandeira_user.length - 2);
                     
-                    bandeira_user = " | :flag_"+ bandeira_user +":";
+                    bandeira_user = ` | :flag_${bandeira_user}:`;
                 }catch(err){
                     bandeira_user = "";
                 }
@@ -139,9 +139,9 @@ module.exports = {
                     tempo_semanas = parseFloat(tempo_semanas.split(" ")[0]);
 
                     if(idioma_definido === "pt-br")
-                        tempo_semanas = tempo_semanas +" "+ utilitarios[16][descriminador_tempo_2];
+                        tempo_semanas = `${tempo_semanas} ${utilitarios[16][descriminador_tempo_2]}`;
                     else
-                        tempo_semanas = tempo_semanas +" "+ descriminador_tempo_2;
+                        tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`;
                 }catch(err){
                     tempo_semanas = "-";
                 }
@@ -228,7 +228,7 @@ module.exports = {
                         descriminador_tempo = utilitarios[16][descriminador_tempo];
 
                     tempo_jogado = tempo_jogado.replace(",", ".").replace(/\s+/g, '');
-                    tempo_jogado = tempo_jogado +" "+ descriminador_tempo;
+                    tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`;
                 }
 
                 if(res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")){
@@ -256,31 +256,31 @@ module.exports = {
                 if(artes_user !== "-")
                     criacoes_user += `\n:paintbrush: **${utilitarios[16]["artes"]}: **\`${artes_user}\``;
 
-                let jogos_user_embed = `**Total: **\``+ jogos_user +`\``;
+                let jogos_user_embed = `**Total: **\`${jogos_user}\``;
                 if(reviews_user !== "-")
-                    jogos_user_embed += `\n**`+ utilitarios[16]["analises"] +`: **\`${reviews_user}\``;
+                    jogos_user_embed += `\n**${utilitarios[16]["analises"]}: **\`${reviews_user}\``;
 
                 let usuario_steam = new MessageEmbed()
-                .setTitle(nome_user +""+ bandeira_user)
+                .setTitle(`${nome_user}${bandeira_user}`)
                 .setURL(usuario_alvo)
                 .setAuthor("Steam", "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0")
                 .setThumbnail(avatar_user)
                 .setImage(background_user)
                 .setColor(0x29BB8E)
                 .addFields(
-                    { name: ":ninja: "+ utilitarios[16]["nivel"], value: `**`+ utilitarios[12]["atual"] +`: **\`${nivel_user}\``, inline: true},
-                    { name: ":video_game: "+ utilitarios[16]["jogos"], value: `${jogos_user_embed}`, inline: true},
-                    { name: ":red_envelope: "+ utilitarios[16]["insignias"], value: `**Total: **\`${insignias_user}\``, inline: true},
+                    { name: `:ninja: ${utilitarios[16]["nivel"]}`, value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``, inline: true},
+                    { name: `:video_game: ${utilitarios[16]["jogos"]}`, value: `${jogos_user_embed}`, inline: true},
+                    { name: `:red_envelope: ${utilitarios[16]["insignias"]}`, value: `**Total: **\`${insignias_user}\``, inline: true},
                 )
                 .addFields(
-                    { name: ":trophy: "+ utilitarios[16]["conquistas"], value: `**Total: **\`${conquistas_user}\`\n**`+ utilitarios[16]["porcentagem"] +`:** \`${porcentagem_conquistas}\`\n**`+ utilitarios[16]["jogos_perfeitos"] +`: **\`${jogos_perfeitos}\``, inline: true},
-                    { name: ":mobile_phone_off: Status", value: `\`${status_atual}\`\n:clock: **2 Semanas: **\n\`${tempo_semanas}\``, inline: true}
+                    { name: `:trophy: ${utilitarios[16]["conquistas"]}`, value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``, inline: true},
+                    { name: ":mobile_phone_off: Status", value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``, inline: true}
                 )
                 .setFooter(nota_rodape, message.author.avatarURL({ dynamic:true }));
 
                 if(criacoes_user !== "")
                     usuario_steam.addFields(
-                        { name: ":piñata: "+ utilitarios[16]["criacoes"], value: `${criacoes_user}`, inline: true}
+                        { name: `:piñata: ${utilitarios[16]["criacoes"]}`, value: `${criacoes_user}`, inline: true}
                     )
                 else
                     usuario_steam.addFields(
@@ -289,19 +289,19 @@ module.exports = {
 
                 if(jogo_favorito !== "")
                     usuario_steam.addFields(
-                        { name: ":star: "+ utilitarios[16]["jogo_favorito"], value: `**`+ utilitarios[16]["nome"] +`: **\`${jogo_favorito}\`\n:trophy: **`+ utilitarios[16]["conquistas"] +`: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **`+ utilitarios[16]["tempo_jogado"] +`: **\`${tempo_jogado}\``, inline: false}
+                        { name: `:star: ${utilitarios[16]["jogo_favorito"]}`, value: `**${utilitarios[16]["nome"]}: **\`${jogo_favorito}\`\n:trophy: **${utilitarios[16]["conquistas"]}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${utilitarios[16]["tempo_jogado"]}: **\`${tempo_jogado}\``, inline: false}
                     )
 
                 if(anos_servico !== "")
                     usuario_steam.addFields(
-                        { name: ":birthday: "+ utilitarios[13]["entrada"] , value: `\`${anos_servico}\``, inline: true}
+                        { name: `:birthday: ${utilitarios[13]["entrada"]}`, value: `\`${anos_servico}\``, inline: true}
                     )
                 
                 message.reply({ embeds: [usuario_steam] });
             });
         }catch(err){
             client.channels.cache.get('862015290433994752').send(err);
-            message.reply(utilitarios[16]["error_2"] +"\n<"+ usuario_alvo +">");
+            message.reply(`${utilitarios[16]["error_2"]}\n<${usuario_alvo}>`);
         }
     }
 }

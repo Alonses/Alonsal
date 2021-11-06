@@ -7,7 +7,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
-        const { utilitarios } = require('../../arquivos/idiomas/'+ idioma_adotado +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
@@ -32,7 +32,7 @@ module.exports = {
         const { weather_key, time_key } = require('../../config.json');
         const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
-        const translations = require("i18n-country-code/locales/"+ idioma_adotado.slice(0, 2) +".json");
+        const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);
         
         const getCountryISO3 = require("country-iso-2-to-3");
         
@@ -43,7 +43,7 @@ module.exports = {
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length < 1) // Pesquisa sem argumentos
-            return message.reply(":warning: | "+ utilitarios[8]["aviso_1"].replaceAll(".a", prefix));
+            return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
 
         let indices = [];
         args.forEach(valor => {
@@ -51,7 +51,7 @@ module.exports = {
         });
 
         pesquisa = indices.join(" ");
-        let url_completa = base_url +"appid="+ weather_key +"&q="+ pesquisa + "&units=metric&lang=pt";
+        let url_completa = `${base_url}appid=${weather_key}&q=${pesquisa}&units=metric&lang=pt`;
         
         if(idioma_adotado === "en-us")
             url_completa = url_completa.replace("&lang=pt", "");
@@ -61,11 +61,11 @@ module.exports = {
         .then(async res => {
 
             if(res.cod === '404' || res.cod === '400')
-                message.reply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_2"] +" \`"+ pesquisa +"\`"+ utilitarios[8]["tente_novamente"]);
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]}\`${pesquisa}\` ${utilitarios[8]["tente_novamente"]}`);
             else if(res.cod === '429')
-                message.reply(emoji_nao_encontrado +" | "+ utilitarios[8]["aviso_3"]);
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
             else{
-                let url_hora = time_url +"key="+ time_key + "&format=json&by=position&lat="+ res.coord.lat +"&lng="+ res.coord.lon;
+                let url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`;
 
                 fetch(url_hora) // Buscando o horário local
                 .then(response => response.json())
@@ -118,7 +118,7 @@ module.exports = {
 
                     if(minutos >= 30)
                         hours += "30";
-
+                    
                     let emoji_ceu_atual = ":park:";
 
                     // Umidade
@@ -164,7 +164,7 @@ module.exports = {
                     if(res.main.feels_like >= 35)
                         emoji_sensacao_termica = ":fire:";
                     
-                    horario_local = ":clock"+ hours +": **Hora local:** `"+ hora +":"+ minutos +" | "+ dia +" de "+ mes;
+                    horario_local = `:clock${hours}: **Hora local:** \`${hora}:${minutos}\` | ${dia} de ${mes}`;
 
                     if(idioma_adotado === "en-us"){
                         horario_local = horario_local.replace("Hora local", "Local time");
@@ -190,33 +190,29 @@ module.exports = {
                     let infos_chuva = "";
 
                     if(typeof res.rain != "undefined"){
-                        infos_chuva = "\n **Chuva 1H:** `"+ res.rain["1h"]+ "mm`";
+                        infos_chuva = `\n**Chuva 1H:** \`${res.rain["1h"]}\` mm`;
                     
+                        if(typeof res.rain["3h"] != "undefined")
+                            infos_chuva += `\n**Chuva 3H:** \`${res.rain["3h"]}\` mm`;
+
                         if(idioma_adotado === "en-us")
-                            infos_chuva = infos_chuva.replace("Chuva", "Rain");
-
-                        if(typeof res.rain["3h"] != "undefined"){
-                            infos_chuva += "\n **Chuva 3H:** `"+ res.rain["3h"]+ "mm`";
-
-                            if(idioma_adotado === "en-us")
-                                infos_chuva = infos_chuva.replace("Chuva", "Rain");
-                        }
+                            infos_chuva = infos_chuva.replaceAll("Chuva", "Rain");
                     }
        
                     let cidade_encontrada = new MessageEmbed()
-                    .setTitle(":boom: "+ utilitarios[8]["tempo_agora"] +" "+ nome_local +""+ nome_pais +" "+ bandeira_pais)
+                    .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
-                    .setDescription(horario_local +"` | **"+ tempo_atual +"**")
-                    .setThumbnail("http://openweathermap.org/img/wn/"+ res.weather[0].icon +"@2x.png")
+                    .setDescription(`${horario_local} | **${tempo_atual}**`)
+                    .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
-                        { name: ':thermometer: **'+ utilitarios[8]["temperatura"] +'**', value: ":small_orange_diamond: **"+ utilitarios[12]["atual"] +"**: `"+ res.main.temp +"°C`\n:small_red_triangle: **Max:** `"+ res.main.temp_max +"°C`\n:small_red_triangle_down: **Min:** `"+ res.main.temp_min +"°C`", inline: true },
-                        { name: emoji_ceu_atual +' **'+ utilitarios[8]["ceu_momento"] +'**', value: emoji_nuvens +' **'+ utilitarios[8]["nuvens"] +': **`'+ res.clouds.all +'%`\n:sunrise: **'+ utilitarios[8]["nas_sol"] +': **`'+ nascer_sol +"`\n:city_sunset: **"+ utilitarios[8]["por_sol"] +": **`"+ por_sol +"`", inline: true},
-                        { name: ':wind_chime: **'+ utilitarios[8]["vento"] +'**', value: ":airplane: **Vel.: **`"+ res.wind.speed +" km/h`\n:compass: **"+ utilitarios[8]["direcao"] +": ** `"+ direcao_vento +"`", inline: true },
+                        { name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, inline: true },
+                        { name: `${emoji_ceu_atual} **${utilitarios[8]["ceu_momento"]}**`, value: `${emoji_nuvens} **${utilitarios[8]["nuvens"]}: **\`${res.clouds.all}%\`\n:sunrise: **${utilitarios[8]["nas_sol"]}: **\`${nascer_sol}\`\n:city_sunset: **${utilitarios[8]["por_sol"]}: **\`${por_sol}\``, inline: true},
+                        { name: `:wind_chime: **${utilitarios[8]["vento"]}**`, value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\``, inline: true },
                     )
                     .addFields(
-                        { name: emoji_sensacao_termica +' **'+ utilitarios[8]["sensacao_termica"] +'.**', value: '**'+ utilitarios[12]["atual"] +': **`'+ res.main.feels_like +'°C`', inline: true},
-                        { name: emoji_umidade +' **'+ utilitarios[8]["umidade_ar"] +'**', value: "**"+ utilitarios[12]["atual"] +": **`"+ res.main.humidity +"%`"+ infos_chuva, inline: true },
-                        { name: ':compression: **'+ utilitarios[8]["pressao_ar"] +'**', value: '**'+ utilitarios[12]["atual"] +': **`'+ res.main.pressure +' kPA`', inline: true}
+                        { name: `${emoji_sensacao_termica} **${utilitarios[8]["sensacao_termica"]}.**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.feels_like}°C\``, inline: true},
+                        { name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\` ${infos_chuva}`, inline: true },
+                        { name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.pressure} kPA\``, inline: true}
                     )
                     .setFooter(aviso_continente);
                    

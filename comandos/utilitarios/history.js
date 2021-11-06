@@ -13,7 +13,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         const idioma_definido = client.idioma.getLang(message.guild.id);
-        const { utilitarios } = require('../../arquivos/idiomas/'+  idioma_definido +'.json');
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 
@@ -26,26 +26,26 @@ module.exports = {
 
         if(args.length > 0){
             if(!args[0].includes("-")) // Formato incorreto
-                return message.reply(":warning: | "+ utilitarios[10]["aviso_1"].replaceAll(".a", prefix));
+                return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
 
             let data_pesquisada = args[0].split("-");
             dia = data_pesquisada[0];
             mes = data_pesquisada[1];
 
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
-                return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_2"]).then(msg => setTimeout(() => msg.delete(), 6000));
+                return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
             
 
             if(idioma_definido === "pt-br"){
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
-                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 6000));
+                    return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
                 
-                url_completa += dia +"/"+ mes;
+                url_completa += `${dia}/${mes}`;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
-                    return message.reply(":hotsprings: | "+ utilitarios[10]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 6000));
+                    return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
             
-                url_completa += mes +"/"+ dia;
+                url_completa += `${mes}/${dia}`;
 
                 let troca = dia;
                 dia = mes;
@@ -68,7 +68,7 @@ module.exports = {
             dia = new Date().getDate();
         }
 
-        const aviso = await message.reply(":hotsprings: | "+ utilitarios[10]["aviso_3"]);
+        const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"]}`);
 
         fetch(url_completa)
         .then(response => response.text())
@@ -95,7 +95,7 @@ module.exports = {
                     datas.push(`${mes} ${dia}, ${ano_materia}`);
 
                 acontecimento_final.push(acontece);
-                fontes.push("https://history.uol.com.br"+ link_materia);
+                fontes.push(`https://history.uol.com.br${link_materia}`);
             }
 
             if(datas.length > 0){
@@ -128,7 +128,7 @@ module.exports = {
 
                     if(!imagem.includes("https")){ // Imagens com links antigos
                         imagem = imagem.slice(9, imagem.length);
-                        imagem = "https://assets.historyplay.tv/br/public" + imagem;
+                        imagem = `https://assets.historyplay.tv/br/public${imagem}`;
                     }
                     
                     let descricao = res_artigo.split("<div class=\"clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item\">")[1];
@@ -151,7 +151,7 @@ module.exports = {
                     aviso.delete();
                 });
             }else{
-                message.reply(":mag: | "+ utilitarios[10]["sem_entradas"].replaceAll(".a", prefix));
+                message.reply(`:mag: | ${utilitarios[10]["sem_entradas"].replaceAll(".a", prefix)}`);
                 aviso.delete();
             }
         });

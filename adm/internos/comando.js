@@ -1,11 +1,11 @@
 module.exports = async ({client, message}) => {
     
-    const { messages } = require('../arquivos/json/text/'+ client.idioma.getLang(message.guild.id) +'/comando.json');
+    const { messages } = require(`../arquivos/json/text/${client.idioma.getLang(message.guild.id)}/comando.json`);
 
     const num = Math.round((messages.length - 1) * Math.random());
     let key = Object.keys(messages[num]);
 
-    let marcacao = "<@" + message.author.id + ">";
+    let marcacao = `<@${message.author.id}>`;
     const frase = key[0].replace("autor_msg", marcacao);
     
     // Frase

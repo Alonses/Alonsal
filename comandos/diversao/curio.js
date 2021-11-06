@@ -1,4 +1,3 @@
-const { MessageAttachment } = require('discord.js');
 const { curiosidades } = require("../../arquivos/json/text/curio.json");
 
 module.exports = {
@@ -13,11 +12,11 @@ module.exports = {
         let key = Object.keys(curiosidades[num]);
         
         if(curiosidades[num][key] === null)
-            message.channel.send(":clipboard: | "+ key);
+            message.channel.send(`:clipboard: | ${key}`);
         else{
             const link_extra = curiosidades[num][key];
 
-            message.channel.send(":clipboard: | "+ key).then(message => { message.channel.send(link_extra)});
+            message.channel.send(`:clipboard: | ${key}`).then(message => { message.channel.send(link_extra)});
         }
     }
 };

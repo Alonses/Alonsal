@@ -8,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
-        const { diversao } = require('../../arquivos/idiomas/'+ client.idioma.getLang(message.guild.id) +'.json');
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         const baidu = new MessageAttachment('arquivos/img/baidu.png');
         message.channel.send({ content: diversao[0]["baidu"], files: [baidu] }).then(() => {
