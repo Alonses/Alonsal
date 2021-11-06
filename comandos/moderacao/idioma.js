@@ -12,20 +12,19 @@ module.exports = {
             return message.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)); // Libera configuração para o Slondo e adms apenas
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        let idioma_selecionado;
-        
-        console.log(args, message.content);
+        let idioma_selecionado;        
+        let novo_idioma = message.content.split(" ")[1];
 
-        if(args[0] !== "pt" && args[0] !== "en")
+        if(novo_idioma !== "pt" && novo_idioma !== "en")
             return message.reply(`:interrobang: | ${moderacao[0]["error"].replaceAll(".a", prefix)}`);
         else
             idioma_selecionado = "pt-br";
 
         let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
 
-        if(args[0] === "pt")
+        if(novo_idioma === "pt")
             idioma_selecionado = "pt-br";
-        else if(args[0] === "en") {
+        else if(novo_idioma === "en") {
             idioma_selecionado = "en-us";
             idioma_alterado = ":flag_us: | Language switched to `American English`";
         }
