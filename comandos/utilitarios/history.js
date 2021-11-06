@@ -8,10 +8,12 @@ let ult_server = null;
 module.exports = {
     name: "history",
     description: "Fatos que ocorreram no mundo em determinada data",
-    aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con" ],
+    aliases: [ "hs", "hoje", "today", "historia", "fato", "contecimento", "con", "cons" ],
     cooldown: 6,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
+        
+        const removeFormatacoes = require('../../adm/funcoes/remformats.js');
         const idioma_definido = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
@@ -20,9 +22,18 @@ module.exports = {
         let datas = [];
         let fontes = [];
         let acontecimento_final = [];
+        let evento_escolhido = "";
+        let ano_materias = [];
 
         let data = new Date();
         let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
+        let data_informada = utilitarios[10]["hoje"];
+        let valor_primario = args[0];
+        
+        if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
+            evento_escolhido = args[0];
+            args.shift();
+        }
 
         if(args.length > 0){
             if(!args[0].includes("-")) // Formato incorreto
@@ -35,17 +46,18 @@ module.exports = {
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
                 return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
             
-
             if(idioma_definido === "pt-br"){
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
                     return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
                 
                 url_completa += `${dia}/${mes}`;
+                data_informada = `${dia}/${mes}`;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
                     return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
             
                 url_completa += `${mes}/${dia}`;
+                data_informada = `${mes}/${dia}`;
 
                 let troca = dia;
                 dia = mes;
@@ -67,7 +79,7 @@ module.exports = {
 
             dia = new Date().getDate();
         }
-
+        
         const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"]}`);
 
         fetch(url_completa)
@@ -94,8 +106,39 @@ module.exports = {
                 else
                     datas.push(`${mes} ${dia}, ${ano_materia}`);
 
+                ano_materias.push(ano_materia);
                 acontecimento_final.push(acontece);
                 fontes.push(`https://history.uol.com.br${link_materia}`);
+            }
+
+            if((message.content === `${prefix}cons` || message.content.includes(`${prefix}cons`)) && evento_escolhido === ""){
+                if(datas.length > 0){
+
+                    let lista_eventos = "";
+                    let data_eventos = "";
+
+                    for(let i = 0; i < datas.length; i++){
+                        lista_eventos += `\`${i + 1}\` - [ \`em ${ano_materias[i]}\` ] ${acontecimento_final[i]}\n`;
+                    }
+                    
+                    lista_eventos = removeFormatacoes(lista_eventos);
+
+                    if(data_informada !== utilitarios[10]["hoje"])
+                        data_eventos = ` ${data_informada}`;
+
+                    const embed_eventos = new MessageEmbed()
+                    .setTitle(utilitarios[10]["acontecimentos_1"])
+                    .setAuthor("History", "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png")
+                    .setColor(0x29BB8E)
+                    .setDescription(`${utilitarios[10]["acontecimentos_2"]} ${data_informada}\n${lista_eventos}`)
+                    .setFooter(`${utilitarios[10]["utilize_1"]} ${prefix}cons <${utilitarios[10]["numero"]}>${data_eventos.replace("/", "-")} ${utilitarios[10]["utilize_2"]}`)
+
+                    message.reply({ embeds: [embed_eventos] });
+                }else
+                    message.reply(`:mag: | ${utilitarios[10]["sem_entradas"].replaceAll(".a", prefix)}`);
+                
+                aviso.delete();
+                return;
             }
 
             if(datas.length > 0){
@@ -106,18 +149,28 @@ module.exports = {
 
                 let num = 0;
 
-                do{ // Sorteando o evento
-                    let importancia = Math.round(Math.random());
+                if(evento_escolhido === ""){
+                    do{ // Sorteando o evento
+                        let importancia = Math.round(Math.random());
 
-                    if(importancia > 0)
-                        num = Math.round((datas.length - 1) * Math.random());
-                    else
-                        num = Math.round(2 * Math.random());
-                }while(valores_esc.includes(num));
+                        if(importancia > 0)
+                            num = Math.round((datas.length - 1) * Math.random());
+                        else
+                            num = Math.round(2 * Math.random());
+                    }while(valores_esc.includes(num));
                 
-                ult_server = message.guild.id;
-                valores_esc.push(num);
-                
+                    ult_server = message.guild.id;
+                    valores_esc.push(num);
+                }else if(!valor_primario.includes("-")){
+                    if(isNaN(evento_escolhido) || evento_escolhido > acontecimento_final.length || evento_escolhido < 1){
+                        message.reply(`:mag: | ${utilitarios[10]["error_1"]}`);
+                        aviso.delete();
+                        return;
+                    }
+
+                    num = evento_escolhido - 1;
+                }
+
                 fetch(fontes[num])
                 .then(response => response.text())
                 .then(async res_artigo => {

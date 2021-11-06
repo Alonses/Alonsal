@@ -313,9 +313,16 @@
             }
         },
         {
+            "hoje" : "today",
+            "numero" : "number",
+            "acontecimentos_1" : "Events through history",
+            "acontecimentos_2" : "Below are all events on the date of",
+            "utilize_1" : "Use the command",
+            "utilize_2" : "to view a specific event",
             "aviso_1" : "Submit as `.ahs 01-31` to be able to search on a specific date\nOr just use `.ahs` to see events on today's date from history",
             "aviso_2" : "Values entered are wrong, please enter correct numerical values for day and month",
             "aviso_3": "Looking for an event...",
+            "error_1" : "Enter a number contained in the event list to see more details",
             "sem_entradas" : "There are no events for this date, please enter a different date `.acon 01-21`"
         },
         {
@@ -367,7 +374,14 @@
         },
         {
             "id_canal" : "Channel ID",
-            "idioma" : "Favorite language"
+            "servidor" : "Server",
+            "canal_voz" : "This is a voice channel!",
+            "topico" : "Topic",
+            "sem_topico" : "Channel with no defined topic",
+            "mencao" : "Mention",
+            "transmissao" : "Transmission",
+            "sem_limite" : "Unlimited",
+            "modo_lento" : "Slow mode"
         },
         {
             "undefined" : "Unknow",

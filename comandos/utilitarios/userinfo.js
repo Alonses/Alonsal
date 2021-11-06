@@ -13,7 +13,7 @@ module.exports = {
         const getDateDiff = require('../../adm/funcoes/diffdatas.js');
         const formata_data = require('../../adm/funcoes/formatadata.js');
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
-        const {utilitarios} = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
         
         const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170", "735644852385087529"];
 
