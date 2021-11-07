@@ -358,19 +358,18 @@
             "moderador" : "This member is an administrator on this server"
         },
         {
-            "anos" : " years ",
-            "ano" : " year ",
-            "meses" : " months ",
-            "mes" : "month",
-            "dias" : " days ",
-            "dia" : " day ",
-            "horas" : " hours ",
-            "hora" : " hour ",
-            "minutos" : " minutes ",
-            "minuto" : " minute ",
-            "segundos" : " seconds ",
-            "segundo" : " second ",
-            "e" : "and "
+            "anos" : " years",
+            "ano" : " year",
+            "meses" : " months",
+            "mes" : " month",
+            "dias" : " days",
+            "dia" : " day",
+            "horas" : " hours",
+            "hora" : " hour",
+            "minutos" : " minutes",
+            "minuto" : " minute",
+            "segundos" : " seconds",
+            "segundo" : " second"
         },
         {
             "id_canal" : "Channel ID",

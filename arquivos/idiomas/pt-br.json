@@ -329,19 +329,18 @@
             "moderador" : "Este membro é um administrador neste servidor"
         },
         {
-            "anos" : " anos ",
-            "ano" : " ano ",
-            "meses" : " meses ",
-            "mes" : "mês",
-            "dias" : " dias ",
-            "dia" : " dia ",
-            "horas" : " horas ",
-            "hora" : " hora ",
-            "minutos" : " minutos ",
-            "minuto" : " minuto ",
-            "segundos" : " segundos ",
-            "segundo" : " segundo ",
-            "e" : "e "
+            "anos" : " anos",
+            "ano" : " ano",
+            "meses" : " meses",
+            "mes" : " mês",
+            "dias" : " dias",
+            "dia" : " dia",
+            "horas" : " horas",
+            "hora" : " hora",
+            "minutos" : " minutos",
+            "minuto" : " minuto",
+            "segundos" : " segundos",
+            "segundo" : " segundo"
         },
         {
             "id_canal" : "ID do canal",
