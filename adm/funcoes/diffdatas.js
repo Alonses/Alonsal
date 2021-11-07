@@ -19,34 +19,34 @@ module.exports = (date1, date2, utilitarios) => {
     let retorno_ajustado = "";
 
     if(diferencas[0] > 1)
-        retorno_ajustado = diferencas[0] +""+ utilitarios[14]["anos"];
+        retorno_ajustado = `${diferencas[0]}${utilitarios[14]["anos"]}`;
     else if(diferencas[0] > 0)
-        retorno_ajustado = "1"+ utilitarios[14]["ano"];
+        retorno_ajustado = `1${utilitarios[14]["ano"]}`;
 
     if(diferencas[1] > 1)
-        retorno_ajustado += diferencas[1] +""+ utilitarios[14]["meses"];
+        retorno_ajustado += ` ${diferencas[1]}${utilitarios[14]["meses"]}`;
     else if(diferencas[1] > 0)
-        retorno_ajustado += diferencas[1] +""+ utilitarios[14]["mes"];
+        retorno_ajustado += ` ${diferencas[1]}${utilitarios[14]["mes"]}`;
 
     if(diferencas[2] > 1)
-        retorno_ajustado += diferencas[2] +""+ utilitarios[14]["dias"];
-    else if(diferencas[2] > 0)
-        retorno_ajustado += diferencas[2] +""+ utilitarios[14]["dia"];
+        retorno_ajustado += ` ${diferencas[2]}${utilitarios[14]["dias"]}`;
+    else if(diferencas[2] == 1)
+        retorno_ajustado += ` ${diferencas[2]}${utilitarios[14]["dia"]}`;
 
     if(diferencas[3] > 1 && diferencas[0] < 1)
-        retorno_ajustado += diferencas[3] +""+ utilitarios[14]["horas"];
+        retorno_ajustado += ` ${diferencas[3]}${utilitarios[14]["horas"]}`;
     else if(diferencas[3] > 0 && diferencas[0] < 1)
-        retorno_ajustado += diferencas[3] +""+ utilitarios[14]["hora"];
+        retorno_ajustado += ` ${diferencas[3]}${utilitarios[14]["hora"]}`;
 
     if(diferencas[4] > 1 && diferencas[1] === 0)
-        retorno_ajustado += diferencas[4] +""+ utilitarios[14]["minutos"];
+        retorno_ajustado += ` ${diferencas[4]}${utilitarios[14]["minutos"]}`;
     else if(diferencas[4] > 0 && diferencas[1] === 0)
-        retorno_ajustado += diferencas[4] +""+ utilitarios[14]["minuto"];
+        retorno_ajustado += ` ${diferencas[4]}${utilitarios[14]["minuto"]}`;
 
     if(diferencas[5] > 1 && diferencas[3] < 24 && diferencas[2] < 1)
-        retorno_ajustado += utilitarios[14]["e"] +""+ diferencas[5] +""+ utilitarios[14]["segundos"];
+        retorno_ajustado += ` ${diferencas[5]}${utilitarios[14]["segundos"]}`;
     else if(diferencas[5] > 0 && diferencas[3] < 24 && diferencas[2] < 1)
-        retorno_ajustado += utilitarios[14]["e"] +""+ diferencas[5] +""+ utilitarios[14]["segundo"];
+        retorno_ajustado += ` ${diferencas[5]}${utilitarios[14]["segundo"]}`;
 
     return retorno_ajustado;
 }
