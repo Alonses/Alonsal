@@ -3,6 +3,8 @@ const fetch = require('node-fetch');
 const { weather_key, time_key } = require('../../config.json');
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 const getCountryISO3 = require("country-iso-2-to-3");
+const base_url = "http://api.openweathermap.org/data/2.5/weather?";
+const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
 module.exports = {
     name: "tempo",
@@ -20,8 +22,6 @@ module.exports = {
             prefix = ".a";
         
         const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
-        const base_url = "http://api.openweathermap.org/data/2.5/weather?";
-        const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
         let pesquisa = "";
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
@@ -58,9 +58,7 @@ module.exports = {
                 .then(async res_hora => {
 
                     let dados_att = new Date((res.dt + res.timezone) * 1000);
-                    dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)}`;
-
-                    console.log(res);
+                    dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)}*`;
 
                     let bandeira_pais = "";
                     let nome_pais = "";
@@ -164,6 +162,7 @@ module.exports = {
 
                     let direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
                     let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
+                    let infos_chuva = "";
 
                     if(typeof res.sys.country != "undefined")
                         if(idioma_adotado === "pt-br")
@@ -172,19 +171,14 @@ module.exports = {
                     if(res.name === "Globe")
                         nome_local = `${utilitarios[8]["terra"]} :earth_americas:`;
                     
-                    let infos_chuva = "";
-
                     if(typeof res.rain != "undefined"){
-                        infos_chuva = `\n**Chuva 1H:** \`${res.rain["1h"]}\` mm`;
+                        infos_chuva = `\n**${utilitarios[8]["chuva"]} 1H:** \`${res.rain["1h"]}mm\``;
                     
                         if(typeof res.rain["3h"] != "undefined")
-                            infos_chuva += `\n**Chuva 3H:** \`${res.rain["3h"]}\` mm`;
-
-                        if(idioma_adotado === "en-us")
-                            infos_chuva = infos_chuva.replaceAll("Chuva", "Rain");
+                            infos_chuva += `\n**${utilitarios[8]["chuva"]} 3H:** \`${res.rain["3h"]}mm\``;
                     }
        
-                    let cidade_encontrada = new MessageEmbed()
+                    const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
                     .setDescription(`${horario_local} | **${tempo_atual}**`)
@@ -201,7 +195,7 @@ module.exports = {
                     )
                     .setFooter(nota_rodape);
                    
-                    message.reply({ embeds: [cidade_encontrada] });
+                    message.reply({ embeds: [clima_atual] });
                 });
             }
         });
