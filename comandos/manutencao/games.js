@@ -1,4 +1,5 @@
 const { MessageAttachment, MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "mail_games",
     description: "Envie atualizações de jogos",
@@ -7,7 +8,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        if(!client.owners.includes(message.author.id)) return;
+        if(message.author.id !== "665002572926681128") return;
 
         const { emojis } = require('../../arquivos/json/text/emojis.json');
         const { canal_games } = require('../../arquivos/data/games/canal_games.json');
