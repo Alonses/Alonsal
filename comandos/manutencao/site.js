@@ -18,7 +18,7 @@ module.exports = {
         .setDescription(manutencao[4]["comandos"]);
 
         const m = await message.channel.send(`${message.author} `+ manutencao[4]["despachei"]);
-        m.react('📫');
+        await m.react('📫');
 
         client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }

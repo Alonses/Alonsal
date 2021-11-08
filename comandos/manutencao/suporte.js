@@ -26,7 +26,7 @@ module.exports = {
         .setImage("https://i.imgur.com/incYvy2.jpg");
 
         const m = await message.channel.send(`${message.author} ${manutencao[5]["despachei"]} ${vergonha}`);
-        m.react('📫');
+        await m.react('📫');
 
         client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }
