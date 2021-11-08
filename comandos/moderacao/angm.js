@@ -26,8 +26,8 @@ module.exports = {
         let outputArray = []; // Transfere todos os dados do JSON para um array
         for(let element in canal_games){
 
-            canal = canal_games[element][0];
-            cargo = canal_games[element][1];
+            const canal = canal_games[element][0];
+            const cargo = canal_games[element][1];
 
             if(args[0] !== "rem" || element !== message.guild.id){ // Remove um servidor/canal da lista de clientes no json
                 outputArray.push(

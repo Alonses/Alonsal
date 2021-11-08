@@ -155,21 +155,23 @@ module.exports = {
                     porcentagem_conquistas = "-";
                 }
 
-                try{
+                let jogos_perfeitos;
+                try {
                     jogos_perfeitos = res.split("<div class=\"label\">Perfect Games</div>")[0];
                     jogos_perfeitos = jogos_perfeitos.slice(jogos_perfeitos.length - 40);
                     jogos_perfeitos = jogos_perfeitos.split("<div class=\"value\">")[1];
                     jogos_perfeitos = jogos_perfeitos.split("</div>")[0];
                     jogos_perfeitos = jogos_perfeitos.replace(",", ".").replace(/\s+/g, '');
-                }catch(err){
+                } catch (err) {
                     jogos_perfeitos = "-";
                 }
 
-                try{
+                let reviews_user;
+                try {
                     reviews_user = res.split("<span class=\"count_link_label\">Reviews</span>&nbsp;")[1];
                     reviews_user = reviews_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0];
                     reviews_user = reviews_user.replace(",", ".").replace(/\s+/g, '');
-                }catch(err){
+                } catch (err) {
                     reviews_user = "-";
                 }
 
@@ -197,7 +199,8 @@ module.exports = {
                     artes_user = "-";
                 }
 
-                if(res.includes("<div class=\"showcase_item_detail_title\">")){
+                let descriminador_tempo;
+                if (res.includes("<div class=\"showcase_item_detail_title\">")) {
                     let dados_jogo_fav = res.split("<div class=\"showcase_item_detail_title\">")[1];
 
                     jogo_favorito = dados_jogo_fav;
@@ -207,25 +210,25 @@ module.exports = {
 
                     jogo_favorito = jogo_favorito.replaceAll(/[\n\r]/g, "");
 
-                    try{
+                    try {
                         tempo_jogado = dados_jogo_fav.split("<div class=\"showcase_stat\">")[1];
                         tempo_jogado = tempo_jogado.split("</div>")[0];
                         tempo_jogado = tempo_jogado.replace("<div class=\"value\">", "");
-                    }catch(err){
+                    } catch (err) {
                         tempo_jogado = "-";
                     }
 
-                    try{
+                    try {
                         descriminador_tempo = dados_jogo_fav.split("<div class=\"label\">")[1];
                         descriminador_tempo = descriminador_tempo.split("</div>")[0];
                         descriminador_tempo = descriminador_tempo.split(" ")[0].toLocaleLowerCase();
-                    }catch(err){
+                    } catch (err) {
                         descriminador_tempo = "-";
                     }
 
-                    if(conquistas_favoritas)
-                    if(idioma_definido === "pt-br")
-                        descriminador_tempo = utilitarios[16][descriminador_tempo];
+                    if (conquistas_favoritas)
+                        if (idioma_definido === "pt-br")
+                            descriminador_tempo = utilitarios[16][descriminador_tempo];
 
                     tempo_jogado = tempo_jogado.replace(",", ".").replace(/\s+/g, '');
                     tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`;
