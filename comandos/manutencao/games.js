@@ -18,7 +18,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        if(!client.owners.includes(message.author.id)) return;
+        if(message.author.id !== "665002572926681128") return;
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         var canais_clientes = [];
