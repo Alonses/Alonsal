@@ -196,7 +196,6 @@
             "wiki_slondo" : "This bum is not on the wiki, look for something else! :sunglasses:",
             "topicos_rel" : "Related Topics",
             "sem_dados" : "I didn't find anything related to your search",
-            "tente_novamente" : "try again",
             "auto_pesquisa" : "Why are you researching yourself? There's nothing about you here"
         },
         {
@@ -247,10 +246,14 @@
             "aviso_1" : "Enter the name of some city to search\nFor example, as `.awe los angeles`",
             "aviso_2" : "I didn't find any place called",
             "aviso_3" : "There was an error with the weather API and it is not possible to search for weather at the moment",
-            "tente_novamente" : ", try again",
             "aviso_continente" : "These data are an average of all values for the continent surveyed",
             "aviso_pais" : "These data are an average of all values in the country surveyed",
+            "aviso_planeta" : "These data are an average of all surveyed values on the planet", 
             "tempo_agora" : "Weather now",
+            "hora_local" : "Local time",
+            "de" : "of",
+            "na" : "in",
+            "terra" : "on Earth",
             "vento" : "Wind",
             "nuvens" : "Clouds",
             "direcao" : "Direction",
@@ -260,7 +263,10 @@
             "nas_sol" : "Sunset",
             "sensacao_termica" : "Thermal sens",
             "umidade_ar" : "Air humidity",
-            "pressao_ar" : "Air pressure"
+            "pressao_ar" : "Air pressure",
+            "visibilidade" : "Visibility",
+            "dados_atts" : "Data updated in",
+            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
         },
         {
             "nao_encontrado" : "I didn't find any item or block with the name",
