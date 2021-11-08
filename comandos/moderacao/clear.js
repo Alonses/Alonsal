@@ -26,9 +26,9 @@ module.exports = {
         if(args[0] < 1 || args[0] > 100) // Valor maior que 100 ou menor que 1
             return message.reply(moderacao[1]["aviso_2"]);
     
-        texto = moderacao[1]["apagado_1"];
+        let texto = moderacao[1]["apagado_1"];
     
-        if(args[0] === 1)
+        if(args[0].value === 1)
             texto = moderacao[1]["apagado_2"];
         
         message.channel.bulkDelete(parseInt(args[0]))

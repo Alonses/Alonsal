@@ -34,7 +34,7 @@ module.exports = {
         }
 
         for(let i = 0; i < caracteres.length; i++){
-            fatorial = 1;
+            let fatorial = 1;
 
             if(caracteres[i] > 1){
                 for(let x = 1; x <= caracteres[i]; x++){
@@ -45,7 +45,7 @@ module.exports = {
             }
         }
 
-        result = mult;
+        let result = mult;
 
         if(rept > 1)
             result /= rept;
@@ -73,7 +73,7 @@ module.exports = {
                 cor_embed = 0xfbff3d;
         }
 
-        if(cor_embed == 0xfbff3d)
+        if(cor_embed === 0xfbff3d)
             exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`;
 
         const anagrama = new MessageEmbed()
@@ -124,7 +124,7 @@ module.exports = {
         }
 
         for(let i = 0; i < caracteres.length; i++){
-            fatorial = 1;
+            let fatorial = 1;
 
             if(caracteres[i] > 1){
                 for(let x = 1; x <= caracteres[i]; x++){
@@ -135,7 +135,7 @@ module.exports = {
             }
         }
 
-        result = mult;
+        let result = mult;
 
         if(rept > 1)
             result /= rept;
@@ -163,7 +163,7 @@ module.exports = {
                 cor_embed = 0xfbff3d;
         }
 
-        if(cor_embed == 0xfbff3d)
+        if(cor_embed === 0xfbff3d)
             exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`;
 
         const anagramas_possiveis = `:abc: ${diversao[5]["anagrama"]}\n\n${diversao[5]["entrada"]}: \`${anagrama}\`\n ${diversao[5]["combinacao"]}: \n${exib_formatado}\n${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${diversao[5]["combinacoes"]}`;
