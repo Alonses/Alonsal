@@ -256,6 +256,7 @@
             "terra" : "on Earth",
             "vento" : "Wind",
             "nuvens" : "Clouds",
+            "chuva" : "Rain",
             "direcao" : "Direction",
             "ceu_momento" : "Sky at the moment",
             "temperatura" : "Temperature",
@@ -266,7 +267,7 @@
             "pressao_ar" : "Air pressure",
             "visibilidade" : "Visibility",
             "dados_atts" : "Data updated in",
-            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
+            "error_1" : "Just enter normal characters for your search, searches with numbers are ignored"
         },
         {
             "nao_encontrado" : "I didn't find any item or block with the name",
