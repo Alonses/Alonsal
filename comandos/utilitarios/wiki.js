@@ -70,10 +70,10 @@ module.exports = {
                 if(username.includes(termo_pesquisado_cc))
                     message.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`);
                 else
-                    message.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[1]["tente_novamente"]}`);
+                    message.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`);
             })
             .catch(() => {
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[1]["tente_novamente"]}`);
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`);
             });
         }
     }

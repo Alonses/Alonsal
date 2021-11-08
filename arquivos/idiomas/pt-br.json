@@ -196,7 +196,6 @@
             "wiki_slondo" : "Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:",
             "topicos_rel" : "Tópicos relacionados",
             "sem_dados" : "Não encontrei nada relacionado a sua pesquisa",
-            "tente_novamente" : "tente novamente",
             "auto_pesquisa" : "Pq vc está se pesquisando? Não tem nada sobre vc aq"
         },
         {
@@ -247,10 +246,14 @@
             "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`",
             "aviso_2" : "Não encontrei nenhum local chamado",
             "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
-            "tente_novamente" : ", tente novamente",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
-            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado",
+            "aviso_pais" : "Estes dados são uma média de todos os valores do planeta pesquisado",
+            "aviso_planeta" : "Estes dados são uma média de todos os valores do planeta pesquisado",
             "tempo_agora" : "Tempo agora",
+            "hora_local" : "Hora local",
+            "de" : "de",
+            "na" : "na",
+            "terra" : "na terra",
             "vento" : "Vento",
             "nuvens" : "Nuvens",
             "direcao" : "Direção",
@@ -260,7 +263,10 @@
             "nas_sol" : "Na. do sol",
             "sensacao_termica" : "Sensação Térm",
             "umidade_ar" : "Umidade do ar",
-            "pressao_ar" : "Pressão do ar"
+            "pressao_ar" : "Pressão do ar",
+            "visibilidade" : "Visibilidade",
+            "dados_atts" : "Dados atualizados às",
+            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",

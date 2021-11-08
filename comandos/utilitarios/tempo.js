@@ -1,3 +1,9 @@
+const { MessageEmbed } = require('discord.js');
+const fetch = require('node-fetch');
+const { weather_key, time_key } = require('../../config.json');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const getCountryISO3 = require("country-iso-2-to-3");
+
 module.exports = {
     name: "tempo",
     description: "Veja informações do tempo em alguma cidade",
@@ -12,30 +18,8 @@ module.exports = {
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
-            
-        function direcao_cardial(degrees){
-            let direcao = parseInt((degrees / 22.5) + 0.5);
-
-            if(idioma_adotado === "pt-br")
-                cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
-            else
-                cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
-            
-            direcao = cards[direcao % 16];
-
-            return direcao;
-        }
-
-        const { MessageEmbed } = require('discord.js');
         
-        const fetch = require('node-fetch');
-        const { weather_key, time_key } = require('../../config.json');
-        const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-
-        const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);
-        
-        const getCountryISO3 = require("country-iso-2-to-3");
-        
+        const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
         const base_url = "http://api.openweathermap.org/data/2.5/weather?";
         const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
 
@@ -51,8 +35,10 @@ module.exports = {
         });
 
         pesquisa = indices.join(" ");
-        let url_completa = `${base_url}appid=${weather_key}&q=${pesquisa}&units=metric&lang=pt`;
+        if(pesquisa === "") return message.reply(`:mag: | ${utilitarios[8]["error_1"]}`);
         
+        let url_completa = `${base_url}appid=${weather_key}&q=${pesquisa}&units=metric&lang=pt`;
+
         if(idioma_adotado === "en-us")
             url_completa = url_completa.replace("&lang=pt", "");
         
@@ -61,7 +47,7 @@ module.exports = {
         .then(async res => {
 
             if(res.cod === '404' || res.cod === '400')
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]}\`${pesquisa}\` ${utilitarios[8]["tente_novamente"]}`);
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`);
             else if(res.cod === '429')
                 message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
             else{
@@ -71,28 +57,38 @@ module.exports = {
                 .then(response => response.json())
                 .then(async res_hora => {
 
+                    let dados_att = new Date((res.dt + res.timezone) * 1000);
+                    dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)}`;
+
+                    console.log(res);
+
                     let bandeira_pais = "";
                     let nome_pais = "";
-                    let aviso_continente = utilitarios[8]["aviso_continente"];
+                    let nota_rodape = `${utilitarios[8]["dados_atts"]} ${dados_att}`;
                     let horario_local;
 
-                    if(typeof res.sys.country != "undefined"){
-                        bandeira_pais = ' :flag_'+ (res.sys.country).toLowerCase() +':';
+                    if(typeof res.sys.country !== "undefined"){
+                        bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`;
                         
                         let cod_pais = getCountryISO3(res.sys.country);
-                        nome_pais = " - "+ translations[cod_pais];
-                        aviso_continente = "";
-
+                        nome_pais = ` - ${translations[cod_pais]}`;
+                        
                         if(nome_pais.includes(res.name)){
                             nome_pais = "";
-                            aviso_continente = utilitarios[8]["aviso_pais"];
+                            nota_rodape += ` | ${utilitarios[8]["aviso_pais"]}`;
                         }
 
                         horario_local = res_hora.formatted;
                         horario_local = new Date(horario_local);
-                    }else
+                    }else{
                         horario_local = new Date(res.dt * 1000);
-                    
+
+                        if(res.name !== "Globe")
+                            nota_rodape += ` | ${utilitarios[8]["aviso_continente"]}`;
+                        else
+                            nota_rodape += ` | ${utilitarios[8]["aviso_planeta"]}`;
+                    }
+
                     let nascer_sol = new Date((res.sys.sunrise + res.timezone) * 1000);
                     let por_sol = new Date((res.sys.sunset + res.timezone) * 1000);
 
@@ -113,7 +109,7 @@ module.exports = {
 
                     let hours = horario_local.getHours();
 
-                    hours = hours % 12;
+                    hours %= 12;
                     hours = hours ? hours : 12;
 
                     if(minutos >= 30)
@@ -164,29 +160,18 @@ module.exports = {
                     if(res.main.feels_like >= 35)
                         emoji_sensacao_termica = ":fire:";
                     
-                    horario_local = `:clock${hours}: **Hora local:** \`${hora}:${minutos}\` | ${dia} de ${mes}`;
+                    horario_local = `:clock${hours}: **${utilitarios[8]["hora_local"]}:** \`${hora}:${minutos} | ${dia} ${utilitarios[8]["de"]} ${mes}\``;
 
-                    if(idioma_adotado === "en-us"){
-                        horario_local = horario_local.replace("Hora local", "Local time");
-                        horario_local = horario_local.replace("de", "of");
-                    }
+                    let direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
+                    let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
 
-                    let direcao_vento = direcao_cardial(res.wind.deg);
-
-                    let nome_local = "na "+ res.name;
-
-                    if(idioma_adotado === "en-us")
-                        nome_local = nome_local.replace("na", "in");
                     if(typeof res.sys.country != "undefined")
                         if(idioma_adotado === "pt-br")
                             nome_local = nome_local.replace("na", "em");
                     
-                    else
-                        if(idioma_adotado === "pt-br")
-                            horario_local = horario_local.replace("Hora local", "Dados de");
-                        else
-                            horario_local = horario_local.replace("Local time", "Data from");
-
+                    if(res.name === "Globe")
+                        nome_local = `${utilitarios[8]["terra"]} :earth_americas:`;
+                    
                     let infos_chuva = "";
 
                     if(typeof res.rain != "undefined"){
@@ -207,18 +192,30 @@ module.exports = {
                     .addFields(
                         { name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, inline: true },
                         { name: `${emoji_ceu_atual} **${utilitarios[8]["ceu_momento"]}**`, value: `${emoji_nuvens} **${utilitarios[8]["nuvens"]}: **\`${res.clouds.all}%\`\n:sunrise: **${utilitarios[8]["nas_sol"]}: **\`${nascer_sol}\`\n:city_sunset: **${utilitarios[8]["por_sol"]}: **\`${por_sol}\``, inline: true},
-                        { name: `:wind_chime: **${utilitarios[8]["vento"]}**`, value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\``, inline: true },
+                        { name: `:wind_chime: **${utilitarios[8]["vento"]}**`, value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%\``, inline: true },
                     )
                     .addFields(
                         { name: `${emoji_sensacao_termica} **${utilitarios[8]["sensacao_termica"]}.**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.feels_like}°C\``, inline: true},
                         { name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\` ${infos_chuva}`, inline: true },
                         { name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.pressure} kPA\``, inline: true}
                     )
-                    .setFooter(aviso_continente);
+                    .setFooter(nota_rodape);
                    
                     message.reply({ embeds: [cidade_encontrada] });
                 });
             }
         });
     }
-};
+}
+function direcao_cardial(degrees, idioma_adotado){
+    let direcao = parseInt((degrees / 22.5) + 0.5);
+
+    if(idioma_adotado === "pt-br")
+        cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
+    else
+        cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
+    
+    direcao = cards[direcao % 16];
+
+    return direcao;
+}
