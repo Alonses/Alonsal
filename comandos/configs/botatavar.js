@@ -12,13 +12,9 @@ module.exports = {
         
         let novo_perfil;
         
-        if(message.attachments.size > 0){
-
-            let attachment = message.attachments.first();
-            let url = attachment.url;
-            
-            novo_perfil = url;
-        }else{
+        if(message.attachments.size > 0) {
+            novo_perfil = message.attachments.first().url;
+        } else {
             novo_perfil = args[0];
             novo_perfil = novo_perfil.replace("<", "");
             novo_perfil = novo_perfil.replace(">", "");

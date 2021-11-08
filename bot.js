@@ -67,10 +67,10 @@ client.on("messageCreate", async message => {
     if (message.content.includes(client.user.id) && !message.content.startsWith(`${prefix}usinfo`) && !message.content.startsWith(`${prefix}userinfo`) && !message.content.startsWith(`${prefix}gado`) && !message.content.startsWith(`${prefix}ga`)) { // Responde as mensagens em que é marcado
 
         const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
-        let dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-        let idioma_selecionado = idioma.getLang(message.guild.id);
+        const dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const idioma_selecionado = idioma.getLang(message.guild.id);
 
-        let { inicio } = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
+        const {inicio} = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
 
         return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
     }

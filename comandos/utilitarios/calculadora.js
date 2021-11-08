@@ -11,9 +11,10 @@ module.exports = {
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if(args.length < 1) return message.reply(utilitarios[17]["aviso_1"]);
+
+        let operacao = args.join(" ");
         
         try{
-            let operacao = args.join(" ");
             let resultado = math.evaluate(operacao);
             let emoji_res = ":chart_with_upwards_trend:";
 
