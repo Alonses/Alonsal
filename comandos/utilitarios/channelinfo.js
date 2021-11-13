@@ -34,9 +34,7 @@ module.exports = {
         let nsfw = utilitarios[9]["nao"];
         if(canal.nsfw)
             nsfw = utilitarios[9]["sim"];
-
-        console.log(canal);
-
+        
         const data_atual = new Date();
         let data_criacao = formata_data(new Date(canal.createdAt), idioma_selecionado); // Criação do servidor
         let diferenca_criacao = getDateDiff(new Date(canal.createdAt), data_atual, utilitarios);
