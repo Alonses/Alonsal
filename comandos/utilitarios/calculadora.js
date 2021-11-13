@@ -12,6 +12,8 @@ module.exports = {
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if(args.length < 1) return message.reply(utilitarios[17]["aviso_1"]);
+
+        let operacao = args.join(" ");
         
         let operacao = args.join(" ");
         

@@ -10,8 +10,6 @@ module.exports = {
     async execute(client, message, args) {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-
         const member1 = args[0].value, member2 = args[1].value;
 
         let titulo = diversao[2]["limda"];

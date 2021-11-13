@@ -1,4 +1,14 @@
 const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { canal_games } = require('../../arquivos/data/games/canal_games.json');
+const formata_anun = require('../../adm/funcoes/formatagames.js');
+
+const platformMap = {
+    "epicgames.com": [ "<:Logo_ep:864887054067957791>", "Epic" ],
+    "store.steam": [ "<:Logo_st:864887020467257364>", "Steam" ],
+    "gog.com": [ "<:Logo_gog:864887080673214505>", "GOG" ],
+    "humblebundle.com": [ "<:Logo_hb:864887252587642911>", "Humble Bundle" ],
+    "ubisoft.com": [ "<:Logo_ubi:864887154483134516>\n", "Ubisoft" ]
+}
 
 module.exports = {
     name: "mail_games",
@@ -10,17 +20,14 @@ module.exports = {
 
         if(message.author.id !== "665002572926681128") return;
 
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
-        const { canal_games } = require('../../arquivos/data/games/canal_games.json');
-        const formata_anun = require('../../adm/funcoes/formatagames.js');
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
         var canais_clientes = [];
 
         let tipo_anun = "";
         percorrer(canal_games);
 
         function percorrer(obj) { // Coleta os valores de canais e cargos
-            for (var propriedade in obj) {
+            for (const propriedade in obj) {
                 if (obj.hasOwnProperty(propriedade)) {
                     if (typeof obj[propriedade] == "object") {
                         percorrer(obj[propriedade]);
@@ -31,10 +38,10 @@ module.exports = {
             }
         }
 
-        if(args[0] === "list"){
+        if(args[0].toString() === "list"){
             let nome_canais = "";
 
-            if(canais_clientes.length == 0)
+            if(canais_clientes.length === 0)
                 return message.reply(":octagonal_sign: Sem canais clientes");
             
             for(let i = 0; i < canais_clientes.length; i++){
@@ -53,7 +60,7 @@ module.exports = {
             return message.reply(`Canais clientes: \`${canais_clientes.length/2}\`\n\nCanais: ${nome_canais}`);
         }
 
-        if(args[0] === "h"){
+        if(args[0].toString() === "h"){
             const embed_fomatacao = new MessageEmbed()
             .setTitle("Notificações de Games & DLC's")
             .setDescription(`:one: Game - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:two: Games - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>\`\n:cloud_tornado: DLC - \`${prefix}mg dlc <nome_dlc> 21/01 50,00 <url> <img_anexo>\`\n:rotating_light: Anúncio urgente - \`${prefix}mg u <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:placard: Canais clientes - \`${prefix}mg list\``);
@@ -61,7 +68,7 @@ module.exports = {
             return message.reply({embeds: [embed_fomatacao]});
         }
         
-        if(args[0] == "u" || args[0] == "dlc"){
+        if(args[0].toString() === "u" || args[0] === "dlc"){
             tipo_anun = args[0];
             args.shift();
         }
@@ -69,14 +76,12 @@ module.exports = {
         if(args.length < 4)
             return message.reply(`Informe pelo menos como \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\nOu utilize o comando\`${prefix}mg h\` para ver os aliases deste comando`);
         
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-        
-        let nome_jogo = args[0].replaceAll("_", " ");
+        let nome_jogo = args[0].toString().replaceAll("_", " ");
 
-        let plataforma = "";
-        let logo_plat = "";
+        const matches = args[3].toString().match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com/);
+
+        const plataforma = platformMap[matches[0]][1];
+        const logo_plat = platformMap[matches[0]][0];
         let url = "";
 
         if(message.attachments.size === 1){
@@ -85,47 +90,22 @@ module.exports = {
             });
         }else
             return message.reply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(msg => setTimeout(() => msg.delete(), 3000));
-        
-        if(args[3].includes("epicgames.com")){
-            logo_plat = emoji(emojis.lg_epicgames);
-            plataforma = "Epic";
-        }
-
-        if(args[3].includes("store.steam")){
-            logo_plat = emoji(emojis.lg_steam);
-            plataforma = "Steam";
-        }
-
-        if(args[3].includes("gog.com")){
-            logo_plat = emoji(emojis.lg_gog);
-            plataforma = "GOG";
-        }
-
-        if(args[3].includes("humblebundle.com")){
-            logo_plat = emoji(emojis.lg_humble);
-            plataforma = "Humble Bundle";
-        }
-
-        if(args[3].includes("ubisoft.com")){
-            logo_plat = emoji(emojis.lg_ubisoft);
-            plataforma = "Ubisoft";
-        }
 
         // Soma o valor dos jogos anunciados
-        let valor_total = parseFloat((args[2]).replace(",", "."));
+        let valor_total = parseFloat((args[2].toString()).replace(",", "."));
 
         if(args.length > 4)
-            valor_total += parseFloat((args[5]).replace(",", "."));
+            valor_total += parseFloat((args[5].toString()).replace(",", "."));
         
         let img_game = new MessageAttachment(url);
 
         valor_total = valor_total.toFixed(2);
         let canais_recebidos = 0;
 
-        for(let i = 0; i < canais_clientes.length; i++){ // Envia a mensagem para vários canais clientes
-            try{
+        for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
+            try {
                 let nome_jogo_2 = "";
-                let link_1 = args[3];
+                let link_1 = args[3].toString();
                 let link_2 = "";
 
                 if(typeof args[4] !== "undefined"){
@@ -137,7 +117,7 @@ module.exports = {
                 servidor = servidor.guild.id;
                 
                 let lang_server = await client.idioma.getLang(message.guild.id);
-                texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1], valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
+                let texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1].toString(), valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
                 
                 if(typeof canais_clientes[i + 1] !== "undefined")
                     texto_anuncio += ` <@&${canais_clientes[i + 1]}>`;

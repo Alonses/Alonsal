@@ -24,8 +24,7 @@ module.exports = {
         
         let msg_retorno = `:lock: | ${moderacao[7]["canal"]} **${message.channel.name}** ${moderacao[7]["lock"].replaceAll(".a", prefix)}`;
         
-        if(message.content === `${prefix}unlk` || message.content === `${prefix}unlock` || message.content === `${prefix}destravar` || message.content === `${prefix}liberar`){
-            trava_canal = true;
+        if (message.content === `${prefix}unlk` || message.content === `${prefix}unlock` || message.content === `${prefix}destravar` || message.content === `${prefix}liberar`) {
             msg_retorno = `:unlock: | ${moderacao[7]["canal"]} **${message.channel.name}** ${moderacao[7]["unlock"].replaceAll(".a", prefix)}`;
             
             message.channel.permissionOverwrites.set([
