@@ -18,12 +18,10 @@ module.exports = {
 
         if(client.owners.includes(message.author.id)){
             try{
-                tipo = content[0];
-                id_alvo = content[1];
-
-                id_alvo = id_alvo.toString();
+                tipo = content[0].toString();
+                id_alvo = content[1].toString();
             }catch(e){
-                return await message.reply(":octagonal_sign: | "+ manutencao[3]["aviso_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+                return await message.reply(`:octagonal_sign: | ${manutencao[3]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             }
 
             for(let i = 2; i < content.length; i++){
