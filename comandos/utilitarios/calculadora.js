@@ -15,8 +15,6 @@ module.exports = {
 
         let operacao = args.join(" ");
         
-        let operacao = args.join(" ");
-        
         if(args[0] === "+" || args[0] === "-" || args[0] === "*" || args[0] === "/"){
             let operador = args[0];
             args.shift();
