@@ -12,24 +12,24 @@ module.exports = {
     cooldown: 6,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
+
         const removeFormatacoes = require('../../adm/funcoes/remformats.js');
         const idioma_definido = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        let datas = [];
-        let fontes = [];
-        let acontecimento_final = [];
+        const datas = [];
+        const fontes = [];
+        const acontecimento_final = [];
         let evento_escolhido = "";
-        let ano_materias = [];
+        const ano_materias = [];
 
         let data = new Date();
         let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
         let data_informada = utilitarios[10]["hoje"];
-        let valor_primario = args[0];
-        
+        const valor_primario = args[0];
+
         if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
             evento_escolhido = args[0];
             args.shift();
@@ -45,17 +45,17 @@ module.exports = {
 
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
                 return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
-            
+
             if(idioma_definido === "pt-br"){
                 if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
                     return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
-                
+
                 url_completa += `${dia}/${mes}`;
                 data_informada = `${dia}/${mes}`;
             }else{
                 if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
                     return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
-            
+
                 url_completa += `${mes}/${dia}`;
                 data_informada = `${mes}/${dia}`;
 
@@ -79,7 +79,7 @@ module.exports = {
 
             dia = new Date().getDate();
         }
-        
+
         const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"]}`);
 
         fetch(url_completa)
@@ -88,9 +88,9 @@ module.exports = {
 
             alvos = res.split("<div class=\"card-img-overlay\">");
             alvos.shift();
-            
+
             for(let i = 0; i < alvos.length; i++){ // Separando os valores
-                
+
                 data = alvos[i].split("<div class=\"field field--name-field-date field--type-datetime field--label-hidden field__item\">")[1];
                 let ano_materia = data.slice(0, 4);
 
@@ -120,7 +120,7 @@ module.exports = {
                     for(let i = 0; i < datas.length; i++){
                         lista_eventos += `\`${i + 1}\` - [ \`em ${ano_materias[i]}\` ] ${acontecimento_final[i]}\n`;
                     }
-                    
+
                     lista_eventos = removeFormatacoes(lista_eventos);
 
                     if(data_informada !== utilitarios[10]["hoje"])
@@ -136,7 +136,7 @@ module.exports = {
                     message.reply({ embeds: [embed_eventos] });
                 }else
                     message.reply(`:mag: | ${utilitarios[10]["sem_entradas"].replaceAll(".a", prefix)}`);
-                
+
                 aviso.delete();
                 return;
             }
@@ -158,7 +158,7 @@ module.exports = {
                         else
                             num = Math.round(2 * Math.random());
                     }while(valores_esc.includes(num));
-                
+
                     ult_server = message.guild.id;
                     valores_esc.push(num);
                 }else if(!valor_primario.includes("-")){
@@ -174,7 +174,7 @@ module.exports = {
                 fetch(fontes[num])
                 .then(response => response.text())
                 .then(async res_artigo => {
-                    
+
                     let imagem = res_artigo.split("<div class=\"field field--name-field-thumbnail field--type-entity-reference field--label-hidden field--item\">")[1];
                     imagem = imagem.split("<img src=\"")[1];
                     imagem = imagem.split("\"")[0];
@@ -183,14 +183,14 @@ module.exports = {
                         imagem = imagem.slice(9, imagem.length);
                         imagem = `https://assets.historyplay.tv/br/public${imagem}`;
                     }
-                    
+
                     let descricao = res_artigo.split("<div class=\"clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item\">")[1];
-                    
-                    descricao = descricao.split("</p>")[0]; 
+
+                    descricao = descricao.split("</p>")[0];
                     descricao = descricao.slice(0, 350) +"...";
                     descricao = descricao.replace("<p>", "");
                     descricao = descricao.replace("<div>", "");
-                
+
                     const acontecimento = new MessageEmbed()
                     .setTitle(acontecimento_final[num])
                     .setAuthor("History", "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png")
@@ -199,7 +199,7 @@ module.exports = {
                     .setDescription(descricao)
                     .setFooter(datas[num], message.author.avatarURL({ dynamic:true }))
                     .setImage(imagem);
-                    
+
                     message.reply({ embeds: [acontecimento] });
                     aviso.delete();
                 });

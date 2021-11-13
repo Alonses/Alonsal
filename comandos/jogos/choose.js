@@ -21,11 +21,11 @@ module.exports = {
         }else{
 
             if(args.length - 1 < 2) return message.reply(jogos[4]["aviso_1"]);
-            
-            let opcoes = args;
-            qtd_pers = args[0].replace("[", "");
 
-            if(qtd_pers == 0 || isNaN(qtd_pers)) return message.reply(`:octagonal_sign: | ${jogos[4]["aviso_2"]}`);
+            const opcoes = args;
+            let qtd_pers = args[0].replace("[", "");
+
+            if(qtd_pers === 0 || isNaN(qtd_pers)) return message.reply(`:octagonal_sign: | ${jogos[4]["aviso_2"]}`);
 
             opcoes.shift(); // Remove o indicador de qtd de escolhas
 
@@ -36,7 +36,7 @@ module.exports = {
 
             for(let i = 0; i < qtd_pers; i++){
 
-                if(i + 1 == qtd_pers)
+                if(i + 1 === qtd_pers)
                     escolhas += " & ";
 
                 let item = opcoes[Math.round((opcoes.length - 1) * Math.random())];
