@@ -31,7 +31,7 @@ module.exports = {
             if(!isInteger(resultado))
                 resultado = resultado.toFixed(6)
 
-            message.reply(`${emoji_res} | ${utilitarios[17]["resultado"]}: \`${resultado}\``);
+            message.reply(`${emoji_res} | ${utilitarios[17]["resultado"]}: \`${resultado.toLocaleString('pt-BR')}\``);
         }catch(err){
             message.reply(`:octagonal_sign: | ${utilitarios[17]["error"]}: \`${operacao}\``);
         }
