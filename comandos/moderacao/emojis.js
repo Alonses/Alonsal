@@ -13,8 +13,7 @@ module.exports = {
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        
+        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
         let prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if(message.content.includes(`${prefix}moji`)){
@@ -34,7 +33,7 @@ module.exports = {
                     
                     let imagem_emoji = new MessageAttachment(url);
 
-                    message.reply({ attachments: [imagem_emoji] });
+                    message.reply({ files: [imagem_emoji] });
                 });
             }else
                 message.reply(`${moderacao[2]["aviso_2"]} \`${prefix}moji \`${emoji_dancando}\` \``);
