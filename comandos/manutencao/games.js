@@ -38,6 +38,15 @@ module.exports = {
             }
         }
 
+        if(typeof args[0] === "undefined" || args.length < 1){
+            const embed_fomatacao = new MessageEmbed()
+            .setTitle("Notificações de Games & DLC's")
+            .setColor(0x29BB8E)
+            .setDescription(`:one: Game - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:two: Games - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>\`\n:cloud_tornado: DLC - \`${prefix}mg dlc <nome_dlc> 21/01 50,00 <url> <img_anexo>\`\n:rotating_light: Anúncio urgente - \`${prefix}mg u <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:placard: Canais clientes - \`${prefix}mg list\``);
+            
+            return message.reply({embeds: [embed_fomatacao]});
+        }
+
         if(args[0].toString() === "list"){
             let nome_canais = "";
 
@@ -60,14 +69,6 @@ module.exports = {
             return message.reply(`Canais clientes: \`${canais_clientes.length/2}\`\n\nCanais: ${nome_canais}`);
         }
 
-        if(args[0].toString() === "h"){
-            const embed_fomatacao = new MessageEmbed()
-            .setTitle("Notificações de Games & DLC's")
-            .setDescription(`:one: Game - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:two: Games - \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <nome_jogo> 50,00 <url> <img_anexo>\`\n:cloud_tornado: DLC - \`${prefix}mg dlc <nome_dlc> 21/01 50,00 <url> <img_anexo>\`\n:rotating_light: Anúncio urgente - \`${prefix}mg u <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\n:placard: Canais clientes - \`${prefix}mg list\``);
-            
-            return message.reply({embeds: [embed_fomatacao]});
-        }
-        
         if(args[0].toString() === "u" || args[0] === "dlc"){
             tipo_anun = args[0];
             args.shift();
@@ -144,8 +145,7 @@ module.exports = {
                     description: `\`\`\`Canal/Servidores desconhecidos, considere apagar este campo >>manualmente<< :: ${canais_clientes[i]} :)\n${err.toString().substring(0, 2000)}\`\`\``,
                     color: "RED"
                 });
-
-                console.log(err);
+                
                 client.channels.cache.get('862015290433994752').send({ embeds: [embed] });
             }
 
@@ -157,7 +157,7 @@ module.exports = {
         if(canais_recebidos === 1)
             aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canal cliente`;
 
-        // client.channels.cache.get('872865396200452127').send(aviso);
+        client.channels.cache.get('872865396200452127').send(aviso);
         const mensagem = await message.reply("A atualização foi enviada à todos os canais de games");
 
         setTimeout(() => {
