@@ -1,12 +1,12 @@
 let ult_comando;
 let ult_mensagem;
-let conexoes_ativas = 0;
+// let conexoes_ativas = 0;
 
-let { prefix } = require('../../config.json');
+// let { prefix } = require('../../config.json');
 const { MessageEmbed } = require('discord.js');
 
-const canais_conectados = new Map();
-const servers_conectados = new Map();
+// const canais_conectados = new Map();
+// const servers_conectados = new Map();
 
 module.exports = async function({client, auto, ult_comand, ult_message}){
 
@@ -30,35 +30,35 @@ module.exports = async function({client, auto, ult_comand, ult_message}){
         require("./servers.js")({client, caso, guild});
     });
     
-    client.on("voiceStateUpdate", guild => {
+    // client.on("voiceStateUpdate", guild => {
         
-        if(guild.guild.client.voice.connections.size < conexoes_ativas){
-            // Processa quando o bot é desconectado do canal por um usuário manualmente
-            conexoes_ativas--;
+    //     if(guild.guild.client.voice.connections.size < conexoes_ativas){
+    //         // Processa quando o bot é desconectado do canal por um usuário manualmente
+    //         conexoes_ativas--;
 
-            const id_canal_desconectado = guild.channelID; // Canal de voz
+    //         const id_canal_desconectado = guild.channelID; // Canal de voz
             
-            let id_canal_comando = servers_conectados.get(guild.guild.id); // Canal de texto 
-            let id_mensagem = canais_conectados.get(guild.guild.id);
+    //         let id_canal_comando = servers_conectados.get(guild.guild.id); // Canal de texto 
+    //         let id_mensagem = canais_conectados.get(guild.guild.id);
             
-            const channel = client.channels.cache.get(id_canal_comando);
-            const message = channel.messages.cache.get(id_mensagem);
+    //         const channel = client.channels.cache.get(id_canal_comando);
+    //         const message = channel.messages.cache.get(id_mensagem);
     
-            const args = message.content.slice(prefix.length).trim().split(' ');
+    //         const args = message.content.slice(prefix.length).trim().split(' ');
 
-            require('../../comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
+    //         require('../../comandos/musicas/play.js')({message, client, args, id_canal_desconectado});
             
-            servers_conectados.set(guild.guild.id, []);
-            canais_conectados.set(guild.guild.id, []);
-        }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
-            if(typeof ult_mensagem !== "undefined"){
-                conexoes_ativas = guild.guild.client.voice.connections.size;
+    //         servers_conectados.set(guild.guild.id, []);
+    //         canais_conectados.set(guild.guild.id, []);
+    //     }else{ // Salva num mapa os comandos quando há atualizações nos canais de voz
+    //         if(typeof ult_mensagem !== "undefined"){
+    //             conexoes_ativas = guild.guild.client.voice.connections.size;
             
-                servers_conectados.set(ult_mensagem.guild.id, ult_mensagem.channel.id);
-                canais_conectados.set(ult_mensagem.guild.id, ult_mensagem.id);
-            }
-        }
-    });
+    //             servers_conectados.set(ult_mensagem.guild.id, ult_mensagem.channel.id);
+    //             canais_conectados.set(ult_mensagem.guild.id, ult_mensagem.id);
+    //         }
+    //     }
+    // });
     
     client.on("rateLimit", limit => {
         const embed = new MessageEmbed()

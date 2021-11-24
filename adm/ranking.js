@@ -2,10 +2,10 @@ const usersMap = new Map();
 const LIMIT = 4;
 const DIFF = 5000;
 
-module.exports = async ({client, message}) => {
+const { rank_servidores } = require('../arquivos/data/rank/ranking.json');
+const fs = require('fs');
 
-    const { rank_servidores } = require('../arquivos/data/rank/ranking.json');
-    const fs = require('fs');
+module.exports = async ({client, message}) => {
 
     function constructJson(id_guild, array_valores){
         return { [id_guild] : array_valores } // Montando servidores com usuários
