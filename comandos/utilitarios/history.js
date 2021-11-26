@@ -81,6 +81,7 @@ module.exports = {
         }
 
         const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"]}`);
+        const ano_atual = new Date().getFullYear();
 
         fetch(url_completa)
         .then(response => response.text())
@@ -118,7 +119,11 @@ module.exports = {
                     let data_eventos = "";
 
                     for(let i = 0; i < datas.length; i++){
-                        lista_eventos += `\`${i + 1}\` - [ \`em ${ano_materias[i]}\` ] ${acontecimento_final[i]}\n`;
+                        lista_eventos += `\`${i + 1}\` - [ \`${utilitarios[10]["em"]} ${ano_materias[i]}\` | \``;
+                        
+                        ano_atual - ano_materias[i] > 1 ? lista_eventos += `${utilitarios[10]["ha"]} ${ano_atual - ano_materias[i]}${utilitarios[14]["anos"]}\` ] `: ano_atual - ano_materias[i] == 1 ? lista_eventos += `${utilitarios[10]["ano_passado"]}\` ] ` : lista_eventos += `${utilitarios[10]["este_ano"]}\` ] `;
+
+                        lista_eventos += `${acontecimento_final[i]}\n`;
                     }
 
                     lista_eventos = removeFormatacoes(lista_eventos);

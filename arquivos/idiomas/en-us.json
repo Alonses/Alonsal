@@ -321,6 +321,10 @@
         },
         {
             "hoje" : "today",
+            "este_ano" : "This year",
+            "ha": "",
+            "em": "in",
+            "ano_passado" : "Last year",
             "numero" : "number",
             "acontecimentos_1" : "Events through history",
             "acontecimentos_2" : "Below are all events on the date of",

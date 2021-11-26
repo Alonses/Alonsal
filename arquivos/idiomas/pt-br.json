@@ -292,6 +292,10 @@
         },
         {
             "hoje" : "hoje",
+            "este_ano" : "Este ano",
+            "ha": "Há",
+            "em" : "em",
+            "ano_passado" : "Ano passado",
             "numero" : "numero",
             "acontecimentos_1" : "Acontecimentos pela história",
             "acontecimentos_2" : "Abaixo estão todos os acontecimentos na data de",
