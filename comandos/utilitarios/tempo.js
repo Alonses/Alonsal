@@ -171,17 +171,32 @@ module.exports = {
                     if(res.name === "Globe")
                         nome_local = `${utilitarios[8]["terra"]} :earth_americas:`;
                     
-                    if(typeof res.rain != "undefined"){
-                        infos_chuva = `\n**${utilitarios[8]["chuva"]} 1H:** \`${res.rain["1h"]}mm\``;
+                    if(typeof res.rain !== "undefined"){
+                        infos_chuva = `${utilitarios[8]["chovendo"]}\n${utilitarios[8]["chuva"]} 1H: ${res.rain["1h"]}mm`;
                     
                         if(typeof res.rain["3h"] != "undefined")
-                            infos_chuva += `\n**${utilitarios[8]["chuva"]} 3H:** \`${res.rain["3h"]}mm\``;
+                            infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
                     }
-       
-                    let clima_atual = new MessageEmbed()
+                    
+                    if(typeof res.snow !== "undefined"){
+                        infos_chuva = `${utilitarios[8]["nevando"]}\n${utilitarios[8]["neve"]} 1H: ${res.rain["1h"]}mm`;
+                    
+                        if(typeof res.rain["3h"] != "undefined")
+                            infos_chuva += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
+                    }
+
+                    if(infos_chuva !== "")
+                        infos_chuva = `\`\`\`fix\n${infos_chuva}\`\`\``;
+
+                    let pressao_local = `**${utilitarios[12]["atual"]}: **\`${res.main.pressure} kPA\``;
+
+                    if(typeof res.main.grnd_level !== "undefined") 
+                        pressao_local = `:camping: **${utilitarios[8]["nivel_chao"]}: ** \`${res.main.grnd_level} kPA\`\n:island: **${utilitarios[8]["nivel_mar"]}: ** \`${res.main.sea_level} kPA\``;
+
+                    const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
-                    .setDescription(`${horario_local} | **${tempo_atual}**`)
+                    .setDescription(`${horario_local} | **${tempo_atual}**${infos_chuva}`)
                     .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
                         { name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, inline: true },
@@ -190,18 +205,11 @@ module.exports = {
                     )
                     .addFields(
                         { name: `${emoji_sensacao_termica} **${utilitarios[8]["sensacao_termica"]}.**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.feels_like}°C\``, inline: true},
-                        { name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\` ${infos_chuva}`, inline: true },
-                        { name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.pressure} kPA\``, inline: true}
+                        { name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\``, inline: true },
+                        { name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, value: `${pressao_local}`, inline: true}
                     )
                     .setFooter(nota_rodape);
-                   
-                    if(typeof res.main.grnd_level !== "undefined" || typeof res.main.sea_level !== "undefined")
-                        clima_atual.addFields(
-                            { name: `:camping: **${utilitarios[8]["nivel_chao"]}**`, value: `\`${res.main.grnd_level} ${utilitarios[8]["metros"]}\``, inline: true },
-                            { name: `:island: **${utilitarios[8]["nivel_mar"]}**`, value: `\`${res.main.sea_level} ${utilitarios[8]["metros"]}\``, inline: true},
-                            { name: `⠀`, value: `⠀`, inline: true}
-                        );
-
+                    
                     message.reply({ embeds: [clima_atual] });
                 });
             }

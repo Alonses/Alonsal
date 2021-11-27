@@ -266,9 +266,10 @@
             "umidade_ar" : "Umidade do ar",
             "pressao_ar" : "Pressão do ar",
             "visibilidade" : "Visibilidade",
-            "nivel_chao" : "Nível do chão",
-            "nivel_mar" : "Nível do mar",
-            "metros" : "metros",
+            "nivel_chao" : "No chão",
+            "nivel_mar" : "No mar",
+            "chovendo" : "Chovendo agora",
+            "nevando" : "Nevando agora",
             "dados_atts" : "Dados atualizados às",
             "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
         },

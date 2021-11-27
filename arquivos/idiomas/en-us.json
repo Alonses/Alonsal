@@ -268,7 +268,8 @@
             "visibilidade" : "Visibility",
             "nivel_chao" : "Ground level",
             "nivel_mar" : "Ocean level",
-            "metros" : "meters",
+            "chovendo" : "Raining now",
+            "nevando" : "Snowing now",
             "dados_atts" : "Data updated in",
             "error_1" : "Just enter normal characters for your search, searches with numbers are ignored"
         },
