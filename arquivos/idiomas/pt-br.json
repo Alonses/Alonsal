@@ -247,7 +247,7 @@
             "aviso_2" : "Não encontrei nenhum local chamado",
             "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
-            "aviso_pais" : "Estes dados são uma média de todos os valores do planeta pesquisado",
+            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado",
             "aviso_planeta" : "Estes dados são uma média de todos os valores do planeta pesquisado",
             "tempo_agora" : "Tempo agora",
             "hora_local" : "Hora local",
@@ -266,6 +266,9 @@
             "umidade_ar" : "Umidade do ar",
             "pressao_ar" : "Pressão do ar",
             "visibilidade" : "Visibilidade",
+            "nivel_chao" : "Nível do chão",
+            "nivel_mar" : "Nível do mar",
+            "metros" : "metros",
             "dados_atts" : "Dados atualizados às",
             "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
         },

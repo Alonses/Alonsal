@@ -266,6 +266,9 @@
             "umidade_ar" : "Air humidity",
             "pressao_ar" : "Air pressure",
             "visibilidade" : "Visibility",
+            "nivel_chao" : "Ground level",
+            "nivel_mar" : "Ocean level",
+            "metros" : "meters",
             "dados_atts" : "Data updated in",
             "error_1" : "Just enter normal characters for your search, searches with numbers are ignored"
         },

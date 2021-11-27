@@ -81,9 +81,9 @@ module.exports = {
                     }else{
                         horario_local = new Date(res.dt * 1000);
 
-                        if(res.name !== "Globe")
+                        if(res.name !== "Globe" && (res.coord.lon !== 0 && res.coord.lat !== 0))
                             nota_rodape += ` | ${utilitarios[8]["aviso_continente"]}`;
-                        else
+                        else if(res.coord.lon === 0 && res.coord.lat === 0)
                             nota_rodape += ` | ${utilitarios[8]["aviso_planeta"]}`;
                     }
 
@@ -178,7 +178,7 @@ module.exports = {
                             infos_chuva += `\n**${utilitarios[8]["chuva"]} 3H:** \`${res.rain["3h"]}mm\``;
                     }
        
-                    const clima_atual = new MessageEmbed()
+                    let clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
                     .setDescription(`${horario_local} | **${tempo_atual}**`)
@@ -195,6 +195,13 @@ module.exports = {
                     )
                     .setFooter(nota_rodape);
                    
+                    if(typeof res.main.grnd_level !== "undefined" || typeof res.main.sea_level !== "undefined")
+                        clima_atual.addFields(
+                            { name: `:camping: **${utilitarios[8]["nivel_chao"]}**`, value: `\`${res.main.grnd_level} ${utilitarios[8]["metros"]}\``, inline: true },
+                            { name: `:island: **${utilitarios[8]["nivel_mar"]}**`, value: `\`${res.main.sea_level} ${utilitarios[8]["metros"]}\``, inline: true},
+                            { name: `⠀`, value: `⠀`, inline: true}
+                        );
+
                     message.reply({ embeds: [clima_atual] });
                 });
             }
