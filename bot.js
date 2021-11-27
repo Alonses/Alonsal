@@ -89,6 +89,8 @@ client.on("messageCreate", async message => {
     
     if(comandos_musicais.includes(message.content.split(" ")[0].replace(prefix, ""))){
 
+        if(message.author.id !== "665002572926681128") return;
+        
         let args = content.split(" ");
         args.shift();
 

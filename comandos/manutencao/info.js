@@ -20,7 +20,7 @@ module.exports = {
         const emoji_bolo = client.emojis.cache.get(emojis.mc_bolo).toString();
         const emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        fs.readFile('./arquivos/data/status/comandos.txt', 'utf8', function(err, data) {
+        fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
             if (err) throw err;
             
             qtd_comandos = parseInt(data) + 1;

@@ -4,7 +4,7 @@ let fs = require('fs');
 
 module.exports = async ({client, message, content}) => {
 
-    fs.readFile('./arquivos/data/status/comandos.txt', 'utf8', function(err, data) {
+    fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
         if (err) throw err;
     
         qtd_comandos = parseInt(data);
@@ -37,7 +37,7 @@ module.exports = async ({client, message, content}) => {
             client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
         }
 
-        fs.writeFile('./arquivos/data/status/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
+        fs.writeFile('./arquivos/data/contador/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
             if (err) throw err;
         });
     });
