@@ -1,17 +1,15 @@
 const handler = require("wax-command-handler");
 const idioma = require("./adm/idioma");
-const { Player } = require("discord-music-player");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 
 const { readdirSync } = require("fs");
-const {token, token_2, prefix, owner_id, comandos_musicais} = require('./config.json');
+const {token, token_2, prefix, owner_id} = require('./config.json');
 const client = new Client({ intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    Intents.FLAGS.GUILD_VOICE_STATES]
+    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS]
 });
 
 String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
@@ -28,25 +26,17 @@ const commandConfig = new handler.CommandConfig(
 
 handler.setup(commandConfig);
 
-const player = new Player(client, {
-    leaveOnEmpty: false, // This options are optional.
-});
-
-client.player = player;
-
 client.on("ready", async () => {
 
     await require("./adm/internos/status.js")({client});
     await handler.useSlashHandler();
 
     for (const folder of readdirSync(`${__dirname}/comandos/`)){
-        if(folder !== "musicas"){
-            for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
-                const command = require(`./comandos/${folder}/${file}`);
-                handler.addCommand(command);
+        for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
+            const command = require(`./comandos/${folder}/${file}`);
+            handler.addCommand(command);
 
-                if(command.slash) handler.addSlashCommand(command);
-            }
+            if(command.slash) handler.addSlashCommand(command);
         }
     }
 
@@ -83,20 +73,6 @@ client.on("messageCreate", async message => {
         const {inicio} = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
 
         return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
-    }
-
-    const content = message.content;
-    
-    if(comandos_musicais.includes(message.content.split(" ")[0].replace(prefix, ""))){
-
-        if(message.author.id !== "665002572926681128") return;
-        
-        let args = content.split(" ");
-        args.shift();
-
-        require('./comandos/musicas/play.js')({message, client, args});
-        await require('./adm/internos/eventos.js')({client, auto: true, content});
-        await require('./adm/internos/log.js')({client, message, content});
     }
 
     if (message.content !== prefix)

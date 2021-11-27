@@ -1,6 +1,6 @@
 {
   "name": "alonsal",
-  "version": "1.5.5",
+  "version": "1.8.5",
   "description": "Automatiza!",
   "main": "bot.js",
   "scripts": {
@@ -14,13 +14,11 @@
     "canvas": "^2.8.0",
     "country-iso-2-to-3": "^1.1.0",
     "crypto-js": "^4.1.1",
-    "discord-music-player": "^8.3.1",
     "discord.js": "^13.2.0",
     "i18n-country-code": "^1.0.1",
     "mathjs": "^9.5.1",
     "node-fetch": "^2.6.5",
     "nodemon": "^2.0.13",
-    "opusscript": "0.0.8",
     "wax-command-handler": "2.0.2"
   }
 }

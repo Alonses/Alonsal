@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const { id_canais } = require('../../config.json');
 let fs = require('fs');
 
 module.exports = async ({client, message, content}) => {
@@ -34,7 +33,7 @@ module.exports = async ({client, message, content}) => {
             .setColor(0x29BB8E)
             .setDescription(`:man_raising_hand: (ID) User: \`${message.author.id}\`\n:label: Username: \`${message.author.username}\`\n\n:link: (ID) Server: \`${message.guild.id}\`\n:label: Server name: \`${message.guild.name}\`\n:link: (ID) Channel: \`${message.channel.id}\`\n:label: Channel name: \`${message.channel.name}\`\n:link: (ID) Message: \`${message.id}\`\n\n:pencil: Command: \`${comando_inserido}\`\n:notepad_spiral: Command N°: \`${qtd_comandos.toLocaleString('pt-BR')}\`\n:alarm_clock: Time/date: \`${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}\``);
 
-            client.channels.cache.get(id_canais[1]).send({ embeds: [embed] }); // Envia o log com os comandos do usuário
+            client.channels.cache.get('846151364492001280').send({ embeds: [embed] }); // Envia o log com os comandos do usuário
         }
 
         fs.writeFile('./arquivos/data/contador/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
