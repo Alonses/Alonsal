@@ -162,7 +162,8 @@
             "error_2" : "Usuário inválido!",
             "error_ban" : "Não foi possível banir o usuário",
             "error_kick" : "Não foi possível expulsar o usuário",
-            "banido" : "tomou uma esfihada!"
+            "banido" : "tomou uma esfihada!",
+            "expulso" : "foi expuldo do servidor"
         },
         {
             "error_1" : "Informe um prefixo para ser usado, por exemplo, ",

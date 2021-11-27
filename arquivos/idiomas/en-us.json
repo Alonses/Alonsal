@@ -160,9 +160,10 @@
             "razao" : "Reason not informed",
             "error_1" : "Stop there, you bastard! This member is also an administrator.",
             "error_2" : "Invalid User!",
-            "error_ban" : "Unable to ban user",
-            "error_kick" : "Unable to expel user",
-            "banido" : "was removed!"
+            "error_ban" : "Unable to ban this user",
+            "error_kick" : "Unable to expel this user",
+            "banido" : "was banned",
+            "expulso" : "was removed from server"
         },
         {
             "error_1" : "Enter a prefix to be used, for example, ",
