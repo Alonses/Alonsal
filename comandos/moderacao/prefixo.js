@@ -13,9 +13,9 @@ module.exports = {
         if(args.length !== 1)
             return message.reply(`:interrobang: | ${moderacao[5]["error_1"]} \`+px\``).then(msg => setTimeout(() => msg.delete(), 5000));
         
-        client.prefixManager.setPrefix(message.guild.id, args[0])
+        client.prefixManager.setPrefix(message.guild.id, args[0].toString())
         message.reply(`:asterisk: | ${moderacao[5]["att_prefix"]} \`${args[0]}\``);
-
+        
         client.channels.cache.get('872865396200452127').send(`:asterisk: | Prefixo do servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) alterado para : \`${args[0]}\``);
     }
 };

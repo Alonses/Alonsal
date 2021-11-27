@@ -140,7 +140,7 @@
             "aviso_5" : "Upload an image smaller than 250kb to use as an emoji",
             "aviso_6" : "Include emoji to remove\nFor example,",
             "aviso_7" : "Enter an emoji to be removed",
-            "aviso_8" : "Enter a custom emoji from this server to be removed",
+            "aviso_8" : "Enter a custom emoji from this server to be removed\nYou can also use the emoji id, for example `.armoji 914227763978838116`",
             "permissao_1" : "You do not have permissions to manage emojis on this server",
             "permissao_2" : "I don't have permissions to `manage emojis` on this server",
             "requebrando" : "dancing",
@@ -258,6 +258,7 @@
             "nuvens" : "Clouds",
             "chuva" : "Rain",
             "direcao" : "Direction",
+            "velocidade" : "Speed",
             "ceu_momento" : "Sky at the moment",
             "temperatura" : "Temperature",
             "por_sol" : "Sunrise",
@@ -268,10 +269,12 @@
             "visibilidade" : "Visibility",
             "nivel_chao" : "Ground level",
             "nivel_mar" : "Ocean level",
-            "chovendo" : "Raining now",
-            "nevando" : "Snowing now",
+            "chovendo" : "🌧️ Raining now",
+            "nevando" : "❄️ Snowing now",
+            "rajadas_vento" : "🌪️ Wind gusts",
             "dados_atts" : "Data updated in",
-            "error_1" : "Just enter normal characters for your search, searches with numbers are ignored"
+            "error_1" : "Just enter normal characters for your search, searches with numbers are ignored",
+            "antartida" : "Antarctica"
         },
         {
             "nao_encontrado" : "I didn't find any item or block with the name",

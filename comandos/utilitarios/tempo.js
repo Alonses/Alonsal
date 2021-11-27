@@ -71,6 +71,9 @@ module.exports = {
                         let cod_pais = getCountryISO3(res.sys.country);
                         nome_pais = ` - ${translations[cod_pais]}`;
                         
+                        if(res.sys.country === "AQ")
+                            nome_pais = ` - ${utilitarios[8]["antartida"]}`;
+
                         if(nome_pais.includes(res.name)){
                             nome_pais = "";
                             nota_rodape += ` | ${utilitarios[8]["aviso_pais"]}`;
@@ -117,6 +120,7 @@ module.exports = {
 
                     // Umidade
                     let emoji_umidade = ":sweat_drops:";
+                    let emoji_indica_humidade = "";
 
                     if(res.main.humidity < 60)
                         emoji_umidade = ":droplet:";
@@ -176,6 +180,8 @@ module.exports = {
                     
                         if(typeof res.rain["3h"] != "undefined")
                             infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
+
+                        emoji_indica_humidade = ":arrow_up:";
                     }
                     
                     if(typeof res.snow !== "undefined"){
@@ -183,6 +189,13 @@ module.exports = {
                     
                         if(typeof res.rain["3h"] != "undefined")
                             infos_chuva += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
+                    }
+
+                    if(typeof res.wind.gust !== "undefined"){
+                        if(infos_chuva !== "")
+                            infos_chuva += "\n------------------------------";
+
+                        infos_chuva += `\n${utilitarios[8]["rajadas_vento"]}\n${utilitarios[8]["velocidade"]}: ${res.wind.gust} km/h`;
                     }
 
                     if(infos_chuva !== "")
@@ -199,14 +212,37 @@ module.exports = {
                     .setDescription(`${horario_local} | **${tempo_atual}**${infos_chuva}`)
                     .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
-                        { name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, inline: true },
-                        { name: `${emoji_ceu_atual} **${utilitarios[8]["ceu_momento"]}**`, value: `${emoji_nuvens} **${utilitarios[8]["nuvens"]}: **\`${res.clouds.all}%\`\n:sunrise: **${utilitarios[8]["nas_sol"]}: **\`${nascer_sol}\`\n:city_sunset: **${utilitarios[8]["por_sol"]}: **\`${por_sol}\``, inline: true},
-                        { name: `:wind_chime: **${utilitarios[8]["vento"]}**`, value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%\``, inline: true },
+                        {
+                            name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, 
+                            value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, 
+                            inline: true
+                        },
+                        {
+                            name: `${emoji_ceu_atual} **${utilitarios[8]["ceu_momento"]}**`,
+                            value: `${emoji_nuvens} **${utilitarios[8]["nuvens"]}: **\`${res.clouds.all}%\`\n:sunrise: **${utilitarios[8]["nas_sol"]}: **\`${nascer_sol}\`\n:city_sunset: **${utilitarios[8]["por_sol"]}: **\`${por_sol}\``, 
+                            inline: true},
+                        {
+                            name: `:wind_chime: **${utilitarios[8]["vento"]}**`, 
+                            value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%\``, 
+                            inline: true 
+                        },
                     )
                     .addFields(
-                        { name: `${emoji_sensacao_termica} **${utilitarios[8]["sensacao_termica"]}.**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.feels_like}°C\``, inline: true},
-                        { name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\``, inline: true },
-                        { name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, value: `${pressao_local}`, inline: true}
+                        {
+                            name: `${emoji_sensacao_termica} **${utilitarios[8]["sensacao_termica"]}.**`, 
+                            value: `**${utilitarios[12]["atual"]}: **\`${res.main.feels_like}°C\``, 
+                            inline: true
+                        },
+                        {
+                            name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, 
+                            value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\` ${emoji_indica_humidade}`, 
+                            inline: true
+                        },
+                        {
+                            name: `:compression: **${utilitarios[8]["pressao_ar"]}**`, 
+                            value: `${pressao_local}`, 
+                            inline: true
+                        }
                     )
                     .setFooter(nota_rodape);
                     

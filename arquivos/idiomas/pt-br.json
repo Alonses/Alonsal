@@ -140,7 +140,7 @@
             "aviso_5" : "Envie uma imagem com tamanho menor que 250kb para usar de emoji",
             "aviso_6" : "Inclua o emoji para remover\nPor exemplo,",
             "aviso_7" : "Informe um emoji para ser removido",
-            "aviso_8" : "Informe um emoji customizado deste servidor para ser removido",
+            "aviso_8" : "Informe um emoji customizado deste servidor para ser removido\nVocê também pode usar o ID, como `.armoji 914227763978838116` por exemplo",
             "permissao_1" : "Você não possui permissões para gerenciar emojis neste servidor",
             "permissao_2" : "Eu não possuo permissões para `gerenciar emojis` neste servidor",
             "requebrando" : "requebrando",
@@ -258,6 +258,7 @@
             "nuvens" : "Nuvens",
             "chuva" : "Chuva",
             "direcao" : "Direção",
+            "velocidade" : "Velocidade",
             "ceu_momento" : "Céu no momento",
             "temperatura" : "Temperatura",
             "por_sol" : "Pôr do sol",
@@ -268,10 +269,12 @@
             "visibilidade" : "Visibilidade",
             "nivel_chao" : "No chão",
             "nivel_mar" : "No mar",
-            "chovendo" : "Chovendo agora",
-            "nevando" : "Nevando agora",
+            "chovendo" : "🌧️Chovendo agora",
+            "nevando" : "❄️Nevando agora",
+            "rajadas_vento" : "🌪️Rajadas de vento",
             "dados_atts" : "Dados atualizados às",
-            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas"
+            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
+            "antartida" : "Antártida"
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",

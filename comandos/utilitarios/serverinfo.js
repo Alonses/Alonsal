@@ -54,9 +54,6 @@ module.exports = {
         }else
             icone_server = "";
 
-        diferenca_entrada = diferenca_entrada.slice(0, -1);
-        diferenca_criacao = diferenca_criacao.slice(0, -1);
-
         const infos_sv = new MessageEmbed()
             .setTitle(message.guild.name)
             .setColor(0x29BB8E)
@@ -77,7 +74,7 @@ module.exports = {
             .addFields(
                 {
                     name: `:placard: **${utilitarios[12]["canais"]} ( ${qtd_canais} )**`,
-                    value: `:card_box: **${utilitarios[12]["categorias"]}:** \`${categorias} \`\n:notepad_spiral: **${utilitarios[12]["texto"]}:** \`${canais_texto}\`\n:speaking_head: **${utilitarios[12]["voz"]}:** \`${canais_voz}\``,
+                    value: `:card_box: **${utilitarios[12]["categorias"]}:** \`${categorias}\`\n:notepad_spiral: **${utilitarios[12]["texto"]}:** \`${canais_texto}\`\n:speaking_head: **${utilitarios[12]["voz"]}:** \`${canais_voz}\``,
                     inline: true
                 },
                 {
