@@ -181,7 +181,7 @@ module.exports = {
                         if(typeof res.rain["3h"] != "undefined")
                             infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
 
-                        emoji_indica_humidade = ":arrow_up:";
+                        emoji_indica_humidade = " 🔼";
                     }
                     
                     if(typeof res.snow !== "undefined"){
@@ -235,7 +235,7 @@ module.exports = {
                         },
                         {
                             name: `${emoji_umidade} **${utilitarios[8]["umidade_ar"]}**`, 
-                            value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%\` ${emoji_indica_humidade}`, 
+                            value: `**${utilitarios[12]["atual"]}: **\`${res.main.humidity}%${emoji_indica_humidade}\``, 
                             inline: true
                         },
                         {
