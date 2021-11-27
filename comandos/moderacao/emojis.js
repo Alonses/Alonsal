@@ -41,11 +41,11 @@ module.exports = {
             return;
         }
 
-        if(!message.member.permissions.has('MANAGE_EMOJIS')) // Permissão do membro para gerenciar emojis
+        if(!message.member.permissions.has('MANAGE_EMOJIS_AND_STICKERS')) // Permissão do membro para gerenciar emojis
             return message.reply(`:octagonal_sign: | ${moderacao[2]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
         
         // Verificar permissões do bot
-        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS')){
+        if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS_AND_STICKERS')){
 
             let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
             let nome_emoji = null;
@@ -63,15 +63,14 @@ module.exports = {
 
                     if(!message.content.includes("https://cdn.discordapp.com/emojis/")){
                         match[2] = args[1]; // altera com o novo nome
-    
-                        // animated will be 'a' if it is animated or '' if it isn't
+
                         const [, animated, name, id] = match;
                         url = `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png' }`;
                         
                     }else
-                        url = args[0];
+                        url = args[0].toString();
 
-                    nome_emoji = args[1];
+                    nome_emoji = args[1].toString();
                 }else{
 
                     if(message.attachments.size > 1) // Mais de um arquivo enviado
@@ -86,7 +85,7 @@ module.exports = {
                         if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")) // Extensão do arquivo incorreta
                             return message.reply(`:warning: | ${moderacao[2]["error_1"]}`);
 
-                        nome_emoji = args[0];
+                        nome_emoji = args[0].toString();
                     });
                 }
                 
@@ -97,7 +96,8 @@ module.exports = {
                         
                         message.reply(`${novo_emoji} | ${moderacao[2]["sucesso_1"]}`);
                     })
-                    .catch(() => {
+                    .catch(err => {
+                        console.log(err);
                         message.reply(`:octagonal_sign: | ${moderacao[2]["error_2"]}`);
                     });
                 }
@@ -109,13 +109,18 @@ module.exports = {
                     return message.reply(`:warning: | ${moderacao[2]["aviso_6"]} \`${prefix}rmoji \`${emoji_nao_encontrado}\` \``);
 
                 if(!match) // Confirma que a entrada é um emoji
-                    return message.reply(`:octagonal_sign: | ${moderacao[2]["aviso_7"]}`);
+                    if(isNaN(args[0].value))
+                        return message.reply(`:octagonal_sign: | ${moderacao[2]["aviso_7"]}`);
 
                 // Coletando o emoji do cache do bot
-                emoji = client.emojis.cache.get(match[3]);
-                
-                if(typeof emoji == "undefined" || message.guild.id !== emoji.guild.id) // Emoji indefinido e emoji pertencente ao servidor o qual o comando foi acionado
-                    return message.reply(`:warning: | ${moderacao[2]["aviso_8"]}`);
+                if(isNaN(args[0].value)){
+                    emoji = await client.emojis.cache.get(match[3]);
+                    console.log(match[3], typeof match[3]);
+                }else
+                    emoji = await client.emojis.cache.get(args[0].toString());
+
+                if(typeof emoji === "undefined" || message.guild.id !== emoji.guild.id) // Emoji indefinido ou emoji pertencente ao servidor o qual o comando foi acionado
+                    return message.reply(`:warning: | ${moderacao[2]["aviso_8"].replace(".a", prefix)}`);
                 
                 emoji.delete()
                 .then(() => {

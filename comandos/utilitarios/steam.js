@@ -271,19 +271,43 @@ module.exports = {
                 .setImage(background_user)
                 .setColor(0x29BB8E)
                 .addFields(
-                    { name: `:ninja: ${utilitarios[16]["nivel"]}`, value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``, inline: true},
-                    { name: `:video_game: ${utilitarios[16]["jogos"]}`, value: `${jogos_user_embed}`, inline: true},
-                    { name: `:red_envelope: ${utilitarios[16]["insignias"]}`, value: `**Total: **\`${insignias_user}\``, inline: true},
+                    {
+                        name: `:ninja: ${utilitarios[16]["nivel"]}`, 
+                        value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``, 
+                        inline: true
+                    },
+                    {
+                        name: `:video_game: ${utilitarios[16]["jogos"]}`, 
+                        value: `${jogos_user_embed}`, 
+                        inline: true
+                    },
+                    {
+                        name: `:red_envelope: ${utilitarios[16]["insignias"]}`, 
+                        value: `**Total: **\`${insignias_user}\``, 
+                        inline: true
+                    },
                 )
                 .addFields(
-                    { name: `:trophy: ${utilitarios[16]["conquistas"]}`, value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``, inline: true},
-                    { name: ":mobile_phone_off: Status", value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``, inline: true}
+                    {
+                        name: `:trophy: ${utilitarios[16]["conquistas"]}`, 
+                        value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``, 
+                        inline: true
+                    },
+                    {
+                        name: ":mobile_phone_off: Status", 
+                        value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``, 
+                        inline: true
+                    }
                 )
                 .setFooter(nota_rodape, message.author.avatarURL({ dynamic:true }));
 
                 if(criacoes_user !== "")
                     usuario_steam.addFields(
-                        { name: `:piñata: ${utilitarios[16]["criacoes"]}`, value: `${criacoes_user}`, inline: true}
+                        {
+                            name: `:piñata: ${utilitarios[16]["criacoes"]}`, 
+                            value: `${criacoes_user}`, 
+                            inline: true
+                        }
                     )
                 else
                     usuario_steam.addFields(
@@ -292,12 +316,20 @@ module.exports = {
 
                 if(jogo_favorito !== "")
                     usuario_steam.addFields(
-                        { name: `:star: ${utilitarios[16]["jogo_favorito"]}`, value: `**${utilitarios[16]["nome"]}: **\`${jogo_favorito}\`\n:trophy: **${utilitarios[16]["conquistas"]}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${utilitarios[16]["tempo_jogado"]}: **\`${tempo_jogado}\``, inline: false}
+                        {
+                            name: `:star: ${utilitarios[16]["jogo_favorito"]}`, 
+                            value: `**${utilitarios[16]["nome"]}: **\`${jogo_favorito}\`\n:trophy: **${utilitarios[16]["conquistas"]}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${utilitarios[16]["tempo_jogado"]}: **\`${tempo_jogado}\``, 
+                            inline: false
+                        }
                     )
 
                 if(anos_servico !== "")
                     usuario_steam.addFields(
-                        { name: `:birthday: ${utilitarios[13]["entrada"]}`, value: `\`${anos_servico}\``, inline: true}
+                        {
+                            name: `:birthday: ${utilitarios[13]["entrada"]}`, 
+                            value: `\`${anos_servico}\``, 
+                            inline: true
+                        }
                     )
                 
                 message.reply({ embeds: [usuario_steam] });

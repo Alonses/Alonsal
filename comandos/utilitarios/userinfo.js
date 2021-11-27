@@ -17,23 +17,26 @@ module.exports = {
         
         const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170", "735644852385087529"];
 
-        let user = message.mentions.users.first() || message.author; // Coleta o ID do usuário
+        let user = message.mentions.users.first(); // Coleta o ID do usuário
         let nota_rodape = "";
 
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        if (!user && args[0] != null) {
-            if (isNaN(args[0]))
+        if (!user && typeof args[0] !== "undefined") {
+            if (isNaN(args[0].value))
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
             try {
-                user = await message.guild.members.fetch(args[0]);
+                user = await message.guild.members.fetch(args[0].toString());
 
                 user = user.user; // Pega o usuário pelo ID
             } catch (e) {
                 return message.reply(`${emoji_nao_encontrado} | ${utilitarios[4]["nao_conhecido"]}`);
             }
         }
+
+        if(typeof user === "undefined")
+            user = message.author;
 
         let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`;
         const data_atual = new Date();
@@ -77,10 +80,7 @@ module.exports = {
 
             nota_rodape += utilitarios[13]["enceirado"];
         }
-
-        diferenca_entrada = diferenca_entrada.slice(0, -1);
-        diferenca_criacao = diferenca_criacao.slice(0, -1);
-
+        
         const permissoes_user = membro_sv.permissions.toArray();
         let permissoes_fn = "";
 

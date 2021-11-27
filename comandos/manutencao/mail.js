@@ -24,10 +24,7 @@ module.exports = {
                 return await message.reply(`:octagonal_sign: | ${manutencao[3]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             }
 
-            for(let i = 2; i < content.length; i++){
-                mensagem += content[i] +" ";
-            }
-
+            mensagem = content.join(" ");
             mensagem = mensagem.replace(id_alvo, "");
 
             try{
@@ -49,11 +46,8 @@ module.exports = {
                 return message.reply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
             }
         }else{
-            for(let i = 0; i < content.length; i++){
-                mensagem += content[i] + " ";
-            }
             
-            mensagem = mensagem.substr(0, (mensagem.length - 1));
+            mensagem = content.join(" ");
 
             const msg_user = new MessageEmbed()
             .setTitle("> New Message :mailbox_with_mail:")
@@ -71,9 +65,6 @@ module.exports = {
             tipo = client.channels.cache.get(id_alvo).name;
         else if(tipo === "u")
             tipo = client.users.cache.get(id_alvo).username;
-
-        if(tipo !== "Alonsal")
-            mensagem = mensagem.substr(0, (mensagem.length - 1));
 
         const mensagem2 = mensagem;
 
