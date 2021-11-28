@@ -106,7 +106,6 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 });
 
 handler.events.on("command_error", async e => {
-    console.log(e);
 
     const channel = client.channels.cache.get('862015290433994752');
 
