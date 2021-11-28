@@ -15,11 +15,11 @@ module.exports = {
         let user = message.mentions.users.first(); // Coleta o ID do usuário mencionado
 
         if(!user && args.length > 0){ 
-            if(isNaN(args[0])) // Verifica se é um ID realmente
+            if(isNaN(args[0].value)) // Verifica se é um ID realmente
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
             try{ // Busca pelo usuário no server inteiro
-                user = await message.guild.members.fetch(args[0]);
+                user = await message.guild.members.fetch(args[0].toString());
                 user = user.user; // Separa os dados de usuário
             }catch(e){
                 return message.reply(`${emoji_nao_encontrado} | ${utilitarios[4]["nao_conhecido"]}`);

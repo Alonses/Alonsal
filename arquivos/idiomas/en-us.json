@@ -118,7 +118,7 @@
             "despachei" : "I sent the invitation to Alonsal Hub in your dm :handshake:"
         },
         {
-            "aviso_1" : "Enter a number between 1 and 5 to navigate the menu pages"
+            "aviso_1" : "Enter a number between 1 and 4 to navigate the menu pages"
         }
     ],
     "moderacao" : [
@@ -230,18 +230,8 @@
             "reproducao_2" : "File sent by"
         },
         {
-            "manipu_imagens" : "Image manipulation :frame_photo:",
-            "conteudo_menu" : ":white_square_button: **`.aimg bw <img>`** | **`.ai bw <img>`** - Makes one or more images black and white",
-            "sugestao" : " | Suggest top effects for Alonsal using `.amail <your_top_effect>` !",
-            "carregando" : "Wait a moment while I process your files....",
-            "aviso_1" : "Enter an editing style for your image\nFor example, `.adit bw <image>`",
-            "aviso_2" : "Insert an image with the command and its effect so that you can edit it\nFor example, `.ai bw <img>`\n\nYou can see all styles using the command `.aih`",
-            "aviso_3" : "Cannot edit more than three images at a time, decrease the amount and try again",
-            "aviso_4" : "Please send images with less pixels!",
-            "aviso_5" : "Please send only one large image at a time.", 
-            "error_1" : "\n\nSome of your files may not have been processed due to an unexpected file, please use the command again.",
-            "error_2" : "Unable to process this file\nSend an image file for me to manipulate ;)",
-            "efeito_errado" : "This effect does not exist! Suggest effects to Alonsal using `.amail <your_top_effect>`"
+            "aviso_1" : "Enter something to be removed or replaced and a string\nFor example `.arm o slondo` or `.arp i o slindo`",
+            "remove_tudo" : "You removed everything, there's nothing left"
         },
         {
             "aviso_1" : "Enter the name of some city to search\nFor example, as `.awe los angeles`",
