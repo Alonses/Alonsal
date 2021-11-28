@@ -5,22 +5,29 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
-
-        let alvo = "";
+        
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        if(args.length < 2) return message.reply(utilitarios[7]["aviso_1"]);
+        
+        let substituto = "";
         let substituir = args[0].toString();
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        if(args.length < 2) return message.reply("Entre com algo para ser removido ou substituído e uma string\nPor exemplo `.arm o slondo` ou `.arp i o slindo`");
-
         if(message.content.startsWith(`${prefix}rp`)){ // Substituindo caracteres
-            alvo = args[1].toString();
+            substituto = args[1].toString();
             args.shift();
         }
 
         args.shift();
         let string = args.join(" ");
 
-        message.reply(`\`\`\`${string.replaceAll(substituir, alvo)}\`\`\``);
+        string = string.replaceAll(substituir, substituto);
+        string = string.replace(/\s+/g, ' '); // Apaga espaços extras no meio do texto
+
+        if(string.replaceAll(" ", "").length === 0)
+            string = `fix\n${utilitarios[7]["remove_tudo"]}`;
+        
+        message.reply(`\`\`\`${string}\`\`\``);
     }
 }

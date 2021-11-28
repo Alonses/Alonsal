@@ -25,13 +25,7 @@ module.exports = {
         let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
         let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
-        let embed_inicial,
-            embed_diversao,
-            embed_utilitarios,
-            embed_jogos,
-            embed_manutencao,
-            embed_imagens;
+        let embed_inicial, embed_diversao, embed_utilitarios, embed_jogos, embed_manutencao;
             
         if(idioma_selecionado === "pt-br"){
 
@@ -40,7 +34,7 @@ module.exports = {
             embed_inicial = new MessageEmbed()
             .setTitle('Boas vindas ao Ajuda! :boomerang:')
             .setColor(0x29BB8E)
-            .setDescription(`Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **\`${prefix}h 1\`** - \`Comandos Divertidos\`\n\n:compass: **\`${prefix}h 2\`** - \`Comandos Utilitários\`\n\n:golf: **\`${prefix}h 3\`** - \`Comandos de Jogos\`\n\n:tools: **\`${prefix}h 4\`** - \`Manutenção do Alonsal\`\n\n:frame_photo: **\`${prefix}h 5\`** -  \`Manipulação de imagens\`\n\n:scroll: **\`${prefix}hm\`** - \`Comandos moderativos\`\n\n:information_source: **\`${prefix}info\`** - \`Informações do Alonsal\`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n${bandeira_trad} | _Use the command \`${prefix}lang en\` to switch to \`american english\`_`);
+            .setDescription(`Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **\`${prefix}h 1\`** - \`Comandos Divertidos\`\n\n:compass: **\`${prefix}h 2\`** - \`Comandos Utilitários\`\n\n:golf: **\`${prefix}h 3\`** - \`Comandos de Jogos\`\n\n:tools: **\`${prefix}h 4\`** - \`Manutenção do Alonsal\`\n\n:scroll: **\`${prefix}hm\`** - \`Comandos moderativos\`\n\n:information_source: **\`${prefix}info\`** - \`Informações do Alonsal\`\n\n :hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n${bandeira_trad} | _Use the command \`${prefix}lang en\` to switch to \`american english\`_`);
             
             embed_diversao = new MessageEmbed()
             .setTitle('Comandos Divertidos :zany_face:')
@@ -61,12 +55,6 @@ module.exports = {
             .setTitle('Manutenção do Alonsal :tools:')
             .setColor(0x29BB8E)
             .setDescription(`:information_source: **\`${prefix}info\`** - Informações do bot\n:computer: **\`${prefix}site\`** - O meu site com diversos comandos\n:envelope: **\`${prefix}mail <sua msg>\`** - Envie uma mensagem para o bot :P\n:love_letter: **\`${prefix}cvv\`** | **\`${prefix}convite\`** - Convide-me para um Servidor!\n${emoji_rainha} **\`${prefix}hub\`** | **\`${prefix}server\`** - Entre no Hub multiconectado do Alonsal\n${emoji_bolo} **\`${prefix}suporte\`** - Ajude a manter e desenvolver o Alonsal\n${bandeira_trad} **\`${prefix}lang en\`** | **\`${prefix}lang pt\`** - Altera o idioma do Alonsal`);
-
-            embed_imagens = new MessageEmbed()
-            .setTitle('Manipulação de Ibagens :frame_photo:')
-            .setColor(0x29BB8E)
-            .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-            .setDescription(`:white_square_button: **\`${prefix}img bw <img>\`** | **\`${prefix}i bw <img>\`** - Torna uma ou várias imagens preta e branca\n\n${emoji_dancando} | Sugira efeitos tops para o Alonsal usando o \`${prefix}mail <seu_efeito_top>\` !\n\n:man_tipping_hand: | _Você pode abrir este menu com o comando \`${prefix}ih\`_`);
         }else{ // Inglês
 
             bandeira_trad = ":flag_br:";
@@ -74,7 +62,7 @@ module.exports = {
             embed_inicial = new MessageEmbed()
             .setTitle('Welcome to Help! :boomerang:')
             .setColor(0x29BB8E)
-            .setDescription(`Use the numbers below to navigate between sections of Alonsais commands :stuck_out_tongue_winking_eye:\n\n:zany_face: **\`${prefix}h 1\`** - \`Funny Commands\`\n\n:compass: **\`${prefix}h 2\`** - \`Utility Commands\`\n\n:golf: **\`${prefix}h 3\`** - \`Game Commands\`\n\n:tools: **\`${prefix}h 4\`** - \`Alonsal Maintenance\`\n\n:frame_photo: **\`${prefix}h 5\`** - \`Image manipulation\`\n\n:scroll: **\`${prefix}hm\`** - \`Moderative Commands\`\n\n:information_source: **\`${prefix}info\`** - \`My informations\`\n\n :hotsprings: | _Messages with this symbol are automatically deleted.._\n${bandeira_trad} | _Use o comando \`${prefix}lang pt\` para trocar para o \`português brasileiro\`_`);
+            .setDescription(`Use the numbers below to navigate between sections of Alonsais commands :stuck_out_tongue_winking_eye:\n\n:zany_face: **\`${prefix}h 1\`** - \`Funny Commands\`\n\n:compass: **\`${prefix}h 2\`** - \`Utility Commands\`\n\n:golf: **\`${prefix}h 3\`** - \`Game Commands\`\n\n:tools: **\`${prefix}h 4\`** - \`Alonsal Maintenance\`\n\n:scroll: **\`${prefix}hm\`** - \`Moderative Commands\`\n\n:information_source: **\`${prefix}info\`** - \`My informations\`\n\n :hotsprings: | _Messages with this symbol are automatically deleted.._\n${bandeira_trad} | _Use o comando \`${prefix}lang pt\` para trocar para o \`português brasileiro\`_`);
 
             embed_diversao = new MessageEmbed()
             .setTitle('Funny Commands :zany_face:')
@@ -95,12 +83,6 @@ module.exports = {
             .setTitle('Alonsal Maintenance :tools:')
             .setColor(0x29BB8E)
             .setDescription(`:information_source: **\`${prefix}info\`** - My informations\n:computer: **\`${prefix}site\`** - My website with several commands\n:envelope: **\`${prefix}mail <sua msg>\`** - Send a message to me! :P\n:love_letter: **\`${prefix}cvv\`** | **\`${prefix}convite\`** - Invite me to a server!\n${emoji_rainha} **\`${prefix}hub\`** | **\`${prefix}server\`** - Enter Alonsal's Multiconnected Hub\n${emoji_bolo} **\`${prefix}suporte\`** - Help maintain and develop the Alonsal\n${bandeira_trad} **\`${prefix}lang en\`** | **\`${prefix}lang pt\`** - Change Alonsal's language`);
-
-            embed_imagens = new MessageEmbed()
-            .setTitle('Image manipulation :frame_photo:')
-            .setColor(0x29BB8E)
-            .setThumbnail("https://scontent-gru1-2.xx.fbcdn.net/v/t1.6435-9/34582820_1731681436946171_4012652554398728192_n.png?_nc_cat=103&ccb=1-3&_nc_sid=973b4a&_nc_ohc=2pQUpS4JYesAX-tblT6&_nc_ht=scontent-gru1-2.xx&oh=cd477beb31450446556e04001525ece6&oe=60D1FE58")
-            .setDescription(`:white_square_button: **\`${prefix}img bw <img>\`** | **\`${prefix}i bw <img>\`** - Makes one or more images black and white\n\n${emoji_dancando} | Suggest top effects to Alonsal using the \`${prefix}mail <seu_efeito_top>\`!\n\n:man_tipping_hand: | _You can open this menu with the command \`${prefix}ih\`_`);
         }
 
         const pages = [
@@ -108,14 +90,13 @@ module.exports = {
             embed_diversao,
             embed_utilitarios,
             embed_jogos,
-            embed_manutencao,
-            embed_imagens
+            embed_manutencao
         ];
         
         if(args.length < 1)
             return message.reply({ embeds: [embed_inicial] });
 
-        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 5))
+        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 4))
             return message.reply(":warning: | "+ manutencao[7]["aviso_1"]);
 
         message.reply({ embeds: [pages[args[0]]] });
