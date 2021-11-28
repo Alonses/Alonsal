@@ -1,4 +1,4 @@
-const { isInteger } = require('mathjs');
+const { isInteger, forEach } = require('mathjs');
 const math = require('mathjs');
 
 module.exports = {
@@ -19,6 +19,19 @@ module.exports = {
             let operador = args[0].toString();
             args.shift();
             operacao = args.join(` ${operador} `);
+        }
+
+        if(args[0].toString().includes("+") || args[0].toString().includes("-") || args[0].toString().includes("*") || args[0].toString().includes("/")){ // Operando vários itens de uma vez
+
+            let valores_fn = [];
+            let opera = args[0].toString();
+            args.shift();
+
+            args.forEach(valor => {
+                valores_fn.push(math.evaluate(`${valor} ${opera}`).toLocaleString('pt-BR'));
+            });
+
+            return message.reply(`:abacus: | ${utilitarios[17]["resultado"]}: \`${valores_fn.join(" ")}\``);;
         }
 
         try{
