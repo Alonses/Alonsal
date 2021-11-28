@@ -1,15 +1,26 @@
 module.exports = {
     name: "remove",
-    description: "remove o caractere informado",
-    aliases: [ "rm" ],
+    description: "remove ou altera o caractere informado",
+    aliases: [ "rm", "rp" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
-        
-        if(args.length < 2) return message.reply("Entre com algo para ser removido e uma string\nPor exemplo `.arm o slondo`");
 
+        let alvo = "";
+        let substituir = args[0].toString();
+
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
+        if(args.length < 2) return message.reply("Entre com algo para ser removido ou substituído e uma string\nPor exemplo `.arm o slondo` ou `.arp i o slindo`");
+
+        if(message.content.startsWith(`${prefix}rp`)){ // Substituindo caracteres
+            alvo = args[1].toString();
+            args.shift();
+        }
+
+        args.shift();
         let string = args.join(" ");
 
-        message.reply(string.replaceAll(args[0].toString(), ""));
+        message.reply(`\`\`\`${string.replaceAll(substituir, alvo)}\`\`\``);
     }
 }
