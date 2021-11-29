@@ -1,7 +1,7 @@
 module.exports = {
     name: "remove",
     description: "remove ou altera o caractere informado",
-    aliases: [ "rm", "rp" ],
+    aliases: [ "rm", "rp", "replace", "remover", "substituir" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
@@ -14,7 +14,7 @@ module.exports = {
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        if(message.content.startsWith(`${prefix}rp`)){ // Substituindo caracteres
+        if(message.content.startsWith(`${prefix}rp`) || message.content.startsWith(`${prefix}replace`) || message.content.startsWith(`${prefix}substituir`)){ // Substituindo caracteres
             substituto = args[1].toString();
             args.shift();
         }

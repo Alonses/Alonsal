@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { weather_key, time_key } = require('../../config.json');
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json');
 const getCountryISO3 = require("country-iso-2-to-3");
 const base_url = "http://api.openweathermap.org/data/2.5/weather?";
 const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
@@ -25,6 +25,7 @@ module.exports = {
 
         let pesquisa = "";
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        let emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
 
         if(args.length < 1) // Pesquisa sem argumentos
             return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
@@ -167,6 +168,7 @@ module.exports = {
                     let direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
                     let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
                     let infos_chuva = "";
+                    let chuva_troll = "";
 
                     if(typeof res.sys.country != "undefined")
                         if(idioma_adotado === "pt-br")
@@ -182,6 +184,8 @@ module.exports = {
                             infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
 
                         emoji_indica_humidade = " 🔼";
+
+                        chuva_troll = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`;
                     }
                     
                     if(typeof res.snow !== "undefined"){
@@ -189,6 +193,8 @@ module.exports = {
                     
                         if(typeof res.rain["3h"] != "undefined")
                             infos_chuva += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
+
+                        chuva_troll = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`;
                     }
 
                     if(typeof res.wind.gust !== "undefined"){
@@ -209,7 +215,7 @@ module.exports = {
                     const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
-                    .setDescription(`${horario_local} | **${tempo_atual}**${infos_chuva}`)
+                    .setDescription(`${horario_local} | **${tempo_atual}**${infos_chuva}${chuva_troll}`)
                     .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
                         {
