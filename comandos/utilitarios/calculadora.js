@@ -10,11 +10,17 @@ module.exports = {
     execute(client, message, args){
 
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        idioma_definido = client.idioma.getLang(message.guild.id);
 
         if(args.length < 1) return message.reply(utilitarios[17]["aviso_1"]);
 
         let operacao = args.join(" ");
-        
+
+        if(idioma_definido !== "en-us") // Prevenindo erros por causa de vírgulas
+            operacao = operacao.replaceAll(",", ".");
+        else
+            operacao = operacao.replaceAll(",", "");
+
         if(args[0].toString() === "+" || args[0].toString() === "-" || args[0].toString() === "*" || args[0].toString() === "/"){
             let operador = args[0].toString();
             args.shift();
