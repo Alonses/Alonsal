@@ -70,7 +70,7 @@
         {
             "aviso_1" : "Informe pelo menos 2 itens para eu escolher",
             "aviso_2" : "Informe uma quantidade em números como `.ach [2 s a l 4 d @` e um valor maior que zero",
-            "escolho_todos" : "Você informou um número maior que a quantidade de opções, eu escolho todas!",
+            "escolho_todos" : "Você informou um número maior ou igual a quantidade de opções, eu escolho todas!",
             "escolho" : "Eu escolho..."
         }
     ],
