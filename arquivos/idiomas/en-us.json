@@ -44,6 +44,9 @@
         },
         {
             "nsfw_jaja" : "Due to the excess of delight, this command can only be used on an NSFW channel."
+        },
+        {
+            "aviso_1" : "Write something for this command\nFor example, `.asans slomdo very cringerrr afff`"
         }
     ],
     "jogos" : [

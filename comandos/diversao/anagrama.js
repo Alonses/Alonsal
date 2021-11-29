@@ -3,12 +3,14 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: "anagrama",
     description: "Anagramas",
-    aliases: [ "na", "anagram" ],
-    usage: "na <any>",
+    aliases: [ "na", "anagram", "ana" ],
     cooldown: 2,
     async execute(client, message, args){
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
+        if(args.length < 1) return message.reply(diversao[5]["aviso_1"].replace(".a", prefix));
 
         let string = args.join(" ");
         let cor_embed = 0x29BB8E;
