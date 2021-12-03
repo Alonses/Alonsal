@@ -40,12 +40,13 @@ module.exports = async ({client}) => {
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [
-        "Me pingue para o prefixo!",
-        "Bugs fora",
+        "Rank 3X!!!",
+        "🎄Boas Festas!",
         ".alang pt | .alang en",
-        "Seria ceira ceira seria?",
+        `Neve ${client.guilds.cache.size} servidores`,
+        "🎅Seria santa santa seria?",
         "Ping me for prefix!",
-        "Translation worldwide",
+        "❄️Let's snow Let's snow Let's snow...",
     ];
 
     let i = 0;

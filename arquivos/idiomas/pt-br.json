@@ -48,6 +48,13 @@
         },
         {
             "aviso_1" : "Escreva algo para este comando\nPor exemplo, `.asans slomdo muinto cringerrr afff`"
+        },
+        {
+            "rank_sv" : "Rank de",
+            "nivel_descricao" : "nível = experiência / 1000",
+            "enceirados" : "Enceirados",
+            "experiencia" : "Experiência",
+            "nivel" : "Nível"
         }
     ],
     "jogos" : [
