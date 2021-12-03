@@ -16,8 +16,7 @@ module.exports = {
             novo_perfil = message.attachments.first().url;
         } else {
             novo_perfil = args[0];
-            novo_perfil = novo_perfil.replace("<", "");
-            novo_perfil = novo_perfil.replace(">", "");
+            novo_perfil = novo_perfil.replace("<", "").replace(">", "");
         }
 
         if(!novo_perfil.includes(".png") && !novo_perfil.includes(".jpg") && !novo_perfil.includes(".jpeg") && !novo_perfil.includes(".bmp"))

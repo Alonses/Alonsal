@@ -5,7 +5,7 @@ module.exports = {
     description: "Anagramas",
     aliases: [ "na", "anagram", "ana" ],
     cooldown: 2,
-    async execute(client, message, args){
+    async execute(client, message, args) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
