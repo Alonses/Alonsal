@@ -43,7 +43,7 @@ module.exports = async ({client}) => {
         "Rank 3X!!!",
         "🎄Boas Festas!",
         ".alang pt | .alang en",
-        `Neve ${client.guilds.cache.size} servidores`,
+        `Neve em ${client.guilds.cache.size} servidores`,
         "🎅Seria santa santa seria?",
         "Ping me for prefix!",
         "❄️Let's snow Let's snow Let's snow...",

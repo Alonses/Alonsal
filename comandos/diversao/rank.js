@@ -75,10 +75,10 @@ module.exports = {
                 icone_server = icone_server.replace('.gif', '.webp')
 
             const rank_sv = new MessageEmbed()
-            .setTitle(` ${diversao[8]["rank_sv"]} ${message.guild.name}`)
+            .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
             .setColor(0x29BB8E)
             .setThumbnail(icone_server)
-            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\`\`\``)
+            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n------------------------\n      >>>3X EXP<<<\`\`\``)
             .addFields(
                 {
                     name: `:christmas_tree: ${diversao[8]["enceirados"]}`, 
