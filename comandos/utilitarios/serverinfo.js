@@ -34,7 +34,7 @@ module.exports = {
         let categorias = message.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size;
         let qtd_canais = canais_texto + canais_voz;
         
-        let qtd_membros = message.guild.memberCount; 
+        let qtd_membros = message.guild.memberCount;
         const data_atual = new Date();
 
         let data_entrada = formata_data(new Date(message.guild.joinedTimestamp), idioma_selecionado); // Entrada do bot no server
@@ -69,7 +69,10 @@ module.exports = {
                     value: `:bust_in_silhouette: **${utilitarios[12]["atual"]}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${message.guild.maximumMembers.toLocaleString('pt-BR')}\``,
                     inline: true
                 },
-                {name: `:unicorn: **${utilitarios[12]["dono"]}**`, value: dono_sv, inline: true},
+                {
+                    name: `:unicorn: **${utilitarios[12]["dono"]}**`,
+                    value: dono_sv,
+                    inline: true},
             )
             .addFields(
                 {
