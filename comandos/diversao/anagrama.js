@@ -64,8 +64,10 @@ module.exports = {
         let anagrama_formado = [];
         let exib_formatado = "";
         let qtd_quebras = [];
+        let repeticoes = result > 3 ? 3 : result;
+        let combinacoes = result > 3 ? diversao[5]["combinacoes"]: diversao[5]["combinacao"];
 
-        for(let i = 0; i < 3; i++){
+        for(let i = 0; i < repeticoes; i++){
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''));
 
             exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`;
@@ -82,8 +84,8 @@ module.exports = {
         .setTitle(":abc: "+ diversao[5]["anagrama"])
         .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
         .setColor(cor_embed)
-        .setDescription(`${diversao[5]["entrada"]}: \`${string}\`\n${diversao[5]["combinacao"]}:\n${exib_formatado}`)
-        .setFooter(`${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${diversao[5]["combinacoes"]}`);
+        .setDescription(`${diversao[5]["entrada"]}: \`${string}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
+        .setFooter(`${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}`);
 
         message.reply({embeds: [anagrama]});
     },

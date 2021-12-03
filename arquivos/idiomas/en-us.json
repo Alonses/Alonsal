@@ -37,8 +37,9 @@
             "aviso_1" : "Enter something in addition to this command, for example `.ana alonsal > odnols`",
             "anagrama" : "Your anagram",
             "entrada" : "Original entry",
-            "combinacao" : "Possible combinations",
+            "lista_combinacoes" : "Possible combinations",
             "sequencia" : "Your entered characters produce",
+            "combinacao" : "combination",
             "combinacoes" : "combinations!",
             "sorte" : "There was a repetition of words! Lucky you?"
         },
