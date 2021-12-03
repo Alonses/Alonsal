@@ -40,7 +40,7 @@ module.exports = async ({client}) => {
 
     client.user.setActivity('Vapor p/ fora!', 'COMPETING')
     const activities = [
-        "Rank 3X!!!",
+        "Rank 5X!!!!!",
         "🎄Boas Festas!",
         ".alang pt | .alang en",
         `Neve em ${client.guilds.cache.size} servidores`,

@@ -1,4 +1,4 @@
-const CEIRA_ADICIONAL = 3;
+const CEIRA_ADICIONAL = 5;
 const LIMIT = 5;
 const DIFF = 10000;
 const CALDEIRA = 60000;
@@ -36,9 +36,9 @@ module.exports = async (client, message) => {
     }
 
     if (user.caldeira_de_ceira) {
-        if (message.createdTimestamp - user.lastValidMessage > CALDEIRA) {
+        if (message.createdTimestamp - user.lastValidMessage > CALDEIRA)
             user.caldeira_de_ceira = false;
-        } else
+        else
             return;
     }
 

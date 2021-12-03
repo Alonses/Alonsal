@@ -26,7 +26,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
             .setColor(0x29BB8E)
-            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n------------------------\n      >>>3X EXP<<<\`\`\``)
+            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n------------------------\n      >>>5X EXP<<<\`\`\``)
             .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
 
         let users = [];
@@ -48,16 +48,18 @@ module.exports = {
         let i = 0;
 
         for (const user of users) {
-            usernames.push(`${medals[i] || ":medal:"} \`${user.nickname}\``);
-            experiencias.push(`\`${user.xp}\``);
-            levels.push(`\`${parseInt(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
+            if(i < 6){
+                usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
+                experiencias.push(`\`${user.xp}\``);
+                levels.push(`\`${parseInt(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
+            }
 
             i++;
         }
 
-        embed.addField(":christmas_tree: Enceirados", usernames.join("\n"), true);
-        embed.addField(":postal_horn: Experiência", experiencias.join("\n"), true);
-        embed.addField(":beginner: Nível", levels.join("\n"), true);
+        embed.addField(`:christmas_tree: ${diversao[8]["enceirados"]}`, usernames.join("\n"), true);
+        embed.addField(`:postal_horn: ${diversao[8]["experiencia"]}`, experiencias.join("\n"), true);
+        embed.addField(`:beginner: ${diversao[8]["nivel"]}`, levels.join("\n"), true);
 
         let icone_server = message.guild.iconURL({ size: 2048 }).replace(".webp", ".gif");
 
