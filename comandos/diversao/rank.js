@@ -9,9 +9,9 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args){
 
-        return message.reply("O Sistema de rank está desativado por um tempo, desculpas pelo inconveniente!\nhttps://tenor.com/view/forget-it-flash-men-in-black-will-smith-gif-19235596");
-
         const { rank_servidores } = require('../../arquivos/data/rank/ranking.json');
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+
         let users_sv = [];
 
         for(let i = 0; i < rank_servidores.length; i++){
@@ -21,7 +21,7 @@ module.exports = {
                     users_sv = rank_servidores[i][message.guild.id];
                     break;
                 }
-            // }else{
+            // }else{ // Rank global
                 // let id_server = Object.keys(rank_servidores[i])[0];
                 // for(let x = 0; x < rank_servidores[i][id_server].length; x++){
                     // users_sv.push(rank_servidores[i][id_server][x]);
@@ -36,7 +36,7 @@ module.exports = {
             experiencia.push(users_sv[i]["exp"]);
         }
 
-        for (let i = 1; i < experiencia.length; i++) { // Ordena os arrays do maior para o menor
+        for (let i = 1; i < experiencia.length; i++) { // Ordena os arrays em ordem decrescente
             for (let j = 0; j < i; j++) {
                 if (experiencia[i] > experiencia[j]) {
                     let temp = experiencia[i];
@@ -52,6 +52,7 @@ module.exports = {
 
         let lista_final_nomes = "";
         let lista_final_exp = "";
+        let lista_final_lev = "";
         let medalhas = [":first_place:", ":second_place:", ":third_place:", ":medal:", ":medal:", ":medal:"];
 
         let qtd_entradas = 5;
@@ -62,6 +63,7 @@ module.exports = {
         for(let i = 0; i < qtd_entradas; i++){ // Exibe apenas os 6 usuários com mais exp
             lista_final_nomes += `${medalhas[i]} \`${lista_usuarios[i].replace(/ /g, "")}\`\n`;
             lista_final_exp += `\`${experiencia[i]}\`\n`;
+            lista_final_lev += `\`${parseInt(experiencia[i] / 1000)}\` - \`${((experiencia[i] % 1000) / 1000).toFixed(2)}%\`\n`;
         }
 
         let icone_server = message.guild.iconURL({ size: 2048 });
@@ -73,17 +75,31 @@ module.exports = {
                 icone_server = icone_server.replace('.gif', '.webp')
 
             const rank_sv = new MessageEmbed()
-            .setTitle("Rank de "+ message.guild.name)
+            .setTitle(` ${diversao[8]["rank_sv"]} ${message.guild.name}`)
             .setColor(0x29BB8E)
             .setThumbnail(icone_server)
+            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\`\`\``)
             .addFields(
-                { name: ":hot_face: Enceirados", value: lista_final_nomes, inline: true},
-                { name: ":postal_horn: Experiência", value: lista_final_exp, inline: true}
-                )
+                {
+                    name: `:christmas_tree: ${diversao[8]["enceirados"]}`, 
+                    value: lista_final_nomes, 
+                    inline: true
+                },
+                { 
+                    name: `:postal_horn: ${diversao[8]["experiencia"]}`, 
+                    value: lista_final_exp, 
+                    inline: true
+                },
+                {
+                    name: `:beginner: ${diversao[8]["nivel"]}`,
+                    value: lista_final_lev,
+                    inline: true
+                }
+            )
             .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
 
             message.reply({ embeds: [rank_sv] });
-
+            
             delete require.cache[require.resolve('../../arquivos/data/rank/ranking.json')];
         });
     }

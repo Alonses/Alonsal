@@ -48,6 +48,13 @@
         },
         {
             "aviso_1" : "Write something for this command\nFor example, `.asans slomdo very cringerrr afff`"
+        },
+        {
+            "rank_sv" : "Rank of",
+            "nivel_descricao" : "level = experience / 1000",
+            "enceirados" : "Users",
+            "experiencia" : "Experience",
+            "nivel" : "Level"
         }
     ],
     "jogos" : [
