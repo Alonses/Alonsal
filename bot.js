@@ -53,11 +53,9 @@ client.on("messageCreate", async message => {
 
     if (message.author.bot || message.webhookId) return;
     
-    if(message.content.length >= 7) require('./adm/ranking.js')({client, message}); // Ranking de XP
+    if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
-    if(!prefix)
-        prefix = ".a";
 
     if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user);
@@ -107,6 +105,8 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 });
 
 handler.events.on("command_error", async e => {
+
+    return console.log(e);
 
     const channel = client.channels.cache.get('862015290433994752');
 

@@ -11,7 +11,6 @@ module.exports = {
         if(message.author.id !== "665002572926681128") return
 
         const rank = new MessageAttachment("arquivos/data/rank/ranking.json");
-        return message.channel.send({files: [rank]});
- 
+        message.channel.send({files: [rank]});
     }
 }
