@@ -15,20 +15,11 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        let range = 0;
-
-        if (args[0] && args[0].type === "number") {
-            range = args[0].value * 10 - 10;
-        }
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        const embed = new MessageEmbed()
-            .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
-            .setColor(0x29BB8E)
-            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n------------------------\n      >>>5X EXP<<<\`\`\``)
-            .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
-
+        let rodape = message.author.username;
         let users = [];
 
         for (const file of readdirSync(`./arquivos/data/rank/${message.guild.id}`)) {
@@ -44,18 +35,40 @@ module.exports = {
         let usernames = [];
         let experiencias = [];
         let levels = [];
-
         let i = 0;
+
+        if(users.length > 6)
+            rodape = `( 1 | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+
+        if (args[0] && args[0].type === "number"){
+            if(users.length < (args[0].value - 1) * 6) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
+
+            rodape = `( ${args[0].value} | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+
+            for(let x = 0; x < (args[0].value - 1) * 6; x++){
+                users.shift();
+            }
+        }
 
         for (const user of users) {
             if(i < 6){
-                usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
+                if(args[0] && args[0].type === "number")
+                    usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\``);
+                else
+                    usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
+                
                 experiencias.push(`\`${user.xp}\``);
                 levels.push(`\`${parseInt(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
             }
 
             i++;
         }
+
+        const embed = new MessageEmbed()
+            .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
+            .setColor(0x29BB8E)
+            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> 5X EXP <✳️<\`\`\``)
+            .setFooter(rodape, message.author.avatarURL({dynamic: true}));
 
         embed.addField(`:christmas_tree: ${diversao[8]["enceirados"]}`, usernames.join("\n"), true);
         embed.addField(`:postal_horn: ${diversao[8]["experiencia"]}`, experiencias.join("\n"), true);

@@ -51,6 +51,8 @@
         },
         {
             "rank_sv" : "Rank de",
+            "rodape" : "páginas, use .ar <num> para ver outras páginas",
+            "paginas" : "Informe um número menor para a página",
             "nivel_descricao" : "nível = experiência / 1000",
             "enceirados" : "Enceirados",
             "experiencia" : "Experiência",
@@ -402,101 +404,6 @@
             "aviso_1" : "Informe pelo menos uma operação básica para calcular",
             "resultado" : "Resultado",
             "error" : "Deu pt aq ao processar essa budega"
-        }
-    ],
-    "musicas" : [
-        {
-            "aviso_1" : "Entre em um canal de voz p/ utilizar estes comandos",
-            "aviso_2" : "Inclua mais URL's na playlist para poder remover elas",
-            "aviso_3" : "Informe algo além de `.as`\nPor exemplo, `.as simian segue` ou como `.as https://youtu.be/yBLdQ1a4-JI`",
-            "aviso_4" : "Canal de voz cheio, troque de canal ou aumente o limite de usuários.",
-            "aviso_5" : "As músicas estão desabilitadas por uns dias, estes comandos voltarão em breve!",
-            "error_1" : "Eu não posso conectar neste canal, troque de canal ou atualize minhas permissões para utilizar estes comandos",
-            "error_2" : "Há um problema com este URL, por favor, insira um diferente",
-            "procurando" : ":mag: Procurando por",
-            "nao_encontrado" : "Vídeo não encontrado",
-            "tocando_url" : "Essa faixa já está tocando ou na fila, guentae!",
-            "adicionado" : ":cd: Adicionado a fila",
-            "iniciando_repro" : "Ok, som na caixa DJ :sunglasses: :metal:",
-            "aprecie" : "Aprecie com moderação :musical_note:",
-            "duracao" : "Duração",
-            "pular_ate_1" : "Utilize",
-            "pular_ate_2" : "para pular até ela",
-            "retomando" : "Retomando, digite `.asp` para pausar.",
-            "pausando" : "Pausado, digite `.asr` para retomar."
-        },
-        {
-            "aviso_1" : "Não há faixas na playlist, adicione algumas para poder acessar este comando",
-            "ordenando" : "Ordenando as músicas da playlist, aguarde um pouco :P",
-            "proximas" : "Próximas",
-            "repeteco" : "O Repeteco está ativo",
-            "playlist_1" : "Playlist atual de",
-            "playlist_2" : "Tudo certo",
-            "playlist_3" : "a playlist está abaixo",
-            "tocando" : "Tocando agora",
-            "free" : ":free: Não há nenhuma faixa tocando no momento.",
-            "processando" : "um momento, estou processando a playlist ainda.",
-            "error_1" : "Erro ao buscar informações do vídeo"
-        },
-        {
-            "album_completo" : "Albúm completo! Vamos ouvir todas essas faixas antes de adicionar outras? :P",
-            "aviso_1" : "Escreva como `.asra ms 2`, `.asra me 7`, `.asra jg 5` ou `.asra op 10` ;)",
-            "aviso_2" : "Posso escolher até 15 músicas aleatórias por vez, informe um número menor :P",
-            "aviso_3" : "Posso escolher até 15 músicas de memes aleatórias por vez, informe um número menor :P",
-            "aviso_4" : "Posso escolher até 15 trilhas sonoras aleatórias por vez, informe um número menor :P",
-            "aviso_5" : "Posso escolher até 15 músicas clássicas aleatórias por vez, informe um número menor :P",
-            "escolhendo_1" : "Escolhendo uma música aleatória",
-            "escolhendo_2" : "Escolhendo uma zueira aleatória",
-            "escolhendo_3" : "Escolhendo uma trilha sonora aleatória",
-            "escolhendo_4" : "Escolhendo uma composição clássica aleatória",
-            "escolhidas_1" : "faixas escolhidas automaticamente estão na playlist, use `.aspl` para ver elas.",
-            "escolhidas_2" : "faixas zueiras adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
-            "escolhidas_3" : "trilhas sonoras adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
-            "escolhidas_4" : "músicas clássicas foram adicionadas automaticamente na playlist, use `.aspl` para ver elas.",
-            "adicionado" : ":cd: Faixa aleatória adicionada a fila"
-        },
-        {
-            "tocando" : "Tocando agora :notes:",
-            "sem_descricao" : "Vídeo sem descrição :roll_of_paper:",
-            "aviso_1" : "Não há nenhuma música sendo reproduzida no momento"
-        },
-        {
-            "patrocinador" : ":cool: _Patrocinador Alonsal!_",
-            "comecando" : "Começando agora :loud_sound: :notes:",
-            "anuncio_faixas" : "Utilize `.asfd` para desativar o anúncio de faixas",
-            "aviso_1" : "Informe um link adequado",
-            "error_1" : "Não foi possível reproduzir este vídeo",
-            "error_2" : "Houve um erro e não foi possível continuar reproduzindo esta URL",
-            "skip" : "Utilize `.assk` para pular para a próxima música",
-            "sem_faixas" : "Estou sem faixas, bora ouvir mais?",
-            "desconectado" : "Desconectei por inatividade use `.as` novamente para tocarmos algo :call_me:"
-        },
-        {
-            "pulando_1" : "Pulando para a próxima faixa",
-            "pulando_2" : "Pulando todas as faixas",
-            "playlist" : ":free: Playlist finalizada!",
-            "aviso_1" : "informe o número de uma faixa para poder pular",
-            "aviso_2" : "não tem como pular para a faixa atual :v",
-            "aviso_3" : "Inicie alguma música com `.as url` ou `.asra` para poder pular.",
-            "error_1" : "O número informado é maior que a playlist atual"
-        },
-        {
-            "reiniciando" : "Reiniciando as configs Alonsais para músicas e playlists",
-            "repeteco_1" : "Repeteco ativado, use `.asrp` novamente para desativar.",
-            "repeteco_2" : "Repeteco desativado, use `.asrp` para ativar.",
-            "playlist_pequena" : "Playlist pequena, irei parar de falar o nome das músicas quando elas iniciarem :man_detective:",
-            "sem_faixas" : "Sem faixas na playlist, insira algumas pesquisando ou usando o random",
-            "anuncio_faixas" : "Use `.asfd` para desligar o anúncio de novas faixas :thumbsup:",
-            "anuncios_1" : "Irei anunciar as faixas que começarem a tocar",
-            "anuncios_2" : "Ok, sem anúncios de faixas que começarem a tocar"
-        },
-        {
-            "removido_1" : "Todas as próximas faixas foram removidas.",
-            "removido_2" : "A faixa",
-            "removido_3" : "foi removida da playlist.",
-            "aviso_1" : "Informe o número de uma faixa para remover, utilize o `.aspl` para ver sua playlist.",
-            "aviso_2" : "Informe o número de uma faixa para poder remover",
-            "aviso_3" : "Use `.assk` para pular a faixa atual antes de remover ela"
         }
     ]
 }
