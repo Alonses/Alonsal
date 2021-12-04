@@ -106,8 +106,6 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
 handler.events.on("command_error", async e => {
 
-    return console.log(e);
-
     const channel = client.channels.cache.get('862015290433994752');
 
     const embed = new MessageEmbed({
@@ -117,6 +115,8 @@ handler.events.on("command_error", async e => {
     });
 
     await channel.send({ embeds: [embed] });
+
+    console.log(e);
 });
 
 handler.events.on("cooldown", (message, timeleft) => {

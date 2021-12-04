@@ -51,6 +51,8 @@
         },
         {
             "rank_sv" : "Rank of",
+            "rodape" : "pages, use .ar <num> to see other pages",
+            "paginas" : "Enter a lower number for the page",
             "nivel_descricao" : "level = experience / 1000",
             "enceirados" : "Users",
             "experiencia" : "Experience",
@@ -427,101 +429,6 @@
             "aviso_1" : "Enter at least one basic operation to calculate",
             "resultado" : "Result",
             "error" : "An error occurred while processing this operation"
-        }
-    ],
-    "musicas" : [
-        {
-            "aviso_1" : "Join a voice channel to use these commands",
-            "aviso_2" : "Add more URL's to the playlist to be able to remove them",
-            "aviso_3" : "Enter something other than `.a`\nFor example `.as simian segue` or as `.as https://youtu.be/yBLdQ1a4-JI`",
-            "aviso_4" : "Voice channel full, change channels or increase user limit.",
-            "aviso_5" : "The songs are off for a few days, these commands will be back soon!",
-            "error_1" : "I cannot connect to this channel, switch channels or update my permissions to use these commands",
-            "error_2" : "There is a problem with this URL, please enter a different one",
-            "procurando" : ":mag: Looking for",
-            "nao_encontrado" : "Video not found",
-            "tocando_url" : "This track is already playing or in the queue, wait!",
-            "adicionado" : ":cd: Added to queue",
-            "iniciando_repro" : "Ok, sound in the box :sunglasses: :metal:",
-            "aprecie" : "Enjoy with moderation :musical_note:",
-            "duracao" : "Duration",
-            "pular_ate_1" : "Use",
-            "pular_ate_2" : "to jump to her",
-            "retomando" : "Resuming, type `.asp` to pause.",
-            "pausando" : "Paused, type `.asr` to resume."
-        },
-        {
-            "aviso_1" : "There are no tracks in the playlist, add some to access this command",
-            "ordenando" : "Sorting the songs in the playlist, wait a little :P",
-            "proximas" : "Next",
-            "repeteco" : "Repeat is enabled",
-            "playlist_1" : "Current playlist of",
-            "playlist_2" : "All right",
-            "playlist_3" : "the playlist is below",
-            "tocando" : "Playing now",
-            "free" : ":free: There is no track currently playing..",
-            "processando" : "a moment, i'm still processing the playlist.",
-            "error_1" : "Error fetching video information"
-        },
-        {
-            "album_completo" : "Complete album! Let's listen to all tracks before adding others? :P",
-            "aviso_1" : "Write as `.asra ms 2`, `.asra me 7`, `.asra jg 5` or `.asra op 10` ;)",
-            "aviso_2" : "I can choose up to 15 random songs at a time, enter a smaller number :P",
-            "aviso_3" : "I can choose up to 15 songs from random funny songs at a time, enter a smaller number :P",
-            "aviso_4" : "I can choose up to 15 random soundtracks at a time, enter a smaller number :P",
-            "aviso_5" : "I can choose up to 15 random classical songs at a time, enter a smaller number :P",
-            "escolhendo_1" : "Choosing a random song",
-            "escolhendo_2" : "Choosing a random funny song",
-            "escolhendo_3" : "Choosing a random soundtrack",
-            "escolhendo_4" : "Choosing a classic random composition",
-            "escolhidas_1" : "songs have been automatically added to the playlist, use `.aspl` to see them.",
-            "escolhidas_2" : "funny songs have been automatically added to the playlist, use `.aspl` to see them.",
-            "escolhidas_3" : "game soundtracks have been automatically added to the playlist, use `.aspl` to see them.",
-            "escolhidas_4" : "classic songs have been automatically added to the playlist, use `.aspl` to see them.",
-            "adicionado" : ":cd: Random strip added to queue"
-        },
-        {
-            "tocando" : "Playing now :notes:",
-            "sem_descricao" : "Video without description :roll_of_paper:",
-            "aviso_1" : "There is no music currently playing."
-        },
-        {
-            "patrocinador" : ":cool: _Alonsal Sponsor!_",
-            "comecando" : "Starting now :loud_sound: :notes:",
-            "anuncio_faixas" : "Use `.asfd` to disable posting of new tracks",
-            "aviso_1" : "Enter a suitable link",
-            "error_1" : "Unable to play this video",
-            "error_2" : "An error occurred and we could not continue playing this URL",
-            "skip" : "Use `.assk` to skip to the next song",
-            "sem_faixas" : "I'm out of songs, let's hear more?",
-            "desconectado" : "I disconnected due to inactivity use `.as` again to play something :call_me:"
-        },
-        {
-            "pulando_1" : "Skipping to the next track",
-            "pulando_2" : "Skipping all tracks",
-            "playlist" : ":free: Finished playlist!",
-            "aviso_1" : "enter a track number to be able to skip",
-            "aviso_2" : "there is no way to jump to the current track :v",
-            "aviso_3" : "Start some music with `.as url` or `.asra` to be able to skip.",
-            "error_1" : "The number entered is greater than the current playlist"
-        },
-        {
-            "reiniciando" : "Resetting Alonsais configs for songs and playlists",
-            "repeteco_1" : "Repeating enabled, use `.asrp` again to disable.",
-            "repeteco_2" : "Repeating disabled, use `.asrp` to enable.",
-            "playlist_pequena" : "Small playlist, I'll stop saying song names when they start :man_detective:",
-            "sem_faixas" : "No tracks in playlist, insert some by searching or using random",
-            "anuncio_faixas" : "Use `.asfd` to turn off announcing new tracks :thumbsup:",
-            "anuncios_1" : "I will announce the tracks that start playing",
-            "anuncios_2" : "Okay, no announcements for new tracks that start playing"
-        },
-        {
-            "removido_1" : "All next tracks have been removed..",
-            "removido_2" : "The track",
-            "removido_3" : "has been removed from the playlist.",
-            "aviso_1" : "Enter the number of a track to remove, use `.aspl` to see its playlist.",
-            "aviso_2" : "Enter a track number to be able to remove",
-            "aviso_3" : "Use `.assk` to skip the current track before removing it"
         }
     ]
 }
