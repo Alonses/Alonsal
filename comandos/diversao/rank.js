@@ -1,6 +1,7 @@
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require('discord.js');
 const fetch = require("node-fetch");
+const { UV_FS_O_FILEMAP } = require("constants");
 
 const medals = {
     0: ":first_place:",
@@ -36,23 +37,26 @@ module.exports = {
         let experiencias = [];
         let levels = [];
         let i = 0;
-
+        let paginas = (users.length / 6) - parseInt(users.length / 6) > 0.5 ? parseInt(users.length / 6) + 1: parseInt(users.length / 6);
+        
         if(users.length > 6)
-            rodape = `( 1 | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+            rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
-        if (args[0] && args[0].type === "number"){
-            if(users.length < (parseInt(args[0].value) - 1) * 6) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
+        if (args[0] && args[0].type === "number" && args[0].value !== 1){
+            if(paginas < parseInt(args[0].value)) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
 
-            rodape = `( ${parseInt(args[0].value)} | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+            rodape = `( ${parseInt(args[0].value)} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
-            for(let x = 0; x < (parseInt(args[0].value) - 1) * 6; x++){
+            const remover = args[0].value == paginas ? (parseInt(args[0].value) - 1) * 6 : users.length % 6 !== 0 ? (parseInt(args[0].value) - 2) * 6 : (parseInt(args[0].value) - 1) * 6 ;
+
+            for(let x = 0; x < remover; x++){
                 users.shift();
             }
         }
 
         for (const user of users) {
             if(i < 6){
-                if(args[0] && args[0].type === "number")
+                if(args[0] && args[0].type === "number" && args[0].value !== 1)
                     usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\``);
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
