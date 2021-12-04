@@ -9,7 +9,8 @@ const client = new Client({ intents: [
     Intents.FLAGS.GUILD_BANS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS]
+    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    Intents.FLAGS.GUILD_MEMBERS ]
 });
 
 String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
@@ -53,7 +54,7 @@ client.on("messageCreate", async message => {
 
     if (message.author.bot || message.webhookId) return;
     
-    if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
+    // if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
 
@@ -106,15 +107,15 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
 handler.events.on("command_error", async e => {
 
-    const channel = client.channels.cache.get('862015290433994752');
+    // const channel = client.channels.cache.get('862015290433994752');
 
-    const embed = new MessageEmbed({
-        title: "CeiraException",
-        description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
-        color: "RED"
-    });
+    // const embed = new MessageEmbed({
+    //     title: "CeiraException",
+    //     description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
+    //     color: "RED"
+    // });
 
-    await channel.send({ embeds: [embed] });
+    // await channel.send({ embeds: [embed] });
 
     console.log(e);
 });
