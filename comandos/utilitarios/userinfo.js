@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
+const getDateDiff = require('../../adm/funcoes/diffdatas.js');
+const formata_data = require('../../adm/funcoes/formatadata.js');
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -10,8 +12,6 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const getDateDiff = require('../../adm/funcoes/diffdatas.js');
-        const formata_data = require('../../adm/funcoes/formatadata.js');
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
         
@@ -45,7 +45,7 @@ module.exports = {
         let data_entrada = formata_data(new Date(membro_sv.joinedTimestamp), idioma_selecionado);
         let diferenca_entrada = getDateDiff(new Date(membro_sv.joinedTimestamp), data_atual, utilitarios);
 
-        let data_criacao = formata_data(new Date(user.createdAt), idioma_selecionado); // Criação do servidor
+        let data_criacao = formata_data(new Date(user.createdAt), idioma_selecionado); // Cadastro do user
         let diferenca_criacao = getDateDiff(new Date(user.createdAt), data_atual, utilitarios);
 
         if (avatar_user !== null) {

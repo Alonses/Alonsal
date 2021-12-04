@@ -107,15 +107,15 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
 handler.events.on("command_error", async e => {
 
-    // const channel = client.channels.cache.get('862015290433994752');
+    const channel = client.channels.cache.get('862015290433994752');
 
-    // const embed = new MessageEmbed({
-    //     title: "CeiraException",
-    //     description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
-    //     color: "RED"
-    // });
+    const embed = new MessageEmbed({
+        title: "> CeiraException",
+        description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
+        color: "RED"
+    });
 
-    // await channel.send({ embeds: [embed] });
+    await channel.send({ embeds: [embed] });
 
     console.log(e);
 });
