@@ -1,4 +1,3 @@
-const { arg } = require('mathjs');
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 let membros_sv = [];
@@ -18,6 +17,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         prefix = client.prefixManager.getPrefix(message.guild.id);
         emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
@@ -26,10 +26,10 @@ module.exports = {
         const permissions_bot = await message.guild.members.fetch(message.client.user.id);
         
         if(!permissions_user.permissions.has('MANAGE_ROLES'))
-            return message.reply(`:octagonal_sign: | ${moderacao[4]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
+            return message.reply(`:octagonal_sign: | ${moderacao[8]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
 
-        if(!permissions_bot.permissions.has('MANAGE_ROLES') || !permissions_bot.permissions.has('ADMINISTRATOR'))
-            return message.reply(`:octagonal_sign: | ${moderacao[4]["permissao_2"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
+        if(!permissions_bot.permissions.has('ADMINISTRATOR'))
+            return message.reply(`:octagonal_sign: | ${moderacao[8]["permissao_2"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
 
         if(operacao_ativa && args[0].toString() == "cancel"){
             msg_feed.edit(`:octagonal_sign: | Operação cancelada\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🤖Bots ignorados: ${updates[3]}\`\`\``);
@@ -47,7 +47,6 @@ module.exports = {
             membros_sv = [];
             updates = [0, 0, 0, 0];
 
-            const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
             if(args.length < 1) return message.reply("Informe um cargo para ser atribuido ou removido do usuário\nPor exemplo, `.acar @cargo` ou `.auncar @cargo`".replaceAll(".a", prefix));
     
             const list = client.guilds.cache.get(message.guild.id);
@@ -74,7 +73,7 @@ module.exports = {
             updates[0] = membros_sv.length; // membros_sv_original ( tbm conta bots )
 
             await message.reply("Escreva `.acar cancel` para cancelar a operação".replace(".a", prefix));
-            msg_feed = await message.reply(`${emoji_dancante} | Atualizando usuários: \`1 de ${membros_sv.length}\``);
+            msg_feed = await message.reply(`${emoji_dancante} | Atualizando usuários: \`1 de ${updates[0]}\``);
             alterar_users(cargo, client, message, 0);
         }else
             message.reply("Há uma operação ativa no momento");
