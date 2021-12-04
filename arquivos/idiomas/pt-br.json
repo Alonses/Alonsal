@@ -195,6 +195,10 @@
             "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
             "permissao_1" : "Você não possuí permissões para gerenciar este canal",
             "permissao_2" : "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
+        },
+        {
+            "permissao_1" : "Você não pode atribuir cargos a outros membros",
+            "permissao_2" : "Eu não posso atribuir/ remover cargos de outros membros"
         }
     ],
     "utilitarios" : [
