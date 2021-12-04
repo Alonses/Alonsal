@@ -41,11 +41,11 @@ module.exports = {
             rodape = `( 1 | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
         if (args[0] && args[0].type === "number"){
-            if(users.length < (args[0].value - 1) * 6) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
+            if(users.length < (parseInt(args[0].value) - 1) * 6) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
 
-            rodape = `( ${args[0].value} | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+            rodape = `( ${parseInt(args[0].value)} | ${parseInt(users.length / 6) + 1} ) - ${parseInt(users.length / 6) + 1} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
-            for(let x = 0; x < (args[0].value - 1) * 6; x++){
+            for(let x = 0; x < (parseInt(args[0].value) - 1) * 6; x++){
                 users.shift();
             }
         }
