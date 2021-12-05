@@ -16,8 +16,6 @@ module.exports = {
     async execute(client, message, args) {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
-
-        args[0].replace("a", "");
         
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
