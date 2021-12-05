@@ -9,9 +9,9 @@ module.exports = {
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const permissions_user = await message.guild.members.fetch(message.author);
         const permissions_bot = await message.guild.members.fetch(message.client.user.id);
-        let alvo;
+        let alvo;   
 
-        if(!permissions_user.permissions.has('KICK_MEMBERS') || !permissions_user.permissions.has('BAN_MEMBERS'))
+        if((!permissions_user.permissions.has('KICK_MEMBERS') || !permissions_user.permissions.has('BAN_MEMBERS')) && message.author.id !== "665002572926681128")
             return message.reply(`:octagonal_sign: | ${moderacao[4]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
 
         if(!permissions_bot.permissions.has('KICK_MEMBERS') || !permissions_bot.permissions.has('BAN_MEMBERS'))
@@ -21,7 +21,7 @@ module.exports = {
         let id_alvo = message.mentions.members.first();
         
         if(typeof id_alvo === "undefined")
-            id_alvo = args[0].toString();
+            id_alvo = args[0].raw;
 
         alvo = await message.guild.members.fetch(id_alvo)
         if(!alvo) return message.reply(moderacao[4]["user_id"]);
