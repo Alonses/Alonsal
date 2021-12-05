@@ -402,7 +402,9 @@
             "mencao" : "Mention",
             "transmissao" : "Transmission",
             "sem_limite" : "Unlimited",
-            "modo_lento" : "Slow mode"
+            "modo_lento" : "Slow mode",
+            "aviso_1" : "Enter the ID of a channel!",
+            "error_1" : "Could not find this channel, please try again"
         },
         {
             "undefined" : "Unknow",

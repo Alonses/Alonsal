@@ -106,7 +106,11 @@ module.exports = {
 
         if(message.guild.premiumSubscriptionCount > 0)
             infos_sv.addFields(
-                { name: `${boost_sv} **Boosts ( ${message.guild.premiumSubscriptionCount} )**`, value: '⠀', inline: true}
+                { 
+                    name: `${boost_sv} **Boosts ( ${message.guild.premiumSubscriptionCount} )**`,
+                    value: '⠀',
+                    inline: true
+                }
             )
         else
             infos_sv.addFields(

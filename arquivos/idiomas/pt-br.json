@@ -379,7 +379,9 @@
             "mencao" : "Menção",
             "transmissao" : "Transmissão",
             "sem_limite" : "Sem limite",
-            "modo_lento" : "Modo lento"
+            "modo_lento" : "Modo lento",
+            "aviso_1" : "Informe o ID de um canal!",
+            "error_1" : "Não foi possível localizar este canal, tente novamente"
         },
         {
             "undefined" : "Desconhecido",

@@ -29,39 +29,36 @@ module.exports = {
             const canal = canal_games[element][0];
             const cargo = canal_games[element][1];
 
-            if(args[0] !== "rem" || element !== message.guild.id){ // Remove um servidor/canal da lista de clientes no json
+            if(args[0].raw !== "rem" || element !== message.guild.id){ // Remove um servidor/canal da lista de clientes no json
                 outputArray.push(
                     constructJson(element, [canal, cargo])
                 );
             }
         }
 
-        let cargo_escolhido = args[0];
-        cargo_escolhido = cargo_escolhido.replace("<@&", "");
-        cargo_escolhido = cargo_escolhido.replace(">", "");
-        cargo_escolhido = cargo_escolhido.replace("!", "");
+        let cargo_escolhido = args[0].raw;
+        cargo_escolhido = cargo_escolhido.replace("<@&", "").replace(">", "").replace("!", "");
 
         for(let i = 0; i < outputArray.length; i++){ // Procura pelo ID do server e altera o idioma
             let obj = outputArray[i];
 
             let key = Object.keys(canal_games);
 
-            if(key[i] === message.guild.id && args[0] !== "rem") {
+            if(key[i] === message.guild.id && args[0].raw !== "rem") {
                 obj[message.guild.id][0] = message.channel.id;
                 obj[message.guild.id][1] = cargo_escolhido;
                 break;
             }
         }
         
-        if(args[0] !== "rem") // Remove um servidor/canal da lista de clientes no json
+        if(args[0].raw !== "rem") // Remove um servidor/canal da lista de clientes no json
             outputArray.push(constructJson(message.guild.id, [message.channel.id, cargo_escolhido]));
     
         let canal_servidor = JSON.stringify(outputArray, null, 4);
         canal_servidor = canal_servidor.replace("[", "");
         canal_servidor = canal_servidor.slice(0, -1);
 
-        canal_servidor = canal_servidor.replaceAll("{", "");
-        canal_servidor = canal_servidor.replaceAll("}", "");
+        canal_servidor = canal_servidor.replaceAll("{", "").replaceAll("}", "");
         canal_servidor = `{ \"canal_games\" : { ${canal_servidor} } }`;
 
         canal_servidor = JSON.parse(canal_servidor); // Ajusta o arquivo
@@ -72,7 +69,7 @@ module.exports = {
             
             let mensagem = `:video_game: | O Servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) agora recebe atts de jogos grátis`;
 
-            if(args[0] === "rem")
+            if(args[0].raw === "rem")
                 mensagem = `:video_game: | O Servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) não recebe mais atts de jogos grátis`;
 
             client.channels.cache.get('872865396200452127').send(mensagem);
@@ -82,7 +79,7 @@ module.exports = {
 
         let feedback_user = `${moderacao[6]["anuncio_games"]}\`${prefix}ngm rem\`${moderacao[6]["anuncio_games_2"]}`;
 
-        if(args[0] === "rem")
+        if(args[0].raw === "rem")
             feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`;
 
         message.reply(feedback_user);

@@ -5,8 +5,6 @@ module.exports = async ({client, caso, guild}) => {
     let ocasiao = "> Server update ( New )";
     let cor = 0x29BB8E;
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
-    let idioma_definido = guild.preferredLocale.toLocaleLowerCase();
-    let bandeira_pais = `:flag_${idioma_definido.slice(3, 7)}:`;
     
     if(caso === "Left"){
         ocasiao = "> Server update ( Left )";
@@ -22,21 +20,20 @@ module.exports = async ({client, caso, guild}) => {
     if(client.user.id === "833349943539531806")
         client.channels.cache.get('846853254192693269').send({ embeds : [embed_sv] });
 
-    if(caso === "New")
-        client.channels.cache.get('872865396200452127').send(`${bandeira_pais} | Idioma do servidor ( \`${guild.name}\` | \`${guild.id}\` ) definido como \`${idioma_definido}\``);
+    if (caso === "New"){
+        if(typeof guild.systemChannelId === "undefined") return; // Canal padrão do servidor
 
-    // if (caso === "New"){
-        // let canal = client.channels.cache.get(guild.systemChannelId);
-        // const prefix = client.prefixManager.getPrefix(guild.id)
+        let canal = client.channels.cache.get(guild.systemChannelId);
+        const prefix = client.prefixManager.getPrefix(guild.id)
 
-        // if (typeof canal.type == "undefined") return;
+        if (typeof canal.type === "undefined") return;
     
-        // if (canal.type === "GUILD_TEXT" || canal.type === "GUILD.NEWS") {
-        //     const permissions = canal.permissionsFor(client.user);
+        if (canal.type === "GUILD_TEXT" || canal.type === "GUILD.NEWS") { // Mensagem de apresentação
+            const permissions = canal.permissionsFor(client.user); 
             
-        //     if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+            if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     
-        //     canal.send("Obrigado por me adicionar! Utilize o `"+ prefix +"h` para ver minha lista de comandos, você também pode alterar meu prefixo com o `"+ prefix +"px <prefixo>` ou meu idioma com o `"+ prefix +"lang en`!\n\nThanks for adding me! Use `"+ prefix +"h` to see my command list, you can also change my prefix with `"+ prefix +"px <prefix>` or my language with `"+ prefix +"lang pt`!");
-        // }
-    // }
+            canal.send(`Obrigado por me adicionar! Utilize o \`${prefix}h\` para ver minha lista de comandos, você também pode alterar meu prefixo com o \`${prefix}px <prefixo>\` ou meu idioma com o \`${prefix}lang en\`!\n\nThanks for adding me! Use the command \`${prefix}h\` to see my menu, you can also change my prefix with \`${prefix}px <prefix>\` or my language with \`${prefix}lang pt\`!`);
+        }
+    }
 }
