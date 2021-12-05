@@ -1,19 +1,6 @@
-let ult_comando;
-let ult_mensagem;
-
 const { MessageEmbed } = require('discord.js');
 
-module.exports = async function({client, auto, ult_comand, ult_message}){
-
-    if(auto){
-        if(typeof ult_comand !== "undefined")
-            ult_comando = ult_comand;
-
-        if(typeof ult_message !== "undefined")
-            ult_mensagem = ult_message;
-        
-        return;
-    }
+module.exports = async function({client}){
 
     client.on("guildCreate", guild => {
         let caso = 'New';

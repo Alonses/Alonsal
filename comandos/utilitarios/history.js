@@ -28,18 +28,18 @@ module.exports = {
         let data = new Date();
         let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
         let data_informada = utilitarios[10]["hoje"];
-        const valor_primario = args[0];
+        const valor_primario = args[0].raw;
 
         if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
-            evento_escolhido = args[0];
+            evento_escolhido = args[0].raw;
             args.shift();
         }
 
         if(args.length > 0){
-            if(!args[0].includes("-")) // Formato incorreto
+            if(!args[0].raw.includes("-")) // Formato incorreto
                 return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
 
-            let data_pesquisada = args[0].split("-");
+            let data_pesquisada = args[0].raw.split("-");
             dia = data_pesquisada[0];
             mes = data_pesquisada[1];
 

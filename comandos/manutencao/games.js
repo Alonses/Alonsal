@@ -47,7 +47,7 @@ module.exports = {
             return message.reply({embeds: [embed_fomatacao]});
         }
 
-        if(args[0].toString() === "list"){
+        if(args[0].raw === "list"){
             let nome_canais = "";
 
             if(canais_clientes.length === 0)
@@ -69,17 +69,17 @@ module.exports = {
             return message.reply(`Canais clientes: \`${canais_clientes.length/2}\`\n\nCanais: ${nome_canais}`);
         }
 
-        if(args[0].toString() === "u" || args[0] === "dlc"){
-            tipo_anun = args[0];
+        if(args[0].raw === "u" || args[0].raw === "dlc"){
+            tipo_anun = args[0].raw;
             args.shift();
         }
 
         if(args.length < 4)
             return message.reply(`Informe pelo menos como \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\nOu utilize o comando\`${prefix}mg h\` para ver os aliases deste comando`);
         
-        let nome_jogo = args[0].toString().replaceAll("_", " ");
+        let nome_jogo = args[0].raw.replaceAll("_", " ");
 
-        const matches = args[3].toString().match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com/);
+        const matches = args[3].raw.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com/);
 
         const plataforma = platformMap[matches[0]][1];
         const logo_plat = platformMap[matches[0]][0];
@@ -93,10 +93,10 @@ module.exports = {
             return message.reply(":hotsprings: | Envie uma imagem junto do comando para utilizar de banner").then(msg => setTimeout(() => msg.delete(), 3000));
 
         // Soma o valor dos jogos anunciados
-        let valor_total = parseFloat((args[2].toString()).replace(",", "."));
+        let valor_total = parseFloat((args[2].raw).replace(",", "."));
 
         if(args.length > 4)
-            valor_total += parseFloat((args[5].toString()).replace(",", "."));
+            valor_total += parseFloat((args[5].raw).replace(",", "."));
         
         let img_game = new MessageAttachment(url);
 
@@ -106,7 +106,7 @@ module.exports = {
         for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
             try {
                 let nome_jogo_2 = "";
-                let link_1 = args[3].toString();
+                let link_1 = args[3].raw;
                 let link_2 = "";
 
                 if(typeof args[4] !== "undefined"){
@@ -118,7 +118,7 @@ module.exports = {
                 servidor = servidor.guild.id;
                 
                 let lang_server = await client.idioma.getLang(message.guild.id);
-                let texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1].toString(), valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
+                let texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1].raw, valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
                 
                 if(typeof canais_clientes[i + 1] !== "undefined")
                     texto_anuncio += ` <@&${canais_clientes[i + 1]}>`;

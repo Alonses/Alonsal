@@ -23,11 +23,11 @@ module.exports = {
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if (!user && typeof args[0] !== "undefined") {
-            if (isNaN(parseInt(args[0].value)))
+            if (isNaN(Number(args[0].value)))
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
             try {
-                user = await message.guild.members.fetch(args[0].toString());
+                user = await message.guild.members.fetch(args[0].raw);
 
                 user = user.user; // Pega o usuário pelo ID
             } catch (e) {

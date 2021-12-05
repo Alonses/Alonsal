@@ -96,9 +96,9 @@ module.exports = {
         if(args.length < 1)
             return message.reply({ embeds: [embed_inicial] });
 
-        if(isNaN(args[0]) || (args[0] < 0 || args[0] > 4))
+        if(isNaN(parseInt(args[0]).raw) || (parseInt(args[0].raw) < 0 || parseInt(args[0].raw) > 4))
             return message.reply(":warning: | "+ manutencao[7]["aviso_1"]);
 
-        message.reply({ embeds: [pages[args[0]]] });
+        message.reply({ embeds: [pages[parseInt(args[0].raw)]] });
     }
 };

@@ -21,16 +21,16 @@ module.exports = {
         else
             operacao = operacao.replaceAll(",", "");
 
-        if(args[0].toString() === "+" || args[0].toString() === "-" || args[0].toString() === "*" || args[0].toString() === "/"){
-            let operador = args[0].toString();
+        if(args[0].raw === "+" || args[0].raw === "-" || args[0].raw === "*" || args[0].raw === "/"){
+            let operador = args[0].raw;
             args.shift();
             operacao = args.join(` ${operador} `);
         }
 
-        if(args[0].toString().includes("+") || args[0].toString().includes("-") || args[0].toString().includes("*") || args[0].toString().includes("/")){ // Operando vários itens de uma vez
+        if(args[0].raw.includes("+") || args[0].raw.includes("-") || args[0].raw.includes("*") || args[0].raw.includes("/")){ // Operando vários itens de uma vez
 
             let valores_fn = [];
-            let opera = args[0].toString();
+            let opera = args[0].raw;
             args.shift();
 
             args.forEach(valor => {

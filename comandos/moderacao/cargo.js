@@ -33,7 +33,7 @@ module.exports = {
         if(!permissions_bot.permissions.has('ADMINISTRATOR'))
             return message.reply(`:octagonal_sign: | ${moderacao[8]["permissao_2"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
 
-        if(operacao_ativa && args[0].toString() == "cancel"){
+        if(operacao_ativa && args[0].raw == "cancel"){
             msg_feed.edit(`:octagonal_sign: | Operação cancelada\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🤖Bots ignorados: ${updates[3]}\`\`\``);
 
             updates = [0, 0, 0, 0];

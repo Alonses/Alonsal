@@ -12,7 +12,7 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         try{
-            let usuario_alvo = `https://steamcommunity.com/id/${args[0]}`;
+            let usuario_alvo = `https://steamcommunity.com/id/${args[0].raw}`;
 
             fetch(usuario_alvo)
             .then(response => response.text())

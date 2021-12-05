@@ -20,9 +20,9 @@ module.exports = {
             let texto = args.join(" ");
             texto = texto.replace(args[0], "");
             
-            resultado = `${utilitarios[11]["chave"]}: \`${args[0]}\` :: ${CryptoJS.AES.encrypt(texto, args[0]).toString()}`;
+            resultado = `${utilitarios[11]["chave"]}: \`${args[0].raw}\` :: ${CryptoJS.AES.encrypt(texto, args[0].raw)}`;
         }else if(args.length === 2){
-            let bytes = CryptoJS.AES.decrypt(args[1], args[0]);
+            let bytes = CryptoJS.AES.decrypt(args[1], args[0].raw);
             resultado = bytes.toString(CryptoJS.enc.Utf8);
         }
 

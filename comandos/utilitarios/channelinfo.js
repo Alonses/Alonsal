@@ -17,7 +17,7 @@ module.exports = {
         let canal = message.channel;
         
         if(typeof args[0] !== "undefined"){ // ID's customizados para canais aleatórios, marcando ou não
-            let id_canal = args[0].toString()
+            let id_canal = args[0].raw;
 
             if(id_canal.includes("<#"))
                 id_canal = id_canal.replace("<#", "").replace(">", "");

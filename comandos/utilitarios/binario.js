@@ -12,9 +12,9 @@ module.exports = {
 
         if (args.length < 2) return message.reply(utilitarios[3]["aviso"]);
 
-        if (args[0] !== "encode" && args[0] !== "decode") return message.reply(utilitarios[3]["aviso"]);
+        if (args[0].raw !== "encode" && args[0].raw !== "decode") return message.reply(utilitarios[3]["aviso"]);
 
-        let operation = args[0];
+        let operation = args[0].raw;
         let embed;
 
         args.shift();

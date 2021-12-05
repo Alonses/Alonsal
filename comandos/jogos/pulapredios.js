@@ -10,12 +10,11 @@ module.exports = {
     execute(client, message, args) {
 
         const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-
         const emoji_pula = client.emojis.cache.get(emojis.pula_2).toString();
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
-        .setTitle("> Pula Prédios "+ emoji_pula)
+        .setTitle(`> Pula Prédios ${emoji_pula}`)
         .setURL('https://gamejolt.com/games/pula-predios/613946')
         .setImage('https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp')
         .setDescription(jogos[0]["conteudo"])
