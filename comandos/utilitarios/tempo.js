@@ -17,6 +17,8 @@ module.exports = {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
 
+        args[0].replace("a", "");
+        
         let prefix = client.prefixManager.getPrefix(message.guild.id);
         if(!prefix)
             prefix = ".a";
@@ -24,6 +26,7 @@ module.exports = {
         const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
 
         let pesquisa = "";
+        const pesquisa_bruta = `\"${args.join(" ").replaceAll("\"", "")}"`;
         let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
 
@@ -32,15 +35,12 @@ module.exports = {
 
         let indices = [];
 
-        if(!args[0].raw.startsWith("\"")){ // Pesquisa bruta
+        if(!args[0].raw.startsWith("\"")) // Pesquisa bruta
             args.forEach(valor => { // Pesquisa formatada
                 indices.push(valor.raw.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
             });
-            console.log("Pesquisa formatada");
-        }else{
+        else
             indices.push((args.join(" ")).replaceAll("\"", "")) 
-            console.log("Pesquisa bruta");
-        }
 
         pesquisa = indices.join(" ");
         if(pesquisa === "") return message.reply(`:mag: | ${utilitarios[8]["error_1"]}`);
@@ -55,7 +55,7 @@ module.exports = {
         .then(async res => {
 
             if(res.cod === '404' || res.cod === '400')
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t "${args.join(" ")}"\``);
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t ${pesquisa_bruta}\``);
             else if(res.cod === '429') // Erro da API
                 message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
             else{
