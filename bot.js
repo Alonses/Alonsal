@@ -106,7 +106,7 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     await require('./adm/internos/log.js')({client, message, content});
 });
 
-handler.events.on("command_error", async (e, message) => {
+handler.events.on("command_error", async (e, command, client, message, args) => {
 
     if(typeof message !== "undefined"){
         const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
