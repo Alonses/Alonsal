@@ -284,6 +284,7 @@
             "chuva_troll" : "Talvez não esteja chovendo de verdade, ou será que está?",
             "neve_troll" : "Talvez não esteja nevando de verdade, ou será que está?",
             "dados_atts" : "Dados atualizados às",
+            "sugestao" : "Tente pesquisar de forma bruta, por exemplo, ",
             "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
             "antartida" : "Antártida"
         },

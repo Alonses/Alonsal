@@ -31,9 +31,16 @@ module.exports = {
             return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
 
         let indices = [];
-        args.forEach(valor => {
-            indices.push(valor.raw.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
-        });
+
+        if(!args[0].raw.startsWith("\"")){ // Pesquisa bruta
+            args.forEach(valor => { // Pesquisa formatada
+                indices.push(valor.raw.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
+            });
+            console.log("Pesquisa formatada");
+        }else{
+            indices.push((args.join(" ")).replaceAll("\"", "")) 
+            console.log("Pesquisa bruta");
+        }
 
         pesquisa = indices.join(" ");
         if(pesquisa === "") return message.reply(`:mag: | ${utilitarios[8]["error_1"]}`);
@@ -48,8 +55,8 @@ module.exports = {
         .then(async res => {
 
             if(res.cod === '404' || res.cod === '400')
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`);
-            else if(res.cod === '429')
+                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t "${args.join(" ")}"\``);
+            else if(res.cod === '429') // Erro da API
                 message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
             else{
                 let url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`;

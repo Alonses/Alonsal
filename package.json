@@ -18,6 +18,6 @@
     "mathjs": "^9.5.1",
     "node-fetch": "^2.6.5",
     "nodemon": "^2.0.13",
-    "wax-command-handler": "^2.0.5"
+    "wax-command-handler": "^2.0.6"
   }
 }
