@@ -27,7 +27,7 @@ module.exports = {
             const termo_pesquisado_cc = content.slice(1);
             const username = message.author.username;
             
-            fetch(url, {headers:{"accept-language": client.idioma.getLang(message.guild.id)}})
+            fetch(url, { headers:{ "accept-language": client.idioma.getLang(message.guild.id) }})
             .then(response => response.json())
             .then(async res => {
             
