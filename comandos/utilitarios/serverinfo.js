@@ -25,7 +25,7 @@ module.exports = {
 
         let dono_sv = message.guild.ownerId;
         let dono_membro = await message.guild.members.fetch(dono_sv);
-        dono_sv = `\`${dono_membro.user.username}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``;
+        dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``;
 
         let icone_server = message.guild.iconURL({ size: 2048 });
 

@@ -104,7 +104,7 @@ module.exports = {
             .addFields(
                 {
                     name: ':globe_with_meridians: **Discord**',
-                    value: `\`${user.username}#${user.discriminator}\`\n\`${user.id}\``,
+                    value: `\`${user.username.replace(/ /g, "")}#${user.discriminator}\`\n\`${user.id}\``,
                     inline: true
                 },
                 {
