@@ -68,9 +68,9 @@ module.exports = {
                         url = `https://cdn.discordapp.com/emojis/${id}.${animated ? 'gif' : 'png' }`;
                         
                     }else
-                        url = args[0].toString();
+                        url = args[0].raw;
 
-                    nome_emoji = args[1].toString();
+                    nome_emoji = args[1].raw;
                 }else{
 
                     if(message.attachments.size > 1) // Mais de um arquivo enviado
@@ -85,7 +85,7 @@ module.exports = {
                         if(!url.includes(".png") && !url.includes(".jpg") && !url.includes(".jpeg") && !url.includes(".bmp") && !url.includes(".gif")) // Extensão do arquivo incorreta
                             return message.reply(`:warning: | ${moderacao[2]["error_1"]}`);
 
-                        nome_emoji = args[0].toString();
+                        nome_emoji = args[0].raw;
                     });
                 }
                 
@@ -109,15 +109,15 @@ module.exports = {
                     return message.reply(`:warning: | ${moderacao[2]["aviso_6"]} \`${prefix}rmoji \`${emoji_nao_encontrado}\` \``);
 
                 if(!match) // Confirma que a entrada é um emoji
-                    if(isNaN(args[0].value))
+                    if(isNaN(Number(args[0].value)))
                         return message.reply(`:octagonal_sign: | ${moderacao[2]["aviso_7"]}`);
 
                 // Coletando o emoji do cache do bot
-                if(isNaN(args[0].value)){
+                if(isNaN(Number(args[0].value))){
                     emoji = await client.emojis.cache.get(match[3]);
                     console.log(match[3], typeof match[3]);
                 }else
-                    emoji = await client.emojis.cache.get(args[0].toString());
+                    emoji = await client.emojis.cache.get(args[0].raw);
 
                 if(typeof emoji === "undefined" || message.guild.id !== emoji.guild.id) // Emoji indefinido ou emoji pertencente ao servidor o qual o comando foi acionado
                     return message.reply(`:warning: | ${moderacao[2]["aviso_8"].replace(".a", prefix)}`);

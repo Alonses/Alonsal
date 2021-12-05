@@ -19,7 +19,7 @@ module.exports = {
         let player = Math.round(2 * Math.random());
         
         if(typeof args[0] != "undefined")
-            player = jooj.indexOf(args[0].toLowerCase());
+            player = jooj.indexOf(args[0].raw.toLowerCase());
 
         if(player === -1) // Valor não encontrado
             return message.reply(jogos[3]["aviso_1"].replaceAll(".a", prefix));

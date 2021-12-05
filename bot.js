@@ -1,6 +1,7 @@
 const handler = require("wax-command-handler");
 const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
+const { emojis_negativos } = require('./arquivos/json/text/emojis.json');
 
 const { readdirSync } = require("fs");
 const {token, token_2, prefix, owner_id} = require('./config.json');
@@ -54,7 +55,8 @@ client.on("messageCreate", async message => {
 
     if (message.author.bot || message.webhookId) return;
     
-    // if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
+    if(client.user.id === "833349943539531806")
+        if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
 
     let prefix = client.prefixManager.getPrefix(message.guild.id);
 
@@ -101,13 +103,17 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     const content = message.content;
 
     await handler.executeCommand(command, discord_client, message, args);
-    await require('./adm/internos/eventos.js')({client, auto: true, content});
     await require('./adm/internos/log.js')({client, message, content});
 });
 
-handler.events.on("command_error", async e => {
+handler.events.on("command_error", async (e, message) => {
 
-    const channel = client.channels.cache.get('862015290433994752');
+    if(typeof message !== "undefined"){
+        const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
+        let epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+
+        message.reply(`${epic_embed_fail} | ${inicio[0]["epic_embed_fail"]}`); // Notificando o usuário
+    }
 
     const embed = new MessageEmbed({
         title: "> CeiraException",
@@ -115,7 +121,7 @@ handler.events.on("command_error", async e => {
         color: "RED"
     });
 
-    await channel.send({ embeds: [embed] });
+    await client.channels.cache.get('862015290433994752').send({ embeds: [embed] }); // Notificando o canal de erros
 
     console.log(e);
 });
@@ -140,4 +146,4 @@ handler.events.on("invalid_args", (args, message, command) => {
     message.reply(`${inicio[0]["error_1"]}: \`${prefix}${command.usage}\``);
 });
 
-client.login(token);
+client.login(token_2);

@@ -6,7 +6,8 @@
             "cooldown" : "segundos para executar esse comando novamente",
             "permissao_1" : "você não tem a permissão",
             "permissao_2" : "para executar este comando.",
-            "error_1" : "Errrrou, o uso correto do comando é"
+            "error_1" : "Errrrou, o uso correto do comando é",
+            "epic_embed_fail" : "Houve um erro ao tentar executar este comando, _não é comum mas acontece_, chamei os enceiradores para eliminar este baidu o quanto antes!\nDesculpas pelo inconveniente"
         }
     ],
     "diversao" : [

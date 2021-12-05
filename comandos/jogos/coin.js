@@ -26,7 +26,7 @@ module.exports = {
         let escolha = "";
         
         if(typeof args[0] != "undefined")
-            escolha = args[0].toLowerCase();
+            escolha = args[0].raw.toLowerCase();
 
         if(possibilidades.indexOf(escolha) === -1 || typeof args[0] == "undefined")
             return message.reply(`:warning: | ${jogos[1]["aviso_1"].replaceAll(".a", prefix)}`);

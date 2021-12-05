@@ -10,7 +10,7 @@ module.exports = {
     async execute(client, message, args) {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        const member1 = args[0].value, member2 = args[1].value;
+        const member1 = args[0].raw, member2 = args[1].raw;
 
         let titulo = diversao[2]["limda"];
         let num = 100;
@@ -36,7 +36,7 @@ module.exports = {
             else
                 titulo = diversao[2]["0perc"];
             
-            porcentagem = `${args[0]} e ${args[1]}\n\n`;
+            porcentagem = `${args[0].raw} e ${args[1].raw}\n\n`;
         }
 
         for(let i = 0; i <= num - 10; i += 10){

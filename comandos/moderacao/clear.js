@@ -10,6 +10,8 @@ module.exports = {
         const permissions_user = message.channel.permissionsFor(message.author);
         const permissions_bot = message.channel.permissionsFor(message.client.user);
 
+        console.log(args[0].value, typeof args[0].value);
+        
         if(!permissions_user.has("MANAGE_MESSAGES"))
             return message.reply(`:octagonal_sign: | ${moderacao[1]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             
@@ -23,7 +25,7 @@ module.exports = {
         if(args.length !== 1 || isNaN(args[0])) // Caracteres de texto ou sem entradas suficientes
             return message.reply(moderacao[1]["aviso_1"].replaceAll(".a", prefix));
     
-        if(args[0] < 1 || args[0] > 100) // Valor maior que 100 ou menor que 1
+        if(args[0].raw < 1 || args[0].raw > 100) // Valor maior que 100 ou menor que 1
             return message.reply(moderacao[1]["aviso_2"]);
     
         let texto = moderacao[1]["apagado_1"];
@@ -31,9 +33,9 @@ module.exports = {
         if(args[0].value === 1)
             texto = moderacao[1]["apagado_2"];
         
-        message.channel.bulkDelete(parseInt(args[0]))
+        message.channel.bulkDelete(parseInt(args[0].raw))
         .then(() => {
-            message.channel.send(`:hotsprings: | ${message.author}, \`${args[0]} ${texto}`).then(msg => setTimeout(() => msg.delete(), 5000));
+            message.channel.send(`:hotsprings: | ${message.author}, \`${args[0].raw} ${texto}`).then(msg => setTimeout(() => msg.delete(), 5000));
         })
         .catch(err => {
             message.reply(`:octagonal_sign: | ${moderacao[1]["error"]}`).then(msg => setTimeout(() => msg.delete(), 5000))

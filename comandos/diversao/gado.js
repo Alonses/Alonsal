@@ -12,7 +12,7 @@ module.exports = {
         const { gadisissimo } = require(`../../arquivos/json/text/${lang}/gado.json`);
 
         const num = Math.round((gadisissimo.length - 1) * Math.random());
-        const alvo = args[0].value;
+        const alvo = args[0].raw;
 
         if(client.user.id === alvo.id)
             return message.channel.send(`${message.author} ${diversao[3]["error_2"]}`);

@@ -12,12 +12,10 @@ module.exports = {
         
         let novo_perfil;
         
-        if(message.attachments.size > 0) {
+        if(message.attachments.size > 0)
             novo_perfil = message.attachments.first().url;
-        } else {
-            novo_perfil = args[0];
-            novo_perfil = novo_perfil.replace("<", "").replace(">", "");
-        }
+        else
+            novo_perfil = args[0].raw.replace("<", "").replace(">", "");
 
         if(!novo_perfil.includes(".png") && !novo_perfil.includes(".jpg") && !novo_perfil.includes(".jpeg") && !novo_perfil.includes(".bmp"))
             return message.reply(":octagonal_sign: | Envie um link/arquivo diferente de gif");

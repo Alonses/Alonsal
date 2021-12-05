@@ -32,7 +32,7 @@ module.exports = {
 
         let indices = [];
         args.forEach(valor => {
-            indices.push(valor.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
+            indices.push(valor.raw.normalize("NFD").replace(/[^a-zA-Zs]/g, ""));
         });
 
         pesquisa = indices.join(" ");

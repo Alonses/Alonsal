@@ -10,20 +10,19 @@ module.exports = {
         if(args.length < 2) return message.reply(utilitarios[7]["aviso_1"]);
         
         let substituto = "";
-        let substituir = args[0].toString();
+        let substituir = args[0].raw;
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if(message.content.startsWith(`${prefix}rp`) || message.content.startsWith(`${prefix}replace`) || message.content.startsWith(`${prefix}substituir`)){ // Substituindo caracteres
-            substituto = args[1].toString();
+            substituto = args[1].raw;
             args.shift();
         }
 
         args.shift();
         let string = args.join(" ");
 
-        string = string.replaceAll(substituir, substituto);
-        string = string.replace(/\s+/g, ' '); // Apaga espaços extras no meio do texto
+        string = string.replaceAll(substituir, substituto).replace(/\s+/g, ' ');
 
         if(string.replaceAll(" ", "").length === 0)
             string = `fix\n${utilitarios[7]["remove_tudo"]}`;

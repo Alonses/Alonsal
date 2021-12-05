@@ -6,7 +6,8 @@
             "cooldown" : "seconds to run this command again.",
             "permissao_1" : "you don't have the permission",
             "permissao_2" : "to run this command.",
-            "error_1" : "Wrrrooong, the correct use of the command is"
+            "error_1" : "Wrrrooong, the correct use of the command is",
+            "epic_embed_fail" : "An error occurred while trying to execute this command, I warned the team to eliminate this baidu as soon as possible. apologies for the inconvenience"
         }
     ],
     "diversao" : [
