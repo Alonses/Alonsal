@@ -8,14 +8,15 @@ module.exports = {
     aliases: [ "vatar", "perfil" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args){
+    async execute(client, message, args) {
+
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let user = message.mentions.users.first(); // Coleta o ID do usuário mencionado
 
         if(!user && args.length > 0){ 
-            if(isNaN(Number(args[0].value))) // Verifica se é um ID realmente
+            if (isNaN(Number(args[0].value))) // Verifica se é um ID realmente
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
             try{ // Busca pelo usuário no server inteiro

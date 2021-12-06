@@ -11,20 +11,19 @@ module.exports = {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        let content = args;
         let mensagem = "";
         let tipo = "Alonsal";
         let id_alvo;
 
         if(client.owners.includes(message.author.id)){
             try{
-                tipo = content[0].toString();
-                id_alvo = content[1].toString();
+                tipo = args[0].raw;
+                id_alvo = args[1].raw;
             }catch(e){
                 return await message.reply(`:octagonal_sign: | ${manutencao[3]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             }
 
-            mensagem = content.join(" ");
+            mensagem = args.join(" ");
             mensagem = mensagem.replace(id_alvo, "");
 
             try{
@@ -32,8 +31,8 @@ module.exports = {
                     client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
                 else if(tipo === "c"){
 
-                    let canal_alvo = client.channels.cache.get(id_alvo);
-                    let permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal informado
+                    const canal_alvo = client.channels.cache.get(id_alvo);
+                    const permissoes = canal_alvo.permissionsFor(message.client.user); // Permissões de fala para o canal informado
 
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
@@ -47,7 +46,7 @@ module.exports = {
             }
         }else{
             
-            mensagem = content.join(" ");
+            mensagem = args.join(" ");
 
             const msg_user = new MessageEmbed()
             .setTitle("> New Message :mailbox_with_mail:")
@@ -61,7 +60,7 @@ module.exports = {
             await message.reply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
         }
 
-        if(tipo === "c")
+        if (tipo === "c")
             tipo = client.channels.cache.get(id_alvo).name;
         else if(tipo === "u")
             tipo = client.users.cache.get(id_alvo).username;
@@ -70,7 +69,7 @@ module.exports = {
 
         let graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
 
-        if(graves > 0){
+        if (graves > 0){
             while(graves > 0){
                 mensagem = mensagem.replace("`", "\'");
                 graves--;
@@ -78,12 +77,12 @@ module.exports = {
         }
 
         const embed = new MessageEmbed()
-        .setTitle(manutencao[3]["aviso_2"])
-        .setColor(0x29BB8E)
-        .setDescription(manutencao[3]["conteudo_1"] +" `"+ tipo +"`\n\n"+ manutencao[3]["conteudo_2"] +" :: \n`"+ mensagem +"`")
-        .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
-        .setTimestamp();
-        
+            .setTitle(manutencao[3]["aviso_2"])
+            .setColor(0x29BB8E)
+            .setDescription(manutencao[3]["conteudo_1"] + " `" + tipo + "`\n\n" + manutencao[3]["conteudo_2"] + " :: \n`" + mensagem + "`")
+            .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
+            .setTimestamp();
+
         await client.users.cache.get(message.author.id).send({ embeds: [embed] });
         const permissions = message.channel.permissionsFor(message.client.user);
 

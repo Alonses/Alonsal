@@ -6,7 +6,7 @@ module.exports = {
     aliases: [ "website" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 

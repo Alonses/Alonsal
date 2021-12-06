@@ -7,14 +7,14 @@ module.exports = {
     aliases: [ "hm", "menuadm", "dm", "moderador", "mod" ],
     cooldown: 20,
     permissions: [ "ADMINISTRATOR" ],
-    execute(client, message, args) {
-
+    execute(client, message) {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
 
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-        
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
         let embed;
 
         if(idioma_adotado === "pt-br"){   

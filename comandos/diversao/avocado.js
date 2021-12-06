@@ -6,7 +6,7 @@ module.exports = {
     aliases: [ "vocado", "waterweight", "fault" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args){
+    execute(client, message){
         
         message.channel.send(gifs[Math.round((gifs.length - 1) * Math.random())]).then(() => {
             const permissions = message.channel.permissionsFor(message.client.user);

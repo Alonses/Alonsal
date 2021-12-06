@@ -7,7 +7,7 @@ module.exports = {
     aliases: [ "support", "patrocinio", "money", "premium" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
@@ -15,8 +15,8 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        let vergonha = emoji(emojis.vergonha);
-        let bolo = emoji(emojis.mc_bolo);
+        const vergonha = emoji(emojis.vergonha);
+        const bolo = emoji(emojis.mc_bolo);
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)

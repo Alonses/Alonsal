@@ -8,7 +8,7 @@ module.exports = {
     aliases: [ "svinfo" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const getDateDiff = require('../../adm/funcoes/diffdatas.js');
         const formata_data = require('../../adm/funcoes/formatadata.js');
@@ -19,29 +19,29 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        let boost_sv = emoji(emojis.boost);
-        let emoji_dancando = emoji(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]);
-        let figurinhas = emoji(emojis.bigchad);
+        const boost_sv = emoji(emojis.boost);
+        const emoji_dancando = emoji(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]);
+        const figurinhas = emoji(emojis.bigchad);
 
         let dono_sv = message.guild.ownerId;
-        let dono_membro = await message.guild.members.fetch(dono_sv);
+        const dono_membro = await message.guild.members.fetch(dono_sv);
         dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``;
 
         let icone_server = message.guild.iconURL({ size: 2048 });
 
-        let canais_texto = message.guild.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
-        let canais_voz = message.guild.channels.cache.filter((c) => c.type === "GUILD_VOICE").size;
-        let categorias = message.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size;
-        let qtd_canais = canais_texto + canais_voz;
-        
-        let qtd_membros = message.guild.memberCount;
+        const canais_texto = message.guild.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
+        const canais_voz = message.guild.channels.cache.filter((c) => c.type === "GUILD_VOICE").size;
+        const categorias = message.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size;
+        const qtd_canais = canais_texto + canais_voz;
+
+        const qtd_membros = message.guild.memberCount;
         const data_atual = new Date();
 
-        let data_entrada = formata_data(new Date(message.guild.joinedTimestamp), idioma_selecionado); // Entrada do bot no server
-        let diferenca_entrada = getDateDiff(new Date(message.guild.joinedTimestamp), data_atual, utilitarios);
+        const data_entrada = formata_data(new Date(message.guild.joinedTimestamp), idioma_selecionado); // Entrada do bot no server
+        const diferenca_entrada = getDateDiff(new Date(message.guild.joinedTimestamp), data_atual, utilitarios);
 
-        let data_criacao = formata_data(new Date(message.guild.createdAt), idioma_selecionado); // Criação do servidor
-        let diferenca_criacao = getDateDiff(new Date(message.guild.createdAt), data_atual, utilitarios);
+        const data_criacao = formata_data(new Date(message.guild.createdAt), idioma_selecionado); // Criação do servidor
+        const diferenca_criacao = getDateDiff(new Date(message.guild.createdAt), data_atual, utilitarios);
 
         if(icone_server !== null){
             icone_server = icone_server.replace(".webp", ".gif");

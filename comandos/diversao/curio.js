@@ -7,21 +7,21 @@ module.exports = {
     aliases: [ "curio", "c" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
-        if(lista.length == curiosidades.length) lista = [];
+        if (lista.length === curiosidades.length) lista = [];
         
-        do{
+        do {
             alvo = Math.round((curiosidades.length - 1) * Math.random());
-        }while(lista.includes(alvo));
+        } while(lista.includes(alvo));
 
         lista.push(alvo);
 
         let key = Object.keys(curiosidades[alvo]);
         
-        if(curiosidades[alvo][key] === null)
+        if (curiosidades[alvo][key] === null)
             message.channel.send(`:clipboard: | ${key}`);
-        else{
+        else {
             const link_extra = curiosidades[alvo][key];
 
             message.channel.send(`:clipboard: | ${key}`).then(message => { message.channel.send(link_extra)});

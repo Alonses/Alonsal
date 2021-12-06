@@ -6,7 +6,7 @@ module.exports = {
     aliases: [ "b" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    execute(client, message) {
         
         const num = Math.round((gifs.length - 1) * Math.random());
         

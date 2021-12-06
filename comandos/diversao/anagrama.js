@@ -10,9 +10,9 @@ module.exports = {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        if(args.length < 1) return message.reply(diversao[5]["aviso_1"].replace(".a", prefix));
+        if (args.length < 1) return message.reply(diversao[5]["aviso_1"].replace(".a", prefix));
 
-        let string = args.join(" ");
+        const string = args.join(" ");
         let cor_embed = 0x29BB8E;
 
         function duplicateCount(string) {
@@ -61,11 +61,11 @@ module.exports = {
             return arr;
         }
 
-        let anagrama_formado = [];
+        const anagrama_formado = [];
         let exib_formatado = "";
         let qtd_quebras = [];
-        let repeticoes = result > 3 ? 3 : result;
-        let combinacoes = result > 3 ? diversao[5]["combinacoes"]: diversao[5]["combinacao"];
+        const repeticoes = result > 3 ? 3 : result;
+        const combinacoes = result > 3 ? diversao[5]["combinacoes"] : diversao[5]["combinacao"];
 
         for(let i = 0; i < repeticoes; i++){
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''));
@@ -153,7 +153,7 @@ module.exports = {
             return arr;
         }
 
-        let anagrama_formado = [];
+        const anagrama_formado = [];
         let exib_formatado = "";
         let qtd_quebras = [];
 

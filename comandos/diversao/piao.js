@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    execute(client, message) {
         
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         
