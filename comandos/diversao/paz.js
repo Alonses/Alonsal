@@ -4,8 +4,7 @@ module.exports = {
     aliases: [ "pz" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
-                
+    execute(client, message) {
         message.channel.send('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263').then(() => {
             const permissions = message.channel.permissionsFor(message.client.user);
 

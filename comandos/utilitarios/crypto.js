@@ -9,8 +9,8 @@ module.exports = {
     async execute(client, message, args) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-        
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
         if(args.length < 2)
             return message.reply(utilitarios[11]["aviso_1"].replaceAll(".a", prefix));
 
@@ -22,7 +22,7 @@ module.exports = {
             
             resultado = `${utilitarios[11]["chave"]}: \`${args[0].raw}\` :: ${CryptoJS.AES.encrypt(texto, args[0].raw)}`;
         }else if(args.length === 2){
-            let bytes = CryptoJS.AES.decrypt(args[1], args[0].raw);
+            const bytes = CryptoJS.AES.decrypt(args[1], args[0].raw);
             resultado = bytes.toString(CryptoJS.enc.Utf8);
         }
 

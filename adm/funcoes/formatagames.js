@@ -2,7 +2,7 @@ module.exports = (tipo_anun, item1, item2, data, valor_total, logo_plat, platafo
 
     let texto_formatado;
     let nome_item_2 = "";
-    let nome_item = item1.replaceAll("_", " ");
+    const nome_item = item1.replaceAll("_", " ");
 
     if(typeof item2 !== "undefined")
         nome_item_2 = item2.replaceAll("_", " ");

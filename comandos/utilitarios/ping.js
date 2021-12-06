@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "p" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const { emojis } = require('../../arquivos/json/text/emojis.json');
         
@@ -18,7 +18,7 @@ module.exports = {
         const susto2 = emoji(emojis.susto2);
 
         const m = await message.reply("Ping?");
-        let delay = m.createdTimestamp - message.createdTimestamp;
+        const delay = m.createdTimestamp - message.createdTimestamp;
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_1"]} ${dancando_thanos}`;
         

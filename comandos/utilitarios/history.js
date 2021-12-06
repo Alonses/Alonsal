@@ -39,7 +39,7 @@ module.exports = {
             if(!args[0].raw.includes("-")) // Formato incorreto
                 return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
 
-            let data_pesquisada = args[0].raw.split("-");
+            const data_pesquisada = args[0].raw.split("-");
             dia = data_pesquisada[0];
             mes = data_pesquisada[1];
 
@@ -59,7 +59,7 @@ module.exports = {
                 url_completa += `${mes}/${dia}`;
                 data_informada = `${mes}/${dia}`;
 
-                let troca = dia;
+                const troca = dia;
                 dia = mes;
                 mes = troca;
             }
@@ -93,7 +93,7 @@ module.exports = {
             for(let i = 0; i < alvos.length; i++){ // Separando os valores
 
                 data = alvos[i].split("<div class=\"field field--name-field-date field--type-datetime field--label-hidden field__item\">")[1];
-                let ano_materia = data.slice(0, 4);
+                const ano_materia = data.slice(0, 4);
 
                 acontece = alvos[i].split("hreflang=\"pt-br\">")[1];
                 acontece = acontece.split("</a>")[0];
@@ -156,7 +156,7 @@ module.exports = {
 
                 if(evento_escolhido === ""){
                     do{ // Sorteando o evento
-                        let importancia = Math.round(Math.random());
+                        const importancia = Math.round(Math.random());
 
                         if(importancia > 0)
                             num = Math.round((datas.length - 1) * Math.random());

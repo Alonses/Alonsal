@@ -4,19 +4,19 @@ module.exports = {
     name: "reverso",
     description: "Inverta ou desinverta caracteres",
     aliases: [ "rev", "inverso", "reverter", "reverse" ],
-    usage: "rev <suamensagem>",
+    usage: "rev <any>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         if(args.length > 0){
-            let ordena = args.join(" ").toLowerCase();
+            const ordena = args.join(" ").toLowerCase();
 
             let texto = ordena.split('');
             texto = texto.reverse();
 
-            let texto_ordenado = texto.join("");
+            const texto_ordenado = texto.join("");
 
             const embed = new MessageEmbed()
                 .setTitle(':arrow_backward: '+ utilitarios[5]["reverso"])

@@ -4,16 +4,16 @@ module.exports = {
     aliases: [ "language", "lang" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
         
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id))
+        if (!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id))
             return message.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)); // Libera configuração para o Slondo e adms apenas
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-        let idioma_selecionado;        
-        let novo_idioma = message.content.split(" ")[1];
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+        let idioma_selecionado;
+        const novo_idioma = message.content.split(" ")[1];
 
         if(novo_idioma !== "pt" && novo_idioma !== "en")
             return message.reply(`:interrobang: | ${moderacao[0]["error"].replaceAll(".a", prefix)}`);

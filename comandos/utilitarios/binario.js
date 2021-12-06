@@ -5,7 +5,7 @@ module.exports = {
     description: "Codifique e decodifique do binário",
     aliases: [ "bn" ],
     cooldown: 3,
-    usage: "bn <decode/encode> <text>",
+    usage: "bn <string> <any>",
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
@@ -14,12 +14,11 @@ module.exports = {
 
         if (args[0].raw !== "encode" && args[0].raw !== "decode") return message.reply(utilitarios[3]["aviso"]);
 
-        let operation = args[0].raw;
         let embed;
 
         args.shift();
         
-        switch (operation) {
+        switch (args[0].raw) {
             case "encode":
                 embed = new MessageEmbed()
                     .setTitle(utilitarios[3]["codificado"])

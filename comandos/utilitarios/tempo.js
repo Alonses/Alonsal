@@ -16,22 +16,20 @@ module.exports = {
     async execute(client, message, args) {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
-        
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
-        
+
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
         const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
 
         let pesquisa = "";
         const pesquisa_bruta = `\"${args.join(" ").replaceAll("\"", "")}"`;
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        let emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
+        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
 
         if(args.length < 1) // Pesquisa sem argumentos
             return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
 
-        let indices = [];
+        const indices = [];
 
         if(!args[0].raw.startsWith("\"")) // Pesquisa bruta
             args.forEach(valor => { // Pesquisa formatada
@@ -57,7 +55,7 @@ module.exports = {
             else if(res.cod === '429') // Erro da API
                 message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
             else{
-                let url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`;
+                const url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`;
 
                 fetch(url_hora) // Buscando o horário local
                 .then(response => response.json())
@@ -73,8 +71,8 @@ module.exports = {
 
                     if(typeof res.sys.country !== "undefined"){
                         bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`;
-                        
-                        let cod_pais = getCountryISO3(res.sys.country);
+
+                        const cod_pais = getCountryISO3(res.sys.country);
                         nome_pais = ` - ${translations[cod_pais]}`;
                         
                         if(res.sys.country === "AQ")
@@ -105,10 +103,10 @@ module.exports = {
                     let tempo_atual = res.weather[0].description; // Clima atual
                     tempo_atual = tempo_atual.charAt(0).toUpperCase() + tempo_atual.slice(1);
 
-                    let minutos = ("0" + horario_local.getMinutes()).substr(-2); // Preservar o digito 0
-                    let hora = ("0" + horario_local.getHours()).substr(-2); // Preservar o digito 0
-                    let dia = horario_local.getDate();
-                    
+                    const minutos = ("0" + horario_local.getMinutes()).substr(-2); // Preservar o digito 0
+                    const hora = ("0" + horario_local.getHours()).substr(-2); // Preservar o digito 0
+                    const dia = horario_local.getDate();
+
                     let mes = horario_local.toLocaleString('pt', { month: 'long' });
                     
                     if(idioma_adotado === "en-us")
@@ -170,7 +168,7 @@ module.exports = {
                     
                     horario_local = `:clock${hours}: **${utilitarios[8]["hora_local"]}:** \`${hora}:${minutos} | ${dia} ${utilitarios[8]["de"]} ${mes}\``;
 
-                    let direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
+                    const direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
                     let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
                     let infos_chuva = "";
                     let chuva_troll = "";

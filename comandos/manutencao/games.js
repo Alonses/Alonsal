@@ -21,7 +21,7 @@ module.exports = {
         if(message.author.id !== "665002572926681128") return;
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
-        var canais_clientes = [];
+        const canais_clientes = [];
 
         let tipo_anun = "";
         percorrer(canal_games);
@@ -55,7 +55,7 @@ module.exports = {
             
             for(let i = 0; i < canais_clientes.length; i++){
                 try{
-                    let nome_canal = await client.channels.cache.get(canais_clientes[i]);
+                    const nome_canal = await client.channels.cache.get(canais_clientes[i]);
 
                     if(nome_canal !== undefined)
                         nome_canais += `\n:globe_with_meridians: \`${nome_canal.guild.name}\` -> :placard: \`${nome_canal.name}\``;
@@ -76,8 +76,8 @@ module.exports = {
 
         if(args.length < 4)
             return message.reply(`Informe pelo menos como \`${prefix}mg <nome_jogo> 21/01 50,00 <url> <img_anexo>\`\nOu utilize o comando\`${prefix}mg h\` para ver os aliases deste comando`);
-        
-        let nome_jogo = args[0].raw.replaceAll("_", " ");
+
+        const nome_jogo = args[0].raw.replaceAll("_", " ");
 
         const matches = args[3].raw.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com/);
 
@@ -97,8 +97,8 @@ module.exports = {
 
         if(args.length > 4)
             valor_total += parseFloat((args[5].raw).replace(",", "."));
-        
-        let img_game = new MessageAttachment(url);
+
+        const img_game = new MessageAttachment(url);
 
         valor_total = valor_total.toFixed(2);
         let canais_recebidos = 0;
@@ -106,7 +106,7 @@ module.exports = {
         for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
             try {
                 let nome_jogo_2 = "";
-                let link_1 = args[3].raw;
+                const link_1 = args[3].raw;
                 let link_2 = "";
 
                 if(typeof args[4] !== "undefined"){
@@ -116,8 +116,8 @@ module.exports = {
 
                 let servidor = await client.channels.cache.get(canais_clientes[i]);
                 servidor = servidor.guild.id;
-                
-                let lang_server = await client.idioma.getLang(message.guild.id);
+
+                const lang_server = await client.idioma.getLang(message.guild.id);
                 let texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1].raw, valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
                 
                 if(typeof canais_clientes[i + 1] !== "undefined")
@@ -128,7 +128,7 @@ module.exports = {
                 else
                     texto_anuncio += `\n<< <${link_1}> >>`;
 
-                let canal_alvo = client.channels.cache.get(canais_clientes[i]);
+                const canal_alvo = client.channels.cache.get(canais_clientes[i]);
 
                 if(canal_alvo.type === "GUILD_TEXT" || canal_alvo.type === "GUILD_NEWS"){
                     const permissions = canal_alvo.permissionsFor(client.user);
