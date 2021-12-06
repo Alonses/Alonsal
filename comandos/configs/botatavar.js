@@ -8,11 +8,11 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
     
-        if(!client.owners.includes(message.author.id)) return;
+        if (!client.owners.includes(message.author.id)) return;
         
         let novo_perfil;
         
-        if(message.attachments.size > 0)
+        if (message.attachments.size > 0)
             novo_perfil = message.attachments.first().url;
         else
             novo_perfil = args[0].raw.replace("<", "").replace(">", "");

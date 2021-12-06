@@ -12,24 +12,24 @@ module.exports = {
         let escolhas = "";
         let nota_rodape = "";
 
-        if(args.length < 1) return message.reply(jogos[4]["aviso_2"]);
+        if (args.length < 1) return message.reply(jogos[4]["aviso_2"]);
 
-        if(!args[0].raw.includes("[")){
+        if (!args[0].raw.includes("[")){
             if(args.length < 2) return message.reply(jogos[4]["aviso_1"]);
         
             escolhas = "`"+ args[Math.round((args.length - 1) * Math.random())] +"`";
         }else{
 
-            if(args.length - 1 < 2) return message.reply(jogos[4]["aviso_1"]);
+            if (args.length - 1 < 2) return message.reply(jogos[4]["aviso_1"]);
 
             const opcoes = args;
-            let qtd_pers = args[0].raw.replace("[", "");
+            const qtd_pers = args[0].raw.replace("[", "");
 
-            if(qtd_pers == 0 || isNaN(qtd_pers)) return message.reply(`:octagonal_sign: | ${jogos[4]["aviso_2"]}`);
+            if (qtd_pers === 0 || isNaN(qtd_pers)) return message.reply(`:octagonal_sign: | ${jogos[4]["aviso_2"]}`);
 
             opcoes.shift(); // Remove o indicador de qtd de escolhas
 
-            if(qtd_pers == opcoes.length)
+            if (qtd_pers === opcoes.length)
                 nota_rodape = jogos[4]["escolho_todos"];
 
             for(let i = 0; i < qtd_pers; i++){
@@ -37,7 +37,7 @@ module.exports = {
                 if(i + 1 >= qtd_pers)
                     escolhas += " & ";
 
-                let item = opcoes[Math.round((opcoes.length - 1) * Math.random())];
+                const item = opcoes[Math.round((opcoes.length - 1) * Math.random())];
                 escolhas += `\`${item}\``;
 
                 if(i + 2 < qtd_pers)

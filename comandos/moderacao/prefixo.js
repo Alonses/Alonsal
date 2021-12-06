@@ -8,9 +8,9 @@ module.exports = {
 
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         
-        if(!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id)) return message.reply(`:octagonal_sign: | ${moderacao[5]["moderadores"]}`); // Libera configuração para o proprietários e adms apenas
+        if (!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id)) return message.reply(`:octagonal_sign: | ${moderacao[5]["moderadores"]}`); // Libera configuração para o proprietários e adms apenas
 
-        if(args.length !== 1)
+        if (args.length !== 1)
             return message.reply(`:interrobang: | ${moderacao[5]["error_1"]} \`+px\``).then(msg => setTimeout(() => msg.delete(), 5000));
         
         client.prefixManager.setPrefix(message.guild.id, args[0].raw)

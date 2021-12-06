@@ -3,8 +3,8 @@ module.exports = (date1, date2, utilitarios) => {
     const now = new Date(date2); // Data de hoje
     const past = new Date(date1); // Outra data no passado
     const timediff = Math.abs(now.getTime() - past.getTime()); // Subtrai uma data pela outra
- 
-    let diferencas = [];
+
+    const diferencas = [];
     const diferenca_datas = new Date(timediff);
     
     diferencas.push(diferenca_datas.getYear()); // Ano 0

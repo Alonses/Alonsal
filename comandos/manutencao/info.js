@@ -9,11 +9,11 @@ module.exports = {
     aliases: [ "" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
         let qtd_comandos = "";
 
         const emoji_rainha = client.emojis.cache.get(emojis.dancando_elizabeth).toString();

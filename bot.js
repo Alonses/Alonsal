@@ -58,7 +58,7 @@ client.on("messageCreate", async message => {
     if(client.user.id === "833349943539531806")
         if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
 
-    let prefix = client.prefixManager.getPrefix(message.guild.id);
+    const prefix = client.prefixManager.getPrefix(message.guild.id);
 
     if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user);
@@ -106,11 +106,11 @@ handler.events.on("command_executed", async (command, discord_client, message, a
     await require('./adm/internos/log.js')({client, message, content});
 });
 
-handler.events.on("command_error", async (e, command, client, message, args) => {
+handler.events.on("command_error", async (e, command, client, message) => {
 
     if(typeof message !== "undefined"){
         const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
-        let epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         message.reply(`${epic_embed_fail} | ${inicio[0]["epic_embed_fail"]}`); // Notificando o usuário
     }

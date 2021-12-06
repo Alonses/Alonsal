@@ -10,11 +10,9 @@ module.exports = {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const permissions = message.channel.permissionsFor(message.client.user);
-        
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
-        
+
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
         if(message.attachments.size > 1 || (message.attachments.size === 0 && args.length < 1)){
             let text_aviso = `:hotsprings: | ${utilitarios[6]["aviso_1"]}`;
 
@@ -25,7 +23,7 @@ module.exports = {
             return;
         }
 
-        let conteudo = (message.content).toLowerCase();
+        const conteudo = (message.content).toLowerCase();
 
         if(conteudo.includes("hora certa") || conteudo.includes("right time")){
             const hora_certa = new MessageAttachment("arquivos/songs/hora_certa.mp3");
@@ -51,8 +49,8 @@ module.exports = {
             if(!permissions.has("SEND_TTS_MESSAGES"))
                 return message.reply(`:octagonal_sign: | ${utilitarios[6]["error_1"]}`);
 
-            message.channel.send(`${utilitarios[6]["reproducao_1"]} [ ${message.author} ]`);    
-            let mensagem = message.content.replace(`${prefix}rep`, "");
+            message.channel.send(`${utilitarios[6]["reproducao_1"]} [ ${message.author} ]`);
+            const mensagem = message.content.replace(`${prefix}rep`, "");
 
             message.channel.send(mensagem, {
                 tts: true

@@ -6,11 +6,11 @@ module.exports = {
     aliases: [ "text", "txt"],
     cooldown: 30,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    execute(client, message) {
 
         const num = Math.round((textoes.length - 1) * Math.random());
 
-        let key = Object.keys(textoes[num]);
+        const key = Object.keys(textoes[num]);
 
         message.channel.send(key.toString());
 

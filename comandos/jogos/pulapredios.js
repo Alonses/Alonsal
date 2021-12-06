@@ -7,7 +7,7 @@ module.exports = {
     aliases: [ "pula", "jogo" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    execute(client, message) {
 
         const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const emoji_pula = client.emojis.cache.get(emojis.pula_2).toString();

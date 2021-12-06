@@ -15,16 +15,14 @@ module.exports = {
         
         if(!message.member.permissions.has("ADMINISTRATOR") && !client.owners.includes(message.author.id)) return message.reply(moderacao[5]["moderadores"]); // Libera configuração para proprietários e adms apenas
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-        if(!prefix)
-            prefix = ".a";
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         function constructJson(jsonGuild, arrayValores){
             return { [jsonGuild] : arrayValores } 
         }
-        
-        let outputArray = []; // Transfere todos os dados do JSON para um array
-        for(let element in canal_games){
+
+        const outputArray = []; // Transfere todos os dados do JSON para um array
+        for(const element in canal_games){
 
             const canal = canal_games[element][0];
             const cargo = canal_games[element][1];
@@ -36,13 +34,12 @@ module.exports = {
             }
         }
 
-        let cargo_escolhido = args[0].raw;
-        cargo_escolhido = cargo_escolhido.replace("<@&", "").replace(">", "").replace("!", "");
+        const cargo_escolhido = args[0].raw.replace("<@&", "").replace(">", "").replace("!", "");
 
-        for(let i = 0; i < outputArray.length; i++){ // Procura pelo ID do server e altera o idioma
-            let obj = outputArray[i];
+        for (let i = 0; i < outputArray.length; i++) { // Procura pelo ID do server e altera o idioma
+            const obj = outputArray[i];
 
-            let key = Object.keys(canal_games);
+            const key = Object.keys(canal_games);
 
             if(key[i] === message.guild.id && args[0].raw !== "rem") {
                 obj[message.guild.id][0] = message.channel.id;

@@ -8,14 +8,14 @@ module.exports = {
         const lang = client.idioma.getLang(message.guild.id);
         const { jogos } = require(`../../arquivos/idiomas/${lang}.json`);
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
-            
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
+
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
         if(lang === "en-us")
             jooj = ["rock", "paper", "scissors", "rock"];
 
-        let emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
+        const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
         let player = Math.round(2 * Math.random());
         
         if(typeof args[0] != "undefined")
@@ -54,14 +54,14 @@ module.exports = {
         const { jogos } = require(`../../arquivos/idiomas/${lang}.json`);
 
         const escolha = params.get("escolha");
-        let prefix = client.prefixManager.getPrefix(data.guild_id);
+        const prefix = client.prefixManager.getPrefix(data.guild_id);
 
         let jooj = ["pedra", "papel", "tesoura", "pedra"];
 
         if(lang === "en-us")
             jooj = ["rock", "paper", "scissors", "rock"];
 
-        let emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
+        const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"];
         let player = Math.round(2 * Math.random());
 
         if(typeof escolha != "undefined")

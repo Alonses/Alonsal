@@ -10,7 +10,7 @@ module.exports = async (client, message) => {
     if (!existsSync(`./arquivos/data/rank/${message.guild.id}`))
         mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true });
 
-    let user = {
+    const user = {
         id: message.author.id,
         nickname: message.author.username,
         lastValidMessage: 0,
