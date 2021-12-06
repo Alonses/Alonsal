@@ -4,18 +4,22 @@ module.exports = {
     name: "mail",
     description: "Envie mensagens para o alonsal",
     aliases: [ "" ],
-    usage: "mail <suamensagem>",
+    usage: "mail <any>",
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         let mensagem = "";
         let tipo = "Alonsal";
         let id_alvo;
 
         if(client.owners.includes(message.author.id)){
+
+            if(args.length < 2) return message.reply("Informe o tipo de alvo ( `c`, `u` ), o ID do seu alvo e a mensagem para enviar\nPor exemplo, `.amail c 4002892 oito e sete!`".replace(".a", prefix));
+
             try{
                 tipo = args[0].raw;
                 id_alvo = args[1].raw;
@@ -23,8 +27,8 @@ module.exports = {
                 return await message.reply(`:octagonal_sign: | ${manutencao[3]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
             }
 
-            mensagem = args.join(" ");
-            mensagem = mensagem.replace(id_alvo, "");
+            args.shift();
+            mensagem = args.join(" ").replace(id_alvo, "").replaceAll("`", "\'");
 
             try{
                 if(tipo === "u")
@@ -46,7 +50,7 @@ module.exports = {
             }
         }else{
             
-            mensagem = args.join(" ");
+            mensagem = args.join(" ").replaceAll("`", "\'");
 
             const msg_user = new MessageEmbed()
             .setTitle("> New Message :mailbox_with_mail:")
@@ -64,17 +68,6 @@ module.exports = {
             tipo = client.channels.cache.get(id_alvo).name;
         else if(tipo === "u")
             tipo = client.users.cache.get(id_alvo).username;
-
-        const mensagem2 = mensagem;
-
-        let graves = mensagem2.split("`").length - 1; // separa em blocos e confere se são válidos para uma formatação do discord
-
-        if (graves > 0){
-            while(graves > 0){
-                mensagem = mensagem.replace("`", "\'");
-                graves--;
-            }
-        }
 
         const embed = new MessageEmbed()
             .setTitle(manutencao[3]["aviso_2"])
