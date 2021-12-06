@@ -15,16 +15,16 @@ module.exports = {
             return client.emojis.cache.get(id).toString();
         }
 
-        let emoji_pula = emoji(emojis.pula_2);
-        let emoji_rainha = emoji(emojis.dancando_elizabeth);
-        let emoji_bolo = emoji(emojis.mc_bolo);
-        let emoji_mc = emoji(emojis.mc_earth);
-        let emoji_steam = emoji(emojis.lg_steam);
+        const emoji_pula = emoji(emojis.pula_2);
+        const emoji_rainha = emoji(emojis.dancando_elizabeth);
+        const emoji_bolo = emoji(emojis.mc_bolo);
+        const emoji_mc = emoji(emojis.mc_earth);
+        const emoji_steam = emoji(emojis.lg_steam);
         let bandeira_trad;
 
-        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
 
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
         let embed_inicial, embed_diversao, embed_utilitarios, embed_jogos, embed_manutencao;
             
         if(idioma_selecionado === "pt-br"){
@@ -96,7 +96,7 @@ module.exports = {
         if(args.length < 1)
             return message.reply({ embeds: [embed_inicial] });
 
-        if(isNaN(parseInt(args[0]).raw) || (parseInt(args[0].raw) < 0 || parseInt(args[0].raw) > 4))
+        if(isNaN(parseInt(args[0].raw)) || (parseInt(args[0].raw) < 0 || parseInt(args[0].raw) > 4))
             return message.reply(":warning: | "+ manutencao[7]["aviso_1"]);
 
         message.reply({ embeds: [pages[parseInt(args[0].raw)]] });

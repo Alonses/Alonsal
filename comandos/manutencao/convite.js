@@ -6,7 +6,7 @@ module.exports = {
     aliases: [ "cvv", "invite" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
@@ -20,7 +20,7 @@ module.exports = {
         .setFooter("Alonsal");
         
         const m = await message.channel.send(`${message.author} `+ manutencao[0]["despachei"]);
-        m.react('📫');
+        await m.react('📫');
         
         client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }

@@ -10,7 +10,7 @@ module.exports = {
         if(args.length < 2) return message.reply(utilitarios[7]["aviso_1"]);
         
         let substituto = "";
-        let substituir = args[0].raw;
+        const substituir = args[0].raw;
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 

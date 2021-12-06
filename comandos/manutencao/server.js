@@ -6,10 +6,10 @@ module.exports = {
     aliases: [ "hub" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        let emoji_rainha = client.emojis.cache.get('854830529928757269').toString();
+        const emoji_rainha = client.emojis.cache.get('854830529928757269').toString();
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)

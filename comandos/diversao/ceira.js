@@ -6,8 +6,7 @@ module.exports = {
     aliases: [ "java" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
-
+    execute(client, message) {
         const ceira = new MessageAttachment('arquivos/img/ceira.png');
         message.channel.send({ content: "Press :regional_indicator_f: :pensive: :fist:", files: [ceira] });
 

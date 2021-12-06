@@ -7,12 +7,12 @@ module.exports = {
     aliases: [ "sus", "stus" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args){
+    async execute(client, message, args) {
         const idioma_definido = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         try{
-            let usuario_alvo = `https://steamcommunity.com/id/${args[0].raw}`;
+            const usuario_alvo = `https://steamcommunity.com/id/${args[0].raw}`;
 
             fetch(usuario_alvo)
             .then(response => response.text())
@@ -51,7 +51,7 @@ module.exports = {
                     bandeira_user = "";
                 }
 
-                let nome_user = status;
+                const nome_user = status;
                 let avatar_user = res.split("<div class=\"playerAvatarAutoSizeInner\">")[1];
 
                 if(avatar_user.includes("<div class=\"profile_avatar_frame\">")) // Verifica se o usuário possui decoração sob o avatar
@@ -104,7 +104,7 @@ module.exports = {
                 
                 try{
                     if(res.includes("<div class=\"label\">Achievements</div>")){
-                        let blocos_conquistas = res.split("<div class=\"label\">Achievements</div>");
+                        const blocos_conquistas = res.split("<div class=\"label\">Achievements</div>");
 
                         conquistas_user = blocos_conquistas[0];
 
@@ -135,7 +135,7 @@ module.exports = {
                     tempo_semanas = tempo_semanas.split("</h2>")[0];
                     tempo_semanas = tempo_semanas.replace("<h2>", "");
 
-                    let descriminador_tempo_2 = tempo_semanas.split(" ")[1];
+                    const descriminador_tempo_2 = tempo_semanas.split(" ")[1];
                     tempo_semanas = parseFloat(tempo_semanas.split(" ")[0]);
 
                     if(idioma_definido === "pt-br")
@@ -201,7 +201,7 @@ module.exports = {
 
                 let descriminador_tempo;
                 if (res.includes("<div class=\"showcase_item_detail_title\">")) {
-                    let dados_jogo_fav = res.split("<div class=\"showcase_item_detail_title\">")[1];
+                    const dados_jogo_fav = res.split("<div class=\"showcase_item_detail_title\">")[1];
 
                     jogo_favorito = dados_jogo_fav;
                     jogo_favorito = jogo_favorito.split("</a>")[0];
@@ -263,43 +263,43 @@ module.exports = {
                 if(reviews_user !== "-")
                     jogos_user_embed += `\n**${utilitarios[16]["analises"]}: **\`${reviews_user}\``;
 
-                let usuario_steam = new MessageEmbed()
-                .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
-                .setURL(usuario_alvo)
-                .setAuthor("Steam", "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0")
-                .setThumbnail(avatar_user)
-                .setImage(background_user)
-                .setColor(0x29BB8E)
-                .addFields(
-                    {
-                        name: `:ninja: ${utilitarios[16]["nivel"]}`, 
-                        value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``, 
-                        inline: true
-                    },
-                    {
-                        name: `:video_game: ${utilitarios[16]["jogos"]}`, 
-                        value: `${jogos_user_embed}`, 
-                        inline: true
-                    },
-                    {
-                        name: `:red_envelope: ${utilitarios[16]["insignias"]}`, 
-                        value: `**Total: **\`${insignias_user}\``, 
-                        inline: true
-                    },
-                )
-                .addFields(
-                    {
-                        name: `:trophy: ${utilitarios[16]["conquistas"]}`, 
-                        value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``, 
-                        inline: true
-                    },
-                    {
-                        name: ":mobile_phone_off: Status", 
-                        value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``, 
-                        inline: true
-                    }
-                )
-                .setFooter(nota_rodape, message.author.avatarURL({ dynamic:true }));
+                const usuario_steam = new MessageEmbed()
+                    .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
+                    .setURL(usuario_alvo)
+                    .setAuthor("Steam", "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0")
+                    .setThumbnail(avatar_user)
+                    .setImage(background_user)
+                    .setColor(0x29BB8E)
+                    .addFields(
+                        {
+                            name: `:ninja: ${utilitarios[16]["nivel"]}`,
+                            value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``,
+                            inline: true
+                        },
+                        {
+                            name: `:video_game: ${utilitarios[16]["jogos"]}`,
+                            value: `${jogos_user_embed}`,
+                            inline: true
+                        },
+                        {
+                            name: `:red_envelope: ${utilitarios[16]["insignias"]}`,
+                            value: `**Total: **\`${insignias_user}\``,
+                            inline: true
+                        },
+                    )
+                    .addFields(
+                        {
+                            name: `:trophy: ${utilitarios[16]["conquistas"]}`,
+                            value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``,
+                            inline: true
+                        },
+                        {
+                            name: ":mobile_phone_off: Status",
+                            value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``,
+                            inline: true
+                        }
+                    )
+                    .setFooter(nota_rodape, message.author.avatarURL({dynamic: true}));
 
                 if(criacoes_user !== "")
                     usuario_steam.addFields(

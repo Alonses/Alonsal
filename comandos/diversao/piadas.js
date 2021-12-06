@@ -7,13 +7,13 @@ module.exports = {
     aliases: [ "piada", "joke", "risos", "j" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
+    execute(client, message) {
         
-        if(lista.length == piadas.length) lista = [];
+        if (lista.length === piadas.length) lista = [];
 
-        do{
+        do {
             alvo = Math.round((piadas.length - 1) * Math.random());
-        }while(lista.includes(alvo));
+        } while(lista.includes(alvo));
 
         lista.push(alvo);
                 

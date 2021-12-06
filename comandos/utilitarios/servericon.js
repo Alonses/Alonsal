@@ -7,7 +7,7 @@ module.exports = {
     aliases: [ "svicon", "icon" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args){
+    async execute(client, message) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 

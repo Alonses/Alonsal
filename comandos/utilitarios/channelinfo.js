@@ -32,12 +32,12 @@ module.exports = {
         }
 
         let nsfw = utilitarios[9]["nao"];
-        if(canal.nsfw)
+        if (canal.nsfw)
             nsfw = utilitarios[9]["sim"];
         
         const data_atual = new Date();
-        let data_criacao = formata_data(new Date(canal.createdAt), idioma_selecionado); // Criação do canal
-        let diferenca_criacao = getDateDiff(new Date(canal.createdAt), data_atual, utilitarios);
+        const data_criacao = formata_data(new Date(canal.createdAt), idioma_selecionado); // Criação do canal
+        const diferenca_criacao = getDateDiff(new Date(canal.createdAt), data_atual, utilitarios);
         let userlimit, bitrate = "";
 
         let topico = `\`\`\`${canal.topic}\`\`\``;
@@ -63,22 +63,22 @@ module.exports = {
             if(res.status !== 200)
                 icone_server = icone_server.replace('.gif', '.webp')
 
-            let infos_ch = new MessageEmbed()
-            .setAuthor(canal.name, icone_server)
-            .setColor(0x29BB8E)
-            .setDescription(topico)
-            .addFields(
-                { 
-                    name: `:globe_with_meridians: **${utilitarios[15]["id_canal"]}**`,
-                    value: `\`${canal.id}\``,
-                    inline: true
-                },
-                { 
-                    name: `:label: **${utilitarios[15]["mencao"]}**`,
-                    value: `\`<#${canal.id}>\``,
-                    inline: true
-                },
-            );
+            const infos_ch = new MessageEmbed()
+                .setAuthor(canal.name, icone_server)
+                .setColor(0x29BB8E)
+                .setDescription(topico)
+                .addFields(
+                    {
+                        name: `:globe_with_meridians: **${utilitarios[15]["id_canal"]}**`,
+                        value: `\`${canal.id}\``,
+                        inline: true
+                    },
+                    {
+                        name: `:label: **${utilitarios[15]["mencao"]}**`,
+                        value: `\`<#${canal.id}>\``,
+                        inline: true
+                    },
+                );
 
             if(bitrate === "")
                 infos_ch.addFields(

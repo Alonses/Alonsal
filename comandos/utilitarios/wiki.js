@@ -14,12 +14,12 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         let counter = 0;
-        let content = args.join(" ").toLowerCase();
+        const content = args.join(" ").toLowerCase();
 
         if(content.includes("slondo")) // Pesquisa por slondo
             return message.reply(utilitarios[1]["wiki_slondo"]);
 
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(args.length > 0){
             const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`;
@@ -39,7 +39,7 @@ module.exports = {
             for(const topic of res.RelatedTopics){
                 counter++;
 
-                let text = `${topic.Text.substring(0, 100)}...`;
+                const text = `${topic.Text.substring(0, 100)}...`;
 
                 fields.push({
                     name: text,

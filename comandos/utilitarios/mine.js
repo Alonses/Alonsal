@@ -18,8 +18,8 @@ module.exports = {
         let pesquisa = args.join(" ");
         const nome_interno = pesquisa.split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
         pesquisa = pesquisa.charAt(0).toUpperCase() + pesquisa.slice(1);
-        
-        let random = pesquisa === "";
+
+        const random = pesquisa === "";
 
         fetch('https://raw.githubusercontent.com/brnd-21/inventario-mine/main/JSON/dados_locais.json')
         .then(response => response.json())
@@ -73,7 +73,7 @@ module.exports = {
                     if (lista_itens[i].coletavel === 0)
                         colet_suv = utilitarios[9]["nao"];
 
-                    let fields = [];
+                    const fields = [];
 
                     if (lista_itens[i].descricao != null) {
                         if (lista_itens[i].descricao.includes("[&")) { // Poções
@@ -116,7 +116,7 @@ module.exports = {
                                     nome_item = lista_itens[i].nome_interno.replaceAll("_", " ").replace(/^\w/, (c) => c.toUpperCase());
 
                                 if (idioma_selecionado === "en-us") {
-                                    let traduz_descri = valores_item.split("\n");
+                                    const traduz_descri = valores_item.split("\n");
 
                                     for (let k = 0; k < traduz_descri.length; k++) {
 
@@ -186,7 +186,7 @@ module.exports = {
                 }
             }
 
-            let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+            const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
             message.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`);
         })

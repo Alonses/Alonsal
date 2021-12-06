@@ -1,13 +1,12 @@
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require('discord.js');
 const fetch = require("node-fetch");
-const { UV_FS_O_FILEMAP } = require("constants");
 
 const medals = {
     0: ":first_place:",
     1: ":second_place:",
     2: ":third_place:"
-}
+};
 
 module.exports = {
     name: "rank",
@@ -21,7 +20,7 @@ module.exports = {
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         let rodape = message.author.username;
-        let users = [];
+        const users = [];
 
         for (const file of readdirSync(`./arquivos/data/rank/${message.guild.id}`)) {
             users.push(require(`../../arquivos/data/rank/${message.guild.id}/${file}`));
@@ -33,21 +32,24 @@ module.exports = {
 
         users.sort();
 
-        let usernames = [];
-        let experiencias = [];
-        let levels = [];
+        const usernames = [];
+        const experiencias = [];
+        const levels = [];
+
         let i = 0;
-        let paginas = (users.length / 6) - parseInt(users.length / 6) > 0.5 ? parseInt(users.length / 6) + 1: parseInt(users.length / 6);
-        
+
+        const pages = users.length / 6;
+        const paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages);
+
         if(users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
-        if (args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1){
+        if (args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1) {
             if(paginas < parseInt(args[0].value)) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
 
             rodape = `( ${parseInt(args[0].value)} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
 
-            const remover = parseInt(args[0].value) == paginas ? (parseInt(args[0].value) - 1) * 6 : users.length % 6 !== 0 ? (parseInt(args[0].value) - 2) * 6 : (parseInt(args[0].value) - 1) * 6 ;
+            const remover = parseInt(args[0].value) === paginas ? (parseInt(args[0].value) - 1) * 6 : users.length % 6 !== 0 ? (parseInt(args[0].value) - 2) * 6 : (parseInt(args[0].value) - 1) * 6 ;
 
             for(let x = 0; x < remover; x++){
                 users.shift();
@@ -55,16 +57,15 @@ module.exports = {
         }
 
         for (const user of users) {
-            if(i < 6){
-                if(args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1)
+            if (i < 6) {
+                if (args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1)
                     usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\``);
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
                 
                 experiencias.push(`\`${user.xp}\``);
-                levels.push(`\`${parseInt(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
+                levels.push(`\`${Math.floor(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
             }
-
             i++;
         }
 

@@ -10,11 +10,12 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const match = /<(a?):(.+):(\d+)>/u.exec(message.content);
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        let emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        let emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-        let prefix = client.prefixManager.getPrefix(message.guild.id);
+        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if(message.content.includes(`${prefix}moji`)){
             if(typeof args[0] !== "undefined"){
@@ -30,8 +31,8 @@ module.exports = {
 
                     if(res.status !== 200) // Emoji externo não é animado // URL não existe
                         url = url.replace(".gif", ".png");
-                    
-                    let imagem_emoji = new MessageAttachment(url);
+
+                    const imagem_emoji = new MessageAttachment(url);
 
                     message.reply({ files: [imagem_emoji] });
                 });
@@ -47,7 +48,6 @@ module.exports = {
         // Verificar permissões do bot
         if(message.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && message.guild.me.permissions.has('MANAGE_EMOJIS_AND_STICKERS')){
 
-            let match = /<(a?):(.+):(\d+)>/u.exec(message.content);
             let nome_emoji = null;
             let url = null;
             

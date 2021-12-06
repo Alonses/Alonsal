@@ -10,7 +10,7 @@ module.exports = {
     async execute(client, message, args) {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        const member1 = args[0].raw, member2 = args[1].raw;
+        const member1 = args[0].value, member2 = args[1].value;
 
         let titulo = diversao[2]["limda"];
         let num = 100;
@@ -48,11 +48,11 @@ module.exports = {
         }
 
         const embed = new MessageEmbed()
-        .setColor(0x29BB8E)
-        .setTitle(titulo)
-        .setDescription(`${diversao[2]["teste"]} ${num}%!\n${porcentagem}\n\n${aviso}`)
-        .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
-        .setTimestamp();
+            .setColor(0x29BB8E)
+            .setTitle(titulo)
+            .setDescription(`${diversao[2]["teste"]} ${num}%!\n${porcentagem}\n\n${aviso}`)
+            .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+            .setTimestamp();
 
         message.reply({ embeds: [embed] });
     }
