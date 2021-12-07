@@ -28,14 +28,16 @@ module.exports = {
         let data = new Date();
         let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
         let data_informada = utilitarios[10]["hoje"];
-        const valor_primario = args[0].raw;
-
-        if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
-            evento_escolhido = args[0].raw;
-            args.shift();
-        }
+        let valor_primario = "";
 
         if(args.length > 0){
+            valor_primario = args[0].raw;
+
+            if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
+                evento_escolhido = args[0].raw;
+                args.shift();
+            }
+    
             if(!args[0].raw.includes("-")) // Formato incorreto
                 return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
 
@@ -170,6 +172,8 @@ module.exports = {
                     if(isNaN(evento_escolhido) || evento_escolhido > acontecimento_final.length || evento_escolhido < 1){
                         message.reply(`:mag: | ${utilitarios[10]["error_1"]}`);
                         aviso.delete();
+                        console.log("cancelando", isNaN(evento_escolhido));
+
                         return;
                     }
 
