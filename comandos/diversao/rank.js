@@ -120,13 +120,13 @@ module.exports = {
                 usuario_alvo.push(0);
 
             embed = new MessageEmbed()
-            .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name} | ${user_alvo.username}`)
+            .setTitle(user_alvo.username)
             .setColor(0x29BB8E)
             .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
 
             embed.addFields(
-                { name: `Experiência`, value: `\`${usuario_alvo[0]}\``, inline: true },
-                { name: `Nível`, value: `\`${parseInt(usuario_alvo[0] / 1000)}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
+                { name: `:postal_horn: ${diversao[8]["experiencia"]}`, value: `\`${usuario_alvo[0]}\``, inline: true },
+                { name: `:beginner: ${diversao[8]["nivel"]}`, value: `\`${parseInt(usuario_alvo[0] / 1000)}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
                 { name: "⠀", value: "⠀", inline: true}
             );
 

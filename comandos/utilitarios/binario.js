@@ -35,6 +35,9 @@ module.exports = {
                     text = "invalid input"
                 }
 
+                // Confirma que a operação não resultou em uma string vazia
+                text = text.replace(/ /g, "").length === 0 ? utilitarios[3]["resul_vazio"] : text;
+
                 embed = new MessageEmbed()
                     .setTitle(utilitarios[3]["decodificado"])
                     .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
