@@ -226,6 +226,7 @@
             "aviso_1": "Type something to use this command",
             "aviso_2" : "Enter as `.abn encodes <your_text>` or `.abn decodes <your_encoded_text>`",
             "resul_vazio" : "The final result was empty, try again",
+            "titulo_vazio" : ":octagonal_sign: Decoding resulted in an empty",
             "error_1" : "Unable to convert, maximum size exceeded!"
         },
         {

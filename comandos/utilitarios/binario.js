@@ -35,11 +35,15 @@ module.exports = {
                     text = "invalid input"
                 }
 
+                let msg_titulo = utilitarios[3]["decodificado"];
                 // Confirma que a operação não resultou em uma string vazia
-                text = text.replace(/ /g, "").length === 0 ? utilitarios[3]["resul_vazio"] : text;
+                if(text.replaceAll("\x00", "").length < 1){
+                    text = utilitarios[3]["resul_vazio"]; 
+                    msg_titulo = utilitarios[3]["titulo_vazio"] 
+                }
 
                 embed = new MessageEmbed()
-                    .setTitle(utilitarios[3]["decodificado"])
+                    .setTitle(msg_titulo)
                     .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
                     .setColor(0x29BB8E)
                     .setDescription(`\`${text}\``);
