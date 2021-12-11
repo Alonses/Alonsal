@@ -10,15 +10,15 @@ module.exports = {
     execute(client, message, args) {
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        if (args.length < 2) return message.reply(utilitarios[3]["aviso"]);
+        if (args.length < 1) return message.reply(utilitarios[3]["aviso_1"]);
 
-        if (args[0].raw !== "encode" && args[0].raw !== "decode") return message.reply(utilitarios[3]["aviso"]);
+        if (args[0].raw !== "encode" && args[0].raw !== "decode") return message.reply(utilitarios[3]["aviso_2"]);
 
         let embed;
-
+        const operacao = args[0].raw;
         args.shift();
         
-        switch (args[0].raw) {
+        switch (operacao) {
             case "encode":
                 embed = new MessageEmbed()
                     .setTitle(utilitarios[3]["codificado"])

@@ -223,7 +223,8 @@
         {
             "codificado" : ":one: Your binary encoded message",
             "decodificado" : ":zero: Your message decoded from the binary",
-            "aviso": "Type something to use this command",
+            "aviso_1": "Type something to use this command",
+            "aviso_2" : "Enter as `.abn encodes <your_text>` or `.abn decodes <your_encoded_text>`",
             "error_1" : "Unable to convert, maximum size exceeded!"
         },
         {

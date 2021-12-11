@@ -227,7 +227,8 @@
         {
             "codificado" : ":one: Sua mensagem codificada em binário",
             "decodificado" : ":zero: Sua mensagem decodificada do binário",
-            "aviso": "Escreva algo para utilizar este comando",
+            "aviso_1" : "Escreva algo para utilizar este comando",
+            "aviso_2" : "Informe como `.abn encode <seu_texto>` ou `.abn decode <seu_texto_codificado>`",
             "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
         },
         {
