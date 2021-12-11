@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message) {
-            
+        
         message.channel.send(gifs[Math.round((gifs.length - 1) * Math.random())]).then(() => {
             const permissions = message.channel.permissionsFor(message.client.user);
 

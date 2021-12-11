@@ -4,7 +4,7 @@ module.exports = {
     aliases: [ "ram" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message, args) {
+    async execute(client, message) {
         const used = process.memoryUsage();
         let text = 'Uso de RAM:\n';
 
