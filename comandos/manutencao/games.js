@@ -110,7 +110,7 @@ module.exports = {
                 let link_2 = "";
 
                 if(typeof args[4] !== "undefined"){
-                    nome_jogo_2 = args[4];
+                    nome_jogo_2 = args[4].raw.replaceAll("_", " ");
                     link_2 = args[6];
                 }
 
