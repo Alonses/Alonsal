@@ -77,6 +77,9 @@ client.on("messageCreate", async message => {
         return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
     }
 
+    if(message.content.startsWith(`${prefix}r`) || message.content.startsWith(`${prefix}rank`))
+        message.content = `${message.content.split(" ")[0]} ${parseInt(message.content.split(" ")[1])}`;
+
     if (message.content !== prefix)
         handler.messageReceived(message);
     else

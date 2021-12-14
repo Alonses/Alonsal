@@ -16,7 +16,7 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-
+        
         let usuario_alvo = [];
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
@@ -28,7 +28,7 @@ module.exports = {
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
         if(!user_alvo && args.length > 0 && args[0].raw.length === 18){ 
-            if (isNaN(Number(args[0].value))) // Verifica se é um ID realmente
+            if (isNaN(Number(args[0].raw))) // Verifica se é um ID realmente
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
             try{ // Busca pelo usuário no server inteiro
@@ -62,13 +62,13 @@ module.exports = {
 
         if(users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
-
+        
         if(!user_alvo)
-            if (args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1) {
-                if(paginas < parseInt(args[0].value)) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
+            if (args[0] && parseInt(args[0].raw) > 1) {
+                if(paginas < parseInt(args[0].raw)) return message.reply(`:no_entry_sign: | ${diversao[8]["paginas"]}`);
 
-                rodape = `( ${parseInt(args[0].value)} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
-
+                rodape = `( ${parseInt(args[0].raw)} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`.replace(".a", prefix);
+                
                 const remover = parseInt(args[0].raw) === paginas ? (parseInt(args[0].raw) - 1) * 6 : users.length % 6 !== 0 ? parseInt(args[0].raw) !== 2 ? (parseInt(args[0].raw) - 2) * 6 : (parseInt(args[0].raw) - 1) * 6 : (parseInt(args[0].raw) - 1) * 6 ;
 
                 for(let x = 0; x < remover; x++){
@@ -87,7 +87,7 @@ module.exports = {
                 }
             
             if (i < 6) {
-                if (args[0] && args[0].type === "number" && parseInt(args[0].value) !== 1)
+                if (args[0] && args[0].type === "number" && parseInt(args[0].raw) !== 1)
                     usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\``);
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
