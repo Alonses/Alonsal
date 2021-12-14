@@ -133,6 +133,11 @@
         },
         {
             "aviso_1" : "Informe um número entre 1 e 4 para navegar pelas páginas do menu"
+        },
+        {
+            "traducao_faltando" : "Este comando ainda não possui uma tradução para o seu idioma, aguarde!",
+            "usos" : "Usos",
+            "nao_encontrado" : "Não encontrei nenhum comando com este nome ou aliase, tente novamente"
         }
     ],
     "moderacao" : [

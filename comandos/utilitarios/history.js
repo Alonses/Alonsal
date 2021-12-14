@@ -172,7 +172,6 @@ module.exports = {
                     if(isNaN(evento_escolhido) || evento_escolhido > acontecimento_final.length || evento_escolhido < 1){
                         message.reply(`:mag: | ${utilitarios[10]["error_1"]}`);
                         aviso.delete();
-                        console.log("cancelando", isNaN(evento_escolhido));
 
                         return;
                     }

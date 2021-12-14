@@ -29,9 +29,11 @@ module.exports = async ({client, message, content}) => {
             const year = d.getFullYear();
 
             const embed = new MessageEmbed()
-            .setTitle("> New interaction")
+            .setTitle("> ✨ New interaction")
+            .setURL(`https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`)
             .setColor(0x29BB8E)
-            .setDescription(`:man_raising_hand: (ID) User: \`${message.author.id}\`\n:label: Username: \`${message.author.username}\`\n\n:link: (ID) Server: \`${message.guild.id}\`\n:label: Server name: \`${message.guild.name}\`\n:link: (ID) Channel: \`${message.channel.id}\`\n:label: Channel name: \`${message.channel.name}\`\n:link: (ID) Message: \`${message.id}\`\n\n:pencil: Command: \`${comando_inserido}\`\n:notepad_spiral: Command N°: \`${qtd_comandos.toLocaleString('pt-BR')}\`\n:alarm_clock: Time/date: \`${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}\``);
+            .setDescription(`:man_raising_hand: ( \`${message.author.id}\` | \`${message.author.username}#${message.author.discriminator}\` )\n:globe_with_meridians: ( \`${message.guild.id}\` | \`${message.guild.name}\` )\n:placard: ( \`${message.channel.id}\` | \`${message.channel.name}\` )\n:bookmark_tabs: ( \`${message.id}\` )\n\`\`\`fix\n📝 ${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
+            .setFooter(`⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}`);
 
             client.channels.cache.get('846151364492001280').send({ embeds: [embed] }); // Envia o log com os comandos do usuário
         }
