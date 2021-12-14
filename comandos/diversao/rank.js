@@ -19,7 +19,7 @@ module.exports = {
         
         let usuario_alvo = [];
 
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const { utilitarios, diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         let rodape = message.author.username;
