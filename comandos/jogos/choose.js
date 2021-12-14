@@ -47,8 +47,6 @@ module.exports = {
             }
         }
 
-        console.log(escolhas);
-
         const resultados = new MessageEmbed()
         .setTitle(`:ballot_box: ${jogos[4]["escolho"]}`)
         .setColor(0x29BB8E)

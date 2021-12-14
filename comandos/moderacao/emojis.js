@@ -96,8 +96,7 @@ module.exports = {
                         
                         message.reply(`${novo_emoji} | ${moderacao[2]["sucesso_1"]}`);
                     })
-                    .catch(err => {
-                        console.log(err);
+                    .catch(() => {
                         message.reply(`:octagonal_sign: | ${moderacao[2]["error_2"]}`);
                     });
                 }
@@ -113,10 +112,9 @@ module.exports = {
                         return message.reply(`:octagonal_sign: | ${moderacao[2]["aviso_7"]}`);
 
                 // Coletando o emoji do cache do bot
-                if(isNaN(Number(args[0].value))){
+                if(isNaN(Number(args[0].value)))
                     emoji = await client.emojis.cache.get(match[3]);
-                    console.log(match[3], typeof match[3]);
-                }else
+                else
                     emoji = await client.emojis.cache.get(args[0].raw);
 
                 if(typeof emoji === "undefined" || message.guild.id !== emoji.guild.id) // Emoji indefinido ou emoji pertencente ao servidor o qual o comando foi acionado

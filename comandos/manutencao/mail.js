@@ -53,7 +53,7 @@ module.exports = {
             mensagem = args.join(" ").replaceAll("`", "\'");
 
             const msg_user = new MessageEmbed()
-            .setTitle("> New Message :mailbox_with_mail:")
+            .setTitle("> :mailbox_with_mail: New Message")
             .setFooter("Author: "+ message.author.username)
             .setColor(0xffffff)
             .setDescription("-----------------------\nSent by `"+ message.author.id +"`\n\n Message: `"+ mensagem + "`")
