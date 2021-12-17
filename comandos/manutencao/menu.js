@@ -4,7 +4,7 @@ const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.js
 module.exports = {
     name: "menu",
     description: "Menu com os comandos do alonsal",
-    aliases: [ "h", "juda", "comandos", "commands", "help" ],
+    aliases: [ "h", "juda", "help" ],
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){

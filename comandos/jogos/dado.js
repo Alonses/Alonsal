@@ -18,6 +18,9 @@ module.exports = {
         if (typeof args[0] === "undefined")
             args[0] = 1;
 
+        if(typeof args[1] === "undefined")
+            args[1] = 6;
+            
         if (args.length > 0) {
             if (isNaN(Number(args[0].raw))) // Caracteres de texto
                 return message.reply(`:warning: | ${jogos[2]["aviso_1"]}`);

@@ -52,12 +52,20 @@
         },
         {
             "rank_sv" : "Rank of",
+            "rank_rc" : "Command classification",
             "rodape" : "pages, use .ar <num> to see other pages",
+            "rodape_rc" : "pages, use .arc <num> to see other pages",
             "paginas" : "Enter a lower number for the page",
             "nivel_descricao" : "level = experience / 1000",
             "enceirados" : "Users",
             "experiencia" : "Experience",
-            "nivel" : "Level"
+            "nivel" : "Level",
+            "comandos" : "Commands",
+            "ativacoes" : "Activations",
+            "historia_alonsal" : "These are the commands activated throughout the history of Alonsal",
+            "aliase_faltando" : "alias absent",
+            "nome_faltando" : "Missing name",
+            "error_rc" : "Could not load command rating at this time, please try again later"
         }
     ],
     "jogos" : [

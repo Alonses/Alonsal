@@ -52,12 +52,20 @@
         },
         {
             "rank_sv" : "Rank de",
+            "rank_rc" : "Ranking de comandos",
             "rodape" : "páginas, use .ar <num> para ver outras páginas",
+            "rodape_rc" : "páginas, use .arc <num> para ver outras páginas",
             "paginas" : "Informe um número menor para a página",
             "nivel_descricao" : "nível = experiência / 1000",
             "enceirados" : "Enceirados",
             "experiencia" : "Experiência",
-            "nivel" : "Nível"
+            "nivel" : "Nível",
+            "comandos" : "Comandos",
+            "ativacoes" : "Ativações",
+            "historia_alonsal" : "Estes são os comandos ativados durante toda a história do Alonsal",
+            "aliase_faltando" : "aliase faltando",
+            "nome_faltando" : "Nome faltando",
+            "error_rc" : "Não foi possível carregar o ranking de comandos no momento, tente novamente mais tarde"
         }
     ],
     "jogos" : [

@@ -42,4 +42,7 @@ module.exports = async ({client, message, content}) => {
             if (err) throw err;
         });
     });
+
+    // Contabilizar o comando
+    require('../command_ranking.js')({client, message, content});
 }
