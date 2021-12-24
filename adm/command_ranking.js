@@ -9,7 +9,6 @@ module.exports = async function({client, message, content}){
     const prefix = client.prefixManager.getPrefix(message.guild.id);
     const procura_infos = content.replace(prefix, "").split(" ")[0].replace(/ /g, "");
 
-
     for(let x = 0; x < comandos.length; x++){
         let linha = comandos[x].split(",");
         const aliases = linha;

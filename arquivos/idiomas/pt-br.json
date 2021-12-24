@@ -91,6 +91,10 @@
             "aviso_2" : "Informe uma quantidade em números como `.ach [2 s a l 4 d @` e um valor maior que zero",
             "escolho_todos" : "Você informou um número maior ou igual a quantidade de opções, eu escolho todas!",
             "escolho" : "Eu escolho..."
+        },
+        {
+            "aviso_1" : "Informe algum ou vários dos itens abaixo para jogar\nPor exemplo, `.asjkp pedra papel tesoura` ou `.asjkp capeta`",
+            "error_1" : "Escreva um item que faça parte do jogo, este item não é válido" 
         }
     ],
     "manutencao" : [
