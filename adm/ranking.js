@@ -1,4 +1,4 @@
-const CEIRA_ADICIONAL = 5;
+const CEIRA_ADICIONAL = 25;
 const LIMIT = 5;
 const DIFF = 10000;
 const CALDEIRA = 60000;

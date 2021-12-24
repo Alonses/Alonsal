@@ -91,6 +91,10 @@
             "aviso_2" : "Enter a quantity in numbers such as `.ach [2 s a l 4 d @` and a value greater than zero",
             "escolho_todos" : "You entered a number greater than or equal to the number of options, I choose them all!",
             "escolho" : "I choose..."
+        },
+        {
+            "aviso_1" : "Enter one or more of the items below to play\nFor example, `.asjkp rock paper scissors` or `.asjkp devil`",
+            "error_1" : "Write an item that is part of the game, this item is not valid" 
         }
     ],
     "manutencao" : [
