@@ -77,11 +77,6 @@ client.on("messageCreate", async message => {
         return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
     }
 
-    if(message.content.startsWith(`${prefix}r`) || message.content.startsWith(`${prefix}rank`)){
-        if(message.content.includes(".")) // Formata a entrada com números quebrados
-            message.content = `${message.content.split(" ")[0]} ${message.content.split(".")[0].split(" ")[1]}`;
-    }
-
     if (message.content !== prefix)
         handler.messageReceived(message);
     else

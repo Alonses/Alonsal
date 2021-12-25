@@ -26,8 +26,8 @@ module.exports = {
         const users = [];
         let user_alvo = message.mentions.users.first(); // Coleta o ID do usuário mencionado
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-// 
-        if(!user_alvo && args.length > 0 && args[0].raw.length === 18){ 
+
+        if(!user_alvo && args.length > 0 && args[0].raw.length === 18){
             if (isNaN(Number(args[0].raw))) // Verifica se é um ID realmente
                 return message.reply(`:octagonal_sign: | ${utilitarios[4]["id_user"]}`);
 
@@ -79,7 +79,6 @@ module.exports = {
         let i = 0;
 
         for (const user of users) {
-
             if(user_alvo)
                 if(user.id === user_alvo.id){
                     usuario_alvo.push(user.xp);
