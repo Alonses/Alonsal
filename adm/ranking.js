@@ -1,6 +1,6 @@
-const CEIRA_ADICIONAL = 25;
+const CEIRA_ADICIONAL = 2;
 const LIMIT = 5;
-const DIFF = 10000;
+const DIFF = 5000;
 const CALDEIRA = 60000;
 
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
