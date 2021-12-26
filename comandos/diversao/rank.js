@@ -105,7 +105,7 @@ module.exports = {
             embed = new MessageEmbed()
             .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
             .setColor(0x29BB8E)
-            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> 25X EXP <✳️<\`\`\``)
+            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> 2X EXP <✳️<\`\`\``)
             .setFooter(rodape, message.author.avatarURL({dynamic: true}));
 
             embed.addField(`:christmas_tree: ${diversao[8]["enceirados"]}`, usernames.join("\n"), true);
