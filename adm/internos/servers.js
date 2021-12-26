@@ -2,6 +2,8 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = async ({client, caso, guild}) => {
 
+    if(client.user.id !== "833349943539531806") return;
+
     let ocasiao = "> 🟢 Server update";
     let cor = 0x29BB8E;
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size;
@@ -17,23 +19,5 @@ module.exports = async ({client, caso, guild}) => {
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )\n\n:busts_in_silhouette: Members ( \`${guild.memberCount - 1}\` )\n:placard: Channels ( \`${canais}\` )`)
         .setTimestamp();
 
-    if(client.user.id === "833349943539531806")
-        client.channels.cache.get('846853254192693269').send({ embeds : [embed_sv] });
-
-    if (caso === "New"){
-        if(typeof guild.systemChannelId === "undefined") return; // Canal padrão do servidor
-
-        let canal = client.channels.cache.get(guild.systemChannelId);
-        const prefix = client.prefixManager.getPrefix(guild.id)
-
-        if (typeof canal.type === "undefined") return;
-    
-        if (canal.type === "GUILD_TEXT" || canal.type === "GUILD.NEWS") { // Mensagem de apresentação
-            const permissions = canal.permissionsFor(client.user); 
-            
-            if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
-    
-            canal.send(`Obrigado por me adicionar! Utilize o \`${prefix}h\` para ver minha lista de comandos, você também pode alterar meu prefixo com o \`${prefix}px <prefixo>\` ou meu idioma com o \`${prefix}lang en\`!\n\nThanks for adding me! Use the command \`${prefix}h\` to see my menu, you can also change my prefix with \`${prefix}px <prefix>\` or my language with \`${prefix}lang pt\`!`);
-        }
-    }
+    client.channels.cache.get('846853254192693269').send({ embeds : [embed_sv] });
 }
