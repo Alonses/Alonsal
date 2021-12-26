@@ -10,6 +10,8 @@ module.exports = {
 
         let tamanho = args.length > 0 ? parseInt(args[0].raw) : 12;
         tamanho = tamanho <= 5 ? 12 : tamanho;
+        tamanho = tamanho >= 400 ? 350 : tamanho;
+
         let bonus = '';
 
         for(let i = 0; i < 3; i++){
