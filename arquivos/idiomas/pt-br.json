@@ -432,6 +432,13 @@
             "aviso_1" : "Informe pelo menos uma operação básica para calcular",
             "resultado" : "Resultado",
             "error" : "Deu pt aq ao processar essa budega"
+        },
+        {
+            "primaria" : "Senha primária",
+            "bonus" : "Senhas bônus",
+            "titulo" : "Su4s §3nH@5, clique aqui para testar sua senha",
+            "senha" : "Verifique seu privado, sua senha foi gerada com um tamanho de `tamanho_repl` caracteres",
+            "rodape" : "4 senhas com tamanho_repl caracteres para escolher, elas não são salvas por aqui e nem sei o conteúdo, apenas você ;)"
         }
     ]
 }

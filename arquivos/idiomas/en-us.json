@@ -453,6 +453,13 @@
             "aviso_1" : "Enter at least one basic operation to calculate",
             "resultado" : "Result",
             "error" : "An error occurred while processing this operation"
+        },
+        {
+            "primaria" : "Primary password",
+            "bonus" : "Bonus passwords",
+            "titulo" : "Y0uR P4s§w0Rd5, click here to test your password",
+            "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
+            "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
         }
     ]
 }
