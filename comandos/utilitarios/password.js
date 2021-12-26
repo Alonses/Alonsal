@@ -8,6 +8,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+
         let tamanho = args.length > 0 ? parseInt(args[0].raw) : 12;
         tamanho = tamanho <= 5 ? 12 : tamanho;
         tamanho = tamanho >= 400 ? 350 : tamanho;
@@ -19,13 +21,13 @@ module.exports = {
         }
 
         const embed = new MessageEmbed()
-        .setTitle('Su4s §3nH@5, clique aqui para testar sua senha')
+        .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)
         .setURL('https://password.kaspersky.com/')
         .setColor(0x29BB8E)
-        .setDescription(`:passport_control: **Senha primária**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **Senhas bônus**\n\`\`\`${bonus}\`\`\``)
-        .setFooter('4 senhas para escolher, elas não são salvas por aqui e nem sabemos o conteúdo, apenas você ;)');
+        .setDescription(`:passport_control: **${utilitarios[18]["primaria"]}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${utilitarios[18]["bonus"]}**\n\`\`\`${bonus}\`\`\``)
+        .setFooter(utilitarios[18]["rodape"].replace("tamanho_repl", tamanho));
 
-        const m = await message.reply(`:hotsprings: | Verifique seu privado, sua senha foi gerada com um tamanho de \`tamanho_repl\` caracteres`.replace("tamanho_repl", tamanho));
+        const m = await message.reply(`:hotsprings: | ${utilitarios[18]["senha"]}`.replace("tamanho_repl", tamanho));
         await m.react('📫');
 
         client.users.cache.get(message.author.id).send({ embeds: [embed] });
@@ -39,7 +41,7 @@ module.exports = {
 }
 
 function randomString(len) {
-    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%¨&*()`^´[]{}+=~^.,;:¢¬_-£³²¹\'"|\\/?°§ªº';
+    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}+=~.,;:¢¬_-£"|\\/?§';
     let randomString = '';
 
     for (let i = 0; i < len; i++) {
