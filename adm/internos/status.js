@@ -37,16 +37,15 @@ module.exports = async ({client}) => {
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
         
         client.channels.cache.get('854695578372800552').send({ embeds: [embed] }); // Avisa que está online em um canal
-            
+        
         client.user.setActivity('Vapor p/ fora!', 'COMPETING')
         const activities = [
-            "Rank 2X!!!!!",
-            "🎄Boas Festas!",
+            "bugs fora",
             ".alang pt | .alang en",
-            `Neve em ${client.guilds.cache.size} servidores`,
-            "🎅Seria santa santa seria?",
+            `baidu premium em ${client.guilds.cache.size} servidores`,
+            "ceira seria seria ceira?",
             "Ping me for prefix!",
-            "❄️Let's snow Let's snow Let's snow...",
+            "lenha na fogueira",
         ];
 
         let i = 0;

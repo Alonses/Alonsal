@@ -1,9 +1,9 @@
-const CEIRA_ADICIONAL = 2;
 const LIMIT = 5;
 const DIFF = 5000;
 const CALDEIRA = 60000;
 
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
+const fs = require('fs');
 
 module.exports = async (client, message) => {
 
@@ -48,11 +48,13 @@ module.exports = async (client, message) => {
         return;
     }
 
-    user.xp += CEIRA_ADICIONAL;
-    user.lastValidMessage = message.createdTimestamp;
-    user.warns = 0;
+    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
 
-    writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user));
+        user.xp += parseInt(data);
+        user.lastValidMessage = message.createdTimestamp;
+        user.warns = 0;
 
-    delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
+        writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user));
+        delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
+    });
 }
