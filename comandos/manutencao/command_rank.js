@@ -1,6 +1,7 @@
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require('discord.js');
 const fetch = require("node-fetch");
+const { emojis } = require('../../arquivos/json/text/emojis.json');
 
 const medals = {
     0: ":first_place:",
@@ -19,6 +20,7 @@ module.exports = {
         const idioma = client.idioma.getLang(message.guild.id);
         const { diversao } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
+        const emoji_ceira = client.emojis.cache.get(emojis.mc_honeycomb).toString();
 
         const commands = [];
         let rodape = message.author.username;
@@ -88,7 +90,7 @@ module.exports = {
             .setDescription(`\`\`\`fix\n${diversao[8]["historia_alonsal"]}\`\`\``)
             .setFooter(rodape, message.author.avatarURL({dynamic: true}));
         
-            embed.addField(`:christmas_tree: ${diversao[8]["comandos"]}`, `${conames.join("\n")}`, true);
+            embed.addField(`${emoji_ceira} ${diversao[8]["comandos"]}`, `${conames.join("\n")}`, true);
             embed.addField(`:postal_horn: Aliase`, `${aliases.join("\n")}`, true);
             embed.addField(`:postal_horn: ${diversao[8]["ativacoes"]}`, `${activations.join("\n")}`, true);
 

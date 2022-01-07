@@ -1,7 +1,8 @@
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require('discord.js');
 const fetch = require("node-fetch");
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json');
+const fs = require('fs');
 
 const medals = {
     0: ":first_place:",
@@ -18,6 +19,7 @@ module.exports = {
     async execute(client, message, args) {
         
         let usuario_alvo = [];
+        const emoji_ceira = client.emojis.cache.get(emojis.mc_honeycomb).toString();
 
         const { utilitarios, diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -101,44 +103,46 @@ module.exports = {
 
         let embed, img_embed;
 
-        if(!user_alvo){
-            embed = new MessageEmbed()
-            .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
-            .setColor(0x29BB8E)
-            .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> 2X EXP <✳️<\`\`\``)
-            .setFooter(rodape, message.author.avatarURL({dynamic: true}));
+        fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
+            if(!user_alvo){
+                embed = new MessageEmbed()
+                .setTitle(`${diversao[8]["rank_sv"]} ${message.guild.name}`)
+                .setColor(0x29BB8E)
+                .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
+                .setFooter(rodape, message.author.avatarURL({dynamic: true}));
 
-            embed.addField(`:christmas_tree: ${diversao[8]["enceirados"]}`, usernames.join("\n"), true);
-            embed.addField(`:postal_horn: ${diversao[8]["experiencia"]}`, experiencias.join("\n"), true);
-            embed.addField(`:beginner: ${diversao[8]["nivel"]}`, levels.join("\n"), true);
+                embed.addField(`${emoji_ceira} ${diversao[8]["enceirados"]}`, usernames.join("\n"), true);
+                embed.addField(`:postal_horn: ${diversao[8]["experiencia"]}`, experiencias.join("\n"), true);
+                embed.addField(`:beginner: ${diversao[8]["nivel"]}`, levels.join("\n"), true);
 
-            img_embed = message.guild.iconURL({ size: 2048 }).replace(".webp", ".gif");
-        }else{
+                img_embed = message.guild.iconURL({ size: 2048 }).replace(".webp", ".gif");
+            }else{
 
-            if(usuario_alvo.length === 0)
-                usuario_alvo.push(0);
+                if(usuario_alvo.length === 0)
+                    usuario_alvo.push(0);
 
-            embed = new MessageEmbed()
-            .setTitle(user_alvo.username)
-            .setColor(0x29BB8E)
-            .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
+                embed = new MessageEmbed()
+                .setTitle(user_alvo.username)
+                .setColor(0x29BB8E)
+                .setFooter(message.author.username, message.author.avatarURL({dynamic: true}));
 
-            embed.addFields(
-                { name: `:postal_horn: ${diversao[8]["experiencia"]}`, value: `\`${usuario_alvo[0]}\``, inline: true },
-                { name: `:beginner: ${diversao[8]["nivel"]}`, value: `\`${parseInt(usuario_alvo[0] / 1000)}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
-                { name: "⠀", value: "⠀", inline: true}
-            );
+                embed.addFields(
+                    { name: `:postal_horn: ${diversao[8]["experiencia"]}`, value: `\`${usuario_alvo[0]}\``, inline: true },
+                    { name: `:beginner: ${diversao[8]["nivel"]}`, value: `\`${parseInt(usuario_alvo[0] / 1000)}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
+                    { name: "⠀", value: "⠀", inline: true}
+                );
 
-            img_embed = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`;
-        }
+                img_embed = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`;
+            }
 
-        fetch(img_embed).then(res => {
-            if(res.status !== 200)
-                img_embed = img_embed.replace('.gif', '.webp')
+            fetch(img_embed).then(res => {
+                if(res.status !== 200)
+                    img_embed = img_embed.replace('.gif', '.webp')
 
-            embed.setThumbnail(img_embed);
+                embed.setThumbnail(img_embed);
 
-            message.reply({ embeds: [embed] });
+                message.reply({ embeds: [embed] });
+            });
         });
     }
 }

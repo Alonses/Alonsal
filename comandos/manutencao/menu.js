@@ -38,7 +38,7 @@ module.exports = {
             bandeira_trad = ":flag_us:";
 
             embed_inicial = new MessageEmbed()
-            .setTitle('Boas vindas ao Ajuda! :christmas_tree: :santa:')
+            .setTitle('Boas vindas ao Ajuda! :boomerang:')
             .setColor(0x29BB8E)
             .setDescription(`Use os números abaixo para navegar entre as seções de comandos Alonsais :stuck_out_tongue_winking_eye:\n\n:zany_face: **\`${prefix}h 1\`** - \`Comandos Divertidos\`\n\n:compass: **\`${prefix}h 2\`** - \`Comandos Utilitários\`\n\n:golf: **\`${prefix}h 3\`** - \`Comandos de Jogos\`\n\n:tools: **\`${prefix}h 4\`** - \`Manutenção do Alonsal\`\n\n:scroll: **\`${prefix}hm\`** - \`Comandos moderativos\`\n\n:information_source: **\`${prefix}info\`** - \`Informações do Alonsal\`\n\n:mag: | Veja exemplos de uso e informações de comandos com \`${prefix}\h >comando<\`\n:hotsprings: | _Mensagens com este símbolo são excluídas automaticamente._\n${bandeira_trad} | _Use the command \`${prefix}lang en\` to switch to \`american english\`_`);
             
