@@ -93,7 +93,7 @@ module.exports = {
             )
             .addFields(
                 {
-                    name: ':shield: **' + utilitarios[12]["verificacao"] + '**',
+                    name: `:shield: **${utilitarios[12]["verificacao"]}**`,
                     value: `**${utilitarios[12][message.guild.verificationLevel]}**`,
                     inline: true
                 },
@@ -108,13 +108,13 @@ module.exports = {
             infos_sv.addFields(
                 { 
                     name: `${boost_sv} **Boosts ( ${message.guild.premiumSubscriptionCount} )**`,
-                    value: '⠀',
+                    value: `:passport_control: **${utilitarios[12]["cargos"]}: ** \`${message.guild.roles.cache.size - 1}\``,
                     inline: true
                 }
             )
         else
             infos_sv.addFields(
-                { name: '⠀', value: '⠀', inline: true}
+                { name: `:passport_control: **${utilitarios[12]["cargos"]} ( ${message.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true}
             )
 
         return message.reply({embeds: [infos_sv]});
