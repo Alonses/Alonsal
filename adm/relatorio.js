@@ -24,11 +24,11 @@ module.exports = async ({client, caso}) => {
 
     fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data){
         
-        if(caso === "comando"){
-            bot.comandos_disparados += 1;
-            bot.exp_concedido += parseInt(data);
-        }
+        bot.exp_concedido += parseInt(data);
 
+        if(caso === "comando")
+            bot.comandos_disparados += 1;
+        
         if(caso === "msg_enviada")
             bot.msgs_lidas += 1;
         
