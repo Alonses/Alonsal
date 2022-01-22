@@ -10,6 +10,9 @@ module.exports = {
 
         if (!client.owners.includes(message.author.id)) return;
 
+        const date1 = new Date(); // Ficará esperando até meia noite para executar a rotina
+        const aguardar_tempo =  ("0"+ ((date1.getHours() - 24) *-1)).substr(-2) +":"+ ("0"+ ((date1.getMinutes() - 60)) *-1).substr(-2) +":"+ ("0"+ ((date1.getSeconds() - 60)) *-1).substr(-2);
+
         const bot = {
             comandos_disparados: 0,
             exp_concedido: 0,
@@ -67,7 +70,8 @@ module.exports = {
                 value: `**Escutando:** \`${members}\``,
                 inline: true
             }
-        );
+        )
+        .setFooter(`Próximo update em ${aguardar_tempo}`, message.author.avatarURL({dynamic: true}));
         
         message.reply({ embeds: [embed] });
     }
