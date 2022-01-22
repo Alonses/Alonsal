@@ -6,7 +6,6 @@ module.exports = async ({client, message, content}) => {
     fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
         if (err) throw err;
         
-        console.log(data);
         qtd_comandos = parseInt(data);
         qtd_comandos++;
         

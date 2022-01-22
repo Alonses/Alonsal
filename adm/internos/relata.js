@@ -1,11 +1,14 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = async ({client}) => {
-    gera_relatorio(client);
+
+    const date1 = new Date(); // Ficará esperando até meia noite para executar a rotina
+    var aguardar_tempo =  (((date1.getHours() - 24) *-1) * 3600000) + (((date1.getMinutes() - 60) *-1) * 60000) + (((date1.getSeconds() - 60) * -1) * 1000);
 
     setInterval(() => {
         gera_relatorio(client);
-    }, 86400000); // Executa de 1 em 1 dia
+        aguardar_tempo = 86400000; // Altera o valor para sempre executar à meia-noite
+    }, aguardar_tempo); // Executa de 1 em 1 dia
 }
 
 async function gera_relatorio(client){
