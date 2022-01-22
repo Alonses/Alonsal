@@ -81,6 +81,9 @@ client.on("messageCreate", async message => {
         handler.messageReceived(message);
     else
         await require('./adm/internos/comando.js')({client, message});
+    
+    const caso = "msg_enviada";
+    await require('./adm/relatorio.js')({client, caso});
 });
 
 client.ws.on("INTERACTION_CREATE", async data => {
@@ -122,7 +125,6 @@ handler.events.on("command_error", async (e, command, client, message) => {
     });
 
     await client.channels.cache.get('862015290433994752').send({ embeds: [embed] }); // Notificando o canal de erros
-
     console.log(e);
 });
 

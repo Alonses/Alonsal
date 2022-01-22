@@ -31,7 +31,7 @@ module.exports = async ({client}) => {
                 name: ':busts_in_silhouette: **Usuários**', 
                 value: `**Escutando: **\`${members}\``, 
                 inline: true 
-            },
+            }
         )
         .addField(':white_small_square: Versão', `\`${version}\``, false)
         .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png");
@@ -51,5 +51,11 @@ module.exports = async ({client}) => {
         let i = 0;
         setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 10000);
     }else
-        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] });        
+        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] });
+
+    try{
+        require('./relata.js')({client});
+    }catch(err){
+        console.log(err);
+    }
 }
