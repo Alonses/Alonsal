@@ -57,7 +57,7 @@ module.exports = async function({client, message, args}){
             embed = new MessageEmbed()
             .setTitle(`> ${comando_alvo.emoji} ${comando_alvo.comando}`)
             .setColor(0x29BB8E)
-            .setDescription(`:label: Aliases ( ${format_aliases} )\n:jigsaw: ${manutencao[8]["usos"]} //\n${format_usos}\`\`\`fix\n${comando_alvo.funcao.replaceAll("<mr>", "").replaceAll("</mr>", "")}\`\`\``)
+            .setDescription(`:label: Aliases ( ${format_aliases} )\n:jigsaw: ${manutencao[8]["usos"]} //\n${format_usos.replaceAll("<mr>", "").replaceAll("</mr>", "")}\`\`\`fix\n${comando_alvo.funcao.replaceAll("<mr>", "").replaceAll("</mr>", "")}\`\`\``)
 
             message.reply({embeds: [embed]});
         });

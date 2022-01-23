@@ -53,9 +53,5 @@ module.exports = async ({client}) => {
     }else
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] });
 
-    try{
-        require('./relata.js')({client});
-    }catch(err){
-        console.log(err);
-    }
+    require('./relata.js')({client});
 }

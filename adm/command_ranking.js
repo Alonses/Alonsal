@@ -43,6 +43,5 @@ module.exports = async function({client, message, content}){
     command.activations++;
 
     writeFileSync(`./arquivos/data/command_rank/${indice}.json`, JSON.stringify(command));
-
     delete require.cache[require.resolve(`../arquivos/data/command_rank/${indice}.json`)];
 }
