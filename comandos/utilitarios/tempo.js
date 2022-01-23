@@ -25,6 +25,7 @@ module.exports = {
         const pesquisa_bruta = `\"${args.join(" ").replaceAll("\"", "")}"`;
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         const emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
+        const indicaTemp = require('../../adm/funcoes/indicatemp.js');
 
         if(args.length < 1) // Pesquisa sem argumentos
             return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
@@ -125,6 +126,7 @@ module.exports = {
                     // Umidade
                     let emoji_umidade = ":sweat_drops:";
                     let emoji_indica_humidade = "";
+                    let emoji_indica_visibilidade = "";
 
                     if(res.main.humidity < 60)
                         emoji_umidade = ":droplet:";
@@ -187,7 +189,7 @@ module.exports = {
                             infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
 
                         emoji_indica_humidade = " 🔼";
-
+                        emoji_indica_visibilidade = " 🔽";
                         chuva_troll = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`;
                     }
                     
@@ -196,6 +198,8 @@ module.exports = {
                     
                         if(typeof res.rain["3h"] != "undefined")
                             infos_chuva += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
+
+                        emoji_indica_visibilidade = " 🔽";
 
                         chuva_troll = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`;
                     }
@@ -215,6 +219,8 @@ module.exports = {
                     if(typeof res.main.grnd_level !== "undefined") 
                         pressao_local = `:camping: **${utilitarios[8]["nivel_chao"]}: ** \`${res.main.grnd_level} kPA\`\n:island: **${utilitarios[8]["nivel_mar"]}: ** \`${res.main.sea_level} kPA\``;
 
+                    emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, chuva_troll);
+
                     const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
@@ -223,7 +229,7 @@ module.exports = {
                     .addFields(
                         {
                             name: `:thermometer: **${utilitarios[8]["temperatura"]}**`, 
-                            value: `:small_orange_diamond: **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, 
+                            value: `${emoji_indica_temp} **${utilitarios[12]["atual"]}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``, 
                             inline: true
                         },
                         {
@@ -232,7 +238,7 @@ module.exports = {
                             inline: true},
                         {
                             name: `:wind_chime: **${utilitarios[8]["vento"]}**`, 
-                            value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%\``, 
+                            value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``, 
                             inline: true 
                         },
                     )
