@@ -5,7 +5,6 @@ module.exports = {
     description: "Codifique e decodifique do binário",
     aliases: [ "bn" ],
     cooldown: 3,
-    usage: "bn <string> <any>",
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
         const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
