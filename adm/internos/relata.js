@@ -3,15 +3,24 @@ const { MessageEmbed } = require('discord.js');
 module.exports = async ({client}) => {
 
     const date1 = new Date(); // Ficará esperando até meia noite para executar a rotina
-    var aguardar_tempo =  ((date1.getHours() - 24) *-3600000) + ((date1.getMinutes() - 60) *-60000) + ((date1.getSeconds() - 60) *-1000);
+    const tempo_restante =  ((24 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000);
+    
+    gera_relatorio(client, tempo_restante);
 
-    setInterval(() => {
-        gera_relatorio(client);
-        aguardar_tempo = 86400000; // Altera o valor para sempre executar à meia-noite
-    }, aguardar_tempo); // Executa de 1 em 1 dia
+    setTimeout(() => {
+        gera_relatorio(client, 86400000);
+        requisita_relatorio(client, 86400000); // Altera o valor para sempre executar à meia-noite
+    }, tempo_restante); // Executa de 1 em 1 dia
 }
 
-async function gera_relatorio(client){
+function requisita_relatorio(client, aguardar_tempo){
+    setTimeout(() => {
+        gera_relatorio(client, aguardar_tempo);
+        requisita_relatorio(client, aguardar_tempo);
+    }, aguardar_tempo);
+}
+
+async function gera_relatorio(client, proxima_att){
 
     const bot = {
         comandos_disparados: 0,
@@ -19,6 +28,16 @@ async function gera_relatorio(client){
         msgs_lidas: 0,
         epic_embed_fails: 0
     };
+    
+    const A = proxima_att;
+    const segundos = parseInt((A / 1000) % 60);
+    const minutos = parseInt((A / (1000 * 60)) % 60);
+    const horas = parseInt((A / (1000 * 60 * 60)) % 24);
+    proxima_att = `${("0"+ (horas)).substr(-2)}:${("0"+ (minutos)).substr(-2)}:${("0"+ (segundos)).substr(-2)}`;
+    proxima_att = proxima_att == "00:00:00" ? "24:00:00" : proxima_att;
+
+    console.log(`Próxima atualização em : ${proxima_att}`);
+    return;
 
     const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`);
     bot.comandos_disparados = comandos_disparados;
@@ -71,8 +90,7 @@ async function gera_relatorio(client){
             inline: true
         }
     )
-    .setFooter("Próxima atualização em 24 horas")
-    .setTimestamp();
+    .setFooter(`Próxima atualização em `);
     
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] });
     require("../funcoes/resrelatorio.js")({}); // Reseta o relatório
