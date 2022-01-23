@@ -28,7 +28,6 @@ module.exports = {
         fetch(`https://raw.githubusercontent.com/odnols/site-do-alonsal/main/json/guia_${idioma.slice(0, 2)}.json`)
         .then(response => response.json())
         .then(async dados => {
-
             for (const file of readdirSync(`./arquivos/data/command_rank`)) {
                 commands.push(require(`../../arquivos/data/command_rank/${file}`));
             }
@@ -67,7 +66,7 @@ module.exports = {
             for (const command of commands) {
                 if(i < 6){
                     let command_name = dados.guia[command.id];
-                    command_name = (command_name.comando).split(" ")[0] || diversao[8]["nome_faltando"];
+                    command_name = `${command_name.emoji} ${(command_name.comando).split(" ")[0]}` || diversao[8]["nome_faltando"];
                     
                     let comaliase = dados.guia[command.id];
                     comaliase = (comaliase.aliases).split(",")[0] || diversao[8]["aliase_faltando"];
@@ -96,7 +95,8 @@ module.exports = {
 
             message.reply({ embeds: [embed] });
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err);
             message.reply(`:mag: | ${diversao[8]["error_rc"]}`);
         });
     }
