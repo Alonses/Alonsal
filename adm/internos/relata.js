@@ -7,8 +7,6 @@ module.exports = async ({client}) => {
     const date1 = new Date(); // Ficará esperando até meia noite para executar a rotina
     const tempo_restante =  ((24 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000);
     
-    gera_relatorio(client, tempo_restante);
-
     setTimeout(() => {
         gera_relatorio(client, 86400000);
         requisita_relatorio(client, 86400000); // Altera o valor para sempre executar à meia-noite
