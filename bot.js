@@ -17,7 +17,7 @@ const client = new Client({ intents: [
 String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
     return this.split(needle).join(replacement);
 };
-
+    
 // Configurando o wax e salvando os comandos para uso posterior
 const commandConfig = new handler.CommandConfig(
     client,
