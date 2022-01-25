@@ -53,37 +53,46 @@ client.on("ready", async () => {
 
 client.on("messageCreate", async message => {
 
-    if (message.author.bot || message.webhookId) return;
-    
-    if(client.user.id === "833349943539531806")
-        if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
+    try{ // Detectador de ceiras extremas
+        if (message.author.bot || message.webhookId) return;
+        
+        if(client.user.id === "833349943539531806")
+            if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
 
-    const prefix = client.prefixManager.getPrefix(message.guild.id);
+        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-    if (message.channel.type === "GUILD_TEXT") {
-        const permissions = message.channel.permissionsFor(message.client.user);
+        if (message.channel.type === "GUILD_TEXT") {
+            const permissions = message.channel.permissionsFor(message.client.user);
 
-        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+            if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+        }
+        
+        if (message.content.includes(client.user.id) && !message.content.startsWith(`${prefix}usinfo`) && !message.content.startsWith(`${prefix}userinfo`) && !message.content.startsWith(`${prefix}gado`) && !message.content.startsWith(`${prefix}ga`)) { // Responde as mensagens em que é marcado
+
+            const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
+            const dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+            const idioma_selecionado = idioma.getLang(message.guild.id);
+
+            const {inicio} = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
+
+            return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
+        }
+
+        if (message.content !== prefix)
+            handler.messageReceived(message);
+        else
+            await require('./adm/internos/comando.js')({client, message});
+        
+        if(!message.content.startsWith(prefix)){
+            const caso = "msg_enviada";
+            await require('./adm/relatorio.js')({client, caso});
+        }
+    }catch(err){
+        console.log(err);
+
+        const caso = "epic_fail";
+        await require('./adm/relatorio.js')({client, caso});
     }
-    
-    if (message.content.includes(client.user.id) && !message.content.startsWith(`${prefix}usinfo`) && !message.content.startsWith(`${prefix}userinfo`) && !message.content.startsWith(`${prefix}gado`) && !message.content.startsWith(`${prefix}ga`)) { // Responde as mensagens em que é marcado
-
-        const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
-        const dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
-        const idioma_selecionado = idioma.getLang(message.guild.id);
-
-        const {inicio} = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
-
-        return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
-    }
-
-    if (message.content !== prefix)
-        handler.messageReceived(message);
-    else
-        await require('./adm/internos/comando.js')({client, message});
-    
-    const caso = "msg_enviada";
-    await require('./adm/relatorio.js')({client, caso});
 });
 
 client.ws.on("INTERACTION_CREATE", async data => {

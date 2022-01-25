@@ -95,8 +95,8 @@ module.exports = {
 
             message.reply({ embeds: [embed] });
         })
-        .catch((err) => {
-            console.log(err);
+        .catch((e) => {
+            console.log(e);
             message.reply(`:mag: | ${diversao[8]["error_rc"]}`);
         });
     }
