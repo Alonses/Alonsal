@@ -16,7 +16,7 @@ module.exports = {
 
         if(args.length < 1 || (isNaN(args[0].raw) && args.length == 1)) return message.reply(`:octagonal_sign: | ${moderacao[8]["error_1"].replace(".a", prefix)}`);
 
-        if ((!permissions_user.permissions.has('MANAGE_MEMBERS')) && message.author.id !== "665002572926681128")
+        if ((!permissions_user.permissions.has('MODERATE_MEMBERS')) && message.author.id !== "665002572926681128")
             return message.reply(`:octagonal_sign: | ${moderacao[8]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
         
         //  Buscando o Alvo informado
