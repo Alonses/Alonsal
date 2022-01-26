@@ -89,9 +89,6 @@ client.on("messageCreate", async message => {
         }
     }catch(e){
         console.log(e);
-
-        const caso = "epic_fail";
-        await require('./adm/relatorio.js')({client, caso});
     }
 });
 
