@@ -213,6 +213,12 @@
             "unlock" : "unlocked\nUse `.alock` to lock",
             "permissao_1" : "You do not have permissions to manage this channel.",
             "permissao_2" : "I can't block this channel, I need `Manage channels` and `Manage roles` permissions for this"
+        },
+        {
+            "permissao_1" : "You cannot manage members of this server",
+            "sucesso" : "Experience for `nick_repl` has been changed to `exp_repl exp`, its new level is `nivel_repl`",
+            "error_1" : "Enter the ID and your new XP, or tag someone and enter the command with the new exp\nFor example, `.achr @slondo 0`",
+            "error_2" : "An unexpected error occurred and this user's exp could not be changed at this time.\nPlease try again later"
         }
     ],
     "utilitarios" : [

@@ -6,7 +6,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const {moderacao} = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const permissions_user = await message.guild.members.fetch(message.author);
         const permissions_bot = await message.guild.members.fetch(message.client.user.id);
         let alvo;   

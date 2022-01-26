@@ -5,7 +5,7 @@ const CALDEIRA = 60000;
 const { existsSync, mkdirSync, writeFileSync } = require('fs');
 const fs = require('fs');
 
-module.exports = async (client, message) => {
+module.exports = async ({client, message}) => {
 
     if (!existsSync(`./arquivos/data/rank/${message.guild.id}`))
         mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true });
@@ -55,7 +55,7 @@ module.exports = async (client, message) => {
         user.warns = 0;
 
         const caso = "experiencia";
-        await require('./relatorio.js')({client, caso});
+        require('./relatorio.js')({client, caso});
 
         writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user));
         delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
