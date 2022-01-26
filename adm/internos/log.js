@@ -44,10 +44,10 @@ module.exports = async ({client, message, content}) => {
     });
 
     // Contabilizar o comando
-    // if(client.user.id === "833349943539531806"){
-        // await require('../command_ranking.js')({client, message, content});
-
+    if(client.user.id === "833349943539531806"){
+        await require('../command_ranking.js')({client, message, content});
+        
         const caso = "comando";
         require('../relatorio.js')({client, caso});
-    // }
+    }
 }
