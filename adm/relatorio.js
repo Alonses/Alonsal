@@ -40,9 +40,6 @@ module.exports = async ({client, caso}) => {
         if(caso === "msg_enviada")
             bot.msgs_lidas += 1;
         
-        if(caso === "epic_fail")
-            bot.epic_embed_fails += 1;
-
         writeFileSync(`./arquivos/data/relatorio.json`, JSON.stringify(bot));
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)];
     });
