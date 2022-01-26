@@ -54,6 +54,9 @@ module.exports = async (client, message) => {
         user.lastValidMessage = message.createdTimestamp;
         user.warns = 0;
 
+        const caso = "experiencia";
+        await require('./relatorio.js')({client, caso});
+
         writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user));
         delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
     });
