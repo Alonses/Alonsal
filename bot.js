@@ -57,7 +57,7 @@ client.on("messageCreate", async message => {
         if (message.author.bot || message.webhookId) return;
         
         if(client.user.id === "833349943539531806")
-            if(message.content.length >= 7) await require('./adm/ranking.js')(client, message); // Ranking de XP
+            if(message.content.length >= 7) await require('./adm/ranking.js')({client, message}); // Ranking de XP
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 

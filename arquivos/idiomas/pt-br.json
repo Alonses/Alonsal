@@ -215,8 +215,10 @@
             "permissao_2" : "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
         },
         {
-            "permissao_1" : "Você não pode atribuir cargos a outros membros",
-            "permissao_2" : "Eu não posso atribuir/ remover cargos de outros membros"
+            "permissao_1" : "Você não pode gerenciar os membros deste servidor",
+            "sucesso" : "A Experiência de `nick_repl` foi alterada para `exp_repl exp`, seu novo nível é `nivel_repl`",
+            "error_1" : "Informe o ID e seu novo XP, ou marque alguém e insira o comando com o exp novo\nPor exemplo, `.achr @slondo 0`",
+            "error_2" : "Houve um erro inesperado e não foi possível alterar o exp deste usuário no momento.\nPor Favor, tente novamente mais tarde"
         }
     ],
     "utilitarios" : [
