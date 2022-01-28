@@ -80,11 +80,11 @@ module.exports = {
         )
         .setFooter("Use o comando .abp h para ver mais exemplos e outros comandos".replace(".a", prefix));
                 
-        if(msToTime(horas_trabalhadas).split(":")[0] > 8)
+        if(msToTime(horas_trabalhadas).split(":")[0] >= 8)
             tempo_extra = `**Tempo extra ( ${msToTime(horas_trabalhadas).split(":")[0] - 8}:${msToTime(horas_trabalhadas).split(":")[1]} )**`;
         
         if(msToTime(horas_trabalhadas).split(":")[0] < 8)
-            tempo_extra = `**Tempo faltando ( ${8 - msToTime(horas_trabalhadas).split(":")[0]}:${60 - msToTime(horas_trabalhadas).split(":")[1] == 60? "00" : 60 - msToTime(horas_trabalhadas).split(":")[1]} )**`; 
+            tempo_extra = `**Tempo faltando ( ${8 - msToTime(horas_trabalhadas).split(":")[0]}:${60 - msToTime(horas_trabalhadas).split(":")[1] == 60? "00" : 60 - msToTime(horas_trabalhadas).split(":")[1]} )**`;
         
         embed.addFields(
             {
@@ -94,7 +94,7 @@ module.exports = {
             }
         );
         
-        message.reply({embeds: [embed]});
+        client.users.cache.get(message.author.id).send({ embeds: [embed] });
     }
 }
 
