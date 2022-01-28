@@ -9,6 +9,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
+        return;
+        
         try{
             const getHourDiff = require('../../adm/funcoes/diffhoras.js');
 
