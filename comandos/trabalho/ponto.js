@@ -7,9 +7,7 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
-        return;
-        
+         
         if (!existsSync(`./arquivos/data/trabalho/${message.author.id}`))
             mkdirSync(`./arquivos/data/trabalho/${message.author.id}`, { recursive: true });
 
@@ -115,7 +113,7 @@ module.exports = {
 
         if(verifica_entradas === 4) msg_retorno = "Todos os horários foram preenchidos, você pode editar pontos anteriores com o comando `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOu ver o resumo completo com o comando `.atr`";
 
-        message.reply(msg_retorno.replaceAll(".a", prefix));
+        await message.reply(msg_retorno.replaceAll(".a", prefix)).then(msg => setTimeout(() => msg.delete(), 10000));
 
         if(confirma_dia_atual){
             writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`, JSON.stringify(pontos));
