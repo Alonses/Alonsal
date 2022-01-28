@@ -468,5 +468,29 @@
             "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
             "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
         }
+    ],
+    "trabalho" : [
+        {
+            "entrada" : "Entrance",
+            "saida" : "Exit",
+            "tempo" : "Time",
+            "tempo_extra" : "Extra time",
+            "tempo_falta" : "Time left",
+            "turno_manha" : "Morning shift",
+            "turno_tarde" : "Afternoon shift",
+            "tempo_trabalhado" : "Time worked",
+            "dica_comando" : "Use the command .atr h to see more examples and other commands",
+            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2001 08:07`"
+        },
+        {   
+            "ponto_att_1" : "Time of `ponto_repl°` Point of `data_repl` successfully updated to `hora_repl`",
+            "ponto_att_2" : "ponto_repl° Point of the day recorded, the linked time is `hora_repl`\nDid you type it wrong? Edit this point with the command `.abp ponto_repl 08:07`",
+            "ponto_att_3" : "Time of `ponto_repl°` Point successfully updated to `hora_repl`",
+            "todos_pontos" : "All times have been filled in, you can edit previous points with the command `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOr view the full summary with the `.atr` command",
+            "horario" : "Enter a time to register your point",
+            "error_1" : "Enter a number between `1 & 4` to edit your points today",
+            "error_2" : "Enter an appropriate time format, for example `.abp 20:07`",
+            "error_3" : "You entered too much value, the operation was cancelled\nUse the command `.atr h` to see commands in this category"
+        }
     ]
 }
