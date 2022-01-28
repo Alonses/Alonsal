@@ -3,6 +3,8 @@ const fs = require('fs');
 
 module.exports = async ({client, message, content}) => {
 
+    const prefix = client.prefixManager.getPrefix(message.guild.id);
+
     fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
         if (err) throw err;
         
@@ -13,6 +15,7 @@ module.exports = async ({client, message, content}) => {
             const d = new Date();
             const day = d.toLocaleString('en-US', { weekday: 'long' });
 
+            let url_ativacao = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
             let min = (`0${d.getMinutes()}`).substr(-2); // Preservar o digito 0
             let hr = (`0${d.getHours()}`).substr(-2); // Preservar o digito 0
 
@@ -22,18 +25,24 @@ module.exports = async ({client, message, content}) => {
                 ampm = "pm";
             }
 
-            const comando_inserido = content.replaceAll("`", "'");
+            let comando_inserido = content.replaceAll("`", "'");
+            if(content.startsWith(`${prefix}bp`) || content.startsWith(`${prefix}baterponto`) || content.startsWith(`${prefix}tr`) || content.startsWith(`${prefix}wr`) || content.startsWith(`${prefix}trampo`) || content.startsWith(`${prefix}batponto`)){
+                comando_inserido = "O Conteúdo deste comando é confidencial";
+                url_ativacao = "";
+            }
 
             const date = d.getDate();
             const month = d.toLocaleString('en-US', { month: 'long' });
             const year = d.getFullYear();
 
-            const embed = new MessageEmbed()
+            let embed = new MessageEmbed()
             .setTitle("> ✨ New interaction")
-            .setURL(`https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`)
             .setColor(0x29BB8E)
             .setDescription(`:man_raising_hand: ( \`${message.author.id}\` | \`${message.author.username}#${message.author.discriminator}\` )\n:globe_with_meridians: ( \`${message.guild.id}\` | \`${message.guild.name}\` )\n:placard: ( \`${message.channel.id}\` | \`${message.channel.name}\` )\n:bookmark_tabs: ( \`${message.id}\` )\n\`\`\`fix\n📝 ${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
             .setFooter(`⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}`);
+
+            if(url_ativacao !== "")
+                embed.setURL(`${url_ativacao}`);
 
             client.channels.cache.get('846151364492001280').send({ embeds: [embed] }); // Envia o log com os comandos do usuário
         }
