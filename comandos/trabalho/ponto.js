@@ -118,7 +118,7 @@ module.exports = {
             msg.delete();
         }, 10000));
 
-        if(confirma_dia_atual){
+        if(confirma_dia_atual){ // Confirma se é o dia atual ou algum dia customizado
             writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`, JSON.stringify(pontos));
             delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)];
         }else{
