@@ -8,6 +8,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         
+        return;
+        
         if (!existsSync(`./arquivos/data/trabalho/${message.author.id}`))
             mkdirSync(`./arquivos/data/trabalho/${message.author.id}`, { recursive: true });
 
