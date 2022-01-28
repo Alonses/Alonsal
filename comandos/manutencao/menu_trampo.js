@@ -8,15 +8,15 @@ module.exports = ({client, message}) => {
 
     if(idioma_adotado === "pt-br"){
         embed = new MessageEmbed()
-        .setTitle("Comandos de trabilson :satellite:")
-        .setColor(0xfffb29)
-        .setDescription(`:fax: **\`.abp 08:07\`** - Registra um ponto\n:pencil: **\`.abp 1 20:07\`** - Edita um ponto\n:beers: **\`.atr\`** | **\`.awr\`** - O Resumo do seu dia\n:date: **\`.abp 25/01/2022 1 08:07\`** - Cria/Edita seu ponto em outro dia`.replaceAll(".a", prefix))
+        .setTitle("Assistente de trabalho :satellite:")
+        .setColor(0xfaa81a)
+        .setDescription(`:fax: **\`${prefix}bp 08:07\`** - Registra um ponto\n:pencil: **\`${prefix}bp 1 20:07\`** - Edita um ponto\n:beers: **\`${prefix}tr\`** | **\`${prefix}wr\`** - O Resumo do seu dia\n:wine_glass: **\`${prefix}tr 21/01/2022\`** - O Resumo em um dia diferente\n:date: **\`${prefix}bp 21/01/2022 1 08:07\`** - Cria/Edita seu ponto em outro dia`)
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
     }else{
         embed = new MessageEmbed()
-        .setTitle("Work commands :satellite:")
-        .setColor(0xfffb29)
-        .setDescription(`:fax: **\`.abp 08:07\`** - Register a point\n:pencil: **\`.abp 1 20:07\`** - Edit a point\n:beers: **\`.atr\`** | **\`.awr\`** - The summary of your day\n:date: **\`.abp 25/01/2022 1 08:07\`** - Create/Edit your point another day`.replaceAll(".a", prefix))
+        .setTitle("Work assistant :satellite:")
+        .setColor(0xfaa81a)
+        .setDescription(`:fax: **\`${prefix}bp 08:07\`** - Register a point\n:pencil: **\`${prefix}bp 1 20:07\`** - Edit a point\n:beers: **\`${prefix}tr\`** | **\`${prefix}wr\`** - The summary of your day\n:wine_glass: **\`${prefix}tr 21/01/2022\`** - The Summary on a different day\n:date: **\`${prefix}bp 21/01/2022 1 08:07\`** - Create/Edit your point another day`)
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
     }
 

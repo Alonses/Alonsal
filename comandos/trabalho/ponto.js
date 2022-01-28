@@ -116,7 +116,7 @@ module.exports = {
         await message.reply(msg_retorno.replaceAll(".a", prefix)).then(msg => setTimeout(() => {
             message.delete();
             msg.delete();
-        }, 10000));
+        }, 6000));
 
         if(confirma_dia_atual){ // Confirma se é o dia atual ou algum dia customizado
             writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`, JSON.stringify(pontos));

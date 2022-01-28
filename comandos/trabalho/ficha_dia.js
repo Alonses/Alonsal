@@ -66,7 +66,7 @@ module.exports = {
 
         let embed = new MessageEmbed()
         .setTitle(`${dia_status}`)
-        .setColor(0xfffb29)
+        .setColor(0xfaa81a)
         .addFields(
             {
                 name: `:park: **${trabalho[0]["turno_manha"]}**`,
