@@ -94,7 +94,8 @@ module.exports = {
             }
         );
         
-        client.users.cache.get(message.author.id).send({ embeds: [embed] });
+        await client.users.cache.get(message.author.id).send({ embeds: [embed] });
+        message.delete();
     }
 }
 
