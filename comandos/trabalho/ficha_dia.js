@@ -16,6 +16,7 @@ module.exports = {
         let dia_atual = `${data_atual.getDate()}${("0" + data_atual.getMonth() + 1).substr(-2)}${data_atual.getFullYear()}`;
         let dia_status = `${data_atual.getDate()}/${("0" + data_atual.getMonth() + 1).substr(-2)}/${data_atual.getFullYear()}`;
         const prefix = client.prefixManager.getPrefix(message.guild.id);
+        const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
         const pontos = {
             pont1: null,
@@ -33,7 +34,7 @@ module.exports = {
                 return;
             }
         
-            if(isNaN(isValidDate(args[0].raw))) return message.reply(":octagonal_sign: | Informe uma data válida para esse comando, por exemplo `.abn 21/01/2001 08:07`");
+            if(isNaN(isValidDate(args[0].raw))) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"]}`);
 
             dia_status = args[0].raw;
             data_custom = (args[0].raw).replaceAll("/", "");
@@ -68,27 +69,27 @@ module.exports = {
         .setColor(0xfffb29)
         .addFields(
             {
-                name: `:park: **Turno da manhã**`,
-                value: `**Entrada:** \`${pontos.pont1 || "S/R"}\`\n**Saída:** \`${pontos.pont2 || "S/R"}\`\n**Tempo:** \`${msToTime(getHourDiff(pontos.pont1, pontos.pont2))}\``,
+                name: `:park: **${trabalho[0]["turno_manha"]}**`,
+                value: `**${trabalho[0]["entrada"]}:** \`${pontos.pont1 || "S/R"}\`\n**${trabalho[0]["saida"]}:** \`${pontos.pont2 || "S/R"}\`\n**${trabalho[0]["tempo"]}:** \`${msToTime(getHourDiff(pontos.pont1, pontos.pont2))}\``,
                 inline: true
             },
             {
-                name: `:island: **Turno da tarde**`,
-                value: `**Entrada:** \`${pontos.pont3 || "S/R"}\`\n**Saída:** \`${pontos.pont4 || "S/R"}\`\n**Tempo:** \`${msToTime(getHourDiff(pontos.pont3, pontos.pont4))}\``,
+                name: `:island: **${trabalho[0]["turno_tarde"]}**`,
+                value: `**${trabalho[0]["entrada"]}:** \`${pontos.pont3 || "S/R"}\`\n**${trabalho[0]["saida"]}:** \`${pontos.pont4 || "S/R"}\`\n**${trabalho[0]["tempo"]}:** \`${msToTime(getHourDiff(pontos.pont3, pontos.pont4))}\``,
                 inline: true
             }
         )
-        .setFooter("Use o comando .abp h para ver mais exemplos e outros comandos".replace(".a", prefix));
+        .setFooter(trabalho[0]["dica_comando"].replace(".a", prefix));
                 
         if(msToTime(horas_trabalhadas).split(":")[0] >= 8)
-            tempo_extra = `**Tempo extra ( ${msToTime(horas_trabalhadas).split(":")[0] - 8}:${msToTime(horas_trabalhadas).split(":")[1]} )**`;
+            tempo_extra = `**${trabalho[0]["tempo_extra"]} ( ${msToTime(horas_trabalhadas).split(":")[0] - 8}:${msToTime(horas_trabalhadas).split(":")[1]} )**`;
         
         if(msToTime(horas_trabalhadas).split(":")[0] < 8)
-            tempo_extra = `**Tempo faltando ( ${8 - msToTime(horas_trabalhadas).split(":")[0]}:${60 - msToTime(horas_trabalhadas).split(":")[1] == 60? "00" : 60 - msToTime(horas_trabalhadas).split(":")[1]} )**`;
+            tempo_extra = `**${trabalho[0]["tempo_falta"]} ( ${8 - msToTime(horas_trabalhadas).split(":")[0]}:${60 - msToTime(horas_trabalhadas).split(":")[1] == 60? "00" : 60 - msToTime(horas_trabalhadas).split(":")[1]} )**`;
         
         embed.addFields(
             {
-                name: `:beers: **Tempo trabalhado ( ${msToTime(horas_trabalhadas)} )**`,
+                name: `:beers: **${trabalho[0]["tempo_trabalhado"]} ( ${msToTime(horas_trabalhadas)} )**`,
                 value: `:alarm_clock: ${tempo_extra}`,
                 inline: false
             }

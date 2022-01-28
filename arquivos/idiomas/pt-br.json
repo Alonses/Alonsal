@@ -443,5 +443,29 @@
             "senha" : "Verifique seu privado, sua senha foi gerada com um tamanho de `tamanho_repl` caracteres",
             "rodape" : "4 senhas com tamanho_repl caracteres para escolher, elas não são salvas por aqui e nem sei o conteúdo, apenas você ;)"
         }
+    ],
+    "trabalho" : [
+        {
+            "entrada" : "Entrada",
+            "saida" : "Saída",
+            "tempo" : "Tempo",
+            "tempo_extra" : "Tempo extra",
+            "tempo_falta" : "Tempo faltando",
+            "turno_manha" : "Turno da manhã",
+            "turno_tarde" : "Turno da tarde",
+            "tempo_trabalhado" : "Tempo trabalhado",
+            "dica_comando" : "Use o comando .atr h para ver mais exemplos e outros comandos",
+            "error_1" : "Informe uma data válida para esse comando, por exemplo `.abn 21/01/2001 08:07`"
+        },
+        {   
+            "ponto_att_1" : "Horário do `ponto_repl°` Ponto de `data_repl` atualizado com sucesso para `hora_repl`",
+            "ponto_att_2" : "ponto_repl° Ponto do dia registrado, a hora vinculada é `hora_repl`\nDigitou errado? Edite este ponto com o comando `.abp ponto_repl 08:07`",
+            "ponto_att_3" : "Horário do `ponto_repl°` Ponto atualizado com sucesso para `hora_repl`",
+            "todos_pontos" : "Todos os horários foram preenchidos, você pode editar pontos anteriores com o comando `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOu ver o resumo completo com o comando `.atr`",
+            "horario" : "Informe um horário para registrar seu ponto",
+            "error_1" : "Informe um número entre `1 & 4` para editar seus pontos de hoje",
+            "error_2" : "Informe um formato de hora apropriado, por exemplo, `.abp 20:07`",
+            "error_3" : "Você informou valore demais, a operação foi cancelada\nUse o comando `.atr h` para ver os comandos desta categoria"
+        }
     ]
 }
