@@ -11,7 +11,8 @@ const client = new Client({ intents: [
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    Intents.FLAGS.GUILD_MEMBERS ]
+    Intents.FLAGS.GUILD_MEMBERS
+    ]
 });
 
 String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
@@ -31,14 +32,14 @@ handler.setup(commandConfig);
 client.on("ready", async () => {
 
     await require("./adm/internos/status.js")({client});
-    await handler.useSlashHandler();
+    // await handler.useSlashHandler();
 
     for (const folder of readdirSync(`${__dirname}/comandos/`)){
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`);
             handler.addCommand(command);
 
-            if(command.slash) handler.addSlashCommand(command);
+            // if(command.slash) handler.addSlashCommand(command);
         }
     }
 
@@ -58,8 +59,6 @@ client.on("messageCreate", async message => {
         
         if(client.user.id === "833349943539531806")
             if(message.content.length >= 7) await require('./adm/ranking.js')({client, message}); // Ranking de XP
-
-        const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if (message.channel.type === "GUILD_TEXT") {
             const permissions = message.channel.permissionsFor(message.client.user);
@@ -108,8 +107,6 @@ handler.events.on("command_executed", async (command, discord_client, message, a
 
         if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
     }
-
-    const content = message.content;
 
     await handler.executeCommand(command, discord_client, message, args);
     await require('./adm/internos/log.js')({client, message, content});

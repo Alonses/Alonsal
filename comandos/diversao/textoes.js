@@ -9,9 +9,8 @@ module.exports = {
     execute(client, message) {
 
         const num = Math.round((textoes.length - 1) * Math.random());
-
         const key = Object.keys(textoes[num]);
-
+        
         message.channel.send(key.toString());
 
         if(textoes[num][key] !== null)
