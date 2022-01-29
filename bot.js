@@ -32,7 +32,7 @@ client.on("ready", async () => {
 
     await require("./adm/internos/status.js")({client});
     await handler.useSlashHandler();
-
+    
     for (const folder of readdirSync(`${__dirname}/comandos/`)){
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`);
@@ -93,7 +93,11 @@ client.on("messageCreate", async message => {
 });
 
 client.ws.on("INTERACTION_CREATE", async data => {
-    handler.wsInteractionReceived(data);
+    try{
+        handler.wsInteractionReceived(data);
+    }catch(err){
+        console.log(err);
+    }
 });
 
 // Eventos secundários
