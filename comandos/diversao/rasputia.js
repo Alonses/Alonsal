@@ -14,5 +14,12 @@ module.exports = {
             if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
                 message.delete();
         });
+    },
+    slash_params: [{
+        name: "rasputia",
+        description: "Eu vou te mostrar como a p1ranha desce o escorrega"
+    }],
+    slash(client, handler, data, params) {
+        handler.postSlashMessage(data, gifs[Math.round((gifs.length - 1) * Math.random())]);
     }
 };
