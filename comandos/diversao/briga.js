@@ -19,12 +19,12 @@ module.exports = {
             if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
                 message.delete();
         });
-    },
-    slash_params: [{
-        name: "briga",
-        description: "Porradaria!"
-    }],
-    slash(client, handler, data, params) {
-        handler.postSlashMessage(data, gifs[Math.round((gifs.length - 1) * Math.random())]);
     }
+    // slash_params: [{
+    //     name: "briga",
+    //     description: "Porradaria!"
+    // }],
+    // slash(client, handler, data, params) {
+    //     handler.postSlashMessage(data, gifs[Math.round((gifs.length - 1) * Math.random())]);
+    // }
 };

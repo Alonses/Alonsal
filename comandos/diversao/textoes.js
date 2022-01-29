@@ -20,16 +20,16 @@ module.exports = {
     
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
-    },
-    slash_params: [{
-        name: "textoes",
-        description: "Invoque textoes"
-    }],
-    slash(client, handler, data, params) {
-
-        const num = Math.round((textoes.length - 1) * Math.random());
-        const key = Object.keys(textoes[num]);
-        
-        handler.postSlashMessage(data, key.toString());
     }
+    // slash_params: [{
+    //     name: "textoes",
+    //     description: "Invoque textoes"
+    // }],
+    // slash(client, handler, data, params) {
+
+    //     const num = Math.round((textoes.length - 1) * Math.random());
+    //     const key = Object.keys(textoes[num]);
+        
+    //     handler.postSlashMessage(data, key.toString());
+    // }
 };

@@ -11,12 +11,12 @@ module.exports = {
             if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
                 message.delete();
         });
-    },
-    slash_params: [{
-        name: "paz",
-        description: "Demonstre paz"
-    }],
-    slash(client, handler, data, params) {
-        handler.postSlashMessage(data, 'https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
     }
+    // slash_params: [{
+    //     name: "paz",
+    //     description: "Demonstre paz"
+    // }],
+    // slash(client, handler, data, params) {
+    //     handler.postSlashMessage(data, 'https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263');
+    // }
 };
