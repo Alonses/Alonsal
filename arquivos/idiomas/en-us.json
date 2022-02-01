@@ -480,7 +480,7 @@
             "turno_tarde" : "Afternoon shift",
             "tempo_trabalhado" : "Time worked",
             "dica_comando" : "Use the command .atr h to see more examples and other commands",
-            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2001 08:07`"
+            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2022 08:07`"
         },
         {   
             "ponto_att_1" : "Time of `ponto_repl°` Point of `data_repl` successfully updated to `hora_repl`",
@@ -491,6 +491,15 @@
             "error_1" : "Enter a number between `1 & 4` to edit your points today",
             "error_2" : "Enter an appropriate time format, for example `.abp 20:07`",
             "error_3" : "You entered too much value, the operation was cancelled\nUse the command `.atr h` to see commands in this category"
+        },
+        {
+            "registrado" : "Registered days",
+            "sem_dados" : "You don't have any workdays recorded",
+            "error_1" : "Enter a valid date for this command, for example `.arbp 21/01/2022`",
+            "sem_entradas_1" : "There are no points recorded for",
+            "sem_entradas_2" : "No points recorded for today",
+            "dia_removido_1" : "All data from `dia_repl` have been removed",
+            "dia_removido_2" : "All data for today has been removed"
         }
     ]
 }
