@@ -14,12 +14,11 @@ module.exports = {
         let msg_retorno = "";
         let confirma_dia_atual = true;
         let data_atual = new Date();
-        let data_custom = null;
-        let dia_atual = `${("0"+ data_atual.getDate()).substring(-2)}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${data_atual.getFullYear()}`;
-        
+        let data_custom;
+        let data_storage = `${data_atual.getFullYear()}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${("0"+ data_atual.getDate()).substring(-2)}`;
+
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        const isValidDate = require('../../adm/funcoes/validadata.js');
 
         if(args.length < 1) return message.reply(`:mag: | ${trabalho[1]["horario"]}`);
 
@@ -35,9 +34,9 @@ module.exports = {
             pont4: null
         };
 
-        if (existsSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)];
-            const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`);
+        if (existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)) {
+            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
+            const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`);
             pontos.pont1 = pont1;
             pontos.pont2 = pont2;
             pontos.pont3 = pont3;
@@ -52,18 +51,19 @@ module.exports = {
                 if(args.length === 3)
                     if(isNaN(args[1].raw) || args[1].raw < 1 || args[1].raw > 4) return message.reply(`:octagonal_sign: | ${trabalho[1]["error_1"]}`);
                 
-                if(!isValidDate(args[0].raw)) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"].replace(".a", prefix)}`);
+                if(isNaN(isValidDate(args[0].raw))) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"].replace(".a", prefix)}`);
 
                 data_custom = (args[0].raw).replaceAll("/", "");
                 data_custom = data_custom.replaceAll("-", "");
+                data_storage = `${data_custom.slice(4, 8)}${data_custom.slice(2, 4)}${data_custom.slice(0, 2)}`;
 
                 for(let i = 0; i < 4; i++){
                     pontos[`pont${i + 1}`] = null;
                 }
 
-                if(existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)){
-                    delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)];
-                    const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`);
+                if(existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)){
+                    delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
+                    const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`);
                     pontos.pont1 = pont1;
                     pontos.pont2 = pont2;
                     pontos.pont3 = pont3;
@@ -121,11 +121,15 @@ module.exports = {
         }, 6000));
 
         if(confirma_dia_atual){ // Confirma se é o dia atual ou algum dia customizado
-            writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`, JSON.stringify(pontos));
-            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)];
+            writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`, JSON.stringify(pontos));
+            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
         }else{
-            writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${data_custom}.json`, JSON.stringify(pontos));
-            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)];
+            writeFileSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`, JSON.stringify(pontos));
+            delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
         }
     }
+}
+
+function isValidDate(d){
+    return d instanceof Date && !isNaN(d);
 }

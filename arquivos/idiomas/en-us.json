@@ -480,7 +480,8 @@
             "turno_tarde" : "Afternoon shift",
             "tempo_trabalhado" : "Time worked",
             "dica_comando" : "Use the command .atr h to see more examples and other commands",
-            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2022 08:07`"
+            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2022 08:07`",
+            "error_2" : "Enter a valid date for this command, for example `.atr 21/01/2022`"
         },
         {   
             "ponto_att_1" : "Time of `ponto_repl°` Point of `data_repl` successfully updated to `hora_repl`",

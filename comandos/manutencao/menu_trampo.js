@@ -16,7 +16,7 @@ module.exports = ({client, message}) => {
         embed = new MessageEmbed()
         .setTitle("Work assistant :satellite:")
         .setColor(0xfaa81a)
-        .setDescription(`:fax: **\`${prefix}bp 08:07\`** - Register a point\n:pencil: **\`${prefix}bp 1 20:07\`** - Edit a point\n:beers: **\`${prefix}tr\`** | **\`${prefix}wr\`** - The summary of your day\n:wine_glass: **\`${prefix}tr 21/01/2022\`** - The Summary on a different day\n:date: **\`${prefix}bp 21/01/2022 1 08:07\`** - Create/Edit your point another day`)
+        .setDescription(`:fax: **\`${prefix}bp 08:07\`** - Register a point\n:pencil: **\`${prefix}bp 1 20:07\`** - Edit a point\n:beers: **\`${prefix}tr\`** | **\`${prefix}wr\`** - The summary of your day\n:wine_glass: **\`${prefix}tr 21/01/2022\`** - The Summary on a different day\n:date: **\`${prefix}bp 21/01/2022 1 08:07\`** - Create/Edit your point another day\n:card_box: **\`${prefix}ltr\`** - List all days worked\n:fire_extinguisher: **\`${prefix}rbp\`** | **\`${prefix}rbp 21/01/2022\`** - Erase the day's data`)
         .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
     }
 

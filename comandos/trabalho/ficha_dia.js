@@ -13,12 +13,11 @@ module.exports = {
 
         let tempo_extra = '⠀';
         let data_atual = new Date();
-        let dia_atual = `${("0"+ data_atual.getDate()).substring(-2)}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${data_atual.getFullYear()}`;
+        let data_storage = `${data_atual.getFullYear()}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${("0"+ data_atual.getDate()).substring(-2)}`;
         let dia_status = `${("0"+ data_atual.getDate()).substring(-2)}/${("0"+ (data_atual.getMonth() + 1)).substr(-2)}/${data_atual.getFullYear()}`;
         
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        const isValidDate = require('../../adm/funcoes/validadata.js');
 
         const pontos = {
             pont1: null,
@@ -35,25 +34,26 @@ module.exports = {
                 require('../manutencao/menu_trampo.js')({client, message});
                 return;
             }
-        
-            if(!isValidDate(args[0].raw)) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"]}`);
+            
+            if(isNaN(isValidDate(args[0].raw))) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_2"]}`);
 
             dia_status = args[0].raw;
             data_custom = (args[0].raw).replaceAll("/", "");
             data_custom = data_custom.replaceAll("-", "");
+            data_storage = `${data_custom.slice(4, 8)}${data_custom.slice(2, 4)}${data_custom.slice(0, 2)}`;
 
-            if(existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)){
-                delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)];
-                const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`);
+            if(existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)){
+                delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
+                const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`);
                 pontos.pont1 = pont1;
                 pontos.pont2 = pont2;
                 pontos.pont3 = pont3;
                 pontos.pont4 = pont4;
             }
         }else{
-            if (existsSync(`./arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)) {
-                delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`)];
-                const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${dia_atual}.json`);
+            if (existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)) {
+                delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)];
+                const { pont1, pont2, pont3, pont4 } = require(`../../arquivos/data/trabalho/${message.author.id}/${data_storage}.json`);
                 pontos.pont1 = pont1;
                 pontos.pont2 = pont2;
                 pontos.pont3 = pont3;
@@ -110,4 +110,8 @@ function msToTime(duration) {
     minutes = (minutes < 10) ? "0"+ minutes : minutes;
 
     return `${hours}:${minutes}`;
+}
+
+function isValidDate(d){
+    return d instanceof Date && !isNaN(d);
 }
