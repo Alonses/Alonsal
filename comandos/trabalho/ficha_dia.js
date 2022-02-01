@@ -15,10 +15,10 @@ module.exports = {
         let data_atual = new Date();
         let dia_atual = `${("0"+ data_atual.getDate()).substring(-2)}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${data_atual.getFullYear()}`;
         let dia_status = `${("0"+ data_atual.getDate()).substring(-2)}/${("0"+ (data_atual.getMonth() + 1)).substr(-2)}/${data_atual.getFullYear()}`;
+        
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-
-        console.log(dia_atual, dia_status);
+        const isValidDate = require('../../adm/funcoes/validadata.js');
 
         const pontos = {
             pont1: null,
@@ -36,7 +36,7 @@ module.exports = {
                 return;
             }
         
-            if(isNaN(isValidDate(args[0].raw))) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"]}`);
+            if(!isValidDate(args[0].raw)) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"]}`);
 
             dia_status = args[0].raw;
             data_custom = (args[0].raw).replaceAll("/", "");
@@ -110,8 +110,4 @@ function msToTime(duration) {
     minutes = (minutes < 10) ? "0"+ minutes : minutes;
 
     return `${hours}:${minutes}`;
-}
-
-function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
 }

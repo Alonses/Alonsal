@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = async ({client, message, content}) => {
 
     const prefix = client.prefixManager.getPrefix(message.guild.id);
+    const comandos_confidenciais = [`${prefix}bp`, `${prefix}baterponto`, `${prefix}tr`, `${prefix}wr`, `${prefix}trampo`, `${prefix}batponto`, `${prefix}ltr`, `${prefix}lista_dias`, `${prefix}rbp`, `${prefix}remover_dia`];
 
     fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
         if (err) throw err;
@@ -26,7 +27,7 @@ module.exports = async ({client, message, content}) => {
             }
 
             let comando_inserido = content.replaceAll("`", "'");
-            if(content.startsWith(`${prefix}bp`) || content.startsWith(`${prefix}baterponto`) || content.startsWith(`${prefix}tr`) || content.startsWith(`${prefix}wr`) || content.startsWith(`${prefix}trampo`) || content.startsWith(`${prefix}batponto`)){
+            if(comandos_confidenciais.includes(message.content)){
                 comando_inserido = "O Conteúdo deste comando é confidencial";
                 url_ativacao = "";
             }

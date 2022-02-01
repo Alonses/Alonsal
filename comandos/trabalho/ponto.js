@@ -16,10 +16,10 @@ module.exports = {
         let data_atual = new Date();
         let data_custom = null;
         let dia_atual = `${("0"+ data_atual.getDate()).substring(-2)}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${data_atual.getFullYear()}`;
+        
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-
-        console.log(dia_atual);
+        const isValidDate = require('../../adm/funcoes/validadata.js');
 
         if(args.length < 1) return message.reply(`:mag: | ${trabalho[1]["horario"]}`);
 
@@ -52,7 +52,7 @@ module.exports = {
                 if(args.length === 3)
                     if(isNaN(args[1].raw) || args[1].raw < 1 || args[1].raw > 4) return message.reply(`:octagonal_sign: | ${trabalho[1]["error_1"]}`);
                 
-                if(isNaN(isValidDate(args[0].raw))) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"]}`);
+                if(!isValidDate(args[0].raw)) return message.reply(`:octagonal_sign: | ${trabalho[0]["error_1"].replace(".a", prefix)}`);
 
                 data_custom = (args[0].raw).replaceAll("/", "");
                 data_custom = data_custom.replaceAll("-", "");
@@ -128,8 +128,4 @@ module.exports = {
             delete require.cache[require.resolve(`../../arquivos/data/trabalho/${message.author.id}/${data_custom}.json`)];
         }
     }
-}
-
-function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
 }

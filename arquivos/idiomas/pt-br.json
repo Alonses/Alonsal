@@ -455,7 +455,7 @@
             "turno_tarde" : "Turno da tarde",
             "tempo_trabalhado" : "Tempo trabalhado",
             "dica_comando" : "Use o comando .atr h para ver mais exemplos e outros comandos",
-            "error_1" : "Informe uma data válida para esse comando, por exemplo `.abn 21/01/2001 08:07`"
+            "error_1" : "Informe uma data válida para esse comando, por exemplo `.abn 21/01/2022 08:07`"
         },
         {   
             "ponto_att_1" : "Horário do `ponto_repl°` Ponto de `data_repl` atualizado com sucesso para `hora_repl`",
@@ -466,6 +466,15 @@
             "error_1" : "Informe um número entre `1 & 4` para editar seus pontos de hoje",
             "error_2" : "Informe um formato de hora apropriado, por exemplo, `.abp 20:07`",
             "error_3" : "Você informou valore demais, a operação foi cancelada\nUse o comando `.atr h` para ver os comandos desta categoria"
+        },
+        {
+            "registrado" : "Dias registrados",
+            "sem_dados" : "Você não tem nenhum dia de trabalho registrado",
+            "error_1" : "Informe uma data válida para esse comando, por exemplo `.arbp 21/01/2022`",
+            "sem_entradas_1" : "Não há pontos registrados para",
+            "sem_entradas_2" : "Não há pontos registrados para hoje",
+            "dia_removido_1" : "Todos os pontos de `dia_repl` foram removidos",
+            "dia_removido_2" : "Todos os pontos de hoje foram removidos"
         }
     ]
 }
