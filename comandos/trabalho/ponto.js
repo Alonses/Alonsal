@@ -15,9 +15,11 @@ module.exports = {
         let confirma_dia_atual = true;
         let data_atual = new Date();
         let data_custom = null;
-        let dia_atual = `${data_atual.getDate()}${("0" + data_atual.getMonth() + 1).substr(-2)}${data_atual.getFullYear()}`;
+        let dia_atual = `${("0"+ data_atual.getDate()).substring(-2)}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${data_atual.getFullYear()}`;
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+
+        console.log(dia_atual);
 
         if(args.length < 1) return message.reply(`:mag: | ${trabalho[1]["horario"]}`);
 
