@@ -35,7 +35,7 @@ module.exports = {
                 if(err)
                     console.log(err);
                 
-                message.reply(trabalho[2]["dia_removido_1"].replace("dia_repl", dia_status));
+                message.reply(":file_folder: | "+ trabalho[2]["dia_removido_1"].replace("dia_repl", dia_status));
             });
         }else{
             if(!existsSync(`./arquivos/data/trabalho/${message.author.id}/${data_storage}.json`)) return message.reply(`:mag: | ${trabalho[2]["sem_entradas_2"]}`);
@@ -44,7 +44,7 @@ module.exports = {
                 if(err)
                     console.log(err);
             
-                message.reply(trabalho[2]["dia_removido_2"]);
+                message.reply(":file_folder: | "+ trabalho[2]["dia_removido_2"]);
             });
         }
     }
