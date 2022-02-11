@@ -58,6 +58,6 @@ module.exports = async ({client, message, content}) => {
         await require('../command_ranking.js')({client, message, content});
         
         const caso = "comando";
-        require('../relatorio.js')({client, caso});
+        await require('../relatorio.js')({client, caso});
     }
 }
