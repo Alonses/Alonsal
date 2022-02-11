@@ -52,6 +52,8 @@ module.exports = (date1, date2, utilitarios) => {
     if(retorno_ajustado[0] === "")
         retorno_ajustado.shift();
 
+    retorno_ajustado[1] = retorno_ajustado[1] +",";
+    retorno_ajustado.splice(4, 0, utilitarios[14]["e"]);
     retorno_ajustado = retorno_ajustado.join(" ");
 
     return retorno_ajustado;

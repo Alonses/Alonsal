@@ -92,9 +92,9 @@ client.on("messageCreate", async message => {
     }
 });
 
-client.ws.on("INTERACTION_CREATE", async data => {
+client.ws.on("INTERACTION_CREATE", async (data, interaction) => {
     try{
-        handler.wsInteractionReceived(data);
+        handler.wsInteractionReceived(data, interaction);
     }catch(err){
         console.log(err);
     }

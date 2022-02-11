@@ -81,14 +81,14 @@ module.exports = {
             exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`;
 
         const anagrama = new MessageEmbed()
-        .setTitle(":abc: "+ diversao[5]["anagrama"])
-        .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
+        .setTitle(`:abc: ${diversao[5]["anagrama"]}`)
         .setColor(cor_embed)
+        .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
         .setDescription(`${diversao[5]["entrada"]}: \`${string}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
         .setFooter(`${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}`);
 
         message.reply({embeds: [anagrama]});
-    }
+    },
     // slash_params: [{
     //     name: "anagrama",
     //     description: "Gere anagramas",
@@ -96,13 +96,14 @@ module.exports = {
     //     required: true
     // }],
     // async slash(client, handler, data, params) {
-        
+    
     //     try{
     //         const lang = client.idioma.getLang(data.guild_id);
     //         const { diversao } = require(`../../arquivos/idiomas/${lang}.json`);
             
     //         const anagrama = params.get("anagrama");
-        
+    //         console.log(anagrama);
+            
     //         if(typeof anagrama == "undefined")
     //             return handler.postSlashMessage(data, diversao[5]["aviso_1"]);
 

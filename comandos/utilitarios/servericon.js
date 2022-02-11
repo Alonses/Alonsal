@@ -13,6 +13,7 @@ module.exports = {
 
         let icone_server = message.guild.iconURL({ size: 2048 });
         icone_server = icone_server.replace(".webp", ".gif");
+        const download_icon = utilitarios[4]["download_icon"].replace("link_repl", icone_server);
 
         fetch(icone_server)
         .then(res => {
@@ -20,9 +21,8 @@ module.exports = {
                 icone_server = icone_server.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
-            .setAuthor(message.guild.name)
-            .setTitle(utilitarios[4]["baixar_icone"])
-            .setURL(icone_server)
+            .setTitle(message.guild.name)
+            .setDescription(download_icon)
             .setColor(0x29BB8E)
             .setImage(icone_server);
 
