@@ -73,7 +73,7 @@ client.on("messageCreate", async message => {
             const dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
             const idioma_selecionado = idioma.getLang(message.guild.id);
 
-            const {inicio} = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
+            const { inicio } = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
 
             return message.reply(`${dancando} | ${inicio[0]["menciona"].replaceAll(".a", prefix)}`);
         }
