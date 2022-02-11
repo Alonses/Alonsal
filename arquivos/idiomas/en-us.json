@@ -253,9 +253,9 @@
             "error_1" : "Unable to convert, maximum size exceeded!"
         },
         {
+            "download_avatar" : "Click [here](link_repl) to download the avatar",
+            "download_icon" : "Click [here](link_repl) to download the icon",
             "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:",
-            "baixar_avatar" : "Download the avatar",
-            "baixar_icone" : "Download the icon",
             "id_user" : "Enter a user ID"
         },
         {
@@ -420,7 +420,8 @@
             "minutos" : " minutes",
             "minuto" : " minute",
             "segundos" : " seconds",
-            "segundo" : " second"
+            "segundo" : " second",
+            "e" : "and"
         },
         {
             "id_canal" : "Channel ID",

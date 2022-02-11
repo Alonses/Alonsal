@@ -1,7 +1,12 @@
 const { existsSync, writeFileSync } = require('fs');
 const fs = require('fs');
 
+let trava_edicao = 0;
+
 module.exports = async ({client, caso}) => {
+
+    if(trava_edicao === 1) return;
+    trava_edicao = 1;
 
     const bot = {
         comandos_disparados: 0,
@@ -43,5 +48,7 @@ module.exports = async ({client, caso}) => {
         
         writeFileSync(`./arquivos/data/relatorio.json`, JSON.stringify(bot));
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)];
+
+        trava_edicao = 0;
     });
 }

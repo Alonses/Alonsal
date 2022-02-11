@@ -253,9 +253,9 @@
             "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
         },
         {
+            "download_avatar" : "Clique [aqui](link_repl) para baixar o avatar",
+            "download_icon" : "Clique [aqui](link_repl) para baixar o icone",
             "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
-            "baixar_avatar" : "Baixar o avatar",
-            "baixar_icone" : "Baixar o icone",
             "id_user" : "Informe o ID de um usuário"
         },
         {
@@ -393,7 +393,8 @@
             "minutos" : " minutos",
             "minuto" : " minuto",
             "segundos" : " segundos",
-            "segundo" : " segundo"
+            "segundo" : " segundo",
+            "e" : "e"
         },
         {
             "id_canal" : "ID do canal",

@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-const { MessageEmbed } = require("discord.js");
+const { Client, MessageEmbed, Interaction } = require("discord.js");
 
 module.exports = {
     name: "avatar",
@@ -31,6 +31,7 @@ module.exports = {
             user = message.author;
 
         let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`;
+        const download_icon = utilitarios[4]["download"].replace("link_repl", url_avatar);
 
         fetch(url_avatar)
         .then(res => {
@@ -38,12 +39,37 @@ module.exports = {
                 url_avatar = url_avatar.replace('.gif', '.webp')
 
             const embed = new MessageEmbed()
-            .setTitle(`:bust_in_silhouette: ${utilitarios[4]["baixar_avatar"]}`)
-            .setURL(url_avatar)
+            .setTitle(`${user.username}`)
+            .setDescription(download_icon)
             .setColor(0x29BB8E)
             .setImage(url_avatar);
             
             message.reply({ embeds: [embed] });
         });
-    }
+    },
+    // slash_params: [{
+    //     name: "avatar",
+    //     description: "Mostra o avatar de um usuário",
+    //     type: 6,
+    //     required: false
+    // }],
+    // async slash(client, handler, data, params, interaction) {
+    
+    //     try{
+    //         const options;
+
+    //         const user = (options.find((e) => e.name === "user") && options.find((e) => e.name === "user").member.user) || interaction.user;
+
+    //         const member = (options.find((e) => e.name === "user") && options.find((e) => e.name === "user").member) || interaction.member;
+
+    //         const embed = new MessageEmbed().setColor(member.displayHexColor);
+    //         const image = user.displayAvatarURL({dynamic: true, size: 4096});
+
+    //         embed.setAuthor(member.displayName, user.displayAvatarURL()).setImage(image).setTimestamp();
+
+    //         await handler.postSlashMessage({embeds: [embed]});
+    //     }catch(err){
+    //         console.log(err);
+    //     }
+    // }
 }
