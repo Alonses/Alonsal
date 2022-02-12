@@ -14,7 +14,8 @@ module.exports = {
 
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
-        
+        const emojis_busto = [":man_mage:", ":woman_mage:", ":woman_police_officer:", ":man_supervillain: ", ":woman_astronaut:", ":man_guard:", ":man_student:", ":zombie:", ":man_factory_worker:", ":ninja:", ":man_vampire:", ":woman_vampire:", ":man_pilot:", ":woman_pilot:"];
+
         const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170", "735644852385087529"];
 
         let user = message.mentions.users.first(); // Coleta o ID do usuário
@@ -60,8 +61,8 @@ module.exports = {
             avatar_user = "";
 
         let apelido = user.username;
-        if (membro_sv.nickname != null)
-            apelido = membro_sv.nickname;
+        if (membro_sv.nickname !== null)
+            apelido = `${membro_sv.nickname}`;
 
         if (user.bot)
             apelido = `:robot: ${apelido}`;
@@ -70,6 +71,9 @@ module.exports = {
             apelido = `:shield: ${apelido}`;
             nota_rodape = utilitarios[13]["moderador"];
         }
+
+        if(!apelido.includes(":robot:") && !apelido.includes(":shield:"))
+            apelido = `${emojis_busto[Math.round((emojis_busto.length - 1 ) * Math.random())]} ${apelido}`;
 
         if (user.id === client.user.id)
             nota_rodape = utilitarios[13]["alonsal"];
@@ -97,7 +101,6 @@ module.exports = {
 
         permissoes_fn = permissoes_fn.slice(0, 2000);
         let emoji_hypesquad = ":x:";
-        let discord_premium = "⠀";
 
         if(membro_sv.premiumSinceTimestamp) // Assinante do Discord
             discord_premium = client.emojis.cache.get(emojis.boost).toString();
@@ -128,7 +131,7 @@ module.exports = {
                 },
                 {
                     name: `**HypeSquad ( ${emoji_hypesquad} )**`,
-                    value: `${discord_premium}`,
+                    value: `⠀`,
                     inline: true
                 }
             )
@@ -155,28 +158,29 @@ module.exports = {
         })
         .setFooter(nota_rodape);
 
-        let paginas = [
-            infos_user,
-            permissoes
-        ];
+        // try{
+        //     let paginas = [
+        //         infos_user,
+        //         permissoes
+        //     ];
 
-        message.reply({embeds: [paginas[0]]});
-        // let reacoes = ['◀️', '▶️'];
+        //     let embed_pags = await message.reply({embeds: [paginas[0]]});
+        //     embed_pags.react('◀️').then(() => embed_pags.react('▶️'));
+            
+        //     const filter = (reaction, user) => ['◀️', '▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
 
-        // reacoes.forEach(async reacao => {
-        //     await embed_pags.react(reacao);
-        // });
+        //     embed_pags.awaitReactions({ filter, max: 2, time: 15000, errors: ['time'] })
+        //     .then(collected => {
+        //         const reaction = collected.first();
         
-        // const filter = (reaction, user) => ['◀️', '▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
-        // embed_pags.awaitReactions({ filter, max: 2, time: 20000, errors: ['time'] })
-        // .then(collected => {
-        //     const reaction = collected.first();
-    
-        //     if (reaction.emoji.name === '▶️')
-        //         embed_pags.edit({embeds: [paginas[1]]});
-        //     else
-        //         embed_pags.edit({embeds: [paginas[0]]});
-        // })
-        // .catch(() => embed_pags.reactions.removeAll());
+        //         if (reaction.emoji.name === '▶️')
+        //             embed_pags.edit({embeds: [paginas[0]]});
+        //         else
+        //             embed_pags.edit({embeds: [paginas[1]]});
+        //     })
+        //     .catch(() => embed_pags.reactions.removeAll());
+        // }catch(err){
+        //     console.log(err);
+        // }
     }
 }
