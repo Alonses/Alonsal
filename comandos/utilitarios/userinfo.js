@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
 const getDateDiff = require('../../adm/funcoes/diffdatas.js');
 const formata_data = require('../../adm/funcoes/formatadata.js');
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
+const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "userinfo",
@@ -96,6 +96,20 @@ module.exports = {
         }
 
         permissoes_fn = permissoes_fn.slice(0, 2000);
+        let emoji_hypesquad = ":x:";
+        let discord_premium = "⠀";
+
+        if(membro_sv.premiumSinceTimestamp) // Assinante do Discord
+            discord_premium = client.emojis.cache.get(emojis.boost).toString();
+
+        if(user.flags.has("HOUSE_BRAVERY")) // HypeSquad
+            emoji_hypesquad = client.emojis.cache.get(emojis.squad_bravery).toString();
+
+        if(user.flags.has("HOUSE_BALANCE"))
+            emoji_hypesquad = client.emojis.cache.get(emojis.squad_balance).toString();
+        
+        if(user.flags.has("HOUSE_BRILLIANCE"))
+            emoji_hypesquad = client.emojis.cache.get(emojis.squad_brilliance).toString();
 
         const infos_user = new MessageEmbed()
             .setTitle(apelido)
@@ -104,18 +118,30 @@ module.exports = {
             .addFields(
                 {
                     name: ':globe_with_meridians: **Discord**',
-                    value: `\`${user.username.replace(/ /g, "")}#${user.discriminator}\`\n\`${user.id}\``,
+                    value: `\`${user.username.replace(/ /g, "")}#${user.discriminator}\``,
                     inline: true
+                },
+                {
+                    name: `:label: **Discord ID**`,
+                    value: `\`${user.id}\``,
+                    inline: true
+                },
+                {
+                    name: `**HypeSquad ( ${emoji_hypesquad} )**`,
+                    value: `${discord_premium}`,
+                    inline: true
+                }
+            )
+            .addFields(
+                {
+                    name: `:birthday: **${utilitarios[13]["conta_criada"]}**`,
+                    value: `${data_criacao}\n[ \`${diferenca_criacao}\` ]`,
+                    inline: false
                 },
                 {
                     name: `:parachute: **${utilitarios[13]["entrada"]}**`,
-                    value: `\`${data_entrada}\`\n[ \`${diferenca_entrada}\` ]`,
-                    inline: true
-                },
-                {
-                    name: `:birthday: **${utilitarios[13]["conta_criada"]}**`,
-                    value: `\`${data_criacao}\`\n[ \`${diferenca_criacao}\` ]`,
-                    inline: true
+                    value: `${data_entrada}\n[ \`${diferenca_entrada}\` ]`,
+                    inline: false
                 }
             )
             .setFooter(nota_rodape);

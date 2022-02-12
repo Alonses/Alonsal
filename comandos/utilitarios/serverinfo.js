@@ -82,12 +82,12 @@ module.exports = {
                 },
                 {
                     name: `:vulcan: **${utilitarios[12]["entrada"]}**`,
-                    value: `\`${data_entrada}\`\n[ \`${diferenca_entrada}\` ]`,
+                    value: `${data_entrada}\n[ \`${diferenca_entrada}\` ]`,
                     inline: true
                 },
                 {
                     name: `:birthday: **${utilitarios[12]["criacao"]}**`,
-                    value: `\`${data_criacao}\`\n[ \`${diferenca_criacao}\` ]`,
+                    value: `${data_criacao}\n[ \`${diferenca_criacao}\` ]`,
                     inline: true
                 }
             )
