@@ -14,6 +14,7 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
+
         const idioma_adotado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
 
@@ -51,10 +52,14 @@ module.exports = {
         .then(response => response.json())
         .then(async res => {
 
+            console.log(res.id);
+
             if(res.cod === '404' || res.cod === '400')
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t ${pesquisa_bruta}\``);
+                return message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t ${pesquisa_bruta}\``);
             else if(res.cod === '429') // Erro da API
-                message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
+                return message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_3"]}`);
+            else if(res.id === 1873107)
+                return message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["error_2"]}`);
             else{
                 const url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`;
 
@@ -260,13 +265,17 @@ module.exports = {
                         }
                     )
                     .setFooter(nota_rodape);
-                    
+                        
                     message.reply({ embeds: [clima_atual] });
                 });
             }
-        });
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 }
+
 function direcao_cardial(degrees, idioma_adotado){
     let direcao = parseInt((degrees / 22.5) + 0.5);
 

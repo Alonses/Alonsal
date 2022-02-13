@@ -2,7 +2,7 @@ const { version } = require('../../config.json')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = async ({client}) => {
-    
+
     if(client.user.id === "833349943539531806"){
 
         const canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;

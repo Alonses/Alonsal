@@ -308,6 +308,7 @@
             "dados_atts" : "Dados atualizados às",
             "sugestao" : "Tente pesquisar de forma bruta, por exemplo, ",
             "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
+            "error_2" : "Não foi possível resgatar informações deste local, por favor, tente novamente mais tarde",
             "antartida" : "Antártida"
         },
         {
