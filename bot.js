@@ -92,13 +92,13 @@ client.on("messageCreate", async message => {
     }
 });
 
-client.ws.on("INTERACTION_CREATE", async (data, interaction) => {
-    try{
-        handler.wsInteractionReceived(data, interaction);
-    }catch(err){
-        console.log(err);
-    }
-});
+// client.ws.on("INTERACTION_CREATE", async (data, interaction) => {
+//     try{
+//         handler.wsInteractionReceived(data, interaction);
+//     }catch(err){
+//         console.log(err);
+//     }
+// });
 
 // Eventos secundários
 require('./adm/internos/eventos.js')({client});
