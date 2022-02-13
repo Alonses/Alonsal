@@ -19,7 +19,6 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
-
         const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
 
         let pesquisa = "";
@@ -51,8 +50,6 @@ module.exports = {
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
-
-            console.log(res.id);
 
             if(res.cod === '404' || res.cod === '400')
                 return message.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["aviso_2"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}\n${utilitarios[8]["sugestao"]} \`${prefix}t ${pesquisa_bruta}\``);
