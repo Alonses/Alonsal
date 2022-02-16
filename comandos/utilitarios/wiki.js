@@ -39,7 +39,7 @@ module.exports = {
             for(const topic of res.RelatedTopics){
                 counter++;
 
-                const text = `${topic.Text.(0, 100)}...`;
+                const text = `${topic.Text.substr(0, 100)}...`;
 
                 fields.push({
                     name: text,

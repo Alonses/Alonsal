@@ -30,25 +30,29 @@ handler.setup(commandConfig);
 
 client.on("ready", async () => {
 
-    await require("./adm/internos/status.js")({client});
-    await handler.useSlashHandler();
-    
-    for (const folder of readdirSync(`${__dirname}/comandos/`)){
-        for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
-            const command = require(`./comandos/${folder}/${file}`);
-            handler.addCommand(command);
+    try{
+        await require("./adm/internos/status.js")({client});
+        await handler.useSlashHandler();
+        
+        for (const folder of readdirSync(`${__dirname}/comandos/`)){
+            for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
+                const command = require(`./comandos/${folder}/${file}`);
+                handler.addCommand(command);
 
-            if(command.slash) handler.addSlashCommand(command);
+                if(command.slash) handler.addSlashCommand(command);
+            }
         }
+
+        idioma.setPath(`${__dirname}/arquivos/data/idiomas`);
+        idioma.setDefault("pt-br");
+
+        client.idioma = idioma;
+        client.owners = owner_id;
+
+        console.log("Caldeiras aquecidas, pronto para operar");
+    }catch(err){
+        console.log(err);
     }
-
-    idioma.setPath(`${__dirname}/arquivos/data/idiomas`);
-    idioma.setDefault("pt-br");
-
-    client.idioma = idioma;
-    client.owners = owner_id;
-
-    console.log("Caldeiras aquecidas, pronto para operar");
 });
 
 client.on("messageCreate", async message => {
