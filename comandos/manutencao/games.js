@@ -142,7 +142,7 @@ module.exports = {
             }catch(err){
                 const embed = new MessageEmbed({
                     title: ":video_game: | CeiraException",
-                    description: `\`\`\`Canal/Servidor desconhecido, considere apagar este campo >>manualmente<< :: ${canais_clientes[i]} :)\n${err.toString().substring(0, 2000)}\`\`\``,
+                    description: `\`\`\`Canal/Servidor desconhecido, considere apagar este campo >>manualmente<< :: ${canais_clientes[i]} :)\n${err.toString().substr(0, 2000)}\`\`\``,
                     color: "RED"
                 });
                 

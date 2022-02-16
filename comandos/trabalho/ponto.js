@@ -15,7 +15,7 @@ module.exports = {
         let confirma_dia_atual = true;
         let data_atual = new Date();
         let data_custom;
-        let data_storage = `${data_atual.getFullYear()}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${("0"+ data_atual.getDate()).substring(-2)}`;
+        let data_storage = `${data_atual.getFullYear()}${("0"+ (data_atual.getMonth() + 1)).substr(-2)}${("0"+ data_atual.getDate()).substr(-2)}`;
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const { trabalho } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
