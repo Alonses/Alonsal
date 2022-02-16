@@ -129,7 +129,7 @@ handler.events.on("command_error", async (e, command, client, message) => {
 
     const embed = new MessageEmbed({
         title: "> CeiraException",
-        description: `\`\`\`${e.toString().substring(0, 2000)}\`\`\``,
+        description: `\`\`\`${e.toString().substr(0, 2000)}\`\`\``,
         color: "RED"
     });
 
