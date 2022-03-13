@@ -1,7 +1,7 @@
 {
     "inicio" : [
         { 
-            "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n_Você pode alterar meu idioma para português com o comando `.alang pt`_",
+            "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n:earth_americas: | Use the `.alang` command to see the list of available languages",
             "aguarde": "Wait",
             "cooldown" : "seconds to run this command again.",
             "permissao_1" : "you don't have the permission",
