@@ -153,7 +153,7 @@
         }
     ],
     "moderacao" : [
-        { "error" : "Informe como `.alang en` ou `.alang pt`" },
+        { "titulo_idioma" : "Available languages" },
         {
             "permissao_1" : "You do not have `Manage messages` permission",
             "permissao_2" : "I don't have `Manage Messages` permission",
@@ -189,7 +189,7 @@
             "permissao_2" : "I cannot ban or kick members",
             "user_id" : "Enter a user ID",
             "razao" : "Reason not informed",
-            "error_1" : "Stop there, you bastard! This member is also an administrator.",
+            "error_1" : "Stop there, you noob! This member is also an administrator.",
             "error_2" : "Invalid User!",
             "error_ban" : "Unable to ban this user",
             "error_kick" : "Unable to expel this user",
