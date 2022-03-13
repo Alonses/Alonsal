@@ -153,7 +153,7 @@
         }
     ],
     "moderacao" : [
-        { "error" : "Enter as `.alang pt` or `.alang en`" },
+        { "titulo_idioma" : "Idiomas disponíveis" },
         {
             "permissao_1" : "Você não possui a permissão `Gerenciar mensagens`",
             "permissao_2" : "Eu não tenho permissão a permissão `Gerenciar mensagens`",

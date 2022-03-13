@@ -109,36 +109,44 @@ require('./adm/internos/eventos.js')({client});
 
 handler.events.on("command_executed", async (command, discord_client, message, args) => {
 
-    if (message.author.bot || message.webhookId) return;
+    try{
+        if (message.author.bot || message.webhookId) return;
 
-    if (message.channel.type === "GUILD_TEXT") {
-        const permissions = message.channel.permissionsFor(message.client.user);
+        if (message.channel.type === "GUILD_TEXT") {
+            const permissions = message.channel.permissionsFor(message.client.user);
 
-        if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+            if (!permissions.has("SEND_MESSAGES")) return; // Permissão para enviar mensagens no canal
+        }
+
+        const content = message.content;
+        await handler.executeCommand(command, discord_client, message, args);
+        await require('./adm/internos/log.js')({client, message, content});
+    }catch(err){
+        console.log(err);
     }
-
-    const content = message.content;
-    await handler.executeCommand(command, discord_client, message, args);
-    await require('./adm/internos/log.js')({client, message, content});
 });
 
 handler.events.on("command_error", async (e, command, client, message) => {
 
-    if(typeof message !== "undefined"){
-        const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
-        const epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+    try{
+        if(typeof message !== "undefined"){
+            const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
+            const epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
 
-        message.reply(`${epic_embed_fail} | ${inicio[0]["epic_embed_fail"]}`); // Notificando o usuário
+            message.reply(`${epic_embed_fail} | ${inicio[0]["epic_embed_fail"]}`); // Notificando o usuário
+        }
+
+        const embed = new MessageEmbed({
+            title: "> CeiraException",
+            description: `\`\`\`${e.toString().substr(0, 2000)}\`\`\``,
+            color: "RED"
+        });
+
+        await client.channels.cache.get('862015290433994752').send({ embeds: [embed] }); // Notificando o canal de erros
+        console.log(e);
+    }catch(err){
+        console.log(err);
     }
-
-    const embed = new MessageEmbed({
-        title: "> CeiraException",
-        description: `\`\`\`${e.toString().substr(0, 2000)}\`\`\``,
-        color: "RED"
-    });
-
-    await client.channels.cache.get('862015290433994752').send({ embeds: [embed] }); // Notificando o canal de erros
-    console.log(e);
 });
 
 handler.events.on("cooldown", (message, timeleft) => {
