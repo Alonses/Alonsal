@@ -1,0 +1,22 @@
+{
+    "messages": 
+    [
+        { "author_msg Qu'est-ce que la commande?\nUde `.ah`!" :
+        "https://i.imgur.com/XVgR4O8.jpg" },
+        
+        { "autor_msg tapez `.ah` pour voir la liste des commandes!": 
+        null },
+
+        { "Le autor_msg a l'air idiot en utilisant juste le préfixe :v\nUse `.ah`!":
+        null},
+        
+        { "Certains personnages manquent, mec autor_msg\nUde `.ah`!": 
+        "https://i.pinimg.com/474x/81/38/7c/81387c379cf8f54f0dc6b6f2a53785f0.jpg" },
+
+        { "autor_msg Utilisez `.ah` pour voir certaines commandes!": 
+        null },
+
+        { "Fini le reste de la commande autor_msg? :v\nUde `.ah`!": 
+        "https://tenor.com/view/sumiu-meme-gif-19536624" }
+    ]
+}

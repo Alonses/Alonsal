@@ -1,7 +1,7 @@
 {   
     "inicio" : [
         {
-            "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n_You can change my language to english using the command `.alang en`_",
+            "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n:earth_americas: | Use o comando `.alang` para ver a lista de idiomas disponíveis",
             "aguarde": "Aguarde",
             "cooldown" : "segundos para executar esse comando novamente",
             "permissao_1" : "você não tem a permissão",

@@ -47,6 +47,9 @@ module.exports = {
         if(idioma_adotado === "en-us")
             url_completa = url_completa.replace("&lang=pt", "");
         
+        if(idioma_adotado === "fr-fr")
+            url_completa = url_completa.replace("&lang=pt", "&lang=fr");
+        
         fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
@@ -278,9 +281,11 @@ function direcao_cardial(degrees, idioma_adotado){
 
     if(idioma_adotado === "pt-br")
         cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
-    else
+    else if(idioma_adotado == "en-us")
         cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
-    
+    else
+        cards = ["Nord", "N/NL", "Nord-Est", "L/NL", "Est", "L/SL", "Sud-est", "S/SL", "Sud", "S/SO", "Sud-ouest", "O/SO", "Ouest", "O/NO", "Nord Ouest", "N/NO"];
+
     direcao = cards[direcao % 16];
 
     return direcao;
