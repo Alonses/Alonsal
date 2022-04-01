@@ -40,14 +40,15 @@ module.exports = async ({client}) => {
         
         client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
         const activities = [
-            "bugs no lixo",
+            "Rank 500x!!!",
             ".alang | French now!",
-            `baidu premium em ${client.guilds.cache.size} servidores`,
-            "ceira seria seria ceira?",
+            `Hosts pelo ar`,
+            "pinga azul em sapos",
             "Ping me for prefix!",
             ".alang | French now!",
+            "Rank 500x!!!",
             "Bonjour la France!",
-            "lenha na fogueira",
+            "cocô pela janela",
         ];
 
         let i = 0;
