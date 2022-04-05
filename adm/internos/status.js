@@ -40,13 +40,11 @@ module.exports = async ({client}) => {
         
         client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
         const activities = [
-            "Rank 500x!!!",
             ".alang | French now!",
             `Hosts pelo ar`,
             "pinga azul em sapos",
             "Ping me for prefix!",
-            ".alang | French now!",
-            "Rank 500x!!!",
+            "pula prédios",
             "Bonjour la France!",
             "cocô pela janela",
         ];
