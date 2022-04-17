@@ -21,7 +21,7 @@ module.exports = {
 
         const random = pesquisa === "";
 
-        fetch('https://raw.githubusercontent.com/brnd-21/inventario-mine/main/JSON/dados_locais.json')
+        fetch('https://raw.githubusercontent.com/odnols/inventario-mine/main/Files/JSON/dados_locais.json')
         .then(response => response.json())
         .then(async lista_itens => {
             let descr_pesquisa;

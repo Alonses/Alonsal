@@ -41,12 +41,12 @@ module.exports = async ({client}) => {
         client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
         const activities = [
             ".alang | French now!",
-            `Hosts pelo ar`,
-            "pinga azul em sapos",
+            `pinga azul em sapos`,
+            "wardens para cima",
             "Ping me for prefix!",
             "pula prédios",
-            "Bonjour la France!",
-            "cocô pela janela",
+            "itens pixelados",
+            "procrastinação sem excessão",
         ];
 
         let i = 0;
