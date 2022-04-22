@@ -117,7 +117,9 @@ module.exports = {
                 let servidor = await client.channels.cache.get(canais_clientes[i]);
                 servidor = servidor.guild.id;
 
-                const lang_server = await client.idioma.getLang(message.guild.id);
+                let lang_server = await client.idioma.getLang(message.guild.id);
+                if(lang_server == "al-br") lang_server = "pt-br";
+                
                 let texto_anuncio = formata_anun(tipo_anun, nome_jogo, nome_jogo_2, args[1].raw, valor_total, logo_plat, plataforma, canais_clientes, i, lang_server);
                 
                 if(typeof canais_clientes[i + 1] !== "undefined")

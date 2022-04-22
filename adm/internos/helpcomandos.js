@@ -4,8 +4,11 @@ const fetch = require('node-fetch');
 
 module.exports = async function({client, message, args}){
 
-    const idioma = client.idioma.getLang(message.guild.id);
-    const { manutencao } = require('../../arquivos/idiomas/'+ idioma +'.json');
+    let idioma = client.idioma.getLang(message.guild.id);
+
+    if(idioma == "al-br") idioma = "pt-br";
+
+    const { manutencao } = require(`../../arquivos/idiomas/${idioma}.json`);
     const prefix = client.prefixManager.getPrefix(message.guild.id);
     
     const procura_infos = args[0].raw.replace(prefix, "");

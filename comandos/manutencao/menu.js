@@ -9,7 +9,7 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
-        const { manutencao } = require('../../arquivos/idiomas/'+ idioma_selecionado +'.json');
+        const { manutencao } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
 
         function emoji(id){
             return client.emojis.cache.get(id).toString();
@@ -103,7 +103,7 @@ module.exports = {
             return message.reply({ embeds: [embed_inicial] });
 
         if(isNaN(parseInt(args[0].raw)) || (parseInt(args[0].raw) < 0 || parseInt(args[0].raw) > 4))
-            return message.reply(":warning: | "+ manutencao[7]["aviso_1"]);
+            return message.reply(`:warning: | ${manutencao[7]["aviso_1"]}`);
 
         message.reply({ embeds: [pages[parseInt(args[0].raw)]] });
     }

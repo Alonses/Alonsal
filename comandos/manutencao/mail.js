@@ -32,7 +32,7 @@ module.exports = {
 
             try{
                 if(tipo === "u")
-                    client.users.cache.get(id_alvo).send(":postal_horn: [ "+ mensagem +"]\n\nCom ódio. Alonsal");
+                    client.users.cache.get(id_alvo).send(`:postal_horn: [ ${mensagem} ]\n\nCom ódio. Alonsal`);
                 else if(tipo === "c"){
 
                     const canal_alvo = client.channels.cache.get(id_alvo);
@@ -41,12 +41,12 @@ module.exports = {
                     if(permissoes.has("SEND_MESSAGES")){
                         canal_alvo.send(mensagem);
 
-                        await message.reply(":hotsprings: | "+ manutencao[3]["aviso_4"] +`[ \`${id_alvo}\`, \`${canal_alvo.name}\` ] `+ manutencao[3]["aviso_5"]).then(msg => setTimeout(() => msg.delete(), 5000));
+                        await message.reply(`:hotsprings: | ${manutencao[3]["aviso_4"]} [ \`${id_alvo}\`, \`${canal_alvo.name}\` ] ${manutencao[3]["aviso_5"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
                     }else
-                        return await message.reply(":hotsprings: | "+ manutencao[3]["aviso_6"] +`\`${canal_alvo.name}\` :(`).then(msg => setTimeout(() => msg.delete(), 5000));
+                        return await message.reply(`:hotsprings: | ${manutencao[3]["aviso_6"]} \`${canal_alvo.name}\` :(`).then(msg => setTimeout(() => msg.delete(), 5000));
                 }
             }catch(err){
-                return message.reply(":octagonal_sign: | "+ manutencao[3]["error_1"]);
+                return message.reply(`:octagonal_sign: | ${manutencao[3]["error_1"]}`);
             }
         }else{
             
@@ -54,14 +54,14 @@ module.exports = {
 
             const msg_user = new MessageEmbed()
             .setTitle("> :mailbox_with_mail: New Message")
-            .setFooter("Author: "+ message.author.username)
+            .setFooter(`Author: ${message.author.username}`)
             .setColor(0xffffff)
-            .setDescription("-----------------------\nSent by `"+ message.author.id +"`\n\n Message: `"+ mensagem + "`")
+            .setDescription(`-----------------------\nSent by \`${message.author.id}\`\n\n Message: \`${mensagem}\``)
             .setTimestamp();
 
             client.channels.cache.get("847191471379578970").send({ embeds: [msg_user] });
             
-            await message.reply(":hotsprings: | "+ manutencao[3]["sucesso_1"]).then(msg => setTimeout(() => msg.delete(), 5000));
+            await message.reply(`:hotsprings: | ${manutencao[3]["sucesso_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
         }
 
         if (tipo === "c")
@@ -72,7 +72,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle(manutencao[3]["aviso_2"])
             .setColor(0x29BB8E)
-            .setDescription(manutencao[3]["conteudo_1"] + " `" + tipo + "`\n\n" + manutencao[3]["conteudo_2"] + " :: \n`" + mensagem + "`")
+            .setDescription(`${manutencao[3]["conteudo_1"]} \`${tipo}\`\n\n${manutencao[3]["conteudo_2"]} :: \n\`${mensagem}\``)
             .setFooter("Alonsal", "https://i.imgur.com/K61ShGX.png")
             .setTimestamp();
 
@@ -82,6 +82,6 @@ module.exports = {
         if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
             message.delete();
         else
-            message.reply(":tools: | " + manutencao[3]["aviso_3"]);
+            message.reply(`:tools: | ${manutencao[3]["aviso_3"]}`);
     }
 };
