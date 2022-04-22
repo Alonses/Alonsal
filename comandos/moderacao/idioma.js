@@ -1,5 +1,12 @@
 const { MessageEmbed } = require("discord.js");
 
+const idiomasMap = {
+    "pt": [ "pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`" ],
+    "al": [ "al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`" ],
+    "en": [ "en-us", ":flag_us: | Language switched to `American English`" ],
+    "fr": [ "fr-fr", ":flag_fr: | Langue changée en `Français`" ]
+}
+
 module.exports = {
     name: "idioma",
     description: "Altere o idioma do alonsal",
@@ -15,32 +22,27 @@ module.exports = {
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const novo_idioma = message.content.split(" ")[1];
+        
+        // Verifica se o idioma é válido
+        const matches = novo_idioma.match(/pt|al|en|fr/);
 
-        let idioma_selecionado = "pt-br";
-        let idioma_alterado = ":flag_br: | Idioma alterado para `Português Brasileiro`";
-
-        if(novo_idioma !== "pt" && novo_idioma !== "en" && novo_idioma !== "fr"){
+        if(matches == null){ // Retorna a lista de idiomas válidos
             embed_idiomas = new MessageEmbed()
             .setTitle(moderacao[0]["titulo_idioma"])
             .setColor(0x29BB8E)
-            .setDescription(":flag_br: `.alang pt` - Português\n:flag_us: `.alang en` - English\n:flag_fr: `.alang fr` - French".replaceAll(".a", prefix));
+            .setDescription(":flag_br: `.alang pt` - Português\n:pirate_flag: `.alang al` - Alonsês\n:flag_us: `.alang en` - English\n:flag_fr: `.alang fr` - French".replaceAll(".a", prefix));
             
             return message.reply({embeds: [embed_idiomas]});
         }
 
-        if(novo_idioma === "pt")
-            idioma_selecionado = "pt-br";
-        else if(novo_idioma === "en") {
-            idioma_selecionado = "en-us";
-            idioma_alterado = ":flag_us: | Language switched to `American English`";
-        }else if(novo_idioma === "fr"){
-            idioma_selecionado = "fr-fr";
-            idioma_alterado = ":flag_fr: | Langue changée en `Français`";
-        }
+        // Resgata os dados do idioma válido
+        const sigla_idioma = idiomasMap[matches[0]][0];
+        const frase_idioma = idiomasMap[matches[0]][1];
+        const bandeira_idioma = frase_idioma.split(" ")[0];
 
-        client.channels.cache.get('872865396200452127').send(`${idioma_alterado.slice(0, 9)} | Idioma do servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) atualizado para \`${idioma_selecionado}\``);
+        client.channels.cache.get('872865396200452127').send(`${bandeira_idioma} | Idioma do servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) atualizado para \`${sigla_idioma}\``);
 
-        client.idioma.setLang(message.guild.id, idioma_selecionado);
-        message.reply(idioma_alterado);
+        client.idioma.setLang(message.guild.id, sigla_idioma);
+        message.reply(frase_idioma);
     }
 };

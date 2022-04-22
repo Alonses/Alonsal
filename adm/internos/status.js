@@ -46,7 +46,7 @@ module.exports = async ({client}) => {
             "Ping me for prefix!",
             "pula prédios",
             "itens pixelados",
-            "procrastinação sem excessão",
+            "procrastinação sem exceção",
         ];
 
         let i = 0;

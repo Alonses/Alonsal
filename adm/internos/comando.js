@@ -1,6 +1,10 @@
 module.exports = async ({client, message}) => {
     
-    const { messages } = require(`../../arquivos/json/text/${client.idioma.getLang(message.guild.id)}/comando.json`);
+    let idioma = client.idioma.getLang(message.guild.id);
+
+    if(idioma == "al-br") idioma = "pt-br";
+    
+    const { messages } = require(`../../arquivos/json/text/${idioma}/comando.json`);
 
     const num = Math.round((messages.length - 1) * Math.random());
     let key = Object.keys(messages[num]);

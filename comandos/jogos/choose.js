@@ -17,7 +17,7 @@ module.exports = {
         if (!args[0].raw.includes("[")){
             if(args.length < 2) return message.reply(jogos[4]["aviso_1"]);
         
-            escolhas = "`"+ args[Math.round((args.length - 1) * Math.random())] +"`";
+            escolhas = `\`${args[Math.round((args.length - 1) * Math.random())]}\``;
         }else{
 
             if (args.length - 1 < 2) return message.reply(jogos[4]["aviso_1"]);

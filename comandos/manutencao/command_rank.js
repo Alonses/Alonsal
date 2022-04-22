@@ -17,13 +17,16 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
         
-        const idioma = client.idioma.getLang(message.guild.id);
+        let idioma = client.idioma.getLang(message.guild.id);
+
         const { diversao } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const emoji_ceira = client.emojis.cache.get(emojis.mc_honeycomb).toString();
 
         const commands = [];
         let rodape = message.author.username;
+
+        if(idioma == "al-br") idioma = "pt-br";
 
         fetch(`https://raw.githubusercontent.com/odnols/site-do-alonsal/main/json/guia_${idioma.slice(0, 2)}.json`)
         .then(response => response.json())

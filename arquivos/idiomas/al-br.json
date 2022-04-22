@@ -1,0 +1,484 @@
+{   
+    "inicio" : [
+        {
+            "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n:earth_americas: | Use o comando `.alang` para ver a lista de idiomas disponíveis",
+            "aguarde": "Guentae uns",
+            "cooldown" : "segundos que eu executo dnv",
+            "permissao_1" : "Tu não pode tem permissão",
+            "permissao_2" : "para usar esse comando",
+            "error_1" : "Errrrou, tem que usar o comando assim ó",
+            "epic_embed_fail" : "Deu PT aq ao rodar esse comando, acontece toda hora, chora boi, até notifiquei os salafrarios que me mantém, tudo numa boa"
+        }
+    ],
+    "diversao" : [
+        { "baidu" : "Louvado seja!!" },
+        { "asf" : "Vai uma esfiha ae?" },
+        {
+            "aviso_1" : "marque dois salafrarios\nTipo, `.amor @Alonsal @Slondo`",
+            "limda" : "Limda :gift_heart:",
+            "rodape" : "Amor a si próprio é oq importa :heartpulse:",
+            "100perc" : "Praticamente casados :heart_on_fire:",
+            "90perc" : "Meu casal :smiling_face_with_3_hearts:",
+            "80perc" : "Literalmente amantes :revolving_hearts:",
+            "60perc" : "Tá rolando um clima :hot_face:",
+            "40perc" : "Será? :eyes:",
+            "20perc" : "Friendzone :people_hugging:",
+            "0perc" : "São inimigos públicos :angry:",
+            "teste" : "Deu issaq"
+        },
+        {
+            "gado" : "Ô SEU GADO",
+            "error_1" : "kd o @ do usuário?",
+            "error_2" : "sai pra lá seu GA :cow: DO, teste isso com outro usuário"
+        },
+        {
+            "peao" : "Roda o pião dona maria"
+        },
+        {
+            "aviso_1" : "Tá faltando uns outros dados ai, tipo `.ana alonsal > odnols`",
+            "anagrama" : "O Anagrama",
+            "entrada" : "Sua entrada",
+            "lista_combinacoes" : "O que dá eu fiz",
+            "sequencia" : "O que dá para fazer",
+            "combinacao" : "combinação",
+            "combinacoes" : "combinações!",
+            "sorte" : "Repetiu umas palavras! Cagado!"
+        },
+        {
+            "nsfw_jaja" : "Devido ao excesso de delícia este comando só pode ser usado num canal NSFW"
+        },
+        {
+            "aviso_1" : "Tá faltando umas informações aí\nTipo, `.asans slomdo muinto cringerrr afff`"
+        },
+        {
+            "rank_sv" : "Rank de",
+            "rank_rc" : "Ranking de comandos",
+            "rodape" : "páginas, escreva .ar <num> ai pra navegar entre elas",
+            "rodape_rc" : "páginas, escreve .arc <num> pra navegar entre elas",
+            "paginas" : "Não tem tudo isso de páginas",
+            "nivel_descricao" : "nível = experiência / 1000",
+            "enceirados" : "Enceirados",
+            "experiencia" : "Experiência",
+            "nivel" : "Nível",
+            "comandos" : "Comandos",
+            "ativacoes" : "Ativações",
+            "historia_alonsal" : "Esses aqui foram ativos desde meu nascimento",
+            "aliase_faltando" : "aliase faltando",
+            "nome_faltando" : "Nome faltando",
+            "error_rc" : "Tô com preguiça para carregar o rank de comandos agr, tenta dnv dps"
+        }
+    ],
+    "jogos" : [
+        {
+            "conteudo" : "O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!",
+            "rodape" : "O jogo pode não rodar direito em celulares."
+        },
+        {
+            "aviso_1" : "Escreve `.aco cara` ou `.aco coroa` para rodar uns jogos ai"
+        },
+        {
+            "aviso_1" : "Informe **apenas números** para a quantidade de dados e número de faces.",
+            "aviso_2" : "Informe pelo menos 1 dado como `.ada 1 <faces>` para poder rodar.",
+            "error_1" : "Não é possível rodar mais que 50 dados ao mesmo tempo.",
+            "error_2" : "Não é possível rodar sólidos geométricos com mais de 10.000 faces.",
+            "error_3" : "Não é possível rodar sólidos geométricos com menos de 4 faces."
+        },
+        {
+            "aviso_1" : "Envie como `.ajkp papel` ou como `.ajkp` para uma partida randômica."
+        },
+        {
+            "aviso_1" : "Informe pelo menos 2 itens para eu escolher",
+            "aviso_2" : "Informe uma quantidade em números como `.ach [2 s a l 4 d @` e um valor maior que zero",
+            "escolho_todos" : "Você informou um número maior ou igual a quantidade de opções, eu escolho todas!",
+            "escolho" : "Eu escolho..."
+        },
+        {
+            "aviso_1" : "Informe algum ou vários dos itens abaixo para jogar\nPor exemplo, `.asjkp pedra papel tesoura` ou `.asjkp capeta`",
+            "error_1" : "Escreva um item que faça parte do jogo, este item não é válido" 
+        }
+    ],
+    "manutencao" : [
+        {
+            "titulo" : "> Ó Abre alas que eu queru passsaa :notes:",
+            "convite" : "Convide-me clicando aqui!",
+            "despachei": "despachei o convite no seu privado :love_you_gesture:"
+        },
+        {
+            "repositorio" : "> Repositório Alonsal",
+            "link" : "Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:",
+            "despachei" : "despachei a ceira mais recente no seu privado :handshake:"
+        },
+        {
+            "infos" : "Patinando entre as linhas bugadas :man_golfing:",
+            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal",
+            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal",
+            "conteudo_3" : "**`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTAS\nFrases do **`.atext`** não representam as ideias dos criadores do Alonsal, sendo assim, são apenas para fins cômicos.",
+            "invocado_1" : "Já fui invocado",
+            "invocado_2" : "vezes",
+            "versao" : "Versão"
+        },
+        {
+            "aviso_1" : "Há um erro em sua mensagem, tente novamente.",
+            "aviso_2" : ":mailbox: Sua mensagem foi entregue!",
+            "aviso_3" : "Não foi possível excluir sua mensagem automaticamente, para isto preciso de permissões para gerenciar as mensagens.",
+            "aviso_4" : "Mensagem enviada para",
+            "aviso_5" : ":incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
+            "aviso_6" : "Eu não posso enviar mensagens no canal",
+            "error_1" : "Não foi possível enviar a mensagem para este ID",
+            "sucesso_1" : "Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
+            "conteudo_1" : "Sua mensagem foi entregue para o/a",
+            "conteudo_2" : "O Conteúdo da mensagem é"
+        },
+        {
+            "comandos" : "Veja os comandos, me convide ou acesse meu servidor pelo site!",
+            "despachei" : "despachei o link do meu site no seu privado :handshake:"
+        },
+        {
+            "apoie" : "> Apoie o Alonsal!",
+            "escaneie" : "Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D",
+            "despachei" : "Obrigado pela consideração!\nDespachei as infos no seu privado"
+        },
+        {
+            "hub_alonsal" : "> Hub do Alonsal",
+            "info" : "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!",
+            "despachei" : "despachei o convite para o Hub alonsal no seu privado :handshake:"
+        },
+        {
+            "aviso_1" : "Informe um número entre 1 e 4 para navegar pelas páginas do menu"
+        },
+        {
+            "traducao_faltando" : "Este comando ainda não possui uma tradução para o seu idioma, aguarde!",
+            "usos" : "Usos",
+            "nao_encontrado" : "Não encontrei nenhum comando com este nome ou aliase, xora"
+        }
+    ],
+    "moderacao" : [
+        { "titulo_idioma" : "Idiomas disponíveis" },
+        {
+            "permissao_1" : "Você não possui a permissão `Gerenciar mensagens`",
+            "permissao_2" : "Eu não tenho permissão a permissão `Gerenciar mensagens`",
+            "aviso_1" : "Informe o número de mensagens q deseja remover\nTipo, `.acl 20`",
+            "aviso_2" : ":warning: | Informe um número entre `0` e `100` para remover",
+            "apagado_1" : "mensagens` foram removidas",
+            "apagado_2" : "mensagem` foi removida",
+            "error" : "Não foi possível executar este comando, pois há mensagens fixadas ou mensagens muito antigas, diminua a quantidade e tente novamente"
+        },
+        {
+            "aviso_1" : "Bota um emoji customizado no seu comando alek",
+            "aviso_2" : "Informe um emoji para ser visualizado\nTipo,",
+            "aviso_3" : "Insira um emoji e o nome dele\nTipo,",
+            "aviso_4" : "Envie apenas 1 emoji por vez :P",
+            "aviso_5" : "Envie uma imagem com tamanho menor que 250kb para usar de emoji",
+            "aviso_6" : "Inclua o emoji para remover\nTipo,",
+            "aviso_7" : "Informe um emoji para ser removido",
+            "aviso_8" : "Informe um emoji customizado deste servidor para ser removido\nVocê também pode usar o ID, como `.armoji 914227763978838116` tipo",
+            "permissao_1" : "Você não possui permissões para gerenciar emojis neste servidor",
+            "permissao_2" : "Eu não possuo permissões para `gerenciar emojis` neste servidor",
+            "requebrando" : "requebrando",
+            "sucesso_1" : "O Emoji foi adicionado!",
+            "sucesso_2" : "O Emoji foi removido do servidor",
+            "error_1" : "Não é possível processar este arquivo\nEnvie um arquivo de imagem para eu poder manipular ;)",
+            "error_2" : "O Limite de emojis para este servidor foi atingido, remova alguns antes de adicionar novos",
+            "error_3" : "Não foi possível remover este emoji, tente novamente"
+        },
+        {
+            "permissao_1" : "Você não possui permissões para gerenciar o servidor"
+        },
+        {
+            "permissao_1" : "Você não pode banir ou expulsar membros",
+            "permissao_2" : "Eu não posso banir ou expulsar membros",
+            "user_id" : "Informe o ID de um usuário",
+            "razao" : "Razão não informada",
+            "error_1" : "Parado ai seu salafrário! Este membro é um Administrador também",
+            "error_2" : "Usuário inválido!",
+            "error_ban" : "Não foi possível banir o usuário",
+            "error_kick" : "Não foi possível expulsar o usuário",
+            "banido" : "tomou uma esfihada!",
+            "expulso" : "foi expuldo do servidor"
+        },
+        {
+            "error_1" : "Informe um prefixo para ser usado, por exemplo, ",
+            "att_prefix" : "Prefixo deste servidor alterado para :",
+            "moderadores" : "Apenas moderadores podem executar este comando"
+        },
+        {
+            "aviso_1" : "Informe um cargo para ser notificado",
+            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando ",
+            "anuncio_games_2" : " para remover as atualizações.",
+            "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
+        },
+        {
+            "canal" : "Canal",
+            "lock" : "bloqueado\nUtilize `.aunlk` para desbloquear",
+            "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
+            "permissao_1" : "Você não possuí permissões para gerenciar este canal",
+            "permissao_2" : "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
+        },
+        {
+            "permissao_1" : "Você não pode gerenciar os membros deste servidor",
+            "sucesso" : "A Experiência de `nick_repl` foi alterada para `exp_repl exp`, seu novo nível é `nivel_repl`",
+            "error_1" : "Informe o ID e seu novo XP, ou marque alguém e insira o comando com o exp novo\nPor exemplo, `.achr @slondo 0`",
+            "error_2" : "Houve um erro inesperado e não foi possível alterar o exp deste usuário no momento.\nPor Favor, tente novamente mais tarde"
+        }
+    ],
+    "utilitarios" : [
+        {
+            "ping_1" : "Tá lagado um poko tô renderizando vídeo",
+            "ping_2" : "Tudo numa boa!",
+            "ping_3" : "Dá até para jogar de olhos fechados!",
+            "ping_4" : "Pode jogar fora esse teu roteador!",
+            "ping_5" : "BLZ, quem instalou baidu aqui? EMMM???",
+            "latencia" : "Latência do Alonsal"
+        },
+        {
+            "wiki_slondo" : "Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:",
+            "topicos_rel" : "Tópicos relacionados",
+            "sem_dados" : "Não encontrei nada relacionado a sua pesquisa",
+            "auto_pesquisa" : "Pq vc está se pesquisando? Não tem nada sobre vc aq"
+        },
+        {
+            "caracteres" : "Alguns caracteres não foram codificados pois não existem no morse",
+            "codificado" : ":symbols: Sua mensagem codificada em morse",
+            "decodificado" : ":symbols: Sua mensagem decodificada do morse",
+            "carac_invalidos" : "Caracteres inválidos",
+            "error" : ":warning: Houve um problema ao codificar"
+        },
+        {
+            "codificado" : ":one: Sua mensagem codificada em binário",
+            "decodificado" : ":zero: Sua mensagem decodificada do binário",
+            "aviso_1" : "Escreva algo para utilizar este comando",
+            "aviso_2" : "Informe como `.abn encode <seu_texto>` ou `.abn decode <seu_texto_codificado>`",
+            "resul_vazio" : "O resultado final era vazio, tente novamente",
+            "titulo_vazio" : ":octagonal_sign: A decodificação resultou em vazio",
+            "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
+        },
+        {
+            "download_avatar" : "Clique [aqui](link_repl) para baixar o avatar",
+            "download_icon" : "Clique [aqui](link_repl) para baixar o icone",
+            "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
+            "id_user" : "Informe o ID de um usuário"
+        },
+        {
+            "reverso" : "Sua mensagem ao contrário"
+        },
+        {
+            "aviso_1" : "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
+            "aviso_2" : "Envie apenas 1 arquivo por vez",
+            "error_1" : "Não posso falar em TTS neste chat",
+            "hora_certa" : "Hora Certa!",
+            "reproducao_1" : "Reprodução solicitada por",
+            "reproducao_2" : "Arquivo enviado por"
+        },
+        {
+            "aviso_1" : "Entre com algo para ser removido ou substituído e uma string\nPor exemplo `.arm o slondo` ou `.arp i o slindo`",
+            "remove_tudo" : "Você removeu tudo, vai dá não"
+        },
+        {
+            "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`",
+            "aviso_2" : "Não encontrei nenhum local chamado",
+            "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
+            "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
+            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado",
+            "aviso_planeta" : "Estes dados são uma média de todos os valores do planeta pesquisado",
+            "tempo_agora" : "Tempo agora",
+            "hora_local" : "Hora local",
+            "de" : "de",
+            "na" : "na",
+            "terra" : "na terra",
+            "vento" : "Vento",
+            "nuvens" : "Nuvens",
+            "chuva" : "Chuva",
+            "direcao" : "Direção",
+            "velocidade" : "Velocidade",
+            "ceu_momento" : "Céu no momento",
+            "temperatura" : "Temperatura",
+            "por_sol" : "Pôr do sol",
+            "nas_sol" : "Na. do sol",
+            "sensacao_termica" : "Sensação Térm",
+            "umidade_ar" : "Umidade do ar",
+            "pressao_ar" : "Pressão do ar",
+            "visibilidade" : "Visibili.",
+            "nivel_chao" : "No chão",
+            "nivel_mar" : "No mar",
+            "chovendo" : "🌧️Chovendo agora",
+            "nevando" : "❄️Nevando agora",
+            "rajadas_vento" : "🌪️Rajadas de vento",
+            "chuva_troll" : "Talvez não esteja chovendo de verdade, ou será que está?",
+            "neve_troll" : "Talvez não esteja nevando de verdade, ou será que está?",
+            "dados_atts" : "Dados atualizados às",
+            "sugestao" : "Tente pesquisar de forma bruta, por exemplo, ",
+            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
+            "error_2" : "Não foi possível resgatar informações deste local, por favor, tente novamente mais tarde",
+            "antartida" : "Antártida"
+        },
+        {
+            "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
+            "tente_novamente" : "tente novamente",
+            "error_1" : "Não foi possível carregar a base de itens no momento, tente novamente mais tarde",
+            "coletavel" : "Coletável",
+            "tipo" : "Tipo",
+            "versao_add" : "Versão adicionada",
+            "empilhavel" : "Empilhável",
+            "renovavel" : "Renovável",
+            "nome_interno" : "Nome interno",
+            "construcao" : "Construção",
+            "pocoes" : "Poções",
+            "efeitos_aplicados" : "Efeitos Aplicados",
+            "atributos" : "Atributos",
+            "disco_musical" : "Disco musical",
+            "livro_encantado" : "Livro encantado",
+            "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
+            "sim" : "Sim",
+            "nao" : "Não",
+            "ate" : "Até"
+        },
+        {
+            "hoje" : "hoje",
+            "este_ano" : "Este ano",
+            "ha": "Há",
+            "em" : "em",
+            "ano_passado" : "Ano passado",
+            "numero" : "numero",
+            "acontecimentos_1" : "Acontecimentos pela história",
+            "acontecimentos_2" : "Abaixo estão todos os acontecimentos na data de",
+            "utilize_1" : "Utilize o comando",
+            "utilize_2" : "para visualizar um acontecimento específico",
+            "aviso_1" : "Envie como `.acon 31-01` para poder pesquisar em uma data específica\nOu use apenas `.acon` para ver acontecimentos na data de hoje pela história",
+            "aviso_2" : "Os valores informados estão errados, por favor, insira valores numéricos corretos para dia e mês",
+            "aviso_3" : "Procurando uns eventos...",
+            "error_1" : "Informe um número da lista de acontecimentos para visualizar mais detalhes",
+            "sem_entradas" : "Não aconteceu nada nesse dia, bota uma data diferente aí `.acon 21-01`"
+        },
+        {
+            "chave": "Chave",
+            "aviso_1" : "Escreva a chave e a o texto a ser criptografado\nTipo, `.acr slondo Hello World!`, ou `.acr slondo U2FsdG~~`",
+            "error_1" : "Chave errada, não deu para descriptografar\nSe tiver tentando criptografar, bota mais uns espaços no seu texto"
+        },
+        {
+            "id_server" : "ID do server",
+            "membros" : "Usuários",
+            "dono" : "Dono",
+            "canais" : "Canais",
+            "categorias" : "Categorias",
+            "texto" : "Texto",
+            "voz" : "Voz",
+            "atual" : "Atual",
+            "entrada" : "Entrada alonsal",
+            "criacao" : "Criação",
+            "verificacao" : "Verificação",
+            "cargos" : "Cargos",
+            "figurinhas" : "Figurinhas",
+            "NONE" : ":white_large_square: Nenhum",
+            "LOW" : ":blue_square: Baixo",
+            "MEDIUM" : ":green_square: Médio",
+            "HIGH" : ":orange_square: Alto",
+            "HIGHEST" : ":red_square: Máximo"
+        },
+        {
+            "id_user" : "ID do usuário",
+            "entrada" : "Chegou em",
+            "conta_criada" : "Conta criada",
+            "alonsal" : "Ó eu ai!",
+            "enceirado" : "eternamente enceirado",
+            "moderador" : "Esse é o admir do server"
+        },
+        {
+            "anos" : " anos",
+            "ano" : " ano",
+            "meses" : " meses",
+            "mes" : " mês",
+            "dias" : " dias",
+            "dia" : " dia",
+            "horas" : " horas",
+            "hora" : " hora",
+            "minutos" : " minutos",
+            "minuto" : " minuto",
+            "segundos" : " segundos",
+            "segundo" : " segundo",
+            "e" : "e"
+        },
+        {
+            "id_canal" : "ID do canal",
+            "servidor" : "Servidor",
+            "canal_voz" : "É um canal de voz",
+            "topico" : "Tópico",
+            "sem_topico" : "Canal sem tópico",
+            "mencao" : "Menção",
+            "transmissao" : "Transmissão",
+            "sem_limite" : "Sem limite",
+            "modo_lento" : "Modo lento",
+            "aviso_1" : "Bota o ID do canal ai!",
+            "error_1" : "Não encontrei esse canal, tenta dnv"
+        },
+        {
+            "undefined" : "Desconhecido",
+            "error_1" : "Perfil não encontrado, certifique-se que o perfil pesquisado possui uma url personalizada",
+            "error_2" : "Este perfil existe mas houve um erro ao carregar ele",
+            "rodape" : "Alguns (ou todos os) dados deste usuário não estão disponíveis no perfil do mesmo",
+            "analises" : "Análises",
+            "nivel" : "Nível",
+            "jogos" : "Jogos",
+            "jogos_perfeitos" : "J. 100%",
+            "conquistas" : "Conquistas",
+            "porcentagem" : "Porcent.",
+            "insignias" : "Insígnias",
+            "criacoes" : "Criações",
+            "semanas" : "2 Semanas",
+            "artes" : "Artes",
+            "suspeito" : "Este usuário pode estar usando uns hacks para conseguir conquistas, não considere isso como uma afirmação, mas né ¯\\_(ツ)_/¯",
+            "jogo_favorito" : "Jogo favorito",
+            "capturas" : "Capturas",
+            "nome" : "Nome",
+            "tempo_jogado" : "Tempo jogado",
+            "hours" : "horas",
+            "minutes" : "minutos"
+        },
+        {
+            "aviso_1" : "Escreva pelo menos uma operação básica para isso",
+            "resultado" : "Resultado",
+            "error" : "Deu pt aq ao processar essa budega"
+        },
+        {
+            "primaria" : "Senha primária",
+            "bonus" : "Otras senhas",
+            "titulo" : "Su4s §3nH@5, clique aqui pra testar a senha",
+            "senha" : "Olha sua DM, gerei sua senha com `tamanho_repl` caracteres",
+            "rodape" : "4 senhas com tamanho_repl caracteres, nunca nem vi elas, passar bem :detective:"
+        }
+    ],
+    "trabalho" : [
+        {
+            "entrada" : "Entrada",
+            "saida" : "Saída",
+            "tempo" : "Tempo",
+            "tempo_extra" : "Tempo extra",
+            "tempo_falta" : "Tempo faltando",
+            "turno_manha" : "Turno da manhã",
+            "turno_tarde" : "Turno da tarde",
+            "tempo_trabalhado" : "Tempo trabalhado",
+            "dica_comando" : "Use o comando .atr h para ver mais exemplos e outros comandos",
+            "error_1" : "Informe uma data válida para esse comando, por exemplo `.abn 21/01/2022 08:07`",
+            "error_2" : "Informe uma data válida para esse comando, por exemplo `.atr 21/01/2022`"
+        },
+        {   
+            "ponto_att_1" : "Horário do `ponto_repl°` Ponto de `data_repl` atualizado com sucesso para `hora_repl`",
+            "ponto_att_2" : "ponto_repl° Ponto do dia registrado, a hora vinculada é `hora_repl`\nDigitou errado? Edite este ponto com o comando `.abp ponto_repl 08:07`",
+            "ponto_att_3" : "Horário do `ponto_repl°` Ponto atualizado com sucesso para `hora_repl`",
+            "todos_pontos" : "Todos os horários foram preenchidos, você pode editar pontos anteriores com o comando `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOu ver o resumo completo com o comando `.atr`",
+            "horario" : "Informe um horário para registrar seu ponto",
+            "error_1" : "Informe um número entre `1 & 4` para editar seus pontos de hoje",
+            "error_2" : "Informe um formato de hora apropriado, por exemplo, `.abp 20:07`",
+            "error_3" : "Você informou valore demais, a operação foi cancelada\nUse o comando `.atr h` para ver os comandos desta categoria"
+        },
+        {
+            "registrado" : "Dias contabilizados",
+            "sem_dados" : "Você não tem nenhum dia de trabalho registrado",
+            "error_1" : "Informe uma data válida para esse comando, por exemplo `.arbp 21/01/2022`",
+            "sem_entradas_1" : "Não há pontos registrados para",
+            "sem_entradas_2" : "Não há pontos registrados para hoje",
+            "dia_removido_1" : "Todos os pontos de `dia_repl` foram removidos",
+            "dia_removido_2" : "Todos os pontos de hoje foram removidos",
+            "dica_comando" : "Use o comando .atr data_repl para ver o dia"
+        }
+    ]
+}
