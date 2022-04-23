@@ -266,7 +266,7 @@
             "aviso_planeta" : "Ces données sont une moyenne de toutes les valeurs relevées sur la planète", 
             "tempo_agora" : "Météo maintenant",
             "hora_local" : "Heure locale",
-            "de" : "de",
+            "de" : "",
             "na" : "à",
             "terra" : "sur Terre",
             "vento" : "Vent",
@@ -346,7 +346,7 @@
         {
             "hoje" : "aujourd'hui",
             "este_ano" : "Cette année",
-            "ha": "",
+            "ha": "il y a",
             "em": "dans",
             "ano_passado" : "L'année dernière",
             "numero" : "numéro",

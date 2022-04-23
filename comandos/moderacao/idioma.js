@@ -21,7 +21,7 @@ module.exports = {
             return message.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)); // Libera configuração para o Slondo e adms apenas
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
-        const novo_idioma = message.content.split(" ")[1];
+        const novo_idioma = message.content.split(" ")[1] || "";
         
         // Verifica se o idioma é válido
         const matches = novo_idioma.match(/pt|al|en|fr/);

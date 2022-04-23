@@ -15,8 +15,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const idioma_adotado = client.idioma.getLang(message.guild.id);
+        let idioma_adotado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
+
+        if(idioma_adotado == "al-br") idioma_adotado = "pt-br";
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         const translations = require(`i18n-country-code/locales/${idioma_adotado.slice(0, 2)}.json`);    
@@ -112,12 +114,8 @@ module.exports = {
                     const minutos = ("0" + horario_local.getMinutes()).substr(-2); // Preservar o digito 0
                     const hora = ("0" + horario_local.getHours()).substr(-2); // Preservar o digito 0
                     const dia = horario_local.getDate();
-
-                    let mes = horario_local.toLocaleString('pt', { month: 'long' });
-                    
-                    if(idioma_adotado === "en-us")
-                        mes = horario_local.toLocaleString('en', { month: 'long' });
-
+    
+                    let mes = horario_local.toLocaleString(idioma_adotado.slice(0, 2), { month: 'long' });
                     let hours = horario_local.getHours();
 
                     hours %= 12;
@@ -224,7 +222,7 @@ module.exports = {
                     if(typeof res.main.grnd_level !== "undefined") 
                         pressao_local = `:camping: **${utilitarios[8]["nivel_chao"]}: ** \`${res.main.grnd_level} kPA\`\n:island: **${utilitarios[8]["nivel_mar"]}: ** \`${res.main.sea_level} kPA\``;
 
-                    emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, chuva_troll);
+                    let emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, chuva_troll);
 
                     const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
