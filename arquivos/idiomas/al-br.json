@@ -203,15 +203,15 @@
         },
         {
             "aviso_1" : "Informe um cargo para ser notificado",
-            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando ",
-            "anuncio_games_2" : " para remover as atualizações.",
+            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUsa o comando ",
+            "anuncio_games_2" : " pra tirar as atualizações.",
             "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
         },
         {
             "canal" : "Canal",
-            "lock" : "bloqueado\nUtilize `.aunlk` para desbloquear",
-            "unlock" : "desbloqueado\nUtilize `.alock` para bloquear",
-            "permissao_1" : "Você não possuí permissões para gerenciar este canal",
+            "lock" : "bloqueado\nUsa o `.aunlk` para desbloquear",
+            "unlock" : "desbloqueado\nUsa o `.alock` para bloquear",
+            "permissao_1" : "Tu não pode gerenciar esse canal",
             "permissao_2" : "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
         },
         {
@@ -253,33 +253,33 @@
             "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
         },
         {
-            "download_avatar" : "Clique [aqui](link_repl) para baixar o avatar",
-            "download_icon" : "Clique [aqui](link_repl) para baixar o icone",
-            "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
+            "download_avatar" : "Clique [aqui](link_repl) para baixar essa ibagem",
+            "download_icon" : "Clique [aqui](link_repl) para baixar essa ibagem",
+            "nao_conhecido" : "Eu não conheço este salafrário, marca ele aí no comando",
             "id_user" : "Informe o ID de um usuário"
         },
         {
             "reverso" : "Sua mensagem ao contrário"
         },
         {
-            "aviso_1" : "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
-            "aviso_2" : "Envie apenas 1 arquivo por vez",
-            "error_1" : "Não posso falar em TTS neste chat",
+            "aviso_1" : "Escreva algo ou envie um arquivo para mim e repostarei ele",
+            "aviso_2" : "Envia só 1 arquivo diacho!",
+            "error_1" : "Não liberaram o TTS nesse xet",
             "hora_certa" : "Hora Certa!",
-            "reproducao_1" : "Reprodução solicitada por",
-            "reproducao_2" : "Arquivo enviado por"
+            "reproducao_1" : "Áudio enviado pelo",
+            "reproducao_2" : "Arquivo enviado pelo"
         },
         {
-            "aviso_1" : "Entre com algo para ser removido ou substituído e uma string\nPor exemplo `.arm o slondo` ou `.arp i o slindo`",
+            "aviso_1" : "Bota um texto e um alvo para remover\nTipo `.arm o slondo` ou `.arp i o slindo`",
             "remove_tudo" : "Você removeu tudo, vai dá não"
         },
         {
-            "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`",
-            "aviso_2" : "Não encontrei nenhum local chamado",
-            "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
-            "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
-            "aviso_pais" : "Estes dados são uma média de todos os valores do país pesquisado",
-            "aviso_planeta" : "Estes dados são uma média de todos os valores do planeta pesquisado",
+            "aviso_1" : "Bota o nome de um lugar aí\nTipo `.at sao paulo`",
+            "aviso_2" : "Não achei nada com esse nome ai",
+            "aviso_3" : "Deu um PT aq na API do tempo, vai dar pra pesquisar não",
+            "aviso_continente" : "Issae é uma média do continente todo",
+            "aviso_pais" : "Issae é uma média do país todo",
+            "aviso_planeta" : "Issae é uma média de todos os dados do planeta",
             "tempo_agora" : "Tempo agora",
             "hora_local" : "Hora local",
             "de" : "de",
@@ -303,12 +303,12 @@
             "chovendo" : "🌧️Chovendo agora",
             "nevando" : "❄️Nevando agora",
             "rajadas_vento" : "🌪️Rajadas de vento",
-            "chuva_troll" : "Talvez não esteja chovendo de verdade, ou será que está?",
-            "neve_troll" : "Talvez não esteja nevando de verdade, ou será que está?",
-            "dados_atts" : "Dados atualizados às",
-            "sugestao" : "Tente pesquisar de forma bruta, por exemplo, ",
-            "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
-            "error_2" : "Não foi possível resgatar informações deste local, por favor, tente novamente mais tarde",
+            "chuva_troll" : "Sepá n tá chovendo mesmo",
+            "neve_troll" : "Sepá n tá nevando mesmo",
+            "dados_atts" : "Atualizado às",
+            "sugestao" : "Tenta pesquisar inteiro, tipo",
+            "error_1" : "Bota apenas texto na sua pesquisa, ovo ignorar esses números aí",
+            "error_2" : "Não consegui puxar os dados desse lugar, tenta depois",
             "antartida" : "Antártida"
         },
         {
