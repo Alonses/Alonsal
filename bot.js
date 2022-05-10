@@ -169,4 +169,4 @@ handler.events.on("invalid_args", (args, message, command) => {
     message.reply(`${inicio[0]["error_1"]}: \`${prefix}${command.usage}\``);
 });
 
-client.login(token_2);
+client.login(token);
