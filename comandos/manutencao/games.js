@@ -7,7 +7,7 @@ const platformMap = {
     "store.steam": [ "<:Logo_st:864887020467257364>", "Steam" ],
     "gog.com": [ "<:Logo_gog:864887080673214505>", "GOG" ],
     "humblebundle.com": [ "<:Logo_hb:864887252587642911>", "Humble Bundle" ],
-    "ubisoft.com": [ "<:Logo_ubi:864887154483134516>\n", "Ubisoft" ],
+    "ubisoft.com": [ "<:Logo_ubi:864887154483134516>", "Ubisoft" ],
     "play.google" : ["<:logo_pst:973395673489756220>", "Google Play"]
 }
 
@@ -80,7 +80,7 @@ module.exports = {
 
         const nome_jogo = args[0].raw.replaceAll("_", " ");
 
-        const matches = args[3].raw.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com/);
+        const matches = args[3].raw.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|play.google/);
 
         const plataforma = platformMap[matches[0]][1];
         const logo_plat = platformMap[matches[0]][0];
