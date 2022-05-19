@@ -28,6 +28,7 @@ module.exports = {
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         const emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
         const indicaTemp = require('../../adm/funcoes/indicatemp.js');
+        const estacao_atual = require('../../adm/funcoes/estacao_atual.js');
 
         if(args.length < 1) // Pesquisa sem argumentos
             return message.reply(`:warning: | ${utilitarios[8]["aviso_1"].replaceAll(".a", prefix)}`);
@@ -175,7 +176,7 @@ module.exports = {
 
                     const direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
                     let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
-                    let infos_chuva = "";
+                    let cabecalho_fix = estacao_atual(res.coord.lat, idioma_adotado);
                     let chuva_troll = "";
 
                     if(typeof res.sys.country != "undefined")
@@ -186,10 +187,12 @@ module.exports = {
                         nome_local = `${utilitarios[8]["terra"]} :earth_americas:`;
                     
                     if(typeof res.rain !== "undefined"){
-                        infos_chuva = `${utilitarios[8]["chovendo"]}\n${utilitarios[8]["chuva"]} 1H: ${res.rain["1h"]}mm`;
+                        cabecalho_fix += "\n------------------------------";
+                        
+                        cabecalho_fix += `${utilitarios[8]["chovendo"]}\n${utilitarios[8]["chuva"]} 1H: ${res.rain["1h"]}mm`;
                     
                         if(typeof res.rain["3h"] != "undefined")
-                            infos_chuva += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
+                            cabecalho_fix += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`;
 
                         emoji_indica_humidade = " 🔼";
                         emoji_indica_visibilidade = " 🔽";
@@ -197,10 +200,10 @@ module.exports = {
                     }
                     
                     if(typeof res.snow !== "undefined"){
-                        infos_chuva = `${utilitarios[8]["nevando"]}\n${utilitarios[8]["neve"]} 1H: ${res.rain["1h"]}mm`;
+                        cabecalho_fix = `${utilitarios[8]["nevando"]}\n${utilitarios[8]["neve"]} 1H: ${res.rain["1h"]}mm`;
                     
                         if(typeof res.rain["3h"] != "undefined")
-                            infos_chuva += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
+                            cabecalho_fix += `\n${utilitarios[8]["neve"]} 3H: ${res.rain["3h"]}mm`;
 
                         emoji_indica_visibilidade = " 🔽";
 
@@ -208,14 +211,14 @@ module.exports = {
                     }
 
                     if(typeof res.wind.gust !== "undefined"){
-                        if(infos_chuva !== "")
-                            infos_chuva += "\n------------------------------";
+                        if(cabecalho_fix !== "")
+                            cabecalho_fix += "\n------------------------------";
 
-                        infos_chuva += `\n${utilitarios[8]["rajadas_vento"]}\n${utilitarios[8]["velocidade"]}: ${res.wind.gust} km/h`;
+                        cabecalho_fix += `\n${utilitarios[8]["rajadas_vento"]}\n${utilitarios[8]["velocidade"]}: ${res.wind.gust} km/h`;
                     }
 
-                    if(infos_chuva !== "")
-                        infos_chuva = `\`\`\`fix\n${infos_chuva}\`\`\``;
+                    if(cabecalho_fix !== "")
+                        cabecalho_fix = `\`\`\`fix\n${cabecalho_fix}\`\`\``;
 
                     let pressao_local = `**${utilitarios[12]["atual"]}: **\`${res.main.pressure} kPA\``;
 
@@ -227,7 +230,7 @@ module.exports = {
                     const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
-                    .setDescription(`${horario_local} | **${tempo_atual}**${infos_chuva}${chuva_troll}`)
+                    .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${chuva_troll}`)
                     .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
                         {
@@ -238,12 +241,13 @@ module.exports = {
                         {
                             name: `${emoji_ceu_atual} **${utilitarios[8]["ceu_momento"]}**`,
                             value: `${emoji_nuvens} **${utilitarios[8]["nuvens"]}: **\`${res.clouds.all}%\`\n:sunrise: **${utilitarios[8]["nas_sol"]}: **\`${nascer_sol}\`\n:city_sunset: **${utilitarios[8]["por_sol"]}: **\`${por_sol}\``, 
-                            inline: true},
+                            inline: true
+                        },
                         {
                             name: `:wind_chime: **${utilitarios[8]["vento"]}**`, 
                             value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``, 
                             inline: true 
-                        },
+                        }
                     )
                     .addFields(
                         {
@@ -274,17 +278,14 @@ module.exports = {
     }
 }
 
-function direcao_cardial(degrees, idioma_adotado){
-    let direcao = parseInt((degrees / 22.5) + 0.5);
+function direcao_cardial(degrees){
+    const cards = ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"];
+    degrees += 22.5;
 
-    if(idioma_adotado === "pt-br")
-        cards = ["Norte", "N/NL", "Nordeste", "L/NL", "Leste", "L/SL", "Sudeste", "S/SL", "Sul", "S/SO", "Sudoeste", "O/SO", "Oeste", "O/NO", "Noroeste", "N/NO"];
-    else if(idioma_adotado == "en-us")
-        cards = ["North", "N/NL", "North East", "L/NL", "East", "L/SL", "Southeast", "S/SL", "Sul", "S/SO", "South-west", "O/SO", "West", "O/NO", "Northwest", "N/NO"];
-    else
-        cards = ["Nord", "N/NL", "Nord-Est", "L/NL", "Est", "L/SL", "Sud-est", "S/SL", "Sud", "S/SO", "Sud-ouest", "O/SO", "Ouest", "O/NO", "Nord Ouest", "N/NO"];
-
-    direcao = cards[direcao % 16];
-
-    return direcao;
+    if (degrees < 0)
+        degrees = 360 - Math.abs(degrees) % 360;
+    else 
+        degrees = degrees % 360;
+  
+    return cards[parseInt(degrees / 45)];
 }

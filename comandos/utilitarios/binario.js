@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const binario = require('../../arquivos/json/text/binario.json');
 
 module.exports = {
     name: "binario",
@@ -57,12 +58,12 @@ module.exports = {
 
 function textToBinary(str) {
     return str.split('').map(char => {
-        return char.charCodeAt(0).toString(2);
+        return binario[char];
     }).join(' ');
 }
 
 function binaryToText(str) {
     return str.split(" ").map(function(elem) {
-        return String.fromCharCode(parseInt(elem, 2));
+        return Object.keys(binario).find(key => binario[key] === elem);
     }).join("")
-} 
+}

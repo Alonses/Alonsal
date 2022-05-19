@@ -307,7 +307,13 @@
             "sugestao" : "Try a raw search for example, ",
             "error_1" : "Just enter normal characters for your search, searches with numbers are ignored",
             "error_2" : "Unable to retrieve information from this location, please try again later",
-            "antartida" : "Antarctica"
+            "antartida" : "Antarctica",
+            "outono" : "Autumn",
+            "verao" : "Summer",
+            "primavera" : "Spring",
+            "inverno" : "Winter",
+            "comeco" : "Started in",
+            "termino" : ", ends in"
         },
         {
             "nao_encontrado" : "I didn't find any item or block with the name",
