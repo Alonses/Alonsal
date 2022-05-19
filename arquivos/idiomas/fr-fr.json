@@ -291,7 +291,13 @@
             "sugestao" : "Essayez une recherche brute par exemple, ",
             "error_1" : "Entrez simplement des caractères normaux pour votre recherche, les recherches avec des nombres sont ignorées",
             "error_2" : "Impossible de récupérer les informations de cet emplacement, veuillez réessayer plus tard",
-            "antartida" : "Antarctique"
+            "antartida" : "Antarctique",
+            "outono" : "Automne",
+            "verao" : "Été",
+            "primavera" : "Printemps",
+            "inverno" : "L'hiver",
+            "comeco" : "Commencé en",
+            "termino" : ", fini dans"
         },
         {
             "nao_encontrado" : "Je n'ai trouvé aucun élément ou bloc avec le nom",

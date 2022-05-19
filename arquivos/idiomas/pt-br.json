@@ -309,7 +309,13 @@
             "sugestao" : "Tente pesquisar de forma bruta, por exemplo, ",
             "error_1" : "Informe apenas caracteres normais para sua pesquisa, pesquisas com números são desconsideradas",
             "error_2" : "Não foi possível resgatar informações deste local, por favor, tente novamente mais tarde",
-            "antartida" : "Antártida"
+            "antartida" : "Antártida",
+            "outono" : "Outono",
+            "verao" : "Verão",
+            "primavera" : "Primavera",
+            "inverno" : "Inverno",
+            "comeco" : "Começou em",
+            "termino" : ", termina em"
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
