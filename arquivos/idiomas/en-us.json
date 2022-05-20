@@ -313,7 +313,8 @@
             "primavera" : "Spring",
             "inverno" : "Winter",
             "comeco" : "Started in",
-            "termino" : ", ends in"
+            "termino" : ", ends in",
+            "equador" : "This location is close to the equator, the current season may not reflect your current climate"
         },
         {
             "nao_encontrado" : "I didn't find any item or block with the name",

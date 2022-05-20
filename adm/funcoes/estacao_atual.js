@@ -3,22 +3,19 @@ module.exports = (latitude, idioma_adotado) => {
     if(idioma_adotado == "al-br") idioma_adotado = "pt-br";
 
     const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
-
-    let indice = 0;
-    const data_atual = new Date();
+    
+    let data_atual = new Date();
     const emojis = ["🌻", "🍂", "❄️", "🌼"];
     let datas_estacao = ["21/12", "21/03", "21/06", "21/09"];
     const estacao_nome = ["verao", "outono", "inverno", "primavera"];
 
     const dias_passados = calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear());
-
-    if(latitude < 0) // Hemisfério sul
-        indice = dias_passados > 79 && dias_passados < 171 ? 1 : dias_passados >= 171 && dias_passados < 264 ? 2 : dias_passados >= 264 && dias_passados < 354 ? 3 : 0;
-    else{ // Hemisfério norte
-        indice = dias_passados > 79 && dias_passados < 171 ? 3 : dias_passados >= 171 && dias_passados < 264 ? 0 : dias_passados >= 264 && dias_passados < 354 ? 1 : 2;
+    
+    // Estipulando um indice de clima
+    let indice = estipula_indice(dias_passados, latitude);
+    if(latitude > 0) // Hemisfério norte
         datas_estacao = ["21/06", "21/09", "21/12", "21/03"];
-    }
-
+    
     let indice_int = indice + 1;
     if(indice_int >= datas_estacao.length) indice_int = 0;
 
@@ -52,4 +49,17 @@ function calcula_dias(dia_atual, mes_atual, ano_atual){
     }
 
     return (dias - (ult_mes - dia_atual));
+}
+
+function estipula_indice(dias_passados, latitude){
+
+    // Estipula um indice para a estação do local
+    let indices = [1, 2, 3, 0];
+
+    if(latitude > 0)
+        indices = [3, 0, 1, 2];
+
+    let indice = dias_passados > 79 && dias_passados <= 171 ? indices[0] : dias_passados > 171 && dias_passados <= 264 ? indices[1] : dias_passados > 264 && dias_passados <= 354 ? indices[2] : indices[3];
+
+    return indice;
 }

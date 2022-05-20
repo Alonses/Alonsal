@@ -297,7 +297,8 @@
             "primavera" : "Printemps",
             "inverno" : "L'hiver",
             "comeco" : "Commencé en",
-            "termino" : ", fini dans"
+            "termino" : ", fini dans",
+            "equador" : "Cet emplacement est proche de l'équateur, la saison en cours peut ne pas refléter votre météo actuelle"
         },
         {
             "nao_encontrado" : "Je n'ai trouvé aucun élément ou bloc avec le nom",

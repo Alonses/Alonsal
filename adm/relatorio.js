@@ -5,9 +5,9 @@ let trava_edicao = 0;
 
 module.exports = async ({client, caso}) => {
 
-    if(trava_edicao === 1) return;
+    if(client.user.id !== "833349943539531806" || trava_edicao === 1) return;
     trava_edicao = 1;
-
+    
     const bot = {
         comandos_disparados: 0,
         exp_concedido: 0,

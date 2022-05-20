@@ -8,7 +8,11 @@ module.exports = {
     cooldown: 2,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args){
-        const idioma_selecionado = client.idioma.getLang(message.guild.id);
+        let idioma_selecionado = client.idioma.getLang(message.guild.id);
+
+        if(idioma_selecionado == "al-br")
+            idioma_selecionado = "pt-br"; 
+
         const { manutencao } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
 
         function emoji(id){
