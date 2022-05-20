@@ -177,7 +177,7 @@ module.exports = {
                     const direcao_vento = direcao_cardial(res.wind.deg, idioma_adotado);
                     let nome_local = `${utilitarios[8]["na"]} ${res.name}`;
                     let cabecalho_fix = estacao_atual(res.coord.lat, idioma_adotado);
-                    let chuva_troll = "";
+                    let rodape_cabecalho = "";
 
                     if(typeof res.sys.country != "undefined")
                         if(idioma_adotado === "pt-br")
@@ -196,7 +196,7 @@ module.exports = {
 
                         emoji_indica_humidade = " 🔼";
                         emoji_indica_visibilidade = " 🔽";
-                        chuva_troll = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`;
+                        rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`;
                     }
                     
                     if(typeof res.snow !== "undefined"){
@@ -207,7 +207,7 @@ module.exports = {
 
                         emoji_indica_visibilidade = " 🔽";
 
-                        chuva_troll = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`;
+                        rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`;
                     }
 
                     if(typeof res.wind.gust !== "undefined"){
@@ -225,12 +225,15 @@ module.exports = {
                     if(typeof res.main.grnd_level !== "undefined") 
                         pressao_local = `:camping: **${utilitarios[8]["nivel_chao"]}: ** \`${res.main.grnd_level} kPA\`\n:island: **${utilitarios[8]["nivel_mar"]}: ** \`${res.main.sea_level} kPA\``;
 
-                    let emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, chuva_troll);
+                    let emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, rodape_cabecalho);
+
+                    if(res.coord.lat > -20 && res.coord.lat < 20)
+                        rodape_cabecalho = `:ringed_planet: ${utilitarios[8]["equador"]}\n${rodape_cabecalho}`;
 
                     const clima_atual = new MessageEmbed()
                     .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                     .setColor(0x29BB8E)
-                    .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${chuva_troll}`)
+                    .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                     .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                     .addFields(
                         {

@@ -315,7 +315,8 @@
             "primavera" : "Primavera",
             "inverno" : "Inverno",
             "comeco" : "Começou em",
-            "termino" : ", termina em"
+            "termino" : ", termina em",
+            "equador" : "Este local esta próximo da linha do equador, a estação atual pode não refletir seu clima atual"
         },
         {
             "nao_encontrado" : "Não encontrei nenhum item ou bloco com o nome",
