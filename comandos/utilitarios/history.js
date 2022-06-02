@@ -33,18 +33,18 @@ module.exports = {
         if(args.length > 0){
             valor_primario = args[0].raw;
 
-            if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){
+            if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){ // Pesquisa por dia
                 evento_escolhido = args[0].raw;
                 args.shift();
             }
-    
-            if(!args[0].raw.includes("-")) // Formato incorreto
+            
+            if(typeof args[0] !== "undefined") // Formato incorreto
                 return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
-
-            const data_pesquisada = args[0].raw.split("-");
+            
+            const data_pesquisada = valor_primario.split("-");
             dia = data_pesquisada[0];
             mes = data_pesquisada[1];
-
+            
             if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
                 return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
 
