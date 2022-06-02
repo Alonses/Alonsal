@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-const { Client, MessageEmbed, Interaction } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "avatar",
@@ -10,7 +10,10 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        let idioma = client.idioma.getLang(message.guild.id);
+        idioma = idioma == "al-br" ? "pt-br" : idioma;
+        
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma}.json`);
 
         const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
         let user = message.mentions.users.first(); // Coleta o ID do usuário mencionado
@@ -26,12 +29,12 @@ module.exports = {
                 return message.reply(`${emoji_nao_encontrado} | ${utilitarios[4]["nao_conhecido"]}`);
             }
         }
-        
+
         if(!user) // Usa o autor do comando como alvo em último caso
             user = message.author;
 
         let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`;
-        const download_icon = utilitarios[4]["download"].replace("link_repl", url_avatar);
+        const download_icon = utilitarios[4]["download_avatar"].replace("link_repl", url_avatar);
 
         fetch(url_avatar)
         .then(res => {
@@ -46,30 +49,5 @@ module.exports = {
             
             message.reply({ embeds: [embed] });
         });
-    },
-    // slash_params: [{
-    //     name: "avatar",
-    //     description: "Mostra o avatar de um usuário",
-    //     type: 6,
-    //     required: false
-    // }],
-    // async slash(client, handler, data, params, interaction) {
-    
-    //     try{
-    //         const options;
-
-    //         const user = (options.find((e) => e.name === "user") && options.find((e) => e.name === "user").member.user) || interaction.user;
-
-    //         const member = (options.find((e) => e.name === "user") && options.find((e) => e.name === "user").member) || interaction.member;
-
-    //         const embed = new MessageEmbed().setColor(member.displayHexColor);
-    //         const image = user.displayAvatarURL({dynamic: true, size: 4096});
-
-    //         embed.setAuthor(member.displayName, user.displayAvatarURL()).setImage(image).setTimestamp();
-
-    //         await handler.postSlashMessage({embeds: [embed]});
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
+    }
 }
