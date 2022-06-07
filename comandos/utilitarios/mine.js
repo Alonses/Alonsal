@@ -142,8 +142,8 @@ module.exports = {
                             }
                         }
                     }
-
-                    if (lista_itens[i].versao_add > 17)
+                    
+                    if (lista_itens[i].versao_add > 19)
                         nota_rodape = utilitarios[9]["nota_rodape"];
 
                     const embed = new MessageEmbed()
