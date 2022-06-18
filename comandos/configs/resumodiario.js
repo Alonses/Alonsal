@@ -17,13 +17,15 @@ module.exports = {
             comandos_disparados: 0,
             exp_concedido: 0,
             msgs_lidas: 0,
+            msgs_validas: 0,
             epic_embed_fails: 0
         };
 
-        const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`);
+        const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`);
         bot.comandos_disparados = comandos_disparados;
         bot.exp_concedido = exp_concedido;
         bot.msgs_lidas = msgs_lidas;
+        bot.msgs_validas = msgs_validas;
         bot.epic_embed_fails = epic_embed_fails;
 
         let canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
@@ -50,7 +52,7 @@ module.exports = {
             },
             {
                 name: ":e_mail: **Mensagens**",
-                value: `**Hoje:** \`${bot.msgs_lidas}\``,
+                value: `**Hoje:** \`${bot.msgs_lidas}\`\n**Válidas:** \`${bot.msgs_validas}\``,
                 inline: true
             }
         )

@@ -26,6 +26,7 @@ async function gera_relatorio(client, proxima_att){
         comandos_disparados: 0,
         exp_concedido: 0,
         msgs_lidas: 0,
+        msgs_validas: 0,
         epic_embed_fails: 0
     };
     
@@ -36,10 +37,11 @@ async function gera_relatorio(client, proxima_att){
     proxima_att = `${("0"+ (horas)).substr(-2)}:${("0"+ (minutos)).substr(-2)}:${("0"+ (segundos)).substr(-2)}`;
     proxima_att = proxima_att == "00:00:00" ? "24:00:00" : proxima_att;
     
-    const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`);
+    const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`);
     bot.comandos_disparados = comandos_disparados;
     bot.exp_concedido = exp_concedido;
     bot.msgs_lidas = msgs_lidas;
+    bot.msgs_validas = msgs_validas;
     bot.epic_embed_fails = epic_embed_fails;
 
     let canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size;
@@ -66,7 +68,7 @@ async function gera_relatorio(client, proxima_att){
         },
         {
             name: ":e_mail: **Mensagens**",
-            value: `**Hoje:** \`${bot.msgs_lidas}\``,
+            value: `**Hoje:** \`${bot.msgs_lidas}\`\n**Válidas:** \`${bot.msgs_validas}\``,
             inline: true
         }
     )

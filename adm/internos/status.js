@@ -38,14 +38,15 @@ module.exports = async ({client}) => {
         
         client.channels.cache.get('854695578372800552').send({ embeds: [embed] }); // Avisa que está online em um canal
         
-        client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
+        client.user.setActivity('Vapor p/ fora!', 'COMPETING')
         const activities = [
-            ".alang | French now!",
-            `pinga azul em sapos`,
+            ".alang | Français maintenant!",
+            `baidu em ${canais_texto} canais`,
             "wardens para cima",
             "Ping me for prefix!",
             "pula prédios",
-            "itens pixelados",
+            "wikipedias na bancada",
+            `ceira em ${client.guilds.cache.size} servidores`,
             "procrastinação sem exceção",
         ];
 

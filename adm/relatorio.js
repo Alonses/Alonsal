@@ -12,6 +12,7 @@ module.exports = async ({client, caso}) => {
         comandos_disparados: 0,
         exp_concedido: 0,
         msgs_lidas: 0,
+        msgs_validas: 0,
         epic_embed_fails: 0
     };
 
@@ -22,11 +23,13 @@ module.exports = async ({client, caso}) => {
             bot.comandos_disparados = comandos_disparados;
             bot.exp_concedido = exp_concedido;
             bot.msgs_lidas = msgs_lidas;
+            bot.msgs_validas = msgs_validas;
             bot.epic_embed_fails = epic_embed_fails;
         }catch(err){
             bot.comandos_disparados = 0;
             bot.exp_concedido = 0;
             bot.msgs_lidas = 0;
+            bot.msgs_validas = 0;
             bot.epic_embed_fails = 0;
 
             client.channels.cache.get('872865396200452127').send(":scroll: | Houve um erro no relatório e ele foi reiniciado, chora");
@@ -35,9 +38,11 @@ module.exports = async ({client, caso}) => {
 
     fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data){
         
-        if(caso === "experiencia")
+        if(caso === "experiencia"){
             bot.exp_concedido += parseInt(data);
-
+            bot.msgs_validas += 1; // Mensagens válidas para XP
+        }
+        
         if(caso === "comando"){
             bot.comandos_disparados += 1;
             bot.msgs_lidas += 1;

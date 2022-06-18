@@ -14,61 +14,63 @@ module.exports = {
     async execute(client, message, args) {
 
         const removeFormatacoes = require('../../adm/funcoes/remformats.js');
-        const idioma_definido = client.idioma.getLang(message.guild.id);
+
+        let idioma_definido = client.idioma.getLang(message.guild.id);
+        idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido;
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        const datas = [];
-        const fontes = [];
-        const acontecimento_final = [];
-        let evento_escolhido = "";
-        const ano_materias = [];
+        const datas = [], fontes = [], ano_materias = [], acontecimento_final = [];
+        let evento_escolhido = "", valor_primario = "";
 
-        let data = new Date();
-        let dia, mes, url_completa = "https://history.uol.com.br/hoje-na-historia/";
-        let data_informada = utilitarios[10]["hoje"];
-        let valor_primario = "";
+        let data = new Date(), entrada_com_data = false, data_informada = utilitarios[10]["hoje"];
+        let dia = data.getDate(), mes = data.getMonth() + 1, url_completa = "https://history.uol.com.br/hoje-na-historia/";
 
         if(args.length > 0){
             valor_primario = args[0].raw;
 
-            if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")){ // Pesquisa por dia
-                evento_escolhido = args[0].raw;
-                args.shift();
+            if(message.content.includes("cons") && message.content !== `${prefix}cons` && !valor_primario.includes("-")) // Define um evento como alvo
+                evento_escolhido = args[0].raw;    
+            else if(args.length >= 1){
+                entrada_com_data = true;
+
+                if(args.length >= 2) evento_escolhido = args[1].raw;
             }
-            
-            if(typeof args[0] !== "undefined") // Formato incorreto
+        
+            if(isNaN(evento_escolhido))
                 return message.reply(`:warning: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`);
+
+            if(entrada_com_data){
+                const data_pesquisada = valor_primario.split("-");
+                dia = data_pesquisada[0];
+                mes = data_pesquisada[1];
+                
+                if((isNaN(dia) || isNaN(mes)) && args.length > 0) // Caracteres de texto no lugar de números
+                    return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"].replaceAll(".a", prefix)}`).then(msg => setTimeout(() => msg.delete(), 6000));
             
-            const data_pesquisada = valor_primario.split("-");
-            dia = data_pesquisada[0];
-            mes = data_pesquisada[1];
-            
-            if(isNaN(dia) || isNaN(mes)) // Caracteres de texto no lugar de números
-                return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_2"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
+                if(idioma_definido === "pt-br"){
+                    if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
+                        return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`).then(msg => setTimeout(() => msg.delete(), 6000));
 
-            if(idioma_definido === "pt-br"){
-                if(mes > 12 || mes < 0 || dia > 31 || dia < 0 || (mes === 2 && dia > 29)) // Verificando dias e meses
-                    return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
+                    url_completa += `${dia}/${mes}`;
+                    data_informada = `${dia}/${mes}`;
+                }else{
+                    if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
+                        return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"].replaceAll(".a", prefix)}`).then(msg => setTimeout(() => msg.delete(), 6000));
 
-                url_completa += `${dia}/${mes}`;
-                data_informada = `${dia}/${mes}`;
-            }else{
-                if(dia > 12 || dia < 0 || mes > 31 || mes < 0 || (mes > 29 && dia === 2)) // Verificando dias e meses ( padrão inglês )
-                    return message.reply(`:hotsprings: | ${utilitarios[10]["aviso_1"]}`).then(msg => setTimeout(() => msg.delete(), 6000));
+                    url_completa += `${mes}/${dia}`;
+                    data_informada = `${mes}/${dia}`;
 
-                url_completa += `${mes}/${dia}`;
-                data_informada = `${mes}/${dia}`;
-
-                const troca = dia;
-                dia = mes;
-                mes = troca;
+                    const troca = dia;
+                    dia = mes;
+                    mes = troca;
+                }
             }
 
             data_mes = new Date();
             data_mes.setMonth(mes - 1);
-
+        
             if(idioma_definido === "pt-br")
                 mes = data_mes.toLocaleString('pt', { month: 'long' });
             else
@@ -82,7 +84,7 @@ module.exports = {
             dia = new Date().getDate();
         }
 
-        const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"]}`);
+        const aviso = await message.reply(`:hotsprings: | ${utilitarios[10]["aviso_3"].replaceAll(".a", prefix)}`);
         const ano_atual = new Date().getFullYear();
 
         fetch(url_completa)
@@ -138,7 +140,7 @@ module.exports = {
                     .setAuthor("History", "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png")
                     .setColor(0x29BB8E)
                     .setDescription(`${utilitarios[10]["acontecimentos_2"]} ${data_informada}\n${lista_eventos}`)
-                    .setFooter(`${utilitarios[10]["utilize_1"]} ${prefix}cons <${utilitarios[10]["numero"]}>${data_eventos.replace("/", "-")} ${utilitarios[10]["utilize_2"]}`)
+                    .setFooter(`${utilitarios[10]["utilize_1"]} ${prefix}cons ${data_eventos.replace("/", "-")} <${utilitarios[10]["numero"]}> ${utilitarios[10]["utilize_2"]}`)
 
                     message.reply({ embeds: [embed_eventos] });
                 }else
@@ -168,7 +170,7 @@ module.exports = {
 
                     ult_server = message.guild.id;
                     valores_esc.push(num);
-                }else if(!valor_primario.includes("-")){
+                }else if(valor_primario.includes("-")){
                     if(isNaN(evento_escolhido) || evento_escolhido > acontecimento_final.length || evento_escolhido < 1){
                         message.reply(`:mag: | ${utilitarios[10]["error_1"]}`);
                         aviso.delete();
@@ -196,15 +198,13 @@ module.exports = {
 
                     descricao = descricao.split("</p>")[0];
                     descricao = descricao.slice(0, 350) +"...";
-                    descricao = descricao.replace("<p>", "");
-                    descricao = descricao.replace("<div>", "");
 
                     const acontecimento = new MessageEmbed()
-                    .setTitle(acontecimento_final[num])
+                    .setTitle(acontecimento_final[num].replaceAll("&quot;", "\""))
                     .setAuthor("History", "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png")
                     .setURL(fontes[num])
                     .setColor(0x29BB8E)
-                    .setDescription(descricao)
+                    .setDescription(removeFormatacoes(descricao))
                     .setFooter(datas[num], message.author.avatarURL({ dynamic:true }))
                     .setImage(imagem);
 
@@ -215,6 +215,6 @@ module.exports = {
                 message.reply(`:mag: | ${utilitarios[10]["sem_entradas"].replaceAll(".a", prefix)}`);
                 aviso.delete();
             }
-        });
+        })
     }
 }
