@@ -316,6 +316,8 @@
             "atributos" : "Les attributs",
             "disco_musical" : "Disque de musique",
             "livro_encantado" : "Livre enchanté",
+            "sugestao_pesquisa" : "Élément erroné? Essayez de rechercher en utilisant des guillemets, par exemple .amc \"torch\"",
+            "mais_detalhes_wiki" : "[Voir plus de détails sur le wiki](link_repl)",
             "nota_rodape" : "Cet élément n'a pas encore été officiellement implémenté, vos données ne sont pas officielles",
             "sim" : "Oui",
             "nao" : "Non",
