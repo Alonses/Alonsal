@@ -19,7 +19,7 @@ module.exports = async ({client, caso}) => {
     if(existsSync(`./arquivos/data/relatorio.json`)){
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)];
         try{
-            const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../arquivos/data/relatorio.json`);
+            const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails} = require(`../arquivos/data/relatorio.json`);
             bot.comandos_disparados = comandos_disparados;
             bot.exp_concedido = exp_concedido;
             bot.msgs_lidas = msgs_lidas;
