@@ -32,7 +32,7 @@ module.exports = {
             if (Object.keys(morse).find(key => morse[key] === texto[0]))
                 tipo_texto = 1;
 
-            if (tipo_texto === 0) {
+            if (tipo_texto === 0) { // Convertendo para morse
                 texto = entrada.split('');
                 for (let carac = 0; carac < texto.length; carac++) {
                     if (morse[texto[carac]])
@@ -42,7 +42,7 @@ module.exports = {
                         aviso = utilitarios[2]["caracteres"];
                     }
                 }
-            } else {
+            } else { // Decodificando do morse
                 for (let carac = 0; carac < texto.length; carac++) {
                     if (Object.keys(morse).find(key => morse[key] === texto[carac]))
                         texto[carac] = Object.keys(morse).find(key => morse[key] === texto[carac]);
