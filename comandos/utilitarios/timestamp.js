@@ -11,7 +11,7 @@ module.exports = {
     async execute(client, message, args) {
 
         let idioma = client.idioma.getLang(message.guild.id);
-        idioma == "al-br" ? "pt-br" : idioma;
+        idioma = idioma == "al-br" ? "pt-br" : idioma;
 
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -22,13 +22,14 @@ module.exports = {
 
         let timestamp, aviso = "", conversao_invalida = false;
         let titulo = utilitarios[19]["timestamp_1"];
-        let data = args[0].raw;
+        let data = args[0].raw, retorno;
 
         if(!args[0].raw.includes("-")){ // De timestamp para data normal
-            timestamp = new Date(Number(args[0].raw));
+            timestamp = new Date(Number(args[0].raw * 1000));
             titulo = utilitarios[19]["timestamp_2"];
-
-            timestamp = `${timestamp.getFullYear()}-${("0"+ timestamp.getMonth()).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${("0"+ timestamp.getHours()).slice(-2)}:${("0"+ timestamp.getMinutes()).slice(-2)}:${("0"+ timestamp.getSeconds()).slice(-2)}`;
+            retorno = args[0].raw;
+            
+            timestamp = `${timestamp.getFullYear()}-${("0"+ (timestamp.getMonth() + 1)).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${("0"+ timestamp.getHours()).slice(-2)}:${("0"+ timestamp.getMinutes()).slice(-2)}:${("0"+ timestamp.getSeconds()).slice(-2)}`;
 
             if((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] == "NaN")
                 conversao_invalida = true;
@@ -37,6 +38,7 @@ module.exports = {
                 data += ` ${args[1].raw}`;
         
             timestamp = new Date(data).getTime() / 1000;
+            retorno = timestamp;
 
             if(isNaN(timestamp))
                 conversao_invalida = true;
@@ -53,7 +55,7 @@ module.exports = {
             .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
             .setColor(0x29BB8E)
             .setFooter(aviso)
-            .setDescription(`\`${data}\` -> \`${timestamp}\``);
+            .setDescription(`\`${data}\` -> \`${timestamp}\`\n\n<t:${retorno}:R> ( \`<t:${retorno}:R>\` )`);
 
         message.reply({embeds: [embed]});
     }
