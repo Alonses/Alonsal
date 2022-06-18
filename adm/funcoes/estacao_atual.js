@@ -3,7 +3,7 @@ module.exports = (latitude, idioma_adotado) => {
     if(idioma_adotado == "al-br") idioma_adotado = "pt-br";
     const { utilitarios } = require(`../../arquivos/idiomas/${idioma_adotado}.json`);
     
-    let data_atual = new Date('12/22/2022');
+    let data_atual = new Date();
     
     const emojis = ["🌻", "🍂", "❄️", "🌼"];
     let datas_estacao = ["21/12", "21/03", "21/06", "21/09"];
