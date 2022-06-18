@@ -298,6 +298,7 @@
             "inverno" : "L'hiver",
             "comeco" : "Commencé en",
             "termino" : ", fini dans",
+            "termino_hoje" : ", se termine aujourd'hui",
             "equador" : "Cet emplacement est proche de l'équateur, la saison en cours peut ne pas refléter votre météo actuelle"
         },
         {
@@ -316,7 +317,7 @@
             "atributos" : "Les attributs",
             "disco_musical" : "Disque de musique",
             "livro_encantado" : "Livre enchanté",
-            "sugestao_pesquisa" : "Élément erroné? Essayez de rechercher en utilisant des guillemets, par exemple .amc \"torch\"",
+            "sugestao_pesquisa" : "Élément erroné? Essayez de rechercher en utilisant des guillemets, par exemple .amc \"item_repl\"",
             "mais_detalhes_wiki" : "[Voir plus de détails sur le wiki](link_repl)",
             "nota_rodape" : "Cet élément n'a pas encore été officiellement implémenté, vos données ne sont pas officielles",
             "sim" : "Oui",
