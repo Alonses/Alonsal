@@ -9,6 +9,7 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     execute(client, message, args) {
+
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -59,13 +60,13 @@ module.exports = {
                     auto_compl_verif = (pesquisa.length === nome_simplificado.length) && (pesquisa === nome_simplificado);
                 }
 
-                if ((nome_simplificado_verif || nome_interno_verif) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl_verif) {
+                if (((nome_simplificado_verif || nome_interno_verif) || random || nome_interno === lista_itens[i].nome_interno || descri || auto_compl_verif) && !objeto_encontrado) {
                     
-                    if (random)
+                    if (random && !objeto_encontrado)
                         i = Math.round((lista_itens.length - 1) * Math.random());
 
                     url = `https://raw.githubusercontent.com/odnols/inventario-mine/main/IMG/Itens/new/${lista_itens[i].tipo_item}/${lista_itens[i].nome_icon}`;
-
+                    
                     objeto_encontrado = true;
                     let nome_item = lista_itens[i].nome_item;
                     let nome_pesquisa_wiki = nome_item;
@@ -165,7 +166,7 @@ module.exports = {
                     if (lista_itens[i].versao_add > 19)
                         nota_rodape = utilitarios[9]["nota_rodape"];
                     
-                    if(objeto_encontrado){
+                    if(objeto_encontrado){ 
                         // Procurando na wiki sobre a pesquisa
                         fetch(`https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki}`)
                         .then(response => response.text())
@@ -215,7 +216,7 @@ module.exports = {
                                 }, fields
                             )
                             .setFooter(nota_rodape);
-
+                            
                             if(descricao_item_wiki !== ""){
                                 
                                 let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki.replaceAll(" ", "_")}`;
