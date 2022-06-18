@@ -9,9 +9,9 @@ module.exports = {
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
-        
+
         let idioma = client.idioma.getLang(message.guild.id);
-        idioma = idioma == "al-br" ? "pt-br" : idioma;
+        idioma == "al-br" ? "pt-br" : idioma;
 
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);

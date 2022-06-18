@@ -476,6 +476,14 @@
             "titulo" : "Y0uR P4s§w0Rd5, click here to test your password",
             "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
             "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
+        },
+        {
+            "timestamp_1" : "From date to timestamp",
+            "timestamp_2" : "From timestamp to date",
+            "erro_titulo" : ":warning: Something went wrong",
+            "erro_conversao" : "Could not generate a timestamp with the given input, please try again",
+            "valor_nulo" : "The result of this conversion was null",
+            "aviso_1" : "I need more information to be able to convert your data\nFor example `.atime 2022-06-08 23:03:57` or `.atime 385723948238`"
         }
     ],
     "trabalho" : [
