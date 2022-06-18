@@ -166,7 +166,10 @@ module.exports = {
                     if (lista_itens[i].versao_add > 19)
                         nota_rodape = utilitarios[9]["nota_rodape"];
                     
-                    if(objeto_encontrado){ 
+                    if(nota_rodape.includes("item_repl"))
+                        nota_rodape = nota_rodape.replace("item_repl", pesquisa)
+
+                    if(objeto_encontrado){
                         // Procurando na wiki sobre a pesquisa
                         fetch(`https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki}`)
                         .then(response => response.text())
@@ -235,9 +238,8 @@ module.exports = {
                             return message.reply({embeds: [embed]});
                         })
                     }
-                }
-                
-                i++;
+                }else
+                    i++;
             }
             
             if(!objeto_encontrado){

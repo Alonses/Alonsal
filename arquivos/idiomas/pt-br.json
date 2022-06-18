@@ -316,6 +316,7 @@
             "inverno" : "Inverno",
             "comeco" : "Começou em",
             "termino" : ", termina em",
+            "termino_hoje" : ", termina hoje",
             "equador" : "Este local esta próximo da linha do equador, a estação atual pode não refletir seu clima atual"
         },
         {
@@ -334,7 +335,7 @@
             "atributos" : "Atributos",
             "disco_musical" : "Disco musical",
             "livro_encantado" : "Livro encantado",
-            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo .amc \"tocha\"",
+            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo .amc \"item_repl\"",
             "mais_detalhes_wiki" : "[Veja mais detalhes na wiki](link_repl)",
             "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
             "sim" : "Sim",
