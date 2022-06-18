@@ -1,7 +1,6 @@
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
-const fs = require('fs');
 
 module.exports = {
     name: "mine",
