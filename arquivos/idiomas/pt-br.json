@@ -334,6 +334,8 @@
             "atributos" : "Atributos",
             "disco_musical" : "Disco musical",
             "livro_encantado" : "Livro encantado",
+            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo .amc \"tocha\"",
+            "mais_detalhes_wiki" : "[Veja mais detalhes na wiki](link_repl)",
             "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
             "sim" : "Sim",
             "nao" : "Não",
