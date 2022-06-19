@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 const { MessageEmbed } = require("discord.js");
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "avatar",
@@ -15,7 +16,7 @@ module.exports = {
         
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma}.json`);
 
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
         let user = message.mentions.users.first(); // Coleta o ID do usuário mencionado
 
         if(!user && args.length > 0){ 

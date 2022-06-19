@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: "resumodiario",
     description: "Veja um resumo diário de forma manual",
-    aliases: [ "rsd" ],
+    aliases: [ "crsd" ],
     cooldown: 5,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message) {

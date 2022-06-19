@@ -1,3 +1,4 @@
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -9,9 +10,9 @@ module.exports = {
     execute(client, message, args) {
         const idioma_definido = client.idioma.getLang(message.guild.id);
         const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`);
-
-        const emoji_epic_embed_fail = client.emojis.cache.get(emojis.epic_embed_fail2).toString();
-        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        
+        const emoji_epic_embed_fail = busca_emoji(client, emojis.epic_embed_fail2);
+        const emoji_dancando = busca_emoji(client, emojis_dancantes);
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 

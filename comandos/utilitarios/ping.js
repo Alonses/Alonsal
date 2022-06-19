@@ -1,3 +1,6 @@
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { emojis } = require('../../arquivos/json/text/emojis.json');
+
 module.exports = {
     name: "ping",
     description: "Veja seu ping",
@@ -6,16 +9,11 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message) {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        const { emojis } = require('../../arquivos/json/text/emojis.json');
-        
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-
-        const dancando_thanos = emoji(emojis.dancando_thanos);
-        const emoji_steve = emoji(emojis.dancando_steve);
-        const emoji_pare = emoji(emojis.pare_agr);
-        const susto2 = emoji(emojis.susto2);
+      
+        const dancando_thanos = busca_emoji(client, emojis.dancando_thanos);
+        const emoji_steve = busca_emoji(client, emojis.dancando_steve);
+        const emoji_pare = busca_emoji(client, emojis.pare_agr);
+        const susto2 = busca_emoji(client, emojis.susto2);
 
         const m = await message.reply("Ping?");
         const delay = m.createdTimestamp - message.createdTimestamp;

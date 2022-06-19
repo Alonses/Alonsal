@@ -12,12 +12,9 @@ module.exports = {
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        let mensagem = "";
-        let tipo = "Alonsal";
-        let id_alvo;
+        let mensagem = "", id_alvo, tipo = "Alonsal";
 
         if(client.owners.includes(message.author.id)){
-
             if(args.length < 2) return message.reply("Informe o tipo de alvo ( `c`, `u` ), o ID do seu alvo e a mensagem para enviar\nPor exemplo, `.amail c 4002892 oito e sete!`".replace(".a", prefix));
 
             try{

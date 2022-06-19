@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const fetch = require("node-fetch");
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json');
 const fs = require('fs');
+const busca_emoji = require("../../adm/funcoes/busca_emoji");
 
 const medals = {
     0: ":first_place:",
@@ -19,7 +20,7 @@ module.exports = {
     async execute(client, message, args) {
         
         let usuario_alvo = [];
-        const emoji_ceira = client.emojis.cache.get(emojis.mc_honeycomb).toString();
+        const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb);
 
         const { utilitarios, diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
@@ -27,7 +28,7 @@ module.exports = {
         let rodape = message.author.username;
         const users = [];
         let user_alvo = message.mentions.users.first(); // Coleta o ID do usuário mencionado
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
 
         if(!user_alvo && args.length > 0 && args[0].raw.length === 18){
             if (isNaN(Number(args[0].raw))) // Verifica se é um ID realmente

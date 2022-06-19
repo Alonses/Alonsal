@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { MessageAttachment } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -13,8 +14,9 @@ module.exports = {
         const match = /<(a?):(.+):(\d+)>/u.exec(message.content);
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
 
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
+        const emoji_dancando = busca_emoji(client, emojis_dancantes);
+
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         if(message.content.includes(`${prefix}moji`)){
@@ -92,7 +94,7 @@ module.exports = {
                 if(nome_emoji != null && url != null){ // Criando o emoji no servidor
                     message.guild.emojis.create(url, nome_emoji)
                     .then(newEmoji => {
-                        const novo_emoji = client.emojis.cache.get(newEmoji.id).toString();
+                        const novo_emoji = busca_emoji(client, newEmoji.id);
                         
                         message.reply(`${novo_emoji} | ${moderacao[2]["sucesso_1"]}`);
                     })

@@ -1,7 +1,10 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const getDateDiff = require('../../adm/funcoes/diffdatas.js');
+const formata_data = require('../../adm/funcoes/formatadata.js');
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
- 
+
 module.exports = {
     name: "serverinfo",
     description: "Veja detalhes do servidor",
@@ -10,18 +13,12 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message) {
 
-        const getDateDiff = require('../../adm/funcoes/diffdatas.js');
-        const formata_data = require('../../adm/funcoes/formatadata.js');
         const idioma_selecionado = client.idioma.getLang(message.guild.id);
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
 
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-
-        const boost_sv = emoji(emojis.boost);
-        const emoji_dancando = emoji(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]);
-        const figurinhas = emoji(emojis.bigchad);
+        const boost_sv = busca_emoji(client, emojis.boost);
+        const figurinhas = busca_emoji(client, emojis.bigchad);
+        const emoji_dancando = busca_emoji(client, emojis_dancantes);
 
         let dono_sv = message.guild.ownerId;
         const dono_membro = await message.guild.members.fetch(dono_sv);

@@ -1,7 +1,10 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
+
 const getDateDiff = require('../../adm/funcoes/diffdatas.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji.js');
 const formata_data = require('../../adm/funcoes/formatadata.js');
+
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -21,7 +24,7 @@ module.exports = {
         let user = message.mentions.users.first(); // Coleta o ID do usuário
         let nota_rodape = "";
 
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
 
         if (!user && typeof args[0] !== "undefined") {
             if (isNaN(Number(args[0].value)))
@@ -103,16 +106,16 @@ module.exports = {
         let emoji_hypesquad = ":x:";
 
         if(membro_sv.premiumSinceTimestamp) // Assinante do Discord
-            discord_premium = client.emojis.cache.get(emojis.boost).toString();
+            discord_premium = busca_emoji(client, emojis.boost);
 
         if(user.flags.has("HOUSE_BRAVERY")) // HypeSquad
-            emoji_hypesquad = client.emojis.cache.get(emojis.squad_bravery).toString();
+            emoji_hypesquad = busca_emoji(client, emojis.squad_bravery);
 
         if(user.flags.has("HOUSE_BALANCE"))
-            emoji_hypesquad = client.emojis.cache.get(emojis.squad_balance).toString();
+            emoji_hypesquad = busca_emoji(client, emojis.squad_balance);
         
         if(user.flags.has("HOUSE_BRILLIANCE"))
-            emoji_hypesquad = client.emojis.cache.get(emojis.squad_brilliance).toString();
+            emoji_hypesquad = busca_emoji(client, emojis.squad_brilliance);
 
         const infos_user = new MessageEmbed()
             .setTitle(apelido)

@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -19,7 +20,7 @@ module.exports = {
         if(content.includes("slondo")) // Pesquisa por slondo
             return message.reply(utilitarios[1]["wiki_slondo"]);
 
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
 
         if(args.length > 0){
             const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`;

@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "botavatar",
     description: "Altere o avatar do alonsal",
-    aliases: [ "bta" ],
+    aliases: [ "cavatar" ],
     cooldown: 3,
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {

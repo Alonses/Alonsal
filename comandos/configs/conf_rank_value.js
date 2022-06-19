@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
     name: "rankvalue",
     description: "Mude o valor do ranking",
-    aliases: [ "rkv" ],
+    aliases: [ "crkv" ],
     cooldown: 3,
     usage: "rkv <number>",
     permissions: [ "SEND_MESSAGES" ],

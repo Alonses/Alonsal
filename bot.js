@@ -2,6 +2,7 @@ const handler = require("wax-command-handler");
 const idioma = require("./adm/idioma");
 const { Client, MessageEmbed, Intents } = require("discord.js");
 const { emojis_negativos } = require('./arquivos/json/text/emojis.json');
+const busca_emoji = require('./adm/funcoes/busca_emoji.js');
 
 const { readdirSync } = require("fs");
 const {token, token_2, prefix, owner_id} = require('./config.json');
@@ -74,7 +75,7 @@ client.on("messageCreate", async message => {
         if (message.content.includes(client.user.id) && !message.content.startsWith(`${prefix}usinfo`) && !message.content.startsWith(`${prefix}userinfo`) && !message.content.startsWith(`${prefix}gado`) && !message.content.startsWith(`${prefix}ga`)) { // Responde as mensagens em que é marcado
 
             const { emojis_dancantes } = require('./arquivos/json/text/emojis.json');
-            const dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+            const dancando = busca_emoji(client, emojis_dancantes);
             const idioma_selecionado = idioma.getLang(message.guild.id);
 
             const { inicio } = require(`./arquivos/idiomas/${idioma_selecionado}.json`);
@@ -131,7 +132,7 @@ handler.events.on("command_error", async (e, command, client, message) => {
     try{
         if(typeof message !== "undefined"){
             const { inicio } = require(`./arquivos/idiomas/${idioma.getLang(message.guild.id)}.json`);
-            const epic_embed_fail = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+            const epic_embed_fail = busca_emoji(client, emojis_negativos);
 
             message.reply(`${epic_embed_fail} | ${inicio[0]["epic_embed_fail"]}`); // Notificando o usuário
         }

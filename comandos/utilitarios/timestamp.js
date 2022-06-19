@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 const { MessageEmbed } = require("discord.js");
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "timestamp",
@@ -16,7 +16,7 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
-        const emoji_error = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+        const emoji_error = busca_emoji(client, emojis_negativos);
 
         if (args.length < 1) return message.reply(`${emoji_error} | ${utilitarios[19]["aviso_1"].replaceAll(".a", prefix)}`);
 
