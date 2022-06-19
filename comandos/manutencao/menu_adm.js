@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -10,8 +11,8 @@ module.exports = {
     execute(client, message) {
         const idioma_adotado = client.idioma.getLang(message.guild.id);
 
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
+        const emoji_dancando = busca_emoji(client, emojis_dancantes);
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 

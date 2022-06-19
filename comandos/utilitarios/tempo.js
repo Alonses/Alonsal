@@ -1,10 +1,13 @@
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
-const { weather_key, time_key } = require('../../config.json');
-const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json');
+const { MessageEmbed } = require('discord.js');
 const getCountryISO3 = require("country-iso-2-to-3");
-const base_url = "http://api.openweathermap.org/data/2.5/weather?";
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { weather_key, time_key } = require('../../config.json');
+
 const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?";
+const base_url = "http://api.openweathermap.org/data/2.5/weather?";
+
+const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "tempo",
@@ -25,8 +28,10 @@ module.exports = {
 
         let pesquisa = "";
         const pesquisa_bruta = `\"${args.join(" ").replaceAll("\"", "")}"`;
-        const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
-        const emoji_troll = client.emojis.cache.get(emojis.trollface).toString();
+        
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
+        const emoji_troll = busca_emoji(client, emojis.trollface);
+
         const indicaTemp = require('../../adm/funcoes/indicatemp.js');
         const estacao_atual = require('../../adm/funcoes/estacao_atual.js');
 

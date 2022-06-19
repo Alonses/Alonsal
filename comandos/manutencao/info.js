@@ -1,7 +1,8 @@
+const fs = require('fs');
 const { MessageEmbed } = require('discord.js');
 const { version } = require('../../config.json');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
-const fs = require('fs');
 
 module.exports = {
     name: "info",
@@ -16,9 +17,9 @@ module.exports = {
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         let qtd_comandos = "";
 
-        const emoji_rainha = client.emojis.cache.get(emojis.dancando_elizabeth).toString();
-        const emoji_bolo = client.emojis.cache.get(emojis.mc_bolo).toString();
-        const emoji_dancante = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth);
+        const emoji_bolo = busca_emoji(client, emojis.mc_bolo);
+        const emoji_dancante = busca_emoji(client, emojis_dancantes);
 
         fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
             if (err) throw err;

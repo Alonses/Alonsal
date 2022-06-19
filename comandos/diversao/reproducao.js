@@ -34,6 +34,11 @@ module.exports = {
             const avast = new MessageAttachment("arquivos/songs/avast.mp3");
             return message.channel.send({files: [avast]});
         }
+        
+        if(conteudo === `${prefix}rep alaa` || conteudo === `${prefix}rep funfou`){
+            const avast = new MessageAttachment("arquivos/songs/alaa.mp3");
+            return message.channel.send({files: [avast]});
+        }
 
         if(conteudo === `${prefix}rep malakoi`){
             const malakoi = new MessageAttachment("arquivos/songs/malakoi.mp3");

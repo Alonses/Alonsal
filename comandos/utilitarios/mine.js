@@ -1,6 +1,7 @@
-const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
-const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
+const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "mine",
@@ -15,8 +16,8 @@ module.exports = {
         const prefix = client.prefixManager.getPrefix(message.guild.id);
 
         let nota_rodape = (utilitarios[9]["sugestao_pesquisa"]).replace(".a", prefix), objeto_encontrado = false, i = 0;
-        const emoji_suv = client.emojis.cache.get(emojis.mc_coracao).toString();
-        const logo_wikipedia = client.emojis.cache.get(emojis.mc_logo_wikipedia).toString();
+        const emoji_suv = busca_emoji(client, emojis.mc_coracao);
+        const logo_wikipedia = busca_emoji(client, emojis.mc_logo_wikipedia);
 
         let pesquisa_crua = args.join(" ");
         const nome_interno = pesquisa_crua.split(" ").join("_").toLocaleLowerCase(); // Pesquisa usando nome em inglês/interno
@@ -243,7 +244,7 @@ module.exports = {
             }
             
             if(!objeto_encontrado){
-                const emoji_nao_encontrado = client.emojis.cache.get(emojis_negativos[Math.round((emojis_negativos.length - 1) * Math.random())]).toString();
+                const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
 
                 message.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`);
             }

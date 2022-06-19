@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -15,24 +16,20 @@ module.exports = {
 
         const { manutencao } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
 
-        function emoji(id){
-            return client.emojis.cache.get(id).toString();
-        }
-
         if(typeof args[0] !== "undefined")
             if(isNaN(args[0].raw)){ // Help de comandos
                 require('../../adm/internos/helpcomandos.js')({client, message, args});
                 return;
             }
 
-        const emoji_pula = emoji(emojis.pula_2);
-        const emoji_rainha = emoji(emojis.dancando_elizabeth);
-        const emoji_bolo = emoji(emojis.mc_bolo);
-        const emoji_mc = emoji(emojis.mc_earth);
-        const emoji_steam = emoji(emojis.lg_steam);
+        const emoji_pula = busca_emoji(client, emojis.pula_2);
+        const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth);
+        const emoji_bolo = busca_emoji(client, emojis.mc_bolo);
+        const emoji_mc = busca_emoji(client, emojis.mc_earth);
+        const emoji_steam = busca_emoji(client, emojis.lg_steam);
         let bandeira_trad;
 
-        const emoji_dancando = client.emojis.cache.get(emojis_dancantes[Math.round((emojis_dancantes.length - 1) * Math.random())]).toString();
+        const emoji_dancando = busca_emoji(client, emojis_dancantes);
 
         const prefix = client.prefixManager.getPrefix(message.guild.id);
         let embed_inicial, embed_diversao, embed_utilitarios, embed_jogos, embed_manutencao;

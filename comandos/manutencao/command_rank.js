@@ -1,6 +1,7 @@
+const fetch = require("node-fetch");
 const { readdirSync } = require("fs");
 const { MessageEmbed } = require('discord.js');
-const fetch = require("node-fetch");
+const busca_emoji = require("../../adm/funcoes/busca_emoji");
 const { emojis } = require('../../arquivos/json/text/emojis.json');
 
 const medals = {
@@ -21,7 +22,7 @@ module.exports = {
 
         const { diversao } = require(`../../arquivos/idiomas/${idioma}.json`);
         const prefix = client.prefixManager.getPrefix(message.guild.id);
-        const emoji_ceira = client.emojis.cache.get(emojis.mc_honeycomb).toString();
+        const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb);
 
         const commands = [];
         let rodape = message.author.username;

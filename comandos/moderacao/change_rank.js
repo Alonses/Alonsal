@@ -1,5 +1,6 @@
 const { existsSync, writeFileSync } = require('fs');
-const { messageReceived } = require('wax-command-handler');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
     name: "changerank",
@@ -13,6 +14,7 @@ module.exports = {
         const { moderacao, utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
         const permissions_user = await message.guild.members.fetch(message.author);
         let alvo;
+        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos);
 
         if(args.length < 1 || (isNaN(args[0].raw) && args.length == 1)) return message.reply(`:octagonal_sign: | ${moderacao[8]["error_1"].replace(".a", prefix)}`);
 

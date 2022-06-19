@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const busca_emoji = require('../../adm/funcoes/busca_emoji');
 const { emojis } = require('../../arquivos/json/text/emojis.json');
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     execute(client, message) {
 
         const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        const emoji_pula = client.emojis.cache.get(emojis.pula_2).toString();
+        const emoji_pula = busca_emoji(client, emojis.pula_2);
 
         const embed = new MessageEmbed()
         .setColor(0x29BB8E)
