@@ -36,7 +36,7 @@ module.exports = {
             nsfw = utilitarios[9]["sim"];
         
         const data_atual = new Date();
-        const data_criacao = formata_data(new Date(canal.createdAt), idioma_selecionado); // Criação do canal
+        const data_criacao = formata_data(new Date(canal.createdAt), idioma_selecionado == "al-br" ? "pt-br" : idioma_selecionado); // Criação do canal
         const diferenca_criacao = getDateDiff(new Date(canal.createdAt), data_atual, utilitarios);
         let userlimit, bitrate = "";
 
