@@ -34,10 +34,10 @@ module.exports = {
         const qtd_membros = message.guild.memberCount;
         const data_atual = new Date();
 
-        const data_entrada = formata_data(new Date(message.guild.joinedTimestamp), idioma_selecionado); // Entrada do bot no server
+        const data_entrada = formata_data(new Date(message.guild.joinedTimestamp), idioma_selecionado == "al-br" ? "pt-br" : idioma_selecionado); // Entrada do bot no server
         const diferenca_entrada = getDateDiff(new Date(message.guild.joinedTimestamp), data_atual, utilitarios);
 
-        const data_criacao = formata_data(new Date(message.guild.createdAt), idioma_selecionado); // Criação do servidor
+        const data_criacao = formata_data(new Date(message.guild.createdAt), idioma_selecionado == "al-br" ? "pt-br" : idioma_selecionado); // Criação do servidor
         const diferenca_criacao = getDateDiff(new Date(message.guild.createdAt), data_atual, utilitarios);
 
         if(icone_server !== null){

@@ -15,7 +15,8 @@ module.exports = {
     permissions: [ "SEND_MESSAGES" ],
     async execute(client, message, args) {
 
-        const idioma_selecionado = client.idioma.getLang(message.guild.id);
+        const idioma_selecionado = client.idioma.getLang(message.guild.id); 
+        
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
         const emojis_busto = [":man_mage:", ":woman_mage:", ":woman_police_officer:", ":man_supervillain: ", ":woman_astronaut:", ":man_guard:", ":man_student:", ":zombie:", ":man_factory_worker:", ":ninja:", ":man_vampire:", ":woman_vampire:", ":man_pilot:", ":woman_pilot:"];
 
@@ -46,10 +47,10 @@ module.exports = {
         const data_atual = new Date();
 
         const membro_sv = message.guild.members.cache.get(user.id); // Coleta dados como membro
-        let data_entrada = formata_data(new Date(membro_sv.joinedTimestamp), idioma_selecionado);
+        let data_entrada = formata_data(new Date(membro_sv.joinedTimestamp), idioma_selecionado == "al-br" ? "pt-br" : idioma_selecionado);
         let diferenca_entrada = getDateDiff(new Date(membro_sv.joinedTimestamp), data_atual, utilitarios);
 
-        let data_criacao = formata_data(new Date(user.createdAt), idioma_selecionado); // Cadastro do user
+        let data_criacao = formata_data(new Date(user.createdAt), idioma_selecionado == "al-br" ? "pt-br" : idioma_selecionado); // Cadastro do user
         let diferenca_criacao = getDateDiff(new Date(user.createdAt), data_atual, utilitarios);
 
         if (avatar_user !== null) {
@@ -185,5 +186,7 @@ module.exports = {
         // }catch(err){
         //     console.log(err);
         // }
+
+        return message.reply({embeds: [infos_user]})
     }
 }
