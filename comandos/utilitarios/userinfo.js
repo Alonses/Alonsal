@@ -104,19 +104,24 @@ module.exports = {
         }
 
         permissoes_fn = permissoes_fn.slice(0, 2000);
-        let emoji_hypesquad = ":x:";
-
-        if(membro_sv.premiumSinceTimestamp) // Assinante do Discord
-            discord_premium = busca_emoji(client, emojis.boost);
-
-        if(user.flags.has("HOUSE_BRAVERY")) // HypeSquad
-            emoji_hypesquad = busca_emoji(client, emojis.squad_bravery);
-
-        if(user.flags.has("HOUSE_BALANCE"))
-            emoji_hypesquad = busca_emoji(client, emojis.squad_balance);
+        let emoji_hypesquad = "⠀", discord_premium = "⠀";
         
-        if(user.flags.has("HOUSE_BRILLIANCE"))
-            emoji_hypesquad = busca_emoji(client, emojis.squad_brilliance);
+        if(!user.bot){
+            if(user.flags.has("HOUSE_BRAVERY")) // HypeSquad
+                emoji_hypesquad = busca_emoji(client, emojis.squad_bravery);
+
+            if(user.flags.has("HOUSE_BALANCE"))
+                emoji_hypesquad = busca_emoji(client, emojis.squad_balance);
+            
+            if(user.flags.has("HOUSE_BRILLIANCE"))
+                emoji_hypesquad = busca_emoji(client, emojis.squad_brilliance);
+
+            if(user.flags.has("EARLY_SUPPORTER"))
+                discord_premium = busca_emoji(client, emojis.early_supporter);
+                
+            if(membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
+                discord_premium += ` ${busca_emoji(client, emojis.boost)}`;
+        }
 
         const infos_user = new MessageEmbed()
             .setTitle(apelido)
@@ -134,8 +139,8 @@ module.exports = {
                     inline: true
                 },
                 {
-                    name: `**HypeSquad ( ${emoji_hypesquad} )**`,
-                    value: `⠀`,
+                    name: `**${emoji_hypesquad}**`,
+                    value: `${discord_premium}`,
                     inline: true
                 }
             )
