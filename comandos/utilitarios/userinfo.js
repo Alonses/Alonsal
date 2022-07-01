@@ -18,7 +18,7 @@ module.exports = {
         const idioma_selecionado = client.idioma.getLang(message.guild.id); 
         
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_selecionado}.json`);
-        const emojis_busto = [":man_mage:", ":woman_mage:", ":woman_police_officer:", ":man_supervillain: ", ":woman_astronaut:", ":man_guard:", ":man_student:", ":zombie:", ":man_factory_worker:", ":ninja:", ":man_vampire:", ":woman_vampire:", ":man_pilot:", ":woman_pilot:"];
+        const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺"];
 
         const ids_enceirados = ["597926883069394996", "665002572926681128", "610525028076748800", "678061682991562763", "813149555553468438", "434089428160348170", "735644852385087529"];
 
@@ -64,20 +64,18 @@ module.exports = {
         } else
             avatar_user = "";
 
-        let apelido = user.username;
+        let apelido = user.username, tipo_user = "🤖";
+
         if (membro_sv.nickname !== null)
             apelido = `${membro_sv.nickname}`;
 
-        if (user.bot)
-            apelido = `:robot: ${apelido}`;
-
         if (membro_sv.permissions.has("ADMINISTRATOR")) {
-            apelido = `:shield: ${apelido}`;
+            tipo_user = "🛡️";
             nota_rodape = utilitarios[13]["moderador"];
         }
 
-        if(!apelido.includes(":robot:") && !apelido.includes(":shield:"))
-            apelido = `${emojis_busto[Math.round((emojis_busto.length - 1 ) * Math.random())]} ${apelido}`;
+        if(!tipo_user.includes("🛡️") && !user.bot)
+            tipo_user = emojis_busto[Math.round((emojis_busto.length - 1 ) * Math.random())];
 
         if (user.id === client.user.id)
             nota_rodape = utilitarios[13]["alonsal"];
@@ -93,7 +91,6 @@ module.exports = {
         let permissoes_fn = "";
 
         for(let i = 0; i < permissoes_user.length; i++){
-
             if(typeof permissoes_user[i + 1] === "undefined")
                 permissoes_fn += " & ";
 
@@ -118,13 +115,13 @@ module.exports = {
 
             if(user.flags.has("EARLY_SUPPORTER"))
                 discord_premium = busca_emoji(client, emojis.early_supporter);
-                
+            
             if(membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
                 discord_premium += ` ${busca_emoji(client, emojis.boost)}`;
         }
 
         const infos_user = new MessageEmbed()
-            .setTitle(apelido)
+            .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
             .setColor(0x29BB8E)
             .setThumbnail(avatar_user)
             .addFields(
@@ -136,11 +133,6 @@ module.exports = {
                 {
                     name: `:label: **Discord ID**`,
                     value: `\`${user.id}\``,
-                    inline: true
-                },
-                {
-                    name: `**${emoji_hypesquad}**`,
-                    value: `${discord_premium}`,
                     inline: true
                 }
             )
@@ -156,7 +148,7 @@ module.exports = {
                     inline: false
                 }
             )
-            .setFooter(nota_rodape);
+            .setFooter(`${tipo_user} ${nota_rodape}`);
 
         const permissoes = new MessageEmbed()
         .setTitle(apelido)
