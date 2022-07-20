@@ -105,7 +105,8 @@
             "conteudo_3" : "**`.asuporte`** - Aider à maintenir et à développer Alonsal\n\n-----------------------------\n> AUTRES RESSOURCES\nExpressions de **`.aga`** | **`.agado`** les commandes sont entièrement détenues par @GadoDecider, tous les crédits lui reviennent. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> REMARQUES\nPhrases de **`.atext`** ne représentent pas les idées des créateurs d'Alonsal, par conséquent, ils sont uniquement à des fins comiques.",
             "invocado_1" : "J'ai déjà été invoqué",
             "invocado_2" : "fois",
-            "versao" : "Version"
+            "versao" : "Version",
+            "spawn_alonsal" : "Je suis né "
         },
         {
             "aviso_1" : "Il y a une erreur dans votre message, réessayez.",

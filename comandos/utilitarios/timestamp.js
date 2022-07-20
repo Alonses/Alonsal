@@ -44,10 +44,13 @@ module.exports = {
                 conversao_invalida = true;
         }
         
+        let dica_conversao = `\n\n<t:${retorno}:R> ( \`<t:${retorno}:R>\` )`;
+
         if(conversao_invalida){
             titulo = utilitarios[19]["erro_titulo"];
             aviso = utilitarios[19]["erro_conversao"];
             timestamp = utilitarios[19]["valor_nulo"];
+            dica_conversao = "";
         }
 
         const embed = new MessageEmbed()
@@ -55,7 +58,7 @@ module.exports = {
             .setAuthor(message.author.username, message.author.avatarURL({dynamic: true}))
             .setColor(0x29BB8E)
             .setFooter(aviso)
-            .setDescription(`\`${data}\` -> \`${timestamp}\`\n\n<t:${retorno}:R> ( \`<t:${retorno}:R>\` )`);
+            .setDescription(`\`${data}\` -> \`${timestamp}\`${dica_conversao}`);
 
         message.reply({embeds: [embed]});
     }
