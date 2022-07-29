@@ -58,34 +58,34 @@ async function gera_relatorio(client, proxima_att){
     .addFields(
         {
             name: ":gear: **Comandos**",
-            value: `**Hoje:** \`${bot.comandos_disparados}\``,
+            value: `**Hoje:** \`${formata_num(bot.comandos_disparados)}\``,
             inline: true
         },
         {
             name: ":medal: **Experiência**",
-            value: `**Hoje:** \`${bot.exp_concedido}\``,
+            value: `**Hoje:** \`${formata_num(bot.exp_concedido)}\``,
             inline: true
         },
         {
             name: ":e_mail: **Mensagens**",
-            value: `**Hoje:** \`${bot.msgs_lidas}\`\n**Válidas:** \`${bot.msgs_validas}\``,
+            value: `**Hoje:** \`${formata_num(bot.msgs_lidas)}\`\n**Válidas:** \`${formata_num(bot.msgs_validas)}\``,
             inline: true
         }
     )
     .addFields(
         {
             name: ':globe_with_meridians: **Servidores**',
-            value: `**Ativo em:** \`${client.guilds.cache.size}\``,
+            value: `**Ativo em:** \`${formata_num(client.guilds.cache.size)}\``,
             inline: true
         },
         {
             name: ':card_box: **Canais**',
-            value: `**Observando:** \`${canais_texto}\`\n**Falando em:** \`${canais_voz}\``,
+            value: `**Observando:** \`${formata_num(canais_texto)}\`\n**Falando em:** \`${formata_num(canais_voz)}\``,
             inline: true
         },
         {
             name: ':busts_in_silhouette: **Usuários**',
-            value: `**Escutando:** \`${members}\``,
+            value: `**Escutando:** \`${formata_num(members)}\``,
             inline: true
         }
     )
@@ -93,4 +93,8 @@ async function gera_relatorio(client, proxima_att){
     
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] });
     require("../funcoes/resrelatorio.js")({}); // Reseta o relatório
+}
+
+function formata_num(valor){
+    return parseInt(valor).toLocaleString('pt-BR');
 }

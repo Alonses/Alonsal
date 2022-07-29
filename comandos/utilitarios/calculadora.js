@@ -32,7 +32,7 @@ module.exports = {
             args.shift();
 
             args.forEach(valor => {
-                valores_fn.push(math.evaluate(`${valor} ${args[0].raw}`).toLocaleString('pt-BR'));
+                valores_fn.push(math.evaluate(`${valor} ${args[0].raw}`));
             });
 
             return message.reply(`:abacus: | ${utilitarios[17]["resultado"]}: \`${valores_fn.join(" ")}\``);
