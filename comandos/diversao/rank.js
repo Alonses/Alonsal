@@ -94,8 +94,8 @@ module.exports = {
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\``);
                 
-                experiencias.push(`\`${user.xp}\``);
-                levels.push(`\`${Math.floor(user.xp / 1000)}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
+                experiencias.push(`\`${formata_num(user.xp)}\``);
+                levels.push(`\`${formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``);
             }
 
             if(!user_alvo) // Verifica se a entrada é um ID
@@ -129,7 +129,7 @@ module.exports = {
 
                 embed.addFields(
                     { name: `:postal_horn: ${diversao[8]["experiencia"]}`, value: `\`${usuario_alvo[0]}\``, inline: true },
-                    { name: `:beginner: ${diversao[8]["nivel"]}`, value: `\`${parseInt(usuario_alvo[0] / 1000)}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
+                    { name: `:beginner: ${diversao[8]["nivel"]}`, value: `\`${formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, inline: true },
                     { name: "⠀", value: "⠀", inline: true}
                 );
 
@@ -146,4 +146,8 @@ module.exports = {
             });
         });
     }
+}
+
+function formata_num(valor){
+    return parseInt(valor).toLocaleString('pt-BR');
 }

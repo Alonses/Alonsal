@@ -19,17 +19,17 @@ module.exports = async ({client}) => {
         .addFields(
             {
                 name: ':globe_with_meridians: **Servidores**', 
-                value: `**Ativo em: **\`${client.guilds.cache.size}\``, 
+                value: `**Ativo em: **\`${formata_num(client.guilds.cache.size)}\``, 
                 inline: true 
             },
             {
                 name: ':card_box: **Canais**', 
-                value: `**Observando: **\`${canais_texto}\`\n**Falando em: ** \`${canais_voz}\``, 
+                value: `**Observando: **\`${formata_num(canais_texto)}\`\n**Falando em: ** \`${formata_num(canais_voz)}\``, 
                 inline: true 
             },
             {
                 name: ':busts_in_silhouette: **Usuários**', 
-                value: `**Escutando: **\`${members}\``, 
+                value: `**Escutando: **\`${formata_num(members)}\``, 
                 inline: true 
             }
         )
@@ -56,4 +56,8 @@ module.exports = async ({client}) => {
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] });
 
     require('./relata.js')({client});
+}
+
+function formata_num(valor){
+    return parseInt(valor).toLocaleString('pt-BR');
 }

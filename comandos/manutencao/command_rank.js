@@ -95,7 +95,7 @@ module.exports = {
         
             embed.addField(`${emoji_ceira} ${diversao[8]["comandos"]}`, `${conames.join("\n")}`, true);
             embed.addField(`:postal_horn: Aliase`, `${aliases.join("\n")}`, true);
-            embed.addField(`:postal_horn: ${diversao[8]["ativacoes"]}`, `${activations.join("\n")}`, true);
+            embed.addField(`:postal_horn: ${formata_num(diversao[8]["ativacoes"])}`, `${activations.join("\n")}`, true);
 
             message.reply({ embeds: [embed] });
         })
@@ -104,4 +104,8 @@ module.exports = {
             message.reply(`:mag: | ${diversao[8]["error_rc"]}`);
         });
     }
+}
+
+function formata_num(valor){
+    return parseInt(valor).toLocaleString('pt-BR');
 }
