@@ -5,7 +5,7 @@ module.exports = async ({client}) => {
     if(client.user.id !== "833349943539531806") return;
 
     const date1 = new Date(); // Ficará esperando até meia noite para executar a rotina
-    const tempo_restante =  ((24 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000);
+    const tempo_restante =  ((24 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000);
     
     setTimeout(() => {
         gera_relatorio(client, 86400000);

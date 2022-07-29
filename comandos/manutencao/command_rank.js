@@ -74,13 +74,18 @@ module.exports = {
                     
                     let comaliase = dados.guia[command.id];
                     comaliase = (comaliase.aliases).split(",")[0] || diversao[8]["aliase_faltando"];
+                    
+                    if(comaliase == ".asus"){
+                        command_name = dados.guia[command.id];
+                        command_name = `👤 ${(command_name.comando).split(" ")[0]}` || diversao[8]["nome_faltando"];
+                    }
 
                     if (args[0] && args[0].type === "number" && parseInt(args[0].raw) !== 1)
                         conames.push(`:gear: \`${command_name}\``); 
                     else
                         conames.push(`${medals[i] || ":gear:"} \`${command_name}\``);
                 
-                    activations.push(`\`${command.activations}\``);
+                    activations.push(`\`${formata_num(command.activations)}\``);
                     aliases.push(`\`${prefix}${command.aliases[0].replace(/ /g, "")}\``);
                 }
 
@@ -95,7 +100,7 @@ module.exports = {
         
             embed.addField(`${emoji_ceira} ${diversao[8]["comandos"]}`, `${conames.join("\n")}`, true);
             embed.addField(`:postal_horn: Aliase`, `${aliases.join("\n")}`, true);
-            embed.addField(`:postal_horn: ${formata_num(diversao[8]["ativacoes"])}`, `${activations.join("\n")}`, true);
+            embed.addField(`:postal_horn: ${diversao[8]["ativacoes"]}`, `${activations.join("\n")}`, true);
 
             message.reply({ embeds: [embed] });
         })
@@ -107,5 +112,7 @@ module.exports = {
 }
 
 function formata_num(valor){
-    return parseInt(valor).toLocaleString('pt-BR');
+    let sparkles = valor % 100 == 0 ? " ✨" : "";
+
+    return `${parseInt(valor).toLocaleString('pt-BR')}${sparkles}`;
 }
