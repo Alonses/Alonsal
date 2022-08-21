@@ -1,4 +1,10 @@
 {   
+    "updates" : [
+        {
+            "slash_commands" : "Os comandos tradicionais foram desativados, continue usando o Alonsal pelos comandos de barra! Experimente agora mesmo ;D\n\nNota: Não consegue ver meus comandos? Me convide novamente clicando no botão abaixo!",
+            "convidar": "Convidar!"
+        }
+    ],
     "inicio" : [
         {
             "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n:earth_americas: | Use o comando `.alang` para ver a lista de idiomas disponíveis",
@@ -110,12 +116,13 @@
         },
         {
             "infos" : "Patinando entre as linhas bugadas :man_golfing:",
-            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanche, 40 tipos de lanche, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal",
+            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanches, 40 tipos de lanches, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal",
             "conteudo_2" : "**`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal",
             "conteudo_3" : "**`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTAS\nFrases do **`.atext`** não representam as ideias dos criadores do Alonsal, sendo assim, são apenas para fins cômicos.",
             "invocado_1" : "Já fui invocado",
             "invocado_2" : "vezes",
-            "versao" : "Versão"
+            "versao" : "Versão",
+            "spawn_alonsal" : "Spawnei em "
         },
         {
             "aviso_1" : "Há um erro em sua mensagem, tente novamente.",
@@ -202,10 +209,11 @@
             "moderadores" : "Apenas moderadores podem executar este comando"
         },
         {
-            "aviso_1" : "Informe um cargo para ser notificado",
-            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando ",
-            "anuncio_games_2" : " para remover as atualizações.",
-            "anuncio_off" : "Anúncios de jogos desligados para este canal/server"
+            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando novamente para remover as atualizações",
+            "anuncio_off" : "Anúncios de jogos desligados para este servidor",
+            "ativos" : "Ativos no momento",
+            "ate_data" : "até",
+            "resgate_dica" : "Estes são os jogos Disponíveis no momento!\nResgate antes que expirem!"
         },
         {
             "canal" : "Canal",
@@ -316,6 +324,7 @@
             "inverno" : "Inverno",
             "comeco" : "Começou em",
             "termino" : ", termina em",
+            "termino_hoje" : ", termina hoje",
             "equador" : "Este local esta próximo da linha do equador, a estação atual pode não refletir seu clima atual"
         },
         {
@@ -334,6 +343,8 @@
             "atributos" : "Atributos",
             "disco_musical" : "Disco musical",
             "livro_encantado" : "Livro encantado",
+            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo .amc \"item_repl\"",
+            "mais_detalhes_wiki" : "[Veja mais detalhes na wiki](link_repl)",
             "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
             "sim" : "Sim",
             "nao" : "Não",
@@ -451,6 +462,14 @@
             "titulo" : "Su4s §3nH@5, clique aqui para testar sua senha",
             "senha" : "Verifique seu privado, sua senha foi gerada com um tamanho de `tamanho_repl` caracteres",
             "rodape" : "4 senhas com tamanho_repl caracteres para escolher, elas não são salvas por aqui e nem sei o conteúdo, apenas você ;)"
+        },
+        {
+            "timestamp_1" : "De data para timestamp",
+            "timestamp_2" : "De timestamp para data",
+            "erro_titulo" : ":warning: Algo saiu errado",
+            "erro_conversao" : "Não foi possível gerar um timestamp com a entrada informada, tente novamente",
+            "valor_nulo" : "O resultado desta conversão foi nulo",
+            "aviso_1" : "Necessito de mais informações para poder converter sua data\nPor exemplo `.atime 2022-06-08 23:03:57` ou `.atime 385723948238`"
         }
     ],
     "trabalho" : [

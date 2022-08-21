@@ -1,4 +1,10 @@
 {
+    "updates" : [
+        {
+            "slash_commands" : "Les commandes traditionnelles ont été désactivées, continuez à utiliser Alonsal par les commandes slash! Essayez-le maintenant ;D\n\nRemarque: Vous ne voyez pas mes commandes? Invitez-moi à nouveau en cliquant sur le bouton ci-dessous!",
+            "convidar": "Inviter!"
+        }
+    ],
     "inicio" : [
         { 
             "menciona" : "Salut! Tapez `.ahelp` ou `.a` pour voir le menu de commandes :D\n:earth_americas: | Utilisez la commande `.alang` pour voir la liste des langues disponibles",
@@ -188,10 +194,11 @@
             "moderadores" : "Seuls les modérateurs peuvent exécuter cette commande"
         },
         {
-            "aviso_1" : "Entrez un tag pour être notifié",
-            "anuncio_games" : "À partir de maintenant, cette chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande ",
-            "anuncio_games_2" : " pour désactiver ces mises à jour.",
-            "anuncio_off" : "Notifications de jeu désactivées pour cette chaîne/serveur"
+            "anuncio_games" : "À partir de maintenant, cette chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande pour désactiver ces mises à jour.",
+            "anuncio_off" : "Notifications de jeu désactivées pour cette serveur",
+            "ativos" : "Actuellement actif",
+            "ate_data" : "jusqu'à",
+            "resgate_dica" : "Ce sont des jeux actuellement disponibles!\nUtilisez-les avant qu'ils n'expirent!"
         },
         {
             "canal" : "Canal",

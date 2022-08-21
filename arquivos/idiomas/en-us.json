@@ -1,4 +1,10 @@
 {
+    "updates" : [
+        {
+            "slash_commands" : "Traditional commands have been disabled, keep using Alonsal by slash commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below!",
+            "convidar": "To invite!"
+        }
+    ],
     "inicio" : [
         { 
             "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n:earth_americas: | Use the `.alang` command to see the list of available languages",
@@ -202,10 +208,11 @@
             "moderadores" : "Only moderators can run this command"
         },
         {
-            "aviso_1" : "Enter a tag to be notified",
-            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command ",
-            "anuncio_games_2" : " to disable these updates.",
-            "anuncio_off" : "Game notifications turned off for this channel/server"
+            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command again to disable these updates.",
+            "anuncio_off" : "Game notifications turned off for this server",
+            "ativos" : "Currently active",
+            "ate_data" : "until",
+            "resgate_dica" : "These are currently available games!\nRedeem them before they expire!"
         },
         {
             "canal" : "Channel",

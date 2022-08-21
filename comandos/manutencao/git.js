@@ -1,26 +1,21 @@
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
-    name: "git",
-    description: "O repositório do Alonsal",
-    aliases: [ "g", "repositorio", "repository" ],
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message) {
+	data: new SlashCommandBuilder()
+		.setName('git')
+		.setDescription('⌠📡⌡ O repositório do Alonsal™️'),
+	async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
         .setColor(0x29BB8E)
-        .setAuthor('GitHub')
+        .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
         .setTitle(manutencao[1]["repositorio"])
         .setURL('https://github.com/brnd-21/Alonsal')
         .setImage('https://i.imgur.com/0tV3IQr.png')
-        .setDescription(manutencao[1]["link"]);
+        .setDescription(manutencao[1]["link"])
 
-        const m = await message.channel.send(`${message.author} `+ manutencao[1]["despachei"]);
-        await m.react('📫');
-
-        client.users.cache.get(message.author.id).send({ embeds: [embed] });
+        interaction.reply({embeds: [embed], ephemeral: true})
     }
-};
+}
