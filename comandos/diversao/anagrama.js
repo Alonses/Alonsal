@@ -86,5 +86,5 @@ module.exports = {
         .setFooter({ text: `${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
         
 		return interaction.reply({embeds: [anagrama]})
-	},
+	}
 }
