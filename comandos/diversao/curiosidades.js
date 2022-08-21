@@ -21,7 +21,7 @@ module.exports = {
             if(res.img_curio) // Imagem da curiosidade
             embed.setImage(res.img_curio)
         
-    		return interaction.reply({embeds: [embed]})
+    		    return interaction.reply({embeds: [embed]})
         })
-	},
+	  },
 }

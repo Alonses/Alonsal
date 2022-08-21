@@ -127,4 +127,4 @@ client.on('interactionCreate', async interaction => {
 // Eventos secundários
 require('./adm/internos/eventos.js')({client})
 
-client.login(token)
+client.login(token);
