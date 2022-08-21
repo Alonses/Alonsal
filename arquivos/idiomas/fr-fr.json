@@ -1,4 +1,10 @@
 {
+    "updates" : [
+        {
+            "slash_commands" : "Les commandes traditionnelles ont été désactivées, continuez à utiliser Alonsal par les commandes slash! Essayez-le maintenant ;D\n\nRemarque: Vous ne voyez pas mes commandes? Invitez-moi à nouveau en cliquant sur le bouton ci-dessous!",
+            "convidar": "Inviter!"
+        }
+    ],
     "inicio" : [
         { 
             "menciona" : "Salut! Tapez `.ahelp` ou `.a` pour voir le menu de commandes :D\n:earth_americas: | Utilisez la commande `.alang` pour voir la liste des langues disponibles",
@@ -105,8 +111,7 @@
             "conteudo_3" : "**`.asuporte`** - Aider à maintenir et à développer Alonsal\n\n-----------------------------\n> AUTRES RESSOURCES\nExpressions de **`.aga`** | **`.agado`** les commandes sont entièrement détenues par @GadoDecider, tous les crédits lui reviennent. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> REMARQUES\nPhrases de **`.atext`** ne représentent pas les idées des créateurs d'Alonsal, par conséquent, ils sont uniquement à des fins comiques.",
             "invocado_1" : "J'ai déjà été invoqué",
             "invocado_2" : "fois",
-            "versao" : "Version",
-            "spawn_alonsal" : "Je suis né "
+            "versao" : "Version"
         },
         {
             "aviso_1" : "Il y a une erreur dans votre message, réessayez.",
@@ -189,10 +194,11 @@
             "moderadores" : "Seuls les modérateurs peuvent exécuter cette commande"
         },
         {
-            "aviso_1" : "Entrez un tag pour être notifié",
-            "anuncio_games" : "À partir de maintenant, cette chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande ",
-            "anuncio_games_2" : " pour désactiver ces mises à jour.",
-            "anuncio_off" : "Notifications de jeu désactivées pour cette chaîne/serveur"
+            "anuncio_games" : "À partir de maintenant, cette chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande pour désactiver ces mises à jour.",
+            "anuncio_off" : "Notifications de jeu désactivées pour cette serveur",
+            "ativos" : "Actuellement actif",
+            "ate_data" : "jusqu'à",
+            "resgate_dica" : "Ce sont des jeux actuellement disponibles!\nUtilisez-les avant qu'ils n'expirent!"
         },
         {
             "canal" : "Canal",
@@ -299,7 +305,6 @@
             "inverno" : "L'hiver",
             "comeco" : "Commencé en",
             "termino" : ", fini dans",
-            "termino_hoje" : ", se termine aujourd'hui",
             "equador" : "Cet emplacement est proche de l'équateur, la saison en cours peut ne pas refléter votre météo actuelle"
         },
         {
@@ -318,8 +323,6 @@
             "atributos" : "Les attributs",
             "disco_musical" : "Disque de musique",
             "livro_encantado" : "Livre enchanté",
-            "sugestao_pesquisa" : "Élément erroné? Essayez de rechercher en utilisant des guillemets, par exemple .amc \"item_repl\"",
-            "mais_detalhes_wiki" : "[Voir plus de détails sur le wiki](link_repl)",
             "nota_rodape" : "Cet élément n'a pas encore été officiellement implémenté, vos données ne sont pas officielles",
             "sim" : "Oui",
             "nao" : "Non",
@@ -464,14 +467,6 @@
             "titulo" : "V0s_M0t5 d3 p4553, cliquez ici pour tester votre mot de passe",
             "senha" : "Vérifiez votre privé, votre mot de passe a été généré avec une longueur de caractères `tamanho_repl`",
             "rodape" : "4 mots de passe avec des caractères tamanho_repl à choisir, ils ne sont pas enregistrés ici et je ne connais même pas le contenu, seulement vous ;)"
-        },
-        {
-            "timestamp_1" : "De la date à l'horodatage",
-            "timestamp_2" : "De l'horodatage à la date",
-            "erro_titulo" : ":warning: Quelque chose s'est mal passé",
-            "erro_conversao" : "Impossible de générer un horodatage avec l'entrée donnée, veuillez réessayer",
-            "valor_nulo" : "Le résultat de cette conversion était nul",
-            "aviso_1" : "J'ai besoin de plus d'informations pour pouvoir convertir vos données\nPar exemple `.atime 2022-06-08 23:03:57` ou `.atime 385723948238`"
         }
     ],
     "trabalho" : [

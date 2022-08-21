@@ -1,4 +1,10 @@
 {
+    "updates" : [
+        {
+            "slash_commands" : "Traditional commands have been disabled, keep using Alonsal by slash commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below!",
+            "convidar": "To invite!"
+        }
+    ],
     "inicio" : [
         { 
             "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n:earth_americas: | Use the `.alang` command to see the list of available languages",
@@ -110,13 +116,12 @@
         },
         {
             "infos" : "Skating between the wax lines :man_golfing:",
-            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snacks, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository",
+            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository",
             "conteudo_2" : "**`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub",
             "conteudo_3" : "**`.asuporte`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`.aga`** | **`.agado`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTES\nPhrases from **`.atext`** do not represent the ideas of the creators of Alonsal, therefore, they are for comic purposes only.",
             "invocado_1" : "I've already been invoked",
             "invocado_2" : "times",
-            "versao" : "Version",
-            "spawn_alonsal" : "I was born"
+            "versao" : "Version"
         },
         {
             "aviso_1" : "There is an error in your message, try again.",
@@ -203,10 +208,11 @@
             "moderadores" : "Only moderators can run this command"
         },
         {
-            "aviso_1" : "Enter a tag to be notified",
-            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command ",
-            "anuncio_games_2" : " to disable these updates.",
-            "anuncio_off" : "Game notifications turned off for this channel/server"
+            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command again to disable these updates.",
+            "anuncio_off" : "Game notifications turned off for this server",
+            "ativos" : "Currently active",
+            "ate_data" : "until",
+            "resgate_dica" : "These are currently available games!\nRedeem them before they expire!"
         },
         {
             "canal" : "Channel",
@@ -315,7 +321,6 @@
             "inverno" : "Winter",
             "comeco" : "Started in",
             "termino" : ", ends in",
-            "termino_hoje" : ", ends today",
             "equador" : "This location is close to the equator, the current season may not reflect your current climate"
         },
         {
@@ -334,8 +339,6 @@
             "atributos" : "Attributes",
             "disco_musical" : "Musical disc",
             "livro_encantado" : "Enchanted bool",
-            "sugestao_pesquisa" : "Wrong item? Try searching using quotes, for example .amc \"item_repl\"",
-            "mais_detalhes_wiki" : "[See more details on Wiki](link_repl)",
             "nota_rodape" : "This item has not been officially implemented yet, your data is unofficial",
             "sim" : "Yes",
             "nao" : "No",
@@ -480,14 +483,6 @@
             "titulo" : "Y0uR P4s§w0Rd5, click here to test your password",
             "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
             "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
-        },
-        {
-            "timestamp_1" : "From date to timestamp",
-            "timestamp_2" : "From timestamp to date",
-            "erro_titulo" : ":warning: Something went wrong",
-            "erro_conversao" : "Could not generate a timestamp with the given input, please try again",
-            "valor_nulo" : "The result of this conversion was null",
-            "aviso_1" : "I need more information to be able to convert your data\nFor example `.atime 2022-06-08 23:03:57` or `.atime 385723948238`"
         }
     ],
     "trabalho" : [
