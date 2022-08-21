@@ -1,25 +1,50 @@
-const { gifs } = require("../../arquivos/json/gifs/rasputia.json");
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
+const { SlashCommandBuilder } = require('discord.js')
+const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
 
 module.exports = {
-    name: "rasputia",
-    description: "Rasputia!",
-    aliases: [ "ra", "ras", "gorda" ],
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    execute(client, message) {
-        
-        message.channel.send(gifs[Math.round((gifs.length - 1) * Math.random())]).then(() => {
-            const permissions = message.channel.permissionsFor(message.client.user);
+	data: new SlashCommandBuilder()
+		.setName('rasputia')
+		.setDescription('⌠😂⌡ Rasputia em sua glória')
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('gif')
+				.setDescription('⌠😂⌡ Invoca um gif da rasputia'))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('frase')
+				.setDescription('⌠😂⌡ Invoca uma frase da rasputia')),
+	async execute(client, interaction) {
 
-            if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-                message.delete();
-        });
-    }
-    // slash_params: [{
-    //     name: "rasputia",
-    //     description: "Eu vou te mostrar como a p1ranha desce o escorrega"
-    // }],
-    // slash(client, handler, data, params) {
-    //     handler.postSlashMessage(data, gifs[Math.round((gifs.length - 1) * Math.random())]);
-    // }
-};
+		if(interaction.options.getSubcommand() === "gif")
+			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+		else{
+	
+			interaction.deferReply()
+
+			const channel = client.channels.cache.get(interaction.channel.id)
+			
+			// Webhook
+			fetch('https://apisal.herokuapp.com/random?rasputia')
+			.then(response => response.json())
+			.then(async res => {
+				
+				// Webhook
+				channel.createWebhook({
+					name: res.nome,
+					avatar: res.foto,
+				})
+				.then(webhook => {
+					webhook.send({ content: res.texto })
+					.then(() => { webhook.delete() })
+				})
+				
+				await interaction.editReply({
+					content: `⠀`,
+				}).then(() => { interaction.deleteReply() })
+			})
+		}
+	},
+}

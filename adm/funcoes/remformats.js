@@ -1,9 +1,13 @@
-module.exports = (texto_entrada) => {
+module.exports = (string) => {
     
-    texto_entrada = texto_entrada.replaceAll("&quot;", "");
-    
-    if(texto_entrada.length > 2000)
-        texto_entrada = `${texto_entrada.slice(0, 2000)}...`;
+    string = string.replaceAll("&quot;", "\"")
+    string = string.replaceAll("&#039;", "'")
+    string = string.replaceAll("&amp;","&")
+    string = string.replaceAll("&#34;", "\"")
+    string = string.replaceAll("&#39;", "'")
 
-    return texto_entrada;
+    if(string.length > 2000)
+        string = `${string.slice(0, 2000)}...`
+
+    return string
 }

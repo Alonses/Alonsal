@@ -1,27 +1,26 @@
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
 module.exports = {
-    name: "convite",
-    description: "Convide o alonsal para um servidor",
-    aliases: [ "cvv", "invite" ],
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message) {
+	data: new SlashCommandBuilder()
+		.setName('convite')
+		.setDescription('⌠📡⌡ Convide o Alonsal agora mesmo!'),
+	async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        const { manutencao, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        
+        const row = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                .setLabel(updates[0]["convidar"])
+                .setURL(`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720`)
+                .setStyle(ButtonStyle.Link),
+            )
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
         .setColor(0x29BB8E)
         .setTitle(manutencao[0]["titulo"])
-        .setURL('https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1614150720')
-        .setThumbnail('https://i.imgur.com/K61ShGX.png')
         .setDescription(manutencao[0]["convite"])
-        .setTimestamp()
-        .setFooter("Alonsal");
         
-        const m = await message.channel.send(`${message.author} `+ manutencao[0]["despachei"]);
-        await m.react('📫');
-        
-        client.users.cache.get(message.author.id).send({ embeds: [embed] });
+        interaction.reply({embeds: [embed], components: [row], ephemeral: true})
     }
-};
+}
