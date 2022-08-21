@@ -1,13 +1,13 @@
-module.exports = (texto_entrada) => {
+module.exports = (string) => {
     
-    const marcacoes = ["&quot;", "<br />", "<br>", "<p>", "<div>", "</div>", "<br "]
+    string = string.replaceAll("&quot;", "\"")
+    string = string.replaceAll("&#039;", "'")
+    string = string.replaceAll("&amp;","&")
+    string = string.replaceAll("&#34;", "\"")
+    string = string.replaceAll("&#39;", "'")
 
-    for(let i = 0; i < marcacoes.length; i++){
-        texto_entrada = texto_entrada.replaceAll(`${marcacoes[i]}`, "");
-    }
+    if(string.length > 2000)
+        string = `${string.slice(0, 2000)}...`
 
-    if(texto_entrada.length > 2000)
-        texto_entrada = `${texto_entrada.slice(0, 2000)}...`;
-
-    return texto_entrada;
+    return string
 }

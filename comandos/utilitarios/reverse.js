@@ -1,34 +1,30 @@
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
-    name: "reverso",
-    description: "Inverta ou desinverta caracteres",
-    aliases: [ "rev", "inverso", "reverter", "reverse" ],
-    usage: "rev <any>",
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args) {
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+	data: new SlashCommandBuilder()
+		.setName('reverse')
+		.setDescription('⌠💡⌡ Inverta ou desinverta caracteres')
+		.addStringOption(option =>
+            option.setName('texto')
+                .setDescription('O texto a ser invertido')
+                .setRequired(true)),
+	async execute(client, interaction) {
 
-        if(args.length > 0){
-            const ordena = args.join(" ").toLowerCase();
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-            let texto = ordena.split('');
-            texto = texto.reverse();
+        const ordena = interaction.options.data[0].value
 
-            const texto_ordenado = texto.join("");
+        let texto = ordena.split('')
+        texto = texto.reverse()
 
-            const embed = new MessageEmbed()
-                .setTitle(':arrow_backward: '+ utilitarios[5]["reverso"])
-                .setAuthor(message.author.username, message.author.avatarURL({ dynamic:true }))
-                .setColor(0x29BB8E)
-                .setDescription(`\`${texto_ordenado}\``);
+        const texto_ordenado = texto.join("")
 
-            message.reply({ embeds: [embed] })
-            .catch(() => {
-                message.reply(`:octagonal_sign: | ${utilitarios[3]["error_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000));
-            });
-        }else
-            return message.reply(utilitarios[3]["aviso"]);
+        const embed = new EmbedBuilder()
+            .setTitle(`:arrow_backward: ${utilitarios[5]["reverso"]}`)
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic:true }) })
+            .setColor(0x29BB8E)
+            .setDescription(`\`${texto_ordenado}\``)
+
+        interaction.reply({ embeds: [embed] })
     }
-};
+}

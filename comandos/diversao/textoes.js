@@ -1,35 +1,43 @@
-const { textoes }  = require("../../arquivos/json/text/textoes.json");
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
-    name: "textoes",
-    description: "textoes gratuitos",
-    aliases: [ "text", "txt"],
-    cooldown: 30,
-    permissions: [ "SEND_MESSAGES" ],
-    execute(client, message) {
+	data: new SlashCommandBuilder()
+		.setName('text')
+		.setDescription('⌠😂⌡ Um texto aleatório'),
+	async execute(client, interaction) {
 
-        const num = Math.round((textoes.length - 1) * Math.random());
-        const key = Object.keys(textoes[num]);
-        
-        message.channel.send(key.toString());
+        fetch('https://apisal.herokuapp.com/random?textoes')
+        .then(response => response.json())
+        .then(async res => {
 
-        if(textoes[num][key] !== null)
-            message.channel.send(textoes[num][key].toString());
+            const channel = client.channels.cache.get(interaction.channel.id)
+            
+            interaction.deferReply()
 
-        const permissions = message.channel.permissionsFor(message.client.user);
-    
-        if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-            message.delete();
-    }
-    // slash_params: [{
-    //     name: "textoes",
-    //     description: "Invoque textoes"
-    // }],
-    // slash(client, handler, data, params) {
+            // Webhook
+            channel.createWebhook({
+                name: res.nome,
+                avatar: res.foto,
+            })
+            .then(webhook => {
+                webhook.send({
+                    content: res.texto
+                }).then(() => {
+                    if(typeof res.texto_2 !== "undefined")
+                        webhook.send({
+                            content: res.texto_2
+                        })
 
-    //     const num = Math.round((textoes.length - 1) * Math.random());
-    //     const key = Object.keys(textoes[num]);
-        
-    //     handler.postSlashMessage(data, key.toString());
-    // }
-};
+                    webhook.delete()
+                })
+            })
+            
+            await interaction.editReply({
+                content: `⠀`,
+            }).then(() => { interaction.deleteReply() })
+        })
+	},
+}

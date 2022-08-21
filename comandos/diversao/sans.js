@@ -1,23 +1,23 @@
+const { SlashCommandBuilder } = require('discord.js')
+
 module.exports = {
-    name: "sans",
-    description: "EsCrEvA DeSsA FoRmA RaPidÃo",
-    aliases: [ "" ],
-    cooldown: 2,
-    permissions: [ "SEND_MESSAGES" ],
-    execute(client, message, args){
+	data: new SlashCommandBuilder()
+		.setName('sans')
+		.setDescription('⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo')
+		.addStringOption(option =>
+            option.setName('texto')
+                .setDescription('Insira um texto')
+                .setRequired(true)),
+	async execute(client, interaction) {
         
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
-        const prefix = client.prefixManager.getPrefix(message.guild.id);
+		const texto_entrada = (interaction.options.data[0].value).split("")
 
-        if (args.length < 1) return message.reply(diversao[7]["aviso_1"].replace(".a", prefix));
-        const texto = args.join(" ").split("");
-
-        for (let i = 0; i < texto.length; i++)
+        for (let i = 0; i < texto_entrada.length; i++)
             if (i % 2 === 0 && i % 1 === 0)
-                texto[i] = texto[i].toLocaleUpperCase();
+                texto_entrada[i] = texto_entrada[i].toLocaleUpperCase()
             else
-                texto[i] = texto[i].toLocaleLowerCase();
+                texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
-        message.reply(`\`\`\`${texto.join("").slice(0, 1990)}\`\`\``);
-    }
+        interaction.reply(`\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``)
+	},
 }

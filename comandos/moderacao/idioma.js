@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const idiomasMap = {
     "pt": [ "pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`" ],
@@ -8,41 +8,51 @@ const idiomasMap = {
 }
 
 module.exports = {
-    name: "idioma",
-    description: "Altere o idioma do alonsal",
-    aliases: [ "language", "lang" ],
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    async execute(client, message) {
+	data: new SlashCommandBuilder()
+		.setName('idioma')
+		.setDescription('⌠💂⌡ Altere o idioma do Alonsal')
+        .addStringOption(option =>
+            option.setName('idioma')
+                .setDescription('pt, en, fr ou al?')
+                .addChoices(
+                    { name: 'Português', value: 'pt' },
+                    { name: 'English', value: 'en' },
+                    { name: 'Français', value: 'fr' },
+                    { name: 'Alonsês', value: 'al' }
+                )),
+	async execute(client, interaction) {
+
+        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+
+        if (!interaction.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(interaction.user.id))
+            return interaction.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)) // Libera configuração para o Slondo e adms apenas
+
+        let matches, novo_idioma
         
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        if(interaction.options.data.length > 0){
+            novo_idioma = interaction.options.data[0].value
 
-        if (!message.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(message.author.id))
-            return message.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)); // Libera configuração para o Slondo e adms apenas
-
-        const prefix = client.prefixManager.getPrefix(message.guild.id);
-        const novo_idioma = message.content.split(" ")[1] || "";
-        
-        // Verifica se o idioma é válido
-        const matches = novo_idioma.match(/pt|al|en|fr/);
-
-        if(matches == null){ // Retorna a lista de idiomas válidos
-            embed_idiomas = new MessageEmbed()
-            .setTitle(moderacao[0]["titulo_idioma"])
-            .setColor(0x29BB8E)
-            .setDescription(":flag_br: `.alang pt` - Português\n:pirate_flag: `.alang al` - Alonsês\n:flag_us: `.alang en` - English\n:flag_fr: `.alang fr` - French".replaceAll(".a", prefix));
-            
-            return message.reply({embeds: [embed_idiomas]});
+            // Verifica se o idioma é válido
+            matches = novo_idioma.match(/pt|al|en|fr/)
         }
 
+        if(matches == null || interaction.options.data.length < 1){ // Retorna a lista de idiomas válidos
+            embed_idiomas = new EmbedBuilder()
+            .setTitle(moderacao[0]["titulo_idioma"])
+            .setColor(0x29BB8E)
+            .setDescription(":flag_br: `.alang pt` - Português\n:pirate_flag: `.alang al` - Alonsês\n:flag_us: `.alang en` - English\n:flag_fr: `.alang fr` - Français")
+            
+            return interaction.reply({embeds: [embed_idiomas], ephemeral: true})
+        }
+        
         // Resgata os dados do idioma válido
-        const sigla_idioma = idiomasMap[matches[0]][0];
-        const frase_idioma = idiomasMap[matches[0]][1];
-        const bandeira_idioma = frase_idioma.split(" ")[0];
+        const sigla_idioma = idiomasMap[matches[0]][0]
+        const frase_idioma = idiomasMap[matches[0]][1]
+        const bandeira_idioma = frase_idioma.split(" ")[0]
 
-        client.channels.cache.get('872865396200452127').send(`${bandeira_idioma} | Idioma do servidor ( \`${message.guild.name}\` | \`${message.guild.id}\` ) atualizado para \`${sigla_idioma}\``);
+        client.channels.cache.get('872865396200452127').send(`${bandeira_idioma} | Idioma do servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) atualizado para \`${sigla_idioma}\``)
 
-        client.idioma.setLang(message.guild.id, sigla_idioma);
-        message.reply(frase_idioma);
+        client.idioma.setLang(interaction.guild.id, sigla_idioma)
+        interaction.reply(frase_idioma)
     }
-};
+}

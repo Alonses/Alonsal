@@ -1,22 +1,53 @@
-const { gifs } = require("../../arquivos/json/gifs/jailson.json");
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
+const { SlashCommandBuilder } = require('discord.js')
+const { gifs } = require("../../arquivos/json/gifs/jailson.json")
 
 module.exports = {
-    name: "jailson",
-    description: "Jailson",
-    aliases: [ "ja", "urso", "oco" ],
-    cooldown: 5,
-    permissions: [ "SEND_MESSAGES" ],
-    execute(client, message) {
+	data: new SlashCommandBuilder()
+		.setName('jailson')
+		.setDescription('⌠😂⌡ Assim que não resisto, vaiinn')
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('gif')
+				.setDescription('⌠😂⌡ Invoca um gif do jaja'))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('frase')
+				.setDescription('⌠😂⌡ Invoca uma frase do jaja')),
+	async execute(client, interaction) {
+
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(message.guild.id)}.json`);
+        if(!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true})
 
-        if(!message.channel.nsfw) return message.reply(`:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`);
+		if(interaction.options.getSubcommand() === "gif")
+			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+		else{
+			
+			const channel = client.channels.cache.get(interaction.channel.id)
 
-        message.channel.send(gifs[Math.round((gifs.length - 1) * Math.random())]).then(() => {
-            const permissions = message.channel.permissionsFor(message.client.user);
+			interaction.deferReply()
+			
+			fetch('https://apisal.herokuapp.com/random?jailson')
+			.then(response => response.json())
+			.then(async res => {
 
-            if(permissions.has("MANAGE_MESSAGES")) // Permissão para gerenciar mensagens
-                message.delete();
-        });
-    }
-};
+				// Webhook
+				channel.createWebhook({
+					name: res.nome,
+					avatar: res.foto,
+				})
+				.then(webhook => {
+					webhook.send({ content: res.texto })
+					.then(() => { webhook.delete() })
+				})
+				
+				await interaction.editReply({
+					content: `⠀`,
+				}).then(() => { interaction.deleteReply() })
+			})
+		}
+	},
+}
