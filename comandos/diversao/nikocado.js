@@ -7,5 +7,5 @@ module.exports = {
 		.setDescription('⌠😂⌡ It\'s your fault'),
 	async execute(client, interaction) {
 		interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-	},
+	}
 }

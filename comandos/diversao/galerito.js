@@ -8,5 +8,5 @@ module.exports = {
 	async execute(client, interaction) {
         const num = Math.round((gifs.length - 1) * Math.random())
 		interaction.reply(gifs[num])
-	},
+	}
 }

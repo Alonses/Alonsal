@@ -49,5 +49,5 @@ module.exports = {
 				}).then(() => { interaction.deleteReply() })
 			})
 		}
-	},
+	}
 }

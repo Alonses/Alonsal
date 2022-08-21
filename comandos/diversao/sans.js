@@ -19,5 +19,5 @@ module.exports = {
                 texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
         interaction.reply(`\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``)
-	},
+	}
 }
