@@ -35,5 +35,5 @@ module.exports = {
 		.catch(() => {
 			interaction.reply({ text: "Não foi possível buscar este avatar no momento, tente novamente mais tarde"})
 		})
-	},
+	}
 }
