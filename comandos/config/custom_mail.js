@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, AttachmentBuilder, ComponentAssertions } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()

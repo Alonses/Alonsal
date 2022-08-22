@@ -208,11 +208,12 @@
             "moderadores" : "Apenas moderadores podem executar este comando"
         },
         {
-            "anuncio_games" : "A partir de agora este canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUsa o comando de novo para desligar as notificações",
+            "anuncio_games" : "A partir de agora o canal repl_canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUsa o comando sem parametros para desligar as notificações",
             "anuncio_off" : "Anúncios de jogos desligados para este servidor",
             "ativos" : "Ativos no momento",
+            "tipo_canal" : "O canal definido precisa ser um canal de texto, tente novamente",
             "ate_data" : "até",
-            "resgate_dica" : "Estes são os jogos Disponíveis no momento!\nResgate antes que expirem!"
+            "resgate_dica" : "Estes são os jogos Disponíveis no momento\nResgate antes que expirem!"
         },
         {
             "canal" : "Canal",

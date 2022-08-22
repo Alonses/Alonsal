@@ -208,11 +208,12 @@
             "moderadores" : "Only moderators can run this command"
         },
         {
-            "anuncio_games" : "From now on, this channel will receive updates when free games are available \nUse the command again to disable these updates.",
+            "anuncio_games" : "From now on, the repl_canal channel will receive updates when free games are available\nUse the command without parameters to disable these updates.",
             "anuncio_off" : "Game notifications turned off for this server",
             "ativos" : "Currently active",
+            "tipo_canal" : "The defined channel must be a text channel, please try again",
             "ate_data" : "until",
-            "resgate_dica" : "These are currently available games!\nRedeem them before they expire!"
+            "resgate_dica" : "These are currently available games\nRedeem them before they expire!"
         },
         {
             "canal" : "Channel",

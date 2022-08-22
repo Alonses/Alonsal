@@ -14,12 +14,10 @@ module.exports = {
                 .setDescription('⌠💂⌡ (Des)Habilitar anúncio de games free')
                 .addRoleOption(option =>
                     option.setName('cargo')
-                        .setDescription('O cargo que será notificado')
-                        .setRequired(true))
+                        .setDescription('O cargo que será notificado'))
                 .addChannelOption(option =>
                     option.setName('canal')
-                        .setDescription('O canal que será usado')
-                        .setRequired(true)))
+                        .setDescription('O canal que será usado')))
         .addSubcommand(subcommand =>
 			subcommand
 				.setName('agora')
@@ -64,53 +62,60 @@ module.exports = {
             })
         }else{
 
-            let valida_existencia = false
+            let opcao_remove = false
 
             if(!interaction.member.permissions.has("ADMINISTRATOR") && !client.owners.includes(interaction.user.id)) return interaction.reply(moderacao[5]["moderadores"]) // Libera configuração para proprietários e adms apenas
 
-            let entradas = interaction.options.data
-            let cargo_escolhido, canal_escolhido
+            let entradas = interaction.options.data[0].options, canal_alvo
+
+            const notificador = {
+                cargo: null,
+                canal: null
+            }
             
+            // Coletando todas as entradas
             entradas.forEach(valor => {
+
                 if(valor.name == "cargo")
-                    cargo_escolhido = valor.value
+                    notificador.cargo = valor.value
 
                 if(valor.name == "canal"){
-                    canal_escolhido = valor.value
+                    notificador.canal = valor.value
 
                     if(valor.channel.type !== 0) // Canal inválido
-                        return interaction.reply({ content: "O canal definido precisa ser um canal de texto, tente novamente", ephemeral: true })
+                        return interaction.reply({ content: `:octagonal_sign: | ${moderacao[6]["tipo_canal"]}`, ephemeral: true })
                 }
             })
 
+            if(!notificador.canal || !notificador.cargo)
+                opcao_remove = "rem"
+            
             const outputArray = [] // Transfere todos os dados do JSON para um array
             for(const element in canal_games){
 
                 const canal = canal_games[element][0]
                 const cargo = canal_games[element][1]
                 
-                if(element !== interaction.guild.id){ // Remove um servidor/canal da lista de clientes no json
+                if(opcao_remove !== "rem" || element !== interaction.guild.id){ // Remove um servidor/canal da lista de clientes no json
                     outputArray.push(
                         constructJson(element, [canal, cargo])
                     )
-                }else
-                    valida_existencia = true
+                }
             }
 
             for (let i = 0; i < outputArray.length; i++) { // Procura pelo ID do server e altera o idioma
                 const obj = outputArray[i]
-
                 const key = Object.keys(canal_games)
 
-                if(key[i] === interaction.guild.id) {
-                    obj[interaction.guild.id][0] = canal_escolhido
-                    obj[interaction.guild.id][1] = cargo_escolhido
+                if(key[i] === interaction.guild.id && opcao_remove !== "rem") {
+                    obj[interaction.guild.id][0] = notificador.canal
+                    obj[interaction.guild.id][1] = notificador.cargo
                     break
                 }
             }
             
-            if(!valida_existencia) // Registra o servidor caso o mesmo não esteja registrado
-                outputArray.push(constructJson(interaction.guild.id, [canal_escolhido, cargo_escolhido]))
+            if(opcao_remove !== "rem") // Registra o servidor caso o mesmo não esteja registrado
+                outputArray.push(constructJson(interaction.guild.id, [notificador.canal, notificador.cargo]))
 
             let canal_servidor = JSON.stringify(outputArray, null, 4)
             canal_servidor = canal_servidor.replace("[", "")
@@ -127,20 +132,20 @@ module.exports = {
                 
                 let mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
 
-                if(valida_existencia)
+                if(opcao_remove === "rem")
                     mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) não recebe mais atts de jogos grátis`
 
-                // client.channels.cache.get('872865396200452127').send(mensagem)
+                client.channels.cache.get('872865396200452127').send(mensagem)
             })
 
             delete require.cache[require.resolve('../../arquivos/data/games/canal_games.json')]
             
             let feedback_user = moderacao[6]["anuncio_games"]
 
-            if(valida_existencia)
+            if(opcao_remove === "rem")
                 feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`
 
-            interaction.reply({content: feedback_user, ephemeral: true })
+            interaction.reply({content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
         }
     }
 }

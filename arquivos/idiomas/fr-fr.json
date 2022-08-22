@@ -194,11 +194,12 @@
             "moderadores" : "Seuls les modérateurs peuvent exécuter cette commande"
         },
         {
-            "anuncio_games" : "À partir de maintenant, cette chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande pour désactiver ces mises à jour.",
+            "anuncio_games" : "À partir de maintenant, cette repl_canal chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande sans paramètres pour supprimer les mises à jour.",
             "anuncio_off" : "Notifications de jeu désactivées pour cette serveur",
             "ativos" : "Actuellement actif",
+            "tipo_canal" : "Le canal défini doit être un canal de texte, veuillez réessayer",
             "ate_data" : "jusqu'à",
-            "resgate_dica" : "Ce sont des jeux actuellement disponibles!\nUtilisez-les avant qu'ils n'expirent!"
+            "resgate_dica" : "Ce sont des jeux actuellement disponibles\nUtilisez-les avant qu'ils n'expirent!"
         },
         {
             "canal" : "Canal",
