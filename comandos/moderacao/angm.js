@@ -82,7 +82,7 @@ module.exports = {
                 if(valor.name == "canal"){
                     notificador.canal = valor.value
 
-                    if(valor.channel.type !== 0) // Canal inválido
+                    if(valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
                         return interaction.reply({ content: `:octagonal_sign: | ${moderacao[6]["tipo_canal"]}`, ephemeral: true })
                 }
             })

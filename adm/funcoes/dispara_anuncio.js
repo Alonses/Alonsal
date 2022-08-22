@@ -63,7 +63,7 @@ module.exports = async (client, interaction, objeto_anunciado) => {
             const canal_alvo = client.channels.cache.get(canais_clientes[i])
 
             // Enviando os anúncios para os canais
-            if(canal_alvo.type === 0){        
+            if(canal_alvo.type === 0 || canal_alvo.type === 5){        
                 if(canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)){
                     canal_alvo.send({content: texto_anuncio, files: [img_game]}) // Permissão para enviar mensagens no canal
                 
