@@ -5,10 +5,10 @@ module.exports = async ({client}) => {
 
     if(client.user.id === "833349943539531806"){
 
-        const canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size
-        const canais_voz = client.channels.cache.filter((c) => c.type === "GUILD_VOICE").size
+        const canais_texto = client.channels.cache.filter((c) => c.type === 0).size
+        const canais_voz = client.channels.cache.filter((c) => c.type === 2).size
         let members = 0
-
+        
         client.guilds.cache.forEach(async guild => {
             members += guild.memberCount - 1
         })

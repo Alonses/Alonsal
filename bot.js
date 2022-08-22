@@ -42,12 +42,12 @@ for (const folder of readdirSync(`${__dirname}/comandos/`)){
 // 	.catch(console.error)
 
 // Removendo os comandos slash globalmente
-// rest.get(Routes.applicationCommands(clientId2))
+// rest.get(Routes.applicationCommands(clientId))
 //     .then(data => {
 //         const promises = []
 
 //         for (const command of data) {
-//             const deleteUrl = `${Routes.applicationCommands(clientId2)}/${command.id}`
+//             const deleteUrl = `${Routes.applicationCommands(clientId)}/${command.id}`
 //             promises.push(rest.delete(deleteUrl))
 //         }
 		
@@ -79,7 +79,7 @@ client.on("messageCreate", async (message) => {
 	if (message.author.bot || message.webhookId) return
 
 	try{ // Atualizando ranking e recebendo mensagens de texto
-		if(message.content.length >= 7) await require('./adm/ranking.js')({client, message})
+		if(message.content.length >= 7 && client.user.id == "833349943539531806") await require('./adm/ranking.js')({client, message})
 		
 		if (message.channel.type === "GUILD_TEXT") {
 			const permissions = message.channel.permissionsFor(message.client.user)
@@ -119,6 +119,8 @@ client.on('interactionCreate', async interaction => {
 		require('./adm/internos/log.js')({client, interaction, command})
 	})
 	.catch(err => {
+		const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+
 		require('./adm/internos/error.js')({client, err})
 		interaction.reply({ content: inicio[0]["epic_embed_fail"], ephemeral: true })
 	})

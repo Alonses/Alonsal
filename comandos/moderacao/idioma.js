@@ -53,6 +53,6 @@ module.exports = {
         client.channels.cache.get('872865396200452127').send(`${bandeira_idioma} | Idioma do servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) atualizado para \`${sigla_idioma}\``)
 
         client.idioma.setLang(interaction.guild.id, sigla_idioma)
-        interaction.reply(frase_idioma)
+        interaction.reply({content: frase_idioma, ephemeral: true })
     }
 }
