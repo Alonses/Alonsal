@@ -22,10 +22,6 @@ module.exports = {
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		else{
 			
-			const teste = "a"
-
-			teste = "v"
-
 			interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
