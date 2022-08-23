@@ -26,6 +26,8 @@ module.exports = {
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		else{
 			
+			return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
+			
 			const channel = client.channels.cache.get(interaction.channel.id)
 
 			interaction.deferReply()
