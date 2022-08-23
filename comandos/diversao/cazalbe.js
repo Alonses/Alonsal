@@ -21,7 +21,9 @@ module.exports = {
 		if(interaction.options.getSubcommand() === "gif")
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		else{
-			
+
+			return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
+
 			interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")

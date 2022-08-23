@@ -9,6 +9,8 @@ module.exports = {
 		.setDescription('⌠😂⌡ Um texto aleatório'),
 	async execute(client, interaction) {
 
+        return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
+        
         fetch('https://apisal.herokuapp.com/random?textoes')
         .then(response => response.json())
         .then(async res => {

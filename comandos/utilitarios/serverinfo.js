@@ -14,6 +14,8 @@ module.exports = {
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
+        const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
+
         const getDateDiff = require('../../adm/funcoes/diffdatas.js')
         const formata_data = require('../../adm/funcoes/formatadata.js')
 
@@ -27,9 +29,10 @@ module.exports = {
 
         let icone_server = interaction.guild.iconURL({ size: 2048 })
 
-        const canais_texto = interaction.guild.channels.cache.filter((c) => c.type === "GUILD_TEXT").size
-        const canais_voz = interaction.guild.channels.cache.filter((c) => c.type === "GUILD_VOICE").size
-        const categorias = interaction.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size
+        const canais_texto = interaction.guild.channels.cache.filter((c) => c.type === 0).size
+        const canais_anuncio = interaction.guild.channels.cache.filter((c) => c.type === 5).size
+        const canais_voz = interaction.guild.channels.cache.filter((c) => c.type === 2).size
+        const categorias = interaction.guild.channels.cache.filter(c => c.type === 4).size
         const qtd_canais = canais_texto + canais_voz
 
         const qtd_membros = interaction.guild.memberCount
@@ -51,7 +54,7 @@ module.exports = {
             })
         }else
             icone_server = ""
-
+        
         const infos_sv = new EmbedBuilder()
             .setTitle(interaction.guild.name)
             .setColor(0x29BB8E)
@@ -92,7 +95,7 @@ module.exports = {
             .addFields(
                 {
                     name: `:shield: **${utilitarios[12]["verificacao"]}**`,
-                    value: `**${utilitarios[12][interaction.guild.verificationLevel]}**`,
+                    value: `**${utilitarios[12][niveis_verificacao[interaction.guild.verificationLevel]]}**`,
                     inline: true
                 },
                 {

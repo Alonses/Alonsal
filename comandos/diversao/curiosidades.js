@@ -8,7 +8,7 @@ module.exports = {
 		.setName('curiosidade')
 		.setDescription('⌠😂⌡ Uma curiosidade aleatória'),
 	async execute(client, interaction) {
-
+        
         fetch('https://apisal.herokuapp.com/curiosidades')
         .then(response => response.json())
         .then(async res => {

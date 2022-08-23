@@ -42,8 +42,8 @@ async function gera_relatorio(client, proxima_att){
     bot.msgs_lidas = msgs_lidas
     bot.epic_embed_fails = epic_embed_fails
 
-    let canais_texto = client.channels.cache.filter((c) => c.type === "GUILD_TEXT").size
-    let canais_voz = client.channels.cache.filter((c) => c.type === "GUILD_VOICE").size
+    let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
+    let canais_voz = client.channels.cache.filter((c) => c.type === 2).size
     let members = 0
 
     client.guilds.cache.forEach(async guild => {
