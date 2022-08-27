@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const { canal_games } = require('../../arquivos/data/games/canal_games.json')
-const formata_anun = require('./formatagames.js')
+const formata_anun = require('./formata_games.js')
 
 const platformMap = {
     "epicgames.com": [ "<:Logo_ep:864887054067957791>", "Epic Games" ],
@@ -31,7 +31,7 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
     
     const matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
-    if(!matches && interaction)
+    if (!matches && interaction)
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
@@ -56,7 +56,7 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
             let cor_embed = 0x29BB8E
 
             let idioma_definido = await client.idioma.getLang(servidor)
-            if(idioma_definido == "al-br") idioma_definido = "pt-br"
+            if (idioma_definido == "al-br") idioma_definido = "pt-br"
             
             let texto_anuncio = formata_anun(objeto_anunciado, plataforma, idioma_definido)
             
@@ -69,8 +69,8 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
             const canal_alvo = client.channels.cache.get(canais_clientes[i])
 
             // Enviando os anúncios para os canais
-            if(canal_alvo.type === 0 || canal_alvo.type === 5){        
-                if(canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)){
+            if (canal_alvo.type === 0 || canal_alvo.type === 5){        
+                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)){
                     canal_alvo.send({embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
                     
                     canais_recebidos++
@@ -85,11 +85,11 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
     
     let aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canais clientes`
 
-    if(canais_recebidos === 1)
+    if (canais_recebidos === 1)
         aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canal cliente`
 
     client.channels.cache.get('872865396200452127').send(aviso)
 
-    if(interaction)
+    if (interaction)
         return interaction.editReply({ content: "A atualização foi enviada à todos os canais de games", ephemeral: true })
 }

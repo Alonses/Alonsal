@@ -42,7 +42,7 @@ module.exports = {
                 )),
         async execute(client, interaction) {
             
-            if(interaction.user.id !== "665002572926681128") return
+            if (interaction.user.id !== "665002572926681128") return
 
             await interaction.deferReply()
 
@@ -59,32 +59,32 @@ module.exports = {
             }
 
             entradas.forEach(valor => {
-                if(valor.name == "nome")
+                if (valor.name == "nome")
                     objeto_anunciado.nome = valor.value
                     
-                if(valor.name == "tipo")
+                if (valor.name == "tipo")
                     objeto_anunciado.tipo = valor.value
                 
-                if(valor.name == "link")
+                if (valor.name == "link")
                     objeto_anunciado.link = valor.value
 
-                if(valor.name == "preço")
+                if (valor.name == "preço")
                     objeto_anunciado.preco = valor.value
 
-                if(valor.name == "expiração")
+                if (valor.name == "expiração")
                     objeto_anunciado.expira = valor.value
 
-                if(valor.name == "urgência")
+                if (valor.name == "urgência")
                     objeto_anunciado.urgencia = valor.value
 
-                if(valor.name == "imagem")
+                if (valor.name == "imagem")
                     objeto_anunciado.thumbnail = valor.attachment.attachment
             })
             
-            if(objeto_anunciado.tipo == null)
+            if (objeto_anunciado.tipo == null)
                 objeto_anunciado.tipo = "jogo"
 
-            if(objeto_anunciado.urgencia == null)
+            if (objeto_anunciado.urgencia == null)
                 objeto_anunciado.urgencia = "n"
             
             dispara_anuncio(client, interaction, objeto_anunciado)

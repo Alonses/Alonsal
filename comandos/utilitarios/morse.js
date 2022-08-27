@@ -32,17 +32,17 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if(valor.name == "texto")
+            if (valor.name == "texto")
                 codificar.texto = valor.value
 
-            if(valor.name == "reverso")
+            if (valor.name == "reverso")
                 codificar.reverso = valor.value
 
-            if(valor.name == "operacao")
+            if (valor.name == "operacao")
                 codificar.opera = parseInt(valor.value)
         })
 
-        if(!codificar.opera){ // Codificando
+        if (!codificar.opera){ // Codificando
             texto = codificar.texto.split('')
                 
             for (let carac = 0; carac < texto.length; carac++) {
@@ -53,7 +53,7 @@ module.exports = {
                     aviso = utilitarios[2]["caracteres"]
                 }
             }
-        }else{ // Decodificando
+        } else { // Decodificando
             texto = codificar.texto.split(" ")
 
             for (let carac = 0; carac < texto.length; carac++) {
@@ -62,7 +62,7 @@ module.exports = {
             }
         }
         
-        if(codificar.reverso) // Inverte os caracteres
+        if (codificar.reverso) // Inverte os caracteres
             texto = texto.reverse()
         
         // Montando 
@@ -83,7 +83,7 @@ module.exports = {
             .setColor(0x29BB8E)
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
             
-            if(aviso.length > 0)
+            if (aviso.length > 0)
                 embed.setFooter({ text: aviso })
 
         interaction.reply({embeds: [embed], ephemeral: true })

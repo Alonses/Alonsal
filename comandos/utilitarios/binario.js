@@ -32,24 +32,24 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if(valor.name == "texto")
+            if (valor.name == "texto")
                 codificar.texto = valor.value
 
-            if(valor.name == "reverso")
+            if (valor.name == "reverso")
                 codificar.reverso = valor.value
 
-            if(valor.name == "operacao")
+            if (valor.name == "operacao")
                 codificar.opera = parseInt(valor.value)
         })
 
-        if(!codificar.opera) // Codificando
+        if (!codificar.opera) // Codificando
             texto = textToBinary(codificar.texto) 
         else // Decodificando
             texto = binaryToText(codificar.texto)
         
         texto = texto.split("")
         
-        if(codificar.reverso) // Inverte os caracteres
+        if (codificar.reverso) // Inverte os caracteres
             texto = texto.reverse()
         
         // Montando 
@@ -60,9 +60,9 @@ module.exports = {
             titulo = utilitarios[3]["decodificado"]
 
         // Confirma que a operação não resultou em uma string vazia
-        if(texto_ordenado.replaceAll("\x00", "").length < 1){
-            texto_ordenado = utilitarios[3]["resul_vazio"]; 
-            titulo = utilitarios[3]["titulo_vazio"] 
+        if (texto_ordenado.replaceAll("\x00", "").length < 1){
+            texto_ordenado = utilitarios[3]["resul_vazio"]
+            titulo = utilitarios[3]["titulo_vazio"]
         }
 
         const embed = new EmbedBuilder()
@@ -71,7 +71,7 @@ module.exports = {
             .setColor(0x29BB8E)
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
             
-            if(aviso.length > 0)
+            if (aviso.length > 0)
                 embed.setFooter({ text: aviso })
 
         interaction.reply({embeds: [embed], ephemeral: true })

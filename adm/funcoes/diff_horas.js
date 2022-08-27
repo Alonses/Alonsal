@@ -3,7 +3,7 @@ module.exports = (entrada, saida) => {
     let hora_inicio = entrada
     let hora_fim = saida
 
-    if(entrada == null || saida == null ) return 0
+    if (entrada == null || saida == null ) return 0
 
     let data = new Date()
     let dia = String(data.getDate()).padStart(2, '0')
@@ -17,7 +17,7 @@ module.exports = (entrada, saida) => {
         let fim = new Date(ano, mes - 1, dia, hora_fim.substr(0, 2), hora_fim.substr(3, 2))
 
         diff = Math.abs(inicio.getTime() - fim.getTime())
-    }else{
+    } else {
         let fim = new Date(ano, mes - 1, dia, hora_fim.substr(0, 2), hora_fim.substr(3, 2))
 
         fim.setDate(fim.getDate() + 1)

@@ -18,7 +18,7 @@ module.exports = {
             .setAuthor({ name: res.nome, iconURL: res.foto })
             .setDescription(res.texto)
 
-            if(res.img_curio) // Imagem da curiosidade
+            if (res.img_curio) // Imagem da curiosidade
             embed.setImage(res.img_curio)
         
     		    return interaction.reply({embeds: [embed]})

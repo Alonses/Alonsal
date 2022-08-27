@@ -21,7 +21,7 @@ module.exports = {
         let counter = 0
         const content = interaction.options.data[0].value
 
-        if(content.includes("slondo")) // Pesquisa por slondo
+        if (content.includes("slondo")) // Pesquisa por slondo
             return interaction.reply(utilitarios[1]["wiki_slondo"])
 
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
@@ -36,10 +36,10 @@ module.exports = {
         
         const fields = []
         
-        if(res.RelatedTopics.length > 0)
+        if (res.RelatedTopics.length > 0)
             fields.push({ name: `:books: ${utilitarios[1]["topicos_rel"]}`, value: "\u200B" })
 
-        for(const topic of res.RelatedTopics){
+        for (const topic of res.RelatedTopics){
             counter++
 
             const text = `${topic.Text.substr(0, 100)}...`
@@ -50,11 +50,11 @@ module.exports = {
                 inline: true
             })
 
-            if(counter > 5)
+            if (counter > 5)
                 break
         }
 
-        if(res.Heading !== ""){
+        if (res.Heading !== ""){
             fields.length = fields.length > 5 ? 5 : fields.length
             
             const Embed = new EmbedBuilder()
@@ -69,8 +69,8 @@ module.exports = {
             .setURL(res.AbstractURL)
 
             interaction.reply({ embeds: [Embed] })
-        }else
-            if(username.includes(termo_pesquisado_cc))
+        } else
+            if (username.includes(termo_pesquisado_cc))
                 interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`)
             else
                 interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)

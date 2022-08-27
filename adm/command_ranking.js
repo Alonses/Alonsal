@@ -8,12 +8,12 @@ module.exports = async function({client, message, content}){
     
     const procura_infos = content.replace(prefix, "").split(" ")[0].replace(/ /g, "")
 
-    for(let x = 0; x < comandos.length; x++){
+    for (let x = 0; x < comandos.length; x++){
         let linha = comandos[x].split(",")
         const aliases = linha
 
-        for(let i = 1; i < aliases.length; i++){ // Procurando se o comando existe
-            if(aliases[i].replace(/ /g, "") === procura_infos){
+        for (let i = 1; i < aliases.length; i++){ // Procurando se o comando existe
+            if (aliases[i].replace(/ /g, "") === procura_infos){
                 indice = linha[0]
                 alias = linha
                 valida_aliase = true
@@ -22,7 +22,7 @@ module.exports = async function({client, message, content}){
         }
     }
     
-    if(indice === null) return // Confirma a existencia do comando
+    if (indice === null) return // Confirma a existencia do comando
 
     alias.shift()
 

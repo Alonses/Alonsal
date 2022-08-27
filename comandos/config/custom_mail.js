@@ -17,7 +17,7 @@ module.exports = {
             .setDescription("A imagem que será usada")),
     async execute(client, interaction) {
         
-        if(interaction.user.id !== "665002572926681128") return
+        if (interaction.user.id !== "665002572926681128") return
         
         let entradas = interaction.options.data
 
@@ -28,28 +28,28 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if(valor.name == "texto")
+            if (valor.name == "texto")
                 corpo_mail.texto = valor.value
 
-            if(valor.name == "canal")   
+            if (valor.name == "canal")   
                 corpo_mail.canal = valor.value
             
-            if(valor.name == "imagem")
+            if (valor.name == "imagem")
                 corpo_mail.anexo = valor.attachment.attachment
         })
 
         let img_game
         const nome_canal = await client.channels.cache.get(corpo_mail.canal)
 
-        if(nome_canal){
-            if(corpo_mail.anexo){
+        if (nome_canal){
+            if (corpo_mail.anexo){
                 img_game = new AttachmentBuilder(corpo_mail.anexo)
                 client.channels.cache.get(corpo_mail.canal).send({content: corpo_mail.texto, files: [img_game]})
-            }else
+            } else
                 client.channels.cache.get(corpo_mail.canal).send({content: corpo_mail.texto})
 
             interaction.reply({content: `Mensagem enviada para o canal ${nome_canal} com sucesso`, ephemeral: true })
-        }else
+        } else
             interaction.reply({content: `:octagonal_sign: | O canal mencionado é desconhecido, tente novamente`, ephemeral: true })
     }
 }

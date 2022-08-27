@@ -18,9 +18,9 @@ module.exports = {
 				.setDescription('⌠😂⌡ Invoca uma piada excelentississima')),
 	async execute(client, interaction) {
 
-		if(interaction.options.getSubcommand() === "gif")
+		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-		else{
+		else {
 
 			return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
 

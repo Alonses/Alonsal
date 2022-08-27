@@ -28,7 +28,7 @@ module.exports = {
                 webhook.send({
                     content: res.texto
                 }).then(() => {
-                    if(typeof res.texto_2 !== "undefined")
+                    if (typeof res.texto_2 !== "undefined")
                         webhook.send({
                             content: res.texto_2
                         })

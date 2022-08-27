@@ -13,7 +13,7 @@ module.exports = {
             .setDescription('Anexe arquivos se precisar')),
     async execute(client, interaction) {
         
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`);
+        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         const corpo_mensagem = {
             texto: null,
@@ -24,10 +24,10 @@ module.exports = {
 
         entradas.forEach(valor => {
 
-            if(valor.name == "texto")
+            if (valor.name == "texto")
                 corpo_mensagem.texto = valor.value
 
-            if(valor.name == "arquivo")
+            if (valor.name == "arquivo")
                 corpo_mensagem.arquivo = valor.attachment.attachment
         })
 
@@ -38,7 +38,7 @@ module.exports = {
         .setColor(0xffffff)
         .setTimestamp()
         
-        if(corpo_mensagem.arquivo)
+        if (corpo_mensagem.arquivo)
             msg_user.setImage(corpo_mensagem.arquivo)
 
         interaction.reply({ content: manutencao[3]["sucesso_1"], ephemeral: true})

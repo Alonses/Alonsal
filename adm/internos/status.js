@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({client}) => {
 
-    if(client.user.id === "833349943539531806"){
+    if (client.user.id === "833349943539531806"){
 
         const canais_texto = client.channels.cache.filter((c) => c.type === 0).size
         const canais_voz = client.channels.cache.filter((c) => c.type === 2).size
@@ -51,7 +51,7 @@ module.exports = async ({client}) => {
 
         let i = 0
         setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 10000)
-    }else
+    } else
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
 
     require('./relata.js')({client})

@@ -20,16 +20,16 @@ module.exports = {
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_1"]} ${dancando_thanos}`
         
-        if(delay < 200)
+        if (delay < 200)
             mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_2"]}`
 
-        if(delay < 100)
+        if (delay < 100)
             mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_3"]} ${emoji_steve}`
 
-        if(delay > 600)
+        if (delay > 600)
             mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_4"]} ${emoji_pare}`
 
-        if(delay <= 0)
+        if (delay <= 0)
             mensagem = `:ping_pong: Pong!? [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_5"]} ${susto2}`
 
         mensagem += `\n${utilitarios[0]["latencia"]} [ **\`${Math.round(client.ws.ping)}ms\`** ]`

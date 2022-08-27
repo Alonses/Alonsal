@@ -17,7 +17,7 @@ module.exports = {
         
         let bonus = ''
 
-        for(let i = 0; i < 3; i++){
+        for (let i = 0; i < 3; i++){
             bonus += `${randomString(tamanho)}\n\n`
         }
 

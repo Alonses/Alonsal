@@ -1,5 +1,6 @@
 
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const formata_horas = require("../../adm/funcoes/formata_horas")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -22,26 +23,26 @@ module.exports = {
 
         let entrada = interaction.options.data[0].value
 
-        if(!entrada.includes("-")){ // De timestamp para data normal
+        if (!entrada.includes("-")){ // De timestamp para data normal
             timestamp = new Date(Number(entrada * 1000))
             titulo = utilitarios[19]["timestamp_2"]
             retorno = entrada
             
-            timestamp = `${timestamp.getFullYear()}-${("0"+ (timestamp.getMonth() + 1)).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${("0"+ timestamp.getHours()).slice(-2)}:${("0"+ timestamp.getMinutes()).slice(-2)}:${("0"+ timestamp.getSeconds()).slice(-2)}`
+            timestamp = `${timestamp.getFullYear()}-${("0"+ (timestamp.getMonth() + 1)).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
 
-            if((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] == "NaN")
+            if ((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] == "NaN")
                 conversao_invalida = true
-        }else{ // De data normal para timestamp
+        } else { // De data normal para timestamp
             timestamp = new Date(data).getTime() / 1000
             retorno = timestamp
 
-            if(isNaN(timestamp))
+            if (isNaN(timestamp))
                 conversao_invalida = true
         }
         
         let dica_conversao = `\n\n<t:${retorno}:R> ( \`<t:${retorno}:R>\` )`
 
-        if(conversao_invalida){
+        if (conversao_invalida){
             titulo = utilitarios[19]["erro_titulo"]
             aviso = utilitarios[19]["erro_conversao"]
             timestamp = utilitarios[19]["valor_nulo"]
@@ -54,7 +55,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({dynamic: true}) })
             .setDescription(`\`${data}\` -> \`${timestamp}\`${dica_conversao}`)
         
-        if(aviso.length > 0)
+        if (aviso.length > 0)
             embed.setFooter(aviso)
 
         interaction.reply({ embeds: [embed], ephemeral: true })

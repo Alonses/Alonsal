@@ -21,7 +21,7 @@ module.exports = {
 
 		fetch(url_avatar)
 		.then(res => {
-			if(res.status !== 200)
+			if (res.status !== 200)
 				url_avatar = url_avatar.replace('.gif', '.webp')
 
 			const embed = new EmbedBuilder()

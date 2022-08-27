@@ -17,7 +17,7 @@ module.exports = {
 
         fetch(icone_server)
         .then(res => {
-            if(res.status !== 200)
+            if (res.status !== 200)
                 icone_server = icone_server.replace('.gif', '.webp')
 
             const embed = new EmbedBuilder()

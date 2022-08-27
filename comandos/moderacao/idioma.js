@@ -29,14 +29,14 @@ module.exports = {
 
         let matches, novo_idioma
         
-        if(interaction.options.data.length > 0){
+        if (interaction.options.data.length > 0){
             novo_idioma = interaction.options.data[0].value
 
             // Verifica se o idioma é válido
             matches = novo_idioma.match(/pt|al|en|fr/)
         }
 
-        if(matches == null || interaction.options.data.length < 1){ // Retorna a lista de idiomas válidos
+        if (matches == null || interaction.options.data.length < 1){ // Retorna a lista de idiomas válidos
             embed_idiomas = new EmbedBuilder()
             .setTitle(moderacao[0]["titulo_idioma"])
             .setColor(0x29BB8E)
