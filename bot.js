@@ -36,7 +36,7 @@ for (const folder of readdirSync(`${__dirname}/comandos/`)){
 // 	.then(() => console.log('Comandos Alonsais globais atualizados com sucesso.'))
 // 	.catch(console.error)
 
-// // // // Registrando os comandos no server
+// Registrando os comandos no server
 // rest.put(Routes.applicationGuildCommands(clientId2, guildId), { body: comandos_privados })
 // 	.then(() => console.log('Comandos Alonsais privados do servidor atualizados com sucesso.'))
 // 	.catch(console.error)
