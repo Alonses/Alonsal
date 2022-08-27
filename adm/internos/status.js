@@ -55,4 +55,5 @@ module.exports = async ({client}) => {
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
 
     require('./relata.js')({client})
+    require('./anuncia.js')({client})
 }

@@ -214,7 +214,7 @@
             "ativos" : "Ativos no momento",
             "tipo_canal" : "O canal definido precisa ser um canal de texto, tente novamente",
             "ate_data" : "até",
-            "resgate_dica" : "Estes são os jogos Disponíveis no momento\nResgate antes que expirem!"
+            "resgate_dica" : "Estes são os jogos disponíveis no momento\nResgate antes que expirem!"
         },
         {
             "canal" : "Canal",

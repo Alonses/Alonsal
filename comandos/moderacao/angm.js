@@ -1,8 +1,10 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
+  
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const fs = require('fs')
+  
+const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -27,7 +29,17 @@ module.exports = {
 		const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const { canal_games } = require('../../arquivos/data/games/canal_games.json')
         
-        if(interaction.options.getSubcommand() === "agora"){
+        if(interaction.options.getSubcommand() === "teste"){
+
+            interaction.deferReply()
+            
+            fetch('https://apisal.herokuapp.com/games')
+            .then(response => response.json())
+            .then(async res => {
+                dispara_anuncio(client, interaction, res)
+            })
+
+        }else if(interaction.options.getSubcommand() === "agora"){
 
             interaction.deferReply()
             
@@ -40,7 +52,7 @@ module.exports = {
 
                 res.forEach(valor => {
 
-                    let nome_jogo = valor.nome.length > 10 ? `${valor.nome.slice(0, 9)}...` : valor.nome;
+                    let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome;
 
                     jogos_disponiveis.push(`- ${valor.nome} [ ${moderacao[6]["ate_data"]} ${valor.data_final} ]`)
 
