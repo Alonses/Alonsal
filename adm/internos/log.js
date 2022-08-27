@@ -1,6 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 const fs = require('fs')
 
+const formata_horas = require('../funcoes/diff_horas.js')
+
 module.exports = async ({client, interaction}) => {
     
     fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function(err, data) {
@@ -64,7 +66,7 @@ module.exports = async ({client, interaction}) => {
             let embed = new EmbedBuilder()
             .setTitle("> ✨ New interaction")
             .setColor(0x29BB8E)
-            .setDescription(`:man_raising_hand: ( \`${interaction.user.id}\` | \`${interaction.user.username}#${interaction.user.discriminator}\` )\n:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n:placard: ( \`${interaction.channel.id}\` | \`${interaction.channel.name}\` )\n:bookmark_tabs: ( \`${interaction.id}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
+            .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n:placard: ( \`${interaction.channel.id}\` | \`${interaction.channel.name}\` )\n:bookmark_tabs: ( \`${interaction.id}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
             .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
 
             if (url_ativacao !== "")
