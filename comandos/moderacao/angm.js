@@ -3,8 +3,6 @@ const fetch = (...args) =>
   
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const fs = require('fs')
-  
-const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,17 +27,7 @@ module.exports = {
 		const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const { canal_games } = require('../../arquivos/data/games/canal_games.json')
         
-        if(interaction.options.getSubcommand() === "teste"){
-
-            interaction.deferReply()
-            
-            fetch('https://apisal.herokuapp.com/games')
-            .then(response => response.json())
-            .then(async res => {
-                dispara_anuncio(client, interaction, res)
-            })
-
-        }else if(interaction.options.getSubcommand() === "agora"){
+        if(interaction.options.getSubcommand() === "agora"){
 
             interaction.deferReply()
             
@@ -54,7 +42,7 @@ module.exports = {
 
                     let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome;
 
-                    jogos_disponiveis.push(`- ${valor.nome} [ ${moderacao[6]["ate_data"]} ${valor.data_final} ]`)
+                    jogos_disponiveis.push(`- ${valor.nome} [ ${moderacao[6]["ate_data"]} ${valor.expira} ]`)
 
                     row.addComponents(
                         new ButtonBuilder()
@@ -70,7 +58,7 @@ module.exports = {
                 .setColor(0x29BB8E)
                 .setDescription(`${moderacao[6]["resgate_dica"]}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                return interaction.editReply({ embeds: [embed], components: [row]})
+                interaction.editReply({ embeds: [embed], components: [row]})
             })
         }else{
 
@@ -78,7 +66,7 @@ module.exports = {
 
             if(!interaction.member.permissions.has("ADMINISTRATOR") && !client.owners.includes(interaction.user.id)) return interaction.reply(moderacao[5]["moderadores"]) // Libera configuração para proprietários e adms apenas
 
-            let entradas = interaction.options.data[0].options, canal_alvo
+            let entradas = interaction.options.data[0].options
 
             const notificador = {
                 cargo: null,
