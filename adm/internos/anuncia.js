@@ -2,10 +2,11 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
+const formata_horas = require('../funcoes/formata_horas.js')
 
 module.exports = async ({client}) => {
 
-    if(client.user.id !== "833349943539531806") return
+    if (client.user.id !== "833349943539531806") return
 
     const date1 = new Date() // Ficará esperando até quinta feira aos 12:00 para executar a rotina
     const dias = [4, 3, 2, 1, 7, 6, 5]
@@ -47,7 +48,8 @@ function next_att(client, tempo_restante){
     const segundos = parseInt((A / 1000) % 60)
     const minutos = parseInt((A / (1000 * 60)) % 60)
     const horas = parseInt((A / (1000 * 60 * 60)) % 24)
-    tempo_restante = `${("0"+ (horas)).substr(-2)}:${("0"+ (minutos)).substr(-2)}:${("0"+ (segundos)).substr(-2)}`
+    tempo_restante = formata_horas(horas, minutos, segundos)
+    
     tempo_restante = tempo_restante == "00:00:00" ? "24:00:00" : tempo_restante
 
     client.channels.cache.get('872865396200452127').send(`:video_game: | Próxima atualização de jogos gratuitos em \`${tempo_restante}\``)

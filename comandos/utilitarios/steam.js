@@ -29,15 +29,15 @@ module.exports = {
                 status = status.split("</title>")[0]
                 status = status.replace("Steam Community :: ", "")
                 
-                if(status === "Error") return interaction.reply(utilitarios[16]["error_1"])
+                if (status === "Error") return interaction.reply(utilitarios[16]["error_1"])
                 
                 let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas
                 let jogo_favorito = "", tempo_jogado = "", nota_rodape = interaction.user.username, anos_servico = "", background_user = "", criacoes_user = ""
 
-                if(res.includes("<video playsinline autoplay muted loop poster=\"")){
+                if (res.includes("<video playsinline autoplay muted loop poster=\"")){
                     background_user = res.split("<video playsinline autoplay muted loop poster=\"")[1]
                     background_user = background_user.split("\">")[0]
-                }else if(res.includes("<div class=\"no_header profile_page has_profile_background")){
+                } else if (res.includes("<div class=\"no_header profile_page has_profile_background")){
                     background_user = res.split("<div class=\"no_header profile_page has_profile_background")[1]
                     background_user = background_user.split("' );\">")[0]
                     background_user = background_user.split("url( '")[1]
@@ -57,7 +57,7 @@ module.exports = {
                 const nome_user = status
                 let avatar_user = res.split("<div class=\"playerAvatarAutoSizeInner\">")[1]
 
-                if(avatar_user.includes("<div class=\"profile_avatar_frame\">")) // Verifica se o usuário possui decoração sob o avatar
+                if (avatar_user.includes("<div class=\"profile_avatar_frame\">")) // Verifica se o usuário possui decoração sob o avatar
                     avatar_user = avatar_user.split("</div>")[1]
 
                 avatar_user = avatar_user.split("</div>")[0]
@@ -69,7 +69,7 @@ module.exports = {
                     status_atual = status_atual.split("</div>")[0]
                     status_atual = status_atual.replace("Currently ", "")
 
-                    if(status_atual === "undefined")
+                    if (status_atual === "undefined")
                         status_atual = utilitarios[16][status_atual]
                 }catch(err){
                     status = utilitarios[16]["undefined"]
@@ -89,7 +89,7 @@ module.exports = {
                 }catch(err){
                     jogos_user = "-"
 
-                    if(res.includes("<div class=\"label\">Games Owned</div>")){
+                    if (res.includes("<div class=\"label\">Games Owned</div>")){
                         jogos_user = res.split("<div class=\"label\">Games Owned</div>")[0]
                         jogos_user = jogos_user.slice(jogos_user.length - 120).split("<div class=\"value\">")[1]
                         jogos_user = jogos_user.split("</div>")[0]
@@ -106,28 +106,28 @@ module.exports = {
                 }
                 
                 try{
-                    if(res.includes("<div class=\"label\">Achievements</div>")){
+                    if (res.includes("<div class=\"label\">Achievements</div>")){
                         const blocos_conquistas = res.split("<div class=\"label\">Achievements</div>")
 
                         conquistas_user = blocos_conquistas[0]
 
-                        if(blocos_conquistas.length > 2){
+                        if (blocos_conquistas.length > 2){
                             conquistas_favoritas = conquistas_user.slice(conquistas_user.length - 120)
                             conquistas_favoritas = conquistas_favoritas.split("<div class=\"value\">")[1]
                             conquistas_favoritas = conquistas_favoritas.split("</div>")[0]
 
-                            total_conquistas_favoritas = res.split("&nbsp; <span class=\"ellipsis\">"+ conquistas_favoritas)[1]
+                            total_conquistas_favoritas = res.split(`&nbsp; <span class=\"ellipsis\">${conquistas_favoritas}`)[1]
                             total_conquistas_favoritas = total_conquistas_favoritas.split("</span>")[0]
                             total_conquistas_favoritas = total_conquistas_favoritas.replace("of ", "")
                         }
 
-                        if(blocos_conquistas.length > 2)
+                        if (blocos_conquistas.length > 2)
                             conquistas_user = blocos_conquistas[1]
 
                         conquistas_user = conquistas_user.slice(conquistas_user.length - 120)
                         conquistas_user = conquistas_user.split("<div class=\"value\">")[1]
                         conquistas_user = conquistas_user.split("</div>")[0]
-                    }else
+                    } else
                         conquistas_user = "-"
                 }catch(err){
                     conquistas_user = "-"
@@ -141,7 +141,7 @@ module.exports = {
                     const descriminador_tempo_2 = tempo_semanas.split(" ")[1]
                     tempo_semanas = parseFloat(tempo_semanas.split(" ")[0])
 
-                    if(idioma_definido === "pt-br")
+                    if (idioma_definido === "pt-br")
                         tempo_semanas = `${tempo_semanas} ${utilitarios[16][descriminador_tempo_2]}`
                     else
                         tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`
@@ -237,33 +237,33 @@ module.exports = {
                     tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`
                 }
 
-                if(res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")){
+                if (res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")){
 
                     anos_servico = res.split(" data-tooltip-html=\"Years of Service&lt;br&gt;")[1]
                     anos_servico = anos_servico.split(".\" >")[0]
                     anos_servico = anos_servico.split("Member since ")[1]
                 }
 
-                if(reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
+                if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
                     nota_rodape = utilitarios[16]["rodape"]
 
-                if(parseInt(jogos_user.replace(".", "")) < jogos_perfeitos)
+                if (parseInt(jogos_user.replace(".", "")) < jogos_perfeitos)
                     nota_rodape = utilitarios[16]["suspeito"]
 
-                if(typeof conquistas_favoritas == "undefined" && typeof total_conquistas_favoritas == "undefined")
+                if (typeof conquistas_favoritas == "undefined" && typeof total_conquistas_favoritas == "undefined")
                     jogo_favorito = ""
                     
                 conquistas_user = conquistas_user.replace(",", ".").replace(/\s+/g, '')
 
-                if(capturas_user !== "-")
+                if (capturas_user !== "-")
                     criacoes_user += `:frame_photo: **${utilitarios[16]["capturas"]}: **\`${capturas_user}\``
-                if(videos_user !== "-")
+                if (videos_user !== "-")
                     criacoes_user += `\n:film_frames: **Videos: **\`${videos_user}\``
-                if(artes_user !== "-")
+                if (artes_user !== "-")
                     criacoes_user += `\n:paintbrush: **${utilitarios[16]["artes"]}: **\`${artes_user}\``
 
                 let jogos_user_embed = `**Total: **\`${jogos_user}\``
-                if(reviews_user !== "-")
+                if (reviews_user !== "-")
                     jogos_user_embed += `\n**${utilitarios[16]["analises"]}: **\`${reviews_user}\``
 
                 const usuario_steam = new EmbedBuilder()
@@ -304,7 +304,7 @@ module.exports = {
                     )
                     .setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-                if(criacoes_user !== "")
+                if (criacoes_user !== "")
                     usuario_steam.addFields(
                         {
                             name: `:piñata: ${utilitarios[16]["criacoes"]}`, 
@@ -317,7 +317,7 @@ module.exports = {
                         { name: "⠀", value: "⠀", inline: true}
                     )
 
-                if(jogo_favorito !== "")
+                if (jogo_favorito !== "")
                     usuario_steam.addFields(
                         {
                             name: `:star: ${utilitarios[16]["jogo_favorito"]}`, 
@@ -326,7 +326,7 @@ module.exports = {
                         }
                     )
 
-                if(anos_servico !== "")
+                if (anos_servico !== "")
                     usuario_steam.addFields(
                         {
                             name: `:birthday: ${utilitarios[13]["entrada"]}`, 

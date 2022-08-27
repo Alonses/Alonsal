@@ -1,6 +1,6 @@
 module.exports = (latitude, idioma_definido) => {
 
-    if(idioma_definido == "al-br") idioma_definido = "pt-br"
+    if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
     const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
     
@@ -13,11 +13,11 @@ module.exports = (latitude, idioma_definido) => {
     
     // Estipulando um indice de clima
     let indice = estipula_indice(dias_passados, latitude)
-    if(latitude > 0) // Hemisfério norte
+    if (latitude > 0) // Hemisfério norte
         datas_estacao = ["21/06", "21/09", "21/12", "21/03"]
     
     let indice_int = indice + 1
-    if(indice_int >= datas_estacao.length) indice_int = 0
+    if (indice_int >= datas_estacao.length) indice_int = 0
 
     comeco_termino = `${utilitarios[8]["comeco"]} ${datas_estacao[indice]}${utilitarios[8]["termino"]} ${datas_estacao[indice_int]}`
 
@@ -25,7 +25,7 @@ module.exports = (latitude, idioma_definido) => {
     mes_termino = parseInt(datas_estacao[indice_int].split("/")[1])
     dias_restantes = calcula_dias(21, mes_termino, data_atual.getFullYear()) - calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear())
     
-    if(dias_restantes > 1) dias_restantes += `${utilitarios[14]["dias"]}`
+    if (dias_restantes > 1) dias_restantes += `${utilitarios[14]["dias"]}`
     else dias_restantes += `${utilitarios[14]["dia"]}`
 
     estacao = `${emojis[indice]} ${utilitarios[8][estacao_nome[indice]]}${utilitarios[8]["termino"]} ${dias_restantes}\n${comeco_termino}`
@@ -55,7 +55,7 @@ function estipula_indice(dias_passados, latitude){
     // Estipula um indice para a estação do local
     let indices = [1, 2, 3, 0]
 
-    if(latitude > 0)
+    if (latitude > 0)
         indices = [3, 0, 1, 2]
 
     let indice = dias_passados > 79 && dias_passados <= 171 ? indices[0] : dias_passados > 171 && dias_passados <= 264 ? indices[1] : dias_passados > 264 && dias_passados <= 354 ? indices[2] : indices[3]

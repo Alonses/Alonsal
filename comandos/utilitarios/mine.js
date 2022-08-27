@@ -21,7 +21,7 @@ module.exports = {
         const emoji_suv = busca_emoji(client, emojis.mc_coracao)
         const logo_wikipedia = busca_emoji(client, emojis.mc_logo_wikipedia)
 
-        if(interaction.options.data.length > 0) pesquisa_crua = interaction.options.data[0].value
+        if (interaction.options.data.length > 0) pesquisa_crua = interaction.options.data[0].value
         
         const nome_interno = pesquisa_crua.split(" ").join("_").toLocaleLowerCase() // Pesquisa usando nome em inglês/interno
         pesquisa_crua = pesquisa_crua.charAt(0).toUpperCase() + pesquisa_crua.slice(1)
@@ -51,13 +51,13 @@ module.exports = {
                 // Responsável pelo auto completa da pesquisa
                 let nome_simplificado_verif = false, nome_interno_verif = false, auto_compl_verif = false
                 
-                if(!pesquisa_crua.includes("\"")){ // Verificando se não é uma pesquisa bruta
+                if (!pesquisa_crua.includes("\"")){ // Verificando se não é uma pesquisa bruta
                     auto_compl_verif = auto_compl.includes(pesquisa_crua.toLocaleLowerCase())
                     nome_simplificado_verif = pesquisa_crua === nome_simplificado
                     nome_interno_verif = pesquisa_crua === lista_itens[i].nome_interno
 
                     pesquisa = pesquisa_crua
-                }else{ // Pesquisa bruta
+                } else { // Pesquisa bruta
                     pesquisa = pesquisa_crua.replaceAll("\"", "")
                     auto_compl_verif = (pesquisa.length === nome_simplificado.length) && (pesquisa === nome_simplificado)
                 }
@@ -168,10 +168,10 @@ module.exports = {
                     if (lista_itens[i].versao_add > 19)
                         nota_rodape = utilitarios[9]["nota_rodape"]
                     
-                    if(nota_rodape.includes("item_repl"))
+                    if (nota_rodape.includes("item_repl"))
                         nota_rodape = nota_rodape.replace("item_repl", pesquisa)
 
-                    if(objeto_encontrado){
+                    if (objeto_encontrado){
                         // Procurando na wiki sobre a pesquisa
                         fetch(`https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki}`)
                         .then(response => response.text())
@@ -222,7 +222,7 @@ module.exports = {
                             )
                             .setFooter({ text: nota_rodape })
                             
-                            if(descricao_item_wiki !== ""){
+                            if (descricao_item_wiki !== ""){
                                 
                                 let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki.replaceAll(" ", "_")}`
                                 
@@ -240,11 +240,11 @@ module.exports = {
                             return interaction.reply({embeds: [embed]})
                         })
                     }
-                }else
+                } else
                     i++
             }
             
-            if(!objeto_encontrado){
+            if (!objeto_encontrado){
                 const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
 
                 return interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`)

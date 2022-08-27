@@ -5,7 +5,7 @@ let trava_edicao = 0
 
 module.exports = async ({client, caso}) => {
     
-    if(trava_edicao === 1) return
+    if (trava_edicao === 1) return
     trava_edicao = 1
     
     const bot = {
@@ -15,7 +15,7 @@ module.exports = async ({client, caso}) => {
         epic_embed_fails: 0
     }
 
-    if(existsSync(`./arquivos/data/relatorio.json`)){
+    if (existsSync(`./arquivos/data/relatorio.json`)){
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)]
         try{
             const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../arquivos/data/relatorio.json`)
@@ -35,15 +35,15 @@ module.exports = async ({client, caso}) => {
 
     fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data){
         
-        if(caso === "experiencia")
+        if (caso === "experiencia")
             bot.exp_concedido += parseInt(data)
 
-        if(caso === "comando"){
+        if (caso === "comando"){
             bot.comandos_disparados += 1
             bot.msgs_lidas += 1
         }
 
-        if(caso === "msg_enviada")
+        if (caso === "msg_enviada")
             bot.msgs_lidas += 1
         
         writeFileSync(`./arquivos/data/relatorio.json`, JSON.stringify(bot))

@@ -1,8 +1,10 @@
 const { EmbedBuilder } = require('discord.js')
 
+const formata_horas = require('../funcoes/formata_horas.js')
+
 module.exports = async ({client}) => {
 
-    if(client.user.id !== "833349943539531806") return
+    if (client.user.id !== "833349943539531806") return
 
     const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
     const tempo_restante =  ((24 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
@@ -33,7 +35,7 @@ async function gera_relatorio(client, proxima_att){
     const segundos = parseInt((A / 1000) % 60)
     const minutos = parseInt((A / (1000 * 60)) % 60)
     const horas = parseInt((A / (1000 * 60 * 60)) % 24)
-    proxima_att = `${("0"+ (horas)).substr(-2)}:${("0"+ (minutos)).substr(-2)}:${("0"+ (segundos)).substr(-2)}`
+    proxima_att = formata_horas(horas, minutos, segundos)
     proxima_att = proxima_att == "00:00:00" ? "24:00:00" : proxima_att
     
     const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`)
@@ -90,5 +92,5 @@ async function gera_relatorio(client, proxima_att){
     .setFooter({ text: `Próxima atualização em ${proxima_att}` })
     
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
-    require("../funcoes/resrelatorio.js")({}) // Reseta o relatório
+    require("../funcoes/reseta_relatorio.js")({}) // Reseta o relatório
 }

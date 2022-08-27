@@ -9,16 +9,16 @@ module.exports = async ({client, interaction}) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
         
-        if(client.user.id === "833349943539531806"){
+        if (client.user.id === "833349943539531806"){
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
             let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
-            let min = (`0${d.getMinutes()}`).substr(-2) // Preservar o digito 0
-            let hr = (`0${d.getHours()}`).substr(-2) // Preservar o digito 0
+            let min = formata_horas(d.getMinutes())
+            let hr = formata_horas(d.getHours())
 
             let ampm = "am"
-            if(hr > 12){
+            if (hr > 12){
                 hr -= 12
                 ampm = "pm"
             }
@@ -33,16 +33,16 @@ module.exports = async ({client, interaction}) => {
                 let entrada = `${valor.name}: ${valor.value}`
                 let opcoes_internas_comando = []
 
-                if(!valor.value)
+                if (!valor.value)
                     entrada = valor.name
                 
-                if(valor.options){ // Opções internas da interação
+                if (valor.options){ // Opções internas da interação
                     opcoes_comando = valor.options
                     opcoes_comando.forEach(opcao => {
 
                         opcao_interna = `${opcao.name}: ${opcao.value}`
 
-                        if(!opcao.value)
+                        if (!opcao.value)
                             opcao_interna = ""
 
                         opcoes_internas_comando.push(opcao_interna)
@@ -60,14 +60,14 @@ module.exports = async ({client, interaction}) => {
             const date = d.getDate()
             const month = d.toLocaleString('en-US', { month: 'long' })
             const year = d.getFullYear()
-
+            
             let embed = new EmbedBuilder()
             .setTitle("> ✨ New interaction")
             .setColor(0x29BB8E)
             .setDescription(`:man_raising_hand: ( \`${interaction.user.id}\` | \`${interaction.user.username}#${interaction.user.discriminator}\` )\n:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n:placard: ( \`${interaction.channel.id}\` | \`${interaction.channel.name}\` )\n:bookmark_tabs: ( \`${interaction.id}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
             .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
 
-            if(url_ativacao !== "")
+            if (url_ativacao !== "")
                 embed.setURL(`${url_ativacao}`)
 
             client.channels.cache.get('846151364492001280').send({ embeds: [embed] }) // Envia o log com os comandos do usuário
@@ -79,7 +79,7 @@ module.exports = async ({client, interaction}) => {
     })
 
     // Contabilizar o comando
-    if(client.user.id === "833349943539531806"){
+    if (client.user.id === "833349943539531806"){
         // await require('../command_ranking.js')({client, interaction, content})
         
         const caso = "comando"

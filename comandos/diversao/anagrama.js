@@ -30,15 +30,15 @@ module.exports = {
         const fatori_fix = fatori
         let mult = 1, rept = 1
 
-        for(let i = 1; i < fatori.length + 1; i++){
+        for (let i = 1; i < fatori.length + 1; i++){
             mult *= i
         }
 
-        for(let i = 0; i < caracteres.length; i++){
+        for (let i = 0; i < caracteres.length; i++){
             let fatorial = 1
 
-            if(caracteres[i] > 1){
-                for(let x = 1; x <= caracteres[i]; x++){
+            if (caracteres[i] > 1){
+                for (let x = 1; x <= caracteres[i]; x++){
                     fatorial *= x
                 }
 
@@ -48,7 +48,7 @@ module.exports = {
 
         let result = mult
 
-        if(rept > 1)
+        if (rept > 1)
             result /= rept
 
         function shuffleArray(arr) {
@@ -65,17 +65,17 @@ module.exports = {
         const repeticoes = result > 3 ? 3 : result
         const combinacoes = result > 3 ? diversao[5]["combinacoes"] : diversao[5]["combinacao"]
 
-        for(let i = 0; i < repeticoes; i++){
+        for (let i = 0; i < repeticoes; i++){
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''))
 
             exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`
             qtd_quebras = exib_formatado.split(anagrama_formado[i])
 
-            if(qtd_quebras.length > 2 && fatori_fix.length > 4)
+            if (qtd_quebras.length > 2 && fatori_fix.length > 4)
                 cor_embed = 0xfbff3d
         }
 
-        if(cor_embed === 0xfbff3d)
+        if (cor_embed === 0xfbff3d)
             exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`
 
         const anagrama = new EmbedBuilder()

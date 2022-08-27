@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const remformats = require('../../adm/funcoes/remformats')
+const formata_texto = require('../../adm/funcoes/formata_texto')
 
 let horas_tocadas, horas_passadas
 
@@ -33,47 +33,47 @@ module.exports = {
                 
                 let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
                 
-                if(res.includes("Página não encontrada"))
+                if (res.includes("Página não encontrada"))
                     return interaction.editReply("Este perfil não existe, tente novamente")
 
-                if(!res.includes("ainda não ouviu nenhuma música.")){
-                    if(res.includes("<div class=\"about-me-header\">")){
+                if (!res.includes("ainda não ouviu nenhuma música.")){
+                    if (res.includes("<div class=\"about-me-header\">")){
                         descricao = `_- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"_`
                     }
 
-                    if(res.includes("<span class=\"header-scrobble-since\">"))
+                    if (res.includes("<span class=\"header-scrobble-since\">"))
                         criacao_conta = res.split("<span class=\"header-scrobble-since\">")[1].split("</span>")[0].replace("• em scrobble desde ", "")
                     
                     avatar = `https://lastfm.freetls.fastly.net/i/u/avatar170s/${res.split("alt=\"Avatar de ")[0].split("https://lastfm.freetls.fastly.net/i/u/avatar170s/")[1].replace("\"", "")}`
                     nome = res.split("Perfil musical de ")[1].split(" | Last.fm</title>")[0]
 
-                    if(res.includes("data-analytics-action=\"ObsessionTrackName\"")){
+                    if (res.includes("data-analytics-action=\"ObsessionTrackName\"")){
                         obsessao = res.split("data-analytics-action=\"ObsessionTrackName\"")[1]
 
-                        musica_obsessao = remformats(obsessao.split("</a>")[0].split(">")[1])
-                        artista_obsessao = remformats(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
+                        musica_obsessao = formata_texto(obsessao.split("</a>")[0].split(">")[1])
+                        artista_obsessao = formata_texto(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
 
                         obsessao = `💿 Obsessão do momento\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
                     }
 
-                    if(res.includes("modal?action=scrobbling-now-theirs\"")){
-                        scrobble_atual = `${remformats(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${remformats(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
+                    if (res.includes("modal?action=scrobbling-now-theirs\"")){
+                        scrobble_atual = `${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
                         
                         musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] == "unloved" ? "🖤 " : "💙 "
 
                         obsessao += `🎶 Em Scrobble no momento: \n${musica_curtida}${scrobble_atual}`
                     }
 
-                    if(obsessao !== "")
+                    if (obsessao !== "")
                         obsessao = `\`\`\`fix\n${obsessao}\`\`\``
                     
-                    if(res.includes("Média de "))
+                    if (res.includes("Média de "))
                         media_scrobbles = res.split("Média de ")[1].split(" scrobble")[0]
                     
                     musicas_ouvidas = res.split("<h4 class=\"header-metadata-title\">Scrobbles</h4>")[1].split("</a></p>")[0].split("/library\"")[1].split(">")[1].replace(/ /g, "")
                     artistas_ouvidos = res.split("/library/artists\"")[1].split("</a>")[0].replace(">", "").replace(/ /g, "").replace(/\n/g, "")
 
-                    if(res.includes("<h4 class=\"header-metadata-title\">Faixas preferidas</h4>"))
+                    if (res.includes("<h4 class=\"header-metadata-title\">Faixas preferidas</h4>"))
                         faixas_preferidas = res.split("<h4 class=\"header-metadata-title\">Faixas preferidas</h4>")[1].split("</a></p>")[0].split("/loved\"")[1].replace(">", "").replace(/ /g, "").replace(/\n/g, "")
                     
                     // Buscando histórico semanal do usuário
@@ -87,9 +87,9 @@ module.exports = {
 
                         let indicador_scrobbles = "⏺️", indicador_media = "⏺️", indicador_tempo = "⏺️", indicador_artista = "⏺️", indicador_album = "⏺️"
                         
-                        if(!semanal.includes("não ouviu nenhuma música :(")){
+                        if (!semanal.includes("não ouviu nenhuma música :(")){
                             // Scrobbles p/ dia
-                            if(semanal.includes("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")){
 
                                 scrobbles_semanal = semanal.split("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")[1].split(" scrobbles")[0].split(">")[2].trim()
 
@@ -99,7 +99,7 @@ module.exports = {
                             }
 
                             // Média de Scrobbles p/ dia
-                            if(semanal.includes("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")){
 
                                 media_semanal = semanal.split("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")[1].split(" scrobbles")[0].split(">")[1].trim()
 
@@ -109,7 +109,7 @@ module.exports = {
                             }
 
                             // Tempo de reprodução
-                            if(semanal.includes("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")){
 
                                 tempo_reproducao = semanal.split("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")[1].split("</div>")[0].split(">")[1].trim()
 
@@ -119,7 +119,7 @@ module.exports = {
                             }
 
                             // Álbuns
-                            if(semanal.includes("<div class=\"graph-description\">")){
+                            if (semanal.includes("<div class=\"graph-description\">")){
 
                                 albuns_semanal = semanal.split("<div class=\"graph-description\">")[1].split(" álbuns")[0].split("<h3>")[1].trim()
 
@@ -129,7 +129,7 @@ module.exports = {
                             }
 
                             // Artistas
-                            if(semanal.includes("<div class=\"graph-description\">")){
+                            if (semanal.includes("<div class=\"graph-description\">")){
 
                                 artistas_semanal = semanal.split("<div class=\"graph-description\">")[2].split(" artistas")[0].split("<h3>")[1].trim()
 
@@ -162,10 +162,10 @@ module.exports = {
                             }
                         )
                         
-                        if(descricao.length > 0 || obsessao.length > 0)
+                        if (descricao.length > 0 || obsessao.length > 0)
                             embed.setDescription(`${descricao}${obsessao}`)
                         
-                        if(!semanal.includes("não ouviu nenhuma música :("))
+                        if (!semanal.includes("não ouviu nenhuma música :("))
                             embed.addFields(
                                 {
                                     name: `:calendar: Semanal`,
@@ -176,7 +176,7 @@ module.exports = {
 
                         interaction.editReply({embeds: [embed]})
                     })
-                }else
+                } else
                     interaction.editReply("Este perfil existe, porém não possui nenhum Scrobble :(")
             })
         }catch(err){
@@ -187,7 +187,7 @@ module.exports = {
 
 function regula_porcentagem(stats_semana, stats_passado, hora){
 
-    if(hora){ // Formatando a hora para números inteiros
+    if (hora){ // Formatando a hora para números inteiros
         stats_semana = parseInt(stats_semana.split(" dia")[0]) * 24 + parseInt(stats_semana.split(", ")[1].split(" ")[0])
         stats_passado = parseInt(stats_passado.split(" dia")[0] * 24) + parseInt(stats_passado.split(", ")[1].split(" ")[0])
 
@@ -197,7 +197,7 @@ function regula_porcentagem(stats_semana, stats_passado, hora){
 
     porcentagem = (100 * stats_semana) / stats_passado
 
-    if(stats_semana < stats_passado)
+    if (stats_semana < stats_passado)
         porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
     else
         porcentagem = `🔼 ${(100 - porcentagem).toFixed(2)}`

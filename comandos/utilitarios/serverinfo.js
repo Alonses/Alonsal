@@ -16,8 +16,8 @@ module.exports = {
 
         const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
 
-        const getDateDiff = require('../../adm/funcoes/diffdatas.js')
-        const formata_data = require('../../adm/funcoes/formatadata.js')
+        const getDateDiff = require('../../adm/funcoes/diff_datas.js')
+        const formata_data = require('../../adm/funcoes/formata_data.js')
 
         const boost_sv = busca_emoji(client, emojis.boost)
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
@@ -44,15 +44,15 @@ module.exports = {
         const data_criacao = formata_data(new Date(interaction.guild.createdAt), idioma_definido) // Criação do servidor
         const diferenca_criacao = getDateDiff(new Date(interaction.guild.createdAt), data_atual, utilitarios)
 
-        if(icone_server !== null){
+        if (icone_server !== null){
             icone_server = icone_server.replace(".webp", ".gif")
 
             await fetch(icone_server)
             .then(res => {
-                if(res.status !== 200)
+                if (res.status !== 200)
                     icone_server = icone_server.replace('.gif', '.webp')
             })
-        }else
+        } else
             icone_server = ""
         
         const infos_sv = new EmbedBuilder()
@@ -105,7 +105,7 @@ module.exports = {
                 }
             )
 
-            if(interaction.guild.premiumSubscriptionCount > 0)
+            if (interaction.guild.premiumSubscriptionCount > 0)
                 infos_sv.addFields(
                     { 
                         name: `${boost_sv} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,

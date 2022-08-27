@@ -20,11 +20,11 @@ module.exports = {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         
-        if(!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true})
+        if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true})
 
-		if(interaction.options.getSubcommand() === "gif")
+		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-		else{
+		else {
 			
 			return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
 			
