@@ -23,7 +23,7 @@ if (modo_develop){
 	clientId = clientId_2
 }
 
-const commands = []
+let commands = []
 const comandos_privados = []
 client.commands = new Collection()
 
