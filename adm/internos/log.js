@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 const fs = require('fs')
 
-const formata_horas = require('../funcoes/diff_horas.js')
+const formata_horas = require('../funcoes/formata_horas.js')
 
 module.exports = async ({client, interaction}) => {
     
