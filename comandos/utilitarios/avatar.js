@@ -7,12 +7,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('avatar')
 		.setDescription('⌠💡⌡ Veja o avatar seu ou de outro usuário.')
-		.addUserOption(option => option.setName('alvo').setDescription('Marque outro usuário como alvo')),
+		.addUserOption(option => option.setName('usuario').setDescription('Marque outro usuário como alvo')),
 	async execute(client, interaction) {
 		
 		const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 		
-		let user = interaction.options.getUser('alvo')
+		let user = interaction.options.getUser('usuario')
 		if (!user) 
 			user = interaction.user
 
