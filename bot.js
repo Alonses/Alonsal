@@ -1,7 +1,7 @@
 const { readdirSync } = require("fs")
 const idioma = require("./adm/idioma")
 const { REST } = require('@discordjs/rest')
-const { Client, Collection, GatewayIntentBits } = require('discord.js')
+const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { Routes } = require('discord.js')
 let { clientId, clientId_2, token, token_2, guildId, owner_id } = require('./config.json')
 
@@ -9,12 +9,13 @@ const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
-    	GatewayIntentBits.MessageContent
+    	GatewayIntentBits.MessageContent,
+		IntentsBitField.Flags.GuildMembers
 	]
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 1
+const modo_develop = 0, force_update = 0, status = 1
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 
@@ -47,7 +48,7 @@ if (modo_develop || force_update){
 
 	if (force_update){ // Registrando os comandos públicos globalmente
 		rest.put(Routes.applicationCommands(clientId), { body: commands })
-			.then(() => console.log('Comandos Alonsais globais atualizados com sucesso.'))
+			.then(() => console.log('Comandos globais atualizados com sucesso.'))
 			.catch(console.error)
 	}
 
@@ -90,8 +91,10 @@ client.once('ready', async () => {
 	client.idioma = idioma
 	client.owners = owner_id
 
-	await require("./adm/internos/status.js")({client})
-	console.log('Caldeiras aquecidas, pronto para operar')
+	if (status)
+		await require("./adm/internos/status.js")({client})
+	
+	console.log(`Caldeiras do ${client.user.username} aquecidas, pronto para operar`)
 })
 
 client.on("messageCreate", async (message) => {

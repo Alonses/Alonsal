@@ -56,16 +56,16 @@ module.exports = {
         const pages = users.length / 6
         const paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
         
-        if(users.length > 6)
+        if (users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
 
-        if(!user_alvo){
-            if(pagina > paginas) // Número de página escolhida maior que as disponíveis
+        if (!user_alvo){
+            if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                 return interaction.reply({ content: "Informe um número da página menor para isto", ephemeral: true })
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
-            for(let x = 0; x < remover; x++)
+            for (let x = 0; x < remover; x++)
                 users.shift()
 
             rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
@@ -74,8 +74,8 @@ module.exports = {
         let i = 0
 
         for (const user of users) {
-            if(user_alvo)
-                if(user.id === user_alvo.id){
+            if (user_alvo)
+                if (user.id === user_alvo.id){
                     usuario_alvo.push(user.xp)
                     break
                 }
@@ -90,14 +90,14 @@ module.exports = {
                 levels.push(`\`${formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
             }
 
-            if(!user_alvo) // Verifica se a entrada é um ID
+            if (!user_alvo) // Verifica se a entrada é um ID
                 i++
         }
 
         let embed, img_embed
 
         fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
-            if(!user_alvo){ // Sem usuário alvo definido
+            if (!user_alvo){ // Sem usuário alvo definido
                 embed = new EmbedBuilder()
                 .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
                 .setColor(0x29BB8E)
@@ -124,7 +124,7 @@ module.exports = {
                 img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
             }else{ // Com usuário alvo definido
 
-                if(usuario_alvo.length === 0)
+                if (usuario_alvo.length === 0)
                     usuario_alvo.push(0)
 
                 embed = new EmbedBuilder()
@@ -150,7 +150,7 @@ module.exports = {
             }
 
             fetch(img_embed).then(res => {
-                if(res.status !== 200)
+                if (res.status !== 200)
                     img_embed = img_embed.replace('.gif', '.webp')
 
                 embed.setThumbnail(img_embed)
