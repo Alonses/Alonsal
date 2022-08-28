@@ -53,7 +53,7 @@ module.exports = {
             .setTitle("> Seus dados conhecidos")
             .setColor(0x29BB8E)
             .setDescription(`Este é um resumo dos dados que salvamos de você\n\n${ranking_servidores}`)
-            .setFooter({ text: 'Você pode solicitar a exclusão dos seus dados com o comando /data excluir'})
+            .setFooter({ text: 'Você pode excluir todos os seus dados com o comando /data excluir'})
 
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
