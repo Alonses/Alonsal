@@ -55,9 +55,9 @@ if (modo_develop || force_update){
 		commands = comandos_privados
 
 	// Registrando os comandos privados no servidor
-	// rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-		// .then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
-		// .catch(console.error)
+	rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+		.then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
+		.catch(console.error)
 
 // Removendo os comandos slash globalmente
 	// rest.get(Routes.applicationCommands(clientId))

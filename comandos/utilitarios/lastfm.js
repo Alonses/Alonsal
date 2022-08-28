@@ -200,7 +200,7 @@ function regula_porcentagem(stats_semana, stats_passado, hora){
     if (stats_semana < stats_passado)
         porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
     else
-        porcentagem = `🔼 ${(100 - porcentagem).toFixed(2)}`
+        porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
 
     return porcentagem
 }
