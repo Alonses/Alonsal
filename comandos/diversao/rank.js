@@ -33,12 +33,12 @@ module.exports = {
         const users = []
 
         let rodape = interaction.user.username, user_alvo = interaction.options.getUser('usuario') // Coleta o ID do usuário mencionado
-        let opcoes = interaction.options.data, pagina = 0
+        let opcoes = interaction.options.data, pagina = 1
 
         // Filtrando os valores de entrada caso tenham sido declarados
         opcoes.forEach(valor => {
             if (valor.name == "pagina")
-                pagina = valor.value
+                pagina = valor.value < 1 ? 1 : valor.value
         })
         
         for (const file of readdirSync(`./arquivos/data/rank/${interaction.guild.id}`)) {
@@ -55,9 +55,21 @@ module.exports = {
 
         const pages = users.length / 6
         const paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
-
+        
         if(users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
+
+        if(!user_alvo){
+            if(pagina > paginas) // Número de página escolhida maior que as disponíveis
+                return interaction.reply({ content: "Informe um número da página menor para isto", ephemeral: true })
+
+            const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
+
+            for(let x = 0; x < remover; x++)
+                users.shift()
+
+            rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
+        }
         
         let i = 0
 
