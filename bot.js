@@ -15,7 +15,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, status = 1
+const modo_develop = 0, force_update = 0, status = 1, ranking = 1
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 
@@ -101,7 +101,7 @@ client.on("messageCreate", async (message) => {
 	if (message.author.bot || message.webhookId) return
 
 	try{ // Atualizando ranking e recebendo mensagens de texto
-		if (message.content.length >= 7 && client.user.id == "833349943539531806") await require('./adm/ranking.js')({client, message})
+		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({client, message})
 		
 		require('./adm/internos/comandos_antigos.js')({client, message})
 	}catch(err){
