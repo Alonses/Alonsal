@@ -32,7 +32,7 @@ module.exports = async ({client, interaction}) => {
 
             filtrador.forEach(valor => {
                 // Listando todos os parâmetros usados na interação
-                let entrada = `${valor.name}: ${valor.value}`
+                let entrada = `${valor.name}: ⬛`
                 let opcoes_internas_comando = []
 
                 if (!valor.value)
@@ -42,7 +42,7 @@ module.exports = async ({client, interaction}) => {
                     opcoes_comando = valor.options
                     opcoes_comando.forEach(opcao => {
 
-                        opcao_interna = `${opcao.name}: ${opcao.value}`
+                        opcao_interna = `${opcao.name}: ⬛`
 
                         if (!opcao.value)
                             opcao_interna = ""
