@@ -14,7 +14,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0
+const modo_develop = 0, force_update = 1
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 
