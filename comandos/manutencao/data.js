@@ -9,7 +9,7 @@ module.exports = {
             option.setName("excluir")
             .setDescription("Solicitar a exclusão de seus dados no Alonsal")),
     async execute(client, interaction) {
-        
+
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
 
@@ -29,7 +29,7 @@ module.exports = {
                     else
                         nome_server = server.name
 
-                    ranking.push(`Ranking em ${nome_server}`)
+                    ranking.push(nome_server)
                 }
             }
         }
@@ -47,13 +47,47 @@ module.exports = {
 
             interaction.reply({ content: `Seus dados foram removidos do ${client.user.username}`, ephemeral: true })
         }else{
+            ranking_servidores = `**Ranking nos seguintes servidores:**\`\`\`fix\n${lista_servidores(ranking, 250)}\`\`\``
+
             const embed = new EmbedBuilder()
             .setTitle("> Seus dados conhecidos")
             .setColor(0x29BB8E)
-            .setDescription(`Este é um resumo dos dados que salvamos de você\`\`\`fix\n${ranking.join("\n")}\`\`\``)
+            .setDescription(`Este é um resumo dos dados que salvamos de você\n\n${ranking_servidores}`)
             .setFooter({ text: 'Você pode solicitar a exclusão dos seus dados com o comando /data excluir'})
 
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
     }
+}
+
+function lista_servidores(servidores, linha_corte){
+
+    let nome_servidores = servidores.join(", ")
+
+    if(nome_servidores.length > linha_corte){
+
+        let i = linha_corte
+        nome_interno = nome_servidores.slice(0, linha_corte)
+        do{
+            nome_interno = nome_servidores.slice(0, i)
+            
+            i += 1
+        }while(!nome_interno.includes(", "))
+
+        nome_servidores = nome_interno
+        ultima_posicao = nome_servidores.lastIndexOf(", ")
+
+        // Quantidade de servidores listados anteriormente
+        qtd_servidores = (nome_servidores.match(/,/g) || []).length
+        
+        nome_servidores = nome_servidores.slice(0, ultima_posicao)
+        servidores_restantes = servidores.length - qtd_servidores
+
+        if(servidores_restantes > 1)
+            nome_servidores = `${nome_servidores} e outros ${servidores_restantes} servidores`
+        else
+            nome_servidores = `${nome_servidores} e 1 outro servidor`
+    }
+
+    return nome_servidores
 }
