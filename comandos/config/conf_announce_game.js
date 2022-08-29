@@ -48,7 +48,7 @@ module.exports = {
 
             let entradas = interaction.options.data
 
-            const objeto_anunciado = {
+            const item = {
                 nome: null,
                 tipo: null,
                 link: null,
@@ -60,33 +60,35 @@ module.exports = {
 
             entradas.forEach(valor => {
                 if (valor.name == "nome")
-                    objeto_anunciado.nome = valor.value
+                    item.nome = valor.value
                     
                 if (valor.name == "tipo")
-                    objeto_anunciado.tipo = valor.value
+                    item.tipo = valor.value
                 
                 if (valor.name == "link")
-                    objeto_anunciado.link = valor.value
+                    item.link = valor.value
 
                 if (valor.name == "preço")
-                    objeto_anunciado.preco = valor.value
+                    item.preco = valor.value
 
                 if (valor.name == "expiração")
-                    objeto_anunciado.expira = valor.value
+                    item.expira = valor.value
 
                 if (valor.name == "urgência")
-                    objeto_anunciado.urgencia = valor.value
+                    item.urgencia = valor.value
 
                 if (valor.name == "imagem")
-                    objeto_anunciado.thumbnail = valor.attachment.attachment
+                    item.thumbnail = valor.attachment.attachment
             })
             
-            if (objeto_anunciado.tipo == null)
-                objeto_anunciado.tipo = "jogo"
+            if (item.tipo == null)
+                item.tipo = "jogo"
 
-            if (objeto_anunciado.urgencia == null)
-                objeto_anunciado.urgencia = "n"
+            if (item.urgencia == null)
+                item.urgencia = "n"
             
-            dispara_anuncio({client, interaction, objeto_anunciado})
+            const objetos_anunciado = [item]
+
+            dispara_anuncio({client, interaction, objetos_anunciado})
   	}
 }
