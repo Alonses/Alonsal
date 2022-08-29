@@ -12,7 +12,7 @@ const platformMap = {
     "play.google" : ["<:logo_pst:973395673489756220>", "Google Play"]
 }
 
-module.exports = async ({client, interaction, objeto_anunciado}) => {
+module.exports = async ({client, interaction, objetos_anunciado}) => {
 
     const canais_clientes = []
     
@@ -28,8 +28,8 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
             }
         }
     }
-
-    const matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+    
+    const matches = objetos_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
@@ -39,7 +39,7 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
     
     const row = new ActionRowBuilder()
 
-    objeto_anunciado.forEach(valor => {
+    objetos_anunciado.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
         row.addComponents(
@@ -58,14 +58,14 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
             let idioma_definido = await client.idioma.getLang(servidor)
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
             
-            let texto_anuncio = formata_anun(objeto_anunciado, plataforma, idioma_definido)
+            let texto_anuncio = formata_anun(objetos_anunciado, plataforma, idioma_definido)
             
             const embed = new EmbedBuilder()
             .setTitle(`${logo_plat} ${plataforma}`)
-            .setThumbnail(objeto_anunciado[0].thumbnail)
+            .setImage(objetos_anunciado[0].thumbnail)
             .setColor(cor_embed)
             .setDescription(texto_anuncio)
-
+            
             const canal_alvo = client.channels.cache.get(canais_clientes[i])
 
             // Enviando os anúncios para os canais

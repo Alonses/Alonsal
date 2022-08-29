@@ -10,7 +10,7 @@ module.exports = async ({client}) => {
 
     const date1 = new Date() // Ficará esperando até quinta feira aos 12:00 para executar a rotina
     const dias = [4, 3, 2, 1, 7, 6, 5]
-    const data_alvo = (dias[3] * 86400000) - ((36 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
+    const data_alvo = (dias[date1.getDay()] * 86400000) - ((36 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
 
     const tempo_restante = (new Date(date1.getTime() + data_alvo)) - date1.getTime()
     
