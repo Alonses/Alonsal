@@ -29,6 +29,8 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
         }
     }
 
+    let matches
+
     if(objeto_anunciado.length > 1)
         matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
     else
