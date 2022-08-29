@@ -14,6 +14,12 @@
             "permissao_2" : "to run this command.",
             "error_1" : "Wrrrooong, the correct use of the command is",
             "epic_embed_fail" : "An error occurred while trying to execute this command, I warned the team to eliminate this baidu as soon as possible. apologies for the inconvenience"
+        },
+        {
+            "titulo" : "> Oh, make way for me to go through :notes:",
+            "boas_vindas" : "Hi! Thanks for adding me to the server!\n\nI leave my website attached below, with all the commands if necessary ;D",
+            "idioma_dica" : "Não fala inglês? Sem problemas! Mude meu idioma agora mesmo com o comando /idioma!",
+            "site": "Alonsal Website"
         }
     ],
     "diversao" : [
@@ -156,6 +162,17 @@
             "traducao_faltando" : "This command doesn't have a translation for your language yet, wait!",
             "usos" : "Uses",
             "nao_encontrado" : "I didn't find any command with this name or aliase, try again"
+        },
+        {
+            "ranking_guilds" : "Ranking on the following servers",
+            "dados_conhecidos" : "> Your known data",
+            "resumo_dados" : "This is a summary of the data we save about you.",
+            "dica_rodape" : "You can delete all your data with /data excluir command",
+            "dados_removidos" : "Your data has been removed from",
+            "sem_dados" : "You don't have any data saved here ;)",
+            "server_desconhecido" : "unknown server",
+            "um_server" : "and one other server",
+            "outros_servers" : "and server_repl other servers"
         }
     ],
     "moderacao" : [
@@ -484,6 +501,28 @@
             "titulo" : "Y0uR P4s§w0Rd5, click here to test your password",
             "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
             "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
+        },
+        {
+            "timestamp_1" : "From date to timestamp",
+            "timestamp_2" : "From timestamp to date",
+            "erro_titulo" : ":warning: Something went wrong",
+            "erro_conversao" : "Could not generate a timestamp with the given input, please try again",
+            "valor_nulo" : "The result of this conversion was null",
+            "aviso_1" : "I need more information to be able to convert your date\nFor example `timestamp 2022-06-08 23:03:57` or `/timestamp 385723948238`"
+        },
+        {
+            "sem_scrobbles" : "This profile exists, but it does not have any Scrobble :(",
+            "semanal" : "Weekly",
+            "media_dia" : "Average per day",
+            "tempo_tocado" : "Time played",
+            "albuns" : "Albums",
+            "artistas" : "Artists",
+            "faixas_favoritas" : "Favorite tracks",
+            "geral" : "General",
+            "perfil_musical" : "nome_repl's musical profile",
+            "em_scrobble" : "On Scrobble right now",
+            "obsessao" : "Obsession of the moment",
+            "error_1" : "This profile does not exist, please try again"
         }
     ],
     "trabalho" : [

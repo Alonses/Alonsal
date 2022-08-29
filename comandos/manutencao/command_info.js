@@ -6,7 +6,7 @@ const { comandos } = require('../../arquivos/data/comandos.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('help')
+		.setName('command_help')
 		.setDescription('⌠📡⌡ Veja informações de comandos')
         .addStringOption(option =>
             option.setName('comando')

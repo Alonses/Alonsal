@@ -10,6 +10,8 @@ module.exports = {
             .setDescription("Solicitar a exclusão de seus dados no Alonsal")),
     async execute(client, interaction) {
 
+        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
 
@@ -25,7 +27,7 @@ module.exports = {
                     let server = client.guilds.cache.get(folder)
                 
                     if (!server)
-                        nome_server = "servidor desconhecido"
+                        nome_server = manutencao[9]["server_desconhecido"]
                     else
                         nome_server = server.name
 
@@ -35,7 +37,7 @@ module.exports = {
         }
 
         if(ranking.length < 1)
-            return interaction.reply({ content: "Você não possui dados salvos por aqui ;)", ephemeral: true })
+            return interaction.reply({ content: manutencao[9]["sem_dados"], ephemeral: true })
 
         if(exclusao){ // Excluindo os dados do usuário do bot
             for (const folder of readdirSync(`./arquivos/data/rank/`)){
@@ -45,22 +47,22 @@ module.exports = {
                 }
             }
 
-            interaction.reply({ content: `Seus dados foram removidos do ${client.user.username}`, ephemeral: true })
+            interaction.reply({ content: `${manutencao[9]["dados_removidos"]} ${client.user.username}`, ephemeral: true })
         }else{
-            ranking_servidores = `**Ranking nos seguintes servidores:**\`\`\`fix\n${lista_servidores(ranking, 250)}\`\`\``
+            ranking_servidores = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
 
             const embed = new EmbedBuilder()
-            .setTitle("> Seus dados conhecidos")
+            .setTitle(manutencao[9]["dados_conhecidos"])
             .setColor(0x29BB8E)
-            .setDescription(`Este é um resumo dos dados que salvamos de você\n\n${ranking_servidores}`)
-            .setFooter({ text: 'Você pode excluir todos os seus dados com o comando /data excluir'})
+            .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${ranking_servidores}`)
+            .setFooter({ text: manutencao[9]["dica_rodape"]})
 
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
     }
 }
 
-function lista_servidores(servidores, linha_corte){
+function lista_servidores(servidores, linha_corte, manutencao){
 
     let nome_servidores = servidores.join(", ")
 
@@ -84,9 +86,9 @@ function lista_servidores(servidores, linha_corte){
         servidores_restantes = servidores.length - qtd_servidores
 
         if(servidores_restantes > 1)
-            nome_servidores = `${nome_servidores} e outros ${servidores_restantes} servidores`
+            nome_servidores = `${nome_servidores} ${manutencao[9]["outros_servers"].replace("server_repl", servidores_restantes)}`
         else
-            nome_servidores = `${nome_servidores} e 1 outro servidor`
+            nome_servidores = `${nome_servidores} ${manutencao[9]["um_server"]}`
     }
 
     return nome_servidores

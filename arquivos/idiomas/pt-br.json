@@ -7,20 +7,26 @@
     ],
     "inicio" : [
         {
-            "menciona" : "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n:earth_americas: | Use o comando `.alang` para ver a lista de idiomas disponíveis",
+            "menciona" : "Aoba! Digite `/help` para ver a lista de comandos :D\n:earth_americas: | Use o comando `/idioma` para ver a lista de idiomas disponíveis",
             "aguarde": "Aguarde",
             "cooldown" : "segundos para executar esse comando novamente",
             "permissao_1" : "você não tem a permissão",
             "permissao_2" : "para executar este comando.",
             "error_1" : "Errrrou, o uso correto do comando é",
             "epic_embed_fail" : "Houve um erro ao tentar executar este comando, _não é comum mas acontece_, chamei os enceiradores para eliminar este baidu o quanto antes!\nDesculpas pelo inconveniente"
+        },
+        {
+            "titulo" : "> Ó Abre alas que eu queru passsaa :notes:",
+            "boas_vindas" : "Olá! Obrigado por me adicionar ao servidor!\n\nDeixo em anexo abaixo o meu site, com todos os comandos caso necessário ;D",
+            "idioma_dica" : "Do not speak Portuguese? No problems! Change my language right now with the /idioma command!",
+            "site": "Site Alonsal"
         }
     ],
     "diversao" : [
         { "baidu" : "Louvado seja!!" },
         { "asf" : "Vai uma esfiha ae?" },
         {
-            "aviso_1" : "marque duas pessoas para testar\nPor exemplo, `.amor @Alonsal @Slondo`",
+            "aviso_1" : "marque duas pessoas para testar\nPor exemplo, `/amor @Alonsal @Slondo`",
             "limda" : "Limda :gift_heart:",
             "rodape" : "Amor a si próprio é oq importa :heartpulse:",
             "100perc" : "Praticamente casados :heart_on_fire:",
@@ -37,11 +43,9 @@
             "error_1" : "kd o @ do usuário?",
             "error_2" : "sai pra lá seu GA :cow: DO, teste isso com outro usuário"
         },
+        { "peao" : "Roda o pião" },
         {
-            "peao" : "Roda o pião"
-        },
-        {
-            "aviso_1" : "Informe algo além do comando, por exemplo `.ana alonsal > odnols`",
+            "aviso_1" : "Informe algo além do comando, por exemplo `/anagrama alonsal > odnols`",
             "anagrama" : "Seu anagrama",
             "entrada" : "Entrada original",
             "lista_combinacoes" : "Possiveis combinações",
@@ -50,12 +54,8 @@
             "combinacoes" : "combinações!",
             "sorte" : "Houve uma repetição de palavras! Seria sorte?"
         },
-        {
-            "nsfw_jaja" : "Devido ao excesso de delícia este comando só pode ser usado num canal NSFW"
-        },
-        {
-            "aviso_1" : "Escreva algo para este comando\nPor exemplo, `.asans slomdo muinto cringerrr afff`"
-        },
+        { "nsfw_jaja" : "Devido ao excesso de delícia este comando só pode ser usado num canal NSFW" },
+        { "aviso_1" : "Escreva algo para este comando\nPor exemplo, `/sans slomdo muinto cringerrr afff`" },
         {
             "rank_sv" : "Rank de",
             "rank_rc" : "Ranking de comandos",
@@ -79,9 +79,7 @@
             "conteudo" : "O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!",
             "rodape" : "O jogo pode não rodar direito em celulares."
         },
-        {
-            "aviso_1" : "Informe cara ou coroa como `.aco cara` ou `.aco coroa` para testar sua sorte!"
-        },
+        { "aviso_1" : "Informe cara ou coroa como `/coin cara` ou `/coin coroa` para testar sua sorte!" },
         {
             "aviso_1" : "Informe **apenas números** para a quantidade de dados e número de faces.",
             "aviso_2" : "Informe pelo menos 1 dado como `.ada 1 <faces>` para poder rodar.",
@@ -90,7 +88,7 @@
             "error_3" : "Não é possível rodar sólidos geométricos com menos de 4 faces."
         },
         {
-            "aviso_1" : "Envie como `.ajkp papel` ou como `.ajkp` para uma partida randômica."
+            "aviso_1" : "Envie como `/jokenpo papel` ou como `/jokenpo` para uma partida randômica."
         },
         {
             "aviso_1" : "Informe pelo menos 2 itens para eu escolher",
@@ -116,9 +114,9 @@
         },
         {
             "infos" : "Patinando entre as linhas bugadas :man_golfing:",
-            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanches, 40 tipos de lanches, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`.amail <sua msg>`**\n:page_facing_up: Utilize **`.ag`** ou **`.agit`** para visualizar o repositório do Alonsal",
-            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Entre no Hub multiconectado do Alonsal",
-            "conteudo_3" : "**`.asuporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`.aga`** | **`.agado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTAS\nFrases do **`.atext`** não representam as ideias dos criadores do Alonsal, sendo assim, são apenas para fins cômicos.",
+            "conteudo_1" : "Este bot é patrocinado por Baidu e Renato's lanches, 40 tipos de lanches, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`/mail <sua msg>`**\n:page_facing_up: Utilize **`/git`** para visualizar o repositório do Alonsal",
+            "conteudo_2" : "**`/server`** - Entre no Hub multiconectado do Alonsal",
+            "conteudo_3" : "**`/suporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`/gado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTAS\nFrases do **`/textoes`** não representam as ideias dos criadores do Alonsal, sendo assim, são apenas para fins cômicos.",
             "invocado_1" : "Já fui invocado",
             "invocado_2" : "vezes",
             "versao" : "Versão",
@@ -150,13 +148,22 @@
             "info" : "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!",
             "despachei" : "despachei o convite para o Hub alonsal no seu privado :handshake:"
         },
-        {
-            "aviso_1" : "Informe um número entre 1 e 4 para navegar pelas páginas do menu"
-        },
+        { "aviso_1" : "Informe um número entre 1 e 4 para navegar pelas páginas do menu" },
         {
             "traducao_faltando" : "Este comando ainda não possui uma tradução para o seu idioma, aguarde!",
             "usos" : "Usos",
             "nao_encontrado" : "Não encontrei nenhum comando com este nome ou aliase, tente novamente"
+        },
+        {
+            "ranking_guilds" : "Ranking nos seguintes servidores",
+            "dados_conhecidos" : "> Seus dados conhecidos",
+            "resumo_dados" : "Este é um resumo dos dados que salvamos de você",
+            "dica_rodape" : "Você pode excluir todos os seus dados com o comando /data excluir",
+            "dados_removidos" : "Seus dados foram removidos do",
+            "sem_dados" : "Você não possui dados salvos por aqui ;)",
+            "server_desconhecido" : "servidor desconhecido",
+            "um_server" : "e 1 outro servidor",
+            "outros_servers" : "e outros server_repl servidores"
         }
     ],
     "moderacao" : [
@@ -188,9 +195,7 @@
             "error_2" : "O Limite de emojis para este servidor foi atingido, remova alguns antes de adicionar novos",
             "error_3" : "Não foi possível remover este emoji, tente novamente"
         },
-        {
-            "permissao_1" : "Você não possui permissões para gerenciar o servidor"
-        },
+        { "permissao_1" : "Você não possui permissões para gerenciar o servidor" },
         {
             "permissao_1" : "Você não pode banir ou expulsar membros",
             "permissao_2" : "Eu não posso banir ou expulsar membros",
@@ -256,7 +261,7 @@
             "codificado" : ":one: Sua mensagem codificada em binário",
             "decodificado" : ":zero: Sua mensagem decodificada do binário",
             "aviso_1" : "Escreva algo para utilizar este comando",
-            "aviso_2" : "Informe como `.abn encode <seu_texto>` ou `.abn decode <seu_texto_codificado>`",
+            "aviso_2" : "Informe como `/binario <seu_texto>` ou `/binario <seu_texto_codificado>`",
             "resul_vazio" : "O resultado final era vazio, tente novamente",
             "titulo_vazio" : ":octagonal_sign: A decodificação resultou em vazio",
             "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
@@ -267,9 +272,7 @@
             "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
             "id_user" : "Informe o ID de um usuário"
         },
-        {
-            "reverso" : "Sua mensagem ao contrário"
-        },
+        { "reverso" : "Sua mensagem ao contrário" },
         {
             "aviso_1" : "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
             "aviso_2" : "Envie apenas 1 arquivo por vez",
@@ -283,7 +286,7 @@
             "remove_tudo" : "Você removeu tudo, vai dá não"
         },
         {
-            "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `.at sao paulo`",
+            "aviso_1" : "Informe o nome de alguma cidade para buscar\nPor exemplo, como `/tempo sao paulo`",
             "aviso_2" : "Não encontrei nenhum local chamado",
             "aviso_3" : "Houve algum erro com a API de clima e não é possível pesquisar por climas no momento",
             "aviso_continente" : "Estes dados são uma média de todos os valores do continente pesquisado",
@@ -344,7 +347,7 @@
             "atributos" : "Atributos",
             "disco_musical" : "Disco musical",
             "livro_encantado" : "Livro encantado",
-            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo .amc \"item_repl\"",
+            "sugestao_pesquisa" : "Item errado? Tente pesquisar utilizando aspas, por exemplo /mine \"item_repl\"",
             "mais_detalhes_wiki" : "[Veja mais detalhes na wiki](link_repl)",
             "nota_rodape" : "Este item ainda não foi oficialmente implementado, seus dados não são oficiais",
             "sim" : "Sim",
@@ -362,11 +365,11 @@
             "acontecimentos_2" : "Abaixo estão todos os acontecimentos na data de",
             "utilize_1" : "Utilize o comando",
             "utilize_2" : "para visualizar um acontecimento específico",
-            "aviso_1" : "Envie como `.acon 31-01` para poder pesquisar em uma data específica\nOu use apenas `.acon` para ver acontecimentos na data de hoje pela história",
+            "aviso_1" : "Envie como `/history 31-01` para poder pesquisar em uma data específica\nOu use apenas `/history` para ver acontecimentos na data de hoje pela história",
             "aviso_2" : "Os valores informados estão errados, por favor, insira valores numéricos corretos para dia e mês",
             "aviso_3" : "Procurando um acontecimento...",
             "error_1" : "Informe um número da lista de acontecimentos para visualizar mais detalhes",
-            "sem_entradas" : "Não há acontecimentos para esta data, insira uma data diferente `.acon 21-01`"
+            "sem_entradas" : "Não há acontecimentos para esta data, insira uma data diferente `/history 21-01`"
         },
         {
             "chave": "Chave",
@@ -470,7 +473,21 @@
             "erro_titulo" : ":warning: Algo saiu errado",
             "erro_conversao" : "Não foi possível gerar um timestamp com a entrada informada, tente novamente",
             "valor_nulo" : "O resultado desta conversão foi nulo",
-            "aviso_1" : "Necessito de mais informações para poder converter sua data\nPor exemplo `.atime 2022-06-08 23:03:57` ou `.atime 385723948238`"
+            "aviso_1" : "Necessito de mais informações para poder converter sua data\nPor exemplo `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"
+        },
+        {
+            "sem_scrobbles" : "Este perfil existe, porém não possui nenhum Scrobble :(",
+            "semanal" : "Semanal",
+            "media_dia" : "Média p/ dia",
+            "tempo_tocado" : "Tempo tocado",
+            "albuns" : "Álbuns",
+            "artistas" : "Artistas",
+            "faixas_favoritas" : "Faixas favoritas",
+            "geral" : "Geral",
+            "perfil_musical" : "Perfil musical de nome_repl",
+            "em_scrobble" : "Em Scrobble no momento",
+            "obsessao" : "Obsessão do momento",
+            "error_1" : "Este perfil não existe, tente novamente"
         }
     ],
     "trabalho" : [
