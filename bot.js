@@ -16,11 +16,11 @@ const client = new Client({
 
 // Alternância entre modo normal e de testes
 const modo_develop = 0, force_update = 0
-let status = 1, ranking = 1
+let status = 0, ranking = 0
 
 if(!modo_develop){
-	status = 0
-	ranking = 0
+	status = 1
+	ranking = 1
 }
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
