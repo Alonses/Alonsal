@@ -28,8 +28,11 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
             }
         }
     }
-    
-    const matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+
+    if(objeto_anunciado.length > 1)
+        matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+    else
+        matches = objeto_anunciado.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
