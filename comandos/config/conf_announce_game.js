@@ -87,6 +87,6 @@ module.exports = {
             if (objeto_anunciado.urgencia == null)
                 objeto_anunciado.urgencia = "n"
             
-            dispara_anuncio(client, interaction, objeto_anunciado)
+            dispara_anuncio({client, interaction, objeto_anunciado})
   	}
 }

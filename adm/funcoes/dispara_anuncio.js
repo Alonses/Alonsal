@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle, RequestManager } = require('discord.js')
 const { canal_games } = require('../../arquivos/data/games/canal_games.json')
 const formata_anun = require('./formata_games.js')
 
@@ -29,12 +29,7 @@ module.exports = async ({client, interaction, objeto_anunciado}) => {
         }
     }
 
-    let matches
-
-    if(objeto_anunciado.length > 1)
-        matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
-    else
-        matches = objeto_anunciado.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+    const matches = objeto_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
