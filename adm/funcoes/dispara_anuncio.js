@@ -1,5 +1,4 @@
-const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle, RequestManager } = require('discord.js')
-const { canal_games } = require('../../arquivos/data/games/canal_games.json')
+const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const formata_anun = require('./formata_games.js')
 
 const platformMap = {
@@ -15,7 +14,8 @@ const platformMap = {
 module.exports = async ({client, interaction, objetos_anunciado}) => {
 
     const canais_clientes = []
-    
+    const { canal_games } = require('../../arquivos/data/games/canal_games.json')
+
     percorrer(canal_games)
 
     function percorrer(obj) { // Coleta os valores de canais e cargos para anunciar
@@ -35,7 +35,7 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
-    let canais_recebidos = 0
+    let canais_recebidos = 0, marcacao = '⠀'
     
     const row = new ActionRowBuilder()
 
@@ -60,6 +60,9 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             
             let texto_anuncio = formata_anun(objetos_anunciado, plataforma, idioma_definido)
             
+            if(typeof canais_clientes[i + 1] !== "undefined")
+                marcacao = `<@&${canais_clientes[i + 1]}>`
+
             const embed = new EmbedBuilder()
             .setTitle(`${logo_plat} ${plataforma}`)
             .setImage(objetos_anunciado[0].thumbnail)
@@ -71,7 +74,7 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5){        
                 if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)){
-                    canal_alvo.send({embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
+                    canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
                     
                     canais_recebidos++
                 }

@@ -16,8 +16,7 @@ module.exports = {
                 .setRequired(true)),
 	async execute(client, interaction) {
         
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         
         const texto_entrada = interaction.options.data[0].value
 
@@ -34,7 +33,7 @@ module.exports = {
                 let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
                 
                 if (res.includes("Página não encontrada"))
-                    return interaction.editReply("Este perfil não existe, tente novamente")
+                    return interaction.editReply(utilitarios[20]["error_1"])
 
                 if (!res.includes("ainda não ouviu nenhuma música.")){
                     if (res.includes("<div class=\"about-me-header\">")){
@@ -52,8 +51,8 @@ module.exports = {
 
                         musica_obsessao = formata_texto(obsessao.split("</a>")[0].split(">")[1])
                         artista_obsessao = formata_texto(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
-
-                        obsessao = `💿 Obsessão do momento\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
+                        
+                        obsessao = `💿 ${utilitarios[20]["obsessao"]}\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
                     }
 
                     if (res.includes("modal?action=scrobbling-now-theirs\"")){
@@ -61,7 +60,7 @@ module.exports = {
                         
                         musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] == "unloved" ? "🖤 " : "💙 "
 
-                        obsessao += `🎶 Em Scrobble no momento: \n${musica_curtida}${scrobble_atual}`
+                        obsessao += `🎶 ${utilitarios[20]["em_scrobble"]}: \n${musica_curtida}${scrobble_atual}`
                     }
 
                     if (obsessao !== "")
@@ -95,7 +94,7 @@ module.exports = {
 
                                 scrobbles_semana_passada = semanal.split("class=\"listening-report-highlight-comparison\">")[1].split(" (semana passada)")[0].split("vs. ")[1].trim()
 
-                                indicador_scrobbles = regula_porcentagem(scrobbles_semanal, scrobbles_semana_passada)
+                                indicador_scrobbles = regula_porcentagem(scrobbles_semanal, scrobbles_semana_passada, 0, utilitarios)
                             }
 
                             // Média de Scrobbles p/ dia
@@ -105,7 +104,7 @@ module.exports = {
 
                                 media_semana_passada = semanal.split("class=\"listening-report-highlight-comparison\">")[2].split(" (semana passada)")[0].split("vs. ")[1]
 
-                                indicador_media = regula_porcentagem(media_semanal, media_semana_passada)
+                                indicador_media = regula_porcentagem(media_semanal, media_semana_passada, 0, utilitarios)
                             }
 
                             // Tempo de reprodução
@@ -115,7 +114,7 @@ module.exports = {
 
                                 tempo_reproducao_passada = semanal.split("class=\"listening-report-highlight-comparison\">")[3].split(" (semana passada)")[0].split("vs. ")[1].trim()
                                 
-                                indicador_tempo = regula_porcentagem(tempo_reproducao, tempo_reproducao_passada, 1)
+                                indicador_tempo = regula_porcentagem(tempo_reproducao, tempo_reproducao_passada, 1, utilitarios)
                             }
 
                             // Álbuns
@@ -125,7 +124,7 @@ module.exports = {
 
                                 albuns_semana_passada = semanal.split("<p class=\"listening-report-highlight-comparison-meta\">")[1].split(" (semana passada)")[0].split("vs. ")[1].trim()
 
-                                indicador_album = regula_porcentagem(albuns_semanal, albuns_semana_passada)
+                                indicador_album = regula_porcentagem(albuns_semanal, albuns_semana_passada, 0, utilitarios)
                             }
 
                             // Artistas
@@ -135,28 +134,28 @@ module.exports = {
 
                                 artistas_semana_passada = semanal.split("<p class=\"listening-report-highlight-comparison-meta\">")[2].split(" (semana passada)")[0].split("vs. ")[1].trim()
 
-                                indicador_artista = regula_porcentagem(artistas_semanal, artistas_semana_passada)
+                                indicador_artista = regula_porcentagem(artistas_semanal, artistas_semana_passada, 0, utilitarios)
                             }
                         }
 
                         const embed = new EmbedBuilder()
-                        .setTitle(`Perfil musical de ${nome}`)
+                        .setTitle(utilitarios[20]["perfil_musical"].replace("nome_repl", nome))
                         .setThumbnail(avatar)
                         .setURL(usuario_alvo)
                         .setColor(0x29BB8E)
                         .addFields(
                             {
-                                name: `:saxophone: Geral`,
-                                value: `:notes: **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **Média p/ dia: **\`${media_scrobbles}\``,
+                                name: `:saxophone: ${utilitarios[20]["geral"]}`,
+                                value: `:notes: **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **${utilitarios[20]["media_dia"]}: **\`${media_scrobbles}\``,
                                 inline: true
                             },
                             {
                                 name: `⠀`,
-                                value: `:man_singer: **Artistas: **\`${artistas_ouvidos}\`\n:blue_heart: **Faixas favoritas: **\`${faixas_preferidas}\``,
+                                value: `:man_singer: **${utilitarios[20]["artistas"]}: **\`${artistas_ouvidos}\`\n:blue_heart: **${utilitarios[20]["faixas_favoritas"]}: **\`${faixas_preferidas}\``,
                                 inline: true
                             },
                             {
-                                name: `:birthday: Entrada`,
+                                name: `:birthday: ${utilitarios[13]["conta_criada"]}`,
                                 value: `**${criacao_conta}**`,
                                 inline: true
                             }
@@ -168,8 +167,8 @@ module.exports = {
                         if (!semanal.includes("não ouviu nenhuma música :("))
                             embed.addFields(
                                 {
-                                    name: `:calendar: Semanal`,
-                                    value: `:blue_book: **Álbuns: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n:man_singer: **Artistas: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **Média p/ dia: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n:alarm_clock: **Tempo tocado: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
+                                    name: `:calendar: ${utilitarios[20]["semanal"]}`,
+                                    value: `:blue_book: **${utilitarios[20]["albuns"]}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n:man_singer: **${utilitarios[20]["artistas"]}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${utilitarios[20]["media_dia"]}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n:alarm_clock: **${utilitarios[20]["tempo_tocado"]}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
                                     inline: false
                                 }
                             )
@@ -177,7 +176,7 @@ module.exports = {
                         interaction.editReply({embeds: [embed]})
                     })
                 } else
-                    interaction.editReply("Este perfil existe, porém não possui nenhum Scrobble :(")
+                    interaction.editReply(utilitarios[20]["sem_scrobbles"])
             })
         }catch(err){
             console.log(err)
@@ -185,14 +184,14 @@ module.exports = {
     }
 }
 
-function regula_porcentagem(stats_semana, stats_passado, hora){
+function regula_porcentagem(stats_semana, stats_passado, hora, utilitarios){
 
     if (hora){ // Formatando a hora para números inteiros
         stats_semana = parseInt(stats_semana.split(" dia")[0]) * 24 + parseInt(stats_semana.split(", ")[1].split(" ")[0])
         stats_passado = parseInt(stats_passado.split(" dia")[0] * 24) + parseInt(stats_passado.split(", ")[1].split(" ")[0])
 
-        horas_tocadas = `${stats_semana} horas`
-        horas_passadas = `${stats_passado} horas`
+        horas_tocadas = `${stats_semana}${utilitarios[14]["horas"]}`
+        horas_passadas = `${stats_passado}${utilitarios[14]["horas"]}`
     }
 
     porcentagem = (100 * stats_semana) / stats_passado

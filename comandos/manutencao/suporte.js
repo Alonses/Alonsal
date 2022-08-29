@@ -9,9 +9,8 @@ module.exports = {
 	async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
         const bolo = busca_emoji(client, emojis.mc_bolo)
-
+        
         const embed = new EmbedBuilder()
         .setColor(0x29BB8E)
         .setTitle(`${manutencao[5]["apoie"]} ${bolo}`)

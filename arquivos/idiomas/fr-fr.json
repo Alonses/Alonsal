@@ -14,6 +14,12 @@
             "permissao_2" : "pour exécuter cette commande.",
             "error_1" : "Faux, l'utilisation correcte de la commande est",
             "epic_embed_fail" : "Une erreur s'est produite lors de l'exécution de cette commande, j'ai prévenu l'équipe d'éliminer ce baidu au plus vite. mes excuses pour le derangement"
+        },
+        {
+            "titulo" : "> Oh emmène-moi à traaveeers :notes:",
+            "boas_vindas" : "Salut! Merci de m'avoir ajouté au serveur!\n\nJe laisse mon site ci-joint, avec toutes les commandes si besoin ;D",
+            "idioma_dica" : "Do not speak Français? No problems! Change my language right now with the /idioma command!",
+            "site": "Alonsal Website"
         }
     ],
     "diversao" : [
@@ -144,6 +150,17 @@
             "traducao_faltando" : "Cette commande n'a pas encore de traduction pour votre langue, attendez!",
             "usos" : "Les usages",
             "nao_encontrado" : "Je n'ai trouvé aucune commande avec ce nom ou alias, réessayez"
+        },
+        {
+            "ranking_guilds" : "Classement sur les serveurs suivants",
+            "dados_conhecidos" : "> Vos données connues",
+            "resumo_dados" : "Ceci est un résumé des données que nous détenons à votre sujet.",
+            "dica_rodape" : "Vous pouvez supprimer toutes vos données avec la commande /data excluir",
+            "dados_removidos" : "Vos données ont été supprimées de",
+            "sem_dados" : "Vous n'avez aucune donnée enregistrée ici ;)",
+            "server_desconhecido" : "serveur inconnu",
+            "um_server" : "et 1 autre serveur",
+            "outros_servers" : "et server_repl autres serveurs"
         }
     ],
     "moderacao" : [
@@ -468,6 +485,28 @@
             "titulo" : "V0s_M0t5 d3 p4553, cliquez ici pour tester votre mot de passe",
             "senha" : "Vérifiez votre privé, votre mot de passe a été généré avec une longueur de caractères `tamanho_repl`",
             "rodape" : "4 mots de passe avec des caractères tamanho_repl à choisir, ils ne sont pas enregistrés ici et je ne connais même pas le contenu, seulement vous ;)"
+        },
+        {
+            "timestamp_1" : "De la date à l'horodatage",
+            "timestamp_2" : "De l'horodatage à la date",
+            "erro_titulo" : ":warning: Quelque chose s'est mal passé",
+            "erro_conversao" : "Impossible de générer un horodatage avec l'entrée donnée, veuillez réessayer",
+            "valor_nulo" : "Le résultat de cette conversion était nul",
+            "aviso_1" : "J'ai besoin de plus d'informations pour pouvoir convertir vos données\nPar exemple `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"
+        },
+        {
+            "sem_scrobbles" : "Ce profil existe, mais il n'a pas de Scrobble :(",
+            "semanal" : "Hebdomadaire",
+            "media_dia" : "Moyenne par jour",
+            "tempo_tocado" : "Temps joué",
+            "albuns" : "Albums",
+            "artistas" : "Artistes",
+            "faixas_favoritas" : "Pistes préférées",
+            "geral" : "Général",
+            "perfil_musical" : "Profil musical de nome_repl",
+            "em_scrobble" : "Sur Scrobble en ce moment",
+            "obsessao" : "Coup de coeur du moment",
+            "error_1" : "Ce profil n'existe pas, veuillez réessayer"
         }
     ],
     "trabalho" : [

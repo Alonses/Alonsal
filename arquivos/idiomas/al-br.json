@@ -14,6 +14,12 @@
             "permissao_2" : "para usar esse comando",
             "error_1" : "Errrrou, tem que usar o comando assim ó",
             "epic_embed_fail" : "Deu PT aq ao rodar esse comando, acontece toda hora, chora boi, até notifiquei os salafrarios que me mantém, tudo numa boa"
+        },
+        {
+            "titulo" : "> Ó Abre alas que eu queru passsaa :notes:",
+            "boas_vindas" : "Olá! Obrigado por me adicionar ao servidor!\n\nDeixo em anexo abaixo o meu site, com todos os comandos caso necessário ;D",
+            "idioma_dica" : "Do not speak Portuguese? No problems! Change my language right now with the /idioma command!",
+            "site": "Site Alonsal"
         }
     ],
     "diversao" : [
@@ -156,6 +162,17 @@
             "traducao_faltando" : "Este comando ainda não possui uma tradução para o seu idioma, aguarde!",
             "usos" : "Usos",
             "nao_encontrado" : "Não encontrei nenhum comando com este nome ou aliase, xora"
+        },
+        {
+            "ranking_guilds" : "Ranking nos seguintes servidores",
+            "dados_conhecidos" : "> Seus dados conhecidos",
+            "resumo_dados" : "Este é um resumo dos dados que salvamos de você",
+            "dica_rodape" : "Você pode excluir todos os seus dados com o comando /data excluir",
+            "dados_removidos" : "Seus dados foram removidos do",
+            "sem_dados" : "Você não possui dados salvos por aqui ;)",
+            "server_desconhecido" : "servidor desconhecido",
+            "um_server" : "e 1 outro servidor",
+            "outros_servers" : "e outros server_repl servidores"
         }
     ],
     "moderacao" : [
@@ -453,6 +470,20 @@
             "titulo" : "Su4s §3nH@5, clique aqui pra testar a senha",
             "senha" : "Olha sua DM, gerei sua senha com `tamanho_repl` caracteres",
             "rodape" : "4 senhas com tamanho_repl caracteres, nunca nem vi elas, passar bem :detective:"
+        },
+        {
+            "sem_scrobbles" : "Este perfil existe, só que o dono abandonou",
+            "semanal" : "Semanal",
+            "media_dia" : "Média no dia",
+            "tempo_tocado" : "Tempo ouvido",
+            "albuns" : "Álbuns",
+            "artistas" : "Artistas",
+            "faixas_favoritas" : "Faixas curtidas",
+            "geral" : "Geral",
+            "perfil_musical" : "Perfil musical de nome_repl",
+            "em_scrobble" : "Scrobblando agora",
+            "obsessao" : "Favorita da semana",
+            "error_1" : "Esse perfil não existe, tenta dnv"
         }
     ],
     "trabalho" : [
