@@ -1,3 +1,6 @@
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
 const { version } = require('../../config.json')
 const { EmbedBuilder } = require('discord.js')
 
@@ -13,30 +16,39 @@ module.exports = async ({client}) => {
             members += guild.memberCount - 1
         })
 
-        const embed = new EmbedBuilder()
-        .setTitle(':steam_locomotive: Caldeiras aquecidas')
-        .setColor(0x29BB8E)
-        .addFields(
-            {
-                name: ':globe_with_meridians: **Servidores**', 
-                value: `**Ativo em: **\`${client.guilds.cache.size}\``, 
-                inline: true 
-            },
-            {
-                name: ':card_box: **Canais**', 
-                value: `**Observando: **\`${canais_texto}\`\n**Falando em: ** \`${canais_voz}\``, 
-                inline: true 
-            },
-            {
-                name: ':busts_in_silhouette: **Usuários**', 
-                value: `**Escutando: **\`${members}\``, 
-                inline: true 
-            }
-        )
-        .addFields({name: ':white_small_square: Versão', value: `\`${version}\``, inline: false })
-        .setFooter({ text: client.user.username, iconURL: client.user.avatarURL({ dynamic: true })})
-        
-        client.channels.cache.get('854695578372800552').send({ embeds: [embed] }) // Avisa que está online em um canal
+        fetch('https://apisal.herokuapp.com/status')
+        .then(res => res.json())
+        .then(retorno => {
+
+            let status_apisal = "🛑 Offline"
+            if(retorno.status)
+                status_apisal = "✅ Online"
+
+            const embed = new EmbedBuilder()
+            .setTitle(':steam_locomotive: Caldeiras aquecidas')
+            .setColor(0x29BB8E)
+            .addFields(
+                {
+                    name: ':globe_with_meridians: **Servidores**',
+                    value: `**Ativo em: **\`${client.guilds.cache.size}\``,
+                    inline: true
+                },
+                {
+                    name: ':card_box: **Canais**',
+                    value: `**Observando: **\`${canais_texto}\`\n**Falando em: ** \`${canais_voz}\``,
+                    inline: true
+                },
+                {
+                    name: ':busts_in_silhouette: **Usuários**',
+                    value: `**Escutando: **\`${members}\``,
+                    inline: true
+                }
+            )
+            .addFields({name: ':white_small_square: Versão', value: `\`${version}\`\n**APISAL: **${status_apisal}`, inline: false })
+            .setFooter({ text: client.user.username, iconURL: client.user.avatarURL({ dynamic: true })})
+            
+            client.channels.cache.get('854695578372800552').send({ embeds: [embed] }) // Avisa que está online em um canal
+        })
         
         client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
         const activities = [
