@@ -51,15 +51,6 @@ module.exports = {
         if (rept > 1)
             result /= rept
 
-        function shuffleArray(arr) {
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1))
-                [arr[i], arr[j]] = [arr[j], arr[i]]
-            }
-            
-            return arr
-        }
-
         const anagrama_formado = []
         let exib_formatado = "", qtd_quebras = []
         const repeticoes = result > 3 ? 3 : result
@@ -87,4 +78,13 @@ module.exports = {
         
 		return interaction.reply({embeds: [anagrama]})
 	}
+}
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+    
+    return arr
 }
