@@ -6,8 +6,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({client}) => {
 
-    // if (client.user.id === "833349943539531806"){
-
+    if (client.user.id === "833349943539531806"){
         fetch('https://apisal.herokuapp.com/status')
         .then(res => res.json())
         .then(retorno => {
@@ -35,9 +34,9 @@ module.exports = async ({client}) => {
 
         let i = 0
         setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 10000)
-    // } else
-        // client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
-
+    } else
+        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
+    
     require('./relata.js')({client})
     require('./anuncia.js')({client})
 }
