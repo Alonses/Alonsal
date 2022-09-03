@@ -62,12 +62,12 @@ function dispara_status(client, status_apisal){
         },
         {
             name: ':card_box: **Canais**',
-            value: `**Observando: **\`${canais_texto}\`\n**Falando em: ** \`${canais_voz}\``,
+            value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\`\n**Falando em: ** \`${canais_voz.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ':busts_in_silhouette: **Usuários**',
-            value: `**Escutando: **\`${members}\``,
+            value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
             inline: true
         }
     )
