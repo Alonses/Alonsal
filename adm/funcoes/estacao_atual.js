@@ -33,7 +33,7 @@ module.exports = (latitude, idioma_definido) => {
     return estacao
 }
 
-function calcula_dias(dia_atual, mes_atual, ano_atual){
+function calcula_dias(dia_atual, mes_atual, ano_atual) {
 
     let dias = 0, ult_mes = 0
 
@@ -50,7 +50,7 @@ function calcula_dias(dia_atual, mes_atual, ano_atual){
     return (dias - (ult_mes - dia_atual))
 }
 
-function estipula_indice(dias_passados, latitude){
+function estipula_indice(dias_passados, latitude) {
 
     // Estipula um indice para a estação do local
     let indices = [1, 2, 3, 0]

@@ -32,7 +32,7 @@ module.exports = {
         if (!canal.topic)
             topico = `\`\`\`${utilitarios[15]["sem_topico"]}\`\`\``
         
-        if (typeof canal.bitrate !== "undefined"){
+        if (typeof canal.bitrate !== "undefined") {
             topico = `\`\`\`🔊 ${utilitarios[15]["canal_voz"]}\`\`\``
 
             userlimit = canal.userLimit

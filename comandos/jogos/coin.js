@@ -29,7 +29,7 @@ module.exports = {
         if (moeda === 1)
             emoji_exib = ":crown:"
 
-        if (escolha === possibilidades[moeda]){ // Acertou
+        if (escolha === possibilidades[moeda]) { // Acertou
             resultado = `[ ${emoji_exib} ] Deu ${escolha}! Você acertou! ${emoji_dancando}`
 
             if (idioma_definido === "en-us")

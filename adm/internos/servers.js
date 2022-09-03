@@ -8,7 +8,7 @@ module.exports = async ({client, caso, guild}) => {
     let cor = 0x29BB8E
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
     
-    if (caso === "Left"){
+    if (caso === "Left") {
         ocasiao = "> 🔴 Server update"
         cor = 0xd4130d
     }

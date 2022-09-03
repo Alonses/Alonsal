@@ -22,11 +22,11 @@ module.exports = {
         
         if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true})
 
-		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-		else {
+		if (interaction.options.getSubcommand() === "gif") {
+			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+		} else {
 
-			interaction.deferReply()
+			await interaction.deferReply()
 			
 			fetch('https://apisal.herokuapp.com/random?jailson')
 			.then(response => response.json())

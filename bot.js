@@ -18,14 +18,14 @@ const client = new Client({
 const modo_develop = 0, force_update = 0
 let status = 1, ranking = 1
 
-if(!modo_develop){
+if (!modo_develop) {
 	status = 1
 	ranking = 1
 }
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 
-if (modo_develop){
+if (modo_develop) {
 	token = token_2
 	clientId = clientId_2
 }
@@ -35,7 +35,7 @@ const comandos_privados = []
 client.commands = new Collection()
 
 // Linkando os comandos slash disponíveis
-for (const folder of readdirSync(`${__dirname}/comandos/`)){
+for (const folder of readdirSync(`${__dirname}/comandos/`)) {
 	for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 		const command = require(`./comandos/${folder}/${file}`)
 
@@ -49,10 +49,10 @@ for (const folder of readdirSync(`${__dirname}/comandos/`)){
 	}
 }
 
-if (modo_develop || force_update){
+if (modo_develop || force_update) {
 	const rest = new REST({ version: '10' }).setToken(token)
 
-	if (force_update){ // Registrando os comandos públicos globalmente
+	if (force_update) { // Registrando os comandos públicos globalmente
 		rest.put(Routes.applicationCommands(clientId), { body: commands })
 			.then(() => console.log('Comandos globais atualizados com sucesso.'))
 			.catch(console.error)
@@ -81,7 +81,7 @@ if (modo_develop || force_update){
 	// 	})
 }
 
-for (const folder of readdirSync(`${__dirname}/comandos/`)){
+for (const folder of readdirSync(`${__dirname}/comandos/`)) {
 	for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 		const command = require(`./comandos/${folder}/${file}`)
 		client.commands.set(command.data.name, command)
@@ -110,7 +110,7 @@ client.on("messageCreate", async (message) => {
 		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({client, message})
 		
 		require('./adm/internos/comandos_antigos.js')({client, message})
-	}catch(err){
+	}catch(err) {
 		require('./adm/internos/error.js')({client, err})
 	}
 })

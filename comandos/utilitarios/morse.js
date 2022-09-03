@@ -42,7 +42,7 @@ module.exports = {
                 codificar.opera = parseInt(valor.value)
         })
 
-        if (!codificar.opera){ // Codificando
+        if (!codificar.opera) { // Codificando
             texto = codificar.texto.split('')
                 
             for (let carac = 0; carac < texto.length; carac++) {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async function({client}){
+module.exports = async function({client}) {
 
     client.on("guildCreate", guild => {
         let caso = 'New'

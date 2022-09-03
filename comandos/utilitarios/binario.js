@@ -60,7 +60,7 @@ module.exports = {
             titulo = utilitarios[3]["decodificado"]
 
         // Confirma que a operação não resultou em uma string vazia
-        if (texto_ordenado.replaceAll("\x00", "").length < 1){
+        if (texto_ordenado.replaceAll("\x00", "").length < 1) {
             texto_ordenado = utilitarios[3]["resul_vazio"]
             titulo = utilitarios[3]["titulo_vazio"]
         }

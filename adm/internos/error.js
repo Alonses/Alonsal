@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async function({client, err}){
+module.exports = async function({client, err}) {
 
     let local_erro = err.stack.split("\n")[1].trim()
 

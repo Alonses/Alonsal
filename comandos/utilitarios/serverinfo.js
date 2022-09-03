@@ -44,7 +44,7 @@ module.exports = {
         const data_criacao = formata_data(new Date(interaction.guild.createdAt), idioma_definido) // Criação do servidor
         const diferenca_criacao = getDateDiff(new Date(interaction.guild.createdAt), data_atual, utilitarios)
 
-        if (icone_server !== null){
+        if (icone_server !== null) {
             icone_server = icone_server.replace(".webp", ".gif")
 
             await fetch(icone_server)

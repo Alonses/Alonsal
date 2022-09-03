@@ -41,8 +41,8 @@ module.exports = {
         let img_game
         const nome_canal = await client.channels.cache.get(corpo_mail.canal)
 
-        if (nome_canal){
-            if (corpo_mail.anexo){
+        if (nome_canal) {
+            if (corpo_mail.anexo) {
                 img_game = new AttachmentBuilder(corpo_mail.anexo)
                 client.channels.cache.get(corpo_mail.canal).send({content: corpo_mail.texto, files: [img_game]})
             } else

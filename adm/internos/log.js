@@ -11,7 +11,7 @@ module.exports = async ({client, interaction}) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
         
-        if (client.user.id === "833349943539531806"){
+        if (client.user.id === "833349943539531806") {
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
@@ -20,7 +20,7 @@ module.exports = async ({client, interaction}) => {
             let hr = formata_horas(d.getHours())
 
             let ampm = "am"
-            if (hr > 12){
+            if (hr > 12) {
                 hr -= 12
                 ampm = "pm"
             }
@@ -38,7 +38,7 @@ module.exports = async ({client, interaction}) => {
                 if (!valor.value)
                     entrada = valor.name
                 
-                if (valor.options){ // Opções internas da interação
+                if (valor.options) { // Opções internas da interação
                     opcoes_comando = valor.options
                     opcoes_comando.forEach(opcao => {
 
@@ -81,7 +81,7 @@ module.exports = async ({client, interaction}) => {
     })
 
     // Contabilizar o comando
-    if (client.user.id === "833349943539531806"){
+    if (client.user.id === "833349943539531806") {
         // await require('../command_ranking.js')({client, interaction, content})
         
         const caso = "comando"

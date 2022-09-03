@@ -20,7 +20,7 @@ module.exports = {
         
         const texto_entrada = interaction.options.data[0].value
 
-        interaction.deferReply()
+        await interaction.deferReply()
 
         try{
             const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
@@ -35,8 +35,8 @@ module.exports = {
                 if (res.includes("Página não encontrada"))
                     return interaction.editReply(utilitarios[20]["error_1"])
 
-                if (!res.includes("ainda não ouviu nenhuma música.")){
-                    if (res.includes("<div class=\"about-me-header\">")){
+                if (!res.includes("ainda não ouviu nenhuma música.")) {
+                    if (res.includes("<div class=\"about-me-header\">")) {
                         descricao = `_- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"_`
                     }
 
@@ -46,7 +46,7 @@ module.exports = {
                     avatar = `https://lastfm.freetls.fastly.net/i/u/avatar170s/${res.split("alt=\"Avatar de ")[0].split("https://lastfm.freetls.fastly.net/i/u/avatar170s/")[1].replace("\"", "")}`
                     nome = res.split("Perfil musical de ")[1].split(" | Last.fm</title>")[0]
 
-                    if (res.includes("data-analytics-action=\"ObsessionTrackName\"")){
+                    if (res.includes("data-analytics-action=\"ObsessionTrackName\"")) {
                         obsessao = res.split("data-analytics-action=\"ObsessionTrackName\"")[1]
 
                         musica_obsessao = formata_texto(obsessao.split("</a>")[0].split(">")[1])
@@ -55,7 +55,7 @@ module.exports = {
                         obsessao = `💿 ${utilitarios[20]["obsessao"]}\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
                     }
 
-                    if (res.includes("modal?action=scrobbling-now-theirs\"")){
+                    if (res.includes("modal?action=scrobbling-now-theirs\"")) {
                         scrobble_atual = `${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
                         
                         musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] == "unloved" ? "🖤 " : "💙 "
@@ -86,9 +86,9 @@ module.exports = {
 
                         let indicador_scrobbles = "⏺️", indicador_media = "⏺️", indicador_tempo = "⏺️", indicador_artista = "⏺️", indicador_album = "⏺️"
                         
-                        if (!semanal.includes("não ouviu nenhuma música :(")){
+                        if (!semanal.includes("não ouviu nenhuma música :(")) {
                             // Scrobbles p/ dia
-                            if (semanal.includes("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")) {
 
                                 scrobbles_semanal = semanal.split("<h4 class=\"header-metadata-title\">TOTAL DE SCROBBLES</h4>")[1].split(" scrobbles")[0].split(">")[2].trim()
 
@@ -98,7 +98,7 @@ module.exports = {
                             }
 
                             // Média de Scrobbles p/ dia
-                            if (semanal.includes("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")) {
 
                                 media_semanal = semanal.split("<h4 class=\"header-metadata-title\">MÉDIA DIÁRIA DE SCROBBLES</h4>")[1].split(" scrobbles")[0].split(">")[1].trim()
 
@@ -108,7 +108,7 @@ module.exports = {
                             }
 
                             // Tempo de reprodução
-                            if (semanal.includes("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")){
+                            if (semanal.includes("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")) {
 
                                 tempo_reproducao = semanal.split("<h4 class=\"header-metadata-title\">TEMPO DE REPRODUÇÃO</h4>")[1].split("</div>")[0].split(">")[1].trim()
 
@@ -118,7 +118,7 @@ module.exports = {
                             }
 
                             // Álbuns
-                            if (semanal.includes("<div class=\"graph-description\">")){
+                            if (semanal.includes("<div class=\"graph-description\">")) {
 
                                 albuns_semanal = semanal.split("<div class=\"graph-description\">")[1].split(" álbuns")[0].split("<h3>")[1].trim()
 
@@ -128,7 +128,7 @@ module.exports = {
                             }
 
                             // Artistas
-                            if (semanal.includes("<div class=\"graph-description\">")){
+                            if (semanal.includes("<div class=\"graph-description\">")) {
 
                                 artistas_semanal = semanal.split("<div class=\"graph-description\">")[2].split(" artistas")[0].split("<h3>")[1].trim()
 
@@ -178,15 +178,15 @@ module.exports = {
                 } else
                     interaction.editReply(utilitarios[20]["sem_scrobbles"])
             })
-        }catch(err){
+        }catch(err) {
             console.log(err)
         }
     }
 }
 
-function regula_porcentagem(stats_semana, stats_passado, hora, utilitarios){
+function regula_porcentagem(stats_semana, stats_passado, hora, utilitarios) {
 
-    if (hora){ // Formatando a hora para números inteiros
+    if (hora) { // Formatando a hora para números inteiros
         stats_semana = parseInt(stats_semana.split(" dia")[0]) * 24 + parseInt(stats_semana.split(", ")[1].split(" ")[0])
         stats_passado = parseInt(stats_passado.split(" dia")[0] * 24) + parseInt(stats_passado.split(", ")[1].split(" ")[0])
 

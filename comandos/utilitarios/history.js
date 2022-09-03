@@ -34,7 +34,7 @@ module.exports = {
 
         await interaction.deferReply()
 
-        if (interaction.options.getSubcommand() === "lista"){ // Lista de eventos
+        if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
 
             if (interaction.options.data[0].options.length > 0) // Data customizada
                 data = `?data=${interaction.options.data[0].options[0].value}`
@@ -50,7 +50,7 @@ module.exports = {
                 let data_eventos = ""
                 const ano_atual = new Date().getFullYear()
 
-                for (let i = 0; i < res.length; i++){
+                for (let i = 0; i < res.length; i++) {
                     lista_eventos += `\`${i + 1}\` - [ \`${utilitarios[10]["em"]} ${res[i].ano}\` | \``
                     
                     ano_atual - res[i].ano > 1 ? lista_eventos += `${utilitarios[10]["ha"]} ${ano_atual - res[i].ano}${utilitarios[14]["anos"]}\` ] `: ano_atual - res[i].ano == 1 ? lista_eventos += `${utilitarios[10]["ano_passado"]}\` ] ` : lista_eventos += `${utilitarios[10]["este_ano"]}\` ] `

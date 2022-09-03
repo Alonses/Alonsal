@@ -14,13 +14,13 @@ module.exports = {
         let emojis_registrados = "", emojis_registrados_2 = "", i = 0
 
         Object.keys(emojis).forEach(emoji => {
-            if ((emojis_registrados + busca_emoji(client, emojis[emoji])).length < 2000){
+            if ((emojis_registrados + busca_emoji(client, emojis[emoji])).length < 2000) {
                 if (i % 9 == 0)
                     emojis_registrados += "\n"
 
                 emojis_registrados += busca_emoji(client, emojis[emoji])
             }else{
-                if ((emojis_registrados_2 + busca_emoji(client, emojis[emoji])).length < 2000){
+                if ((emojis_registrados_2 + busca_emoji(client, emojis[emoji])).length < 2000) {
                     if (i % 9 == 0)
                         emojis_registrados_2 += "\n"
 
@@ -40,7 +40,7 @@ module.exports = {
         if (emojis_registrados_2.length < 1)
             interaction.reply({embeds: [emojis_global]})
 
-        if (emojis_registrados_2.length > 0){
+        if (emojis_registrados_2.length > 0) {
             const emojis_global2 = new EmbedBuilder()
             .setTitle("Todos os emojis registrados")
             .setColor(0x29BB8E)

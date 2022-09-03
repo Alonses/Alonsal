@@ -51,7 +51,7 @@ module.exports = {
                 // Responsável pelo auto completa da pesquisa
                 let nome_simplificado_verif = false, nome_interno_verif = false, auto_compl_verif = false
                 
-                if (!pesquisa_crua.includes("\"")){ // Verificando se não é uma pesquisa bruta
+                if (!pesquisa_crua.includes("\"")) { // Verificando se não é uma pesquisa bruta
                     auto_compl_verif = auto_compl.includes(pesquisa_crua.toLocaleLowerCase())
                     nome_simplificado_verif = pesquisa_crua === nome_simplificado
                     nome_interno_verif = pesquisa_crua === lista_itens[i].nome_interno
@@ -171,7 +171,7 @@ module.exports = {
                     if (nota_rodape.includes("item_repl"))
                         nota_rodape = nota_rodape.replace("item_repl", pesquisa)
 
-                    if (objeto_encontrado){
+                    if (objeto_encontrado) {
                         // Procurando na wiki sobre a pesquisa
                         fetch(`https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki}`)
                         .then(response => response.text())
@@ -182,7 +182,7 @@ module.exports = {
                             try{ // Verifica se o item possui uma breve descrição
                                 descricao_item_wiki = res.split(`<meta name="description" content="`)[1]
                                 descricao_item_wiki = descricao_item_wiki.split(`"/>`)[0]
-                            }catch(err){
+                            }catch(err) {
                                 descricao_item_wiki = ""
                             }
 
@@ -222,7 +222,7 @@ module.exports = {
                             )
                             .setFooter({ text: nota_rodape })
                             
-                            if (descricao_item_wiki !== ""){
+                            if (descricao_item_wiki !== "") {
                                 
                                 let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki.replaceAll(" ", "_")}`
                                 
@@ -244,7 +244,7 @@ module.exports = {
                     i++
             }
             
-            if (!objeto_encontrado){
+            if (!objeto_encontrado) {
                 const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
 
                 return interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`)

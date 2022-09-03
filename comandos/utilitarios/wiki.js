@@ -39,7 +39,7 @@ module.exports = {
         if (res.RelatedTopics.length > 0)
             fields.push({ name: `:books: ${utilitarios[1]["topicos_rel"]}`, value: "\u200B" })
 
-        for (const topic of res.RelatedTopics){
+        for (const topic of res.RelatedTopics) {
             counter++
 
             const text = `${topic.Text.substr(0, 100)}...`
@@ -54,7 +54,7 @@ module.exports = {
                 break
         }
 
-        if (res.Heading !== ""){
+        if (res.Heading !== "") {
             fields.length = fields.length > 5 ? 5 : fields.length
             
             const Embed = new EmbedBuilder()

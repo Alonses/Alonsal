@@ -59,7 +59,7 @@ module.exports = {
         if (users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
 
-        if (!user_alvo){
+        if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                 return interaction.reply({ content: "Informe um número da página menor para isto", ephemeral: true })
 
@@ -75,7 +75,7 @@ module.exports = {
 
         for (const user of users) {
             if (user_alvo)
-                if (user.id === user_alvo.id){
+                if (user.id === user_alvo.id) {
                     usuario_alvo.push(user.xp)
                     break
                 }
@@ -97,7 +97,7 @@ module.exports = {
         let embed, img_embed
 
         fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
-            if (!user_alvo){ // Sem usuário alvo definido
+            if (!user_alvo) { // Sem usuário alvo definido
                 embed = new EmbedBuilder()
                 .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
                 .setColor(0x29BB8E)
@@ -161,6 +161,6 @@ module.exports = {
     }
 }
 
-function formata_num(valor){
+function formata_num(valor) {
     return parseInt(valor).toLocaleString('pt-BR')
 }

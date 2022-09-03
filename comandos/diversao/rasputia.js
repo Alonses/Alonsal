@@ -18,11 +18,11 @@ module.exports = {
 				.setDescription('⌠😂⌡ Invoca uma frase da rasputia')),
 	async execute(client, interaction) {
 
-		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-		else {
+		if (interaction.options.getSubcommand() === "gif") {
+			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+		} else {
 				
-			interaction.deferReply()
+			await interaction.deferReply()
 
 			fetch('https://apisal.herokuapp.com/random?rasputia')
 			.then(response => response.json())
