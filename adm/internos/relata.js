@@ -36,7 +36,7 @@ async function gera_relatorio(client, proxima_att){
     const minutos = parseInt((A / (1000 * 60)) % 60)
     const horas = parseInt((A / (1000 * 60 * 60)) % 24)
     proxima_att = formata_horas(horas, minutos, segundos)
-    proxima_att = proxima_att == "00:00:00" ? "24:00:00" : proxima_att
+    proxima_att = proxima_att == "00" ? "24:00:00" : proxima_att
     
     const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`)
     bot.comandos_disparados = comandos_disparados
