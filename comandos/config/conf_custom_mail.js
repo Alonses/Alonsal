@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -39,17 +39,21 @@ module.exports = {
         })
 
         let img_game
-        const nome_canal = await client.channels.cache.get(corpo_mail.canal)
+        const canal_alvo = await client.channels.cache.get(corpo_mail.canal)
 
-        if (nome_canal) {
-            if (corpo_mail.anexo) {
-                img_game = new AttachmentBuilder(corpo_mail.anexo)
-                client.channels.cache.get(corpo_mail.canal).send({content: corpo_mail.texto, files: [img_game]})
-            } else
-                client.channels.cache.get(corpo_mail.canal).send({content: corpo_mail.texto})
+        if (canal_alvo.type === 0 || canal_alvo.type === 5) {
+            if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)) {
+                if (corpo_mail.anexo) {
+                    img_game = new AttachmentBuilder(corpo_mail.anexo)
 
-            interaction.reply({content: `Mensagem enviada para o canal ${nome_canal} com sucesso`, ephemeral: true })
+                    canal_alvo.send({content: corpo_mail.texto, files: [img_game]})
+                } else
+                    canal_alvo.send({content: corpo_mail.texto})
+
+                interaction.reply({content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`, ephemeral: true })
+            } else 
+                interaction.reply({ content: ":octagonal_sign: | Canal desconhecido", ephemeral: true })
         } else
-            interaction.reply({content: `:octagonal_sign: | O canal mencionado é desconhecido, tente novamente`, ephemeral: true })
+            interaction.reply({content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`, ephemeral: true })
     }
 }
