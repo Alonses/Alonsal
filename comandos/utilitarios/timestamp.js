@@ -23,7 +23,7 @@ module.exports = {
 
         let entrada = interaction.options.data[0].value
 
-        if (!entrada.includes("-")){ // De timestamp para data normal
+        if (!entrada.includes("-")) { // De timestamp para data normal
             timestamp = new Date(Number(entrada * 1000))
             titulo = utilitarios[19]["timestamp_2"]
             retorno = entrada
@@ -42,7 +42,7 @@ module.exports = {
         
         let dica_conversao = `\n\n<t:${retorno}:R> ( \`<t:${retorno}:R>\` )`
 
-        if (conversao_invalida){
+        if (conversao_invalida) {
             titulo = utilitarios[19]["erro_titulo"]
             aviso = utilitarios[19]["erro_conversao"]
             timestamp = utilitarios[19]["valor_nulo"]

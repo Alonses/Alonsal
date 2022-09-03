@@ -44,12 +44,12 @@ module.exports = {
         let valida_aliase = false
         let indice
 
-        for (let x = 0; x < comandos.length; x++){
+        for (let x = 0; x < comandos.length; x++) {
             let linha = comandos[x].split(",")
             const aliases = linha
 
-            for (let i = 1; i < aliases.length; i++){
-                if (aliases[i].replace(/ /g, "") === procura_infos){
+            for (let i = 1; i < aliases.length; i++) {
+                if (aliases[i].replace(/ /g, "") === procura_infos) {
                     indice = linha[0]
                     valida_aliase = true
                     break
@@ -57,7 +57,7 @@ module.exports = {
             }
         }
         
-        if (valida_aliase){
+        if (valida_aliase) {
             fetch(`https://raw.githubusercontent.com/odnols/site-do-alonsal/main/json/guia_${idioma.slice(0, 2)}.json`)
             .then(response => response.json())
             .then(async dados => {
@@ -69,7 +69,7 @@ module.exports = {
                 format_aliases = ""
                 format_usos = ""
 
-                for (let i = 0; i < aliases.length; i++){
+                for (let i = 0; i < aliases.length; i++) {
                     format_aliases += `\`${aliases[i].replace(/ /g, "").replace(".a", prefix)}\``
 
                     if (typeof aliases[i + 1] !== "undefined")
@@ -78,7 +78,7 @@ module.exports = {
                 
                 let usos = comando_alvo.usos.split(",")
 
-                for (let i = 0; i < usos.length; i++){
+                for (let i = 0; i < usos.length; i++) {
 
                     let uso = usos[i].split("|")[0]
                     uso = uso.slice(0, 1) == " " ? uso.substr(1) : uso // Removendo o primeiro espaço da string caso exista um

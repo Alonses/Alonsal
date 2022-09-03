@@ -69,7 +69,7 @@ module.exports = {
                     let nota_rodape = `${utilitarios[8]["dados_atts"]} ${dados_att}`
                     let horario_local
 
-                    if (typeof res.sys.country !== "undefined"){
+                    if (typeof res.sys.country !== "undefined") {
                         bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`
 
                         const cod_pais = getCountryISO3(res.sys.country)
@@ -78,7 +78,7 @@ module.exports = {
                         if (res.sys.country === "AQ")
                             nome_pais = ` - ${utilitarios[8]["antartida"]}`
 
-                        if (nome_pais.includes(res.name)){
+                        if (nome_pais.includes(res.name)) {
                             nome_pais = ""
                             nota_rodape += ` | ${utilitarios[8]["aviso_pais"]}`
                         }
@@ -136,7 +136,7 @@ module.exports = {
                     if (res.clouds.all < 41)
                         emoji_nuvens = ":white_sun_small_cloud:"
 
-                    if (res.clouds.all < 31){
+                    if (res.clouds.all < 31) {
                         emoji_nuvens = ":sunny:"
 
                         if (hora > 17 || hora < 7) // Noite
@@ -175,7 +175,7 @@ module.exports = {
                     if (res.name === "Globe")
                         nome_local = `${utilitarios[8]["terra"]} :earth_americas:`
                     
-                    if (typeof res.rain !== "undefined"){
+                    if (typeof res.rain !== "undefined") {
                         cabecalho_fix += "\n------------------------------"
                         
                         cabecalho_fix += `${utilitarios[8]["chovendo"]}\n${utilitarios[8]["chuva"]} 1H: ${res.rain["1h"]}mm`
@@ -187,7 +187,7 @@ module.exports = {
                         rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`
                     }
                     
-                    if (typeof res.snow !== "undefined"){
+                    if (typeof res.snow !== "undefined") {
                         cabecalho_fix = `${utilitarios[8]["nevando"]}\n${utilitarios[8]["neve"]} 1H: ${res.rain["1h"]}mm`
                     
                         if (typeof res.rain["3h"] != "undefined")
@@ -198,7 +198,7 @@ module.exports = {
                         rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`
                     }
 
-                    if (typeof res.wind.gust !== "undefined"){
+                    if (typeof res.wind.gust !== "undefined") {
                         if (cabecalho_fix !== "")
                             cabecalho_fix += "\n------------------------------"
 
@@ -269,7 +269,7 @@ module.exports = {
     }
 }
 
-function direcao_cardial(degrees){
+function direcao_cardial(degrees) {
     const cards = ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"]
     degrees += 22.5
 

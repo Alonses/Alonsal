@@ -6,13 +6,13 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({client}) => {
 
-    if (client.user.id === "833349943539531806"){
+    if (client.user.id === "833349943539531806") {
         fetch('https://apisal.herokuapp.com/status')
         .then(res => res.json())
         .then(retorno => {
 
             let status_apisal = "🛑 Offline"
-            if(retorno.status)
+            if (retorno.status)
                 status_apisal = "✅ Online"
 
             dispara_status(client, status_apisal)
@@ -41,7 +41,7 @@ module.exports = async ({client}) => {
     require('./anuncia.js')({client})
 }
 
-function dispara_status(client, status_apisal){
+function dispara_status(client, status_apisal) {
 
     const canais_texto = client.channels.cache.filter((c) => c.type === 0).size
     const canais_voz = client.channels.cache.filter((c) => c.type === 2).size

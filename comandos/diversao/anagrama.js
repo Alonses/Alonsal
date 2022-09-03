@@ -30,15 +30,15 @@ module.exports = {
         const fatori_fix = fatori
         let mult = 1, rept = 1
 
-        for (let i = 1; i < fatori.length + 1; i++){
+        for (let i = 1; i < fatori.length + 1; i++) {
             mult *= i
         }
 
-        for (let i = 0; i < caracteres.length; i++){
+        for (let i = 0; i < caracteres.length; i++) {
             let fatorial = 1
 
-            if (caracteres[i] > 1){
-                for (let x = 1; x <= caracteres[i]; x++){
+            if (caracteres[i] > 1) {
+                for (let x = 1; x <= caracteres[i]; x++) {
                     fatorial *= x
                 }
 
@@ -56,7 +56,7 @@ module.exports = {
         const repeticoes = result > 3 ? 3 : result
         const combinacoes = result > 3 ? diversao[5]["combinacoes"] : diversao[5]["combinacao"]
 
-        for (let i = 0; i < repeticoes; i++){
+        for (let i = 0; i < repeticoes; i++) {
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''))
 
             exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`

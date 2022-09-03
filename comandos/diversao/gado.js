@@ -20,16 +20,16 @@ module.exports = {
         const alvo = interaction.options.getUser('usuario')
 
         if (client.user.id === alvo.id)
-            return interaction.reply(diversao[3]["error_2"]);
+            return interaction.reply(diversao[3]["error_2"])
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")
-                interaction.reply(`O <@${alvo.id}> ${gadisissimo[num]}`);
+                interaction.reply(`O <@${alvo.id}> ${gadisissimo[num]}`)
             else
-                interaction.reply(`The <@${alvo.id}> ${gadisissimo[num]}`);
+                interaction.reply(`The <@${alvo.id}> ${gadisissimo[num]}`)
         else
             if (idioma_definido === "pt-br")
-                interaction.reply(`Você ${interaction.user} ${gadisissimo[num]}`);
+                interaction.reply(`Você ${interaction.user} ${gadisissimo[num]}`)
             else
                 interaction.reply(`You ${interaction.user} ${gadisissimo[num]}`)
     }

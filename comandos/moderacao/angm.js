@@ -27,9 +27,9 @@ module.exports = {
 		const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const { canal_games } = require('../../arquivos/data/games/canal_games.json')
         
-        if (interaction.options.getSubcommand() === "agora"){
+        if (interaction.options.getSubcommand() === "agora") {
 
-            interaction.deferReply()
+            await interaction.deferReply()
             
             fetch('https://apisal.herokuapp.com/games')
             .then(response => response.json())
@@ -79,7 +79,7 @@ module.exports = {
                 if (valor.name == "cargo")
                     notificador.cargo = valor.value
 
-                if (valor.name == "canal"){
+                if (valor.name == "canal") {
                     notificador.canal = valor.value
 
                     if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
@@ -91,12 +91,12 @@ module.exports = {
                 opcao_remove = "rem"
             
             const outputArray = [] // Transfere todos os dados do JSON para um array
-            for (const element in canal_games){
+            for (const element in canal_games) {
 
                 const canal = canal_games[element][0]
                 const cargo = canal_games[element][1]
                 
-                if (opcao_remove !== "rem" || element !== interaction.guild.id){ // Remove um servidor/canal da lista de clientes no json
+                if (opcao_remove !== "rem" || element !== interaction.guild.id) { // Remove um servidor/canal da lista de clientes no json
                     outputArray.push(
                         constructJson(element, [canal, cargo])
                     )
@@ -150,6 +150,6 @@ module.exports = {
     }
 }
 
-function constructJson(jsonGuild, arrayValores){
+function constructJson(jsonGuild, arrayValores) {
 	return { [jsonGuild] : arrayValores } 
 }

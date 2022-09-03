@@ -15,7 +15,7 @@ module.exports = async ({client, caso}) => {
         epic_embed_fails: 0
     }
 
-    if (existsSync(`./arquivos/data/relatorio.json`)){
+    if (existsSync(`./arquivos/data/relatorio.json`)) {
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)]
         try{
             const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../arquivos/data/relatorio.json`)
@@ -23,7 +23,7 @@ module.exports = async ({client, caso}) => {
             bot.exp_concedido = exp_concedido
             bot.msgs_lidas = msgs_lidas
             bot.epic_embed_fails = epic_embed_fails
-        }catch(err){
+        }catch(err) {
             bot.comandos_disparados = 0
             bot.exp_concedido = 0
             bot.msgs_lidas = 0
@@ -33,12 +33,12 @@ module.exports = async ({client, caso}) => {
         }
     }
 
-    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data){
+    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
         
         if (caso === "experiencia")
             bot.exp_concedido += parseInt(data)
 
-        if (caso === "comando"){
+        if (caso === "comando") {
             bot.comandos_disparados += 1
             bot.msgs_lidas += 1
         }

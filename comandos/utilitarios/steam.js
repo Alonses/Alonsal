@@ -34,10 +34,10 @@ module.exports = {
                 let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas
                 let jogo_favorito = "", tempo_jogado = "", nota_rodape = interaction.user.username, anos_servico = "", background_user = "", criacoes_user = ""
 
-                if (res.includes("<video playsinline autoplay muted loop poster=\"")){
+                if (res.includes("<video playsinline autoplay muted loop poster=\"")) {
                     background_user = res.split("<video playsinline autoplay muted loop poster=\"")[1]
                     background_user = background_user.split("\">")[0]
-                } else if (res.includes("<div class=\"no_header profile_page has_profile_background")){
+                } else if (res.includes("<div class=\"no_header profile_page has_profile_background")) {
                     background_user = res.split("<div class=\"no_header profile_page has_profile_background")[1]
                     background_user = background_user.split("' );\">")[0]
                     background_user = background_user.split("url( '")[1]
@@ -50,7 +50,7 @@ module.exports = {
                     bandeira_user = bandeira_user.slice(bandeira_user.length - 2)
                     
                     bandeira_user = ` | :flag_${bandeira_user}:`
-                }catch(err){
+                }catch(err) {
                     bandeira_user = ""
                 }
 
@@ -71,14 +71,14 @@ module.exports = {
 
                     if (status_atual === "undefined")
                         status_atual = utilitarios[16][status_atual]
-                }catch(err){
+                }catch(err) {
                     status = utilitarios[16]["undefined"]
                 }
 
                 try{
                     nivel_user = res.split("<span class=\"friendPlayerLevelNum\">")[1]
                     nivel_user = nivel_user.split("</span>")[0]
-                }catch(err){
+                }catch(err) {
                     nivel_user = "-"
                 }
 
@@ -86,10 +86,10 @@ module.exports = {
                     jogos_user = res.split("<span class=\"count_link_label\">Games</span>&nbsp;")[1]
                     jogos_user = jogos_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                     jogos_user = jogos_user.replace(",", ".").replace(/\s+/g, '')
-                }catch(err){
+                }catch(err) {
                     jogos_user = "-"
 
-                    if (res.includes("<div class=\"label\">Games Owned</div>")){
+                    if (res.includes("<div class=\"label\">Games Owned</div>")) {
                         jogos_user = res.split("<div class=\"label\">Games Owned</div>")[0]
                         jogos_user = jogos_user.slice(jogos_user.length - 120).split("<div class=\"value\">")[1]
                         jogos_user = jogos_user.split("</div>")[0]
@@ -101,17 +101,17 @@ module.exports = {
                     insignias_user = res.split("<span class=\"count_link_label\">Badges</span>&nbsp;")[1]
                     insignias_user = insignias_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                     insignias_user = insignias_user.replace(",", ".").replace(/\s+/g, '')
-                }catch(err){
+                }catch(err) {
                     insignias_user = "-"
                 }
                 
                 try{
-                    if (res.includes("<div class=\"label\">Achievements</div>")){
+                    if (res.includes("<div class=\"label\">Achievements</div>")) {
                         const blocos_conquistas = res.split("<div class=\"label\">Achievements</div>")
 
                         conquistas_user = blocos_conquistas[0]
 
-                        if (blocos_conquistas.length > 2){
+                        if (blocos_conquistas.length > 2) {
                             conquistas_favoritas = conquistas_user.slice(conquistas_user.length - 120)
                             conquistas_favoritas = conquistas_favoritas.split("<div class=\"value\">")[1]
                             conquistas_favoritas = conquistas_favoritas.split("</div>")[0]
@@ -129,7 +129,7 @@ module.exports = {
                         conquistas_user = conquistas_user.split("</div>")[0]
                     } else
                         conquistas_user = "-"
-                }catch(err){
+                }catch(err) {
                     conquistas_user = "-"
                 }
 
@@ -145,7 +145,7 @@ module.exports = {
                         tempo_semanas = `${tempo_semanas} ${utilitarios[16][descriminador_tempo_2]}`
                     else
                         tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`
-                }catch(err){
+                }catch(err) {
                     tempo_semanas = "-"
                 }
 
@@ -154,7 +154,7 @@ module.exports = {
                     porcentagem_conquistas = porcentagem_conquistas.slice(porcentagem_conquistas.length - 40)
                     porcentagem_conquistas = porcentagem_conquistas.split("<div class=\"value\">")[1]
                     porcentagem_conquistas = porcentagem_conquistas.split("</div>")[0]
-                }catch(err){
+                }catch(err) {
                     porcentagem_conquistas = "-"
                 }
 
@@ -182,7 +182,7 @@ module.exports = {
                     capturas_user = res.split("<span class=\"count_link_label\">Screenshots</span>&nbsp;")[1]
                     capturas_user = capturas_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                     capturas_user = capturas_user.replace(",", ".").replace(/\s+/g, '')
-                }catch(err){
+                }catch(err) {
                     capturas_user = "-"
                 }
 
@@ -190,7 +190,7 @@ module.exports = {
                     videos_user = res.split("<span class=\"count_link_label\">Videos</span>&nbsp;")[1]
                     videos_user = videos_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                     videos_user = videos_user.replace(",", ".").replace(/\s+/g, '')
-                }catch(err){
+                }catch(err) {
                     videos_user = "-"
                 }
 
@@ -198,7 +198,7 @@ module.exports = {
                     artes_user = res.split("<span class=\"count_link_label\">Artwork</span>&nbsp;")[1]
                     artes_user = artes_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                     artes_user = artes_user.replace(",", ".").replace(/\s+/g, '')
-                }catch(err){
+                }catch(err) {
                     artes_user = "-"
                 }
 
@@ -237,7 +237,7 @@ module.exports = {
                     tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`
                 }
 
-                if (res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")){
+                if (res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")) {
 
                     anos_servico = res.split(" data-tooltip-html=\"Years of Service&lt;br&gt;")[1]
                     anos_servico = anos_servico.split(".\" >")[0]
@@ -337,7 +337,7 @@ module.exports = {
                 
                 interaction.reply({ embeds: [usuario_steam] })
             })
-        }catch(err){
+        }catch(err) {
             client.channels.cache.get('862015290433994752').send(err)
             interaction.reply(`${utilitarios[16]["error_2"]}\n<${usuario_alvo}>`)
         }

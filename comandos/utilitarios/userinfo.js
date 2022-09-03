@@ -76,7 +76,7 @@ module.exports = {
         const permissoes_user = membro_sv.permissions.toArray()
         let permissoes_fn = ""
 
-        for (let i = 0; i < permissoes_user.length; i++){
+        for (let i = 0; i < permissoes_user.length; i++) {
             if (typeof permissoes_user[i + 1] === "undefined")
                 permissoes_fn += " & "
 
@@ -90,7 +90,7 @@ module.exports = {
         let emoji_hypesquad = "⠀", discord_premium = "⠀"
         const flags_user = user.flags.toArray()
         
-        if (!user.bot){
+        if (!user.bot) {
             if (flags_user.includes('HypeSquadOnlineHouse1')) // HypeSquad
                 emoji_hypesquad = busca_emoji(client, emojis.squad_bravery)
 

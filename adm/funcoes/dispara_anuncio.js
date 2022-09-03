@@ -60,7 +60,7 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             
             let texto_anuncio = formata_anun(objetos_anunciado, plataforma, idioma_definido)
             
-            if(typeof canais_clientes[i + 1] !== "undefined")
+            if (typeof canais_clientes[i + 1] !== "undefined")
                 marcacao = `<@&${canais_clientes[i + 1]}>`
 
             const embed = new EmbedBuilder()
@@ -72,14 +72,14 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             const canal_alvo = client.channels.cache.get(canais_clientes[i])
 
             // Enviando os anúncios para os canais
-            if (canal_alvo.type === 0 || canal_alvo.type === 5){        
-                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)){
+            if (canal_alvo.type === 0 || canal_alvo.type === 5) {        
+                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)) {
                     canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
                     
                     canais_recebidos++
                 }
             }
-        }catch(err){
+        }catch(err) {
             require('../../adm/internos/error.js')({client, err})
         }
 

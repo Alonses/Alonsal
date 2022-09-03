@@ -1,6 +1,6 @@
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js')
 
-module.exports = async function({client, message}){
+module.exports = async function({client, message}) {
 
     if (message.channel.type === "GUILD_TEXT") {
         const permissions = message.channel.permissionsFor(message.client.user)
@@ -10,7 +10,7 @@ module.exports = async function({client, message}){
 
     const { updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(message)}.json`)
 
-    if (message.content.includes(client.user.id) || message.content.startsWith(".a")){
+    if (message.content.includes(client.user.id) || message.content.startsWith(".a")) {
     
         const row = new ActionRowBuilder()
             .addComponents(

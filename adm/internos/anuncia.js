@@ -22,14 +22,14 @@ module.exports = async ({client}) => {
     }, tempo_restante) // Executa de 1 em 1 semana
 }
 
-function requisita_anuncio(client, aguardar_tempo){
+function requisita_anuncio(client, aguardar_tempo) {
     setTimeout(() => {
         gera_anuncio(client, aguardar_tempo)
         requisita_anuncio(client, aguardar_tempo)
     }, aguardar_tempo)
 }
 
-async function gera_anuncio(client, proxima_att){
+async function gera_anuncio(client, proxima_att) {
 
     client.channels.cache.get('872865396200452127').send(`:video_game: | Disparando automaticamente anúncios de jogos gratuitos`)
 
@@ -42,7 +42,7 @@ async function gera_anuncio(client, proxima_att){
     next_att(client, proxima_att)
 }
 
-function next_att(client, tempo_restante){
+function next_att(client, tempo_restante) {
 
     const A = tempo_restante
     const segundos = parseInt((A / 1000) % 60)
