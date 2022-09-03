@@ -73,7 +73,7 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
 
             // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {        
-                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)) {
+                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.ViewChannel)) {
                     canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
                     
                     canais_recebidos++
