@@ -1,7 +1,7 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
 
 module.exports = {
@@ -21,31 +21,20 @@ module.exports = {
 		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		else {
-			
-			return interaction.reply({ content: "Um comando bem enceirado vem ai...", ephemeral: true })
-			
+				
 			interaction.deferReply()
 
-			const channel = client.channels.cache.get(interaction.channel.id)
-			
-			// Webhook
 			fetch('https://apisal.herokuapp.com/random?rasputia')
 			.then(response => response.json())
 			.then(async res => {
 				
-				// Webhook
-				channel.createWebhook({
-					name: res.nome,
-					avatar: res.foto,
-				})
-				.then(webhook => {
-					webhook.send({ content: res.texto })
-					.then(() => { webhook.delete() })
-				})
+				const embed = new EmbedBuilder()
+				.setTitle(res.nome)
+				.setThumbnail(res.foto)
+				.setColor(0x29BB8E)
+				.setDescription(`- "${res.texto}"`)
 				
-				await interaction.editReply({
-					content: `⠀`,
-				}).then(() => { interaction.deleteReply() })
+				interaction.editReply({ embeds: [embed] })
 			})
 		}
 	}
