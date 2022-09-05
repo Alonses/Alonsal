@@ -470,7 +470,9 @@
         {
             "timestamp_1" : "De data para timestamp",
             "timestamp_2" : "De timestamp para data",
-            "erro_titulo" : ":warning: Algo saiu errado",
+            "timestamp_now" : "Timestamp agora",
+            "timestamp_crono" : "Timestamp cronometrado",
+            "erro_titulo" : ":warning: | Algo saiu errado",
             "erro_conversao" : "Não foi possível gerar um timestamp com a entrada informada, tente novamente",
             "valor_nulo" : "O resultado desta conversão foi nulo",
             "aviso_1" : "Necessito de mais informações para poder converter sua data\nPor exemplo `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"

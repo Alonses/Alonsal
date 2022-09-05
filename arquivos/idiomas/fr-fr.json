@@ -489,7 +489,9 @@
         {
             "timestamp_1" : "De la date à l'horodatage",
             "timestamp_2" : "De l'horodatage à la date",
-            "erro_titulo" : ":warning: Quelque chose s'est mal passé",
+            "timestamp_now" : "Horodatage maintenant",
+            "timestamp_crono" : "Horodatage programmé",
+            "erro_titulo" : ":warning: | Quelque chose s'est mal passé",
             "erro_conversao" : "Impossible de générer un horodatage avec l'entrée donnée, veuillez réessayer",
             "valor_nulo" : "Le résultat de cette conversion était nul",
             "aviso_1" : "J'ai besoin de plus d'informations pour pouvoir convertir vos données\nPar exemple `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"

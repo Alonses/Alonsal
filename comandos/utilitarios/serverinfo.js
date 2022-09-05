@@ -30,7 +30,6 @@ module.exports = {
         let icone_server = interaction.guild.iconURL({ size: 2048 })
 
         const canais_texto = interaction.guild.channels.cache.filter((c) => c.type === 0).size
-        const canais_anuncio = interaction.guild.channels.cache.filter((c) => c.type === 5).size
         const canais_voz = interaction.guild.channels.cache.filter((c) => c.type === 2).size
         const categorias = interaction.guild.channels.cache.filter(c => c.type === 4).size
         const qtd_canais = canais_texto + canais_voz
@@ -43,7 +42,7 @@ module.exports = {
 
         const data_criacao = formata_data(new Date(interaction.guild.createdAt), idioma_definido) // Criação do servidor
         const diferenca_criacao = getDateDiff(new Date(interaction.guild.createdAt), data_atual, utilitarios)
-
+        
         if (icone_server !== null) {
             icone_server = icone_server.replace(".webp", ".gif")
 

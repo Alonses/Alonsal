@@ -505,7 +505,9 @@
         {
             "timestamp_1" : "From date to timestamp",
             "timestamp_2" : "From timestamp to date",
-            "erro_titulo" : ":warning: Something went wrong",
+            "timestamp_now" : "Timestamp now",
+            "timestamp_crono" : "Timed timestamp",
+            "erro_titulo" : ":warning: | Something went wrong",
             "erro_conversao" : "Could not generate a timestamp with the given input, please try again",
             "valor_nulo" : "The result of this conversion was null",
             "aviso_1" : "I need more information to be able to convert your date\nFor example `timestamp 2022-06-08 23:03:57` or `/timestamp 385723948238`"
