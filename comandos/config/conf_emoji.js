@@ -19,7 +19,7 @@ module.exports = {
                     emojis_registrados += "\n"
 
                 emojis_registrados += busca_emoji(client, emojis[emoji])
-            }else{
+            } else {
                 if ((emojis_registrados_2 + busca_emoji(client, emojis[emoji])).length < 2000) {
                     if (i % 9 == 0)
                         emojis_registrados_2 += "\n"

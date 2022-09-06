@@ -79,7 +79,7 @@ module.exports = {
                     conversao_invalida = true
             }
 
-            if(conversao_invalida)
+            if (conversao_invalida)
                 conversao_valida = `\`${data}\` -> \`${timestamp}\``
         } else {
             retorno = Math.floor(Date.now() / 1000)

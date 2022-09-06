@@ -21,6 +21,7 @@ module.exports = {
         const emoji_suv = busca_emoji(client, emojis.mc_coracao)
         const logo_wikipedia = busca_emoji(client, emojis.mc_logo_wikipedia)
 
+        // Entrada customizada, ativa caso o usuário tenha escrevido algo ao rodar o comando
         if (interaction.options.data.length > 0) pesquisa_crua = interaction.options.data[0].value
         
         const nome_interno = pesquisa_crua.split(" ").join("_").toLocaleLowerCase() // Pesquisa usando nome em inglês/interno

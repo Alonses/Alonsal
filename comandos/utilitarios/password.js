@@ -17,9 +17,8 @@ module.exports = {
         
         let bonus = ''
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++)
             bonus += `${randomString(tamanho)}\n\n`
-        }
 
         const embed = new EmbedBuilder()
         .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)

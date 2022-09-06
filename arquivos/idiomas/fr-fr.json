@@ -267,7 +267,8 @@
             "download_avatar" : "Cliquez [ici](link_repl) pour télécharger l'avatar",
             "download_icon" : "Cliquez [ici](link_repl) pour télécharger l'icône",
             "nao_conhecido" : "Je ne connais pas cet utilisateur, utilisez la commande en le marquant ! :smiling_imp:",
-            "id_user" : "Entrez l'ID utilisateur"
+            "id_user" : "Entrez l'ID utilisateur",
+            "error_1" : "Impossible de récupérer cet avatar pour le moment, veuillez réessayer plus tard"
         },
         { "reverso" : "Votre message inversé" },
         {

@@ -270,7 +270,8 @@
             "download_avatar" : "Clique [aqui](link_repl) para baixar o avatar",
             "download_icon" : "Clique [aqui](link_repl) para baixar o icone",
             "nao_conhecido" : "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
-            "id_user" : "Informe o ID de um usuário"
+            "id_user" : "Informe o ID de um usuário",
+            "error_1" : "Não foi possível buscar este avatar no momento, tente novamente mais tarde"
         },
         { "reverso" : "Sua mensagem ao contrário" },
         {

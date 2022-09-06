@@ -31,13 +31,6 @@ async function gera_relatorio(client, proxima_att) {
         epic_embed_fails: 0
     }
     
-    const A = proxima_att
-    const segundos = parseInt((A / 1000) % 60)
-    const minutos = parseInt((A / (1000 * 60)) % 60)
-    const horas = parseInt((A / (1000 * 60 * 60)) % 24)
-    proxima_att = formata_horas(horas, minutos, segundos)
-    proxima_att = proxima_att == "00" ? "24:00:00" : proxima_att
-    
     const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`)
     bot.comandos_disparados = comandos_disparados
     bot.exp_concedido = exp_concedido
@@ -45,7 +38,6 @@ async function gera_relatorio(client, proxima_att) {
     bot.epic_embed_fails = epic_embed_fails
 
     let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
-    let canais_voz = client.channels.cache.filter((c) => c.type === 2).size
     let members = 0
 
     client.guilds.cache.forEach(async guild => {
@@ -58,38 +50,38 @@ async function gera_relatorio(client, proxima_att) {
     .addFields(
         {
             name: ":gear: **Comandos**",
-            value: `**Hoje:** \`${bot.comandos_disparados}\``,
+            value: `**Hoje:** \`${bot.comandos_disparados.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ":medal: **Experiência**",
-            value: `**Hoje:** \`${bot.exp_concedido}\``,
+            value: `**Hoje:** \`${bot.exp_concedido.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ":e_mail: **Mensagens**",
-            value: `**Hoje:** \`${bot.msgs_lidas}\``,
+            value: `**Hoje:** \`${bot.msgs_lidas.toLocaleString('pt-BR')}\``,
             inline: true
         }
     )
     .addFields(
         {
             name: ':globe_with_meridians: **Servidores**',
-            value: `**Ativo em:** \`${client.guilds.cache.size}\``,
+            value: `**Ativo em:** \`${(client.guilds.cache.size).toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ':card_box: **Canais**',
-            value: `**Observando:** \`${canais_texto}\`\n**Falando em:** \`${canais_voz}\``,
+            value: `**Observando:** \`${canais_texto.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ':busts_in_silhouette: **Usuários**',
-            value: `**Escutando:** \`${members}\``,
+            value: `**Escutando:** \`${members.toLocaleString('pt-BR')}\``,
             inline: true
         }
     )
-    .setFooter({ text: `Próxima atualização em ${proxima_att}` })
+    .setFooter({ text: `Próxima atualização em <t:${Math.floor(proxima_att / 1000)}:R>` })
     
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
     require("../funcoes/reseta_relatorio.js")({}) // Reseta o relatório

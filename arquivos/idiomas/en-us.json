@@ -281,7 +281,8 @@
             "download_avatar" : "Click [here](link_repl) to download the avatar",
             "download_icon" : "Click [here](link_repl) to download the icon",
             "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:",
-            "id_user" : "Enter a user ID"
+            "id_user" : "Enter a user ID",
+            "error_1" : "Unable to fetch this avatar at the moment, please try again later"
         },
         {
             "reverso" : "Your message in reverse"

@@ -14,7 +14,7 @@ module.exports = {
                 .setDescription('Inverter resultado de saída'))
         .addStringOption(option =>
             option.setName('operacao')
-            .setDescription("Forçar operação")
+            .setDescription("Forçar uma operação")
             .addChoices(
                 { name: 'Codificar', value: '0' },
                 { name: 'Decodificar', value: '1' }
