@@ -3,18 +3,14 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
-const diff_datas = require('../../adm/funcoes/diff_datas.js')
-const formata_data = require('../../adm/funcoes/formata_data.js')
-
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('channelinfo')
+		.setName('cinfo')
 		.setDescription('⌠💡⌡ Veja detalhes de algum canal')
-        .addChannelOption(option => option.setName('canal').setDescription('Marque outro canal como alvo')),
+        .addChannelOption(option => option.setName('canal').setDescription('Marque um canal como alvo')),
 	async execute(client, interaction) {
-
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         let canal = interaction.options.getChannel('canal') || interaction.channel
         // Coletando os dados do canal informado
@@ -23,9 +19,8 @@ module.exports = {
         if (canal.nsfw)
             nsfw = utilitarios[9]["sim"]
         
-        const data_atual = new Date()
-        const data_criacao = formata_data(new Date(canal.createdAt), idioma_definido == "al-br" ? "pt-br" : idioma_definido) // Criação do canal
-        const diferenca_criacao = diff_datas(new Date(canal.createdAt), data_atual, utilitarios)
+        const data_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:f>` // Criação do canal
+        const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
         let userlimit, bitrate = ""
 
         let topico = `\`\`\`${canal.topic}\`\`\``

@@ -273,15 +273,16 @@
             "decodificado" : ":zero: Sua mensagem decodificada do binário",
             "aviso_1" : "Escreva algo para utilizar este comando",
             "aviso_2" : "Informe como `.abn encode <seu_texto>` ou `.abn decode <seu_texto_codificado>`",
-            "resul_vazio" : "O resultado final era vazio, tente novamente",
-            "titulo_vazio" : ":octagonal_sign: A decodificação resultou em vazio",
-            "error_1" : "Não foi possível converter, o tamanho máximo foi excedido!"
+            "resul_vazio" : "O resultado final tava bugado, tente dnv",
+            "titulo_vazio" : ":octagonal_sign: A decodificação deu um bug",
+            "error_1" : "Não foi possível converter, epic embed fail!"
         },
         {
             "download_avatar" : "Clique [aqui](link_repl) para baixar essa ibagem",
             "download_icon" : "Clique [aqui](link_repl) para baixar essa ibagem",
             "nao_conhecido" : "Eu não conheço este salafrário, marca ele aí no comando",
-            "id_user" : "Informe o ID de um usuário"
+            "id_user" : "Informe o ID de um usuário",
+            "error_1" : "Não foi possível buscar este salafrario no momento, tenta dnv depois"
         },
         {
             "reverso" : "Sua mensagem ao contrário"

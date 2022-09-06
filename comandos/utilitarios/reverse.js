@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reverse')
-		.setDescription('⌠💡⌡ Inverta ou desinverta caracteres')
+		.setDescription('⌠💡⌡ (Des)inverta caracteres!')
 		.addStringOption(option =>
             option.setName('texto')
                 .setDescription('O texto a ser invertido')

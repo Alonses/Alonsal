@@ -122,7 +122,7 @@ module.exports = {
                 .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({dynamic: true}) })
 
                 img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
-            }else{ // Com usuário alvo definido
+            } else { // Com usuário alvo definido
 
                 if (usuario_alvo.length === 0)
                     usuario_alvo.push(0)

@@ -4,10 +4,10 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('server')
+		.setName('discord')
 		.setDescription('⌠📡⌡ Servidor oficial do Alonsal™️'),
 	async execute(client, interaction) {
-
+        
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)
 

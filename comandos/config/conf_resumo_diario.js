@@ -11,7 +11,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-        const aguardar_tempo =  formata_horas(((date1.getHours() - 24) *-1), ((date1.getMinutes() - 60) *-1), ((date1.getSeconds() - 60) *-1))
+        const proxima_att =  formata_horas(((date1.getHours() - 24) *-1), ((date1.getMinutes() - 60) *-1), ((date1.getSeconds() - 60) *-1))
 
         const bot = {
             comandos_disparados: 0,
@@ -29,9 +29,8 @@ module.exports = {
         bot.epic_embed_fails = epic_embed_fails || 0
 
         let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
-        let canais_voz = client.channels.cache.filter((c) => c.type === 2).size
         let members = 0
-
+        
         client.guilds.cache.forEach(async guild => {
             members += guild.memberCount - 1
         })
@@ -42,38 +41,38 @@ module.exports = {
         .addFields(
             {
                 name: ":gear: **Comandos**",
-                value: `**Hoje:** \`${bot.comandos_disparados}\``,
+                value: `**Hoje:** \`${bot.comandos_disparados.toLocaleString('pt-BR')}\``,
                 inline: true
             },
             {
                 name: ":medal: **Experiência**",
-                value: `**Hoje:** \`${bot.exp_concedido}\``,
+                value: `**Hoje:** \`${bot.exp_concedido.toLocaleString('pt-BR')}\``,
                 inline: true
             },
             {
                 name: ":e_mail: **Mensagens**",
-                value: `**Hoje:** \`${bot.msgs_lidas}\`\n**Válidas:** \`${bot.msgs_validas}\``,
+                value: `**Hoje:** \`${bot.msgs_lidas.toLocaleString('pt-BR')}\`\n**Válidas:** \`${bot.msgs_validas.toLocaleString('pt-BR')}\``,
                 inline: true
             }
         )
         .addFields(
             {
                 name: ':globe_with_meridians: **Servidores**',
-                value: `**Ativo em:** \`${client.guilds.cache.size}\``,
+                value: `**Ativo em:** \`${client.guilds.cache.size.toLocaleString('pt-BR')}\``,
                 inline: true
             },
             {
                 name: ':card_box: **Canais**',
-                value: `**Observando:** \`${canais_texto}\`\n**Falando em:** \`${canais_voz}\``,
+                value: `**Observando:** \`${canais_texto.toLocaleString('pt-BR')}\``,
                 inline: true
             },
             {
                 name: ':busts_in_silhouette: **Usuários**',
-                value: `**Escutando:** \`${members}\``,
+                value: `**Escutando:** \`${members.toLocaleString('pt-BR')}\``,
                 inline: true
             }
         )
-        .setFooter({ text: `Próximo update em ${aguardar_tempo}`, iconURL: interaction.user.avatarURL({dynamic: true}) })
+        .setFooter({ text: `Próximo update em ${proxima_att}`, iconURL: interaction.user.avatarURL({dynamic: true}) })
         
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

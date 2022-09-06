@@ -21,15 +21,15 @@ module.exports = async ({client}) => {
             dispara_status(client, "🛑 Offline")
         })
         
-        client.user.setActivity('Faites chauffer la vapeur!', 'COMPETING')
+        client.user.setActivity('Oto online!', 'COMPETING')
         const activities = [
-            "/idioma | French now!",
+            "/idioma | Alonsês já!",
             `comandos em barra`,
             "wardens para cima",
-            "barras de atalhos",
+            "slash commands",
             "pula prédios",
-            "ceira em barras",
-            "me marca aí!",
+            "ceira em slash",
+            "me marca aí seu cornu!",
         ]
 
         let i = 0
@@ -44,7 +44,6 @@ module.exports = async ({client}) => {
 function dispara_status(client, status_apisal) {
 
     const canais_texto = client.channels.cache.filter((c) => c.type === 0).size
-    const canais_voz = client.channels.cache.filter((c) => c.type === 2).size
     let members = 0
     
     client.guilds.cache.forEach(async guild => {
@@ -62,7 +61,7 @@ function dispara_status(client, status_apisal) {
         },
         {
             name: ':card_box: **Canais**',
-            value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\`\n**Falando em: ** \`${canais_voz.toLocaleString('pt-BR')}\``,
+            value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
