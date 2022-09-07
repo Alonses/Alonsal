@@ -3,6 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
+const busca_badges = require('../../adm/funcoes/busca_badges.js')
 const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { ids_enceirados } = require('../../config.json')
@@ -112,6 +113,8 @@ module.exports = {
                     discord_premium += ` ${busca_emoji(client, emojis.boost)}`
             }
 
+            let badges = busca_badges(client, 'all', interaction.user.id)
+
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
                 .setColor(0x29BB8E)
@@ -141,7 +144,14 @@ module.exports = {
                     }
                 )
                 .setFooter({ text: `${tipo_user} ${nota_rodape}` })
-            
+                
+                if(badges.length > 0)
+                    infos_user.addFields({
+                        name: ':trophy: **Badges**',
+                        value: badges,
+                        inline: false
+                    })
+
             return interaction.reply({ embeds: [infos_user] })
         } else { // O avatar do usuário
 
