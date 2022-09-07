@@ -1,4 +1,5 @@
 const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+
 const formata_anun = require('./formata_games.js')
 
 const platformMap = {
@@ -11,7 +12,7 @@ const platformMap = {
     "play.google" : ["<:logo_pst:973395673489756220>", "Google Play"]
 }
 
-module.exports = async ({client, interaction, objetos_anunciado}) => {
+module.exports = async ({client, interaction, objetos_anunciados}) => {
 
     const canais_clientes = []
     const { canal_games } = require('../../arquivos/data/games/canal_games.json')
@@ -29,17 +30,17 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
         }
     }
     
-    const matches = objetos_anunciado[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
-    let canais_recebidos = 0, marcacao = '⠀'
+    let canais_recebidos = 0, marcacao = '⠀', imagem_destaque, valor_anterior = 0
     
     const row = new ActionRowBuilder()
 
-    objetos_anunciado.forEach(valor => {
+    objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
         row.addComponents(
@@ -48,6 +49,11 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             .setURL(valor.link)
             .setStyle(ButtonStyle.Link),
         )
+        
+        if (parseFloat(valor.preco) > valor_anterior){
+            valor_anterior = parseFloat(valor.preco)
+            imagem_destaque = valor.thumbnail
+        }
     })
 
     for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
@@ -58,14 +64,14 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
             let idioma_definido = await client.idioma.getLang(servidor)
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
             
-            let texto_anuncio = formata_anun(objetos_anunciado, plataforma, idioma_definido)
+            let texto_anuncio = formata_anun(objetos_anunciados, plataforma, idioma_definido)
             
             if (typeof canais_clientes[i + 1] !== "undefined")
                 marcacao = `<@&${canais_clientes[i + 1]}>`
 
             const embed = new EmbedBuilder()
             .setTitle(`${logo_plat} ${plataforma}`)
-            .setImage(objetos_anunciado[0].thumbnail)
+            .setImage(imagem_destaque)
             .setColor(cor_embed)
             .setDescription(texto_anuncio)
             
@@ -86,10 +92,10 @@ module.exports = async ({client, interaction, objetos_anunciado}) => {
         i++
     }
     
-    let aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canais clientes`
+    let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
 
     if (canais_recebidos === 1)
-        aviso = `:white_check_mark: | Aviso de Jogo gratuito enviado para \`${canais_recebidos}\` canal cliente`
+        aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canal cliente`
 
     client.channels.cache.get('872865396200452127').send(aviso)
 

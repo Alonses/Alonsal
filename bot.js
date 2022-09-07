@@ -111,7 +111,8 @@ client.on("messageCreate", async (message) => {
 		
 		require('./adm/internos/comandos_antigos.js')({client, message})
 	}catch(err) {
-		require('./adm/internos/error.js')({client, err})
+		const local = "commands"
+		require('./adm/internos/error.js')({client, err, local})
 	}
 })
 
