@@ -22,6 +22,7 @@ if (!modo_develop) {
 	status = 1
 	ranking = 1
 }
+
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 
@@ -107,7 +108,9 @@ client.on("messageCreate", async (message) => {
 	if (message.author.bot || message.webhookId) return
 
 	try{ // Atualizando ranking e recebendo mensagens de texto
-		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({client, message})
+		
+		const caso = 'messages'
+		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({client, message, caso})
 		
 		require('./adm/internos/comandos_antigos.js')({client, message})
 	}catch(err) {

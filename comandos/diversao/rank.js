@@ -64,7 +64,7 @@ module.exports = {
         
         if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return interaction.reply({ content: `:octagonal_sign: ${diversao[8]["error_1"]}`, ephemeral: true })
+                return interaction.reply({ content: `:octagonal_sign: | ${diversao[8]["error_1"]}`, ephemeral: true })
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
@@ -165,5 +165,5 @@ module.exports = {
 }
 
 function formata_num(valor) {
-    return parseInt(valor).toLocaleString('pt-BR')
+    return parseFloat(valor).toLocaleString('pt-BR')
 }
