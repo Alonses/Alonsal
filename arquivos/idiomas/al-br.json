@@ -65,8 +65,8 @@
         {
             "rank_sv" : "Rank de",
             "rank_rc" : "Ranking de comandos",
-            "rodape" : "páginas, escreva .ar <num> ai pra navegar entre elas",
-            "rodape_rc" : "páginas, escreve .arc <num> pra navegar entre elas",
+            "rodape" : "páginas, escreva /rank pagina:<num> ai pra navegar entre elas",
+            "rodape_rc" : "páginas, escreve /rank comandos pagina:<num> pra navegar entre elas",
             "paginas" : "Não tem tudo isso de páginas",
             "nivel_descricao" : "nível = experiência / 1000",
             "enceirados" : "Enceirados",
@@ -77,6 +77,7 @@
             "historia_alonsal" : "Esses aqui foram ativos desde meu nascimento",
             "aliase_faltando" : "aliase faltando",
             "nome_faltando" : "Nome faltando",
+            "error_1" : "Bota um número menor ae meo",
             "error_rc" : "Tô com preguiça para carregar o rank de comandos agr, tenta dnv dps"
         }
     ],

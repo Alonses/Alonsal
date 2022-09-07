@@ -87,8 +87,8 @@ module.exports = {
             if (item.urgencia == null)
                 item.urgencia = "n"
             
-            const objetos_anunciado = [item]
+            const objetos_anunciados = [item]
 
-            dispara_anuncio({client, interaction, objetos_anunciado})
+            dispara_anuncio({client, interaction, objetos_anunciados})
   	}
 }

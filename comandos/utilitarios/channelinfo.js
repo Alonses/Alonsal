@@ -77,7 +77,7 @@ module.exports = {
             infos_ch.addFields(
                 { 
                     name: `:birthday: ${utilitarios[12]["criacao"]}`,
-                    value: `${data_criacao}\n [ \`${diferenca_criacao}\` ]`,
+                    value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
                     inline: true
                 }
             )

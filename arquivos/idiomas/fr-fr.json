@@ -59,8 +59,8 @@
         {
             "rank_sv" : "Rang de",
             "rank_rc" : "Classement des commandes",
-            "rodape" : "pages, utilisez .ar <num> pour voir d'autres pages",
-            "rodape_rc" : "pages, utilisez .arc <num> pour voir d'autres pages",
+            "rodape" : "pages, utilisez /rank pagina:<num> pour voir d'autres pages",
+            "rodape_rc" : "pages, utilisez /rank comandos pagina:<num> pour voir d'autres pages",
             "paginas" : "Enter a lower number for the page",
             "nivel_descricao" : "niveau = expérience / 1000",
             "enceirados" : "Users",
@@ -71,6 +71,7 @@
             "historia_alonsal" : "Ce sont les commandes activées tout au long de l'histoire d'Alonsal",
             "aliase_faltando" : "pseudo absent",
             "nome_faltando" : "Nom manquant",
+            "error_1" : "Veuillez entrer un numéro de page plus petit pour ce",
             "error_rc" : "Impossible de charger la commande de ratissage pour le moment, veuillez réessayer plus tard"
         }
     ],
