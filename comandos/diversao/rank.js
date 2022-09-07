@@ -1,8 +1,8 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { readdirSync } = require("fs")
 const fs = require('fs')
+const { readdirSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
@@ -54,14 +54,17 @@ module.exports = {
         const usernames = [], experiencias = [], levels = []
 
         const pages = users.length / 6
-        const paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
+        let paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
         
+        if(users.length / 6 < 1)
+            paginas = 1
+
         if (users.length > 6)
             rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
-
+        
         if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return interaction.reply({ content: "Informe um número da página menor para isto", ephemeral: true })
+                return interaction.reply({ content: `:octagonal_sign: ${diversao[8]["error_1"]}`, ephemeral: true })
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
