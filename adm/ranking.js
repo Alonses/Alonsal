@@ -54,7 +54,7 @@ module.exports = async ({client, message}) => {
         user.xp += parseInt(data)
         user.lastValidMessage = message.createdTimestamp
         user.warns = 0
-
+        
         const caso = "experiencia"
         require('./relatorio.js')({client, caso})
 

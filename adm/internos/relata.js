@@ -1,7 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const formata_horas = require('../funcoes/formata_horas.js')
-
 module.exports = async ({client}) => {
 
     if (client.user.id !== "833349943539531806") return
@@ -24,65 +22,76 @@ function requisita_relatorio(client, aguardar_tempo) {
 
 async function gera_relatorio(client, proxima_att) {
 
+    const date1 = new Date()
+
     const bot = {
         comandos_disparados: 0,
         exp_concedido: 0,
         msgs_lidas: 0,
+        msgs_validas: 0,
         epic_embed_fails: 0
     }
     
-    const { comandos_disparados, exp_concedido, msgs_lidas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`)
+    const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails} = require(`../../arquivos/data/relatorio.json`)
     bot.comandos_disparados = comandos_disparados
     bot.exp_concedido = exp_concedido
     bot.msgs_lidas = msgs_lidas
+    bot.msgs_validas = msgs_validas
     bot.epic_embed_fails = epic_embed_fails
 
     let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
-    let members = 0
+    let members = 0, processamento = '🎲 Processamento\n'
 
     client.guilds.cache.forEach(async guild => {
         members += guild.memberCount - 1
     })
 
+    const used = process.memoryUsage()
+
+    for (let key in used) 
+        processamento += `${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`
+
     let embed = new EmbedBuilder()
-    .setTitle("Resumo diário :mega:")
+    .setTitle("> Resumo diário :mega:")
     .setColor(0x29BB8E)
     .addFields(
         {
             name: ":gear: **Comandos**",
-            value: `**Hoje:** \`${bot.comandos_disparados.toLocaleString('pt-BR')}\``,
+            value: `:dart: **Hoje:** \`${bot.comandos_disparados.toLocaleString('pt-BR')}\`\n:octagonal_sign: **Erros:** \`${bot.epic_embed_fails}\``,
             inline: true
         },
         {
             name: ":medal: **Experiência**",
-            value: `**Hoje:** \`${bot.exp_concedido.toLocaleString('pt-BR')}\``,
+            value: `:dart: **Hoje:** \`${bot.exp_concedido.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ":e_mail: **Mensagens**",
-            value: `**Hoje:** \`${bot.msgs_lidas.toLocaleString('pt-BR')}\``,
+            value: `:dart: **Hoje:** \`${bot.msgs_lidas.toLocaleString('pt-BR')}\`\n:white_check_mark: **Válidas:** \`${bot.msgs_validas.toLocaleString('pt-BR')}\``,
             inline: true
         }
     )
     .addFields(
         {
             name: ':globe_with_meridians: **Servidores**',
-            value: `**Ativo em:** \`${(client.guilds.cache.size).toLocaleString('pt-BR')}\``,
-            inline: true
-        },
-        {
-            name: ':card_box: **Canais**',
-            value: `**Observando:** \`${canais_texto.toLocaleString('pt-BR')}\``,
+            value: `**Ativo em:** \`${(client.guilds.cache.size).toLocaleString('pt-BR')}\`\n**Canais: ** \`${canais_texto.toLocaleString('pt-BR')}\``,
             inline: true
         },
         {
             name: ':busts_in_silhouette: **Usuários**',
-            value: `**Escutando:** \`${members.toLocaleString('pt-BR')}\``,
+            value: `**Conhecidos:** \`${members.toLocaleString('pt-BR')}\``,
+            inline: true
+        },
+        {
+            name: '⠀',
+            value: '⠀',
             inline: true
         }
     )
-    .setFooter({ text: `Próxima atualização em <t:${Math.floor(proxima_att / 1000)}:R>` })
-    
+    .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
+    .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `[ <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f> ]`, inline: false })
+    .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
+
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
     require("../funcoes/reseta_relatorio.js")({}) // Reseta o relatório
 }

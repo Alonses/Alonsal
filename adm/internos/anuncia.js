@@ -7,14 +7,12 @@ module.exports = async ({client}) => {
 
     if (client.user.id !== "833349943539531806") return
     
-    const date1 = new Date() // Ficará esperando até quinta feira aos 12:00 para executar a rotina
-    const dias = [4, 3, 2, 1, 7, 6, 5]
-    const data_alvo = (dias[date1.getDay()] * 86400000) - ((36 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
-
-    const tempo_restante = (new Date(date1.getTime() + data_alvo)) - date1.getTime()
+    const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
+    const dias = [4, 3, 2, 1, 0, 6, 5]
+    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
     
     next_att(client, tempo_restante)
-
+    
     setTimeout(() => {
         gera_anuncio(client, 604800000)
         requisita_anuncio(client, 604800000) // Altera o valor para sempre executar à meia-noite
@@ -30,13 +28,17 @@ function requisita_anuncio(client, aguardar_tempo) {
 
 async function gera_anuncio(client, proxima_att) {
 
-    client.channels.cache.get('872865396200452127').send(`:video_game: | Disparando automaticamente anúncios de jogos gratuitos`)
+    client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
-    // fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
-    // .then(response => response.json())
-    // .then(async objeto_anunciado => {
-        // dispara_anuncio({client, objeto_anunciado})
-    // })
+    fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
+    .then(response => response.json())
+    .then(async objetos_anunciados => {
+        dispara_anuncio({client, objetos_anunciados})
+    })
+    .catch(err => {
+        const local = "games"
+        require('./error.js')({client, err, local})
+    })
 
     next_att(client, proxima_att)
 }
@@ -45,5 +47,5 @@ function next_att(client, tempo_restante) {
 
     tempo_restante = Math.floor((Date.now() / 1000) + (tempo_restante / 1000))
 
-    client.channels.cache.get('872865396200452127').send(`:video_game: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
+    client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
 }
