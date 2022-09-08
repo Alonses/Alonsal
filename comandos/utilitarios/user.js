@@ -113,8 +113,8 @@ module.exports = {
                     discord_premium += ` ${busca_emoji(client, emojis.boost)}`
             }
 
-            let badges = busca_badges(client, 'all', interaction.user.id)
-
+            let badges = busca_badges(client, 'all', user.id)
+            
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
                 .setColor(0x29BB8E)
