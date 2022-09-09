@@ -58,7 +58,7 @@ module.exports = {
             })
             
             // Verificando se o usuário possui a badge informada
-            if(!all_badges.includes(new_badge)) return interaction.reply({ content: diversao[9]["error_2"], ephemeral: true })
+            if (!all_badges.includes(new_badge)) return interaction.reply({ content: diversao[9]["error_2"], ephemeral: true })
 
             const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
             

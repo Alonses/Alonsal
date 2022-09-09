@@ -11,7 +11,7 @@ module.exports = async ({client}) => {
     let controle = 0
 
     // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
-    if(date1.getDay() == 4 && date1.getHours() > 13)
+    if (date1.getDay() == 4 && date1.getHours() > 13)
         controle = 7
     
     const dias = [4, 3, 2, 1, controle, 6, 5]

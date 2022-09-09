@@ -10,7 +10,7 @@ module.exports = async ({client, message, caso}) => {
     if (!existsSync(`./arquivos/data/rank/${message.guild.id}`))
         mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true })
 
-    if(caso !== "comando") {
+    if (caso !== "comando") {
         user = {
             id: message.author.id,
             nickname: message.author.username,
@@ -51,7 +51,7 @@ module.exports = async ({client, message, caso}) => {
     if (user.caldeira_de_ceira) {
         if (message.createdTimestamp - user.lastValidMessage > CALDEIRA)
             user.caldeira_de_ceira = false
-        else if(caso == 'messages') return
+        else if (caso == 'messages') return
     }
 
     if (caso == 'messages')

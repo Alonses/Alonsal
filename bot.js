@@ -18,21 +18,16 @@ const client = new Client({
 const modo_develop = 0, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
-if (!modo_develop) {
+if (!modo_develop)
 	status = 1, ranking = 1
-}
 
-if (silent){
+if (silent)
 	status = 0, ranking = 0
-}
 
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
-
-if (modo_develop) {
-	token = token_2
-	clientId = clientId_2
-}
+if (modo_develop)
+	token = token_2, clientId = clientId_2
 
 let commands = []
 const comandos_privados = []

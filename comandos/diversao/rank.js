@@ -78,7 +78,7 @@ module.exports = {
             const pages = users.length / 6
             let paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
             
-            if(users.length / 6 < 1)
+            if (users.length / 6 < 1)
                 paginas = 1
 
             if (users.length > 6)
