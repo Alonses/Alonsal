@@ -15,6 +15,9 @@ module.exports = (client, modo, id_usuario) => {
     const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator]
     const badge_names = ["Tester", "Debugger", "Programmer", "Creator"]
 
+    if(modo == "single") // Retorna a badge bruta
+        return [badges[id_usuario], badge_names[id_usuario]]
+
     if (existsSync(`./arquivos/data/badges/${user.id}/badges.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
         const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}/badges.json`)

@@ -36,7 +36,7 @@ module.exports = {
                     .setDescription('Uma página para exibir')))
         .addSubcommand(subcommand =>
             subcommand.setName('xp')
-                .setDescription("⌠😂⌡ Ajuste o XP de algum usuário")
+                .setDescription("⌠💂⌡ Ajuste o XP de algum usuário")
                 .addUserOption(option =>
                     option.setName('usuario')
                     .setDescription("O usuário para ajustar")
@@ -156,7 +156,7 @@ module.exports = {
 
                     if (usuario_alvo.length === 0)
                         usuario_alvo.push(0)
-
+                    
                     let fixed_badge = ""
 
                     if (existsSync(`./arquivos/data/badges/${user_alvo.id}/badges.json`))
