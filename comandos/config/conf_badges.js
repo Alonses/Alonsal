@@ -3,6 +3,7 @@ const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
 const { emojis_dancantes, emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
+const busca_badges = require('../../adm/funcoes/busca_badges.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,8 +34,6 @@ module.exports = {
             badge_list: []
         }
 
-        const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator]
-        const badge_names = ["Tester", "Debugger", "Programmer", "Creator"]
         const all_badges = []
 
         let entradas = interaction.options.data
@@ -48,8 +47,9 @@ module.exports = {
                 user.badge = parseInt(valor.value)
         })
         
-        const badge = busca_emoji(client, badges[user.badge])
-    
+        const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(user.badge))[0])
+        const badge_name = busca_badges(client, 'single', parseInt(user.badge))[1]
+
         // Criando o JSON para o usuário da badge
         if (!existsSync(`./arquivos/data/badges/${user.id}`))
             mkdirSync(`./arquivos/data/badges/${user.id}`, { recursive: true })
@@ -74,9 +74,9 @@ module.exports = {
         delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
 
         client.users.fetch(user.id, false).then((user_interno) => {
-            user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_names[user.badge]}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
+            user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
             
-            interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_names[user.badge]}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
+            interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
         })
     }
 }

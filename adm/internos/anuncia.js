@@ -7,9 +7,17 @@ module.exports = async ({client}) => {
 
     if (client.user.id !== "833349943539531806") return
     
+
     const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
-    const dias = [4, 3, 2, 1, 0, 6, 5]
-    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
+    let controle = 0
+
+    // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
+    if(date1.getDay() == 4 && date1.getHours() > 13)
+        controle = 7
+    
+    const dias = [4, 3, 2, 1, controle, 6, 5]
+    
+    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((11 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
     
     next_att(client, tempo_restante)
     
