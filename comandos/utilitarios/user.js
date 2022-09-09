@@ -145,7 +145,7 @@ module.exports = {
                 )
                 .setFooter({ text: `${tipo_user} ${nota_rodape}` })
                 
-                if(badges.length > 0)
+                if (badges.length > 0)
                     infos_user.addFields({
                         name: ':trophy: **Badges**',
                         value: badges,
