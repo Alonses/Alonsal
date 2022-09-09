@@ -73,6 +73,13 @@
             "nome_faltando" : "Nom manquant",
             "error_1" : "Veuillez entrer un numéro de page plus petit pour ce",
             "error_rc" : "Impossible de charger la commande de ratissage pour le moment, veuillez réessayer plus tard"
+        },
+        {
+            "error_1" : "Vous n'avez aucun badge à afficher!",
+            "error_2" : "Vous n'avez pas ce badge à épingler",
+            "suas_badges" : "Vos badges",
+            "badge_fixada" : "épinglé à votre profil!",
+            "rodape" : "Utilisez la commande /badges fixar:<nom> pour épingler un!"
         }
     ],
     "jogos" : [

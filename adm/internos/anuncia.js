@@ -7,7 +7,6 @@ module.exports = async ({client}) => {
 
     if (client.user.id !== "833349943539531806") return
     
-
     const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
     let controle = 0
 

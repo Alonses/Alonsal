@@ -12,9 +12,9 @@ module.exports = (client, modo, id_usuario) => {
     }
 
     let all_badges = []
-    const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator]
-    const badge_names = ["Tester", "Debugger", "Programmer", "Creator"]
-
+    const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator, emojis.aln_waxed]
+    const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed"]
+    
     if(modo == "single") // Retorna a badge bruta
         return [badges[id_usuario], badge_names[id_usuario]]
 

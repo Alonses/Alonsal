@@ -6,6 +6,8 @@ module.exports = {
 		.setDescription('⌠✳️⌡ Veja um resumo de processamento do Alonsal'),
 	async execute(client, interaction) {
 
+        if (!client.owners.includes(interaction.user.id)) return
+
         const used = process.memoryUsage()
         let text = 'Uso de RAM:\n'
 
@@ -14,7 +16,7 @@ module.exports = {
 
         for (let key in used) 
             text += `${key}: **${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB**\n`
-
-        interaction.reply(text)
+        
+        interaction.reply({ content: text, ephemeral: true })
     }
 }

@@ -73,6 +73,13 @@
             "nome_faltando" : "Nome faltando",
             "error_1" : "Informe um número da página menor para isto",
             "error_rc" : "Não foi possível carregar o ranking de comandos no momento, tente novamente mais tarde"
+        },
+        {
+            "error_1" : "Você não possui nenhuma badge para visualizar!",
+            "error_2" : "Você não possui essa badge para fixar",
+            "suas_badges" : "Suas Badges",
+            "badge_fixada" : "fixada ao seu perfil!",
+            "rodape" : "Use o comando /badges fixar:<nome> para fixar uma!"
         }
     ],
     "jogos" : [

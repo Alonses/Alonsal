@@ -14,21 +14,22 @@ module.exports = {
                 .addChoices(
                     { name: 'Tester', value: '0' },
                     { name: 'Debugger', value: '1' },
-                    { name: 'Programmer', value: '2' }
+                    { name: 'Programmer', value: '2' },
+                    { name: 'Waxed', value: '4' }
                 )),
 	async execute(client, interaction) {
 
         // Procurando pelas badges antes do comando
         if (!existsSync(`./arquivos/data/badges/${interaction.user.id}/badges.json`))
-            interaction.reply({ content: "Você não possui nenhuma badge para visualizar!", ephemeral: true })
+            interaction.reply({ content: diversao[9]["error_1"], ephemeral: true })
         
         if (!interaction.options.data[0]) {
 
             const embed = new EmbedBuilder()
-            .setTitle("> Suas Badges")
+            .setTitle(`> ${diversao[9]["suas_badges"]}`)
             .setColor(0x29BB8E)
             .setDescription(busca_badges(client, 'all', interaction.user.id))
-            .setFooter({ text: 'Use o comando /badges fixar:<nome> para fixar uma!'})
+            .setFooter({ text: diversao[9]["rodape"]})
 
             interaction.reply({ embeds: [embed], ephemeral: true })
         } else { // Fixando a badge ao perfil do usuário
@@ -55,7 +56,7 @@ module.exports = {
             })
             
             // Verificando se o usuário possui a badge informada
-            if(!all_badges.includes(new_badge)) return interaction.reply({ content: 'Você não possui essa badge para fixar!', ephemeral: true })
+            if(!all_badges.includes(new_badge)) return interaction.reply({ content: diversao[9]["error_2"], ephemeral: true })
 
             const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
             
@@ -66,7 +67,7 @@ module.exports = {
             writeFileSync(`./arquivos/data/badges/${user.id}/badges.json`, JSON.stringify(user))
             delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
 
-            interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` fixada ao seu perfil!`, ephemeral: true })
+            interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` ${diversao[9]["badge_fixada"]}`, ephemeral: true })
         }
     }
 }
