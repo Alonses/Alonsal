@@ -79,6 +79,13 @@
             "nome_faltando" : "Missing name",
             "error_1" : "Please enter a smaller page number for this",
             "error_rc" : "Could not load command rating at this time, please try again later"
+        },
+        {
+            "error_1" : "You don't have any badges to view!",
+            "error_2" : "You don't have this badge to pin",
+            "suas_badges" : "Your Badges",
+            "badge_fixada" : "pinned to your profile!",
+            "rodape" : "Use the /badges fixar:<name> command to pin a!"
         }
     ],
     "jogos" : [

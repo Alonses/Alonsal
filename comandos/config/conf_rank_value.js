@@ -23,8 +23,8 @@ module.exports = {
                 if (err) throw err
             })
         })
-
-        interaction.reply(`:tropical_drink: | Agora o ranking está dando \`${valor_ranking}x\` experiência`)
+        
+        interaction.reply({ content: `:tropical_drink: | Agora o ranking está dando \`${valor_ranking}x\` experiência`, ephemeral: true })
         client.channels.cache.get('872865396200452127').send(`:medal: | Ranking do Alonsal ajustado para \`${valor_ranking}x\``)
     }
 }

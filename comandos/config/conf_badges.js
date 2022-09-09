@@ -20,7 +20,8 @@ module.exports = {
                     { name: 'Tester', value: '0' },
                     { name: 'Debugger', value: '1' },
                     { name: 'Programmer', value: '2' },
-                    { name: 'Creator', value: '3' }
+                    { name: 'Creator', value: '3' },
+                    { name: 'Waxed', value: '4' }
                 )
                 .setRequired(true)),
     async execute(client, interaction) {

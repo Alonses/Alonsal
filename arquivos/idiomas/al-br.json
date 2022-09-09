@@ -79,6 +79,13 @@
             "nome_faltando" : "Nome faltando",
             "error_1" : "Bota um número menor ae meo",
             "error_rc" : "Tô com preguiça para carregar o rank de comandos agr, tenta dnv dps"
+        },
+        {
+            "error_1" : "Você não tem nenhuma badge para ver!",
+            "error_2" : "Você não tem essa badge",
+            "suas_badges" : "Suas Badges",
+            "badge_fixada" : "colada no seu perfil!",
+            "rodape" : "Usa o comando /badges fixar:<nome> pra colar uma!"
         }
     ],
     "jogos" : [
