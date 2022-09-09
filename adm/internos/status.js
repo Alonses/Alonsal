@@ -7,8 +7,6 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({client}) => {
     
     if (client.user.id === "833349943539531806") {
-
-        // require('./commit.js')({client})
         
         fetch('https://apisal.herokuapp.com/status')
         .then(res => res.json())
