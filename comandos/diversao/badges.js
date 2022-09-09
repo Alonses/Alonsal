@@ -19,6 +19,8 @@ module.exports = {
                 )),
 	async execute(client, interaction) {
 
+        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        
         // Procurando pelas badges antes do comando
         if (!existsSync(`./arquivos/data/badges/${interaction.user.id}/badges.json`))
             interaction.reply({ content: diversao[9]["error_1"], ephemeral: true })
