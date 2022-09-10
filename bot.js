@@ -1,5 +1,5 @@
-const { readdirSync } = require("fs")
-const idioma = require("./adm/idioma")
+const { readdirSync } = require('fs')
+const idioma = require('./adm/idioma')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { Routes } = require('discord.js')
@@ -39,7 +39,7 @@ for (const folder of readdirSync(`${__dirname}/comandos/`)) {
 		const command = require(`./comandos/${folder}/${file}`)
 
 		if (!modo_develop)
-			if (!command.data.name.startsWith("c_"))
+			if (!command.data.name.startsWith('c_'))
 				commands.push(command.data.toJSON())
 			else // Salvando comandos privados para usar apenas num servidor
 				comandos_privados.push(command.data.toJSON())
@@ -91,18 +91,18 @@ client.once('ready', async () => {
 
 	// Definindo o idioma do bot
 	idioma.setPath(`${__dirname}/arquivos/data/idiomas`)
-	idioma.setDefault("pt-br")
+	idioma.setDefault('pt-br')
 
 	client.idioma = idioma
 	client.owners = owner_id
 
 	if (status)
-		await require("./adm/internos/status.js")({client})
+		await require('./adm/internos/status.js')({client})
 	
 	console.log(`Caldeiras do ${client.user.username} aquecidas, pronto para operar`)
 })
 
-client.on("messageCreate", async (message) => {
+client.on('messageCreate', async (message) => {
 	if (message.author.bot || message.webhookId) return
 
 	try{ // Atualizando ranking e recebendo mensagens de texto
@@ -112,7 +112,7 @@ client.on("messageCreate", async (message) => {
 		
 		require('./adm/internos/comandos_antigos.js')({client, message})
 	}catch(err) {
-		const local = "commands"
+		const local = 'commands'
 		require('./adm/internos/error.js')({client, err, local})
 	}
 })

@@ -21,7 +21,7 @@ module.exports = {
             )),
 	async execute(client, interaction) {
 
-        const {utilitarios} = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         let entradas = interaction.options.data, aviso = ""
 
