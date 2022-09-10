@@ -16,7 +16,10 @@ module.exports = {
                 .setRequired(true)),
 	async execute(client, interaction) {
         
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        let idioma_definido = client.idioma.getLang(interaction)
+        idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
+        
+        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         
         const texto_entrada = interaction.options.data[0].value
 
