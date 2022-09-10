@@ -9,7 +9,7 @@ module.exports = {
 	async execute(client, interaction) {
 
 		const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-				
+        
         const dancando_thanos = busca_emoji(client, emojis.dancando_thanos)
         const emoji_steve = busca_emoji(client, emojis.dancando_steve)
         const emoji_pare = busca_emoji(client, emojis.pare_agr)

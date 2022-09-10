@@ -18,8 +18,6 @@ module.exports = async ({client}) => {
     
     const tempo_restante = (dias[date1.getDay()] * 86400000) + ((11 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
     
-    next_att(client, tempo_restante)
-    
     setTimeout(() => {
         gera_anuncio(client, 604800000)
         requisita_anuncio(client, 604800000) // Altera o valor para sempre executar à meia-noite
