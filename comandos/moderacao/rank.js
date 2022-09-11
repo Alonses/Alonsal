@@ -36,7 +36,7 @@ module.exports = {
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== "665002572926681128")
-            return interaction.reply({ content: 'Você não tem permissão para fazer isso!', ephemeral: true })
+            return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true })
         
         const usuario = interaction.options.getUser('usuario')
 
