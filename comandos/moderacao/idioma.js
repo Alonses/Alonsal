@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
 
 const idiomasMap = {
     "pt": [ "pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`" ],
@@ -9,11 +9,27 @@ const idiomasMap = {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('idioma')
-		.setDescription('⌠💂⌡ Altere o idioma do Alonsal')
+		.setName('language')
+        .setNameLocalizations({
+            "pt-BR": 'idioma',
+            "fr": 'langue'
+        })
+		.setDescription('⌠💂⌡ Change the language of Alonsal')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💂⌡ Altere o idioma do Alonsal',
+            "fr": '⌠💂⌡ Changer la langue d\'Alonsal'
+        })
         .addStringOption(option =>
-            option.setName('idioma')
-                .setDescription('pt, en, fr ou al?')
+            option.setName('language')
+                .setNameLocalizations({
+                    "pt-BR": 'idioma',
+                    "fr": 'langue'
+                })
+                .setDescription('pt, en, fr or al?')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'pt, en, fr ou al?',
+                    "fr": 'pt, en, fr ou al?'
+                })
                 .addChoices(
                     { name: 'Português', value: 'pt' },
                     { name: 'English', value: 'en' },
@@ -21,8 +37,14 @@ module.exports = {
                     { name: 'Alonsês', value: 'al' }
                 )
                 .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
+
+        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
+
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== "665002572926681128")
+            return interaction.reply(moderacao[5]["moderadores"]) // Libera configuração para proprietários e adms apenas
 
         let novo_idioma = interaction.options.data[0].value
 

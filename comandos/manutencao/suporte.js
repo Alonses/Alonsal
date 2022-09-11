@@ -4,8 +4,16 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('suporte')
-		.setDescription('⌠📡⌡ Dê suporte ao Alonsal'),
+		.setName('support')
+        .setNameLocalizations({
+            "pt-BR": 'suporte',
+            "fr": 'soutien'
+        })
+		.setDescription('⌠📡⌡ Support Alonsal')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
+            "fr": '⌠📡⌡ Soutenez Alonsal'
+        }),
 	async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

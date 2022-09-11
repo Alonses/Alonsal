@@ -3,7 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('git')
-		.setDescription('⌠📡⌡ O repositório do Alonsal™️'),
+		.setDescription('⌠📡⌡ The Alonsal™️ repository')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
+            "fr": '⌠📡⌡ Le référentiel Alonsal™️'
+        }),
 	async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

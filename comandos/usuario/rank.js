@@ -18,7 +18,7 @@ const medals = {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('rank')
-		.setDescription('⌠👤⌡ Veja o ranking do servidor')
+		.setDescription('⌠👤⌡ Veja o ranking do Alonsal')
         .addSubcommand(subcommand =>
             subcommand.setName('server')
             .setDescription('⌠👤⌡ Veja o ranking do servidor')

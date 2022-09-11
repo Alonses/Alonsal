@@ -3,14 +3,34 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('mail')
-		.setDescription('⌠📡⌡ Envie mensagens para o Alonsal')
+		.setDescription('⌠📡⌡ Send messages to Alonsal')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠📡⌡ Envie mensagens para o Alonsal',
+            "fr": '⌠📡⌡ Envoyer des messages à Alonsal'
+        })
         .addStringOption(option =>
-            option.setName('texto')
-            .setDescription('Reporte bugs ou dê sugestões!')
+            option.setName('text')
+            .setNameLocalizations({
+                "pt-BR": 'texto',
+                "fr": 'text'
+            })
+            .setDescription('Report bugs or give suggestions!')
+            .setDescriptionLocalizations({
+                "pt-BR": 'Reporte bugs ou dê sugestões!',
+                "fr": 'Signalez des bugs ou faites des suggestions !'
+            })
             .setRequired(true))
         .addAttachmentOption(option =>
-            option.setName('arquivo')
-            .setDescription('Anexe arquivos se precisar')),
+            option.setName('file')
+            .setNameLocalizations({
+                "pt-BR": 'arquivo',
+                "fr": 'dossier'
+            })
+            .setDescription('Attach files if needed')
+            .setDescriptionLocalizations({
+                "pt-BR": 'Anexe arquivos se precisar',
+                "fr": 'Joindre des fichiers si besoin'
+            })),
     async execute(client, interaction) {
         
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
@@ -21,13 +41,13 @@ module.exports = {
         }
         
         let entradas = interaction.options.data
+        const ent_texto = ["texto", "text"], ent_arquivo = ["arquivo", "file", "dossier"]
 
         entradas.forEach(valor => {
-
-            if (valor.name == "texto")
+            if (ent_texto.includes(valor.name))
                 corpo_mensagem.texto = valor.value
 
-            if (valor.name == "arquivo")
+            if (ent_arquivo.includes(valor.name))
                 corpo_mensagem.arquivo = valor.attachment.attachment
         })
 

@@ -1,22 +1,43 @@
 const { existsSync, writeFileSync } = require("fs")
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('xp')
-        .setDescription("⌠💂⌡ Ajuste o XP de algum usuário")
+        .setDescription("⌠💂⌡ Adjust some user's XP")
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
+            "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs'
+        })
         .addUserOption(option =>
-            option.setName('usuario')
-            .setDescription("O usuário a ser ajustar")
+            option.setName('user')
+            .setNameLocalizations({
+                "pt-BR": 'usuario',
+                "fr": 'user'
+            })
+            .setDescription("The user to adjust")
+            .setDescriptionLocalizations({
+                "pt-BR": 'O usuário a ser ajustar',
+                "fr": 'Utilisateur cible'
+            })
             .setRequired(true))
         .addNumberOption(option =>
             option.setName('xp')
-            .setDescription('Qual o novo XP?')
+            .setDescription('What is the new XP?')
+            .setDescriptionLocalizations({
+                "pt-BR": 'Qual o novo XP?',
+                "fr": 'Qu\'est-ce que le nouvel XP ?'
+            })
             .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
 
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
+
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== "665002572926681128")
+            return interaction.reply({ content: 'Você não tem permissão para fazer isso!', ephemeral: true })
+        
         const usuario = interaction.options.getUser('usuario')
 
         const user = {

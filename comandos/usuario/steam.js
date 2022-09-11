@@ -6,10 +6,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('steam')
-        .setDescription('⌠👤⌡ Perfil de alguém na Steam')
+        .setDescription('⌠👤⌡ Someone\'s Steam Profile')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Perfil de alguém na Steam',
+            "fr": '⌠👤⌡ Profil Steam de quelqu\'un'
+        })
         .addStringOption(option =>
-            option.setName('usuario')
-                .setDescription('O nome do usuário')
+            option.setName('user')
+                .setNameLocalizations({
+                    "pt-BR": 'usuario',
+                    "fr": 'user'
+                })
+                .setDescription('The username')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'O nome do usuário',
+                    "fr": 'Nom de profil'
+                })
                 .setRequired(true)),
     async execute(client, interaction) {
 

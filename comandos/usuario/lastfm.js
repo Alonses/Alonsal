@@ -9,10 +9,22 @@ let horas_tocadas, horas_passadas
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('lastfm')
-		.setDescription('⌠👤⌡ Perfil de alguém no LastFM')
+		.setDescription('⌠👤⌡ Someone\'s Profile on LastFM')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
+            "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM'
+        })
         .addStringOption(option =>
-            option.setName('usuario')
-                .setDescription('O nome do usuário')
+            option.setName('user')
+                .setNameLocalizations({
+                    "pt-BR": 'usuario',
+                    "fr": 'user'
+                })
+                .setDescription('The username')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'O nome do usuário',
+                    "fr": 'Nom de profil'
+                })
                 .setRequired(true)),
 	async execute(client, interaction) {
         
@@ -20,7 +32,6 @@ module.exports = {
         idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
         
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        
         const texto_entrada = interaction.options.data[0].value
 
         await interaction.deferReply()

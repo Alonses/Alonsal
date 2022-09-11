@@ -9,7 +9,7 @@ module.exports = (lista_botoes) => {
     lista_botoes.forEach(valor => {
         if (valor.type === 4) {
 
-            if(!valor.emoji)
+            if (!valor.emoji)
                 row_buttons.addComponents(
                     new ButtonBuilder()
                         .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
@@ -25,7 +25,7 @@ module.exports = (lista_botoes) => {
                         .setEmoji(valor.emoji)
                 )   
         } else {
-            if(!valor.emoji)
+            if (!valor.emoji)
                 row_buttons.addComponents(
                     new ButtonBuilder()
                         .setCustomId(valor.name.slice(0, 4))
