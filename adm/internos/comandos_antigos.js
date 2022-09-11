@@ -1,4 +1,5 @@
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js')
+const create_buttons = require('../../adm/funcoes/create_buttons.js')
+const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async function({client, message}) {
 
@@ -7,19 +8,13 @@ module.exports = async function({client, message}) {
 
         if (!permissions.has("SEND_MESSAGES")) return // Permissão para enviar mensagens no canal
     }
-
+    
     const { updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(message)}.json`)
 
     if (message.content.includes(client.user.id) || message.content.startsWith(".a")) {
-    
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                .setLabel(updates[0]["convidar"])
-                .setURL(`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720`)
-                .setStyle(ButtonStyle.Link),
-            )
-            
+        
+        const row = create_buttons([{ name: updates[0]["convidar"], value: `https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720`, type: 4, emoji: emojis.icon_integration }, { name: updates[0]["suporte"], value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }])
+        
         message.reply({ content: updates[0]["slash_commands"], components: [row]})
     }
 }

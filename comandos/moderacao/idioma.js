@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const idiomasMap = {
     "pt": [ "pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`" ],
@@ -20,13 +20,9 @@ module.exports = {
                     { name: 'Français', value: 'fr' },
                     { name: 'Alonsês', value: 'al' }
                 )
-                .setRequired(true)),
+                .setRequired(true))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels),
 	async execute(client, interaction) {
-
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
-        if (!interaction.member.permissions.has('MANAGE_GUILD') && !client.owners.includes(interaction.user.id))
-            return interaction.reply(`:octagonal_sign: | ${moderacao[3]["permissao_1"]}`).then(msg => setTimeout(() => msg.delete(), 5000)) // Libera configuração para o Slondo e adms apenas
 
         let novo_idioma = interaction.options.data[0].value
 

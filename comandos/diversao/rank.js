@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const fs = require('fs')
-const { readdirSync, existsSync, writeFileSync } = require("fs")
+const { readdirSync, unlinkSync, existsSync, writeFileSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
@@ -64,7 +64,13 @@ module.exports = {
             })
             
             for (const file of readdirSync(`./arquivos/data/rank/${interaction.guild.id}`)) {
-                users.push(require(`../../arquivos/data/rank/${interaction.guild.id}/${file}`))
+                try{
+                    const data = require(`../../arquivos/data/rank/${interaction.guild.id}/${file}`)
+
+                    users.push(data)
+                }catch(err){ // Erro na leitura do arquivo ( arquivo corrompido / Excluindo o arquivo )
+                    unlinkSync(`./arquivos/data/rank/${interaction.guild.id}/${file}`)
+                }
             }
 
             users.sort(function (a, b) { // Ordena os usuários em ordem decrescente

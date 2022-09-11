@@ -1,8 +1,9 @@
 {
     "updates" : [
         {
-            "slash_commands" : "Traditional commands have been disabled, keep using Alonsal by slash commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below!",
-            "convidar": "To invite!"
+            "slash_commands" : "Traditional commands have been disabled, keep using Alonsal by `/slash` commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below! Also make sure my commands are enabled for all in server integrations under `Integrations -> Alonsal -> Commands`",
+            "convidar" : "To invite!",
+            "suporte" : "Support"
         }
     ],
     "inicio" : [

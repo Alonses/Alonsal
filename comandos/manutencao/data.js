@@ -49,14 +49,14 @@ module.exports = {
 
             interaction.reply({ content: `${manutencao[9]["dados_removidos"]} ${client.user.username}`, ephemeral: true })
         } else {
-            ranking_servidores = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
-
+            dados_conhecidos = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
+            
             const embed = new EmbedBuilder()
             .setTitle(manutencao[9]["dados_conhecidos"])
             .setColor(0x29BB8E)
-            .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${ranking_servidores}`)
+            .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${dados_conhecidos}`)
             .setFooter({ text: manutencao[9]["dica_rodape"]})
-
+    
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
     }
