@@ -1,9 +1,9 @@
-const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_mail')
-		.setDescription('⌠✳️⌡ Enviar mensagem em canal especifico')
+		.setDescription('⌠🤖⌡ Enviar mensagem em canal especifico')
         .addStringOption(option =>
             option.setName('texto')
             .setDescription("O texto a ser enviado")
@@ -14,7 +14,8 @@ module.exports = {
             .setRequired(true))
         .addAttachmentOption(option =>
             option.setName('imagem')
-            .setDescription("A imagem que será usada")),
+            .setDescription("A imagem que será usada"))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
         
         if (interaction.user.id !== "665002572926681128") return

@@ -6,7 +6,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('steam')
-        .setDescription('⌠💡⌡ Perfil de alguém na Steam')
+        .setDescription('⌠👤⌡ Perfil de alguém na Steam')
         .addStringOption(option =>
             option.setName('usuario')
                 .setDescription('O nome do usuário')

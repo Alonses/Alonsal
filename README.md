@@ -7,6 +7,7 @@ Dentre as áreas de atuação, separamos por esses tópicos: //
 - [😂] Diversão
 - [💡] Utilitários
 - [🎲] Jogos
+- [👤] Usuário
 - [💂] Administração
 - [📡] Infos
 

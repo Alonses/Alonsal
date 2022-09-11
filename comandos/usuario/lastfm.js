@@ -9,7 +9,7 @@ let horas_tocadas, horas_passadas
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('lastfm')
-		.setDescription('⌠💡⌡ Perfil de alguém no LastFM')
+		.setDescription('⌠👤⌡ Perfil de alguém no LastFM')
         .addStringOption(option =>
             option.setName('usuario')
                 .setDescription('O nome do usuário')

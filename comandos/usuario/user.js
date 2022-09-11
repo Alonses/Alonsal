@@ -11,16 +11,16 @@ const { ids_enceirados } = require('../../config.json')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('user')
-		.setDescription('⌠💡⌡ Veja detalhes de algum usuario')
+		.setDescription('⌠👤⌡ Veja detalhes de algum usuario')
         .addSubcommand(subcommand =>
 			subcommand
 				.setName('avatar')
-				.setDescription('⌠💡⌡ O Avatar do usuário')
+				.setDescription('⌠👤⌡ O Avatar do usuário')
                 .addUserOption(option => option.setName('usuario').setDescription('Marque outro usuário como alvo')))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('info')
-                .setDescription('⌠💡⌡ Informações do usuário')
+                .setDescription('⌠👤⌡ Informações do usuário')
                 .addUserOption(option => option.setName('usuario').setDescription('Marque outro usuário como alvo'))),
 	async execute(client, interaction) {
         

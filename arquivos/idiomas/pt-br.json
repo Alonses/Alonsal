@@ -80,6 +80,7 @@
             "error_2" : "Você não possui essa badge para fixar",
             "suas_badges" : "Suas Badges",
             "badge_fixada" : "fixada ao seu perfil!",
+            "badge_removida" : "removida do seu perfil",
             "rodape" : "Use o comando /badges fixar:<nome> para fixar uma!"
         }
     ],
