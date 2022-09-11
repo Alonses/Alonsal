@@ -8,10 +8,22 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('wiki')
-		.setDescription('⌠💡⌡ Pesquise sobre algo na wiki')
+		.setDescription('⌠💡⌡ Search for something on the wiki')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
+            "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki'
+        })
         .addStringOption(option =>
-            option.setName('pesquisa')
-                .setDescription('Estou com sorte')
+            option.setName('search')
+                .setNameLocalizations({
+                    "pt-BR": 'pesquisa',
+                    "fr": 'chercher'
+                })
+                .setDescription('I\'m lucky')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Estou com sorte',
+                    "fr": 'J\'ai de la chance'
+                })
                 .setRequired(true)),
 	async execute(client, interaction) {
 

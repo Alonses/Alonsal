@@ -3,10 +3,22 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('sans')
-		.setDescription('⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo')
+		.setDescription('⌠😂⌡ WrItE LiKe tHaT QuIcKlY')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo',
+            "fr": '⌠😂⌡ ÉcRiVeZ CoMmE CeCi rApIdEmEnT'
+        })
 		.addStringOption(option =>
-            option.setName('texto')
-                .setDescription('Insira um texto')
+            option.setName('text')
+                .setNameLocalizations({
+                    "pt-BR": 'texto',
+                    "fr": 'texte'
+                })
+                .setDescription('Write something!')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Escreva algo!',
+                    "fr": 'Écris quelque chose!'
+                })
                 .setRequired(true)),
 	async execute(client, interaction) {
         
@@ -18,6 +30,6 @@ module.exports = {
             else
                 texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
-        interaction.reply(`\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``)
+        interaction.reply({ content: `\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``, ephemeral: true })
 	}
 }

@@ -7,13 +7,33 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('badge')
-		.setDescription('⌠👤⌡ (Des)Fixe suas badges!')
+		.setDescription('⌠👤⌡ (Un)pin your badges!')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ (Des)Fixe suas badges!',
+            "fr": '⌠👤⌡ (Dé)épinglez vos badges!'
+        })
         .addSubcommand(subcommand =>
-            subcommand.setName('fixar')
-                .setDescription('⌠👤⌡ Fixe uma badge ao seu perfil')
+            subcommand.setName('fix')
+                .setNameLocalizations({
+                    "pt-BR": 'fixar',
+                    "fr": 'épingler'
+                })
+                .setDescription('⌠👤⌡ Pin a badge to your profile')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
+                    "fr": '⌠👤⌡ Épinglez un badge sur votre profil'
+                })
                 .addStringOption(option =>
-                option.setName('fixar')
-                    .setDescription('Qual vai fixar?')
+                option.setName('fix')
+                    .setNameLocalizations({
+                        "pt-BR": 'fixar',
+                        "fr": 'épingler'
+                    })
+                    .setDescription('Which will fix?')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'Qual vai fixar?',
+                        "fr": 'Lequel réparera ?'
+                    })
                     .addChoices(
                         { name: 'Tester', value: '0' },
                         { name: 'Debugger', value: '1' },
@@ -23,8 +43,16 @@ module.exports = {
                     )
                     .setRequired(true)))
         .addSubcommand(subcommand =>
-            subcommand.setName('remover')
-            .setDescription('⌠👤⌡ Remover a badge do fixado')),
+            subcommand.setName('remove')
+            .setNameLocalizations({
+                "pt-BR": 'remover',
+                "fr": 'retirer'
+            })
+            .setDescription('⌠👤⌡ Remove pinned emblem')
+            .setDescriptionLocalizations({
+                "pt-BR": '⌠👤⌡ Remover a badge do fixado',
+                "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé'
+            })),
 	async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
@@ -34,9 +62,11 @@ module.exports = {
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         let entrada = interaction.options.data[0].options, new_badge = ""
+        // Entradas traduzíveis
+        const ent_fixar = ["fixar", "fix", "épingler"]
 
         entrada.forEach(valor => {
-            if (valor.name == "fixar")
+            if (ent_fixar.includes(valor.name))
                 new_badge = parseInt(valor.value)
         })
         
@@ -59,8 +89,6 @@ module.exports = {
                 emoji_badge = busca_emoji(client, busca_badges(client, 'single', parseInt(Object.keys(valor)[0]))[0])
         })
         
-        console.log(all_badges, new_badge)
-
         // Verificando se o usuário possui a badge informada
         if (!all_badges.includes(new_badge) && interaction.options.getSubcommand() == "fixar" ) 
             return interaction.reply({ content: `:octagonal_sign: | ${diversao[9]["error_2"]}`, ephemeral: true })
@@ -68,7 +96,7 @@ module.exports = {
         const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
         
         // Salvando os dados novamente para a reescrita
-        if (interaction.options.getSubcommand() == "fixar")
+        if (ent_fixar.includes(interaction.options.getSubcommand()))
             user.fixed_badge = new_badge
         else
             user.fixed_badge = null
@@ -78,7 +106,7 @@ module.exports = {
         writeFileSync(`./arquivos/data/badges/${user.id}/badges.json`, JSON.stringify(user))
         delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
 
-        if (interaction.options.getSubcommand() == "fixar")
+        if (ent_fixar.includes(interaction.options.getSubcommand()))
             interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` ${diversao[9]["badge_fixada"]}`, ephemeral: true })
         else // Removendo a badge fixada
             interaction.reply({ content: `:medal: | Badge ${diversao[9]["badge_removida"]}`, ephemeral: true })

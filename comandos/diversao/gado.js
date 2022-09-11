@@ -2,11 +2,27 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('gado')
-		.setDescription('⌠😂⌡ Teste a gadisse de alguém')
+		.setName('cattle')
+        .setNameLocalizations({
+            "pt-BR": 'gado',
+            "fr": 'betail'
+        })
+		.setDescription('⌠😂⌡ Test someone\'s horn size')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠😂⌡ Teste a gadisse de algué',
+            "fr": '⌠😂⌡ Testez la taille de la corne de quelqu\'un'
+        })
         .addUserOption(option => 
-            option.setName('usuario')
-            .setDescription('Marque outro usuário como alvo')
+            option.setName('user')
+            .setNameLocalizations({
+                "pt-BR": 'usuario',
+                "fr": 'user'
+            })
+            .setDescription('Mention a user as a target')
+            .setDescriptionLocalizations({
+                "pt-BR": 'Marque outro usuário como alvo',
+                "fr": 'Mentionner un utilisateur comme cible'
+            })
             .setRequired(true)),
 	async execute(client, interaction) {
 

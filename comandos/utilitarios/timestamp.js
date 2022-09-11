@@ -5,17 +5,37 @@ const formata_horas = require("../../adm/funcoes/formata_horas")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('timestamp')
-		.setDescription('⌠💡⌡ Converta uma data para timestamp ou vice-versa')
+		.setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
+            "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa'
+        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName('custom')
-                .setDescription('⌠💡⌡ Timestamp customizado')
+                .setDescription('⌠💡⌡ Custom Timestamp')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💡⌡ Timestamp customizado',
+                    "fr": '⌠💡⌡ Horodatage personnalisé'
+                })
                 .addStringOption(option =>
-                    option.setName("tempo")
-                    .setDescription("O Valor a ser convertido"))
+                    option.setName("time")
+                    .setNameLocalizations({
+                        "pt-BR": 'tempo',
+                        "fr": 'temps'
+                    })
+                    .setDescription("The value to be converted")
+                    .setDescriptionLocalizations({
+                       "pt-BR": 'O Valor a ser convertido',
+                       "fr": 'La valeur à convertir' 
+                    }))
                 .addStringOption(option =>
                     option.setName('timer')
-                    .setDescription('Uma data rápida para marcar')
+                    .setDescription('A quick date to book')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'Uma data rápida para marcar',
+                        "fr": 'Une date rapide à réserver'
+                    })
                     .addChoices(
                         { name: '+5 Minutos', value: '5' },
                         { name: '+10 Minutos', value: '10' },
@@ -25,8 +45,16 @@ module.exports = {
                     )))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('agora')
-                .setDescription('⌠💡⌡ Timestamp atual')),
+                .setName('now')
+                .setNameLocalizations({
+                    "pt-BR": 'agora',
+                    "fr": 'present'
+                })
+                .setDescription('⌠💡⌡ Current timestamp')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💡⌡ Timestamp atual',
+                    "fr": '⌠💡⌡ Horodatage actuel'
+                })),
 	async execute(client, interaction) {
         
         let idioma_definido = client.idioma.getLang(interaction)
@@ -39,12 +67,14 @@ module.exports = {
         let data = interaction.options.data[0].value, retorno, entrada = null, timer = 0
         let conversao_valida = ""
 
-        if (interaction.options.getSubcommand() !== "agora"){ // Entrada customizada
+        // Entradas traduzíveis
+        const ent_tempo = ["tempo", "temps", "time"], ent_momentum = ["agora", "now", "present"]
+
+        if (!ent_momentum.includes(interaction.options.getSubcommand())){ // Entrada customizada
             let opcoes = interaction.options.data[0].options
-
+            
             opcoes.forEach(valor => {
-
-                if (valor.name == "tempo")
+                if (ent_tempo.includes(valor.name))
                     entrada = parseInt(valor.value)
 
                 if (valor.name == "timer")

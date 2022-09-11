@@ -18,22 +18,58 @@ const medals = {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('rank')
-		.setDescription('⌠👤⌡ Veja o ranking do Alonsal')
+		.setDescription('⌠👤⌡ See Alonsal\'s ranking')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
+            "fr": '⌠👤⌡ Voir le classement d\'Alonsal'
+        })
         .addSubcommand(subcommand =>
             subcommand.setName('server')
-            .setDescription('⌠👤⌡ Veja o ranking do servidor')
+            .setDescription('⌠👤⌡ See server ranking')
+            .setDescriptionLocalizations({
+                "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
+                "fr": '⌠👤⌡ Voir le classement des serveurs'
+            })
             .addStringOption(option =>
-                option.setName('pagina')
-                    .setDescription('Uma página para exibir'))
+                option.setName('page')
+                    .setNameLocalizations({
+                        "pt-BR": 'pagina',
+                        "fr": 'page'
+                    })
+                    .setDescription('One page to display')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'Uma página para exibir',
+                        "fr": 'Une page à afficher'
+                    }))
             .addUserOption(option =>
-                option.setName('usuario')
-                    .setDescription('O Usuário para exibir')))
+                option.setName('user')
+                    .setNameLocalizations({
+                        "pt-BR": 'usuario',
+                        "fr": 'user'
+                    })
+                    .setDescription('User to display')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'O Usuário para exibir',
+                        "fr": 'Utilisateur à afficher'
+                    })))
         .addSubcommand(subcommand =>
             subcommand.setName('global')
-            .setDescription('⌠👤⌡ Veja o ranking global')
+            .setDescription('⌠👤⌡ See the global ranking')
+            .setDescriptionLocalizations({
+                "pt-BR": '⌠👤⌡ Veja o ranking global',
+                "fr": '⌠👤⌡ Voir le classement mondial'
+            })
             .addStringOption(option =>
-                option.setName('pagina')
-                    .setDescription('Uma página para exibir'))),
+                option.setName('page')
+                .setNameLocalizations({
+                    "pt-BR": 'pagina',
+                    "fr": 'page'
+                })
+                .setDescription('One page to display')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Uma página para exibir',
+                    "fr": 'Une page à afficher'
+                }))),
 	async execute(client, interaction) {
         
         let usuario_alvo = []
@@ -42,13 +78,16 @@ module.exports = {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const users = []
 
-        let rodape = interaction.user.username, user_alvo = interaction.options.getUser('usuario') // Coleta o ID do usuário mencionado
+        let rodape = interaction.user.username, user_alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user') // Coleta o ID do usuário mencionado
         let opcoes = interaction.options.data, pagina = 1
 
         if (interaction.options.getSubcommand() === "server") { // Exibindo o rank normalmente
+        
+            const ent_pagina = ["page", "pagina"]
+        
             // Filtrando os valores de entrada caso tenham sido declarados
             opcoes.forEach(valor => {
-                if (valor.name == "pagina")
+                if (ent_pagina.includes(valor.name))
                     pagina = valor.value < 1 ? 1 : valor.value
             })
             

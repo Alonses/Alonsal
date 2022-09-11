@@ -3,21 +3,53 @@ const binario = require('../../arquivos/json/text/binario.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('binario')
-		.setDescription('⌠💡⌡ (De)codifique do/para o binário')
+		.setName('binary')
+        .setNameLocalizations({
+            "pt-BR": 'binario',
+            "fr": 'binarie'
+        })
+		.setDescription('⌠💡⌡ (De)code from/to binary')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ (De)codifique do/para o binario',
+            "fr": '⌠💡⌡ (Dé)coder de/vers binaire'
+        })
         .addStringOption(option =>
-            option.setName('texto')
-                .setDescription('Escreva algo!')
+            option.setName('text')
+                .setNameLocalizations({
+                    "pt-BR": 'texto',
+                    "fr": 'texte'
+                })
+                .setDescription('Write something!')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Escreva algo!',
+                    "fr": 'Écris quelque chose!'
+                })
                 .setRequired(true))
         .addBooleanOption(option =>
-            option.setName('reverso')
-                .setDescription('Inverter resultado de saída'))
+            option.setName('reverse')
+                .setNameLocalizations({
+                    "pt-BR": 'reverso',
+                    "fr": 'inverse'
+                })
+                .setDescription('Invert output result')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Inverter resultado de saída',
+                    "fr": 'Inverser le résultat de sortie'
+                }))
         .addStringOption(option =>
-            option.setName('operacao')
-            .setDescription("Forçar uma operação")
+            option.setName('operation')
+            .setNameLocalizations({
+                "pt-BR": 'operacao',
+                "fr": 'operation'
+            })
+            .setDescription("Force an operation")
+            .setDescriptionLocalizations({
+                "pt-BR": 'Forçar uma operação',
+                "fr": 'Forcer une opération'
+            })
             .addChoices(
-                { name: 'Codificar', value: '0' },
-                { name: 'Decodificar', value: '1' }
+                { name: 'Encode', value: '0' },
+                { name: 'Decode', value: '1' }
             )),
 	async execute(client, interaction) {
 
@@ -31,14 +63,17 @@ module.exports = {
             opera: 0
         }
 
+        // Entradas traduzíveis
+        const ent_texto = ["texto", "texte", "text"], ent_reverso = ["reverso", "reverse", "inverse"], ent_operacao = ["operacao", "operation"]
+        
         entradas.forEach(valor => {
-            if (valor.name == "texto")
+            if (ent_texto.includes(valor.name))
                 codificar.texto = valor.value
 
-            if (valor.name == "reverso")
+            if (ent_reverso.includes(valor.name))
                 codificar.reverso = valor.value
 
-            if (valor.name == "operacao")
+            if (ent_operacao.includes(valor.name))
                 codificar.opera = parseInt(valor.value)
         })
 

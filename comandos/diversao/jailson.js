@@ -7,15 +7,23 @@ const { gifs } = require("../../arquivos/json/gifs/jailson.json")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('jailson')
-		.setDescription('⌠😂⌡ Assim que não resisto, vaiinn')
+		.setDescription('⌠😂⌡ As soon as I can\'t resist, vaiinn')
+		.setDescriptionLocalizations({
+			"pt-BR": '⌠😂⌡ Assim que não resisto, vaiinn',
+			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn'
+		})
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('gif')
-				.setDescription('⌠😂⌡ Invoca um gif do jaja'))
+				.setDescription('⌠😂⌡ Summons a gif of jaja')
+				.setDescriptionLocalizations({
+					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
+					"fr": '⌠😂⌡ Invoque un gif de jaja'
+				}))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('frase')
-				.setDescription('⌠😂⌡ Invoca uma frase do jaja')),
+				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do jaja')),
 	async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

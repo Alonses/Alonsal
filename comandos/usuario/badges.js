@@ -6,7 +6,11 @@ const busca_badges = require('../../adm/funcoes/busca_badges.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('badges')
-		.setDescription('⌠👤⌡ Veja suas badges'),
+		.setDescription('⌠👤⌡ See your badges')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Veja suas badges',
+            "fr": '⌠👤⌡ Voir vos badges'
+        }),
 	async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

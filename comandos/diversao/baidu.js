@@ -3,7 +3,11 @@ const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('baidu')
-		.setDescription('⌠😂⌡ Louvado seja!'),
+		.setDescription('⌠😂⌡ Praise be!')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠😂⌡ Louvado seja!',
+            "fr": '⌠😂⌡ Loué soit !'
+        }),
 	async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

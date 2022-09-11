@@ -7,7 +7,11 @@ const create_buttons = require('../../adm/funcoes/create_buttons')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('games')
-        .setDescription('⌠💡⌡ O(s) jogo(s) gratuito(s) do momento'),
+        .setDescription('⌠💡⌡ The free game(s) of the moment')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
+            "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment'
+        }),
 	async execute(client, interaction) {
         
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

@@ -3,7 +3,11 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('esfiha')
-		.setDescription('⌠😂⌡ Servidos??'),
+		.setDescription('⌠😂⌡ Serve??')
+		.setDescriptionLocalizations({
+			"pt-BR": '⌠😂⌡ Servidos??',
+			"fr": '⌠😂⌡ Servi??'
+		}),
 	async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

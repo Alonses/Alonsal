@@ -5,7 +5,11 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('⌠💡⌡ Veja seu ping.'),
+		.setDescription('⌠💡⌡ See your ping')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Veja seu ping',
+            "fr": '⌠💡⌡ Voir votre ping'
+        }),
 	async execute(client, interaction) {
 
 		const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
