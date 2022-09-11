@@ -45,7 +45,7 @@ module.exports = {
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== "665002572926681128")
-            return interaction.reply(moderacao[5]["moderadores"]) // Libera configuração para proprietários e adms apenas
+            return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true }) // Libera configuração para proprietários e adms apenas
 
         let opcao_remove = false, entradas = interaction.options.data
 
