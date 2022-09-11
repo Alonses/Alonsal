@@ -14,11 +14,27 @@ const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?"
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('tempo')
-        .setDescription('⌠💡⌡ Mostra o clima atual em algum local')
+        .setName('weather')
+        .setNameLocalizations({
+            "pt-BR": 'tempo',
+            "fr": 'climat'
+        })
+        .setDescription('⌠💡⌡ Show current weather somewhere')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Mostra o clima atual em algum local',
+            "fr": '⌠💡⌡ Afficher la météo actuelle quelque part'
+        })
         .addStringOption(option =>
-            option.setName('local')
-                .setDescription('Insira um local')
+            option.setName('place')
+                .setNameLocalizations({
+                    "pt-BR": 'local',
+                    "fr": 'place'
+                })
+                .setDescription('Enter a location')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Insira um local',
+                    "fr": 'Informer un endroit'
+                })
                 .setRequired(true)),
     async execute(client, interaction) {
 

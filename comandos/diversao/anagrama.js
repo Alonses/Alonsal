@@ -2,11 +2,27 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('anagrama')
-		.setDescription('⌠😂⌡ Gera anagramas com base na entrada')
+		.setName('anagram')
+        .setNameLocalizations({
+            "pt-BR": 'anagrama',
+            "fr": 'anagramme'
+        })
+		.setDescription('⌠😂⌡ Generates anagrams based on input')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
+            "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée'
+        })
         .addStringOption(option =>
-            option.setName('texto')
-                .setDescription('Insira uma palavra!')
+            option.setName('text')
+                .setNameLocalizations({
+                    "pt-BR": 'texto',
+                    "fr": 'texte'
+                })
+                .setDescription('Write something!')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Escreva algo!',
+                    "fr": 'Écris quelque chose!'
+                })
                 .setRequired(true)),
 	async execute(client, interaction) {
         

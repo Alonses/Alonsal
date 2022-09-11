@@ -7,15 +7,23 @@ const { gifs } = require("../../arquivos/json/gifs/cazalbe.json")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('cazalbe')
-		.setDescription('⌠😂⌡ Cazalbe rei da prassódia')
+		.setDescription('⌠😂⌡ Cazalbe King of Prasody')
+		.setDescriptionLocalizations({
+			"pt-BR": '⌠😂⌡ Cazalbe rei da prassódia',
+			"fr": '⌠😂⌡ Cazalbe roi de la prasodie'
+		})
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('gif')
-				.setDescription('⌠😂⌡ Invoca um gif do cazalbe'))
+				.setDescription('⌠😂⌡ Summons a gif of cazalbe')
+				.setDescriptionLocalizations({
+					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
+					"fr": '⌠😂⌡ Invoque un gif de cazalbe'
+				}))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('piada')
-				.setDescription('⌠😂⌡ Invoca uma piada excelentississima')),
+				.setDescription('⌠😂|🇧🇷⌡ Invoca uma piada excelentississima')),
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {

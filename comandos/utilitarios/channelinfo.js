@@ -6,13 +6,27 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('cinfo')
-		.setDescription('⌠💡⌡ Veja detalhes de algum canal')
-        .addChannelOption(option => option.setName('canal').setDescription('Marque um canal como alvo')),
+		.setDescription('⌠💡⌡ Show channel details')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
+            "fr": '⌠💡⌡ Afficher les détails de la chaîne'
+        })
+        .addChannelOption(option => 
+            option.setName('channel')
+            .setNameLocalizations({
+                "pt-BR": 'canal',
+                "fr": 'chaîne'
+            })
+            .setDescription('Mention a channel')
+            .setDescriptionLocalizations({
+                "pt-BR": 'Marque um canal como alvo',
+                "fr": 'mentionner une chaîne'
+            })),
 	async execute(client, interaction) {
         
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
-        let canal = interaction.options.getChannel('canal') || interaction.channel
+        
+        let canal = interaction.options.getChannel('canal') || interaction.options.getChannel('channel') || interaction.options.getChannel('chaîne') || interaction.channel
         // Coletando os dados do canal informado
         
         let nsfw = utilitarios[9]["nao"]

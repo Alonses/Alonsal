@@ -19,11 +19,11 @@ module.exports = {
                 "pt-BR": 'cargo',
                 "fr": 'role'
             })
-            .setDescription('The role that will be notified'))
+            .setDescription('The role that will be notified')
             .setDescriptionLocalizations({
                 "pt-BR": 'O cargo que será notificado',
                 "fr": 'Le role qui sera notifié'
-            })
+            }))
         .addChannelOption(option =>
             option.setName('channel')
             .setNameLocalizations({

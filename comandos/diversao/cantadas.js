@@ -6,7 +6,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cantada')
-        .setDescription('⌠😂⌡ Uma cantada aleatória do Vai dar namoro™️'),
+        .setDescription('⌠😂|🇧🇷⌡ Uma cantada aleatória do Vai dar namoro™️'),
     async execute(client,  interaction) {
 		
 		await interaction.deferReply()

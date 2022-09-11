@@ -6,11 +6,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('history')
-		.setDescription('⌠💡⌡ Fatos que ocorreram no mundo em determinada data')
+		.setDescription('⌠💡|🇧🇷⌡ Fatos que ocorreram no mundo em determinada data')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('unico')
-                .setDescription('⌠💡⌡ Apenas um acontecimento')
+                .setDescription('⌠💡|🇧🇷⌡ Apenas um acontecimento')
                 .addStringOption(option =>
                     option.setName('data')
                         .setDescription('Uma data específica, neste formato 21/01'))
@@ -20,7 +20,7 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('lista')
-                .setDescription('⌠💡⌡ Listar todos os acontecimentos do dia')
+                .setDescription('⌠💡|🇧🇷⌡ Listar todos os acontecimentos do dia')
                 .addStringOption(option =>
                     option.setName('data')
                         .setDescription('Uma data específica, neste formato 21/01'))),

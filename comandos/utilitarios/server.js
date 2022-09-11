@@ -8,15 +8,27 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('server')
-		.setDescription('⌠💡⌡ Veja informações do servidor.')
+		.setDescription('⌠💡⌡ Show server information')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Veja informações do servidor',
+            "fr": '⌠💡⌡ Afficher les informations du serveur'
+        })
         .addSubcommand(subcommand =>
 			subcommand
 				.setName('icon')
-				.setDescription('⌠💡⌡ O Icone do servidor'))
+				.setDescription('⌠💡⌡ The Server Icon')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💡⌡ O Icone do servidor',
+                    "fr": '⌠💡⌡ L\'icône du serveur'
+                }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('info')
-                .setDescription('⌠💡⌡ Informações do servidor')),
+                .setDescription('⌠💡⌡ Server Information')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💡⌡ Informações do servidor',
+                    "fr": '⌠💡⌡ Informations sur le serveur'
+                })),
 	async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)

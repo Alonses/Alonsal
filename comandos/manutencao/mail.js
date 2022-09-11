@@ -12,7 +12,7 @@ module.exports = {
             option.setName('text')
             .setNameLocalizations({
                 "pt-BR": 'texto',
-                "fr": 'text'
+                "fr": 'texte'
             })
             .setDescription('Report bugs or give suggestions!')
             .setDescriptionLocalizations({
@@ -41,7 +41,8 @@ module.exports = {
         }
         
         let entradas = interaction.options.data
-        const ent_texto = ["texto", "text"], ent_arquivo = ["arquivo", "file", "dossier"]
+        // Entradas traduzíveis
+        const ent_texto = ["texto", "text", "texte"], ent_arquivo = ["arquivo", "file", "dossier"]
 
         entradas.forEach(valor => {
             if (ent_texto.includes(valor.name))

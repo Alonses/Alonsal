@@ -6,7 +6,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('curiosidade')
-		.setDescription('⌠😂⌡ Uma curiosidade aleatória'),
+		.setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
 	async execute(client, interaction) {
         
         fetch('https://apisal.herokuapp.com/curiosidades')

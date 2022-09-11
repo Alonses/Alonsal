@@ -3,10 +3,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reverse')
-		.setDescription('⌠💡⌡ (Des)inverta caracteres!')
+		.setDescription('⌠💡⌡ (Un)invert characters!')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ (Des)inverta caracteres!',
+            "fr": '⌠💡⌡ (Dé)inverser les caractères !'
+        })
 		.addStringOption(option =>
-            option.setName('texto')
-                .setDescription('O texto a ser invertido')
+            option.setName('text')
+                .setNameLocalizations({
+                    "pt-BR": 'texto',
+                    "fr": 'texte'
+                })
+                .setDescription('The text to be inverted')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'O texto a ser invertido',
+                    "fr": 'Le texte à revenir'
+                })
                 .setRequired(true)),
 	async execute(client, interaction) {
 

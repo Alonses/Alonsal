@@ -3,10 +3,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('password')
-		.setDescription('⌠💡⌡ Gere senhas aleatórias')
+		.setDescription('⌠💡⌡ Generate random passwords')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
+            "fr": '⌠💡⌡ Générer des mots de passe aléatoires'
+        })
         .addStringOption(option =>
-            option.setName('tamanho')
-                .setDescription('de 12 até 350')),
+            option.setName('length')
+                .setNameLocalizations({
+                    "pt-BR": 'tamanho',
+                    "fr": 'longueur'
+                })
+                .setDescription('from 12 to 350')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'de 12 até 350',
+                    "fr": 'de 12 à 350'
+                })),
 	async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
