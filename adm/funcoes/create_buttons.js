@@ -8,19 +8,38 @@ module.exports = (lista_botoes) => {
     // passando pelo array de botões e criando novos
     lista_botoes.forEach(valor => {
         if (valor.type === 4) {
-            row_buttons.addComponents(
-                new ButtonBuilder()
-                    .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
-                    .setURL(valor.value)
-                    .setStyle(tipos[valor.type])
-            )
+
+            if(!valor.emoji)
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
+                        .setURL(valor.value)
+                        .setStyle(tipos[valor.type])
+                )
+            else
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
+                        .setURL(valor.value)
+                        .setStyle(tipos[valor.type])
+                        .setEmoji(valor.emoji)
+                )   
         } else {
-            row_buttons.addComponents(
-                new ButtonBuilder()
-                    .setCustomId(valor.name.slice(0, 4))
-                    .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
-                    .setStyle(tipos[valor.type])
-            )
+            if(!valor.emoji)
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(valor.name.slice(0, 4))
+                        .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
+                        .setStyle(tipos[valor.type])
+                )
+            else
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setLabel(valor.name.length > 25 ? `${valor.name.slice(0, 25)}...` : valor.name)
+                        .setURL(valor.value)
+                        .setStyle(tipos[valor.type])
+                        .setEmoji(valor.emoji)
+                )
         }
     })
 

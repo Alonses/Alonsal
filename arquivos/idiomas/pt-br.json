@@ -1,8 +1,9 @@
 {   
     "updates" : [
         {
-            "slash_commands" : "Os comandos tradicionais foram desativados, continue usando o Alonsal pelos comandos de barra! Experimente agora mesmo ;D\n\nNota: Não consegue ver meus comandos? Me convide novamente clicando no botão abaixo!",
-            "convidar": "Convidar!"
+            "slash_commands" : "Os comandos tradicionais foram desativados, continue usando o Alonsal pelos comandos de `/barra`! Experimente agora mesmo ;D\n\nNota: Não consegue ver meus comandos? Me convide novamente clicando no botão abaixo! Também verifique se meus comandos estão habilitados para todos nas integrações do servidor em `Integrações -> Alonsal -> Comandos`",
+            "convidar" : "Convidar!",
+            "suporte" : "Suporte"
         }
     ],
     "inicio" : [
