@@ -26,6 +26,6 @@ module.exports = {
         .setDescription(manutencao[5]["escaneie"])
         .setImage("https://i.imgur.com/incYvy2.jpg")
         
-        interaction.reply({embeds: [embed], ephemeral: true})
+        interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }

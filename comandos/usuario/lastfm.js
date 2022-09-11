@@ -187,7 +187,7 @@ module.exports = {
                                 }
                             )
 
-                        interaction.editReply({embeds: [embed]})
+                        interaction.editReply({ embeds: [embed] })
                     })
                 } else
                     interaction.editReply(utilitarios[20]["sem_scrobbles"])

@@ -19,6 +19,6 @@ module.exports = {
         .setDescription(jogos[0]["conteudo"])
         .setFooter({ text: jogos[0]["rodape"] })
 
-        return interaction.reply({embeds: [embed], ephemeral: true})
+        return interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }

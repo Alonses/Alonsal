@@ -116,7 +116,7 @@ module.exports = {
                         }
                     )
             
-            return interaction.reply({embeds: [infos_ch]})
+            return interaction.reply({ embeds: [infos_ch] })
         })
     }
 }
