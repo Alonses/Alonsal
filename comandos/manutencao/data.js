@@ -4,10 +4,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('data')
-		.setDescription('⌠📡⌡ Tudo o que sabemos sobre você')
+		.setDescription('⌠📡⌡ Everything we know about you')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠📡⌡ Tudo o que sabemos sobre você',
+            "fr": '⌠📡⌡ Tout ce que l\'on sait sur vous'
+        })
         .addBooleanOption(option =>
-            option.setName("excluir")
-            .setDescription("Solicitar a exclusão de seus dados no Alonsal")),
+            option.setName("delete")
+            .setNameLocalizations({
+                "pt-BR": 'excluir',
+                "fr": 'nettoyer'
+            })
+            .setDescription("Request the deletion of your data in Alonsal")
+            .setDescriptionLocalizations({
+                "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
+                "fr": 'Demander la suppression de vos données d\'Alonsal'
+            })),
     async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

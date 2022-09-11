@@ -6,7 +6,11 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('⌠🌎⌡ It all starts here'),
+		.setDescription('⌠🌎⌡ It all starts here')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
+            "fr": '⌠🌎⌡ Tout commence ici'
+        }),
 	async execute(client, interaction) {
 
         const { inicio, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

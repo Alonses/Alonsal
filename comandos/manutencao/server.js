@@ -5,7 +5,11 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('discord')
-		.setDescription('⌠📡⌡ Servidor oficial do Alonsal™️'),
+		.setDescription('⌠📡⌡ Official Alonsal™️ Server')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
+            "fr": '⌠📡⌡ Serveur officiel Alonsal™️'
+        }),
 	async execute(client, interaction) {
         
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)

@@ -1,22 +1,52 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
 const fs = require('fs')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('notificar')
-        .setDescription('⌠💂⌡ (Des)Habilitar anúncio de games free')    
+		.setName('notify')
+        .setNameLocalizations({
+            "pt-BR": 'notificar',
+            "fr": 'notifier'
+        })
+        .setDescription('⌠💂⌡ (Dis)Enable announces for free games')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠💂⌡ (Des)Habilitar anúncio de games free',
+            "fr": '⌠💂⌡ (Dés)activer les publicités pour les jeux gratuits'
+        })
         .addRoleOption(option =>
-            option.setName('cargo')
-                .setDescription('O cargo que será notificado'))
+            option.setName('role')
+            .setNameLocalizations({
+                "pt-BR": 'cargo',
+                "fr": 'role'
+            })
+            .setDescription('The role that will be notified'))
+            .setDescriptionLocalizations({
+                "pt-BR": 'O cargo que será notificado',
+                "fr": 'Le role qui sera notifié'
+            })
         .addChannelOption(option =>
-            option.setName('canal')
-                .setDescription('O canal que será usado'))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+            option.setName('channel')
+            .setNameLocalizations({
+                "pt-BR": 'canal',
+                "fr": 'salon'
+            })
+            .setDescription('The channel that will be used')
+            .setDescriptionLocalizations({
+                "pt-BR": 'O canal que será usado',
+                "fr": 'Le canal qui sera utilisé'
+            }))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator)
+        ,
 	async execute(client, interaction) {
         
 		const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const { canal_games } = require('../../arquivos/data/games/canal_games.json')
         
+        const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
+
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== "665002572926681128")
+            return interaction.reply(moderacao[5]["moderadores"]) // Libera configuração para proprietários e adms apenas
+
         let opcao_remove = false, entradas = interaction.options.data
 
         const notificador = {

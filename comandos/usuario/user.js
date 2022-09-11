@@ -11,24 +11,56 @@ const { ids_enceirados } = require('../../config.json')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('user')
-		.setDescription('⌠👤⌡ Veja detalhes de algum usuario')
+		.setDescription('⌠👤⌡ View user details')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Veja detalhes de algum usuario',
+            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur'
+        })
         .addSubcommand(subcommand =>
 			subcommand
 				.setName('avatar')
-				.setDescription('⌠👤⌡ O Avatar do usuário')
-                .addUserOption(option => option.setName('usuario').setDescription('Marque outro usuário como alvo')))
+				.setDescription('⌠👤⌡ The User Avatar')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ O Avatar do usuário',
+                    "fr": '⌠👤⌡ L\'avatar de l\'utilisateur'
+                })
+                .addUserOption(option => 
+                    option.setName('user')
+                    .setNameLocalizations({
+                        "pt-BR": 'usuario',
+                        "fr": 'user'
+                    })
+                    .setDescription('Mention a user as a target')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'Marque outro usuário como alvo',
+                        "fr": 'Mentionner un utilisateur comme cible'
+                    })))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('info')
-                .setDescription('⌠👤⌡ Informações do usuário')
-                .addUserOption(option => option.setName('usuario').setDescription('Marque outro usuário como alvo'))),
+                .setDescription('⌠👤⌡ User Information')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Informações do usuário',
+                    "fr": '⌠👤⌡ Informations utilisateur'
+                })
+                .addUserOption(option => 
+                    option.setName('user')
+                    .setNameLocalizations({
+                        "pt-BR": 'usuario',
+                        "fr": 'user'
+                    })
+                    .setDescription('Mention a user as a target')
+                    .setDescriptionLocalizations({
+                        "pt-BR": 'Marque outro usuário como alvo',
+                        "fr": 'Mentionner un utilisateur comme cible'
+                    }))),
 	async execute(client, interaction) {
         
         const idioma_definido = client.idioma.getLang(interaction) 
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         
-        let user = interaction.options.getUser('usuario')
-
+        let user = interaction.options.getUser('usuario') || interaction.options.getUser('user')
+        
         if (!user)
             user = interaction.user
 
