@@ -21,7 +21,7 @@ module.exports = {
                     { name: 'Alonsês', value: 'al' }
                 )
                 .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
 
         let novo_idioma = interaction.options.data[0].value

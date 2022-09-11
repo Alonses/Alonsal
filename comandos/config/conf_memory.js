@@ -1,9 +1,10 @@
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_memory')
-		.setDescription('⌠✳️⌡ Veja um resumo de processamento do Alonsal'),
+		.setDescription('⌠🤖⌡ Veja um resumo de processamento do Alonsal')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return

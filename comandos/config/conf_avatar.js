@@ -1,13 +1,14 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_avatar')
-		.setDescription('⌠✳️⌡ Altere o avatar do Alonsal')
+		.setDescription('⌠🤖⌡ Altere o avatar do Alonsal')
         .addAttachmentOption(option =>
             option.setName('foto')
                 .setDescription('A nova foto para o bot')
-                .setRequired(true)),
+                .setRequired(true))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return

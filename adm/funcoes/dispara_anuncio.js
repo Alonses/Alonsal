@@ -1,5 +1,6 @@
-const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
+const create_buttons = require('./create_buttons.js')
 const formata_anun = require('./formata_games.js')
 
 const platformMap = {
@@ -37,24 +38,21 @@ module.exports = async ({client, interaction, objetos_anunciados}) => {
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
     let canais_recebidos = 0, marcacao = '⠀', imagem_destaque, valor_anterior = 0
-    
-    const row = new ActionRowBuilder()
+    let objeto_jogos = []
 
     objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-        row.addComponents(
-            new ButtonBuilder()
-            .setLabel(nome_jogo)
-            .setURL(valor.link)
-            .setStyle(ButtonStyle.Link),
-        )
-        
+        objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link})
+
         if (parseFloat(valor.preco) > valor_anterior){
             valor_anterior = parseFloat(valor.preco)
             imagem_destaque = valor.thumbnail
         }
     })
+
+    // Criando os botões externos para os jogos
+    const row = create_buttons(objeto_jogos)
 
     for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
         try {

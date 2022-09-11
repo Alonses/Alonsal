@@ -86,6 +86,7 @@
             "error_2" : "Você não tem essa badge",
             "suas_badges" : "Suas Badges",
             "badge_fixada" : "colada no seu perfil!",
+            "badge_removida" : "tirada do seu perfil",
             "rodape" : "Usa o comando /badges fixar:<nome> pra colar uma!"
         }
     ],

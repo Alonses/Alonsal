@@ -1,9 +1,10 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
+const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_resumo_diario')
-		.setDescription('⌠✳️⌡ Veja um resumo diário de forma manual'),
+		.setDescription('⌠🤖⌡ Veja um resumo diário de forma manual')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return

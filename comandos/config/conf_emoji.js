@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
@@ -6,7 +6,8 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_emojis')
-		.setDescription('⌠✳️⌡ Lista todos os emojis conhecidos'),
+		.setDescription('⌠🤖⌡ Lista todos os emojis conhecidos')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
 	async execute(client, interaction) {
     
         if (!client.owners.includes(interaction.user.id)) return

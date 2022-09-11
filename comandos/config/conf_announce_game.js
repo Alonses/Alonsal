@@ -1,11 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_anunciar')
-		.setDescription('⌠✳️⌡ Anúnciar games/dlcs free')
+		.setDescription('⌠🤖⌡ Anúnciar games/dlcs free')
         .addStringOption(option =>
             option.setName('nome')
                 .setDescription('O nome do conteúdo')
@@ -39,7 +39,8 @@ module.exports = {
                 .addChoices(
                     { name: 'Normal', value: 'n' },
                     { name: 'Urgente', value: 'u' },
-                )),
+                ))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
         async execute(client, interaction) {
             
             if (interaction.user.id !== "665002572926681128") return

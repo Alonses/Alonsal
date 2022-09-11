@@ -1,14 +1,14 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
-const { emojis_dancantes, emojis } = require('../../arquivos/json/text/emojis.json')
+const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 const busca_badges = require('../../adm/funcoes/busca_badges.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('c_badge')
-		.setDescription('⌠✳️⌡ Atribuir badges a usuários')
+		.setDescription('⌠🤖⌡ Atribuir badges a usuários')
         .addStringOption(option =>
             option.setName('id')
             .setDescription("O ID do usuário alvo")
@@ -23,7 +23,8 @@ module.exports = {
                     { name: 'Creator', value: '3' },
                     { name: 'Waxed', value: '4' }
                 )
-                .setRequired(true)),
+                .setRequired(true))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
