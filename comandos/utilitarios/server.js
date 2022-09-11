@@ -135,7 +135,7 @@ module.exports = {
                         { name: `:passport_control: **${utilitarios[12]["cargos"]} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true}
                     )
 
-                return interaction.reply({embeds: [infos_sv]})
+                return interaction.reply({ embeds: [infos_sv] })
         } else { // Icone do servidor
             
             let icone_server = interaction.guild.iconURL({ size: 2048 })

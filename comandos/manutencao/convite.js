@@ -23,6 +23,6 @@ module.exports = {
         .setTitle(manutencao[0]["titulo"])
         .setDescription(manutencao[0]["convite"])
         
-        interaction.reply({embeds: [embed], components: [row], ephemeral: true})
+        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }

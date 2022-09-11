@@ -92,7 +92,7 @@ module.exports = {
         .setDescription(`${diversao[5]["entrada"]}: \`${texto_entrada}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
         .setFooter({ text: `${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
         
-		return interaction.reply({embeds: [anagrama]})
+		return interaction.reply({ embeds: [anagrama] })
 	}
 }
 

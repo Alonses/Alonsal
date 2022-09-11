@@ -47,14 +47,14 @@ module.exports = {
                 if (corpo_mail.anexo) {
                     img_game = new AttachmentBuilder(corpo_mail.anexo)
 
-                    canal_alvo.send({content: corpo_mail.texto, files: [img_game]})
+                    canal_alvo.send({ content: corpo_mail.texto, files: [img_game] })
                 } else
-                    canal_alvo.send({content: corpo_mail.texto})
+                    canal_alvo.send({ content: corpo_mail.texto })
 
-                interaction.reply({content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`, ephemeral: true })
+                interaction.reply({ content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`, ephemeral: true })
             } else 
                 interaction.reply({ content: ":octagonal_sign: | Canal desconhecido", ephemeral: true })
         } else
-            interaction.reply({content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`, ephemeral: true })
+            interaction.reply({ content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`, ephemeral: true })
     }
 }

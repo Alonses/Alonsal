@@ -109,7 +109,7 @@ module.exports = {
             if (aviso.length > 0)
                 embed.setFooter({ text: aviso })
 
-        interaction.reply({embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: true })
         .catch(() => {
             interaction.reply({ content: `:octagonal_sign: | ${utilitarios[3]["error_1"]}`, ephemeral: true })
         })

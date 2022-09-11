@@ -39,7 +39,7 @@ module.exports = {
         .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
 
         if (emojis_registrados_2.length < 1)
-            interaction.reply({embeds: [emojis_global]})
+            interaction.reply({ embeds: [emojis_global] })
 
         if (emojis_registrados_2.length > 0) {
             const emojis_global2 = new EmbedBuilder()

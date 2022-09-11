@@ -126,7 +126,7 @@ module.exports = {
         if (opcao_remove === "rem")
             feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`
 
-        interaction.reply({content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
+        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
     }
 }
 

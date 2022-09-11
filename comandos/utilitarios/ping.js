@@ -38,6 +38,6 @@ module.exports = {
 
         mensagem += `\n${utilitarios[0]["latencia"]} [ **\`${Math.round(client.ws.ping)}ms\`** ]`
 
-        await interaction.editReply({content: mensagem})
+        await interaction.editReply({ content: mensagem})
     }
 }
