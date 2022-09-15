@@ -3,19 +3,19 @@ module.exports = (latitude, idioma_definido) => {
     if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
     const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-    
+
     let data_atual = new Date()
     const emojis = ["🌻", "🍂", "❄️", "🌼"]
     let datas_estacao = ["21/12", "21/03", "21/06", "21/09"]
     const estacao_nome = ["verao", "outono", "inverno", "primavera"]
 
     const dias_passados = calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear())
-    
+
     // Estipulando um indice de clima
     let indice = estipula_indice(dias_passados, latitude)
     if (latitude > 0) // Hemisfério norte
         datas_estacao = ["21/06", "21/09", "21/12", "21/03"]
-    
+
     let indice_int = indice + 1
     if (indice_int >= datas_estacao.length) indice_int = 0
 
@@ -24,7 +24,7 @@ module.exports = (latitude, idioma_definido) => {
     // Calculando o tempo restante em dias para o fim da estação
     mes_termino = parseInt(datas_estacao[indice_int].split("/")[1])
     dias_restantes = calcula_dias(21, mes_termino, data_atual.getFullYear()) - calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear())
-    
+
     if (dias_restantes > 1) dias_restantes += `${utilitarios[14]["dias"]}`
     else dias_restantes += `${utilitarios[14]["dia"]}`
 

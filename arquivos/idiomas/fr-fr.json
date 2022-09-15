@@ -1,559 +1,537 @@
 {
-    "updates" : [
+    "updates": [
         {
-            "slash_commands" : "Les commandes traditionnelles ont été désactivées, continuez à utiliser Alonsal par les commandes `/slash`! Essayez-le maintenant ;D\n\nRemarque: Vous ne voyez pas mes commandes? Invitez-moi à nouveau en cliquant sur le bouton ci-dessous! Vérifiez également si mes commandes sont activées pour tout le serveur dans `Integrations -> Alonsal -> Commands`",
-            "convidar" : "Inviter!",
-            "suporte" : "Soutien"
+            "slash_commands": "Les commandes traditionnelles ont été désactivées, continuez à utiliser Alonsal par les commandes `/slash`! Essayez-le maintenant ;D\n\nRemarque: Vous ne voyez pas mes commandes? Invitez-moi à nouveau en cliquant sur le bouton ci-dessous! Vérifiez également si mes commandes sont activées pour tout le serveur dans `Integrations -> Alonsal -> Commands`",
+            "convidar": "Inviter!",
+            "suporte": "Soutien"
         }
     ],
-    "inicio" : [
-        { 
-            "menciona" : "Salut! Tapez `.ahelp` ou `.a` pour voir le menu de commandes :D\n:earth_americas: | Utilisez la commande `.alang` pour voir la liste des langues disponibles",
+    "inicio": [
+        {
+            "menciona": "Salut! Tapez `.ahelp` ou `.a` pour voir le menu de commandes :D\n:earth_americas: | Utilisez la commande `.alang` pour voir la liste des langues disponibles",
             "aguarde": "Attendez",
-            "cooldown" : "secondes pour exécuter à nouveau cette commande.",
-            "permissao_1" : "vous n'avez pas la permission",
-            "permissao_2" : "pour exécuter cette commande.",
-            "error_1" : "Faux, l'utilisation correcte de la commande est",
-            "epic_embed_fail" : "Une erreur s'est produite lors de l'exécution de cette commande, j'ai prévenu l'équipe d'éliminer ce baidu au plus vite. mes excuses pour le derangement"
+            "cooldown": "secondes pour exécuter à nouveau cette commande.",
+            "permissao_1": "vous n'avez pas la permission",
+            "permissao_2": "pour exécuter cette commande.",
+            "error_1": "Faux, l'utilisation correcte de la commande est",
+            "epic_embed_fail": "Une erreur s'est produite lors de l'exécution de cette commande, j'ai prévenu l'équipe d'éliminer ce baidu au plus vite. mes excuses pour le derangement"
         },
         {
-            "titulo" : "> Oh emmène-moi à traaveeers :notes:",
-            "boas_vindas" : "Salut! Merci de m'avoir ajouté au serveur!\n\nJe laisse mon site ci-joint, avec toutes les commandes si besoin ;D",
-            "idioma_dica" : "Do not speak Français? No problems! Change my language right now with the /idioma command!",
+            "titulo": "> Oh emmène-moi à traaveeers :notes:",
+            "boas_vindas": "Salut! Merci de m'avoir ajouté au serveur!\n\nJe laisse mon site ci-joint, avec toutes les commandes si besoin ;D",
+            "idioma_dica": "Do not speak Français? No problems! Change my language right now with the /idioma command!",
             "site": "Alonsal Website"
         }
     ],
-    "diversao" : [
-        { "baidu" : "Louange à être!!" },
-        { "asf" : "Voulez-vous un sfiha?" },
+    "diversao": [
         {
-            "aviso_1" : "Taguez deux personnes à tester\nPar exemple, `.alove @Alonsal @Slondo`",
-            "limda" : "Magnifique :cadeau coeur:",
-            "rodape" : "Si aimer est ce qui compte :heartpulse:",
-            "100perc" : "Pratiquement marié :heart_on_fire:",
-            "90perc" : "Mon couple :smiling_face_with_3_hearts:",
-            "80perc" : "Littéralement amoureux :revolving_hearts:",
-            "60perc" : "Il y a de l'ambiance :hot_face:",
-            "40perc" : "Sera? :eyes:",
-            "20perc" : "Friendzone :people_hugging:",
-            "0perc" : "Sont des ennemis publics :angry:",
-            "teste" : "Le test est revenu"
+            "baidu": "Louange à être!!"
         },
         {
-            "gado" : "VOTRE BÉTAIL",
-            "error_1" : "où est le @ de l'utilisateur?",
-            "error_2" : "sortez votre BÉ :cow: TAIL, testez ceci avec un autre utilisateur"
-        },
-        { "peao" : "Tourner le pion" },
-        {
-            "aviso_1" : "Entrez quelque chose en plus de cette commande, par exemple `.ana alonsal > odnols`",
-            "anagrama" : "Votre anagramme",
-            "entrada" : "Entrée originale",
-            "lista_combinacoes" : "Combinaisons possibles",
-            "sequencia" : "Vos caractères tapés produisent",
-            "combinacao" : "combinaison",
-            "combinacoes" : "combinaisons!",
-            "sorte" : "Il y avait une répétition de mots! Quel chanceux êtes-vous?"
-        },
-        { "nsfw_jaja" : "En raison de l'excès de plaisir, cette commande ne peut être utilisée que sur un canal NSFW." },
-        { "aviso_1" : "Écrivez quelque chose pour cette commande\nPar exemple, `.asans slomdo very cringerrr afff`" },
-        {
-            "rank_sv" : "Rang de",
-            "rank_rc" : "Classement des commandes",
-            "rodape" : "pages, utilisez /rank pagina:<num> pour voir d'autres pages",
-            "rodape_rc" : "pages, utilisez /rank comandos pagina:<num> pour voir d'autres pages",
-            "paginas" : "Enter a lower number for the page",
-            "nivel_descricao" : "niveau = expérience / 1000",
-            "enceirados" : "Users",
-            "experiencia" : "Expérience",
-            "nivel" : "Niveau",
-            "comandos" : "Commandes",
-            "ativacoes" : "Activations",
-            "historia_alonsal" : "Ce sont les commandes activées tout au long de l'histoire d'Alonsal",
-            "aliase_faltando" : "pseudo absent",
-            "nome_faltando" : "Nom manquant",
-            "error_1" : "Veuillez entrer un numéro de page plus petit pour ce",
-            "error_rc" : "Impossible de charger la commande de ratissage pour le moment, veuillez réessayer plus tard"
+            "asf": "Voulez-vous un sfiha?"
         },
         {
-            "error_1" : "Vous n'avez aucun badge à afficher!",
-            "error_2" : "Vous n'avez pas ce badge à épingler",
-            "suas_badges" : "Vos badges",
-            "badge_fixada" : "épinglé à votre profil!",
-            "badge_removida" : "supprimé de votre profil",
-            "rodape" : "Utilisez la commande /badges fixar:<nom> pour épingler un!"
+            "aviso_1": "Taguez deux personnes à tester\nPar exemple, `.alove @Alonsal @Slondo`",
+            "limda": "Magnifique :cadeau coeur:",
+            "rodape": "Si aimer est ce qui compte :heartpulse:",
+            "100perc": "Pratiquement marié :heart_on_fire:",
+            "90perc": "Mon couple :smiling_face_with_3_hearts:",
+            "80perc": "Littéralement amoureux :revolving_hearts:",
+            "60perc": "Il y a de l'ambiance :hot_face:",
+            "40perc": "Sera? :eyes:",
+            "20perc": "Friendzone :people_hugging:",
+            "0perc": "Sont des ennemis publics :angry:",
+            "teste": "Le test est revenu"
+        },
+        {
+            "gado": "VOTRE BÉTAIL",
+            "error_1": "où est le @ de l'utilisateur?",
+            "error_2": "sortez votre BÉ :cow: TAIL, testez ceci avec un autre utilisateur"
+        },
+        {
+            "peao": "Tourner le pion"
+        },
+        {
+            "aviso_1": "Entrez quelque chose en plus de cette commande, par exemple `.ana alonsal > odnols`",
+            "anagrama": "Votre anagramme",
+            "entrada": "Entrée originale",
+            "lista_combinacoes": "Combinaisons possibles",
+            "sequencia": "Vos caractères tapés produisent",
+            "combinacao": "combinaison",
+            "combinacoes": "combinaisons!",
+            "sorte": "Il y avait une répétition de mots! Quel chanceux êtes-vous?"
+        },
+        {
+            "nsfw_jaja": "En raison de l'excès de plaisir, cette commande ne peut être utilisée que sur un canal NSFW."
+        },
+        {
+            "aviso_1": "Écrivez quelque chose pour cette commande\nPar exemple, `.asans slomdo very cringerrr afff`"
+        },
+        {
+            "rank_sv": "Rang de",
+            "rank_rc": "Classement des commandes",
+            "rodape": "pages, utilisez /rank pagina:<num> pour voir d'autres pages",
+            "rodape_rc": "pages, utilisez /rank comandos pagina:<num> pour voir d'autres pages",
+            "paginas": "Enter a lower number for the page",
+            "nivel_descricao": "niveau = expérience / 1000",
+            "enceirados": "Users",
+            "experiencia": "Expérience",
+            "nivel": "Niveau",
+            "comandos": "Commandes",
+            "ativacoes": "Activations",
+            "historia_alonsal": "Ce sont les commandes activées tout au long de l'histoire d'Alonsal",
+            "aliase_faltando": "pseudo absent",
+            "nome_faltando": "Nom manquant",
+            "error_1": "Veuillez entrer un numéro de page plus petit pour ce",
+            "error_rc": "Impossible de charger la commande de ratissage pour le moment, veuillez réessayer plus tard"
+        },
+        {
+            "error_1": "Vous n'avez aucun badge à afficher!",
+            "error_2": "Vous n'avez pas ce badge à épingler",
+            "suas_badges": "Vos badges",
+            "badge_fixada": "épinglé à votre profil!",
+            "badge_removida": "supprimé de votre profil",
+            "rodape": "Utilisez la commande /badges fixar:<nom> pour épingler un!"
         }
     ],
-    "jogos" : [
+    "jogos": [
         {
-            "conteudo" : "Le 1er jeu créé par Slondo!\nJusqu'où pouvez-vous courir? Testez maintenant!",
-            "rodape" : "Le jeu peut ne pas fonctionner correctement sur les téléphones portables."
-        },
-        { "aviso_1" : "Entrez pile ou face en tant que `.aco face` ou `.aco pilo` pour tester votre chance!" },
-        {
-            "aviso_1" : "Entrez **des chiffres uniquement** pour le nombre de dés et le nombre de faces",
-            "aviso_2" : "Entrez au moins 1 dé sous la forme `.ada 1 <faces>` pour pouvoir courir.",
-            "error_1" : "Il n'est pas possible de prendre plus de 50 dés en même temps.",
-            "error_2" : "Il n'est pas possible de dessiner des solides géométriques avec plus de 10.000 faces.",
-            "error_3" : "Il n'est pas possible de faire pivoter des solides géométriques avec moins de 4 faces."
-        },
-        { "aviso_1" : "Écrivez comme `.ajkp paper` ou `.ajkp` pour une correspondance aléatoire." },
-        {
-            "aviso_1" : "Informez au moins 2 articles pour que je choisisse",
-            "aviso_2" : "Entrez une quantité en nombres tels que `.ach [2 s a l 4 d @` et une valeur supérieure à zéro",
-            "escolho_todos" : "Vous avez saisi un nombre supérieur ou égal au nombre d'options, je les choisis toutes !",
-            "escolho" : "Je choisis..."
+            "conteudo": "Le 1er jeu créé par Slondo!\nJusqu'où pouvez-vous courir? Testez maintenant!",
+            "rodape": "Le jeu peut ne pas fonctionner correctement sur les téléphones portables."
         },
         {
-            "aviso_1" : "Entrez un ou plusieurs des éléments ci-dessous pour jouer\nPar exemple, `.asjkp rock paper scissors` ou `.asjkp devil`",
-            "error_1" : "Écrivez un élément qui fait partie du jeu, cet élément n'est pas valide" 
+            "aviso_1": "Entrez pile ou face en tant que `.aco face` ou `.aco pilo` pour tester votre chance!"
+        },
+        {
+            "aviso_1": "Entrez **des chiffres uniquement** pour le nombre de dés et le nombre de faces",
+            "aviso_2": "Entrez au moins 1 dé sous la forme `.ada 1 <faces>` pour pouvoir courir.",
+            "error_1": "Il n'est pas possible de prendre plus de 50 dés en même temps.",
+            "error_2": "Il n'est pas possible de dessiner des solides géométriques avec plus de 10.000 faces.",
+            "error_3": "Il n'est pas possible de faire pivoter des solides géométriques avec moins de 4 faces."
+        },
+        {
+            "aviso_1": "Écrivez comme `.ajkp paper` ou `.ajkp` pour une correspondance aléatoire."
+        },
+        {
+            "aviso_1": "Informez au moins 2 articles pour que je choisisse",
+            "aviso_2": "Entrez une quantité en nombres tels que `.ach [2 s a l 4 d @` et une valeur supérieure à zéro",
+            "escolho_todos": "Vous avez saisi un nombre supérieur ou égal au nombre d'options, je les choisis toutes !",
+            "escolho": "Je choisis..."
+        },
+        {
+            "aviso_1": "Entrez un ou plusieurs des éléments ci-dessous pour jouer\nPar exemple, `.asjkp rock paper scissors` ou `.asjkp devil`",
+            "error_1": "Écrivez un élément qui fait partie du jeu, cet élément n'est pas valide"
         }
     ],
-    "manutencao" : [
+    "manutencao": [
         {
-            "titulo" : "> Oh ouvre la voie que je veux suivre :notes:",
-            "convite" : "Invitez-moi en cliquant ici!",
-            "despachei": "J'ai envoyé l'invitation dans votre dm :love_you_gesture:"
+            "titulo": "> Oh ouvre la voie que je veux suivre :notes:",
+            "convite": "Invitez-moi en cliquant ici!"
         },
         {
-            "repositorio" : "> Dépôt d'Alonsal",
-            "link" : "Contribuez en signalant des bogues ou en volant des codes à Alonsal :pray_tone2:",
-            "despachei" : "J'ai expédié la cire la plus récente dans votre dm :handshake:"
+            "repositorio": "> Dépôt d'Alonsal",
+            "link": "Contribuez en signalant des bogues ou en volant des codes à Alonsal :pray_tone2:"
         },
         {
-            "infos" : "Patiner entre les lignes de fartage :man_golfing:",
-            "conteudo_1" : "Ce bot est sponsorisé par le snack de Baidu et Renato, 40 sortes de snacks, hot dog, restauration rapide en 5 minutes, le plus grand snack d'Extrema, venez manger le renatão de 4, le snack complet!\n\n:mailbox: Suggérez des commandes ou signalez des bogues en utilisant le **`.amail <votre message>`**\n:page_facing_up: Utiliser **`.ag`** ou **`.agit`** pour voir le référentiel Alonsal",
-            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Entrez dans le hub multiconnecté d'Alonsal",
-            "conteudo_3" : "**`.asuporte`** - Aider à maintenir et à développer Alonsal\n\n-----------------------------\n> AUTRES RESSOURCES\nExpressions de **`.aga`** | **`.agado`** les commandes sont entièrement détenues par @GadoDecider, tous les crédits lui reviennent. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> REMARQUES\nPhrases de **`.atext`** ne représentent pas les idées des créateurs d'Alonsal, par conséquent, ils sont uniquement à des fins comiques.",
-            "invocado_1" : "J'ai déjà été invoqué",
-            "invocado_2" : "fois",
-            "versao" : "Version"
+            "infos": "Patiner entre les lignes de fartage :man_golfing:",
+            "conteudo_1": "Ce bot est sponsorisé par le snack de Baidu et Renato, 40 sortes de snacks, hot dog, restauration rapide en 5 minutes, le plus grand snack d'Extrema, venez manger le renatão de 4, le snack complet!\n\n:mailbox: Suggérez des commandes ou signalez des bogues en utilisant le **`/mail <votre message>`**\n:page_facing_up: Utiliser **`/git`** pour voir le référentiel Alonsal",
+            "conteudo_2": "**`/discord`** - Entrez dans le hub multiconnecté d'Alonsal",
+            "conteudo_3": "**`/git`** - Aider à maintenir et à développer Alonsal\n\n-----------------------------\n> AUTRES RESSOURCES\nExpressions de **`/betail`** les commandes sont entièrement détenues par @GadoDecider, tous les crédits lui reviennent. ( https://twitter.com/GadoDecider )",
+            "invocado_1": "J'ai déjà été invoqué",
+            "invocado_2": "fois",
+            "versao": "Version",
+            "spawn_alonsal": "Généré dans "
         },
         {
-            "aviso_1" : "Il y a une erreur dans votre message, réessayez.",
-            "aviso_2" : ":mailbox: Votre message a été livré !",
-            "aviso_3" : "Il n'a pas été possible de supprimer votre message automatiquement, pour cela j'ai besoin des autorisations pour gérer les messages.",
-            "aviso_4" : "Message envoyé à",
-            "aviso_5" : ":incoming_envelope:\nJ'ai envoyé plus d'informations dans votre dm :mailbox_with_mail:",
-            "aviso_6" : "Je ne peux pas envoyer de messages sur cette chaîne",
-            "error_1" : "Impossible d'envoyer un message à cet ID",
-            "sucesso_1" : "Message envoyé à Alonsal :incoming_envelope:\nJ'ai envoyé plus d'informations dans votre dm :mailbox_with_mail:",
-            "conteudo_1" : "Votre message a été transmis au",
-            "conteudo_2" : "Le contenu du message est"
+            "aviso_1": "Il y a une erreur dans votre message, réessayez.",
+            "aviso_2": ":mailbox: Votre message a été livré !",
+            "aviso_5": ":incoming_envelope:\nJ'ai envoyé plus d'informations dans votre dm :mailbox_with_mail:",
+            "error_1": "Impossible d'envoyer un message à cet ID",
+            "sucesso_1": "Message envoyé à Alonsal :incoming_envelope:\nJ'ai envoyé plus d'informations dans votre dm :mailbox_with_mail:",
+            "conteudo_1": "Votre message a été transmis au",
+            "conteudo_2": "Le contenu du message est"
         },
         {
-            "comandos" : "Voir les commandes, m'inviter ou accéder à mon serveur via le site web !",
-            "despachei" : "J'ai envoyé le lien vers mon site dans votre dm :handshake:"
+            "comandos": "Voir les commandes, m'inviter ou accéder à mon serveur via le site web !"
         },
         {
-            "apoie" : "> Soutenez Alonsal!",
-            "escaneie" : "Scannez ou cliquez sur le titre ci-dessus pour faire un don\net aider à maintenir et à développer Alonsal!\nToute aide est ultra Bienvenue ;D",
-            "despachei" : "Merci pour votre considération!\nJ'ai envoyé les informations dans votre dm"
+            "apoie": "> Soutenez Alonsal!",
+            "escaneie": "Scannez ou cliquez sur le titre ci-dessus pour faire un don\net aider à maintenir et à développer Alonsal!\nToute aide est ultra Bienvenue ;D"
         },
         {
-            "hub_alonsal" : "> Hub d'Alonsal",
-            "info" : "Entrez sur mon serveur dès maintenant, que ce soit pour poser des questions, ou utiliser les commandes, le serveur est gratuit pour tout le monde!",
-            "despachei" : "J'ai envoyé l'invitation à Alonsal Hub dans votre dm :handshake:"
-        },
-        { "aviso_1" : "Entrez un nombre entre 1 et 4 pour naviguer dans les pages du menu" },
-        {
-            "traducao_faltando" : "Cette commande n'a pas encore de traduction pour votre langue, attendez!",
-            "usos" : "Les usages",
-            "nao_encontrado" : "Je n'ai trouvé aucune commande avec ce nom ou alias, réessayez"
+            "hub_alonsal": "> Hub d'Alonsal",
+            "info": "Entrez sur mon serveur dès maintenant, que ce soit pour poser des questions, ou utiliser les commandes, le serveur est gratuit pour tout le monde!"
         },
         {
-            "ranking_guilds" : "Classement sur les serveurs suivants",
-            "dados_conhecidos" : "> Vos données connues",
-            "resumo_dados" : "Ceci est un résumé des données que nous détenons à votre sujet.",
-            "dica_rodape" : "Vous pouvez supprimer toutes vos données avec la commande /data excluir",
-            "dados_removidos" : "Vos données ont été supprimées de",
-            "sem_dados" : "Vous n'avez aucune donnée enregistrée ici ;)",
-            "server_desconhecido" : "serveur inconnu",
-            "um_server" : "et 1 autre serveur",
-            "outros_servers" : "et server_repl autres serveurs"
+            "aviso_1": "Entrez un nombre entre 1 et 4 pour naviguer dans les pages du menu"
+        },
+        {
+            "traducao_faltando": "Cette commande n'a pas encore de traduction pour votre langue, attendez!",
+            "usos": "Les usages",
+            "nao_encontrado": "Je n'ai trouvé aucune commande avec ce nom ou alias, réessayez"
+        },
+        {
+            "ranking_guilds": "Classement sur les serveurs suivants",
+            "dados_conhecidos": "> Vos données connues",
+            "resumo_dados": "Ceci est un résumé des données que nous détenons à votre sujet.",
+            "dica_rodape": "Vous pouvez supprimer toutes vos données avec la commande /data excluir",
+            "dados_removidos": "Vos données ont été supprimées de",
+            "sem_dados": "Vous n'avez aucune donnée enregistrée ici ;)",
+            "server_desconhecido": "serveur inconnu",
+            "um_server": "et 1 autre serveur",
+            "outros_servers": "et server_repl autres serveurs"
         }
     ],
-    "moderacao" : [
-        { "titulo_idioma" : "Langues disponibles" },
+    "moderacao": [
         {
-            "permissao_1" : "Vous ne disposez pas de l'autorisation `Gérer les messages`",
-            "permissao_2" : "Je n'ai pas l'autorisation `Gérer les messages`",
-            "aviso_1" : "Entrez le nombre de messages que vous souhaitez supprimer\nPar exemple, `.acl 20`",
-            "aviso_2" : ":warning: | Entrez un nombre entre `0` et `100` pour supprimer",
-            "apagado_1" : "messages` ont été supprimés",
-            "apagado_2" : "message` a été supprimé",
-            "error" : "Impossible d'exécuter cette commande car il y a des messages épinglés ou des messages trop anciens, diminuez la quantité et réessayez"
+            "titulo_idioma": "Langues disponibles"
         },
         {
-            "aviso_1" : "Ajoutez un emoji personnalisé à votre commande! :P",
-            "aviso_2" : "Saisissez un emoji à afficher\nPar exemple,",
-            "aviso_3" : "Entrez un emoji et son nom\nPar exemple,",
-            "aviso_4" : "N'envoyez qu'un seul emoji à la fois :P",
-            "aviso_5" : "Téléchargez une image inférieure à 250Kb à utiliser comme emoji",
-            "aviso_6" : "Inclure les emoji à supprimer\nPar exemple,",
-            "aviso_7" : "Entrez un emoji à supprimer",
-            "aviso_8" : "Entrez un emoji personnalisé de ce serveur à supprimer\nVous pouvez également utiliser l'identifiant emoji, par exemple `.armoji 914227763978838116`",
-            "permissao_1" : "Vous n'êtes pas autorisé à gérer les emojis sur ce serveur",
-            "permissao_2" : "Je n'ai pas les autorisations pour `gérer les emojis` sur ce serveur",
-            "requebrando" : "dansant",
-            "sucesso_1" : "Emoji a été ajouté!",
-            "sucesso_2" : "Emoji a été supprimé du serveur",
-            "error_1" : "Impossible de traiter ce fichier\nEnvoyez un fichier image pour que je le manipule ;)",
-            "error_2" : "La limite d'emoji pour ce serveur a été atteinte, supprimez-en quelques-uns avant d'en ajouter de nouveaux",
-            "error_3" : "Impossible de supprimer cet emoji, réessayez"
-        },
-        { "permissao_1" : "Vous n'êtes pas autorisé à gérer le serveur" },
-        {
-            "permissao_1" : "Vous ne pouvez pas bannir ou expulser des membres.",
-            "permissao_2" : "Je ne peux pas bannir ou expulser des membres",
-            "user_id" : "Entrez l'ID utilisateur",
-            "razao" : "Raison non renseignée",
-            "error_1" : "Arrête ça, noob! Ce membre est également administrateur.",
-            "error_2" : "Utilisateur invalide!",
-            "error_ban" : "Impossible de bannir cet utilisateur",
-            "error_kick" : "Impossible d'expulser cet utilisateur",
-            "banido" : "a été banni",
-            "expulso" : "a été supprimé du serveur"
+            "permissao_1": "Vous ne disposez pas de l'autorisation `Gérer les messages`",
+            "permissao_2": "Je n'ai pas l'autorisation `Gérer les messages`",
+            "aviso_1": "Entrez le nombre de messages que vous souhaitez supprimer\nPar exemple, `.acl 20`",
+            "aviso_2": ":warning: | Entrez un nombre entre `0` et `100` pour supprimer",
+            "apagado_1": "messages` ont été supprimés",
+            "apagado_2": "message` a été supprimé",
+            "error": "Impossible d'exécuter cette commande car il y a des messages épinglés ou des messages trop anciens, diminuez la quantité et réessayez"
         },
         {
-            "error_1" : "Entrez un préfixe à utiliser, par exemple, ",
-            "att_prefix" : "Le préfixe de ce serveur a été remplacé par :",
-            "moderadores" : "Seuls les modérateurs peuvent exécuter cette commande"
+            "aviso_1": "Ajoutez un emoji personnalisé à votre commande! :P",
+            "aviso_2": "Saisissez un emoji à afficher\nPar exemple,",
+            "aviso_3": "Entrez un emoji et son nom\nPar exemple,",
+            "aviso_4": "N'envoyez qu'un seul emoji à la fois :P",
+            "aviso_5": "Téléchargez une image inférieure à 250Kb à utiliser comme emoji",
+            "aviso_6": "Inclure les emoji à supprimer\nPar exemple,",
+            "aviso_7": "Entrez un emoji à supprimer",
+            "aviso_8": "Entrez un emoji personnalisé de ce serveur à supprimer\nVous pouvez également utiliser l'identifiant emoji, par exemple `.armoji 914227763978838116`",
+            "permissao_1": "Vous n'êtes pas autorisé à gérer les emojis sur ce serveur",
+            "permissao_2": "Je n'ai pas les autorisations pour `gérer les emojis` sur ce serveur",
+            "requebrando": "dansant",
+            "sucesso_1": "Emoji a été ajouté!",
+            "sucesso_2": "Emoji a été supprimé du serveur",
+            "error_1": "Impossible de traiter ce fichier\nEnvoyez un fichier image pour que je le manipule ;)",
+            "error_2": "La limite d'emoji pour ce serveur a été atteinte, supprimez-en quelques-uns avant d'en ajouter de nouveaux",
+            "error_3": "Impossible de supprimer cet emoji, réessayez"
         },
         {
-            "anuncio_games" : "À partir de maintenant, cette repl_canal chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande sans paramètres pour supprimer les mises à jour.",
-            "anuncio_off" : "Notifications de jeu désactivées pour cette serveur",
-            "ativos" : "Actuellement actif",
-            "tipo_canal" : "Le canal défini doit être un canal de texte, veuillez réessayer",
-            "ate_data" : "jusqu'à",
-            "resgate_dica" : "Ce sont des jeux actuellement disponibles\nUtilisez-les avant qu'ils n'expirent!"
+            "permissao_1": "Vous n'êtes pas autorisé à gérer le serveur"
         },
         {
-            "canal" : "Canal",
-            "lock" : "verrouillé\nUtilisez `.aunlk` pour déverrouiller",
-            "unlock" : "déverrouillé\nUtilisez `.alock` pour verrouiller",
-            "permissao_1" : "Vous n'êtes pas autorisé à gérer cette chaîne.",
-            "permissao_2" : "Je ne peux pas bloquer cette chaîne, j'ai besoin des autorisations `Gérer les chaînes` et `Gérer les rôles` pour cela"
+            "permissao_1": "Vous ne pouvez pas bannir ou expulser des membres.",
+            "permissao_2": "Je ne peux pas bannir ou expulser des membres",
+            "user_id": "Entrez l'ID utilisateur",
+            "razao": "Raison non renseignée",
+            "error_1": "Arrête ça, noob! Ce membre est également administrateur.",
+            "error_2": "Utilisateur invalide!",
+            "error_ban": "Impossible de bannir cet utilisateur",
+            "error_kick": "Impossible d'expulser cet utilisateur",
+            "banido": "a été banni",
+            "expulso": "a été supprimé du serveur"
         },
         {
-            "permissao_1" : "Vous ne pouvez pas gérer les membres de ce serveur",
-            "sucesso" : "L'expérience pour `nick_repl` a été changée en `exp_repl exp`, son nouveau niveau est `nivel_repl`",
-            "error_1" : "Entrez l'ID et votre nouvel XP, ou marquez quelqu'un et entrez la commande avec le nouvel exp\nPar exemple, `.achr @slondo 0`",
-            "error_2" : "Une erreur inattendue s'est produite et l'expérience de cet utilisateur n'a pas pu être modifiée pour le moment.\nVeuillez réessayer plus tard"
+            "moderadores": "Seuls les modérateurs peuvent exécuter cette commande"
+        },
+        {
+            "anuncio_games": "À partir de maintenant, cette repl_canal chaîne recevra des mises à jour lorsque des jeux gratuits seront disponibles\nUtilisez la commande sans paramètres pour supprimer les mises à jour.",
+            "anuncio_off": "Notifications de jeu désactivées pour cette serveur",
+            "ativos": "Actuellement actif",
+            "tipo_canal": "Le canal défini doit être un canal de texte, veuillez réessayer",
+            "ate_data": "jusqu'à",
+            "resgate_dica": "Ce sont des jeux actuellement disponibles\nUtilisez-les avant qu'ils n'expirent!"
+        },
+        {
+            "canal": "Canal",
+            "lock": "verrouillé\nUtilisez `.aunlk` pour déverrouiller",
+            "unlock": "déverrouillé\nUtilisez `.alock` pour verrouiller",
+            "permissao_1": "Vous n'êtes pas autorisé à gérer cette chaîne.",
+            "permissao_2": "Je ne peux pas bloquer cette chaîne, j'ai besoin des autorisations `Gérer les chaînes` et `Gérer les rôles` pour cela"
+        },
+        {
+            "permissao_1": "Vous ne pouvez pas gérer les membres de ce serveur",
+            "sucesso": "L'expérience pour `nick_repl` a été changée en `exp_repl exp`, son nouveau niveau est `nivel_repl`",
+            "error_2": "Une erreur inattendue s'est produite et l'expérience de cet utilisateur n'a pas pu être modifiée pour le moment.\nVeuillez réessayer plus tard"
         }
     ],
-    "utilitarios" : [
+    "utilitarios": [
         {
-            "ping_1" : "C'est un peu lent, je fais une vidéo!",
-            "ping_2" : "Tout va bien!",
-            "ping_3" : "Vous pouvez même jouer les yeux fermés!",
-            "ping_4" : "Vous pouvez jeter votre routeur!",
-            "ping_5" : "Ok, qui a installé Baidu ici ? OMS????",
-            "latencia" : "Latence d'Alonsal"
+            "ping_1": "C'est un peu lent, je fais une vidéo!",
+            "ping_2": "Tout va bien!",
+            "ping_3": "Vous pouvez même jouer les yeux fermés!",
+            "ping_4": "Vous pouvez jeter votre routeur!",
+            "ping_5": "Ok, qui a installé Baidu ici ? OMS????",
+            "latencia": "Latence d'Alonsal"
         },
         {
-            "wiki_slondo" : "Ce clochard n'est pas sur le wiki, cherchez autre chose ! :sunglasses:",
-            "topicos_rel" : "Rubriques connexes",
-            "sem_dados" : "je n'ai rien trouvé en rapport avec votre recherche",
-            "auto_pesquisa" : "Pourquoi faites-vous des recherches sur vous-même ? Il n'y a rien sur toi ici"
+            "wiki_slondo": "Ce clochard n'est pas sur le wiki, cherchez autre chose ! :sunglasses:",
+            "topicos_rel": "Rubriques connexes",
+            "sem_dados": "je n'ai rien trouvé en rapport avec votre recherche",
+            "auto_pesquisa": "Pourquoi faites-vous des recherches sur vous-même ? Il n'y a rien sur toi ici"
         },
         {
-            "caracteres" : "Certains caractères n'ont pas été encodés car ils n'existent pas en morse",
-            "codificado" : ":symbols: Votre message encodé en morse",
-            "decodificado" : ":symbols: Votre message morse décodé",
-            "carac_invalidos" : "Caractères invalides",
-            "error" : ":warning: Il y a eu un problème de codage"
+            "caracteres": "Certains caractères n'ont pas été encodés car ils n'existent pas en morse",
+            "codificado": ":symbols: Votre message encodé en morse",
+            "decodificado": ":symbols: Votre message morse décodé",
+            "carac_invalidos": "Caractères invalides",
+            "error": ":warning: Il y a eu un problème de codage"
         },
         {
-            "codificado" : ":one: Votre message codé en binaire",
-            "decodificado" : ":zero: Votre message décodé du binaire",
+            "codificado": ":one: Votre message codé en binaire",
+            "decodificado": ":zero: Votre message décodé du binaire",
             "aviso_1": "Tapez quelque chose pour utiliser cette commande",
-            "aviso_2" : "Entrez comme `.abn encode <votre_texte>` ou `.abn décode <votre_texte_encodé>`",
-            "resul_vazio" : "Le résultat final était vide, réessayez",
-            "titulo_vazio" : ":octagonal_sign: Le décodage a abouti à un vide",
-            "error_1" : "Conversion impossible, taille maximale dépassée!"
+            "aviso_2": "Entrez comme `.abn encode <votre_texte>` ou `.abn décode <votre_texte_encodé>`",
+            "resul_vazio": "Le résultat final était vide, réessayez",
+            "titulo_vazio": ":octagonal_sign: Le décodage a abouti à un vide",
+            "error_1": "Conversion impossible, taille maximale dépassée!"
         },
         {
-            "download_avatar" : "Cliquez [ici](link_repl) pour télécharger l'avatar",
-            "download_icon" : "Cliquez [ici](link_repl) pour télécharger l'icône",
-            "nao_conhecido" : "Je ne connais pas cet utilisateur, utilisez la commande en le marquant ! :smiling_imp:",
-            "id_user" : "Entrez l'ID utilisateur",
-            "error_1" : "Impossible de récupérer cet avatar pour le moment, veuillez réessayer plus tard"
-        },
-        { "reverso" : "Votre message inversé" },
-        {
-            "aviso_1" : "Écrivez quelque chose ou envoyez-moi un fichier et je vous le rendrai",
-            "aviso_2" : "Joindre un seul fichier à la fois",
-            "error_1" : "Je ne peux pas parler TTS dans ce chat",
-            "hora_certa" : "Bon moment!",
-            "reproducao_1" : "Reproduction demandée par",
-            "reproducao_2" : "Fichier envoyé par"
+            "download_avatar": "Cliquez [ici](link_repl) pour télécharger l'avatar",
+            "download_icon": "Cliquez [ici](link_repl) pour télécharger l'icône",
+            "nao_conhecido": "Je ne connais pas cet utilisateur, utilisez la commande en le marquant ! :smiling_imp:",
+            "id_user": "Entrez l'ID utilisateur",
+            "error_1": "Impossible de récupérer cet avatar pour le moment, veuillez réessayer plus tard"
         },
         {
-            "aviso_1" : "Entrez quelque chose à supprimer ou à remplacer et une chaîne\nPar exemple `.arm o slondo` ou `.arp i o slindo`",
-            "remove_tudo" : "Tu as tout enlevé, il ne reste plus rien"
+            "reverso": "Votre message inversé"
         },
         {
-            "aviso_1" : "Entrez le nom d'une ville à rechercher\nPar exemple, comme `.awe paris`",
-            "aviso_2" : "Je n'ai pas trouvé d'endroit appelé",
-            "aviso_3" : "Il y a eu une erreur avec l'API météo et il n'est pas possible de rechercher la météo pour le moment",
-            "aviso_continente" : "Ces données sont une moyenne de toutes les valeurs pour le continent étudié",
-            "aviso_pais" : "Ces données sont une moyenne de toutes les valeurs du pays enquêté",
-            "aviso_planeta" : "Ces données sont une moyenne de toutes les valeurs relevées sur la planète", 
-            "tempo_agora" : "Météo maintenant",
-            "hora_local" : "Heure locale",
-            "de" : "",
-            "na" : "à",
-            "terra" : "sur Terre",
-            "vento" : "Vent",
-            "nuvens" : "Des nuages",
-            "chuva" : "Pluie",
-            "direcao" : "Direction",
-            "velocidade" : "Vitesse",
-            "ceu_momento" : "Ciel en ce moment",
-            "temperatura" : "Température",
-            "por_sol" : "Lever du soleil",
-            "nas_sol" : "Le coucher du soleil",
-            "sensacao_termica" : "Sens thermique",
-            "umidade_ar" : "L'humidité de l'air",
-            "pressao_ar" : "Pression de l'air",
-            "visibilidade" : "Visibilité",
-            "nivel_chao" : "Niveau du sol",
-            "nivel_mar" : "Niveau de l'océan",
-            "chovendo" : "🌧️ Il pleut maintenant",
-            "nevando" : "❄️ Il neige maintenant",
-            "rajadas_vento" : "🌪️ Rafales de vent",
-            "dados_atts" : "Données mises à jour dans",
-            "sugestao" : "Essayez une recherche brute par exemple, ",
-            "error_1" : "Entrez simplement des caractères normaux pour votre recherche, les recherches avec des nombres sont ignorées",
-            "error_2" : "Impossible de récupérer les informations de cet emplacement, veuillez réessayer plus tard",
-            "antartida" : "Antarctique",
-            "outono" : "Automne",
-            "verao" : "Été",
-            "primavera" : "Printemps",
-            "inverno" : "L'hiver",
-            "comeco" : "Commencé en",
-            "termino" : ", fini dans",
-            "equador" : "Cet emplacement est proche de l'équateur, la saison en cours peut ne pas refléter votre météo actuelle"
+            "aviso_1": "Écrivez quelque chose ou envoyez-moi un fichier et je vous le rendrai",
+            "aviso_2": "Joindre un seul fichier à la fois",
+            "error_1": "Je ne peux pas parler TTS dans ce chat",
+            "hora_certa": "Bon moment!",
+            "reproducao_1": "Reproduction demandée par",
+            "reproducao_2": "Fichier envoyé par"
         },
         {
-            "nao_encontrado" : "Je n'ai trouvé aucun élément ou bloc avec le nom",
-            "tente_novamente" : "réessayer",
-            "error_1" : "Impossible de charger la base de données pour le moment, veuillez réessayer plus tard",
-            "coletavel" : "collecter",
-            "tipo" : "Taper",
-            "versao_add" : "Version ajoutée",
-            "empilhavel" : "Empilable",
-            "renovavel" : "Renouvelable",
-            "nome_interno" : "Nom interne",
-            "construcao" : "Construction",
-            "pocoes" : "Potions",
-            "efeitos_aplicados" : "Effets appliqués",
-            "atributos" : "Les attributs",
-            "disco_musical" : "Disque de musique",
-            "livro_encantado" : "Livre enchanté",
-            "nota_rodape" : "Cet élément n'a pas encore été officiellement implémenté, vos données ne sont pas officielles",
-            "sim" : "Oui",
-            "nao" : "Non",
-            "ate" : "Jusqu'à",
-            "detalhes" : {
-                "na_cabeca" : "Quand sur la tête",
-                "no_corpo" : "Quand sur le corps",
-                "nas_pernas" : "Quand sur les jambes",
-                "nos_pes" : "Quand sur les pieds",
-                "pontos_de_armadura" : "Armure",
-                "resistencia_da_armadura" : "Robustesse de l'armure",
-                "resistencia_a_repulsao" : "Résistance au recul",
-                "dano_por_golpe" : "Dégâts d'attaque",
-                "na_mao_principal" : "Quand dans la main principale",
-                "velocidade_de_ataque" : "Vitesse d'attaque",
-                "nenhum_efeito" : "Aucun effet",
-                "velocidade" : "Rapidité",
-                "lentidao" : "Lenteur",
-                "resistencia" : "La résistance",
-                "respiracao" : "Respiration aquatique",
-                "visao" : "Vision nocturne",
-                "forca" : "Force",
-                "dano" : "Dégâts instantanés",
-                "vida" : "Santé instantanée",
-                "veneno" : "Poison",
-                "supersalto" : "Boost de saut",
-                "cegueira" : "Cécité",
-                "levitação" : "Lévitation",
-                "queda" : "Chute lente",
-                "fraqueza" : "La faiblesse",
-                "sorte" : "Chance",
-                "invisibilidade" : "Invisibilité"
+            "aviso_1": "Entrez quelque chose à supprimer ou à remplacer et une chaîne\nPar exemple `.arm o slondo` ou `.arp i o slindo`",
+            "remove_tudo": "Tu as tout enlevé, il ne reste plus rien"
+        },
+        {
+            "aviso_1": "Entrez le nom d'une ville à rechercher\nPar exemple, comme `.awe paris`",
+            "aviso_2": "Je n'ai pas trouvé d'endroit appelé",
+            "aviso_3": "Il y a eu une erreur avec l'API météo et il n'est pas possible de rechercher la météo pour le moment",
+            "aviso_continente": "Ces données sont une moyenne de toutes les valeurs pour le continent étudié",
+            "aviso_pais": "Ces données sont une moyenne de toutes les valeurs du pays enquêté",
+            "aviso_planeta": "Ces données sont une moyenne de toutes les valeurs relevées sur la planète",
+            "tempo_agora": "Météo maintenant",
+            "hora_local": "Heure locale",
+            "de": "",
+            "na": "à",
+            "terra": "sur Terre",
+            "vento": "Vent",
+            "nuvens": "Des nuages",
+            "chuva": "Pluie",
+            "direcao": "Direction",
+            "velocidade": "Vitesse",
+            "ceu_momento": "Ciel en ce moment",
+            "temperatura": "Température",
+            "por_sol": "Lever du soleil",
+            "nas_sol": "Le coucher du soleil",
+            "sensacao_termica": "Sens thermique",
+            "umidade_ar": "L'humidité de l'air",
+            "pressao_ar": "Pression de l'air",
+            "visibilidade": "Visibilité",
+            "nivel_chao": "Niveau du sol",
+            "nivel_mar": "Niveau de l'océan",
+            "chovendo": "🌧️ Il pleut maintenant",
+            "nevando": "❄️ Il neige maintenant",
+            "rajadas_vento": "🌪️ Rafales de vent",
+            "dados_atts": "Données mises à jour dans",
+            "sugestao": "Essayez une recherche brute par exemple, ",
+            "error_1": "Entrez simplement des caractères normaux pour votre recherche, les recherches avec des nombres sont ignorées",
+            "error_2": "Impossible de récupérer les informations de cet emplacement, veuillez réessayer plus tard",
+            "antartida": "Antarctique",
+            "outono": "Automne",
+            "verao": "Été",
+            "primavera": "Printemps",
+            "inverno": "L'hiver",
+            "comeco": "Commencé en",
+            "termino": ", fini dans",
+            "equador": "Cet emplacement est proche de l'équateur, la saison en cours peut ne pas refléter votre météo actuelle"
+        },
+        {
+            "nao_encontrado": "Je n'ai trouvé aucun élément ou bloc avec le nom",
+            "tente_novamente": "réessayer",
+            "error_1": "Impossible de charger la base de données pour le moment, veuillez réessayer plus tard",
+            "coletavel": "collecter",
+            "tipo": "Taper",
+            "versao_add": "Version ajoutée",
+            "empilhavel": "Empilable",
+            "renovavel": "Renouvelable",
+            "nome_interno": "Nom interne",
+            "construcao": "Construction",
+            "pocoes": "Potions",
+            "efeitos_aplicados": "Effets appliqués",
+            "atributos": "Les attributs",
+            "disco_musical": "Disque de musique",
+            "livro_encantado": "Livre enchanté",
+            "nota_rodape": "Cet élément n'a pas encore été officiellement implémenté, vos données ne sont pas officielles",
+            "sim": "Oui",
+            "nao": "Non",
+            "ate": "Jusqu'à",
+            "detalhes": {
+                "na_cabeca": "Quand sur la tête",
+                "no_corpo": "Quand sur le corps",
+                "nas_pernas": "Quand sur les jambes",
+                "nos_pes": "Quand sur les pieds",
+                "pontos_de_armadura": "Armure",
+                "resistencia_da_armadura": "Robustesse de l'armure",
+                "resistencia_a_repulsao": "Résistance au recul",
+                "dano_por_golpe": "Dégâts d'attaque",
+                "na_mao_principal": "Quand dans la main principale",
+                "velocidade_de_ataque": "Vitesse d'attaque",
+                "nenhum_efeito": "Aucun effet",
+                "velocidade": "Rapidité",
+                "lentidao": "Lenteur",
+                "resistencia": "La résistance",
+                "respiracao": "Respiration aquatique",
+                "visao": "Vision nocturne",
+                "forca": "Force",
+                "dano": "Dégâts instantanés",
+                "vida": "Santé instantanée",
+                "veneno": "Poison",
+                "supersalto": "Boost de saut",
+                "cegueira": "Cécité",
+                "levitação": "Lévitation",
+                "queda": "Chute lente",
+                "fraqueza": "La faiblesse",
+                "sorte": "Chance",
+                "invisibilidade": "Invisibilité"
             }
         },
         {
-            "hoje" : "aujourd'hui",
-            "este_ano" : "Cette année",
+            "hoje": "aujourd'hui",
+            "este_ano": "Cette année",
             "ha": "il y a",
             "em": "dans",
-            "ano_passado" : "L'année dernière",
-            "numero" : "numéro",
-            "acontecimentos_1" : "Événements à travers l'histoire",
-            "acontecimentos_2" : "Vous trouverez ci-dessous tous les événements à la date de",
-            "utilize_1" : "Utilisez la commande",
-            "utilize_2" : "pour voir un événement spécifique",
-            "aviso_1" : "Soumettez en tant que `.ahs 01-31` pour pouvoir effectuer une recherche à une date spécifique\nOu utilisez simplement `.ahs` pour voir les événements à la date d'aujourd'hui dans l'historique",
-            "aviso_2" : "Les valeurs saisies sont erronées, veuillez saisir des valeurs numériques correctes pour le jour et le mois",
+            "ano_passado": "L'année dernière",
+            "numero": "numéro",
+            "acontecimentos_1": "Événements à travers l'histoire",
+            "acontecimentos_2": "Vous trouverez ci-dessous tous les événements à la date de",
+            "utilize_1": "Utilisez la commande",
+            "utilize_2": "pour voir un événement spécifique",
+            "aviso_1": "Soumettez en tant que `.ahs 01-31` pour pouvoir effectuer une recherche à une date spécifique\nOu utilisez simplement `.ahs` pour voir les événements à la date d'aujourd'hui dans l'historique",
+            "aviso_2": "Les valeurs saisies sont erronées, veuillez saisir des valeurs numériques correctes pour le jour et le mois",
             "aviso_3": "A la recherche d'un événement...",
-            "error_1" : "Entrez un numéro contenu dans la liste des événements pour voir plus de détails",
-            "sem_entradas" : "Il n'y a pas d'événements pour cette date, veuillez entrer une date différente `.acon 01-21`"
+            "error_1": "Entrez un numéro contenu dans la liste des événements pour voir plus de détails",
+            "sem_entradas": "Il n'y a pas d'événements pour cette date, veuillez entrer une date différente `.acon 01-21`"
         },
         {
-            "chave" : "Clé",
-            "aviso_1" : "Saisissez une clé et le texte à chiffrer\nPar exemple, `.acr slondo Hello World!` ou `.acr slondo U2FsdG~~`",
-            "error_1" : "Clé incorrecte, impossible de déchiffrer\nSi vous essayez de chiffrer, ajoutez plus d'espaces à votre texte"
+            "chave": "Clé",
+            "aviso_1": "Saisissez une clé et le texte à chiffrer\nPar exemple, `.acr slondo Hello World!` ou `.acr slondo U2FsdG~~`",
+            "error_1": "Clé incorrecte, impossible de déchiffrer\nSi vous essayez de chiffrer, ajoutez plus d'espaces à votre texte"
         },
         {
-            "id_server" : "Identifiant du serveur",
-            "membros" : "Membres",
-            "dono" : "Propriétaire",
-            "canais" : "Canaux",
-            "categorias" : "Catégories",
-            "texto" : "Texte",
-            "voz" : "Voix",
-            "atual" : "Courant",
-            "entrada" : "Entrée d'Alonsal",
-            "criacao" : "Création",
-            "verificacao" : "Verification",
-            "cargos" : "Les rôles",
-            "figurinhas" : "Autocollants",
-            "NONE" : ":white_large_square: Aucun",
-            "LOW" : ":blue_square: Meugler",
-            "MEDIUM" : ":green_square: Moyen",
-            "HIGH" : ":orange_square: Haut",
-            "HIGHEST" : ":red_square: Le plus élevé"
+            "id_server": "Identifiant du serveur",
+            "membros": "Membres",
+            "dono": "Propriétaire",
+            "canais": "Canaux",
+            "categorias": "Catégories",
+            "texto": "Texte",
+            "voz": "Voix",
+            "atual": "Courant",
+            "entrada": "Entrée d'Alonsal",
+            "criacao": "Création",
+            "verificacao": "Verification",
+            "cargos": "Les rôles",
+            "figurinhas": "Autocollants",
+            "NONE": ":white_large_square: Aucun",
+            "LOW": ":blue_square: Meugler",
+            "MEDIUM": ":green_square: Moyen",
+            "HIGH": ":orange_square: Haut",
+            "HIGHEST": ":red_square: Le plus élevé"
         },
         {
-            "id_user" : "Identifiant d'utilisateur",
-            "entrada" : "Entré dans",
-            "conta_criada" : "Compte créé",
-            "alonsal" : "Regarde moi là!",
-            "enceirado" : "éternellement ciré",
-            "moderador" : "Ce membre est administrateur sur ce serveur"
+            "id_user": "Identifiant d'utilisateur",
+            "entrada": "Entré dans",
+            "conta_criada": "Compte créé",
+            "alonsal": "Regarde moi là!",
+            "enceirado": "éternellement ciré",
+            "moderador": "Ce membre est administrateur sur ce serveur"
         },
         {
-            "anos" : " ans",
-            "ano" : " an",
-            "meses" : " mois",
-            "mes" : " mois",
-            "dias" : " journées",
-            "dia" : " journée",
-            "horas" : " les heures",
-            "hora" : " heure",
-            "minutos" : " minutes",
-            "minuto" : " minute",
-            "segundos" : " seconds",
-            "segundo" : " second",
-            "e" : "et"
+            "anos": " ans",
+            "ano": " an",
+            "meses": " mois",
+            "mes": " mois",
+            "dias": " journées",
+            "dia": " journée",
+            "horas": " les heures",
+            "hora": " heure",
+            "minutos": " minutes",
+            "minuto": " minute",
+            "segundos": " seconds",
+            "segundo": " second",
+            "e": "et"
         },
         {
-            "id_canal" : "Identifiant de la chaine",
-            "servidor" : "Serveur",
-            "canal_voz" : "Ceci est un canal vocal!",
-            "topico" : "Sujet",
-            "sem_topico" : "Chaîne sans sujet défini",
-            "mencao" : "Mention",
-            "transmissao" : "Transmission",
-            "sem_limite" : "Illimité",
-            "modo_lento" : "Mode lent",
-            "aviso_1" : "Saisissez un identifiant de chaîne!",
-            "error_1" : "Impossible de trouver cette chaîne, veuillez réessayer"
+            "id_canal": "Identifiant de la chaine",
+            "servidor": "Serveur",
+            "canal_voz": "Ceci est un canal vocal!",
+            "topico": "Sujet",
+            "sem_topico": "Chaîne sans sujet défini",
+            "mencao": "Mention",
+            "transmissao": "Transmission",
+            "sem_limite": "Illimité",
+            "modo_lento": "Mode lent",
+            "aviso_1": "Saisissez un identifiant de chaîne!",
+            "error_1": "Impossible de trouver cette chaîne, veuillez réessayer"
         },
         {
-            "undefined" : "Inconnu",
-            "error_1" : "Profil introuvable, assurez-vous que le profil recherché a une URL personnalisée",
-            "error_2" : "Ce profil existe mais une erreur s'est produite lors de son chargement",
-            "rodape" : "Certaines (ou toutes) des données de cet utilisateur ne sont pas disponibles dans son profil",
-            "analises" : "Commentaires",
-            "nivel" : "Niveau",
-            "jogos" : "Jeux",
-            "jogos_perfeitos" : "J. 100%",
-            "conquistas" : "Réalisations",
-            "porcentagem" : "Pour cent.",
-            "insignias" : "Insignes",
-            "criacoes" : "Les créations",
-            "semanas" : "2 semaines",
-            "artes" : "Oeuvres",
-            "suspeito" : "Cet utilisateur peut utiliser des moyens illégaux pour obtenir des réalisations, ne considérez pas cela comme une confirmation",
-            "jogo_favorito" : "Jeu préféré",
-            "capturas" : "Impressions",
-            "nome" : "Nom",
-            "tempo_jogado" : "Temps joué"
+            "undefined": "Inconnu",
+            "error_1": "Profil introuvable, assurez-vous que le profil recherché a une URL personnalisée",
+            "error_2": "Ce profil existe mais une erreur s'est produite lors de son chargement",
+            "rodape": "Certaines (ou toutes) des données de cet utilisateur ne sont pas disponibles dans son profil",
+            "analises": "Commentaires",
+            "nivel": "Niveau",
+            "jogos": "Jeux",
+            "jogos_perfeitos": "J. 100%",
+            "conquistas": "Réalisations",
+            "porcentagem": "Pour cent.",
+            "insignias": "Insignes",
+            "criacoes": "Les créations",
+            "semanas": "2 semaines",
+            "artes": "Oeuvres",
+            "suspeito": "Cet utilisateur peut utiliser des moyens illégaux pour obtenir des réalisations, ne considérez pas cela comme une confirmation",
+            "jogo_favorito": "Jeu préféré",
+            "capturas": "Impressions",
+            "nome": "Nom",
+            "tempo_jogado": "Temps joué"
         },
         {
-            "aviso_1" : "Entrez au moins une opération de base pour calculer",
-            "resultado" : "Résultat",
-            "error" : "Une erreur s'est produite lors du traitement de cette opération"
+            "aviso_1": "Entrez au moins une opération de base pour calculer",
+            "resultado": "Résultat",
+            "error": "Une erreur s'est produite lors du traitement de cette opération"
         },
         {
-            "primaria" : "Mot de passe principal",
-            "bonus" : "Mots de passe bonus",
-            "titulo" : "V0s_M0t5 d3 p4553, cliquez ici pour tester votre mot de passe",
-            "senha" : "Vérifiez votre privé, votre mot de passe a été généré avec une longueur de caractères `tamanho_repl`",
-            "rodape" : "4 mots de passe avec des caractères tamanho_repl à choisir, ils ne sont pas enregistrés ici et je ne connais même pas le contenu, seulement vous ;)"
+            "primaria": "Mot de passe principal",
+            "bonus": "Mots de passe bonus",
+            "titulo": "V0s_M0t5 d3 p4553, cliquez ici pour tester votre mot de passe",
+            "senha": "Vérifiez votre privé, votre mot de passe a été généré avec une longueur de caractères `tamanho_repl`",
+            "rodape": "4 mots de passe avec des caractères tamanho_repl à choisir, ils ne sont pas enregistrés ici et je ne connais même pas le contenu, seulement vous ;)"
         },
         {
-            "timestamp_1" : "De la date à l'horodatage",
-            "timestamp_2" : "De l'horodatage à la date",
-            "timestamp_now" : "Horodatage maintenant",
-            "timestamp_crono" : "Horodatage programmé",
-            "erro_titulo" : ":warning: | Quelque chose s'est mal passé",
-            "erro_conversao" : "Impossible de générer un horodatage avec l'entrée donnée, veuillez réessayer",
-            "valor_nulo" : "Le résultat de cette conversion était nul",
-            "aviso_1" : "J'ai besoin de plus d'informations pour pouvoir convertir vos données\nPar exemple `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"
+            "timestamp_1": "De la date à l'horodatage",
+            "timestamp_2": "De l'horodatage à la date",
+            "timestamp_now": "Horodatage maintenant",
+            "timestamp_crono": "Horodatage programmé",
+            "erro_titulo": ":warning: | Quelque chose s'est mal passé",
+            "erro_conversao": "Impossible de générer un horodatage avec l'entrée donnée, veuillez réessayer",
+            "valor_nulo": "Le résultat de cette conversion était nul",
+            "aviso_1": "J'ai besoin de plus d'informations pour pouvoir convertir vos données\nPar exemple `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"
         },
         {
-            "sem_scrobbles" : "Ce profil existe, mais il n'a pas de Scrobble :(",
-            "semanal" : "Hebdomadaire",
-            "media_dia" : "Moyenne par jour",
-            "tempo_tocado" : "Temps joué",
-            "albuns" : "Albums",
-            "artistas" : "Artistes",
-            "faixas_favoritas" : "Pistes préférées",
-            "geral" : "Général",
-            "perfil_musical" : "Profil musical de nome_repl",
-            "em_scrobble" : "Sur Scrobble en ce moment",
-            "obsessao" : "Coup de coeur du moment",
-            "error_1" : "Ce profil n'existe pas, veuillez réessayer"
-        }
-    ],
-    "trabalho" : [
-        {
-            "entrada" : "Entrée",
-            "saida" : "Sortir",
-            "tempo" : "Temps",
-            "tempo_extra" : "Temps supplémentaire",
-            "tempo_falta" : "Temps restant",
-            "turno_manha" : "Quart du matin",
-            "turno_tarde" : "Quart de l'après-midi",
-            "tempo_trabalhado" : "Temps travaillé",
-            "dica_comando" : "Utilisez la commande .atr h pour voir plus d'exemples et d'autres commandes",
-            "error_1" : "Entrez une date valide pour cette commande, par exemple `.abn 21/01/2022 08:07`",
-            "error_2" : "Entrez une date valide pour cette commande, par exemple `.atr 21/01/2022`"
-        },
-        {   
-            "ponto_att_1" : "Heure de `ponto_repl°` Point de `data_repl` mis à jour avec succès vers `hora_repl`",
-            "ponto_att_2" : "ponto_repl° Point du jour enregistré, l'heure liée est `hora_repl`\nVous avez mal tapé ? Editez ce point avec la commande `.abp ponto_repl 08:07`",
-            "ponto_att_3" : "Heure de `ponto_repl°` Point mis à jour avec succès vers `hora_repl`",
-            "todos_pontos" : "Toutes les heures ont été renseignées, vous pouvez modifier les points précédents avec la commande `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOu voir le résumé complet avec la commande `.atr`",
-            "horario" : "Saisissez une heure pour enregistrer votre point",
-            "error_1" : "Entrez un nombre entre '1 et 4' pour modifier vos points aujourd'hui",
-            "error_2" : "Entrez un format d'heure approprié, par exemple `.abp 20:07`",
-            "error_3" : "Vous avez entré trop de valeur, l'opération a été annulée\nUtilisez la commande `.atr h` pour voir les commandes de cette catégorie"
-        },
-        {
-            "registrado" : "Jours enregistrés",
-            "sem_dados" : "Vous n'avez pas de jours de travail enregistrés",
-            "error_1" : "Entrez une date valide pour cette commande, par exemple `.arbp 21/01/2022`",
-            "sem_entradas_1" : "Il n'y a pas de points enregistrés pour",
-            "sem_entradas_2" : "Aucun point enregistré pour aujourd'hui",
-            "dia_removido_1" : "Toutes les données de `dia_repl` ont été supprimées",
-            "dia_removido_2" : "Toutes les données d'aujourd'hui ont été supprimées"
+            "sem_scrobbles": "Ce profil existe, mais il n'a pas de Scrobble :(",
+            "semanal": "Hebdomadaire",
+            "media_dia": "Moyenne par jour",
+            "tempo_tocado": "Temps joué",
+            "albuns": "Albums",
+            "artistas": "Artistes",
+            "faixas_favoritas": "Pistes préférées",
+            "geral": "Général",
+            "perfil_musical": "Profil musical de nome_repl",
+            "em_scrobble": "Sur Scrobble en ce moment",
+            "obsessao": "Coup de coeur du moment",
+            "error_1": "Ce profil n'existe pas, veuillez réessayer"
         }
     ]
 }

@@ -1,17 +1,17 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('jokenpo')
-		.setDescription('⌠🎲⌡ Jogue jokenpô')
+    data: new SlashCommandBuilder()
+        .setName('jokenpo')
+        .setDescription('⌠🎲⌡ Jogue jokenpô')
         .addStringOption(option =>
             option.setName('escolha')
                 .setDescription('Pedra, papel ou tesoura?')),
-	async execute(client, interaction) {
-        
+    async execute(client, interaction) {
+
         const idioma_definido = client.idioma.getLang(interaction)
         const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        
+
         let jooj = ["pedra", "papel", "tesoura", "pedra"], escolha
 
         if (idioma_definido === "en-us")
@@ -22,8 +22,8 @@ module.exports = {
 
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
         let player = Math.round(2 * Math.random())
-        
-        if (interaction.options.data.length > 0) 
+
+        if (interaction.options.data.length > 0)
             player = jooj.indexOf(escolha)
 
         if (player === -1) // Valor não encontrado
@@ -36,7 +36,7 @@ module.exports = {
 
         if (player === 3 && bot === 1)
             player = 0
-        
+
         if (bot < player || (player === 1 && bot === 3)) ganhador = ":trophy:"
         if (bot === player) ganhador = ":infinity:"
 

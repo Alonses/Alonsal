@@ -3,17 +3,18 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('⌠💡⌡ See your ping')
+    data: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('⌠💡⌡ See your ping')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja seu ping',
+            "es-ES": '⌠💡⌡ Ver tu ping',
             "fr": '⌠💡⌡ Voir votre ping'
         }),
-	async execute(client, interaction) {
+    async execute(client, interaction) {
 
-		const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+
         const dancando_thanos = busca_emoji(client, emojis.dancando_thanos)
         const emoji_steve = busca_emoji(client, emojis.dancando_steve)
         const emoji_pare = busca_emoji(client, emojis.pare_agr)
@@ -23,7 +24,7 @@ module.exports = {
         const delay = m.createdTimestamp - interaction.createdTimestamp
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_1"]} ${dancando_thanos}`
-        
+
         if (delay < 200)
             mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${utilitarios[0]["ping_2"]}`
 
@@ -38,6 +39,6 @@ module.exports = {
 
         mensagem += `\n${utilitarios[0]["latencia"]} [ **\`${Math.round(client.ws.ping)}ms\`** ]`
 
-        await interaction.editReply({ content: mensagem})
+        await interaction.editReply({ content: mensagem })
     }
 }

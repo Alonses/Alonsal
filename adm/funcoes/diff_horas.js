@@ -1,12 +1,12 @@
 module.exports = (entrada, saida) => {
-    
-    if (entrada == null || saida == null ) return 0
-    
+
+    if (entrada == null || saida == null) return 0
+
     let data = new Date()
     let dia = String(data.getDate()).padStart(2, '0')
     let mes = String(data.getMonth() + 1).padStart(2, '0')
     let ano = data.getFullYear()
-    
+
     let inicio = new Date(ano, mes - 1, dia, entrada.substr(0, 2), entrada.substr(3, 2))
     let diff
 

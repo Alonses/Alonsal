@@ -3,9 +3,9 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('c_anunciar')
-		.setDescription('⌠🤖⌡ Anúnciar games/dlcs free')
+    data: new SlashCommandBuilder()
+        .setName('c_anunciar')
+        .setDescription('⌠🤖⌡ Anúnciar games/dlcs free')
         .addStringOption(option =>
             option.setName('nome')
                 .setDescription('O nome do conteúdo')
@@ -24,8 +24,8 @@ module.exports = {
                 .setRequired(true))
         .addAttachmentOption(option =>
             option.setName('imagem')
-            .setDescription("A imagem que será exibida")
-            .setRequired(true))
+                .setDescription("A imagem que será exibida")
+                .setRequired(true))
         .addStringOption(option =>
             option.setName('tipo')
                 .setDescription('O tipo do conteudo')
@@ -41,55 +41,55 @@ module.exports = {
                     { name: 'Urgente', value: 'u' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-        async execute(client, interaction) {
-            
-            if (interaction.user.id !== "665002572926681128") return
+    async execute(client, interaction) {
 
-            await interaction.deferReply()
+        if (interaction.user.id !== "665002572926681128") return
 
-            let entradas = interaction.options.data
+        await interaction.deferReply()
 
-            const item = {
-                nome: null,
-                tipo: null,
-                link: null,
-                preco: null,
-                expira: null,
-                urgencia: null,
-                thumbnail: null
-            }
+        let entradas = interaction.options.data
 
-            entradas.forEach(valor => {
-                if (valor.name == "nome")
-                    item.nome = valor.value
-                    
-                if (valor.name == "tipo")
-                    item.tipo = valor.value
-                
-                if (valor.name == "link")
-                    item.link = valor.value
+        const item = {
+            nome: null,
+            tipo: null,
+            link: null,
+            preco: null,
+            expira: null,
+            urgencia: null,
+            thumbnail: null
+        }
 
-                if (valor.name == "preço")
-                    item.preco = valor.value
+        entradas.forEach(valor => {
+            if (valor.name == "nome")
+                item.nome = valor.value
 
-                if (valor.name == "expiração")
-                    item.expira = valor.value
+            if (valor.name == "tipo")
+                item.tipo = valor.value
 
-                if (valor.name == "urgência")
-                    item.urgencia = valor.value
+            if (valor.name == "link")
+                item.link = valor.value
 
-                if (valor.name == "imagem")
-                    item.thumbnail = valor.attachment.attachment
-            })
-            
-            if (item.tipo == null)
-                item.tipo = "jogo"
+            if (valor.name == "preço")
+                item.preco = valor.value
 
-            if (item.urgencia == null)
-                item.urgencia = "n"
-            
-            const objetos_anunciados = [item]
+            if (valor.name == "expiração")
+                item.expira = valor.value
 
-            dispara_anuncio({client, interaction, objetos_anunciados})
-  	}
+            if (valor.name == "urgência")
+                item.urgencia = valor.value
+
+            if (valor.name == "imagem")
+                item.thumbnail = valor.attachment.attachment
+        })
+
+        if (item.tipo == null)
+            item.tipo = "jogo"
+
+        if (item.urgencia == null)
+            item.urgencia = "n"
+
+        const objetos_anunciados = [item]
+
+        dispara_anuncio({ client, interaction, objetos_anunciados })
+    }
 }

@@ -1,34 +1,34 @@
 {
     "updates": [
         {
-            "slash_commands": "Os comandos tradicionais foram desativados, continue usando o Alonsal pelos comandos de `/barra`! Experimente agora mesmo ;D\n\nNota: Não consegue ver meus comandos? Me convide novamente clicando no botão abaixo! Também verifique se meus comandos estão habilitados para todos nas integrações do servidor em `Integrações -> Alonsal -> Comandos`",
-            "convidar": "Convidar!",
-            "suporte": "Suporte"
+            "slash_commands": "Los comandos heredados se han deshabilitado, ¡siga usando Alonsal con los comandos `/slash`! Pruébelo ahora ;D\n\nNota: ¿No puede ver mis comandos? ¡Invítame de nuevo haciendo clic en el botón de abajo! También verifique que mis comandos estén habilitados para todas las integraciones de servidor en `Integraciones -> Alonsal -> Comandos`",
+            "convidar": "¡Invitar!",
+            "suporte": "Apoyo"
         }
     ],
     "inicio": [
         {
             "menciona": "Aoba! Digite `/help` para ver a lista de comandos :D\n:earth_americas: | Use o comando `/idioma` para ver a lista de idiomas disponíveis",
-            "aguarde": "Aguarde",
-            "cooldown": "segundos para executar esse comando novamente",
-            "permissao_1": "você não tem a permissão",
-            "permissao_2": "para executar este comando.",
+            "aguarde": "Mantener",
+            "cooldown": "segundos para ejecutar ese comando de nuevo",
+            "permissao_1": "no tienes el permiso",
+            "permissao_2": "para ejecutar este comando.",
             "error_1": "Errrrou, o uso correto do comando é",
-            "epic_embed_fail": "Houve um erro ao tentar executar este comando, _não é comum mas acontece_, chamei os enceiradores para eliminar este baidu o quanto antes!\nDesculpas pelo inconveniente"
+            "epic_embed_fail": "Ocurrió un error al intentar ejecutar este comando, _no es común, pero sucede_, ¡he notificado a los desarrolladores que eliminen este baidu lo antes posible!\nDisculpe las molestias"
         },
         {
-            "titulo": "> Ó Abre alas que eu queru passsaa :notes:",
-            "boas_vindas": "Olá! Obrigado por me adicionar ao servidor!\n\nDeixo em anexo abaixo o meu site, com todos os comandos caso necessário ;D",
-            "idioma_dica": "Do not speak Portuguese? No problems! Change my language right now with the /idioma command!",
-            "site": "Site Alonsal"
+            "titulo": "> ¡Oh Abran paso que quiero pasar! :notes:",
+            "boas_vindas": "¡Hola! ¡Gracias por agregarme al servidor!\n\nDejo mi sitio web adjunto a continuación, con todos los comandos si es necesario ;D",
+            "idioma_dica": "Do not speak Spanish? No problems! Change my language right now with the /idioma command!",
+            "site": "Web de Alonsal"
         }
     ],
     "diversao": [
         {
-            "baidu": "Louvado seja!!"
+            "baidu": "¡¡Alabado sea!!"
         },
         {
-            "asf": "Vai uma esfiha ae?"
+            "asf": "¿Hay una esfiha allí?"
         },
         {
             "aviso_1": "marque duas pessoas para testar\nPor exemplo, `/amor @Alonsal @Slondo`",
@@ -49,49 +49,49 @@
             "error_2": "sai pra lá seu GA :cow: DO, teste isso com outro usuário"
         },
         {
-            "peao": "Roda o pião"
+            "peao": "Rueda el peón"
         },
         {
-            "aviso_1": "Informe algo além do comando, por exemplo `/anagrama alonsal > odnols`",
-            "anagrama": "Seu anagrama",
+            "aviso_1": "Escriba algo que no sea el comando, por ejemplo `/anagrama alonsal > odnols`",
+            "anagrama": "Tu anagrama",
             "entrada": "Entrada original",
-            "lista_combinacoes": "Possiveis combinações",
-            "sequencia": "Sua sequência de caracteres produz",
-            "combinacao": "combinação",
-            "combinacoes": "combinações!",
-            "sorte": "Houve uma repetição de palavras! Seria sorte?"
+            "lista_combinacoes": "Posibles combinaciones",
+            "sequencia": "Tu cadena produce",
+            "combinacao": "combinación",
+            "combinacoes": "combinaciones!",
+            "sorte": "¡Hubo una repetición de palabras! ¿Fue suerte?"
         },
         {
-            "nsfw_jaja": "Devido ao excesso de delícia este comando só pode ser usado num canal NSFW"
+            "nsfw_jaja": "Debido al exceso de placer, este comando solo se puede usar en un canal NSFW"
         },
         {
-            "aviso_1": "Escreva algo para este comando\nPor exemplo, `/sans slomdo muinto cringerrr afff`"
+            "aviso_1": "Escriba algo en este comando\nPor ejemplo `/sans slomdo very cringer afff`"
         },
         {
-            "rank_sv": "Rank de",
-            "rank_rc": "Ranking de comandos",
+            "rank_sv": "Rango de",
+            "rank_rc": "Clasificación de comandos",
             "rodape": "páginas, use /rank pagina:<num> para ver outras páginas",
             "rodape_rc": "páginas, use /rank comandos pagina:<num> para ver outras páginas",
             "paginas": "Informe um número menor para a página",
-            "nivel_descricao": "nível = experiência / 1000",
-            "enceirados": "Enceirados",
-            "experiencia": "Experiência",
-            "nivel": "Nível",
+            "nivel_descricao": "nivel = experiencia / 1000",
+            "enceirados": "Membros",
+            "experiencia": "Experiencia",
+            "nivel": "Nivel",
             "comandos": "Comandos",
-            "ativacoes": "Ativações",
-            "historia_alonsal": "Estes são os comandos ativados durante toda a história do Alonsal",
-            "aliase_faltando": "aliase faltando",
-            "nome_faltando": "Nome faltando",
-            "error_1": "Informe um número da página menor para isto",
-            "error_rc": "Não foi possível carregar o ranking de comandos no momento, tente novamente mais tarde"
+            "ativacoes": "Activaciones",
+            "historia_alonsal": "Estos son los mandos activados a lo largo de la historia de Alonsal",
+            "aliase_faltando": "alias desaparecido",
+            "nome_faltando": "Nombre desconocido",
+            "error_1": "Introduzca un número de página más pequeño para este",
+            "error_rc": "No se pudo cargar la clasificación de comandos en este momento, intente nuevamente más tarde"
         },
         {
-            "error_1": "Você não possui nenhuma badge para visualizar!",
-            "error_2": "Você não possui essa badge para fixar",
-            "suas_badges": "Suas Badges",
-            "badge_fixada": "fixada ao seu perfil!",
-            "badge_removida": "removida do seu perfil",
-            "rodape": "Use o comando /badges fixar:<nome> para fixar uma!"
+            "error_1": "¡No tienes insignias para ver!",
+            "error_2": "No tienes esta insignia para fijar",
+            "suas_badges": "Tus insignias",
+            "badge_fixada": "anclado a tu perfil!",
+            "badge_removida": "eliminado de tu perfil",
+            "rodape": "¡Use el comando /badge fix: <nombre> para fijar uno!"
         }
     ],
     "jogos": [
@@ -113,10 +113,10 @@
             "aviso_1": "Envie como `/jokenpo papel` ou como `/jokenpo` para uma partida randômica."
         },
         {
-            "aviso_1": "Informe pelo menos 2 itens para eu escolher",
+            "aviso_1": "Dime al menos 2 artículos para elegir",
             "aviso_2": "Informe uma quantidade em números como `.ach [2 s a l 4 d @` e um valor maior que zero",
-            "escolho_todos": "Você informou um número maior ou igual a quantidade de opções, eu escolho todas!",
-            "escolho": "Eu escolho..."
+            "escolho_todos": "Ingresaste un número mayor o igual al número de opciones, ¡las elijo todas!",
+            "escolho": "Yo escojo..."
         },
         {
             "aviso_1": "Informe algum ou vários dos itens abaixo para jogar\nPor exemplo, `.asjkp pedra papel tesoura` ou `.asjkp capeta`",
@@ -125,66 +125,66 @@
     ],
     "manutencao": [
         {
-            "titulo": "> Ó Abre alas que eu queru passsaa :notes:",
-            "convite": "Convide-me clicando aqui!"
+            "titulo": "> ¡Oh Abran paso que quiero pasar! :notes:",
+            "convite": "Invítame haciendo click aquí!"
         },
         {
-            "repositorio": "> Repositório Alonsal",
-            "link": "Contribua reportando bugs ou roubando códigos do Alonsal :pray_tone2:"
+            "repositorio": "> Repositorio Alonsal",
+            "link": "Contribuye reportando errores o robando códigos de Alonsal :pray_tone2:"
         },
         {
-            "infos": "Patinando entre as linhas bugadas :man_golfing:",
-            "conteudo_1": "Este bot é patrocinado por Baidu e Renato's lanches, 40 tipos de lanches, hot dog, fastfood em 5 minutos, a maior casa de lanches de extrema, venha comer o renatão de 4, o lanche completo!\n\n:mailbox: Sugira comandos ou reporte bugs usando o **`/mail <sua msg>`**\n:page_facing_up: Utilize **`/git`** para visualizar o repositório do Alonsal",
-            "conteudo_2": "**`/discord`** - Entre no Hub multiconectado do Alonsal",
-            "conteudo_3": "**`/suporte`** - Ajude a manter e desenvolver o Alonsal\n\n-----------------------------\n> OUTROS RECURSOS\nFrases do **`/gado`** são de total direito do @GadoDecider, todos os créditos vão a ele. ( https://twitter.com/GadoDecider )",
-            "invocado_1": "Já fui invocado",
-            "invocado_2": "vezes",
-            "versao": "Versão",
-            "spawn_alonsal": "Spawnei em "
+            "infos": "Patinando entre las líneas de buggy :man_golfing:",
+            "conteudo_1": "Este bot está patrocinado por Baidu y Renato's snacks, 40 tipos de snacks, hot dog, fastfood en 5 minutos, la mayor tienda de snacks extremos, ¡ven y come el renatão de 4 pulgadas, el snack completo!\n\n:buzón: Sugerir comandos o reportar errores usando **`/mail <tu_mensaje>`**\n:page_facing_up: Usa **`/git`** para ver el repositorio de Alonsal",
+            "conteudo_2": "**`/discord`** - Únete al Hub Multiconectado de Alonsal",
+            "conteudo_3": "**`/suporte`** - Ayudar a mantener y desarrollar Alonsal\n\n-----------------------------\n> OTROS RECURSOS\nLas frases de **`/ganado`** son derechos completos de @GadoDecider, todos los créditos son para él. ( https://twitter.com/GadoDecider )",
+            "invocado_1": "Yo ya estaba convocado",
+            "invocado_2": "veces",
+            "versao": "Versión",
+            "spawn_alonsal": "Nací en "
         },
         {
-            "aviso_1": "Há um erro em sua mensagem, tente novamente.",
-            "aviso_2": ":mailbox: Sua mensagem foi entregue!",
-            "aviso_5": ":incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
-            "error_1": "Não foi possível enviar a mensagem para este ID",
-            "sucesso_1": "Mensagem enviada para o Alonsal :incoming_envelope:\nDespachei mais informações no seu privado :mailbox_with_mail:",
-            "conteudo_1": "Sua mensagem foi entregue para o/a",
-            "conteudo_2": "O Conteúdo da mensagem é"
+            "aviso_1": "Hay un error en su mensaje, inténtelo de nuevo.",
+            "aviso_2": ":mailbox: ¡Tu mensaje ha sido entregado!",
+            "aviso_5": ":incoming_envelope:\nTe envié más información a tu privado. :mailbox_with_mail:",
+            "error_1": "No se pudo enviar el mensaje a este ID",
+            "sucesso_1": "Mensaje enviado a Alonso :incoming_envelope:\nTe envié más información a tu privado. :mailbox_with_mail:",
+            "conteudo_1": "Su mensaje ha sido entregado a",
+            "conteudo_2": "El contenido del mensaje es"
         },
         {
             "comandos": "Veja os comandos, me convide ou acesse meu servidor pelo site!"
         },
         {
-            "apoie": "> Apoie o Alonsal!",
-            "escaneie": "Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D"
+            "apoie": "> ¡Apoya a Alonso!",
+            "escaneie": "¡Escanee o haga clic en el título de arriba para donar\ny ayudar a mantener y desarrollar Alonsal!\nToda ayuda es muy apreciada ;D"
         },
         {
-            "hub_alonsal": "> Hub do Alonsal",
-            "info": "Entre agora mesmo no meu servidor, seja para tirar dúvidas, ou usar os comandos, o server é liberado para todos!"
+            "hub_alonsal": "> Centro de Alonsal",
+            "info": "Ingrese a mi servidor ahora mismo, ya sea para hacer preguntas, o usar los comandos, ¡el servidor es gratis para todos!"
         },
         {
             "aviso_1": "Informe um número entre 1 e 4 para navegar pelas páginas do menu"
         },
         {
-            "traducao_faltando": "Este comando ainda não possui uma tradução para o seu idioma, aguarde!",
+            "traducao_faltando": "Este comando aún no tiene traducción para tu idioma, ¡espera!",
             "usos": "Usos",
-            "nao_encontrado": "Não encontrei nenhum comando com este nome ou aliase, tente novamente"
+            "nao_encontrado": "No encontré ningún comando con este nombre o alias, intente nuevamente"
         },
         {
-            "ranking_guilds": "Ranking nos seguintes servidores",
-            "dados_conhecidos": "> Seus dados conhecidos",
-            "resumo_dados": "Este é um resumo dos dados que salvamos de você",
-            "dica_rodape": "Você pode excluir todos os seus dados com o comando /data excluir",
-            "dados_removidos": "Seus dados foram removidos do",
-            "sem_dados": "Você não possui dados salvos por aqui ;)",
-            "server_desconhecido": "servidor desconhecido",
-            "um_server": "e 1 outro servidor",
-            "outros_servers": "e outros server_repl servidores"
+            "ranking_guilds": "Clasificación en los siguientes servidores",
+            "dados_conhecidos": "> Tus datos conocidos",
+            "resumo_dados": "Este es un resumen de los datos que guardamos para usted.",
+            "dica_rodape": "Puede eliminar todos sus datos con el comando /data eliminar",
+            "dados_removidos": "Tus datos han sido eliminados de",
+            "sem_dados": "No tienes ningún dato guardado aquí ;)",
+            "server_desconhecido": "servidor desconocido",
+            "um_server": "y 1 otro servidor",
+            "outros_servers": "u otros server_repl servidores"
         }
     ],
     "moderacao": [
         {
-            "titulo_idioma": "Idiomas disponíveis"
+            "titulo_idioma": "Idiomas Disponibles"
         },
         {
             "permissao_1": "Você não possui a permissão `Gerenciar mensagens`",
@@ -214,7 +214,7 @@
             "error_3": "Não foi possível remover este emoji, tente novamente"
         },
         {
-            "permissao_1": "Você não possui permissões para gerenciar o servidor"
+            "permissao_1": "No tienes permisos para administrar el servidor"
         },
         {
             "permissao_1": "Você não pode banir ou expulsar membros",
@@ -226,18 +226,18 @@
             "error_ban": "Não foi possível banir o usuário",
             "error_kick": "Não foi possível expulsar o usuário",
             "banido": "tomou uma esfihada!",
-            "expulso": "foi expulso do servidor"
+            "expulso": "foi expuldo do servidor"
         },
         {
-            "moderadores": "Apenas moderadores podem executar este comando"
+            "moderadores": "Solo los moderadores pueden ejecutar este comando"
         },
         {
-            "anuncio_games": "A partir de agora o canal repl_canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUtilize o comando sem parametros para remover as atualizações",
-            "anuncio_off": "Anúncios de jogos desligados para este servidor",
-            "ativos": "Ativos no momento",
-            "tipo_canal": "O canal definido precisa ser um canal de texto, tente novamente",
-            "ate_data": "até",
-            "resgate_dica": "Estes são os jogos disponíveis no momento\nResgate antes que expirem!"
+            "anuncio_games": "A partir de ahora, el canal repl_canal recibirá actualizaciones cuando haya juegos gratuitos disponibles\nUtilice el comando sin parámetros para eliminar las actualizaciones",
+            "anuncio_off": "Anuncios de juegos desactivados para este servidor",
+            "ativos": "Actualmente activo",
+            "tipo_canal": "El canal definido debe ser un canal de texto, intente nuevamente",
+            "ate_data": "hasta",
+            "resgate_dica": "Estos son los juegos disponibles actualmente\nCanjéalos antes de que caduquen!"
         },
         {
             "canal": "Canal",
@@ -247,32 +247,32 @@
             "permissao_2": "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
         },
         {
-            "permissao_1": "Você não pode gerenciar os membros deste servidor",
-            "sucesso": "A Experiência de `nick_repl` foi alterada para `exp_repl exp`, seu novo nível é `nivel_repl`",
-            "error_2": "Houve um erro inesperado e não foi possível alterar o exp deste usuário no momento.\nPor Favor, tente novamente mais tarde"
+            "permissao_1": "No puede administrar miembros de este servidor",
+            "sucesso": "La experiencia de `nick_repl` ha sido cambiada a `exp_repl exp`, su nuevo nivel es `nivel_repl`",
+            "error_2": "Hubo un error inesperado y la experiencia de este usuario no se pudo cambiar en este momento.\nVuelva a intentarlo más tarde"
         }
     ],
     "utilitarios": [
         {
-            "ping_1": "Tá lagado um poko tô renderizando vídeo",
-            "ping_2": "Tudo numa boa!",
-            "ping_3": "Dá até para jogar de olhos fechados!",
-            "ping_4": "Pode jogar fora esse teu roteador!",
-            "ping_5": "BLZ, quem instalou baidu aqui? EMMM???",
-            "latencia": "Latência do Alonsal"
+            "ping_1": "Tiene un poco de lag, estoy renderizando un video",
+            "ping_2": "¡Todo bien!",
+            "ping_3": "¡Incluso puedes jugar con los ojos cerrados!",
+            "ping_4": "¡Puedes tirar ese enrutador tuyo!",
+            "ping_5": "Bien, ¿quién instaló baidu aquí? ¿¿¿OMS???",
+            "latencia": "Latencia alonsal"
         },
         {
-            "wiki_slondo": "Esse vagabundo não tá na wiki, pesquise outra coisa! :sunglasses:",
-            "topicos_rel": "Tópicos relacionados",
-            "sem_dados": "Não encontrei nada relacionado a sua pesquisa",
-            "auto_pesquisa": "Pq vc está se pesquisando? Não tem nada sobre vc aq"
+            "wiki_slondo": "Este vagabundo no está en la wiki, ¡busca algo más! :sunglasses:",
+            "topicos_rel": "Temas relacionados",
+            "sem_dados": "No encontré nada relacionado con tu búsqueda.",
+            "auto_pesquisa": "¿Por qué te investigas a ti mismo? no hay nada sobre ti aquí"
         },
         {
-            "caracteres": "Alguns caracteres não foram codificados pois não existem no morse",
-            "codificado": ":symbols: Sua mensagem codificada em morse",
-            "decodificado": ":symbols: Sua mensagem decodificada do morse",
+            "caracteres": "Algunos caracteres no fueron codificados ya que no existen en morse",
+            "codificado": ":symbols: Tu mensaje codificado en morse",
+            "decodificado": ":symbols: Tu mensaje decodificado de morse",
             "carac_invalidos": "Caracteres inválidos",
-            "error": ":warning: Houve um problema ao codificar"
+            "error": ":warning: Hubo un problema de codificación"
         },
         {
             "codificado": ":one: Sua mensagem codificada em binário",
@@ -284,14 +284,14 @@
             "error_1": "Não foi possível converter, o tamanho máximo foi excedido!"
         },
         {
-            "download_avatar": "Clique [aqui](link_repl) para baixar o avatar",
-            "download_icon": "Clique [aqui](link_repl) para baixar o icone",
-            "nao_conhecido": "Eu não conheço este usuário, use o comando marcando ele! :smiling_imp:",
-            "id_user": "Informe o ID de um usuário",
-            "error_1": "Não foi possível buscar este avatar no momento, tente novamente mais tarde"
+            "download_avatar": "Haga clic [aquí](link_repl) para descargar el avatarr",
+            "download_icon": "Haga clic [aquí](link_repl) para descargar el icono",
+            "nao_conhecido": "¡No conozco a este usuario, usa el comando etiquetándolo! :smiling_imp:",
+            "id_user": "Ingrese una identificación de usuario",
+            "error_1": "No se puede obtener este avatar en este momento, inténtalo de nuevo más tarde"
         },
         {
-            "reverso": "Sua mensagem ao contrário"
+            "reverso": "Tu mensaje al revés"
         },
         {
             "aviso_1": "Escreva algo ou envie um arquivo para mim e eu retornarei ele",
@@ -398,118 +398,118 @@
         },
         {
             "id_server": "ID do server",
-            "membros": "Membros",
-            "dono": "Dono",
-            "canais": "Canais",
-            "categorias": "Categorias",
+            "membros": "Miembros",
+            "dono": "Dueño",
+            "canais": "Canales",
+            "categorias": "Categorías",
             "texto": "Texto",
             "voz": "Voz",
-            "atual": "Atual",
+            "atual": "Actual",
             "entrada": "Entrada alonsal",
-            "criacao": "Criação",
-            "verificacao": "Verificação",
-            "cargos": "Cargos",
-            "figurinhas": "Figurinhas",
-            "NONE": ":white_large_square: Nenhum",
-            "LOW": ":blue_square: Baixo",
-            "MEDIUM": ":green_square: Médio",
+            "criacao": "Creación",
+            "verificacao": "Verificación",
+            "cargos": "Posiciones",
+            "figurinhas": "Figuritas",
+            "NONE": ":white_large_square: Ninguna",
+            "LOW": ":blue_square: Bajo",
+            "MEDIUM": ":green_square: Medio",
             "HIGH": ":orange_square: Alto",
             "HIGHEST": ":red_square: Máximo"
         },
         {
-            "id_user": "ID do usuário",
-            "entrada": "Entrou em",
-            "conta_criada": "Conta criada",
-            "alonsal": "Ó eu ai!",
-            "enceirado": "eternamente enceirado",
-            "moderador": "Este membro é um administrador neste servidor"
+            "id_user": "ID de usuario",
+            "entrada": "Entró en",
+            "conta_criada": "Cuenta creada",
+            "alonsal": "Oh yo allí!",
+            "enceirado": "eternamente encerado",
+            "moderador": "Este miembro es un administrador en este servidor"
         },
         {
-            "anos": " anos",
-            "ano": " ano",
+            "anos": " años",
+            "ano": " año",
             "meses": " meses",
-            "mes": " mês",
-            "dias": " dias",
-            "dia": " dia",
+            "mes": " mes",
+            "dias": " días",
+            "dia": " día",
             "horas": " horas",
             "hora": " hora",
             "minutos": " minutos",
             "minuto": " minuto",
             "segundos": " segundos",
             "segundo": " segundo",
-            "e": "e"
+            "e": "y"
         },
         {
-            "id_canal": "ID do canal",
+            "id_canal": "Canal ID",
             "servidor": "Servidor",
-            "canal_voz": "Este é um canal de voz!",
-            "topico": "Tópico",
-            "sem_topico": "Canal sem tópico definido",
-            "mencao": "Menção",
-            "transmissao": "Transmissão",
-            "sem_limite": "Sem limite",
+            "canal_voz": "¡Este es un canal de voz!",
+            "topico": "Tema",
+            "sem_topico": "Canal sin tema definido",
+            "mencao": "Mencion",
+            "transmissao": "Transmisión",
+            "sem_limite": "Sin limite",
             "modo_lento": "Modo lento",
-            "aviso_1": "Informe o ID de um canal!",
-            "error_1": "Não foi possível localizar este canal, tente novamente"
+            "aviso_1": "¡Ingrese una ID de canal!",
+            "error_1": "No se pudo encontrar este canal, intente nuevamente"
         },
         {
-            "undefined": "Desconhecido",
-            "error_1": "Perfil não encontrado, certifique-se que o perfil pesquisado possui uma url personalizada",
-            "error_2": "Este perfil existe mas houve um erro ao carregar ele",
-            "rodape": "Alguns (ou todos os) dados deste usuário não estão disponíveis no perfil do mesmo",
-            "analises": "Análises",
-            "nivel": "Nível",
-            "jogos": "Jogos",
+            "undefined": "Desconocido",
+            "error_1": "Perfil no encontrado, asegúrese de que el perfil buscado tenga una URL personalizada",
+            "error_2": "Este perfil existe pero hubo un error al cargarlo",
+            "rodape": "Algunos (o todos) los datos de este usuario no están disponibles en el perfil del usuario",
+            "analises": "Análisis",
+            "nivel": "Nivel",
+            "jogos": "Juegos",
             "jogos_perfeitos": "J. 100%",
-            "conquistas": "Conquistas",
+            "conquistas": "Logros",
             "porcentagem": "Porcent.",
-            "insignias": "Insígnias",
-            "criacoes": "Criações",
+            "insignias": "Insignias",
+            "criacoes": "Creaciones",
             "semanas": "2 Semanas",
             "artes": "Artes",
-            "suspeito": "Este usuário pode estar usando de meios ilegais para conseguir conquistas, não considere isso como uma confirmação",
-            "jogo_favorito": "Jogo favorito",
+            "suspeito": "Este usuario puede estar usando medios ilegales para obtener logros, por favor no tome esto como una confirmación.",
+            "jogo_favorito": "Juego favorito",
             "capturas": "Capturas",
-            "nome": "Nome",
-            "tempo_jogado": "Tempo jogado",
+            "nome": "Nombre",
+            "tempo_jogado": "Tiempo jugado",
             "hours": "horas",
             "minutes": "minutos"
         },
         {
-            "aviso_1": "Informe pelo menos uma operação básica para calcular",
+            "aviso_1": "Introduzca al menos una operación básica para calcular",
             "resultado": "Resultado",
-            "error": "Deu pt aq ao processar essa budega"
+            "error": "Hubo un error al procesar esta operación"
         },
         {
-            "primaria": "Senha primária",
-            "bonus": "Senhas bônus",
-            "titulo": "Su4s §3nH@5, clique aqui para testar sua senha",
-            "senha": "Verifique seu privado, sua senha foi gerada com um tamanho de `tamanho_repl` caracteres",
-            "rodape": "4 senhas com tamanho_repl caracteres para escolher, elas não são salvas por aqui e nem sei o conteúdo, apenas você ;)"
+            "primaria": "Contraseña principal",
+            "bonus": "Contraseñas de bonificación",
+            "titulo": "Su5 c0Ntr4S3ña5, haga clic aquí para probar su contraseña",
+            "senha": "Verifique su privacidad, su contraseña se generó con una longitud de caracteres `tamanho_repl`",
+            "rodape": "4 contraseñas con caracteres tamanho_repl para elegir, no se guardan aquí y ni siquiera sé el contenido, solo tú ;)"
         },
         {
-            "timestamp_1": "De data para timestamp",
-            "timestamp_2": "De timestamp para data",
-            "timestamp_now": "Timestamp agora",
-            "timestamp_crono": "Timestamp cronometrado",
-            "erro_titulo": ":warning: | Algo saiu errado",
-            "erro_conversao": "Não foi possível gerar um timestamp com a entrada informada, tente novamente",
-            "valor_nulo": "O resultado desta conversão foi nulo",
-            "aviso_1": "Necessito de mais informações para poder converter sua data\nPor exemplo `/timestamp 2022-06-08 23:03:57` ou `/timestamp 385723948238`"
+            "timestamp_1": "Desde la fecha hasta la marca de tiempo",
+            "timestamp_2": "Desde la marca de tiempo hasta la fecha",
+            "timestamp_now": "Marca de tiempo ahora",
+            "timestamp_crono": "Marca de tiempo cronometrada",
+            "erro_titulo": ":warning: | Algo salió mal",
+            "erro_conversao": "No se pudo generar una marca de tiempo con la entrada dada, intente nuevamente",
+            "valor_nulo": "El resultado de esta conversión fue nulo.",
+            "aviso_1": "Necesito más información para poder convertir tus datos\nPor ejemplo `/timestamp 2022-06-08 23:03:57` o `/timestamp 385723948238`"
         },
         {
-            "sem_scrobbles": "Este perfil existe, porém não possui nenhum Scrobble :(",
-            "semanal": "Semanal",
-            "media_dia": "Média p/ dia",
-            "tempo_tocado": "Tempo tocado",
-            "albuns": "Álbuns",
+            "sem_scrobbles": "Este perfil existe, pero no tiene ningún Scrobble :(",
+            "semanal": "Semanalmente",
+            "media_dia": "Promedio p/ dia",
+            "tempo_tocado": "Tiempo escuchado",
+            "albuns": "Álbumes",
             "artistas": "Artistas",
-            "faixas_favoritas": "Faixas favoritas",
-            "geral": "Geral",
+            "faixas_favoritas": "Pistas favoritas",
+            "geral": "General",
             "perfil_musical": "Perfil musical de nome_repl",
-            "em_scrobble": "Em Scrobble no momento",
-            "obsessao": "Obsessão do momento",
-            "error_1": "Este perfil não existe, tente novamente"
+            "em_scrobble": "En Scrobble ahora mismo",
+            "obsessao": "Obsesión del momento",
+            "error_1": "Este perfil no existe, intente nuevamente"
         }
     ]
 }

@@ -1,8 +1,8 @@
 module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
-    
+
     let texto_formatado, valor_total = 0
     plataforma = plataforma.split(" ")[0]
-    
+
     objeto_anunciado.forEach(item => {
         valor_total += parseFloat(item.preco)
     })
@@ -15,7 +15,7 @@ module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
 
         if (idioma_definido === "en-us")
             texto_formatado = `The Game _\`${objeto_anunciado[0].nome}\`_ it's free until the day \`${objeto_anunciado[0].expira}\` over there\n\nRedeem it before date to save \`R$"${objeto_anunciado[0].preco}\` and get a copy in your ${plataforma} account`
-        
+
         if (objeto_anunciado[1]) {
             texto_formatado = `Os Games ${nome_games(objeto_anunciado)} estão gratuitos até o dia \`${objeto_anunciado[0].expira}\` por lá\n\nResgate todos antes da data para poupar \`R$${valor_total}\` e garantir uma cópia em sua conta ${plataforma}`
 
@@ -47,14 +47,14 @@ module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
                 texto_formatado = `The Games ${nome_games(objeto_anunciado)} are free until the day \`"${objeto_anunciado[0].expira}\` over there\n\nRedeem both as soon as possible to save \`R$${valor_total}\` and get a copy in your ${plataforma} account`
         }
     }
-    
+
     return texto_formatado
 }
 
-function nome_games(objeto_anunciado){
+function nome_games(objeto_anunciado) {
 
     let str = ""
-    
+
     objeto_anunciado.forEach(valor => str += `_\`${valor.nome}\`_, `)
 
     return str.slice(0, str.length - 2).replaceAll(", ", " & ")

@@ -2,42 +2,46 @@ const { existsSync, writeFileSync } = require("fs")
 const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('xp')
+    data: new SlashCommandBuilder()
+        .setName('xp')
         .setDescription("⌠💂⌡ Adjust some user's XP")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
+            "es-ES": '⌠💂⌡ Ajustar la XP de algunos usuarios',
             "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs'
         })
         .addUserOption(option =>
             option.setName('user')
-            .setNameLocalizations({
-                "pt-BR": 'usuario',
-                "fr": 'user'
-            })
-            .setDescription("The user to adjust")
-            .setDescriptionLocalizations({
-                "pt-BR": 'O usuário a ser ajustar',
-                "fr": 'Utilisateur cible'
-            })
-            .setRequired(true))
+                .setNameLocalizations({
+                    "pt-BR": 'usuario',
+                    "es-ES": 'usuario',
+                    "fr": 'user'
+                })
+                .setDescription("The user to adjust")
+                .setDescriptionLocalizations({
+                    "pt-BR": 'O usuário a ser ajustar',
+                    "es-ES": 'El usuario para ajustar',
+                    "fr": 'Utilisateur cible'
+                })
+                .setRequired(true))
         .addNumberOption(option =>
             option.setName('xp')
-            .setDescription('What is the new XP?')
-            .setDescriptionLocalizations({
-                "pt-BR": 'Qual o novo XP?',
-                "fr": 'Qu\'est-ce que le nouvel XP ?'
-            })
-            .setRequired(true))
+                .setDescription('What is the new XP?')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Qual o novo XP?',
+                    "es-ES": '¿Qué es el nuevo XP?',
+                    "fr": 'Qu\'est-ce que le nouvel XP ?'
+                })
+                .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
-	async execute(client, interaction) {
+    async execute(client, interaction) {
 
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== "665002572926681128")
             return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true })
-        
+
         const usuario = interaction.options.getUser('usuario')
 
         const user = {
@@ -63,10 +67,10 @@ module.exports = {
         user.xp = parseFloat(novo_exp)
         novo_nivel = parseFloat(novo_exp / 1000)
 
-        try{
+        try {
             writeFileSync(`./arquivos/data/rank/${interaction.guild.id}/${user.id}.json`, JSON.stringify(user))
             delete require.cache[require.resolve(`../../arquivos/data/rank/${interaction.guild.id}/${user.id}.json`)]
-        }catch(err){
+        } catch (err) {
             console.log(err)
             return message.reply(`:octagonal_sign: | ${moderacao[8]["error_2"]}`)
         }

@@ -1,25 +1,25 @@
 const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('c_mail')
-		.setDescription('⌠🤖⌡ Enviar mensagem em canal especifico')
+    data: new SlashCommandBuilder()
+        .setName('c_mail')
+        .setDescription('⌠🤖⌡ Enviar mensagem em canal especifico')
         .addStringOption(option =>
             option.setName('texto')
-            .setDescription("O texto a ser enviado")
-            .setRequired(true))
-        .addStringOption(option => 
+                .setDescription("O texto a ser enviado")
+                .setRequired(true))
+        .addStringOption(option =>
             option.setName('canal')
-            .setDescription("O canal alvo")
-            .setRequired(true))
+                .setDescription("O canal alvo")
+                .setRequired(true))
         .addAttachmentOption(option =>
             option.setName('imagem')
-            .setDescription("A imagem que será usada"))
+                .setDescription("A imagem que será usada"))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
-        
+
         if (interaction.user.id !== "665002572926681128") return
-        
+
         let entradas = interaction.options.data
 
         const corpo_mail = {
@@ -32,9 +32,9 @@ module.exports = {
             if (valor.name == "texto")
                 corpo_mail.texto = valor.value
 
-            if (valor.name == "canal")   
+            if (valor.name == "canal")
                 corpo_mail.canal = valor.value
-            
+
             if (valor.name == "imagem")
                 corpo_mail.anexo = valor.attachment.attachment
         })
@@ -52,7 +52,7 @@ module.exports = {
                     canal_alvo.send({ content: corpo_mail.texto })
 
                 interaction.reply({ content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`, ephemeral: true })
-            } else 
+            } else
                 interaction.reply({ content: ":octagonal_sign: | Canal desconhecido", ephemeral: true })
         } else
             interaction.reply({ content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`, ephemeral: true })

@@ -9,7 +9,7 @@ module.exports = () => {
         msgs_validas: 0,
         epic_embed_fails: 0
     }
-    
+
     writeFileSync(`./arquivos/data/relatorio.json`, JSON.stringify(bot))
     delete require.cache[require.resolve(`../../arquivos/data/relatorio.json`)]
 }

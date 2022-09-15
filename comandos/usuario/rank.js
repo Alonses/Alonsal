@@ -1,9 +1,9 @@
 const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const fs = require('fs')
-const { readdirSync, unlinkSync, existsSync, writeFileSync } = require("fs")
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { readdirSync, unlinkSync, existsSync } = require("fs")
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require("../../adm/funcoes/busca_emoji")
@@ -16,65 +16,74 @@ const medals = {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('rank')
-		.setDescription('⌠👤⌡ See Alonsal\'s ranking')
+    data: new SlashCommandBuilder()
+        .setName('rank')
+        .setDescription('⌠👤⌡ See Alonsal\'s ranking')
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
+            "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
             "fr": '⌠👤⌡ Voir le classement d\'Alonsal'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('server')
-            .setDescription('⌠👤⌡ See server ranking')
-            .setDescriptionLocalizations({
-                "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
-                "fr": '⌠👤⌡ Voir le classement des serveurs'
-            })
-            .addStringOption(option =>
-                option.setName('page')
-                    .setNameLocalizations({
-                        "pt-BR": 'pagina',
-                        "fr": 'page'
-                    })
-                    .setDescription('One page to display')
-                    .setDescriptionLocalizations({
-                        "pt-BR": 'Uma página para exibir',
-                        "fr": 'Une page à afficher'
-                    }))
-            .addUserOption(option =>
-                option.setName('user')
-                    .setNameLocalizations({
-                        "pt-BR": 'usuario',
-                        "fr": 'user'
-                    })
-                    .setDescription('User to display')
-                    .setDescriptionLocalizations({
-                        "pt-BR": 'O Usuário para exibir',
-                        "fr": 'Utilisateur à afficher'
-                    })))
+                .setDescription('⌠👤⌡ See server ranking')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
+                    "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
+                    "fr": '⌠👤⌡ Voir le classement des serveurs'
+                })
+                .addStringOption(option =>
+                    option.setName('page')
+                        .setNameLocalizations({
+                            "pt-BR": 'pagina',
+                            "es-ES": 'pagina',
+                            "fr": 'page'
+                        })
+                        .setDescription('One page to display')
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Uma página para exibir',
+                            "es-ES": 'Una pagina para mostrar',
+                            "fr": 'Une page à afficher'
+                        }))
+                .addUserOption(option =>
+                    option.setName('user')
+                        .setNameLocalizations({
+                            "pt-BR": 'usuario',
+                            "es-ES": 'usuario',
+                            "fr": 'user'
+                        })
+                        .setDescription('User to display')
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'O Usuário para exibir',
+                            "es-ES": 'Usuario a mostrar',
+                            "fr": 'Utilisateur à afficher'
+                        })))
         .addSubcommand(subcommand =>
             subcommand.setName('global')
-            .setDescription('⌠👤⌡ See the global ranking')
-            .setDescriptionLocalizations({
-                "pt-BR": '⌠👤⌡ Veja o ranking global',
-                "fr": '⌠👤⌡ Voir le classement mondial'
-            })
-            .addStringOption(option =>
-                option.setName('page')
-                .setNameLocalizations({
-                    "pt-BR": 'pagina',
-                    "fr": 'page'
-                })
-                .setDescription('One page to display')
+                .setDescription('⌠👤⌡ See the global ranking')
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Uma página para exibir',
-                    "fr": 'Une page à afficher'
-                }))),
-	async execute(client, interaction) {
-        
+                    "pt-BR": '⌠👤⌡ Veja o ranking global',
+                    "es-ES": '⌠👤⌡ Ver el ranking mundial',
+                    "fr": '⌠👤⌡ Voir le classement mondial'
+                })
+                .addStringOption(option =>
+                    option.setName('page')
+                        .setNameLocalizations({
+                            "pt-BR": 'pagina',
+                            "es-ES": 'pagina',
+                            "fr": 'page'
+                        })
+                        .setDescription('One page to display')
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Uma página para exibir',
+                            "es-ES": 'Una pagina para mostrar',
+                            "fr": 'Une page à afficher'
+                        }))),
+    async execute(client, interaction) {
+
         let usuario_alvo = []
         const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb)
-        
+
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const users = []
 
@@ -82,21 +91,21 @@ module.exports = {
         let opcoes = interaction.options.data, pagina = 1
 
         if (interaction.options.getSubcommand() === "server") { // Exibindo o rank normalmente
-        
+
             const ent_pagina = ["page", "pagina"]
-        
+
             // Filtrando os valores de entrada caso tenham sido declarados
             opcoes.forEach(valor => {
                 if (ent_pagina.includes(valor.name))
                     pagina = valor.value < 1 ? 1 : valor.value
             })
-            
+
             for (const file of readdirSync(`./arquivos/data/rank/${interaction.guild.id}`)) {
-                try{
+                try {
                     const data = require(`../../arquivos/data/rank/${interaction.guild.id}/${file}`)
 
                     users.push(data)
-                }catch(err){ // Erro na leitura do arquivo ( arquivo corrompido / Excluindo o arquivo )
+                } catch (err) { // Erro na leitura do arquivo ( arquivo corrompido / Excluindo o arquivo )
                     unlinkSync(`./arquivos/data/rank/${interaction.guild.id}/${file}`)
                 }
             }
@@ -111,13 +120,13 @@ module.exports = {
 
             const pages = users.length / 6
             let paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
-            
+
             if (users.length / 6 < 1)
                 paginas = 1
 
             if (users.length > 6)
                 rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
-            
+
             if (!user_alvo) {
                 if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                     return interaction.reply({ content: `:octagonal_sign: | ${diversao[8]["error_1"]}`, ephemeral: true })
@@ -129,7 +138,7 @@ module.exports = {
 
                 rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
             }
-            
+
             let i = 0
 
             for (const user of users) {
@@ -138,7 +147,7 @@ module.exports = {
                         usuario_alvo.push(user.xp)
                         break
                     }
-                
+
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
@@ -149,7 +158,7 @@ module.exports = {
                         usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
                     else
                         usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
-                    
+
                     experiencias.push(`\`${formata_num(user.xp.toFixed(2))}\``)
                     levels.push(`\`${formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
                 }
@@ -160,59 +169,59 @@ module.exports = {
 
             let embed, img_embed
 
-            fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
+            fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
-                    .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
-                    .setColor(0x29BB8E)
-                    .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
-                    .addFields(
-                        {
-                            name: `${emoji_ceira} ${diversao[8]["enceirados"]}`, 
-                            value: usernames.join("\n"), 
-                            inline: true
-                        },
-                        {
-                            name: `:postal_horn: ${diversao[8]["experiencia"]}`,
-                            value: experiencias.join("\n"), 
-                            inline: true
-                        },
-                        {
-                            name: `:beginner: ${diversao[8]["nivel"]}`, 
-                            value: levels.join("\n"), 
-                            inline: true
-                        }
-                    )
-                    .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({dynamic: true}) })
+                        .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
+                        .setColor(0x29BB8E)
+                        .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
+                        .addFields(
+                            {
+                                name: `${emoji_ceira} ${diversao[8]["enceirados"]}`,
+                                value: usernames.join("\n"),
+                                inline: true
+                            },
+                            {
+                                name: `:postal_horn: ${diversao[8]["experiencia"]}`,
+                                value: experiencias.join("\n"),
+                                inline: true
+                            },
+                            {
+                                name: `:beginner: ${diversao[8]["nivel"]}`,
+                                value: levels.join("\n"),
+                                inline: true
+                            }
+                        )
+                        .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
                 } else { // Com usuário alvo definido
 
                     if (usuario_alvo.length === 0)
                         usuario_alvo.push(0)
-                    
+
                     let fixed_badge = ""
 
                     if (existsSync(`./arquivos/data/badges/${user_alvo.id}/badges.json`))
                         fixed_badge = busca_badges(client, 'fixed', user_alvo.id)
 
                     embed = new EmbedBuilder()
-                    .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                    .setColor(0x29BB8E)
-                    .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({dynamic: true}) })
+                        .setTitle(`${user_alvo.username} ${fixed_badge}`)
+                        .setColor(0x29BB8E)
+                        .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(
-                        { 
-                            name: `:postal_horn: ${diversao[8]["experiencia"]}`, 
-                            value: `\`${usuario_alvo[0].toFixed(2)}\``, 
-                            inline: true 
+                        {
+                            name: `:postal_horn: ${diversao[8]["experiencia"]}`,
+                            value: `\`${usuario_alvo[0].toFixed(2)}\``,
+                            inline: true
                         },
-                        { 
-                            name: `:beginner: ${diversao[8]["nivel"]}`, 
-                            value: `\`${formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``, 
-                            inline: true 
+                        {
+                            name: `:beginner: ${diversao[8]["nivel"]}`,
+                            value: `\`${formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
+                            inline: true
                         },
-                        { name: "⠀", value: "⠀", inline: true}
+                        { name: "⠀", value: "⠀", inline: true }
                     )
 
                     img_embed = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`

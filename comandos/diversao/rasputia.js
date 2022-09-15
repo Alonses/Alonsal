@@ -1,5 +1,5 @@
 const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
@@ -10,6 +10,7 @@ module.exports = {
 		.setDescription('⌠😂⌡ Rasputia in its glory')
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Rasputia em sua glória',
+			"es-ES": '⌠😂⌡ Rasputia en todo su esplendor',
 			"fr": '⌠😂⌡ Rasputia dans sa splendeur'
 		})
 		.addSubcommand(subcommand =>
@@ -37,21 +38,21 @@ module.exports = {
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else {
-			
+
 			await interaction.deferReply()
 
 			fetch('https://apisal.herokuapp.com/random?rasputia')
-			.then(response => response.json())
-			.then(async res => {
-				
-				const embed = new EmbedBuilder()
-				.setTitle(res.nome)
-				.setThumbnail(res.foto)
-				.setColor(0x29BB8E)
-				.setDescription(`- "${res.texto}"`)
-				
-				interaction.editReply({ embeds: [embed] })
-			})
+				.then(response => response.json())
+				.then(async res => {
+
+					const embed = new EmbedBuilder()
+						.setTitle(res.nome)
+						.setThumbnail(res.foto)
+						.setColor(0x29BB8E)
+						.setDescription(`- "${res.texto}"`)
+
+					interaction.editReply({ embeds: [embed] })
+				})
 		}
 	}
 }

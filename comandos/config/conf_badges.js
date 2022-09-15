@@ -6,13 +6,13 @@ const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 const busca_badges = require('../../adm/funcoes/busca_badges.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('c_badge')
-		.setDescription('⌠🤖⌡ Atribuir badges a usuários')
+    data: new SlashCommandBuilder()
+        .setName('c_badge')
+        .setDescription('⌠🤖⌡ Atribuir badges a usuários')
         .addStringOption(option =>
             option.setName('id')
-            .setDescription("O ID do usuário alvo")
-            .setRequired(true))
+                .setDescription("O ID do usuário alvo")
+                .setRequired(true))
         .addStringOption(option =>
             option.setName('badge')
                 .setDescription('A badge que será atribuida')
@@ -45,10 +45,10 @@ module.exports = {
             if (valor.name == "id")
                 user.id = valor.value
 
-            if (valor.name == "badge")   
+            if (valor.name == "badge")
                 user.badge = parseInt(valor.value)
         })
-        
+
         const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(user.badge))[0])
         const badge_name = busca_badges(client, 'single', parseInt(user.badge))[1]
 
@@ -61,7 +61,7 @@ module.exports = {
             const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}/badges.json`)
 
             user.fixed_badge = fixed_badge
-            
+
             badge_list.forEach(valor => {
                 user.badge_list.push(valor)
                 all_badges.push(parseInt(Object.keys(valor)[0])) // Listando todas as badges que o usuário possui
@@ -77,12 +77,12 @@ module.exports = {
 
         client.users.fetch(user.id, false).then((user_interno) => {
             user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
-            
+
             interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
         })
     }
 }
 
 function constructJson(jsonGuild, arrayValores) {
-	return { [jsonGuild] : arrayValores } 
+    return { [jsonGuild]: arrayValores }
 }

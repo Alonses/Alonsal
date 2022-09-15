@@ -4,14 +4,14 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('c_emojis')
-		.setDescription('⌠🤖⌡ Lista todos os emojis conhecidos')
+    data: new SlashCommandBuilder()
+        .setName('c_emojis')
+        .setDescription('⌠🤖⌡ Lista todos os emojis conhecidos')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-	async execute(client, interaction) {
-    
+    async execute(client, interaction) {
+
         if (!client.owners.includes(interaction.user.id)) return
-        
+
         let emojis_registrados = "", emojis_registrados_2 = "", i = 0
 
         Object.keys(emojis).forEach(emoji => {
@@ -33,22 +33,22 @@ module.exports = {
         })
 
         const emojis_global = new EmbedBuilder()
-        .setTitle("Todos os emojis registrados")
-        .setColor(0x29BB8E)
-        .setDescription(emojis_registrados)
-        .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
+            .setTitle("Todos os emojis registrados")
+            .setColor(0x29BB8E)
+            .setDescription(emojis_registrados)
+            .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
 
         if (emojis_registrados_2.length < 1)
             interaction.reply({ embeds: [emojis_global] })
 
         if (emojis_registrados_2.length > 0) {
             const emojis_global2 = new EmbedBuilder()
-            .setTitle("Todos os emojis registrados")
-            .setColor(0x29BB8E)
-            .setDescription(emojis_registrados_2)
-            .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
+                .setTitle("Todos os emojis registrados")
+                .setColor(0x29BB8E)
+                .setDescription(emojis_registrados_2)
+                .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
 
-            interaction.channel.send({embeds: [emojis_global2]})
+            interaction.channel.send({ embeds: [emojis_global2] })
             interaction.reply({ embeds: [emojis_global] })
         }
     }

@@ -5,7 +5,7 @@ const CALDEIRA = 60000
 const fs = require('fs')
 const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
-module.exports = async ({client, message, caso}) => {
+module.exports = async ({ client, message, caso }) => {
 
     if (!existsSync(`./arquivos/data/rank/${message.guild.id}`))
         mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true })
@@ -19,7 +19,7 @@ module.exports = async ({client, message, caso}) => {
             caldeira_de_ceira: false,
             xp: 0
         }
-    } else { 
+    } else {
         user = {
             id: message.user.id,
             nickname: message.user.username,
@@ -62,16 +62,16 @@ module.exports = async ({client, message, caso}) => {
         }
 
     // Coletando o XP atual e somando ao total do usuário
-    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
-        
-        if (caso == 'messages'){
+    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
+
+        if (caso == 'messages') {
             user.xp += parseInt(data)
             user.lastValidMessage = message.createdTimestamp
             user.warns = 0
         } else // Experiência obtida executando comandos
             user.xp += (parseInt(data) * 1.5)
-        
-        require('./relatorio.js')({client, caso})
+
+        require('./relatorio.js')({ client, caso })
 
         writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
         delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]

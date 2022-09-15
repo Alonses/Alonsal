@@ -1,575 +1,537 @@
 {
-    "updates" : [
+    "updates": [
         {
-            "slash_commands" : "Traditional commands have been disabled, keep using Alonsal by `/slash` commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below! Also make sure my commands are enabled for all in server integrations under `Integrations -> Alonsal -> Commands`",
-            "convidar" : "To invite!",
-            "suporte" : "Support"
+            "slash_commands": "Traditional commands have been disabled, keep using Alonsal by `/slash` commands! Try it now ;D\n\nNote: Can't see my commands? Invite me again by clicking the button below! Also make sure my commands are enabled for all in server integrations under `Integrations -> Alonsal -> Commands`",
+            "convidar": "To invite!",
+            "suporte": "Support"
         }
     ],
-    "inicio" : [
-        { 
-            "menciona" : "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n:earth_americas: | Use the `.alang` command to see the list of available languages",
+    "inicio": [
+        {
+            "menciona": "Hi! Type `.ahelp` or `.ah` to see the command menu :D\n:earth_americas: | Use the `.alang` command to see the list of available languages",
             "aguarde": "Wait",
-            "cooldown" : "seconds to run this command again.",
-            "permissao_1" : "you don't have the permission",
-            "permissao_2" : "to run this command.",
-            "error_1" : "Wrrrooong, the correct use of the command is",
-            "epic_embed_fail" : "An error occurred while trying to execute this command, I warned the team to eliminate this baidu as soon as possible. apologies for the inconvenience"
+            "cooldown": "seconds to run this command again.",
+            "permissao_1": "you don't have the permission",
+            "permissao_2": "to run this command.",
+            "error_1": "Wrrrooong, the correct use of the command is",
+            "epic_embed_fail": "An error occurred while trying to execute this command, I warned the team to eliminate this baidu as soon as possible. apologies for the inconvenience"
         },
         {
-            "titulo" : "> Oh, make way for me to go through :notes:",
-            "boas_vindas" : "Hi! Thanks for adding me to the server!\n\nI leave my website attached below, with all the commands if necessary ;D",
-            "idioma_dica" : "Não fala inglês? Sem problemas! Mude meu idioma agora mesmo com o comando /idioma!",
+            "titulo": "> Oh, make way for me to go through :notes:",
+            "boas_vindas": "Hi! Thanks for adding me to the server!\n\nI leave my website attached below, with all the commands if necessary ;D",
+            "idioma_dica": "Não fala inglês? Sem problemas! Mude meu idioma agora mesmo com o comando /idioma!",
             "site": "Alonsal Website"
         }
     ],
-    "diversao" : [
-        { "baidu" : "Praise be to!!" },
-        { "asf" : "Do you want a sfiha?" },
+    "diversao": [
         {
-            "aviso_1" : "Tag two people to test\nFor example, `.alove @Alonsal @Slondo`",
-            "limda" : "Beautiful :gift_heart:",
-            "rodape" : "Love yourself is what matters :heartpulse:",
-            "100perc" : "Practically married :heart_on_fire:",
-            "90perc" : "My couple :smiling_face_with_3_hearts:",
-            "80perc" : "literally lovers :revolving_hearts:",
-            "60perc" : "There's a mood going on :hot_face:",
-            "40perc" : "Will be? :eyes:",
-            "20perc" : "Friendzone :people_hugging:",
-            "0perc" : "Are public enemies :angry:",
-            "teste" : "The test returned"
+            "baidu": "Praise be to!!"
         },
         {
-            "gado" : "YOUR CATTLE",
-            "error_1" : "where's the user's @?",
-            "error_2" : "get out of here your CAT :cow: TLE, test it with another user"
+            "asf": "Do you want a sfiha?"
         },
         {
-            "peao" : "Rotate the pawn"
+            "aviso_1": "Tag two people to test\nFor example, `.alove @Alonsal @Slondo`",
+            "limda": "Beautiful :gift_heart:",
+            "rodape": "Love yourself is what matters :heartpulse:",
+            "100perc": "Practically married :heart_on_fire:",
+            "90perc": "My couple :smiling_face_with_3_hearts:",
+            "80perc": "literally lovers :revolving_hearts:",
+            "60perc": "There's a mood going on :hot_face:",
+            "40perc": "Will be? :eyes:",
+            "20perc": "Friendzone :people_hugging:",
+            "0perc": "Are public enemies :angry:",
+            "teste": "The test returned"
         },
         {
-            "aviso_1" : "Enter something in addition to this command, for example `.ana alonsal > odnols`",
-            "anagrama" : "Your anagram",
-            "entrada" : "Original entry",
-            "lista_combinacoes" : "Possible combinations",
-            "sequencia" : "Your entered characters produce",
-            "combinacao" : "combination",
-            "combinacoes" : "combinations!",
-            "sorte" : "There was a repetition of words! Lucky you?"
+            "gado": "YOUR CATTLE",
+            "error_1": "where's the user's @?",
+            "error_2": "get out of here your CAT :cow: TLE, test it with another user"
         },
         {
-            "nsfw_jaja" : "Due to the excess of delight, this command can only be used on an NSFW channel."
+            "peao": "Rotate the pawn"
         },
         {
-            "aviso_1" : "Write something for this command\nFor example, `.asans slomdo very cringerrr afff`"
+            "aviso_1": "Enter something in addition to this command, for example `.ana alonsal > odnols`",
+            "anagrama": "Your anagram",
+            "entrada": "Original entry",
+            "lista_combinacoes": "Possible combinations",
+            "sequencia": "Your entered characters produce",
+            "combinacao": "combination",
+            "combinacoes": "combinations!",
+            "sorte": "There was a repetition of words! Lucky you?"
         },
         {
-            "rank_sv" : "Rank of",
-            "rank_rc" : "Command classification",
-            "rodape" : "pages, use /rank pagina:<num> to see other pages",
-            "rodape_rc" : "pages, use /rank comandos pagina:<num> to see other pages",
-            "paginas" : "Enter a lower number for the page",
-            "nivel_descricao" : "level = experience / 1000",
-            "enceirados" : "Users",
-            "experiencia" : "Experience",
-            "nivel" : "Level",
-            "comandos" : "Commands",
-            "ativacoes" : "Activations",
-            "historia_alonsal" : "These are the commands activated throughout the history of Alonsal",
-            "aliase_faltando" : "alias absent",
-            "nome_faltando" : "Missing name",
-            "error_1" : "Please enter a smaller page number for this",
-            "error_rc" : "Could not load command rating at this time, please try again later"
+            "nsfw_jaja": "Due to the excess of delight, this command can only be used on an NSFW channel."
         },
         {
-            "error_1" : "You don't have any badges to view!",
-            "error_2" : "You don't have this badge to pin",
-            "suas_badges" : "Your Badges",
-            "badge_fixada" : "pinned to your profile!",
-            "badge_removida" : "removed from your profile",
-            "rodape" : "Use the /badges fixar:<name> command to pin a!"
+            "aviso_1": "Write something for this command\nFor example, `.asans slomdo very cringerrr afff`"
+        },
+        {
+            "rank_sv": "Rank of",
+            "rank_rc": "Command classification",
+            "rodape": "pages, use /rank pagina:<num> to see other pages",
+            "rodape_rc": "pages, use /rank comandos pagina:<num> to see other pages",
+            "paginas": "Enter a lower number for the page",
+            "nivel_descricao": "level = experience / 1000",
+            "enceirados": "Users",
+            "experiencia": "Experience",
+            "nivel": "Level",
+            "comandos": "Commands",
+            "ativacoes": "Activations",
+            "historia_alonsal": "These are the commands activated throughout the history of Alonsal",
+            "aliase_faltando": "alias absent",
+            "nome_faltando": "Missing name",
+            "error_1": "Please enter a smaller page number for this",
+            "error_rc": "Could not load command rating at this time, please try again later"
+        },
+        {
+            "error_1": "You don't have any badges to view!",
+            "error_2": "You don't have this badge to pin",
+            "suas_badges": "Your Badges",
+            "badge_fixada": "pinned to your profile!",
+            "badge_removida": "removed from your profile",
+            "rodape": "Use the /badges fixar:<name> command to pin a!"
         }
     ],
-    "jogos" : [
+    "jogos": [
         {
-            "conteudo" : "The 1st Game created by SLondo!\nHow far can you run? Test now!",
-            "rodape" : "The game may not run properly on mobile phones."
+            "conteudo": "The 1st Game created by SLondo!\nHow far can you run? Test now!",
+            "rodape": "The game may not run properly on mobile phones."
         },
         {
-            "aviso_1" : "Enter heads or tails as `.aco heads` or `.aco tails` to test your luck!"
+            "aviso_1": "Enter heads or tails as `.aco heads` or `.aco tails` to test your luck!"
         },
         {
-            "aviso_1" : "Enter **numbers only** for the amount of dice and number of faces",
-            "aviso_2" : "Enter at least 1 die as `.ada 1 <faces>` to be able to run.",
-            "error_1" : "It is not possible to take more than 50 dice at the same time..",
-            "error_2" : "It is not possible to draw geometric solids with more than 10,000 faces.",
-            "error_3" : "It is not possible to rotate geometric solids with less than 4 faces."
+            "aviso_1": "Enter **numbers only** for the amount of dice and number of faces",
+            "aviso_2": "Enter at least 1 die as `.ada 1 <faces>` to be able to run.",
+            "error_1": "It is not possible to take more than 50 dice at the same time..",
+            "error_2": "It is not possible to draw geometric solids with more than 10,000 faces.",
+            "error_3": "It is not possible to rotate geometric solids with less than 4 faces."
         },
         {
-            "aviso_1" : "Write as `.ajkp paper` or `.ajkp` for a random match."
+            "aviso_1": "Write as `.ajkp paper` or `.ajkp` for a random match."
         },
         {
-            "aviso_1" : "Inform at least 2 items for me to choose",
-            "aviso_2" : "Enter a quantity in numbers such as `.ach [2 s a l 4 d @` and a value greater than zero",
-            "escolho_todos" : "You entered a number greater than or equal to the number of options, I choose them all!",
-            "escolho" : "I choose..."
+            "aviso_1": "Inform at least 2 items for me to choose",
+            "aviso_2": "Enter a quantity in numbers such as `.ach [2 s a l 4 d @` and a value greater than zero",
+            "escolho_todos": "You entered a number greater than or equal to the number of options, I choose them all!",
+            "escolho": "I choose..."
         },
         {
-            "aviso_1" : "Enter one or more of the items below to play\nFor example, `.asjkp rock paper scissors` or `.asjkp devil`",
-            "error_1" : "Write an item that is part of the game, this item is not valid" 
+            "aviso_1": "Enter one or more of the items below to play\nFor example, `.asjkp rock paper scissors` or `.asjkp devil`",
+            "error_1": "Write an item that is part of the game, this item is not valid"
         }
     ],
-    "manutencao" : [
+    "manutencao": [
         {
-            "titulo" : "> Oh open up the way I want to go :notes:",
-            "convite" : "Invite me by clicking here!",
-            "despachei": "I sent the invitation in your dm :love_you_gesture:"
+            "titulo": "> Oh open up the way I want to go :notes:",
+            "convite": "Invite me by clicking here!"
         },
         {
-            "repositorio" : "> Alonsal Repository",
-            "link" : "Contribute by reporting bugs or stealing codes from Alonsal :pray_tone2:",
-            "despachei" : "I shipped the most recent wax in your dm :handshake:"
+            "repositorio": "> Alonsal Repository",
+            "link": "Contribute by reporting bugs or stealing codes from Alonsal :pray_tone2:"
         },
         {
-            "infos" : "Skating between the wax lines :man_golfing:",
-            "conteudo_1" : "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`.amail <your msg>`**\n:page_facing_up: Use **`.ag`** or **`.agit`** to view the Alonsal repository",
-            "conteudo_2" : "**`.ahub`** | **`.aserver`** - Enter Alonsal's Multiconnected Hub",
-            "conteudo_3" : "**`.asuporte`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`.aga`** | **`.agado`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )\n\n-----------------------------\n> NOTES\nPhrases from **`.atext`** do not represent the ideas of the creators of Alonsal, therefore, they are for comic purposes only.",
-            "invocado_1" : "I've already been invoked",
-            "invocado_2" : "times",
-            "versao" : "Version"
+            "infos": "Skating between the wax lines :man_golfing:",
+            "conteudo_1": "This bot is sponsored by Baidu and Renato's snack, 40 kinds of snacks, hot dog, fast food in 5 minutes, the biggest snack bar in Extrema, come eat the renatão of 4, the complete snack!\n\n:mailbox: Suggest commands or report bugs using the **`/mail <your msg>`**\n:page_facing_up: Use **`/git`** to view the Alonsal repository",
+            "conteudo_2": "**`/discord`** - Enter Alonsal's Multiconnected Hub",
+            "conteudo_3": "**`/support`** - Help maintain and develop Alonsal\n\n-----------------------------\n> OTHER RESOURCES\nPhrases of **`/cattle`** commands are fully owned by @GadoDecider, all credits go to him. ( https://twitter.com/GadoDecider )",
+            "invocado_1": "I've already been invoked",
+            "invocado_2": "times",
+            "versao": "Version",
+            "spawn_alonsal": "Spawned in"
         },
         {
-            "aviso_1" : "There is an error in your message, try again.",
-            "aviso_2" : ":mailbox: Your message has been delivered!",
-            "aviso_3" : "It was not possible to delete your message automatically, for this I need permissions to manage the messages.",
-            "aviso_4" : "Message sent to",
-            "aviso_5" : ":incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
-            "aviso_6" : "I can't send messages to this channel",
-            "error_1" : "Could not send a message to this ID",
-            "sucesso_1" : "Message sent to Alonsal :incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
-            "conteudo_1" : "Your message has been delivered to the",
-            "conteudo_2" : "The content of the message is"
+            "aviso_1": "There is an error in your message, try again.",
+            "aviso_2": ":mailbox: Your message has been delivered!",
+            "aviso_5": ":incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
+            "error_1": "Could not send a message to this ID",
+            "sucesso_1": "Message sent to Alonsal :incoming_envelope:\nI sent more information in your dm :mailbox_with_mail:",
+            "conteudo_1": "Your message has been delivered to the",
+            "conteudo_2": "The content of the message is"
         },
         {
-            "comandos" : "See the commands, invite me or access my server through the website!",
-            "despachei" : "I sent the link to my site in your dm :handshake:"
+            "comandos": "See the commands, invite me or access my server through the website!"
         },
         {
-            "apoie" : "> Support Alonsal!",
-            "escaneie" : "Scan or click on the Title above to donate\nand help maintain and develop Alonsal!\nAll help is ultra Welcome ;D",
-            "despachei" : "Thanks for your consideration!\nI sent the infos in your dm"
+            "apoie": "> Support Alonsal!",
+            "escaneie": "Scan or click on the Title above to donate\nand help maintain and develop Alonsal!\nAll help is ultra Welcome ;D"
         },
         {
-            "hub_alonsal" : "> Alonsal Hub",
-            "info" : "Enter my server right now, whether to ask questions, or use the commands, the server is free for everyone!",
-            "despachei" : "I sent the invitation to Alonsal Hub in your dm :handshake:"
+            "hub_alonsal": "> Alonsal Hub",
+            "info": "Enter my server right now, whether to ask questions, or use the commands, the server is free for everyone!"
         },
         {
-            "aviso_1" : "Enter a number between 1 and 4 to navigate the menu pages"
+            "aviso_1": "Enter a number between 1 and 4 to navigate the menu pages"
         },
         {
-            "traducao_faltando" : "This command doesn't have a translation for your language yet, wait!",
-            "usos" : "Uses",
-            "nao_encontrado" : "I didn't find any command with this name or aliase, try again"
+            "traducao_faltando": "This command doesn't have a translation for your language yet, wait!",
+            "usos": "Uses",
+            "nao_encontrado": "I didn't find any command with this name or aliase, try again"
         },
         {
-            "ranking_guilds" : "Ranking on the following servers",
-            "dados_conhecidos" : "> Your known data",
-            "resumo_dados" : "This is a summary of the data we save about you.",
-            "dica_rodape" : "You can delete all your data with /data excluir command",
-            "dados_removidos" : "Your data has been removed from",
-            "sem_dados" : "You don't have any data saved here ;)",
-            "server_desconhecido" : "unknown server",
-            "um_server" : "and one other server",
-            "outros_servers" : "and server_repl other servers"
+            "ranking_guilds": "Ranking on the following servers",
+            "dados_conhecidos": "> Your known data",
+            "resumo_dados": "This is a summary of the data we save about you.",
+            "dica_rodape": "You can delete all your data with /data excluir command",
+            "dados_removidos": "Your data has been removed from",
+            "sem_dados": "You don't have any data saved here ;)",
+            "server_desconhecido": "unknown server",
+            "um_server": "and one other server",
+            "outros_servers": "and server_repl other servers"
         }
     ],
-    "moderacao" : [
-        { "titulo_idioma" : "Available languages" },
+    "moderacao": [
         {
-            "permissao_1" : "You do not have `Manage messages` permission",
-            "permissao_2" : "I don't have `Manage Messages` permission",
-            "aviso_1" : "Enter the number of messages you want to remove\nFor example, `.acl 20`",
-            "aviso_2" : ":warning: | Enter a number between `0` and `100` to remove",
-            "apagado_1" : "messages` have been removed",
-            "apagado_2" : "message` has been removed",
-            "error" : "Unable to execute this command because there are messages pinned or messages that are too old, decrease the quantity and try again"
+            "titulo_idioma": "Available languages"
         },
         {
-            "aviso_1" : "Add a custom emoji to your command! :P",
-            "aviso_2" : "Enter an emoji to be viewed\nFor example,",
-            "aviso_3" : "Enter an emoji and its name\nFor example,",
-            "aviso_4" : "Send only 1 emoji at a time :P",
-            "aviso_5" : "Upload an image smaller than 250kb to use as an emoji",
-            "aviso_6" : "Include emoji to remove\nFor example,",
-            "aviso_7" : "Enter an emoji to be removed",
-            "aviso_8" : "Enter a custom emoji from this server to be removed\nYou can also use the emoji id, for example `.armoji 914227763978838116`",
-            "permissao_1" : "You do not have permissions to manage emojis on this server",
-            "permissao_2" : "I don't have permissions to `manage emojis` on this server",
-            "requebrando" : "dancing",
-            "sucesso_1" : "Emoji has been added!",
-            "sucesso_2" : "Emoji has been removed from the server",
-            "error_1" : "Unable to process this file\nSend an image file for me to manipulate ;)",
-            "error_2" : "Emoji limit for this server has been reached, remove some before adding new ones",
-            "error_3" : "Could not remove this emoji, try again"
+            "permissao_1": "You do not have `Manage messages` permission",
+            "permissao_2": "I don't have `Manage Messages` permission",
+            "aviso_1": "Enter the number of messages you want to remove\nFor example, `.acl 20`",
+            "aviso_2": ":warning: | Enter a number between `0` and `100` to remove",
+            "apagado_1": "messages` have been removed",
+            "apagado_2": "message` has been removed",
+            "error": "Unable to execute this command because there are messages pinned or messages that are too old, decrease the quantity and try again"
         },
         {
-            "permissao_1" : "You don't have permissions to manage the server"
+            "aviso_1": "Add a custom emoji to your command! :P",
+            "aviso_2": "Enter an emoji to be viewed\nFor example,",
+            "aviso_3": "Enter an emoji and its name\nFor example,",
+            "aviso_4": "Send only 1 emoji at a time :P",
+            "aviso_5": "Upload an image smaller than 250kb to use as an emoji",
+            "aviso_6": "Include emoji to remove\nFor example,",
+            "aviso_7": "Enter an emoji to be removed",
+            "aviso_8": "Enter a custom emoji from this server to be removed\nYou can also use the emoji id, for example `.armoji 914227763978838116`",
+            "permissao_1": "You do not have permissions to manage emojis on this server",
+            "permissao_2": "I don't have permissions to `manage emojis` on this server",
+            "requebrando": "dancing",
+            "sucesso_1": "Emoji has been added!",
+            "sucesso_2": "Emoji has been removed from the server",
+            "error_1": "Unable to process this file\nSend an image file for me to manipulate ;)",
+            "error_2": "Emoji limit for this server has been reached, remove some before adding new ones",
+            "error_3": "Could not remove this emoji, try again"
         },
         {
-            "permissao_1" : "You cannot ban or kick members.",
-            "permissao_2" : "I cannot ban or kick members",
-            "user_id" : "Enter a user ID",
-            "razao" : "Reason not informed",
-            "error_1" : "Stop there, you noob! This member is also an administrator.",
-            "error_2" : "Invalid User!",
-            "error_ban" : "Unable to ban this user",
-            "error_kick" : "Unable to expel this user",
-            "banido" : "was banned",
-            "expulso" : "was removed from server"
+            "permissao_1": "You don't have permissions to manage the server"
         },
         {
-            "error_1" : "Enter a prefix to be used, for example, ",
-            "att_prefix" : "The prefix for this server changed to :",
-            "moderadores" : "Only moderators can run this command"
+            "permissao_1": "You cannot ban or kick members.",
+            "permissao_2": "I cannot ban or kick members",
+            "user_id": "Enter a user ID",
+            "razao": "Reason not informed",
+            "error_1": "Stop there, you noob! This member is also an administrator.",
+            "error_2": "Invalid User!",
+            "error_ban": "Unable to ban this user",
+            "error_kick": "Unable to expel this user",
+            "banido": "was banned",
+            "expulso": "was removed from server"
         },
         {
-            "anuncio_games" : "From now on, the repl_canal channel will receive updates when free games are available\nUse the command without parameters to disable these updates.",
-            "anuncio_off" : "Game notifications turned off for this server",
-            "ativos" : "Currently active",
-            "tipo_canal" : "The defined channel must be a text channel, please try again",
-            "ate_data" : "until",
-            "resgate_dica" : "These are currently available games\nRedeem them before they expire!"
+            "moderadores": "Only moderators can run this command"
         },
         {
-            "canal" : "Channel",
-            "lock" : "locked\nUse `.aunlk` to unlock",
-            "unlock" : "unlocked\nUse `.alock` to lock",
-            "permissao_1" : "You do not have permissions to manage this channel.",
-            "permissao_2" : "I can't block this channel, I need `Manage channels` and `Manage roles` permissions for this"
+            "anuncio_games": "From now on, the repl_canal channel will receive updates when free games are available\nUse the command without parameters to disable these updates.",
+            "anuncio_off": "Game notifications turned off for this server",
+            "ativos": "Currently active",
+            "tipo_canal": "The defined channel must be a text channel, please try again",
+            "ate_data": "until",
+            "resgate_dica": "These are currently available games\nRedeem them before they expire!"
         },
         {
-            "permissao_1" : "You cannot manage members of this server",
-            "sucesso" : "Experience for `nick_repl` has been changed to `exp_repl exp`, its new level is `nivel_repl`",
-            "error_1" : "Enter the ID and your new XP, or tag someone and enter the command with the new exp\nFor example, `.achr @slondo 0`",
-            "error_2" : "An unexpected error occurred and this user's exp could not be changed at this time.\nPlease try again later"
+            "canal": "Channel",
+            "lock": "locked\nUse `.aunlk` to unlock",
+            "unlock": "unlocked\nUse `.alock` to lock",
+            "permissao_1": "You do not have permissions to manage this channel.",
+            "permissao_2": "I can't block this channel, I need `Manage channels` and `Manage roles` permissions for this"
+        },
+        {
+            "permissao_1": "You cannot manage members of this server",
+            "sucesso": "Experience for `nick_repl` has been changed to `exp_repl exp`, its new level is `nivel_repl`",
+            "error_2": "An unexpected error occurred and this user's exp could not be changed at this time.\nPlease try again later"
         }
     ],
-    "utilitarios" : [
+    "utilitarios": [
         {
-            "ping_1" : "It's a bit laggy, I'm rendering a video!",
-            "ping_2" : "Everything alright!",
-            "ping_3" : "You can even play with your eyes closed!",
-            "ping_4" : "You can throw away your router!",
-            "ping_5" : "Okay, who installed baidu here? WHOOOO???",
-            "latencia" : "Alonsal latency"
+            "ping_1": "It's a bit laggy, I'm rendering a video!",
+            "ping_2": "Everything alright!",
+            "ping_3": "You can even play with your eyes closed!",
+            "ping_4": "You can throw away your router!",
+            "ping_5": "Okay, who installed baidu here? WHOOOO???",
+            "latencia": "Alonsal latency"
         },
         {
-            "wiki_slondo" : "This bum is not on the wiki, look for something else! :sunglasses:",
-            "topicos_rel" : "Related Topics",
-            "sem_dados" : "I didn't find anything related to your search",
-            "auto_pesquisa" : "Why are you researching yourself? There's nothing about you here"
+            "wiki_slondo": "This bum is not on the wiki, look for something else! :sunglasses:",
+            "topicos_rel": "Related Topics",
+            "sem_dados": "I didn't find anything related to your search",
+            "auto_pesquisa": "Why are you researching yourself? There's nothing about you here"
         },
         {
-            "caracteres" : "Some characters were not encoded as they do not exist in morse",
-            "codificado" : ":symbols: Your message encoded in morse",
-            "decodificado" : ":symbols: Your decoded morse message",
-            "carac_invalidos" : "Invalid characters",
-            "error" : ":warning: There was a problem coding"
+            "caracteres": "Some characters were not encoded as they do not exist in morse",
+            "codificado": ":symbols: Your message encoded in morse",
+            "decodificado": ":symbols: Your decoded morse message",
+            "carac_invalidos": "Invalid characters",
+            "error": ":warning: There was a problem coding"
         },
         {
-            "codificado" : ":one: Your binary encoded message",
-            "decodificado" : ":zero: Your message decoded from the binary",
+            "codificado": ":one: Your binary encoded message",
+            "decodificado": ":zero: Your message decoded from the binary",
             "aviso_1": "Type something to use this command",
-            "aviso_2" : "Enter as `.abn encodes <your_text>` or `.abn decodes <your_encoded_text>`",
-            "resul_vazio" : "The final result was empty, try again",
-            "titulo_vazio" : ":octagonal_sign: Decoding resulted in an empty",
-            "error_1" : "Unable to convert, maximum size exceeded!"
+            "aviso_2": "Enter as `.abn encodes <your_text>` or `.abn decodes <your_encoded_text>`",
+            "resul_vazio": "The final result was empty, try again",
+            "titulo_vazio": ":octagonal_sign: Decoding resulted in an empty",
+            "error_1": "Unable to convert, maximum size exceeded!"
         },
         {
-            "download_avatar" : "Click [here](link_repl) to download the avatar",
-            "download_icon" : "Click [here](link_repl) to download the icon",
-            "nao_conhecido" : "I don't know this user, use the command by marking him! :smiling_imp:",
-            "id_user" : "Enter a user ID",
-            "error_1" : "Unable to fetch this avatar at the moment, please try again later"
+            "download_avatar": "Click [here](link_repl) to download the avatar",
+            "download_icon": "Click [here](link_repl) to download the icon",
+            "nao_conhecido": "I don't know this user, use the command by marking him! :smiling_imp:",
+            "id_user": "Enter a user ID",
+            "error_1": "Unable to fetch this avatar at the moment, please try again later"
         },
         {
-            "reverso" : "Your message in reverse"
+            "reverso": "Your message in reverse"
         },
         {
-            "aviso_1" : "Write something or send a file to me and I will return it",
-            "aviso_2" : "Only upload 1 file at a time",
-            "error_1" : "I can't talk in TTS in this chat",
-            "hora_certa" : "Right Time!",
-            "reproducao_1" : "Reproduction requested by",
-            "reproducao_2" : "File sent by"
+            "aviso_1": "Write something or send a file to me and I will return it",
+            "aviso_2": "Only upload 1 file at a time",
+            "error_1": "I can't talk in TTS in this chat",
+            "hora_certa": "Right Time!",
+            "reproducao_1": "Reproduction requested by",
+            "reproducao_2": "File sent by"
         },
         {
-            "aviso_1" : "Enter something to be removed or replaced and a string\nFor example `.arm o slondo` or `.arp i o slindo`",
-            "remove_tudo" : "You removed everything, there's nothing left"
+            "aviso_1": "Enter something to be removed or replaced and a string\nFor example `.arm o slondo` or `.arp i o slindo`",
+            "remove_tudo": "You removed everything, there's nothing left"
         },
         {
-            "aviso_1" : "Enter the name of some city to search\nFor example, as `.awe los angeles`",
-            "aviso_2" : "I didn't find any place called",
-            "aviso_3" : "There was an error with the weather API and it is not possible to search for weather at the moment",
-            "aviso_continente" : "These data are an average of all values for the continent surveyed",
-            "aviso_pais" : "These data are an average of all values in the country surveyed",
-            "aviso_planeta" : "These data are an average of all surveyed values on the planet", 
-            "tempo_agora" : "Weather now",
-            "hora_local" : "Local time",
-            "de" : "of",
-            "na" : "in",
-            "terra" : "on Earth",
-            "vento" : "Wind",
-            "nuvens" : "Clouds",
-            "chuva" : "Rain",
-            "direcao" : "Direction",
-            "velocidade" : "Speed",
-            "ceu_momento" : "Sky at the moment",
-            "temperatura" : "Temperature",
-            "por_sol" : "Sunrise",
-            "nas_sol" : "Sunset",
-            "sensacao_termica" : "Thermal sens",
-            "umidade_ar" : "Air humidity",
-            "pressao_ar" : "Air pressure",
-            "visibilidade" : "Visibility",
-            "nivel_chao" : "Ground level",
-            "nivel_mar" : "Ocean level",
-            "chovendo" : "🌧️ Raining now",
-            "nevando" : "❄️ Snowing now",
-            "rajadas_vento" : "🌪️ Wind gusts",
-            "dados_atts" : "Data updated in",
-            "sugestao" : "Try a raw search for example, ",
-            "error_1" : "Just enter normal characters for your search, searches with numbers are ignored",
-            "error_2" : "Unable to retrieve information from this location, please try again later",
-            "antartida" : "Antarctica",
-            "outono" : "Autumn",
-            "verao" : "Summer",
-            "primavera" : "Spring",
-            "inverno" : "Winter",
-            "comeco" : "Started in",
-            "termino" : ", ends in",
-            "equador" : "This location is close to the equator, the current season may not reflect your current climate"
+            "aviso_1": "Enter the name of some city to search\nFor example, as `.awe los angeles`",
+            "aviso_2": "I didn't find any place called",
+            "aviso_3": "There was an error with the weather API and it is not possible to search for weather at the moment",
+            "aviso_continente": "These data are an average of all values for the continent surveyed",
+            "aviso_pais": "These data are an average of all values in the country surveyed",
+            "aviso_planeta": "These data are an average of all surveyed values on the planet",
+            "tempo_agora": "Weather now",
+            "hora_local": "Local time",
+            "de": "of",
+            "na": "in",
+            "terra": "on Earth",
+            "vento": "Wind",
+            "nuvens": "Clouds",
+            "chuva": "Rain",
+            "direcao": "Direction",
+            "velocidade": "Speed",
+            "ceu_momento": "Sky at the moment",
+            "temperatura": "Temperature",
+            "por_sol": "Sunrise",
+            "nas_sol": "Sunset",
+            "sensacao_termica": "Thermal sens",
+            "umidade_ar": "Air humidity",
+            "pressao_ar": "Air pressure",
+            "visibilidade": "Visibility",
+            "nivel_chao": "Ground level",
+            "nivel_mar": "Ocean level",
+            "chovendo": "🌧️ Raining now",
+            "nevando": "❄️ Snowing now",
+            "rajadas_vento": "🌪️ Wind gusts",
+            "dados_atts": "Data updated in",
+            "sugestao": "Try a raw search for example, ",
+            "error_1": "Just enter normal characters for your search, searches with numbers are ignored",
+            "error_2": "Unable to retrieve information from this location, please try again later",
+            "antartida": "Antarctica",
+            "outono": "Autumn",
+            "verao": "Summer",
+            "primavera": "Spring",
+            "inverno": "Winter",
+            "comeco": "Started in",
+            "termino": ", ends in",
+            "equador": "This location is close to the equator, the current season may not reflect your current climate"
         },
         {
-            "nao_encontrado" : "I didn't find any item or block with the name",
-            "tente_novamente" : "try again",
-            "error_1" : "Could not load database at this time, please try again later",
-            "coletavel" : "Collectable",
-            "tipo"  : "Type",
-            "versao_add" : "Version added",
-            "empilhavel" : "Stackable",
-            "renovavel" : "Renewable",
-            "nome_interno" : "Internal name",
-            "construcao" : "Construction",
-            "pocoes" : "Potions",
-            "efeitos_aplicados" : "Applied Effects",
-            "atributos" : "Attributes",
-            "disco_musical" : "Musical disc",
-            "livro_encantado" : "Enchanted bool",
-            "nota_rodape" : "This item has not been officially implemented yet, your data is unofficial",
-            "sim" : "Yes",
-            "nao" : "No",
-            "ate" : "Up to",
-            "detalhes" : {
-                "na_cabeca" : "When on Head",
-                "no_corpo" : "When on Body",
-                "nas_pernas" : "When on Legs",
-                "nos_pes" : "When on Feet",
-                "pontos_de_armadura" : "Armor",
-                "resistencia_da_armadura" : "Armor Toughness",
-                "resistencia_a_repulsao" : "Knockback Resistance",
-                "dano_por_golpe" : "Attack Damage",
-                "na_mao_principal" : "When in Main Hand",
-                "velocidade_de_ataque" : "Attack Speed",
-                "nenhum_efeito" : "No Effects",
-                "velocidade" : "Velocity",
-                "lentidao" : "Slowness",
-                "resistencia" : "Resistance",
-                "respiracao" : "Water Breathing",
-                "visao" : "Night Vision",
-                "forca" : "Strength",
-                "dano" : "Instant Damage",
-                "vida" : "Instant Health",
-                "veneno" : "Poison",
-                "supersalto" : "Jump Boost",
-                "cegueira" : "Blindness",
-                "levitação" : "Levitation",
-                "queda" : "Slow falling",
-                "fraqueza" : "Weakness",
-                "sorte" : "Luck",
-                "invisibilidade" : "Invisibility"
+            "nao_encontrado": "I didn't find any item or block with the name",
+            "tente_novamente": "try again",
+            "error_1": "Could not load database at this time, please try again later",
+            "coletavel": "Collectable",
+            "tipo": "Type",
+            "versao_add": "Version added",
+            "empilhavel": "Stackable",
+            "renovavel": "Renewable",
+            "nome_interno": "Internal name",
+            "construcao": "Construction",
+            "pocoes": "Potions",
+            "efeitos_aplicados": "Applied Effects",
+            "atributos": "Attributes",
+            "disco_musical": "Musical disc",
+            "livro_encantado": "Enchanted bool",
+            "nota_rodape": "This item has not been officially implemented yet, your data is unofficial",
+            "sim": "Yes",
+            "nao": "No",
+            "ate": "Up to",
+            "detalhes": {
+                "na_cabeca": "When on Head",
+                "no_corpo": "When on Body",
+                "nas_pernas": "When on Legs",
+                "nos_pes": "When on Feet",
+                "pontos_de_armadura": "Armor",
+                "resistencia_da_armadura": "Armor Toughness",
+                "resistencia_a_repulsao": "Knockback Resistance",
+                "dano_por_golpe": "Attack Damage",
+                "na_mao_principal": "When in Main Hand",
+                "velocidade_de_ataque": "Attack Speed",
+                "nenhum_efeito": "No Effects",
+                "velocidade": "Velocity",
+                "lentidao": "Slowness",
+                "resistencia": "Resistance",
+                "respiracao": "Water Breathing",
+                "visao": "Night Vision",
+                "forca": "Strength",
+                "dano": "Instant Damage",
+                "vida": "Instant Health",
+                "veneno": "Poison",
+                "supersalto": "Jump Boost",
+                "cegueira": "Blindness",
+                "levitação": "Levitation",
+                "queda": "Slow falling",
+                "fraqueza": "Weakness",
+                "sorte": "Luck",
+                "invisibilidade": "Invisibility"
             }
         },
         {
-            "hoje" : "today",
-            "este_ano" : "This year",
+            "hoje": "today",
+            "este_ano": "This year",
             "ha": "",
             "em": "in",
-            "ano_passado" : "Last year",
-            "numero" : "number",
-            "acontecimentos_1" : "Events through history",
-            "acontecimentos_2" : "Below are all events on the date of",
-            "utilize_1" : "Use the command",
-            "utilize_2" : "to view a specific event",
-            "aviso_1" : "Submit as `.ahs 01-31` to be able to search on a specific date\nOr just use `.ahs` to see events on today's date from history",
-            "aviso_2" : "Values entered are wrong, please enter correct numerical values for day and month",
+            "ano_passado": "Last year",
+            "numero": "number",
+            "acontecimentos_1": "Events through history",
+            "acontecimentos_2": "Below are all events on the date of",
+            "utilize_1": "Use the command",
+            "utilize_2": "to view a specific event",
+            "aviso_1": "Submit as `.ahs 01-31` to be able to search on a specific date\nOr just use `.ahs` to see events on today's date from history",
+            "aviso_2": "Values entered are wrong, please enter correct numerical values for day and month",
             "aviso_3": "Looking for an event...",
-            "error_1" : "Enter a number contained in the event list to see more details",
-            "sem_entradas" : "There are no events for this date, please enter a different date `.acon 01-21`"
+            "error_1": "Enter a number contained in the event list to see more details",
+            "sem_entradas": "There are no events for this date, please enter a different date `.acon 01-21`"
         },
         {
-            "chave" : "Key",
-            "aviso_1" : "Enter a key and the text to be encrypted\nFor example, `.acr slondo Hello World!`, or `.acr slondo U2FsdG~~`",
-            "error_1" : "Incorrect key, unable to decrypt\nIf you are trying to encrypt, add more spaces to your text"
+            "chave": "Key",
+            "aviso_1": "Enter a key and the text to be encrypted\nFor example, `.acr slondo Hello World!`, or `.acr slondo U2FsdG~~`",
+            "error_1": "Incorrect key, unable to decrypt\nIf you are trying to encrypt, add more spaces to your text"
         },
         {
-            "id_server" : "Server ID",
-            "membros" : "Members",
-            "dono" : "Owner",
-            "canais" : "Channels",
-            "categorias" : "Categories",
-            "texto" : "Text",
-            "voz" : "Voice",
-            "atual" : "Current",
-            "entrada" : "Alonsal entrance",
-            "criacao" : "Creation",
-            "verificacao" : "Verification",
-            "cargos" : "Roles",
-            "figurinhas" : "Stickers",
-            "NONE" : ":white_large_square: None",
-            "LOW" : ":blue_square: Low",
-            "MEDIUM" : ":green_square: Medium",
-            "HIGH" : ":orange_square: High",
-            "HIGHEST" : ":red_square: Highest"
+            "id_server": "Server ID",
+            "membros": "Members",
+            "dono": "Owner",
+            "canais": "Channels",
+            "categorias": "Categories",
+            "texto": "Text",
+            "voz": "Voice",
+            "atual": "Current",
+            "entrada": "Alonsal entrance",
+            "criacao": "Creation",
+            "verificacao": "Verification",
+            "cargos": "Roles",
+            "figurinhas": "Stickers",
+            "NONE": ":white_large_square: None",
+            "LOW": ":blue_square: Low",
+            "MEDIUM": ":green_square: Medium",
+            "HIGH": ":orange_square: High",
+            "HIGHEST": ":red_square: Highest"
         },
         {
-            "id_user" : "User ID",
-            "entrada" : "Entered in",
-            "conta_criada" : "Account created",
-            "alonsal" : "Look at me there!",
-            "enceirado" : "eternally waxed",
-            "moderador" : "This member is an administrator on this server"
+            "id_user": "User ID",
+            "entrada": "Entered in",
+            "conta_criada": "Account created",
+            "alonsal": "Look at me there!",
+            "enceirado": "eternally waxed",
+            "moderador": "This member is an administrator on this server"
         },
         {
-            "anos" : " years",
-            "ano" : " year",
-            "meses" : " months",
-            "mes" : " month",
-            "dias" : " days",
-            "dia" : " day",
-            "horas" : " hours",
-            "hora" : " hour",
-            "minutos" : " minutes",
-            "minuto" : " minute",
-            "segundos" : " seconds",
-            "segundo" : " second",
-            "e" : "and"
+            "anos": " years",
+            "ano": " year",
+            "meses": " months",
+            "mes": " month",
+            "dias": " days",
+            "dia": " day",
+            "horas": " hours",
+            "hora": " hour",
+            "minutos": " minutes",
+            "minuto": " minute",
+            "segundos": " seconds",
+            "segundo": " second",
+            "e": "and"
         },
         {
-            "id_canal" : "Channel ID",
-            "servidor" : "Server",
-            "canal_voz" : "This is a voice channel!",
-            "topico" : "Topic",
-            "sem_topico" : "Channel with no defined topic",
-            "mencao" : "Mention",
-            "transmissao" : "Transmission",
-            "sem_limite" : "Unlimited",
-            "modo_lento" : "Slow mode",
-            "aviso_1" : "Enter the ID of a channel!",
-            "error_1" : "Could not find this channel, please try again"
+            "id_canal": "Channel ID",
+            "servidor": "Server",
+            "canal_voz": "This is a voice channel!",
+            "topico": "Topic",
+            "sem_topico": "Channel with no defined topic",
+            "mencao": "Mention",
+            "transmissao": "Transmission",
+            "sem_limite": "Unlimited",
+            "modo_lento": "Slow mode",
+            "aviso_1": "Enter the ID of a channel!",
+            "error_1": "Could not find this channel, please try again"
         },
         {
-            "undefined" : "Unknow",
-            "error_1" : "Profile not found, make sure the profile searched has a custom url",
-            "error_2" : "This profile exists but there was an error loading it",
-            "rodape" : "Some (or all) of this user's data is not available in his profile",
-            "analises" : "Reviews",
-            "nivel" : "Level",
-            "jogos" : "Games",
-            "jogos_perfeitos" : "G. 100%",
-            "conquistas" : "Achievements",
-            "porcentagem" : "Percent.",
-            "insignias" : "Badges",
-            "criacoes" : "Creations",
-            "semanas" : "2 Weeks",
-            "artes" : "Artworks",
-            "suspeito" : "This user may be using illegal means to get achievements, do not consider this as a confirmation",
-            "jogo_favorito" : "Favorite game",
-            "capturas" : "Prints",
-            "nome" : "Name",
-            "tempo_jogado" : "Time played"
+            "undefined": "Unknow",
+            "error_1": "Profile not found, make sure the profile searched has a custom url",
+            "error_2": "This profile exists but there was an error loading it",
+            "rodape": "Some (or all) of this user's data is not available in his profile",
+            "analises": "Reviews",
+            "nivel": "Level",
+            "jogos": "Games",
+            "jogos_perfeitos": "G. 100%",
+            "conquistas": "Achievements",
+            "porcentagem": "Percent.",
+            "insignias": "Badges",
+            "criacoes": "Creations",
+            "semanas": "2 Weeks",
+            "artes": "Artworks",
+            "suspeito": "This user may be using illegal means to get achievements, do not consider this as a confirmation",
+            "jogo_favorito": "Favorite game",
+            "capturas": "Prints",
+            "nome": "Name",
+            "tempo_jogado": "Time played"
         },
         {
-            "aviso_1" : "Enter at least one basic operation to calculate",
-            "resultado" : "Result",
-            "error" : "An error occurred while processing this operation"
+            "aviso_1": "Enter at least one basic operation to calculate",
+            "resultado": "Result",
+            "error": "An error occurred while processing this operation"
         },
         {
-            "primaria" : "Primary password",
-            "bonus" : "Bonus passwords",
-            "titulo" : "Y0uR P4s§w0Rd5, click here to test your password",
-            "senha" : "Check your private, your password was generated with a length of `tamanho_repl` characters",
-            "rodape" : "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
+            "primaria": "Primary password",
+            "bonus": "Bonus passwords",
+            "titulo": "Y0uR P4s§w0Rd5, click here to test your password",
+            "senha": "Check your private, your password was generated with a length of `tamanho_repl` characters",
+            "rodape": "4 passwords with tamanho_repl characters to choose, they are not saved here and I don't even know the content, only you ;)"
         },
         {
-            "timestamp_1" : "From date to timestamp",
-            "timestamp_2" : "From timestamp to date",
-            "timestamp_now" : "Timestamp now",
-            "timestamp_crono" : "Timed timestamp",
-            "erro_titulo" : ":warning: | Something went wrong",
-            "erro_conversao" : "Could not generate a timestamp with the given input, please try again",
-            "valor_nulo" : "The result of this conversion was null",
-            "aviso_1" : "I need more information to be able to convert your date\nFor example `timestamp 2022-06-08 23:03:57` or `/timestamp 385723948238`"
+            "timestamp_1": "From date to timestamp",
+            "timestamp_2": "From timestamp to date",
+            "timestamp_now": "Timestamp now",
+            "timestamp_crono": "Timed timestamp",
+            "erro_titulo": ":warning: | Something went wrong",
+            "erro_conversao": "Could not generate a timestamp with the given input, please try again",
+            "valor_nulo": "The result of this conversion was null",
+            "aviso_1": "I need more information to be able to convert your date\nFor example `timestamp 2022-06-08 23:03:57` or `/timestamp 385723948238`"
         },
         {
-            "sem_scrobbles" : "This profile exists, but it does not have any Scrobble :(",
-            "semanal" : "Weekly",
-            "media_dia" : "Average per day",
-            "tempo_tocado" : "Time played",
-            "albuns" : "Albums",
-            "artistas" : "Artists",
-            "faixas_favoritas" : "Favorite tracks",
-            "geral" : "General",
-            "perfil_musical" : "nome_repl's musical profile",
-            "em_scrobble" : "On Scrobble right now",
-            "obsessao" : "Obsession of the moment",
-            "error_1" : "This profile does not exist, please try again"
-        }
-    ],
-    "trabalho" : [
-        {
-            "entrada" : "Entrance",
-            "saida" : "Exit",
-            "tempo" : "Time",
-            "tempo_extra" : "Extra time",
-            "tempo_falta" : "Time left",
-            "turno_manha" : "Morning shift",
-            "turno_tarde" : "Afternoon shift",
-            "tempo_trabalhado" : "Time worked",
-            "dica_comando" : "Use the command .atr h to see more examples and other commands",
-            "error_1" : "Enter a valid date for this command, for example `.abn 21/01/2022 08:07`",
-            "error_2" : "Enter a valid date for this command, for example `.atr 21/01/2022`"
-        },
-        {   
-            "ponto_att_1" : "Time of `ponto_repl°` Point of `data_repl` successfully updated to `hora_repl`",
-            "ponto_att_2" : "ponto_repl° Point of the day recorded, the linked time is `hora_repl`\nDid you type it wrong? Edit this point with the command `.abp ponto_repl 08:07`",
-            "ponto_att_3" : "Time of `ponto_repl°` Point successfully updated to `hora_repl`",
-            "todos_pontos" : "All times have been filled in, you can edit previous points with the command `.abp 1 08:07`, `.abp 2 20:07`, `.abp 3 07:20`,..\nOr view the full summary with the `.atr` command",
-            "horario" : "Enter a time to register your point",
-            "error_1" : "Enter a number between `1 & 4` to edit your points today",
-            "error_2" : "Enter an appropriate time format, for example `.abp 20:07`",
-            "error_3" : "You entered too much value, the operation was cancelled\nUse the command `.atr h` to see commands in this category"
-        },
-        {
-            "registrado" : "Registered days",
-            "sem_dados" : "You don't have any workdays recorded",
-            "error_1" : "Enter a valid date for this command, for example `.arbp 21/01/2022`",
-            "sem_entradas_1" : "There are no points recorded for",
-            "sem_entradas_2" : "No points recorded for today",
-            "dia_removido_1" : "All data from `dia_repl` have been removed",
-            "dia_removido_2" : "All data for today has been removed"
+            "sem_scrobbles": "This profile exists, but it does not have any Scrobble :(",
+            "semanal": "Weekly",
+            "media_dia": "Average per day",
+            "tempo_tocado": "Time played",
+            "albuns": "Albums",
+            "artistas": "Artists",
+            "faixas_favoritas": "Favorite tracks",
+            "geral": "General",
+            "perfil_musical": "nome_repl's musical profile",
+            "em_scrobble": "On Scrobble right now",
+            "obsessao": "Obsession of the moment",
+            "error_1": "This profile does not exist, please try again"
         }
     ]
 }
