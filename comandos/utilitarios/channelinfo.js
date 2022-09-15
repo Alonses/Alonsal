@@ -98,7 +98,6 @@ module.exports = {
                         inline: true
                     }
                 )
-                    .setFooter({ text: `${utilitarios[15]["servidor"]}: ${canal.guild.name}`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                 if (typeof canal.bitrate !== "undefined")
                     infos_ch.addFields(
