@@ -1,11 +1,11 @@
 const { comandos } = require('../arquivos/data/comandos.json')
 const { existsSync, writeFileSync } = require('fs')
 
-module.exports = async function({client, message, content}) {
-    
+module.exports = async function ({ client, message, content }) {
+
     let indice = null
     let alias = null
-    
+
     const procura_infos = content.replace(prefix, "").split(" ")[0].replace(/ /g, "")
 
     for (let x = 0; x < comandos.length; x++) {
@@ -21,7 +21,7 @@ module.exports = async function({client, message, content}) {
             }
         }
     }
-    
+
     if (indice === null) return // Confirma a existencia do comando
 
     alias.shift()

@@ -4,16 +4,16 @@ const create_buttons = require('./create_buttons.js')
 const formata_anun = require('./formata_games.js')
 
 const platformMap = {
-    "epicgames.com": [ "<:Logo_ep:864887054067957791>", "Epic Games" ],
-    "store.steam": [ "<:Logo_st:864887020467257364>", "Steam" ],
-    "gog.com": [ "<:Logo_gog:864887080673214505>", "GOG" ],
-    "humblebundle.com": [ "<:Logo_hb:864887252587642911>", "Humble Bundle" ],
-    "ubisoft.com": [ "<:Logo_ubi:864887154483134516>", "Ubisoft" ],
-    "xbox.com" : ["<:Logo_xb:864886938322731058>", "Xbox"],
-    "play.google" : ["<:logo_pst:973395673489756220>", "Google Play"]
+    "epicgames.com": ["<:Logo_ep:864887054067957791>", "Epic Games"],
+    "store.steam": ["<:Logo_st:864887020467257364>", "Steam"],
+    "gog.com": ["<:Logo_gog:864887080673214505>", "GOG"],
+    "humblebundle.com": ["<:Logo_hb:864887252587642911>", "Humble Bundle"],
+    "ubisoft.com": ["<:Logo_ubi:864887154483134516>", "Ubisoft"],
+    "xbox.com": ["<:Logo_xb:864886938322731058>", "Xbox"],
+    "play.google": ["<:logo_pst:973395673489756220>", "Google Play"]
 }
 
-module.exports = async ({client, interaction, objetos_anunciados}) => {
+module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
     const canais_clientes = []
     const { canal_games } = require('../../arquivos/data/games/canal_games.json')
@@ -30,7 +30,7 @@ module.exports = async ({client, interaction, objetos_anunciados}) => {
             }
         }
     }
-    
+
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
@@ -43,9 +43,9 @@ module.exports = async ({client, interaction, objetos_anunciados}) => {
     objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-        objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link})
+        objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
 
-        if (parseFloat(valor.preco) > valor_anterior){
+        if (parseFloat(valor.preco) > valor_anterior) {
             valor_anterior = parseFloat(valor.preco)
             imagem_destaque = valor.thumbnail
         }
@@ -61,35 +61,35 @@ module.exports = async ({client, interaction, objetos_anunciados}) => {
 
             let idioma_definido = await client.idioma.getLang(servidor)
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
-            
+
             let texto_anuncio = formata_anun(objetos_anunciados, plataforma, idioma_definido)
-            
+
             if (typeof canais_clientes[i + 1] !== "undefined")
                 marcacao = `<@&${canais_clientes[i + 1]}>`
 
             const embed = new EmbedBuilder()
-            .setTitle(`${logo_plat} ${plataforma}`)
-            .setImage(imagem_destaque)
-            .setColor(cor_embed)
-            .setDescription(texto_anuncio)
-            
+                .setTitle(`${logo_plat} ${plataforma}`)
+                .setImage(imagem_destaque)
+                .setColor(cor_embed)
+                .setDescription(texto_anuncio)
+
             const canal_alvo = client.channels.cache.get(canais_clientes[i])
 
             // Enviando os anúncios para os canais
-            if (canal_alvo.type === 0 || canal_alvo.type === 5) {        
+            if (canal_alvo.type === 0 || canal_alvo.type === 5) {
                 if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.ViewChannel)) {
                     canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
-                    
+
                     canais_recebidos++
                 }
             }
-        }catch(err) {
-            require('../../adm/internos/error.js')({client, err})
+        } catch (err) {
+            require('../../adm/internos/error.js')({ client, err })
         }
 
         i++
     }
-    
+
     let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
 
     if (canais_recebidos === 1)

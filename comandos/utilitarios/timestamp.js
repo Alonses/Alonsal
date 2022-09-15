@@ -3,9 +3,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 const formata_horas = require("../../adm/funcoes/formata_horas")
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('timestamp')
-		.setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
+    data: new SlashCommandBuilder()
+        .setName('timestamp')
+        .setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
             "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa'
@@ -20,29 +20,29 @@ module.exports = {
                 })
                 .addStringOption(option =>
                     option.setName("time")
-                    .setNameLocalizations({
-                        "pt-BR": 'tempo',
-                        "fr": 'temps'
-                    })
-                    .setDescription("The value to be converted")
-                    .setDescriptionLocalizations({
-                       "pt-BR": 'O Valor a ser convertido',
-                       "fr": 'La valeur à convertir' 
-                    }))
+                        .setNameLocalizations({
+                            "pt-BR": 'tempo',
+                            "fr": 'temps'
+                        })
+                        .setDescription("The value to be converted")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'O Valor a ser convertido',
+                            "fr": 'La valeur à convertir'
+                        }))
                 .addStringOption(option =>
                     option.setName('timer')
-                    .setDescription('A quick date to book')
-                    .setDescriptionLocalizations({
-                        "pt-BR": 'Uma data rápida para marcar',
-                        "fr": 'Une date rapide à réserver'
-                    })
-                    .addChoices(
-                        { name: '+5 Minutos', value: '5' },
-                        { name: '+10 Minutos', value: '10' },
-                        { name: '+30 Minutos', value: '30' },
-                        { name: '+1 Hora', value: '60' },
-                        { name: '+2 Horas', value: '120' }
-                    )))
+                        .setDescription('A quick date to book')
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Uma data rápida para marcar',
+                            "fr": 'Une date rapide à réserver'
+                        })
+                        .addChoices(
+                            { name: '+5 Minutos', value: '5' },
+                            { name: '+10 Minutos', value: '10' },
+                            { name: '+30 Minutos', value: '30' },
+                            { name: '+1 Hora', value: '60' },
+                            { name: '+2 Horas', value: '120' }
+                        )))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('now')
@@ -55,8 +55,8 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "fr": '⌠💡⌡ Horodatage actuel'
                 })),
-	async execute(client, interaction) {
-        
+    async execute(client, interaction) {
+
         let idioma_definido = client.idioma.getLang(interaction)
         idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
 
@@ -70,9 +70,9 @@ module.exports = {
         // Entradas traduzíveis
         const ent_tempo = ["tempo", "temps", "time"], ent_momentum = ["agora", "now", "present"]
 
-        if (!ent_momentum.includes(interaction.options.getSubcommand())){ // Entrada customizada
+        if (!ent_momentum.includes(interaction.options.getSubcommand())) { // Entrada customizada
             let opcoes = interaction.options.data[0].options
-            
+
             opcoes.forEach(valor => {
                 if (ent_tempo.includes(valor.name))
                     entrada = parseInt(valor.value)
@@ -89,15 +89,15 @@ module.exports = {
                 retorno = entrada
 
                 timestamp = new Date(entrada)
-                timestamp = `${timestamp.getFullYear()}-${("0"+ (timestamp.getMonth() + 1)).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
+                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
 
                 conversao_invalida = false
             } else if (!entrada.includes("-")) { // De timestamp para data normal
                 timestamp = new Date(Number(entrada * 1000))
                 titulo = utilitarios[19]["timestamp_2"]
                 retorno = entrada
-                
-                timestamp = `${timestamp.getFullYear()}-${("0"+ (timestamp.getMonth() + 1)).slice(-2)}-${("0"+ timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
+
+                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
 
                 if ((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] == "NaN")
                     conversao_invalida = true
@@ -115,7 +115,7 @@ module.exports = {
             retorno = Math.floor(Date.now() / 1000)
             titulo = utilitarios[19]["timestamp_now"]
         }
-        
+
         let dica_conversao = `\n\n( \`<t:${retorno}:R>\` ) <t:${retorno}:R>\n( \`<t:${retorno}:t>\` ) <t:${retorno}:t>\n( \`<t:${retorno}:T>\` ) <t:${retorno}:T>\n( \`<t:${retorno}:d>\` ) <t:${retorno}:d>\n( \`<t:${retorno}:D>\` ) <t:${retorno}:D>\n( \`<t:${retorno}:f>\` ) <t:${retorno}:f>\n( \`<t:${retorno}:F>\` ) <t:${retorno}:F>`
 
         if (conversao_invalida) {
@@ -128,9 +128,9 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo)
             .setColor(0x29BB8E)
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({dynamic: true}) })
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setDescription(`${conversao_valida}${dica_conversao}`)
-        
+
         if (aviso.length > 0)
             embed.setFooter(aviso)
 

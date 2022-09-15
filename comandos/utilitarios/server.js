@@ -1,24 +1,26 @@
 const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('server')
-		.setDescription('⌠💡⌡ Show server information')
+    data: new SlashCommandBuilder()
+        .setName('server')
+        .setDescription('⌠💡⌡ Show server information')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja informações do servidor',
+            "es-ES": '⌠💡⌡ Ver información del servidor',
             "fr": '⌠💡⌡ Afficher les informations du serveur'
         })
         .addSubcommand(subcommand =>
-			subcommand
-				.setName('icon')
-				.setDescription('⌠💡⌡ The Server Icon')
+            subcommand
+                .setName('icon')
+                .setDescription('⌠💡⌡ The Server Icon')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ O Icone do servidor',
+                    "es-ES": '⌠💡⌡ El icono del servidor',
                     "fr": '⌠💡⌡ L\'icône du serveur'
                 }))
         .addSubcommand(subcommand =>
@@ -27,9 +29,10 @@ module.exports = {
                 .setDescription('⌠💡⌡ Server Information')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Informações do servidor',
+                    "es-ES": '⌠💡⌡ Información del servidor',
                     "fr": '⌠💡⌡ Informations sur le serveur'
                 })),
-	async execute(client, interaction) {
+    async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
@@ -37,7 +40,7 @@ module.exports = {
         if (interaction.options.getSubcommand() === "info") {
 
             const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
-            
+
             const boost_sv = busca_emoji(client, emojis.boost)
             const emoji_dancando = busca_emoji(client, emojis_dancantes)
             const figurinhas = busca_emoji(client, emojis.bigchad)
@@ -60,18 +63,18 @@ module.exports = {
 
             const data_criacao = `<t:${Math.floor(interaction.guild.createdAt / 1000)}:f>` // Criação do servidor
             const diferenca_criacao = `<t:${Math.floor(interaction.guild.createdAt / 1000)}:R>`
-            
+
             if (icone_server !== null) {
                 icone_server = icone_server.replace(".webp", ".gif")
 
                 await fetch(icone_server)
-                .then(res => {
-                    if (res.status !== 200)
-                        icone_server = icone_server.replace('.gif', '.webp')
-                })
+                    .then(res => {
+                        if (res.status !== 200)
+                            icone_server = icone_server.replace('.gif', '.webp')
+                    })
             } else
                 icone_server = ""
-            
+
             const infos_sv = new EmbedBuilder()
                 .setTitle(interaction.guild.name)
                 .setColor(0x29BB8E)
@@ -90,7 +93,8 @@ module.exports = {
                     {
                         name: `:unicorn: **${utilitarios[12]["dono"]}**`,
                         value: dono_sv,
-                        inline: true},
+                        inline: true
+                    },
                 )
                 .addFields(
                     {
@@ -122,39 +126,39 @@ module.exports = {
                     }
                 )
 
-                if (interaction.guild.premiumSubscriptionCount > 0)
-                    infos_sv.addFields(
-                        { 
-                            name: `${boost_sv} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
-                            value: `:passport_control: **${utilitarios[12]["cargos"]}: ** \`${interaction.guild.roles.cache.size - 1}\``,
-                            inline: true
-                        }
-                    )
-                else
-                    infos_sv.addFields(
-                        { name: `:passport_control: **${utilitarios[12]["cargos"]} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true}
-                    )
+            if (interaction.guild.premiumSubscriptionCount > 0)
+                infos_sv.addFields(
+                    {
+                        name: `${boost_sv} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
+                        value: `:passport_control: **${utilitarios[12]["cargos"]}: ** \`${interaction.guild.roles.cache.size - 1}\``,
+                        inline: true
+                    }
+                )
+            else
+                infos_sv.addFields(
+                    { name: `:passport_control: **${utilitarios[12]["cargos"]} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
+                )
 
-                return interaction.reply({ embeds: [infos_sv] })
+            return interaction.reply({ embeds: [infos_sv] })
         } else { // Icone do servidor
-            
+
             let icone_server = interaction.guild.iconURL({ size: 2048 })
             icone_server = icone_server.replace(".webp", ".gif")
             const download_icon = utilitarios[4]["download_icon"].replace("link_repl", icone_server)
 
             fetch(icone_server)
-            .then(res => {
-                if (res.status !== 200)
-                    icone_server = icone_server.replace('.gif', '.webp')
+                .then(res => {
+                    if (res.status !== 200)
+                        icone_server = icone_server.replace('.gif', '.webp')
 
-                const embed = new EmbedBuilder()
-                .setTitle(interaction.guild.name)
-                .setDescription(download_icon)
-                .setColor(0x29BB8E)
-                .setImage(icone_server)
+                    const embed = new EmbedBuilder()
+                        .setTitle(interaction.guild.name)
+                        .setDescription(download_icon)
+                        .setColor(0x29BB8E)
+                        .setImage(icone_server)
 
-                interaction.reply({ embeds: [embed] })
-            })
+                    interaction.reply({ embeds: [embed] })
+                })
         }
     }
 }

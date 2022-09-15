@@ -1,21 +1,21 @@
 const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
 
-module.exports = async ({client}) => {
+module.exports = async ({ client }) => {
 
     if (client.user.id !== "833349943539531806") return
-    
+
     const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
     let controle = 0
 
     // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
     if (date1.getDay() == 4 && date1.getHours() > 13)
         controle = 7
-    
+
     const dias = [4, 3, 2, 1, controle, 6, 5]
-    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((11 - date1.getHours()) *3600000) + ((60 - date1.getMinutes()) *60000) + ((60 - date1.getSeconds()) *1000)
+    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((11 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
     setTimeout(() => {
         gera_anuncio(client, 604800000)
@@ -35,14 +35,14 @@ async function gera_anuncio(client, proxima_att) {
     client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
     fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
-    .then(response => response.json())
-    .then(async objetos_anunciados => {
-        dispara_anuncio({client, objetos_anunciados})
-    })
-    .catch(err => {
-        const local = "games"
-        require('./error.js')({client, err, local})
-    })
+        .then(response => response.json())
+        .then(async objetos_anunciados => {
+            dispara_anuncio({ client, objetos_anunciados })
+        })
+        .catch(err => {
+            const local = "games"
+            require('./error.js')({ client, err, local })
+        })
 
     next_att(client, proxima_att)
 }

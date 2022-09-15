@@ -23,7 +23,7 @@ module.exports = (lista_botoes) => {
                         .setURL(valor.value)
                         .setStyle(tipos[valor.type])
                         .setEmoji(valor.emoji)
-                )   
+                )
         } else {
             if (!valor.emoji)
                 row_buttons.addComponents(

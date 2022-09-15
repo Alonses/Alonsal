@@ -1,4 +1,4 @@
-const { writeFileSync, readFileSync }  = require("fs")
+const { writeFileSync, readFileSync } = require("fs")
 
 let default_lang, datapath
 
@@ -17,10 +17,10 @@ function setLang(alvoID, lang) {
 function getLang(elemento) {
 
     let alvoID = elemento.guild.id
-    
+
     try {
         return readFileSync(`${datapath}/${alvoID}.txt`, "utf-8") || default_lang
-    }catch (e) {
+    } catch (e) {
         return default_lang
     }
 }

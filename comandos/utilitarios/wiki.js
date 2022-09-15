@@ -1,31 +1,34 @@
 const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args))
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/funcoes/busca_emoji')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('wiki')
-		.setDescription('⌠💡⌡ Search for something on the wiki')
+    data: new SlashCommandBuilder()
+        .setName('wiki')
+        .setDescription('⌠💡⌡ Search for something on the wiki')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
+            "es-ES": '⌠💡⌡ Busca algo en la wiki',
             "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki'
         })
         .addStringOption(option =>
             option.setName('search')
                 .setNameLocalizations({
                     "pt-BR": 'pesquisa',
+                    "es-ES": 'busqueda',
                     "fr": 'chercher'
                 })
                 .setDescription('I\'m lucky')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
+                    "es-ES": 'Estoy con suerte',
                     "fr": 'J\'ai de la chance'
                 })
                 .setRequired(true)),
-	async execute(client, interaction) {
+    async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction) == "al-br" ? "pt-br" : client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
@@ -41,54 +44,54 @@ module.exports = {
 
         const termo_pesquisado_cc = content.slice(1)
         const username = interaction.user.username
-        
-        fetch(url, { headers:{ "accept-language": idioma_definido }})
-        .then(response => response.json())
-        .then(async res => {
-        
-        const fields = []
-        
-        if (res.RelatedTopics.length > 0)
-            fields.push({ name: `:books: ${utilitarios[1]["topicos_rel"]}`, value: "\u200B" })
 
-        for (const topic of res.RelatedTopics) {
-            counter++
+        fetch(url, { headers: { "accept-language": idioma_definido } })
+            .then(response => response.json())
+            .then(async res => {
 
-            const text = `${topic.Text.substr(0, 100)}...`
+                const fields = []
 
-            fields.push({
-                name: text,
-                value: topic.FirstURL,
-                inline: true
+                if (res.RelatedTopics.length > 0)
+                    fields.push({ name: `:books: ${utilitarios[1]["topicos_rel"]}`, value: "\u200B" })
+
+                for (const topic of res.RelatedTopics) {
+                    counter++
+
+                    const text = `${topic.Text.substr(0, 100)}...`
+
+                    fields.push({
+                        name: text,
+                        value: topic.FirstURL,
+                        inline: true
+                    })
+
+                    if (counter > 5)
+                        break
+                }
+
+                if (res.Heading !== "") {
+                    fields.length = fields.length > 5 ? 5 : fields.length
+
+                    const Embed = new EmbedBuilder()
+                        .setColor(0x29BB8E)
+                        .setTitle(res.Heading)
+                        .setAuthor({ name: res.AbstractSource })
+                        .setDescription(res.AbstractText)
+                        .setThumbnail(res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
+                        .addFields(fields)
+                        .setTimestamp()
+                        .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                        .setURL(res.AbstractURL)
+
+                    interaction.reply({ embeds: [Embed] })
+                } else
+                    if (username.includes(termo_pesquisado_cc))
+                        interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`)
+                    else
+                        interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
             })
-
-            if (counter > 5)
-                break
-        }
-
-        if (res.Heading !== "") {
-            fields.length = fields.length > 5 ? 5 : fields.length
-            
-            const Embed = new EmbedBuilder()
-            .setColor(0x29BB8E)
-            .setTitle(res.Heading)
-            .setAuthor({ name: res.AbstractSource })
-            .setDescription(res.AbstractText)
-            .setThumbnail(res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
-            .addFields(fields)
-            .setTimestamp()
-            .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic:true }) })
-            .setURL(res.AbstractURL)
-
-            interaction.reply({ embeds: [Embed] })
-        } else
-            if (username.includes(termo_pesquisado_cc))
-                interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`)
-            else
+            .catch(() => {
                 interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
-        })
-        .catch(() => {
-            interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
-        })
+            })
     }
 }

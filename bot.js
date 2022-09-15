@@ -9,7 +9,7 @@ const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
-    	GatewayIntentBits.MessageContent,
+		GatewayIntentBits.MessageContent,
 		IntentsBitField.Flags.GuildMembers
 	]
 })
@@ -65,7 +65,7 @@ if (modo_develop || force_update) {
 		.then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
 		.catch(console.error)
 
-// Removendo os comandos slash globalmente
+	// Removendo os comandos slash globalmente
 	// rest.get(Routes.applicationCommands(clientId))
 	// 	.then(data => {
 	// 		const promises = []
@@ -74,7 +74,7 @@ if (modo_develop || force_update) {
 	// 			const deleteUrl = `${Routes.applicationCommands(clientId)}/${command.id}`
 	// 			promises.push(rest.delete(deleteUrl))
 	// 		}
-		
+
 	// 		console.log("Removendo os comandos em barra globalmente")
 	// 		return Promise.all(promises)
 	// 	})
@@ -97,47 +97,47 @@ client.once('ready', async () => {
 	client.owners = owner_id
 
 	if (status)
-		await require('./adm/internos/status.js')({client})
-	
+		await require('./adm/internos/status.js')({ client })
+
 	console.log(`Caldeiras do ${client.user.username} aquecidas, pronto para operar`)
 })
 
 client.on('messageCreate', async (message) => {
 	if (message.author.bot || message.webhookId) return
 
-	try{ // Atualizando ranking e recebendo mensagens de texto
-		
+	try { // Atualizando ranking e recebendo mensagens de texto
+
 		const caso = 'messages'
-		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({client, message, caso})
-		
-		require('./adm/internos/comandos_antigos.js')({client, message})
-	}catch(err) {
+		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({ client, message, caso })
+
+		require('./adm/internos/comandos_antigos.js')({ client, message })
+	} catch (err) {
 		const local = 'commands'
-		require('./adm/internos/error.js')({client, err, local})
+		require('./adm/internos/error.js')({ client, err, local })
 	}
 })
 
 client.on('interactionCreate', async interaction => {
 
-	if (!interaction.isChatInputCommand()) return 
+	if (!interaction.isChatInputCommand()) return
 	if (!interaction.guild) return interaction.reply("Comandos em DM não estão ativos :spy:")
 
 	const command = client.commands.get(interaction.commandName)
 	if (!command) return
-	
-	await command.execute(client, interaction)
-	.then(() => {
-		require('./adm/internos/log.js')({client, interaction, command})
-	})
-	.catch(err => {
-		const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-		require('./adm/internos/error.js')({client, err})
-		interaction.reply({ content: `:octagonal_sign: | ${inicio[0]["epic_embed_fail"]}`, ephemeral: true })
-	})
+	await command.execute(client, interaction)
+		.then(() => {
+			require('./adm/internos/log.js')({ client, interaction, command })
+		})
+		.catch(err => {
+			const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+
+			require('./adm/internos/error.js')({ client, err })
+			interaction.reply({ content: `:octagonal_sign: | ${inicio[0]["epic_embed_fail"]}`, ephemeral: true })
+		})
 })
 
 // Eventos secundários
-require('./adm/internos/eventos.js')({client})
+require('./adm/internos/eventos.js')({ client })
 
 client.login(token)

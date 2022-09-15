@@ -2,24 +2,27 @@ const { readdirSync, unlinkSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('data')
-		.setDescription('⌠📡⌡ Everything we know about you')
+    data: new SlashCommandBuilder()
+        .setName('data')
+        .setDescription('⌠📡⌡ Everything we know about you')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Tudo o que sabemos sobre você',
+            "es-ES": '⌠📡⌡ Todo lo que sabemos de ti',
             "fr": '⌠📡⌡ Tout ce que l\'on sait sur vous'
         })
         .addBooleanOption(option =>
             option.setName("delete")
-            .setNameLocalizations({
-                "pt-BR": 'excluir',
-                "fr": 'nettoyer'
-            })
-            .setDescription("Request the deletion of your data in Alonsal")
-            .setDescriptionLocalizations({
-                "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
-                "fr": 'Demander la suppression de vos données d\'Alonsal'
-            })),
+                .setNameLocalizations({
+                    "pt-BR": 'excluir',
+                    "es-ES": 'eliminar',
+                    "fr": 'nettoyer'
+                })
+                .setDescription("Request the deletion of your data in Alonsal")
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
+                    "es-ES": 'Solicitar la eliminación de sus datos en Alonsal',
+                    "fr": 'Demander la suppression de vos données d\'Alonsal'
+                })),
     async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
@@ -31,13 +34,13 @@ module.exports = {
             exclusao = interaction.options.data[0].value
 
         const ranking = []
-    
+
         for (const folder of readdirSync(`./arquivos/data/rank/`)) {
             for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {
                 if (file.includes(interaction.user.id)) {
-                    
+
                     let server = client.guilds.cache.get(folder)
-                
+
                     if (!server)
                         nome_server = manutencao[9]["server_desconhecido"]
                     else
@@ -62,13 +65,13 @@ module.exports = {
             interaction.reply({ content: `${manutencao[9]["dados_removidos"]} ${client.user.username}`, ephemeral: true })
         } else {
             dados_conhecidos = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
-            
+
             const embed = new EmbedBuilder()
-            .setTitle(manutencao[9]["dados_conhecidos"])
-            .setColor(0x29BB8E)
-            .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${dados_conhecidos}`)
-            .setFooter({ text: manutencao[9]["dica_rodape"]})
-    
+                .setTitle(manutencao[9]["dados_conhecidos"])
+                .setColor(0x29BB8E)
+                .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${dados_conhecidos}`)
+                .setFooter({ text: manutencao[9]["dica_rodape"] })
+
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
     }
@@ -84,7 +87,7 @@ function lista_servidores(servidores, linha_corte, manutencao) {
         nome_interno = nome_servidores.slice(0, linha_corte)
         do {
             nome_interno = nome_servidores.slice(0, i)
-            
+
             i += 1
         } while (!nome_interno.includes(", "))
 
@@ -93,7 +96,7 @@ function lista_servidores(servidores, linha_corte, manutencao) {
 
         // Quantidade de servidores listados anteriormente
         qtd_servidores = (nome_servidores.match(/,/g) || []).length
-        
+
         nome_servidores = nome_servidores.slice(0, ultima_posicao)
         servidores_restantes = servidores.length - qtd_servidores
 

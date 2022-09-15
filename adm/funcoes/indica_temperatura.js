@@ -10,6 +10,6 @@ module.exports = (nascer_sol, por_sol, hora_atu, max, min, atu, chuva_neve) => {
 
     if (max === min && min === atu)
         status_temp = "`⏺️`"
-        
+
     return status_temp
 }

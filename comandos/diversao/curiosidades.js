@@ -4,24 +4,24 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('curiosidade')
-		.setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
-	async execute(client, interaction) {
-        
-        fetch('https://apisal.herokuapp.com/curiosidades')
-        .then(response => response.json())
-        .then(async res => {
+  data: new SlashCommandBuilder()
+    .setName('curiosidade')
+    .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
+  async execute(client, interaction) {
 
-            const embed = new EmbedBuilder()
-            .setColor(0x29BB8E)
-            .setAuthor({ name: res.nome, iconURL: res.foto })
-            .setDescription(res.texto)
+    fetch('https://apisal.herokuapp.com/curiosidades')
+      .then(response => response.json())
+      .then(async res => {
 
-            if (res.img_curio) // Imagem da curiosidade
-            embed.setImage(res.img_curio)
-        
-    		    return interaction.reply({ embeds: [embed] })
-        })
-	  }
+        const embed = new EmbedBuilder()
+          .setColor(0x29BB8E)
+          .setAuthor({ name: res.nome, iconURL: res.foto })
+          .setDescription(res.texto)
+
+        if (res.img_curio) // Imagem da curiosidade
+          embed.setImage(res.img_curio)
+
+        return interaction.reply({ embeds: [embed] })
+      })
+  }
 }

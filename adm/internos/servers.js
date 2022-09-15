@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({client, caso, guild}) => {
+module.exports = async ({ client, caso, guild }) => {
 
     if (client.user.id !== "833349943539531806") return
-    
+
     let ocasiao = "> 🟢 Server update", cor = 0x29BB8E
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
 
@@ -18,5 +18,5 @@ module.exports = async ({client, caso, guild}) => {
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 
-    client.channels.cache.get('846853254192693269').send({ embeds : [embed_sv] })
+    client.channels.cache.get('846853254192693269').send({ embeds: [embed_sv] })
 }

@@ -1,8 +1,8 @@
 module.exports = (string) => {
-    
+
     string = string.replaceAll("&quot;", "\"")
     string = string.replaceAll("&#039;", "'")
-    string = string.replaceAll("&amp;","&")
+    string = string.replaceAll("&amp;", "&")
     string = string.replaceAll("&#34;", "\"")
     string = string.replaceAll("&#39;", "'")
 

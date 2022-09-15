@@ -1,31 +1,35 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('anagram')
+    data: new SlashCommandBuilder()
+        .setName('anagram')
         .setNameLocalizations({
             "pt-BR": 'anagrama',
+            "es-ES": 'anagrama',
             "fr": 'anagramme'
         })
-		.setDescription('⌠😂⌡ Generates anagrams based on input')
+        .setDescription('⌠😂⌡ Generates anagrams based on input')
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
+            "es-ES": '⌠😂⌡ Genera anagramas basados ​​en la entrada',
             "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
+                    "es-ES": 'texto',
                     "fr": 'texte'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
+                    "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!'
                 })
                 .setRequired(true)),
-	async execute(client, interaction) {
-        
+    async execute(client, interaction) {
+
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         const texto_entrada = interaction.options.data[0].value
@@ -86,14 +90,14 @@ module.exports = {
             exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`
 
         const anagrama = new EmbedBuilder()
-        .setTitle(`:abc: ${diversao[5]["anagrama"]}`)
-        .setColor(cor_embed)
-        .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-        .setDescription(`${diversao[5]["entrada"]}: \`${texto_entrada}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
-        .setFooter({ text: `${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
-        
-		return interaction.reply({ embeds: [anagrama] })
-	}
+            .setTitle(`:abc: ${diversao[5]["anagrama"]}`)
+            .setColor(cor_embed)
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setDescription(`${diversao[5]["entrada"]}: \`${texto_entrada}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
+            .setFooter({ text: `${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
+
+        return interaction.reply({ embeds: [anagrama] })
+    }
 }
 
 function shuffleArray(arr) {
@@ -101,6 +105,6 @@ function shuffleArray(arr) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]]
     }
-    
+
     return arr
 }

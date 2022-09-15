@@ -3,11 +3,11 @@ const fs = require('fs')
 
 let trava_edicao = 0
 
-module.exports = async ({client, caso}) => {
-    
+module.exports = async ({ client, caso }) => {
+
     if (trava_edicao === 1) return
     trava_edicao = 1
-    
+
     const bot = {
         comandos_disparados: 0,
         exp_concedido: 0,
@@ -18,14 +18,14 @@ module.exports = async ({client, caso}) => {
 
     if (existsSync(`./arquivos/data/relatorio.json`)) {
         delete require.cache[require.resolve(`../arquivos/data/relatorio.json`)]
-        try{
-            const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails} = require(`../arquivos/data/relatorio.json`)
+        try {
+            const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails } = require(`../arquivos/data/relatorio.json`)
             bot.comandos_disparados = comandos_disparados
             bot.exp_concedido = exp_concedido
             bot.msgs_lidas = msgs_lidas
             bot.msgs_validas = msgs_validas
             bot.epic_embed_fails = epic_embed_fails
-        }catch(err) {
+        } catch (err) {
             bot.comandos_disparados = 0
             bot.exp_concedido = 0
             bot.msgs_lidas = 0
@@ -36,9 +36,9 @@ module.exports = async ({client, caso}) => {
         }
     }
 
-    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function(err, data) {
-        
-        if (caso === "messages"){
+    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
+
+        if (caso === "messages") {
             bot.exp_concedido += parseFloat(data)
             bot.msgs_validas += 1
             bot.msgs_lidas += 1
@@ -53,7 +53,7 @@ module.exports = async ({client, caso}) => {
 
         if (caso === "msg_enviada")
             bot.msgs_lidas += 1
-        
+
         if (caso === "epic_embed")
             bot.epic_embed_fails += 1
 
