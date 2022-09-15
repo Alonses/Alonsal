@@ -11,6 +11,7 @@ module.exports = {
         .setDescription('⌠💡⌡ Search Minecraft items')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise itens do Minecraft',
+            "es-ES": '⌠💡⌡ Buscar elementos de Minecraft',
             "fr": '⌠💡⌡ Rechercher des articles Minecraft'
         })
         .addStringOption(option =>
@@ -18,6 +19,7 @@ module.exports = {
                 .setDescription('Insert an item')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Insira um item',
+                    "es-ES": 'Insertar un artículo',
                     "fr": 'Insérer un élément'
                 })),
     async execute(client, interaction) {

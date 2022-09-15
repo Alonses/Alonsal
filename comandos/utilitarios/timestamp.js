@@ -8,6 +8,7 @@ module.exports = {
         .setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
+            "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
             "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa'
         })
         .addSubcommand(subcommand =>
@@ -16,17 +17,20 @@ module.exports = {
                 .setDescription('⌠💡⌡ Custom Timestamp')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp customizado',
+                    "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
                     "fr": '⌠💡⌡ Horodatage personnalisé'
                 })
                 .addStringOption(option =>
                     option.setName("time")
                         .setNameLocalizations({
                             "pt-BR": 'tempo',
+                            "es-ES": 'tiempo',
                             "fr": 'temps'
                         })
                         .setDescription("The value to be converted")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Valor a ser convertido',
+                            "es-ES": 'El valor a convertir',
                             "fr": 'La valeur à convertir'
                         }))
                 .addStringOption(option =>
@@ -34,6 +38,7 @@ module.exports = {
                         .setDescription('A quick date to book')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma data rápida para marcar',
+                            "es-ES": 'Una fecha rápida para reservar',
                             "fr": 'Une date rapide à réserver'
                         })
                         .addChoices(
@@ -48,11 +53,13 @@ module.exports = {
                 .setName('now')
                 .setNameLocalizations({
                     "pt-BR": 'agora',
+                    "es-ES": 'ahora',
                     "fr": 'present'
                 })
                 .setDescription('⌠💡⌡ Current timestamp')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp atual',
+                    "es-ES": '⌠💡⌡ Marca de tiempo actual',
                     "fr": '⌠💡⌡ Horodatage actuel'
                 })),
     async execute(client, interaction) {

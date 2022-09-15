@@ -5,7 +5,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pulapredios')
-        .setDescription('⌠🎲⌡ O Jogo do Pula!'),
+        .setDescription('⌠🎲|🇧🇷⌡ O Jogo do Pula!'),
     async execute(client, interaction) {
 
         const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
