@@ -3,20 +3,35 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('jokenpo')
-        .setDescription('⌠🎲⌡ Jogue jokenpô')
+        .setDescription('⌠🎲⌡ Play jokenpo')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠🎲⌡ Jogue jokenpô',
+            "es-ES": '⌠🎲⌡ Juega jokenpo',
+            "fr": '⌠🎲⌡ Jouer au jokenpo'
+        })
         .addStringOption(option =>
-            option.setName('escolha')
-                .setDescription('Pedra, papel ou tesoura?')),
+            option.setName('choise')
+                .setNameLocalizations({
+                    "pt-BR": 'escolha',
+                    "es-ES": 'eleccion',
+                    "fr": 'choix'
+                })
+                .setDescription('What\'s your choice?')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Qual a sua escolha?',
+                    "es-ES": '¿Cual es tu eleccion?',
+                    "fr": 'Quel est ton choix?'
+                })
+                .addChoices(
+                    { name: '🗿', value: 'pedra' },
+                    { name: '🧻', value: 'papel' },
+                    { name: '✂️', value: 'tesoura' }
+                )),
     async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
-        const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-
         let jooj = ["pedra", "papel", "tesoura", "pedra"], escolha
-
-        if (idioma_definido === "en-us")
-            jooj = ["rock", "paper", "scissors", "rock"]
-
+        
         if (interaction.options.data.length > 0)
             escolha = (interaction.options.data[0].value).toLowerCase()
 
@@ -25,9 +40,6 @@ module.exports = {
 
         if (interaction.options.data.length > 0)
             player = jooj.indexOf(escolha)
-
-        if (player === -1) // Valor não encontrado
-            return interaction.reply(jogos[3]["aviso_1"])
 
         let bot = Math.round(2 * Math.random()), ganhador = ":thumbsdown:"
 
@@ -42,7 +54,7 @@ module.exports = {
 
         let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]`
 
-        if (idioma_definido === "en-us")
+        if (idioma_definido !== "pt-br" && idioma_definido !== "al-br")
             mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]`
 
         return interaction.reply(mensagem)

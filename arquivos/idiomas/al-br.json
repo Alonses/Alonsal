@@ -99,7 +99,8 @@
             "rodape": "O jogo pode não rodar direito em celulares."
         },
         {
-            "aviso_1": "Escreve `.aco cara` ou `.aco coroa` para rodar uns jogos ai"
+            "acertou": "Você acertou! Parabéns!",
+            "errou": "Perdeu playboy!"
         },
         {
             "aviso_1": "Informe **apenas números** para a quantidade de dados e número de faces.",

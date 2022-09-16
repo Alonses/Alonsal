@@ -99,7 +99,8 @@
             "rodape": "Es posible que el juego no funcione correctamente en teléfonos móviles."
         },
         {
-            "aviso_1": "Informe cara ou coroa como `/coin cara` ou `/coin coroa` para testar sua sorte!"
+            "acertou": "¡Eres afortunado!",
+            "errou": "¡Equivocado!"
         },
         {
             "aviso_1": "Ingrese **solo números** para la cantidad de dados y la cantidad de caras.",

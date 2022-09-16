@@ -99,7 +99,8 @@
             "rodape": "Le jeu peut ne pas fonctionner correctement sur les téléphones portables."
         },
         {
-            "aviso_1": "Entrez pile ou face en tant que `.aco face` ou `.aco pilo` pour tester votre chance!"
+            "acertou": "Tu as raison! Toutes nos félicitations!",
+            "errou": "Faux cette fois !"
         },
         {
             "aviso_1": "Entrez **des chiffres uniquement** pour le nombre de dés et le nombre de faces",
