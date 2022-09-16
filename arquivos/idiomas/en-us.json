@@ -99,7 +99,8 @@
             "rodape": "The game may not run properly on mobile phones."
         },
         {
-            "aviso_1": "Enter heads or tails as `.aco heads` or `.aco tails` to test your luck!"
+            "acertou": "You're right! Congratulations!",
+            "errou": "You missed!"
         },
         {
             "aviso_1": "Enter **numbers only** for the amount of dice and number of faces",
