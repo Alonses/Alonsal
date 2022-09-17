@@ -65,7 +65,7 @@ module.exports = {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         // Validando existência de badges antes do comando
-        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}/badges.json`))
+        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         let entrada = interaction.options.data[0].options, new_badge = ""
@@ -86,8 +86,8 @@ module.exports = {
 
         let all_badges = []
 
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
-        const { badge_list } = require(`../../arquivos/data/badges/${user.id}/badges.json`)
+        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
+        const { badge_list } = require(`../../arquivos/data/badges/${user.id}.json`)
 
         badge_list.forEach(valor => {
             all_badges.push(parseInt(Object.keys(valor)[0]))
@@ -110,8 +110,8 @@ module.exports = {
 
         user.badge_list = badge_list
 
-        writeFileSync(`./arquivos/data/badges/${user.id}/badges.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
+        writeFileSync(`./arquivos/data/badges/${user.id}.json`, JSON.stringify(user))
+        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
 
         if (ent_fixar.includes(interaction.options.getSubcommand()))
             interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` ${diversao[9]["badge_fixada"]}`, ephemeral: true })

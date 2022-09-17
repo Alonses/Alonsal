@@ -17,13 +17,13 @@ module.exports = {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         // Procurando pelas badges antes do comando
-        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}/badges.json`))
+        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${diversao[9]["suas_badges"]}`)
             .setColor(0x29BB8E)
-            .setDescription(busca_badges(client, 'all', interaction.user.id))
+            .setDescription(busca_badges(client, 'all', interaction.user.id, interaction))
             .setFooter({ text: diversao[9]["rodape"] })
 
         interaction.reply({ embeds: [embed], ephemeral: true })

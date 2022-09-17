@@ -88,6 +88,7 @@
             "error_1": "Vous n'avez aucun badge à afficher!",
             "error_2": "Vous n'avez pas ce badge à épingler",
             "suas_badges": "Vos badges",
+            "ganhou": "gagné en",
             "badge_fixada": "épinglé à votre profil!",
             "badge_removida": "supprimé de votre profil",
             "rodape": "Utilisez la commande /badges fixar:<nom> pour épingler un!"

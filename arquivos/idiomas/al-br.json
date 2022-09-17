@@ -88,6 +88,7 @@
             "error_1": "Você não tem nenhuma badge para ver!",
             "error_2": "Você não tem essa badge",
             "suas_badges": "Suas Badges",
+            "ganhou": "ganhou em",
             "badge_fixada": "colada no seu perfil!",
             "badge_removida": "tirada do seu perfil",
             "rodape": "Usa o comando /badges fixar:<nome> pra colar uma!"
