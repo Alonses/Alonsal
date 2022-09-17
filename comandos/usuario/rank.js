@@ -168,12 +168,13 @@ module.exports = {
             }
 
             let embed, img_embed
+            let user = client.custom.getUser(interaction.user.id)
 
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
@@ -201,13 +202,14 @@ module.exports = {
                         usuario_alvo.push(0)
 
                     let fixed_badge = ""
+                    const user = client.custom.getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/badges/${user_alvo.id}.json`))
                         fixed_badge = busca_badges(client, 'fixed', user_alvo.id)
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(

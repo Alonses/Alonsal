@@ -61,6 +61,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -110,7 +111,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
 
         if (aviso.length > 0)

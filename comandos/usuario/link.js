@@ -62,16 +62,20 @@ module.exports = {
             id: interaction.user.id,
             lang: null,
             steam: null,
-            lastfm: null
+            lastfm: null,
+            color: null,
+            money: 0
         }
 
         if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
             delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-            const { lang, steam, lastfm } = require(`../../arquivos/data/user/${user.id}.json`)
+            const { lang, steam, lastfm, color, money } = require(`../../arquivos/data/user/${user.id}.json`)
 
             user.lang = lang
             user.steam = steam
             user.lastfm = lastfm
+            user.color = color
+            user.money = money
         }
 
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value

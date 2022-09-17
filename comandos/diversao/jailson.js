@@ -27,6 +27,7 @@ module.exports = {
 	async execute(client, interaction) {
 
 		const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+		const user = client.custom.getUser(interaction.user.id)
 
 		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true })
 
@@ -43,7 +44,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
 						.setThumbnail(res.foto)
-						.setColor(0x29BB8E)
+						.setColor(user.color)
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.editReply({ embeds: [embed] })

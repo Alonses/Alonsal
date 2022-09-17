@@ -10,23 +10,11 @@ function setDefault(lang) {
     default_lang = lang
 }
 
-function setLang(interaction, lang) {
+function setLang(client, interaction, lang) {
 
-    const user = {
-        id: interaction.user.id,
-        lang: lang,
-        steam: null,
-        lastfm: null
-    }
-
-    if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../arquivos/data/user/${user.id}.json`)]
-        const { steam, lastfm } = require(`../arquivos/data/user/${user.id}.json`)
-
-        user.steam = steam
-        user.lastfm = lastfm
-    }
-
+    const user = client.custom.getUser(interaction.user.id)
+    user.lang = lang
+    
     // Salvando os dados do usuário
     writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
     delete require.cache[require.resolve(`../arquivos/data/user/${user.id}.json`)]
@@ -41,15 +29,9 @@ function getLang(elemento) {
     if (isNaN(parseInt(elemento)))
         id_user = elemento.user.id
 
-    // Buscando o idioma usado pelo user
-    const user = {
-        id: id_user,
-        lang: null
-    }
-
-    if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../arquivos/data/user/${user.id}.json`)]
-        const { lang } = require(`../arquivos/data/user/${user.id}.json`)
+    if (existsSync(`./arquivos/data/user/${id_user}.json`)) {
+        delete require.cache[require.resolve(`../arquivos/data/user/${id_user}.json`)]
+        const { lang } = require(`../arquivos/data/user/${id_user}.json`)
 
         if (!lang)
             if (idiomas.includes((elemento.locale).toLowerCase()))

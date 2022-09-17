@@ -6,14 +6,19 @@
             "suporte": "Apoyo"
         }
     ],
+    "customizacao": [
+        {
+            "daily": "¡Ya has recogido tu diario! Usa el comando de nuevo",
+            "error": "¡Recolectado diariamente! Recibiste `B$valor_repl` créditos, vuelve mañana para obtener más"
+        },
+        {
+            "cor_ativa": "¡Ya estás usando este color!",
+            "cor_att": "¡Color actualizado! Ahora sus embeds estarán en el color seleccionado",
+            "sem_money": "¡No tienes `B$preco_repl` créditos para ese color!"
+        }
+    ],
     "inicio": [
         {
-            "menciona": "¡Hola! Escribe `/help` para ver la lista de comandos :D\n:earth_americas: | Use el comando `/idioma` para ver la lista de idiomas disponibles",
-            "aguarde": "Mantener",
-            "cooldown": "segundos para ejecutar ese comando de nuevo",
-            "permissao_1": "no tienes el permiso",
-            "permissao_2": "para ejecutar este comando.",
-            "error_1": "Errrrou, o uso correto do comando é",
             "epic_embed_fail": "Ocurrió un error al intentar ejecutar este comando, _no es común, pero sucede_, ¡he notificado a los desarrolladores que eliminen este baidu lo antes posible!\nDisculpe las molestias"
         },
         {

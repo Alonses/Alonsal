@@ -9,12 +9,14 @@ module.exports = {
     .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
   async execute(client, interaction) {
 
+    const user = client.custom.getUser(interaction.user.id)
+
     fetch('https://apisal.herokuapp.com/curiosidades')
       .then(response => response.json())
       .then(async res => {
 
         const embed = new EmbedBuilder()
-          .setColor(0x29BB8E)
+          .setColor(user.color)
           .setAuthor({ name: res.nome, iconURL: res.foto })
           .setDescription(res.texto)
 

@@ -26,6 +26,7 @@ module.exports = {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let objeto_encontrado = false, i = 0, pesquisa_crua = ""
         const emoji_suv = busca_emoji(client, emojis.mc_coracao)
@@ -199,7 +200,7 @@ module.exports = {
 
                                     const embed = new EmbedBuilder()
                                         .setTitle(nome_item)
-                                        .setColor(0x29BB8E)
+                                        .setColor(user.color)
                                         .setImage(url)
                                         .addFields(
                                             {

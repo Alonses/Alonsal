@@ -31,9 +31,10 @@ module.exports = {
     async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         const texto_entrada = interaction.options.data[0].value
-        let cor_embed = 0x29BB8E
+        let cor_embed = user.color
 
         function duplicateCount(texto_entrada) {
             const charMap = {}

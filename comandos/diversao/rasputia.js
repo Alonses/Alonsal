@@ -39,6 +39,7 @@ module.exports = {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else {
 
+			const user = client.custom.getUser(interaction.user.id)
 			await interaction.deferReply()
 
 			fetch('https://apisal.herokuapp.com/random?rasputia')
@@ -48,7 +49,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
 						.setThumbnail(res.foto)
-						.setColor(0x29BB8E)
+						.setColor(user.color)
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.editReply({ embeds: [embed] })

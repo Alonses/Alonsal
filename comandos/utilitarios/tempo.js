@@ -44,6 +44,7 @@ module.exports = {
 
         let idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         if (idioma_definido == "al-br") idioma_definido = "pt-br"
         const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
@@ -240,7 +241,7 @@ module.exports = {
 
                             const clima_atual = new EmbedBuilder()
                                 .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
-                                .setColor(0x29BB8E)
+                                .setColor(user.color)
                                 .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                                 .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                                 .addFields(

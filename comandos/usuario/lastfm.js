@@ -60,6 +60,8 @@ module.exports = {
 
         alvo_id = interaction.options.getUser('user') || interaction.user.id
 
+        const user = client.custom.getUser(alvo_id)
+
         if (!texto_entrada) { // Verificando se o usuário possui link com a steam
             if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {
                 delete require.cache[require.resolve(`../../arquivos/data/user/${alvo_id}.json`)]
@@ -195,7 +197,7 @@ module.exports = {
                                     .setTitle(utilitarios[20]["perfil_musical"].replace("nome_repl", nome))
                                     .setThumbnail(avatar)
                                     .setURL(usuario_alvo)
-                                    .setColor(0x29BB8E)
+                                    .setColor(user.color)
                                     .addFields(
                                         {
                                             name: `:saxophone: ${utilitarios[20]["geral"]}`,

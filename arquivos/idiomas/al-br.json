@@ -6,14 +6,19 @@
             "suporte": "Suporte"
         }
     ],
+    "customizacao": [
+        {
+            "daily": "Ocê já coletou seu daily! Usa dnv",
+            "error": "Daily coletado! Ocê recebeu `B$valor_repl` Bufunfas, volta amanhã pra mais"
+        },
+        {
+            "cor_ativa": "Ocê já tá usando essa cor!",
+            "cor_att": "Cor alterada! Agora seus _epic embed fails_ serão na nova cor",
+            "sem_money": "Ocê n tem `B$preco_repl` Bufunfas para ter essa cor!"
+        }
+    ],
     "inicio": [
         {
-            "menciona": "Aoba! Digite `.ahelp` ou `.ah` para ver a lista de comandos :D\n:earth_americas: | Use o comando `.alang` para ver a lista de idiomas disponíveis",
-            "aguarde": "Guentae uns",
-            "cooldown": "segundos que eu executo dnv",
-            "permissao_1": "Tu não pode tem permissão",
-            "permissao_2": "para usar esse comando",
-            "error_1": "Errrrou, tem que usar o comando assim ó",
             "epic_embed_fail": "Deu PT aq ao rodar esse comando, acontece toda hora, chora boi, até notifiquei os salafrarios que me mantém, tudo numa boa"
         },
         {
@@ -85,8 +90,8 @@
             "error_rc": "Tô com preguiça para carregar o rank de comandos agr, tenta dnv dps"
         },
         {
-            "error_1": "Você não tem nenhuma badge para ver!",
-            "error_2": "Você não tem essa badge",
+            "error_1": "Ocê não tem nenhuma badge para ver!",
+            "error_2": "Ocê não tem essa badge",
             "suas_badges": "Suas Badges",
             "ganhou": "ganhou em",
             "badge_fixada": "colada no seu perfil!",
@@ -96,11 +101,11 @@
     ],
     "jogos": [
         {
-            "conteudo": "O 1° Jogo criado pelo Slondo!\nQuão longe você consegue correr? Teste agora mesmo!",
+            "conteudo": "O 1° Jogo criado pelo Slondo!\nQuão longe ocê consegue correr? Teste agora mesmo!",
             "rodape": "O jogo pode não rodar direito em celulares."
         },
         {
-            "acertou": "Você acertou! Parabéns!",
+            "acertou": "Ocê acertou! Parabéns!",
             "errou": "Perdeu playboy!"
         },
         {
@@ -116,7 +121,7 @@
         {
             "aviso_1": "Informe pelo menos 2 itens para eu escolher",
             "aviso_2": "Informe uma quantidade em números como `.ach [2 s a l 4 d @` e um valor maior que zero",
-            "escolho_todos": "Você informou um número maior ou igual a quantidade de opções, eu escolho todas!",
+            "escolho_todos": "Ocê informou um número maior ou igual a quantidade de opções, eu escolho todas!",
             "escolho": "Eu escolho..."
         },
         {
@@ -174,10 +179,10 @@
         {
             "ranking_guilds": "Ranking nos seguintes servidores",
             "dados_conhecidos": "> Seus dados conhecidos",
-            "resumo_dados": "Este é um resumo dos dados que salvamos de você",
-            "dica_rodape": "Você pode excluir todos os seus dados com o comando /data excluir",
+            "resumo_dados": "Este é um resumo dos dados que salvamos de ocê",
+            "dica_rodape": "Ocê pode excluir todos os seus dados com o comando /data excluir",
             "dados_removidos": "Seus dados foram removidos do",
-            "sem_dados": "Você não possui dados salvos por aqui ;)",
+            "sem_dados": "Ocê não possui dados salvos por aqui ;)",
             "server_desconhecido": "servidor desconhecido",
             "um_server": "e 1 outro servidor",
             "outros_servers": "e outros server_repl servidores"
@@ -188,7 +193,7 @@
             "titulo_idioma": "Idiomas disponíveis"
         },
         {
-            "permissao_1": "Você não possui a permissão `Gerenciar mensagens`",
+            "permissao_1": "Ocê não possui a permissão `Gerenciar mensagens`",
             "permissao_2": "Eu não tenho permissão a permissão `Gerenciar mensagens`",
             "aviso_1": "Informe o número de mensagens q deseja remover\nTipo, `.acl 20`",
             "aviso_2": ":warning: | Informe um número entre `0` e `100` para remover",
@@ -204,8 +209,8 @@
             "aviso_5": "Envie uma imagem com tamanho menor que 250kb para usar de emoji",
             "aviso_6": "Inclua o emoji para remover\nTipo,",
             "aviso_7": "Informe um emoji para ser removido",
-            "aviso_8": "Informe um emoji customizado deste servidor para ser removido\nVocê também pode usar o ID, como `.armoji 914227763978838116` tipo",
-            "permissao_1": "Você não possui permissões para gerenciar emojis neste servidor",
+            "aviso_8": "Informe um emoji customizado deste servidor para ser removido\nOcê também pode usar o ID, como `.armoji 914227763978838116` tipo",
+            "permissao_1": "Ocê não possui permissões para gerenciar emojis neste servidor",
             "permissao_2": "Eu não possuo permissões para `gerenciar emojis` neste servidor",
             "requebrando": "requebrando",
             "sucesso_1": "O Emoji foi adicionado!",
@@ -215,10 +220,10 @@
             "error_3": "Não foi possível remover este emoji, tente novamente"
         },
         {
-            "permissao_1": "Você não possui permissões para gerenciar o servidor"
+            "permissao_1": "Ocê não possui permissões para gerenciar o servidor"
         },
         {
-            "permissao_1": "Você não pode banir ou expulsar membros",
+            "permissao_1": "Ocê não pode banir ou expulsar membros",
             "permissao_2": "Eu não posso banir ou expulsar membros",
             "user_id": "Informe o ID de um usuário",
             "razao": "Razão não informada",
@@ -248,7 +253,7 @@
             "permissao_2": "Eu não posso bloquear este canal, eu preciso das permissões `Gerenciar Canais` & `Gerenciar cargos` para isto"
         },
         {
-            "permissao_1": "Você não pode gerenciar os membros deste servidor",
+            "permissao_1": "Ocê não pode gerenciar os membros deste servidor",
             "sucesso": "A Experiência de `nick_repl` foi alterada para `exp_repl exp`, seu novo nível é `nivel_repl`",
             "error_2": "Houve um erro inesperado e não foi possível alterar o exp deste usuário no momento.\nPor Favor, tente novamente mais tarde"
         }
@@ -304,7 +309,7 @@
         },
         {
             "aviso_1": "Bota um texto e um alvo para remover\nTipo `.arm o slondo` ou `.arp i o slindo`",
-            "remove_tudo": "Você removeu tudo, vai dá não"
+            "remove_tudo": "Ocê tirou tudo, vai dá não"
         },
         {
             "aviso_1": "Bota o nome de um lugar aí\nTipo `.at sao paulo`",
@@ -494,7 +499,7 @@
             "obsessao": "Favorita da semana",
             "error_1": "Esse perfil não existe, tenta dnv",
             "sem_link": "Esse corno não me linkou com a LastFM, tenta dnv usando o nome personalizado dele",
-            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` você não precisará escrever seu nome toda hora :P"
+            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` ocê não precisará escrever seu nome toda hora :P"
         }
     ]
 }

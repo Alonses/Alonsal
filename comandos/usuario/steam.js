@@ -69,6 +69,8 @@ module.exports = {
                 return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
         }
 
+        const user = client.custom.getUser(alvo_id)
+
         try {
             const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
 
@@ -322,7 +324,7 @@ module.exports = {
                         .setURL(usuario_alvo)
                         .setAuthor({ name: "Steam", iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0" })
                         .setThumbnail(avatar_user)
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .addFields(
                             {
                                 name: `:ninja: ${utilitarios[16]["nivel"]}`,

@@ -20,9 +20,10 @@ module.exports = {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const bolo = busca_emoji(client, emojis.mc_bolo)
+        const user = client.custom.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setTitle(`${manutencao[5]["apoie"]} ${bolo}`)
             .setURL("https://picpay.me/slondo")
             .setDescription(manutencao[5]["escaneie"])

@@ -30,6 +30,7 @@ module.exports = {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else {
 
+			const user = client.custom.getUser(interaction.user.id)
 			await interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
@@ -39,7 +40,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle('Cazalbé')
 						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
-						.setColor(0x29BB8E)
+						.setColor(user.color)
 						.setDescription(`${res.question}\n${res.answer}`)
 
 					interaction.editReply({ embeds: [embed] })
