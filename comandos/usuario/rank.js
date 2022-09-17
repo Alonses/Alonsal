@@ -169,7 +169,7 @@ module.exports = {
 
             let embed, img_embed
 
-            fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
+            fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)

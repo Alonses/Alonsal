@@ -465,7 +465,8 @@
             "nome": "Nome",
             "tempo_jogado": "Tempo jogado",
             "hours": "horas",
-            "minutes": "minutos"
+            "minutes": "minutos",
+            "sem_link": "Esse corno não me linkou com a Steam, tenta dnv usando o nome personalizado dele"
         },
         {
             "aviso_1": "Escreva pelo menos uma operação básica para isso",
@@ -491,7 +492,8 @@
             "perfil_musical": "Perfil musical de nome_repl",
             "em_scrobble": "Scrobblando agora",
             "obsessao": "Favorita da semana",
-            "error_1": "Esse perfil não existe, tenta dnv"
+            "error_1": "Esse perfil não existe, tenta dnv",
+            "sem_link": "Esse corno não me linkou com a LastFM, tenta dnv usando o nome personalizado dele"
         }
     ]
 }

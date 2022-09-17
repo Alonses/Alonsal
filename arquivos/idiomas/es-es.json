@@ -474,7 +474,8 @@
             "nome": "Nombre",
             "tempo_jogado": "Tiempo jugado",
             "hours": "horas",
-            "minutes": "minutos"
+            "minutes": "minutos",
+            "sem_link": "El usuario mencionado no ha vinculado a Alonsal con Steam, ¡intenta buscar su nombre personalizado!"
         },
         {
             "aviso_1": "Introduzca al menos una operación básica para calcular",
@@ -510,7 +511,8 @@
             "perfil_musical": "Perfil musical de nome_repl",
             "em_scrobble": "En Scrobble ahora mismo",
             "obsessao": "Obsesión del momento",
-            "error_1": "Este perfil no existe, intente nuevamente"
+            "error_1": "Este perfil no existe, intente nuevamente",
+            "sem_link": "El usuario mencionado no ha vinculado a Alonsal con LastFM, ¡intenta buscar su nombre personalizado!"
         }
     ]
 }

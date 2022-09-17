@@ -36,7 +36,7 @@ module.exports = async ({ client, caso }) => {
         }
     }
 
-    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
+    fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
 
         if (caso === "messages") {
             bot.exp_concedido += parseFloat(data)

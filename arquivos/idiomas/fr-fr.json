@@ -496,7 +496,8 @@
             "jogo_favorito": "Jeu préféré",
             "capturas": "Impressions",
             "nome": "Nom",
-            "tempo_jogado": "Temps joué"
+            "tempo_jogado": "Temps joué",
+            "sem_link": "L'utilisateur mentionné n'a pas lié Alonsal à Steam, essayez de rechercher son nom personnalisé !"
         },
         {
             "aviso_1": "Entrez au moins une opération de base pour calculer",
@@ -532,7 +533,8 @@
             "perfil_musical": "Profil musical de nome_repl",
             "em_scrobble": "Sur Scrobble en ce moment",
             "obsessao": "Coup de coeur du moment",
-            "error_1": "Ce profil n'existe pas, veuillez réessayer"
+            "error_1": "Ce profil n'existe pas, veuillez réessayer",
+            "sem_link": "L'utilisateur mentionné n'a pas lié Alonsal à LastFM, essayez de rechercher son nom personnalisé !"
         }
     ]
 }
