@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
-const fs = require('fs')
+const { writeFileSync, existsSync, unlinkSync } = require("fs")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,13 +40,27 @@ module.exports = {
                     "es-ES": 'El canal que se utilizará',
                     "fr": 'Le canal qui sera utilisé'
                 }))
+        .addStringOption(option =>
+            option.setName('language')
+                .setNameLocalizations({
+                    "pt-BR": 'idioma',
+                    "es-ES": 'idioma',
+                    "fr": 'langue'
+                })
+                .setDescription('O idioma que será utilizado')
+                .addChoices(
+                    { name: 'Português', value: 'pt-br' },
+                    { name: 'English', value: 'en-us' },
+                    { name: 'Español', value: 'es-es' },
+                    { name: 'Français', value: 'fr-fr' },
+                    { name: 'Alonsês', value: 'al-br' }
+                )
+        )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator)
     ,
     async execute(client, interaction) {
 
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const { canal_games } = require('../../arquivos/data/games/canal_games.json')
-
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== "665002572926681128")
@@ -54,18 +68,23 @@ module.exports = {
 
         let opcao_remove = false, entradas = interaction.options.data
 
+        const ent_canal = ["canal", "channel", "salon"], ent_cargo = ["cargo", "role"], ent_idioma = ["idioma", "language", "langue"]
+
         const notificador = {
+            canal: null,
             cargo: null,
-            canal: null
+            idioma: null
         }
 
         // Coletando todas as entradas
         entradas.forEach(valor => {
-
-            if (valor.name == "cargo")
+            if (ent_cargo.includes(valor.name))
                 notificador.cargo = valor.value
 
-            if (valor.name == "canal") {
+            if (ent_idioma.includes(valor.name))
+                notificador.idioma = valor.value
+
+            if (ent_canal.includes(valor.name)) {
                 notificador.canal = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
@@ -73,68 +92,33 @@ module.exports = {
             }
         })
 
-        if (!notificador.canal || !notificador.cargo)
-            opcao_remove = "rem"
+        if (!notificador.idioma)
+            notificador.idioma = client.idioma.getLang(interaction)
 
-        const outputArray = [] // Transfere todos os dados do JSON para um array
-        for (const element in canal_games) {
+        let mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) não recebe mais atts de jogos grátis`
 
-            const canal = canal_games[element][0]
-            const cargo = canal_games[element][1]
+        if (!notificador.canal || !notificador.cargo) { // Removendo o anúncio do servidor 
 
-            if (opcao_remove !== "rem" || element !== interaction.guild.id) { // Remove um servidor/canal da lista de clientes no json
-                outputArray.push(
-                    constructJson(element, [canal, cargo])
-                )
-            }
+            opcao_remove = true
+
+            if (existsSync(`./arquivos/data/games/${interaction.guild.id}.json`))
+                unlinkSync(`./arquivos/data/games/${interaction.guild.id}.json`)
         }
 
-        for (let i = 0; i < outputArray.length; i++) { // Procura pelo ID do server e altera o idioma
-            const obj = outputArray[i]
-            const key = Object.keys(canal_games)
+        if (!opcao_remove) {
+            writeFileSync(`./arquivos/data/games/${interaction.guild.id}.json`, JSON.stringify(notificador))
+            delete require.cache[require.resolve(`../../arquivos/data/games/${interaction.guild.id}.json`)]
 
-            if (key[i] === interaction.guild.id && opcao_remove !== "rem") {
-                obj[interaction.guild.id][0] = notificador.canal
-                obj[interaction.guild.id][1] = notificador.cargo
-                break
-            }
+            mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
         }
 
-        if (opcao_remove !== "rem") // Registra o servidor caso o mesmo não esteja registrado
-            outputArray.push(constructJson(interaction.guild.id, [notificador.canal, notificador.cargo]))
-
-        let canal_servidor = JSON.stringify(outputArray, null, 4)
-        canal_servidor = canal_servidor.replace("[", "")
-        canal_servidor = canal_servidor.slice(0, -1)
-
-        canal_servidor = canal_servidor.replaceAll("{", "").replaceAll("}", "")
-        canal_servidor = `{ \"canal_games\" : { ${canal_servidor} } }`
-
-        canal_servidor = JSON.parse(canal_servidor) // Ajusta o arquivo
-        canal_servidor = JSON.stringify(canal_servidor, null, 4)
-
-        fs.writeFile('./arquivos/data/games/canal_games.json', canal_servidor, (err) => {
-            if (err) throw err
-
-            let mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
-
-            if (opcao_remove === "rem")
-                mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) não recebe mais atts de jogos grátis`
-
-            client.channels.cache.get('872865396200452127').send(mensagem)
-        })
-
-        delete require.cache[require.resolve('../../arquivos/data/games/canal_games.json')]
+        client.channels.cache.get('872865396200452127').send(mensagem)
 
         let feedback_user = moderacao[6]["anuncio_games"]
 
-        if (opcao_remove === "rem")
+        if (opcao_remove)
             feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`
 
         interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
     }
-}
-
-function constructJson(jsonGuild, arrayValores) {
-    return { [jsonGuild]: arrayValores }
 }
