@@ -36,9 +36,14 @@ function getLang(elemento) {
 
     const idiomas = ["pt-br", "es-es", "fr", "en-us"]
 
+    let id_user = elemento
+
+    if (isNaN(parseInt(elemento)))
+        id_user = elemento.user.id
+
     // Buscando o idioma usado pelo user
     const user = {
-        id: elemento.user.id,
+        id: id_user,
         lang: null
     }
 
@@ -47,7 +52,7 @@ function getLang(elemento) {
         const { lang } = require(`../arquivos/data/user/${user.id}.json`)
 
         if (!lang)
-            if(idiomas.includes((elemento.locale).toLowerCase()))
+            if (idiomas.includes((elemento.locale).toLowerCase()))
                 return elemento.locale.toLowerCase()
             else default_lang
         else
