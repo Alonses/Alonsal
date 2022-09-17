@@ -512,7 +512,8 @@
             "em_scrobble": "Em Scrobble no momento",
             "obsessao": "Obsessão do momento",
             "error_1": "Este perfil não existe, tente novamente",
-            "sem_link": "O usuário mencionado não linkou o Alonsal com a LastFM, tente pesquisar pelo nome personalizado do mesmo!"
+            "sem_link": "O usuário mencionado não linkou o Alonsal com a LastFM, tente pesquisar pelo nome personalizado do mesmo!",
+            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` você não precisará escrever seu nome toda hora :P"
         }
     ]
 }

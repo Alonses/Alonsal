@@ -11,30 +11,52 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('steam')
-                .setDescription('⌠😂⌡ Summons a rasputia gif')
+                .setDescription('⌠👤⌡ Link to Steam')
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠😂⌡ Linkar a Steam',
-                    "fr": '⌠😂⌡ Invoque un rasputia gif'
+                    "pt-BR": '⌠👤⌡ Linkar ao Steam',
+                    "es-ES": '⌠👤⌡ Enlace a Steam',
+                    "fr": '⌠👤⌡ Lien vers Steam'
                 })
                 .addStringOption(option =>
-                    option.setName("nome")
-                        .setDescription("Seu nome na plataforma")
+                    option.setName("name")
+                        .setNameLocalizations({
+                            "pt-BR": 'nome',
+                            "es-ES": 'nombre',
+                            "fr": 'nom'
+                        })
+                        .setDescription("Your name on the platform")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Seu nome na plataforma',
+                            "es-ES": 'Tu nombre en la plataforma',
+                            "fr": 'Votre nom sur la plateforme'
+                        })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('lastfm')
-                .setDescription('⌠😂⌡ Summons a rasputia gif')
+                .setDescription('⌠👤⌡ Link to LastFM')
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠😂⌡ Linkar o LastFM',
-                    "fr": '⌠😂⌡ Invoque un rasputia gif'
+                    "pt-BR": '⌠👤⌡ Linkar ao LastFM',
+                    "es-ES": '⌠👤⌡ Enlace a LastFM',
+                    "fr": '⌠👤⌡ Lien vers LastFM'
                 })
                 .addStringOption(option =>
-                    option.setName("nome")
-                        .setDescription("Seu nome na plataforma")
+                    option.setName("name")
+                        .setNameLocalizations({
+                            "pt-BR": 'nome',
+                            "es-ES": 'nombre',
+                            "fr": 'nom'
+                        })
+                        .setDescription("Your name on the platform")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Seu nome na plataforma',
+                            "es-ES": 'Tu nombre en la plataforma',
+                            "fr": 'Votre nom sur la plateforme'
+                        })
                         .setRequired(true))),
     async execute(client, interaction) {
 
-        const idioma_definido = client.idioma.getLang(interaction)
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         const user = {
             id: interaction.user.id,
@@ -65,6 +87,6 @@ module.exports = {
         writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
         delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
 
-        return interaction.reply({ content: `${emoji_dancando} | O Alonsal foi vinculado a sua conta \`${plataforma}\`! Agora ao usar \`/${plataforma}\` você não precisará escrever seu nome toda hora :P`, ephemeral: true })
+        return interaction.reply({ content: `${emoji_dancando} | ${utilitarios[20]["new_link"].replaceAll("plat_repl", plataforma)}`, ephemeral: true })
     }
 }
