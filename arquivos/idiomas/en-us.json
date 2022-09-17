@@ -8,8 +8,8 @@
     ],
     "customizacao": [
         {
-            "daily": "You have already collected your daily! Use the command again",
-            "error": "Daily collected! You received `B$valor_repl` Bufunfas, check back tomorrow for more"
+            "daily": "Daily collected! You received `B$valor_repl` Bufunfas, check back tomorrow for more",
+            "error": "You have already collected your daily! Use the command again"
         },
         {
             "cor_ativa": "You are already using this color!",

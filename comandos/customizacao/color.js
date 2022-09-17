@@ -1,17 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 const busca_emoji = require('../../adm/funcoes/busca_emoji')
-
 const { emojis_dancantes, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('color')
-        .setDescription('⌠🖌️⌡ Change your color')
+        .setNameLocalizations({
+            "pt-BR": 'cor',
+            "es-ES": 'color',
+            "fr": 'couleur'
+        })
+        .setDescription('⌠🎉⌡ Change your color')
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🖌️⌡ Altere sua cor',
-            "es-ES": '⌠🖌️⌡ Cambia tu color',
-            "fr": '⌠🖌️⌡ Change ta couleur'
+            "pt-BR": '⌠🎉⌡ Altere sua cor',
+            "es-ES": '⌠🎉⌡ Cambia tu color',
+            "fr": '⌠🎉⌡ Change ta couleur'
         })
         .addStringOption(option =>
             option.setName('color')

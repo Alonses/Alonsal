@@ -8,8 +8,8 @@
     ],
     "customizacao": [
         {
-            "daily": "¡Ya has recogido tu diario! Usa el comando de nuevo",
-            "error": "¡Recolectado diariamente! Recibiste `B$valor_repl` créditos, vuelve mañana para obtener más"
+            "daily": "¡Recolectado diariamente! Recibiste `B$valor_repl` créditos, vuelve mañana para obtener más",
+            "error": "¡Ya has recogido tu diario! Usa el comando de nuevo"
         },
         {
             "cor_ativa": "¡Ya estás usando este color!",

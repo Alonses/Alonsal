@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 const busca_emoji = require('../../adm/funcoes/busca_emoji')
-
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
         const user = client.custom.getUser(interaction.user.id)
         let tempo_restante = Math.floor(Date.now() / 1000 - user.daily)
 
-        if (tempo_restante < 86400)
+        if (tempo_restante < 86400 && user.daily)
             return interaction.reply({ content: `:bank: | ${customizacao[0]["error"]} <t:${user.daily + 86400}:R>\n[ <t:${user.daily + 86400}:f> ]`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)

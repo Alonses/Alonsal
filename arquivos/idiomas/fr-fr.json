@@ -8,8 +8,8 @@
     ],
     "customizacao": [
         {
-            "daily": "Vous avez déjà encaissé votre paiement quotidien ! Utilisez à nouveau la commande",
-            "error": "Quotidiennement collecté ! Vous avez reçu `B$valor_repl` Bufunfas, revenez demain pour plus"
+            "daily": "Quotidiennement collecté! Vous avez reçu `B$valor_repl` Bufunfas, revenez demain pour plus",
+            "error": "Vous avez déjà encaissé votre paiement quotidien! Utilisez à nouveau la commande"
         },
         {
             "cor_ativa": "Vous utilisez déjà cette couleur!",
