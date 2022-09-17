@@ -12,7 +12,7 @@ module.exports = {
         const used = process.memoryUsage()
         let text = 'Uso de RAM:\n'
 
-        if (client.idioma.getLang(interaction) === "en-us")
+        if (client.idioma.getLang(interaction) !== "pt-br")
             text = 'RAM usage:\n'
 
         for (let key in used)
