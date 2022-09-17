@@ -496,7 +496,8 @@
             "jogo_favorito": "Favorite game",
             "capturas": "Prints",
             "nome": "Name",
-            "tempo_jogado": "Time played"
+            "tempo_jogado": "Time played",
+            "sem_link": "The mentioned user has not linked Alonsal with Steam, try searching for his custom name!"
         },
         {
             "aviso_1": "Enter at least one basic operation to calculate",
@@ -532,7 +533,8 @@
             "perfil_musical": "nome_repl's musical profile",
             "em_scrobble": "On Scrobble right now",
             "obsessao": "Obsession of the moment",
-            "error_1": "This profile does not exist, please try again"
+            "error_1": "This profile does not exist, please try again",
+            "sem_link": "The mentioned user has not linked Alonsal with LastFM, try searching for his custom name!"
         }
     ]
 }

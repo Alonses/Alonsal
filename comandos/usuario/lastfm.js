@@ -3,6 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const formata_texto = require('../../adm/funcoes/formata_texto')
+const { existsSync } = require('fs')
 
 let horas_tocadas, horas_passadas
 
@@ -16,26 +17,61 @@ module.exports = {
             "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM'
         })
         .addStringOption(option =>
-            option.setName('user')
-                .setNameLocalizations({
-                    "pt-BR": 'usuario',
-                    "es-ES": 'usuario',
-                    "fr": 'user'
-                })
+            option.setName('url')
                 .setDescription('The username')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
                     "fr": 'Nom de profil'
-                })
-                .setRequired(true)),
+                }))
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('A discord user')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Um usuário do discord',
+                    "es-ES": 'Un usuario de discord',
+                    "fr": 'Un utilisateur de discord'
+                })),
     async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction)
         idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
 
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const texto_entrada = interaction.options.data[0].value
+        let texto_entrada = ''
+
+        const params = {
+            url: null,
+            user: null
+        }
+
+        let entradas = interaction.options.data
+
+        entradas.forEach(valor => {
+            if (valor.name == "url")
+                params.url = valor.value
+
+            if (valor.name == "user")
+                params.user = valor.value
+        })
+
+        if (params.url)
+            texto_entrada = params.url
+
+        alvo_id = interaction.options.getUser('user') || interaction.user.id
+
+        if (!texto_entrada) { // Verificando se o usuário possui link com a steam
+            if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {
+                delete require.cache[require.resolve(`../../arquivos/data/user/${alvo_id}.json`)]
+                const { lastfm } = require(`../../arquivos/data/user/${alvo_id}.json`)
+
+                if (!lastfm)
+                    return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
+
+                texto_entrada = lastfm
+            } else
+                return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
+        }
 
         await interaction.deferReply()
 

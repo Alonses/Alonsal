@@ -2,6 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { existsSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,25 +14,60 @@ module.exports = {
             "fr": '⌠👤⌡ Profil Steam de quelqu\'un'
         })
         .addStringOption(option =>
-            option.setName('user')
-                .setNameLocalizations({
-                    "pt-BR": 'usuario',
-                    "es-ES": 'usuario',
-                    "fr": 'user'
-                })
+            option.setName('url')
                 .setDescription('The username')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
                     "fr": 'Nom de profil'
-                })
-                .setRequired(true)),
+                }))
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('A discord user')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Um usuário do discord',
+                    "es-ES": 'Un usuario de discord',
+                    "fr": 'Un utilisateur de discord'
+                })),
     async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
-        const texto_entrada = interaction.options.data[0].value
+        let texto_entrada = ''
+
+        const params = {
+            url: null,
+            user: null
+        }
+
+        let entradas = interaction.options.data
+
+        entradas.forEach(valor => {
+            if (valor.name == "url")
+                params.url = valor.value
+
+            if (valor.name == "user")
+                params.user = valor.value
+        })
+
+        if (params.url)
+            texto_entrada = params.url
+
+        alvo_id = interaction.options.getUser('user') || interaction.user.id
+
+        if (!texto_entrada) { // Verificando se o usuário possui link com a steam
+            if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {
+                delete require.cache[require.resolve(`../../arquivos/data/user/${alvo_id}.json`)]
+                const { steam } = require(`../../arquivos/data/user/${alvo_id}.json`)
+
+                if (!steam)
+                    return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
+
+                texto_entrada = steam
+            } else
+                return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
+        }
 
         try {
             const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
@@ -286,7 +322,6 @@ module.exports = {
                         .setURL(usuario_alvo)
                         .setAuthor({ name: "Steam", iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0" })
                         .setThumbnail(avatar_user)
-                        .setImage(background_user)
                         .setColor(0x29BB8E)
                         .addFields(
                             {
@@ -318,6 +353,10 @@ module.exports = {
                             }
                         )
                         .setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+
+
+                    if (background_user.length > 0)
+                        usuario_steam.setImage(background_user)
 
                     if (criacoes_user !== "")
                         usuario_steam.addFields(

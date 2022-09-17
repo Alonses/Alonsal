@@ -5,7 +5,7 @@ const formata_horas = require('../funcoes/formata_horas.js')
 
 module.exports = async ({ client, interaction }) => {
 
-    fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function (err, data) {
+    fs.readFile('./arquivos/data/ativacoes.txt', 'utf8', function (err, data) {
         if (err) throw err
 
         qtd_comandos = parseInt(data)
@@ -75,7 +75,7 @@ module.exports = async ({ client, interaction }) => {
             client.channels.cache.get('846151364492001280').send({ embeds: [embed] }) // Envia o log com os comandos do usuário
         }
 
-        fs.writeFile('./arquivos/data/contador/comandos.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
+        fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
             if (err) throw err
         })
     })

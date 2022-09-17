@@ -62,7 +62,7 @@ module.exports = async ({ client, message, caso }) => {
         }
 
     // Coletando o XP atual e somando ao total do usuário
-    fs.readFile('./arquivos/data/ranking/ranking.txt', 'utf8', function (err, data) {
+    fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
 
         if (caso == 'messages') {
             user.xp += parseInt(data)

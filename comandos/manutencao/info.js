@@ -24,8 +24,8 @@ module.exports = {
         const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)
         const emoji_bolo = busca_emoji(client, emojis.mc_bolo)
         const emoji_dancante = busca_emoji(client, emojis_dancantes)
-
-        fs.readFile('./arquivos/data/contador/comandos.txt', 'utf8', function (err, data) {
+        
+        fs.readFile('./arquivos/data/ativacoes.txt', 'utf8', function (err, data) {
             if (err) throw err;
 
             qtd_comandos = parseInt(data) + 1;
