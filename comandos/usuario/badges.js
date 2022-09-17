@@ -15,6 +15,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         // Procurando pelas badges antes do comando
         if (!existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
@@ -22,7 +23,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${diversao[9]["suas_badges"]}`)
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setDescription(busca_badges(client, 'all', interaction.user.id, interaction))
             .setFooter({ text: diversao[9]["rodape"] })
 

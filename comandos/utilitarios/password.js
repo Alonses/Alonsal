@@ -25,6 +25,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
         tamanho = tamanho <= 5 ? 12 : tamanho
@@ -38,7 +39,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)
             .setURL('https://password.kaspersky.com/')
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setDescription(`:passport_control: **${utilitarios[18]["primaria"]}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${utilitarios[18]["bonus"]}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({ text: utilitarios[18]["rodape"].replace("tamanho_repl", tamanho) })
 

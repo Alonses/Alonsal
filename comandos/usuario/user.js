@@ -152,10 +152,11 @@ module.exports = {
             }
 
             let badges = busca_badges(client, 'all', user.id, interaction)
+            const user_c = await client.custom.getUser(user.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
-                .setColor(0x29BB8E)
+                .setColor(user_c.color)
                 .setThumbnail(avatar_user)
                 .addFields(
                     {
@@ -195,6 +196,7 @@ module.exports = {
 
             let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
             const download_icon = utilitarios[4]["download_avatar"].replace("link_repl", url_avatar)
+            const user_c = client.custom.getUser(user.id)
 
             fetch(url_avatar)
                 .then(res => {
@@ -204,7 +206,7 @@ module.exports = {
                     const embed = new EmbedBuilder()
                         .setTitle(`${user.username}`)
                         .setDescription(download_icon)
-                        .setColor(0x29BB8E)
+                        .setColor(user_c.color)
                         .setImage(url_avatar)
 
                     return interaction.reply({ embeds: [embed] })

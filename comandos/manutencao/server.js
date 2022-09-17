@@ -15,9 +15,10 @@ module.exports = {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)
+        const user = client.custom.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setTitle(`${manutencao[6]["hub_alonsal"]} ${emoji_rainha}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')

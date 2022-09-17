@@ -12,9 +12,10 @@ module.exports = {
     async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
             .setTitle(manutencao[1]["repositorio"])
             .setURL('https://github.com/brnd-21/Alonsal')

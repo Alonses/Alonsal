@@ -54,7 +54,7 @@ module.exports = {
         const sigla_idioma = idiomasMap[matches[0]][0]
         const frase_idioma = idiomasMap[matches[0]][1]
 
-        client.idioma.setLang(interaction, sigla_idioma)
+        client.idioma.setLang(client, interaction, sigla_idioma)
         interaction.reply({ content: frase_idioma, ephemeral: true })
     }
 }

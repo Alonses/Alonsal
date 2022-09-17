@@ -15,12 +15,13 @@ module.exports = {
     async execute(client, interaction) {
 
         const { inicio, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         const row = create_buttons([{ name: inicio[1]["site"], value: 'http://alonsal.glitch.me/', type: 4 }, { name: updates[0]["suporte"], value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }])
 
         const embed = new EmbedBuilder()
             .setTitle(inicio[1]["titulo"])
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setImage('https://i.imgur.com/NqmwCA9.png')
             .setDescription(`${inicio[1]["boas_vindas"]}`)
             .setFooter({ text: inicio[1]["idioma_dica"] })

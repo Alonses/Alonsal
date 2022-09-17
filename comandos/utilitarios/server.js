@@ -36,6 +36,7 @@ module.exports = {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         if (interaction.options.getSubcommand() === "info") {
 
@@ -77,7 +78,7 @@ module.exports = {
 
             const infos_sv = new EmbedBuilder()
                 .setTitle(interaction.guild.name)
-                .setColor(0x29BB8E)
+                .setColor(user.color)
                 .setThumbnail(icone_server)
                 .addFields(
                     {
@@ -154,7 +155,7 @@ module.exports = {
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
                         .setDescription(download_icon)
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setImage(icone_server)
 
                     interaction.reply({ embeds: [embed] })

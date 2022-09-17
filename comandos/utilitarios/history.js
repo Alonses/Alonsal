@@ -29,6 +29,7 @@ module.exports = {
         const formata_texto = require('../../adm/funcoes/formata_texto.js')
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let data = ""
 
@@ -67,7 +68,7 @@ module.exports = {
                     const embed_eventos = new EmbedBuilder()
                         .setTitle(utilitarios[10]["acontecimentos_1"])
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setDescription(`${utilitarios[10]["acontecimentos_2"]} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                     interaction.editReply({ embeds: [embed_eventos] })
@@ -102,7 +103,7 @@ module.exports = {
                         .setTitle(formata_texto(res.acontecimento))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setURL(res.fonte)
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setDescription(res.descricao)
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)

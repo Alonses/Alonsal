@@ -1,5 +1,6 @@
 const { readdirSync } = require('fs')
 const idioma = require('./adm/idioma')
+const user = require('./adm/funcoes/dados_usuario')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { Routes } = require('discord.js')
@@ -95,6 +96,7 @@ client.once('ready', async () => {
 
 	client.idioma = idioma
 	client.owners = owner_id
+	client.custom = user
 
 	if (status)
 		await require('./adm/internos/status.js')({ client })

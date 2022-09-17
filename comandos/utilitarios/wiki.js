@@ -32,6 +32,7 @@ module.exports = {
 
         let idioma_definido = client.idioma.getLang(interaction) == "al-br" ? "pt-br" : client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let counter = 0
         const content = interaction.options.data[0].value
@@ -73,7 +74,7 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const Embed = new EmbedBuilder()
-                        .setColor(0x29BB8E)
+                        .setColor(user.color)
                         .setTitle(res.Heading)
                         .setAuthor({ name: res.AbstractSource })
                         .setDescription(res.AbstractText)

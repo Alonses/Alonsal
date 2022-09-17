@@ -68,6 +68,7 @@ module.exports = {
         idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
 
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let timestamp, aviso = "", conversao_invalida = false
         let titulo = utilitarios[19]["timestamp_1"]
@@ -134,7 +135,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(titulo)
-            .setColor(0x29BB8E)
+            .setColor(user.color)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setDescription(`${conversao_valida}${dica_conversao}`)
 

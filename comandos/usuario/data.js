@@ -28,6 +28,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
@@ -73,7 +74,7 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle(manutencao[9]["dados_conhecidos"])
-                .setColor(0x29BB8E)
+                .setColor(user.color)
                 .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${dados_conhecidos}`)
                 .setFooter({ text: manutencao[9]["dica_rodape"] })
 

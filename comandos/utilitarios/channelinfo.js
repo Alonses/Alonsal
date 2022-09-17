@@ -28,6 +28,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         let canal = interaction.options.getChannel('canal') || interaction.options.getChannel('channel') || interaction.options.getChannel('chaîne') || interaction.channel
         // Coletando os dados do canal informado
@@ -65,7 +66,7 @@ module.exports = {
 
                 const infos_ch = new EmbedBuilder()
                     .setAuthor({ name: canal.name, iconURL: icone_server })
-                    .setColor(0x29BB8E)
+                    .setColor(user.color)
                     .setDescription(topico)
                     .addFields(
                         {

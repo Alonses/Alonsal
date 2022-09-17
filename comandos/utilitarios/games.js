@@ -16,6 +16,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.custom.getUser(interaction.user.id)
 
         await interaction.deferReply()
 
@@ -39,7 +40,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(moderacao[6]["ativos"])
                     .setThumbnail(res[0].thumbnail)
-                    .setColor(0x29BB8E)
+                    .setColor(user.color)
                     .setDescription(`${moderacao[6]["resgate_dica"]}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })
