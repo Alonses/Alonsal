@@ -8,8 +8,8 @@
     ],
     "customizacao": [
         {
-            "daily": "Ocê já coletou seu daily! Usa dnv",
-            "error": "Daily coletado! Ocê recebeu `B$valor_repl` Bufunfas, volta amanhã pra mais"
+            "daily": "Daily coletado! Ocê recebeu `B$valor_repl` Bufunfas, volta amanhã pra mais",
+            "error": "Ocê já coletou seu daily! Usa dnv"
         },
         {
             "cor_ativa": "Ocê já tá usando essa cor!",
