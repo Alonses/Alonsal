@@ -534,7 +534,8 @@
             "em_scrobble": "Sur Scrobble en ce moment",
             "obsessao": "Coup de coeur du moment",
             "error_1": "Ce profil n'existe pas, veuillez réessayer",
-            "sem_link": "L'utilisateur mentionné n'a pas lié Alonsal à LastFM, essayez de rechercher son nom personnalisé !"
+            "sem_link": "L'utilisateur mentionné n'a pas lié Alonsal à LastFM, essayez de rechercher son nom personnalisé !",
+            "new_link": "Alonsal a été lié à votre compte `plat_repl`! Désormais, lorsque vous utilisez `/plat_repl`, vous n'aurez plus besoin d'écrire votre nom tout le temps :P"
         }
     ]
 }

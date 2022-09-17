@@ -493,7 +493,8 @@
             "em_scrobble": "Scrobblando agora",
             "obsessao": "Favorita da semana",
             "error_1": "Esse perfil não existe, tenta dnv",
-            "sem_link": "Esse corno não me linkou com a LastFM, tenta dnv usando o nome personalizado dele"
+            "sem_link": "Esse corno não me linkou com a LastFM, tenta dnv usando o nome personalizado dele",
+            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` você não precisará escrever seu nome toda hora :P"
         }
     ]
 }

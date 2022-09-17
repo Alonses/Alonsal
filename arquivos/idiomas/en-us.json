@@ -534,7 +534,8 @@
             "em_scrobble": "On Scrobble right now",
             "obsessao": "Obsession of the moment",
             "error_1": "This profile does not exist, please try again",
-            "sem_link": "The mentioned user has not linked Alonsal with LastFM, try searching for his custom name!"
+            "sem_link": "The mentioned user has not linked Alonsal with LastFM, try searching for his custom name!",
+            "new_link": "Alonsal has been linked to your `plat_repl` account! Now when using `/plat_repl` you won't need to write your name all the time :P"
         }
     ]
 }
