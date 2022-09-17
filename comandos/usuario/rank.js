@@ -151,7 +151,7 @@ module.exports = {
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
-                    if (existsSync(`./arquivos/data/badges/${user.id}/badges.json`))
+                    if (existsSync(`./arquivos/data/badges/${user.id}.json`))
                         fixed_badge = busca_badges(client, 'fixed', user.id)
 
                     if (parseInt(pagina) !== 1)
@@ -202,7 +202,7 @@ module.exports = {
 
                     let fixed_badge = ""
 
-                    if (existsSync(`./arquivos/data/badges/${user_alvo.id}/badges.json`))
+                    if (existsSync(`./arquivos/data/badges/${user_alvo.id}.json`))
                         fixed_badge = busca_badges(client, 'fixed', user_alvo.id)
 
                     embed = new EmbedBuilder()

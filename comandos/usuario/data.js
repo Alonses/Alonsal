@@ -1,5 +1,7 @@
-const { readdirSync, unlinkSync } = require("fs")
+const { readdirSync, unlinkSync, existsSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const busca_badges = require('../../adm/funcoes/busca_badges.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -65,6 +67,9 @@ module.exports = {
             interaction.reply({ content: `${manutencao[9]["dados_removidos"]} ${client.user.username}`, ephemeral: true })
         } else {
             dados_conhecidos = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
+
+            if (existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
+                dados_conhecidos += `\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(manutencao[9]["dados_conhecidos"])

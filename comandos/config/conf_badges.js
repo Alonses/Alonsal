@@ -52,13 +52,9 @@ module.exports = {
         const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(user.badge))[0])
         const badge_name = busca_badges(client, 'single', parseInt(user.badge))[1]
 
-        // Criando o JSON para o usuário da badge
-        if (!existsSync(`./arquivos/data/badges/${user.id}`))
-            mkdirSync(`./arquivos/data/badges/${user.id}`, { recursive: true })
-
-        if (existsSync(`./arquivos/data/badges/${user.id}/badges.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
-            const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}/badges.json`)
+        if (existsSync(`./arquivos/data/badges/${user.id}.json`)) {
+            delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
+            const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}.json`)
 
             user.fixed_badge = fixed_badge
 
@@ -72,8 +68,8 @@ module.exports = {
         if (!all_badges.includes(user.badge)) // Adicionando uma nova badge
             user.badge_list.push(constructJson(user.badge, Math.floor(date1.getTime() / 1000)))
 
-        writeFileSync(`./arquivos/data/badges/${user.id}/badges.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}/badges.json`)]
+        writeFileSync(`./arquivos/data/badges/${user.id}.json`, JSON.stringify(user))
+        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
 
         client.users.fetch(user.id, false).then((user_interno) => {
             user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)

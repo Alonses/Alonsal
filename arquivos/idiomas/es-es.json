@@ -88,6 +88,7 @@
             "error_1": "¡No tienes insignias para ver!",
             "error_2": "No tienes esta insignia para fijar",
             "suas_badges": "Tus insignias",
+            "ganhou": "ganó en",
             "badge_fixada": "anclado a tu perfil!",
             "badge_removida": "eliminado de tu perfil",
             "rodape": "¡Use el comando /badge fix: <nombre> para fijar uno!"

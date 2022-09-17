@@ -88,6 +88,7 @@
             "error_1": "You don't have any badges to view!",
             "error_2": "You don't have this badge to pin",
             "suas_badges": "Your Badges",
+            "ganhou": "won in",
             "badge_fixada": "pinned to your profile!",
             "badge_removida": "removed from your profile",
             "rodape": "Use the /badges fixar:<name> command to pin a!"
