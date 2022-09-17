@@ -35,7 +35,7 @@ function setLang(interaction, lang) {
 function getLang(elemento) {
 
     const idiomas = ["pt-br", "es-es", "fr", "en-us"]
-    
+
     // Buscando o idioma usado pelo user
     const user = {
         id: elemento.user.id,
@@ -52,7 +52,8 @@ function getLang(elemento) {
             else default_lang
         else
             return lang
-    }
+    } else
+        return default_lang
 }
 
 module.exports = {
