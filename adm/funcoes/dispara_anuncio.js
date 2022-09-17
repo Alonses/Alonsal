@@ -3,6 +3,8 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const create_buttons = require('./create_buttons.js')
 const formata_anun = require('./formata_games.js')
 
+const { readdirSync } = require("fs")
+
 const platformMap = {
     "epicgames.com": ["<:Logo_ep:864887054067957791>", "Epic Games"],
     "store.steam": ["<:Logo_st:864887020467257364>", "Steam"],
@@ -16,20 +18,18 @@ const platformMap = {
 module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
     const canais_clientes = []
-    const { canal_games } = require('../../arquivos/data/games/canal_games.json')
 
-    percorrer(canal_games)
+    for (const file of readdirSync(`./arquivos/data/games/`)) {
+        const data = require(`../../arquivos/data/games/${file}`)
 
-    function percorrer(obj) { // Coleta os valores de canais e cargos para anunciar
-        for (const propriedade in obj) {
-            if (obj.hasOwnProperty(propriedade)) {
-                if (typeof obj[propriedade] == "object")
-                    percorrer(obj[propriedade])
-                else
-                    canais_clientes.push(obj[propriedade])
-            }
-        }
+        data.servidor = file.replace(".json", "")
+        canais_clientes.push(data)
     }
+
+    if (canais_clientes.length < 1)
+        return client.channels.cache.get('872865396200452127').send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
+
+    console.log(canais_clientes)
 
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
@@ -37,7 +37,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
         return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
-    let canais_recebidos = 0, marcacao = '⠀', imagem_destaque, valor_anterior = 0
+    let canais_recebidos = 0, imagem_destaque, valor_anterior = 0
     let objeto_jogos = []
 
     objetos_anunciados.forEach(valor => {
@@ -56,16 +56,13 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
     for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
         try {
-            let servidor = await client.channels.cache.get(canais_clientes[i])
             let cor_embed = 0x29BB8E
 
-            let idioma_definido = await client.idioma.getLang(servidor)
+            let idioma_definido = canais_clientes[i].idioma || "pt-br"
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
             let texto_anuncio = formata_anun(objetos_anunciados, plataforma, idioma_definido)
-
-            if (typeof canais_clientes[i + 1] !== "undefined")
-                marcacao = `<@&${canais_clientes[i + 1]}>`
+            marcacao = `<@&${canais_clientes[i].cargo}>`
 
             const embed = new EmbedBuilder()
                 .setTitle(`${logo_plat} ${plataforma}`)
@@ -73,7 +70,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
                 .setColor(cor_embed)
                 .setDescription(texto_anuncio)
 
-            const canal_alvo = client.channels.cache.get(canais_clientes[i])
+            const canal_alvo = client.channels.cache.get(canais_clientes[i].canal)
 
             // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {

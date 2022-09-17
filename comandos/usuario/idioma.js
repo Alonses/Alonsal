@@ -16,11 +16,11 @@ module.exports = {
             "es-ES": 'idioma',
             "fr": 'langue'
         })
-        .setDescription('⌠💂⌡ Change the language of Alonsal')
+        .setDescription('⌠👤⌡ Change the language of Alonsal')
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Altere o idioma do Alonsal',
-            "es-ES": '⌠💂⌡ Cambiar el idioma de Alonsal',
-            "fr": '⌠💂⌡ Changer la langue d\'Alonsal'
+            "pt-BR": '⌠👤⌡ Altere o idioma do Alonsal',
+            "es-ES": '⌠👤⌡ Cambiar el idioma de Alonsal',
+            "fr": '⌠👤⌡ Changer la langue d\'Alonsal'
         })
         .addStringOption(option =>
             option.setName('language')

@@ -6,11 +6,11 @@ const busca_badges = require('../../adm/funcoes/busca_badges.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('data')
-        .setDescription('⌠📡⌡ Everything we know about you')
+        .setDescription('⌠👤⌡ Everything we know about you')
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Tudo o que sabemos sobre você',
-            "es-ES": '⌠📡⌡ Todo lo que sabemos de ti',
-            "fr": '⌠📡⌡ Tout ce que l\'on sait sur vous'
+            "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
+            "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',
+            "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous'
         })
         .addBooleanOption(option =>
             option.setName("delete")
