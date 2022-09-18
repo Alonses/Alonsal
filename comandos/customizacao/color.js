@@ -66,7 +66,8 @@ module.exports = {
         let preco, entrada = "", new_color, epic_embed_fail = busca_emoji(client, emojis_negativos)
 
         if (interaction.options.getSubcommand() === "static") {
-            entrada = interaction.options.data[0].value
+            entrada = interaction.options.data[0].options[0].value
+
             preco = precos[entrada.split(".")[0]]
 
             if (user.color == colors[entrada.split(".")[1]])
