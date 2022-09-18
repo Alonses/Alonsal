@@ -13,8 +13,22 @@
         },
         {
             "cor_ativa": "You are already using this color!",
+            "error": "Enter values between 0 and 255 for colors",
             "cor_att": "Updated color! Now your embeds will be in the selected color",
             "sem_money": "You don't have enough `B$price_repl` Bufunfas for this color!"
+        },
+        {
+            "error": "You don't have `B$valor_repl` Bufunfas to transfer!",
+            "error_2": "Enter a positive number to deposit",
+            "sucesso": "Transfer approved! `B$valor_repl` Bufunfas were deposited in the account of",
+            "notifica": "You just received a deposit! <@!user_repl> has deposited `B$valor_repl` Bufunfas into your account! yay"
+        },
+        {
+            "suas_bufunfas": "> Your Bufunfas",
+            "bufunfas": "Waxed Bufunfas in stock",
+            "daily": "Next `/daily` available",
+            "dica_comando": "Use `/daily` to collect Bufunfas!",
+            "dica_rodape": "You can use Bufunfas in customizations, like /color for example!"
         }
     ],
     "inicio": [

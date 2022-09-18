@@ -6,17 +6,17 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('daily')
-        .setDescription('⌠💸⌡ Receive your daily credit')
+        .setDescription('⌠💸⌡ Receive your daily bufunfa')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
-            "es-ES": '⌠💸⌡ Recibe tu crédito diario',
-            "fr": '⌠💸⌡ Recevez votre crédit quotidien'
+            "es-ES": '⌠💸⌡ Recibe tu bufunfa diario',
+            "fr": '⌠💸⌡ Recevez votre bufunfa quotidien'
         }),
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.custom.getUser(interaction.user.id)
-        let tempo_restante = Math.floor(Date.now() / 1000 - user.daily)
+        let tempo_restante = (Date.now() / 1000 - user.daily).toFixed(2)
 
         if (tempo_restante < 86400 && user.daily)
             return interaction.reply({ content: `:bank: | ${customizacao[0]["error"]} <t:${user.daily + 86400}:R>\n[ <t:${user.daily + 86400}:f> ]`, ephemeral: true })
@@ -24,7 +24,7 @@ module.exports = {
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
 
         const bufunfa = Math.floor(900 + (Math.random() * 500))
-        user.money = parseInt(user.money) + bufunfa
+        user.money += bufunfa
         user.daily = Math.floor(Date.now() / 1000)
 
         // Salvando os dados do usuário

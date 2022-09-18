@@ -13,13 +13,27 @@
         },
         {
             "cor_ativa": "Ocê já tá usando essa cor!",
+            "error": "Bota valor entre 0 e 255 pras cores",
             "cor_att": "Cor alterada! Agora seus _epic embed fails_ serão na nova cor",
             "sem_money": "Ocê n tem `B$preco_repl` Bufunfas para ter essa cor!"
+        },
+        {
+            "error": "Ocê não tem `B$valor_repl` Bufunfas pra transferir!",
+            "error_2": "Bota um número positivo para depositar aí meo!",
+            "sucesso": "Transferência aprovada! `B$valor_repl` Bufunfas foram enviadas na conta de",
+            "notifica": "Ocê acabou de receber um depósito! <@!user_repl> mandou `B$valor_repl` Bufunfas procê! STONKS"
+        },
+        {
+            "suas_bufunfas": "> Suas Bufunfas",
+            "bufunfas": "Bufunfas enceiradas em stoque",
+            "daily": "Próximo `/daily` só",
+            "dica_comando": "Usa `/daily` pra coletar Bufunfas!",
+            "dica_rodape": "Ocê pode usar Bufunfas em customizações, tipo no /color"
         }
     ],
     "inicio": [
         {
-            "epic_embed_fail": "Deu PT aq ao rodar esse comando, acontece toda hora, chora boi, até notifiquei os salafrarios que me mantém, tudo numa boa"
+            "epic_embed_fail": "Deu PT aq ao rodar esse comando, acontece toda hora, chora boi, já notifiquei os salafrários que me mantém, tudo numa boa"
         },
         {
             "titulo": "> Ó Abre alas que eu queru passsaa :notes:",
@@ -96,7 +110,7 @@
             "ganhou": "ganhou em",
             "badge_fixada": "colada no seu perfil!",
             "badge_removida": "tirada do seu perfil",
-            "rodape": "Usa o comando /badges fixar:<nome> pra colar uma!"
+            "rodape": "Usa o comando /badge fixar:<nome> pra colar uma!"
         }
     ],
     "jogos": [
@@ -162,7 +176,7 @@
         },
         {
             "apoie": "> Apoie o Alonsal!",
-            "escaneie": "Escaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D"
+            "escaneie": "Scaneie ou clique no Titulo acima para doar\ne ajudar a manter e desenvolver o Alonsal!\nToda ajuda é ultra Bem-Vinda ;D"
         },
         {
             "hub_alonsal": "> Hub do Alonsal",
@@ -179,7 +193,7 @@
         {
             "ranking_guilds": "Ranking nos seguintes servidores",
             "dados_conhecidos": "> Seus dados conhecidos",
-            "resumo_dados": "Este é um resumo dos dados que salvamos de ocê",
+            "resumo_dados": "Este é um resumo dos dados que salvamos docê",
             "dica_rodape": "Ocê pode excluir todos os seus dados com o comando /data excluir",
             "dados_removidos": "Seus dados foram removidos do",
             "sem_dados": "Ocê não possui dados salvos por aqui ;)",
@@ -238,12 +252,12 @@
             "moderadores": "Apenas moderadores podem executar este comando"
         },
         {
-            "anuncio_games": "A partir de agora o canal repl_canal irá receber atualizações quando houver jogos gratuitos disponíveis\nUsa o comando sem parametros para desligar as notificações",
+            "anuncio_games": "A partir de agora o canal repl_canal irá receber menções quando houver jogos gratuitos disponíveis\nUsa o comando fartando valores pra desligar as notificações",
             "anuncio_off": "Anúncios de jogos desligados para este servidor",
             "ativos": "Ativos no momento",
             "tipo_canal": "O canal definido precisa ser um canal de texto, tente novamente",
             "ate_data": "até",
-            "resgate_dica": "Estes são os jogos disponíveis no momento\nResgate antes que expirem!"
+            "resgate_dica": "Esses são os joojs free do momento\nResgate antes que expirem!"
         },
         {
             "canal": "Canal",
@@ -348,7 +362,7 @@
             "error_1": "Bota apenas texto na sua pesquisa, ovo ignorar esses números aí",
             "error_2": "Não consegui puxar os dados desse lugar, tenta depois",
             "antartida": "Antártida",
-            "equador": "Essa joça ae tá perto do equador, se pá a estação não funfa aqui"
+            "equador": "Sa joça ae tá perto do equador, se pá a estação não funfa aqui"
         },
         {
             "nao_encontrado": "Não encontrei nenhum item ou bloco com o nome",
@@ -390,7 +404,7 @@
         },
         {
             "chave": "Chave",
-            "aviso_1": "Escreva a chave e a o texto a ser criptografado\nTipo, `.acr slondo Hello World!`, ou `.acr slondo U2FsdG~~`",
+            "aviso_1": "Screva a chave e a o texto a ser criptografado\nTipo, `.acr slondo Hello World!`, ou `.acr slondo U2FsdG~~`",
             "error_1": "Chave errada, não deu para descriptografar\nSe tiver tentando criptografar, bota mais uns espaços no seu texto"
         },
         {
@@ -464,7 +478,7 @@
             "criacoes": "Criações",
             "semanas": "2 Semanas",
             "artes": "Artes",
-            "suspeito": "Este usuário pode estar usando uns hacks para conseguir conquistas, não considere isso como uma afirmação, mas né ¯\\_(ツ)_/¯",
+            "suspeito": "Este usuário pode star usando uns hacks para conseguir conquistas, não considere isso como uma afirmação, mas né ¯\\_(ツ)_/¯ SUSPE1T0",
             "jogo_favorito": "Jogo favorito",
             "capturas": "Capturas",
             "nome": "Nome",
@@ -474,9 +488,9 @@
             "sem_link": "Esse corno não me linkou com a Steam, tenta dnv usando o nome personalizado dele"
         },
         {
-            "aviso_1": "Escreva pelo menos uma operação básica para isso",
+            "aviso_1": "Screva pelo menos uma operação básica para isso",
             "resultado": "Resultado",
-            "error": "Deu pt aq ao processar essa budega"
+            "error": "Deu pt aq ao processar sa budega"
         },
         {
             "primaria": "Senha primária",
@@ -499,7 +513,7 @@
             "obsessao": "Favorita da semana",
             "error_1": "Esse perfil não existe, tenta dnv",
             "sem_link": "Esse corno não me linkou com a LastFM, tenta dnv usando o nome personalizado dele",
-            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` ocê não precisará escrever seu nome toda hora :P"
+            "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` ocê não precisará screver seu nome toda hora :P"
         }
     ]
 }
