@@ -13,8 +13,22 @@
         },
         {
             "cor_ativa": "Você já está usando essa cor!",
+            "error": "Insira valores entre 0 e 255 para as cores",
             "cor_att": "Cor atualizada! Agora seus embeds serão na cor selecionada",
             "sem_money": "Você não possui `B$preco_repl` Bufunfas suficientes para essa cor!"
+        },
+        {
+            "error": "Você não possui `B$valor_repl` Bufunfas para transferir!",
+            "error_2": "Informe um número positivo para depositar",
+            "sucesso": "Transferência aprovada! `B$valor_repl` Bufunfas foram depositadas na conta de",
+            "notifica": "Você acabou de receber um depósito! <@!user_repl> depositou `B$valor_repl` Bufunfas em sua conta! Obaa"
+        },
+        {
+            "suas_bufunfas": "> Suas Bufunfas",
+            "bufunfas": "Bufunfas enceiradas em estoque",
+            "daily": "Próximo `/daily` disponível",
+            "dica_comando": "Use `/daily` para coletar Bufunfas!",
+            "dica_rodape": "Você pode usar Bufunfas em customizações, como o /color por exemplo!"
         }
     ],
     "inicio": [

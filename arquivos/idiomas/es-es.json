@@ -8,13 +8,27 @@
     ],
     "customizacao": [
         {
-            "daily": "¡Recolectado diariamente! Recibiste `B$valor_repl` créditos, vuelve mañana para obtener más",
+            "daily": "¡Recolectado diariamente! Recibiste `B$valor_repl` Bufunfas, vuelve mañana para obtener más",
             "error": "¡Ya has recogido tu diario! Usa el comando de nuevo"
         },
         {
             "cor_ativa": "¡Ya estás usando este color!",
+            "error": "Introduzca valores entre 0 y 255 para los colores",
             "cor_att": "¡Color actualizado! Ahora sus embeds estarán en el color seleccionado",
             "sem_money": "¡No tienes `B$preco_repl` créditos para ese color!"
+        },
+        {
+            "error": "¡No tienes `B$valor_repl` Bufunfas para transferir!",
+            "error_2": "Ingrese un número positivo para depositar",
+            "sucesso": "Transferencia aprobada! `B$valor_repl` Bufunfas fueron depositadas en la cuenta de",
+            "notifica": "¡Acabas de recibir un depósito! ¡<@!user_repl> ha depositado `B$valor_repl` Bufunfas en su cuenta! Hurra"
+        },
+        {
+            "suas_bufunfas": "> Tus Bufunfas",
+            "bufunfas": "Bufunfas encerados en stock",
+            "daily": "Siguiente `/daily` disponible",
+            "dica_comando": "¡Usa `/daily` para recolectar Bufunfas!",
+            "dica_rodape": "¡Puedes usar Bufunfas en personalizaciones, como /color por ejemplo!"
         }
     ],
     "inicio": [
