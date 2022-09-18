@@ -44,7 +44,8 @@ module.exports = {
                             { name: 'Purple B$300', value: '2.6' },
                             { name: 'Gray B$300', value: '1.9' },
                             { name: 'White B$400', value: '2.4' },
-                            { name: 'Black B$400', value: '2.7' }
+                            { name: 'Black B$400', value: '2.7' },
+                            { name: 'Random B$500', value: '3.10'}
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -62,7 +63,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id), precos = [200, 300, 400], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136']
+        const user = client.custom.getUser(interaction.user.id), precos = [200, 300, 400, 500], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
         let preco, entrada = "", new_color, epic_embed_fail = busca_emoji(client, emojis_negativos)
 
         if (interaction.options.getSubcommand() === "static") {
@@ -102,7 +103,7 @@ module.exports = {
 
             // Convertendo do RGB para HEX
             new_color = rgbToHex(rgb.r, rgb.g, rgb.b)
-            preco = 150
+            preco = 50
 
             if (user.color == new_color)
                 return interaction.reply({ content: `:passport_control: | ${customizacao[1]["cor_ativa"]}`, ephemeral: true })
