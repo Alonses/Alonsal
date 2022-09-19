@@ -1,4 +1,4 @@
-const { comandos } = require('../arquivos/data/comandos.json')
+const { comandos } = require('../../arquivos/data/comandos.json')
 const { existsSync, writeFileSync } = require('fs')
 
 module.exports = async function ({ client, message, content }) {

@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 

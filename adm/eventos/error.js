@@ -19,5 +19,5 @@ module.exports = async function ({ client, err, local }) {
     await client.channels.cache.get('862015290433994752').send({ embeds: [embed_error] })
 
     const caso = "epic_embed"
-    require('../relatorio.js')({ client, caso })
+    require('../automaticos/relatorio.js')({ client, caso })
 }

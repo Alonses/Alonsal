@@ -20,11 +20,13 @@
         {
             "error": "You don't have `B$valor_repl` Bufunfas to transfer!",
             "error_2": "Enter a positive number to deposit",
+            "error_3": "You cannot transfer to yourself!",
             "sucesso": "Transfer approved! `B$valor_repl` Bufunfas were deposited in the account of",
             "notifica": "You just received a deposit! <@!user_repl> has deposited `B$valor_repl` Bufunfas into your account! yay"
         },
         {
             "suas_bufunfas": "> Your Bufunfas",
+            "bufunfas_outros": "nome_repl's Bufunfas",
             "bufunfas": "Waxed Bufunfas in stock",
             "daily": "Next `/daily` available",
             "dica_comando": "Use `/daily` to collect Bufunfas!",

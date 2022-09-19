@@ -2,7 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const formata_texto = require('../../adm/funcoes/formata_texto')
+const formata_texto = require('../../adm/formatadores/formata_texto')
 const { existsSync } = require('fs')
 
 let horas_tocadas, horas_passadas

@@ -1,7 +1,7 @@
 const { existsSync } = require('fs')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('./busca_emoji.js')
+const busca_emoji = require('../discord/busca_emoji.js')
 
 module.exports = (client, modo, id_alvo, interaction) => {
 

@@ -1,4 +1,4 @@
-const create_buttons = require('../../adm/funcoes/create_buttons.js')
+const create_buttons = require('../discord/create_buttons.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async function ({ client, message }) {

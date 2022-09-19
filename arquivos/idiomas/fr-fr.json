@@ -20,11 +20,13 @@
         {
             "error": "Vous n'avez pas `B$valor_repl` Bufunfas à transférer!",
             "error_2": "Entrez un nombre positif pour déposer",
+            "error_3": "Vous ne pouvez pas transférer à vous-même!",
             "sucesso": "Transfert approuvé! `B$valor_repl` Bufunfas ont été déposés sur le compte de",
             "notifica": "Vous venez de recevoir un acompte! <@!user_repl> a déposé `B$valor_repl` Bufunfas sur votre compte! Yay"
         },
         {
             "suas_bufunfas": "> Vos Bufunfas",
+            "bufunfas_outros": "Les Bufunfas de nome_repl",
             "bufunfas": "Bufunfas cirés en stock",
             "daily": "Suivant `/daily` disponible",
             "dica_comando": "Utilisez `/daily` pour collecter des Bufunfas!",

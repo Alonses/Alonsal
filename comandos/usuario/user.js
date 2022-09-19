@@ -3,8 +3,8 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const busca_badges = require('../../adm/funcoes/busca_badges.js')
-const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
+const busca_badges = require('../../adm/data/badges.js')
+const busca_emoji = require('../../adm/discord/busca_emoji.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { ids_enceirados } = require('../../config.json')
 

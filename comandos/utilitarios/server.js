@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js')
 const { existsSync, writeFileSync } = require('fs')
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-const busca_emojis = require('../../adm/funcoes/busca_emoji')
+const busca_emojis = require('../../adm/discord/busca_emoji')
 
 module.exports = {
     data: new SlashCommandBuilder()

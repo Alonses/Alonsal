@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const create_buttons = require('../../adm/funcoes/create_buttons')
+const create_buttons = require('../../adm/discord/create_buttons')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {

@@ -1,7 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const create_buttons = require('./create_buttons.js')
-const formata_anun = require('./formata_games.js')
+const create_buttons = require('../discord/create_buttons.js')
+const formata_anun = require('../formatadores/formata_games.js')
 
 const { readdirSync } = require("fs")
 
@@ -81,7 +81,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
                 }
             }
         } catch (err) {
-            require('../../adm/internos/error.js')({ client, err })
+            require('../eventos/error.js')({ client, err })
         }
 
         i++

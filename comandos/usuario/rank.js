@@ -6,8 +6,8 @@ const { readdirSync, unlinkSync, existsSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require("../../adm/funcoes/busca_emoji")
-const busca_badges = require('../../adm/funcoes/busca_badges')
+const busca_emoji = require("../../adm/discord/busca_emoji")
+const busca_badges = require('../../adm/data/badges')
 
 const medals = {
     0: ":first_place:",

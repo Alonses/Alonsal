@@ -38,8 +38,8 @@ module.exports = async ({ client }) => {
     } else
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
 
-    require('./relata.js')({ client })
-    require('./anuncia.js')({ client })
+    require('../automaticos/relata.js')({ client })
+    require('../automaticos/anuncia.js')({ client })
 }
 
 function dispara_status(client, status_apisal) {
