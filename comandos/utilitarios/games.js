@@ -2,7 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const create_buttons = require('../../adm/funcoes/create_buttons')
+const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()

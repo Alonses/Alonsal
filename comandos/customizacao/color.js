@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -66,6 +66,8 @@ module.exports = {
         const user = client.custom.getUser(interaction.user.id), precos = [200, 300, 400, 500], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
         let preco, entrada = "", new_color, epic_embed_fail = busca_emoji(client, emojis_negativos)
 
+        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
+
         if (interaction.options.getSubcommand() === "static") {
             entrada = interaction.options.data[0].options[0].value
 
@@ -111,7 +113,7 @@ module.exports = {
 
         // Validando se o usuário tem dinheiro suficiente
         if (user.money < preco)
-            return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", preco.toLocaleString("pt-BR"))}`, ephemeral: true })
+            return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", formata_num(preco))}`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
         user.money -= preco

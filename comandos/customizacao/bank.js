@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -38,20 +38,26 @@ module.exports = {
             alvo = interaction.user
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(alvo.id)
+        const user = client.custom.getUser(alvo.id), date1 = new Date()
+        const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
+
+        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
         let daily = `${customizacao[3]["dica_comando"]} ${busca_emoji(client, emojis_dancantes)}`
+        let titulo_embed = customizacao[3]["suas_bufunfas"]
 
-        if (user.id != interaction.user.id)
+        if (user.id !== interaction.user.id) {
             daily = ""
+            titulo_embed = `> ${customizacao[3]["bufunfas_outros"].replace("nome_repl", alvo.username)}`
+        }
 
-        if (user.daily)
-            daily = `${customizacao[3]["daily"]} <t:${user.daily + 86400}:R>\n[ <t:${user.daily + 86400}:f> ]`
+        if (user.daily && user.id == interaction.user.id)
+            daily = `${customizacao[3]["daily"]} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
 
         const embed = new EmbedBuilder()
-            .setTitle(customizacao[3]["suas_bufunfas"])
+            .setTitle(titulo_embed)
             .setColor(user.color)
-            .setDescription(`:bank: ${customizacao[3]["bufunfas"]}\`\`\`fix\nB$${user.money.toLocaleString('pt-BR')}\`\`\`\n${daily}`)
+            .setDescription(`:bank: ${customizacao[3]["bufunfas"]}\`\`\`fix\nB$${formata_num(user.money)}\`\`\`\n${daily}`)
 
         if (user.id == interaction.user.id)
             embed.setFooter({ text: customizacao[3]["dica_rodape"], iconURL: interaction.user.avatarURL({ dynamic: true }) })

@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js')
 const { existsSync, writeFileSync } = require('fs')
 
-const busca_badges = require('../../adm/funcoes/busca_badges.js')
-const busca_emoji = require('../../adm/funcoes/busca_emoji.js')
+const busca_badges = require('../../adm/data/badges.js')
+const busca_emoji = require('../../adm/discord/busca_emoji.js')
 
 module.exports = {
     data: new SlashCommandBuilder()

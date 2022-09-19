@@ -1,6 +1,6 @@
 
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
-const formata_horas = require("../../adm/funcoes/formata_horas")
+const formata_horas = require("../../adm/formatadores/formata_horas")
 
 module.exports = {
     data: new SlashCommandBuilder()

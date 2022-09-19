@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
+const dispara_anuncio = require('./dispara_anuncio.js')
 
 module.exports = async ({ client }) => {
 
@@ -41,7 +41,7 @@ async function gera_anuncio(client, proxima_att) {
         })
         .catch(err => {
             const local = "games"
-            require('./error.js')({ client, err, local })
+            require('../eventos/error.js')({ client, err, local })
         })
 
     next_att(client, proxima_att)
@@ -51,5 +51,5 @@ function next_att(client, tempo_restante) {
 
     tempo_restante = Math.floor((Date.now() / 1000) + (tempo_restante / 1000))
 
-    // client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
+    client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
 }

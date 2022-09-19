@@ -6,8 +6,8 @@ const { weather_key, time_key } = require('../../config.json')
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json')
 
 const getCountryISO3 = require("country-iso-2-to-3")
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
-const formata_horas = require('../../adm/funcoes/formata_horas')
+const busca_emoji = require('../../adm/discord/busca_emoji')
+const formata_horas = require('../../adm/formatadores/formata_horas')
 
 const base_url = "http://api.openweathermap.org/data/2.5/weather?"
 const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?"

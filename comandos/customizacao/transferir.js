@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -53,10 +53,15 @@ module.exports = {
         const user = client.custom.getUser(interaction.user.id)
         const alvo = client.custom.getUser(user_alvo.id)
 
+        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
+
         let bufunfas = interaction.options.data[1].value
 
-        if (bufunfas < 1)
+        if (bufunfas < 0.01)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_2"]}`, ephemeral: true })
+
+        if (alvo.id == user.id)
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_3"]}`, ephemeral: true })
 
         if (user.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error"].replace("valor_repl", bufunfas.toLocaleString("pt-BR"))}`, ephemeral: true })
@@ -67,7 +72,7 @@ module.exports = {
         client.custom.saveUser(user)
         client.custom.saveUser(alvo)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", bufunfas.toLocaleString("pt-BR"))} <@!${alvo.id}>`, ephemeral: true })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
         let emoji_dancante = busca_emoji(client, emojis_dancantes)
 
@@ -77,7 +82,7 @@ module.exports = {
                 // Enviando a mensagem no idioma do usuário alvo
                 let { customizacao } = require(`../../arquivos/idiomas/${alvo.lang}.json`)
 
-                user_interno.send(`:bank: | ${customizacao[2]["notifica"].replace("user_repl", user.id).replace("valor_repl", bufunfas.toLocaleString("pt-BR"))} ${emoji_dancante}`)
+                user_interno.send(`:bank: | ${customizacao[2]["notifica"].replace("user_repl", user.id).replace("valor_repl", formata_num(bufunfas))} ${emoji_dancante}`)
             })
     }
 }

@@ -20,11 +20,13 @@
         {
             "error": "Você não possui `B$valor_repl` Bufunfas para transferir!",
             "error_2": "Informe um número positivo para depositar",
+            "error_3": "Você não pode transferir para si mesmo!",
             "sucesso": "Transferência aprovada! `B$valor_repl` Bufunfas foram depositadas na conta de",
             "notifica": "Você acabou de receber um depósito! <@!user_repl> depositou `B$valor_repl` Bufunfas em sua conta! Obaa"
         },
         {
             "suas_bufunfas": "> Suas Bufunfas",
+            "bufunfas_outros": "Bufunfas de nome_repl",
             "bufunfas": "Bufunfas enceiradas em estoque",
             "daily": "Próximo `/daily` disponível",
             "dica_comando": "Use `/daily` para coletar Bufunfas!",

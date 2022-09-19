@@ -1,6 +1,6 @@
 const { readdirSync } = require('fs')
-const idioma = require('./adm/idioma')
-const user = require('./adm/funcoes/dados_usuario')
+const idioma = require('./adm/data/idioma')
+const user = require('./adm/data/usuario')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { Routes } = require('discord.js')
@@ -99,7 +99,7 @@ client.once('ready', async () => {
 	client.custom = user
 
 	if (status)
-		await require('./adm/internos/status.js')({ client })
+		await require('./adm/eventos/status.js')({ client })
 
 	console.log(`Caldeiras do ${client.user.username} aquecidas, pronto para operar`)
 })
@@ -110,12 +110,12 @@ client.on('messageCreate', async (message) => {
 	try { // Atualizando ranking e recebendo mensagens de texto
 
 		const caso = 'messages'
-		if (message.content.length >= 7 && ranking) await require('./adm/ranking.js')({ client, message, caso })
+		if (message.content.length >= 7 && ranking) await require('./adm/data/ranking.js')({ client, message, caso })
 
-		require('./adm/internos/comandos_antigos.js')({ client, message })
+		require('./adm/eventos/comandos_antigos.js')({ client, message })
 	} catch (err) {
 		const local = 'commands'
-		require('./adm/internos/error.js')({ client, err, local })
+		require('./adm/eventos/error.js')({ client, err, local })
 	}
 })
 
@@ -129,17 +129,17 @@ client.on('interactionCreate', async interaction => {
 
 	await command.execute(client, interaction)
 		.then(() => {
-			require('./adm/internos/log.js')({ client, interaction, command })
+			require('./adm/eventos/log.js')({ client, interaction, command })
 		})
 		.catch(err => {
 			const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-			require('./adm/internos/error.js')({ client, err })
+			require('./adm/eventos/error.js')({ client, err })
 			interaction.reply({ content: `:octagonal_sign: | ${inicio[0]["epic_embed_fail"]}`, ephemeral: true })
 		})
 })
 
 // Eventos secundários
-require('./adm/internos/eventos.js')({ client })
+require('./adm/eventos/events.js')({ client })
 
 client.login(token)

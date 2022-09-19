@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 const fs = require('fs')
 
-const formata_horas = require('../funcoes/formata_horas.js')
+const formata_horas = require('../formatadores/formata_horas.js')
 
 module.exports = async ({ client, interaction }) => {
 
@@ -85,9 +85,9 @@ module.exports = async ({ client, interaction }) => {
         // await require('../command_ranking.js')({client, interaction, content})
 
         const caso = "comando"
-        await require('../relatorio.js')({ client, caso })
+        await require('../automaticos/relatorio.js')({ client, caso })
 
         const message = interaction
-        await require('../ranking.js')({ client, message, caso })
+        await require('../data/ranking.js')({ client, message, caso })
     }
 }

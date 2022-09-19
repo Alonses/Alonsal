@@ -31,8 +31,8 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     if (existsSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
-        const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)
+        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
+        const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)
         user.xp = xp
         user.warns = warns
         user.lastValidMessage = lastValidMessage
@@ -71,9 +71,9 @@ module.exports = async ({ client, message, caso }) => {
         } else // Experiência obtida executando comandos
             user.xp += (parseInt(data) * 1.5)
 
-        require('./relatorio.js')({ client, caso })
+        require('../automaticos/relatorio.js')({ client, caso })
 
         writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
+        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
     })
 }

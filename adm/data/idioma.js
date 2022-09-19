@@ -17,7 +17,7 @@ function setLang(client, interaction, lang) {
     
     // Salvando os dados do usuário
     writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
-    delete require.cache[require.resolve(`../arquivos/data/user/${user.id}.json`)]
+    delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
 }
 
 function getLang(elemento) {
@@ -30,8 +30,8 @@ function getLang(elemento) {
         id_user = elemento.user.id
 
     if (existsSync(`./arquivos/data/user/${id_user}.json`)) {
-        delete require.cache[require.resolve(`../arquivos/data/user/${id_user}.json`)]
-        const { lang } = require(`../arquivos/data/user/${id_user}.json`)
+        delete require.cache[require.resolve(`../../arquivos/data/user/${id_user}.json`)]
+        const { lang } = require(`../../arquivos/data/user/${id_user}.json`)
 
         if (!lang)
             if (idiomas.includes((elemento.locale).toLowerCase()))

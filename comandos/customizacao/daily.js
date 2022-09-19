@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/funcoes/busca_emoji')
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -15,17 +15,18 @@ module.exports = {
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id)
-        let tempo_restante = (Date.now() / 1000 - user.daily).toFixed(2)
+        const user = client.custom.getUser(interaction.user.id), date1 = new Date()
+        let data_atual = date1.toDateString('pt-BR')
+        const tempo_restante = Math.floor((date1.getTime() + (((24 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
-        if (tempo_restante < 86400 && user.daily)
-            return interaction.reply({ content: `:bank: | ${customizacao[0]["error"]} <t:${user.daily + 86400}:R>\n[ <t:${user.daily + 86400}:f> ]`, ephemeral: true })
+        if (data_atual == user.daily)
+            return interaction.reply({ content: `:bank: | ${customizacao[0]["error"]} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
 
         const bufunfa = Math.floor(900 + (Math.random() * 500))
         user.money += bufunfa
-        user.daily = Math.floor(Date.now() / 1000)
+        user.daily = date1.toDateString('pt-BR')
 
         // Salvando os dados do usuário
         client.custom.saveUser(user)

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const dispara_anuncio = require('../../adm/funcoes/dispara_anuncio.js')
+const dispara_anuncio = require('../../adm/automaticos/dispara_anuncio.js')
 
 module.exports = {
     data: new SlashCommandBuilder()

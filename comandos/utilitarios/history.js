@@ -26,7 +26,7 @@ module.exports = {
                         .setDescription('Uma data específica, neste formato 21/01'))),
     async execute(client, interaction) {
 
-        const formata_texto = require('../../adm/funcoes/formata_texto.js')
+        const formata_texto = require('../../adm/formatadores/formata_texto.js')
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const user = client.custom.getUser(interaction.user.id)
