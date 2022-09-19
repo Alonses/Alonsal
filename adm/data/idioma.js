@@ -12,7 +12,7 @@ function setDefault(lang) {
 
 function setLang(client, interaction, lang) {
 
-    const user = client.custom.getUser(interaction.user.id)
+    const user = client.usuarios.getUser(interaction.user.id)
     user.lang = lang
     
     // Salvando os dados do usuário

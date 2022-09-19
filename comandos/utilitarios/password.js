@@ -25,7 +25,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
         tamanho = tamanho <= 5 ? 12 : tamanho

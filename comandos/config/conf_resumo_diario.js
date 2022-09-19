@@ -1,5 +1,8 @@
 const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
+const busca_emoji = require('../../adm/discord/busca_emoji')
+const { emojis } = require('../../arquivos/json/text/emojis.json')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('c_resumo_diario')
@@ -10,25 +13,12 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-        const proxima_att = (date1.getTime() / 1000) + (((24 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
-
-        const bot = {
-            comandos_disparados: 0,
-            exp_concedido: 0,
-            msgs_lidas: 0,
-            msgs_validas: 0,
-            epic_embed_fails: 0
-        }
-
-        const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails } = require(`../../arquivos/data/relatorio.json`)
-        bot.comandos_disparados = comandos_disparados || 0
-        bot.exp_concedido = exp_concedido || 0
-        bot.msgs_lidas = msgs_lidas || 0
-        bot.msgs_validas = msgs_validas || 0
-        bot.epic_embed_fails = epic_embed_fails || 0
+        const bot = client.bot.getRelatorio()
+        const proxima_att = (date1.getTime() / 1000) + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
         let members = 0, processamento = '🎲 Processamento\n'
+        let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
 
         client.guilds.cache.forEach(async guild => {
             members += guild.memberCount - 1
@@ -71,8 +61,8 @@ module.exports = {
                     inline: true
                 },
                 {
-                    name: '⠀',
-                    value: '⠀',
+                    name: ':bank: Bufunfas',
+                    value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado}\``,
                     inline: true
                 }
             )

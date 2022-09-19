@@ -10,7 +10,7 @@ module.exports = {
 
         const { jogos } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const emoji_pula = busca_emoji(client, emojis.pula_2)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.color)

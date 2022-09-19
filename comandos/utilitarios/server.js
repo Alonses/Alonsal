@@ -36,7 +36,7 @@ module.exports = {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         if (interaction.options.getSubcommand() === "info") {
 

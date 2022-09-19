@@ -1,4 +1,4 @@
-const { readdirSync, unlinkSync, existsSync } = require("fs")
+const { readdirSync, unlinkSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const busca_badges = require('../../adm/data/badges.js')
@@ -28,7 +28,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
@@ -69,7 +69,7 @@ module.exports = {
         } else {
             dados_conhecidos = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
 
-            if (existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
+            if (user.badge_list.length > 0)
                 dados_conhecidos += `\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
 
             const embed = new EmbedBuilder()

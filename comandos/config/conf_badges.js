@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
-const { existsSync, mkdirSync, writeFileSync } = require('fs')
+const { existsSync } = require('fs')
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/discord/busca_emoji.js')
@@ -29,32 +29,25 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        const user = {
-            id: null,
-            badge: null,
-            fixed_badge: null,
-            badge_list: []
-        }
-
-        const all_badges = []
-
-        let entradas = interaction.options.data
+        let entradas = interaction.options.data, id_alvo, badge_alvo
         const emoji_dancante = busca_emoji(client, emojis_dancantes)
+        const all_badges = []
 
         entradas.forEach(valor => {
             if (valor.name == "id")
-                user.id = valor.value
+                id_alvo = valor.value
 
             if (valor.name == "badge")
-                user.badge = parseInt(valor.value)
+                badge_alvo = parseInt(valor.value)
         })
 
-        const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(user.badge))[0])
-        const badge_name = busca_badges(client, 'single', parseInt(user.badge))[1]
+        const user = client.usuarios.getUser(id_alvo)
+        const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(badge_alvo))[0])
+        const badge_name = busca_badges(client, 'single', parseInt(badge_alvo))[1]
 
-        if (existsSync(`./arquivos/data/badges/${user.id}.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
-            const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}.json`)
+        if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
+            delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+            const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
 
             user.fixed_badge = fixed_badge
 
@@ -64,18 +57,21 @@ module.exports = {
             })
         }
 
-        const date1 = new Date()
-        if (!all_badges.includes(user.badge)) // Adicionando uma nova badge
-            user.badge_list.push(constructJson(user.badge, Math.floor(date1.getTime() / 1000)))
+        console.log(all_badges, badge_alvo)
 
-        writeFileSync(`./arquivos/data/badges/${user.id}.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
+        if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
+            const date1 = new Date()
+            user.badge_list.push(constructJson(badge_alvo, Math.floor(date1.getTime() / 1000)))
 
-        client.users.fetch(user.id, false).then((user_interno) => {
-            user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
+            client.usuarios.saveUser(user)
 
-            interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
-        })
+            client.users.fetch(user.id, false).then((user_interno) => {
+                user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
+
+                interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
+            })
+        } else
+            interaction.reply({ content: `:octagonal_sign: | O usuário <@!${user.id}> já possui a Badge mencionada!`, ephemeral: true })
     }
 }
 

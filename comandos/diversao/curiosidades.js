@@ -9,7 +9,7 @@ module.exports = {
     .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
   async execute(client, interaction) {
 
-    const user = client.custom.getUser(interaction.user.id)
+    const user = client.usuarios.getUser(interaction.user.id)
 
     fetch('https://apisal.herokuapp.com/curiosidades')
       .then(response => response.json())

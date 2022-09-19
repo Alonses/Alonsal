@@ -29,7 +29,7 @@ module.exports = {
         const formata_texto = require('../../adm/formatadores/formata_texto.js')
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         let data = ""
 

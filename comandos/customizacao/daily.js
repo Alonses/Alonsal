@@ -15,7 +15,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id), date1 = new Date()
+        const user = client.usuarios.getUser(interaction.user.id), date1 = new Date()
         let data_atual = date1.toDateString('pt-BR')
         const tempo_restante = Math.floor((date1.getTime() + (((24 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
@@ -29,7 +29,7 @@ module.exports = {
         user.daily = date1.toDateString('pt-BR')
 
         // Salvando os dados do usuário
-        client.custom.saveUser(user)
+        client.usuarios.saveUser(user)
 
         interaction.reply({ content: `:money_with_wings: | ${customizacao[0]["daily"].replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${emoji_dancando}`, ephemeral: true })
     }

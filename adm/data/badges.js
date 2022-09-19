@@ -18,24 +18,24 @@ module.exports = (client, modo, id_alvo, interaction) => {
     if (modo == "single") // Retorna a badge bruta
         return [badges[id_alvo], badge_names[id_alvo]]
 
-    if (existsSync(`./arquivos/data/badges/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
-        const { fixed_badge, badge_list } = require(`../../arquivos/data/badges/${user.id}.json`)
-
+    if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
+        delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+        const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         user.fixed_badge = fixed_badge
 
-        badge_list.forEach(valor => {
-            let emoji_badge = busca_emoji(client, badges[parseInt(Object.keys(valor)[0])])
+        if (badge_list)
+            badge_list.forEach(valor => {
+                let emoji_badge = busca_emoji(client, badges[parseInt(Object.keys(valor)[0])])
 
-            // Listando todas as badges que o usuário possui
-            if (modo == "fixed") { // Fixada
-                if (fixed_badge == parseInt(Object.keys(valor)[0]))
-                    all_badges.push(`${emoji_badge}`)
-            } else // Listar todas
-                all_badges.push(`${emoji_badge} \`${badge_names[parseInt(Object.keys(valor)[0])]}\`, ${diversao[9]["ganhou"]} <t:${Object.values(valor)[0]}:f>`)
-        })
+                // Listando todas as badges que o usuário possui
+                if (modo == "fixed") { // Fixada
+                    if (fixed_badge == parseInt(Object.keys(valor)[0]))
+                        all_badges.push(`${emoji_badge}`)
+                } else // Listando todas
+                    all_badges.push(`${emoji_badge} \`${badge_names[parseInt(Object.keys(valor)[0])]}\`, ${diversao[9]["ganhou"]} <t:${Object.values(valor)[0]}:f>`)
+            })
     }
 
     return all_badges.join("\n")

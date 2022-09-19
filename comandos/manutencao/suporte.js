@@ -20,7 +20,7 @@ module.exports = {
 
         const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const bolo = busca_emoji(client, emojis.mc_bolo)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.color)

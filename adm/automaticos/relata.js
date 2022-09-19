@@ -1,11 +1,14 @@
 const { EmbedBuilder } = require('discord.js')
 
+const busca_emoji = require('../discord/busca_emoji')
+const { emojis } = require('../../arquivos/json/text/emojis.json')
+
 module.exports = async ({ client }) => {
 
     if (client.user.id !== "833349943539531806") return
 
     const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-    const tempo_restante = ((24 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
+    const tempo_restante = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
     setTimeout(() => {
         gera_relatorio(client, 86400000)
@@ -23,21 +26,8 @@ function requisita_relatorio(client, aguardar_tempo) {
 async function gera_relatorio(client, proxima_att) {
 
     const date1 = new Date()
-
-    const bot = {
-        comandos_disparados: 0,
-        exp_concedido: 0,
-        msgs_lidas: 0,
-        msgs_validas: 0,
-        epic_embed_fails: 0
-    }
-
-    const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails } = require(`../../arquivos/data/relatorio.json`)
-    bot.comandos_disparados = comandos_disparados
-    bot.exp_concedido = exp_concedido
-    bot.msgs_lidas = msgs_lidas
-    bot.msgs_validas = msgs_validas
-    bot.epic_embed_fails = epic_embed_fails
+    const bot = client.bot.getRelatorio()
+    let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
 
     let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
     let members = 0, processamento = '🎲 Processamento\n'
@@ -83,13 +73,13 @@ async function gera_relatorio(client, proxima_att) {
                 inline: true
             },
             {
-                name: '⠀',
-                value: '⠀',
+                name: ':bank: Bufunfas',
+                value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado}\``,
                 inline: true
             }
         )
         .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
-        .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `[ <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f> ]`, inline: false })
+        .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`, inline: false })
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
 
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })

@@ -19,7 +19,7 @@ module.exports = {
 
         const { manutencao, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const row = create_buttons([{ name: updates[0]["convidar"], type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720` }])
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.color)

@@ -27,7 +27,7 @@ module.exports = {
 	async execute(client, interaction) {
 
 		const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-		const user = client.custom.getUser(interaction.user.id)
+		const user = client.usuarios.getUser(interaction.user.id)
 
 		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true })
 

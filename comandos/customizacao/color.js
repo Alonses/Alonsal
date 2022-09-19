@@ -63,7 +63,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id), precos = [200, 300, 400, 500], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
+        const user = client.usuarios.getUser(interaction.user.id), precos = [200, 300, 400, 500], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
         let preco, entrada = "", new_color, epic_embed_fail = busca_emoji(client, emojis_negativos)
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
@@ -124,7 +124,7 @@ module.exports = {
             user.color = new_color
 
         // Salvando os dados
-        client.custom.saveUser(user)
+        client.usuarios.saveUser(user)
 
         interaction.reply({ content: `${emoji_dancando} | ${customizacao[1]["cor_att"]}`, ephemeral: true })
     }
