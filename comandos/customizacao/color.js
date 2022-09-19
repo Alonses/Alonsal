@@ -45,7 +45,7 @@ module.exports = {
                             { name: 'Gray B$300', value: '1.9' },
                             { name: 'White B$400', value: '2.4' },
                             { name: 'Black B$400', value: '2.7' },
-                            { name: 'Random B$500', value: '3.10'}
+                            { name: 'Random B$500', value: '3.10' }
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -57,9 +57,9 @@ module.exports = {
                     "es-ES": '¡Elige tu color!',
                     "fr": 'Choisissez votre couleur!'
                 })
-                .addNumberOption(option => option.setName("r").setDescription("Valor pro R").setRequired(true))
-                .addNumberOption(option => option.setName("g").setDescription("Valor pro G").setRequired(true))
-                .addNumberOption(option => option.setName("b").setDescription("Valor pro B").setRequired(true))),
+                .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true))
+                .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true))
+                .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true))),
     async execute(client, interaction) {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
@@ -114,7 +114,7 @@ module.exports = {
             return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", preco.toLocaleString("pt-BR"))}`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
-        user.money -= parseInt(preco)
+        user.money -= preco
 
         if (interaction.options.getSubcommand() === "static")
             user.color = colors[entrada.split(".")[1]]
