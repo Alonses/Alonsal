@@ -60,7 +60,7 @@ module.exports = {
 
         alvo_id = interaction.options.getUser('user') || interaction.user.id
 
-        const user = client.custom.getUser(alvo_id)
+        const user = client.usuarios.getUser(alvo_id)
 
         if (!texto_entrada) { // Verificando se o usuário possui link com a steam
             if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {

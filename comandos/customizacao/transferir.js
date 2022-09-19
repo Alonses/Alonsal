@@ -50,8 +50,8 @@ module.exports = {
         let user_alvo = interaction.options.getUser('user') || interaction.options.getUser('usuario')
 
         let { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id)
-        const alvo = client.custom.getUser(user_alvo.id)
+        const user = client.usuarios.getUser(interaction.user.id)
+        const alvo = client.usuarios.getUser(user_alvo.id)
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
@@ -69,8 +69,8 @@ module.exports = {
         user.money -= bufunfas
         alvo.money += bufunfas
 
-        client.custom.saveUser(user)
-        client.custom.saveUser(alvo)
+        client.usuarios.saveUser(user)
+        client.usuarios.saveUser(alvo)
 
         interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 

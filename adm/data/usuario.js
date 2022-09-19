@@ -9,12 +9,14 @@ function getUser(id_alvo) {
         lastfm: null,
         color: '0x29BB8E',
         money: 0,
-        daily: null
+        daily: null,
+        fixed_badge: null,
+        badge_list: []
     }
 
     if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-        const { lang, steam, lastfm, color, money, daily } = require(`../../arquivos/data/user/${user.id}.json`)
+        const { lang, steam, lastfm, color, money, daily, fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
 
         user.lang = lang
         user.steam = steam
@@ -22,6 +24,8 @@ function getUser(id_alvo) {
         user.color = color || '0x29BB8E'
         user.money = money || 0
         user.daily = daily
+        user.fixed_badge = fixed_badge
+        user.badge_list = badge_list
     }
 
     if (user.color == "RANDOM")

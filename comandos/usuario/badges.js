@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { existsSync } = require('fs')
 
 const busca_badges = require('../../adm/data/badges.js')
 
@@ -15,10 +14,10 @@ module.exports = {
     async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.custom.getUser(interaction.user.id)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         // Procurando pelas badges antes do comando
-        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
+        if (user.badge_list.length > 0 && !user.badge_list)
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         const embed = new EmbedBuilder()

@@ -69,7 +69,7 @@ module.exports = {
                 return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
         }
 
-        const user = client.custom.getUser(alvo_id)
+        const user = client.usuarios.getUser(alvo_id)
 
         try {
             const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`

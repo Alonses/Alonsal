@@ -1,9 +1,10 @@
 const { readdirSync } = require('fs')
-const idioma = require('./adm/data/idioma')
+const { Routes } = require('discord.js')
 const user = require('./adm/data/usuario')
+const bot = require('./adm/data/relatorio')
+const idioma = require('./adm/data/idioma')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
-const { Routes } = require('discord.js')
 let { clientId, clientId_2, token, token_2, guildId, owner_id } = require('./config.json')
 
 const client = new Client({
@@ -16,7 +17,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
+const modo_develop = 0, force_update = 1, silent = 1
 let status = 1, ranking = 1
 
 if (!modo_develop)
@@ -96,7 +97,8 @@ client.once('ready', async () => {
 
 	client.idioma = idioma
 	client.owners = owner_id
-	client.custom = user
+	client.usuarios = user
+	client.bot = bot
 
 	if (status)
 		await require('./adm/eventos/status.js')({ client })

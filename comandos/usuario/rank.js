@@ -151,15 +151,15 @@ module.exports = {
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
-                    if (existsSync(`./arquivos/data/badges/${user.id}.json`))
-                        fixed_badge = busca_badges(client, 'fixed', user.id)
+                    if (existsSync(`./arquivos/data/user/${user.id}.json`))
+                        fixed_badge = busca_badges(client, 'fixed', user.id, interaction)
 
                     if (parseInt(pagina) !== 1)
                         usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
                     else
                         usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
-                    experiencias.push(`\`${formata_num(user.xp.toFixed(2))}\``)
+                    experiencias.push(`\`${formata_num(user.xp.toFixed(2))} EXP\``)
                     levels.push(`\`${formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
                 }
 
@@ -168,7 +168,7 @@ module.exports = {
             }
 
             let embed, img_embed
-            let user = client.custom.getUser(interaction.user.id)
+            let user = client.usuarios.getUser(interaction.user.id)
 
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
@@ -202,10 +202,10 @@ module.exports = {
                         usuario_alvo.push(0)
 
                     let fixed_badge = ""
-                    const user = client.custom.getUser(user_alvo.id)
+                    const user = client.usuarios.getUser(user_alvo.id)
 
-                    if (existsSync(`./arquivos/data/badges/${user_alvo.id}.json`))
-                        fixed_badge = busca_badges(client, 'fixed', user_alvo.id)
+                    if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
+                        fixed_badge = busca_badges(client, 'fixed', user_alvo.id, interaction)
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
@@ -215,7 +215,7 @@ module.exports = {
                     embed.addFields(
                         {
                             name: `:postal_horn: ${diversao[8]["experiencia"]}`,
-                            value: `\`${usuario_alvo[0].toFixed(2)}\``,
+                            value: `\`${usuario_alvo[0].toFixed(2)} EXP\``,
                             inline: true
                         },
                         {

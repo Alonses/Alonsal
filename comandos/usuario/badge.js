@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { existsSync, writeFileSync } = require('fs')
 
 const busca_badges = require('../../adm/data/badges.js')
 const busca_emoji = require('../../adm/discord/busca_emoji.js')
@@ -63,9 +62,10 @@ module.exports = {
     async execute(client, interaction) {
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        const user = client.usuarios.getUser(interaction.user.id)
 
         // Validando existência de badges antes do comando
-        if (!existsSync(`./arquivos/data/badges/${interaction.user.id}.json`))
+        if (user.badge_list.length < 1)
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         let entrada = interaction.options.data[0].options, new_badge = ""
@@ -77,17 +77,8 @@ module.exports = {
                 new_badge = parseInt(valor.value)
         })
 
-        const user = {
-            id: interaction.user.id,
-            badge: null,
-            fixed_badge: null,
-            badge_list: []
-        }
-
         let all_badges = []
-
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
-        const { badge_list } = require(`../../arquivos/data/badges/${user.id}.json`)
+        const badge_list = user.badge_list
 
         badge_list.forEach(valor => {
             all_badges.push(parseInt(Object.keys(valor)[0]))
@@ -97,7 +88,7 @@ module.exports = {
         })
 
         // Verificando se o usuário possui a badge informada
-        if (!all_badges.includes(new_badge) && interaction.options.getSubcommand() == "fixar")
+        if (!all_badges.includes(new_badge) && ent_fixar.includes(interaction.options.getSubcommand()))
             return interaction.reply({ content: `:octagonal_sign: | ${diversao[9]["error_2"]}`, ephemeral: true })
 
         const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
@@ -109,10 +100,8 @@ module.exports = {
             user.fixed_badge = null
 
         user.badge_list = badge_list
-
-        writeFileSync(`./arquivos/data/badges/${user.id}.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/badges/${user.id}.json`)]
-
+        client.usuarios.saveUser(user)
+        
         if (ent_fixar.includes(interaction.options.getSubcommand()))
             interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` ${diversao[9]["badge_fixada"]}`, ephemeral: true })
         else // Removendo a badge fixada
