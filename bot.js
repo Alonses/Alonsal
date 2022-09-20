@@ -100,8 +100,6 @@ client.once('ready', async () => {
 	client.usuarios = user
 	client.bot = bot
 
-	client.bot.resRelatorio()
-	
 	if (status)
 		await require('./adm/eventos/status.js')({ client })
 
