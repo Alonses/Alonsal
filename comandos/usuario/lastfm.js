@@ -66,7 +66,7 @@ module.exports = {
             if (!user.lastfm)
                 return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
             else
-                texto_entrada = lastfm
+                texto_entrada = user.lastfm
 
         await interaction.deferReply()
 
