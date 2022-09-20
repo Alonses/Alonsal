@@ -39,7 +39,6 @@ module.exports = {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(alvo.id), date1 = new Date()
-        const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
@@ -51,8 +50,11 @@ module.exports = {
             titulo_embed = `> ${customizacao[3]["bufunfas_outros"].replace("nome_repl", alvo.username)}`
         }
 
-        if (user.daily && user.id == interaction.user.id)
+        if (user.daily && user.id == interaction.user.id) {
+            const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
+
             daily = `${customizacao[3]["daily"]} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
+        }
 
         const embed = new EmbedBuilder()
             .setTitle(titulo_embed)

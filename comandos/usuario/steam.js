@@ -55,21 +55,14 @@ module.exports = {
             texto_entrada = params.url
 
         alvo_id = interaction.options.getUser('user') || interaction.user.id
+        const user = client.usuarios.getUser(alvo_id)
 
         if (!texto_entrada) { // Verificando se o usuário possui link com a steam
-            if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {
-                delete require.cache[require.resolve(`../../arquivos/data/user/${alvo_id}.json`)]
-                const { steam } = require(`../../arquivos/data/user/${alvo_id}.json`)
-
-                if (!steam)
-                    return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
-
-                texto_entrada = steam
-            } else
+            if (!user.steam)
                 return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
+            else
+                texto_entrada = steam
         }
-
-        const user = client.usuarios.getUser(alvo_id)
 
         try {
             const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`

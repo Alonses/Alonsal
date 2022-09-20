@@ -1,8 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -26,7 +27,6 @@ module.exports = {
 
         const idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const user = client.usuarios.getUser(interaction.user.id)
 
         let objeto_encontrado = false, i = 0, pesquisa_crua = ""
         const emoji_suv = busca_emoji(client, emojis.mc_coracao)
@@ -198,6 +198,8 @@ module.exports = {
                                         descricao_item_wiki = ""
                                     }
 
+                                    const user = client.usuarios.getUser(interaction.user.id)
+                                    
                                     const embed = new EmbedBuilder()
                                         .setTitle(nome_item)
                                         .setColor(user.color)

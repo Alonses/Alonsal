@@ -36,16 +36,6 @@ module.exports = {
         const texto_entrada = interaction.options.data[0].value
         let cor_embed = user.color
 
-        function duplicateCount(texto_entrada) {
-            const charMap = {}
-
-            for (const char of texto_entrada.toLowerCase()) {
-                charMap[char] = (charMap[char] || 0) + 1
-            }
-
-            return Object.values(charMap).filter((count) => count > 0)
-        }
-
         const caracteres = duplicateCount(texto_entrada)
         const fatori = texto_entrada.split('')
         const fatori_fix = fatori
@@ -99,6 +89,16 @@ module.exports = {
 
         return interaction.reply({ embeds: [anagrama] })
     }
+}
+
+function duplicateCount(texto_entrada) {
+    const charMap = {}
+
+    for (const char of texto_entrada.toLowerCase()) {
+        charMap[char] = (charMap[char] || 0) + 1
+    }
+
+    return Object.values(charMap).filter((count) => count > 0)
 }
 
 function shuffleArray(arr) {

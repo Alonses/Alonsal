@@ -33,7 +33,7 @@ module.exports = {
         let jooj = ["pedra", "papel", "tesoura", "pedra"], escolha
         
         if (interaction.options.data.length > 0)
-            escolha = (interaction.options.data[0].value).toLowerCase()
+            escolha = interaction.options.data[0].value.toLowerCase()
 
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
         let player = Math.round(2 * Math.random())

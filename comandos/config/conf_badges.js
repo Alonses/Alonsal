@@ -30,8 +30,6 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         let entradas = interaction.options.data, id_alvo, badge_alvo
-        const emoji_dancante = busca_emoji(client, emojis_dancantes)
-        const all_badges = []
 
         entradas.forEach(valor => {
             if (valor.name == "id")
@@ -41,9 +39,7 @@ module.exports = {
                 badge_alvo = parseInt(valor.value)
         })
 
-        const user = client.usuarios.getUser(id_alvo)
-        const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(badge_alvo))[0])
-        const badge_name = busca_badges(client, 'single', parseInt(badge_alvo))[1]
+        const user = client.usuarios.getUser(id_alvo), all_badges = []
 
         if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
             delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
@@ -57,11 +53,14 @@ module.exports = {
             })
         }
 
-        console.log(all_badges, badge_alvo)
-
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
+            
             const date1 = new Date()
             user.badge_list.push(constructJson(badge_alvo, Math.floor(date1.getTime() / 1000)))
+
+            const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(badge_alvo))[0])
+            const badge_name = busca_badges(client, 'single', parseInt(badge_alvo))[1]
+            const emoji_dancante = busca_emoji(client, emojis_dancantes)
 
             client.usuarios.saveUser(user)
 

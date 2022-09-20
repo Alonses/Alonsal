@@ -25,7 +25,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const texto_entrada = (interaction.options.data[0].value).split("")
+        const texto_entrada = interaction.options.data[0].value.split("")
 
         for (let i = 0; i < texto_entrada.length; i++)
             if (i % 2 === 0 && i % 1 === 0)

@@ -28,12 +28,7 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
-        const ordena = interaction.options.data[0].value
-
-        let texto = ordena.split('')
-        texto = texto.reverse()
-
-        const texto_ordenado = texto.join("")
+        const texto_ordenado = interaction.options.data[0].value.split('').reverse().join("")
 
         const embed = new EmbedBuilder()
             .setTitle(`:arrow_backward: ${utilitarios[5]["reverso"]}`)
@@ -41,6 +36,6 @@ module.exports = {
             .setColor(user.color)
             .setDescription(`\`${texto_ordenado}\``)
 
-        interaction.reply({ embeds: [embed] })
+        interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }

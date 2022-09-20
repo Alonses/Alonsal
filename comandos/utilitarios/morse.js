@@ -67,17 +67,14 @@ module.exports = {
             opera: 0
         }
 
-        // Entradas traduzíveis
-        const ent_texto = ["texto", "texte", "text"], ent_reverso = ["reverso", "reverse", "inverse"], ent_operacao = ["operacao", "operation"]
-
         entradas.forEach(valor => {
-            if (ent_texto.includes(valor.name))
+            if (valor.name == "text")
                 codificar.texto = valor.value
 
-            if (ent_reverso.includes(valor.name))
+            if (valor.name == "reverse")
                 codificar.reverso = valor.value
 
-            if (ent_operacao.includes(valor.name))
+            if (valor.name == "operation")
                 codificar.opera = parseInt(valor.value)
         })
 

@@ -47,24 +47,24 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        let user_alvo = interaction.options.getUser('user') || interaction.options.getUser('usuario')
-
         let { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.usuarios.getUser(interaction.user.id)
-        const alvo = client.usuarios.getUser(user_alvo.id)
 
-        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
-
+        let user_alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user')
         let bufunfas = interaction.options.data[1].value
 
         if (bufunfas < 0.01)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_2"]}`, ephemeral: true })
 
+        const user = client.usuarios.getUser(interaction.user.id)
+        const alvo = client.usuarios.getUser(user_alvo.id)
+
         if (alvo.id == user.id)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_3"]}`, ephemeral: true })
 
+        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
+
         if (user.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error"].replace("valor_repl", bufunfas.toLocaleString("pt-BR"))}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error"].replace("valor_repl", formata_num(bufunfas))}`, ephemeral: true })
 
         user.money -= bufunfas
         alvo.money += bufunfas
@@ -73,17 +73,16 @@ module.exports = {
         client.usuarios.saveUser(alvo)
 
         const caso = "movimentacao", quantia = bufunfas
-        require('../../adm/automaticos/relatorio.js')({client, caso, quantia})
+        require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
         interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
-
-        let emoji_dancante = busca_emoji(client, emojis_dancantes)
 
         if (alvo.id !== client.user.id) // Notificando o recebedor
             client.users.fetch(alvo.id, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo
                 let { customizacao } = require(`../../arquivos/idiomas/${alvo.lang}.json`)
+                let emoji_dancante = busca_emoji(client, emojis_dancantes)
 
                 user_interno.send(`:bank: | ${customizacao[2]["notifica"].replace("user_repl", user.id).replace("valor_repl", formata_num(bufunfas))} ${emoji_dancante}`)
             })

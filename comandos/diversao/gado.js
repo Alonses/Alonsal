@@ -18,6 +18,7 @@ module.exports = {
             option.setName('user')
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
+                    "es-ES": 'usuario',
                     "fr": 'user'
                 })
                 .setDescription('Mention a user as a target')
@@ -32,13 +33,15 @@ module.exports = {
         if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
         const { diversao } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)
 
-        const num = Math.round((gadisissimo.length - 1) * Math.random())
-        const alvo = interaction.options.getUser('usuario')
+        const alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user')
 
         if (client.user.id === alvo.id)
             return interaction.reply(diversao[3]["error_2"])
+
+        // Lista de frases de gado
+        const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)
+        const num = Math.round((gadisissimo.length - 1) * Math.random())
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")

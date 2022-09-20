@@ -17,7 +17,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         // Procurando pelas badges antes do comando
-        if (user.badge_list.length > 0 && !user.badge_list)
+        if (user.badge_list.length < 1 && !user.badge_list)
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         const embed = new EmbedBuilder()
