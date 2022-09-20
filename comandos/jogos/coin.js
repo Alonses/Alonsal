@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
+
 const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
@@ -20,8 +21,6 @@ module.exports = {
         const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
         const escolha = parseInt(interaction.options.data[0].value)
-
-        const emoji_epic_embed_fail = busca_emoji(client, emojis.epic_embed_fail2)
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
 
         const moeda = Math.round(Math.random())
@@ -32,8 +31,10 @@ module.exports = {
 
         let resultado = `[ ${emoji_exib} ] ${jogos[1]["acertou"]} ${emoji_dancando}`
 
-        if (escolha != moeda) // Acertou
+        if (escolha !== moeda) { // Acertou
+            const emoji_epic_embed_fail = busca_emoji(client, emojis.epic_embed_fail2)
             resultado = `[ ${emoji_exib} ] ${jogos[1]["errou"]} ${emoji_epic_embed_fail}`
+        }
 
         return interaction.reply(resultado)
     }

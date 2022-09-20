@@ -119,7 +119,7 @@ module.exports = {
         user.money -= preco
 
         const caso = "movimentacao", quantia = preco
-        require('../../adm/automaticos/relatorio.js')({client, caso, quantia})
+        require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
         if (interaction.options.getSubcommand() === "static")
             user.color = colors[entrada.split(".")[1]]

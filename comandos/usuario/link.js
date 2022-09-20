@@ -57,26 +57,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
-        const user = {
-            id: interaction.user.id,
-            lang: null,
-            steam: null,
-            lastfm: null,
-            color: null,
-            money: 0
-        }
-
-        if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-            const { lang, steam, lastfm, color, money } = require(`../../arquivos/data/user/${user.id}.json`)
-
-            user.lang = lang
-            user.steam = steam
-            user.lastfm = lastfm
-            user.color = color
-            user.money = money
-        }
+        const user = client.usuarios.getUser(interaction.user.id)
 
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
         const emoji_dancando = busca_emojis(client, emojis_dancantes)
@@ -88,8 +69,7 @@ module.exports = {
             plataforma = "lastfm"
         }
 
-        writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+        client.usuarios.saveUser(user)
 
         return interaction.reply({ content: `${emoji_dancando} | ${utilitarios[20]["new_link"].replaceAll("plat_repl", plataforma)}`, ephemeral: true })
     }

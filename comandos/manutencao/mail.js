@@ -46,14 +46,12 @@ module.exports = {
         }
 
         let entradas = interaction.options.data
-        // Entradas traduzíveis
-        const ent_texto = ["texto", "text", "texte"], ent_arquivo = ["arquivo", "file", "dossier"]
 
         entradas.forEach(valor => {
-            if (ent_texto.includes(valor.name))
+            if (valor.name == "text")
                 corpo_mensagem.texto = valor.value
 
-            if (ent_arquivo.includes(valor.name))
+            if (valor.name == "file")
                 corpo_mensagem.arquivo = valor.attachment.attachment
         })
 

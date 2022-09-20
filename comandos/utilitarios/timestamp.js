@@ -75,14 +75,11 @@ module.exports = {
         let data = interaction.options.data[0].value, retorno, entrada = null, timer = 0
         let conversao_valida = ""
 
-        // Entradas traduzíveis
-        const ent_tempo = ["tempo", "temps", "time"], ent_momentum = ["agora", "now", "present"]
-
-        if (!ent_momentum.includes(interaction.options.getSubcommand())) { // Entrada customizada
+        if (interaction.options.getSubcommand() !== "now") { // Entrada customizada
             let opcoes = interaction.options.data[0].options
 
             opcoes.forEach(valor => {
-                if (ent_tempo.includes(valor.name))
+                if (valor.name == "time")
                     entrada = parseInt(valor.value)
 
                 if (valor.name == "timer")

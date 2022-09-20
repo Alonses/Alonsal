@@ -69,11 +69,9 @@ module.exports = {
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         let entrada = interaction.options.data[0].options, new_badge = ""
-        // Entradas traduzíveis
-        const ent_fixar = ["fixar", "fix", "épingler"]
 
         entrada.forEach(valor => {
-            if (ent_fixar.includes(valor.name))
+            if (valor.name == "fix")
                 new_badge = parseInt(valor.value)
         })
 
@@ -88,23 +86,24 @@ module.exports = {
         })
 
         // Verificando se o usuário possui a badge informada
-        if (!all_badges.includes(new_badge) && ent_fixar.includes(interaction.options.getSubcommand()))
+        if (!all_badges.includes(new_badge) && interaction.options.getSubcommand() == "fix")
             return interaction.reply({ content: `:octagonal_sign: | ${diversao[9]["error_2"]}`, ephemeral: true })
 
-        const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
-
         // Salvando os dados novamente para a reescrita
-        if (ent_fixar.includes(interaction.options.getSubcommand()))
+        if (interaction.options.getSubcommand() == "fix")
             user.fixed_badge = new_badge
         else
             user.fixed_badge = null
 
         user.badge_list = badge_list
         client.usuarios.saveUser(user)
-        
-        if (ent_fixar.includes(interaction.options.getSubcommand()))
+
+        if (interaction.options.getSubcommand() == "fix") {
+
+            const nome_badge = busca_badges(client, 'single', parseInt(new_badge))[1]
+
             interaction.reply({ content: `${emoji_badge} | Badge \`${nome_badge}\` ${diversao[9]["badge_fixada"]}`, ephemeral: true })
-        else // Removendo a badge fixada
+        } else // Removendo a badge fixada
             interaction.reply({ content: `:medal: | Badge ${diversao[9]["badge_removida"]}`, ephemeral: true })
     }
 }

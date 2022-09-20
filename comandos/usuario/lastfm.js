@@ -62,18 +62,11 @@ module.exports = {
 
         const user = client.usuarios.getUser(alvo_id)
 
-        if (!texto_entrada) { // Verificando se o usuário possui link com a steam
-            if (existsSync(`./arquivos/data/user/${alvo_id}.json`)) {
-                delete require.cache[require.resolve(`../../arquivos/data/user/${alvo_id}.json`)]
-                const { lastfm } = require(`../../arquivos/data/user/${alvo_id}.json`)
-
-                if (!lastfm)
-                    return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
-
-                texto_entrada = lastfm
-            } else
+        if (!texto_entrada) // Verificando se o usuário possui link com a steam
+            if (!user.lastfm)
                 return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
-        }
+            else
+                texto_entrada = lastfm
 
         await interaction.deferReply()
 
@@ -85,10 +78,10 @@ module.exports = {
                 .then(response => response.text())
                 .then(async res => {
 
-                    let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
-
                     if (res.includes("Página não encontrada"))
                         return interaction.editReply(utilitarios[20]["error_1"])
+
+                    let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
                     if (!res.includes("ainda não ouviu nenhuma música.")) {
                         if (res.includes("<div class=\"about-me-header\">")) {

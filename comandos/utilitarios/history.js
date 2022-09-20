@@ -3,6 +3,8 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
+const formata_texto = require('../../adm/formatadores/formata_texto.js')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('history')
@@ -26,11 +28,8 @@ module.exports = {
                         .setDescription('Uma data específica, neste formato 21/01'))),
     async execute(client, interaction) {
 
-        const formata_texto = require('../../adm/formatadores/formata_texto.js')
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const user = client.usuarios.getUser(interaction.user.id)
-
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+        
         let data = ""
 
         await interaction.deferReply()
@@ -47,8 +46,7 @@ module.exports = {
                     if (res.status)
                         return interaction.editReply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
 
-                    let lista_eventos = ""
-                    let data_eventos = ""
+                    let lista_eventos = "", data_eventos = ""
                     const ano_atual = new Date().getFullYear()
 
                     for (let i = 0; i < res.length; i++) {
@@ -64,6 +62,7 @@ module.exports = {
                     if (data == "") data = utilitarios[10]["hoje"]
 
                     data_eventos = ` ${data}`
+                    const user = client.usuarios.getUser(interaction.user.id)
 
                     const embed_eventos = new EmbedBuilder()
                         .setTitle(utilitarios[10]["acontecimentos_1"])
@@ -73,7 +72,7 @@ module.exports = {
 
                     interaction.editReply({ embeds: [embed_eventos] })
                 })
-        } else {
+        } else { // Um acontecimento aleatório
 
             let especifico = "acon=alea"
             let opcoes = interaction.options.data[0].options

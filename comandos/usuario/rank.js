@@ -82,7 +82,6 @@ module.exports = {
     async execute(client, interaction) {
 
         let usuario_alvo = []
-        const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb)
 
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const users = []
@@ -92,11 +91,9 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === "server") { // Exibindo o rank normalmente
 
-            const ent_pagina = ["page", "pagina"]
-
             // Filtrando os valores de entrada caso tenham sido declarados
             opcoes.forEach(valor => {
-                if (ent_pagina.includes(valor.name))
+                if (valor.name == "page")
                     pagina = valor.value < 1 ? 1 : valor.value
             })
 
@@ -169,6 +166,7 @@ module.exports = {
 
             let embed, img_embed
             let user = client.usuarios.getUser(interaction.user.id)
+            const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb)
 
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido

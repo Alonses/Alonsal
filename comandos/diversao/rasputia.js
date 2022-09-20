@@ -39,8 +39,8 @@ module.exports = {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else {
 
-			const user = client.usuarios.getUser(interaction.user.id)
 			await interaction.deferReply()
+			const user = client.usuarios.getUser(interaction.user.id)
 
 			fetch('https://apisal.herokuapp.com/random?rasputia')
 				.then(response => response.json())

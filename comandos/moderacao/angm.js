@@ -19,7 +19,7 @@ module.exports = {
             option.setName('role')
                 .setNameLocalizations({
                     "pt-BR": 'cargo',
-                    "fr": 'role'
+                    "es-ES": 'rol'
                 })
                 .setDescription('The role that will be notified')
                 .setDescriptionLocalizations({
@@ -68,8 +68,6 @@ module.exports = {
 
         let opcao_remove = false, entradas = interaction.options.data
 
-        const ent_canal = ["canal", "channel", "salon"], ent_cargo = ["cargo", "role"], ent_idioma = ["idioma", "language", "langue"]
-
         const notificador = {
             canal: null,
             cargo: null,
@@ -78,13 +76,13 @@ module.exports = {
 
         // Coletando todas as entradas
         entradas.forEach(valor => {
-            if (ent_cargo.includes(valor.name))
+            if (valor.name == "role")
                 notificador.cargo = valor.value
 
-            if (ent_idioma.includes(valor.name))
+            if (valor.name == "language")
                 notificador.idioma = valor.value
 
-            if (ent_canal.includes(valor.name)) {
+            if (valor.name == "channel") {
                 notificador.canal = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido

@@ -27,7 +27,6 @@ module.exports = {
 	async execute(client, interaction) {
 
 		const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-		const user = client.usuarios.getUser(interaction.user.id)
 
 		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true })
 
@@ -36,6 +35,7 @@ module.exports = {
 		} else {
 
 			await interaction.deferReply()
+			const user = client.usuarios.getUser(interaction.user.id)
 
 			fetch('https://apisal.herokuapp.com/random?jailson')
 				.then(response => response.json())
