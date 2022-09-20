@@ -61,7 +61,7 @@ module.exports = {
             if (!user.steam)
                 return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
             else
-                texto_entrada = steam
+                texto_entrada = user.steam
         }
 
         try {
