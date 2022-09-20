@@ -118,6 +118,9 @@ module.exports = {
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
         user.money -= preco
 
+        const caso = "movimentacao", quantia = preco
+        require('../../adm/automaticos/relatorio.js')({client, caso, quantia})
+
         if (interaction.options.getSubcommand() === "static")
             user.color = colors[entrada.split(".")[1]]
         else // Salvando a cor customizada

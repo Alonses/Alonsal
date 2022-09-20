@@ -72,6 +72,9 @@ module.exports = {
         client.usuarios.saveUser(user)
         client.usuarios.saveUser(alvo)
 
+        const caso = "movimentacao", quantia = bufunfas
+        require('../../adm/automaticos/relatorio.js')({client, caso, quantia})
+
         interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
         let emoji_dancante = busca_emoji(client, emojis_dancantes)
