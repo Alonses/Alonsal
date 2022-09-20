@@ -83,5 +83,5 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
 
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
-    require("./reseta_relatorio.js")({}) // Reseta o relatório
+    client.bot.resRelatorio() // Reseta o relatório
 }
