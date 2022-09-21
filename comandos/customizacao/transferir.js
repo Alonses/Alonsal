@@ -61,6 +61,12 @@ module.exports = {
         if (alvo.id == user.id)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_3"]}`, ephemeral: true })
 
+        // Validando se o usuário marcado não é um bot
+        const membro_sv = interaction.guild.members.cache.get(alvo.id)
+
+        if (membro_sv.user.bot && alvo.id !== client.user.id)
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["user_bot"]}`, ephemeral: true })
+
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
         if (user.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
@@ -77,7 +83,7 @@ module.exports = {
 
         interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
-        if (alvo.id !== client.user.id) // Notificando o recebedor
+        if (alvo.id !== client.user.id && !membro_sv.user.bot) // Notificando o recebedor
             client.users.fetch(alvo.id, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo

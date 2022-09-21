@@ -29,6 +29,7 @@
             "error": "Vous n'avez pas `B$valor_repl` Bufunfas à transférer!",
             "error_2": "Entrez un nombre positif pour déposer",
             "error_3": "Vous ne pouvez pas transférer à vous-même!",
+            "user_bot": "Vous ne pouvez pas transférer les Bufunfas vers des bots autres que moi!",
             "sucesso": "Transfert approuvé! `B$valor_repl` Bufunfas ont été déposés sur le compte de",
             "notifica": "Vous venez de recevoir un acompte! <@!user_repl> a déposé `B$valor_repl` Bufunfas sur votre compte! Yay"
         },

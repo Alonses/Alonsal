@@ -26,7 +26,7 @@ module.exports = {
                 })
                 .setDescription('View another user\'s bank')
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Visualizar o vanco de outro usuário',
+                    "pt-BR": 'Visualizar o banco de outro usuário',
                     "es-ES": 'Ver el banco de otro usuario',
                     "fr": 'Afficher la banque d\'un autre utilisateur'
                 })),
@@ -36,6 +36,12 @@ module.exports = {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(alvo.id), date1 = new Date()
+
+        if (user.id == "297153970613387264")
+            user.money = -40028922
+        
+        if(user.id == client.user.id)
+            user.money = 1000000000000
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 

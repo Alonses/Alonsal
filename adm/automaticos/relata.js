@@ -74,7 +74,7 @@ async function gera_relatorio(client, proxima_att) {
             },
             {
                 name: ':bank: Bufunfas',
-                value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado}\``,
+                value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
                 inline: true
             }
         )
