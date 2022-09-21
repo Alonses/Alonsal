@@ -29,6 +29,7 @@
             "error": "You don't have `B$valor_repl` Bufunfas to transfer!",
             "error_2": "Enter a positive number to deposit",
             "error_3": "You cannot transfer to yourself!",
+            "user_bot": "You cannot transfer Bufunfas to bots other than me!",
             "sucesso": "Transfer approved! `B$valor_repl` Bufunfas were deposited in the account of",
             "notifica": "You just received a deposit! <@!user_repl> has deposited `B$valor_repl` Bufunfas into your account! yay"
         },
