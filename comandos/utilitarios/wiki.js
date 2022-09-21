@@ -33,8 +33,6 @@ module.exports = {
         let idioma_definido = client.idioma.getLang(interaction) == "al-br" ? "pt-br" : client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
-
-        let counter = 0
         const content = interaction.options.data[0].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
@@ -43,8 +41,7 @@ module.exports = {
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
-        const termo_pesquisado_cc = content.slice(1)
-        const username = interaction.user.username
+        let counter = 0
 
         fetch(url, { headers: { "accept-language": idioma_definido } })
             .then(response => response.json())
@@ -85,11 +82,15 @@ module.exports = {
                         .setURL(res.AbstractURL)
 
                     interaction.reply({ embeds: [Embed] })
-                } else
+                } else {
+
+                    const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
+
                     if (username.includes(termo_pesquisado_cc))
                         interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`)
                     else
                         interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
+                }
             })
             .catch(() => {
                 interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)

@@ -49,7 +49,7 @@ module.exports = {
 
         let { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-        let user_alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user')
+        let user_alvo = interaction.options.getUser('user')
         let bufunfas = interaction.options.data[1].value
 
         if (bufunfas < 0.01)

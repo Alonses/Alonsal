@@ -6,6 +6,14 @@
             "suporte": "Suporte"
         }
     ],
+    "games": [
+        {
+            "anuncio_game_1": "O Game nomes_repl está gratuito até o dia `data_repl` por lá\n\nResgate ele o antes da data para poupar `R$valor_repl` e garantir uma cópia em sua conta plat_repl",
+            "anuncio_game_2": "Os Games nomes_repl estão gratuitos até o dia `data_repl` por lá\n\nResgate todos antes da data para poupar `R$valor_repl` e garantir as cópias em sua conta plat_repl",
+            "anuncio_dlc_1": "A DLC nomes_repl esta gratuita até o dia `data_repl` por lá\n\nResgate ela antes da data para poupar `R$valor_repl` e garantir uma cópia em sua conta plat_repl",
+            "anuncio_dlc_2": "As DLC's nomes_repl estão gratuitas até o dia `data_repl` por lá\n\nResgate todas antes da data para poupar `R$valor_repl` e garantir cópias em sua conta plat_repl"
+        }
+    ],
     "customizacao": [
         {
             "daily": "Daily coletado! Você recebeu `B$valor_repl` Bufunfas, retorne amanhã para mais",
@@ -112,7 +120,8 @@
             "ganhou": "ganhou em",
             "badge_fixada": "fixada ao seu perfil!",
             "badge_removida": "removida do seu perfil",
-            "rodape": "Use o comando /badges fixar:<nome> para fixar uma!"
+            "rodape": "Use o comando /badges fixar:<nome> para fixar uma!",
+            "new_badge": "Você acabou de ganhar uma Badge! O `nome_repl` emoji_repl! Ele será exibido em seu perfil ao usarem o comando `/user info`\n\nVocê também pode fixar Badges em destaque com o comando `/badges`!"
         }
     ],
     "jogos": [

@@ -44,7 +44,6 @@ module.exports = {
 
         let idioma_definido = client.idioma.getLang(interaction)
         const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-        const user = client.usuarios.getUser(interaction.user.id)
 
         if (idioma_definido == "al-br") idioma_definido = "pt-br"
         const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
@@ -53,9 +52,6 @@ module.exports = {
 
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
-        const emoji_troll = busca_emoji(client, emojis.trollface)
-        const indicaTemp = require('../../adm/funcoes/indica_temperatura.js')
-        const estacao_atual = require('../../adm/funcoes/estacao_atual.js')
 
         let url_completa = `${base_url}appid=${weather_key}&q=${pesquisa}&units=metric&lang=pt`
 
@@ -85,10 +81,11 @@ module.exports = {
                             let dados_att = new Date((res.dt + res.timezone) * 1000)
                             dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)} (*)`
 
-                            let bandeira_pais = ""
-                            let nome_pais = ""
+                            let bandeira_pais = "", nome_pais = "", horario_local
                             let nota_rodape = `${utilitarios[8]["dados_atts"]} ${dados_att}`
-                            let horario_local
+
+                            const indicaTemp = require('../../adm/funcoes/indica_temperatura.js')
+                            const estacao_atual = require('../../adm/funcoes/estacao_atual.js')
 
                             if (typeof res.sys.country !== "undefined") {
                                 bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`
@@ -184,10 +181,8 @@ module.exports = {
 
                             horario_local = `:clock${hours}: **${utilitarios[8]["hora_local"]}:** \`${hora}:${minutos} | ${dia} ${utilitarios[8]["de"]} ${mes}\``
 
-                            const direcao_vento = direcao_cardial(res.wind.deg, idioma_definido)
-                            let nome_local = `${utilitarios[8]["na"]} ${res.name}`
+                            let nome_local = `${utilitarios[8]["na"]} ${res.name}`, rodape_cabecalho = ""
                             let cabecalho_fix = estacao_atual(res.coord.lat, idioma_definido)
-                            let rodape_cabecalho = ""
 
                             if (typeof res.sys.country != "undefined")
                                 if (idioma_definido === "pt-br")
@@ -205,7 +200,7 @@ module.exports = {
                                     cabecalho_fix += `\n${utilitarios[8]["chuva"]} 3H: ${res.rain["3h"]}mm`
 
                                 emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
-                                rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["chuva_troll"]}_`
+                                rodape_cabecalho = `${busca_emoji(client, emojis.trollface)} _${utilitarios[8]["chuva_troll"]}_`
                             }
 
                             if (typeof res.snow !== "undefined") {
@@ -216,7 +211,7 @@ module.exports = {
 
                                 emoji_indica_visibilidade = " 🔽"
 
-                                rodape_cabecalho = `${emoji_troll} _${utilitarios[8]["neve_troll"]}_`
+                                rodape_cabecalho = `${busca_emoji(client, emojis.trollface)} _${utilitarios[8]["neve_troll"]}_`
                             }
 
                             if (typeof res.wind.gust !== "undefined") {
@@ -239,6 +234,8 @@ module.exports = {
                             if (res.coord.lat > -20 && res.coord.lat < 20)
                                 rodape_cabecalho = `:ringed_planet: ${utilitarios[8]["equador"]}\n${rodape_cabecalho}`
 
+                            const user = client.usuarios.getUser(interaction.user.id)
+
                             const clima_atual = new EmbedBuilder()
                                 .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
                                 .setColor(user.color)
@@ -257,7 +254,7 @@ module.exports = {
                                     },
                                     {
                                         name: `:wind_chime: **${utilitarios[8]["vento"]}**`,
-                                        value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_vento}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
+                                        value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${utilitarios[8]["direcao"]}: ** \`${direcao_cardial(res.wind.deg, idioma_definido)}\`\n:eye: **${utilitarios[8]["visibilidade"]}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
                                         inline: true
                                     }
                                 )

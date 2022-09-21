@@ -146,7 +146,6 @@ module.exports = {
 
             let icone_server = interaction.guild.iconURL({ size: 2048 })
             icone_server = icone_server.replace(".webp", ".gif")
-            const download_icon = utilitarios[4]["download_icon"].replace("link_repl", icone_server)
 
             fetch(icone_server)
                 .then(res => {
@@ -155,11 +154,11 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
-                        .setDescription(download_icon)
+                        .setDescription(utilitarios[4]["download_icon"].replace("link_repl", icone_server))
                         .setColor(user.color)
                         .setImage(icone_server)
 
-                    interaction.reply({ embeds: [embed] })
+                    return interaction.reply({ embeds: [embed], ephemeral: true })
                 })
         }
     }

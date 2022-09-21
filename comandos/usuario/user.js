@@ -62,13 +62,9 @@ module.exports = {
                         }))),
     async execute(client, interaction) {
 
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-        let user = interaction.options.getUser('usuario') || interaction.options.getUser('user')
-
-        if (!user)
-            user = interaction.user
+        let user = interaction.options.getUser('user') || interaction.user
 
         if (interaction.options.getSubcommand() === "info") {
             let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
@@ -195,7 +191,6 @@ module.exports = {
         } else { // O avatar do usuário
 
             let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
-            const download_icon = utilitarios[4]["download_avatar"].replace("link_repl", url_avatar)
             const user_c = client.usuarios.getUser(user.id)
 
             fetch(url_avatar)
@@ -205,11 +200,11 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                         .setTitle(`${user.username}`)
-                        .setDescription(download_icon)
+                        .setDescription(utilitarios[4]["download_avatar"].replace("link_repl", url_avatar))
                         .setColor(user_c.color)
                         .setImage(url_avatar)
 
-                    return interaction.reply({ embeds: [embed] })
+                    return interaction.reply({ embeds: [embed], ephemeral: true })
                 })
                 .catch(() => {
                     interaction.reply({ text: utilitarios[4]["error"], ephemeral: true })

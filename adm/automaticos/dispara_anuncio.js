@@ -29,8 +29,6 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     if (canais_clientes.length < 1)
         return client.channels.cache.get('872865396200452127').send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
 
-    console.log(canais_clientes)
-
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
@@ -54,15 +52,17 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     // Criando os botões externos para os jogos
     const row = create_buttons(objeto_jogos)
 
-    for (let i = 0; i < canais_clientes.length; i++) { // Envia a mensagem para vários canais clientes
+    // Enviando a notificação para vários os canais clientes
+    canais_clientes.forEach(canal => {
+
         try {
             let cor_embed = 0x29BB8E
 
-            let idioma_definido = canais_clientes[i].idioma || "pt-br"
+            let idioma_definido = canal.idioma || "pt-br"
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
             let texto_anuncio = formata_anun(objetos_anunciados, plataforma, idioma_definido)
-            marcacao = `<@&${canais_clientes[i].cargo}>`
+            marcacao = `<@&${canal.cargo}>`
 
             const embed = new EmbedBuilder()
                 .setTitle(`${logo_plat} ${plataforma}`)
@@ -70,7 +70,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
                 .setColor(cor_embed)
                 .setDescription(texto_anuncio)
 
-            const canal_alvo = client.channels.cache.get(canais_clientes[i].canal)
+            const canal_alvo = client.channels.cache.get(canal.canal)
 
             // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {
@@ -83,9 +83,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
         } catch (err) {
             require('../eventos/error.js')({ client, err })
         }
-
-        i++
-    }
+    })
 
     let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
 

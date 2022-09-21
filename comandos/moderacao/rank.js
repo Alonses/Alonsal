@@ -42,7 +42,7 @@ module.exports = {
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== "665002572926681128")
             return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true })
 
-        const usuario = interaction.options.getUser('usuario') || interaction.options.getUser('user')
+        const usuario = interaction.options.getUser('user')
 
         const user = {
             id: usuario.id,

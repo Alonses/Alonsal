@@ -6,6 +6,14 @@
             "suporte": "Support"
         }
     ],
+    "games": [
+        {
+            "anuncio_game_1": "The Game `nomes_repl`_ it's free until the day `data_repl` over there\n\nRedeem it before date to save `R$valor_repl` and get a copy in your plat_repl account",
+            "anuncio_game_2": "The Games nomes_repl are free until the day `data_repl over there\n\nRedeem all before date to save `R$valor_repl` and get a copy in your plat_repl account",
+            "anuncio_dlc_1": "The DLC `nomes_repl` it's free until the day `data_repl` over there\n\nRedeem it before date to save `R$valor_repl` and get a copy in your plat_repl account",
+            "anuncio_dlc_2": "The DLC's nomes_repl are free until the day `data_repl` over there\n\nRedeem both before date to save `R$valor_repl` and get a copy in your plat_repl account"
+        }
+    ],
     "customizacao": [
         {
             "daily": "Daily collected! You received `B$valor_repl` Bufunfas, check back tomorrow for more",
@@ -112,7 +120,8 @@
             "ganhou": "won in",
             "badge_fixada": "pinned to your profile!",
             "badge_removida": "removed from your profile",
-            "rodape": "Use the /badges fixar:<name> command to pin a!"
+            "rodape": "Use the /badges fixar:<name> command to pin a!",
+            "new_badge": "You just won a badge! The `nome_repl` emoji_repl! It will appear on your profile when you use the `/user info` command\n\nYou can also pin featured badges with the `/badges` command!"
         }
     ],
     "jogos": [

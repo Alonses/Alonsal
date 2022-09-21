@@ -112,7 +112,8 @@
             "ganhou": "ganhou em",
             "badge_fixada": "colada no seu perfil!",
             "badge_removida": "tirada do seu perfil",
-            "rodape": "Usa o comando /badge fixar:<nome> pra colar uma!"
+            "rodape": "Usa o comando /badge fixar:<nome> pra colar uma!",
+            "new_badge": "Cê ganhou uma Badge! O `nome_repl` emoji_repl! Ela será exibida em seu perfil se usarem o `/user info`\n\nCê também pode fixar Badges em destaque com o `/badges`!"
         }
     ],
     "jogos": [

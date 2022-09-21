@@ -34,7 +34,7 @@ module.exports = {
 
         const { diversao } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
-        const alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user')
+        const alvo = interaction.options.getUser('user')
 
         if (client.user.id === alvo.id)
             return interaction.reply(diversao[3]["error_2"])

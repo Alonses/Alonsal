@@ -32,10 +32,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        let alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user')
-
-        if (!alvo)
-            alvo = interaction.user
+        let alvo = interaction.options.getUser('user') || interaction.user
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(alvo.id), date1 = new Date()
