@@ -58,9 +58,8 @@ module.exports = {
         if (params.url)
             texto_entrada = params.url
 
-        alvo_id = interaction.options.getUser('user') || interaction.user.id
-
-        const user = client.usuarios.getUser(alvo_id)
+        alvo = interaction.options.getUser('user') || interaction.user
+        const user = client.usuarios.getUser(alvo.id)
 
         if (!texto_entrada) // Verificando se o usuário possui link com a steam
             if (!user.lastfm)

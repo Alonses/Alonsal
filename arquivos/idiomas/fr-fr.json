@@ -6,6 +6,14 @@
             "suporte": "Soutien"
         }
     ],
+    "games": [
+        {
+            "anuncio_game_1": "Le jeu nomes_repl est gratuit jusqu'à `data_repl` ici\n\nUtilisez-le avant la date pour enregistrer `R$valor_repl` et garantir une copie dans votre compte plat_repl",
+            "anuncio_game_2": "Les jeux nomes_repl sont gratuits jusqu'à `data_repl`\n\nÉchangez-les tous avant la date pour économiser `R$valor_repl` et garantir des copies dans votre compte plat_repl",
+            "anuncio_dlc_1": "Le DLC nomes_repl est gratuit jusqu'à `data_repl` ici\n\nUtilisez-le avant la date pour enregistrer `R$valor_repl` et garantir une copie dans votre compte plat_repl",
+            "anuncio_dlc_2": "Les DLC nomes_repl sont gratuits jusqu'à `data_repl` ici\n\nÉchangez-les tous avant la date pour économiser `R$valor_repl` et garantir des copies dans votre compte plat_repl"
+        }
+    ],
     "customizacao": [
         {
             "daily": "Quotidiennement collecté! Vous avez reçu `B$valor_repl` Bufunfas, revenez demain pour plus",
@@ -112,7 +120,8 @@
             "ganhou": "gagné en",
             "badge_fixada": "épinglé à votre profil!",
             "badge_removida": "supprimé de votre profil",
-            "rodape": "Utilisez la commande /badges fixar:<nom> pour épingler un!"
+            "rodape": "Utilisez la commande /badges fixar:<nom> pour épingler un!",
+            "new_badge": "Vous venez de gagner un badge! L'`nome_repl` emoji_repl! Il apparaîtra sur votre profil lorsque vous utiliserez la commande `/user info`\n\nVous pouvez également épingler des badges en vedette avec la commande `/badges`!"
         }
     ],
     "jogos": [

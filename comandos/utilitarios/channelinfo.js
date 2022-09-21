@@ -30,7 +30,7 @@ module.exports = {
         const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
-        let canal = interaction.options.getChannel('canal') || interaction.options.getChannel('channel') || interaction.options.getChannel('chaîne') || interaction.channel
+        let canal = interaction.options.getChannel('channel') || interaction.channel
         // Coletando os dados do canal informado
 
         let nsfw = utilitarios[9]["nao"]

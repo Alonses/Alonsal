@@ -65,7 +65,10 @@ module.exports = {
             client.usuarios.saveUser(user)
 
             client.users.fetch(user.id, false).then((user_interno) => {
-                user_interno.send(`${emoji_dancante} | Você acabou de ganhar uma Badge! O \`${badge_name}\` ${badge}! Ele será exibido em seu perfil ao usarem o comando \`/user info\`\n\nVocê também pode fixar Badges em destaque com o comando \`/badges\`!`)
+
+                const { diversao } = require(`../../arquivos/idiomas/${user.lang}.json`)
+
+                user_interno.send(`${emoji_dancante} | ${diversao[9]["new_badge"].replace("nome_repl", badge_name).replace("emoji_repl", badge)}`)
 
                 interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })

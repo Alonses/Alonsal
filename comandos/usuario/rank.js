@@ -86,7 +86,7 @@ module.exports = {
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const users = []
 
-        let rodape = interaction.user.username, user_alvo = interaction.options.getUser('usuario') || interaction.options.getUser('user') // Coleta o ID do usuário mencionado
+        let rodape = interaction.user.username, user_alvo = interaction.options.getUser('user') // Coleta o ID do usuário mencionado
         let opcoes = interaction.options.data, pagina = 1
 
         if (interaction.options.getSubcommand() === "server") { // Exibindo o rank normalmente

@@ -6,6 +6,14 @@
             "suporte": "Apoyo"
         }
     ],
+    "games": [
+        {
+            "anuncio_game_1": "El juego nomes_repl es gratuito hasta `data_repl` allí\n\nCanjear antes de la fecha para guardar `R$valor_repl` y asegurar una copia en su cuenta plat_repl",
+            "anuncio_game_2": "Los juegos nomes_repl son gratuitos hasta `data_repl` allí\n\nCanjéelos todos antes de la fecha para ahorrar `R$valor_repl` y garantizar copias en su cuenta plat_repl",
+            "anuncio_dlc_1": "El DLC nomes_repl es gratuito hasta `data_repl` allí\n\nCanjéelo antes de la fecha para ahorrar `R$valor_repl y garantizar una copia en su cuenta plat_repl",
+            "anuncio_dlc_2": "Los DLC nomes_repl son gratuitos hasta `data_repl` allí\n\nCanjéelos todos antes de la fecha para ahorrar `R$valor_repl y garantizar copias en su cuenta plat_repl"
+        }
+    ],
     "customizacao": [
         {
             "daily": "¡Recolectado diariamente! Recibiste `B$valor_repl` Bufunfas, vuelve mañana para obtener más",
@@ -112,7 +120,8 @@
             "ganhou": "ganó en",
             "badge_fixada": "anclado a tu perfil!",
             "badge_removida": "eliminado de tu perfil",
-            "rodape": "¡Use el comando /badge fix: <nombre> para fijar uno!"
+            "rodape": "¡Use el comando /badge fix: <nombre> para fijar uno!",
+            "new_badge": "¡Acabas de ganar una insignia! El `nome_repl` emoji_repl! Se mostrará en su perfil cuando use el comando `/información de usuario`\n\n¡También puede anclar insignias destacadas con el comando `/badges`!"
         }
     ],
     "jogos": [
