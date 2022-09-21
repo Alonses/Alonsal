@@ -6,6 +6,7 @@ Ele atua em diversas áreas e apresenta diversas funções!
 Dentre as áreas de atuação, separamos por esses tópicos: //
 - [😂] Diversão
 - [💡] Utilitários
+- [🎉] Customização
 - [🎲] Jogos
 - [👤] Usuário
 - [💂] Administração
@@ -18,7 +19,7 @@ a comandos já existentes, seja com novas informações ou opções de uso
 
 -> Atualmente ele pode ser utilizado diretamente por comandos de barra, com diversas opções de entrada
 para os mais diversos estilos de uso. Também é possível definir um idioma para o Alonsal, temos 4 idiomas
-totalmente funcionais no momento, sendo eles o Português, Inglês, Francês e um idioma ficticio chamado de Alonsês.
+totalmente funcionais no momento, sendo eles o Português, Inglês, Francês, Espanhol e um idioma fictício chamado de Alonsês.
 
 <hr>
 
