@@ -3,8 +3,10 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const busca_badges = require('../../adm/data/badges.js')
-const busca_emoji = require('../../adm/discord/busca_emoji.js')
+const busca_badges = require('../../adm/data/badges')
+const busca_emoji = require('../../adm/discord/busca_emoji')
+const busca_achievements = require('../../adm/data/conquistas')
+
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { ids_enceirados } = require('../../config.json')
 
@@ -148,6 +150,8 @@ module.exports = {
             }
 
             let badges = busca_badges(client, 'all', user.id, interaction)
+            let achievements = busca_achievements(client, all, user.id, interaction)
+
             const user_c = client.usuarios.getUser(user.id)
 
             const infos_user = new EmbedBuilder()

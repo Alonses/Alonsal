@@ -17,7 +17,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
+const modo_develop = 1, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
 if (!modo_develop)

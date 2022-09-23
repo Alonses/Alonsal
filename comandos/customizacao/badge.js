@@ -43,7 +43,8 @@ module.exports = {
                             { name: 'Debugger', value: '1' },
                             { name: 'Programmer', value: '2' },
                             { name: 'Creator', value: '3' },
-                            { name: 'Waxed', value: '4' }
+                            { name: 'Waxed', value: '4' },
+                            { name: 'Donater', value: '5' }
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>

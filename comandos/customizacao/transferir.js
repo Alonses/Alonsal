@@ -81,9 +81,12 @@ module.exports = {
         const caso = "movimentacao", quantia = bufunfas
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
+        if (alvo.id == client.user.id && quantia == 24.69) // Funny Number
+            require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
+
         interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
-        if (alvo.id !== client.user.id && !membro_sv.user.bot) // Notificando o recebedor
+        if (alvo.id !== client.user.id) // Notificando o recebedor
             client.users.fetch(alvo.id, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo
