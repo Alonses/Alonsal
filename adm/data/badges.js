@@ -11,8 +11,8 @@ module.exports = (client, modo, id_alvo, interaction) => {
         badge_list: []
     }
 
-    const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator, emojis.aln_waxed]
-    const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed"]
+    const badges = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator, emojis.aln_waxed, emojis.aln_donater]
+    const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater"]
 
     if (modo == "single") // Retorna a badge bruta
         return [badges[id_alvo], badge_names[id_alvo]]
