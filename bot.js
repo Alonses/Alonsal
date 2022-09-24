@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { readdirSync } = require('fs')
 const { Routes } = require('discord.js')
 const user = require('./adm/data/usuario')
@@ -7,7 +8,6 @@ const idioma = require('./adm/data/idioma')
 const cleverbot = require('cleverbot-free')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
-let { clientId, clientId_2, token, token_2, guildId, owner_id } = require('./config.json')
 
 const client = new Client({
 	intents: [
@@ -22,6 +22,8 @@ const client = new Client({
 const modo_develop = 0, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
+let token = process.env.token_1, clientId = process.env.client_1
+
 if (!modo_develop)
 	status = 1, ranking = 1
 
@@ -31,7 +33,7 @@ if (silent)
 // Force update é usado para forçar a atualização de comandos globais
 // e privados do bot
 if (modo_develop)
-	token = token_2, clientId = clientId_2
+	token = process.env.token_2, clientId = process.env.client_2
 
 let commands = []
 const comandos_privados = []
@@ -66,7 +68,7 @@ if (modo_develop || force_update) {
 		commands = comandos_privados
 
 	// Registrando os comandos privados no servidor
-	rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+	rest.put(Routes.applicationGuildCommands(clientId, process.env.guildID), { body: commands })
 		.then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
 		.catch(console.error)
 
@@ -98,10 +100,10 @@ client.once('ready', async () => {
 	idioma.setPath(`${__dirname}/arquivos/data/idiomas`)
 	idioma.setDefault('pt-br')
 
-	client.idioma = idioma
-	client.owners = owner_id
-	client.usuarios = user
 	client.bot = bot
+	client.idioma = idioma
+	client.usuarios = user
+	client.owners = process.env.owner_id
 
 	if (status)
 		await require('./adm/eventos/status.js')({ client })

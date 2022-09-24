@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { weather_key, time_key } = require('../../config.json')
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json')
 
 const getCountryISO3 = require("country-iso-2-to-3")
@@ -53,7 +52,7 @@ module.exports = {
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
 
-        let url_completa = `${base_url}appid=${weather_key}&q=${pesquisa}&units=metric&lang=pt`
+        let url_completa = `${base_url}appid=${process.env.weather_key}&q=${pesquisa}&units=metric&lang=pt`
 
         if (idioma_definido === "en-us")
             url_completa = url_completa.replace("&lang=pt", "")
@@ -72,7 +71,7 @@ module.exports = {
                 else if (res.id === 1873107)
                     return interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[8]["error_2"]}`)
                 else {
-                    const url_hora = `${time_url}key=${time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`
+                    const url_hora = `${time_url}key=${process.env.time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`
 
                     fetch(url_hora) // Buscando o horário local
                         .then(response => response.json())

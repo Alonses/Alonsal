@@ -8,7 +8,6 @@ const busca_emoji = require('../../adm/discord/busca_emoji')
 // const busca_achievements = require('../../adm/data/conquistas')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { ids_enceirados } = require('../../config.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -108,7 +107,7 @@ module.exports = {
             if (user.id === client.user.id)
                 nota_rodape = utilitarios[13]["alonsal"]
 
-            if (ids_enceirados.includes(user.id)) {
+            if (process.env.ids_enceirados.includes(user.id)) {
                 if (nota_rodape !== "")
                     nota_rodape += ", "
 

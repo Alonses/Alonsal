@@ -1,7 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { version } = require('../../config.json')
 const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client }) => {
@@ -72,7 +71,7 @@ function dispara_status(client, status_apisal) {
             }
         )
         .addFields(
-            { name: ':white_small_square: Versão', value: `\`${version}\``, inline: true },
+            { name: ':white_small_square: Versão', value: `\`${process.env.version}\``, inline: true },
             { name: '⠀', value: '⠀', inline: true },
             { name: ':moyai: APISAL', value: `\`${status_apisal}\``, inline: true })
         .setFooter({ text: client.user.username, iconURL: client.user.avatarURL({ dynamic: true }) })

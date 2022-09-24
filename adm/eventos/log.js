@@ -66,7 +66,7 @@ module.exports = async ({ client, interaction }) => {
             let embed = new EmbedBuilder()
                 .setTitle("> ✨ New interaction")
                 .setColor(0x29BB8E)
-                .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n:placard: ( \`${interaction.channel.id}\` | \`${interaction.channel.name}\` )\n:bookmark_tabs: ( \`${interaction.id}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
+                .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
                 .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
 
             if (url_ativacao !== "")
