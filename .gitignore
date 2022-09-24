@@ -7,3 +7,4 @@ arquivos/data
 /package-lock.json
 prefixes/
 discloud.config
+.env
