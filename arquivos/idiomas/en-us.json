@@ -567,6 +567,13 @@
             "error_1": "This profile does not exist, please try again",
             "sem_link": "The mentioned user has not linked Alonsal with LastFM, try searching for his custom name!",
             "new_link": "Alonsal has been linked to your `plat_repl` account! Now when using `/plat_repl` you won't need to write your name all the time :P"
+        },
+        {
+            "local": "Place",
+            "objeto_rastreado": "Object tracking",
+            "objeto_invalido": "Object not found",
+            "codigo": "Code used",
+            "codigo_invalido": "The code used was not registered, or it has expired and it is no longer possible to consult"
         }
     ]
 }

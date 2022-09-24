@@ -545,6 +545,13 @@
             "error_1": "Este perfil não existe, tente novamente",
             "sem_link": "O usuário mencionado não linkou o Alonsal com a LastFM, tente pesquisar pelo nome personalizado do mesmo!",
             "new_link": "O Alonsal foi vinculado a sua conta `plat_repl`! Agora ao usar `/plat_repl` você não precisará escrever seu nome toda hora :P"
+        },
+        {
+            "local": "Local",
+            "objeto_rastreado": "Rastreio de objeto",
+            "objeto_invalido": "Objeto não encontrado",
+            "codigo": "Código utilizado",
+            "codigo_invalido": "O código utilizado não foi registrado, ou já expirou e não é mais possível consultar"
         }
     ]
 }

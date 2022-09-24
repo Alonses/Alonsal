@@ -41,9 +41,7 @@ module.exports = {
         const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
         let userlimit, bitrate = ""
 
-        let topico = `\`\`\`${canal.topic}\`\`\``
-        if (!canal.topic)
-            topico = `\`\`\`${utilitarios[15]["sem_topico"]}\`\`\``
+        let topico = `\`\`\`${canal.topic || utilitarios[15]["sem_topico"]}\`\`\``
 
         if (typeof canal.bitrate !== "undefined") {
             topico = `\`\`\`🔊 ${utilitarios[15]["canal_voz"]}\`\`\``
