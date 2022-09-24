@@ -3,6 +3,8 @@ const { Routes } = require('discord.js')
 const user = require('./adm/data/usuario')
 const bot = require('./adm/data/relatorio')
 const idioma = require('./adm/data/idioma')
+
+const cleverbot = require('cleverbot-free')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 let { clientId, clientId_2, token, token_2, guildId, owner_id } = require('./config.json')
@@ -33,6 +35,7 @@ if (modo_develop)
 
 let commands = []
 const comandos_privados = []
+const conversations = []
 client.commands = new Collection()
 
 // Linkando os comandos slash disponíveis
@@ -108,6 +111,26 @@ client.once('ready', async () => {
 
 client.on('messageCreate', async (message) => {
 	if (message.author.bot || message.webhookId) return
+
+	// Respostas automatizadas por IA
+	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes('alonsal')) {
+		let text = message.content.split("> ")[1] || message.content
+		text = text.replace("alonsal", "")
+
+		cleverbot(text).then(res => {
+			conversations.push(text)
+			conversations.push(res)
+
+			if (conversations.length > 100) {
+				conversations.shift()
+				conversations.shift()
+			}
+
+			message.channel.send(res)
+		})
+
+		return
+	}
 
 	try { // Atualizando ranking e recebendo mensagens de texto
 
