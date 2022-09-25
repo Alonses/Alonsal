@@ -111,10 +111,13 @@
             "error_2": "Ocê não tem essa badge",
             "suas_badges": "Suas Badges",
             "ganhou": "ganhou em",
+            "cabecalho_menu": "Qual será fixada?",
+            "escolha_uma": "Escolha uma badge!",
+            "fixar": "Fixar a badge",
             "badge_fixada": "colada no seu perfil!",
             "badge_removida": "tirada do seu perfil",
-            "rodape": "Usa o comando /badge fixar:<nome> pra colar uma!",
-            "new_badge": "Cê ganhou uma Badge! O `nome_repl` emoji_repl! Ela será exibida em seu perfil se usarem o `/user info`\n\nCê também pode fixar Badges em destaque com o `/badges`!"
+            "rodape": "Usa o comando /badge fixar pra colar uma!",
+            "new_badge": "Cê ganhou uma Badge! O `nome_repl` emoji_repl! Ela será exibida em seu perfil se usarem o `/user info`\n\nCê também pode fixar Badges em destaque com o `/badge fixar`!"
         }
     ],
     "jogos": [

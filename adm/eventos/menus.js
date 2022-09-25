@@ -11,7 +11,6 @@ module.exports = ({ client, interaction }) => {
         user.fixed_badge = interaction.values[0]
 
         client.usuarios.saveUser(user)
-
         let new_badge = busca_badges(client, 'single', parseInt(interaction.values[0]))
         
         interaction.update({ content: `${busca_emoji(client, new_badge[0])} | Badge \`${new_badge[1]}\` ${diversao[9]["badge_fixada"]}`, components: [], ephemeral: true })
