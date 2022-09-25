@@ -7,6 +7,7 @@ function getUser(id_alvo) {
         lang: 'pt-br',
         steam: null,
         lastfm: null,
+        pula_predios: null,
         color: '0x29BB8E',
         money: 0,
         daily: null,
@@ -17,11 +18,12 @@ function getUser(id_alvo) {
 
     if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-        const { lang, steam, lastfm, color, money, daily, fixed_badge, badge_list, conquistas } = require(`../../arquivos/data/user/${user.id}.json`)
+        const { lang, steam, lastfm, pula_predios, color, money, daily, fixed_badge, badge_list, conquistas } = require(`../../arquivos/data/user/${user.id}.json`)
 
         user.lang = lang
         user.steam = steam
         user.lastfm = lastfm
+        user.pula_predios = pula_predios
         user.color = color || '0x29BB8E'
         user.money = money || 0
         user.daily = daily
