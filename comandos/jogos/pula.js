@@ -31,12 +31,14 @@ module.exports = {
         if (!user.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
 
+        await interaction.deferReply()
+
         fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 
                 if (retorno.status == 404)
-                    return interaction.reply({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
+                    return interaction.edit({ content: "Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
 
                 const datas_pula = retorno.data
 
@@ -81,13 +83,13 @@ module.exports = {
                 if (parseInt(datas_pula.recorde) > 0)
                     embed.setDescription(`\`\`\`🏆 Recorde de ${datas_pula.recorde} pontos numa partida!\n🚀 ${datas_pula.distancia_percorrida} metros percorridos no total\`\`\``)
 
-                return interaction.reply({ embeds: [embed] })
+                return interaction.edit({ embeds: [embed] })
             })
             .catch(err => {
 
                 console.log(err)
 
-                return interaction.reply({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
+                return interaction.edit({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
             })
     }
 }

@@ -148,6 +148,9 @@ client.on('messageCreate', async (message) => {
 
 client.on('interactionCreate', async interaction => {
 
+	if (interaction.isSelectMenu()) // Interações por uso de menus de seleção
+		return require('./adm/eventos/menus.js')({ client, interaction })
+
 	if (!interaction.isChatInputCommand()) return
 	if (!interaction.guild) return interaction.reply("Comandos em DM não estão ativos :spy:")
 
