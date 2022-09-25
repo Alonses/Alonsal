@@ -42,17 +42,10 @@ module.exports = {
 
         const user = client.usuarios.getUser(id_alvo), all_badges = []
 
-        if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-            const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
-
-            user.fixed_badge = fixed_badge
-            user.badge_list = badge_list
-
-            badge_list.forEach(valor => {
+        if (user.badge_list.length > 0)
+            user.badge_list.forEach(valor => {
                 all_badges.push(parseInt(Object.keys(valor)[0])) // Listando todas as badges que o usuário possui
             })
-        }
 
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
 
