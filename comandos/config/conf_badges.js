@@ -21,7 +21,8 @@ module.exports = {
                     { name: 'Debugger', value: '1' },
                     { name: 'Programmer', value: '2' },
                     { name: 'Creator', value: '3' },
-                    { name: 'Waxed', value: '4' }
+                    { name: 'Waxed', value: '4' },
+                    { name: 'Rosquer', value: '7' }
                 )
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
@@ -46,15 +47,15 @@ module.exports = {
             const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
 
             user.fixed_badge = fixed_badge
+            user.badge_list = badge_list
 
             badge_list.forEach(valor => {
-                user.badge_list.push(valor)
                 all_badges.push(parseInt(Object.keys(valor)[0])) // Listando todas as badges que o usuário possui
             })
         }
 
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
-            
+
             const date1 = new Date()
             user.badge_list.push(constructJson(badge_alvo, Math.floor(date1.getTime() / 1000)))
 

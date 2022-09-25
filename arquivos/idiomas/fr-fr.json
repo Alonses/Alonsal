@@ -119,10 +119,13 @@
             "error_2": "Vous n'avez pas ce badge à épingler",
             "suas_badges": "Vos badges",
             "ganhou": "gagné en",
+            "cabecalho_menu": "Lequel allez-vous choisir?",
+            "escolha_uma": "Choisissez un insigne !",
+            "fixar": "Épingler le badge",
             "badge_fixada": "épinglé à votre profil!",
             "badge_removida": "supprimé de votre profil",
-            "rodape": "Utilisez la commande /badges fixar:<nom> pour épingler un!",
-            "new_badge": "Vous venez de gagner un badge! L'`nome_repl` emoji_repl! Il apparaîtra sur votre profil lorsque vous utiliserez la commande `/user info`\n\nVous pouvez également épingler des badges en vedette avec la commande `/badges`!"
+            "rodape": "Utilisez la commande /badge epingler pour épingler un!",
+            "new_badge": "Vous venez de gagner un badge! L'`nome_repl` emoji_repl! Il apparaîtra sur votre profil lorsque vous utiliserez la commande `/user info`\n\nVous pouvez également épingler des badges en vedette avec la commande `/badge epingler`!"
         }
     ],
     "jogos": [

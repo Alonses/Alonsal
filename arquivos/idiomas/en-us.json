@@ -119,10 +119,13 @@
             "error_2": "You don't have this badge to pin",
             "suas_badges": "Your Badges",
             "ganhou": "won in",
+            "cabecalho_menu": "Which one will be chosen?",
+            "escolha_uma": "Choose a badge!",
+            "fixar": "Pin the badge",
             "badge_fixada": "pinned to your profile!",
             "badge_removida": "removed from your profile",
-            "rodape": "Use the /badges fixar:<name> command to pin a!",
-            "new_badge": "You just won a badge! The `nome_repl` emoji_repl! It will appear on your profile when you use the `/user info` command\n\nYou can also pin featured badges with the `/badges` command!"
+            "rodape": "Use the /badge fix command to pin a!",
+            "new_badge": "You just won a badge! The `nome_repl` emoji_repl! It will appear on your profile when you use the `/user info` command\n\nYou can also pin featured badges with the `/badge fix` command!"
         }
     ],
     "jogos": [

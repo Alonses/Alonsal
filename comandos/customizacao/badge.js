@@ -56,7 +56,7 @@ module.exports = {
         })
 
         if (interaction.options.getSubcommand() == "fix") // Menu seletor de Badges
-            return interaction.reply({ content: `Qual será fixada?`, components: [create_menus(client, all_badges, interaction)], ephemeral: true })
+            return interaction.reply({ content: diversao[9]["cabecalho_menu"], components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
             user.fixed_badge = null
 

@@ -119,10 +119,13 @@
             "error_2": "No tienes esta insignia para fijar",
             "suas_badges": "Tus insignias",
             "ganhou": "ganó en",
+            "cabecalho_menu": "¿Cuál será el elegido?",
+            "escolha_uma": "¡Elige una insignia!",
+            "fixar": "Pin la insignia",
             "badge_fixada": "anclado a tu perfil!",
             "badge_removida": "eliminado de tu perfil",
-            "rodape": "¡Use el comando /badge fix: <nombre> para fijar uno!",
-            "new_badge": "¡Acabas de ganar una insignia! El `nome_repl` emoji_repl! Se mostrará en su perfil cuando use el comando `/información de usuario`\n\n¡También puede anclar insignias destacadas con el comando `/badges`!"
+            "rodape": "¡Use el comando /badge etiquetar para fijar uno!",
+            "new_badge": "¡Acabas de ganar una insignia! El `nome_repl` emoji_repl! Se mostrará en su perfil cuando use el comando `/información de usuario`\n\n¡También puede anclar insignias destacadas con el comando `/badge etiquetar`!"
         }
     ],
     "jogos": [
