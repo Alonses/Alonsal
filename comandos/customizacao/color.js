@@ -1,7 +1,6 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
-const { emojis_dancantes, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
+const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -64,7 +63,7 @@ module.exports = {
 
         const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id), precos = [200, 300, 400, 500], colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
-        let preco, entrada = "", new_color, epic_embed_fail = busca_emoji(client, emojis_negativos)
+        let preco, entrada = "", new_color
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
@@ -111,25 +110,29 @@ module.exports = {
                 return interaction.reply({ content: `:passport_control: | ${customizacao[1]["cor_ativa"]}`, ephemeral: true })
         }
 
-        // Validando se o usuário tem dinheiro suficiente
-        if (user.money < preco)
-            return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", formata_num(preco))}`, ephemeral: true })
+        let cor_demonstracao = entrada.split(".")[1] == 10 ? alea_hex() : colors[entrada.split(".")[1]]
+        let nota_cor_aleatoria = ""
 
-        const emoji_dancando = busca_emoji(client, emojis_dancantes)
-        user.money -= preco
+        // Cor customizada
+        if (interaction.options.getSubcommand() == "custom"){
+            cor_demonstracao = new_color
+            entrada = "4.0"
+        }
 
-        const caso = "movimentacao", quantia = preco
-        require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
+        if (entrada.split(".")[1] == 10)
+            nota_cor_aleatoria = `\n:rainbow: ${customizacao[1]["rand_color"]}`
 
-        if (interaction.options.getSubcommand() === "static")
-            user.color = colors[entrada.split(".")[1]]
-        else // Salvando a cor customizada
-            user.color = new_color
+        // Enviando o embed para validação
+        const embed = new EmbedBuilder()
+            .setTitle(customizacao[1]["titulo"])
+            .setDescription(`\`\`\`${customizacao[1]["descricao"]}\`\`\`${nota_cor_aleatoria}`)
+            .setColor(cor_demonstracao)
+            .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
+            .setFooter({ text: customizacao[1]["footer"], iconURL: client.user.avatarURL({ dynamic: true }) })
 
-        // Salvando os dados
-        client.usuarios.saveUser(user)
+        const row = create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
 
-        interaction.reply({ content: `${emoji_dancando} | ${customizacao[1]["cor_att"]}`, ephemeral: true })
+        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }
 
@@ -139,3 +142,5 @@ function componentToHex(c) {
 }
 
 function rgbToHex(r, g, b) { return `0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}` }
+
+function alea_hex() { return rgbToHex(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)) }

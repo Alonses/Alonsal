@@ -22,8 +22,13 @@
         {
             "cor_ativa": "¡Ya estás usando este color!",
             "error": "Introduzca valores entre 0 y 255 para los colores",
+            "titulo": "> Esta es una demostración incrustada :tada:",
+            "descricao": "Alguna descripción aleatoria por aquí...",
+            "footer": "Tus incrustaciones aparecerán así y cuando vean tu perfil con Alonsal",
+            "rand_color": "Tus colores serán aleatorios con cada comando.",
             "cor_att": "¡Color actualizado! Ahora sus embeds estarán en el color seleccionado",
-            "sem_money": "¡No tienes `B$preco_repl` créditos para ese color!"
+            "sem_money": "¡No tienes `B$preco_repl` créditos para ese color!",
+            "att_cancelada": "Cambio de color cancelado"
         },
         {
             "error": "¡No tienes `B$valor_repl` Bufunfas para transferir!",
@@ -44,7 +49,8 @@
     ],
     "inicio": [
         {
-            "epic_embed_fail": "Ocurrió un error al intentar ejecutar este comando, _no es común, pero sucede_, ¡he notificado a los desarrolladores que eliminen este baidu lo antes posible!\nDisculpe las molestias"
+            "epic_embed_fail": "Ocurrió un error al intentar ejecutar este comando, _no es común, pero sucede_, ¡he notificado a los desarrolladores que eliminen este baidu lo antes posible!\nDisculpe las molestias",
+            "comando_dm": "Los comandos DM no están activos :spy:"
         },
         {
             "titulo": "> ¡Oh Abran paso que quiero pasar! :notes:",

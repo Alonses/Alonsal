@@ -149,10 +149,15 @@ client.on('messageCreate', async (message) => {
 client.on('interactionCreate', async interaction => {
 
 	if (interaction.isSelectMenu()) // Interações por uso de menus de seleção
-		return require('./adm/eventos/menus.js')({ client, interaction })
+		return require('./adm/interacoes/menus.js')({ client, interaction })
+
+	if (interaction.isButton()) // Interações por uso de botões
+		return require('./adm/interacoes/buttons.js')({ client, interaction })
+
+	const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}`)
 
 	if (!interaction.isChatInputCommand()) return
-	if (!interaction.guild) return interaction.reply("Comandos em DM não estão ativos :spy:")
+	if (!interaction.guild) return interaction.reply(inicio[0]["comando_dm"])
 
 	const command = client.commands.get(interaction.commandName)
 	if (!command) return

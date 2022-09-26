@@ -22,8 +22,13 @@
         {
             "cor_ativa": "Você já está usando essa cor!",
             "error": "Insira valores entre 0 e 255 para as cores",
+            "titulo": "> Este é um Embed demonstração :tada:",
+            "descricao": "Alguma descrição aleatória por aqui...",
+            "footer": "Seus embeds irão aparecer assim e ao verem seu perfil com o Alonsal",
+            "rand_color": "Suas cores serão aleatórias a cada comando",
             "cor_att": "Cor atualizada! Agora seus embeds serão na cor selecionada",
-            "sem_money": "Você não possui `B$preco_repl` Bufunfas suficientes para essa cor!"
+            "sem_money": "Você não possui `B$preco_repl` Bufunfas suficientes para essa cor!",
+            "att_cancelada": "Alteração de cor cancelada"
         },
         {
             "error": "Você não possui `B$valor_repl` Bufunfas para transferir!",
@@ -44,7 +49,8 @@
     ],
     "inicio": [
         {
-            "epic_embed_fail": "Houve um erro ao tentar executar este comando, _não é comum mas acontece_, chamei os enceiradores para eliminar este baidu o quanto antes!\nDesculpas pelo inconveniente"
+            "epic_embed_fail": "Houve um erro ao tentar executar este comando, _não é comum mas acontece_, chamei os enceiradores para eliminar este baidu o quanto antes!\nDesculpas pelo inconveniente",
+            "comando_dm": "Comandos em DM não estão ativos :spy:"
         },
         {
             "titulo": "> Ó Abre alas que eu queru passsaa :notes:",

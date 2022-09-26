@@ -1,7 +1,7 @@
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
 const { gifs } = require("../../arquivos/json/gifs/cazalbe.json")
 
 module.exports = {
@@ -18,7 +18,22 @@ module.exports = {
 				.setDescription('⌠😂⌡ Summons a gif of cazalbe')
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
+					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
 					"fr": '⌠😂⌡ Invoque un gif de cazalbe'
+				}))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('laugh')
+				.setNameLocalizations({
+					"pt-BR": 'risada',
+					"es-ES": 'risa',
+					"fr": 'rire'
+				})
+				.setDescription('⌠😂⌡ The cazalbe laugh')
+				.setDescriptionLocalizations({
+					"pt-BR": '⌠😂⌡ A risada cazalbe',
+					"es-ES": '⌠😂⌡ La risa del cazalbe',
+					"fr": '⌠😂⌡ Le rire cazalbe'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
@@ -26,8 +41,11 @@ module.exports = {
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma piada excelentississima')),
 	async execute(client, interaction) {
 
-		if (interaction.options.getSubcommand() === "gif") {
+		if (interaction.options.getSubcommand() === "gif")
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+		else if (interaction.options.getSubcommand() === "laugh") {
+			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.mp3')
+			return interaction.reply({ files: [file] })
 		} else {
 
 			const user = client.usuarios.getUser(interaction.user.id)
