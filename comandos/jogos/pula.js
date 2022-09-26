@@ -31,14 +31,12 @@ module.exports = {
         if (!user.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
 
-        await interaction.deferReply()
-
         fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 
                 if (retorno.status == 404)
-                    return interaction.edit({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
+                    return interaction.reply({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
 
                 const datas_pula = retorno.data
 
@@ -48,7 +46,7 @@ module.exports = {
                     .addFields(
                         {
                             name: `${busca_emoji(client, emojis.pula_2)} **Gerais**`,
-                            value: `:part_alternation_mark: **Pulos:** \`${datas_pula.pulos}\`\n:fireworks: **Mods Ativos:** \`${datas_pula.mods}\`\n:skull_crossbones: **Mortes:** \`${datas_pula.mortes}\``,
+                            value: `:part_alternation_mark: **Pulos:** \`${datas_pula.pulos}\`\n:rocket: **Mods Ativos:** \`${datas_pula.mods}\`\n:skull_crossbones: **Mortes:** \`${datas_pula.mortes}\``,
                             inline: true,
                         },
                         {
@@ -81,15 +79,15 @@ module.exports = {
                     )
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    embed.setDescription(`\`\`\`🏆 Recorde de ${datas_pula.recorde} pontos numa partida!\n🚀 ${datas_pula.distancia_percorrida} metros percorridos no total\`\`\``)
+                    embed.setDescription(`\`\`\`🏆 Recorde de ${datas_pula.recorde} pontos numa partida!\n🏃 ${(datas_pula.distancia_percorrida / 1000).toLocaleString('pt-BR')} km's percorridos no total\`\`\``)
 
-                return interaction.edit({ embeds: [embed] })
+                return interaction.reply({ embeds: [embed] })
             })
             .catch(err => {
 
                 console.log(err)
 
-                return interaction.edit({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
+                return interaction.reply({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
             })
     }
 }
