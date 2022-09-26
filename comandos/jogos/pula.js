@@ -38,7 +38,7 @@ module.exports = {
             .then(retorno => {
 
                 if (retorno.status == 404)
-                    return interaction.edit({ content: "Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
+                    return interaction.edit({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
 
                 const datas_pula = retorno.data
 

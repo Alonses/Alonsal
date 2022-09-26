@@ -17,7 +17,7 @@ module.exports = {
         const { inicio, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
-        const row = create_buttons([{ name: inicio[1]["site"], value: 'http://alonsal.glitch.me/', type: 4 }, { name: updates[0]["suporte"], value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }])
+        const row = create_buttons([{ name: inicio[1]["site"], value: 'http://alonsal.glitch.me/', type: 4 }, { name: updates[0]["suporte"], value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }], interaction)
 
         const embed = new EmbedBuilder()
             .setTitle(inicio[1]["titulo"])

@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
-module.exports = (lista_botoes) => {
+module.exports = (lista_botoes, interaction) => {
 
     const row_buttons = new ActionRowBuilder()
     const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
@@ -30,8 +30,8 @@ module.exports = (lista_botoes) => {
             if (!valor.emoji)
                 row_buttons.addComponents(
                     new ButtonBuilder()
-                        .setCustomId(valor.name.slice(0, 4))
-                        .setLabel(valor.name)
+                        .setCustomId(`${valor.name.slice(0, 4)}[${valor.name.split(":")[1]}]_${interaction.user.id}`)
+                        .setLabel(valor.name.split(":")[0])
                         .setStyle(tipos[valor.type])
                 )
             else

@@ -22,8 +22,13 @@
         {
             "cor_ativa": "Vous utilisez déjà cette couleur!",
             "error": "Entrez des valeurs entre 0 et 255 pour les couleurs",
+            "titulo": "> Ceci est une démo Embed :tada:",
+            "descricao": "Une description aléatoire ici...",
+            "footer": "Vos intégrations apparaîtront comme ceci et quand ils verront votre profil avec Alonsal",
+            "rand_color": "Vos couleurs seront aléatoires à chaque commande",
             "cor_att": "Couleur mise à jour! Maintenant, vos embeds seront dans la couleur sélectionnée",
-            "sem_money": "Vous n'avez pas `B$price_repl` crédits pour cette couleur!"
+            "sem_money": "Vous n'avez pas `B$price_repl` crédits pour cette couleur!",
+            "att_cancelada": "Changement de couleur annulé"
         },
         {
             "error": "Vous n'avez pas `B$valor_repl` Bufunfas à transférer!",
@@ -44,7 +49,8 @@
     ],
     "inicio": [
         {
-            "epic_embed_fail": "Une erreur s'est produite lors de l'exécution de cette commande, j'ai prévenu l'équipe d'éliminer ce baidu au plus vite. mes excuses pour le derangement"
+            "epic_embed_fail": "Une erreur s'est produite lors de l'exécution de cette commande, j'ai prévenu l'équipe d'éliminer ce baidu au plus vite. mes excuses pour le derangement",
+            "comando_dm": "Les commandes DM ne sont pas actives :spy:"
         },
         {
             "titulo": "> Oh emmène-moi à traaveeers :notes:",
