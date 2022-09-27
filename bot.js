@@ -114,21 +114,33 @@ client.once('ready', async () => {
 client.on('messageCreate', async (message) => {
 	if (message.author.bot || message.webhookId) return
 
+	let ativador = "a_1"
+
+	if (client.user.id == "846472827212136498")
+		ativador = "a_2"
+
 	// Respostas automatizadas por IA
-	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes('alonsal')) {
+	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes(ativador)) {
 		let text = message.content.split("> ")[1] || message.content
-		text = text.replace("alonsal", "").replace("833349943539531806", "").trim()
+		text = text.replace(ativador, "").replace("833349943539531806", "").trim()
+
+		let alvo = "a_2"
+
+		if (ativador == "a_2")
+			alvo = "a_1"
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
 			conversations.push(res)
 
-			message.channel.send(res)
+			setTimeout(() => {
+				message.channel.send(`${alvo} ${res}`)
 
-			if (conversations.length > 100) {
-				conversations.shift()
-				conversations.shift()
-			}
+				if (conversations.length > 200) {
+					conversations.shift()
+					conversations.shift()
+				}
+			}, 2000)
 		})
 
 		return
