@@ -112,7 +112,6 @@ client.once('ready', async () => {
 })
 
 client.on('messageCreate', async (message) => {
-	if (message.author.bot || message.webhookId) return
 
 	let ativador = "a_1"
 
@@ -131,7 +130,7 @@ client.on('messageCreate', async (message) => {
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
-			conversations.push(res)
+			conversations.push(res.trim())
 
 			setTimeout(() => {
 				message.channel.send(`${alvo} ${res}`)
@@ -145,6 +144,8 @@ client.on('messageCreate', async (message) => {
 
 		return
 	}
+
+	if (message.author.bot || message.webhookId) return
 
 	try { // Atualizando ranking e recebendo mensagens de texto
 
