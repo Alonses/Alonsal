@@ -35,6 +35,9 @@ if (silent)
 if (modo_develop)
 	token = process.env.token_2, clientId = process.env.client_2
 
+if (modo_develop == 2)
+	token = process.env.token_3, clientId = process.env.client_3
+
 let commands = []
 const comandos_privados = []
 const conversations = []
@@ -118,12 +121,20 @@ client.on('messageCreate', async (message) => {
 	if (client.user.id == "846472827212136498")
 		ativador = "a_2"
 
+	if (client.user.id == "881264210116509696")
+		ativador = "a_3"
+
 	// Respostas automatizadas por IA
 	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes(ativador)) {
 		let text = message.content.split("> ")[1] || message.content
 		text = text.replace(ativador, "").replace("833349943539531806", "").trim()
 
-		let alvo = "a_2"
+		let alvo
+		const alvos = ["a_1", "a_2", "a_3"]
+
+		do {
+			alvo = alvos[Math.round((alvos.length - 1) * Math.random())]
+		} while (ativador == alvo)
 
 		if (ativador == "a_2")
 			alvo = "a_1"
@@ -135,11 +146,11 @@ client.on('messageCreate', async (message) => {
 			setTimeout(() => {
 				message.channel.send(`${alvo} ${res}`)
 
-				if (conversations.length > 200) {
+				if (conversations.length > 500) {
 					conversations.shift()
 					conversations.shift()
 				}
-			}, 2000)
+			}, 2500)
 		})
 
 		return
