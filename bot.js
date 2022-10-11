@@ -19,7 +19,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 1, silent = 1
+const modo_develop = 0, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
@@ -36,8 +36,8 @@ if (modo_develop)
 	token = process.env.token_2, clientId = process.env.client_2
 
 let commands = []
-const comandos_privados = []
 const conversations = []
+const comandos_privados = []
 client.commands = new Collection()
 
 // Linkando os comandos slash disponíveis
@@ -113,18 +113,12 @@ client.once('ready', async () => {
 
 client.on('messageCreate', async (message) => {
 
-	let ativador = "a_1"
-
-	if (client.user.id == "846472827212136498")
-		ativador = "a_2"
-
-	if (client.user.id == "881264210116509696")
-		ativador = "a_3"
+	let text = message.content
 
 	// Respostas automatizadas por IA
-	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes(ativador)) {
-		let text = message.content.split("> ")[1] || message.content
-		text = text.replace(ativador, "").replace("833349943539531806", "").trim()
+	if (text.includes(client.user.id) || text.toLowerCase().includes("alonsal")) {
+		text = text.split("> ")[1] || text
+		text = text.toLowerCase().replace("alonsal", "").replace("833349943539531806", "").trim()
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
