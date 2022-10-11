@@ -113,19 +113,19 @@ client.once('ready', async () => {
 
 client.on('messageCreate', async (message) => {
 
-	let text = message.content
+	let text = message.content.toLowerCase()
 
 	// Respostas automatizadas por IA
-	if (text.includes(client.user.id) || text.toLowerCase().includes("alonsal")) {
+	if (text.includes(client.user.id) || text.includes("alonsal")) {
 		text = text.split("> ")[1] || text
-		text = text.toLowerCase().replace("alonsal", "").replace("833349943539531806", "").trim()
+		text = text.replace("alonsal", "").replace("833349943539531806", "").trim()
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
 			conversations.push(res.trim())
 
 			setTimeout(() => {
-				message.channel.send(`${alvo} ${res}`)
+				message.channel.send(res)
 
 				if (conversations.length > 500) {
 					conversations.shift()
