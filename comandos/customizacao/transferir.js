@@ -75,8 +75,7 @@ module.exports = {
         user.money -= bufunfas
         alvo.money += bufunfas
 
-        client.usuarios.saveUser(user)
-        client.usuarios.saveUser(alvo)
+        client.usuarios.saveUser([user, alvo])
 
         const caso = "movimentacao", quantia = bufunfas
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })

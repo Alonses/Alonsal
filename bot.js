@@ -19,7 +19,7 @@ const client = new Client({
 })
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
+const modo_develop = 0, force_update = 1, silent = 1
 let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
@@ -34,9 +34,6 @@ if (silent)
 // e privados do bot
 if (modo_develop)
 	token = process.env.token_2, clientId = process.env.client_2
-
-if (modo_develop == 2)
-	token = process.env.token_3, clientId = process.env.client_3
 
 let commands = []
 const comandos_privados = []
@@ -128,16 +125,6 @@ client.on('messageCreate', async (message) => {
 	if (message.content.includes(client.user.id) || (message.content.toLowerCase()).includes(ativador)) {
 		let text = message.content.split("> ")[1] || message.content
 		text = text.replace(ativador, "").replace("833349943539531806", "").trim()
-
-		let alvo
-		const alvos = ["a_1", "a_2", "a_3"]
-
-		do {
-			alvo = alvos[Math.round((alvos.length - 1) * Math.random())]
-		} while (ativador == alvo)
-
-		if (ativador == "a_2")
-			alvo = "a_1"
 
 		cleverbot(text).then(res => {
 			conversations.push(text)

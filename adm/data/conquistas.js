@@ -23,7 +23,7 @@ module.exports = (client, modo, id_alvo, interaction) => {
         client.usuarios.saveUser(user)
 
         client.users.fetch(user.id, false).then((user_interno) => {
-            user_interno.send('Você acabou de ganhar uma Badge!')
+            user_interno.send('Você acabou de ganhar uma Conquista!')
         })
     }
 }
