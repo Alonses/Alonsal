@@ -14,7 +14,7 @@ function setLang(client, interaction, lang) {
 
     const user = client.usuarios.getUser(interaction.user.id)
     user.lang = lang
-    
+
     // Salvando os dados do usuário
     writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
     delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
