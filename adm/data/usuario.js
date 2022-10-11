@@ -39,8 +39,13 @@ function getUser(id_alvo) {
 }
 
 function saveUser(user) {
-    writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
-    delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+
+    for (let i = 0; i < user.length; i++) {
+        const user_alvo = user[i]
+
+        writeFileSync(`./arquivos/data/user/${user_alvo.id}.json`, JSON.stringify(user_alvo))
+        delete require.cache[require.resolve(`../../arquivos/data/user/${user_alvo.id}.json`)]
+    }
 }
 
 module.exports = {
@@ -55,4 +60,4 @@ function componentToHex(c) {
 
 function rgbToHex(r, g, b) { return `0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}` }
 
-function alea_hex(){ return rgbToHex(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)) }
+function alea_hex() { return rgbToHex(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)) }
