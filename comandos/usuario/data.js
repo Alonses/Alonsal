@@ -69,8 +69,17 @@ module.exports = {
         } else {
             dados_conhecidos = `**${manutencao[9]["ranking_guilds"]}:**\`\`\`fix\n${lista_servidores(ranking, 250, manutencao)}\`\`\``
 
+            // if (user.redes.length > 0) {
+            //     dados_conhecidos += '\n**Links externos: **\n'
+
+            //     user.redes.forEach(valor => {
+            //         if (Object.values(valor)[0]) // Listando as redes linkadas
+            //             dados_conhecidos += `\`${Object.keys(valor)[0]}\`, `
+            //     })
+            // }
+
             if (user.badge_list.length > 0)
-                dados_conhecidos += `\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
+                dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(manutencao[9]["dados_conhecidos"])
