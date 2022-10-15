@@ -21,20 +21,19 @@ module.exports = async ({ client }) => {
                 dispara_status(client, "🛑 Offline")
             })
 
-        client.user.setActivity('Minecraft Live 🐸', { type: ActivityType.Watching })
+        client.user.setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
 
-        // const activities = [
-        //     "/idioma | Español ahora!",
-        //     `comandos em barra`,
-        //     "traducciones",
-        //     "slash commands",
-        //     "cera en español",
-        //     "baidu en comandos",
-        //     "etiquétame ahí tu cuerno!",
-        // ]
+        const activities = [
+            "/idioma | Español!",
+            `comandos em barra`,
+            "traducciones",
+            "slash commands",
+            "itens pixelados",
+            "baidu en comandos"
+        ]
 
-        // let i = 0
-        // setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`, {type: ActivityType.Watching}), 10000)
+        let i = 0
+        setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`, {type: ActivityType.Playing}), 10000)
     } else
         client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
 
