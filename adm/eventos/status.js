@@ -1,11 +1,11 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, ActivityType } = require('discord.js')
 
 module.exports = async ({ client }) => {
 
-    if (client.user.id === "833349943539531806") {
+    if (client.user.id === process.env.client_1) {
 
         fetch('https://apisal.herokuapp.com/status')
             .then(res => res.json())
@@ -21,21 +21,22 @@ module.exports = async ({ client }) => {
                 dispara_status(client, "🛑 Offline")
             })
 
-        client.user.setActivity('¡Estoy en linea!', 'COMPETING')
-        const activities = [
-            "/idioma | Español ahora!",
-            `comandos em barra`,
-            "traducciones",
-            "slash commands",
-            "cera en español",
-            "baidu en comandos",
-            "etiquétame ahí tu cuerno!",
-        ]
+        client.user.setActivity('Minecraft Live 🐸', { type: ActivityType.Watching })
 
-        let i = 0
-        setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`), 10000)
+        // const activities = [
+        //     "/idioma | Español ahora!",
+        //     `comandos em barra`,
+        //     "traducciones",
+        //     "slash commands",
+        //     "cera en español",
+        //     "baidu en comandos",
+        //     "etiquétame ahí tu cuerno!",
+        // ]
+
+        // let i = 0
+        // setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`, {type: ActivityType.Watching}), 10000)
     } else
-        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }] })
+        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
 
     require('../automaticos/relata.js')({ client })
     require('../automaticos/anuncia.js')({ client })

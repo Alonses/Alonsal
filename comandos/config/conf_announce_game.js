@@ -43,7 +43,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        if (interaction.user.id !== "665002572926681128") return
+        if (interaction.user.id !== client.owners[0]) return
 
         await interaction.deferReply()
 

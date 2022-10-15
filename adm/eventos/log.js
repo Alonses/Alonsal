@@ -11,7 +11,7 @@ module.exports = async ({ client, interaction }) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
 
-        if (client.user.id === "833349943539531806") {
+        if (client.user.id === process.env.client_1) {
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
@@ -81,7 +81,7 @@ module.exports = async ({ client, interaction }) => {
     })
 
     // Contabilizar os comandos
-    if (client.user.id === "833349943539531806") {
+    if (client.user.id === process.env.client_1) {
         // await require('../command_ranking.js')({client, interaction, content})
 
         const caso = "comando"
