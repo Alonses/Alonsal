@@ -116,9 +116,9 @@ client.on('messageCreate', async (message) => {
 	let text = message.content.toLowerCase()
 
 	// Respostas automatizadas por IA
-	if (text.includes(client.user.id) || text.includes("alonsal")) {
+	if (text.includes(client.user.id) || text.includes("alonsal") || text.includes("a*")) {
 		text = text.split("> ")[1] || text
-		text = text.replace("alonsal", "").replace("833349943539531806", "").trim()
+		text = text.replace("alonsal", "").replace(client.user.id, "").replace("a*", "").trim()
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
@@ -131,7 +131,7 @@ client.on('messageCreate', async (message) => {
 					conversations.shift()
 					conversations.shift()
 				}
-			}, 2500)
+			}, Math.floor(900 + (Math.random() * 800)))
 		})
 
 		return
@@ -142,7 +142,7 @@ client.on('messageCreate', async (message) => {
 	try { // Atualizando ranking e recebendo mensagens de texto
 
 		const caso = 'messages'
-		if (message.content.length >= 7 && ranking) await require('./adm/data/ranking.js')({ client, message, caso })
+		if (message.content.length > 6 && ranking) await require('./adm/data/ranking.js')({ client, message, caso })
 
 		require('./adm/eventos/comandos_antigos.js')({ client, message })
 	} catch (err) {

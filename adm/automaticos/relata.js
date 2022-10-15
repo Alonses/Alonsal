@@ -5,7 +5,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client }) => {
 
-    if (client.user.id !== "833349943539531806") return
+    if (client.user.id !== process.env.client_1) return
 
     const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
     const tempo_restante = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)

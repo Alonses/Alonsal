@@ -63,7 +63,7 @@ module.exports = {
         const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== "665002572926681128")
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
             return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true }) // Libera configuração para proprietários e adms apenas
 
         let opcao_remove = false, entradas = interaction.options.data
