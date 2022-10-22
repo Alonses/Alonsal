@@ -23,7 +23,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setTitle(`${manutencao[5]["apoie"]} ${bolo}`)
             .setURL("https://picpay.me/slondo")
             .setDescription(manutencao[5]["escaneie"])

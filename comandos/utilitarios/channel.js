@@ -64,7 +64,7 @@ module.exports = {
 
                 const infos_ch = new EmbedBuilder()
                     .setAuthor({ name: canal.name, iconURL: icone_server })
-                    .setColor(user.color)
+                    .setColor(user.misc.embed)
                     .setDescription(topico)
                     .addFields(
                         {

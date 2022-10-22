@@ -22,7 +22,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setTitle(manutencao[0]["titulo"])
             .setDescription(manutencao[0]["convite"])
 

@@ -11,7 +11,7 @@ module.exports = async ({ client, interaction }) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
 
-        if (client.user.id === process.env.client_1) {
+        if (client.id() === process.env.client_1) {
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
@@ -72,7 +72,7 @@ module.exports = async ({ client, interaction }) => {
             if (url_ativacao !== "")
                 embed.setURL(`${url_ativacao}`)
 
-            client.channels.cache.get('846151364492001280').send({ embeds: [embed] }) // Envia o log com os comandos do usuário
+            client.discord.channels.cache.get('846151364492001280').send({ embeds: [embed] }) // Envia o log com os comandos do usuário
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
@@ -81,7 +81,7 @@ module.exports = async ({ client, interaction }) => {
     })
 
     // Contabilizar os comandos
-    if (client.user.id === process.env.client_1) {
+    if (client.id() === process.env.client_1) {
         // await require('../command_ranking.js')({client, interaction, content})
 
         const caso = "comando"

@@ -80,12 +80,12 @@ module.exports = {
         const emoji_dancando = busca_emojis(client, emojis_dancantes)
 
         if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
-            user.steam = entrada
+            user.social.steam = entrada
         else if (interaction.options.getSubcommand() === "lastfm") {
-            user.lastfm = entrada
+            user.social.lastfm = entrada
             plataforma = "lastfm"
         } else {
-            user.pula_predios = entrada
+            user.social.pula_predios = entrada
             plataforma = "Pula prédios"
         }
 

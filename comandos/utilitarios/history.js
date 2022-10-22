@@ -67,7 +67,7 @@ module.exports = {
                     const embed_eventos = new EmbedBuilder()
                         .setTitle(utilitarios[10]["acontecimentos_1"])
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setDescription(`${utilitarios[10]["acontecimentos_2"]} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                     interaction.editReply({ embeds: [embed_eventos] })
@@ -102,7 +102,7 @@ module.exports = {
                         .setTitle(formata_texto(res.acontecimento))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setURL(res.fonte)
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setDescription(res.descricao)
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)

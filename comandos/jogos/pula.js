@@ -28,10 +28,10 @@ module.exports = {
         alvo = interaction.options.getUser('user') || interaction.user
         const user = client.usuarios.getUser(alvo.id)
 
-        if (!user.pula_predios)
+        if (!user.social.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
 
-        fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.pula_predios}`)
+        fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.social.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 
@@ -42,7 +42,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle("> Suas estatísticas no Pula")
-                    .setColor(user.color)
+                    .setColor(user.misc.embed)
                     .addFields(
                         {
                             name: `${busca_emoji(client, emojis.pula_2)} **Gerais**`,

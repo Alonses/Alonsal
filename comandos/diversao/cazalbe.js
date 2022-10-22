@@ -58,7 +58,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle('Cazalbé')
 						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
-						.setColor(user.color)
+						.setColor(user.misc.embed)
 						.setDescription(`${res.question}\n${res.answer}`)
 
 					interaction.editReply({ embeds: [embed] })

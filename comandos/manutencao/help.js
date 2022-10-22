@@ -21,7 +21,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(inicio[1]["titulo"])
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setImage('https://i.imgur.com/NqmwCA9.png')
             .setDescription(`${inicio[1]["boas_vindas"]}`)
             .setFooter({ text: inicio[1]["idioma_dica"] })

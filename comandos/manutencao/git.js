@@ -15,7 +15,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
             .setTitle(manutencao[1]["repositorio"])
             .setURL('https://github.com/brnd-21/Alonsal')

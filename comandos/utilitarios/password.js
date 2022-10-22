@@ -39,7 +39,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)
             .setURL('https://password.kaspersky.com/')
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setDescription(`:passport_control: **${utilitarios[18]["primaria"]}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${utilitarios[18]["bonus"]}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({ text: utilitarios[18]["rodape"].replace("tamanho_repl", tamanho) })
 

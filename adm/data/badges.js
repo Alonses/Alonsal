@@ -24,7 +24,7 @@ module.exports = (client, modo, id_alvo, interaction) => {
         const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
         const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
-        user.fixed_badge = fixed_badge
+        user.badges.fixed_badge = fixed_badge
 
         if (badge_list)
             badge_list.forEach(valor => {

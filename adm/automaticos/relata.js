@@ -26,7 +26,7 @@ function requisita_relatorio(client, aguardar_tempo) {
 async function gera_relatorio(client, proxima_att) {
 
     const date1 = new Date()
-    const bot = client.bot.getRelatorio()
+    const bot = client.auto.getRelatorio()
     let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
 
     let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
@@ -83,5 +83,5 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
 
     await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
-    client.bot.resRelatorio() // Reseta o relatório
+    client.auto.resRelatorio() // Reseta o relatório
 }

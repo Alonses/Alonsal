@@ -116,7 +116,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
 
         if (aviso.length > 0)

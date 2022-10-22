@@ -132,7 +132,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(titulo)
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setDescription(`${conversao_valida}${dica_conversao}`)
 

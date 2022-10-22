@@ -69,10 +69,10 @@ module.exports = {
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
-        if (user.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
+        if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error"].replace("valor_repl", formata_num(bufunfas))}`, ephemeral: true })
 
-        user.money -= bufunfas
+        user.misc.money -= bufunfas
         alvo.money += bufunfas
 
         client.usuarios.saveUser([user, alvo])

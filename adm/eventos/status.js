@@ -2,10 +2,13 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { EmbedBuilder, ActivityType } = require('discord.js')
+const fs = require('fs')
 
 module.exports = async ({ client }) => {
 
-    if (client.user.id === process.env.client_1) {
+    client.idioma.loadAll()
+
+    if (client.id() === process.env.client_1) {
 
         fetch('https://apisal.herokuapp.com/status')
             .then(res => res.json())
@@ -21,7 +24,7 @@ module.exports = async ({ client }) => {
                 dispara_status(client, "🛑 Offline")
             })
 
-        client.user.setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
+        client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
 
         const activities = [
             "/idioma | Español!",
@@ -33,9 +36,13 @@ module.exports = async ({ client }) => {
         ]
 
         let i = 0
-        setInterval(() => client.user.setActivity(`${activities[i++ % activities.length]}`, {type: ActivityType.Playing}), 10000)
+        setInterval(() => client.user().setActivity(`${activities[i++ % activities.length]}`, { type: ActivityType.Playing }), 10000)
     } else
-        client.user.setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
+        client.user().setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
+
+    setTimeout(() => {
+        client.idioma.listAll()
+    }, 3000)
 
     require('../automaticos/relata.js')({ client })
     require('../automaticos/anuncia.js')({ client })
@@ -43,38 +50,47 @@ module.exports = async ({ client }) => {
 
 function dispara_status(client, status_apisal) {
 
-    const canais_texto = client.channels.cache.filter((c) => c.type === 0).size
-    let members = 0
+    setTimeout(() => {
 
-    client.guilds.cache.forEach(async guild => {
-        members += guild.memberCount - 1
-    })
+        fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
-    const embed = new EmbedBuilder()
-        .setTitle(':steam_locomotive: Caldeiras aquecidas')
-        .setColor(0x29BB8E)
-        .addFields(
-            {
-                name: ':globe_with_meridians: **Servidores**',
-                value: `**Ativo em: **\`${client.guilds.cache.size}\``,
-                inline: true
-            },
-            {
-                name: ':card_box: **Canais**',
-                value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
-                inline: true
-            },
-            {
-                name: ':busts_in_silhouette: **Usuários**',
-                value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
-                inline: true
-            }
-        )
-        .addFields(
-            { name: ':white_small_square: Versão', value: `\`${process.env.version}\``, inline: true },
-            { name: '⠀', value: '⠀', inline: true },
-            { name: ':moyai: APISAL', value: `\`${status_apisal}\``, inline: true })
-        .setFooter({ text: client.user.username, iconURL: client.user.avatarURL({ dynamic: true }) })
+            const commit_language = data
+            const canais_texto = client.discord.channels.cache.filter((c) => c.type === 0).size
+            let members = 0
 
-    client.channels.cache.get('854695578372800552').send({ embeds: [embed] }) // Avisa que está online em um canal
+            client.guilds().forEach(async guild => {
+                members += guild.memberCount - 1
+            })
+
+            let bandeira_idiomas = client.idioma.listAll()
+
+            const embed = new EmbedBuilder()
+                .setTitle(':steam_locomotive: Caldeiras aquecidas')
+                .setColor(0x29BB8E)
+                .addFields(
+                    {
+                        name: ':globe_with_meridians: **Servidores**',
+                        value: `**Ativo em: **\`${client.guilds().size}\``,
+                        inline: true
+                    },
+                    {
+                        name: ':card_box: **Canais**',
+                        value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
+                        inline: true
+                    },
+                    {
+                        name: ':busts_in_silhouette: **Usuários**',
+                        value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
+                        inline: true
+                    }
+                )
+                .addFields(
+                    { name: ':white_small_square: **Versão**', value: `\`${process.env.version}\``, inline: true },
+                    { name: ':earth_americas: **Idiomas**', value: `\`💠 ${commit_language}\`${bandeira_idiomas}`, inline: true },
+                    { name: ':moyai: **APISAL**', value: `\`${status_apisal}\``, inline: true })
+                .setFooter({ text: client.user().username, iconURL: client.user().avatarURL({ dynamic: true }) })
+
+            client.discord.channels.cache.get('854695578372800552').send({ embeds: [embed] }) // Avisa que está online em um canal
+        })
+    }, 3000)
 }

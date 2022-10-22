@@ -71,7 +71,7 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const Embed = new EmbedBuilder()
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setTitle(res.Heading)
                         .setAuthor({ name: res.AbstractSource })
                         .setDescription(res.AbstractText)

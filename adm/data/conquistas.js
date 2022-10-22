@@ -17,7 +17,7 @@ module.exports = (client, modo, id_alvo, interaction) => {
         user.conquistas.push(constructJson(modo, Math.floor(date1.getTime() / 1000)))
 
         if (modo == 1) { // Badge por transferir um funny number para o alonsal
-            user.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
+            user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
         }
 
         client.usuarios.saveUser(user)

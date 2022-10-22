@@ -36,11 +36,11 @@ module.exports = {
                     "fr": 'Quelle est la nouvelle langue ?'
                 })
                 .addChoices(
-                    { name: 'Português', value: 'pt' },
+                    { name: 'Alonsês', value: 'al' },
                     { name: 'English', value: 'en' },
                     { name: 'Español', value: 'es' },
                     { name: 'Français', value: 'fr' },
-                    { name: 'Alonsês', value: 'al' }
+                    { name: 'Português', value: 'pt' },
                 )
                 .setRequired(true)),
     async execute(client, interaction) {

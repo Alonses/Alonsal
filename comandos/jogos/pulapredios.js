@@ -13,7 +13,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setTitle(`> Pula Prédios ${emoji_pula}`)
             .setURL('https://gamejolt.com/games/pula-predios/613946')
             .setImage('https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp')

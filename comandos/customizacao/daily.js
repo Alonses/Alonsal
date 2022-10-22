@@ -19,7 +19,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id), date1 = new Date()
         let data_atual = date1.toDateString('pt-BR')
 
-        if (data_atual == user.daily){
+        if (data_atual == user.misc.daily){
             const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
         
             return interaction.reply({ content: `:bank: | ${customizacao[0]["error"]} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
@@ -28,8 +28,8 @@ module.exports = {
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
         const bufunfa = Math.floor(900 + (Math.random() * 500))
         
-        user.money += bufunfa
-        user.daily = date1.toDateString('pt-BR')
+        user.misc.money += bufunfa
+        user.misc.daily = date1.toDateString('pt-BR')
 
         const caso = "bufunfa", quantia = bufunfa
         require('../../adm/automaticos/relatorio.js')({client, caso, quantia})

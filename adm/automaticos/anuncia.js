@@ -5,7 +5,7 @@ const dispara_anuncio = require('./dispara_anuncio.js')
 
 module.exports = async ({ client }) => {
 
-    if (client.user.id !== process.env.client_1) return
+    if (client.id() !== process.env.client_1) return
 
     const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
     let controle = 0
@@ -51,5 +51,5 @@ function next_att(client, tempo_restante) {
 
     tempo_restante = Math.floor((Date.now() / 1000) + (tempo_restante / 1000))
 
-    client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
+    client.discord.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
 }
