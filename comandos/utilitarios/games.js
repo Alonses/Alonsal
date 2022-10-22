@@ -40,7 +40,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(moderacao[6]["ativos"])
                     .setThumbnail(res[0].thumbnail)
-                    .setColor(user.color)
+                    .setColor(user.misc.embed)
                     .setDescription(`${moderacao[6]["resgate_dica"]}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })

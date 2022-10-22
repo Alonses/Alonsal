@@ -17,12 +17,12 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         // Procurando pelas badges antes do comando
-        if (user.badge_list.length < 1 && !user.badge_list)
+        if (user.badges.badge_list.length < 1 && !user.badges.badge_list)
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${diversao[9]["suas_badges"]}`)
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setDescription(busca_badges(client, 'all', interaction.user.id, interaction))
             .setFooter({ text: diversao[9]["rodape"] })
 

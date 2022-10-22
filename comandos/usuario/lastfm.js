@@ -62,10 +62,10 @@ module.exports = {
         const user = client.usuarios.getUser(alvo.id)
 
         if (!texto_entrada) // Verificando se o usuário possui link com a steam
-            if (!user.lastfm)
+            if (!user.social.lastfm)
                 return interaction.reply({ content: `:mag: | ${utilitarios[20]["sem_link"]}`, ephemeral: true })
             else
-                texto_entrada = user.lastfm
+                texto_entrada = user.social.lastfm
 
         await interaction.deferReply()
 
@@ -189,7 +189,7 @@ module.exports = {
                                     .setTitle(utilitarios[20]["perfil_musical"].replace("nome_repl", nome))
                                     .setThumbnail(avatar)
                                     .setURL(usuario_alvo)
-                                    .setColor(user.color)
+                                    .setColor(user.misc.embed)
                                     .addFields(
                                         {
                                             name: `:saxophone: ${utilitarios[20]["geral"]}`,

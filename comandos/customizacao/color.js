@@ -72,7 +72,7 @@ module.exports = {
 
             preco = precos[entrada.split(".")[0]]
 
-            if (user.color == colors[entrada.split(".")[1]])
+            if (user.misc.color == colors[entrada.split(".")[1]])
                 return interaction.reply({ content: `:passport_control: | ${customizacao[1]["cor_ativa"]}`, ephemeral: true })
         } else { // Cor customizada
 
@@ -106,7 +106,7 @@ module.exports = {
             new_color = rgbToHex(rgb.r, rgb.g, rgb.b)
             preco = 50
 
-            if (user.color == new_color)
+            if (user.misc.color == new_color)
                 return interaction.reply({ content: `:passport_control: | ${customizacao[1]["cor_ativa"]}`, ephemeral: true })
         }
 

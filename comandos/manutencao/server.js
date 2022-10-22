@@ -18,7 +18,7 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setTitle(`${manutencao[6]["hub_alonsal"]} ${emoji_rainha}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')

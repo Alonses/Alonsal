@@ -18,19 +18,19 @@ module.exports = ({ client, interaction }) => {
         const preco = precos[parseInt(data_cor.split(".")[0])]
 
         // Validando se o usuário tem dinheiro suficiente
-        if (user.money < preco)
+        if (user.misc.money < preco)
             return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", formata_num(preco))}`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
-        user.money -= preco
+        user.misc.money -= preco
 
         const caso = "movimentacao", quantia = preco
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
         if (data_cor.split(".") != 10)
-            user.color = colors[data_cor.split(".")[1].split("-")[0]]
+            user.misc.color = colors[data_cor.split(".")[1].split("-")[0]]
         else // Salvando a cor customizada
-            user.color = data_cor.split("-")[1]
+            user.misc.color = data_cor.split("-")[1]
 
         // Salvando os dados
         client.usuarios.saveUser(user)

@@ -58,7 +58,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle(titulo)
-                    .setColor(user.color)
+                    .setColor(user.misc.embed)
                     .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${utilitarios[21]["codigo"]}:** \`${texto_entrada}\``)
 
                 if (nota_rodape.length > 1)

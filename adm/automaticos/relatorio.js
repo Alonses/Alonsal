@@ -8,7 +8,7 @@ module.exports = async ({ client, caso, quantia }) => {
     trava_edicao = 1
 
     // Coletando os dados do bot
-    const bot = client.bot.getRelatorio()
+    const bot = client.auto.getRelatorio()
 
     // Movimentações de dinheiro pelo bot
     if (caso == "bufunfa" || caso == "movimentacao") {
@@ -19,7 +19,7 @@ module.exports = async ({ client, caso, quantia }) => {
         if (caso == "movimentacao")
             bot.movimentado += quantia
 
-        client.bot.saveRelatorio(bot)
+        client.auto.saveRelatorio(bot)
         trava_edicao = 0
     } else {
 
@@ -44,7 +44,7 @@ module.exports = async ({ client, caso, quantia }) => {
             if (caso === "epic_embed")
                 bot.epic_embed_fails += 1
 
-            client.bot.saveRelatorio(bot)
+            client.auto.saveRelatorio(bot)
             trava_edicao = 0
         })
     }

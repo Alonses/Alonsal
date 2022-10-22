@@ -1,39 +1,41 @@
-const { existsSync, writeFileSync } = require("fs")
+const { existsSync, writeFileSync, readdirSync } = require("fs")
 
 function getUser(id_alvo) {
 
     const user = {
         id: id_alvo,
         lang: 'pt-br',
-        steam: null,
-        lastfm: null,
-        pula_predios: null,
-        color: '0x29BB8E',
-        money: 0,
-        daily: null,
-        fixed_badge: null,
-        badge_list: [],
+        social: {
+            steam: null,
+            lastfm: null,
+            pula_predios: null
+        },
+        misc: {
+            color: '0x29BB8E',
+            money: 0,
+            daily: null,
+            embed: null
+        },
+        badges: {
+            fixed_badge: null,
+            badge_list: []
+        },
         conquistas: []
     }
 
     if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
-        const { lang, steam, lastfm, pula_predios, color, money, daily, fixed_badge, badge_list, conquistas } = require(`../../arquivos/data/user/${user.id}.json`)
+        const { lang, social, misc, badges, conquistas } = require(`../../arquivos/data/user/${user.id}.json`)
 
         user.lang = lang
-        user.steam = steam
-        user.lastfm = lastfm
-        user.pula_predios = pula_predios
-        user.color = color || '0x29BB8E'
-        user.money = money || 0
-        user.daily = daily
-        user.fixed_badge = fixed_badge
-        user.badge_list = badge_list || []
+        user.social = social
+        user.misc = misc
+        user.badges = badges
         user.conquistas = conquistas || []
     }
 
-    if (user.color == "RANDOM")
-        user.color = alea_hex()
+    if (user.misc.color == "RANDOM")
+        user.misc.embed = alea_hex()
 
     return user
 }
@@ -48,9 +50,40 @@ function saveUser(user) {
     }
 }
 
+function updateData() {
+    for (const file of readdirSync(`./arquivos/data/user/`)) {
+        const { steam, money, color, id, fixed_badge, daily, lastfm, pula_predios, lang, conquistas } = require(`../../arquivos/data/user/${file}`)
+
+        const user = {
+            id: id,
+            lang: lang,
+            social: {
+                lastfm: lastfm || null,
+                steam: steam || null,
+                pula_predios: pula_predios || null
+            },
+            misc: {
+                color: color || '0x29BB8E',
+                money: money || 0,
+                daily: daily || null,
+                embed: null
+            },
+            badges: {
+                fixed_badge: fixed_badge || null,
+                badge_list: badge_list || []
+            },
+            conquistas: conquistas || []
+        }
+
+        // Salvando o usuário no novo formato
+        saveUser([user])
+    }
+}
+
 module.exports = {
     getUser,
-    saveUser
+    saveUser,
+    updateData
 }
 
 function componentToHex(c) {

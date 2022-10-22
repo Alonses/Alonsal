@@ -78,12 +78,12 @@ module.exports = {
             //     })
             // }
 
-            if (user.badge_list.length > 0)
+            if (user.badges.badge_list.length > 0)
                 dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(manutencao[9]["dados_conhecidos"])
-                .setColor(user.color)
+                .setColor(user.misc.embed)
                 .setDescription(`${manutencao[9]["resumo_dados"]}\n\n${dados_conhecidos}`)
                 .setFooter({ text: manutencao[9]["dica_rodape"] })
 

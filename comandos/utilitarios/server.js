@@ -79,7 +79,7 @@ module.exports = {
 
             const infos_sv = new EmbedBuilder()
                 .setTitle(interaction.guild.name)
-                .setColor(user.color)
+                .setColor(user.misc.embed)
                 .setThumbnail(icone_server)
                 .addFields(
                     {
@@ -155,7 +155,7 @@ module.exports = {
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
                         .setDescription(utilitarios[4]["download_icon"].replace("link_repl", icone_server))
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setImage(icone_server)
 
                     return interaction.reply({ embeds: [embed], ephemeral: true })

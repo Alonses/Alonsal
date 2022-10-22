@@ -13,7 +13,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-        const bot = client.bot.getRelatorio()
+        const bot = client.auto.getRelatorio()
         const proxima_att = (date1.getTime() / 1000) + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels.cache.filter((c) => c.type === 0).size

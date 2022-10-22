@@ -2,14 +2,15 @@ require('dotenv').config()
 const { readdirSync } = require('fs')
 const { Routes } = require('discord.js')
 const user = require('./adm/data/usuario')
-const bot = require('./adm/data/relatorio')
 const idioma = require('./adm/data/idioma')
+const auto = require('./adm/data/relatorio')
+const translate = require('./adm/formatadores/translate')
 
 const cleverbot = require('cleverbot-free')
 const { REST } = require('@discordjs/rest')
 const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
 
-const client = new Client({
+const cli = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
@@ -18,8 +19,32 @@ const client = new Client({
 	]
 })
 
+class CeiraClient {
+	constructor(discord, usuarios, idioma, translate, auto) {
+		this.tls = translate,
+			this.idioma = idioma,
+			this.discord = discord,
+			this.usuarios = usuarios,
+			this.auto = auto
+	}
+
+	id() {
+		return this.discord.user.id
+	}
+
+	user() {
+		return this.discord.user
+	}
+
+	guilds() {
+		return this.discord.guilds.cache
+	}
+}
+
+const client = new CeiraClient(cli, user, idioma, translate, auto)
+
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
+const modo_develop = 1, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
@@ -38,7 +63,7 @@ if (modo_develop)
 let commands = []
 const conversations = []
 const comandos_privados = []
-client.commands = new Collection()
+client.discord.commands = new Collection()
 
 // Linkando os comandos slash disponíveis
 for (const folder of readdirSync(`${__dirname}/comandos/`)) {
@@ -90,35 +115,34 @@ if (modo_develop || force_update) {
 for (const folder of readdirSync(`${__dirname}/comandos/`)) {
 	for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 		const command = require(`./comandos/${folder}/${file}`)
-		client.commands.set(command.data.name, command)
+		client.discord.commands.set(command.data.name, command)
 	}
 }
 
-client.once('ready', async () => {
+client.discord.once('ready', async () => {
 
 	// Definindo o idioma do bot
 	idioma.setPath(`${__dirname}/arquivos/data/idiomas`)
 	idioma.setDefault('pt-br')
 
-	client.bot = bot
-	client.idioma = idioma
-	client.usuarios = user
-	client.owners = process.env.owner_id
+	client.owners = process.env.owner_id.split(", ")
+
+	console.log(client.idioma)
 
 	if (status)
 		await require('./adm/eventos/status.js')({ client })
 
-	console.log(`Caldeiras do ${client.user.username} aquecidas, pronto para operar`)
+	console.log(`Caldeiras do ${client.discord.user.username} aquecidas, pronto para operar`)
 })
 
-client.on('messageCreate', async (message) => {
+client.discord.on('messageCreate', async (message) => {
 
 	let text = message.content.toLowerCase()
 
 	// Respostas automatizadas por IA
-	if (text.includes(client.user.id) || text.includes("alonsal") || text.includes("a*")) {
+	if (text.includes(client.discord.user.id) || text.includes("alonsal")) {
 		text = text.split("> ")[1] || text
-		text = text.replace("alonsal", "").replace(client.user.id, "").replace("a*", "").trim()
+		text = text.replace("alonsal", "").replace(client.discord.user.id, "").trim()
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
@@ -151,7 +175,7 @@ client.on('messageCreate', async (message) => {
 	}
 })
 
-client.on('interactionCreate', async interaction => {
+client.discord.on('interactionCreate', async interaction => {
 
 	if (interaction.isSelectMenu()) // Interações por uso de menus de seleção
 		return require('./adm/interacoes/menus.js')({ client, interaction })
@@ -159,12 +183,10 @@ client.on('interactionCreate', async interaction => {
 	if (interaction.isButton()) // Interações por uso de botões
 		return require('./adm/interacoes/buttons.js')({ client, interaction })
 
-	const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}`)
-
 	if (!interaction.isChatInputCommand()) return
-	if (!interaction.guild) return interaction.reply(inicio[0]["comando_dm"])
+	if (!interaction.guild) return client.tls.reply(client, interaction, "inic.error.comando_dm")
 
-	const command = client.commands.get(interaction.commandName)
+	const command = client.discord.commands.get(interaction.commandName)
 	if (!command) return
 
 	await command.execute(client, interaction)
@@ -172,14 +194,12 @@ client.on('interactionCreate', async interaction => {
 			require('./adm/eventos/log.js')({ client, interaction, command })
 		})
 		.catch(err => {
-			const { inicio } = require(`./arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
 			require('./adm/eventos/error.js')({ client, err })
-			interaction.reply({ content: `:octagonal_sign: | ${inicio[0]["epic_embed_fail"]}`, ephemeral: true })
+			client.tls.reply(client, interaction, "inic.error.epic_embed_fail", true, 0)
 		})
 })
 
 // Eventos secundários
 require('./adm/eventos/events.js')({ client })
 
-client.login(token)
+client.discord.login(token)

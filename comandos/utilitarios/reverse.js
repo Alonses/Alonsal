@@ -33,7 +33,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`:arrow_backward: ${utilitarios[5]["reverso"]}`)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setDescription(`\`${texto_ordenado}\``)
 
         interaction.reply({ embeds: [embed], ephemeral: true })

@@ -172,7 +172,7 @@ module.exports = {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
@@ -207,7 +207,7 @@ module.exports = {
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(

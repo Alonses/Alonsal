@@ -237,7 +237,7 @@ module.exports = {
 
                             const clima_atual = new EmbedBuilder()
                                 .setTitle(`:boom: ${utilitarios[8]["tempo_agora"]} ${nome_local}${nome_pais} ${bandeira_pais}`)
-                                .setColor(user.color)
+                                .setColor(user.misc.embed)
                                 .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                                 .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                                 .addFields(

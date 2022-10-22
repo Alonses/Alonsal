@@ -45,11 +45,11 @@ module.exports = {
         const user = client.usuarios.getUser(interaction.user.id)
 
         // Validando existência de badges antes do comando
-        if (user.badge_list.length < 1)
+        if (user.badges.badge_list.length < 1)
             return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
 
         let all_badges = []
-        const badge_list = user.badge_list
+        const badge_list = user.badges.badge_list
 
         badge_list.forEach(valor => {
             all_badges.push(parseInt(Object.keys(valor)[0]))
@@ -58,9 +58,9 @@ module.exports = {
         if (interaction.options.getSubcommand() == "fix") // Menu seletor de Badges
             return interaction.reply({ content: diversao[9]["cabecalho_menu"], components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
-            user.fixed_badge = null
+            user.badges.fixed_badge = null
 
-            user.badge_list = badge_list
+            user.badges.badge_list = badge_list
             client.usuarios.saveUser(user)
         }
 

@@ -33,39 +33,42 @@ module.exports = {
     async execute(client, interaction) {
 
         let alvo = interaction.options.getUser('user') || interaction.user
-
-        const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(alvo.id), date1 = new Date()
 
         if (user.id == "297153970613387264")
-            user.money = -40028922
-        
-        if(user.id == client.user.id)
-            user.money = 1000000000000
+            user.misc.money = -4002892228342
+
+        if (user.id == client.discord.user.id)
+            user.misc.money = 1000000000000
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
-        let daily = `${customizacao[3]["dica_comando"]} ${busca_emoji(client, emojis_dancantes)}`
-        let titulo_embed = customizacao[3]["suas_bufunfas"]
+        let daily = `${client.tls.phrase(interaction, "misc.banco.dica_comando")} ${busca_emoji(client, emojis_dancantes)}`
+        let titulo_embed = client.tls.phrase(interaction, "misc.banco.suas_bufunfas")
 
         if (user.id !== interaction.user.id) {
             daily = ""
-            titulo_embed = `> ${customizacao[3]["bufunfas_outros"].replace("nome_repl", alvo.username)}`
+            titulo_embed = `> ${client.tls.phrase(interaction, "misc.banco.bufunfas_outros").replace("nome_repl", alvo.username)}`
         }
 
-        if (user.daily && user.id == interaction.user.id) {
+        if (user.misc.daily && user.id == interaction.user.id) {
             const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
-            daily = `${customizacao[3]["daily"]} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
+            daily = `${client.tls.phrase(interaction, "misc.banco.daily")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
         }
+
+        let lang = "fix"
+
+        if(user.misc.money < 0)
+            lang = "diff"
 
         const embed = new EmbedBuilder()
             .setTitle(titulo_embed)
-            .setColor(user.color)
-            .setDescription(`:bank: ${customizacao[3]["bufunfas"]}\`\`\`fix\nB$${formata_num(user.money)}\`\`\`\n${daily}`)
+            .setColor(user.misc.embed)
+            .setDescription(`:bank: ${client.tls.phrase(interaction, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${formata_num(user.misc.money)}\`\`\`\n${daily}`)
 
         if (user.id == interaction.user.id)
-            embed.setFooter({ text: customizacao[3]["dica_rodape"], iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            embed.setFooter({ text: client.tls.phrase(interaction, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         interaction.reply({ embeds: [embed] })
     }

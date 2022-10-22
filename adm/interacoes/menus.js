@@ -8,7 +8,7 @@ module.exports = ({ client, interaction }) => {
         const user = client.usuarios.getUser(interaction.user.id)
         const { diversao } = require(`../../arquivos/idiomas/${user.lang}.json`)
 
-        user.fixed_badge = interaction.values[0]
+        user.badges.fixed_badge = interaction.values[0]
 
         client.usuarios.saveUser(user)
         let new_badge = busca_badges(client, 'single', parseInt(interaction.values[0]))
