@@ -127,12 +127,10 @@ client.discord.once('ready', async () => {
 
 	client.owners = process.env.owner_id.split(", ")
 
-	console.log(client.idioma)
-
 	if (status)
 		await require('./adm/eventos/status.js')({ client })
 
-	console.log(`Caldeiras do ${client.discord.user.username} aquecidas, pronto para operar`)
+	console.log(`Caldeiras do ${client.user().username} aquecidas, pronto para operar`)
 })
 
 client.discord.on('messageCreate', async (message) => {
@@ -140,9 +138,9 @@ client.discord.on('messageCreate', async (message) => {
 	let text = message.content.toLowerCase()
 
 	// Respostas automatizadas por IA
-	if (text.includes(client.discord.user.id) || text.includes("alonsal")) {
+	if (text.includes(client.id()) || text.includes("alonsal")) {
 		text = text.split("> ")[1] || text
-		text = text.replace("alonsal", "").replace(client.discord.user.id, "").trim()
+		text = text.replace("alonsal", "").replace(client.id(), "").trim()
 
 		cleverbot(text).then(res => {
 			conversations.push(text)
