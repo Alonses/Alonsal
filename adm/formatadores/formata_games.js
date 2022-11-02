@@ -38,7 +38,6 @@ function nome_games(objeto_anunciado) {
         objeto_anunciado.forEach(valor => str += `_\`${valor.nome}\`_, `)
 
         return str.slice(0, str.length - 2).replaceAll(", ", " & ")
-    } else {
-        return `_\`${objeto_anunciado}\`_`
-    }
+    } else
+        return `_\`${objeto_anunciado[0].nome}\`_`
 }
