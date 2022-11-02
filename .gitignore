@@ -2,10 +2,9 @@ node_modules/
 config.json
 *.zip
 .idea/
-dados/
-arquivos/data
+arquivos/data/*
 /package-lock.json
 prefixes/
 discloud.config
 .env
-idiomas/
+arquivos/idiomas/*
