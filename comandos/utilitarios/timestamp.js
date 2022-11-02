@@ -64,14 +64,10 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction)
-        idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
-
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let timestamp, aviso = "", conversao_invalida = false
-        let titulo = utilitarios[19]["timestamp_1"]
+        let titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_1")
         let data = interaction.options.data[0].value, retorno, entrada = null, timer = 0
         let conversao_valida = ""
 
@@ -90,7 +86,7 @@ module.exports = {
                 entrada = Math.floor(Date.now() / 1000) + timer // Iniciando o timestamp 
 
             if (!isNaN(entrada)) {
-                titulo = utilitarios[19]["timestamp_crono"]
+                titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_crono")
                 retorno = entrada
 
                 timestamp = new Date(entrada)
@@ -99,7 +95,7 @@ module.exports = {
                 conversao_invalida = false
             } else if (!entrada.includes("-")) { // De timestamp para data normal
                 timestamp = new Date(Number(entrada * 1000))
-                titulo = utilitarios[19]["timestamp_2"]
+                titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_2")
                 retorno = entrada
 
                 timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
@@ -118,15 +114,15 @@ module.exports = {
                 conversao_valida = `\`${data}\` -> \`${timestamp}\``
         } else {
             retorno = Math.floor(Date.now() / 1000)
-            titulo = utilitarios[19]["timestamp_now"]
+            titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_now")
         }
 
         let dica_conversao = `\n\n( \`<t:${retorno}:R>\` ) <t:${retorno}:R>\n( \`<t:${retorno}:t>\` ) <t:${retorno}:t>\n( \`<t:${retorno}:T>\` ) <t:${retorno}:T>\n( \`<t:${retorno}:d>\` ) <t:${retorno}:d>\n( \`<t:${retorno}:D>\` ) <t:${retorno}:D>\n( \`<t:${retorno}:f>\` ) <t:${retorno}:f>\n( \`<t:${retorno}:F>\` ) <t:${retorno}:F>`
 
         if (conversao_invalida) {
-            titulo = utilitarios[19]["erro_titulo"]
-            aviso = utilitarios[19]["erro_conversao"]
-            timestamp = utilitarios[19]["valor_nulo"]
+            titulo = client.tls.phrase(client, interaction, "util.timestamp.erro_titulo")
+            aviso = client.tls.phrase(client, interaction, "util.timestamp.erro_conversao")
+            timestamp = client.tls.phrase(client, interaction, "util.timestamp.valor_nulo")
             dica_conversao = ""
         }
 

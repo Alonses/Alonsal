@@ -69,7 +69,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo_embed)
             .setColor(user.misc.embed)
-            .setDescription(`:bank: ${client.tls.phrase(client, interaction, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${formata_num(user.misc.money)}\`\`\`\n${daily}`)
+            .setDescription(`:bank: ${client.tls.phrase(client, interaction, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${client.formata_num(user.misc.money)}\`\`\`\n${daily}`)
 
         if (user.id == interaction.user.id)
             embed.setFooter({ text: client.tls.phrase(client, interaction, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })

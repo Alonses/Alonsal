@@ -56,7 +56,6 @@ module.exports = {
                 )),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
@@ -86,7 +85,7 @@ module.exports = {
                     texto[carac] = `${morse[texto[carac]]} `
                 else {
                     texto[carac] = ""
-                    aviso = utilitarios[2]["caracteres"]
+                    aviso = client.tls.phrase(client, interaction, "util.morse.caracteres")
                 }
             }
         } else { // Decodificando
@@ -103,14 +102,14 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = utilitarios[2]["codificado"]
+        let titulo = client.tls.phrase(client, interaction, "util.morse.codificado")
 
         if (codificar.opera)
-            titulo = utilitarios[2]["decodificado"]
+            titulo = client.tls.phrase(client, interaction, "util.morse.decodificado")
 
         if (texto_ordenado.length === 0) {
-            texto_ordenado = utilitarios[2]["carac_invalidos"]
-            titulo = utilitarios[2]["error"]
+            texto_ordenado = client.tls.phrase(client, interaction, "util.morse.carac_invalidos")
+            titulo = client.tls.phrase(client, interaction, "util.morse.error")
         }
 
         const embed = new EmbedBuilder()
@@ -124,7 +123,7 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
             .catch(() => {
-                interaction.reply({ content: `:octagonal_sign: | ${utilitarios[3]["error_1"]}`, ephemeral: true })
+                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
             })
     }
 }

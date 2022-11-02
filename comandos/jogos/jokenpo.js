@@ -7,20 +7,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Jogue jokenpô',
             "es-ES": '⌠🎲⌡ Juega jokenpo',
-            "fr": '⌠🎲⌡ Jouer au jokenpo'
+            "fr": '⌠🎲⌡ Jouer au jokenpo',
+            "it": '⌠🎲⌡ Gioca a jokenpo'
         })
         .addStringOption(option =>
             option.setName('choise')
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
-                    "fr": 'choix'
+                    "fr": 'choix',
+                    "it": 'scelta'
                 })
                 .setDescription('What\'s your choice?')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual a sua escolha?',
                     "es-ES": '¿Cual es tu eleccion?',
-                    "fr": 'Quel est ton choix?'
+                    "fr": 'Quel est ton choix?',
+                    "it": 'Qual\'è la tua scelta?'
                 })
                 .addChoices(
                     { name: '🗿', value: 'pedra' },

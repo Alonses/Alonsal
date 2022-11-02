@@ -63,8 +63,6 @@ module.exports = {
                         }))),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
         let user = interaction.options.getUser('user') || interaction.user
 
         if (interaction.options.getSubcommand() === "info") {
@@ -98,20 +96,20 @@ module.exports = {
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 tipo_user = "🛡️"
-                nota_rodape = utilitarios[13]["moderador"]
+                nota_rodape = client.tls.phrase(client, interaction, "util.user.moderador")
             }
 
             if (!tipo_user.includes("🛡️") && !user.bot)
                 tipo_user = emojis_busto[Math.round((emojis_busto.length - 1) * Math.random())]
 
             if (user.id === client.user.id)
-                nota_rodape = utilitarios[13]["alonsal"]
+                nota_rodape = client.tls.phrase(client, interaction, "util.user.alonsal")
 
             if (process.env.ids_enceirados.includes(user.id)) {
                 if (nota_rodape !== "")
                     nota_rodape += ", "
 
-                nota_rodape += utilitarios[13]["enceirado"]
+                nota_rodape += client.tls.phrase(client, interaction, "util.user.enceirado")
             }
 
             const permissoes_user = membro_sv.permissions.toArray()
@@ -171,12 +169,12 @@ module.exports = {
                 )
                 .addFields(
                     {
-                        name: `:birthday: **${utilitarios[13]["conta_criada"]}**`,
+                        name: `:birthday: **${client.tls.phrase(client, interaction, "util.user.conta_criada")}**`,
                         value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
                         inline: false
                     },
                     {
-                        name: `:parachute: **${utilitarios[13]["entrada"]}**`,
+                        name: `:parachute: **${client.tls.phrase(client, interaction, "util.user.entrada")}**`,
                         value: `${data_entrada}\n[ ${diferenca_entrada} ]`,
                         inline: false
                     }
@@ -202,15 +200,15 @@ module.exports = {
                         url_avatar = url_avatar.replace('.gif', '.webp')
 
                     const embed = new EmbedBuilder()
-                        .setTitle(`${user.username}`)
-                        .setDescription(utilitarios[4]["download_avatar"].replace("link_repl", url_avatar))
-                        .setColor(user_c.color)
+                        .setTitle(user.username)
+                        .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_avatar").replace("link_repl", url_avatar))
+                        .setColor(user_c.misc.embed)
                         .setImage(url_avatar)
 
                     return interaction.reply({ embeds: [embed], ephemeral: true })
                 })
                 .catch(() => {
-                    interaction.reply({ text: utilitarios[4]["error"], ephemeral: true })
+                    client.tls.reply(client, interaction, "util.avatar.error_1", true, 2)
                 })
         }
     }

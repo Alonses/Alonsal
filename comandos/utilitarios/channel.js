@@ -27,29 +27,28 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let canal = interaction.options.getChannel('channel') || interaction.channel
         // Coletando os dados do canal informado
 
-        let nsfw = utilitarios[9]["nao"]
+        let nsfw = client.tls.phrase(client, interaction, "util.minecraft.nao")
         if (canal.nsfw)
-            nsfw = utilitarios[9]["sim"]
+            nsfw = client.tls.phrase(client, interaction, "util.minecraft.sim")
 
         const data_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:f>` // Criação do canal
         const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
         let userlimit, bitrate = ""
 
-        let topico = `\`\`\`${canal.topic || utilitarios[15]["sem_topico"]}\`\`\``
+        let topico = `\`\`\`${canal.topic || client.tls.phrase(client, interaction, "util.canal.sem_topico")}\`\`\``
 
         if (typeof canal.bitrate !== "undefined") {
-            topico = `\`\`\`🔊 ${utilitarios[15]["canal_voz"]}\`\`\``
+            topico = `\`\`\`🔊 ${client.tls.phrase(client, interaction, "util.canal.canal_voz")}\`\`\``
 
             userlimit = canal.userLimit
 
             if (userlimit === 0)
-                userlimit = utilitarios[15]["sem_limite"]
+                userlimit = client.tls.phrase(client, interaction, "util.canal.sem_limites")
 
             bitrate = `${canal.bitrate / 1000}kbps`
         }
@@ -68,12 +67,12 @@ module.exports = {
                     .setDescription(topico)
                     .addFields(
                         {
-                            name: `:globe_with_meridians: **${utilitarios[15]["id_canal"]}**`,
+                            name: `:globe_with_meridians: **${client.tls.phrase(client, interaction, "util.canal.id_canal")}**`,
                             value: `\`${canal.id}\``,
                             inline: true
                         },
                         {
-                            name: `:label: **${utilitarios[15]["mencao"]}**`,
+                            name: `:label: **${client.tls.phrase(client, interaction, "util.canal.mencao")}**`,
                             value: `\`<#${canal.id}>\``,
                             inline: true
                         },
@@ -92,7 +91,7 @@ module.exports = {
 
                 infos_ch.addFields(
                     {
-                        name: `:birthday: ${utilitarios[12]["criacao"]}`,
+                        name: `:birthday: ${client.tls.phrase(client, interaction, "util.server.criacao")}`,
                         value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
                         inline: true
                     }
@@ -101,7 +100,7 @@ module.exports = {
                 if (typeof canal.bitrate !== "undefined")
                     infos_ch.addFields(
                         {
-                            name: `:mega: ${utilitarios[15]["transmissao"]}`,
+                            name: `:mega: ${client.tls.phrase(client, interaction, "util.canal.transmissao")}`,
                             value: `:radio: **Bitrate: **\`${bitrate}\`\n:busts_in_silhouette: **Max. users: **\`${userlimit}\``,
                             inline: true
                         }
@@ -111,8 +110,8 @@ module.exports = {
                     if (canal.rateLimitPerUser > 0)
                         infos_ch.addFields(
                             {
-                                name: `:name_badge: ${utilitarios[15]["modo_lento"]}`,
-                                value: `\`${canal.rateLimitPerUser} segundos\``,
+                                name: `:name_badge: ${client.tls.phrase(client, interaction, "util.canal.modo_lento")}`,
+                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(client, interaction, "util.unidades.segundos")}\``,
                                 inline: true
                             }
                         )

@@ -15,7 +15,6 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         await interaction.deferReply()
@@ -30,7 +29,7 @@ module.exports = {
                 res.forEach(valor => {
                     let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-                    jogos_disponiveis.push(`- ${valor.nome} [ ${moderacao[6]["ate_data"]} ${valor.expira} ]`)
+                    jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(client, interaction, "mode.anuncio.ate_data")} ${valor.expira} ]`)
                     objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
                 })
 
@@ -38,10 +37,10 @@ module.exports = {
                 const row = create_buttons(objeto_jogos)
 
                 const embed = new EmbedBuilder()
-                    .setTitle(moderacao[6]["ativos"])
+                    .setTitle(client.tls.phrase(client, interaction, "mode.anuncio.ativos"))
                     .setThumbnail(res[0].thumbnail)
                     .setColor(user.misc.embed)
-                    .setDescription(`${moderacao[6]["resgate_dica"]}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
+                    .setDescription(`${client.tls.phrase(client, interaction, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })
             })

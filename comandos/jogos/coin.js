@@ -6,19 +6,34 @@ const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.js
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('coin')
-        .setDescription('⌠🎲⌡ Jogue cara ou coroa')
+        .setDescription('⌠🎲⌡ Play heads or tails')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠🎲⌡ Jogue cara ou coroa',
+            "es-ES": '⌠🎲⌡ Juega cara o cruz',
+            "fr": '⌠🎲⌡ Jouez à pile ou face',
+            "it": '⌠🎲⌡ Gioca testa o croce'
+        })
         .addStringOption(option =>
-            option.setName('escolha')
-                .setDescription('Cara ou coroa?')
+            option.setName('choise')
+                .setNameLocalizations({
+                    "pt-BR": 'escolha',
+                    "es-ES": 'eleccion',
+                    "fr": 'choix',
+                    "it": 'scelta'
+                })
+                .setDescription('Heads or tails?')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Cara ou coroa?',
+                    "es-ES": '¿Cara o cruz?',
+                    "fr": 'Pile ou face?',
+                    "it": 'Testa o croce?'
+                })
                 .addChoices(
                     { name: '🟡', value: '0' },
                     { name: '👑', value: '1' }
                 )
                 .setRequired(true)),
     async execute(client, interaction) {
-
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { jogos } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
         const escolha = parseInt(interaction.options.data[0].value)
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
@@ -29,11 +44,11 @@ module.exports = {
         if (moeda === 1)
             emoji_exib = ":crown:"
 
-        let resultado = `[ ${emoji_exib} ] ${jogos[1]["acertou"]} ${emoji_dancando}`
+        let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.acertou")} ${emoji_dancando}`
 
         if (escolha !== moeda) { // Acertou
             const emoji_epic_embed_fail = busca_emoji(client, emojis.epic_embed_fail2)
-            resultado = `[ ${emoji_exib} ] ${jogos[1]["errou"]} ${emoji_epic_embed_fail}`
+            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.coroa.errou")} ${emoji_epic_embed_fail}`
         }
 
         return interaction.reply(resultado)
