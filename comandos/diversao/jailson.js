@@ -26,9 +26,7 @@ module.exports = {
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do jaja')),
 	async execute(client, interaction) {
 
-		const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
-		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true })
+		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(client, interaction, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])

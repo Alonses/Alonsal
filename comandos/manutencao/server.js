@@ -13,16 +13,15 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.misc.embed)
-            .setTitle(`${manutencao[6]["hub_alonsal"]} ${emoji_rainha}`)
+            .setTitle(`${client.tls.phrase(client, interaction, "manu.hub.hub_alonsal")} ${emoji_rainha}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')
-            .setDescription(manutencao[6]["info"])
+            .setDescription(client.tls.phrase(client, interaction, "manu.hub.info"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

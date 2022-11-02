@@ -18,15 +18,14 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const bolo = busca_emoji(client, emojis.mc_bolo)
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.misc.embed)
-            .setTitle(`${manutencao[5]["apoie"]} ${bolo}`)
+            .setTitle(`${client.tls.phrase(client, interaction, "manu.apoio.apoie")} ${bolo}`)
             .setURL("https://picpay.me/slondo")
-            .setDescription(manutencao[5]["escaneie"])
+            .setDescription(client.tls.phrase(client, interaction, "manu.apoio.escaneie"))
             .setImage("https://i.imgur.com/incYvy2.jpg")
 
         interaction.reply({ embeds: [embed], ephemeral: true })

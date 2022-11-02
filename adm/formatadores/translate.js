@@ -4,37 +4,36 @@ const status = {
     2: ':warning: | '
 }
 
-function reply(interaction, target, ephemeral, tipo) {
+function reply(client, interaction, target, ephemeral, type) {
 
-    let phrase = translate(interaction, target)
+    let phrase = translate(client, interaction, target)
 
-    if (typeof tipo !== "undefined")
-        phrase = `${status[tipo]}${phrase}`
+    if (typeof type !== "undefined")
+        phrase = `${status[type]}${phrase}`
 
     interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
 
-function editReply(interaction, target, ephemeral, tipo) {
+function editReply(client, interaction, target, ephemeral, type) {
 
-    let phrase = translate(interaction, target)
+    let phrase = translate(client, interaction, target)
 
-    if (typeof tipo !== "undefined")
-        phrase = `${status[tipo]}${phrase}`
+    if (typeof type !== "undefined")
+        phrase = `${status[type]}${phrase}`
 
     interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
 
-function phrase(interaction, target) {
+function phrase(client, interaction, target) {
 
-    let phrase = translate(interaction, target)
+    let phrase = translate(client, interaction, target)
     return phrase
 }
 
-function translate(interaction, target) {
+function translate(client, interaction, target) {
 
     // Busca as traduções para o item solicitado
-    const lang = this.client.idioma.getLang(interaction)
-    let { data } = require(`../../arquivos/idiomas/${lang}.json`)
+    let { data } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])

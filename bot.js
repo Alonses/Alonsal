@@ -49,9 +49,6 @@ let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
 
-if (!modo_develop)
-	status = 1, ranking = 1
-
 if (silent)
 	status = 0, ranking = 0
 

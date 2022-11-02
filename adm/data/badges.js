@@ -22,7 +22,6 @@ module.exports = (client, modo, id_alvo, interaction) => {
     if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
         const { fixed_badge, badge_list } = require(`../../arquivos/data/user/${user.id}.json`)
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         user.badges.fixed_badge = fixed_badge
 
@@ -35,7 +34,7 @@ module.exports = (client, modo, id_alvo, interaction) => {
                     if (fixed_badge == parseInt(Object.keys(valor)[0]))
                         all_badges.push(`${emoji_badge}`)
                 } else // Listando todas
-                    all_badges.push(`${emoji_badge} \`${badge_names[parseInt(Object.keys(valor)[0])]}\`, ${diversao[9]["ganhou"]} <t:${Object.values(valor)[0]}:f>`)
+                    all_badges.push(`${emoji_badge} \`${badge_names[parseInt(Object.keys(valor)[0])]}\`, ${client.tls.phrase(client, interaction, "dive.badges.ganhou")} <t:${Object.values(valor)[0]}:f>`)
             })
     }
 
