@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const busca_badges = require('../../adm/data/badges.js')
-const busca_emoji = require('../../adm/discord/busca_emoji.js')
 const create_menus = require('../../adm/discord/create_menus.js')
 
 module.exports = {
@@ -41,12 +39,11 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         // Validando existência de badges antes do comando
         if (user.badges.badge_list.length < 1)
-            return interaction.reply({ content: `:mag: | ${diversao[9]["error_1"]}`, ephemeral: true })
+            return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
 
         let all_badges = []
         const badge_list = user.badges.badge_list
@@ -56,7 +53,7 @@ module.exports = {
         })
 
         if (interaction.options.getSubcommand() == "fix") // Menu seletor de Badges
-            return interaction.reply({ content: diversao[9]["cabecalho_menu"], components: [create_menus(client, all_badges, interaction)], ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(client, interaction, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
             user.badges.fixed_badge = null
 
@@ -65,6 +62,6 @@ module.exports = {
         }
 
         // Removendo a badge fixada
-        interaction.reply({ content: `:medal: | Badge ${diversao[9]["badge_removida"]}`, ephemeral: true })
+        interaction.reply({ content: `:medal: | Badge ${client.tls.phrase(client, interaction, "dive.badges.badge_removida")}`, ephemeral: true })
     }
 }

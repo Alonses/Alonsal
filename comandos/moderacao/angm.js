@@ -60,11 +60,11 @@ module.exports = {
     ,
     async execute(client, interaction) {
 
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
+        // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true }) // Libera configuração para proprietários e adms apenas
+            return client.tls.reply(client, interaction, "mode.adm.moderadores", true)
 
         let opcao_remove = false, entradas = interaction.options.data
 
@@ -86,7 +86,7 @@ module.exports = {
                 notificador.canal = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
-                    return interaction.reply({ content: `:octagonal_sign: | ${moderacao[6]["tipo_canal"]}`, ephemeral: true })
+                    return client.tls.reply(client, interaction, "mode.anuncio.tipo_canal", true, 0)
             }
         })
 
@@ -110,13 +110,13 @@ module.exports = {
             mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
         }
 
-        client.channels.cache.get('872865396200452127').send(mensagem)
+        client.discord.channels.cache.get('872865396200452127').send(mensagem)
 
-        let feedback_user = moderacao[6]["anuncio_games"]
+        let feedback_user = client.tls.phrase(client, interaction, "manu.anuncio.anuncio_games")
 
         if (opcao_remove)
-            feedback_user = `:mobile_phone_off: | ${moderacao[6]["anuncio_off"]}`
+            feedback_user = `:mobile_phone_off: | ${client.tls.phrase(client, interaction, "manu.anuncio.anuncio_off")}`
 
-        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
+        client.tls.reply(client, interaction, feedback_user.replace("repl_canal", `<#${notificador.canal}>`), true)
     }
 }

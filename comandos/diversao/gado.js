@@ -32,12 +32,10 @@ module.exports = {
         let idioma_definido = client.idioma.getLang(interaction)
         if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
-        const { diversao } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-
         const alvo = interaction.options.getUser('user')
 
         if (client.user.id === alvo.id)
-            return interaction.reply(diversao[3]["error_2"])
+            return client.tls.reply(client, interaction, "dive.gado.error_2")
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)

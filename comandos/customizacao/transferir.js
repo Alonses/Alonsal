@@ -53,24 +53,23 @@ module.exports = {
         let bufunfas = interaction.options.data[1].value
 
         if (bufunfas < 0.01)
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_2"]}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_2")}`, ephemeral: true })
 
-        const user = client.usuarios.getUser(interaction.user.id)
-        const alvo = client.usuarios.getUser(user_alvo.id)
+        const user = client.usuarios.getUser(interaction.user.id), alvo = client.usuarios.getUser(user_alvo.id)
 
         if (alvo.id == user.id)
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error_3"]}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_3")}`, ephemeral: true })
 
         // Validando se o usuário marcado não é um bot
         const membro_sv = interaction.guild.members.cache.get(alvo.id)
 
         if (membro_sv.user.bot && alvo.id !== client.user.id)
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["user_bot"]}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.user_bot")}`, ephemeral: true })
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${customizacao[2]["error"].replace("valor_repl", formata_num(bufunfas))}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error").replace("valor_repl", formata_num(bufunfas))}`, ephemeral: true })
 
         user.misc.money -= bufunfas
         alvo.money += bufunfas
@@ -83,16 +82,15 @@ module.exports = {
         if (alvo.id == client.user.id && quantia == 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${customizacao[2]["sucesso"].replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(client, interaction, "misc.pay.sucesso").replace("valor_repl", formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
         if (alvo.id !== client.user.id) // Notificando o recebedor
-            client.users.fetch(alvo.id, false).then((user_interno) => {
+            client.discord.users.fetch(alvo.id, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo
-                let { customizacao } = require(`../../arquivos/idiomas/${alvo.lang}.json`)
                 let emoji_dancante = busca_emoji(client, emojis_dancantes)
 
-                user_interno.send(`:bank: | ${customizacao[2]["notifica"].replace("user_repl", user.id).replace("valor_repl", formata_num(bufunfas))} ${emoji_dancante}`)
+                user_interno.send(`:bank: | ${client.tls.phrase(client, alvo.id, "misc.pay.notifica").replace("user_repl", user.id).replace("valor_repl", formata_num(bufunfas))} ${emoji_dancante}`)
             })
     }
 }

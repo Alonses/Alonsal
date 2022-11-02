@@ -73,11 +73,8 @@ module.exports = {
                         .setRequired(true))),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const user = client.usuarios.getUser(interaction.user.id)
-
+        const user = client.usuarios.getUser(interaction.user.id), emoji_dancando = busca_emojis(client, emojis_dancantes)
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
-        const emoji_dancando = busca_emojis(client, emojis_dancantes)
 
         if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
             user.social.steam = entrada
@@ -91,6 +88,6 @@ module.exports = {
 
         client.usuarios.saveUser(user)
 
-        return interaction.reply({ content: `${emoji_dancando} | ${utilitarios[20]["new_link"].replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+        return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
     }
 }

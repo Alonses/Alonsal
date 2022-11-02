@@ -14,17 +14,16 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const { inicio, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
-        const row = create_buttons([{ name: inicio[1]["site"], value: 'http://alonsal.glitch.me/', type: 4 }, { name: updates[0]["suporte"], value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }], interaction)
+        const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.ping.site"), value: 'http://alonsal.glitch.me/', type: 4 }, { name: client.tls.phrase(client, interaction, "inic.inicio.suporte"), value: `https://discord.gg/ZxHnxQDNwn`, type: 4, emoji: emojis.icon_rules_channel }], interaction)
 
         const embed = new EmbedBuilder()
-            .setTitle(inicio[1]["titulo"])
+            .setTitle(client.tls.phrase(client, interaction, "inic.ping.titulo"))
             .setColor(user.misc.embed)
             .setImage('https://i.imgur.com/NqmwCA9.png')
-            .setDescription(`${inicio[1]["boas_vindas"]}`)
-            .setFooter({ text: inicio[1]["idioma_dica"] })
+            .setDescription(client.tls.phrase(client, interaction, "inic.ping.boas_vindas"))
+            .setFooter({ text: client.tls.phrase(client, interaction, "inic.ping.idioma_dica") })
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

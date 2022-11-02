@@ -30,9 +30,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
-
         const texto_entrada = interaction.options.data[0].value
         let cor_embed = user.misc.embed
 
@@ -65,7 +63,7 @@ module.exports = {
         const anagrama_formado = []
         let exib_formatado = "", qtd_quebras = []
         const repeticoes = result > 3 ? 3 : result
-        const combinacoes = result > 3 ? diversao[5]["combinacoes"] : diversao[5]["combinacao"]
+        const combinacoes = result > 3 ? client.tls.phrase(client, interaction, "dive.anagrama.combinacoes") : client.tls.phrase(client, interaction, "dive.anagrama.combinacao")
 
         for (let i = 0; i < repeticoes; i++) {
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''))
@@ -78,14 +76,14 @@ module.exports = {
         }
 
         if (cor_embed === 0xfbff3d)
-            exib_formatado += `\n:four_leaf_clover: | _${diversao[5]["sorte"]}_`
+            exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(client, interaction, "dive.anagrama.sorte")}_`
 
         const anagrama = new EmbedBuilder()
-            .setTitle(`:abc: ${diversao[5]["anagrama"]}`)
+            .setTitle(`:abc: ${client.tls.phrase(client, interaction, "dive.anagrama.anagrama")}`)
             .setColor(cor_embed)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setDescription(`${diversao[5]["entrada"]}: \`${texto_entrada}\`\n${diversao[5]["lista_combinacoes"]}:\n${exib_formatado}`)
-            .setFooter({ text: `${diversao[5]["sequencia"]} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
+            .setDescription(`${client.tls.phrase(client, interaction, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(client, interaction, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
+            .setFooter({ text: `${client.tls.phrase(client, interaction, "dive.anagrama.sequencia")} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
 
         return interaction.reply({ embeds: [anagrama] })
     }

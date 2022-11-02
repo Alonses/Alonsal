@@ -38,8 +38,6 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
         const corpo_mensagem = {
             texto: null,
             arquivo: null,
@@ -65,7 +63,7 @@ module.exports = {
         if (corpo_mensagem.arquivo)
             msg_user.setImage(corpo_mensagem.arquivo)
 
-        interaction.reply({ content: manutencao[3]["sucesso_1"], ephemeral: true })
+        client.tls.reply(client, interaction, "manu.mail.sucesso_1", true)
 
         client.channels.cache.get("847191471379578970").send({ embeds: [msg_user] })
     }
