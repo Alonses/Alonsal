@@ -39,6 +39,6 @@ function nome_games(objeto_anunciado) {
 
         return str.slice(0, str.length - 2).replaceAll(", ", " & ")
     } else {
-        return `_\`${objeto_anunciado}\`_`
+        return `_\`${objeto_anunciado[0].nome}\`_`
     }
 }
