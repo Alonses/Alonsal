@@ -25,13 +25,11 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
-
         const texto_ordenado = interaction.options.data[0].value.split('').reverse().join("")
 
         const embed = new EmbedBuilder()
-            .setTitle(`:arrow_backward: ${utilitarios[5]["reverso"]}`)
+            .setTitle(`:arrow_backward: ${client.tls.phrase(client, interaction, "util.reverso.reverso")}`)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setColor(user.misc.embed)
             .setDescription(`\`${texto_ordenado}\``)

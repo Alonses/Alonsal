@@ -15,10 +15,6 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction)
-        idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
-
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const texto_entrada = interaction.options.data[0].value
 
         fetch(`https://proxyapp.correios.com.br/v1/sro-rastro/${texto_entrada}`)
@@ -44,22 +40,22 @@ module.exports = {
                         datas_eventos += `<t:${data_evento}:F>`
                         let local = `\`${eventos[i].unidade.endereco.cidade} | ${eventos[i].unidade.tipo}\``
 
-                        eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${utilitarios[21]["local"]}: ${local}\n${datas_eventos}\n`)
+                        eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${client.tls.phrase(client, interaction, "util.rastreio.local")}: ${local}\n${datas_eventos}\n`)
                     }
                 }
 
-                let titulo = `> ${utilitarios[21]["objeto_rastreado"]} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
+                let titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_rastreado")} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
 
                 if (objeto.mensagem) {
                     objeto_nao_encontrado = `\`\`\`${objeto.mensagem.split(":")[1]}\`\`\``
-                    titulo = `> ${utilitarios[21]["objeto_invalido"]} :warning:`
-                    nota_rodape = utilitarios[21]["codigo_invalido"]
+                    titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_invalido")} :warning:`
+                    nota_rodape = client.tls.phrase(client, interaction, "util.rastreio.codigo_invalido")
                 }
 
                 const embed = new EmbedBuilder()
                     .setTitle(titulo)
                     .setColor(user.misc.embed)
-                    .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${utilitarios[21]["codigo"]}:** \`${texto_entrada}\``)
+                    .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(client, interaction, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
 
                 if (nota_rodape.length > 1)
                     embed.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })

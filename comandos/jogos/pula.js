@@ -13,7 +13,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',
-            "fr": '⌠🎲⌡ Le Jeu Pula!'
+            "fr": '⌠🎲⌡ Le Jeu Pula!',
+            "it": '⌠🎲⌡ Il gioco di Pola!'
         })
         .addUserOption(option =>
             option.setName('user')
@@ -21,7 +22,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
-                    "fr": 'Un utilisateur de discord'
+                    "fr": 'Un utilisateur de discord',
+                    "it": 'Un utente della discordia'
                 })),
     async execute(client, interaction) {
 

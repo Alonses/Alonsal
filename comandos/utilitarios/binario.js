@@ -60,7 +60,6 @@ module.exports = {
                 )),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
@@ -94,15 +93,15 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = utilitarios[3]["codificado"]
+        let titulo = client.tls.phrase(client, interaction, "util.binario.codificado")
 
         if (codificar.opera)
-            titulo = utilitarios[3]["decodificado"]
+            titulo = client.tls.phrase(client, interaction, "util.binario.decodificado")
 
         // Confirma que a operação não resultou em uma string vazia
         if (texto_ordenado.replaceAll("\x00", "").length < 1) {
-            texto_ordenado = utilitarios[3]["resul_vazio"]
-            titulo = utilitarios[3]["titulo_vazio"]
+            texto_ordenado = client.tls.phrase(client, interaction, "util.binario.resul_vazio")
+            titulo = client.tls.phrase(client, interaction, "util.binario.titulo_vazio")
         }
 
         const embed = new EmbedBuilder()
@@ -116,7 +115,7 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
             .catch(() => {
-                interaction.reply({ content: `:octagonal_sign: | ${utilitarios[3]["error_1"]}`, ephemeral: true })
+                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
             })
     }
 }

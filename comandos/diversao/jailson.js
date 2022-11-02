@@ -10,7 +10,9 @@ module.exports = {
 		.setDescription('⌠😂⌡ As soon as I can\'t resist, vaiinn')
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Assim que não resisto, vaiinn',
-			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn'
+			"es-ES": '⌠😂⌡ Así que no me resistiré, vaiinn',
+			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn',
+			"it": '⌠😂⌡ Non resisterò, vaiinn'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
@@ -18,7 +20,9 @@ module.exports = {
 				.setDescription('⌠😂⌡ Summons a gif of jaja')
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
-					"fr": '⌠😂⌡ Invoque un gif de jaja'
+					"es-ES": '⌠😂⌡ Invoca un gif de jaja',
+					"fr": '⌠😂⌡ Invoque un gif de jaja',
+					"it": '⌠😂⌡ Evoca una gif di Jaja'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand

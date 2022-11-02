@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { existsSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -32,7 +31,6 @@ module.exports = {
     async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
 
         let texto_entrada = ''
 
@@ -59,7 +57,7 @@ module.exports = {
 
         if (!texto_entrada) { // Verificando se o usuário possui link com a steam
             if (!user.social.steam)
-                return interaction.reply({ content: `:mag: | ${utilitarios[16]["sem_link"]}`, ephemeral: true })
+                return client.tls.reply(client, interaction, "util.steam.sem_link", true, 1)
             else
                 texto_entrada = user.social.steam
         }
@@ -75,7 +73,7 @@ module.exports = {
                     status = status.split("</title>")[0]
                     status = status.replace("Steam Community :: ", "")
 
-                    if (status === "Error") return interaction.reply(utilitarios[16]["error_1"])
+                    if (status === "Error") return client.tls.reply(client, interaction, "util.steam.error_1", true, 1)
 
                     let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas
                     let jogo_favorito = "", tempo_jogado = "", nota_rodape = interaction.user.username, anos_servico = "", background_user = "", criacoes_user = ""
@@ -116,9 +114,9 @@ module.exports = {
                         status_atual = status_atual.replace("Currently ", "")
 
                         if (status_atual === "undefined")
-                            status_atual = utilitarios[16][status_atual]
+                            status_atual = client.tls.phrase(client, interaction, `util.steam.${status_atual}`)
                     } catch (err) {
-                        status = utilitarios[16]["undefined"]
+                        status = client.tls.phrase(client, interaction, `util.steam.undefined`)
                     }
 
                     try {
@@ -188,7 +186,7 @@ module.exports = {
                         tempo_semanas = parseFloat(tempo_semanas.split(" ")[0])
 
                         if (idioma_definido === "pt-br")
-                            tempo_semanas = `${tempo_semanas} ${utilitarios[16][descriminador_tempo_2]}`
+                            tempo_semanas = `${tempo_semanas} ${client.tls.phrase(client, interaction, `util.steam.${descriminador_tempo_2}`)}`
                         else
                             tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`
                     } catch (err) {
@@ -277,7 +275,7 @@ module.exports = {
 
                         if (conquistas_favoritas)
                             if (idioma_definido === "pt-br")
-                                descriminador_tempo = utilitarios[16][descriminador_tempo]
+                                descriminador_tempo = client.tls.phrase(client, interaction, `util.steam.${descriminador_tempo}`)
 
                         tempo_jogado = tempo_jogado.replace(",", ".").replace(/\s+/g, '')
                         tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`
@@ -291,10 +289,10 @@ module.exports = {
                     }
 
                     if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
-                        nota_rodape = utilitarios[16]["rodape"]
+                        nota_rodape = client.tls.phrase(client, interaction, "util.steam.rodape")
 
                     if (parseInt(jogos_user.replace(".", "")) < jogos_perfeitos)
-                        nota_rodape = utilitarios[16]["suspeito"]
+                        nota_rodape = client.tls.phrase(client, interaction, "util.steam.suspeito")
 
                     if (typeof conquistas_favoritas == "undefined" && typeof total_conquistas_favoritas == "undefined")
                         jogo_favorito = ""
@@ -302,15 +300,15 @@ module.exports = {
                     conquistas_user = conquistas_user.replace(",", ".").replace(/\s+/g, '')
 
                     if (capturas_user !== "-")
-                        criacoes_user += `:frame_photo: **${utilitarios[16]["capturas"]}: **\`${capturas_user}\``
+                        criacoes_user += `:frame_photo: **${client.tls.phrase(client, interaction, "util.steam.capturas")}: **\`${capturas_user}\``
                     if (videos_user !== "-")
                         criacoes_user += `\n:film_frames: **Videos: **\`${videos_user}\``
                     if (artes_user !== "-")
-                        criacoes_user += `\n:paintbrush: **${utilitarios[16]["artes"]}: **\`${artes_user}\``
+                        criacoes_user += `\n:paintbrush: **${client.tls.phrase(client, interaction, "util.steam.artes")}: **\`${artes_user}\``
 
                     let jogos_user_embed = `**Total: **\`${jogos_user}\``
                     if (reviews_user !== "-")
-                        jogos_user_embed += `\n**${utilitarios[16]["analises"]}: **\`${reviews_user}\``
+                        jogos_user_embed += `\n**${client.tls.phrase(client, interaction, "util.steam.analises")}: **\`${reviews_user}\``
 
                     const usuario_steam = new EmbedBuilder()
                         .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
@@ -320,30 +318,30 @@ module.exports = {
                         .setColor(user.misc.embed)
                         .addFields(
                             {
-                                name: `:ninja: ${utilitarios[16]["nivel"]}`,
-                                value: `**${utilitarios[12]["atual"]}: **\`${nivel_user}\``,
+                                name: `:ninja: ${client.tls.phrase(client, interaction, "util.steam.nivel")}`,
+                                value: `**${client.tls.phrase(client, interaction, "util.server.atual")}: **\`${nivel_user}\``,
                                 inline: true
                             },
                             {
-                                name: `:video_game: ${utilitarios[16]["jogos"]}`,
+                                name: `:video_game: ${client.tls.phrase(client, interaction, "util.steam.jogos")}`,
                                 value: `${jogos_user_embed}`,
                                 inline: true
                             },
                             {
-                                name: `:red_envelope: ${utilitarios[16]["insignias"]}`,
+                                name: `:red_envelope: ${client.tls.phrase(client, interaction, "util.steam.insignias")}`,
                                 value: `**Total: **\`${insignias_user}\``,
                                 inline: true
                             },
                         )
                         .addFields(
                             {
-                                name: `:trophy: ${utilitarios[16]["conquistas"]}`,
-                                value: `**Total: **\`${conquistas_user}\`\n**${utilitarios[16]["porcentagem"]}:** \`${porcentagem_conquistas}\`\n**${utilitarios[16]["jogos_perfeitos"]}: **\`${jogos_perfeitos}\``,
+                                name: `:trophy: ${client.tls.phrase(client, interaction, "util.steam.conquistas")}`,
+                                value: `**Total: **\`${conquistas_user}\`\n**${client.tls.phrase(client, interaction, "util.steam.porcentagem")}:** \`${porcentagem_conquistas}\`\n**${client.tls.phrase(client, interaction, "util.steam.jogos_perfeitos")}: **\`${jogos_perfeitos}\``,
                                 inline: true
                             },
                             {
                                 name: ":mobile_phone_off: Status",
-                                value: `\`${status_atual}\`\n:clock: **${utilitarios[16]["semanas"]}: **\n\`${tempo_semanas}\``,
+                                value: `\`${status_atual}\`\n:clock: **${client.tls.phrase(client, interaction, "util.steam.semanas")}: **\n\`${tempo_semanas}\``,
                                 inline: true
                             }
                         )
@@ -356,7 +354,7 @@ module.exports = {
                     if (criacoes_user !== "")
                         usuario_steam.addFields(
                             {
-                                name: `:piñata: ${utilitarios[16]["criacoes"]}`,
+                                name: `:piñata: ${client.tls.phrase(client, interaction, "util.steam.criacoes")}`,
                                 value: `${criacoes_user}`,
                                 inline: true
                             }
@@ -369,8 +367,8 @@ module.exports = {
                     if (jogo_favorito !== "")
                         usuario_steam.addFields(
                             {
-                                name: `:star: ${utilitarios[16]["jogo_favorito"]}`,
-                                value: `**${utilitarios[16]["nome"]}: **\`${jogo_favorito}\`\n:trophy: **${utilitarios[16]["conquistas"]}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${utilitarios[16]["tempo_jogado"]}: **\`${tempo_jogado}\``,
+                                name: `:star: ${client.tls.phrase(client, interaction, "util.steam.jogo_favorito")}`,
+                                value: `**${client.tls.phrase(client, interaction, "util.steam.nome")}: **\`${jogo_favorito}\`\n:trophy: **${client.tls.phrase(client, interaction, "util.steam.conquistas")}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${client.tls.phrase(client, interaction, "util.steam.tempo_jogado")}: **\`${tempo_jogado}\``,
                                 inline: false
                             }
                         )
@@ -378,7 +376,7 @@ module.exports = {
                     if (anos_servico !== "")
                         usuario_steam.addFields(
                             {
-                                name: `:birthday: ${utilitarios[13]["entrada"]}`,
+                                name: `:birthday: ${client.tls.phrase(client, interaction, "util.user.entrada")}`,
                                 value: `\`${anos_servico}\``,
                                 inline: true
                             }
@@ -388,7 +386,7 @@ module.exports = {
                 })
         } catch (err) {
             client.channels.cache.get('862015290433994752').send(err)
-            interaction.reply(`${utilitarios[16]["error_2"]}\n<${usuario_alvo}>`)
+            interaction.reply(`${client.tls.phrase(client, interaction, "util.steam.error_2")}\n<${usuario_alvo}>`)
         }
     }
 }

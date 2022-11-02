@@ -8,7 +8,8 @@ module.exports = {
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Gifs aleatórios da rogéria',
 			"es-ES": '⌠😂⌡ Gifs aleatorios de rogéria',
-			"fr": '⌠😂⌡ Gifs aléatoires de rogéria'
+			"fr": '⌠😂⌡ Gifs aléatoires de rogéria',
+			"it": '⌠😂⌡ Gif casuali di rogéria'
 		}),
 	async execute(client, interaction) {
 		const num = Math.round((gifs.length - 1) * Math.random())

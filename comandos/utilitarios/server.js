@@ -35,8 +35,6 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         if (interaction.options.getSubcommand() === "info") {
@@ -83,47 +81,47 @@ module.exports = {
                 .setThumbnail(icone_server)
                 .addFields(
                     {
-                        name: `:globe_with_meridians: ${utilitarios[12]["id_server"]}`,
+                        name: `:globe_with_meridians: ${client.tls.phrase(client, interaction, "util.server.id_server")}`,
                         value: `\`${interaction.guild.id}\``,
                         inline: true
                     },
                     {
-                        name: `:busts_in_silhouette: **${utilitarios[12]["membros"]}**`,
-                        value: `:bust_in_silhouette: **${utilitarios[12]["atual"]}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${interaction.guild.maximumMembers.toLocaleString('pt-BR')}\``,
+                        name: `:busts_in_silhouette: **${client.tls.phrase(client, interaction, "util.server.membros")}**`,
+                        value: `:bust_in_silhouette: **${client.tls.phrase(client, interaction, "util.server.atual")}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${interaction.guild.maximumMembers.toLocaleString('pt-BR')}\``,
                         inline: true
                     },
                     {
-                        name: `:unicorn: **${utilitarios[12]["dono"]}**`,
+                        name: `:unicorn: **${client.tls.phrase(client, interaction, "util.server.dono")}**`,
                         value: dono_sv,
                         inline: true
                     },
                 )
                 .addFields(
                     {
-                        name: `:placard: **${utilitarios[12]["canais"]} ( ${qtd_canais} )**`,
-                        value: `:card_box: **${utilitarios[12]["categorias"]}:** \`${categorias}\`\n:notepad_spiral: **${utilitarios[12]["texto"]}:** \`${canais_texto}\`\n:speaking_head: **${utilitarios[12]["voz"]}:** \`${canais_voz}\``,
+                        name: `:placard: **${client.tls.phrase(client, interaction, "util.server.canais")} ( ${qtd_canais} )**`,
+                        value: `:card_box: **${client.tls.phrase(client, interaction, "util.server.categorias")}:** \`${categorias}\`\n:notepad_spiral: **${client.tls.phrase(client, interaction, "util.server.texto")}:** \`${canais_texto}\`\n:speaking_head: **${client.tls.phrase(client, interaction, "util.server.voz")}:** \`${canais_voz}\``,
                         inline: true
                     },
                     {
-                        name: `:vulcan: **${utilitarios[12]["entrada"]}**`,
+                        name: `:vulcan: **${client.tls.phrase(client, interaction, "util.server.entrada")}**`,
                         value: `${data_entrada}\n[ ${diferenca_entrada} ]`,
                         inline: true
                     },
                     {
-                        name: `:birthday: **${utilitarios[12]["criacao"]}**`,
+                        name: `:birthday: **${client.tls.phrase(client, interaction, "util.server.criacao")}**`,
                         value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
                         inline: true
                     }
                 )
                 .addFields(
                     {
-                        name: `:shield: **${utilitarios[12]["verificacao"]}**`,
-                        value: `**${utilitarios[12][niveis_verificacao[interaction.guild.verificationLevel]]}**`,
+                        name: `:shield: **${client.tls.phrase(client, interaction, "util.server.verificacao")}**`,
+                        value: `**${client.tls.phrase(client, interaction, `util.server.${niveis_verificacao[interaction.guild.verificationLevel]}`)}**`,
                         inline: true
                     },
                     {
                         name: `${emoji_dancando} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
-                        value: `${figurinhas} **${utilitarios[12]["figurinhas"]} ( ${interaction.guild.stickers.cache.size} )**`,
+                        value: `${figurinhas} **${client.tls.phrase(client, interaction, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                         inline: true
                     }
                 )
@@ -132,13 +130,13 @@ module.exports = {
                 infos_sv.addFields(
                     {
                         name: `${boost_sv} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
-                        value: `:passport_control: **${utilitarios[12]["cargos"]}: ** \`${interaction.guild.roles.cache.size - 1}\``,
+                        value: `:passport_control: **${client.tls.phrase(client, interaction, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
                         inline: true
                     }
                 )
             else
                 infos_sv.addFields(
-                    { name: `:passport_control: **${utilitarios[12]["cargos"]} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
+                    { name: `:passport_control: **${client.tls.phrase(client, interaction, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
                 )
 
             return interaction.reply({ embeds: [infos_sv] })
@@ -154,7 +152,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
-                        .setDescription(utilitarios[4]["download_icon"].replace("link_repl", icone_server))
+                        .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_icon").replace("link_repl", icone_server))
                         .setColor(user.misc.embed)
                         .setImage(icone_server)
 

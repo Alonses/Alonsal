@@ -24,7 +24,6 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
@@ -37,11 +36,11 @@ module.exports = {
             bonus += `${randomString(tamanho)}\n\n`
 
         const embed = new EmbedBuilder()
-            .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)
+            .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(client, interaction, "util.password.titulo")}`)
             .setURL('https://password.kaspersky.com/')
             .setColor(user.misc.embed)
-            .setDescription(`:passport_control: **${utilitarios[18]["primaria"]}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${utilitarios[18]["bonus"]}**\n\`\`\`${bonus}\`\`\``)
-            .setFooter({ text: utilitarios[18]["rodape"].replace("tamanho_repl", tamanho) })
+            .setDescription(`:passport_control: **${client.tls.phrase(client, interaction, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(client, interaction, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
+            .setFooter({ text: client.tls.phrase(client, interaction, "util.password.rodape").replace("tamanho_repl", tamanho) })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

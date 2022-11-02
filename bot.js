@@ -39,6 +39,10 @@ class CeiraClient {
 	guilds() {
 		return this.discord.guilds.cache
 	}
+
+	formata_num(valor) {
+		return parseFloat(valor).toLocaleString('pt-BR')
+	}
 }
 
 const client = new CeiraClient(cli, user, idioma, translate, auto)

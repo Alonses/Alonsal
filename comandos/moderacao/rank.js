@@ -36,11 +36,10 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true })
+            return client.tls.reply(client, interaction, "mode.adm.moderadores", true)
 
         const usuario = interaction.options.getUser('user')
 
@@ -72,9 +71,9 @@ module.exports = {
             delete require.cache[require.resolve(`../../arquivos/data/rank/${interaction.guild.id}/${user.id}.json`)]
         } catch (err) {
             console.log(err)
-            return message.reply(`:octagonal_sign: | ${moderacao[8]["error_2"]}`)
+            return client.tls.reply(client, interaction, "mode.xp.error_2", true, 0)
         }
 
-        interaction.reply({ content: `:military_medal: | ${moderacao[8]["sucesso"].replace("nick_repl", user.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
+        interaction.reply({ content: `:military_medal: | ${client.tls.phrase(client, interaction, "mode.xp.sucesso", true, 0).replace("nick_repl", user.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
     }
 }

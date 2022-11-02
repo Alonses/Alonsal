@@ -58,11 +58,9 @@ module.exports = {
 
             client.usuarios.saveUser(user)
 
-            client.users.fetch(user.id, false).then((user_interno) => {
+            client.discord.users.fetch(user.id, false).then((user_interno) => {
 
-                const { diversao } = require(`../../arquivos/idiomas/${user.lang}.json`)
-
-                user_interno.send(`${emoji_dancante} | ${diversao[9]["new_badge"].replace("nome_repl", badge_name).replace("emoji_repl", badge)}`)
+                user_interno.send(`${emoji_dancante} | ${client.tls.phrase(client, user.id, "dive.badges.new_badge").replace("nome_repl", badge_name).replace("emoji_repl", badge)}`)
 
                 interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })

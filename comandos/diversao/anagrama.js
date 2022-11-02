@@ -6,26 +6,30 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'anagrama',
             "es-ES": 'anagrama',
-            "fr": 'anagramme'
+            "fr": 'anagramme',
+            "it": 'anagramma'
         })
         .setDescription('⌠😂⌡ Generates anagrams based on input')
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
             "es-ES": '⌠😂⌡ Genera anagramas basados ​​en la entrada',
-            "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée'
+            "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée',
+            "it": '⌠😂⌡ Genera anagrammi in base all\'input'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
-                    "fr": 'texte'
+                    "fr": 'texte',
+                    "it": 'testo'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
-                    "fr": 'Écris quelque chose!'
+                    "fr": 'Écris quelque chose!',
+                    "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {

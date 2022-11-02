@@ -1,6 +1,7 @@
 module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
 
-    const { games } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+    const { data } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+    const game = data.game
 
     let texto_formatado, valor_total = 0
     plataforma = plataforma.split(" ")[0]
@@ -14,17 +15,17 @@ module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
     // Escolhendo o caso e o texto que será usado para o anúncio
     if (objeto_anunciado[0].tipo !== "dlc") {
 
-        texto_formatado = texto_formatado = games[0]["anuncio_game_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+        texto_formatado = texto_formatado = game["anuncio"]["anuncio_game_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
 
         if (objeto_anunciado.length > 1)
-            texto_formatado = texto_formatado = games[0]["anuncio_game_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+            texto_formatado = texto_formatado = game["anuncio"]["anuncio_game_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
 
     } else if (objeto_anunciado[0].tipo === "dlc") {
 
-        texto_formatado = texto_formatado = games[0]["anuncio_dlc_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+        texto_formatado = texto_formatado = game["anuncio"]["anuncio_dlc_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
 
         if (objeto_anunciado.length > 1)
-            texto_formatado = games[0]["anuncio_dlc_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+            texto_formatado = game["anuncio"]["anuncio_dlc_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
     }
 
     return texto_formatado

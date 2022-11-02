@@ -14,14 +14,14 @@ function reply(client, interaction, target, ephemeral, type) {
     interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
 
-function editReply(client, interaction, target, ephemeral, type) {
+function editReply(client, interaction, target, type) {
 
     let phrase = translate(client, interaction, target)
 
     if (typeof type !== "undefined")
         phrase = `${status[type]}${phrase}`
 
-    interaction.editReply({ content: phrase, ephemeral: ephemeral })
+    interaction.editReply({ content: phrase })
 }
 
 function phrase(client, interaction, target) {
@@ -42,8 +42,24 @@ function translate(client, interaction, target) {
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
     }
 
-    // Compactando a tradução alvo em um único valor
-    data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+    try {
+        // Compactando a tradução alvo em um único valor
+        if (!target.includes("minecraft.detalhes"))
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+        else
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+    } catch (err) { // Tradução não existente no idioma selecionado
+
+        data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
+        data = data.data
+
+        // Retornando a tradução em PT-BR (idioma padrão)
+        if (!target.includes("minecraft.detalhes"))
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+        else
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+    }
+
     let phrase = data
 
     // Verifica se não há mensagens diferentes para o mesmo retorno

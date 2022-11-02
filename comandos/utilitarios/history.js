@@ -28,8 +28,6 @@ module.exports = {
                         .setDescription('Uma data específica, neste formato 21/01'))),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        
         let data = ""
 
         await interaction.deferReply()
@@ -50,25 +48,25 @@ module.exports = {
                     const ano_atual = new Date().getFullYear()
 
                     for (let i = 0; i < res.length; i++) {
-                        lista_eventos += `\`${i + 1}\` - [ \`${utilitarios[10]["em"]} ${res[i].ano}\` | \``
+                        lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(client, interaction, "util.history.em")} ${res[i].ano}\` | \``
 
-                        ano_atual - res[i].ano > 1 ? lista_eventos += `${utilitarios[10]["ha"]} ${ano_atual - res[i].ano}${utilitarios[14]["anos"]}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${utilitarios[10]["ano_passado"]}\` ] ` : lista_eventos += `${utilitarios[10]["este_ano"]}\` ] `
+                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(client, interaction, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(client, interaction, "util.history.este_ano")}\` ] `
 
                         lista_eventos += `${res[i].acontecimento}\n`
                     }
 
                     lista_eventos = formata_texto(lista_eventos)
 
-                    if (data == "") data = utilitarios[10]["hoje"]
+                    if (data == "") data = client.tls.phrase(client, interaction, "util.history.hoje")
 
                     data_eventos = ` ${data}`
                     const user = client.usuarios.getUser(interaction.user.id)
 
                     const embed_eventos = new EmbedBuilder()
-                        .setTitle(utilitarios[10]["acontecimentos_1"])
+                        .setTitle(client.tls.phrase(client, interaction, "util.history.acontecimentos_1"))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setColor(user.misc.embed)
-                        .setDescription(`${utilitarios[10]["acontecimentos_2"]} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
+                        .setDescription(`${client.tls.phrase(client, interaction, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                     interaction.editReply({ embeds: [embed_eventos] })
                 })

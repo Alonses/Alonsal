@@ -26,8 +26,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
-
+        
         let objeto_encontrado = false, i = 0, pesquisa_crua = ""
         const emoji_suv = busca_emoji(client, emojis.mc_coracao)
         const logo_wikipedia = busca_emoji(client, emojis.mc_logo_wikipedia)
@@ -85,26 +84,26 @@ module.exports = {
                         let nome_item = lista_itens[i].nome_item
                         let nome_pesquisa_wiki = nome_item
 
-                        let colet_suv = utilitarios[9]["sim"]
-                        let empilhavel = `${utilitarios[9]["ate"]} ${lista_itens[i].empilhavel}`
-                        let renovavel = utilitarios[9]["sim"]
+                        let colet_suv = client.tls.phrase(client, interaction, "util.minecraft.sim")
+                        let empilhavel = `${client.tls.phrase(client, interaction, "util.minecraft.ate")} ${lista_itens[i].empilhavel}`
+                        let renovavel = client.tls.phrase(client, interaction, "util.minecraft.sim")
 
                         let tipo_item = lista_itens[i].tipo_item
 
                         if (lista_itens[i].tipo_item === "Construcao")
-                            tipo_item = utilitarios[9]["construcao"]
+                            tipo_item = client.tls.phrase(client, interaction, "util.minecraft.construcao")
 
                         if (lista_itens[i].tipo_item === "Pocoes")
-                            tipo_item = utilitarios[9]["pocoes"]
+                            tipo_item = client.tls.phrase(client, interaction, "util.minecraft.pocoes")
 
                         if (lista_itens[i].renovavel === 0)
-                            renovavel = utilitarios[9]["nao"]
+                            renovavel = client.tls.phrase(client, interaction, "util.minecraft.nao")
 
                         if (lista_itens[i].empilhavel === 0)
-                            empilhavel = utilitarios[9]["nao"]
+                            empilhavel = client.tls.phrase(client, interaction, "util.minecraft.nao")
 
                         if (lista_itens[i].coletavel === 0)
-                            colet_suv = utilitarios[9]["nao"]
+                            colet_suv = client.tls.phrase(client, interaction, "util.minecraft.nao")
 
                         let fields = { name: "⠀", value: "⠀" }
 
@@ -113,13 +112,13 @@ module.exports = {
 
                                 let valores_item = lista_itens[i].descricao
 
-                                let descricao_tipo = `:magic_wand: ${utilitarios[9]["efeitos_aplicados"]}`
+                                let descricao_tipo = `:magic_wand: ${client.tls.phrase(client, interaction, "util.minecraft.efeitos_aplicados")}`
 
                                 if (!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha"))
-                                    descricao_tipo = `:receipt: ${utilitarios[9]["atributos"]}`
+                                    descricao_tipo = `:receipt: ${client.tls.phrase(client, interaction, "util.minecraft.atributos")}`
 
                                 if (nome_item === "Disco musical") {
-                                    nome_item = utilitarios[9]["disco_musical"]
+                                    nome_item = client.tls.phrase(client, interaction, "util.minecraft.disco_musical")
 
                                     valores_item = valores_item.replace("[&r", "")
                                     nome_item += ` | ${valores_item}`
@@ -127,7 +126,7 @@ module.exports = {
                                 }
 
                                 if (nome_item === "Livro encantado") {
-                                    nome_item = utilitarios[9]["livro_encantado"]
+                                    nome_item = client.tls.phrase(client, interaction, "util.minecraft.livro_encantado")
 
                                     valores_item = valores_item.replace("[&r", "")
                                     nome_item += ` | ${valores_item}`
@@ -164,10 +163,10 @@ module.exports = {
                                                 if (alvo_json.includes(":"))
                                                     alvo_json = alvo_json.split(":")[0]
 
-                                                nome_item += ` of ${utilitarios[9]["detalhes"][alvo_json]}`
+                                                nome_item += ` of ${client.tls.phrase(client, interaction, `util.minecraft.detalhes.${alvo_json}`)}`
                                             }
 
-                                            traducao_alvo = utilitarios[9]["detalhes"][alvo_json]
+                                            traducao_alvo = client.tls.phrase(client, interaction, `util.minecraft.detalhes.${alvo_json}`)
                                             valores_item = valores_item.replaceAll(alvo, traducao_alvo)
                                         }
                                     }
@@ -178,7 +177,7 @@ module.exports = {
                         }
 
                         if (lista_itens[i].versao_add > 19)
-                            nota_rodape = utilitarios[9]["nota_rodape"]
+                            nota_rodape = client.tls.phrase(client, interaction, "util.minecraft.nota_rodape")
 
                         if (nota_rodape.includes("item_repl"))
                             nota_rodape = nota_rodape.replace("item_repl", pesquisa)
@@ -199,37 +198,37 @@ module.exports = {
                                     }
 
                                     const user = client.usuarios.getUser(interaction.user.id)
-                                    
+
                                     const embed = new EmbedBuilder()
                                         .setTitle(nome_item)
                                         .setColor(user.misc.embed)
                                         .setImage(url)
                                         .addFields(
                                             {
-                                                name: `${emoji_suv}** ${utilitarios[9]["coletavel"]}**`,
+                                                name: `${emoji_suv}** ${client.tls.phrase(client, interaction, "util.minecraft.coletavel")}**`,
                                                 value: `\`${colet_suv}\``,
                                                 inline: true
                                             },
-                                            { name: `:label: **${utilitarios[9]["tipo"]}**`, value: `\`${tipo_item}\``, inline: true },
+                                            { name: `:label: **${client.tls.phrase(client, interaction, "util.minecraft.tipo")}**`, value: `\`${tipo_item}\``, inline: true },
                                             {
-                                                name: `:bookmark_tabs: **${utilitarios[9]["versao_add"]}**`,
+                                                name: `:bookmark_tabs: **${client.tls.phrase(client, interaction, "util.minecraft.versao_add")}**`,
                                                 value: `\`1.${lista_itens[i].versao_add}\``,
                                                 inline: true
                                             }
                                         )
                                         .addFields(
                                             {
-                                                name: `:abacus: **${utilitarios[9]["empilhavel"]}**`,
+                                                name: `:abacus: **${client.tls.phrase(client, interaction, "util.minecraft.empilhavel")}**`,
                                                 value: `\`${empilhavel}\``,
                                                 inline: true
                                             },
                                             {
-                                                name: `:herb: **${utilitarios[9]["renovavel"]}**`,
+                                                name: `:herb: **${client.tls.phrase(client, interaction, "util.minecraft.renovavel")}**`,
                                                 value: `\`${renovavel}\``,
                                                 inline: true
                                             },
                                             {
-                                                name: `:link: **${utilitarios[9]["nome_interno"]}**`,
+                                                name: `:link: **${client.tls.phrase(client, interaction, "util.minecraft.nome_interno")}**`,
                                                 value: `**\`minecraft:${lista_itens[i].nome_interno}\`**`,
                                                 inline: true
                                             }, fields
@@ -240,7 +239,7 @@ module.exports = {
 
                                         let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_pesquisa_wiki.replaceAll(" ", "_")}`
 
-                                        link_artigo = `${utilitarios[9]["mais_detalhes_wiki"].replace("link_repl", link_artigo)}`
+                                        link_artigo = `${client.tls.phrase(client, interaction, "util.minecraft.mais_detalhes_wiki").replace("link_repl", link_artigo)}`
 
                                         embed.addFields(
                                             {
@@ -261,11 +260,11 @@ module.exports = {
                 if (!objeto_encontrado) {
                     const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
 
-                    return interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[9]["nao_encontrado"]} \`${pesquisa}\`, ${utilitarios[9]["tente_novamente"]}`)
+                    return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
                 }
             })
             .catch(() => {
-                return interaction.reply(`:octagonal_sign: | ${utilitarios[9]["error_1"]}`)
+                client.tls.reply(client, interaction, "util.minecraft.error_1", true, 0)
             })
     }
 }
