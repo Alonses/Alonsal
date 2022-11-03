@@ -100,7 +100,7 @@ module.exports = {
             plataforma = "Pula prédios"
         }
 
-        client.usuarios.saveUser(user)
+        client.usuarios.saveUser([user])
 
         return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
     }

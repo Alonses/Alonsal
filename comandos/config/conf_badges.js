@@ -56,7 +56,7 @@ module.exports = {
             const badge_name = busca_badges(client, 'single', parseInt(badge_alvo))[1]
             const emoji_dancante = busca_emoji(client, emojis_dancantes)
 
-            client.usuarios.saveUser(user)
+            client.usuarios.saveUser([user])
 
             client.discord.users.fetch(user.id, false).then((user_interno) => {
 

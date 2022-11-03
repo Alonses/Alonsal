@@ -24,6 +24,8 @@ module.exports = {
             return interaction.reply({ content: `:bank: | ${client.tls.phrase(client, interaction, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
         }
 
+        console.log(user.misc)
+
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
         const bufunfa = Math.floor(900 + (Math.random() * 500))
 
@@ -33,8 +35,10 @@ module.exports = {
         const caso = "bufunfa", quantia = bufunfa
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
+        console.log(user.misc)
+
         // Salvando os dados do usuário
-        client.usuarios.saveUser(user)
+        client.usuarios.saveUser([user])
 
         interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(client, interaction, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${emoji_dancando}`, ephemeral: true })
     }

@@ -63,7 +63,7 @@ module.exports = {
             user.badges.fixed_badge = null
 
             user.badges.badge_list = badge_list
-            client.usuarios.saveUser(user)
+            client.usuarios.saveUser([user])
         }
 
         // Removendo a badge fixada
