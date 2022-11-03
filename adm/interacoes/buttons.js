@@ -28,11 +28,13 @@ module.exports = ({ client, interaction }) => {
 
         if (data_cor.split(".") != 10)
             user.misc.color = colors[data_cor.split(".")[1].split("-")[0]]
-        else // Salvando a cor customizada
+        else if (data_cor.split(".")[1].split("0")[0] == 10) // Salvando a cor customizada
+            user.misc.color = 'RANDOM'
+        else
             user.misc.color = data_cor.split("-")[1]
 
         // Salvando os dados
-        client.usuarios.saveUser(user)
+        client.usuarios.saveUser([user])
 
         interaction.update({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
     }

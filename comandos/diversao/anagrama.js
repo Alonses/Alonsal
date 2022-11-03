@@ -76,10 +76,10 @@ module.exports = {
             qtd_quebras = exib_formatado.split(anagrama_formado[i])
 
             if (qtd_quebras.length > 2 && fatori_fix.length > 4)
-                cor_embed = 0xfbff3d
+                cor_embed = '0xfbff3d'
         }
 
-        if (cor_embed === 0xfbff3d)
+        if (cor_embed === '0xfbff3d')
             exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(client, interaction, "dive.anagrama.sorte")}_`
 
         const anagrama = new EmbedBuilder()

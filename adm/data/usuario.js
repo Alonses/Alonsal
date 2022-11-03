@@ -34,6 +34,8 @@ function getUser(id_alvo) {
         user.conquistas = conquistas || []
     }
 
+    user.misc.embed = user.misc.color
+
     if (user.misc.color == "RANDOM")
         user.misc.embed = alea_hex()
 
