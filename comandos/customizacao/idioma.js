@@ -16,7 +16,7 @@ module.exports = {
             "pt-BR": 'idioma',
             "es-ES": 'idioma',
             "fr": 'langue',
-            "it": 'linguaggio'
+            "it": 'lingua'
         })
         .setDescription('⌠👤⌡ Change the language of Alonsal')
         .setDescriptionLocalizations({

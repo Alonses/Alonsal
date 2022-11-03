@@ -2,7 +2,7 @@ node_modules/
 config.json
 *.zip
 .idea/
-arquivos/data/*
+arquivos/data
 /package-lock.json
 prefixes/
 discloud.config
