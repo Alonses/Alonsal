@@ -7,7 +7,8 @@ module.exports = {
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Java enceirado',
 			"es-ES": '⌠😂⌡ Java encerado',
-			"fr": '⌠😂⌡ Java ciré'
+			"fr": '⌠😂⌡ Java ciré',
+			"it": '⌠😂⌡ Java cerato'
 		}),
 	async execute(client, interaction) {
 		const ceira = new AttachmentBuilder('./arquivos/img/ceira.png')

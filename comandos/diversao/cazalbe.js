@@ -10,7 +10,8 @@ module.exports = {
 		.setDescription('⌠😂⌡ Cazalbe King of Prasody')
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Cazalbe rei da prassódia',
-			"fr": '⌠😂⌡ Cazalbe roi de la prasodie'
+			"fr": '⌠😂⌡ Cazalbe roi de la prasodie',
+			"it": '⌠😂⌡ Cazalbe re della prasodia'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
@@ -19,7 +20,8 @@ module.exports = {
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
 					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
-					"fr": '⌠😂⌡ Invoque un gif de cazalbe'
+					"fr": '⌠😂⌡ Invoque un gif de cazalbe',
+					"it": '⌠😂⌡ Evoca una gif di cazalbe'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
@@ -27,18 +29,20 @@ module.exports = {
 				.setNameLocalizations({
 					"pt-BR": 'risada',
 					"es-ES": 'risa',
-					"fr": 'rire'
+					"fr": 'rire',
+					"it": 'risata'
 				})
 				.setDescription('⌠😂⌡ The cazalbe laugh')
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ A risada cazalbe',
+					"pt-BR": '⌠😂⌡ A risada do cazalbe',
 					"es-ES": '⌠😂⌡ La risa del cazalbe',
-					"fr": '⌠😂⌡ Le rire cazalbe'
+					"fr": '⌠😂⌡ Le rire cazalbe',
+					"it": '⌠😂⌡ La risata di Cazalbe'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('piada')
-				.setDescription('⌠😂|🇧🇷⌡ Invoca uma piada excelentississima')),
+				.setDescription('⌠😂|🇧🇷⌡ Conta uma piada')),
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
@@ -58,7 +62,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle('Cazalbé')
 						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
-						.setColor(user.color)
+						.setColor(user.misc.embed)
 						.setDescription(`${res.question}\n${res.answer}`)
 
 					interaction.editReply({ embeds: [embed] })

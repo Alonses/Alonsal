@@ -22,7 +22,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
             "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
-            "fr": '⌠👤⌡ Voir le classement d\'Alonsal'
+            "fr": '⌠👤⌡ Voir le classement d\'Alonsal',
+            "it": '⌠👤⌡ Guarda la classifica di Alonsal'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('server')
@@ -30,33 +31,36 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
                     "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
-                    "fr": '⌠👤⌡ Voir le classement des serveurs'
+                    "fr": '⌠👤⌡ Voir le classement des serveurs',
+                    "it": '⌠👤⌡ Vedi classifica server'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "fr": 'page'
+                            "it": 'pagina'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher'
+                            "fr": 'Une page à afficher',
+                            "it": 'Una pagina da visualizzare'
                         }))
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "fr": 'user'
+                            "it": 'utente'
                         })
                         .setDescription('User to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Usuário para exibir',
                             "es-ES": 'Usuario a mostrar',
-                            "fr": 'Utilisateur à afficher'
+                            "fr": 'Utilisateur à afficher',
+                            "it": 'Utente da visualizzare'
                         })))
         .addSubcommand(subcommand =>
             subcommand.setName('global')
@@ -64,26 +68,26 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking global',
                     "es-ES": '⌠👤⌡ Ver el ranking mundial',
-                    "fr": '⌠👤⌡ Voir le classement mondial'
+                    "fr": '⌠👤⌡ Voir le classement mondial',
+                    "it": '⌠👤⌡ Guarda la classifica globale'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "fr": 'page'
+                            "it": 'pagina'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher'
+                            "fr": 'Une page à afficher',
+                            "it": 'Una pagina da visualizzare'
                         }))),
     async execute(client, interaction) {
 
         let usuario_alvo = []
-
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const users = []
 
         let rodape = interaction.user.username, user_alvo = interaction.options.getUser('user') // Coleta o ID do usuário mencionado
@@ -122,18 +126,18 @@ module.exports = {
                 paginas = 1
 
             if (users.length > 6)
-                rodape = `( 1 | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
+                rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(client, interaction, "dive.rank.rodape")}`
 
             if (!user_alvo) {
                 if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                    return interaction.reply({ content: `:octagonal_sign: | ${diversao[8]["error_1"]}`, ephemeral: true })
+                    return client.tls.reply(client, interaction, "dive.rank.error_1", true, 0)
 
                 const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
                 for (let x = 0; x < remover; x++)
                     users.shift()
 
-                rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${diversao[8]["rodape"]}`
+                rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(client, interaction, "dive.rank.rodape")}`
             }
 
             let i = 0
@@ -156,8 +160,8 @@ module.exports = {
                     else
                         usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
-                    experiencias.push(`\`${formata_num(user.xp.toFixed(2))} EXP\``)
-                    levels.push(`\`${formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
+                    experiencias.push(`\`${client.formata_num(user.xp.toFixed(2))} EXP\``)
+                    levels.push(`\`${client.formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
                 }
 
                 if (!user_alvo) // Verifica se a entrada é um ID
@@ -171,22 +175,22 @@ module.exports = {
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
-                        .setTitle(`${diversao[8]["rank_sv"]} ${interaction.guild.name}`)
-                        .setColor(user.color)
-                        .setDescription(`\`\`\`fix\n${diversao[8]["nivel_descricao"]} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
+                        .setTitle(`${client.tls.phrase(client, interaction, "dive.rank.rank_sv")} ${interaction.guild.name}`)
+                        .setColor(user.misc.embed)
+                        .setDescription(`\`\`\`fix\n${client.tls.phrase(client, interaction, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
-                                name: `${emoji_ceira} ${diversao[8]["enceirados"]}`,
+                                name: `${emoji_ceira} ${client.tls.phrase(client, interaction, "dive.rank.enceirados")}`,
                                 value: usernames.join("\n"),
                                 inline: true
                             },
                             {
-                                name: `:postal_horn: ${diversao[8]["experiencia"]}`,
+                                name: `:postal_horn: ${client.tls.phrase(client, interaction, "dive.rank.experiencia")}`,
                                 value: experiencias.join("\n"),
                                 inline: true
                             },
                             {
-                                name: `:beginner: ${diversao[8]["nivel"]}`,
+                                name: `:beginner: ${client.tls.phrase(client, interaction, "dive.rank.nivel")}`,
                                 value: levels.join("\n"),
                                 inline: true
                             }
@@ -207,18 +211,18 @@ module.exports = {
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(
                         {
-                            name: `:postal_horn: ${diversao[8]["experiencia"]}`,
+                            name: `:postal_horn: ${client.tls.phrase(client, interaction, "dive.rank.experiencia")}`,
                             value: `\`${usuario_alvo[0].toFixed(2)} EXP\``,
                             inline: true
                         },
                         {
-                            name: `:beginner: ${diversao[8]["nivel"]}`,
-                            value: `\`${formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
+                            name: `:beginner: ${client.tls.phrase(client, interaction, "dive.rank.nivel")}`,
+                            value: `\`${client.formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
                             inline: true
                         },
                         { name: "⠀", value: "⠀", inline: true }
@@ -236,11 +240,7 @@ module.exports = {
                     interaction.reply({ embeds: [embed] })
                 })
             })
-        } else // Alterando o XP do usuário informado
+        } else // Ranking global
             interaction.reply({ content: 'Um comando bem enceirado vem aí...', ephemeral: true })
     }
-}
-
-function formata_num(valor) {
-    return parseFloat(valor).toLocaleString('pt-BR')
 }

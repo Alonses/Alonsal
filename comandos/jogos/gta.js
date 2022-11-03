@@ -32,7 +32,7 @@ module.exports = {
         }
 
         function dateGTA(time) {
-            
+
             const min = time % 48
 
             const hour = Math.floor((min / GTADAY) * 24)
@@ -50,8 +50,10 @@ module.exports = {
         let hora_variavel = currentDate.getHours() - 5 > 0 ? currentDate.getHours() - 5 : 19 + currentDate.getHours()
         let horaAtual = `${hora_variavel}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`
 
-        let emoji_horario = currentDate.getHours() < 17 && currentDate.getHours() > 6 ? ":park:" : ":bridge_at_night:"
+        const hora_gta = dateGTA(timeToMin(horaAtual))
 
-        interaction.reply(`${emoji_horario} | Agora é \`${dateGTA(timeToMin(horaAtual))}\` no gta online`)
+        let emoji_horario = hora_gta.slice(0, 2) < 20 && hora_gta.slice(0, 2) > 6 ? hora_gta.slice(0, 2) > 17 ? ":city_sunset:" : ":park:" : ":bridge_at_night:"
+
+        interaction.reply({ content: `${emoji_horario} | Agora é \`${hora_gta}\` no gta online`, ephemeral: true })
     }
 }

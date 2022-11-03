@@ -10,7 +10,9 @@ module.exports = {
 		.setDescription('⌠😂⌡ As soon as I can\'t resist, vaiinn')
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Assim que não resisto, vaiinn',
-			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn'
+			"es-ES": '⌠😂⌡ Así que no me resistiré, vaiinn',
+			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn',
+			"it": '⌠😂⌡ Non resisterò, vaiinn'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
@@ -18,7 +20,9 @@ module.exports = {
 				.setDescription('⌠😂⌡ Summons a gif of jaja')
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
-					"fr": '⌠😂⌡ Invoque un gif de jaja'
+					"es-ES": '⌠😂⌡ Invoca un gif de jaja',
+					"fr": '⌠😂⌡ Invoque un gif de jaja',
+					"it": '⌠😂⌡ Evoca una gif di Jaja'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
@@ -26,9 +30,7 @@ module.exports = {
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do jaja')),
 	async execute(client, interaction) {
 
-		const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
-		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${diversao[6]["nsfw_jaja"]}`, ephemeral: true })
+		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(client, interaction, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
@@ -44,7 +46,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
 						.setThumbnail(res.foto)
-						.setColor(user.color)
+						.setColor(user.misc.embed)
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.editReply({ embeds: [embed] })

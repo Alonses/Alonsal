@@ -17,12 +17,12 @@ module.exports = (client, modo, id_alvo, interaction) => {
         user.conquistas.push(constructJson(modo, Math.floor(date1.getTime() / 1000)))
 
         if (modo == 1) { // Badge por transferir um funny number para o alonsal
-            user.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
+            user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
         }
 
         client.usuarios.saveUser(user)
 
-        client.users.fetch(user.id, false).then((user_interno) => {
+        client.discord.users.fetch(user.id, false).then((user_interno) => {
             user_interno.send('Você acabou de ganhar uma Conquista!')
         })
     }

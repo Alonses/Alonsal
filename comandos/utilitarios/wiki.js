@@ -12,31 +12,33 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
-            "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki'
+            "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki',
+            "it": '⌠💡⌡ Cerca qualcosa sul wiki'
         })
         .addStringOption(option =>
             option.setName('search')
                 .setNameLocalizations({
                     "pt-BR": 'pesquisa',
                     "es-ES": 'busqueda',
-                    "fr": 'chercher'
+                    "fr": 'chercher',
+                    "it": 'ricerca'
                 })
                 .setDescription('I\'m lucky')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
                     "es-ES": 'Estoy con suerte',
-                    "fr": 'J\'ai de la chance'
+                    "fr": 'J\'ai de la chance',
+                    "it": 'Sono fortunato'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction) == "al-br" ? "pt-br" : client.idioma.getLang(interaction)
-        const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
         const content = interaction.options.data[0].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
-            return interaction.reply(utilitarios[1]["wiki_slondo"])
+            return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
 
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
@@ -50,7 +52,7 @@ module.exports = {
                 const fields = []
 
                 if (res.RelatedTopics.length > 0)
-                    fields.push({ name: `:books: ${utilitarios[1]["topicos_rel"]}`, value: "\u200B" })
+                    fields.push({ name: `:books: ${client.tls.phrase(client, interaction, "util.wiki_topicos_rel")}`, value: "\u200B" })
 
                 for (const topic of res.RelatedTopics) {
                     counter++
@@ -71,7 +73,7 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const Embed = new EmbedBuilder()
-                        .setColor(user.color)
+                        .setColor(user.misc.embed)
                         .setTitle(res.Heading)
                         .setAuthor({ name: res.AbstractSource })
                         .setDescription(res.AbstractText)
@@ -87,13 +89,13 @@ module.exports = {
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["auto_pesquisa"]} :v`)
+                        interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.auto_pesquisa")} :v`)
                     else
-                        interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
+                        interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
                 }
             })
             .catch(() => {
-                interaction.reply(`${emoji_nao_encontrado} | ${utilitarios[1]["sem_dados"]} [ \`${content}\` ], ${utilitarios[9]["tente_novamente"]}`)
+                interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
             })
     }
 }

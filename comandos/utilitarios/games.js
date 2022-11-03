@@ -7,15 +7,20 @@ const create_buttons = require('../../adm/discord/create_buttons')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('games')
+        .setNameLocalizations({
+            "es-ES": 'juegos',
+            "fr": 'jeux',
+            "it": 'giochi'
+        })
         .setDescription('⌠💡⌡ The free game(s) of the moment')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "es-ES": '⌠💡⌡ El(los) juego(s) gratuito(s) del momento',
-            "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment'
+            "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment',
+            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento'
         }),
     async execute(client, interaction) {
 
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         await interaction.deferReply()
@@ -30,7 +35,7 @@ module.exports = {
                 res.forEach(valor => {
                     let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-                    jogos_disponiveis.push(`- ${valor.nome} [ ${moderacao[6]["ate_data"]} ${valor.expira} ]`)
+                    jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(client, interaction, "mode.anuncio.ate_data")} ${valor.expira} ]`)
                     objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
                 })
 
@@ -38,10 +43,10 @@ module.exports = {
                 const row = create_buttons(objeto_jogos)
 
                 const embed = new EmbedBuilder()
-                    .setTitle(moderacao[6]["ativos"])
+                    .setTitle(client.tls.phrase(client, interaction, "mode.anuncio.ativos"))
                     .setThumbnail(res[0].thumbnail)
-                    .setColor(user.color)
-                    .setDescription(`${moderacao[6]["resgate_dica"]}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
+                    .setColor(user.misc.embed)
+                    .setDescription(`${client.tls.phrase(client, interaction, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })
             })

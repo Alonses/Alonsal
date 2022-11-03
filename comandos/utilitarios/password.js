@@ -7,24 +7,26 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
             "es-ES": '⌠💡⌡ Genera contraseñas aleatorias',
-            "fr": '⌠💡⌡ Générer des mots de passe aléatoires'
+            "fr": '⌠💡⌡ Générer des mots de passe aléatoires',
+            "it": '⌠💡⌡ Genera password casuali'
         })
         .addStringOption(option =>
             option.setName('length')
                 .setNameLocalizations({
                     "pt-BR": 'tamanho',
                     "es-ES": 'tamano',
-                    "fr": 'longueur'
+                    "fr": 'longueur',
+                    "it": 'lunghezza'
                 })
                 .setDescription('from 12 to 350')
                 .setDescriptionLocalizations({
                     "pt-BR": 'de 12 até 350',
                     "es-ES": 'de 12 a 350',
-                    "fr": 'de 12 à 350'
+                    "fr": 'de 12 à 350',
+                    "it": 'da 12 a 350'
                 })),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
@@ -37,11 +39,11 @@ module.exports = {
             bonus += `${randomString(tamanho)}\n\n`
 
         const embed = new EmbedBuilder()
-            .setTitle(`:lock_with_ink_pen: ${utilitarios[18]["titulo"]}`)
+            .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(client, interaction, "util.password.titulo")}`)
             .setURL('https://password.kaspersky.com/')
-            .setColor(user.color)
-            .setDescription(`:passport_control: **${utilitarios[18]["primaria"]}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${utilitarios[18]["bonus"]}**\n\`\`\`${bonus}\`\`\``)
-            .setFooter({ text: utilitarios[18]["rodape"].replace("tamanho_repl", tamanho) })
+            .setColor(user.misc.embed)
+            .setDescription(`:passport_control: **${client.tls.phrase(client, interaction, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(client, interaction, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
+            .setFooter({ text: client.tls.phrase(client, interaction, "util.password.rodape").replace("tamanho_repl", tamanho) })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

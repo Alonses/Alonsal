@@ -16,7 +16,7 @@ module.exports = {
       .then(async res => {
 
         const embed = new EmbedBuilder()
-          .setColor(user.color)
+          .setColor(user.misc.embed)
           .setAuthor({ name: res.nome, iconURL: res.foto })
           .setDescription(res.texto)
 

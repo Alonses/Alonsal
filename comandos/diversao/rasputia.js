@@ -11,7 +11,8 @@ module.exports = {
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Rasputia em sua glória',
 			"es-ES": '⌠😂⌡ Rasputia en todo su esplendor',
-			"fr": '⌠😂⌡ Rasputia dans sa splendeur'
+			"fr": '⌠😂⌡ Rasputia dans sa splendeur',
+			"it": '⌠😂⌡ Rasputia nel suo splendore'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
@@ -19,20 +20,14 @@ module.exports = {
 				.setDescription('⌠😂⌡ Summons a rasputia gif')
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif da rasputia',
-					"fr": '⌠😂⌡ Invoque un rasputia gif'
+					"es-ES": '⌠😂⌡ Invoca un gif de rasputia',
+					"fr": '⌠😂⌡ Invoque un rasputia gif',
+					"it": '⌠😂⌡ Evoca una gif di rasputia'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('phrase')
-				.setNameLocalizations({
-					"pt-BR": 'frase',
-					"fr": 'phrase'
-				})
-				.setDescription('⌠😂⌡ Summons a phrase from rasputia')
-				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ Invoca uma frase da rasputia',
-					"fr": '⌠😂⌡ Invoque une phrase de rasputia'
-				})),
+				.setName('frase')
+				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase da rasputia')),
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
@@ -49,7 +44,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
 						.setThumbnail(res.foto)
-						.setColor(user.color)
+						.setColor(user.misc.embed)
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.editReply({ embeds: [embed] })

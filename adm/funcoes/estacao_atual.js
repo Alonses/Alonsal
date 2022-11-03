@@ -1,8 +1,4 @@
-module.exports = (latitude, idioma_definido) => {
-
-    if (idioma_definido == "al-br") idioma_definido = "pt-br"
-
-    const { utilitarios } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+module.exports = (latitude, client, interaction) => {
 
     let data_atual = new Date()
     const emojis = ["🌻", "🍂", "❄️", "🌼"]
@@ -19,16 +15,16 @@ module.exports = (latitude, idioma_definido) => {
     let indice_int = indice + 1
     if (indice_int >= datas_estacao.length) indice_int = 0
 
-    comeco_termino = `${utilitarios[8]["comeco"]} ${datas_estacao[indice]}${utilitarios[8]["termino"]} ${datas_estacao[indice_int]}`
+    comeco_termino = `${client.tls.phrase(client, interaction, "util.tempo.comeco")} ${datas_estacao[indice]}${client.tls.phrase(client, interaction, "util.tempo.termino")} ${datas_estacao[indice_int]}`
 
     // Calculando o tempo restante em dias para o fim da estação
     mes_termino = parseInt(datas_estacao[indice_int].split("/")[1])
     dias_restantes = calcula_dias(21, mes_termino, data_atual.getFullYear()) - calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear())
 
-    if (dias_restantes > 1) dias_restantes += `${utilitarios[14]["dias"]}`
-    else dias_restantes += `${utilitarios[14]["dia"]}`
+    if (dias_restantes > 1) dias_restantes += `${client.tls.phrase(client, interaction, "util.unidades.dias")}`
+    else dias_restantes += `${client.tls.phrase(client, interaction, "util.unidades.dia")}`
 
-    estacao = `${emojis[indice]} ${utilitarios[8][estacao_nome[indice]]}${utilitarios[8]["termino"]} ${dias_restantes}\n${comeco_termino}`
+    estacao = `${emojis[indice]} ${client.tls.phrase(client, interaction, `util.tempo.${estacao_nome[indice]}`)}${client.tls.phrase(client, interaction, "util.tempo.termino")} ${dias_restantes}\n${comeco_termino}`
 
     return estacao
 }

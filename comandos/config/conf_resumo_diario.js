@@ -13,14 +13,14 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-        const bot = client.bot.getRelatorio()
+        const bot = client.auto.getRelatorio()
         const proxima_att = (date1.getTime() / 1000) + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
-        let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
+        let canais_texto = client.channels().filter((c) => c.type === 0).size
         let members = 0, processamento = '🎲 Processamento\n'
         let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
 
-        client.guilds.cache.forEach(async guild => {
+        client.guilds().forEach(async guild => {
             members += guild.memberCount - 1
         })
 
@@ -52,7 +52,7 @@ module.exports = {
             .addFields(
                 {
                     name: ':globe_with_meridians: **Servidores**',
-                    value: `**Ativo em:** \`${client.guilds.cache.size.toLocaleString('pt-BR')}\`\n**Canais: **\`${canais_texto.toLocaleString('pt-BR')}\``,
+                    value: `**Ativo em:** \`${client.guilds().size.toLocaleString('pt-BR')}\`\n**Canais: **\`${canais_texto.toLocaleString('pt-BR')}\``,
                     inline: true
                 },
                 {

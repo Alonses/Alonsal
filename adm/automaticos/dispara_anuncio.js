@@ -27,7 +27,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     }
 
     if (canais_clientes.length < 1)
-        return client.channels.cache.get('872865396200452127').send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
+        return client.channels().get('872865396200452127').send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
 
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
@@ -70,11 +70,11 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
                 .setColor(cor_embed)
                 .setDescription(texto_anuncio)
 
-            const canal_alvo = client.channels.cache.get(canal.canal)
+            const canal_alvo = client.discord.channels.cache.get(canal.canal)
 
             // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {
-                if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.ViewChannel)) {
+                if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
                     canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
 
                     canais_recebidos++
@@ -90,7 +90,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     if (canais_recebidos === 1)
         aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canal cliente`
 
-    client.channels.cache.get('872865396200452127').send(aviso)
+    client.discord.channels.cache.get('872865396200452127').send(aviso)
 
     if (interaction)
         return interaction.editReply({ content: "A atualização foi enviada à todos os canais de games", ephemeral: true })

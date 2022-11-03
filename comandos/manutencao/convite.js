@@ -7,24 +7,25 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'convite',
             "es-ES": 'invitacion',
-            "fr": 'invitation'
+            "fr": 'invitation',
+            "it": 'invito'
         })
         .setDescription('⌠📡⌡ Invite Alonsal right now!')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
             "es-ES": '⌠📡⌡ ¡Invita a Alonsal ahora mismo!',
-            "fr": '⌠📡⌡ Invitez Alonsal maintenant!'
+            "fr": '⌠📡⌡ Invitez Alonsal maintenant!',
+            "it": '⌠📡⌡ Invita Alonsal ora!'
         }),
     async execute(client, interaction) {
 
-        const { manutencao, updates } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-        const row = create_buttons([{ name: updates[0]["convidar"], type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720` }], interaction)
+        const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
-            .setTitle(manutencao[0]["titulo"])
-            .setDescription(manutencao[0]["convite"])
+            .setColor(user.misc.embed)
+            .setTitle(client.tls.phrase(client, interaction, "manu.convite.titulo"))
+            .setDescription(client.tls.phrase(client, interaction, "manu.convite.convite"))
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

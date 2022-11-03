@@ -7,20 +7,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo',
             "es-ES": '⌠😂⌡ EsCrIbE AsI MuY RaPiDo',
-            "fr": '⌠😂⌡ ÉcRiVeZ CoMmE CeCi rApIdEmEnT'
+            "fr": '⌠😂⌡ ÉcRiVeZ CoMmE CeCi rApIdEmEnT',
+            "it": '⌠😂⌡ ScRiVi vElOcEmEnTe cOn qUeStO StIlE'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
-                    "fr": 'texte'
+                    "fr": 'texte',
+                    "it": 'testo'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
-                    "fr": 'Écris quelque chose!'
+                    "fr": 'Écris quelque chose!',
+                    "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {
