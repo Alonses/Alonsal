@@ -41,16 +41,23 @@ module.exports = {
                     "es-ES": 'Ingrese una ubicación',
                     "fr": 'Informer un endroit',
                     "it": 'Inserisci una posizione'
-                })
-                .setRequired(true)),
+                })),
     async execute(client, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction)
+        let idioma_definido = client.idioma.getLang(interaction), pesquisa = ''
 
         if (idioma_definido == "al-br") idioma_definido = "pt-br"
         const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
 
-        let pesquisa = interaction.options.data[0].value
+        const user = client.usuarios.getUser(interaction.user.id)
+
+        if (interaction.options.data.length < 1 && !user.misc.locale)
+            return client.tls.reply(client, interaction, "util.tempo.error_locale", true, 2)
+
+        if (interaction.options.data.length < 1)
+            pesquisa = user.misc.locale
+        else
+            pesquisa = interaction.options.data[0].value
 
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
         const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)

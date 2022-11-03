@@ -84,6 +84,32 @@ module.exports = {
                             "fr": 'Votre jeton unique',
                             "it": 'Il tuo token unico'
                         })
+                        .setRequired(true)))
+
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('locale')
+                .setDescription('⌠👤⌡ Set a location')
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Definir um local',
+                    "es-ES": '⌠👤⌡ Establecer una ubicación',
+                    "fr": '⌠👤⌡ Définir un emplacement',
+                    "it": '⌠👤⌡ Impostare una posizione'
+                })
+                .addStringOption(option =>
+                    option.setName("place")
+                        .setNameLocalizations({
+                            "pt-BR": 'local',
+                            "es-ES": 'lugar',
+                            'it': 'posto'
+                        })
+                        .setDescription("The location to always use")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'O Lugar a ser definido',
+                            "es-ES": 'La ubicación para usar siempre',
+                            "fr": 'Lieu d\'utilisation',
+                            "it": 'La posizione da usare sempre'
+                        })
                         .setRequired(true))),
     async execute(client, interaction) {
 
@@ -95,6 +121,9 @@ module.exports = {
         else if (interaction.options.getSubcommand() === "lastfm") {
             user.social.lastfm = entrada
             plataforma = "lastfm"
+        } else if (interaction.options.getSubcommand() === "locale") {
+            user.misc.locale = entrada
+            plataforma = "locale"
         } else {
             user.social.pula_predios = entrada
             plataforma = "Pula prédios"
@@ -102,6 +131,9 @@ module.exports = {
 
         client.usuarios.saveUser([user])
 
-        return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+        if (plataforma !== "locale")
+            return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+        else // Link de local do /tempo
+            return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
     }
 }
