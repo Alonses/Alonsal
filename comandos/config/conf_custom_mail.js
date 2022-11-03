@@ -40,10 +40,10 @@ module.exports = {
         })
 
         let img_game
-        const canal_alvo = await client.channels.cache.get(corpo_mail.canal)
+        const canal_alvo = await client.channels().get(corpo_mail.canal)
 
         if (canal_alvo.type === 0 || canal_alvo.type === 5) {
-            if (canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user).has(PermissionsBitField.Flags.SendMessages)) {
+            if (canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages)) {
                 if (corpo_mail.anexo) {
                     img_game = new AttachmentBuilder(corpo_mail.anexo)
 

@@ -7,11 +7,17 @@ const create_buttons = require('../../adm/discord/create_buttons')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('games')
+        .setNameLocalizations({
+            "es-ES": 'juegos',
+            "fr": 'jeux',
+            "it": 'giochi'
+        })
         .setDescription('⌠💡⌡ The free game(s) of the moment')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "es-ES": '⌠💡⌡ El(los) juego(s) gratuito(s) del momento',
-            "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment'
+            "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment',
+            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento'
         }),
     async execute(client, interaction) {
 

@@ -22,7 +22,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
             "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
-            "fr": '⌠👤⌡ Voir le classement d\'Alonsal'
+            "fr": '⌠👤⌡ Voir le classement d\'Alonsal',
+            "it": '⌠👤⌡ Guarda la classifica di Alonsal'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('server')
@@ -30,33 +31,36 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
                     "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
-                    "fr": '⌠👤⌡ Voir le classement des serveurs'
+                    "fr": '⌠👤⌡ Voir le classement des serveurs',
+                    "it": '⌠👤⌡ Vedi classifica server'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "fr": 'page'
+                            "it": 'pagina'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher'
+                            "fr": 'Une page à afficher',
+                            "it": 'Una pagina da visualizzare'
                         }))
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "fr": 'user'
+                            "it": 'utente'
                         })
                         .setDescription('User to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Usuário para exibir',
                             "es-ES": 'Usuario a mostrar',
-                            "fr": 'Utilisateur à afficher'
+                            "fr": 'Utilisateur à afficher',
+                            "it": 'Utente da visualizzare'
                         })))
         .addSubcommand(subcommand =>
             subcommand.setName('global')
@@ -64,20 +68,22 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking global',
                     "es-ES": '⌠👤⌡ Ver el ranking mundial',
-                    "fr": '⌠👤⌡ Voir le classement mondial'
+                    "fr": '⌠👤⌡ Voir le classement mondial',
+                    "it": '⌠👤⌡ Guarda la classifica globale'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "fr": 'page'
+                            "it": 'pagina'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher'
+                            "fr": 'Une page à afficher',
+                            "it": 'Una pagina da visualizzare'
                         }))),
     async execute(client, interaction) {
 

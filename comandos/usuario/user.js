@@ -24,20 +24,22 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ O Avatar do usuário',
                     "es-ES": '⌠👤⌡ El avatar de usuario',
-                    "fr": '⌠👤⌡ L\'avatar de l\'utilisateur'
+                    "fr": '⌠👤⌡ L\'avatar de l\'utilisateur',
+                    "it": '⌠👤⌡ L\'utente Avatar'
                 })
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "fr": 'user'
+                            "it": 'utente'
                         })
                         .setDescription('Mention a user as a target')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
-                            "fr": 'Mentionner un utilisateur comme cible'
+                            "fr": 'Mentionner un utilisateur comme cible',
+                            "it": 'Menziona un altro utente'
                         })))
         .addSubcommand(subcommand =>
             subcommand
@@ -46,20 +48,22 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Informações do usuário',
                     "es-ES": '⌠👤⌡ Información del usuario',
-                    "fr": '⌠👤⌡ Informations utilisateur'
+                    "fr": '⌠👤⌡ Informations utilisateur',
+                    "it": '⌠👤⌡ Informazioni sull\'utente'
                 })
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "fr": 'user'
+                            "it": 'utente'
                         })
                         .setDescription('Mention a user as a target')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
-                            "fr": 'Mentionner un utilisateur comme cible'
+                            "fr": 'Mentionner un utilisateur comme cible',
+                            "it": 'Menziona un altro utente'
                         }))),
     async execute(client, interaction) {
 
@@ -102,7 +106,7 @@ module.exports = {
             if (!tipo_user.includes("🛡️") && !user.bot)
                 tipo_user = emojis_busto[Math.round((emojis_busto.length - 1) * Math.random())]
 
-            if (user.id === client.user.id)
+            if (user.id === client.id())
                 nota_rodape = client.tls.phrase(client, interaction, "util.user.alonsal")
 
             if (process.env.ids_enceirados.includes(user.id)) {

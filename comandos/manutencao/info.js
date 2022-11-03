@@ -12,7 +12,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Informações do Alonsal',
             "es-ES": '⌠📡⌡ Información Alonsal',
-            "fr": '⌠📡⌡ Informations sur le Alonsal'
+            "fr": '⌠📡⌡ Informations sur le Alonsal',
+            "it": '⌠📡⌡ Informazioni Alonsal'
         }),
     async execute(client, interaction) {
 

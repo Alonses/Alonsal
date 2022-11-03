@@ -8,20 +8,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
-            "fr": '⌠💡⌡ (Dé)coder de/vers morse'
+            "fr": '⌠💡⌡ (Dé)coder de/vers morse',
+            "it": '⌠💡⌡ (Da) codice da/per morse'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
-                    "fr": 'texte'
+                    "fr": 'texte',
+                    "it": 'testo'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
-                    "fr": 'Écris quelque chose!'
+                    "fr": 'Écris quelque chose!',
+                    "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
@@ -29,26 +32,30 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
-                    "fr": 'inverse'
+                    "fr": 'inverse',
+                    "it": 'inversione'
                 })
                 .setDescription('Invert output result')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
-                    "fr": 'Inverser le résultat de sortie'
+                    "fr": 'Inverser le résultat de sortie',
+                    "it": 'invertire il risultato di output'
                 }))
         .addStringOption(option =>
             option.setName('operation')
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',
-                    "fr": 'operation'
+                    "fr": 'operation',
+                    "it": 'operazione'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Forçar uma operação',
                     "es-ES": 'Forzar una operación',
-                    "fr": 'Forcer une opération'
+                    "fr": 'Forcer une opération',
+                    "it": 'forzare un\'operazione'
                 })
                 .addChoices(
                     { name: 'Encode', value: '0' },

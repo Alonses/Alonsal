@@ -9,7 +9,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "es-ES": '⌠💡⌡ Ver tu ping',
-            "fr": '⌠💡⌡ Voir votre ping'
+            "fr": '⌠💡⌡ Voir votre ping',
+            "it": '⌠💡⌡ Guarda il tuo ping'
         }),
     async execute(client, interaction) {
 
@@ -30,7 +31,7 @@ module.exports = {
         if (delay <= 0)
             mensagem = `:ping_pong: Pong!? [ **\`${delay}ms\`** ] ${client.tls.phrase(client, interaction, "util.ping.ping_5")} ${busca_emoji(client, emojis.susto2)}`
 
-        mensagem += `\n${client.tls.phrase(client, interaction, "util.ping.latencia")} [ **\`${Math.round(client.ws.ping)}ms\`** ]`
+        mensagem += `\n${client.tls.phrase(client, interaction, "util.ping.latencia")} [ **\`${Math.round(client.discord.ws.ping)}ms\`** ]`
 
         await interaction.editReply({ content: mensagem })
     }

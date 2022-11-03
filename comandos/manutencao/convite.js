@@ -7,17 +7,19 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'convite',
             "es-ES": 'invitacion',
-            "fr": 'invitation'
+            "fr": 'invitation',
+            "it": 'invito'
         })
         .setDescription('⌠📡⌡ Invite Alonsal right now!')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
             "es-ES": '⌠📡⌡ ¡Invita a Alonsal ahora mismo!',
-            "fr": '⌠📡⌡ Invitez Alonsal maintenant!'
+            "fr": '⌠📡⌡ Invitez Alonsal maintenant!',
+            "it": '⌠📡⌡ Invita Alonsal ora!'
         }),
     async execute(client, interaction) {
 
-        const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1614150720` }], interaction)
+        const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()

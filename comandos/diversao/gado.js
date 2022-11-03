@@ -39,7 +39,7 @@ module.exports = {
 
         const alvo = interaction.options.getUser('user')
 
-        if (client.user.id === alvo.id)
+        if (client.id() === alvo.id)
             return client.tls.reply(client, interaction, "dive.gado.error_2")
 
         // Lista de frases de gado

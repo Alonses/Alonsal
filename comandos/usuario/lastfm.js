@@ -13,7 +13,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
             "es-ES": '⌠👤⌡ Perfil de alguien en LastFM',
-            "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM'
+            "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM',
+            "it": '⌠👤⌡ Profilo di qualcuno su LastFM'
         })
         .addStringOption(option =>
             option.setName('url')
@@ -21,7 +22,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
-                    "fr": 'Nom de profil'
+                    "fr": 'Nom de profil',
+                    "it": 'il nome utente'
                 }))
         .addUserOption(option =>
             option.setName('user')
@@ -29,7 +31,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
-                    "fr": 'Un utilisateur de discord'
+                    "fr": 'Un utilisateur de discord',
+                    "it": 'Un utente della discord'
                 })),
     async execute(client, interaction) {
 

@@ -10,7 +10,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
             "es-ES": '⌠💸⌡ Recibe tu bufunfa diario',
-            "fr": '⌠💸⌡ Recevez votre bufunfa quotidien'
+            "fr": '⌠💸⌡ Recevez votre bufunfa quotidien',
+            "it": '⌠💸⌡ Ottieni la tua bufunfa quotidiana'
         }),
     async execute(client, interaction) {
 

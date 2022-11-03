@@ -34,15 +34,15 @@ module.exports = {
 				})
 				.setDescription('⌠😂⌡ The cazalbe laugh')
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ A risada cazalbe',
+					"pt-BR": '⌠😂⌡ A risada do cazalbe',
 					"es-ES": '⌠😂⌡ La risa del cazalbe',
 					"fr": '⌠😂⌡ Le rire cazalbe',
-
+					"it": '⌠😂⌡ La risata di Cazalbe'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('piada')
-				.setDescription('⌠😂|🇧🇷⌡ Invoca uma piada excelentississima')),
+				.setDescription('⌠😂|🇧🇷⌡ Conta uma piada')),
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")

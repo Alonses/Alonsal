@@ -9,7 +9,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
             "es-ES": '⌠📡⌡ Servidor Oficial Alonsal™️',
-            "fr": '⌠📡⌡ Serveur officiel Alonsal™️'
+            "fr": '⌠📡⌡ Serveur officiel Alonsal™️',
+            "it": '⌠📡⌡ Server ufficiale Alonsal™️'
         }),
     async execute(client, interaction) {
 

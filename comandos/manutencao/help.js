@@ -10,7 +10,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
             "es-ES": '⌠🌎⌡ Todo comienza aquí',
-            "fr": '⌠🌎⌡ Tout commence ici'
+            "fr": '⌠🌎⌡ Tout commence ici',
+            "it": '⌠🌎⌡ Tutto inizia qui'
         }),
     async execute(client, interaction) {
 

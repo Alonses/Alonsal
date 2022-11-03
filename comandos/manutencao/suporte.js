@@ -8,13 +8,15 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'suporte',
             "es-ES": 'soporte',
-            "fr": 'soutien'
+            "fr": 'soutien',
+            "it": 'supporto'
         })
         .setDescription('⌠📡⌡ Support Alonsal')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
             "es-ES": '⌠📡⌡ Apoya a Alonsal',
-            "fr": '⌠📡⌡ Soutenez Alonsal'
+            "fr": '⌠📡⌡ Soutenez Alonsal',
+            "it": '⌠📡⌡ Supporta Alonsal'
         }),
     async execute(client, interaction) {
 

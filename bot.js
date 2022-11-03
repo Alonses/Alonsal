@@ -40,6 +40,10 @@ class CeiraClient {
 		return this.discord.guilds.cache
 	}
 
+	channels() {
+		return this.discord.channels.cache
+	}
+
 	formata_num(valor) {
 		return parseFloat(valor).toLocaleString('pt-BR')
 	}
@@ -48,7 +52,7 @@ class CeiraClient {
 const client = new CeiraClient(cli, user, idioma, translate, auto)
 
 // Alternância entre modo normal e de testes
-const modo_develop = 1, force_update = 0, silent = 0
+const modo_develop = 0, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1

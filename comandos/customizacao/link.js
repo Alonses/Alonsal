@@ -6,7 +6,13 @@ const busca_emojis = require('../../adm/discord/busca_emoji')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('link')
-        .setDescription('⌠👤⌡ Link suas redes ao Alonsal')
+        .setDescription('⌠👤⌡ Connect your social networks to Alonsal')
+        .setDescriptionLocalizations({
+            "pt-BR": '⌠👤⌡ Link suas redes ao Alonsal',
+            "es-ES": '⌠👤⌡ Conecta tus redes a Alonsal',
+            "fr": '⌠👤⌡ Connectez vos réseaux à Alonsal',
+            "it": '⌠👤⌡ Collega le tue reti ad Alonsal'
+        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName('steam')
@@ -14,20 +20,23 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Steam',
                     "es-ES": '⌠👤⌡ Enlace a Steam',
-                    "fr": '⌠👤⌡ Lien vers Steam'
+                    "fr": '⌠👤⌡ Lien vers Steam',
+                    "it": '⌠👤⌡ Collegati a Steam'
                 })
                 .addStringOption(option =>
                     option.setName("name")
                         .setNameLocalizations({
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
-                            "fr": 'nom'
+                            "fr": 'nom',
+                            'it': 'nome'
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
-                            "fr": 'Votre nom sur la plateforme'
+                            "fr": 'Votre nom sur la plateforme',
+                            "it": 'Il tuo nome sulla piattaforma'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -37,20 +46,23 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao LastFM',
                     "es-ES": '⌠👤⌡ Enlace a LastFM',
-                    "fr": '⌠👤⌡ Lien vers LastFM'
+                    "fr": '⌠👤⌡ Lien vers LastFM',
+                    "it": '⌠👤⌡ Collegati a LastFM'
                 })
                 .addStringOption(option =>
                     option.setName("name")
                         .setNameLocalizations({
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
-                            "fr": 'nom'
+                            "fr": 'nom',
+                            "it": "nome"
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
-                            "fr": 'Votre nom sur la plateforme'
+                            "fr": 'Votre nom sur la plateforme',
+                            "it": 'Il tuo nome sulla piattaforma'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -60,7 +72,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Pula Prédios',
                     "es-ES": '⌠👤⌡ Enlace a Pula Prédios',
-                    "fr": '⌠👤⌡ Lien vers Pula Prédios'
+                    "fr": '⌠👤⌡ Lien vers Pula Prédios',
+                    "it": '⌠👤⌡ Collegati a Pula Prédios'
                 })
                 .addStringOption(option =>
                     option.setName("token")
@@ -68,7 +81,8 @@ module.exports = {
                         .setDescriptionLocalizations({
                             "pt-BR": 'O seu token único',
                             "es-ES": 'Tu ficha única',
-                            "fr": 'Votre jeton unique'
+                            "fr": 'Votre jeton unique',
+                            "it": 'Il tuo token unico'
                         })
                         .setRequired(true))),
     async execute(client, interaction) {

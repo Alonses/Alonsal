@@ -17,26 +17,30 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'tempo',
             "es-ES": 'tiempo',
-            "fr": 'climat'
+            "fr": 'climat',
+            "it": 'clima'
         })
         .setDescription('⌠💡⌡ Show current weather somewhere')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Mostra o clima atual em algum local',
             "es-ES": '⌠💡⌡ Muestra el clima actual en algún lugar',
-            "fr": '⌠💡⌡ Afficher la météo actuelle quelque part'
+            "fr": '⌠💡⌡ Afficher la météo actuelle quelque part',
+            "it": '⌠💡⌡ Mostra il tempo attuale da qualche parte'
         })
         .addStringOption(option =>
             option.setName('place')
                 .setNameLocalizations({
                     "pt-BR": 'local',
                     "es-ES": 'lugar',
-                    "fr": 'place'
+                    "fr": 'place',
+                    "it": 'posto'
                 })
                 .setDescription('Enter a location')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Insira um local',
                     "es-ES": 'Ingrese una ubicación',
-                    "fr": 'Informer un endroit'
+                    "fr": 'Informer un endroit',
+                    "it": 'Inserisci una posizione'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {

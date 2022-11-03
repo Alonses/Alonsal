@@ -7,7 +7,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',
-            "fr": '⌠📡⌡ Le référentiel Alonsal™️'
+            "fr": '⌠📡⌡ Le référentiel Alonsal™️',
+            "it": '⌠📡⌡ Il repository Alonsal™️'
         }),
     async execute(client, interaction) {
 
