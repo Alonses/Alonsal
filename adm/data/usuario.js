@@ -14,7 +14,8 @@ function getUser(id_alvo) {
             color: '0x29BB8E',
             money: 0,
             daily: null,
-            embed: null
+            embed: null,
+            locale: null
         },
         badges: {
             fixed_badge: null,
