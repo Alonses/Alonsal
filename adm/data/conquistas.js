@@ -20,7 +20,7 @@ module.exports = (client, modo, id_alvo, interaction) => {
             user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
         }
 
-        client.usuarios.saveUser(user)
+        client.usuarios.saveUser([user])
 
         client.discord.users.fetch(user.id, false).then((user_interno) => {
             user_interno.send('Você acabou de ganhar uma Conquista!')
