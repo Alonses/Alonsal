@@ -13,7 +13,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',
-            "fr": '⌠🎲⌡ Le Jeu Pula!'
+            "fr": '⌠🎲⌡ Le Jeu Pula!',
+            "it": '⌠🎲⌡ Il gioco di Pola!'
         })
         .addUserOption(option =>
             option.setName('user')
@@ -21,17 +22,18 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
-                    "fr": 'Un utilisateur de discord'
+                    "fr": 'Un utilisateur de discord',
+                    "it": 'Un utente della discordia'
                 })),
     async execute(client, interaction) {
 
         alvo = interaction.options.getUser('user') || interaction.user
         const user = client.usuarios.getUser(alvo.id)
 
-        if (!user.pula_predios)
+        if (!user.social.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
 
-        fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.pula_predios}`)
+        fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.social.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 
@@ -42,7 +44,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle("> Suas estatísticas no Pula")
-                    .setColor(user.color)
+                    .setColor(user.misc.embed)
                     .addFields(
                         {
                             name: `${busca_emoji(client, emojis.pula_2)} **Gerais**`,

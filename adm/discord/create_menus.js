@@ -6,18 +6,16 @@ const busca_emoji = require('../../adm/discord/busca_emoji')
 module.exports = (client, dados, interaction) => {
 
     const opcoes = []
-    const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
     let insersoes = []
 
     dados.forEach(valor => {
-        let badge = busca_badges(client, 'single', valor)
+        let badge = busca_badges(client, 'single', valor, interaction)
 
         if (!insersoes.includes(valor)) {
             opcoes.push({
                 label: `${badge[1]}`,
                 emoji: `${busca_emoji(client, badge[0])}`,
-                description: `${diversao[9]["fixar"]} ${badge[1]}`,
+                description: `${client.tls.phrase(client, interaction, "dive.badges.fixar")} ${badge[1]}`,
                 value: `${valor}`
             })
 
@@ -29,7 +27,7 @@ module.exports = (client, dados, interaction) => {
         .addComponents(
             new SelectMenuBuilder()
                 .setCustomId(`select_${interaction.user.id}`)
-                .setPlaceholder(diversao[9]["escolha_uma"])
+                .setPlaceholder(client.tls.phrase(client, interaction, "dive.badges.escolha_uma"))
                 .addOptions(opcoes)
         )
 

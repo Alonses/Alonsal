@@ -5,7 +5,6 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 module.exports = ({ client, interaction }) => {
 
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
-    const { customizacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
     if (id_button == `Conf_${interaction.user.id}`) {
 
@@ -18,26 +17,26 @@ module.exports = ({ client, interaction }) => {
         const preco = precos[parseInt(data_cor.split(".")[0])]
 
         // Validando se o usuário tem dinheiro suficiente
-        if (user.money < preco)
-            return interaction.reply({ content: `${epic_embed_fail} | ${customizacao[1]["sem_money"].replace("preco_repl", formata_num(preco))}`, ephemeral: true })
+        if (user.misc.money < preco)
+            return interaction.reply({ content: `${epic_embed_fail} | ${client.tls.reply(client, interaction, "misc.color.sem_money").replace("preco_repl", client.formata_num(preco))}`, ephemeral: true })
 
         const emoji_dancando = busca_emoji(client, emojis_dancantes)
-        user.money -= preco
+        user.misc.money -= preco
 
         const caso = "movimentacao", quantia = preco
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
         if (data_cor.split(".") != 10)
-            user.color = colors[data_cor.split(".")[1].split("-")[0]]
+            user.misc.color = colors[data_cor.split(".")[1].split("-")[0]]
         else // Salvando a cor customizada
-            user.color = data_cor.split("-")[1]
+            user.misc.color = data_cor.split("-")[1]
 
         // Salvando os dados
         client.usuarios.saveUser(user)
 
-        interaction.update({ content: `${emoji_dancando} | ${customizacao[1]["cor_att"]}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
     }
 
     if (id_button == `Canc_${interaction.user.id}`)
-        return interaction.update({ content: `:anger: | ${customizacao[1]["att_cancelada"]}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: `:anger: | ${client.tls.phrase(client, interaction, "misc.color.att_cancelada")}`, embeds: [], components: [], ephemeral: true })
 }

@@ -7,13 +7,12 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Louvado seja!',
             "es-ES": '⌠😂⌡ ¡Alabado seas!',
-            "fr": '⌠😂⌡ Loué soit !'
+            "fr": '⌠😂⌡ Loué soit!',
+            "it": '⌠😂⌡ Sia lodato!'
         }),
     async execute(client, interaction) {
 
-        const { diversao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
-
         const baidu = new AttachmentBuilder('./arquivos/img/baidu.png')
-        interaction.reply({ content: diversao[0]["baidu"], files: [baidu] })
+        interaction.reply({ content: client.tls.phrase(client, interaction, "dive.baidu.baidu"), files: [baidu] })
     }
 }

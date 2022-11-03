@@ -8,20 +8,22 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
             "es-ES": '⌠💂⌡ Ajustar la XP de algunos usuarios',
-            "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs'
+            "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs',
+            "it": '⌠💂⌡ Regola gli XP di un altro utente'
         })
         .addUserOption(option =>
             option.setName('user')
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
-                    "fr": 'user'
+                    "it": 'utente'
                 })
                 .setDescription("The user to adjust")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'O usuário a ser ajustar',
+                    "pt-BR": 'O usuário a ser ajustado',
                     "es-ES": 'El usuario para ajustar',
-                    "fr": 'Utilisateur cible'
+                    "fr": 'Utilisateur cible',
+                    "it": 'L\'utente da aggiornare'
                 })
                 .setRequired(true))
         .addNumberOption(option =>
@@ -30,17 +32,17 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual o novo XP?',
                     "es-ES": '¿Qué es el nuevo XP?',
-                    "fr": 'Qu\'est-ce que le nouvel XP ?'
+                    "fr": 'Qu\'est-ce que le nouvel XP?',
+                    "it": 'Qual è il nuovo XP?'
                 })
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        const { moderacao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: moderacao[5]["moderadores"], ephemeral: true })
+            return client.tls.reply(client, interaction, "mode.adm.moderadores", true)
 
         const usuario = interaction.options.getUser('user')
 
@@ -72,9 +74,9 @@ module.exports = {
             delete require.cache[require.resolve(`../../arquivos/data/rank/${interaction.guild.id}/${user.id}.json`)]
         } catch (err) {
             console.log(err)
-            return message.reply(`:octagonal_sign: | ${moderacao[8]["error_2"]}`)
+            return client.tls.reply(client, interaction, "mode.xp.error_2", true, 0)
         }
 
-        interaction.reply({ content: `:military_medal: | ${moderacao[8]["sucesso"].replace("nick_repl", user.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
+        interaction.reply({ content: `:military_medal: | ${client.tls.phrase(client, interaction, "mode.xp.sucesso", true, 0).replace("nick_repl", user.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
     }
 }

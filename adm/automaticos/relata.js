@@ -5,7 +5,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client }) => {
 
-    if (client.user.id !== process.env.client_1) return
+    if (client.id() !== process.env.client_1) return
 
     const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
     const tempo_restante = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
@@ -26,13 +26,13 @@ function requisita_relatorio(client, aguardar_tempo) {
 async function gera_relatorio(client, proxima_att) {
 
     const date1 = new Date()
-    const bot = client.bot.getRelatorio()
+    const bot = client.auto.getRelatorio()
     let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
 
-    let canais_texto = client.channels.cache.filter((c) => c.type === 0).size
+    let canais_texto = client.channels().filter((c) => c.type === 0).size
     let members = 0, processamento = '🎲 Processamento\n'
 
-    client.guilds.cache.forEach(async guild => {
+    client.guilds().forEach(async guild => {
         members += guild.memberCount - 1
     })
 
@@ -64,7 +64,7 @@ async function gera_relatorio(client, proxima_att) {
         .addFields(
             {
                 name: ':globe_with_meridians: **Servidores**',
-                value: `**Ativo em:** \`${(client.guilds.cache.size).toLocaleString('pt-BR')}\`\n**Canais: ** \`${canais_texto.toLocaleString('pt-BR')}\``,
+                value: `**Ativo em:** \`${(client.guilds().size).toLocaleString('pt-BR')}\`\n**Canais: ** \`${canais_texto.toLocaleString('pt-BR')}\``,
                 inline: true
             },
             {
@@ -82,6 +82,6 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`, inline: false })
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
 
-    await client.channels.cache.get('934426266726174730').send({ embeds: [embed] })
-    client.bot.resRelatorio() // Reseta o relatório
+    await client.channels().get('934426266726174730').send({ embeds: [embed] })
+    client.auto.resRelatorio() // Reseta o relatório
 }

@@ -7,20 +7,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Envie mensagens para o Alonsal',
             "es-ES": '⌠📡⌡ Enviar mensajes a Alonsal',
-            "fr": '⌠📡⌡ Envoyer des messages à Alonsal'
+            "fr": '⌠📡⌡ Envoyer des messages à Alonsal',
+            "it": '⌠📡⌡ Invia messaggi ad Alonsal'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
-                    "fr": 'texte'
+                    "fr": 'texte',
+                    "it": 'testo'
                 })
                 .setDescription('Report bugs or give suggestions!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Reporte bugs ou dê sugestões!',
                     "es-ES": '¡Informar de errores o dar sugerencias!',
-                    "fr": 'Signalez des bugs ou faites des suggestions !'
+                    "fr": 'Signalez des bugs ou faites des suggestions!',
+                    "it": 'Segnala bug o dai suggerimenti!'
                 })
                 .setRequired(true))
         .addAttachmentOption(option =>
@@ -28,17 +31,17 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'arquivo',
                     "es-ES": 'archivo',
-                    "fr": 'dossier'
+                    "fr": 'dossier',
+                    "it": 'file'
                 })
                 .setDescription('Attach files if needed')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Anexe arquivos se precisar',
                     "es-ES": 'Adjunte archivos si es necesario',
-                    "fr": 'Joindre des fichiers si besoin'
+                    "fr": 'Joindre des fichiers si besoin',
+                    "it": 'Allega file se necessario'
                 })),
     async execute(client, interaction) {
-
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
 
         const corpo_mensagem = {
             texto: null,
@@ -65,8 +68,8 @@ module.exports = {
         if (corpo_mensagem.arquivo)
             msg_user.setImage(corpo_mensagem.arquivo)
 
-        interaction.reply({ content: manutencao[3]["sucesso_1"], ephemeral: true })
+        client.tls.reply(client, interaction, "manu.mail.sucesso_1", true)
 
-        client.channels.cache.get("847191471379578970").send({ embeds: [msg_user] })
+        client.channels().get("847191471379578970").send({ embeds: [msg_user] })
     }
 }

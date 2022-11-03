@@ -8,20 +8,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
-            "fr": '⌠💡⌡ (Dé)coder de/vers morse'
+            "fr": '⌠💡⌡ (Dé)coder de/vers morse',
+            "it": '⌠💡⌡ (Da) codice da/per morse'
         })
         .addStringOption(option =>
             option.setName('text')
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
-                    "fr": 'texte'
+                    "fr": 'texte',
+                    "it": 'testo'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
-                    "fr": 'Écris quelque chose!'
+                    "fr": 'Écris quelque chose!',
+                    "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
@@ -29,26 +32,30 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
-                    "fr": 'inverse'
+                    "fr": 'inverse',
+                    "it": 'inversione'
                 })
                 .setDescription('Invert output result')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
-                    "fr": 'Inverser le résultat de sortie'
+                    "fr": 'Inverser le résultat de sortie',
+                    "it": 'invertire il risultato di output'
                 }))
         .addStringOption(option =>
             option.setName('operation')
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',
-                    "fr": 'operation'
+                    "fr": 'operation',
+                    "it": 'operazione'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Forçar uma operação',
                     "es-ES": 'Forzar una operación',
-                    "fr": 'Forcer une opération'
+                    "fr": 'Forcer une opération',
+                    "it": 'forzare un\'operazione'
                 })
                 .addChoices(
                     { name: 'Encode', value: '0' },
@@ -56,7 +63,6 @@ module.exports = {
                 )),
     async execute(client, interaction) {
 
-        const { utilitarios } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
@@ -86,7 +92,7 @@ module.exports = {
                     texto[carac] = `${morse[texto[carac]]} `
                 else {
                     texto[carac] = ""
-                    aviso = utilitarios[2]["caracteres"]
+                    aviso = client.tls.phrase(client, interaction, "util.morse.caracteres")
                 }
             }
         } else { // Decodificando
@@ -103,20 +109,20 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = utilitarios[2]["codificado"]
+        let titulo = client.tls.phrase(client, interaction, "util.morse.codificado")
 
         if (codificar.opera)
-            titulo = utilitarios[2]["decodificado"]
+            titulo = client.tls.phrase(client, interaction, "util.morse.decodificado")
 
         if (texto_ordenado.length === 0) {
-            texto_ordenado = utilitarios[2]["carac_invalidos"]
-            titulo = utilitarios[2]["error"]
+            texto_ordenado = client.tls.phrase(client, interaction, "util.morse.carac_invalidos")
+            titulo = client.tls.phrase(client, interaction, "util.morse.error")
         }
 
         const embed = new EmbedBuilder()
             .setTitle(titulo)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
 
         if (aviso.length > 0)
@@ -124,7 +130,7 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
             .catch(() => {
-                interaction.reply({ content: `:octagonal_sign: | ${utilitarios[3]["error_1"]}`, ephemeral: true })
+                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
             })
     }
 }

@@ -7,20 +7,20 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',
-            "fr": '⌠📡⌡ Le référentiel Alonsal™️'
+            "fr": '⌠📡⌡ Le référentiel Alonsal™️',
+            "it": '⌠📡⌡ Il repository Alonsal™️'
         }),
     async execute(client, interaction) {
 
-        const { manutencao } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
         const user = client.usuarios.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.color)
+            .setColor(user.misc.embed)
             .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
-            .setTitle(manutencao[1]["repositorio"])
+            .setTitle(client.tls.phrase(client, interaction, "manu.git.repositorio"))
             .setURL('https://github.com/brnd-21/Alonsal')
             .setImage('https://i.imgur.com/0tV3IQr.png')
-            .setDescription(manutencao[1]["link"])
+            .setDescription(client.tls.phrase(client, interaction, "manu.git.link"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }
