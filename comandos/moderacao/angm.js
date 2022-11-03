@@ -7,52 +7,66 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'notificar',
             "es-ES": 'notificar',
-            "fr": 'notifier'
+            "fr": 'notifier',
+            "it": 'notificare'
         })
         .setDescription('⌠💂⌡ (Dis)Enable announces for free games')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ (Des)Habilitar anúncio de games free',
             "es-ES": '⌠💂⌡ (Des)Habilitar anuncios para juegos gratis',
-            "fr": '⌠💂⌡ (Dés)activer les publicités pour les jeux gratuits'
+            "fr": '⌠💂⌡ (Dés)activer les publicités pour les jeux gratuits',
+            "it": '⌠💂⌡ (Dis) Abilita annunci di giochi gratuiti'
         })
         .addRoleOption(option =>
             option.setName('role')
                 .setNameLocalizations({
                     "pt-BR": 'cargo',
-                    "es-ES": 'rol'
+                    "es-ES": 'rol',
+                    "it": 'roule'
                 })
                 .setDescription('The role that will be notified')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O cargo que será notificado',
                     "es-ES": 'El rol a ser notificado',
-                    "fr": 'Le role qui sera notifié'
+                    "fr": 'Le role qui sera notifié',
+                    "it": 'La roule da notificare'
                 }))
         .addChannelOption(option =>
             option.setName('channel')
                 .setNameLocalizations({
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
-                    "fr": 'salon'
+                    "fr": 'salon',
+                    "it": 'canale'
                 })
                 .setDescription('The channel that will be used')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O canal que será usado',
                     "es-ES": 'El canal que se utilizará',
-                    "fr": 'Le canal qui sera utilisé'
+                    "fr": 'Le canal qui sera utilisé',
+                    "it": 'Il canale che verrà utilizzato'
                 }))
         .addStringOption(option =>
             option.setName('language')
                 .setNameLocalizations({
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
-                    "fr": 'langue'
+                    "fr": 'langue',
+                    "it": 'linguaggio'
                 })
-                .setDescription('O idioma que será utilizado')
+                .setDescription('The language to be used')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'O idioma que será utilizado',
+                    "es-ES": 'El lenguaje a utilizar',
+                    "fr": 'La langue à utiliser',
+                    "it": 'La lingua da usare'
+                })
                 .addChoices(
                     { name: 'Português', value: 'pt-br' },
                     { name: 'English', value: 'en-us' },
                     { name: 'Español', value: 'es-es' },
                     { name: 'Français', value: 'fr-fr' },
+                    { name: 'Italiano', value: 'it-it' },
                     { name: 'Alonsês', value: 'al-br' }
                 )
         )

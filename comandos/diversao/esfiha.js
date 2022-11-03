@@ -8,7 +8,7 @@ module.exports = {
 			"pt-BR": '⌠😂⌡ Servidos??',
 			"es-ES": '⌠😂⌡ Servido??',
 			"fr": '⌠😂⌡ Servi??',
-			"it": '⌠😂⌡ Sservito??'
+			"it": '⌠😂⌡ Servito??'
 		}),
 	async execute(client, interaction) {
 

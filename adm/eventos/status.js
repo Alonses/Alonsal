@@ -42,7 +42,7 @@ module.exports = async ({ client }) => {
 
     setTimeout(() => {
         client.idioma.listAll()
-    }, 3000)
+    }, 2000)
 
     require('../automaticos/relata.js')({ client })
     require('../automaticos/anuncia.js')({ client })

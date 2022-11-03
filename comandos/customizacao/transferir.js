@@ -9,26 +9,29 @@ module.exports = {
         .setNameLocalizations({
             "pt-BR": 'dei-lhe',
             "es-ES": 'transferir',
-            "fr": 'payer'
+            "fr": 'payer',
+            "it": 'pagare'
         })
         .setDescription('⌠💸⌡ Transfer Bufunfa to other users')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Transfira Bufunfa para outros usuários',
             "es-ES": '⌠💸⌡ Transferir Bufunfa a otros usuarios',
-            "fr": '⌠💸⌡ Transférer Bufunfa à d\'autres utilisateurs'
+            "fr": '⌠💸⌡ Transférer Bufunfa à d\'autres utilisateurs',
+            "it": '⌠💸⌡ Trasferisci Bufunfa ad altri utenti'
         })
         .addUserOption(option =>
             option.setName('user')
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
-                    "fr": 'user'
+                    "it": 'utente'
                 })
                 .setDescription('The user who will receive')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O usuário que receberá',
                     "es-ES": 'El usuario que recibirá',
-                    "fr": 'L\'utilisateur qui recevra'
+                    "fr": 'L\'utilisateur qui recevra',
+                    "it": 'L\'utente che riceverà'
                 })
                 .setRequired(true))
         .addNumberOption(option =>
@@ -36,13 +39,15 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'quantia',
                     "es-ES": 'monto',
-                    "fr": 'montant'
+                    "fr": 'montant',
+                    "it": 'quantita'
                 })
                 .setDescription('The amount that will be transferred')
                 .setDescriptionLocalizations({
                     "pt-BR": 'A quantidade que será transferida',
                     "es-ES": 'El monto a transferir',
-                    "fr": 'Le montant à transférer'
+                    "fr": 'Le montant à transférer',
+                    "it": 'L\'importo da trasferire'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {
@@ -63,7 +68,7 @@ module.exports = {
         // Validando se o usuário marcado não é um bot
         const membro_sv = interaction.guild.members.cache.get(alvo.id)
 
-        if (membro_sv.user.bot && alvo.id !== client.user.id)
+        if (membro_sv.user.bot && alvo.id !== client.id())
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.user_bot")}`, ephemeral: true })
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
@@ -79,12 +84,12 @@ module.exports = {
         const caso = "movimentacao", quantia = bufunfas
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
-        if (alvo.id == client.user.id && quantia == 24.69) // Funny Number
+        if (alvo.id == client.id() && quantia == 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
         interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(client, interaction, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
 
-        if (alvo.id !== client.user.id) // Notificando o recebedor
+        if (alvo.id !== client.id()) // Notificando o recebedor
             client.discord.users.fetch(alvo.id, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo

@@ -9,7 +9,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
             "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
-            "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa'
+            "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa',
+            "it": '⌠💡⌡ Converti una data in timestamp o viceversa'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -18,20 +19,23 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp customizado',
                     "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
-                    "fr": '⌠💡⌡ Horodatage personnalisé'
+                    "fr": '⌠💡⌡ Horodatage personnalisé',
+                    "it": '⌠💡⌡ Timestamp personalizzato'
                 })
                 .addStringOption(option =>
                     option.setName("time")
                         .setNameLocalizations({
                             "pt-BR": 'tempo',
                             "es-ES": 'tiempo',
-                            "fr": 'temps'
+                            "fr": 'temps',
+                            "it": 'volta'
                         })
                         .setDescription("The value to be converted")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Valor a ser convertido',
                             "es-ES": 'El valor a convertir',
-                            "fr": 'La valeur à convertir'
+                            "fr": 'La valeur à convertir',
+                            "it": 'Il valore da convertire'
                         }))
                 .addStringOption(option =>
                     option.setName('timer')
@@ -39,14 +43,15 @@ module.exports = {
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma data rápida para marcar',
                             "es-ES": 'Una fecha rápida para reservar',
-                            "fr": 'Une date rapide à réserver'
+                            "fr": 'Une date rapide à réserver',
+                            "it": 'Un\'ora veloce per raccogliere'
                         })
                         .addChoices(
-                            { name: '+5 Minutos', value: '5' },
-                            { name: '+10 Minutos', value: '10' },
-                            { name: '+30 Minutos', value: '30' },
-                            { name: '+1 Hora', value: '60' },
-                            { name: '+2 Horas', value: '120' }
+                            { name: '+5 M', value: '5' },
+                            { name: '+10 M', value: '10' },
+                            { name: '+30 M', value: '30' },
+                            { name: '+1 H', value: '60' },
+                            { name: '+2 H', value: '120' }
                         )))
         .addSubcommand(subcommand =>
             subcommand

@@ -9,33 +9,38 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ (Des)Fixe suas badges!',
             "es-ES": '⌠👤⌡ (Un)pin sus insignias!',
-            "fr": '⌠👤⌡ (Dé)épinglez vos badges!'
+            "fr": '⌠👤⌡ (Dé)épinglez vos badges!',
+            "it": '⌠👤⌡ (Un)appunta i tuoi badge!'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('fix')
                 .setNameLocalizations({
                     "pt-BR": 'fixar',
                     "es-ES": 'etiquetar',
-                    "fr": 'epingler'
+                    "fr": 'epingler',
+                    "it": 'evidenziare'
                 })
                 .setDescription('⌠👤⌡ Pin a badge to your profile')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
                     "es-ES": '⌠👤⌡ Pon una insignia en tu perfil',
-                    "fr": '⌠👤⌡ Épinglez un badge sur votre profil'
+                    "fr": '⌠👤⌡ Épinglez un badge sur votre profil',
+                    "it": '⌠👤⌡ Evidenzia un badge sul tuo profilo'
                 }))
         .addSubcommand(subcommand =>
             subcommand.setName('remove')
                 .setNameLocalizations({
                     "pt-BR": 'remover',
                     "es-ES": 'retirar',
-                    "fr": 'retirer'
+                    "fr": 'retirer',
+                    "it": 'rimuovere'
                 })
                 .setDescription('⌠👤⌡ Remove pinned emblem')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Remover a badge do fixado',
                     "es-ES": '⌠👤⌡ Quita la insignia',
-                    "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé'
+                    "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé',
+                    "it": '⌠👤⌡ Rimuovi il badge da appuntato'
                 })),
     async execute(client, interaction) {
 

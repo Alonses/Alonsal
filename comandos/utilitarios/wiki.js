@@ -12,20 +12,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
-            "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki'
+            "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki',
+            "it": '⌠💡⌡ Cerca qualcosa sul wiki'
         })
         .addStringOption(option =>
             option.setName('search')
                 .setNameLocalizations({
                     "pt-BR": 'pesquisa',
                     "es-ES": 'busqueda',
-                    "fr": 'chercher'
+                    "fr": 'chercher',
+                    "it": 'ricerca'
                 })
                 .setDescription('I\'m lucky')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
                     "es-ES": 'Estoy con suerte',
-                    "fr": 'J\'ai de la chance'
+                    "fr": 'J\'ai de la chance',
+                    "it": 'Sono fortunato'
                 })
                 .setRequired(true)),
     async execute(client, interaction) {

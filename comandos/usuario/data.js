@@ -10,20 +10,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
             "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',
-            "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous'
+            "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous',
+            "it": '⌠👤⌡ Tutto quello che sappiamo di te'
         })
         .addBooleanOption(option =>
             option.setName("delete")
                 .setNameLocalizations({
                     "pt-BR": 'excluir',
                     "es-ES": 'eliminar',
-                    "fr": 'nettoyer'
+                    "fr": 'nettoyer',
+                    "it": 'elimina'
                 })
                 .setDescription("Request the deletion of your data in Alonsal")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
                     "es-ES": 'Solicitar la eliminación de sus datos en Alonsal',
-                    "fr": 'Demander la suppression de vos données d\'Alonsal'
+                    "fr": 'Demander la suppression de vos données d\'Alonsal',
+                    "it": 'Richiedi la cancellazione dei tuoi dati in Alonsal'
                 })),
     async execute(client, interaction) {
 
@@ -40,7 +43,7 @@ module.exports = {
             for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {
                 if (file.includes(interaction.user.id)) {
 
-                    let server = client.discord.guilds.cache.get(folder)
+                    let server = client.guilds().get(folder)
 
                     if (!server)
                         nome_server = client.tls.phrase(client, interaction, "manu.data.server_desconhecido")

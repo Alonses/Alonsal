@@ -13,7 +13,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja informações do servidor',
             "es-ES": '⌠💡⌡ Ver información del servidor',
-            "fr": '⌠💡⌡ Afficher les informations du serveur'
+            "fr": '⌠💡⌡ Afficher les informations du serveur',
+            "it": '⌠💡⌡ Visualizza le informazioni sul server'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -22,7 +23,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ O Icone do servidor',
                     "es-ES": '⌠💡⌡ El icono del servidor',
-                    "fr": '⌠💡⌡ L\'icône du serveur'
+                    "fr": '⌠💡⌡ L\'icône du serveur',
+                    "it": '⌠💡⌡ L\'icona del server'
                 }))
         .addSubcommand(subcommand =>
             subcommand
@@ -31,7 +33,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Informações do servidor',
                     "es-ES": '⌠💡⌡ Información del servidor',
-                    "fr": '⌠💡⌡ Informations sur le serveur'
+                    "fr": '⌠💡⌡ Informations sur le serveur',
+                    "it": '⌠💡⌡ Informazioni sul server'
                 })),
     async execute(client, interaction) {
 

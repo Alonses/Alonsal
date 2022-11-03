@@ -19,14 +19,14 @@ module.exports = {
             return interaction.reply(":octagonal_sign: | Envie um link/arquivo diferente de gif")
 
         const att_avatar = new EmbedBuilder()
-            .setTitle(`:bust_in_silhouette: O Avatar do ${client.user.username} foi alterado`)
+            .setTitle(`:bust_in_silhouette: O Avatar do ${client.user().username} foi alterado`)
             .setColor(0x29BB8E)
             .setImage(novo_perfil)
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
 
-        await client.user.setAvatar(novo_perfil)
+        await client.user().setAvatar(novo_perfil)
         
         interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true })
-        client.channels.cache.get('872865396200452127').send({ embeds: [att_avatar] })
+        client.channels().get('872865396200452127').send({ embeds: [att_avatar] })
     }
 }

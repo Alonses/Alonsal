@@ -32,7 +32,7 @@ function requisita_anuncio(client, aguardar_tempo) {
 
 async function gera_anuncio(client, proxima_att) {
 
-    // client.channels.cache.get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
+    client.channels().get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
     fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
         .then(response => response.json())

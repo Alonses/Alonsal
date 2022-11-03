@@ -7,20 +7,23 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
             "es-ES": '⌠💡⌡ Genera contraseñas aleatorias',
-            "fr": '⌠💡⌡ Générer des mots de passe aléatoires'
+            "fr": '⌠💡⌡ Générer des mots de passe aléatoires',
+            "it": '⌠💡⌡ Genera password casuali'
         })
         .addStringOption(option =>
             option.setName('length')
                 .setNameLocalizations({
                     "pt-BR": 'tamanho',
                     "es-ES": 'tamano',
-                    "fr": 'longueur'
+                    "fr": 'longueur',
+                    "it": 'lunghezza'
                 })
                 .setDescription('from 12 to 350')
                 .setDescriptionLocalizations({
                     "pt-BR": 'de 12 até 350',
                     "es-ES": 'de 12 a 350',
-                    "fr": 'de 12 à 350'
+                    "fr": 'de 12 à 350',
+                    "it": 'da 12 a 350'
                 })),
     async execute(client, interaction) {
 

@@ -10,7 +10,8 @@ module.exports = {
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Perfil de alguém na Steam',
             "es-ES": '⌠👤⌡ Perfil de alguien en Steam',
-            "fr": '⌠👤⌡ Profil Steam de quelqu\'un'
+            "fr": '⌠👤⌡ Profil Steam de quelqu\'un',
+            "it": '⌠👤⌡ Profilo Steam di qualcuno'
         })
         .addStringOption(option =>
             option.setName('url')
@@ -18,7 +19,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
-                    "fr": 'Nom de profil'
+                    "fr": 'Nom de profil',
+                    "it": 'il nome utente'
                 }))
         .addUserOption(option =>
             option.setName('user')
@@ -26,7 +28,8 @@ module.exports = {
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
-                    "fr": 'Un utilisateur de discord'
+                    "fr": 'Un utilisateur de discord',
+                    "it": 'Un utente della discord'
                 })),
     async execute(client, interaction) {
 
@@ -385,7 +388,7 @@ module.exports = {
                     interaction.reply({ embeds: [usuario_steam] })
                 })
         } catch (err) {
-            client.channels.cache.get('862015290433994752').send(err)
+            client.channels().get('862015290433994752').send(err)
             interaction.reply(`${client.tls.phrase(client, interaction, "util.steam.error_2")}\n<${usuario_alvo}>`)
         }
     }
