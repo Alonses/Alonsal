@@ -25,7 +25,7 @@ module.exports = {
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
 
         await client.user().setAvatar(novo_perfil)
-        
+
         interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true })
         client.channels().get('872865396200452127').send({ embeds: [att_avatar] })
     }

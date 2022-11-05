@@ -1,14 +1,20 @@
-module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
+const { emojis } = require('../../arquivos/json/text/emojis.json')
+const busca_emoji = require('../discord/busca_emoji.js')
+
+module.exports = (client, objeto_anunciado, plataforma, idioma_definido) => {
 
     const { data } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
     const game = data.game
 
-    let texto_formatado, valor_total = 0
+    let texto_formatado, valor_total = 0, link_app = ""
     plataforma = plataforma.split(" ")[0]
 
     objeto_anunciado.forEach(item => {
         valor_total += parseFloat(item.preco)
     })
+
+    if (objeto_anunciado[0].link.match(/store.steam/))
+        link_app = `\n\n${busca_emoji(client, emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`.replace("plat_repl", plataforma)
 
     valor_total = valor_total.toFixed(2)
 
@@ -28,7 +34,7 @@ module.exports = (objeto_anunciado, plataforma, idioma_definido) => {
             texto_formatado = game["anuncio"]["anuncio_dlc_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
     }
 
-    return texto_formatado
+    return `${texto_formatado}${link_app}`
 }
 
 function nome_games(objeto_anunciado) {
