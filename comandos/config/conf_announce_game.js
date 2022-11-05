@@ -24,21 +24,13 @@ module.exports = {
                 .setRequired(true))
         .addAttachmentOption(option =>
             option.setName('imagem')
-                .setDescription("A imagem que será exibida")
-                .setRequired(true))
+                .setDescription("A imagem que será exibida"))
         .addStringOption(option =>
             option.setName('tipo')
                 .setDescription('O tipo do conteudo')
                 .addChoices(
                     { name: 'Jogo', value: 'jogo' },
                     { name: 'DLC/Expansão', value: 'dlc' },
-                ))
-        .addStringOption(option =>
-            option.setName('urgência')
-                .setDescription('A urgência do anúncio')
-                .addChoices(
-                    { name: 'Normal', value: 'n' },
-                    { name: 'Urgente', value: 'u' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
@@ -74,9 +66,6 @@ module.exports = {
 
             if (valor.name == "expiração")
                 item.expira = valor.value
-
-            if (valor.name == "urgência")
-                item.urgencia = valor.value
 
             if (valor.name == "imagem")
                 item.thumbnail = valor.attachment.attachment

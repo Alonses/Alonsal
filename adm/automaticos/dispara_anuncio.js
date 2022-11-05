@@ -32,25 +32,28 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
 
     if (!matches && interaction)
-        return interaction.editReply({ content: "Plataforma inválida, tente novamente", ephemeral: true })
+        return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente", ephemeral: true })
 
     const plataforma = platformMap[matches[0]][1], logo_plat = platformMap[matches[0]][0]
     let canais_recebidos = 0, imagem_destaque, valor_anterior = 0
-    let objeto_jogos = []
+    let lista_links = []
 
     objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-        objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
+        lista_links.push({ name: nome_jogo, type: 4, value: valor.link })
 
         if (parseFloat(valor.preco) > valor_anterior) {
             valor_anterior = parseFloat(valor.preco)
             imagem_destaque = valor.thumbnail
         }
+
+        if (valor.link.includes("store.steam") && !imagem_destaque)
+            imagem_destaque = `https://cdn.akamai.steamstatic.com/steam/apps/${valor.link.split("app/")[1].split("/")[0]}/capsule_616x353.jpg`
     })
 
     // Criando os botões externos para os jogos
-    const row = create_buttons(objeto_jogos)
+    const row = create_buttons(lista_links)
 
     // Enviando a notificação para vários os canais clientes
     canais_clientes.forEach(canal => {
@@ -61,7 +64,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
             let idioma_definido = canal.idioma || "pt-br"
             if (idioma_definido == "al-br") idioma_definido = "pt-br"
 
-            let texto_anuncio = formata_anun(objetos_anunciados, plataforma, idioma_definido)
+            let texto_anuncio = formata_anun(client, objetos_anunciados, plataforma, idioma_definido)
             marcacao = `<@&${canal.cargo}>`
 
             const embed = new EmbedBuilder()
@@ -93,5 +96,5 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     client.discord.channels.cache.get('872865396200452127').send(aviso)
 
     if (interaction)
-        return interaction.editReply({ content: "A atualização foi enviada à todos os canais de games", ephemeral: true })
+        return interaction.editReply({ content: ":white_check_mark: | A atualização foi enviada à todos os canais de games", ephemeral: true })
 }

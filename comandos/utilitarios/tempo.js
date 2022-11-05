@@ -51,12 +51,14 @@ module.exports = {
 
         const user = client.usuarios.getUser(interaction.user.id)
 
+        // Verifica se não há entrada customizada e se o usuário não possui um local padrão
         if (interaction.options.data.length < 1 && !user.misc.locale)
             return client.tls.reply(client, interaction, "util.tempo.error_locale", true, 2)
 
+        // Usa o local padrão caso não tenha entrada definida
         if (interaction.options.data.length < 1)
             pesquisa = user.misc.locale
-        else
+        else // Usa a entrada customizada
             pesquisa = interaction.options.data[0].value
 
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
