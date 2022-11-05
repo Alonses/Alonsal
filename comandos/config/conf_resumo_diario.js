@@ -68,7 +68,7 @@ module.exports = {
             )
             .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
             .addFields({ name: `:sparkles: Próximo update`, value: `<t:${Math.floor(proxima_att)}:f>`, inline: false })
-            .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.readyTimestamp / 1000)}:R>`, inline: false })
+            .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`, inline: false })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }
