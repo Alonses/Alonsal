@@ -15,7 +15,7 @@ module.exports = async ({ client }) => {
         controle = 7
 
     const dias = [4, 3, 2, 1, controle, 6, 5]
-    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((11 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
+    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
     setTimeout(() => {
         gera_anuncio(client, 604800000)
@@ -32,7 +32,8 @@ function requisita_anuncio(client, aguardar_tempo) {
 
 async function gera_anuncio(client, proxima_att) {
 
-    client.channels().get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
+    if (process.env.client_1 == client.id())
+        client.channels().get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
     fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
         .then(response => response.json())
