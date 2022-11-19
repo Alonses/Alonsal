@@ -10,6 +10,7 @@ const platformMap = {
     "store.steam": ["<:Logo_st:864887020467257364>", "Steam"],
     "gog.com": ["<:Logo_gog:864887080673214505>", "GOG"],
     "humblebundle.com": ["<:Logo_hb:864887252587642911>", "Humble Bundle"],
+    "store.ubi.com": ["<:Logo_ubi:864887154483134516>", "Ubisoft"],
     "ubisoft.com": ["<:Logo_ubi:864887154483134516>", "Ubisoft"],
     "xbox.com": ["<:Logo_xb:864886938322731058>", "Xbox"],
     "play.google": ["<:logo_pst:973395673489756220>", "Google Play"]
