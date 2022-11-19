@@ -30,7 +30,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     if (canais_clientes.length < 1)
         return client.channels().get('872865396200452127').send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
 
-    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|xbox.com|play.google/)
+    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente", ephemeral: true })
