@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const busca_badges = require('../../adm/data/badges')
+const {buildAllBadges} = require('../../adm/data/badges');
 const busca_emoji = require('../../adm/discord/busca_emoji')
 // const busca_achievements = require('../../adm/data/conquistas')
 
@@ -150,14 +150,14 @@ module.exports = {
                     discord_premium += ` ${busca_emoji(client, emojis.boost)}`
             }
 
-            let badges = busca_badges(client, 'all', user.id, interaction)
+            let badges = buildAllBadges(client, interaction);
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
             const user_c = client.usuarios.getUser(user.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
-                .setColor(user_c.color)
+                .setColor(user_c.color || "#ffffff")
                 .setThumbnail(avatar_user)
                 .addFields(
                     {

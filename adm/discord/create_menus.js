@@ -1,6 +1,6 @@
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
-const busca_badges = require('../../adm/data/badges')
+const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = (client, dados, interaction) => {
@@ -9,13 +9,13 @@ module.exports = (client, dados, interaction) => {
     let insersoes = []
 
     dados.forEach(valor => {
-        let badge = busca_badges(client, 'single', valor, interaction)
+        const badge = busca_badges(client, badgeTypes.SINGLE, valor);
 
         if (!insersoes.includes(valor)) {
             opcoes.push({
-                label: `${badge[1]}`,
-                emoji: `${busca_emoji(client, badge[0])}`,
-                description: `${client.tls.phrase(client, interaction, "dive.badges.fixar")} ${badge[1]}`,
+                label: `${badge.name}`,
+                emoji: `${badge.emoji}`,
+                description: `${client.tls.phrase(client, interaction, "dive.badges.fixar")} ${badge.name}`,
                 value: `${valor}`
             })
 

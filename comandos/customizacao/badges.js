@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const busca_badges = require('../../adm/data/badges.js')
+const {buildAllBadges} = require('../../adm/data/badges');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,7 +23,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`> ${client.tls.phrase(client, interaction, "dive.badges.suas_badges")}`)
             .setColor(user.misc.embed)
-            .setDescription(busca_badges(client, 'all', interaction.user.id, interaction))
+            .setDescription(buildAllBadges(client, interaction))
             .setFooter({ text: client.tls.phrase(client, interaction, "dive.badges.rodape") })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
