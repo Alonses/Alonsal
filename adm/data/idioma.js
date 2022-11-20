@@ -8,38 +8,38 @@ let default_lang, datapath
 
 // Carrega todos os idiomas do bot diretamente do git
 function loadAll() {
-
-    const idiomas = process.env.language.split(", ")
-
     if (!existsSync(`./arquivos/idiomas/`))
-        mkdirSync(`./arquivos/idiomas/`, { recursive: true })
+        mkdirSync(`./arquivos/idiomas/`, {recursive: true});
 
-    fetch(`https://github.com/Alonses/Alondioma`)
-        .then(res => res.text())
-        .then(res => {
+    fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
-            // Verifica o commit mais recente
-            const commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
+        fetch("https://api.github.com/repos/Alonses/Alondioma")
+            .then(res => res.json())
+            .then(content => {
+                if (content.updated_at !== data) {
+                    console.log("Sincronizando com os idiomas mais recentes");
 
-            fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
+                    fs.writeFile('./arquivos/data/language.txt', content.updated_at, (err) => {
+                        if (err) throw err
+                    });
 
-                if (commit !== data) {
-                    for (let i = 0; i < idiomas.length; i++) {
-                        fetch(`https://raw.githubusercontent.com/Alonses/Alondioma/main/${idiomas[i]}.json`)
-                            .then(res => res.json())
-                            .then(res => {
-                                writeFileSync(`./arquivos/idiomas/${idiomas[i]}.json`, JSON.stringify(res))
-                            })
-                    }
+                    fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
+                        .then(res => res.json())
+                        .then(content => {
+                            for (let i = 0; i < content.length; i++) {
+                                const idioma = content[i];
+                                if (!idioma.name.endsWith(".json")) continue;
 
-                    console.log("Sincronizando com os idiomas mais recentes")
+                                fetch(idioma.download_url)
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        writeFileSync(`./arquivos/idiomas/${idioma.name}`, JSON.stringify(res))
+                                    });
+                            }
+                        });
                 }
-
-                fs.writeFile('./arquivos/data/language.txt', commit, (err) => {
-                    if (err) throw err
-                })
-            })
-        })
+            });
+    })
 }
 
 // Lista todas as bandeiras de idiomas carregados
@@ -49,7 +49,7 @@ function listAll() {
 
     for (const file of readdirSync(`./arquivos/idiomas/`)) {
 
-        if (i % 3 == 0)
+        if (i % 3 === 0)
             bandeiras.push("\n")
 
         let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : `:pirate_flag:`
