@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { getUser } = require("../../adm/database/schemas/User.js");
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -47,7 +46,7 @@ module.exports = {
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
-        let daily = `${client.tls.phrase(client, interaction, "misc.banco.dica_comando")} ${busca_emoji(client, emojis_dancantes)}`
+        let daily = `${client.tls.phrase(client, interaction, "misc.banco.dica_comando")} ${client.emoji(emojis_dancantes)}`
         let titulo_embed = client.tls.phrase(client, interaction, "misc.banco.suas_bufunfas")
 
         if (user.uid !== interaction.user.id) {

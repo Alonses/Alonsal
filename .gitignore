@@ -7,4 +7,5 @@ arquivos/data
 prefixes/
 discloud.config
 .env
+arquivos/data/*
 arquivos/idiomas/*

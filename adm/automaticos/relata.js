@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const busca_emoji = require('../discord/busca_emoji')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client }) => {
@@ -27,7 +26,7 @@ async function gera_relatorio(client, proxima_att) {
 
     const date1 = new Date()
     const bot = client.auto.getRelatorio()
-    let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
+    let emoji_esmeralda = client.emoji(emojis.mc_esmeralda)
 
     let canais_texto = client.channels().filter((c) => c.type === 0).size
     let members = 0, processamento = '🎲 Processamento\n'

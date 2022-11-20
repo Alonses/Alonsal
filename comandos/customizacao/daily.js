@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 const { getUser } = require("../../adm/database/schemas/User.js");
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -25,7 +24,7 @@ module.exports = {
             return interaction.reply({ content: `:bank: | ${client.tls.phrase(client, interaction, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
         }
 
-        const emoji_dancando = busca_emoji(client, emojis_dancantes)
+        const emoji_dancando = client.emoji(emojis_dancantes)
         const bufunfa = Math.floor(900 + (Math.random() * 500))
 
         user.misc.money += bufunfa

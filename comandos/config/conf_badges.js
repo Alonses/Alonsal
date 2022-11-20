@@ -2,8 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { getUser } = require("../../adm/database/schemas/User.js");
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../../adm/discord/busca_emoji.js')
-const {busca_badges, badgeTypes} = require('../../adm/data/badges');
+const { busca_badges, badgeTypes } = require('../../adm/data/badges');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,11 +49,11 @@ module.exports = {
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
 
             const date1 = new Date()
-            user.badges.badge_list.push({key: badge_alvo, value: Math.floor(date1.getTime() / 1000)})
+            user.badges.badge_list.push({ key: badge_alvo, value: Math.floor(date1.getTime() / 1000) })
             user.save();
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo));
-            const emoji_dancante = busca_emoji(client, emojis_dancantes)
+            const emoji_dancante = client.emoji(emojis_dancantes)
 
             client.discord.users.fetch(id_alvo, false).then((user_interno) => {
                 user_interno.send(`${emoji_dancante} | ${client.tls.phrase(client, id_alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)

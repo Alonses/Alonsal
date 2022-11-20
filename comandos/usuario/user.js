@@ -4,8 +4,8 @@ const { getUser } = require("../../adm/database/schemas/User.js");
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const {buildAllBadges} = require('../../adm/data/badges');
-const busca_emoji = require('../../adm/discord/busca_emoji')
+const { buildAllBadges } = require('../../adm/data/badges')
+
 // const busca_achievements = require('../../adm/data/conquistas')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
@@ -136,19 +136,19 @@ module.exports = {
 
             if (!user.bot) {
                 if (flags_user.includes('HypeSquadOnlineHouse1')) // HypeSquad
-                    emoji_hypesquad = busca_emoji(client, emojis.squad_bravery)
+                    emoji_hypesquad = client.emoji(emojis.squad_bravery)
 
                 if (flags_user.includes('HypeSquadOnlineHouse2'))
-                    emoji_hypesquad = busca_emoji(client, emojis.squad_brilliance)
+                    emoji_hypesquad = client.emoji(emojis.squad_brilliance)
 
                 if (flags_user.includes('HypeSquadOnlineHouse3'))
-                    emoji_hypesquad = busca_emoji(client, emojis.squad_balance)
+                    emoji_hypesquad = client.emoji(emojis.squad_balance)
 
                 if (flags_user.includes('PremiumEarlySupporter'))
-                    discord_premium = busca_emoji(client, emojis.early_supporter)
+                    discord_premium = client.emoji(emojis.early_supporter)
 
                 if (membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
-                    discord_premium += ` ${busca_emoji(client, emojis.boost)}`
+                    discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
             let badges = buildAllBadges(client, interaction);

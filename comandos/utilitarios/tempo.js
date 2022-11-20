@@ -3,9 +3,8 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 const getCountryISO3 = require("country-iso-2-to-3")
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const formata_horas = require('../../adm/formatadores/formata_horas')
 
 const base_url = "http://api.openweathermap.org/data/2.5/weather?"
@@ -62,7 +61,7 @@ module.exports = {
             pesquisa = interaction.options.data[0].value
 
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
-        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
+        const emoji_nao_encontrado = client.emoji(emojis_negativos)
 
         let url_completa = `${base_url}appid=${process.env.weather_key}&q=${pesquisa}&units=metric&lang=pt`
 
@@ -211,7 +210,7 @@ module.exports = {
                                     cabecalho_fix += `\n${client.tls.phrase(client, interaction, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                                 emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
-                                rodape_cabecalho = `${busca_emoji(client, emojis.trollface)} _${client.tls.phrase(client, interaction, "util.tempo.chuva_troll")}_`
+                                rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(client, interaction, "util.tempo.chuva_troll")}_`
                             }
 
                             if (typeof res.snow !== "undefined") {
@@ -222,7 +221,7 @@ module.exports = {
 
                                 emoji_indica_visibilidade = " 🔽"
 
-                                rodape_cabecalho = `${busca_emoji(client, emojis.trollface)} _${client.tls.phrase(client, interaction, "util.tempo.neve_troll")}_`
+                                rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(client, interaction, "util.tempo.neve_troll")}_`
                             }
 
                             if (typeof res.wind.gust !== "undefined") {

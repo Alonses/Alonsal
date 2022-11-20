@@ -2,9 +2,9 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
+
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -44,9 +44,9 @@ module.exports = {
 
             const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
 
-            const boost_sv = busca_emoji(client, emojis.boost)
-            const emoji_dancando = busca_emoji(client, emojis_dancantes)
-            const figurinhas = busca_emoji(client, emojis.bigchad)
+            const boost_sv = client.emoji(emojis.boost)
+            const emoji_dancando = client.emoji(emojis_dancantes)
+            const figurinhas = client.emoji(emojis.bigchad)
 
             let dono_sv = interaction.guild.ownerId
             const dono_membro = await interaction.guild.members.fetch(dono_sv)

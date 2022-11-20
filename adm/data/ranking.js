@@ -34,7 +34,7 @@ module.exports = async ({ client, message, caso }) => {
 
     if (existsSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`)) {
         delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
-        const {xp, lastValidMessage, warns, caldeira_de_ceira} = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`);
+        const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`);
 
         user.xp = xp
         user.warns = warns

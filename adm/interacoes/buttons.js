@@ -1,6 +1,5 @@
-const busca_emoji = require("../discord/busca_emoji")
 const { getUser } = require("../../adm/database/schemas/User.js");
-const { emojis_dancantes, epic_embed_fail2 } = require('../../arquivos/json/text/emojis.json')
+const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client, interaction }) => {
 
@@ -24,7 +23,7 @@ module.exports = async ({ client, interaction }) => {
             })
         }
 
-        const emoji_dancando = busca_emoji(client, emojis_dancantes)
+        const emoji_dancando = client.emoji(emojis_dancantes)
         user.misc.money -= preco
 
         const caso = "movimentacao", quantia = preco
