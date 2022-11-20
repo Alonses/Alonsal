@@ -68,8 +68,7 @@ module.exports = {
                         }))),
     async execute(client, interaction) {
 
-        console.log(interaction.options.user)
-        let user = interaction.options.getUser(interaction.options.user) || interaction.user
+        let user = interaction.options.getUser("user") || interaction.user
 
         if (interaction.options.getSubcommand() === "info") {
             let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
