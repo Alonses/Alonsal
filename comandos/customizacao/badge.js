@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js');
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 const create_menus = require('../../adm/discord/create_menus.js')
 
@@ -43,11 +44,11 @@ module.exports = {
                     "it": '⌠👤⌡ Rimuovi il badge da appuntato'
                 })),
     async execute(client, interaction) {
-
-        const user = client.usuarios.getUser(interaction.user.id)
+        const id = interaction.user.id;
+        const user = await getUser(id);
 
         // Validando existência de badges antes do comando
-        if (user.badges.badge_list.length < 1)
+        if (user.badges.badge_list.length <= 0)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
 
         let all_badges = []
@@ -57,13 +58,16 @@ module.exports = {
             all_badges.push(parseInt(Object.keys(valor)[0]))
         })
 
-        if (interaction.options.getSubcommand() == "fix") // Menu seletor de Badges
+        if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
             return interaction.reply({ content: client.tls.phrase(client, interaction, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
-            user.badges.fixed_badge = null
-
-            user.badges.badge_list = badge_list
-            client.usuarios.saveUser([user])
+            user.updateOne({uid: id},
+                {
+                    badges: {
+                        fixed_badge: null,
+                        badge_list: badge_list
+                    }
+                });
         }
 
         // Removendo a badge fixada

@@ -1,6 +1,6 @@
 const { readdirSync, unlinkSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
 

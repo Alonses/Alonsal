@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
@@ -60,9 +61,9 @@ module.exports = {
         if (bufunfas < 0.01)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_2")}`, ephemeral: true })
 
-        const user = client.usuarios.getUser(interaction.user.id), alvo = client.usuarios.getUser(user_alvo.id)
+        const user = await getUser(interaction.user.id), alvo = await getUser(user_alvo.id)
 
-        if (alvo.id == user.id)
+        if (alvo.id === user.id)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_3")}`, ephemeral: true })
 
         // Validando se o usuário marcado não é um bot
@@ -79,23 +80,24 @@ module.exports = {
         user.misc.money -= bufunfas
         alvo.money += bufunfas
 
-        client.usuarios.saveUser([user, alvo])
+        user.save();
+        alvo.save();
 
         const caso = "movimentacao", quantia = bufunfas
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
-        if (alvo.id == client.id() && quantia == 24.69) // Funny Number
+        if (alvo.id === client.id() && quantia === 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(client, interaction, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.id}>`, ephemeral: true })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(client, interaction, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: true })
 
         if (alvo.id !== client.id()) // Notificando o recebedor
-            client.discord.users.fetch(alvo.id, false).then((user_interno) => {
+            client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo
                 let emoji_dancante = busca_emoji(client, emojis_dancantes)
 
-                user_interno.send(`:bank: | ${client.tls.phrase(client, alvo.id, "misc.pay.notifica").replace("user_repl", user.id).replace("valor_repl", client.formata_num(bufunfas))} ${emoji_dancante}`)
+                user_interno.send(`:bank: | ${client.tls.phrase(client, alvo.uid, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.formata_num(bufunfas))} ${emoji_dancante}`)
             })
     }
 }
