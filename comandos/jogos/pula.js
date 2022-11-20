@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
     async execute(client, interaction) {
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = client.usuarios.getUser(alvo.id)
+        const user = await getUser(alvo.id)
 
         if (!user.social.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })

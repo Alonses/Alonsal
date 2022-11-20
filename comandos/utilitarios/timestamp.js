@@ -1,4 +1,4 @@
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 const formata_horas = require("../../adm/formatadores/formata_horas")
 
@@ -69,7 +69,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         let timestamp, aviso = "", conversao_invalida = false
         let titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_1")
@@ -80,10 +80,10 @@ module.exports = {
             let opcoes = interaction.options.data[0].options
 
             opcoes.forEach(valor => {
-                if (valor.name == "time")
+                if (valor.name === "time")
                     entrada = parseInt(valor.value)
 
-                if (valor.name == "timer")
+                if (valor.name === "timer")
                     timer = parseInt(valor.value) * 60
             })
 

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -27,7 +28,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
         tamanho = tamanho <= 5 ? 12 : tamanho

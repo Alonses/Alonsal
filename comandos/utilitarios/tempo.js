@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json')
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const getCountryISO3 = require("country-iso-2-to-3")
 const busca_emoji = require('../../adm/discord/busca_emoji')
 const formata_horas = require('../../adm/formatadores/formata_horas')
@@ -46,10 +46,10 @@ module.exports = {
 
         let idioma_definido = client.idioma.getLang(interaction), pesquisa = ''
 
-        if (idioma_definido == "al-br") idioma_definido = "pt-br"
+        if (idioma_definido === "al-br") idioma_definido = "pt-br"
         const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         // Verifica se não há entrada customizada e se o usuário não possui um local padrão
         if (interaction.options.data.length < 1 && !user.misc.locale)
@@ -245,7 +245,7 @@ module.exports = {
                             if (res.coord.lat > -20 && res.coord.lat < 20)
                                 rodape_cabecalho = `:ringed_planet: ${client.tls.phrase(client, interaction, "util.tempo.equador")}\n${rodape_cabecalho}`
 
-                            const user = client.usuarios.getUser(interaction.user.id)
+                            const user = await getUser(interaction.user.id)
 
                             const clima_atual = new EmbedBuilder()
                                 .setTitle(`:boom: ${client.tls.phrase(client, interaction, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`)

@@ -4,7 +4,7 @@ const fetch = (...args) =>
 const fs = require('fs')
 const { readdirSync, unlinkSync, existsSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require("../../adm/discord/busca_emoji")
 const {busca_badges, badgeTypes} = require('../../adm/data/badges');
@@ -171,10 +171,10 @@ module.exports = {
             }
 
             let embed, img_embed
-            let user = client.usuarios.getUser(interaction.user.id)
+            let user = getUser(interaction.user.id)
             const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb)
 
-            fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
+            await fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${client.tls.phrase(client, interaction, "dive.rank.rank_sv")} ${interaction.guild.name}`)
@@ -206,7 +206,7 @@ module.exports = {
                         usuario_alvo.push(0)
 
                     let fixed_badge = ""
-                    const user = client.usuarios.getUser(user_alvo.id)
+                    const user = await getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
                         fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji;

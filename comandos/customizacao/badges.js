@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 const {buildAllBadges} = require('../../adm/data/badges');
 
@@ -13,17 +14,16 @@ module.exports = {
             "it": '⌠👤⌡ Guarda i tuoi badge'
         }),
     async execute(client, interaction) {
-
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         // Procurando pelas badges antes do comando
-        if (user.badges.badge_list.length < 1 && !user.badges.badge_list)
+        if (user.badges.badge_list.length <= 0 || !user.badges.badge_list)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${client.tls.phrase(client, interaction, "dive.badges.suas_badges")}`)
             .setColor(user.misc.embed)
-            .setDescription(buildAllBadges(client, interaction))
+            .setDescription(await buildAllBadges(client, interaction))
             .setFooter({ text: client.tls.phrase(client, interaction, "dive.badges.rodape") })
 
         interaction.reply({ embeds: [embed], ephemeral: true })

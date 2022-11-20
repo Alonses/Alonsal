@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,7 +35,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
         const texto_entrada = interaction.options.data[0].value
         let cor_embed = user.misc.embed
 

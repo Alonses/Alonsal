@@ -72,5 +72,6 @@ function translate(client, interaction, target) {
 module.exports = {
     reply,
     phrase,
-    editReply
+    editReply,
+    translate
 }

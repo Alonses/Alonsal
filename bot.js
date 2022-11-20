@@ -1,7 +1,6 @@
 require('dotenv').config()
 const { readdirSync } = require('fs')
 const { Routes } = require('discord.js')
-const user = require('./adm/data/usuario')
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
@@ -21,11 +20,10 @@ const cli = new Client({
 })
 
 class CeiraClient {
-	constructor(discord, usuarios, idioma, translate, auto) {
+	constructor(discord, idioma, translate, auto) {
 		this.tls = translate,
 			this.idioma = idioma,
 			this.discord = discord,
-			this.usuarios = usuarios,
 			this.auto = auto
 	}
 
@@ -54,7 +52,7 @@ class CeiraClient {
 	}
 }
 
-const client = new CeiraClient(cli, user, idioma, translate, auto)
+const client = new CeiraClient(cli, idioma, translate, auto)
 
 // Alternância entre modo normal e de testes
 const modo_develop = 0, force_update = 0, silent = 0

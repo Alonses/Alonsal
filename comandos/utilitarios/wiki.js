@@ -1,6 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/discord/busca_emoji')
@@ -33,8 +33,8 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction) == "al-br" ? "pt-br" : client.idioma.getLang(interaction)
-        const user = client.usuarios.getUser(interaction.user.id)
+        let idioma_definido = client.idioma.getLang(interaction) === "al-br" ? "pt-br" : client.idioma.getLang(interaction)
+        const user = await getUser(interaction.user.id)
         const content = interaction.options.data[0].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
