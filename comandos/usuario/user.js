@@ -1,9 +1,10 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const busca_badges = require('../../adm/data/badges')
+const {buildAllBadges} = require('../../adm/data/badges');
 const busca_emoji = require('../../adm/discord/busca_emoji')
 // const busca_achievements = require('../../adm/data/conquistas')
 
@@ -67,7 +68,7 @@ module.exports = {
                         }))),
     async execute(client, interaction) {
 
-        let user = interaction.options.getUser('user') || interaction.user
+        let user = interaction.options.getUser("user") || interaction.user
 
         if (interaction.options.getSubcommand() === "info") {
             let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
@@ -150,14 +151,14 @@ module.exports = {
                     discord_premium += ` ${busca_emoji(client, emojis.boost)}`
             }
 
-            let badges = busca_badges(client, 'all', user.id, interaction)
+            let badges = buildAllBadges(client, interaction);
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
-            const user_c = client.usuarios.getUser(user.id)
+            const user_c = getUser(user.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
-                .setColor(user_c.color)
+                .setColor(user_c.color || "#ffffff")
                 .setThumbnail(avatar_user)
                 .addFields(
                     {

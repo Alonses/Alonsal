@@ -1,6 +1,6 @@
 const fs = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 const busca_emoji = require('../../adm/discord/busca_emoji')
@@ -17,7 +17,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
         let qtd_comandos = 1
 
         const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)

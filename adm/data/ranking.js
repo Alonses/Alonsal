@@ -7,8 +7,10 @@ const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
 module.exports = async ({ client, message, caso }) => {
 
-    if (!existsSync(`./arquivos/data/rank/${message.guild.id}`))
+    if (!existsSync(`./arquivos/data/rank/${message.guild.id}`)) {
         mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true })
+        return;
+    }
 
     if (caso !== "comando") {
         user = {
@@ -31,15 +33,16 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     if (existsSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
-        const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)
+        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)];
+        const {xp, lastValidMessage, warns, caldeira_de_ceira} = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`);
+
         user.xp = xp
         user.warns = warns
         user.lastValidMessage = lastValidMessage
         user.caldeira_de_ceira = caldeira_de_ceira
     }
 
-    if (caso == 'messages')
+    if (caso === 'messages')
         if (user.warns >= LIMIT) {
             user.caldeira_de_ceira = true
             user.warns = 0
@@ -51,10 +54,10 @@ module.exports = async ({ client, message, caso }) => {
     if (user.caldeira_de_ceira) {
         if (message.createdTimestamp - user.lastValidMessage > CALDEIRA)
             user.caldeira_de_ceira = false
-        else if (caso == 'messages') return
+        else if (caso === 'messages') return
     }
 
-    if (caso == 'messages')
+    if (caso === 'messages')
         if (message.createdTimestamp - user.lastValidMessage < DIFF) {
             user.warns++
             writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
@@ -64,7 +67,7 @@ module.exports = async ({ client, message, caso }) => {
     // Coletando o XP atual e somando ao total do usuário
     fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
 
-        if (caso == 'messages') {
+        if (caso === 'messages') {
             user.xp += parseInt(data)
             user.lastValidMessage = message.createdTimestamp
             user.warns = 0

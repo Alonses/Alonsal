@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const morse = require('../../arquivos/json/text/morse.json')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -63,7 +64,7 @@ module.exports = {
                 )),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -74,13 +75,13 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if (valor.name == "text")
+            if (valor.name === "text")
                 codificar.texto = valor.value
 
-            if (valor.name == "reverse")
+            if (valor.name === "reverse")
                 codificar.reverso = valor.value
 
-            if (valor.name == "operation")
+            if (valor.name === "operation")
                 codificar.opera = parseInt(valor.value)
         })
 

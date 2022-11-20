@@ -1,7 +1,8 @@
+const { getUser } = require("../database/schemas/User.js")
 
 module.exports = (client, modo, id_alvo, interaction) => {
 
-    const user = client.usuarios.getUser(id_alvo)
+    const user = getUser(id_alvo)
 
     // const { conquistas } = require(`../../arquivos/idiomas/${user.lang}.json`)
 
@@ -16,11 +17,11 @@ module.exports = (client, modo, id_alvo, interaction) => {
         const date1 = new Date()
         user.conquistas.push(constructJson(modo, Math.floor(date1.getTime() / 1000)))
 
-        if (modo == 1) { // Badge por transferir um funny number para o alonsal
+        if (modo === 1) { // Badge por transferir um funny number para o alonsal
             user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
         }
 
-        client.usuarios.saveUser([user])
+        user.save()
 
         client.discord.users.fetch(user.id, false).then((user_interno) => {
             user_interno.send('Você acabou de ganhar uma Conquista!')

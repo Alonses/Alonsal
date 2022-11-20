@@ -1,9 +1,9 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
-const { existsSync } = require('fs')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require('../../adm/discord/busca_emoji.js')
-const busca_badges = require('../../adm/data/badges.js')
+const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -33,14 +33,14 @@ module.exports = {
         let entradas = interaction.options.data, id_alvo, badge_alvo
 
         entradas.forEach(valor => {
-            if (valor.name == "id")
+            if (valor.name === "id")
                 id_alvo = valor.value
 
-            if (valor.name == "badge")
+            if (valor.name === "badge")
                 badge_alvo = parseInt(valor.value)
         })
 
-        const user = client.usuarios.getUser(id_alvo), all_badges = []
+        const user = await getUser(id_alvo), all_badges = []
 
         if (user.badges.badge_list.length > 0)
             user.badges.badge_list.forEach(valor => {
@@ -50,22 +50,19 @@ module.exports = {
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
 
             const date1 = new Date()
-            user.badges.badge_list.push(constructJson(badge_alvo, Math.floor(date1.getTime() / 1000)))
+            user.badges.badge_list.push({key: badge_alvo, value: Math.floor(date1.getTime() / 1000)})
+            user.save();
 
-            const badge = busca_emoji(client, busca_badges(client, 'single', parseInt(badge_alvo))[0])
-            const badge_name = busca_badges(client, 'single', parseInt(badge_alvo))[1]
+            const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo));
             const emoji_dancante = busca_emoji(client, emojis_dancantes)
 
-            client.usuarios.saveUser([user])
+            client.discord.users.fetch(id_alvo, false).then((user_interno) => {
+                user_interno.send(`${emoji_dancante} | ${client.tls.phrase(client, id_alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
-            client.discord.users.fetch(user.id, false).then((user_interno) => {
-
-                user_interno.send(`${emoji_dancante} | ${client.tls.phrase(client, user.id, "dive.badges.new_badge").replace("nome_repl", badge_name).replace("emoji_repl", badge)}`)
-
-                interaction.reply({ content: `${emoji_dancante} | Badge \`${badge_name}\` ${badge} atribuída ao usuário ${user_interno}!`, ephemeral: true })
+                interaction.reply({ content: `${emoji_dancante} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })
         } else
-            interaction.reply({ content: `:octagonal_sign: | O usuário <@!${user.id}> já possui a Badge mencionada!`, ephemeral: true })
+            interaction.reply({ content: `:octagonal_sign: | O usuário <@!${id_alvo}> já possui a Badge mencionada!`, ephemeral: true })
     }
 }
 
