@@ -9,6 +9,8 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
+        return
+
         interaction.deferReply()
 
         await migrateUsers()
