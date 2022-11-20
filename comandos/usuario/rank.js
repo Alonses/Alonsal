@@ -7,7 +7,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const busca_emoji = require("../../adm/discord/busca_emoji")
-const busca_badges = require('../../adm/data/badges')
+const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 
 const medals = {
     0: ":first_place:",
@@ -97,7 +97,7 @@ module.exports = {
 
             // Filtrando os valores de entrada caso tenham sido declarados
             opcoes.forEach(valor => {
-                if (valor.name == "page")
+                if (valor.name === "page")
                     pagina = valor.value < 1 ? 1 : valor.value
             })
 
@@ -152,8 +152,10 @@ module.exports = {
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
-                    if (existsSync(`./arquivos/data/user/${user.id}.json`))
-                        fixed_badge = busca_badges(client, 'fixed', user.id, interaction)
+                    if (existsSync(`./arquivos/data/user/${user.id}.json`)){
+                        const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction);
+                        if (badge !== null) fixed_badge = badge.emoji;
+                    }
 
                     if (parseInt(pagina) !== 1)
                         usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
@@ -207,7 +209,7 @@ module.exports = {
                     const user = client.usuarios.getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
-                        fixed_badge = busca_badges(client, 'fixed', user_alvo.id, interaction)
+                        fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji;
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
