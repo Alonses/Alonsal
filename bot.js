@@ -62,7 +62,7 @@ class CeiraClient {
 const client = new CeiraClient(cli, idioma, translate, auto)
 
 // Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
+const modo_develop = 0, force_update = 0, silent = 1
 let status = 1, ranking = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
