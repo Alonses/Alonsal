@@ -169,6 +169,8 @@ module.exports = {
                     i++
             }
 
+            const user_2 = await getUser(2)
+            
             let embed, img_embed
             let user = await getUser(interaction.user.id)
             const emoji_ceira = client.emoji(emojis.mc_honeycomb)
