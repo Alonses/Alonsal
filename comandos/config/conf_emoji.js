@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../../adm/discord/busca_emoji.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,17 +14,17 @@ module.exports = {
         let emojis_registrados = "", emojis_registrados_2 = "", i = 0
 
         Object.keys(emojis).forEach(emoji => {
-            if ((emojis_registrados + busca_emoji(client, emojis[emoji])).length < 2000) {
+            if ((emojis_registrados + client.emoji(emojis[emoji])).length < 2000) {
                 if (i % 9 == 0)
                     emojis_registrados += "\n"
 
-                emojis_registrados += busca_emoji(client, emojis[emoji])
+                emojis_registrados += client.emoji(emojis[emoji])
             } else {
-                if ((emojis_registrados_2 + busca_emoji(client, emojis[emoji])).length < 2000) {
+                if ((emojis_registrados_2 + client.emoji(emojis[emoji])).length < 2000) {
                     if (i % 9 == 0)
                         emojis_registrados_2 += "\n"
 
-                    emojis_registrados_2 += busca_emoji(client, emojis[emoji])
+                    emojis_registrados_2 += client.emoji(emojis[emoji])
                 }
             }
 

@@ -9,7 +9,7 @@ let default_lang, datapath
 // Carrega todos os idiomas do bot diretamente do git
 function loadAll() {
     if (!existsSync(`./arquivos/idiomas/`))
-        mkdirSync(`./arquivos/idiomas/`, {recursive: true});
+        mkdirSync(`./arquivos/idiomas/`, { recursive: true });
 
     fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 

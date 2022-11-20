@@ -2,8 +2,8 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
-const busca_emoji = require('../../adm/discord/busca_emoji')
+const { getUser } = require("../../adm/database/schemas/User.js")
+
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -28,10 +28,10 @@ module.exports = {
     async execute(client, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
-        
+
         let objeto_encontrado = false, i = 0, pesquisa_crua = ""
-        const emoji_suv = busca_emoji(client, emojis.mc_coracao)
-        const logo_wikipedia = busca_emoji(client, emojis.mc_logo_wikipedia)
+        const emoji_suv = client.emoji(emojis.mc_coracao)
+        const logo_wikipedia = client.emoji(emojis.mc_logo_wikipedia)
 
         // Entrada customizada, ativa caso o usuário tenha escrevido algo ao rodar o comando
         if (interaction.options.data.length > 0) pesquisa_crua = interaction.options.data[0].value
@@ -260,7 +260,7 @@ module.exports = {
                 }
 
                 if (!objeto_encontrado) {
-                    const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
+                    const emoji_nao_encontrado = client.emoji(emojis_negativos)
 
                     return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
                 }

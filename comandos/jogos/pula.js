@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { getUser } = require("../../adm/database/schemas/User.js");
-const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -47,7 +46,7 @@ module.exports = {
                     .setColor(user.misc.embed)
                     .addFields(
                         {
-                            name: `${busca_emoji(client, emojis.pula_2)} **Gerais**`,
+                            name: `${client.emoji(emojis.pula_2)} **Gerais**`,
                             value: `:part_alternation_mark: **Pulos:** \`${datas_pula.pulos}\`\n:rocket: **Mods Ativos:** \`${datas_pula.mods}\`\n:skull_crossbones: **Mortes:** \`${datas_pula.mortes}\``,
                             inline: true,
                         },
@@ -57,7 +56,7 @@ module.exports = {
                             inline: true
                         },
                         {
-                            name: `${busca_emoji(client, emojis.mc_esmeralda)} **Moedas**`,
+                            name: `${client.emoji(emojis.mc_esmeralda)} **Moedas**`,
                             value: `:bank: **Coletadas:** \`${datas_pula.moedas_coletadas}\`\n:money_with_wings: **Gastas:** \`${datas_pula.moedas_gastas}\`\n:moneybag: **Guardadas:** \`${datas_pula.moedas}\``,
                             inline: true
                         },

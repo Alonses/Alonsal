@@ -1,5 +1,4 @@
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../discord/busca_emoji.js')
 
 module.exports = (client, objeto_anunciado, plataforma, idioma_definido) => {
 
@@ -14,7 +13,7 @@ module.exports = (client, objeto_anunciado, plataforma, idioma_definido) => {
     })
 
     if (objeto_anunciado[0].link.match(/store.steam/))
-        link_app = `\n\n${busca_emoji(client, emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`.replace("plat_repl", plataforma)
+        link_app = `\n\n${client.emoji(emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`.replace("plat_repl", plataforma)
 
     valor_total = valor_total.toFixed(2)
 

@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 const { getUser } = require("../../adm/database/schemas/User.js");
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -95,7 +94,7 @@ module.exports = {
             client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
 
                 // Enviando a mensagem no idioma do usuário alvo
-                let emoji_dancante = busca_emoji(client, emojis_dancantes)
+                let emoji_dancante = client.emoji(emojis_dancantes)
 
                 user_interno.send(`:bank: | ${client.tls.phrase(client, alvo.uid, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.formata_num(bufunfas))} ${emoji_dancante}`)
             })

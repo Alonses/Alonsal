@@ -1,6 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -18,7 +17,7 @@ module.exports = {
 
         let canais_texto = client.channels().filter((c) => c.type === 0).size
         let members = 0, processamento = '🎲 Processamento\n'
-        let emoji_esmeralda = busca_emoji(client, emojis.mc_esmeralda)
+        let emoji_esmeralda = client.emoji(emojis.mc_esmeralda)
 
         client.guilds().forEach(async guild => {
             members += guild.memberCount - 1

@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { getUser } = require("../../adm/database/schemas/User.js");
 
@@ -9,7 +8,7 @@ module.exports = {
         .setDescription('⌠🎲|🇧🇷⌡ O Jogo do Pula!'),
     async execute(client, interaction) {
 
-        const emoji_pula = busca_emoji(client, emojis.pula_2)
+        const emoji_pula = client.emoji(emojis.pula_2)
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()

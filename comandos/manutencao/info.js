@@ -3,8 +3,6 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { getUser } = require("../../adm/database/schemas/User.js");
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('info')
@@ -20,9 +18,9 @@ module.exports = {
         const user = await getUser(interaction.user.id)
         let qtd_comandos = 1
 
-        const emoji_rainha = busca_emoji(client, emojis.dancando_elizabeth)
-        const emoji_bolo = busca_emoji(client, emojis.mc_bolo)
-        const emoji_dancante = busca_emoji(client, emojis_dancantes)
+        const emoji_rainha = client.emoji(emojis.dancando_elizabeth)
+        const emoji_bolo = client.emoji(emojis.mc_bolo)
+        const emoji_dancante = client.emoji(emojis_dancantes)
 
         fs.readFile('./arquivos/data/ativacoes.txt', 'utf8', function (err, data) {
             if (err) throw err

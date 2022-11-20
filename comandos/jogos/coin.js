@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const busca_emoji = require('../../adm/discord/busca_emoji')
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -36,7 +35,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const escolha = parseInt(interaction.options.data[0].value)
-        const emoji_dancando = busca_emoji(client, emojis_dancantes)
+        const emoji_dancando = client.emoji(emojis_dancantes)
 
         const moeda = Math.round(Math.random())
         let emoji_exib = ":coin:"
@@ -47,7 +46,7 @@ module.exports = {
         let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.acertou")} ${emoji_dancando}`
 
         if (escolha !== moeda) { // Acertou
-            const emoji_epic_embed_fail = busca_emoji(client, emojis.epic_embed_fail2)
+            const emoji_epic_embed_fail = client.emoji(emojis.epic_embed_fail2)
             resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.coroa.errou")} ${emoji_epic_embed_fail}`
         }
 

@@ -4,10 +4,9 @@ const fetch = (...args) =>
 const fs = require('fs')
 const { readdirSync, unlinkSync, existsSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require("../../adm/discord/busca_emoji")
-const {busca_badges, badgeTypes} = require('../../adm/data/badges');
+const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 const medals = {
     0: ":first_place:",
@@ -152,7 +151,7 @@ module.exports = {
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
-                    if (existsSync(`./arquivos/data/user/${user.id}.json`)){
+                    if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
                         const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction);
                         if (badge !== null) fixed_badge = badge.emoji;
                     }
@@ -172,7 +171,7 @@ module.exports = {
 
             let embed, img_embed
             let user = getUser(interaction.user.id)
-            const emoji_ceira = busca_emoji(client, emojis.mc_honeycomb)
+            const emoji_ceira = client.emoji(emojis.mc_honeycomb)
 
             await fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido

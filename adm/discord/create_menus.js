@@ -1,7 +1,6 @@
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
 const {busca_badges, badgeTypes} = require('../../adm/data/badges');
-const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = (client, dados, interaction) => {
 

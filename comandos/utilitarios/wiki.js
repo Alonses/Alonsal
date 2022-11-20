@@ -1,9 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const { getUser } = require("../../adm/database/schemas/User.js");
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
-const busca_emoji = require('../../adm/discord/busca_emoji')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,7 +40,7 @@ module.exports = {
         if (content.includes("slondo")) // Pesquisa por slondo
             return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
 
-        const emoji_nao_encontrado = busca_emoji(client, emojis_negativos)
+        const emoji_nao_encontrado = client.emoji(emojis_negativos)
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
         let counter = 0

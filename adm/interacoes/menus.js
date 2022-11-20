@@ -1,4 +1,3 @@
-const busca_emoji = require("../discord/busca_emoji")
 const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 
 module.exports = ({ client, interaction }) => {
@@ -11,6 +10,6 @@ module.exports = ({ client, interaction }) => {
         client.usuarios.saveUser([user])
         let new_badge = busca_badges(client, badgeTypes.SINGLE, parseInt(interaction.values[0]))
 
-        interaction.update({ content: `${busca_emoji(client, new_badge[0])} | Badge \`${new_badge[1]}\` ${client.tls.phrase(client, interaction, "dive.badges.badge_fixada")}`, components: [], ephemeral: true })
+        interaction.update({ content: `${client.emoji(new_badge[0])} | Badge \`${new_badge[1]}\` ${client.tls.phrase(client, interaction, "dive.badges.badge_fixada")}`, components: [], ephemeral: true })
     }
 }
