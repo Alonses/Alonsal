@@ -47,6 +47,8 @@ module.exports = {
         const id = interaction.user.id;
         const user = await getUser(id);
 
+        return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+
         // Validando existência de badges antes do comando
         if (user.badges.badge_list.length <= 0)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
@@ -61,7 +63,7 @@ module.exports = {
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
             return interaction.reply({ content: client.tls.phrase(client, interaction, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
-            user.updateOne({uid: id},
+            user.updateOne({ uid: id },
                 {
                     badges: {
                         fixed_badge: null,

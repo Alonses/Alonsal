@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getUser } = require("../../adm/database/schemas/User.js");
 
-const {buildAllBadges} = require('../../adm/data/badges');
+const { buildAllBadges } = require('../../adm/data/badges');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,6 +15,8 @@ module.exports = {
         }),
     async execute(client, interaction) {
         const user = await getUser(interaction.user.id)
+
+        return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
         // Procurando pelas badges antes do comando
         if (user.badges.badge_list.length <= 0 || !user.badges.badge_list)
