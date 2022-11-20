@@ -13,7 +13,8 @@ const badgeTypes = {
 module.exports.busca_badges = async (client, type, id_alvo) => {
 
     // Retorna a badge bruta
-    if (type === badgeTypes.SINGLE) return new Badge(badge_ids[id_alvo], badge_names[id_alvo], client.emoji(badge_ids[id_alvo]))
+    if (type === badgeTypes.SINGLE)
+        return new Badge(badge_ids[id_alvo], badge_names[id_alvo], client.emoji(badge_ids[id_alvo]))
 
     const all_badges = new BadgeCollection();
 

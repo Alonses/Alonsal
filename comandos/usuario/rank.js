@@ -151,10 +151,10 @@ module.exports = {
                 if (i < 6) {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
-                    if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-                        const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction);
-                        if (badge !== null) fixed_badge = badge.emoji;
-                    }
+                    // if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
+                    //     const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction);
+                    //     if (badge !== null) fixed_badge = badge.emoji;
+                    // }
 
                     if (parseInt(pagina) !== 1)
                         usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
@@ -170,7 +170,7 @@ module.exports = {
             }
 
             let embed, img_embed
-            let user = getUser(interaction.user.id)
+            let user = await getUser(interaction.user.id)
             const emoji_ceira = client.emoji(emojis.mc_honeycomb)
 
             await fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
