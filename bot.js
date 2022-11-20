@@ -47,6 +47,10 @@ class CeiraClient {
 	formata_num(valor) {
 		return parseFloat(valor).toLocaleString('pt-BR')
 	}
+
+	login(token) {
+		return this.discord.login(token);
+	}
 }
 
 const client = new CeiraClient(cli, user, idioma, translate, auto)
@@ -205,4 +209,4 @@ client.discord.on('interactionCreate', async interaction => {
 // Eventos secundários
 require('./adm/eventos/events.js')({ client })
 
-client.discord.login(token)
+client.login(token)
