@@ -1,7 +1,7 @@
 const { readdirSync, unlinkSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
-const busca_badges = require('../../adm/data/badges.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
+const {busca_badges, badgeTypes} = require('../../adm/data/badges');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,7 +30,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
 
@@ -80,7 +80,7 @@ module.exports = {
             // }
 
             if (user.badges.badge_list.length > 0)
-                dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, 'all', interaction.user.id, interaction)}`
+                dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, badgeTypes.ALL, interaction.user.id, interaction).build(client, interaction)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(client, interaction, "manu.data.dados_conhecidos"))

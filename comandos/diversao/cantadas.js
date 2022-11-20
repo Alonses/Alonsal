@@ -2,6 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +10,7 @@ module.exports = {
         .setDescription('⌠😂|🇧🇷⌡ Uma cantada aleatória do Vai dar namoro™️'),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = getUser(interaction.user.id)
         await interaction.deferReply()
 
         fetch('https://apisal.herokuapp.com/random?cantadas')

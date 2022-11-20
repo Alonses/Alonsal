@@ -1,6 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
+const { getUser } = require("../../adm/database/schemas/User.js");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const formata_texto = require('../../adm/formatadores/formata_texto')
 
@@ -47,10 +48,10 @@ module.exports = {
         let entradas = interaction.options.data
 
         entradas.forEach(valor => {
-            if (valor.name == "url")
+            if (valor.name === "url")
                 params.url = valor.value
 
-            if (valor.name == "user")
+            if (valor.name === "user")
                 params.user = valor.value
         })
 
@@ -58,7 +59,7 @@ module.exports = {
             texto_entrada = params.url
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = client.usuarios.getUser(alvo.id)
+        const user = await getUser(alvo.id)
 
         if (!texto_entrada) // Verificando se o usuário possui link com a steam
             if (!user.social || !user.social.lastfm)

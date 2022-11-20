@@ -16,6 +16,7 @@
     "discord.js": "^14.1.1",
     "dotenv": "^16.0.2",
     "i18n-country-code": "^1.0.1",
+    "mongoose": "^6.7.2",
     "node-fetch": "^3.2.9",
     "nodemon": "^2.0.19"
   }

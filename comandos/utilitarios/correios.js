@@ -2,7 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder, Utils } = require("discord.js")
-
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 // QI518312458BR
 module.exports = {
@@ -21,8 +21,9 @@ module.exports = {
             .then(res => res.json())
             .then(result => {
 
-                const objeto = result.quantidade == 1 ? result.objetos[0] : result.objetos
-                const user = client.usuarios.getUser(interaction.user.id)
+                const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
+                let user;
+                getUser(interaction.user.id).then(usr => user = usr);
 
                 const eventos_transp = []
 

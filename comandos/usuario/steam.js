@@ -2,6 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -56,7 +57,7 @@ module.exports = {
             texto_entrada = params.url
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = client.usuarios.getUser(alvo.id)
+        const user = await getUser(alvo.id)
 
         if (!texto_entrada) { // Verificando se o usuário possui link com a steam
             if (!user.social.steam)

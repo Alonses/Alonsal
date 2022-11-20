@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const create_buttons = require('../../adm/discord/create_buttons')
+const { getUser } = require("../../adm/database/schemas/User.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
     async execute(client, interaction) {
 
         const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(user.misc.embed)
