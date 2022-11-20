@@ -5,6 +5,7 @@ const user = require('./adm/data/usuario')
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
+const database = require("./adm/database/database")
 
 const cleverbot = require('cleverbot-free')
 const { REST } = require('@discordjs/rest')
@@ -209,4 +210,5 @@ client.discord.on('interactionCreate', async interaction => {
 // Eventos secundários
 require('./adm/eventos/events.js')({ client })
 
+database.setup(process.env.dburi)
 client.login(token)
