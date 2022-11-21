@@ -84,7 +84,7 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(client, interaction, "manu.data.dados_conhecidos"))
-                .setColor(user.misc.embed)
+                .setColor(client.embed_color(user.misc.color))
                 .setDescription(`${client.tls.phrase(client, interaction, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
                 .setFooter({ text: client.tls.phrase(client, interaction, "manu.data.dica_rodape") })
 

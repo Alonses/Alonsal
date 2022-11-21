@@ -1,10 +1,11 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
+const { getUser } = require("../database/schemas/User.js");
 const { mkdirSync, writeFileSync, existsSync, readdirSync } = require("fs")
 const fs = require('fs')
 
-let default_lang, datapath
+let default_lang
 
 // Carrega todos os idiomas do bot diretamente do git
 function loadAll() {
@@ -63,49 +64,37 @@ function listAll() {
     return bandeiras.join(" ")
 }
 
-function setPath(path) {
-    datapath = path
-}
-
 function setDefault(lang) {
     default_lang = lang
 }
 
-function setLang(client, interaction, lang) {
+async function setLang(interaction, lang) {
 
-    const user = client.usuarios.getUser(interaction.user.id)
-    user.lang = lang
+    const id = interaction.user.id
+    const user = await getUser(id)
 
     // Salvando os dados do usuário
-    writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
-    delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+    user.updateOne({ uid: id }, {
+        lang: lang
+    })
 }
 
-function getLang(elemento) {
+function getLang(interaction) {
 
-    const idiomas = ["pt-br", "es-es", "fr-fr", "en-us", "it-it"]
+    // const idiomas = ["pt-br", "es-es", "fr-fr", "en-us", "it-it"]
+    // await getUser(interaction.user.id)
+    //     .then(user => {
+    //         console.log(user.locale)
 
-    let id_user = elemento
+    //         if (idiomas.includes((user.locale)))
+    //             return user.locale
+    //         else return default_lang
+    // })
 
-    if (isNaN(parseInt(elemento)))
-        id_user = elemento.user.id
-
-    if (existsSync(`./arquivos/data/user/${id_user}.json`)) {
-        delete require.cache[require.resolve(`../../arquivos/data/user/${id_user}.json`)]
-        const { lang } = require(`../../arquivos/data/user/${id_user}.json`)
-
-        if (!lang)
-            if (idiomas.includes((elemento.locale).toLowerCase()))
-                return elemento.locale.toLowerCase()
-            else default_lang
-        else
-            return lang
-    } else
-        return default_lang
+    return default_lang
 }
 
 module.exports = {
-    setPath,
     setDefault,
     setLang,
     getLang,

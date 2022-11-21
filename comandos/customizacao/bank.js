@@ -67,7 +67,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(titulo_embed)
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setDescription(`:bank: ${client.tls.phrase(client, interaction, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${client.formata_num(user.misc.money)}\`\`\`\n${daily}`)
 
         if (user.uid === interaction.user.id)

@@ -203,7 +203,7 @@ module.exports = {
 
                                     const embed = new EmbedBuilder()
                                         .setTitle(nome_item)
-                                        .setColor(user.misc.embed)
+                                        .setColor(client.embed_color(user.misc.color))
                                         .setImage(url)
                                         .addFields(
                                             {

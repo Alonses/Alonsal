@@ -3,6 +3,7 @@ const { readdirSync } = require('fs')
 const { Routes } = require('discord.js')
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
+const { alea_hex } = require('./adm/funcoes/hex_color')
 const translate = require('./adm/formatadores/translate')
 const database = require("./adm/database/database")
 
@@ -52,6 +53,13 @@ class CeiraClient {
 			id_emoji = id_emoji[Math.round((id_emoji.length - 1) * Math.random())]
 
 		return this.discord.emojis.cache.get(id_emoji).toString()
+	}
+
+	embed_color(entrada) {
+		if (entrada == "RANDOM")
+			return alea_hex()
+		else
+			return entrada
 	}
 
 	login(token) {
@@ -137,7 +145,6 @@ for (const folder of readdirSync(`${__dirname}/comandos/`)) {
 client.discord.once('ready', async () => {
 
 	// Definindo o idioma do bot
-	idioma.setPath(`${__dirname}/arquivos/data/idiomas`)
 	idioma.setDefault('pt-br')
 
 	client.owners = process.env.owner_id.split(", ")

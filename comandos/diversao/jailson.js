@@ -47,7 +47,7 @@ module.exports = {
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
 						.setThumbnail(res.foto)
-						.setColor(user.misc.embed)
+						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.editReply({ embeds: [embed] })

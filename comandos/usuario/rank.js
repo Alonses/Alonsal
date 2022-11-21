@@ -179,7 +179,7 @@ module.exports = {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${client.tls.phrase(client, interaction, "dive.rank.rank_sv")} ${interaction.guild.name}`)
-                        .setColor(user.misc.embed)
+                        .setColor(client.embed_color(user.misc.color))
                         .setDescription(`\`\`\`fix\n${client.tls.phrase(client, interaction, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
@@ -214,7 +214,7 @@ module.exports = {
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                        .setColor(user.misc.embed)
+                        .setColor(client.embed_color(user.misc.color))
                         .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(

@@ -43,7 +43,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle("> Suas estatísticas no Pula")
-                    .setColor(user.misc.embed)
+                    .setColor(client.embed_color(user.misc.color))
                     .addFields(
                         {
                             name: `${client.emoji(emojis.pula_2)} **Gerais**`,

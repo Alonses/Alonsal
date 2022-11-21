@@ -16,7 +16,7 @@ module.exports = {
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
             .setTitle(client.tls.phrase(client, interaction, "manu.git.repositorio"))
             .setURL('https://github.com/brnd-21/Alonsal')

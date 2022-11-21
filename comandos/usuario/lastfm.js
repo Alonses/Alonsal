@@ -189,7 +189,7 @@ module.exports = {
                                     .setTitle(client.tls.phrase(client, interaction, "util.lastfm.perfil_musical").replace("nome_repl", nome))
                                     .setThumbnail(avatar)
                                     .setURL(usuario_alvo)
-                                    .setColor(user.misc.embed)
+                                    .setColor(client.embed_color(user.misc.color))
                                     .addFields(
                                         {
                                             name: `:saxophone: ${client.tls.phrase(client, interaction, "util.lastfm.geral")}`,

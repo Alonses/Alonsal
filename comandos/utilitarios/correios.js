@@ -55,7 +55,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle(titulo)
-                    .setColor(user.misc.embed)
+                    .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(client, interaction, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
 
                 if (nota_rodape.length > 1)
