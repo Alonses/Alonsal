@@ -37,7 +37,7 @@ module.exports = {
 
         const user = await getUser(interaction.user.id)
         const texto_entrada = interaction.options.data[0].value
-        let cor_embed = user.misc.embed
+        let cor_embed = client.embed_color(user.misc.color)
 
         const caracteres = duplicateCount(texto_entrada)
         const fatori = texto_entrada.split('')

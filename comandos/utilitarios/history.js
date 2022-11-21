@@ -65,7 +65,7 @@ module.exports = {
                     const embed_eventos = new EmbedBuilder()
                         .setTitle(client.tls.phrase(client, interaction, "util.history.acontecimentos_1"))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
-                        .setColor(user.misc.embed)
+                        .setColor(client.embed_color(user.misc.color))
                         .setDescription(`${client.tls.phrase(client, interaction, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                     interaction.editReply({ embeds: [embed_eventos] })
@@ -100,7 +100,7 @@ module.exports = {
                         .setTitle(formata_texto(res.acontecimento))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setURL(res.fonte)
-                        .setColor(user.misc.embed)
+                        .setColor(client.embed_color(user.misc.color))
                         .setDescription(res.descricao)
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)

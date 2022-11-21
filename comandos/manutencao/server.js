@@ -19,7 +19,7 @@ module.exports = {
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setTitle(`${client.tls.phrase(client, interaction, "manu.hub.hub_alonsal")} ${emoji_rainha}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')

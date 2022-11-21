@@ -80,7 +80,7 @@ module.exports = {
 
             const infos_sv = new EmbedBuilder()
                 .setTitle(interaction.guild.name)
-                .setColor(user.misc.embed)
+                .setColor(client.embed_color(user.misc.color))
                 .setThumbnail(icone_server)
                 .addFields(
                     {
@@ -156,7 +156,7 @@ module.exports = {
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
                         .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_icon").replace("link_repl", icone_server))
-                        .setColor(user.misc.embed)
+                        .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
                     return interaction.reply({ embeds: [embed], ephemeral: true })

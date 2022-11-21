@@ -24,7 +24,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${client.tls.phrase(client, interaction, "dive.badges.suas_badges")}`)
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setDescription(await buildAllBadges(client, interaction))
             .setFooter({ text: client.tls.phrase(client, interaction, "dive.badges.rodape") })
 

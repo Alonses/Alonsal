@@ -42,7 +42,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(client, interaction, "util.password.titulo")}`)
             .setURL('https://password.kaspersky.com/')
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setDescription(`:passport_control: **${client.tls.phrase(client, interaction, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(client, interaction, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({ text: client.tls.phrase(client, interaction, "util.password.rodape").replace("tamanho_repl", tamanho) })
 

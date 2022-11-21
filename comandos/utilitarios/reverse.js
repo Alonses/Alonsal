@@ -35,7 +35,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`:arrow_backward: ${client.tls.phrase(client, interaction, "util.reverso.reverso")}`)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setDescription(`\`${texto_ordenado}\``)
 
         interaction.reply({ embeds: [embed], ephemeral: true })

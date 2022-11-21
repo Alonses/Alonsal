@@ -24,7 +24,7 @@ module.exports = {
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setColor(user.misc.embed)
+            .setColor(client.embed_color(user.misc.color))
             .setTitle(client.tls.phrase(client, interaction, "manu.convite.titulo"))
             .setDescription(client.tls.phrase(client, interaction, "manu.convite.convite"))
 
