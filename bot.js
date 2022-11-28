@@ -1,146 +1,13 @@
 require('dotenv').config()
-const { readdirSync } = require('fs')
-const { Routes } = require('discord.js')
+
+const { CeiraClient } = require('./client')
+const { config } = require('./config')
+
 const idioma = require('./adm/data/idioma')
-const auto = require('./adm/data/relatorio')
-const { alea_hex } = require('./adm/funcoes/hex_color')
-const translate = require('./adm/formatadores/translate')
 const database = require("./adm/database/database")
 
-const cleverbot = require('cleverbot-free')
-const { REST } = require('@discordjs/rest')
-const { Client, Collection, GatewayIntentBits, IntentsBitField } = require('discord.js')
-
-const cli = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		IntentsBitField.Flags.GuildMembers
-	]
-})
-
-class CeiraClient {
-	constructor(discord, idioma, translate, auto) {
-		this.tls = translate,
-			this.idioma = idioma,
-			this.discord = discord,
-			this.auto = auto
-	}
-
-	id() {
-		return this.discord.user.id
-	}
-
-	user() {
-		return this.discord.user
-	}
-
-	guilds() {
-		return this.discord.guilds.cache
-	}
-
-	channels() {
-		return this.discord.channels.cache
-	}
-
-	formata_num(valor) {
-		return parseFloat(valor).toLocaleString('pt-BR')
-	}
-
-	emoji(id_emoji) {
-		if (typeof id_emoji == "object") // Array de emojis
-			id_emoji = id_emoji[Math.round((id_emoji.length - 1) * Math.random())]
-
-		return this.discord.emojis.cache.get(id_emoji).toString()
-	}
-
-	embed_color(entrada) {
-		if (entrada == "RANDOM")
-			return alea_hex()
-		else
-			return entrada
-	}
-
-	login(token) {
-		return this.discord.login(token);
-	}
-}
-
-const client = new CeiraClient(cli, idioma, translate, auto)
-
-// Alternância entre modo normal e de testes
-const modo_develop = 0, force_update = 0, silent = 0
-let status = 1, ranking = 1
-
-let token = process.env.token_1, clientId = process.env.client_1
-
-if (silent)
-	status = 0, ranking = 0
-
-// Force update é usado para forçar a atualização de comandos globais
-// e privados do bot
-if (modo_develop)
-	token = process.env.token_2, clientId = process.env.client_2
-
-let commands = []
-const conversations = []
-const comandos_privados = []
-client.discord.commands = new Collection()
-
-// Linkando os comandos slash disponíveis
-for (const folder of readdirSync(`${__dirname}/comandos/`)) {
-	for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
-		const command = require(`./comandos/${folder}/${file}`)
-
-		if (!modo_develop)
-			if (!command.data.name.startsWith('c_'))
-				commands.push(command.data.toJSON())
-			else // Salvando comandos privados para usar apenas num servidor
-				comandos_privados.push(command.data.toJSON())
-		else
-			commands.push(command.data.toJSON())
-	}
-}
-
-if (modo_develop || force_update) {
-	const rest = new REST({ version: '10' }).setToken(token)
-
-	if (force_update) { // Registrando os comandos públicos globalmente
-		rest.put(Routes.applicationCommands(clientId), { body: commands })
-			.then(() => console.log('Comandos globais atualizados com sucesso.'))
-			.catch(console.error)
-	}
-
-	if (force_update) // Reescreve a lista de comandos com os comandos privados
-		commands = comandos_privados
-
-	// Registrando os comandos privados no servidor
-	rest.put(Routes.applicationGuildCommands(clientId, process.env.guildID), { body: commands })
-		.then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
-		.catch(console.error)
-
-	// Removendo os comandos slash globalmente
-	// rest.get(Routes.applicationCommands(clientId))
-	// 	.then(data => {
-	// 		const promises = []
-
-	// 		for (const command of data) {
-	// 			const deleteUrl = `${Routes.applicationCommands(clientId)}/${command.id}`
-	// 			promises.push(rest.delete(deleteUrl))
-	// 		}
-
-	// 		console.log("Removendo os comandos em barra globalmente")
-	// 		return Promise.all(promises)
-	// 	})
-}
-
-for (const folder of readdirSync(`${__dirname}/comandos/`)) {
-	for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
-		const command = require(`./comandos/${folder}/${file}`)
-		client.discord.commands.set(command.data.name, command)
-	}
-}
+let client = new CeiraClient()
+config(client) // Atualiza os comandos slash do bot
 
 client.discord.once('ready', async () => {
 
@@ -149,7 +16,7 @@ client.discord.once('ready', async () => {
 
 	client.owners = process.env.owner_id.split(", ")
 
-	if (status)
+	if (client.x.status)
 		await require('./adm/eventos/status.js')({ client })
 
 	console.log(`Caldeiras do ${client.user().username} aquecidas, pronto para operar`)
@@ -161,35 +28,18 @@ client.discord.on('messageCreate', async (message) => {
 
 	// Respostas automatizadas por IA
 	if (text.includes(client.id()) || text.includes("alonsal")) {
-		text = text.split("> ")[1] || text
-		text = text.replace("alonsal", "").replace(client.id(), "").trim()
-
-		cleverbot(text).then(res => {
-			conversations.push(text)
-			conversations.push(res.trim())
-
-			setTimeout(() => {
-				message.channel.send(res)
-
-				if (conversations.length > 500) {
-					conversations.shift()
-					conversations.shift()
-				}
-			}, Math.floor(900 + (Math.random() * 800)))
-		})
-
+		await require('./adm/eventos/conversacao.js')({ client, message, text })
 		return
 	}
 
 	if (message.author.bot || message.webhookId) return
 
-	try { // Atualizando ranking e recebendo mensagens de texto
-
+	try { // Atualizando o XP dos usuários
 		const caso = 'messages'
-		if (message.content.length > 6 && ranking) await require('./adm/data/ranking.js')({ client, message, caso })
+		if (message.content.length > 6 && client.x.ranking) await require('./adm/data/ranking.js')({ client, message, caso })
 
 		require('./adm/eventos/comandos_antigos.js')({ client, message })
-	} catch (err) {
+	} catch (err) { // Erro no comando
 		const local = 'commands'
 		require('./adm/eventos/error.js')({ client, err, local })
 	}
@@ -197,10 +47,10 @@ client.discord.on('messageCreate', async (message) => {
 
 client.discord.on('interactionCreate', async interaction => {
 
-	if (interaction.isSelectMenu()) // Interações por uso de menus de seleção
+	if (interaction.isSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require('./adm/interacoes/menus.js')({ client, interaction })
 
-	if (interaction.isButton()) // Interações por uso de botões
+	if (interaction.isButton()) // Interações geradas no uso de botões
 		return require('./adm/interacoes/buttons.js')({ client, interaction })
 
 	if (!interaction.isChatInputCommand()) return
@@ -223,4 +73,4 @@ client.discord.on('interactionCreate', async interaction => {
 require('./adm/eventos/events.js')({ client })
 
 database.setup(process.env.dburi)
-client.login(token)
+client.login(client.x.token)
