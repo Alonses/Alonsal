@@ -1,6 +1,6 @@
 module.exports = (entrada, saida) => {
 
-    if (entrada == null || saida == null) return 0
+    if (entrada === null || saida === null) return 0
 
     let data = new Date()
     let dia = String(data.getDate()).padStart(2, '0')

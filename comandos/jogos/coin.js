@@ -47,7 +47,7 @@ module.exports = {
 
         if (escolha !== moeda) { // Acertou
             const emoji_epic_embed_fail = client.emoji(emojis.epic_embed_fail2)
-            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.coroa.errou")} ${emoji_epic_embed_fail}`
+            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.errou")} ${emoji_epic_embed_fail}`
         }
 
         return interaction.reply(resultado)

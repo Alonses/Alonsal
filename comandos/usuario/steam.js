@@ -46,10 +46,10 @@ module.exports = {
         let entradas = interaction.options.data
 
         entradas.forEach(valor => {
-            if (valor.name == "url")
+            if (valor.name === "url")
                 params.url = valor.value
 
-            if (valor.name == "user")
+            if (valor.name === "user")
                 params.user = valor.value
         })
 

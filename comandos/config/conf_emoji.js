@@ -15,13 +15,13 @@ module.exports = {
 
         Object.keys(emojis).forEach(emoji => {
             if ((emojis_registrados + client.emoji(emojis[emoji])).length < 2000) {
-                if (i % 9 == 0)
+                if (i % 9 === 0)
                     emojis_registrados += "\n"
 
                 emojis_registrados += client.emoji(emojis[emoji])
             } else {
                 if ((emojis_registrados_2 + client.emoji(emojis[emoji])).length < 2000) {
-                    if (i % 9 == 0)
+                    if (i % 9 === 0)
                         emojis_registrados_2 += "\n"
 
                     emojis_registrados_2 += client.emoji(emojis[emoji])
