@@ -1,9 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const { getUser } = require("../../adm/database/schemas/User.js");
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
 
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { buildAllBadges } = require('../../adm/data/badges')
 
 // const busca_achievements = require('../../adm/data/conquistas')
@@ -151,7 +151,7 @@ module.exports = {
                     discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
-            let badges = buildAllBadges(client, interaction);
+            let badges = buildAllBadges(client, interaction)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
             const user_c = getUser(user.id)

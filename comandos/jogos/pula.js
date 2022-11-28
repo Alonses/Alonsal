@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,7 +37,7 @@ module.exports = {
             .then(retorno => {
 
                 if (retorno.status == 404)
-                    return interaction.reply({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, tente novamente mais tarde", ephemeral: true })
+                    return interaction.reply({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, por favor, tente novamente mais tarde", ephemeral: true })
 
                 const datas_pula = retorno.data
 

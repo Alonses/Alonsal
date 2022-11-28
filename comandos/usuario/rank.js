@@ -152,8 +152,8 @@ module.exports = {
                     let fixed_badge = "" // Procurando a Badge fixada do usuário
 
                     // if (existsSync(`./arquivos/data/user/${user.id}.json`)) {
-                    //     const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction);
-                    //     if (badge !== null) fixed_badge = badge.emoji;
+                    //     const badge = busca_badges(client, badgeTypes.FIXED, user.id, interaction)
+                    //     if (badge !== null) fixed_badge = badge.emoji
                     // }
 
                     if (parseInt(pagina) !== 1)
@@ -170,7 +170,7 @@ module.exports = {
             }
 
             const user_2 = await getUser(2)
-            
+
             let embed, img_embed
             let user = await getUser(interaction.user.id)
             const emoji_ceira = client.emoji(emojis.mc_honeycomb)
@@ -210,7 +210,7 @@ module.exports = {
                     const user = await getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
-                        fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji;
+                        fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)

@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {

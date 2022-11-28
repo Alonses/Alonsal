@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
-const create_buttons = require('../../adm/discord/create_buttons')
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis } = require('../../arquivos/json/text/emojis.json')
+const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()

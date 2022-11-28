@@ -1,5 +1,5 @@
 const { readdirSync } = require("fs")
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
     uid: String,
@@ -21,9 +21,9 @@ const schema = new mongoose.Schema({
         badge_list: [{ key: String, value: Number }]
     },
     conquistas: [{ key: String, value: Number }]
-});
+})
 
-const model = mongoose.model("User", schema);
+const model = mongoose.model("User", schema)
 
 async function getUser(uid) {
     if (!await model.exists({ uid: uid })) await model.create({ uid: uid })
@@ -52,6 +52,6 @@ async function migrateUsers() {
     }
 }
 
-module.exports.User = model;
-module.exports.getUser = getUser;
-module.exports.migrateUsers = migrateUsers;
+module.exports.User = model
+module.exports.getUser = getUser
+module.exports.migrateUsers = migrateUsers

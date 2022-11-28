@@ -35,9 +35,9 @@ const cli = new Client({
 class CeiraClient {
     constructor() {
         this.discord = cli,
-        this.tls = translate,
-        this.idioma = idioma,
-        this.auto = auto
+            this.tls = translate,
+            this.idioma = idioma,
+            this.auto = auto
         this.x = { // Variáveis de configuração inicial do bot
             modo_develop: modo_develop,
             force_update: force_update,
@@ -70,7 +70,7 @@ class CeiraClient {
     }
 
     emoji(id_emoji) {
-        if (typeof id_emoji == "object") // Array de emojis
+        if (typeof id_emoji == "object") // Escolhendo um emoji do Array com vários emojis
             id_emoji = id_emoji[Math.round((id_emoji.length - 1) * Math.random())]
 
         return this.discord.emojis.cache.get(id_emoji).toString()
@@ -84,7 +84,7 @@ class CeiraClient {
     }
 
     login(token) {
-        return this.discord.login(token);
+        return this.discord.login(token)
     }
 }
 

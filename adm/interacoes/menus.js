@@ -1,4 +1,4 @@
-const {busca_badges, badgeTypes} = require('../../adm/data/badges');
+const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 module.exports = ({ client, interaction }) => {
 

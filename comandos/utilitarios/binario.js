@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const binario = require('../../arquivos/json/text/binario.json')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,8 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { getUser } = require("../../adm/database/schemas/User.js");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const formata_texto = require('../../adm/formatadores/formata_texto')
 
 let horas_tocadas, horas_passadas

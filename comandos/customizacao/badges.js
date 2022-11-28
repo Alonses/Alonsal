@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { buildAllBadges } = require('../../adm/data/badges');
+const { getUser } = require("../../adm/database/schemas/User.js")
+const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
