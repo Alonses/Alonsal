@@ -2,8 +2,9 @@ const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const { gifs } = require("../../arquivos/json/gifs/jailson.json")
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()

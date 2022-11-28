@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
 
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -129,7 +129,7 @@ module.exports = {
             plataforma = "Pula prédios"
         }
 
-        user.save();
+        user.save()
 
         if (plataforma !== "locale")
             return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })

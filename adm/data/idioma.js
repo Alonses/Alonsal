@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { getUser } = require("../database/schemas/User.js");
+const { getUser } = require("../database/schemas/User.js")
 const { mkdirSync, writeFileSync, existsSync, readdirSync } = require("fs")
 const fs = require('fs')
 
@@ -10,7 +10,7 @@ let default_lang
 // Carrega todos os idiomas do bot diretamente do git
 function loadAll() {
     if (!existsSync(`./arquivos/idiomas/`))
-        mkdirSync(`./arquivos/idiomas/`, { recursive: true });
+        mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
     fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
@@ -18,28 +18,29 @@ function loadAll() {
             .then(res => res.json())
             .then(content => {
                 if (content.updated_at !== data) {
-                    console.log("Sincronizando com os idiomas mais recentes");
+                    console.log("Sincronizando com os idiomas mais recentes")
 
                     fs.writeFile('./arquivos/data/language.txt', content.updated_at, (err) => {
                         if (err) throw err
-                    });
+                    })
 
                     fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                         .then(res => res.json())
                         .then(content => {
                             for (let i = 0; i < content.length; i++) {
-                                const idioma = content[i];
-                                if (!idioma.name.endsWith(".json")) continue;
+                                const idioma = content[i]
+
+                                if (!idioma.name.endsWith(".json")) continue
 
                                 fetch(idioma.download_url)
                                     .then(res => res.json())
                                     .then(res => {
                                         writeFileSync(`./arquivos/idiomas/${idioma.name}`, JSON.stringify(res))
-                                    });
+                                    })
                             }
-                        });
+                        })
                 }
-            });
+            })
     })
 }
 

@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-const { busca_badges, badgeTypes } = require('../../adm/data/badges');
+const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,9 +50,9 @@ module.exports = {
 
             const date1 = new Date()
             user.badges.badge_list.push({ key: badge_alvo, value: Math.floor(date1.getTime() / 1000) })
-            user.save();
+            user.save()
 
-            const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo));
+            const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
             const emoji_dancante = client.emoji(emojis_dancantes)
 
             client.discord.users.fetch(id_alvo, false).then((user_interno) => {
@@ -63,8 +63,4 @@ module.exports = {
         } else
             interaction.reply({ content: `:octagonal_sign: | O usuário <@!${id_alvo}> já possui a Badge mencionada!`, ephemeral: true })
     }
-}
-
-function constructJson(jsonGuild, arrayValores) {
-    return { [jsonGuild]: arrayValores }
 }

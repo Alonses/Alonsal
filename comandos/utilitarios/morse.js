@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const morse = require('../../arquivos/json/text/morse.json')
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()

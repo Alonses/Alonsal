@@ -1,4 +1,5 @@
-const { getUser } = require("../../adm/database/schemas/User.js");
+const { getUser } = require("../../adm/database/schemas/User.js")
+
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client, interaction }) => {
@@ -18,7 +19,7 @@ module.exports = async ({ client, interaction }) => {
         // Validando se o usuário tem dinheiro suficiente
         if (user.misc.money < preco) {
             return interaction.reply({
-                content: `:epic_embed_fail: | ${client.tls.translate(client, interaction, "misc.color.sem_money").replace("preco_repl", client.formata_num(preco)) }`,
+                content: `:epic_embed_fail: | ${client.tls.translate(client, interaction, "misc.color.sem_money").replace("preco_repl", client.formata_num(preco))}`,
                 ephemeral: true
             })
         }
@@ -37,7 +38,7 @@ module.exports = async ({ client, interaction }) => {
             user.misc.color = data_cor.split("-")[1]
 
         // Salvando os dados
-        user.save();
+        user.save()
 
         interaction.update({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
     }

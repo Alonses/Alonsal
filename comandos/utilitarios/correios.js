@@ -2,9 +2,9 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder, Utils } = require("discord.js")
-const { getUser } = require("../../adm/database/schemas/User.js");
 
-// QI518312458BR
+const { getUser } = require("../../adm/database/schemas/User.js")
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('rastreio')
@@ -22,8 +22,8 @@ module.exports = {
             .then(result => {
 
                 const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
-                let user;
-                getUser(interaction.user.id).then(usr => user = usr);
+                let user
+                getUser(interaction.user.id).then(usr => user = usr)
 
                 const eventos_transp = []
 

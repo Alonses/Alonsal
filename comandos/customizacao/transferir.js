@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
 
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -79,8 +79,8 @@ module.exports = {
         user.misc.money -= bufunfas
         alvo.money += bufunfas
 
-        user.save();
-        alvo.save();
+        user.save()
+        alvo.save()
 
         const caso = "movimentacao", quantia = bufunfas
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })

@@ -1,7 +1,8 @@
 const { readdirSync, unlinkSync } = require("fs")
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
-const {busca_badges, badgeTypes} = require('../../adm/data/badges');
+
+const { getUser } = require("../../adm/database/schemas/User.js")
+const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js");
 
+const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
         const caso = "bufunfa", quantia = bufunfa
         require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
-        user.save();
+        user.save()
 
         interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(client, interaction, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${emoji_dancando}`, ephemeral: true })
     }

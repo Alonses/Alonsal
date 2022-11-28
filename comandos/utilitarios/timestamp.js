@@ -1,5 +1,6 @@
-const { getUser } = require("../../adm/database/schemas/User.js");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const formata_horas = require("../../adm/formatadores/formata_horas")
 
 module.exports = {

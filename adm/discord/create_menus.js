@@ -1,6 +1,6 @@
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
-const {busca_badges, badgeTypes} = require('../../adm/data/badges');
+const {busca_badges, badgeTypes} = require('../../adm/data/badges')
 
 module.exports = (client, dados, interaction) => {
 
@@ -8,7 +8,7 @@ module.exports = (client, dados, interaction) => {
     let insersoes = []
 
     dados.forEach(valor => {
-        const badge = busca_badges(client, badgeTypes.SINGLE, valor);
+        const badge = busca_badges(client, badgeTypes.SINGLE, valor)
 
         if (!insersoes.includes(valor)) {
             opcoes.push({
