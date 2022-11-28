@@ -57,7 +57,7 @@ module.exports = {
 
                     lista_eventos = formata_texto(lista_eventos)
 
-                    if (data == "") data = client.tls.phrase(client, interaction, "util.history.hoje")
+                    if (data === "") data = client.tls.phrase(client, interaction, "util.history.hoje")
 
                     data_eventos = ` ${data}`
                     const user = await getUser(interaction.user.id)

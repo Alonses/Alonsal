@@ -32,14 +32,12 @@ const cli = new Client({
     ]
 })
 
-
-
 class CeiraClient {
     constructor() {
         this.discord = cli,
-            this.tls = translate,
-            this.idioma = idioma,
-            this.auto = auto
+        this.tls = translate,
+        this.idioma = idioma,
+        this.auto = auto
         this.x = { // Variáveis de configuração inicial do bot
             modo_develop: modo_develop,
             force_update: force_update,
@@ -79,7 +77,7 @@ class CeiraClient {
     }
 
     embed_color(entrada) {
-        if (entrada == "RANDOM")
+        if (entrada === "RANDOM")
             return alea_hex()
         else
             return entrada

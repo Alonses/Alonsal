@@ -38,7 +38,7 @@ module.exports = {
     async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction), texto_entrada = ""
-        idioma_definido = idioma_definido == "al-br" ? "pt-br" : idioma_definido
+        idioma_definido = idioma_definido === "al-br" ? "pt-br" : idioma_definido
 
         const params = {
             url: null,
@@ -105,7 +105,7 @@ module.exports = {
                         if (res.includes("modal?action=scrobbling-now-theirs\"")) {
                             scrobble_atual = `${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
 
-                            musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] == "unloved" ? "🖤 " : "💙 "
+                            musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] === "unloved" ? "🖤 " : "💙 "
 
                             obsessao += `🎶 ${client.tls.phrase(client, interaction, "util.lastfm.em_scrobble")}: \n${musica_curtida}${scrobble_atual}`
                         }

@@ -63,7 +63,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
             let cor_embed = 0x29BB8E
 
             let idioma_definido = canal.idioma || "pt-br"
-            if (idioma_definido == "al-br") idioma_definido = "pt-br"
+            if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
             let texto_anuncio = formata_anun(client, objetos_anunciados, plataforma, idioma_definido)
             marcacao = `<@&${canal.cargo}>`

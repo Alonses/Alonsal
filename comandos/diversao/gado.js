@@ -35,7 +35,7 @@ module.exports = {
     async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction)
-        if (idioma_definido == "al-br") idioma_definido = "pt-br"
+        if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
         const alvo = interaction.options.getUser('user')
 

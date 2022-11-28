@@ -90,13 +90,13 @@ module.exports = {
 
         // Coletando todas as entradas
         entradas.forEach(valor => {
-            if (valor.name == "role")
+            if (valor.name === "role")
                 notificador.cargo = valor.value
 
-            if (valor.name == "language")
+            if (valor.name === "language")
                 notificador.idioma = valor.value
 
-            if (valor.name == "channel") {
+            if (valor.name === "channel") {
                 notificador.canal = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido

@@ -52,29 +52,29 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if (valor.name == "nome")
+            if (valor.name === "nome")
                 item.nome = valor.value
 
-            if (valor.name == "tipo")
+            if (valor.name === "tipo")
                 item.tipo = valor.value
 
-            if (valor.name == "link")
+            if (valor.name === "link")
                 item.link = valor.value
 
-            if (valor.name == "preço")
+            if (valor.name === "preço")
                 item.preco = valor.value
 
-            if (valor.name == "expiração")
+            if (valor.name === "expiração")
                 item.expira = valor.value
 
-            if (valor.name == "imagem")
+            if (valor.name === "imagem")
                 item.thumbnail = valor.attachment.attachment
         })
 
-        if (item.tipo == null)
+        if (item.tipo === null)
             item.tipo = "jogo"
 
-        if (item.urgencia == null)
+        if (item.urgencia === null)
             item.urgencia = "n"
 
         const objetos_anunciados = [item]

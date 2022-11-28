@@ -5,7 +5,7 @@ module.exports = async function ({ client, err, local }) {
     let local_erro = err.stack.split("\n")[1].trim()
     let titulo = "> CeiraException"
 
-    if (local == "games")
+    if (local === "games")
         titulo = "> Epic Embed Fail"
 
     const embed_error = new EmbedBuilder({

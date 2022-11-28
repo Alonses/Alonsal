@@ -29,13 +29,13 @@ module.exports = {
         }
 
         entradas.forEach(valor => {
-            if (valor.name == "texto")
+            if (valor.name === "texto")
                 corpo_mail.texto = valor.value
 
-            if (valor.name == "canal")
+            if (valor.name === "canal")
                 corpo_mail.canal = valor.value
 
-            if (valor.name == "imagem")
+            if (valor.name === "imagem")
                 corpo_mail.anexo = valor.attachment.attachment
         })
 

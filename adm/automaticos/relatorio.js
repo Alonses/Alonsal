@@ -11,12 +11,12 @@ module.exports = async ({ client, caso, quantia }) => {
     const bot = client.auto.getRelatorio()
 
     // Movimentações de dinheiro pelo bot
-    if (caso == "bufunfa" || caso == "movimentacao") {
+    if (caso === "bufunfa" || caso === "movimentacao") {
 
-        if (caso == "bufunfa")
+        if (caso === "bufunfa")
             bot.bufunfas += quantia
 
-        if (caso == "movimentacao")
+        if (caso === "movimentacao")
             bot.movimentado += quantia
 
         client.auto.saveRelatorio(bot)
