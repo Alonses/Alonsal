@@ -10,7 +10,7 @@ module.exports = {
         .setDescription('⌠😂|🇧🇷⌡ Uma cantada aleatória do Vai dar namoro™️'),
     async execute(client, interaction) {
 
-        const user = getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
         await interaction.deferReply()
 
         fetch('https://apisal.herokuapp.com/random?cantadas')
