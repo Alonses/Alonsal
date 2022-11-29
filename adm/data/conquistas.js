@@ -1,8 +1,8 @@
 const { getUser } = require("../database/schemas/User.js")
 
-module.exports = (client, modo, id_alvo, interaction) => {
+module.exports = async (client, modo, id_alvo, interaction) => {
 
-    const user = getUser(id_alvo)
+    const user = await getUser(id_alvo)
 
     // const { conquistas } = require(`../../arquivos/idiomas/${user.lang}.json`)
 
