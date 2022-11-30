@@ -35,7 +35,7 @@ async function gera_anuncio(client, proxima_att) {
     if (process.env.client_1 == client.id())
         client.channels().get('872865396200452127').send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
-    fetch('https://apisal.herokuapp.com/games?reload=1') // Forçando o update da API
+    fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API
         .then(response => response.json())
         .then(async objetos_anunciados => {
             dispara_anuncio({ client, objetos_anunciados })

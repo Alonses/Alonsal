@@ -10,7 +10,7 @@ module.exports = async ({ client }) => {
 
     if (client.id() === process.env.client_1) {
 
-        fetch('https://apisal.herokuapp.com/status')
+        fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())
             .then(retorno => {
 

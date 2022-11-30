@@ -2,6 +2,8 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const { getUser } = require("../../adm/database/schemas/User.js")
 const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
@@ -21,11 +23,11 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = client.usuarios.getUser(interaction.user.id)
+        const user = await getUser(interaction.user.id)
 
         await interaction.deferReply()
 
-        fetch('https://apisal.herokuapp.com/games')
+        fetch(`${process.env.url_apisal}/games`)
             .then(response => response.json())
             .then(async res => {
 
@@ -45,7 +47,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(client.tls.phrase(client, interaction, "mode.anuncio.ativos"))
                     .setThumbnail(res[0].thumbnail)
-                    .setColor(client.embed_color(user.misc.color))
+                    .setColor(user.misc.embed)
                     .setDescription(`${client.tls.phrase(client, interaction, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })
