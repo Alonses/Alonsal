@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder, Utils } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 const { getUser } = require("../../adm/database/schemas/User.js")
 
@@ -21,47 +21,50 @@ module.exports = {
             .then(res => res.json())
             .then(result => {
 
-                const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
-                let user
-                getUser(interaction.user.id).then(usr => user = usr)
+                if (result.causa !== 'Forbidden') {
+                    const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
+                    let user
+                    getUser(interaction.user.id).then(usr => user = usr)
 
-                const eventos_transp = []
+                    const eventos_transp = []
 
-                if (objeto.eventos) {
-                    let eventos = objeto.eventos
+                    if (objeto.eventos) {
+                        let eventos = objeto.eventos
 
-                    for (let i = 0; i < eventos.length && i < 5; i++) {
+                        for (let i = 0; i < eventos.length && i < 5; i++) {
 
-                        let data_evento = new Date(eventos[i].dtHrCriado).getTime() / 1000
-                        let datas_eventos = ""
+                            let data_evento = new Date(eventos[i].dtHrCriado).getTime() / 1000
+                            let datas_eventos = ""
 
-                        if (new Date().getTime() / 1000 - data_evento < 1209600)
-                            datas_eventos = `<t:${data_evento}:R> | `
+                            if (new Date().getTime() / 1000 - data_evento < 1209600)
+                                datas_eventos = `<t:${data_evento}:R> | `
 
-                        datas_eventos += `<t:${data_evento}:F>`
-                        let local = `\`${eventos[i].unidade.endereco.cidade} | ${eventos[i].unidade.tipo}\``
+                            datas_eventos += `<t:${data_evento}:F>`
+                            let local = `\`${eventos[i].unidade.endereco.cidade} | ${eventos[i].unidade.tipo}\``
 
-                        eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${client.tls.phrase(client, interaction, "util.rastreio.local")}: ${local}\n${datas_eventos}\n`)
+                            eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${client.tls.phrase(client, interaction, "util.rastreio.local")}: ${local}\n${datas_eventos}\n`)
+                        }
                     }
-                }
 
-                let titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_rastreado")} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
+                    let titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_rastreado")} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
 
-                if (objeto.mensagem) {
-                    objeto_nao_encontrado = `\`\`\`${objeto.mensagem.split(":")[1]}\`\`\``
-                    titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_invalido")} :warning:`
-                    nota_rodape = client.tls.phrase(client, interaction, "util.rastreio.codigo_invalido")
-                }
+                    if (objeto.mensagem) {
+                        objeto_nao_encontrado = `\`\`\`${objeto.mensagem.split(":")[1]}\`\`\``
+                        titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_invalido")} :warning:`
+                        nota_rodape = client.tls.phrase(client, interaction, "util.rastreio.codigo_invalido")
+                    }
 
-                const embed = new EmbedBuilder()
-                    .setTitle(titulo)
-                    .setColor(client.embed_color(user.misc.color))
-                    .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(client, interaction, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
+                    const embed = new EmbedBuilder()
+                        .setTitle(titulo)
+                        .setColor(client.embed_color(user.misc.color))
+                        .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(client, interaction, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
 
-                if (nota_rodape.length > 1)
-                    embed.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                    if (nota_rodape.length > 1)
+                        embed.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-                return interaction.reply({ embeds: [embed], ephemeral: true })
+                    return interaction.reply({ embeds: [embed], ephemeral: true })
+                } else
+                    return client.tls.reply(client, interaction, "util.rastreio.codigo_invalido", true, 1)
             })
     }
 }

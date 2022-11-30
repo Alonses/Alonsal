@@ -12,7 +12,7 @@ module.exports = {
 
     const user = await getUser(interaction.user.id)
 
-    fetch('https://apisal.herokuapp.com/curiosidades')
+    fetch(`${process.env.url_apisal}/curiosidades`)
       .then(response => response.json())
       .then(async res => {
 

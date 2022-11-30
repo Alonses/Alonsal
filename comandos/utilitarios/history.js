@@ -38,7 +38,7 @@ module.exports = {
             if (interaction.options.data[0].options.length > 0) // Data customizada
                 data = `?data=${interaction.options.data[0].options[0].value}`
 
-            fetch(`https://apisal.herokuapp.com/history${data}`)
+            fetch(`${process.env.url_apisal}/history${data}`)
                 .then(response => response.json())
                 .then(async res => {
 
@@ -90,7 +90,7 @@ module.exports = {
                 especifico = `&${especifico}`
 
             // Requisitando o acontecimento
-            fetch(`https://apisal.herokuapp.com/history?${data}${especifico}`)
+            fetch(`${process.env.url_apisal}/history?${data}${especifico}`)
                 .then(response => response.json())
                 .then(async res => {
 

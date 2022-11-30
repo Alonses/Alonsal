@@ -41,7 +41,7 @@ module.exports = {
 			await interaction.deferReply()
 			const user = await getUser(interaction.user.id)
 
-			fetch('https://apisal.herokuapp.com/random?jailson')
+			fetch(`${process.env.url_apisal}/random?jailson`)
 				.then(response => response.json())
 				.then(async res => {
 

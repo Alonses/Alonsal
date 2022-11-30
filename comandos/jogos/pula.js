@@ -32,7 +32,7 @@ module.exports = {
         if (!user.social.pula_predios)
             return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
 
-        fetch(`http://apisal.herokuapp.com/pula?token=placholder&sync=1&token_user=${user.social.pula_predios}`)
+        fetch(`${process.env.url_apisal}/pula?token=placholder&sync=1&token_user=${user.social.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 

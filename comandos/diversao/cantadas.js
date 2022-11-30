@@ -13,7 +13,7 @@ module.exports = {
         const user = await getUser(interaction.user.id)
         await interaction.deferReply()
 
-        fetch('https://apisal.herokuapp.com/random?cantadas')
+        fetch(`${process.env.url_apisal}/random?cantadas`)
             .then(response => response.json())
             .then(async res => {
 

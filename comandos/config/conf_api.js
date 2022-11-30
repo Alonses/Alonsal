@@ -10,7 +10,9 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        fetch('https://apisal.herokuapp.com/status')
+        interaction.deferReply()
+
+        fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())
             .then(retorno => {
 
@@ -18,7 +20,7 @@ module.exports = {
                 if (retorno.status)
                     texto_apisal = "✅ | A Apisal se encontra Online"
 
-                interaction.reply({ content: texto_apisal, ephemeral: true })
+                interaction.editReply({ content: texto_apisal, ephemeral: true })
             })
     }
 }
