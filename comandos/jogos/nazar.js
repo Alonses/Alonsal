@@ -27,7 +27,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle("> :wind_chime: Madame Nazar hoje")
-                    .setColor(user.misc.embed)
+                    .setColor(client.embed_color(user.misc.color))
                     .setDescription(`A Madame Nazar se encontra hoje na região de \n\`${dados.location.region.name}\`, em \`${dados.location.region.precise}\`\n\n:round_pushpin: Próximo a \`${dados.location.near_by[0]}\` e \`${dados.location.near_by[1]}\``)
                     .setImage(dados.location.image)
 
