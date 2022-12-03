@@ -47,7 +47,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(client.tls.phrase(client, interaction, "mode.anuncio.ativos"))
                     .setThumbnail(res[0].thumbnail)
-                    .setColor(user.misc.embed)
+                    .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${client.tls.phrase(client, interaction, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
                 interaction.editReply({ embeds: [embed], components: [row] })
