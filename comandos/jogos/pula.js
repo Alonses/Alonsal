@@ -47,7 +47,7 @@ module.exports = {
                     .addFields(
                         {
                             name: `${client.emoji(emojis.pula_2)} **Gerais**`,
-                            value: `:part_alternation_mark: **Pulos:** \`${datas_pula.pulos}\`\n:rocket: **Mods Ativos:** \`${datas_pula.mods}\`\n:skull_crossbones: **Mortes:** \`${datas_pula.mortes}\``,
+                            value: `:part_alternation_mark: **Pulos:** \`${client.formata_num(datas_pula.pulos)}\`\n:rocket: **Mods Ativos:** \`${client.formata_num(datas_pula.mods)}\`\n:skull_crossbones: **Mortes:** \`${client.formata_num(datas_pula.mortes)}\``,
                             inline: true,
                         },
                         {
@@ -57,19 +57,19 @@ module.exports = {
                         },
                         {
                             name: `${client.emoji(emojis.mc_esmeralda)} **Moedas**`,
-                            value: `:bank: **Coletadas:** \`${datas_pula.moedas_coletadas}\`\n:money_with_wings: **Gastas:** \`${datas_pula.moedas_gastas}\`\n:moneybag: **Guardadas:** \`${datas_pula.moedas}\``,
+                            value: `:bank: **Coletadas:** \`${client.formata_num(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **Gastas:** \`${client.formata_num(datas_pula.moedas_gastas)}\`\n:moneybag: **Guardadas:** \`${client.formata_num(datas_pula.moedas)}\``,
                             inline: true
                         },
                     )
                     .addFields(
                         {
                             name: `:carousel_horse: **Eventos**`,
-                            value: `:man_playing_water_polo: **Áquatico:** \`${datas_pula.eventos[0]}\`\n:hotsprings: **Lava:** \`${datas_pula.eventos[1]}\`\n:checkered_flag: **Concluídos:** \`${datas_pula.eventos_concluidos}\``,
+                            value: `:man_playing_water_polo: **Áquatico:** \`${client.formata_num(datas_pula.eventos[0])}\`\n:hotsprings: **Lava:** \`${client.formata_num(datas_pula.eventos[1])}\`\n:checkered_flag: **Concluídos:** \`${client.formata_num(datas_pula.eventos_concluidos)}\``,
                             inline: true
                         },
                         {
                             name: `⠀`,
-                            value: `:city_dusk: **Zona Densa:** \`${datas_pula.eventos[2]}\`\n:park: **Parque:** \`${datas_pula.eventos[3]}\`\n:house_abandoned: **Pisões:** \`${datas_pula.pisoes}\``,
+                            value: `:city_dusk: **Zona Densa:** \`${client.formata_num(datas_pula.eventos[2])}\`\n:park: **Parque:** \`${client.formata_num(datas_pula.eventos[3])}\`\n:house_abandoned: **Pisões:** \`${client.formata_num(datas_pula.pisoes)}\``,
                             inline: true
                         },
                         {
@@ -80,7 +80,7 @@ module.exports = {
                     )
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    embed.setDescription(`\`\`\`🏆 Recorde de ${datas_pula.recorde} pontos numa partida!\n🏃 ${(datas_pula.distancia_percorrida / 1000).toLocaleString('pt-BR')} km's percorridos no total\`\`\``)
+                    embed.setDescription(`\`\`\`🏆 Recorde de ${client.formata_num(datas_pula.recorde)} pontos numa partida!\n🏃 ${(datas_pula.distancia_percorrida / 1000).toFixed(2)} km's percorridos no total\`\`\``)
 
                 return interaction.reply({ embeds: [embed] })
             })
@@ -88,7 +88,7 @@ module.exports = {
 
                 console.log(err)
 
-                return interaction.reply({ content: "Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
+                return interaction.reply({ content: ":anger: | Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
             })
     }
 }
