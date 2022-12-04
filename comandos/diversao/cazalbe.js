@@ -54,6 +54,8 @@ module.exports = {
 			return interaction.reply({ files: [file] })
 		} else {
 
+			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+
 			const user = await getUser(interaction.user.id)
 			await interaction.deferReply()
 

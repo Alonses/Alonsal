@@ -132,8 +132,6 @@ module.exports = {
             .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
             .setFooter({ text: client.tls.phrase(client, interaction, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
-        console.log(`Confirmar:${entrada}-${new_color}`)
-
         // Criando os botões para a cor customizada
         const row = create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
 
