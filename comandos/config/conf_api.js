@@ -10,17 +10,19 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        interaction.deferReply()
-
         fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())
             .then(retorno => {
 
+                let text = 'Processamento atual\n', used = retorno.process
                 let texto_apisal = "🛑 | A Apisal se encontra Offline"
                 if (retorno.status)
                     texto_apisal = "✅ | A Apisal se encontra Online"
 
-                interaction.editReply({ content: texto_apisal, ephemeral: true })
+                for (let key in used)
+                    text += `${key}: ${used[key]} MB\n`
+
+                interaction.reply({ content: `\`\`\`${texto_apisal}\n\n${text}\`\`\``, ephemeral: true })
             })
     }
 }
