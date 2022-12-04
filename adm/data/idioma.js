@@ -14,13 +14,17 @@ function loadAll() {
 
     fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
-        fetch("https://api.github.com/repos/Alonses/Alondioma")
-            .then(res => res.json())
-            .then(content => {
-                if (content.updated_at !== data) {
-                    console.log("Sincronizando com os idiomas mais recentes")
+        fetch("https://github.com/Alonses/Alondioma")
+            .then(response => response.text())
+            .then(async res => {
 
-                    fs.writeFile('./arquivos/data/language.txt', content.updated_at, (err) => {
+                // Buscando o commit mais recente
+                const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
+
+                if (cod_commit !== data) {
+                    console.log("Sincronizando com os idiomas mais recentes.")
+
+                    fs.writeFile('./arquivos/data/language.txt', cod_commit, (err) => {
                         if (err) throw err
                     })
 
