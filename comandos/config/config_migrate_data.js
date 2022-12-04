@@ -1,6 +1,7 @@
+const { readdirSync } = require("fs")
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
-const { migrateUsers } = require("../../adm/database/schemas/User.js")
+const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,13 +10,25 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        return
+        // const user = await getUser(interaction.user.id)
 
-        interaction.deferReply()
+        // for (const file of readdirSync(`./arquivos/data/user/`)) {
+        //     const { id, lang, social, misc, badges, conquistas } = require(`../../arquivos/data/user/${file}`)
 
-        await migrateUsers()
-            .then(() => {
-                interaction.editReply(`:satellite: | Migração para o banco de dados concluída`)
-            })
+        //     if (id == user.uid) {
+        //         console.log(badges.badge_list)
+        //         user.badges.badge_list = badges.badge_list
+
+        //         console.log(user.badges.badge_list)
+        //         user.save()
+        //     }
+        // }
+
+        // interaction.deferReply()
+
+        // await migrateUsers()
+        //     .then(() => {
+        //         interaction.editReply(`:satellite: | Migração para o banco de dados concluída`)
+        //     })
     }
 }

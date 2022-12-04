@@ -14,20 +14,23 @@ module.exports = {
             "it": '⌠👤⌡ Guarda i tuoi badge'
         }),
     async execute(client, interaction) {
-        const user = await getUser(interaction.user.id)
 
         return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
-        // Procurando pelas badges antes do comando
-        if (user.badges.badge_list.length <= 0 || !user.badges.badge_list)
-            return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
+        // const user = await getUser(interaction.user.id)
 
-        const embed = new EmbedBuilder()
-            .setTitle(`> ${client.tls.phrase(client, interaction, "dive.badges.suas_badges")}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(await buildAllBadges(client, interaction))
-            .setFooter({ text: client.tls.phrase(client, interaction, "dive.badges.rodape") })
+        // console.log(user.badges.badge_list)
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        // // Buscando as badges do usuário
+        // if (user.badges.badge_list.length <= 0 || !user.badges.badge_list)
+        //     return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
+
+        // const embed = new EmbedBuilder()
+        //     .setTitle(`> ${client.tls.phrase(client, interaction, "dive.badges.suas_badges")}`)
+        //     .setColor(client.embed_color(user.misc.color))
+        //     .setDescription(await buildAllBadges(client, interaction))
+        //     .setFooter({ text: client.tls.phrase(client, interaction, "dive.badges.rodape") })
+
+        // interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }

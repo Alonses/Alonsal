@@ -44,8 +44,8 @@ module.exports = {
                     "it": '⌠👤⌡ Rimuovi il badge da appuntato'
                 })),
     async execute(client, interaction) {
-        const id = interaction.user.id
-        const user = await getUser(id)
+        // const id = interaction.user.id
+        // const user = await getUser(id)
 
         return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
