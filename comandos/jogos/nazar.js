@@ -17,8 +17,6 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
-
         const user = await getUser(interaction.user.id)
 
         fetch('https://madam-nazar-location-api.herokuapp.com/location/current')

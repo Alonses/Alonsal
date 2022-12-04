@@ -60,6 +60,9 @@ module.exports = {
             return client.tls.reply(client, interaction, "manu.data.sem_dados", true)
 
         if (exclusao) { // Excluindo os dados do usuário do bot
+
+            return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+
             for (const folder of readdirSync(`./arquivos/data/rank/`)) {
                 for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {
                     if (file.includes(interaction.user.id))
@@ -80,8 +83,8 @@ module.exports = {
             //     })
             // }
 
-            if (user.badges.badge_list.length > 0)
-                dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, badgeTypes.ALL, interaction.user.id, interaction).build(client, interaction)}`
+            // if (user.badges.badge_list.length > 0)
+            //     dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, badgeTypes.ALL, interaction.user.id, interaction).build(client, interaction)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(client, interaction, "manu.data.dados_conhecidos"))
