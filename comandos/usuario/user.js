@@ -151,14 +151,14 @@ module.exports = {
                     discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
-            let badges = buildAllBadges(client, interaction)
+            // let badges = buildAllBadges(client, interaction)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
             const user_c = await getUser(user.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
-                .setColor(user_c.color || "#ffffff")
+                .setColor(client.embed_color(user_c.misc.color))
                 .setThumbnail(avatar_user)
                 .addFields(
                     {
@@ -186,12 +186,12 @@ module.exports = {
                 )
                 .setFooter({ text: `${tipo_user} ${nota_rodape}` })
 
-            if (badges.length > 0)
-                infos_user.addFields({
-                    name: ':trophy: **Badges**',
-                    value: badges,
-                    inline: false
-                })
+            // if (badges.length > 0)
+            //     infos_user.addFields({
+            //         name: ':trophy: **Badges**',
+            //         value: badges,
+            //         inline: false
+            //     })
 
             return interaction.reply({ embeds: [infos_user] })
         } else { // O avatar do usuário

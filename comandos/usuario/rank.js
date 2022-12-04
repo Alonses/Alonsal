@@ -161,7 +161,7 @@ module.exports = {
                     else
                         usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
-                    experiencias.push(`\`${client.formata_num(user.xp.toFixed(2))} EXP\``)
+                    experiencias.push(`\`${client.formata_num(parseInt(user.xp))} EXP\``)
                     levels.push(`\`${client.formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
                 }
 
@@ -244,6 +244,6 @@ module.exports = {
                 })
             })
         } else // Ranking global
-            interaction.reply({ content: 'Um comando bem enceirado vem aí...', ephemeral: true })
+            return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
     }
 }
