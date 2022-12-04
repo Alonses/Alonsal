@@ -112,7 +112,7 @@ module.exports = {
                 return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(client, interaction, "misc.color.cor_ativa")}`, ephemeral: true })
         }
 
-        let cor_demonstracao = entrada.split(".")[1] === 10 ? alea_hex() : colors[entrada.split(".")[1]]
+        let cor_demonstracao = entrada.split(".")[1] === "10" ? alea_hex() : colors[entrada.split(".")[1]]
         let nota_cor_aleatoria = ""
 
         // Cor customizada

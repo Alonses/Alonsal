@@ -16,8 +16,7 @@ module.exports = async ({ client, interaction }) => {
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
             let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
-            let min = formata_horas(d.getMinutes())
-            let hr = formata_horas(d.getHours())
+            let min = formata_horas(d.getMinutes()), hr = formata_horas(d.getHours())
 
             let ampm = "am"
             if (hr > 12) {
@@ -25,9 +24,7 @@ module.exports = async ({ client, interaction }) => {
                 ampm = "pm"
             }
 
-            let comando_inserido = interaction.commandName
-            let entradas = []
-
+            let comando_inserido = interaction.commandName, entradas = []
             let filtrador = interaction.options.data
 
             filtrador.forEach(valor => {
@@ -59,9 +56,8 @@ module.exports = async ({ client, interaction }) => {
 
             comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
 
-            const date = d.getDate()
+            const date = d.getDate(), year = d.getFullYear()
             const month = d.toLocaleString('en-US', { month: 'long' })
-            const year = d.getFullYear()
 
             let embed = new EmbedBuilder()
                 .setTitle("> ✨ New interaction")
@@ -72,7 +68,8 @@ module.exports = async ({ client, interaction }) => {
             if (url_ativacao !== "")
                 embed.setURL(`${url_ativacao}`)
 
-            client.discord.channels.cache.get('846151364492001280').send({ embeds: [embed] }) // Envia o log com os comandos do usuário
+            // Envia um log de telemetria com o comando disparado
+            client.discord.channels.cache.get('846151364492001280').send({ embeds: [embed] })
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
