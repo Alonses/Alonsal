@@ -2,6 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { getUser } = require("../../adm/database/schemas/User.js")
 
@@ -30,65 +31,62 @@ module.exports = {
         const user = await getUser(alvo.id)
 
         if (!user.social.pula_predios)
-            return interaction.reply({ content: "Este usuário não vinculou sua conta Discord ao Pula Prédios:tm: ainda!", ephemeral: true })
+            return client.tls.reply(client, interaction, "game.pula.vinculo", true)
 
         fetch(`${process.env.url_apisal}/pula?token=placholder&sync=1&token_user=${user.social.pula_predios}`)
             .then(res => res.json())
             .then(retorno => {
 
                 if (retorno.status == 404)
-                    return interaction.reply({ content: ":warning: | Houve um erro com o Token, estamos enceirando para descobrir qual foi o problema, por favor, tente novamente mais tarde", ephemeral: true })
+                    return client.tls.reply(client, interaction, "game.pula.error_1", true, 0)
 
                 const datas_pula = retorno.data
 
                 const embed = new EmbedBuilder()
-                    .setTitle("> Suas estatísticas no Pula")
+                    .setTitle(client.tls.phrase(client, interaction, "game.pula.estatisticas_pula"))
                     .setColor(client.embed_color(user.misc.color))
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.pula_2)} **Gerais**`,
-                            value: `:part_alternation_mark: **Pulos:** \`${client.formata_num(datas_pula.pulos)}\`\n:rocket: **Mods Ativos:** \`${client.formata_num(datas_pula.mods)}\`\n:skull_crossbones: **Mortes:** \`${client.formata_num(datas_pula.mortes)}\``,
+                            name: `${client.emoji(emojis.pula_2)} **${client.tls.phrase(client, interaction, "game.pula.gerais")}**`,
+                            value: `:part_alternation_mark: **${client.tls.phrase(client, interaction, "game.pula.pulos")}:** \`${client.formata_num(datas_pula.pulos)}\`\n:rocket: **${client.tls.phrase(client, interaction, "game.pula.mods_ativos")}:** \`${client.formata_num(datas_pula.mods)}\`\n:skull_crossbones: **${client.tls.phrase(client, interaction, "game.pula.mortes")}:** \`${client.formata_num(datas_pula.mortes)}\``,
                             inline: true,
                         },
                         {
-                            name: `:clock: Tempos`,
-                            value: `:joystick: **Jogado:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **Voando:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **Em eventos:** \`${datas_pula.tempo_eventos}s\``,
+                            name: `:clock: ${client.tls.phrase(client, interaction, "game.pula.tempos")}`,
+                            value: `:joystick: **${client.tls.phrase(client, interaction, "game.pula.jogado")}:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **${client.tls.phrase(client, interaction, "game.pula.voando")}:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **${client.tls.phrase(client, interaction, "game.pula.em_eventos")}:** \`${datas_pula.tempo_eventos}s\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_esmeralda)} **Moedas**`,
-                            value: `:bank: **Coletadas:** \`${client.formata_num(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **Gastas:** \`${client.formata_num(datas_pula.moedas_gastas)}\`\n:moneybag: **Guardadas:** \`${client.formata_num(datas_pula.moedas)}\``,
+                            name: `${client.emoji(emojis.mc_esmeralda)} **${client.tls.phrase(client, interaction, "game.pula.moedas")}**`,
+                            value: `:bank: **${client.tls.phrase(client, interaction, "game.pula.coletadas")}:** \`${client.formata_num(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **${client.tls.phrase(client, interaction, "game.pula.gastas")}:** \`${client.formata_num(datas_pula.moedas_gastas)}\`\n:moneybag: **${client.tls.phrase(client, interaction, "game.pula.guardadas")}:** \`${client.formata_num(datas_pula.moedas)}\``,
                             inline: true
                         },
                     )
                     .addFields(
                         {
-                            name: `:carousel_horse: **Eventos**`,
-                            value: `:man_playing_water_polo: **Áquatico:** \`${client.formata_num(datas_pula.eventos[0])}\`\n:hotsprings: **Lava:** \`${client.formata_num(datas_pula.eventos[1])}\`\n:checkered_flag: **Concluídos:** \`${client.formata_num(datas_pula.eventos_concluidos)}\``,
+                            name: `:carousel_horse: **${client.tls.phrase(client, interaction, "game.pula.eventos")}**`,
+                            value: `:man_playing_water_polo: **${client.tls.phrase(client, interaction, "game.pula.aquatico")}:** \`${client.formata_num(datas_pula.eventos[0])}\`\n:hotsprings: **${client.tls.phrase(client, interaction, "game.pula.lava")}:** \`${client.formata_num(datas_pula.eventos[1])}\`\n:checkered_flag: **${client.tls.phrase(client, interaction, "game.pula.concluidos")}:** \`${client.formata_num(datas_pula.eventos_concluidos)}\``,
                             inline: true
                         },
                         {
                             name: `⠀`,
-                            value: `:city_dusk: **Zona Densa:** \`${client.formata_num(datas_pula.eventos[2])}\`\n:park: **Parque:** \`${client.formata_num(datas_pula.eventos[3])}\`\n:house_abandoned: **Pisões:** \`${client.formata_num(datas_pula.pisoes)}\``,
+                            value: `:city_dusk: **${client.tls.phrase(client, interaction, "game.pula.zona_densa")}:** \`${client.formata_num(datas_pula.eventos[2])}\`\n:park: **${client.tls.phrase(client, interaction, "game.pula.parque")}:** \`${client.formata_num(datas_pula.eventos[3])}\`\n:house_abandoned: **${client.tls.phrase(client, interaction, "game.pula.pisoes")}:** \`${client.formata_num(datas_pula.pisoes)}\``,
                             inline: true
                         },
                         {
                             name: `⠀`,
-                            value: `:gem: **Conquistas**\n:tropical_drink: **Progresso ${datas_pula.conquistas} / ${datas_pula.consquistas_total}**`,
+                            value: `:gem: **${client.tls.phrase(client, interaction, "util.steam.conquistas")}**\n:tropical_drink: **${client.tls.phrase(client, interaction, "game.pula.progresso")} ${datas_pula.conquistas} / ${datas_pula.consquistas_total}**`,
                             inline: true
                         }
                     )
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    embed.setDescription(`\`\`\`🏆 Recorde de ${client.formata_num(datas_pula.recorde)} pontos numa partida!\n🏃 ${(datas_pula.distancia_percorrida / 1000).toFixed(2)} km's percorridos no total\`\`\``)
+                    embed.setDescription(`\`\`\`${client.tls.phrase(client, interaction, "game.pula.recorde").replace("pontos_repl", client.formata_num(datas_pula.recorde)).replace("distancia_repl", (datas_pula.distancia_percorrida / 1000).toFixed(2))}\`\`\``)
 
                 return interaction.reply({ embeds: [embed] })
             })
-            .catch(err => {
-
-                console.log(err)
-
-                return interaction.reply({ content: ":anger: | Houve um erro com a APISAL, não sendo foi possível realizar essa função no momento, tente novamente mais tarde", ephemeral: true })
+            .catch(() => {
+                return client.tls.reply(client, interaction, "game.pula.error_2", true, 0)
             })
     }
 }

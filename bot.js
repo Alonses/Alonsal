@@ -15,9 +15,8 @@ client.discord.once('ready', async () => {
 	idioma.setDefault('pt-br')
 
 	client.owners = process.env.owner_id.split(", ")
-
-	if (client.x.status)
-		await require('./adm/eventos/status.js')({ client })
+	
+	await require('./adm/eventos/status.js')({ client })
 
 	console.log(`Caldeiras do ${client.user().username} aquecidas, pronto para operar`)
 })
