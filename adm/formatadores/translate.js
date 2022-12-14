@@ -4,6 +4,10 @@ const status = {
     2: ':warning: | '
 }
 
+const { getUser } = require("../../adm/database/schemas/User.js")
+
+const cache = {}
+
 function reply(client, interaction, target, ephemeral, type) {
 
     let phrase = translate(client, interaction, target)
@@ -32,8 +36,14 @@ function phrase(client, interaction, target) {
 
 function translate(client, interaction, target) {
 
+    const default_lang = 'pt-br'
+    // if (!cache[interaction.user.id]) {
+    //     const user = await getUser(interaction.user.id)
+    //     cache[user.uid]["lang"] = user.lang
+    // }
+
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../arquivos/idiomas/${client.idioma.getLang(interaction)}.json`)
+    let { data } = require(`../../arquivos/idiomas/${default_lang}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
@@ -52,6 +62,8 @@ function translate(client, interaction, target) {
 
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
         data = data.data
+
+        console.log(target, target.split("."))
 
         // Retornando a tradução em PT-BR (idioma padrão)
         if (!target.includes("minecraft.detalhes"))

@@ -15,13 +15,15 @@ client.discord.once('ready', async () => {
 	idioma.setDefault('pt-br')
 
 	client.owners = process.env.owner_id.split(", ")
-	
+
 	await require('./adm/eventos/status.js')({ client })
 
 	console.log(`Caldeiras do ${client.user().username} aquecidas, pronto para operar`)
 })
 
 client.discord.on('messageCreate', async (message) => {
+
+	if (message.author.bot || message.webhookId) return
 
 	let text = message.content.toLowerCase()
 
@@ -30,8 +32,6 @@ client.discord.on('messageCreate', async (message) => {
 		await require('./adm/eventos/conversacao.js')({ client, message, text })
 		return
 	}
-
-	if (message.author.bot || message.webhookId) return
 
 	try { // Atualizando o XP dos usuários
 		const caso = 'messages'
