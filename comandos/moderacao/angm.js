@@ -126,11 +126,11 @@ module.exports = {
 
         client.discord.channels.cache.get('872865396200452127').send(mensagem)
 
-        let feedback_user = client.tls.phrase(client, interaction, "manu.anuncio.anuncio_games")
+        let feedback_user = client.tls.phrase(client, interaction, "mode.anuncio.anuncio_games")
 
         if (opcao_remove)
-            feedback_user = `:mobile_phone_off: | ${client.tls.phrase(client, interaction, "manu.anuncio.anuncio_off")}`
+            feedback_user = `:mobile_phone_off: | ${client.tls.phrase(client, interaction, "mode.anuncio.anuncio_off")}`
 
-        client.tls.reply(client, interaction, feedback_user.replace("repl_canal", `<#${notificador.canal}>`), true)
+        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
     }
 }
