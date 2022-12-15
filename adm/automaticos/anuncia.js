@@ -5,7 +5,7 @@ const dispara_anuncio = require('./dispara_anuncio.js')
 
 module.exports = async ({ client }) => {
 
-    if (client.id() !== process.env.client_1) return
+    if (client.id() !== process.env.client_1 || !client.x.status) return
 
     const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
     let controle = 0
@@ -15,11 +15,16 @@ module.exports = async ({ client }) => {
         controle = 7
 
     const dias = [4, 3, 2, 1, controle, 6, 5]
-    const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
+    // const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
+
+    if (date1.getHours() >= 13) return
+
+    // Atualiza todo dia
+    const tempo_restante = ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
     setTimeout(() => {
-        gera_anuncio(client, 604800000)
-        requisita_anuncio(client, 604800000) // Altera o valor para sempre executar à meia-noite
+        gera_anuncio(client, 86400000)
+        requisita_anuncio(client, 86400000) // Altera o valor para sempre executar à meia-noite
     }, tempo_restante) // Executa de 1 em 1 semana
 }
 

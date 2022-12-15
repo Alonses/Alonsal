@@ -20,6 +20,11 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
     const canais_clientes = []
 
+    if (objetos_anunciados.status == 501) {
+        client.discord.channels.cache.get('872865396200452127').send(":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
+        return
+    }
+
     for (const file of readdirSync(`./arquivos/data/games/`)) {
         const data = require(`../../arquivos/data/games/${file}`)
 
@@ -44,7 +49,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
         lista_links.push({ name: nome_jogo, type: 4, value: valor.link })
 
-        if (parseFloat(valor.preco) > valor_anterior) {
+        if (parseFloat(valor.preco) > valor_anterior || (parseInt(valor.preco) == 0 && objetos_anunciados.length == 1)) {
             valor_anterior = parseFloat(valor.preco)
             imagem_destaque = valor.thumbnail
         }
