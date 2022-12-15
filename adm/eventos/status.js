@@ -10,6 +10,9 @@ module.exports = async ({ client }) => {
 
     if (client.id() === process.env.client_1) {
 
+        // Não notifica que o bot ficou online
+        if (!client.x.status) return
+
         fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())
             .then(retorno => {
