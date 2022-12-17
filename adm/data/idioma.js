@@ -8,7 +8,7 @@ const fs = require('fs')
 let default_lang
 
 // Carrega todos os idiomas do bot diretamente do git
-function loadAll() {
+function loadAll(client) {
     if (!existsSync(`./arquivos/idiomas/`))
         mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
@@ -27,6 +27,8 @@ function loadAll() {
                     fs.writeFile('./arquivos/data/language.txt', cod_commit, (err) => {
                         if (err) throw err
                     })
+
+                    client.channels().get('872865396200452127').send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
 
                     fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                         .then(res => res.json())
