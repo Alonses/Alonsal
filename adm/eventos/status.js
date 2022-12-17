@@ -11,35 +11,35 @@ module.exports = async ({ client }) => {
     if (client.id() === process.env.client_1) {
 
         // Não notifica que o bot ficou online
-        if (!client.x.status) return
+        if (client.x.status) {
+            fetch(`${process.env.url_apisal}/status`)
+                .then(res => res.json())
+                .then(retorno => {
 
-        fetch(`${process.env.url_apisal}/status`)
-            .then(res => res.json())
-            .then(retorno => {
+                    let status_apisal = "🛑 Offline"
+                    if (retorno.status)
+                        status_apisal = "✅ Online"
 
-                let status_apisal = "🛑 Offline"
-                if (retorno.status)
-                    status_apisal = "✅ Online"
+                    dispara_status(client, status_apisal)
+                })
+                .catch(() => {
+                    dispara_status(client, "🛑 Offline")
+                })
 
-                dispara_status(client, status_apisal)
-            })
-            .catch(() => {
-                dispara_status(client, "🛑 Offline")
-            })
+            client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
 
-        client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
+            const activities = [
+                "/idioma | Español!",
+                `comandos em barra`,
+                "traducciones",
+                "slash commands",
+                "itens pixelados",
+                "baidu en comandos"
+            ]
 
-        const activities = [
-            "/idioma | Español!",
-            `comandos em barra`,
-            "traducciones",
-            "slash commands",
-            "itens pixelados",
-            "baidu en comandos"
-        ]
-
-        let i = 0
-        setInterval(() => client.user().setActivity(`${activities[i++ % activities.length]}`, { type: ActivityType.Playing }), 10000)
+            let i = 0
+            setInterval(() => client.user().setActivity(`${activities[i++ % activities.length]}`, { type: ActivityType.Playing }), 10000)
+        }
     } else
         client.user().setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
 
