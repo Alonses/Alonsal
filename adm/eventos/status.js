@@ -6,7 +6,7 @@ const fs = require('fs')
 
 module.exports = async ({ client }) => {
 
-    client.idioma.loadAll()
+    client.idioma.loadAll(client)
 
     if (client.id() === process.env.client_1) {
 
