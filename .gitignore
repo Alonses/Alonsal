@@ -9,3 +9,4 @@ discloud.config
 .env
 arquivos/data/*
 arquivos/idiomas/*
+*.sfk

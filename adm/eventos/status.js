@@ -29,9 +29,9 @@ module.exports = async ({ client }) => {
             client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
 
             const activities = [
-                "/idioma | Español!",
-                `comandos em barra`,
-                "traducciones",
+                "ovos",
+                `baidu em ${client.guilds().size} servers`,
+                "games de graça",
                 "slash commands",
                 "itens pixelados",
                 "baidu en comandos"
