@@ -17,7 +17,6 @@ module.exports = {
 
         let canais_texto = client.channels().filter((c) => c.type === 0).size
         let members = 0, processamento = '🎲 Processamento\n'
-        let emoji_esmeralda = client.emoji(emojis.mc_esmeralda)
 
         client.guilds().forEach(async guild => {
             members += guild.memberCount - 1
@@ -61,7 +60,7 @@ module.exports = {
                 },
                 {
                     name: ':bank: Bufunfas',
-                    value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
+                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
                     inline: true
                 }
             )

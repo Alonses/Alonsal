@@ -61,7 +61,6 @@ module.exports = {
             pesquisa = interaction.options.data[0].value
 
         const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
-        const emoji_nao_encontrado = client.emoji(emojis_negativos)
 
         let url_completa = `${base_url}appid=${process.env.weather_key}&q=${pesquisa}&units=metric&lang=pt`
 
@@ -76,11 +75,11 @@ module.exports = {
             .then(async res => {
 
                 if (res.cod === '404' || res.cod === '400')
-                    return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}\n${client.tls.phrase(client, interaction, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}\n${client.tls.phrase(client, interaction, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
                 else if (res.cod === '429') // Erro da API
-                    return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.tempo.aviso_3")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.tempo.aviso_3")}`, ephemeral: true })
                 else if (res.id === 1873107)
-                    return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.tempo.error_2")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.tempo.error_2")}`, ephemeral: true })
                 else {
                     const url_hora = `${time_url}key=${process.env.time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`
 

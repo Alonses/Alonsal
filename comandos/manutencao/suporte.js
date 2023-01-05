@@ -21,12 +21,11 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const bolo = client.emoji(emojis.mc_bolo)
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.apoio.apoie")} ${bolo}`)
+            .setTitle(`${client.tls.phrase(client, interaction, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
             .setURL("https://picpay.me/slondo")
             .setDescription(client.tls.phrase(client, interaction, "manu.apoio.escaneie"))
             .setImage("https://i.imgur.com/incYvy2.jpg")

@@ -24,7 +24,6 @@ module.exports = {
             return interaction.reply({ content: `:bank: | ${client.tls.phrase(client, interaction, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
         }
 
-        const emoji_dancando = client.emoji(emojis_dancantes)
         const bufunfa = Math.floor(900 + (Math.random() * 500))
 
         user.misc.money += bufunfa
@@ -35,6 +34,6 @@ module.exports = {
 
         user.save()
 
-        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(client, interaction, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${emoji_dancando}`, ephemeral: true })
+        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(client, interaction, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${client.emoji(emojis_dancantes)}`, ephemeral: true })
     }
 }

@@ -15,12 +15,11 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const emoji_rainha = client.emoji(emojis.dancando_elizabeth)
         const user = await getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.hub.hub_alonsal")} ${emoji_rainha}`)
+            .setTitle(`${client.tls.phrase(client, interaction, "manu.hub.hub_alonsal")} ${client.emoji(emojis.dancando_elizabeth)}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')
             .setDescription(client.tls.phrase(client, interaction, "manu.hub.info"))

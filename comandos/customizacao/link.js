@@ -113,7 +113,7 @@ module.exports = {
                         .setRequired(true))),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id), emoji_dancando = client.emoji(emojis_dancantes)
+        const user = await getUser(interaction.user.id)
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
 
         if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
@@ -132,8 +132,8 @@ module.exports = {
         user.save()
 
         if (plataforma !== "locale")
-            return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
         else // Link de local do /tempo
-            return interaction.reply({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
     }
 }

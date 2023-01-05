@@ -27,10 +27,9 @@ module.exports.busca_badges = async (client, type, id_alvo) => {
     } else if (user.badges.badge_list)
         user.badges.badge_list.forEach(valor => {
             const id = parseInt(Object.keys(valor)[0])
-            const emoji_badge = client.emoji(badge_ids[id])
 
             // Listando todas as badges que o usuário possui
-            all_badges.push(new Badge(badge_ids[id], badge_names[id], emoji_badge))
+            all_badges.push(new Badge(badge_ids[id], badge_names[id], client.emoji(badge_ids[id])))
         })
 
 

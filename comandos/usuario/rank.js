@@ -173,9 +173,8 @@ module.exports = {
 
             let embed, img_embed
             let user = await getUser(interaction.user.id)
-            const emoji_ceira = client.emoji(emojis.mc_honeycomb)
 
-            await fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
+            fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
                         .setTitle(`${client.tls.phrase(client, interaction, "dive.rank.rank_sv")} ${interaction.guild.name}`)
@@ -183,7 +182,7 @@ module.exports = {
                         .setDescription(`\`\`\`fix\n${client.tls.phrase(client, interaction, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
-                                name: `${emoji_ceira} ${client.tls.phrase(client, interaction, "dive.rank.enceirados")}`,
+                                name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(client, interaction, "dive.rank.enceirados")}`,
                                 value: usernames.join("\n"),
                                 inline: true
                             },

@@ -53,12 +53,11 @@ module.exports = {
             user.save()
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
-            const emoji_dancante = client.emoji(emojis_dancantes)
 
             client.discord.users.fetch(id_alvo, false).then((user_interno) => {
-                user_interno.send(`${emoji_dancante} | ${client.tls.phrase(client, id_alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+                user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, id_alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
-                interaction.reply({ content: `${emoji_dancante} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
+                interaction.reply({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })
         } else
             interaction.reply({ content: `:octagonal_sign: | O usuário <@!${id_alvo}> já possui a Badge mencionada!`, ephemeral: true })

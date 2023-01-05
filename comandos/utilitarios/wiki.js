@@ -40,7 +40,6 @@ module.exports = {
         if (content.includes("slondo")) // Pesquisa por slondo
             return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
 
-        const emoji_nao_encontrado = client.emoji(emojis_negativos)
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
         let counter = 0
@@ -89,13 +88,13 @@ module.exports = {
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.auto_pesquisa")} :v`)
+                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.auto_pesquisa")} :v`)
                     else
-                        interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
+                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
                 }
             })
             .catch(() => {
-                interaction.reply(`${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
+                interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
             })
     }
 }

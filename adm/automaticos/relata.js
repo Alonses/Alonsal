@@ -26,7 +26,6 @@ async function gera_relatorio(client, proxima_att) {
 
     const date1 = new Date()
     const bot = client.auto.getRelatorio()
-    let emoji_esmeralda = client.emoji(emojis.mc_esmeralda)
 
     let canais_texto = client.channels().filter((c) => c.type === 0).size
     let members = 0, processamento = '🎲 Processamento\n'
@@ -73,7 +72,7 @@ async function gera_relatorio(client, proxima_att) {
             },
             {
                 name: ':bank: Bufunfas',
-                value: `${emoji_esmeralda} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
+                value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
                 inline: true
             }
         )
