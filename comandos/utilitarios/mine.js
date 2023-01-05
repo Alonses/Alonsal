@@ -30,8 +30,6 @@ module.exports = {
         const idioma_definido = client.idioma.getLang(interaction)
 
         let objeto_encontrado = false, i = 0, pesquisa_crua = ""
-        const emoji_suv = client.emoji(emojis.mc_coracao)
-        const logo_wikipedia = client.emoji(emojis.mc_logo_wikipedia)
 
         // Entrada customizada, ativa caso o usuário tenha escrevido algo ao rodar o comando
         if (interaction.options.data.length > 0) pesquisa_crua = interaction.options.data[0].value
@@ -54,8 +52,8 @@ module.exports = {
                     let auto_compl = nome_simplificado
                     auto_compl = auto_compl.toLocaleLowerCase()
 
-                    if (lista_itens[i].descricao !== null) {
-                        descr_pesquisa = lista_itens[i].descricao.toLocaleLowerCase()
+                    if (lista_itens[i].item_descricao) {
+                        descr_pesquisa = lista_itens[i].item_descricao[0].descricao.toLocaleLowerCase()
 
                         if (descr_pesquisa.includes(pesquisa_crua.toLocaleLowerCase()))
                             descri = true
@@ -85,6 +83,7 @@ module.exports = {
                         objeto_encontrado = true
                         let nome_item = lista_itens[i].nome_item
                         let nome_pesquisa_wiki = nome_item
+                        let item_durabilidade = ""
 
                         let colet_suv = client.tls.phrase(client, interaction, "util.minecraft.sim")
                         let empilhavel = `${client.tls.phrase(client, interaction, "util.minecraft.ate")} ${lista_itens[i].empilhavel}`
@@ -109,15 +108,15 @@ module.exports = {
 
                         let fields = { name: "⠀", value: "⠀" }
 
-                        if (lista_itens[i].descricao != null) {
-                            if (lista_itens[i].descricao.includes("[&")) { // Poções
+                        if (lista_itens[i].item_descricao) {
+                            if (lista_itens[i].item_descricao[0].descricao.includes("[&")) { // Poções
 
-                                let valores_item = lista_itens[i].descricao
+                                let valores_item = lista_itens[i].item_descricao[0].descricao
 
-                                let descricao_tipo = `:magic_wand: ${client.tls.phrase(client, interaction, "util.minecraft.efeitos_aplicados")}`
+                                let descricao_tipo = `${client.emoji(emojis.mc_nether_star)} ${client.tls.phrase(client, interaction, "util.minecraft.efeitos_aplicados")}`
 
                                 if (!nome_item.includes("Poção") && !nome_item.includes("Frasco") && !nome_item.includes("Flecha"))
-                                    descricao_tipo = `:receipt: ${client.tls.phrase(client, interaction, "util.minecraft.atributos")}`
+                                    descricao_tipo = `${client.emoji(emojis.mc_writable_book)} ${client.tls.phrase(client, interaction, "util.minecraft.atributos")}`
 
                                 if (nome_item === "Disco musical") {
                                     nome_item = client.tls.phrase(client, interaction, "util.minecraft.disco_musical")
@@ -155,7 +154,7 @@ module.exports = {
 
                                         for (let k = 0; k < traduz_descri.length; k++) {
 
-                                            if (!descricao_tipo.includes(":magic_wand:")) {
+                                            if (!descricao_tipo.includes("nether_star")) {
                                                 alvo = traduz_descri[k].split(":")[0]
                                                 alvo_json = alvo.replaceAll(" ", "_").normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase()
                                             } else { // Traduzindo efeitos de poções e flechas
@@ -173,10 +172,13 @@ module.exports = {
                                         }
                                     }
 
-                                    fields = { name: descricao_tipo, value: `\`${valores_item}\`` }
+                                    fields = { name: descricao_tipo, value: `\`${valores_item}\``, inline: true }
                                 }
                             }
                         }
+
+                        if (lista_itens[i].item_durabilidade)
+                            item_durabilidade = lista_itens[i].item_durabilidade[0].durabilidade
 
                         if (lista_itens[i].versao_add > 19)
                             nota_rodape = client.tls.phrase(client, interaction, "util.minecraft.nota_rodape")
@@ -207,35 +209,49 @@ module.exports = {
                                         .setImage(url)
                                         .addFields(
                                             {
-                                                name: `${emoji_suv}** ${client.tls.phrase(client, interaction, "util.minecraft.coletavel")}**`,
+                                                name: `${client.emoji(emojis.mc_coracao)}** ${client.tls.phrase(client, interaction, "util.minecraft.coletavel")}**`,
                                                 value: `\`${colet_suv}\``,
                                                 inline: true
                                             },
-                                            { name: `:label: **${client.tls.phrase(client, interaction, "util.minecraft.tipo")}**`, value: `\`${tipo_item}\``, inline: true },
+                                            { name: `${client.emoji(emojis.mc_bamboo_sign)} **${client.tls.phrase(client, interaction, "util.minecraft.tipo")}**`, value: `\`${tipo_item}\``, inline: true },
                                             {
-                                                name: `:bookmark_tabs: **${client.tls.phrase(client, interaction, "util.minecraft.versao_add")}**`,
+                                                name: `${client.emoji(emojis.mc_goat_copper_horn)} **${client.tls.phrase(client, interaction, "util.minecraft.versao_add")}**`,
                                                 value: `\`1.${lista_itens[i].versao_add}\``,
                                                 inline: true
                                             }
                                         )
                                         .addFields(
                                             {
-                                                name: `:abacus: **${client.tls.phrase(client, interaction, "util.minecraft.empilhavel")}**`,
+                                                name: `${client.emoji(emojis.mc_chest)} **${client.tls.phrase(client, interaction, "util.minecraft.empilhavel")}**`,
                                                 value: `\`${empilhavel}\``,
                                                 inline: true
                                             },
                                             {
-                                                name: `:herb: **${client.tls.phrase(client, interaction, "util.minecraft.renovavel")}**`,
+                                                name: `${client.emoji(emojis.mc_cornflower)} **${client.tls.phrase(client, interaction, "util.minecraft.renovavel")}**`,
                                                 value: `\`${renovavel}\``,
                                                 inline: true
                                             },
                                             {
-                                                name: `:link: **${client.tls.phrase(client, interaction, "util.minecraft.nome_interno")}**`,
+                                                name: `${client.emoji(emojis.mc_name_tag)} **${client.tls.phrase(client, interaction, "util.minecraft.nome_interno")}**`,
                                                 value: `**\`minecraft:${lista_itens[i].nome_interno}\`**`,
                                                 inline: true
                                             }, fields
                                         )
                                         .setFooter({ text: nota_rodape })
+
+                                    if (item_durabilidade != "")
+                                        embed.addFields(
+                                            {
+                                                name: "⠀",
+                                                value: "⠀",
+                                                inline: true
+                                            },
+                                            {
+                                                name: `${client.emoji(emojis.mc_anvil)} **Durabilidade: ${item_durabilidade + 1}**`,
+                                                value: "⠀",
+                                                inline: true
+                                            }
+                                        )
 
                                     if (descricao_item_wiki !== "") {
 
@@ -245,14 +261,14 @@ module.exports = {
 
                                         embed.addFields(
                                             {
-                                                name: `${logo_wikipedia} Wiki sobre ${nome_item}`,
+                                                name: `${client.emoji(emojis.mc_logo_wikipedia)} Wiki sobre ${nome_item}`,
                                                 value: `\`\`\`fix\n${descricao_item_wiki}\`\`\`\n${link_artigo}`,
                                                 inline: false
                                             }
                                         )
                                     }
 
-                                    return interaction.reply({ embeds: [embed] })
+                                    return interaction.reply({ embeds: [embed], ephemeral: true })
                                 })
                         }
                     } else
@@ -260,9 +276,7 @@ module.exports = {
                 }
 
                 if (!objeto_encontrado) {
-                    const emoji_nao_encontrado = client.emoji(emojis_negativos)
-
-                    return interaction.reply({ content: `${emoji_nao_encontrado} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
                 }
             })
             .catch(() => {

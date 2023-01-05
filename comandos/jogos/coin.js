@@ -35,7 +35,6 @@ module.exports = {
     async execute(client, interaction) {
 
         const escolha = parseInt(interaction.options.data[0].value)
-        const emoji_dancando = client.emoji(emojis_dancantes)
 
         const moeda = Math.round(Math.random())
         let emoji_exib = ":coin:"
@@ -43,12 +42,10 @@ module.exports = {
         if (moeda === 1)
             emoji_exib = ":crown:"
 
-        let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.acertou")} ${emoji_dancando}`
+        let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.acertou")} ${client.emoji(emojis_dancantes)}`
 
-        if (escolha !== moeda) { // Acertou
-            const emoji_epic_embed_fail = client.emoji(emojis.epic_embed_fail2)
-            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.errou")} ${emoji_epic_embed_fail}`
-        }
+        if (escolha !== moeda) // Errou
+            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(client, interaction, "game.cara.errou")} ${client.emoji(emojis.epic_embed_fail2)}`
 
         return interaction.reply(resultado)
     }

@@ -24,7 +24,6 @@ module.exports = async ({ client, interaction }) => {
             })
         }
 
-        const emoji_dancando = client.emoji(emojis_dancantes)
         user.misc.money -= preco
 
         const caso = "movimentacao", quantia = preco
@@ -41,7 +40,7 @@ module.exports = async ({ client, interaction }) => {
         // Salvando os dados
         user.save()
 
-        interaction.update({ content: `${emoji_dancando} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
     }
 
     if (id_button === `Canc_${interaction.user.id}`)

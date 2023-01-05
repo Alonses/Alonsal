@@ -44,10 +44,6 @@ module.exports = {
 
             const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
 
-            const boost_sv = client.emoji(emojis.boost)
-            const emoji_dancando = client.emoji(emojis_dancantes)
-            const figurinhas = client.emoji(emojis.bigchad)
-
             let dono_sv = interaction.guild.ownerId
             const dono_membro = await interaction.guild.members.fetch(dono_sv)
             dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``
@@ -123,8 +119,8 @@ module.exports = {
                         inline: true
                     },
                     {
-                        name: `${emoji_dancando} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
-                        value: `${figurinhas} **${client.tls.phrase(client, interaction, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
+                        name: `${client.emoji(emojis_dancantes)} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
+                        value: `${client.emoji(emojis.bigchad)} **${client.tls.phrase(client, interaction, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                         inline: true
                     }
                 )
@@ -132,7 +128,7 @@ module.exports = {
             if (interaction.guild.premiumSubscriptionCount > 0)
                 infos_sv.addFields(
                     {
-                        name: `${boost_sv} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
+                        name: `${client.emoji(emojis.boost)} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
                         value: `:passport_control: **${client.tls.phrase(client, interaction, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
                         inline: true
                     }
