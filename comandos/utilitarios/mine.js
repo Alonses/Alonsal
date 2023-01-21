@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 const formata_texto = require('../../adm/formatadores/formata_texto')
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
@@ -103,7 +102,7 @@ module.exports = {
                 if (nota_rodape.includes("item_repl"))
                     nota_rodape = nota_rodape.replace("item_repl", pesquisa)
 
-                const user = await getUser(interaction.user.id)
+                const user = await client.getUser(interaction.user.id)
 
                 const embed = new EmbedBuilder()
                     .setTitle(dados_item.name)

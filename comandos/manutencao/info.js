@@ -1,7 +1,6 @@
 const fs = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
         let qtd_comandos = 1
 
         fs.readFile('./arquivos/data/ativacoes.txt', 'utf8', function (err, data) {

@@ -3,8 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-const { gifs } = require("../../arquivos/json/gifs/cazalbe.json")
+const { gifs } = require('../../arquivos/json/gifs/cazalbe.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -56,7 +55,7 @@ module.exports = {
 
 			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
-			const user = await getUser(interaction.user.id)
+			const user = await client.getUser(interaction.user.id)
 			await interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")

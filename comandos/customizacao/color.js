@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
@@ -67,7 +66,7 @@ module.exports = {
                 .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true))),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id), colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
+        const user = await client.getUser(interaction.user.id), colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
         let entrada = "", new_color
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })

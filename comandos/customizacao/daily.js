@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id), date1 = new Date()
+        const user = await client.getUser(interaction.user.id), date1 = new Date()
         let data_atual = date1.toDateString('pt-BR')
 
         if (data_atual === user.misc.daily) {

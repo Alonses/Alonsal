@@ -1,5 +1,6 @@
-const { existsSync, writeFileSync } = require("fs")
-const { getUser } = require("../../adm/database/schemas/User.js")
+const { existsSync, writeFileSync } = require('fs')
+
+const { getUser } = require('../../adm/database/schemas/User.js')
 
 const status = {
     0: ':octagonal_sign: | ',
@@ -38,7 +39,7 @@ function phrase(client, interaction, target) {
 function translate(client, interaction, target) {
 
     if (!cache[interaction.user.id]) {
-        getUser(interaction.user.id)
+        client.getUser(interaction.user.id)
             .then(user => {
                 cache[interaction.user.id] = user.lang
             })

@@ -2,7 +2,6 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,7 +9,7 @@ module.exports = {
     .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
   async execute(client, interaction) {
 
-    const user = await getUser(interaction.user.id)
+    const user = await client.getUser(interaction.user.id)
 
     fetch(`${process.env.url_apisal}/curiosidades`)
       .then(response => response.json())

@@ -1,9 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
-
-const { getUser } = require("../../adm/database/schemas/User.js")
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,7 +22,7 @@ module.exports = {
                 if (result.causa !== 'Forbidden') {
                     const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
                     let user
-                    getUser(interaction.user.id).then(usr => user = usr)
+                    client.getUser(interaction.user.id).then(usr => user = usr)
 
                     const eventos_transp = []
 

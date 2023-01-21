@@ -1,9 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
-
-const { getUser } = require("../../adm/database/schemas/User.js")
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -32,7 +30,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         let canal = interaction.options.getChannel('channel') || interaction.channel
         // Coletando os dados do canal informado

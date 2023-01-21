@@ -3,7 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
 
 module.exports = {
@@ -37,7 +36,7 @@ module.exports = {
 		} else {
 
 			await interaction.deferReply()
-			const user = await getUser(interaction.user.id)
+			const user = await client.getUser(interaction.user.id)
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
 				.then(response => response.json())

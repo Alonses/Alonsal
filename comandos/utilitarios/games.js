@@ -3,7 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
@@ -23,7 +22,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         await interaction.deferReply()
 

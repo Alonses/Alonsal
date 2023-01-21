@@ -3,7 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const create_buttons = require('../discord/create_buttons.js')
 const formata_anun = require('../formatadores/formata_games.js')
 
-const { readdirSync } = require("fs")
+const { readdirSync } = require('fs')
 
 const platformMap = {
     "epicgames.com": ["<:Logo_ep:864887054067957791>", "Epic Games"],

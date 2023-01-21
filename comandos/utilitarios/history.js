@@ -3,7 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const formata_texto = require('../../adm/formatadores/formata_texto.js')
 
 module.exports = {
@@ -61,7 +60,7 @@ module.exports = {
                     if (data === "") data = client.tls.phrase(client, interaction, "util.history.hoje")
 
                     data_eventos = ` ${data}`
-                    const user = await getUser(interaction.user.id)
+                    const user = await client.getUser(interaction.user.id)
 
                     const embed_eventos = new EmbedBuilder()
                         .setTitle(client.tls.phrase(client, interaction, "util.history.acontecimentos_1"))

@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { gifs } = require("../../arquivos/json/gifs/jailson.json")
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -39,7 +38,7 @@ module.exports = {
 		} else {
 
 			await interaction.deferReply()
-			const user = await getUser(interaction.user.id)
+			const user = await client.getUser(interaction.user.id)
 
 			fetch(`${process.env.url_apisal}/random?jailson`)
 				.then(response => response.json())

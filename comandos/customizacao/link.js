@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -113,7 +112,7 @@ module.exports = {
                         .setRequired(true))),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
 
         if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord

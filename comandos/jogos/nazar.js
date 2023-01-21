@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('nazar')
@@ -17,7 +15,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         fetch('https://madam-nazar-location-api.herokuapp.com/location/current')
             .then(res => res.json())

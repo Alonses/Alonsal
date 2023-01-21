@@ -1,4 +1,4 @@
-const { readdirSync } = require("fs")
+const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({

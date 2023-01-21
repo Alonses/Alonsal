@@ -1,9 +1,8 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { buildAllBadges } = require('../../adm/data/badges')
 
 // const busca_achievements = require('../../adm/data/conquistas')
@@ -154,7 +153,7 @@ module.exports = {
             // let badges = buildAllBadges(client, interaction)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
-            const user_c = await getUser(user.id)
+            const user_c = await client.getUser(user.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
@@ -197,7 +196,7 @@ module.exports = {
         } else { // O avatar do usuário
 
             let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
-            const user_c = await getUser(user.id)
+            const user_c = await client.getUser(user.id)
 
             fetch(url_avatar)
                 .then(res => {

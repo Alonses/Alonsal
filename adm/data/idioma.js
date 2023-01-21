@@ -1,8 +1,8 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { getUser } = require("../database/schemas/User.js")
-const { mkdirSync, writeFileSync, existsSync, readdirSync } = require("fs")
+const { getUser } = require('../database/schemas/User.js')
+const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
 const fs = require('fs')
 
 let default_lang

@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
@@ -17,7 +16,7 @@ module.exports = {
 
         return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
-        // const user = await getUser(interaction.user.id)
+        // const user = await client.getUser(interaction.user.id)
 
         // console.log(user.badges.badge_list)
 

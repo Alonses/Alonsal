@@ -1,13 +1,14 @@
 const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
+const { getUser } = require('./adm/database/schemas/User.js')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
 
 /* --------------------------------------------------------------- */
-// Alternância entre o modo normal e modo de testes
+// Alterna entre o modo normal e modo de testes
 const modo_develop = 0, force_update = 0, silent = 0
 let status = 1, ranking = 1
 
@@ -85,6 +86,10 @@ class CeiraClient {
 
     login(token) {
         return this.discord.login(token)
+    }
+
+    getUser(id_user) {
+        return getUser(id_user)
     }
 }
 

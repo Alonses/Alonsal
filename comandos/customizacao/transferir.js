@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -58,7 +57,7 @@ module.exports = {
         if (bufunfas < 0.01)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_2")}`, ephemeral: true })
 
-        const user = await getUser(interaction.user.id), alvo = await getUser(user_alvo.id)
+        const user = await client.getUser(interaction.user.id), alvo = await client.getUser(user_alvo.id)
 
         if (alvo.uid === user.uid)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(client, interaction, "misc.pay.error_3")}`, ephemeral: true })

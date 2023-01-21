@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +27,7 @@ module.exports = {
     async execute(client, interaction) {
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = await getUser(alvo.id)
+        const user = await client.getUser(alvo.id)
 
         if (!user.social.pula_predios)
             return client.tls.reply(client, interaction, "game.pula.vinculo", true)
