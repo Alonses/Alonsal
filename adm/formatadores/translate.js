@@ -1,10 +1,11 @@
+const { existsSync, writeFileSync } = require("fs")
+const { getUser } = require("../../adm/database/schemas/User.js")
+
 const status = {
     0: ':octagonal_sign: | ',
     1: ':mag: | ',
     2: ':warning: | '
 }
-
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 const cache = {}
 
@@ -36,14 +37,17 @@ function phrase(client, interaction, target) {
 
 function translate(client, interaction, target) {
 
-    const default_lang = 'pt-br'
-    // if (!cache[interaction.user.id]) {
-    //     const user = await getUser(interaction.user.id)
-    //     cache[user.uid]["lang"] = user.lang
-    // }
+    if (!cache[interaction.user.id]) {
+        getUser(interaction.user.id)
+            .then(user => {
+                cache[interaction.user.id] = user.lang
+            })
+
+        cache[interaction.user.id] = "pt-br"
+    }
 
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../arquivos/idiomas/${default_lang}.json`)
+    let { data } = require(`../../arquivos/idiomas/${cache[interaction.user.id]}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
@@ -63,8 +67,6 @@ function translate(client, interaction, target) {
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
         data = data.data
 
-        console.log(target, target.split("."))
-
         // Retornando a tradução em PT-BR (idioma padrão)
         if (!target.includes("minecraft.detalhes"))
             data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
@@ -81,9 +83,20 @@ function translate(client, interaction, target) {
     return phrase
 }
 
+async function syncUsers() {
+
+    getUser()
+
+    writeFileSync(`./arquivos/data/translate.json`, JSON.stringify(langs))
+    delete require.cache[require.resolve(`../../arquivos/data/translate.json`)]
+}
+
+// syncUsers()
+
 module.exports = {
     reply,
     phrase,
     editReply,
-    translate
+    translate,
+    syncUsers
 }

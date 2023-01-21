@@ -17,8 +17,6 @@ module.exports = async ({ client }) => {
     const dias = [4, 3, 2, 1, controle, 6, 5]
     const tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
-    if (date1.getHours() >= 13) return
-
     // Atualiza todo dia
     // const tempo_restante = ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
