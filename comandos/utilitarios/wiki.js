@@ -30,12 +30,37 @@ module.exports = {
                     "fr": 'J\'ai de la chance',
                     "it": 'Sono fortunato'
                 })
-                .setRequired(true)),
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('language')
+                .setNameLocalizations({
+                    "pt-BR": 'idioma',
+                    "es-ES": 'idioma',
+                    "fr": 'langue',
+                    "it": 'linguaggio'
+                })
+                .setDescription('In which language?')
+                .setDescriptionLocalizations({
+                    "pt-BR": 'Em qual idioma?',
+                    "es-ES": '¿En qué idioma?',
+                    "fr": 'Dans quelle langue?',
+                    "it": 'In quale lingua?'
+                })
+                .addChoices(
+                    { name: 'Portugues', value: 'pt-br' },
+                    { name: 'English', value: 'en-us' },
+                    { name: 'Español', value: 'es-es' },
+                    { name: 'Français', value: 'fr-fr' },
+                    { name: 'Italiano', value: 'it-it' }
+                )),
     async execute(client, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction) === "al-br" ? "pt-br" : client.idioma.getLang(interaction)
         const user = await client.getUser(interaction.user.id)
         const content = interaction.options.data[0].value
+
+        if (interaction.options.data.length > 1)
+            idioma_definido = interaction.options.data[1].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
             return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
@@ -51,7 +76,7 @@ module.exports = {
                 const fields = []
 
                 if (res.RelatedTopics.length > 0)
-                    fields.push({ name: `:books: ${client.tls.phrase(client, interaction, "util.wiki_topicos_rel")}`, value: "\u200B" })
+                    fields.push({ name: `:books: ${client.tls.phrase(client, interaction, "util.wiki.topicos_rel")}`, value: "\u200B" })
 
                 for (const topic of res.RelatedTopics) {
                     counter++
@@ -94,7 +119,7 @@ module.exports = {
                 }
             })
             .catch(() => {
-                interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
+                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
             })
     }
 }
