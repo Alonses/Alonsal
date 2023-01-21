@@ -42,7 +42,7 @@ module.exports = {
                     return client.tls.reply(client, interaction, "util.minecraft.error_1", true, 0)
 
                 if (dados_item.status == 404)
-                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${pesquisa}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${interaction.options.data[0].value}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
 
                 let nome_item = dados_item.internal_name
                 descricao_tipo = nome_item
