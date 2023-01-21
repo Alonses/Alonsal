@@ -1,6 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
-
-const { getUser } = require("../../adm/database/schemas/User.js")
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,7 +28,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
         const texto_ordenado = interaction.options.data[0].value.split('').reverse().join("")
 
         const embed = new EmbedBuilder()

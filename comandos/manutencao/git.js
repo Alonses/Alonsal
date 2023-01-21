@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('git')
@@ -14,7 +12,7 @@ module.exports = {
         }),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))

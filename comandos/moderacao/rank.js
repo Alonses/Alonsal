@@ -1,4 +1,4 @@
-const { existsSync, writeFileSync } = require("fs")
+const { existsSync, writeFileSync } = require('fs')
 const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {

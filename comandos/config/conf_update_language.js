@@ -1,9 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { mkdirSync, writeFileSync, existsSync } = require("fs")
+const { mkdirSync, writeFileSync, existsSync } = require('fs')
 const fs = require('fs')
 
 module.exports = {

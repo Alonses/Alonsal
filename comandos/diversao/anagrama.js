@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('anagram')
@@ -36,7 +34,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
         const texto_entrada = interaction.options.data[0].value
         let cor_embed = client.embed_color(user.misc.color)
 

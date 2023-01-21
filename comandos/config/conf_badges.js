@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
@@ -39,7 +38,7 @@ module.exports = {
                 badge_alvo = parseInt(valor.value)
         })
 
-        const user = await getUser(id_alvo), all_badges = []
+        const user = await client.getUser(id_alvo), all_badges = []
 
         if (user.badges.badge_list.length > 0)
             user.badges.badge_list.forEach(valor => {

@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const create_menus = require('../../adm/discord/create_menus.js')
 
 module.exports = {
@@ -45,7 +44,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
         // const id = interaction.user.id
-        // const user = await getUser(id)
+        // const user = await client.getUser(id)
 
         return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 

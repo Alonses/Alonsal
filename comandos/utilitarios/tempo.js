@@ -2,8 +2,10 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const { emojis_negativos, emojis } = require('../../arquivos/json/text/emojis.json')
-const { getUser } = require("../../adm/database/schemas/User.js")
+const direcao_cardial = require("../../adm/funcoes/direcao_cardial")
+
 const getCountryISO3 = require("country-iso-2-to-3")
 const formata_horas = require('../../adm/formatadores/formata_horas')
 
@@ -48,7 +50,7 @@ module.exports = {
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
         const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         // Verifica se não há entrada customizada e se o usuário não possui um local padrão
         if (interaction.options.data.length < 1 && !user.misc.locale)
@@ -121,8 +123,9 @@ module.exports = {
                                     nota_rodape += ` | ${client.tls.phrase(client, interaction, "util.tempo.aviso_planeta")}`
                             }
 
-                            let nascer_sol = new Date((res.sys.sunrise + res.timezone) * 1000)
-                            let por_sol = new Date((res.sys.sunset + res.timezone) * 1000)
+                            // 10800 (timezone brasilia)
+                            let nascer_sol = new Date((res.sys.sunrise + res.timezone + 10800) * 1000)
+                            let por_sol = new Date((res.sys.sunset + res.timezone + 10800) * 1000)
 
                             nascer_sol = formata_horas(nascer_sol.getHours(), nascer_sol.getMinutes())
                             por_sol = formata_horas(por_sol.getHours(), por_sol.getMinutes())
@@ -243,8 +246,6 @@ module.exports = {
                             if (res.coord.lat > -20 && res.coord.lat < 20)
                                 rodape_cabecalho = `:ringed_planet: ${client.tls.phrase(client, interaction, "util.tempo.equador")}\n${rodape_cabecalho}`
 
-                            const user = await getUser(interaction.user.id)
-
                             const clima_atual = new EmbedBuilder()
                                 .setTitle(`:boom: ${client.tls.phrase(client, interaction, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`)
                                 .setColor(client.embed_color(user.misc.color))
@@ -294,16 +295,4 @@ module.exports = {
                 console.log(err)
             })
     }
-}
-
-function direcao_cardial(degrees) {
-    const cards = ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"]
-    degrees += 22.5
-
-    if (degrees < 0)
-        degrees = 360 - Math.abs(degrees) % 360
-    else
-        degrees = degrees % 360
-
-    return cards[parseInt(degrees / 45)]
 }

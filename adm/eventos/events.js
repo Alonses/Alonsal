@@ -4,12 +4,12 @@ module.exports = async function ({ client }) {
 
     client.discord.on("guildCreate", guild => {
         let caso = 'New'
-        require("./servers.js")({ client, caso, guild })
+        require('./servers.js')({ client, caso, guild })
     })
 
     client.discord.on("guildDelete", guild => {
         let caso = 'Left'
-        require("./servers.js")({ client, caso, guild })
+        require('./servers.js')({ client, caso, guild })
     })
 
     client.discord.on("rateLimit", limit => {

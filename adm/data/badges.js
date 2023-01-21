@@ -1,5 +1,4 @@
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 const badge_ids = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator, emojis.aln_waxed, emojis.aln_donater, emojis.aln_puler, emojis.aln_rosquer]
 const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer"]
@@ -18,7 +17,7 @@ module.exports.busca_badges = async (client, type, id_alvo) => {
 
     const all_badges = new BadgeCollection()
 
-    const user = await getUser(id_alvo)
+    const user = await client.getUser(id_alvo)
 
     if (type === badgeTypes.FIXED) {
         const id = user.badges.fixed_badge
@@ -38,7 +37,7 @@ module.exports.busca_badges = async (client, type, id_alvo) => {
 
 async function buildAllBadges(client, interaction) {
     const id = interaction.user.id
-    const user = await getUser(id)
+    const user = await client.getUser(id)
 
     let text = ""
 

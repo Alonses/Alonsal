@@ -3,8 +3,8 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const formata_texto = require('../../adm/formatadores/formata_texto')
+const regula_porcentagem = require('../../adm/funcoes/regula_porcentagem')
 
 let horas_tocadas, horas_passadas
 
@@ -60,7 +60,7 @@ module.exports = {
             texto_entrada = params.url
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = await getUser(alvo.id)
+        const user = await client.getUser(alvo.id)
 
         if (!texto_entrada) // Verificando se o usuário possui link com a steam
             if (!user.social || !user.social.lastfm)
@@ -230,24 +230,4 @@ module.exports = {
             console.log(err)
         }
     }
-}
-
-function regula_porcentagem(stats_semana, stats_passado, hora, client, interaction) {
-
-    if (hora) { // Formatando a hora para números inteiros
-        stats_semana = parseInt(stats_semana.split(" horas")[0])
-        stats_passado = parseInt(stats_passado.split(" horas")[0])
-
-        horas_tocadas = `${stats_semana}${client.tls.phrase(client, interaction, "util.unidades.horas")}`
-        horas_passadas = `${stats_passado}${client.tls.phrase(client, interaction, "util.unidades.horas")}`
-    }
-
-    porcentagem = (100 * stats_semana) / stats_passado
-
-    if (stats_semana < stats_passado)
-        porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
-    else
-        porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
-
-    return porcentagem
 }

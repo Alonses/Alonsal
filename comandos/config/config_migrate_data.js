@@ -1,7 +1,5 @@
-const { readdirSync } = require("fs")
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
-
-const { getUser } = require("../../adm/database/schemas/User.js")
+const { readdirSync } = require('fs')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,7 +8,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
-        // const user = await getUser(interaction.user.id)
+        // const user = await client.getUser(interaction.user.id)
 
         // for (const file of readdirSync(`./arquivos/data/user/`)) {
         //     const { id, lang, social, misc, badges, conquistas } = require(`../../arquivos/data/user/${file}`)

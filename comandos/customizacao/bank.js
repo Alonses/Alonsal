@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
@@ -37,7 +36,7 @@ module.exports = {
     async execute(client, interaction) {
 
         let alvo = interaction.options.getUser('user') || interaction.user
-        const user = await getUser(alvo.id), date1 = new Date()
+        const user = await client.getUser(alvo.id), date1 = new Date()
 
         if (user.uid === "297153970613387264")
             user.misc.money = -4002892228342

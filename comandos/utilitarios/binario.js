@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const binario = require('../../arquivos/json/text/binario.json')
-const { getUser } = require("../../adm/database/schemas/User.js")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -71,7 +70,7 @@ module.exports = {
                 )),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         let entradas = interaction.options.data, aviso = ""
 

@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
+const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 

@@ -1,7 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-const formata_horas = require("../../adm/formatadores/formata_horas")
+const formata_horas = require('../../adm/formatadores/formata_horas')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -70,7 +69,7 @@ module.exports = {
                 })),
     async execute(client, interaction) {
 
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         let timestamp, aviso = "", conversao_invalida = false
         let titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_1")

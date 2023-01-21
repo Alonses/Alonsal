@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
-const { writeFileSync, existsSync, unlinkSync } = require("fs")
+const { writeFileSync, existsSync, unlinkSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()

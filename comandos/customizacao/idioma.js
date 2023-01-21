@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getUser } = require("../../adm/database/schemas/User.js")
-
 const idiomasMap = {
     "pt": ["pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`"],
     "al": ["al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`"],
@@ -54,7 +52,7 @@ module.exports = {
     async execute(client, interaction) {
 
         let novo_idioma = interaction.options.data[0].value
-        const user = await getUser(interaction.user.id)
+        const user = await client.getUser(interaction.user.id)
 
         // Validando e coletando os dados do idioma
         const matches = novo_idioma.match(/pt|al|en|es|fr|it/)

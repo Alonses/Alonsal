@@ -2,9 +2,9 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const fs = require('fs')
-const { readdirSync, unlinkSync, existsSync } = require("fs")
+const { readdirSync, unlinkSync, existsSync } = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { getUser } = require("../../adm/database/schemas/User.js")
+
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
@@ -169,10 +169,8 @@ module.exports = {
                     i++
             }
 
-            const user_2 = await getUser(2)
-
             let embed, img_embed
-            let user = await getUser(interaction.user.id)
+            let user = await client.getUser(interaction.user.id)
 
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
@@ -206,7 +204,7 @@ module.exports = {
                         usuario_alvo.push(0)
 
                     let fixed_badge = ""
-                    const user = await getUser(user_alvo.id)
+                    const user = await client.getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
                         fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji

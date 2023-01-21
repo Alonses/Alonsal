@@ -1,5 +1,3 @@
-const { getUser } = require("../database/schemas/User.js")
-
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client, interaction }) => {
@@ -11,7 +9,7 @@ module.exports = async ({ client, interaction }) => {
         // Formatando o ID do botão para o propósito esperado
         const data_cor = interaction.customId.split("[")[1].split("]")[0]
 
-        let user = await getUser(interaction.user.id)
+        let user = await client.getUser(interaction.user.id)
         const colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM'], precos = [200, 300, 400, 500, 50]
 
         const preco = precos[parseInt(data_cor.split(".")[0])]

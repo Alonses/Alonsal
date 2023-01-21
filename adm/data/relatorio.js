@@ -1,4 +1,4 @@
-const { existsSync, writeFileSync } = require("fs")
+const { existsSync, writeFileSync } = require('fs')
 
 function getRelatorio() {
 
