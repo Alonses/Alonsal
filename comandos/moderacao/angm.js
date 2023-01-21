@@ -70,8 +70,7 @@ module.exports = {
                     { name: 'Alonsês', value: 'al-br' }
                 )
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator)
-    ,
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, interaction) {
 
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
