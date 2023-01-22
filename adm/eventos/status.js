@@ -29,19 +29,20 @@ module.exports = async ({ client }) => {
             client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
 
             const activities = [
-                "ovos",
+                "panquecas",
+                "/faustop",
                 `baidu em ${client.guilds().size} servers`,
                 "games de graça",
                 "slash commands",
                 "itens pixelados",
-                "baidu en comandos"
+                "/alaa"
             ]
 
             let i = 0
             setInterval(() => client.user().setActivity(`${activities[i++ % activities.length]}`, { type: ActivityType.Playing }), 10000)
         }
     } else
-        client.user().setPresence({ activities: [{ name: 'baidu nos servidores' }], type: ActivityType.Playing })
+        client.user().setPresence({ activities: [{ name: 'ceira explosiva em servidores' }], type: ActivityType.Playing })
 
     setTimeout(() => {
         client.idioma.listAll()
