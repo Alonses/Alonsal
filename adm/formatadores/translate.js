@@ -38,17 +38,19 @@ function phrase(client, interaction, target) {
 
 function translate(client, interaction, target) {
 
-    if (!cache[interaction.user.id]) {
-        client.getUser(interaction.user.id)
+    let id_usuario = typeof interaction == "object" ? interaction.user.id : interaction
+
+    if (!cache[id_usuario]) {
+        client.getUser(id_usuario)
             .then(user => {
-                cache[interaction.user.id] = user.lang
+                cache[id_usuario] = user.lang
             })
 
-        cache[interaction.user.id] = "pt-br"
+        cache[id_usuario] = "pt-br"
     }
 
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../arquivos/idiomas/${cache[interaction.user.id]}.json`)
+    let { data } = require(`../../arquivos/idiomas/${cache[id_usuario]}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
