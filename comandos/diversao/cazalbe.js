@@ -49,7 +49,7 @@ module.exports = {
 		if (interaction.options.getSubcommand() === "gif")
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		else if (interaction.options.getSubcommand() === "laugh") {
-			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.mp3')
+			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.ogg')
 			return interaction.reply({ files: [file] })
 		} else {
 

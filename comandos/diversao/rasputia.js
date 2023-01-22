@@ -1,7 +1,9 @@
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { readdirSync } = require('fs')
+
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
 const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
 
@@ -18,7 +20,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('gif')
-				.setDescription('⌠😂⌡ Summons a rasputia gif')
+				.setDescription('⌠😂⌡ Invoca um gif da rasputia')
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif da rasputia',
 					"es-ES": '⌠😂⌡ Invoca un gif de rasputia',
@@ -28,12 +30,16 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('frase')
-				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase da rasputia')),
+				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do filme Norbit'))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('fala')
+				.setDescription('⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit')),
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
-		} else {
+			return interaction.reply({ content: "teste", files: [gifs[Math.round((gifs.length - 1) * Math.random())]] })
+		} else if (interaction.options.getSubcommand() === "frase") {
 
 			await interaction.deferReply()
 			const user = await client.getUser(interaction.user.id)
@@ -50,6 +56,17 @@ module.exports = {
 
 					interaction.editReply({ embeds: [embed] })
 				})
+		} else {
+			let i = 0
+
+			for (const file of readdirSync(`./arquivos/songs/norbit`).filter(file => file.endsWith('.ogg')))
+				i++
+
+			let num = Math.round((i - 1) * Math.random())
+
+			const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${num}.ogg`, { name: 'norbit.ogg' })
+
+			return interaction.reply({ files: [file] })
 		}
 	}
 }
