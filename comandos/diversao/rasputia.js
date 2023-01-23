@@ -38,7 +38,7 @@ module.exports = {
 	async execute(client, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply({ content: "teste", files: [gifs[Math.round((gifs.length - 1) * Math.random())]] })
+			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else if (interaction.options.getSubcommand() === "frase") {
 
 			await interaction.deferReply()
