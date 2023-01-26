@@ -1,5 +1,3 @@
-> Dev branch
-
 # Alonsal
 
 O Alonsal é um Bot multi tarefas para o Discord
