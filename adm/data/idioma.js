@@ -1,46 +1,56 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { mkdirSync, writeFileSync, existsSync, readdirSync } = require("fs")
+const { getUser } = require('../database/schemas/User.js')
+const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
 const fs = require('fs')
 
-let default_lang, datapath
+let default_lang
 
 // Carrega todos os idiomas do bot diretamente do git
-function loadAll() {
-
-    const idiomas = process.env.language.split(", ")
-
+function loadAll(client) {
     if (!existsSync(`./arquivos/idiomas/`))
         mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
+    fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
-    fetch(`https://github.com/Alonses/Alondioma`)
-        .then(res => res.text())
-        .then(res => {
+        fetch("https://github.com/Alonses/Alondioma")
+            .then(response => response.text())
+            .then(async res => {
 
-            // Verifica o commit mais recente
-            const commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
+                // Buscando o commit mais recente
+                const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
-            fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
+                if (cod_commit !== data) {
+                    console.log("Sincronizando com os idiomas mais recentes.")
 
-                if (commit !== data) {
-                    for (let i = 0; i < idiomas.length; i++) {
-                        fetch(`https://raw.githubusercontent.com/Alonses/Alondioma/main/${idiomas[i]}.json`)
-                            .then(res => res.json())
-                            .then(res => {
-                                writeFileSync(`./arquivos/idiomas/${idiomas[i]}.json`, JSON.stringify(res))
-                            })
-                    }
+                    fs.writeFile('./arquivos/data/language.txt', cod_commit, (err) => {
+                        if (err) throw err
+                    })
 
-                    console.log("Sincronizando com os idiomas mais recentes")
+                    if (process.env.lang_channel)
+                        client.channels().get(process.env.lang_channel).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
+                    else
+                        console.log(`Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`);
+
+                    fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
+                        .then(res => res.json())
+                        .then(content => {
+                            for (let i = 0; i < content.length; i++) {
+                                const idioma = content[i]
+
+                                if (!idioma.name.endsWith(".json")) continue
+
+                                fetch(idioma.download_url)
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        writeFileSync(`./arquivos/idiomas/${idioma.name}`, JSON.stringify(res))
+                                    })
+                            }
+                        })
                 }
-
-                fs.writeFile('./arquivos/data/language.txt', commit, (err) => {
-                    if (err) throw err
-                })
             })
-        })
+    })
 }
 
 // Lista todas as bandeiras de idiomas carregados
@@ -64,49 +74,37 @@ function listAll() {
     return bandeiras.join(" ")
 }
 
-function setPath(path) {
-    datapath = path
-}
-
 function setDefault(lang) {
     default_lang = lang
 }
 
-function setLang(client, interaction, lang) {
+async function setLang(interaction, lang) {
 
-    const user = client.usuarios.getUser(interaction.user.id)
-    user.lang = lang
+    const id = interaction.user.id
+    const user = await getUser(id)
 
     // Salvando os dados do usuário
-    writeFileSync(`./arquivos/data/user/${user.id}.json`, JSON.stringify(user))
-    delete require.cache[require.resolve(`../../arquivos/data/user/${user.id}.json`)]
+    user.updateOne({ uid: id }, {
+        lang: lang
+    })
 }
 
-function getLang(elemento) {
+function getLang(interaction) {
 
-    const idiomas = ["pt-br", "es-es", "fr-fr", "en-us", "it-it"]
+    // const idiomas = ["pt-br", "es-es", "fr-fr", "en-us", "it-it"]
+    // await getUser(interaction.user.id)
+    //     .then(user => {
+    //         console.log(user.locale)
 
-    let id_user = elemento
+    //         if (idiomas.includes((user.locale)))
+    //             return user.locale
+    //         else return default_lang
+    // })
 
-    if (isNaN(parseInt(elemento)))
-        id_user = elemento.user.id
-
-    if (existsSync(`./arquivos/data/user/${id_user}.json`)) {
-        delete require.cache[require.resolve(`../../arquivos/data/user/${id_user}.json`)]
-        const { lang } = require(`../../arquivos/data/user/${id_user}.json`)
-
-        if (!lang)
-            if (idiomas.includes((elemento.locale).toLowerCase()))
-                return elemento.locale.toLowerCase()
-            else default_lang
-        else
-            return lang
-    } else
-        return default_lang
+    return default_lang
 }
 
 module.exports = {
-    setPath,
     setDefault,
     setLang,
     getLang,
