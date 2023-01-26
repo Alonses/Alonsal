@@ -13,13 +13,13 @@ module.exports = async function ({ client }) {
     })
 
     client.discord.on("rateLimit", limit => {
-        if (!process.env.command_channel) return;
+        if (!process.env.error_channel) return;
 
         const embed = new EmbedBuilder()
             .setTitle("> RateLimit :name_badge:")
             .setColor(0xff0000)
             .setDescription(`Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``)
 
-        client.discord.channels.cache.get(process.env.command_channel).send({ embeds: [embed] })
+        client.discord.channels.cache.get(process.env.error_channel).send({ embeds: [embed] })
     })
 }
