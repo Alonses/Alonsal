@@ -17,7 +17,7 @@ module.exports = async ({ client, interaction }) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
 
-        if (client.id() === process.env.client_1) {
+        if (client.id() === process.env.client_1 && process.env.command_channel) {
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
@@ -75,7 +75,7 @@ module.exports = async ({ client, interaction }) => {
                 embed.setURL(`${url_ativacao}`)
 
             // Envia um log de telemetria com o comando disparado
-            client.discord.channels.cache.get('846151364492001280').send({ embeds: [embed] })
+            client.discord.channels.cache.get(process.env.command_channel).send({ embeds: [embed] })
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
