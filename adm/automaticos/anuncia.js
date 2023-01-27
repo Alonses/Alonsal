@@ -35,8 +35,8 @@ function requisita_anuncio(client, aguardar_tempo) {
 
 async function gera_anuncio(client, proxima_att) {
 
-    if (process.env.client_1 == client.id())
-        client.channels().get(process.env.feeds_channel).send(`:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
+    if (process.env.client_1 === client.id())
+        client.notify(process.env.feeds_channel, 0, `:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`);
 
     fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API
         .then(response => response.json())

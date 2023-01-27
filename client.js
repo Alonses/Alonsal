@@ -93,6 +93,7 @@ class CeiraClient {
     }
 
     notify(id_alvo, tipo, conteudo) {
+        if (!id_alvo) return;
 
         try {
             if (tipo === 1) // embed

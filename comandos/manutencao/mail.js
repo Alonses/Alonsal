@@ -51,10 +51,10 @@ module.exports = {
         let entradas = interaction.options.data
 
         entradas.forEach(valor => {
-            if (valor.name == "text")
+            if (valor.name === "text")
                 corpo_mensagem.texto = valor.value
 
-            if (valor.name == "file")
+            if (valor.name === "file")
                 corpo_mensagem.arquivo = valor.attachment.attachment
         })
 
@@ -70,6 +70,6 @@ module.exports = {
 
         client.tls.reply(client, interaction, "manu.mail.sucesso_1", true)
 
-        client.channels().get("847191471379578970").send({ embeds: [msg_user] })
+        client.notify(process.env.mail_channel, 1, msg_user);
     }
 }

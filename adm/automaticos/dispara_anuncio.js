@@ -33,7 +33,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     }
 
     if (canais_clientes.length < 1)
-        return client.channels().get(process.env.feeds_channel).send(`:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
+        return client.notify(process.env.feeds_channel, 0, `:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`);
 
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google/)
 
