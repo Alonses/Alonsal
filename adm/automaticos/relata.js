@@ -80,6 +80,6 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`, inline: false })
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`, inline: false })
 
-    await client.channels().get(process.env.stats_channel).send({ embeds: [embed] })
+    client.notify(process.env.stats_channel, 1, embed);
     client.auto.resRelatorio() // Reseta o relatório
 }
