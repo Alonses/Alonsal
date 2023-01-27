@@ -69,7 +69,7 @@ module.exports = async ({ client, interaction }) => {
                 embed.setURL(`${url_ativacao}`)
 
             // Envia um log de telemetria com o comando disparado
-            client.discord.channels.cache.get('846151364492001280').send({ embeds: [embed] })
+            client.notify(process.env.command_channel, 1, embed)
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {

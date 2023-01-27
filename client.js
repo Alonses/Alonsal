@@ -91,6 +91,21 @@ class CeiraClient {
     getUser(id_user) {
         return getUser(id_user)
     }
+
+    notify(id_alvo, tipo, conteudo) {
+
+        if (!this.client) return
+
+        try {
+            if (tipo === 1) // embed
+                this.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
+            else // texto normal
+                this.discord.channels.cache.get(id_alvo).send({ content: conteudo })
+        } catch (err) {
+            const client = this.discord
+            require('./adm/eventos/error.js')({ client, err })
+        }
+    }
 }
 
 module.exports = {
