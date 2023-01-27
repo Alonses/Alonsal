@@ -54,17 +54,18 @@ module.exports = async ({ client }) => {
 
 function dispara_status(client, status_apisal) {
 
-    setTimeout(() => {
+    if (process.env.stats_channel) {
+        setTimeout(() => {
 
-        fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
+            fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
-            const commit_language = data
-            const canais_texto = client.discord.channels.cache.filter((c) => c.type === 0).size
-            let members = 0
+                const commit_language = data
+                const canais_texto = client.discord.channels.cache.filter((c) => c.type === 0).size
+                let members = 0
 
-            client.guilds().forEach(async guild => {
-                members += guild.memberCount - 1
-            })
+                client.guilds().forEach(async guild => {
+                    members += guild.memberCount - 1
+                })
 
             let bandeira_idiomas = client.idioma.listAll()
 
