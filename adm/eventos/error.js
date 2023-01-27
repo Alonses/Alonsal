@@ -16,7 +16,7 @@ module.exports = async function ({ client, err, local }) {
 
     console.log(err)
 
-    await client.discord.channels.cache.get('862015290433994752').send({ embeds: [embed_error] })
+    client.notify(process.env.error_channel, 1, embed_error)
 
     const caso = "epic_embed"
     require('../automaticos/relatorio.js')({ client, caso })

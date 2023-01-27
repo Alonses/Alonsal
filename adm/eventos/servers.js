@@ -18,5 +18,5 @@ module.exports = async ({ client, caso, guild }) => {
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 
-    client.discord.channels.cache.get('846853254192693269').send({ embeds: [embed_sv] })
+    client.notify(process.env.server_channel, 1, embed_sv)
 }
