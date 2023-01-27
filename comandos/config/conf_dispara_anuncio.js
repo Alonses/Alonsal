@@ -16,7 +16,7 @@ module.exports = {
 
         interaction.reply({ content: "Enviando os anúncios para os canais clientes.", ephemeral: true })
 
-        client.channels().get('872865396200452127').send(`:video_game: :sparkles: | Disparando manualmente anúncios de jogos gratuitos`)
+        client.channels().get(process.env.feeds_channel).send(`:video_game: :sparkles: | Disparando manualmente anúncios de jogos gratuitos`)
 
         fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API
             .then(response => response.json())

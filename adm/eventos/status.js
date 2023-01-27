@@ -67,40 +67,35 @@ function dispara_status(client, status_apisal) {
                     members += guild.memberCount - 1
                 })
 
-                let bandeira_idiomas = client.idioma.listAll()
+            let bandeira_idiomas = client.idioma.listAll()
 
-                const embed = new EmbedBuilder()
-                    .setTitle(':steam_locomotive: Caldeiras aquecidas')
-                    .setColor(0x29BB8E)
-                    .addFields(
-                        {
-                            name: ':globe_with_meridians: **Servidores**',
-                            value: `**Ativo em: **\`${client.guilds().size}\``,
-                            inline: true
-                        },
-                        {
-                            name: ':card_box: **Canais**',
-                            value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
-                            inline: true
-                        },
-                        {
-                            name: ':busts_in_silhouette: **Usuários**',
-                            value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
-                            inline: true
-                        }
-                    )
-                    .addFields(
-                        {name: ':white_small_square: **Versão**', value: `\`${process.env.version}\``, inline: true},
-                        {
-                            name: ':earth_americas: **Idiomas**',
-                            value: `\`💠 ${commit_language}\`${bandeira_idiomas}`,
-                            inline: true
-                        },
-                        {name: ':moyai: **APISAL**', value: `\`${status_apisal}\``, inline: true})
-                    .setFooter({text: client.user().username, iconURL: client.user().avatarURL({dynamic: true})})
+            const embed = new EmbedBuilder()
+                .setTitle(':steam_locomotive: Caldeiras aquecidas')
+                .setColor(0x29BB8E)
+                .addFields(
+                    {
+                        name: ':globe_with_meridians: **Servidores**',
+                        value: `**Ativo em: **\`${client.guilds().size}\``,
+                        inline: true
+                    },
+                    {
+                        name: ':card_box: **Canais**',
+                        value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
+                        inline: true
+                    },
+                    {
+                        name: ':busts_in_silhouette: **Usuários**',
+                        value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
+                        inline: true
+                    }
+                )
+                .addFields(
+                    { name: ':white_small_square: **Versão**', value: `\`${process.env.version}\``, inline: true },
+                    { name: ':earth_americas: **Idiomas**', value: `\`💠 ${commit_language}\`${bandeira_idiomas}`, inline: true },
+                    { name: ':moyai: **APISAL**', value: `\`${status_apisal}\``, inline: true })
+                .setFooter({ text: client.user().username, iconURL: client.user().avatarURL({ dynamic: true }) })
 
-                client.discord.channels.cache.get(process.env.stats_channel).send({embeds: [embed]}) // Avisa que está online em um canal
-            })
-        }, 3000);
-    }
+            client.notify(process.env.status_channel, 1, embed) // Avisa que está online em um canal
+        })
+    }, 3000)
 }
