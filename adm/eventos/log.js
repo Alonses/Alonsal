@@ -5,13 +5,19 @@ const formata_horas = require('../formatadores/formata_horas.js')
 
 module.exports = async ({ client, interaction }) => {
 
-    fs.readFile('./arquivos/data/ativacoes.txt', 'utf8', function (err, data) {
+    const dir = "./arquivos/data/ativacoes.txt";
+
+    if (!fs.existsSync(dir)) fs.writeFile(dir, '0', err => {
+        if (err) throw err;
+    });
+
+    fs.readFile(dir, 'utf8', function (err, data) {
         if (err) throw err
 
         qtd_comandos = parseInt(data)
         qtd_comandos++
 
-        if (client.id() === process.env.client_1) {
+        if (client.id() === process.env.client_1 && process.env.command_channel) {
             const d = new Date()
             const day = d.toLocaleString('en-US', { weekday: 'long' })
 
