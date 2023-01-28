@@ -94,7 +94,7 @@ function dispara_status(client, status_apisal) {
                     { name: ':moyai: **APISAL**', value: `\`${status_apisal}\``, inline: true })
                 .setFooter({ text: client.user().username, iconURL: client.user().avatarURL({ dynamic: true }) })
 
-            client.notify(process.env.status_channel, 1, embed) // Avisa que está online em um canal
+            client.notify(process.env.status_channel, embed) // Avisa que está online em um canal
         })
     }, 3000)
 }
