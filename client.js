@@ -92,11 +92,10 @@ class CeiraClient {
         return getUser(id_user)
     }
 
-    notify(id_alvo, tipo, conteudo) {
-        if (!id_alvo) return;
+    notify(id_alvo, conteudo) {
 
         try {
-            if (tipo === 1) // embed
+            if (typeof conteudo === "object") // embed
                 this.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
             else // texto normal
                 this.discord.channels.cache.get(id_alvo).send({ content: conteudo })

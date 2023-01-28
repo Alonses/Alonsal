@@ -388,7 +388,7 @@ module.exports = {
                     interaction.reply({ embeds: [usuario_steam] })
                 })
         } catch (err) {
-            client.notify(process.env.error_channel, 0, err.toString());
+            client.notifty(process.env.error_channel, err)
             interaction.reply(`${client.tls.phrase(client, interaction, "util.steam.error_2")}\n<${usuario_alvo}>`)
         }
     }

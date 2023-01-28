@@ -26,7 +26,7 @@ module.exports = {
 
         await client.user().setAvatar(novo_perfil)
 
-        interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true });
-        client.notify(process.env.feeds_channel, 1, att_avatar);
+        interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true })
+        client.notify(process.env.feeds_channel, att_avatar)
     }
 }

@@ -75,7 +75,7 @@ module.exports = async ({ client, interaction }) => {
                 embed.setURL(`${url_ativacao}`)
 
             // Envia um log de telemetria com o comando disparado
-            client.notify(process.env.command_channel, 1, embed)
+            client.notify(process.env.command_channel, embed)
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
