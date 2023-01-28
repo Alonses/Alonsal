@@ -3,12 +3,12 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('mail')
-        .setDescription('⌠📡⌡ Send messages to Alonsal')
+        .setDescription('⌠📡⌡ Send messages to me!')
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Envie mensagens para o Alonsal',
-            "es-ES": '⌠📡⌡ Enviar mensajes a Alonsal',
-            "fr": '⌠📡⌡ Envoyer des messages à Alonsal',
-            "it": '⌠📡⌡ Invia messaggi ad Alonsal'
+            "pt-BR": '⌠📡⌡ Envie mensagens para mim!',
+            "es-ES": '⌠📡⌡ ¡Envíeme un mensaje!',
+            "fr": '⌠📡⌡ Envoyez-moi un message!',
+            "it": '⌠📡⌡ Mandami un messaggio!'
         })
         .addStringOption(option =>
             option.setName('text')
@@ -59,9 +59,9 @@ module.exports = {
         })
 
         const msg_user = new EmbedBuilder()
-            .setTitle("> :mailbox_with_mail: New Message")
-            .setDescription(`-----------------------\nSent by \`${interaction.user.id}\`\n\n Message: \`${corpo_mensagem.texto.replaceAll("`", "'")}\``)
-            .setFooter({ text: `Author: ${interaction.user.username}` })
+            .setTitle("> :mailbox_with_mail: Nova mensagem!")
+            .setDescription(`-----------------------\nEnviado por \`${interaction.user.id}\`\n\n Mensagem: \`${corpo_mensagem.texto.replaceAll("`", "'")}\``)
+            .setFooter({ text: `Autor: ${interaction.user.username}` })
             .setColor(0xffffff)
             .setTimestamp()
 
@@ -70,6 +70,6 @@ module.exports = {
 
         client.tls.reply(client, interaction, "manu.mail.sucesso_1", true)
 
-        client.channels().get("847191471379578970").send({ embeds: [msg_user] })
+        client.notify(process.env.mail_channel, msg_user)
     }
 }

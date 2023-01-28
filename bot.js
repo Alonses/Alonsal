@@ -18,7 +18,7 @@ client.discord.once('ready', async () => {
 
 	await require('./adm/eventos/status.js')({ client })
 
-	console.log(`Caldeiras do ${client.user().username} aquecidas, pronto para operar`)
+	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
 })
 
 client.discord.on('messageCreate', async (message) => {

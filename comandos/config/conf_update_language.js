@@ -33,7 +33,7 @@ module.exports = {
 
                     interaction.reply({ content: `:sa: | Baixando o pacote de traduções do commit \`${cod_commit}\``, ephemeral: true })
 
-                    client.channels().get(process.env.feeds_channel).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
+                    client.notify(process.env.feeds_channel, `:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
 
                     fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                         .then(res => res.json())

@@ -18,5 +18,5 @@ module.exports = async ({ client, caso, guild }) => {
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 
-    client.notify(process.env.server_channel, 1, embed_sv)
+    client.notify(process.env.server_channel, embed_sv)
 }
