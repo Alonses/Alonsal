@@ -42,7 +42,7 @@ function config(client) {
                 commands = comandos_privados
 
             // Registrando os comandos privados no servidor
-            rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guildID), { body: commands })
+            rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guild_id), { body: commands })
                 .then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
                 .catch(console.error)
 
