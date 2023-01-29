@@ -35,14 +35,13 @@ module.exports = {
 			subcommand
 				.setName('fala')
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit')),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else if (interaction.options.getSubcommand() === "frase") {
 
 			await interaction.deferReply()
-			const user = await client.getUser(interaction.user.id)
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
 				.then(response => response.json())

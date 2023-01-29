@@ -68,9 +68,7 @@ module.exports = {
                     { name: 'Encode', value: '0' },
                     { name: 'Decode', value: '1' }
                 )),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -103,15 +101,15 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = client.tls.phrase(client, interaction, "util.binario.codificado")
+        let titulo = client.tls.phrase(user, "util.binario.codificado")
 
         if (codificar.opera)
-            titulo = client.tls.phrase(client, interaction, "util.binario.decodificado")
+            titulo = client.tls.phrase(user, "util.binario.decodificado")
 
         // Confirma que a operação não resultou em uma string vazia
         if (texto_ordenado.replaceAll("\x00", "").length < 1) {
-            texto_ordenado = client.tls.phrase(client, interaction, "util.binario.resul_vazio")
-            titulo = client.tls.phrase(client, interaction, "util.binario.titulo_vazio")
+            texto_ordenado = client.tls.phrase(user, "util.binario.resul_vazio")
+            titulo = client.tls.phrase(user, "util.binario.titulo_vazio")
         }
 
         const embed = new EmbedBuilder()
@@ -125,7 +123,7 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
             .catch(() => {
-                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
+                client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
             })
     }
 }

@@ -28,9 +28,8 @@ module.exports = {
                     "fr": 'Demander la suppression de vos données d\'Alonsal',
                     "it": 'Richiedi la cancellazione dei tuoi dati in Alonsal'
                 })),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id)
         const solicitar_exclusao = interaction.options.data
         let exclusao = false
 
@@ -46,7 +45,7 @@ module.exports = {
                     let server = client.guilds().get(folder)
 
                     if (!server)
-                        nome_server = client.tls.phrase(client, interaction, "manu.data.server_desconhecido")
+                        nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
                     else
                         nome_server = server.name
 
@@ -56,7 +55,7 @@ module.exports = {
         }
 
         if (ranking.length < 1)
-            return client.tls.reply(client, interaction, "manu.data.sem_dados", true)
+            return client.tls.reply(interaction, user, "manu.data.sem_dados", true)
 
         if (exclusao) { // Excluindo os dados do usuário do bot
 
@@ -69,9 +68,9 @@ module.exports = {
                 }
             }
 
-            client.tls.reply(client, interaction, "manu.data.dados_removidos")
+            client.tls.reply(interaction, user, "manu.data.dados_removidos")
         } else {
-            dados_conhecidos = `**${client.tls.phrase(client, interaction, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}\`\`\``
+            dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}\`\`\``
 
             // if (user.redes.length > 0) {
             //     dados_conhecidos += '\n**Links externos: **\n'
@@ -86,10 +85,10 @@ module.exports = {
             //     dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, badgeTypes.ALL, interaction.user.id, interaction).build(client, interaction)}`
 
             const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(client, interaction, "manu.data.dados_conhecidos"))
+                .setTitle(client.tls.phrase(user, "manu.data.dados_conhecidos"))
                 .setColor(client.embed_color(user.misc.color))
-                .setDescription(`${client.tls.phrase(client, interaction, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
-                .setFooter({ text: client.tls.phrase(client, interaction, "manu.data.dica_rodape") })
+                .setDescription(`${client.tls.phrase(user, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
+                .setFooter({ text: client.tls.phrase(user, "manu.data.dica_rodape") })
 
             interaction.reply({ embeds: [embed], ephemeral: true })
         }
@@ -120,9 +119,9 @@ function lista_servidores(servidores, linha_corte, client) {
         servidores_restantes = servidores.length - qtd_servidores
 
         if (servidores_restantes > 1)
-            nome_servidores = `${nome_servidores} ${client.tls.phrase(client, interaction, "manu.data.outros_servers").replace("server_repl", servidores_restantes)}`
+            nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.outros_servers").replace("server_repl", servidores_restantes)}`
         else
-            nome_servidores = `${nome_servidores} ${client.tls.phrase(client, interaction, "manu.data.um_server")}`
+            nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.um_server")}`
     }
 
     return nome_servidores

@@ -44,7 +44,7 @@ module.exports = {
 			subcommand
 				.setName('piada')
 				.setDescription('⌠😂|🇧🇷⌡ Conta uma piada')),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
@@ -55,7 +55,6 @@ module.exports = {
 
 			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
-			const user = await client.getUser(interaction.user.id)
 			await interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")

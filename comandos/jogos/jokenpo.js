@@ -30,7 +30,7 @@ module.exports = {
                     { name: '🧻', value: 'papel' },
                     { name: '✂️', value: 'tesoura' }
                 )),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         let jooj = ["pedra", "papel", "tesoura", "pedra"], escolha

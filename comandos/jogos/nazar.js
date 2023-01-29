@@ -13,9 +13,7 @@ module.exports = {
             "fr": "⌠🎲⌡ Emplacement de Madame Nazar aujourd'hui",
             "it": "⌠🎲⌡ La location di Madame Nazar oggi"
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         fetch('https://madam-nazar-location-api.herokuapp.com/location/current')
             .then(res => res.json())

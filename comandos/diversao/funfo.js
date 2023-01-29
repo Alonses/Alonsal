@@ -4,7 +4,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('alaa')
         .setDescription('⌠😂|🇧🇷⌡ Funfo?'),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
         const file = new AttachmentBuilder('./arquivos/songs/alaa.ogg')
         return interaction.reply({ files: [file] })
     }

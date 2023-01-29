@@ -10,7 +10,7 @@ module.exports = {
 			"fr": '⌠😂⌡ Servi??',
 			"it": '⌠😂⌡ Servito??'
 		}),
-	async execute(client, interaction) {
-		interaction.reply({ content: `${client.tls.phrase(client, interaction, "dive.esfiha.asf")} :yum: :yum: :yum:\n https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713` })
+	async execute(client, user, interaction) {
+		interaction.reply({ content: `${client.tls.phrase(user, "dive.esfiha.asf")} :yum: :yum: :yum:\n https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713` })
 	}
 }

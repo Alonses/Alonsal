@@ -29,25 +29,25 @@ module.exports = {
                 .setMaxValue(100)
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const membro_sv = interaction.guild.members.cache.get(client.id())
         const qtd_msg = interaction.options.data[0].value
 
         // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))
-            return client.tls.reply(client, interaction, "mode.clear.permissao_2", true)
+            return client.tls.reply(interaction, user, "mode.clear.permissao_2", true)
 
         const channel = interaction.channel
 
         channel.bulkDelete(qtd_msg)
             .then(() => {
-                const texto = qtd_msg > 1 ? `\`${qtd_msg} ${client.tls.phrase(client, interaction, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(client, interaction, "mode.clear.apagado_2")}`
+                const texto = qtd_msg > 1 ? `\`${qtd_msg} ${client.tls.phrase(user, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(user, "mode.clear.apagado_2")}`
 
                 interaction.reply({ content: `:recycle: | ${texto}`, ephemeral: true })
             })
             .catch(() => {
-                client.tls.reply(client, interaction, "mode.clear.error", true, 0)
+                client.tls.reply(interaction, user, "mode.clear.error", true, 0)
             })
     }
 }

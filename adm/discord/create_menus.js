@@ -14,7 +14,7 @@ module.exports = (client, dados, interaction) => {
             opcoes.push({
                 label: `${badge.name}`,
                 emoji: `${badge.emoji}`,
-                description: `${client.tls.phrase(client, interaction, "dive.badges.fixar")} ${badge.name}`,
+                description: `${client.tls.phrase(user, "dive.badges.fixar")} ${badge.name}`,
                 value: `${valor}`
             })
 
@@ -26,7 +26,7 @@ module.exports = (client, dados, interaction) => {
         .addComponents(
             new SelectMenuBuilder()
                 .setCustomId(`select_${interaction.user.id}`)
-                .setPlaceholder(client.tls.phrase(client, interaction, "dive.badges.escolha_uma"))
+                .setPlaceholder(client.tls.phrase(user, "dive.badges.escolha_uma"))
                 .addOptions(opcoes)
         )
 

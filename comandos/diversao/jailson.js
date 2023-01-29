@@ -29,16 +29,15 @@ module.exports = {
 			subcommand
 				.setName('frase')
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do jaja')),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 
-		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(client, interaction, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
+		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 		} else {
 
 			await interaction.deferReply()
-			const user = await client.getUser(interaction.user.id)
 
 			fetch(`${process.env.url_apisal}/random?jailson`)
 				.then(response => response.json())

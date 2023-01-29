@@ -7,7 +7,7 @@ module.exports = {
         .setName('c_resumo_diario')
         .setDescription('⌠🤖⌡ Veja um resumo diário de forma manual')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 

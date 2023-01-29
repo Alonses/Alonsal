@@ -65,21 +65,24 @@ module.exports = {
                             "fr": 'Mentionner un utilisateur comme cible',
                             "it": 'Menziona un altro utente'
                         }))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        let user = interaction.options.getUser("user") || interaction.user
+        let user_alvo = interaction.options.getUser("user") || interaction.user
+
+        // user_alvo -> usuário marcado pelo comando
+        // user -> usuário que disparou o comando
 
         if (interaction.options.getSubcommand() === "info") {
-            let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
+            let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`
 
             const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
 
-            const membro_sv = interaction.guild.members.cache.get(user.id) // Coleta dados como membro
+            const membro_sv = interaction.guild.members.cache.get(user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
 
-            let data_criacao = `<t:${Math.floor(user.createdAt / 1000)}:f>` // Cadastro do usuário
-            let diferenca_criacao = `<t:${Math.floor(user.createdAt / 1000)}:R>`
+            let data_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:f>` // Cadastro do usuário
+            let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
             let nota_rodape = ""
 
             if (avatar_user !== null) {
@@ -100,20 +103,20 @@ module.exports = {
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 tipo_user = "🛡️"
-                nota_rodape = client.tls.phrase(client, interaction, "util.user.moderador")
+                nota_rodape = client.tls.phrase(user, "util.user.moderador")
             }
 
-            if (!tipo_user.includes("🛡️") && !user.bot)
+            if (!tipo_user.includes("🛡️") && !user_alvo.bot)
                 tipo_user = emojis_busto[Math.round((emojis_busto.length - 1) * Math.random())]
 
-            if (user.id === client.id())
-                nota_rodape = client.tls.phrase(client, interaction, "util.user.alonsal")
+            if (user_alvo.id === client.id())
+                nota_rodape = client.tls.phrase(user, "util.user.alonsal")
 
-            if (process.env.ids_enceirados.includes(user.id)) {
+            if (process.env.ids_enceirados.includes(user_alvo.id)) {
                 if (nota_rodape !== "")
                     nota_rodape += ", "
 
-                nota_rodape += client.tls.phrase(client, interaction, "util.user.enceirado")
+                nota_rodape += client.tls.phrase(user, "util.user.enceirado")
             }
 
             const permissoes_user = membro_sv.permissions.toArray()
@@ -131,9 +134,9 @@ module.exports = {
 
             permissoes_fn = permissoes_fn.slice(0, 2000)
             let emoji_hypesquad = "⠀", discord_premium = "⠀"
-            const flags_user = user.flags.toArray()
+            const flags_user = user_alvo.flags.toArray()
 
-            if (!user.bot) {
+            if (!user_alvo.bot) {
                 if (flags_user.includes('HypeSquadOnlineHouse1')) // HypeSquad
                     emoji_hypesquad = client.emoji(emojis.squad_bravery)
 
@@ -153,7 +156,7 @@ module.exports = {
             // let badges = buildAllBadges(client, interaction)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
-            const user_c = await client.getUser(user.id)
+            const user_c = await client.getUser(user_alvo.id)
 
             const infos_user = new EmbedBuilder()
                 .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
@@ -162,23 +165,23 @@ module.exports = {
                 .addFields(
                     {
                         name: ':globe_with_meridians: **Discord**',
-                        value: `\`${user.username.replace(/ /g, "")}#${user.discriminator}\``,
+                        value: `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``,
                         inline: true
                     },
                     {
                         name: `:label: **Discord ID**`,
-                        value: `\`${user.id}\``,
+                        value: `\`${user_alvo.id}\``,
                         inline: true
                     }
                 )
                 .addFields(
                     {
-                        name: `:birthday: **${client.tls.phrase(client, interaction, "util.user.conta_criada")}**`,
+                        name: `:birthday: **${client.tls.phrase(user, "util.user.conta_criada")}**`,
                         value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
                         inline: false
                     },
                     {
-                        name: `:parachute: **${client.tls.phrase(client, interaction, "util.user.entrada")}**`,
+                        name: `:parachute: **${client.tls.phrase(user, "util.user.entrada")}**`,
                         value: `${data_entrada}\n[ ${diferenca_entrada} ]`,
                         inline: false
                     }
@@ -195,8 +198,8 @@ module.exports = {
             return interaction.reply({ embeds: [infos_user] })
         } else { // O avatar do usuário
 
-            let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
-            const user_c = await client.getUser(user.id)
+            let url_avatar = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`
+            const user_c = await client.getUser(user_alvo.id)
 
             fetch(url_avatar)
                 .then(res => {
@@ -204,15 +207,15 @@ module.exports = {
                         url_avatar = url_avatar.replace('.gif', '.webp')
 
                     const embed = new EmbedBuilder()
-                        .setTitle(user.username)
-                        .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_avatar").replace("link_repl", url_avatar))
+                        .setTitle(user_alvo.username)
+                        .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
                         .setColor(user_c.misc.embed)
                         .setImage(url_avatar)
 
                     return interaction.reply({ embeds: [embed], ephemeral: true })
                 })
                 .catch(() => {
-                    client.tls.reply(client, interaction, "util.avatar.error_1", true, 2)
+                    client.tls.reply(interaction, user, "util.avatar.error_1", true, 2)
                 })
         }
     }

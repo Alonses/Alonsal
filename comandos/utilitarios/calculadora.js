@@ -35,12 +35,12 @@ module.exports = {
                     "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const expressao = interaction.options.data[0].value
 
         if (expressao.length < 2)
-            return client.tls.reply(client, interaction, "util.calc.aviso_1")
+            return client.tls.reply(interaction, user, "util.calc.aviso_1")
 
         try {
             let resultado = math.evaluate(expressao)
@@ -52,9 +52,9 @@ module.exports = {
             if (!isInteger(resultado))
                 resultado = resultado.toFixed(6)
 
-            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(client, interaction, "util.calc.resultado")}: \`${resultado.toLocaleString('pt-BR')}\``, ephemeral: true })
+            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${resultado.toLocaleString('pt-BR')}\``, ephemeral: true })
         } catch (err) {
-            interaction.reply({ content: `:octagonal_sign: | ${client.tls.phrase(client, interaction, "util.calc.error")}: \`${expressao}\``, ephemeral: true })
+            interaction.reply({ content: `:octagonal_sign: | ${client.tls.phrase(user, "util.calc.error")}: \`${expressao}\``, ephemeral: true })
         }
     }
 }

@@ -16,7 +16,7 @@ module.exports = {
 			"fr": '⌠😂⌡ Faites l\'amour pas la guerre',
 			"it": '⌠😂⌡ Fai l\'amore non la guerra'
 		}),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 		interaction.reply('https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263')
 	}
 }

@@ -71,13 +71,13 @@ module.exports = {
                 )
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
 
         // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
-            return client.tls.reply(client, interaction, "mode.adm.moderadores", true)
+            return client.tls.reply(interaction, user, "mode.adm.moderadores", true)
 
         let opcao_remove = false, entradas = interaction.options.data
 
@@ -99,7 +99,7 @@ module.exports = {
                 notificador.canal = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
-                    return client.tls.reply(client, interaction, "mode.anuncio.tipo_canal", true, 0)
+                    return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
             }
         })
 
@@ -125,10 +125,10 @@ module.exports = {
 
         client.notify(process.env.feeds_channel, mensagem)
 
-        let feedback_user = client.tls.phrase(client, interaction, "mode.anuncio.anuncio_games")
+        let feedback_user = client.tls.phrase(user, "mode.anuncio.anuncio_games")
 
         if (opcao_remove)
-            feedback_user = `:mobile_phone_off: | ${client.tls.phrase(client, interaction, "mode.anuncio.anuncio_off")}`
+            feedback_user = `:mobile_phone_off: | ${client.tls.phrase(user, "mode.anuncio.anuncio_off")}`
 
         interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
     }

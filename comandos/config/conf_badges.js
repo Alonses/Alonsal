@@ -24,7 +24,7 @@ module.exports = {
                 )
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 
@@ -38,7 +38,7 @@ module.exports = {
                 badge_alvo = parseInt(valor.value)
         })
 
-        const user = await client.getUser(id_alvo), all_badges = []
+        const all_badges = []
 
         if (user.badges.badge_list.length > 0)
             user.badges.badge_list.forEach(valor => {
@@ -53,8 +53,11 @@ module.exports = {
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 
-            client.discord.users.fetch(id_alvo, false).then((user_interno) => {
-                user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, id_alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+            client.discord.users.fetch(id_alvo, false).then(async (user_interno) => {
+
+                let alvo = await client.getUser(user_interno.id)
+
+                user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
                 interaction.reply({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })

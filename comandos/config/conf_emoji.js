@@ -7,7 +7,7 @@ module.exports = {
         .setName('c_emojis')
         .setDescription('⌠🤖⌡ Lista todos os emojis conhecidos')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 

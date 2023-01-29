@@ -18,15 +18,13 @@ module.exports = {
             "fr": '⌠📡⌡ Notez moi!',
             "it": '⌠📡⌡ Valutami!'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.avalie.titulo")} ${client.emoji(emojis.dancando)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.avalie.titulo")} ${client.emoji(emojis.dancando)}`)
             .setURL("https://top.gg/bot/833349943539531806")
-            .setDescription(client.tls.phrase(client, interaction, "manu.avalie.descricao"))
+            .setDescription(client.tls.phrase(user, "manu.avalie.descricao"))
             .setImage("https://i.imgur.com/7Qnd1p7.png")
 
         interaction.reply({ embeds: [embed], ephemeral: true })

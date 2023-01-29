@@ -84,7 +84,7 @@ module.exports = {
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare'
                         }))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let usuario_alvo = []
         const users = []
@@ -125,18 +125,18 @@ module.exports = {
                 paginas = 1
 
             if (users.length > 6)
-                rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(client, interaction, "dive.rank.rodape")}`
+                rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
             if (!user_alvo) {
                 if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                    return client.tls.reply(client, interaction, "dive.rank.error_1", true, 0)
+                    return client.tls.reply(interaction, user, "dive.rank.error_1", true, 0)
 
                 const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
                 for (let x = 0; x < remover; x++)
                     users.shift()
 
-                rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(client, interaction, "dive.rank.rodape")}`
+                rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
             }
 
             let i = 0
@@ -170,27 +170,26 @@ module.exports = {
             }
 
             let embed, img_embed
-            let user = await client.getUser(interaction.user.id)
 
             fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
                 if (!user_alvo) { // Sem usuário alvo definido
                     embed = new EmbedBuilder()
-                        .setTitle(`${client.tls.phrase(client, interaction, "dive.rank.rank_sv")} ${interaction.guild.name}`)
+                        .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
                         .setColor(client.embed_color(user.misc.color))
-                        .setDescription(`\`\`\`fix\n${client.tls.phrase(client, interaction, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
+                        .setDescription(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
                         .addFields(
                             {
-                                name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(client, interaction, "dive.rank.enceirados")}`,
+                                name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                                 value: usernames.join("\n"),
                                 inline: true
                             },
                             {
-                                name: `:postal_horn: ${client.tls.phrase(client, interaction, "dive.rank.experiencia")}`,
+                                name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
                                 value: experiencias.join("\n"),
                                 inline: true
                             },
                             {
-                                name: `:beginner: ${client.tls.phrase(client, interaction, "dive.rank.nivel")}`,
+                                name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
                                 value: levels.join("\n"),
                                 inline: true
                             }
@@ -204,24 +203,24 @@ module.exports = {
                         usuario_alvo.push(0)
 
                     let fixed_badge = ""
-                    const user = await client.getUser(user_alvo.id)
+                    const user_a = await client.getUser(user_alvo.id)
 
                     if (existsSync(`./arquivos/data/user/${user_alvo.id}.json`))
                         fixed_badge = busca_badges(client, badgeTypes.FIXED, user_alvo.id, interaction).emoji
 
                     embed = new EmbedBuilder()
                         .setTitle(`${user_alvo.username} ${fixed_badge}`)
-                        .setColor(client.embed_color(user.misc.color))
+                        .setColor(client.embed_color(user_a.misc.color))
                         .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     embed.addFields(
                         {
-                            name: `:postal_horn: ${client.tls.phrase(client, interaction, "dive.rank.experiencia")}`,
+                            name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
                             value: `\`${usuario_alvo[0].toFixed(2)} EXP\``,
                             inline: true
                         },
                         {
-                            name: `:beginner: ${client.tls.phrase(client, interaction, "dive.rank.nivel")}`,
+                            name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
                             value: `\`${client.formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
                             inline: true
                         },

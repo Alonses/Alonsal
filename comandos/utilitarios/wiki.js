@@ -47,23 +47,22 @@ module.exports = {
                     "it": 'In quale lingua?'
                 })
                 .addChoices(
-                    { name: 'Portugues', value: 'pt-br' },
+                    { name: 'Português', value: 'pt-br' },
                     { name: 'English', value: 'en-us' },
                     { name: 'Español', value: 'es-es' },
                     { name: 'Français', value: 'fr-fr' },
                     { name: 'Italiano', value: 'it-it' }
                 )),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction) === "al-br" ? "pt-br" : client.idioma.getLang(interaction)
-        const user = await client.getUser(interaction.user.id)
+        let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang
         const content = interaction.options.data[0].value
 
         if (interaction.options.data.length > 1)
             idioma_definido = interaction.options.data[1].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
-            return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
+            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo")
 
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
@@ -76,7 +75,7 @@ module.exports = {
                 const fields = []
 
                 if (res.RelatedTopics.length > 0)
-                    fields.push({ name: `:books: ${client.tls.phrase(client, interaction, "util.wiki.topicos_rel")}`, value: "\u200B" })
+                    fields.push({ name: `:books: ${client.tls.phrase(user, "util.wiki.topicos_rel")}`, value: "\u200B" })
 
                 for (const topic of res.RelatedTopics) {
                     counter++
@@ -113,13 +112,13 @@ module.exports = {
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.auto_pesquisa")} :v`)
+                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`)
                     else
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
+                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`)
                 }
             })
             .catch(() => {
-                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
             })
     }
 }

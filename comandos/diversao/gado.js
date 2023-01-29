@@ -32,7 +32,7 @@ module.exports = {
                     "it": 'Menziona un altro utente'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction)
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
@@ -40,7 +40,7 @@ module.exports = {
         const alvo = interaction.options.getUser('user')
 
         if (client.id() === alvo.id)
-            return client.tls.reply(client, interaction, "dive.gado.error_2")
+            return client.tls.reply(interaction, user, "dive.gado.error_2")
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)

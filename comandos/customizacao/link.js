@@ -110,29 +110,32 @@ module.exports = {
                             "it": 'La posizione da usare sempre'
                         })
                         .setRequired(true))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id)
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
+        let link_comando = ""
 
-        if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
+        if (interaction.options.getSubcommand() === "steam") { // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
             user.social.steam = entrada
-        else if (interaction.options.getSubcommand() === "lastfm") {
+            link_comando = "</steam:1018609879562334384>"
+        } else if (interaction.options.getSubcommand() === "lastfm") {
             user.social.lastfm = entrada
             plataforma = "lastfm"
+            link_comando = "</lastfm:1018609879512006796>"
         } else if (interaction.options.getSubcommand() === "locale") {
             user.misc.locale = entrada
             plataforma = "locale"
         } else {
             user.social.pula_predios = entrada
             plataforma = "Pula prédios"
+            link_comando = "</pula:1023486895327555584>"
         }
 
         user.save()
 
         if (plataforma !== "locale")
-            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0]).replace("comando_repl", link_comando)}`, ephemeral: true })
         else // Link de local do /tempo
-            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
     }
 }

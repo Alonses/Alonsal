@@ -11,7 +11,7 @@ module.exports = {
             option.setName('codigo')
                 .setDescription('O código do pacote')
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const texto_entrada = interaction.options.data[0].value
 
@@ -21,9 +21,6 @@ module.exports = {
 
                 if (result.causa !== 'Forbidden') {
                     const objeto = result.quantidade === 1 ? result.objetos[0] : result.objetos
-                    let user
-                    client.getUser(interaction.user.id).then(usr => user = usr)
-
                     const eventos_transp = []
 
                     if (objeto.eventos) {
@@ -40,29 +37,29 @@ module.exports = {
                             datas_eventos += `<t:${data_evento}:F>`
                             let local = `\`${eventos[i].unidade.endereco.cidade} | ${eventos[i].unidade.tipo}\``
 
-                            eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${client.tls.phrase(client, interaction, "util.rastreio.local")}: ${local}\n${datas_eventos}\n`)
+                            eventos_transp.push(`${emoji_status(eventos[i].urlIcone)} | ${eventos[i].descricao}\n${client.tls.phrase(user, "util.rastreio.local")}: ${local}\n${datas_eventos}\n`)
                         }
                     }
 
-                    let titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_rastreado")} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
+                    let titulo = `> ${client.tls.phrase(user, "util.rastreio.objeto_rastreado")} :package:`, nota_rodape = "", objeto_nao_encontrado = ""
 
                     if (objeto.mensagem) {
                         objeto_nao_encontrado = `\`\`\`${objeto.mensagem.split(":")[1]}\`\`\``
-                        titulo = `> ${client.tls.phrase(client, interaction, "util.rastreio.objeto_invalido")} :warning:`
-                        nota_rodape = client.tls.phrase(client, interaction, "util.rastreio.codigo_invalido")
+                        titulo = `> ${client.tls.phrase(user, "util.rastreio.objeto_invalido")} :warning:`
+                        nota_rodape = client.tls.phrase(user, "util.rastreio.codigo_invalido")
                     }
 
                     const embed = new EmbedBuilder()
                         .setTitle(titulo)
                         .setColor(client.embed_color(user.misc.color))
-                        .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(client, interaction, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
+                        .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(user, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
 
                     if (nota_rodape.length > 1)
                         embed.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
                     return interaction.reply({ embeds: [embed], ephemeral: true })
                 } else
-                    return client.tls.reply(client, interaction, "util.rastreio.codigo_invalido", true, 1)
+                    return client.tls.reply(interaction, user, "util.rastreio.codigo_invalido", true, 1)
             })
     }
 }

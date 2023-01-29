@@ -62,9 +62,7 @@ module.exports = {
                     { name: 'Encode', value: '0' },
                     { name: 'Decode', value: '1' }
                 )),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -93,7 +91,7 @@ module.exports = {
                     texto[carac] = `${morse[texto[carac]]} `
                 else {
                     texto[carac] = ""
-                    aviso = client.tls.phrase(client, interaction, "util.morse.caracteres")
+                    aviso = client.tls.phrase(user, "util.morse.caracteres")
                 }
             }
         } else { // Decodificando
@@ -110,14 +108,14 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = client.tls.phrase(client, interaction, "util.morse.codificado")
+        let titulo = client.tls.phrase(user, "util.morse.codificado")
 
         if (codificar.opera)
-            titulo = client.tls.phrase(client, interaction, "util.morse.decodificado")
+            titulo = client.tls.phrase(user, "util.morse.decodificado")
 
         if (texto_ordenado.length === 0) {
-            texto_ordenado = client.tls.phrase(client, interaction, "util.morse.carac_invalidos")
-            titulo = client.tls.phrase(client, interaction, "util.morse.error")
+            texto_ordenado = client.tls.phrase(user, "util.morse.carac_invalidos")
+            titulo = client.tls.phrase(user, "util.morse.error")
         }
 
         const embed = new EmbedBuilder()
@@ -131,7 +129,7 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
             .catch(() => {
-                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
+                client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
             })
     }
 }

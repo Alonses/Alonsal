@@ -18,15 +18,13 @@ module.exports = {
             "fr": '⌠📡⌡ Soutenez Alonsal',
             "it": '⌠📡⌡ Supporta Alonsal'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
             .setURL("https://picpay.me/slondo")
-            .setDescription(client.tls.phrase(client, interaction, "manu.apoio.escaneie"))
+            .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
             .setImage("https://i.imgur.com/incYvy2.jpg")
 
         interaction.reply({ embeds: [embed], ephemeral: true })

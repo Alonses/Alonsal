@@ -12,16 +12,14 @@ module.exports = {
             "fr": '⌠📡⌡ Serveur officiel Alonsal™️',
             "it": '⌠📡⌡ Server ufficiale Alonsal™️'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.hub.hub_alonsal")} ${client.emoji(emojis.dancando_elizabeth)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.hub.hub_alonsal")} ${client.emoji(emojis.dancando_elizabeth)}`)
             .setURL('https://discord.gg/ZxHnxQDNwn')
             .setImage('https://i.imgur.com/NqmwCA9.png')
-            .setDescription(client.tls.phrase(client, interaction, "manu.hub.info"))
+            .setDescription(client.tls.phrase(user, "manu.hub.info"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

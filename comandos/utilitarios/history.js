@@ -26,7 +26,7 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName('data')
                         .setDescription('Uma data específica, neste formato 21/01'))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let data = ""
 
@@ -48,25 +48,24 @@ module.exports = {
                     const ano_atual = new Date().getFullYear()
 
                     for (let i = 0; i < res.length; i++) {
-                        lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(client, interaction, "util.history.em")} ${res[i].ano}\` | \``
+                        lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(user, "util.history.em")} ${res[i].ano}\` | \``
 
-                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(client, interaction, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(client, interaction, "util.history.este_ano")}\` ] `
+                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(user, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(user, "util.history.este_ano")}\` ] `
 
                         lista_eventos += `${res[i].acontecimento}\n`
                     }
 
                     lista_eventos = formata_texto(lista_eventos)
 
-                    if (data === "") data = client.tls.phrase(client, interaction, "util.history.hoje")
+                    if (data === "") data = client.tls.phrase(user, "util.history.hoje")
 
                     data_eventos = ` ${data}`
-                    const user = await client.getUser(interaction.user.id)
 
                     const embed_eventos = new EmbedBuilder()
-                        .setTitle(client.tls.phrase(client, interaction, "util.history.acontecimentos_1"))
+                        .setTitle(client.tls.phrase(user, "util.history.acontecimentos_1"))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setColor(client.embed_color(user.misc.color))
-                        .setDescription(`${client.tls.phrase(client, interaction, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
+                        .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                     interaction.editReply({ embeds: [embed_eventos] })
                 })
