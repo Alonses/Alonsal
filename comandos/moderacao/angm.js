@@ -73,7 +73,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-        const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
+        const membro_sv = await interaction.guild.members.cache.get(interaction.user.id)
 
         // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])

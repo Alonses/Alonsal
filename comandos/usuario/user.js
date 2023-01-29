@@ -77,7 +77,7 @@ module.exports = {
 
             const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
 
-            const membro_sv = interaction.guild.members.cache.get(user_alvo.id) // Coleta dados como membro
+            const membro_sv = await interaction.guild.members.cache.get(user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
 
