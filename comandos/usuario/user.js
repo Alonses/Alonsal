@@ -15,7 +15,10 @@ module.exports = {
         .setDescription('⌠👤⌡ View user details')
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja detalhes de algum usuario',
-            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur'
+            "es-ES": '⌠👤⌡ Ver los datos de cualquier usuario',
+            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur',
+            "it": '⌠👤⌡ Visualizza i dati di qualsiasi utente',
+            "ru": '⌠👤⌡ Просмотр любых данных пользователя'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -25,21 +28,24 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ O Avatar do usuário',
                     "es-ES": '⌠👤⌡ El avatar de usuario',
                     "fr": '⌠👤⌡ L\'avatar de l\'utilisateur',
-                    "it": '⌠👤⌡ L\'utente Avatar'
+                    "it": '⌠👤⌡ L\'utente Avatar',
+                    "ru": '⌠👤⌡ Аватар пользователя'
                 })
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "it": 'utente'
+                            "it": 'utente',
+                            "ru": 'пользователь'
                         })
                         .setDescription('Mention a user as a target')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
                             "fr": 'Mentionner un utilisateur comme cible',
-                            "it": 'Menziona un altro utente'
+                            "it": 'Menziona un altro utente',
+                            "ru": 'Упомянуть другого пользователя'
                         })))
         .addSubcommand(subcommand =>
             subcommand
@@ -49,21 +55,24 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Informações do usuário',
                     "es-ES": '⌠👤⌡ Información del usuario',
                     "fr": '⌠👤⌡ Informations utilisateur',
-                    "it": '⌠👤⌡ Informazioni sull\'utente'
+                    "it": '⌠👤⌡ Informazioni sull\'utente',
+                    "ru": '⌠👤⌡ Информация о пользователе'
                 })
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "it": 'utente'
+                            "it": 'utente',
+                            "ru": 'пользователь'
                         })
                         .setDescription('Mention a user as a target')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
                             "fr": 'Mentionner un utilisateur comme cible',
-                            "it": 'Menziona un altro utente'
+                            "it": 'Menziona un altro utente',
+                            "ru": 'Упомянуть другого пользователя'
                         }))),
     async execute(client, user, interaction) {
 
@@ -195,7 +204,7 @@ module.exports = {
             //         inline: false
             //     })
 
-            return interaction.reply({ embeds: [infos_user] })
+            return interaction.reply({ embeds: [infos_user], ephemeral: user.misc.ghost_mode })
         } else { // O avatar do usuário
 
             let url_avatar = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`

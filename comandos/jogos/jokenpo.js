@@ -8,7 +8,8 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ Jogue jokenpô',
             "es-ES": '⌠🎲⌡ Juega jokenpo',
             "fr": '⌠🎲⌡ Jouer au jokenpo',
-            "it": '⌠🎲⌡ Gioca a jokenpo'
+            "it": '⌠🎲⌡ Gioca a jokenpo',
+            "ru": '⌠🎲⌡ Играть в Джокенпо'
         })
         .addStringOption(option =>
             option.setName('choise')
@@ -16,14 +17,16 @@ module.exports = {
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
                     "fr": 'choix',
-                    "it": 'scelta'
+                    "it": 'scelta',
+                    "ru": 'выбор'
                 })
                 .setDescription('What\'s your choice?')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual a sua escolha?',
                     "es-ES": '¿Cual es tu eleccion?',
                     "fr": 'Quel est ton choix?',
-                    "it": 'Qual\'è la tua scelta?'
+                    "it": 'Qual\'è la tua scelta?',
+                    "ru": 'Каков ваш выбор?'
                 })
                 .addChoices(
                     { name: '🗿', value: 'pedra' },
@@ -34,7 +37,7 @@ module.exports = {
 
         const idioma_definido = client.idioma.getLang(interaction)
         let jooj = ["pedra", "papel", "tesoura", "pedra"], escolha
-        
+
         if (interaction.options.data.length > 0)
             escolha = interaction.options.data[0].value.toLowerCase()
 
@@ -60,6 +63,6 @@ module.exports = {
         if (idioma_definido !== "pt-br" && idioma_definido !== "al-br")
             mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]`
 
-        return interaction.reply(mensagem)
+        return interaction.reply({ content: mensagem, ephemeral: user.misc.ghost_mode })
     }
 }

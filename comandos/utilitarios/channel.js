@@ -5,13 +5,14 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('cinfo')
+        .setName('channel')
         .setDescription('⌠💡⌡ Show channel details')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
             "es-ES": '⌠💡⌡ Ver detalles del canal',
             "fr": '⌠💡⌡ Afficher les détails de la chaîne',
-            "it": '⌠💡⌡ Visualizza i dettagli del canale'
+            "it": '⌠💡⌡ Visualizza i dettagli del canale',
+            "ru": '⌠💡⌡ Подробнее о канале'
         })
         .addChannelOption(option =>
             option.setName('channel')
@@ -19,14 +20,16 @@ module.exports = {
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
                     "fr": 'chaîne',
-                    "it": 'canale'
+                    "it": 'canale',
+                    "ru": 'канал'
                 })
                 .setDescription('Mention a channel')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Marque um canal como alvo',
                     "es-ES": 'Mencionar un canal como objetivo',
                     "fr": 'Mentionner une chaîne',
-                    "it": 'Menzionare un canale'
+                    "it": 'Menzionare un canale',
+                    "ru": 'упомянуть канал'
                 })),
     async execute(client, user, interaction) {
 
@@ -117,7 +120,7 @@ module.exports = {
                             }
                         )
 
-                return interaction.reply({ embeds: [infos_ch] })
+                return interaction.reply({ embeds: [infos_ch], ephemeral: user.misc.ghost_mode })
             })
     }
 }

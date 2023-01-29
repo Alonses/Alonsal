@@ -7,14 +7,16 @@ module.exports = {
             "pt-BR": 'telemetria',
             "es-ES": 'telemetria',
             "fr": 'telemetrie',
-            "it": 'telemetria'
+            "it": 'telemetria',
+            "ru": 'телеметрия'
         })
         .setDescription('⌠📡⌡ Data we collect')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Dados que coletamos',
             "es-ES": '⌠📡⌡ Datos que recopilamos',
             "fr": '⌠📡⌡ Données que nous collectons',
-            "it": '⌠📡⌡ Dati che raccogliamo'
+            "it": '⌠📡⌡ Dati che raccogliamo',
+            "ru": '⌠📡⌡ Данные, которые мы собираем'
         }),
     async execute(client, user, interaction) {
 

@@ -11,7 +11,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Perfil de alguém na Steam',
             "es-ES": '⌠👤⌡ Perfil de alguien en Steam',
             "fr": '⌠👤⌡ Profil Steam de quelqu\'un',
-            "it": '⌠👤⌡ Profilo Steam di qualcuno'
+            "it": '⌠👤⌡ Profilo Steam di qualcuno',
+            "ru": '⌠👤⌡ Посмотреть чей-то профиль на Steam'
         })
         .addStringOption(option =>
             option.setName('url')
@@ -20,7 +21,8 @@ module.exports = {
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
                     "fr": 'Nom de profil',
-                    "it": 'il nome utente'
+                    "it": 'il nome utente',
+                    "ru": 'Имя пользователя'
                 }))
         .addUserOption(option =>
             option.setName('user')
@@ -29,7 +31,8 @@ module.exports = {
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
                     "fr": 'Un utilisateur de discord',
-                    "it": 'Un utente della discord'
+                    "it": 'Un utente della discord',
+                    "ru": 'Дискорд-пользователь'
                 })),
     async execute(client, user, interaction) {
 
@@ -388,7 +391,7 @@ module.exports = {
                             }
                         )
 
-                    interaction.reply({ embeds: [usuario_steam] })
+                    interaction.reply({ embeds: [usuario_steam], ephemeral: user.misc.ghost_mode })
                 })
         } catch (err) {
             client.notifty(process.env.error_channel, err)

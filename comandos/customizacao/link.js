@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Link suas redes ao Alonsal',
             "es-ES": '⌠👤⌡ Conecta tus redes a Alonsal',
             "fr": '⌠👤⌡ Connectez vos réseaux à Alonsal',
-            "it": '⌠👤⌡ Collega le tue reti ad Alonsal'
+            "it": '⌠👤⌡ Collega le tue reti ad Alonsal',
+            "ru": '⌠👤⌡ Свяжите свои сети с Алонсалом'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -20,7 +21,8 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Linkar ao Steam',
                     "es-ES": '⌠👤⌡ Enlace a Steam',
                     "fr": '⌠👤⌡ Lien vers Steam',
-                    "it": '⌠👤⌡ Collegati a Steam'
+                    "it": '⌠👤⌡ Collegati a Steam',
+                    "ru": '⌠👤⌡ Ссылка на Steam'
                 })
                 .addStringOption(option =>
                     option.setName("name")
@@ -28,14 +30,16 @@ module.exports = {
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
-                            'it': 'nome'
+                            "it": 'nome',
+                            "ru": 'имя'
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
                             "fr": 'Votre nom sur la plateforme',
-                            "it": 'Il tuo nome sulla piattaforma'
+                            "it": 'Il tuo nome sulla piattaforma',
+                            "ru": 'Ваше имя на платформе'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -46,7 +50,8 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Linkar ao LastFM',
                     "es-ES": '⌠👤⌡ Enlace a LastFM',
                     "fr": '⌠👤⌡ Lien vers LastFM',
-                    "it": '⌠👤⌡ Collegati a LastFM'
+                    "it": '⌠👤⌡ Collegati a LastFM',
+                    "ru": '⌠👤⌡ Ссылка на LastFM'
                 })
                 .addStringOption(option =>
                     option.setName("name")
@@ -54,14 +59,16 @@ module.exports = {
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
-                            "it": "nome"
+                            "it": 'nome',
+                            "ru": 'имя'
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
                             "fr": 'Votre nom sur la plateforme',
-                            "it": 'Il tuo nome sulla piattaforma'
+                            "it": 'Il tuo nome sulla piattaforma',
+                            "ru": 'Ваше имя на платформе'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
@@ -72,7 +79,8 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Linkar ao Pula Prédios',
                     "es-ES": '⌠👤⌡ Enlace a Pula Prédios',
                     "fr": '⌠👤⌡ Lien vers Pula Prédios',
-                    "it": '⌠👤⌡ Collegati a Pula Prédios'
+                    "it": '⌠👤⌡ Collegati a Pula Prédios',
+                    "ru": '⌠👤⌡ Ссылка на Pula Prédios'
                 })
                 .addStringOption(option =>
                     option.setName("token")
@@ -81,7 +89,8 @@ module.exports = {
                             "pt-BR": 'O seu token único',
                             "es-ES": 'Tu ficha única',
                             "fr": 'Votre jeton unique',
-                            "it": 'Il tuo token unico'
+                            "it": 'Il tuo token unico',
+                            "ru": 'Ваш уникальный токен'
                         })
                         .setRequired(true)))
 
@@ -93,21 +102,25 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Definir um local',
                     "es-ES": '⌠👤⌡ Establecer una ubicación',
                     "fr": '⌠👤⌡ Définir un emplacement',
-                    "it": '⌠👤⌡ Impostare una posizione'
+                    "it": '⌠👤⌡ Impostare una posizione',
+                    "ru": '⌠👤⌡ Установить местоположение'
                 })
                 .addStringOption(option =>
                     option.setName("place")
                         .setNameLocalizations({
                             "pt-BR": 'local',
                             "es-ES": 'lugar',
-                            'it': 'posto'
+                            "fr": 'mettre',
+                            "it": 'posto',
+                            "ru": 'место'
                         })
                         .setDescription("The location to always use")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Lugar a ser definido',
                             "es-ES": 'La ubicación para usar siempre',
                             "fr": 'Lieu d\'utilisation',
-                            "it": 'La posizione da usare sempre'
+                            "it": 'La posizione da usare sempre',
+                            "ru": 'Место, которое необходимо определить'
                         })
                         .setRequired(true))),
     async execute(client, user, interaction) {

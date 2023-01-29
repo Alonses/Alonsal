@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠😂⌡ Frases do faustão',
             "es-ES": '⌠😂⌡ Las frases de Faustão',
             "fr": '⌠😂⌡ Les phrases de Faustão',
-            "it": '⌠😂⌡ Le frasi di Faustão'
+            "it": '⌠😂⌡ Le frasi di Faustão',
+            "ru": '⌠😂⌡ Фразы от Faustão'
         }),
     async execute(client, user, interaction) {
 
@@ -27,6 +28,6 @@ module.exports = {
 
         const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: 'faustop.ogg' })
 
-        return interaction.reply({ files: [file] })
+        return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
     }
 }

@@ -22,7 +22,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
             "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
             "fr": '⌠👤⌡ Voir le classement d\'Alonsal',
-            "it": '⌠👤⌡ Guarda la classifica di Alonsal'
+            "it": '⌠👤⌡ Guarda la classifica di Alonsal',
+            "ru": '⌠👤⌡ Посмотреть рейтинг Алонсала'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('server')
@@ -31,35 +32,40 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
                     "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
                     "fr": '⌠👤⌡ Voir le classement des serveurs',
-                    "it": '⌠👤⌡ Vedi classifica server'
+                    "it": '⌠👤⌡ Vedi classifica server',
+                    "ru": '⌠👤⌡ Посмотреть рейтинг серверов'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "it": 'pagina'
+                            "it": 'pagina',
+                            "ru": 'страница'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
                             "fr": 'Une page à afficher',
-                            "it": 'Una pagina da visualizzare'
+                            "it": 'Una pagina da visualizzare',
+                            "ru": 'Одна страница для отображения'
                         }))
                 .addUserOption(option =>
                     option.setName('user')
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "it": 'utente'
+                            "it": 'utente',
+                            "ru": 'пользователь'
                         })
                         .setDescription('User to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Usuário para exibir',
                             "es-ES": 'Usuario a mostrar',
                             "fr": 'Utilisateur à afficher',
-                            "it": 'Utente da visualizzare'
+                            "it": 'Utente da visualizzare',
+                            "ru": 'Пользователь для отображения'
                         })))
         .addSubcommand(subcommand =>
             subcommand.setName('global')
@@ -68,21 +74,24 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Veja o ranking global',
                     "es-ES": '⌠👤⌡ Ver el ranking mundial',
                     "fr": '⌠👤⌡ Voir le classement mondial',
-                    "it": '⌠👤⌡ Guarda la classifica globale'
+                    "it": '⌠👤⌡ Guarda la classifica globale',
+                    "ru": '⌠👤⌡ Смотрите глобальный рейтинг'
                 })
                 .addStringOption(option =>
                     option.setName('page')
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
-                            "it": 'pagina'
+                            "it": 'pagina',
+                            "ru": 'страница'
                         })
                         .setDescription('One page to display')
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
                             "fr": 'Une page à afficher',
-                            "it": 'Una pagina da visualizzare'
+                            "it": 'Una pagina da visualizzare',
+                            "ru": 'Одна страница для отображения'
                         }))),
     async execute(client, user, interaction) {
 
@@ -236,7 +245,7 @@ module.exports = {
 
                     embed.setThumbnail(img_embed)
 
-                    interaction.reply({ embeds: [embed] })
+                    interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
                 })
             })
         } else // Ranking global

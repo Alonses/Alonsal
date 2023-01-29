@@ -9,21 +9,24 @@ module.exports = {
             "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
             "es-ES": '⌠💂⌡ Ajustar la XP de algunos usuarios',
             "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs',
-            "it": '⌠💂⌡ Regola gli XP di un altro utente'
+            "it": '⌠💂⌡ Regola gli XP di un altro utente',
+            "ru": '⌠💂⌡ Настройка опыта некоторых пользователей'
         })
         .addUserOption(option =>
             option.setName('user')
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
-                    "it": 'utente'
+                    "it": 'utente',
+                    "ru": 'пользователя'
                 })
                 .setDescription("The user to adjust")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O usuário a ser ajustado',
                     "es-ES": 'El usuario para ajustar',
                     "fr": 'Utilisateur cible',
-                    "it": 'L\'utente da aggiornare'
+                    "it": 'L\'utente da aggiornare',
+                    "ru": 'Пользователь для установки'
                 })
                 .setRequired(true))
         .addNumberOption(option =>
@@ -33,7 +36,8 @@ module.exports = {
                     "pt-BR": 'Qual o novo XP?',
                     "es-ES": '¿Qué es el nuevo XP?',
                     "fr": 'Qu\'est-ce que le nouvel XP?',
-                    "it": 'Qual è il nuovo XP?'
+                    "it": 'Qual è il nuovo XP?',
+                    "ru": 'Что такое новый XP?'
                 })
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),

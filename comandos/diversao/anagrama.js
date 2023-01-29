@@ -7,14 +7,16 @@ module.exports = {
             "pt-BR": 'anagrama',
             "es-ES": 'anagrama',
             "fr": 'anagramme',
-            "it": 'anagramma'
+            "it": 'anagramma',
+            "ru": 'анаграмма'
         })
         .setDescription('⌠😂⌡ Generates anagrams based on input')
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
             "es-ES": '⌠😂⌡ Genera anagramas basados ​​en la entrada',
             "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée',
-            "it": '⌠😂⌡ Genera anagrammi in base all\'input'
+            "it": '⌠😂⌡ Genera anagrammi in base all\'input',
+            "ru": '⌠😂⌡ Генерирует анаграммы на основе ввода'
         })
         .addStringOption(option =>
             option.setName('text')
@@ -22,14 +24,16 @@ module.exports = {
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true)),
     async execute(client, user, interaction) {
@@ -88,7 +92,7 @@ module.exports = {
             .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
             .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
 
-        return interaction.reply({ embeds: [anagrama] })
+        return interaction.reply({ embeds: [anagrama], ephemeral: user.misc.ghost_mode })
     }
 }
 

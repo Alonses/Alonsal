@@ -14,7 +14,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Pesquise itens do Minecraft',
             "es-ES": '⌠💡⌡ Buscar elementos de Minecraft',
             "fr": '⌠💡⌡ Rechercher des articles Minecraft',
-            "it": '⌠💡⌡ Cerca oggetti Minecraft'
+            "it": '⌠💡⌡ Cerca oggetti Minecraft',
+            "ru": '⌠💡⌡ Найди предметы в майнкрафте'
         })
         .addStringOption(option =>
             option.setName('item')
@@ -23,7 +24,8 @@ module.exports = {
                     "pt-BR": 'Insira um item',
                     "es-ES": 'Insertar un artículo',
                     "fr": 'Insérer un élément',
-                    "it": 'Inserire un elemento'
+                    "it": 'Inserire un elemento',
+                    "ru": 'поиск элемента'
                 })),
     async execute(client, user, interaction) {
 
@@ -173,7 +175,7 @@ module.exports = {
                     )
                 }
 
-                return interaction.reply({ embeds: [embed], ephemeral: true })
+                return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
     }
 }

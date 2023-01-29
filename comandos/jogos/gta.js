@@ -7,10 +7,11 @@ module.exports = {
         .setName('gta')
         .setDescription('⌠🎲⌡ Shows the current time in GTA Online')
         .setDescriptionLocalizations({
-            "pt-BR": "⌠🎲⌡ Mostra a hora atual no GTA Online",
-            "es-ES": "⌠🎲⌡ Muestra la hora actual en GTA Online",
-            "fr": "⌠🎲⌡ Affiche l'heure actuelle dans GTA Online",
-            "it": "⌠🎲⌡ Mostra l'ora corrente in GTA Online"
+            "pt-BR": '⌠🎲⌡ Mostra a hora atual no GTA Online',
+            "es-ES": '⌠🎲⌡ Muestra la hora actual en GTA Online',
+            "fr": '⌠🎲⌡ Affiche l\'heure actuelle dans GTA Online',
+            "it": '⌠🎲⌡ Mostra l\'ora corrente in GTA Online',
+            "ru": '⌠🎲⌡ Показывает текущее время в GTA Online'
         }),
     async execute(client, user, interaction) {
 
@@ -24,7 +25,7 @@ module.exports = {
 
         let emoji_horario = hora_gta.slice(0, 2) < 20 && hora_gta.slice(0, 2) > 6 ? hora_gta.slice(0, 2) > 17 ? ":city_sunset:" : ":park:" : ":bridge_at_night:"
 
-        interaction.reply({ content: `${emoji_horario} | Agora é \`${hora_gta}\` no gta online`, ephemeral: true })
+        interaction.reply({ content: `${emoji_horario} | ${client.tls.phrase(user, "game.gta.horario").replace("horario_repl", hora_gta)}`, ephemeral: user.misc.ghost_mode })
     }
 }
 

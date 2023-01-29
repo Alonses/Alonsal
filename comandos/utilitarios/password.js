@@ -8,7 +8,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
             "es-ES": '⌠💡⌡ Genera contraseñas aleatorias',
             "fr": '⌠💡⌡ Générer des mots de passe aléatoires',
-            "it": '⌠💡⌡ Genera password casuali'
+            "it": '⌠💡⌡ Genera password casuali',
+            "ru": '⌠💡⌡ Генерация случайных паролей'
         })
         .addStringOption(option =>
             option.setName('length')
@@ -16,14 +17,16 @@ module.exports = {
                     "pt-BR": 'tamanho',
                     "es-ES": 'tamano',
                     "fr": 'longueur',
-                    "it": 'lunghezza'
+                    "it": 'lunghezza',
+                    "ru": 'длина'
                 })
                 .setDescription('from 12 to 350')
                 .setDescriptionLocalizations({
                     "pt-BR": 'de 12 até 350',
                     "es-ES": 'de 12 a 350',
                     "fr": 'de 12 à 350',
-                    "it": 'da 12 a 350'
+                    "it": 'da 12 a 350',
+                    "ru": 'от 12 до 350'
                 })),
     async execute(client, user, interaction) {
 

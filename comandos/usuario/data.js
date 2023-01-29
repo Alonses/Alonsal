@@ -11,7 +11,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
             "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',
             "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous',
-            "it": '⌠👤⌡ Tutto quello che sappiamo di te'
+            "it": '⌠👤⌡ Tutto quello che sappiamo di te',
+            "ru": '⌠👤⌡ Все, что мы знаем о тебе'
         })
         .addBooleanOption(option =>
             option.setName("delete")
@@ -19,14 +20,16 @@ module.exports = {
                     "pt-BR": 'excluir',
                     "es-ES": 'eliminar',
                     "fr": 'nettoyer',
-                    "it": 'elimina'
+                    "it": 'elimina',
+                    "ru": 'удалять'
                 })
                 .setDescription("Request the deletion of your data in Alonsal")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
                     "es-ES": 'Solicitar la eliminación de sus datos en Alonsal',
                     "fr": 'Demander la suppression de vos données d\'Alonsal',
-                    "it": 'Richiedi la cancellazione dei tuoi dati in Alonsal'
+                    "it": 'Richiedi la cancellazione dei tuoi dati in Alonsal',
+                    "ru": 'Запросить удаление ваших данных на Alonsal'
                 })),
     async execute(client, user, interaction) {
 

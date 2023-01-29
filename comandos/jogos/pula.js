@@ -13,7 +13,8 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',
             "fr": '⌠🎲⌡ Le Jeu Pula!',
-            "it": '⌠🎲⌡ Il gioco di Pola!'
+            "it": '⌠🎲⌡ Il gioco di Pola!',
+            "ru": '⌠🎲⌡ Игра от Pula!'
         })
         .addUserOption(option =>
             option.setName('user')
@@ -22,7 +23,8 @@ module.exports = {
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
                     "fr": 'Un utilisateur de discord',
-                    "it": 'Un utente della discordia'
+                    "it": 'Un utente della discordia',
+                    "ru": 'Дискорд-пользователь'
                 })),
     async execute(client, user, interaction) {
 
@@ -33,7 +35,7 @@ module.exports = {
         // user -> Dados do usuário que disparou o comando
 
         if (!user_pula.social.pula_predios)
-            return client.tls.reply(interaction, user, "game.pula.vinculo", true)
+            return client.tls.reply(interaction, user, "game.pula.vinculo", true, 1)
 
         fetch(`${process.env.url_apisal}/pula?token=placholder&sync=1&token_user=${user_pula.social.pula_predios}`)
             .then(res => res.json())
@@ -85,7 +87,7 @@ module.exports = {
                 if (parseInt(datas_pula.recorde) > 0)
                     embed.setDescription(`\`\`\`${client.tls.phrase(user, "game.pula.recorde").replace("pontos_repl", client.formata_num(datas_pula.recorde)).replace("distancia_repl", (datas_pula.distancia_percorrida / 1000).toFixed(2))}\`\`\``)
 
-                return interaction.reply({ embeds: [embed] })
+                return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
             .catch(() => {
                 return client.tls.reply(interaction, user, "game.pula.error_2", true, 0)

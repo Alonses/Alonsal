@@ -11,14 +11,16 @@ module.exports = {
         .setNameLocalizations({
             "es-ES": 'juegos',
             "fr": 'jeux',
-            "it": 'giochi'
+            "it": 'giochi',
+            "ru": 'игры'
         })
         .setDescription('⌠💡⌡ The free game(s) of the moment')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "es-ES": '⌠💡⌡ El(los) juego(s) gratuito(s) del momento',
             "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment',
-            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento'
+            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento',
+            "ru": '⌠💡⌡ Текущие бесплатные игры'
         }),
     async execute(client, user, interaction) {
 
@@ -47,7 +49,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.editReply({ embeds: [embed], components: [row] })
+                interaction.editReply({ embeds: [embed], components: [row], ephemeral: user.misc.ghost_mode })
             })
     }
 }

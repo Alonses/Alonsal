@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ Jogue cara ou coroa',
             "es-ES": '⌠🎲⌡ Juega cara o cruz',
             "fr": '⌠🎲⌡ Jouez à pile ou face',
-            "it": '⌠🎲⌡ Gioca testa o croce'
+            "it": '⌠🎲⌡ Gioca testa o croce',
+            "ru": '⌠🎲⌡ Играть орлом или решкой'
         })
         .addStringOption(option =>
             option.setName('choise')
@@ -18,14 +19,16 @@ module.exports = {
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
                     "fr": 'choix',
-                    "it": 'scelta'
+                    "it": 'scelta',
+                    "ru": 'выбор'
                 })
                 .setDescription('Heads or tails?')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Cara ou coroa?',
                     "es-ES": '¿Cara o cruz?',
                     "fr": 'Pile ou face?',
-                    "it": 'Testa o croce?'
+                    "it": 'Testa o croce?',
+                    "ru": 'Орел или решка?'
                 })
                 .addChoices(
                     { name: '🟡', value: '0' },
@@ -47,6 +50,6 @@ module.exports = {
         if (escolha !== moeda) // Errou
             resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.errou")} ${client.emoji(emojis.epic_embed_fail2)}`
 
-        return interaction.reply(resultado)
+        return interaction.reply({ content: resultado, ephemeral: user.misc.ghost_mode })
     }
 }

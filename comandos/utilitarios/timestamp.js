@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
             "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
             "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa',
-            "it": '⌠💡⌡ Converti una data in timestamp o viceversa'
+            "it": '⌠💡⌡ Converti una data in timestamp o viceversa',
+            "ru": '⌠💡⌡ Преобразование даты в метку времени и наоборот'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -20,7 +21,8 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Timestamp customizado',
                     "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
                     "fr": '⌠💡⌡ Horodatage personnalisé',
-                    "it": '⌠💡⌡ Timestamp personalizzato'
+                    "it": '⌠💡⌡ Timestamp personalizzato',
+                    "ru": '⌠💡⌡ Пользовательская временная метка'
                 })
                 .addStringOption(option =>
                     option.setName("time")
@@ -28,14 +30,16 @@ module.exports = {
                             "pt-BR": 'tempo',
                             "es-ES": 'tiempo',
                             "fr": 'temps',
-                            "it": 'volta'
+                            "it": 'volta',
+                            "ru": 'время'
                         })
                         .setDescription("The value to be converted")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Valor a ser convertido',
                             "es-ES": 'El valor a convertir',
                             "fr": 'La valeur à convertir',
-                            "it": 'Il valore da convertire'
+                            "it": 'Il valore da convertire',
+                            "ru": 'Значение для преобразования'
                         }))
                 .addStringOption(option =>
                     option.setName('timer')
@@ -44,7 +48,8 @@ module.exports = {
                             "pt-BR": 'Uma data rápida para marcar',
                             "es-ES": 'Una fecha rápida para reservar',
                             "fr": 'Une date rapide à réserver',
-                            "it": 'Un\'ora veloce per raccogliere'
+                            "it": 'Un\'ora veloce per raccogliere',
+                            "ru": 'Бронирование быстрой даты'
                         })
                         .addChoices(
                             { name: '+5 M', value: '5' },
@@ -59,13 +64,17 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'agora',
                     "es-ES": 'ahora',
-                    "fr": 'present'
+                    "fr": 'present',
+                    "it": 'adesso',
+                    "ru": 'сейчас'
                 })
                 .setDescription('⌠💡⌡ Current timestamp')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "es-ES": '⌠💡⌡ Marca de tiempo actual',
-                    "fr": '⌠💡⌡ Horodatage actuel'
+                    "fr": '⌠💡⌡ Horodatage actuel',
+                    "it": '⌠💡⌡ Timestamp attuale',
+                    "ru": '⌠💡⌡ Текущая метка времени'
                 })),
     async execute(client, user, interaction) {
 
@@ -138,6 +147,6 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter(aviso)
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
     }
 }

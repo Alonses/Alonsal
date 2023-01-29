@@ -9,10 +9,11 @@ module.exports = {
 			"pt-BR": '⌠😂⌡ Gifs aleatórios da rogéria',
 			"es-ES": '⌠😂⌡ Gifs aleatorios de rogéria',
 			"fr": '⌠😂⌡ Gifs aléatoires de rogéria',
-			"it": '⌠😂⌡ Gif casuali di rogéria'
+			"it": '⌠😂⌡ Gif casuali di rogéria',
+			"ru": '⌠😂⌡ Случайные гифки rogéria'
 		}),
 	async execute(client, user, interaction) {
 		const num = Math.round((gifs.length - 1) * Math.random())
-		interaction.reply(gifs[num])
+		interaction.reply({ content: gifs[num], ephemeral: user.misc.ghost_mode })
 	}
 }

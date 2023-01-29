@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
             "fr": '⌠💡⌡ (Dé)coder de/vers morse',
-            "it": '⌠💡⌡ (Da) codice da/per morse'
+            "it": '⌠💡⌡ (Da) codice da/per morse',
+            "ru": '⌠💡⌡ (Де)код в/из азбуки Морзе'
         })
         .addStringOption(option =>
             option.setName('text')
@@ -18,14 +19,16 @@ module.exports = {
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
                 .setDescription('Write something!')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
@@ -41,7 +44,8 @@ module.exports = {
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
                     "fr": 'Inverser le résultat de sortie',
-                    "it": 'invertire il risultato di output'
+                    "it": 'invertire il risultato di output',
+                    "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
             option.setName('operation')
@@ -49,14 +53,16 @@ module.exports = {
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',
                     "fr": 'operation',
-                    "it": 'operazione'
+                    "it": 'operazione',
+                    "ru": 'операция'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Forçar uma operação',
                     "es-ES": 'Forzar una operación',
                     "fr": 'Forcer une opération',
-                    "it": 'forzare un\'operazione'
+                    "it": 'forzare un\'operazione',
+                    "ru": 'форсировать операцию'
                 })
                 .addChoices(
                     { name: 'Encode', value: '0' },
@@ -127,7 +133,7 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter({ text: aviso })
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             .catch(() => {
                 client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
             })
