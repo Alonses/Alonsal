@@ -29,6 +29,6 @@ module.exports = {
         if (user.misc.ghost_mode)
             interaction.reply({ content: `:ghost: | ${client.tls.phrase(user, "mode.oculto.ativo")}`, ephemeral: true })
         else
-            interaction.reply({ content: `${client.emoji(emojis.ghostbusters)} | ${client.tls.phrase("mode.oculto.desativo")}`, ephemeral: true })
+            interaction.reply({ content: `${client.emoji(emojis.ghostbusters)} | ${client.tls.phrase(user, "mode.oculto.desativo")}`, ephemeral: true })
     }
 }
