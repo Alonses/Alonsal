@@ -1,11 +1,11 @@
-module.exports = (stats_semana, stats_passado, hora, client, interaction) => {
+module.exports = (stats_semana, stats_passado, hora, client, user) => {
 
     if (hora) { // Formatando a hora para números inteiros
         stats_semana = parseInt(stats_semana.split(" horas")[0])
         stats_passado = parseInt(stats_passado.split(" horas")[0])
 
-        horas_tocadas = `${stats_semana}${client.tls.phrase(client, interaction, "util.unidades.horas")}`
-        horas_passadas = `${stats_passado}${client.tls.phrase(client, interaction, "util.unidades.horas")}`
+        horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.horas")}`
+        horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.horas")}`
     }
 
     porcentagem = (100 * stats_semana) / stats_passado

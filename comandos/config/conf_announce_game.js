@@ -33,7 +33,7 @@ module.exports = {
                     { name: 'DLC/Expansão', value: 'dlc' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0]) return
 

@@ -11,7 +11,7 @@ module.exports = {
 			"fr": '⌠😂⌡ Gifs aléatoires de rogéria',
 			"it": '⌠😂⌡ Gif casuali di rogéria'
 		}),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 		const num = Math.round((gifs.length - 1) * Math.random())
 		interaction.reply(gifs[num])
 	}

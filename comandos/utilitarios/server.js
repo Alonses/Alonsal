@@ -35,9 +35,7 @@ module.exports = {
                     "fr": '⌠💡⌡ Informations sur le serveur',
                     "it": '⌠💡⌡ Informazioni sul server'
                 })),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "info") {
 
@@ -79,47 +77,47 @@ module.exports = {
                 .setThumbnail(icone_server)
                 .addFields(
                     {
-                        name: `:globe_with_meridians: ${client.tls.phrase(client, interaction, "util.server.id_server")}`,
+                        name: `:globe_with_meridians: ${client.tls.phrase(user, "util.server.id_server")}`,
                         value: `\`${interaction.guild.id}\``,
                         inline: true
                     },
                     {
-                        name: `:busts_in_silhouette: **${client.tls.phrase(client, interaction, "util.server.membros")}**`,
-                        value: `:bust_in_silhouette: **${client.tls.phrase(client, interaction, "util.server.atual")}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${interaction.guild.maximumMembers.toLocaleString('pt-BR')}\``,
+                        name: `:busts_in_silhouette: **${client.tls.phrase(user, "util.server.membros")}**`,
+                        value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${interaction.guild.maximumMembers.toLocaleString('pt-BR')}\``,
                         inline: true
                     },
                     {
-                        name: `:unicorn: **${client.tls.phrase(client, interaction, "util.server.dono")}**`,
+                        name: `:unicorn: **${client.tls.phrase(user, "util.server.dono")}**`,
                         value: dono_sv,
                         inline: true
                     },
                 )
                 .addFields(
                     {
-                        name: `:placard: **${client.tls.phrase(client, interaction, "util.server.canais")} ( ${qtd_canais} )**`,
-                        value: `:card_box: **${client.tls.phrase(client, interaction, "util.server.categorias")}:** \`${categorias}\`\n:notepad_spiral: **${client.tls.phrase(client, interaction, "util.server.texto")}:** \`${canais_texto}\`\n:speaking_head: **${client.tls.phrase(client, interaction, "util.server.voz")}:** \`${canais_voz}\``,
+                        name: `:placard: **${client.tls.phrase(user, "util.server.canais")} ( ${qtd_canais} )**`,
+                        value: `:card_box: **${client.tls.phrase(user, "util.server.categorias")}:** \`${categorias}\`\n:notepad_spiral: **${client.tls.phrase(user, "util.server.texto")}:** \`${canais_texto}\`\n:speaking_head: **${client.tls.phrase(user, "util.server.voz")}:** \`${canais_voz}\``,
                         inline: true
                     },
                     {
-                        name: `:vulcan: **${client.tls.phrase(client, interaction, "util.server.entrada")}**`,
+                        name: `:vulcan: **${client.tls.phrase(user, "util.server.entrada")}**`,
                         value: `${data_entrada}\n[ ${diferenca_entrada} ]`,
                         inline: true
                     },
                     {
-                        name: `:birthday: **${client.tls.phrase(client, interaction, "util.server.criacao")}**`,
+                        name: `:birthday: **${client.tls.phrase(user, "util.server.criacao")}**`,
                         value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
                         inline: true
                     }
                 )
                 .addFields(
                     {
-                        name: `:shield: **${client.tls.phrase(client, interaction, "util.server.verificacao")}**`,
-                        value: `**${client.tls.phrase(client, interaction, `util.server.${niveis_verificacao[interaction.guild.verificationLevel]}`)}**`,
+                        name: `:shield: **${client.tls.phrase(user, "util.server.verificacao")}**`,
+                        value: `**${client.tls.phrase(user, `util.server.${niveis_verificacao[interaction.guild.verificationLevel]}`)}**`,
                         inline: true
                     },
                     {
                         name: `${client.emoji(emojis_dancantes)} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
-                        value: `${client.emoji(emojis.bigchad)} **${client.tls.phrase(client, interaction, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
+                        value: `${client.emoji(emojis.bigchad)} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                         inline: true
                     }
                 )
@@ -128,13 +126,13 @@ module.exports = {
                 infos_sv.addFields(
                     {
                         name: `${client.emoji(emojis.boost)} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
-                        value: `:passport_control: **${client.tls.phrase(client, interaction, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
+                        value: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
                         inline: true
                     }
                 )
             else
                 infos_sv.addFields(
-                    { name: `:passport_control: **${client.tls.phrase(client, interaction, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
+                    { name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
                 )
 
             return interaction.reply({ embeds: [infos_sv] })
@@ -150,7 +148,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
-                        .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_icon").replace("link_repl", icone_server))
+                        .setDescription(client.tls.phrase(user, "util.avatar.download_icon").replace("link_repl", icone_server))
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 

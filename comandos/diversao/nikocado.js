@@ -5,7 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('nikocado')
 		.setDescription('⌠😂⌡ It\'s your fault'),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 		interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
 	}
 }

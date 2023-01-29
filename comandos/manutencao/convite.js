@@ -18,15 +18,14 @@ module.exports = {
             "fr": '⌠📡⌡ Invitez Alonsal maintenant!',
             "it": '⌠📡⌡ Invita Alonsal ora!'
         }),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const row = create_buttons([{ name: client.tls.phrase(client, interaction, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
-        const user = await client.getUser(interaction.user.id)
+        const row = create_buttons([{ name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(client.tls.phrase(client, interaction, "manu.convite.titulo"))
-            .setDescription(client.tls.phrase(client, interaction, "manu.convite.convite"))
+            .setTitle(client.tls.phrase(user, "manu.convite.titulo"))
+            .setDescription(client.tls.phrase(user, "manu.convite.convite"))
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

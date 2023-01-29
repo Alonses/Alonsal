@@ -42,15 +42,13 @@ module.exports = {
                     "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé',
                     "it": '⌠👤⌡ Rimuovi il badge da appuntato'
                 })),
-    async execute(client, interaction) {
-        // const id = interaction.user.id
-        // const user = await client.getUser(id)
+    async execute(client, user, interaction) {
 
         return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
         // Validando existência de badges antes do comando
         if (user.badges.badge_list.length <= 0)
-            return interaction.reply({ content: `:mag: | ${client.tls.phrase(client, interaction, "dive.badges.error_1")}`, ephemeral: true })
+            return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
 
         let all_badges = []
         const badge_list = user.badges.badge_list
@@ -60,7 +58,7 @@ module.exports = {
         })
 
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
-            return interaction.reply({ content: client.tls.phrase(client, interaction, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
         else {
             user.updateOne({ uid: id },
                 {
@@ -72,6 +70,6 @@ module.exports = {
         }
 
         // Removendo a badge fixada
-        interaction.reply({ content: `:medal: | Badge ${client.tls.phrase(client, interaction, "dive.badges.badge_removida")}`, ephemeral: true })
+        interaction.reply({ content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`, ephemeral: true })
     }
 }

@@ -41,7 +41,7 @@ module.exports = {
                     "fr": 'Joindre des fichiers si besoin',
                     "it": 'Allega file se necessario'
                 })),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const corpo_mensagem = {
             texto: null,
@@ -68,7 +68,7 @@ module.exports = {
         if (corpo_mensagem.arquivo)
             msg_user.setImage(corpo_mensagem.arquivo)
 
-        client.tls.reply(client, interaction, "manu.mail.sucesso_1", true)
+        client.tls.reply(interaction, user, "manu.mail.sucesso_1", true)
 
         client.notify(process.env.mail_channel, msg_user)
     }

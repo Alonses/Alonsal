@@ -26,13 +26,12 @@ module.exports = {
                     "it": 'Il testo da invertire'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id)
         const texto_ordenado = interaction.options.data[0].value.split('').reverse().join("")
 
         const embed = new EmbedBuilder()
-            .setTitle(`:arrow_backward: ${client.tls.phrase(client, interaction, "util.reverso.reverso")}`)
+            .setTitle(`:arrow_backward: ${client.tls.phrase(user, "util.reverso.reverso")}`)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`\`${texto_ordenado}\``)

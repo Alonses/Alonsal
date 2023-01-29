@@ -28,30 +28,28 @@ module.exports = {
                     "fr": 'Mentionner une chaîne',
                     "it": 'Menzionare un canale'
                 })),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let canal = interaction.options.getChannel('channel') || interaction.channel
         // Coletando os dados do canal informado
 
-        let nsfw = client.tls.phrase(client, interaction, "util.minecraft.nao")
+        let nsfw = client.tls.phrase(user, "util.minecraft.nao")
         if (canal.nsfw)
-            nsfw = client.tls.phrase(client, interaction, "util.minecraft.sim")
+            nsfw = client.tls.phrase(user, "util.minecraft.sim")
 
         const data_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:f>` // Criação do canal
         const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
         let userlimit, bitrate = ""
 
-        let topico = `\`\`\`${canal.topic || client.tls.phrase(client, interaction, "util.canal.sem_topico")}\`\`\``
+        let topico = `\`\`\`${canal.topic || client.tls.phrase(user, "util.canal.sem_topico")}\`\`\``
 
         if (typeof canal.bitrate !== "undefined") {
-            topico = `\`\`\`🔊 ${client.tls.phrase(client, interaction, "util.canal.canal_voz")}\`\`\``
+            topico = `\`\`\`🔊 ${client.tls.phrase(user, "util.canal.canal_voz")}\`\`\``
 
             userlimit = canal.userLimit
 
             if (userlimit === 0)
-                userlimit = client.tls.phrase(client, interaction, "util.canal.sem_limites")
+                userlimit = client.tls.phrase(user, "util.canal.sem_limites")
 
             bitrate = `${canal.bitrate / 1000}kbps`
         }
@@ -70,12 +68,12 @@ module.exports = {
                     .setDescription(topico)
                     .addFields(
                         {
-                            name: `:globe_with_meridians: **${client.tls.phrase(client, interaction, "util.canal.id_canal")}**`,
+                            name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.id_canal")}**`,
                             value: `\`${canal.id}\``,
                             inline: true
                         },
                         {
-                            name: `:label: **${client.tls.phrase(client, interaction, "util.canal.mencao")}**`,
+                            name: `:label: **${client.tls.phrase(user, "util.canal.mencao")}**`,
                             value: `\`<#${canal.id}>\``,
                             inline: true
                         },
@@ -94,7 +92,7 @@ module.exports = {
 
                 infos_ch.addFields(
                     {
-                        name: `:birthday: ${client.tls.phrase(client, interaction, "util.server.criacao")}`,
+                        name: `:birthday: ${client.tls.phrase(user, "util.server.criacao")}`,
                         value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
                         inline: true
                     }
@@ -103,7 +101,7 @@ module.exports = {
                 if (typeof canal.bitrate !== "undefined")
                     infos_ch.addFields(
                         {
-                            name: `:mega: ${client.tls.phrase(client, interaction, "util.canal.transmissao")}`,
+                            name: `:mega: ${client.tls.phrase(user, "util.canal.transmissao")}`,
                             value: `:radio: **Bitrate: **\`${bitrate}\`\n:busts_in_silhouette: **Max. users: **\`${userlimit}\``,
                             inline: true
                         }
@@ -113,8 +111,8 @@ module.exports = {
                     if (canal.rateLimitPerUser > 0)
                         infos_ch.addFields(
                             {
-                                name: `:name_badge: ${client.tls.phrase(client, interaction, "util.canal.modo_lento")}`,
-                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(client, interaction, "util.unidades.segundos")}\``,
+                                name: `:name_badge: ${client.tls.phrase(user, "util.canal.modo_lento")}`,
+                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(user, "util.unidades.segundos")}\``,
                                 inline: true
                             }
                         )

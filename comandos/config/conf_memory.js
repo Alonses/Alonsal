@@ -5,7 +5,7 @@ module.exports = {
         .setName('c_memory')
         .setDescription('⌠🤖⌡ Veja um resumo de processamento do Alonsal')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 

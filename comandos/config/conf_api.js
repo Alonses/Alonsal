@@ -8,7 +8,7 @@ module.exports = {
         .setName('c_apisal')
         .setDescription('⌠🤖⌡ Verificar o status da APISAL')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())

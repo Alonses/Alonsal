@@ -18,15 +18,13 @@ module.exports = {
             "fr": '⌠📡⌡ Aidez à améliorer les traductions ou implémentez de nouvelles langues!',
             "it": '⌠📡⌡ Aiutaci a migliorare le traduzioni o implementare nuove lingue!'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.traduz.titulo")} ${client.emoji(emojis.dancando)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.traduz.titulo")} ${client.emoji(emojis.dancando)}`)
             .setURL("https://github.com/Alonses/Alondioma")
-            .setDescription(client.tls.phrase(client, interaction, "manu.traduz.descricao"))
+            .setDescription(client.tls.phrase(user, "manu.traduz.descricao"))
             .setImage("https://i.imgur.com/zSVqxhV.png")
 
         interaction.reply({ embeds: [embed], ephemeral: true })

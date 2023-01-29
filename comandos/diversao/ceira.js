@@ -10,7 +10,7 @@ module.exports = {
 			"fr": '⌠😂⌡ Java ciré',
 			"it": '⌠😂⌡ Java cerato'
 		}),
-	async execute(client, interaction) {
+	async execute(client, user, interaction) {
 		const ceira = new AttachmentBuilder('./arquivos/img/ceira.png')
 		interaction.reply({ content: "Press :regional_indicator_f: :pensive: :fist:", files: [ceira] })
 	}

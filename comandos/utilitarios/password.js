@@ -25,9 +25,7 @@ module.exports = {
                     "fr": 'de 12 à 350',
                     "it": 'da 12 a 350'
                 })),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
         tamanho = tamanho <= 5 ? 12 : tamanho
@@ -39,11 +37,11 @@ module.exports = {
             bonus += `${randomString(tamanho)}\n\n`
 
         const embed = new EmbedBuilder()
-            .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(client, interaction, "util.password.titulo")}`)
+            .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`)
             .setURL('https://password.kaspersky.com/')
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`:passport_control: **${client.tls.phrase(client, interaction, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(client, interaction, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
-            .setFooter({ text: client.tls.phrase(client, interaction, "util.password.rodape").replace("tamanho_repl", tamanho) })
+            .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
+            .setFooter({ text: client.tls.phrase(user, "util.password.rodape").replace("tamanho_repl", tamanho) })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

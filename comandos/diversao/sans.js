@@ -26,7 +26,7 @@ module.exports = {
                     "it": 'Scrivi qualcosa!'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const texto_entrada = interaction.options.data[0].value.split("")
 

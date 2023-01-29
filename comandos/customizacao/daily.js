@@ -12,15 +12,15 @@ module.exports = {
             "fr": '⌠💸⌡ Recevez votre bufunfa quotidien',
             "it": '⌠💸⌡ Ottieni la tua bufunfa quotidiana'
         }),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id), date1 = new Date()
+        const date1 = new Date()
         let data_atual = date1.toDateString('pt-BR')
 
         if (data_atual === user.misc.daily) {
             const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
-            return interaction.reply({ content: `:bank: | ${client.tls.phrase(client, interaction, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
+            return interaction.reply({ content: `:bank: | ${client.tls.phrase(user, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
         }
 
         const bufunfa = Math.floor(900 + (Math.random() * 500))
@@ -33,6 +33,6 @@ module.exports = {
 
         user.save()
 
-        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(client, interaction, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${client.emoji(emojis_dancantes)}`, ephemeral: true })
+        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(user, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${client.emoji(emojis_dancantes)}`, ephemeral: true })
     }
 }

@@ -10,9 +10,9 @@ module.exports = {
             "fr": '⌠😂⌡ Loué soit!',
             "it": '⌠😂⌡ Sia lodato!'
         }),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const baidu = new AttachmentBuilder('./arquivos/img/baidu.png')
-        interaction.reply({ content: client.tls.phrase(client, interaction, "dive.baidu.baidu"), files: [baidu] })
+        interaction.reply({ content: client.tls.phrase(user, "dive.baidu.baidu"), files: [baidu] })
     }
 }

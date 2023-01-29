@@ -12,7 +12,7 @@ module.exports = {
             "fr": '⌠😂⌡ Les phrases de Faustão',
             "it": '⌠😂⌡ Le frasi di Faustão'
         }),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let i = 0
 
