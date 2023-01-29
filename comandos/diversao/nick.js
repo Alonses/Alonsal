@@ -5,26 +5,28 @@ module.exports = {
         .setName('nickname')
         .setNameLocalizations({
             "pt-BR": "apelido",
-            "es-ES": 'apellido'
+            "es-ES": 'apellido',
+            "ru": "прозвище"
         })
         .setDescription('⌠🐱⌡ Shuffles your nickname!')
         .setDescriptionLocalizations({
             "pt-BR": "⌠🐱⌡ Embaralha seu apelido!",
             "es-ES": '⌠🐱⌡ Mezcla tu apodo!',
             "fr": '⌠🐱⌡ Mélangez votre pseudo!',
-            "it": '⌠🐱⌡ Mescola il tuo soprannome!'
+            "it": '⌠🐱⌡ Mescola il tuo soprannome!',
+            "ru": '⌠🐱⌡ Перемешайте свой никнейм!'
         }),
     async execute(client, user, interaction) {
 
         if (interaction.guild.ownerId == interaction.user.id)
-            return client.tls.reply(interaction, user, "dive.nick.permissao_1", true)
+            return client.tls.reply(interaction, user, "dive.nick.permissao_1", true, 0)
 
         // Permissões do bot no servidor
         const membro_sv = await interaction.guild.members.cache.get(client.id())
 
         // Libera configuração apenas se puder editar o apelido de outros usuários
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageNicknames) || !membro_sv.permissions.has(PermissionsBitField.Flags.ChangeNickname))
-            return client.tls.reply(interaction, user, "dive.nick.permissao_2", true)
+            return client.tls.reply(interaction, user, "dive.nick.permissao_2", true, 0)
 
         const user_alvo = await interaction.guild.members.fetch(interaction.user.id)
 
@@ -36,7 +38,7 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-                client.tls.reply(interaction, user, "dive.nick.error_1", true)
+                client.tls.reply(interaction, user, "dive.nick.error_1", true, 0)
             })
     }
 }

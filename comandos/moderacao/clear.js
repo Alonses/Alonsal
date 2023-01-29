@@ -36,7 +36,7 @@ module.exports = {
 
         // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))
-            return client.tls.reply(interaction, user, "mode.clear.permissao_2", true)
+            return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
 
         const channel = interaction.channel
 
