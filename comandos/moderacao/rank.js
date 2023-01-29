@@ -39,7 +39,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-        const membro_sv = interaction.guild.members.cache.get(interaction.user.id)
+        const membro_sv = await interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "mode.adm.moderadores", true)

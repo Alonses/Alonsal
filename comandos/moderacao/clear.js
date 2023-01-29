@@ -31,7 +31,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute(client, user, interaction) {
 
-        const membro_sv = interaction.guild.members.cache.get(client.id())
+        const membro_sv = await interaction.guild.members.cache.get(client.id())
         const qtd_msg = interaction.options.data[0].value
 
         // Libera configuração para proprietários e adms apenas
