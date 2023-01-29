@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
             "es-ES": '⌠💸⌡ Recibe tu bufunfa diario',
             "fr": '⌠💸⌡ Recevez votre bufunfa quotidien',
-            "it": '⌠💸⌡ Ottieni la tua bufunfa quotidiana'
+            "it": '⌠💸⌡ Ottieni la tua bufunfa quotidiana',
+            "ru": '⌠💸⌡ Получай свой ежедневный Bufunfa'
         }),
     async execute(client, user, interaction) {
 
@@ -33,6 +34,6 @@ module.exports = {
 
         user.save()
 
-        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(user, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${client.emoji(emojis_dancantes)}`, ephemeral: true })
+        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(user, "misc.daily.daily").replace("valor_repl", bufunfa.toLocaleString("pt-BR"))} ${client.emoji(emojis_dancantes)}`, ephemeral: user.misc.ghost_mode })
     }
 }

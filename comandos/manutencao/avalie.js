@@ -9,14 +9,16 @@ module.exports = {
             "pt-BR": 'avalie',
             "es-ES": 'evaluar',
             "fr": 'evaluer',
-            "it": 'valutare'
+            "it": 'valutare',
+            "ru": 'oценивать'
         })
         .setDescription('⌠📡⌡ Rate me!')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Me avalie!',
             "es-ES": '⌠📡⌡ Calificame!',
             "fr": '⌠📡⌡ Notez moi!',
-            "it": '⌠📡⌡ Valutami!'
+            "it": '⌠📡⌡ Valutami!',
+            "ru": '⌠📡⌡ Оцените меня!'
         }),
     async execute(client, user, interaction) {
 

@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Veja suas badges',
             "es-ES": '⌠👤⌡ Ver tus insignias',
             "fr": '⌠👤⌡ Voir vos badges',
-            "it": '⌠👤⌡ Guarda i tuoi badge'
+            "it": '⌠👤⌡ Guarda i tuoi badge',
+            "ru": '⌠👤⌡ Смотрите свои значки'
         }),
     async execute(client, user, interaction) {
 

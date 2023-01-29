@@ -9,28 +9,32 @@ module.exports = {
             "pt-BR": 'dei-lhe',
             "es-ES": 'transferir',
             "fr": 'payer',
-            "it": 'pagare'
+            "it": 'pagare',
+            "ru": 'платить'
         })
         .setDescription('⌠💸⌡ Transfer Bufunfa to other users')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Transfira Bufunfa para outros usuários',
             "es-ES": '⌠💸⌡ Transferir Bufunfa a otros usuarios',
             "fr": '⌠💸⌡ Transférer Bufunfa à d\'autres utilisateurs',
-            "it": '⌠💸⌡ Trasferisci Bufunfa ad altri utenti'
+            "it": '⌠💸⌡ Trasferisci Bufunfa ad altri utenti',
+            "ru": '⌠💸⌡ Делиться Bufunfa с другими пользователями'
         })
         .addUserOption(option =>
             option.setName('user')
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
-                    "it": 'utente'
+                    "it": 'utente',
+                    "ru": 'пользователь'
                 })
                 .setDescription('The user who will receive')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O usuário que receberá',
                     "es-ES": 'El usuario que recibirá',
                     "fr": 'L\'utilisateur qui recevra',
-                    "it": 'L\'utente che riceverà'
+                    "it": 'L\'utente che riceverà',
+                    "ru": 'Пользователь, который получит'
                 })
                 .setRequired(true))
         .addNumberOption(option =>
@@ -39,14 +43,16 @@ module.exports = {
                     "pt-BR": 'quantia',
                     "es-ES": 'monto',
                     "fr": 'montant',
-                    "it": 'quantita'
+                    "it": 'quantita',
+                    "ru": 'ценить'
                 })
                 .setDescription('The amount that will be transferred')
                 .setDescriptionLocalizations({
                     "pt-BR": 'A quantidade que será transferida',
                     "es-ES": 'El monto a transferir',
                     "fr": 'Le montant à transférer',
-                    "it": 'L\'importo da trasferire'
+                    "it": 'L\'importo da trasferire',
+                    "ru": 'Сумма к переводу'
                 })
                 .setRequired(true)),
     async execute(client, user, interaction) {
@@ -85,7 +91,7 @@ module.exports = {
         if (alvo.uid === client.id() && quantia === 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: true })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: user.misc.ghost_mode })
 
         if (alvo.uid !== client.id()) // Notificando o recebedor
             client.discord.users.fetch(alvo.uid, false).then((user_interno) => {

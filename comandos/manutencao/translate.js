@@ -9,14 +9,16 @@ module.exports = {
             "pt-BR": 'traduz',
             "es-ES": 'traducir',
             "fr": 'traduire',
-            "it": 'tradurre'
+            "it": 'tradurre',
+            "ru": 'перевести'
         })
         .setDescription('⌠📡⌡ Help improve translations or implement new languages!')
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Ajude a melhorar traduções ou implementar novos idiomas!',
             "es-ES": '⌠📡⌡ ¡Ayude a mejorar las traducciones o implemente nuevos idiomas!',
             "fr": '⌠📡⌡ Aidez à améliorer les traductions ou implémentez de nouvelles langues!',
-            "it": '⌠📡⌡ Aiutaci a migliorare le traduzioni o implementare nuove lingue!'
+            "it": '⌠📡⌡ Aiutaci a migliorare le traduzioni o implementare nuove lingue!',
+            "ru": '⌠📡⌡ Помогите улучшить перевод или ввести новые языки!'
         }),
     async execute(client, user, interaction) {
 

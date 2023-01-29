@@ -40,7 +40,7 @@ module.exports = {
         const alvo = interaction.options.getUser('user')
 
         if (client.id() === alvo.id)
-            return client.tls.reply(interaction, user, "dive.gado.error_2")
+            return client.tls.reply(interaction, user, "dive.gado.error_2", true, 2)
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)
@@ -48,13 +48,13 @@ module.exports = {
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")
-                interaction.reply(`O <@${alvo.id}> ${gadisissimo[num]}`)
+                interaction.reply({ content: `O <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
             else
-                interaction.reply(`The <@${alvo.id}> ${gadisissimo[num]}`)
+                interaction.reply({ content: `The <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
         else
             if (idioma_definido === "pt-br")
-                interaction.reply(`Você ${interaction.user} ${gadisissimo[num]}`)
+                interaction.reply({ content: `Você ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
             else
-                interaction.reply(`You ${interaction.user} ${gadisissimo[num]}`)
+                interaction.reply({ content: `You ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
     }
 }

@@ -13,7 +13,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
             "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki',
-            "it": '⌠💡⌡ Cerca qualcosa sul wiki'
+            "it": '⌠💡⌡ Cerca qualcosa sul wiki',
+            "ru": '⌠💡⌡ Ищите что-нибудь в вики'
         })
         .addStringOption(option =>
             option.setName('search')
@@ -21,14 +22,16 @@ module.exports = {
                     "pt-BR": 'pesquisa',
                     "es-ES": 'busqueda',
                     "fr": 'chercher',
-                    "it": 'ricerca'
+                    "it": 'ricerca',
+                    "ru": 'поиск'
                 })
                 .setDescription('I\'m lucky')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
                     "es-ES": 'Estoy con suerte',
                     "fr": 'J\'ai de la chance',
-                    "it": 'Sono fortunato'
+                    "it": 'Sono fortunato',
+                    "ru": 'я удачлив'
                 })
                 .setRequired(true))
         .addStringOption(option =>
@@ -37,21 +40,24 @@ module.exports = {
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
                     "fr": 'langue',
-                    "it": 'linguaggio'
+                    "it": 'linguaggio',
+                    "ru": 'язык'
                 })
                 .setDescription('In which language?')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Em qual idioma?',
                     "es-ES": '¿En qué idioma?',
                     "fr": 'Dans quelle langue?',
-                    "it": 'In quale lingua?'
+                    "it": 'In quale lingua?',
+                    "ru": 'На каком языке?'
                 })
                 .addChoices(
-                    { name: 'Português', value: 'pt-br' },
                     { name: 'English', value: 'en-us' },
                     { name: 'Español', value: 'es-es' },
                     { name: 'Français', value: 'fr-fr' },
-                    { name: 'Italiano', value: 'it-it' }
+                    { name: 'Italiano', value: 'it-it' },
+                    { name: 'Português', value: 'pt-br' },
+                    { name: 'Русский', value: 'ru-ru' }
                 )),
     async execute(client, user, interaction) {
 
@@ -106,15 +112,15 @@ module.exports = {
                         .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setURL(res.AbstractURL)
 
-                    interaction.reply({ embeds: [Embed] })
+                    interaction.reply({ embeds: [Embed], ephemeral: user.misc.ghost_mode })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`)
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`, ephemeral: user.misc.ghost_mode })
                     else
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`)
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: user.misc.ghost_mode })
                 }
             })
             .catch(() => {

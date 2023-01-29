@@ -9,14 +9,16 @@ module.exports = {
             "pt-BR": 'banco',
             "es-ES": 'banco',
             "fr": 'banque',
-            "it": 'banca'
+            "it": 'banca',
+            "ru": 'банк'
         })
         .setDescription('⌠💸⌡ See your Bufunfas')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Veja suas Bufunfas',
             "es-ES": '⌠💸⌡ Mira a tus Bufunfas',
             "fr": '⌠💸⌡ Voir vos Bufunfas',
-            "it": '⌠💸⌡ Visualizza il tuo Bufunfa'
+            "it": '⌠💸⌡ Visualizza il tuo Bufunfa',
+            "ru": '⌠💸⌡ посмотреть свой Bufunfa'
         })
         .addUserOption(option =>
             option.setName('user')
@@ -24,14 +26,16 @@ module.exports = {
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
                     "fr": 'user',
-                    "it": 'utente'
+                    "it": 'utente',
+                    "ru": 'пользователь'
                 })
                 .setDescription('View another user\'s bank')
                 .setDescriptionLocalizations({
                     "pt-BR": 'Visualizar o banco de outro usuário',
                     "es-ES": 'Ver el banco de otro usuario',
                     "fr": 'Afficher la banque d\'un autre utilisateur',
-                    "it": 'Visualizza la banca di un altro utente'
+                    "it": 'Visualizza la banca di un altro utente',
+                    "ru": 'Просмотр банка другого пользователя'
                 })),
     async execute(client, user, interaction) {
 
@@ -72,6 +76,6 @@ module.exports = {
         if (user.uid === interaction.user.id)
             embed.setFooter({ text: client.tls.phrase(user, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-        interaction.reply({ embeds: [embed] })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
     }
 }

@@ -21,7 +21,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`> "${res.texto}"`)
 
-                interaction.editReply({ embeds: [embed] })
+                interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
     }
 }

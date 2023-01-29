@@ -13,7 +13,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Veja informações do servidor',
             "es-ES": '⌠💡⌡ Ver información del servidor',
             "fr": '⌠💡⌡ Afficher les informations du serveur',
-            "it": '⌠💡⌡ Visualizza le informazioni sul server'
+            "it": '⌠💡⌡ Visualizza le informazioni sul server',
+            "ru": '⌠💡⌡ Просмотр информации о сервере'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -23,7 +24,8 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ O Icone do servidor',
                     "es-ES": '⌠💡⌡ El icono del servidor',
                     "fr": '⌠💡⌡ L\'icône du serveur',
-                    "it": '⌠💡⌡ L\'icona del server'
+                    "it": '⌠💡⌡ L\'icona del server',
+                    "ru": '⌠💡⌡ Значок сервера'
                 }))
         .addSubcommand(subcommand =>
             subcommand
@@ -33,7 +35,8 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Informações do servidor',
                     "es-ES": '⌠💡⌡ Información del servidor',
                     "fr": '⌠💡⌡ Informations sur le serveur',
-                    "it": '⌠💡⌡ Informazioni sul server'
+                    "it": '⌠💡⌡ Informazioni sul server',
+                    "ru": '⌠💡⌡ Информация о сервере'
                 })),
     async execute(client, user, interaction) {
 
@@ -152,7 +155,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
-                    return interaction.reply({ embeds: [embed], ephemeral: true })
+                    return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
                 })
         }
     }

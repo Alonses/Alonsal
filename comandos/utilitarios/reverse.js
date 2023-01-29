@@ -8,7 +8,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ (Des)inverta caracteres!',
             "es-ES": '⌠💡⌡ (Des)invertir caracteres!',
             "fr": '⌠💡⌡ (Dé)inverser les caractères!',
-            "it": '⌠💡⌡ (Dis)invertire il testo!'
+            "it": '⌠💡⌡ (Dis)invertire il testo!',
+            "ru": '⌠💡⌡ Перевернуть текст!'
         })
         .addStringOption(option =>
             option.setName('text')
@@ -16,14 +17,16 @@ module.exports = {
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
                 .setDescription('The text to be inverted')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O texto a ser invertido',
                     "es-ES": 'El texto a invertir',
                     "fr": 'Le texte à revenir',
-                    "it": 'Il testo da invertire'
+                    "it": 'Il testo da invertire',
+                    "ru": 'Текст, который нужно инвертировать'
                 })
                 .setRequired(true)),
     async execute(client, user, interaction) {
@@ -36,6 +39,6 @@ module.exports = {
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`\`${texto_ordenado}\``)
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
     }
 }

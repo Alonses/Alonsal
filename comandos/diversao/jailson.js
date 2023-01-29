@@ -13,7 +13,8 @@ module.exports = {
 			"pt-BR": '⌠😂⌡ Assim que não resisto, vaiinn',
 			"es-ES": '⌠😂⌡ Así que no me resistiré, vaiinn',
 			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn',
-			"it": '⌠😂⌡ Non resisterò, vaiinn'
+			"it": '⌠😂⌡ Non resisterò, vaiinn',
+			"ru": '⌠😂⌡ Как только не выдержу, иду'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
@@ -23,7 +24,8 @@ module.exports = {
 					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
 					"es-ES": '⌠😂⌡ Invoca un gif de jaja',
 					"fr": '⌠😂⌡ Invoque un gif de jaja',
-					"it": '⌠😂⌡ Evoca una gif di Jaja'
+					"it": '⌠😂⌡ Evoca una gif di Jaja',
+					"ru": '⌠😂⌡ Отправить jaja gif'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
@@ -34,7 +36,7 @@ module.exports = {
 		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
 		} else {
 
 			await interaction.deferReply()
@@ -49,7 +51,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.editReply({ embeds: [embed] })
+					interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
 				})
 		}
 	}

@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ (Des)Fixe suas badges!',
             "es-ES": '⌠👤⌡ (Un)pin sus insignias!',
             "fr": '⌠👤⌡ (Dé)épinglez vos badges!',
-            "it": '⌠👤⌡ (Un)appunta i tuoi badge!'
+            "it": '⌠👤⌡ (Un)appunta i tuoi badge!',
+            "ru": '⌠👤⌡ (Не) носить значки!'
         })
         .addSubcommand(subcommand =>
             subcommand.setName('fix')
@@ -18,14 +19,16 @@ module.exports = {
                     "pt-BR": 'fixar',
                     "es-ES": 'etiquetar',
                     "fr": 'epingler',
-                    "it": 'evidenziare'
+                    "it": 'evidenziare',
+                    "ru": 'носить'
                 })
                 .setDescription('⌠👤⌡ Pin a badge to your profile')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
                     "es-ES": '⌠👤⌡ Pon una insignia en tu perfil',
                     "fr": '⌠👤⌡ Épinglez un badge sur votre profil',
-                    "it": '⌠👤⌡ Evidenzia un badge sul tuo profilo'
+                    "it": '⌠👤⌡ Evidenzia un badge sul tuo profilo',
+                    "ru": '⌠👤⌡ Добавьте значок в свой профиль'
                 }))
         .addSubcommand(subcommand =>
             subcommand.setName('remove')
@@ -33,14 +36,16 @@ module.exports = {
                     "pt-BR": 'remover',
                     "es-ES": 'retirar',
                     "fr": 'retirer',
-                    "it": 'rimuovere'
+                    "it": 'rimuovere',
+                    "ru": 'удалять'
                 })
                 .setDescription('⌠👤⌡ Remove pinned emblem')
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Remover a badge do fixado',
                     "es-ES": '⌠👤⌡ Quita la insignia',
                     "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé',
-                    "it": '⌠👤⌡ Rimuovi il badge da appuntato'
+                    "it": '⌠👤⌡ Rimuovi il badge da appuntato',
+                    "ru": '⌠👤⌡ Удалить значок профиля'
                 })),
     async execute(client, user, interaction) {
 

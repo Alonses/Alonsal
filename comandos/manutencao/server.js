@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
             "es-ES": '⌠📡⌡ Servidor Oficial Alonsal™️',
             "fr": '⌠📡⌡ Serveur officiel Alonsal™️',
-            "it": '⌠📡⌡ Server ufficiale Alonsal™️'
+            "it": '⌠📡⌡ Server ufficiale Alonsal™️',
+            "ru": '⌠📡⌡ Официальный сервер Алонсал™'
         }),
     async execute(client, user, interaction) {
 

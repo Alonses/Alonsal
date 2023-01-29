@@ -16,7 +16,8 @@ module.exports = {
             "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
             "es-ES": '⌠👤⌡ Perfil de alguien en LastFM',
             "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM',
-            "it": '⌠👤⌡ Profilo di qualcuno su LastFM'
+            "it": '⌠👤⌡ Profilo di qualcuno su LastFM',
+            "ru": '⌠👤⌡ Посмотреть чей-то профиль на LastFM'
         })
         .addStringOption(option =>
             option.setName('url')
@@ -25,7 +26,8 @@ module.exports = {
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
                     "fr": 'Nom de profil',
-                    "it": 'il nome utente'
+                    "it": 'il nome utente',
+                    "ru": 'Имя пользователя'
                 }))
         .addUserOption(option =>
             option.setName('user')
@@ -34,7 +36,8 @@ module.exports = {
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
                     "fr": 'Un utilisateur de discord',
-                    "it": 'Un utente della discord'
+                    "it": 'Un utente della discord',
+                    "ru": 'Дискорд-пользователь'
                 })),
     async execute(client, user, interaction) {
 

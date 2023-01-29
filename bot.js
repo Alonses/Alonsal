@@ -19,6 +19,9 @@ client.discord.once('ready', async () => {
 	await require('./adm/eventos/status.js')({ client })
 
 	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
+
+	// Eventos secundários
+	require('./adm/eventos/events.js')({ client })
 })
 
 client.discord.on('messageCreate', async (message) => {
@@ -69,9 +72,6 @@ client.discord.on('interactionCreate', async interaction => {
 			client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
 		})
 })
-
-// Eventos secundários
-require('./adm/eventos/events.js')({ client })
 
 database.setup(process.env.dburi)
 client.login(client.x.token)

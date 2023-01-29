@@ -8,28 +8,32 @@ module.exports = {
             "pt-BR": 'notificar',
             "es-ES": 'notificar',
             "fr": 'notifier',
-            "it": 'notificare'
+            "it": 'notificare',
+            "ru": 'уведомление'
         })
         .setDescription('⌠💂⌡ (Dis)Enable announces for free games')
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ (Des)Habilitar anúncio de games free',
             "es-ES": '⌠💂⌡ (Des)Habilitar anuncios para juegos gratis',
             "fr": '⌠💂⌡ (Dés)activer les publicités pour les jeux gratuits',
-            "it": '⌠💂⌡ (Dis) Abilita annunci di giochi gratuiti'
+            "it": '⌠💂⌡ (Dis) Abilita annunci di giochi gratuiti',
+            "ru": '⌠💂⌡ (Dis)Включить рекламу бесплатных игр'
         })
         .addRoleOption(option =>
             option.setName('role')
                 .setNameLocalizations({
                     "pt-BR": 'cargo',
                     "es-ES": 'rol',
-                    "it": 'roule'
+                    "it": 'roule',
+                    "ru": 'роль'
                 })
                 .setDescription('The role that will be notified')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O cargo que será notificado',
                     "es-ES": 'El rol a ser notificado',
                     "fr": 'Le role qui sera notifié',
-                    "it": 'La roule da notificare'
+                    "it": 'La roule da notificare',
+                    "ru": 'Роль, которую нужно уведомить'
                 }))
         .addChannelOption(option =>
             option.setName('channel')
@@ -37,14 +41,16 @@ module.exports = {
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
                     "fr": 'salon',
-                    "it": 'canale'
+                    "it": 'canale',
+                    "ru": 'канал'
                 })
                 .setDescription('The channel that will be used')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O canal que será usado',
                     "es-ES": 'El canal que se utilizará',
                     "fr": 'Le canal qui sera utilisé',
-                    "it": 'Il canale che verrà utilizzato'
+                    "it": 'Il canale che verrà utilizzato',
+                    "ru": 'Канал, который будет использоваться'
                 }))
         .addStringOption(option =>
             option.setName('language')
@@ -52,22 +58,25 @@ module.exports = {
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
                     "fr": 'langue',
-                    "it": 'linguaggio'
+                    "it": 'linguaggio',
+                    "ru": 'язык'
                 })
                 .setDescription('The language to be used')
                 .setDescriptionLocalizations({
                     "pt-BR": 'O idioma que será utilizado',
                     "es-ES": 'El lenguaje a utilizar',
                     "fr": 'La langue à utiliser',
-                    "it": 'La lingua da usare'
+                    "it": 'La lingua da usare',
+                    "ru": 'Язык, который будет использоваться'
                 })
                 .addChoices(
-                    { name: 'Português', value: 'pt-br' },
+                    { name: 'Alonsês', value: 'al-br' },
                     { name: 'English', value: 'en-us' },
                     { name: 'Español', value: 'es-es' },
                     { name: 'Français', value: 'fr-fr' },
                     { name: 'Italiano', value: 'it-it' },
-                    { name: 'Alonsês', value: 'al-br' }
+                    { name: 'Português', value: 'pt-br' },
+                    { name: 'Русский', value: 'ru-ru' }
                 )
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),

@@ -8,7 +8,8 @@ module.exports = {
             "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',
             "fr": '⌠📡⌡ Le référentiel Alonsal™️',
-            "it": '⌠📡⌡ Il repository Alonsal™️'
+            "it": '⌠📡⌡ Il repository Alonsal™️',
+            "ru": '⌠📡⌡ Репозиторий Алонсал™'
         }),
     async execute(client, user, interaction) {
 

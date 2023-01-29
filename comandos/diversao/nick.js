@@ -4,17 +4,17 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('nickname')
         .setNameLocalizations({
-            "pt-BR": "apelido",
+            "pt-BR": 'apelido',
             "es-ES": 'apellido',
-            "ru": "прозвище"
+            "ru": 'прозвище'
         })
-        .setDescription('⌠🐱⌡ Shuffles your nickname!')
+        .setDescription('⌠😂⌡ Shuffles your nickname!')
         .setDescriptionLocalizations({
-            "pt-BR": "⌠🐱⌡ Embaralha seu apelido!",
-            "es-ES": '⌠🐱⌡ Mezcla tu apodo!',
-            "fr": '⌠🐱⌡ Mélangez votre pseudo!',
-            "it": '⌠🐱⌡ Mescola il tuo soprannome!',
-            "ru": '⌠🐱⌡ Перемешайте свой никнейм!'
+            "pt-BR": '⌠😂⌡ Embaralha seu apelido!',
+            "es-ES": '⌠😂⌡ Mezcla tu apodo!',
+            "fr": '⌠😂⌡ Mélangez votre pseudo!',
+            "it": '⌠😂⌡ Mescola il tuo soprannome!',
+            "ru": '⌠😂⌡ Перемешайте свой никнейм!'
         }),
     async execute(client, user, interaction) {
 
@@ -34,7 +34,7 @@ module.exports = {
 
         user_alvo.setNickname(shuffleArray(apelido.split("")))
             .then(() => {
-                interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user.misc.ghost_mode })
             })
             .catch(err => {
                 console.log(err)

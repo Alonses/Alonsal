@@ -11,7 +11,8 @@ module.exports = {
             "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
             "es-ES": '⌠🌎⌡ Todo comienza aquí',
             "fr": '⌠🌎⌡ Tout commence ici',
-            "it": '⌠🌎⌡ Tutto inizia qui'
+            "it": '⌠🌎⌡ Tutto inizia qui',
+            "ru": '⌠🌎⌡ Все начинается здесь'
         }),
     async execute(client, user, interaction) {
 

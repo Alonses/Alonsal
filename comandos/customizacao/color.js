@@ -9,14 +9,16 @@ module.exports = {
             "pt-BR": 'color',
             "es-ES": 'color',
             "fr": 'couleur',
-            "it": 'colore'
+            "it": 'colore',
+            "ru": 'цвет'
         })
         .setDescription('⌠🎉⌡ Change your color')
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎉⌡ Altere sua cor',
             "es-ES": '⌠🎉⌡ Cambia tu color',
             "fr": '⌠🎉⌡ Change ta couleur',
-            "it": '⌠🎉⌡ Cambia colore'
+            "it": '⌠🎉⌡ Cambia colore',
+            "ru": '⌠🎉⌡ Измени свой цвет'
         })
         .addSubcommand(subcommand =>
             subcommand
@@ -26,7 +28,8 @@ module.exports = {
                     "pt-BR": '⌠🎉⌡ Cores pré-definidas',
                     "es-ES": '⌠🎉⌡ Colores preestablecidos',
                     "fr": '⌠🎉⌡ Couleurs prédéfinies',
-                    "it": '⌠🎉⌡ Colori preimpostati'
+                    "it": '⌠🎉⌡ Colori preimpostati',
+                    "ru": '⌠🎉⌡ Предопределенные цвета'
                 })
                 .addStringOption(option =>
                     option.setName('color')
@@ -35,7 +38,8 @@ module.exports = {
                             "pt-BR": 'Alterar a cor do seu perfil',
                             "es-ES": 'Cambia el color de tu perfil',
                             "fr": 'Changer la couleur de votre profil',
-                            "it": 'Cambia il colore del tuo profilo'
+                            "it": 'Cambia il colore del tuo profilo',
+                            "ru": 'Изменить цвет профиля'
                         })
                         .addChoices(
                             { name: 'Blue B$200', value: '0.0' },
@@ -59,7 +63,8 @@ module.exports = {
                     "pt-BR": '⌠🎉⌡ Escolha sua cor!',
                     "es-ES": '⌠🎉⌡ ¡Elige tu color!',
                     "fr": '⌠🎉⌡ Choisissez votre couleur!',
-                    "it": '⌠🎉⌡ Scegli il tuo colore!'
+                    "it": '⌠🎉⌡ Scegli il tuo colore!',
+                    "ru": '⌠🎉⌡ Выбери свой цвет!'
                 })
                 .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true))
                 .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true))

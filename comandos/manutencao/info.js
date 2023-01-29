@@ -11,7 +11,8 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Informações do Alonsal',
             "es-ES": '⌠📡⌡ Información Alonsal',
             "fr": '⌠📡⌡ Informations sur le Alonsal',
-            "it": '⌠📡⌡ Informazioni Alonsal'
+            "it": '⌠📡⌡ Informazioni Alonsal',
+            "ru": '⌠📡⌡ Информация от Алонсал'
         }),
     async execute(client, user, interaction) {
 

@@ -10,7 +10,8 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "es-ES": '⌠💡⌡ Ver tu ping',
             "fr": '⌠💡⌡ Voir votre ping',
-            "it": '⌠💡⌡ Guarda il tuo ping'
+            "it": '⌠💡⌡ Guarda il tuo ping',
+            "ru": '⌠💡⌡ Проверьте свой пинг'
         }),
     async execute(client, user, interaction) {
 
@@ -33,6 +34,6 @@ module.exports = {
 
         mensagem += `\n${client.tls.phrase(user, "util.ping.latencia")} [ **\`${Math.round(client.discord.ws.ping)}ms\`** ]`
 
-        await interaction.editReply({ content: mensagem })
+        await interaction.editReply({ content: mensagem, ephemeral: user.misc.ghost_mode })
     }
 }

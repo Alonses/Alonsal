@@ -8,7 +8,8 @@ module.exports = {
             "pt-BR": '⌠💂⌡ Exclui várias mensagens do chat',
             "es-ES": '⌠💂⌡ Eliminar varios mensajes de chat',
             "fr": '⌠💂⌡ Supprimer plusieurs messages de chat',
-            "it": '⌠💂⌡ Elimina più messaggi di chat'
+            "it": '⌠💂⌡ Elimina più messaggi di chat',
+            "ru": '⌠💂⌡ Удалить несколько сообщений из чата'
         })
         .addIntegerOption(option =>
             option.setName("amount")
@@ -16,14 +17,16 @@ module.exports = {
                     "pt-BR": 'quantia',
                     "es-ES": 'monto',
                     "fr": 'quantite',
-                    "it": 'quantita'
+                    "it": 'quantita',
+                    "ru": 'количество'
                 })
                 .setDescription("The amount of messages to delete")
                 .setDescriptionLocalizations({
                     "pt-BR": 'A quantidade de mensagens para excluir',
                     "es-ES": 'El número de mensajes que se eliminarán',
                     "fr": 'Le nombre de messages à supprimer',
-                    "it": 'La quantità di messaggi da eliminare'
+                    "it": 'La quantità di messaggi da eliminare',
+                    "ru": 'Количество сообщений, которые нужно удалить'
                 })
                 .setMinValue(1)
                 .setMaxValue(100)

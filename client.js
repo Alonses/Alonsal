@@ -93,15 +93,10 @@ class CeiraClient {
     }
 
     notify(id_alvo, conteudo) {
-
-        try {
-            if (typeof conteudo === "object") // embed
-                this.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
-            else // texto normal
-                this.discord.channels.cache.get(id_alvo).send({ content: conteudo })
-        } catch (err) {
-            console.log(err)
-        }
+        if (typeof conteudo === "object") // embed
+            this.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
+        else // texto normal
+            this.discord.channels.cache.get(id_alvo).send({ content: conteudo })
     }
 }
 
