@@ -15,7 +15,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const m = await interaction.reply({ content: "Ping?", fetchReply: true })
+        const m = await interaction.reply({ content: "Ping?", fetchReply: true, ephemeral: user.misc.ghost_mode })
         const delay = m.createdTimestamp - interaction.createdTimestamp
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_1")} ${client.emoji(emojis.dancando_thanos)}`

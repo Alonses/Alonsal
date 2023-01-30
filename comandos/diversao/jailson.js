@@ -33,13 +33,12 @@ module.exports = {
 				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do jaja')),
 	async execute(client, user, interaction) {
 
-		if (!interaction.channel.nsfw) return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
+		if (!interaction.channel.nsfw)
+			return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
 			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
 		} else {
-
-			await interaction.deferReply()
 
 			fetch(`${process.env.url_apisal}/random?jailson`)
 				.then(response => response.json())
@@ -51,7 +50,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
 				})
 		}
 	}

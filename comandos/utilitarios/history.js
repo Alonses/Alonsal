@@ -30,8 +30,6 @@ module.exports = {
 
         let data = ""
 
-        await interaction.deferReply()
-
         if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
 
             if (interaction.options.data[0].options.length > 0) // Data customizada
@@ -42,7 +40,7 @@ module.exports = {
                 .then(async res => {
 
                     if (res.status)
-                        return interaction.editReply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
+                        return interaction.reply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
 
                     let lista_eventos = "", data_eventos = ""
                     const ano_atual = new Date().getFullYear()
@@ -67,7 +65,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
-                    interaction.editReply({ embeds: [embed_eventos] })
+                    interaction.reply({ embeds: [embed_eventos], ephemeral: user.misc.ghost_mode })
                 })
         } else { // Um acontecimento aleatório
 
@@ -104,10 +102,10 @@ module.exports = {
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)
 
-                    interaction.editReply({ embeds: [acontecimento] })
+                    interaction.reply({ embeds: [acontecimento], ephemeral: user.misc.ghost_mode })
                 })
                 .catch(() => {
-                    interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true })
+                    interaction.reply({ content: "Houve um erro com este :x", ephemeral: true })
                 })
         }
     }

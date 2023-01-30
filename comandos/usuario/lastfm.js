@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const formata_texto = require('../../adm/formatadores/formata_texto')
-const regula_porcentagem = require('../../adm/funcoes/regula_porcentagem')
 
 let horas_tocadas, horas_passadas
 
@@ -74,8 +73,6 @@ module.exports = {
             else
                 texto_entrada = user_alvo.social.lastfm
 
-        await interaction.deferReply()
-
         try {
             const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
             const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
@@ -85,7 +82,7 @@ module.exports = {
                 .then(async res => {
 
                     if (res.includes("Página não encontrada"))
-                        return interaction.editReply(client.tls.phrase(user, "util.lastfm.error_1"))
+                        return interaction.reply(client.tls.phrase(user, "util.lastfm.error_1"))
 
                     let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
@@ -227,13 +224,40 @@ module.exports = {
                                         }
                                     )
 
-                                interaction.editReply({ embeds: [embed] })
+                                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
                             })
                     } else
-                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles")
+                        client.tls.reply(interaction, user, "util.lastfm.sem_scrobbles", user.misc.ghost_mode, 1)
                 })
         } catch (err) {
             console.log(err)
         }
     }
+}
+
+function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
+
+    if (hora) { // Formatando a hora para números inteiros
+        stats_semana = parseInt(stats_semana.split(" horas")[0])
+        stats_passado = parseInt(stats_passado.split(" horas")[0])
+
+        if (stats_semana !== 1)
+            horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.horas")}`
+        else
+            horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.hora")}`
+
+        if (stats_passado !== 1)
+            horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.horas")}`
+        else
+            horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.hora")}`
+    }
+
+    porcentagem = (100 * stats_semana) / stats_passado
+
+    if (stats_semana < stats_passado)
+        porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
+    else
+        porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
+
+    return porcentagem
 }
