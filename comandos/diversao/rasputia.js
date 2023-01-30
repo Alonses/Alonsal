@@ -43,8 +43,6 @@ module.exports = {
 			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
 		} else if (interaction.options.getSubcommand() === "frase") {
 
-			await interaction.deferReply()
-
 			fetch(`${process.env.url_apisal}/random?rasputia`)
 				.then(response => response.json())
 				.then(async res => {
@@ -55,7 +53,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
 				})
 		} else {
 			let i = 0

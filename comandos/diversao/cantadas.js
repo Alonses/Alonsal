@@ -9,8 +9,6 @@ module.exports = {
         .setDescription('⌠😂|🇧🇷⌡ Uma cantada aleatória do Vai dar namoro™️'),
     async execute(client, user, interaction) {
 
-        await interaction.deferReply()
-
         fetch(`${process.env.url_apisal}/random?cantadas`)
             .then(response => response.json())
             .then(async res => {
@@ -21,7 +19,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`> "${res.texto}"`)
 
-                interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
     }
 }

@@ -59,8 +59,6 @@ module.exports = {
 
 			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
 
-			await interaction.deferReply()
-
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
 				.then(response => response.json())
 				.then(async res => {
@@ -71,7 +69,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`${res.question}\n${res.answer}`)
 
-					interaction.editReply({ embeds: [embed] })
+					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
 				})
 		}
 	}

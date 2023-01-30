@@ -24,8 +24,6 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        await interaction.deferReply()
-
         fetch(`${process.env.url_apisal}/games`)
             .then(response => response.json())
             .then(async res => {
@@ -49,7 +47,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.editReply({ embeds: [embed], components: [row], ephemeral: user.misc.ghost_mode })
+                interaction.reply({ embeds: [embed], components: [row], ephemeral: user.misc.ghost_mode })
             })
     }
 }
