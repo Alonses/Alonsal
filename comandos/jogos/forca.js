@@ -76,6 +76,11 @@ function verifica_chute(entrada, interaction, user) {
         if (!acerto)
             games[interaction.user.id].erros++
 
+        if (games[interaction.user.id].erros == 6) {
+            interaction.reply({ content: `Você perdeu!\nA palavra era \`${games[interaction.user.id].word}\``, ephemeral: user.misc.ghost_mode })
+
+            delete games[interaction.user.id]
+        }
     } else { // Chute pela palavra inteira
         if (entrada == games[interaction.user.id].word || games[interaction.user.id].descobertas.join("").replaceAll("`", "").replaceAll(" ", "") == games[interaction.user.id].word)
             interaction.reply({ content: `Você acertou! Parabéns!\nA palavra era \`${games[interaction.user.id].word}\``, ephemeral: user.misc.ghost_mode })
