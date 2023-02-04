@@ -60,9 +60,6 @@ function listAll() {
 
     for (const file of readdirSync(`./arquivos/idiomas/`)) {
 
-        if (i % 3 === 0)
-            bandeiras.push("\n")
-
         let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : `:pirate_flag:`
 
         if (!bandeiras.includes(bandeira))
