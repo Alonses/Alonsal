@@ -5,11 +5,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('curiosidade')
-    .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
-  async execute(client, interaction) {
-
-    const user = await client.getUser(interaction.user.id)
+    .setName("curiosidade")
+    .setDescription("⌠😂|🇧🇷⌡ Uma curiosidade aleatória"),
+  async execute(client, user, interaction) {
 
     fetch(`${process.env.url_apisal}/curiosidades`)
       .then(response => response.json())
@@ -23,7 +21,7 @@ module.exports = {
         if (res.img_curio) // Imagem da curiosidade
           embed.setImage(res.img_curio)
 
-        return interaction.reply({ embeds: [embed] })
+        return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
       })
   }
 }

@@ -7,24 +7,22 @@ const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('games')
+        .setName("games")
         .setNameLocalizations({
             "es-ES": 'juegos',
             "fr": 'jeux',
-            "it": 'giochi'
+            "it": 'giochi',
+            "ru": 'игры'
         })
-        .setDescription('⌠💡⌡ The free game(s) of the moment')
+        .setDescription("⌠💡⌡ The free game(s) of the moment")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "es-ES": '⌠💡⌡ El(los) juego(s) gratuito(s) del momento',
             "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment',
-            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento'
+            "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento',
+            "ru": '⌠💡⌡ Текущие бесплатные игры'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
-
-        await interaction.deferReply()
+    async execute(client, user, interaction) {
 
         fetch(`${process.env.url_apisal}/games`)
             .then(response => response.json())
@@ -36,7 +34,7 @@ module.exports = {
                 res.forEach(valor => {
                     let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-                    jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(client, interaction, "mode.anuncio.ate_data")} ${valor.expira} ]`)
+                    jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(user, "mode.anuncio.ate_data")} ${valor.expira} ]`)
                     objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
                 })
 
@@ -44,12 +42,12 @@ module.exports = {
                 const row = create_buttons(objeto_jogos)
 
                 const embed = new EmbedBuilder()
-                    .setTitle(client.tls.phrase(client, interaction, "mode.anuncio.ativos"))
+                    .setTitle(client.tls.phrase(user, "mode.anuncio.ativos"))
                     .setThumbnail(res[0].thumbnail)
                     .setColor(client.embed_color(user.misc.color))
-                    .setDescription(`${client.tls.phrase(client, interaction, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
+                    .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.editReply({ embeds: [embed], components: [row] })
+                interaction.reply({ embeds: [embed], components: [row], ephemeral: user.misc.ghost_mode })
             })
     }
 }

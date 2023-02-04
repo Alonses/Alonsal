@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { buildAllBadges } = require('../../adm/data/badges')
+// const { buildAllBadges } = require('../../adm/data/badges')
 
 // const busca_achievements = require('../../adm/data/conquistas')
 
@@ -11,75 +11,116 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('user')
-        .setDescription('⌠👤⌡ View user details')
+        .setName("user")
+        .setDescription("⌠👤⌡ View user details")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Veja detalhes de algum usuario',
-            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur'
+            "pt-BR": '⌠👤⌡ Veja detalhes de algum usuário',
+            "es-ES": '⌠👤⌡ Ver los datos de cualquier usuario',
+            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur',
+            "it": '⌠👤⌡ Visualizza i dati di qualsiasi utente',
+            "ru": '⌠👤⌡ Просмотр любых данных пользователя'
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('avatar')
-                .setDescription('⌠👤⌡ The User Avatar')
+                .setName("avatar")
+                .setDescription("⌠👤⌡ The user's avatar")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ O Avatar do usuário',
                     "es-ES": '⌠👤⌡ El avatar de usuario',
                     "fr": '⌠👤⌡ L\'avatar de l\'utilisateur',
-                    "it": '⌠👤⌡ L\'utente Avatar'
+                    "it": '⌠👤⌡ L\'utente avatar',
+                    "ru": '⌠👤⌡ Аватар пользователя'
                 })
                 .addUserOption(option =>
-                    option.setName('user')
+                    option.setName("user")
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "it": 'utente'
+                            "it": 'utente',
+                            "ru": 'пользователь'
                         })
-                        .setDescription('Mention a user as a target')
+                        .setDescription("Mention a user as a target")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
                             "fr": 'Mentionner un utilisateur comme cible',
-                            "it": 'Menziona un altro utente'
+                            "it": 'Menziona un altro utente',
+                            "ru": 'Упомянуть другого пользователя'
                         })))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('info')
-                .setDescription('⌠👤⌡ User Information')
+                .setName("info")
+                .setDescription("⌠👤⌡ User Information")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Informações do usuário',
                     "es-ES": '⌠👤⌡ Información del usuario',
                     "fr": '⌠👤⌡ Informations utilisateur',
-                    "it": '⌠👤⌡ Informazioni sull\'utente'
+                    "it": '⌠👤⌡ Informazioni sull\'utente',
+                    "ru": '⌠👤⌡ Информация о пользователе'
                 })
                 .addUserOption(option =>
-                    option.setName('user')
+                    option.setName("user")
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
-                            "it": 'utente'
+                            "it": 'utente',
+                            "ru": 'пользователь'
                         })
-                        .setDescription('Mention a user as a target')
+                        .setDescription("Mention a user as a target")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
                             "fr": 'Mentionner un utilisateur comme cible',
-                            "it": 'Menziona un altro utente'
+                            "it": 'Menziona un altro utente',
+                            "ru": 'Упомянуть другого пользователя'
+                        })))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("banner")
+                .setDescription("⌠👤⌡ The user's banner")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Banner do usuário',
+                    "es-ES": '⌠👤⌡ Banner de usuario',
+                    "fr": '⌠👤⌡ Bannière utilisateur',
+                    "it": '⌠👤⌡ Bandiera dell\'utente',
+                    "ru": '⌠👤⌡ пользовательский баннер'
+                })
+                .addUserOption(option =>
+                    option.setName("user")
+                        .setNameLocalizations({
+                            "pt-BR": 'usuario',
+                            "es-ES": 'usuario',
+                            "it": 'utente',
+                            "ru": 'пользователь'
+                        })
+                        .setDescription("Mention a user as a target")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Marque outro usuário como alvo',
+                            "es-ES": 'Mencionar a otro usuario',
+                            "fr": 'Mentionner un utilisateur comme cible',
+                            "it": 'Menziona un altro utente',
+                            "ru": 'Упомянуть другого пользователя'
                         }))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        let user = interaction.options.getUser("user") || interaction.user
+        let user_alvo = interaction.options.getUser("user") || interaction.user
+        const user_c = await client.getUser(user_alvo.id)
 
+        // user_alvo -> usuário marcado pelo comando
+        // user -> usuário que disparou o comando
+
+        // User info
         if (interaction.options.getSubcommand() === "info") {
-            let avatar_user = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
+            let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=1024`
 
             const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
 
-            const membro_sv = interaction.guild.members.cache.get(user.id) // Coleta dados como membro
+            const membro_sv = await interaction.guild.members.cache.get(user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
 
-            let data_criacao = `<t:${Math.floor(user.createdAt / 1000)}:f>` // Cadastro do usuário
-            let diferenca_criacao = `<t:${Math.floor(user.createdAt / 1000)}:R>`
+            let data_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:f>` // Cadastro do usuário
+            let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
             let nota_rodape = ""
 
             if (avatar_user !== null) {
@@ -100,20 +141,20 @@ module.exports = {
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 tipo_user = "🛡️"
-                nota_rodape = client.tls.phrase(client, interaction, "util.user.moderador")
+                nota_rodape = client.tls.phrase(user, "util.user.moderador")
             }
 
-            if (!tipo_user.includes("🛡️") && !user.bot)
+            if (!tipo_user.includes("🛡️") && !user_alvo.bot)
                 tipo_user = emojis_busto[Math.round((emojis_busto.length - 1) * Math.random())]
 
-            if (user.id === client.id())
-                nota_rodape = client.tls.phrase(client, interaction, "util.user.alonsal")
+            if (user_alvo.id === client.id())
+                nota_rodape = client.tls.phrase(user, "util.user.alonsal")
 
-            if (process.env.ids_enceirados.includes(user.id)) {
+            if (process.env.ids_enceirados.includes(user_alvo.id)) {
                 if (nota_rodape !== "")
                     nota_rodape += ", "
 
-                nota_rodape += client.tls.phrase(client, interaction, "util.user.enceirado")
+                nota_rodape += client.tls.phrase(user, "util.user.enceirado")
             }
 
             const permissoes_user = membro_sv.permissions.toArray()
@@ -131,9 +172,9 @@ module.exports = {
 
             permissoes_fn = permissoes_fn.slice(0, 2000)
             let emoji_hypesquad = "⠀", discord_premium = "⠀"
-            const flags_user = user.flags.toArray()
+            const flags_user = user_alvo.flags.toArray()
 
-            if (!user.bot) {
+            if (!user_alvo.bot) {
                 if (flags_user.includes('HypeSquadOnlineHouse1')) // HypeSquad
                     emoji_hypesquad = client.emoji(emojis.squad_bravery)
 
@@ -153,32 +194,30 @@ module.exports = {
             // let badges = buildAllBadges(client, interaction)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
-            const user_c = await client.getUser(user.id)
-
             const infos_user = new EmbedBuilder()
-                .setTitle(`${apelido} ${emoji_hypesquad} ${discord_premium}`)
+                .setTitle(`> ${apelido} ${emoji_hypesquad} ${discord_premium}`)
                 .setColor(client.embed_color(user_c.misc.color))
                 .setThumbnail(avatar_user)
                 .addFields(
                     {
                         name: ':globe_with_meridians: **Discord**',
-                        value: `\`${user.username.replace(/ /g, "")}#${user.discriminator}\``,
+                        value: `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``,
                         inline: true
                     },
                     {
                         name: `:label: **Discord ID**`,
-                        value: `\`${user.id}\``,
+                        value: `\`${user_alvo.id}\``,
                         inline: true
                     }
                 )
                 .addFields(
                     {
-                        name: `:birthday: **${client.tls.phrase(client, interaction, "util.user.conta_criada")}**`,
+                        name: `:birthday: **${client.tls.phrase(user, "util.user.conta_criada")}**`,
                         value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
                         inline: false
                     },
                     {
-                        name: `:parachute: **${client.tls.phrase(client, interaction, "util.user.entrada")}**`,
+                        name: `:parachute: **${client.tls.phrase(user, "util.user.entrada")}**`,
                         value: `${data_entrada}\n[ ${diferenca_entrada} ]`,
                         inline: false
                     }
@@ -192,28 +231,66 @@ module.exports = {
             //         inline: false
             //     })
 
-            return interaction.reply({ embeds: [infos_user] })
-        } else { // O avatar do usuário
+            return interaction.reply({ embeds: [infos_user], ephemeral: user.misc.ghost_mode })
 
-            let url_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=512`
-            const user_c = await client.getUser(user.id)
+            // O avatar do usuário
+        } else if (interaction.options.getSubcommand() == "avatar") {
 
-            fetch(url_avatar)
-                .then(res => {
-                    if (res.status !== 200)
-                        url_avatar = url_avatar.replace('.gif', '.webp')
+            const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
 
-                    const embed = new EmbedBuilder()
-                        .setTitle(user.username)
-                        .setDescription(client.tls.phrase(client, interaction, "util.avatar.download_avatar").replace("link_repl", url_avatar))
-                        .setColor(user_c.misc.embed)
-                        .setImage(url_avatar)
+            if (!url_avatar)
+                return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_avatar"), ephemeral: true })
 
-                    return interaction.reply({ embeds: [embed], ephemeral: true })
-                })
-                .catch(() => {
-                    client.tls.reply(client, interaction, "util.avatar.error_1", true, 2)
-                })
+            const embed = new EmbedBuilder()
+                .setTitle(`> ${user_alvo.username}`)
+                .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
+                .setColor(user_c.misc.embed)
+                .setImage(url_avatar)
+
+            interaction.reply({ embeds: [embed], ephemeral: true })
+
+            // Banner do usuário
+        } else {
+
+            let response = fetch(`https://discord.com/api/v8/users/${user_alvo.id}`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bot ${client.x.token}`
+                }
+            })
+
+            let receive = '', url_banner = ''
+
+            response.then(a => {
+                if (a.status !== 404) {
+                    a.json().then(data => {
+                        receive = data['banner']
+
+                        if (receive !== null) {
+
+                            let format = 'png'
+                            if (receive.substring(0, 2) === 'a_') {
+                                format = 'gif'
+                            }
+
+                            url_banner = `https://cdn.discordapp.com/banners/${user_alvo.id}/${receive}.${format}?size=2048`
+                        }
+
+                        // Usuário sem banner customizado
+                        if (url_banner.length < 1)
+                            return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_banner"), ephemeral: true })
+
+                        // Exibindo o banner do usuário
+                        const embed = new EmbedBuilder()
+                            .setTitle(`> ${user_alvo.username}`)
+                            .setDescription(client.tls.phrase(user, "util.avatar.download_banner").replace("link_repl", url_banner))
+                            .setColor(user_c.misc.embed)
+                            .setImage(url_banner)
+
+                        return interaction.reply({ embeds: [embed], ephemeral: true })
+                    })
+                }
+            })
         }
     }
 }

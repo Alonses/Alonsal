@@ -4,23 +4,25 @@ const formata_horas = require('../../adm/formatadores/formata_horas')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('timestamp')
-        .setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
+        .setName("timestamp")
+        .setDescription("⌠💡⌡ Convert a date to timestamp or vice versa")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
             "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
             "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa',
-            "it": '⌠💡⌡ Converti una data in timestamp o viceversa'
+            "it": '⌠💡⌡ Converti una data in timestamp o viceversa',
+            "ru": '⌠💡⌡ Преобразование даты в метку времени и наоборот'
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('custom')
-                .setDescription('⌠💡⌡ Custom Timestamp')
+                .setName("custom")
+                .setDescription("⌠💡⌡ Custom timestamp")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp customizado',
                     "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
                     "fr": '⌠💡⌡ Horodatage personnalisé',
-                    "it": '⌠💡⌡ Timestamp personalizzato'
+                    "it": '⌠💡⌡ Timestamp personalizzato',
+                    "ru": '⌠💡⌡ Пользовательская временная метка'
                 })
                 .addStringOption(option =>
                     option.setName("time")
@@ -28,23 +30,26 @@ module.exports = {
                             "pt-BR": 'tempo',
                             "es-ES": 'tiempo',
                             "fr": 'temps',
-                            "it": 'volta'
+                            "it": 'volta',
+                            "ru": 'время'
                         })
                         .setDescription("The value to be converted")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Valor a ser convertido',
                             "es-ES": 'El valor a convertir',
                             "fr": 'La valeur à convertir',
-                            "it": 'Il valore da convertire'
+                            "it": 'Il valore da convertire',
+                            "ru": 'Значение для преобразования'
                         }))
                 .addStringOption(option =>
-                    option.setName('timer')
-                        .setDescription('A quick date to book')
+                    option.setName("timer")
+                        .setDescription("A quick date to schedule")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma data rápida para marcar',
                             "es-ES": 'Una fecha rápida para reservar',
                             "fr": 'Une date rapide à réserver',
-                            "it": 'Un\'ora veloce per raccogliere'
+                            "it": 'Un\'ora veloce per raccogliere',
+                            "ru": 'Бронирование быстрой даты'
                         })
                         .addChoices(
                             { name: '+5 M', value: '5' },
@@ -55,24 +60,26 @@ module.exports = {
                         )))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('now')
+                .setName("now")
                 .setNameLocalizations({
                     "pt-BR": 'agora',
                     "es-ES": 'ahora',
-                    "fr": 'present'
+                    "fr": 'present',
+                    "it": 'adesso',
+                    "ru": 'сейчас'
                 })
-                .setDescription('⌠💡⌡ Current timestamp')
+                .setDescription("⌠💡⌡ Current timestamp")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "es-ES": '⌠💡⌡ Marca de tiempo actual',
-                    "fr": '⌠💡⌡ Horodatage actuel'
+                    "fr": '⌠💡⌡ Horodatage actuel',
+                    "it": '⌠💡⌡ Timestamp attuale',
+                    "ru": '⌠💡⌡ Текущая метка времени'
                 })),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let timestamp, aviso = "", conversao_invalida = false
-        let titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_1")
+        let titulo = client.tls.phrase(user, "util.timestamp.timestamp_1")
         let data = interaction.options.data[0].value, retorno, entrada = null, timer = 0
         let conversao_valida = ""
 
@@ -91,7 +98,7 @@ module.exports = {
                 entrada = Math.floor(Date.now() / 1000) + timer // Iniciando o timestamp 
 
             if (!isNaN(entrada)) {
-                titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_crono")
+                titulo = client.tls.phrase(user, "util.timestamp.timestamp_crono")
                 retorno = entrada
 
                 timestamp = new Date(entrada)
@@ -100,7 +107,7 @@ module.exports = {
                 conversao_invalida = false
             } else if (!entrada.includes("-")) { // De timestamp para data normal
                 timestamp = new Date(Number(entrada * 1000))
-                titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_2")
+                titulo = client.tls.phrase(user, "util.timestamp.timestamp_2")
                 retorno = entrada
 
                 timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
@@ -119,15 +126,15 @@ module.exports = {
                 conversao_valida = `\`${data}\` -> \`${timestamp}\``
         } else {
             retorno = Math.floor(Date.now() / 1000)
-            titulo = client.tls.phrase(client, interaction, "util.timestamp.timestamp_now")
+            titulo = client.tls.phrase(user, "util.timestamp.timestamp_now")
         }
 
         let dica_conversao = `\n\n( \`<t:${retorno}:R>\` ) <t:${retorno}:R>\n( \`<t:${retorno}:t>\` ) <t:${retorno}:t>\n( \`<t:${retorno}:T>\` ) <t:${retorno}:T>\n( \`<t:${retorno}:d>\` ) <t:${retorno}:d>\n( \`<t:${retorno}:D>\` ) <t:${retorno}:D>\n( \`<t:${retorno}:f>\` ) <t:${retorno}:f>\n( \`<t:${retorno}:F>\` ) <t:${retorno}:F>`
 
         if (conversao_invalida) {
-            titulo = client.tls.phrase(client, interaction, "util.timestamp.erro_titulo")
-            aviso = client.tls.phrase(client, interaction, "util.timestamp.erro_conversao")
-            timestamp = client.tls.phrase(client, interaction, "util.timestamp.valor_nulo")
+            titulo = client.tls.phrase(user, "util.timestamp.erro_titulo")
+            aviso = client.tls.phrase(user, "util.timestamp.erro_conversao")
+            timestamp = client.tls.phrase(user, "util.timestamp.valor_nulo")
             dica_conversao = ""
         }
 
@@ -140,6 +147,6 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter(aviso)
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
     }
 }

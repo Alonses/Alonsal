@@ -4,29 +4,29 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('support')
+        .setName("support")
         .setNameLocalizations({
             "pt-BR": 'suporte',
             "es-ES": 'soporte',
             "fr": 'soutien',
-            "it": 'supporto'
+            "it": 'supporto',
+            "ru": 'поддержка'
         })
-        .setDescription('⌠📡⌡ Support Alonsal')
+        .setDescription("⌠📡⌡ Support Alonsal")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
             "es-ES": '⌠📡⌡ Apoya a Alonsal',
             "fr": '⌠📡⌡ Soutenez Alonsal',
-            "it": '⌠📡⌡ Supporta Alonsal'
+            "it": '⌠📡⌡ Supporta Alonsal',
+            "ru": '⌠📡⌡ Поддержите Алонсала'
         }),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(client, interaction, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
             .setURL("https://picpay.me/slondo")
-            .setDescription(client.tls.phrase(client, interaction, "manu.apoio.escaneie"))
+            .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
             .setImage("https://i.imgur.com/incYvy2.jpg")
 
         interaction.reply({ embeds: [embed], ephemeral: true })

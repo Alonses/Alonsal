@@ -7,30 +7,28 @@ const formata_texto = require('../../adm/formatadores/formata_texto.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('history')
-        .setDescription('⌠💡|🇧🇷⌡ Fatos que ocorreram no mundo em determinada data')
+        .setName("history")
+        .setDescription("⌠💡|🇧🇷⌡ Fatos que ocorreram no mundo em determinada data")
         .addSubcommand(subcommand =>
             subcommand
-                .setName('unico')
-                .setDescription('⌠💡|🇧🇷⌡ Apenas um acontecimento')
+                .setName("unico")
+                .setDescription("⌠💡|🇧🇷⌡ Apenas um acontecimento")
                 .addStringOption(option =>
-                    option.setName('data')
-                        .setDescription('Uma data específica, neste formato 21/01'))
+                    option.setName("data")
+                        .setDescription("Uma data específica, neste formato 21/01"))
                 .addStringOption(option =>
-                    option.setName('especifico')
-                        .setDescription('1, 2, 3...')))
+                    option.setName("especifico")
+                        .setDescription("1, 2, 3...")))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('lista')
-                .setDescription('⌠💡|🇧🇷⌡ Listar todos os acontecimentos do dia')
+                .setName("lista")
+                .setDescription("⌠💡|🇧🇷⌡ Listar todos os acontecimentos do dia")
                 .addStringOption(option =>
-                    option.setName('data')
-                        .setDescription('Uma data específica, neste formato 21/01'))),
-    async execute(client, interaction) {
+                    option.setName("data")
+                        .setDescription("Uma data específica, neste formato 21/01"))),
+    async execute(client, user, interaction) {
 
         let data = ""
-
-        await interaction.deferReply()
 
         if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
 
@@ -42,33 +40,32 @@ module.exports = {
                 .then(async res => {
 
                     if (res.status)
-                        return interaction.editReply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
+                        return interaction.reply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
 
                     let lista_eventos = "", data_eventos = ""
                     const ano_atual = new Date().getFullYear()
 
                     for (let i = 0; i < res.length; i++) {
-                        lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(client, interaction, "util.history.em")} ${res[i].ano}\` | \``
+                        lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(user, "util.history.em")} ${res[i].ano}\` | \``
 
-                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(client, interaction, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(client, interaction, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(client, interaction, "util.history.este_ano")}\` ] `
+                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(user, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(user, "util.history.este_ano")}\` ] `
 
                         lista_eventos += `${res[i].acontecimento}\n`
                     }
 
                     lista_eventos = formata_texto(lista_eventos)
 
-                    if (data === "") data = client.tls.phrase(client, interaction, "util.history.hoje")
+                    if (data === "") data = client.tls.phrase(user, "util.history.hoje")
 
                     data_eventos = ` ${data}`
-                    const user = await client.getUser(interaction.user.id)
 
                     const embed_eventos = new EmbedBuilder()
-                        .setTitle(client.tls.phrase(client, interaction, "util.history.acontecimentos_1"))
+                        .setTitle(client.tls.phrase(user, "util.history.acontecimentos_1"))
                         .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                         .setColor(client.embed_color(user.misc.color))
-                        .setDescription(`${client.tls.phrase(client, interaction, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
+                        .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
-                    interaction.editReply({ embeds: [embed_eventos] })
+                    interaction.reply({ embeds: [embed_eventos], ephemeral: user.misc.ghost_mode })
                 })
         } else { // Um acontecimento aleatório
 
@@ -105,10 +102,10 @@ module.exports = {
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)
 
-                    interaction.editReply({ embeds: [acontecimento] })
+                    interaction.reply({ embeds: [acontecimento], ephemeral: user.misc.ghost_mode })
                 })
                 .catch(() => {
-                    interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true })
+                    interaction.reply({ content: "Houve um erro com este :x", ephemeral: true })
                 })
         }
     }

@@ -3,12 +3,10 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_migrate')
-        .setDescription('⌠🤖⌡ Migrar os dados para o banco de dados externo')
+        .setName("c_migrate")
+        .setDescription("⌠🤖⌡ Migrar os dados para o banco de dados em nuvem")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
-
-        // const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         // for (const file of readdirSync(`./arquivos/data/user/`)) {
         //     const { id, lang, social, misc, badges, conquistas } = require(`../../arquivos/data/user/${file}`)

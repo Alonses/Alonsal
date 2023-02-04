@@ -4,10 +4,10 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_emojis')
-        .setDescription('⌠🤖⌡ Lista todos os emojis conhecidos')
+        .setName("c_emojis")
+        .setDescription("⌠🤖⌡ Lista todos os emojis salvos no JSON")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 

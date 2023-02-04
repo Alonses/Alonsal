@@ -2,28 +2,32 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('jokenpo')
-        .setDescription('⌠🎲⌡ Play jokenpo')
+        .setName("jokenpo")
+        .setDescription("⌠🎲⌡ Play jokenpo")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Jogue jokenpô',
             "es-ES": '⌠🎲⌡ Juega jokenpo',
             "fr": '⌠🎲⌡ Jouer au jokenpo',
-            "it": '⌠🎲⌡ Gioca a jokenpo'
+            "it": '⌠🎲⌡ Gioca a jokenpo',
+            "ru": '⌠🎲⌡ Играть в Джокенпо'
         })
         .addStringOption(option =>
-            option.setName('choose')
+            option.setName("choise")
+
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
                     "fr": 'choix',
-                    "it": 'scelta'
+                    "it": 'scelta',
+                    "ru": 'выбор'
                 })
-                .setDescription('What\'s your choice?')
+                .setDescription("What's your choice?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual a sua escolha?',
                     "es-ES": '¿Cual es tu eleccion?',
                     "fr": 'Quel est ton choix?',
-                    "it": 'Qual\'è la tua scelta?'
+                    "it": 'Qual\'è la tua scelta?',
+                    "ru": 'Каков ваш выбор?'
                 })
                 .addChoices(
                     { name: '🗿', value: 'pedra' },
@@ -61,7 +65,6 @@ module.exports = {
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
 
         let player = jooj.indexOf(escolha)
-
         let bot = Math.round(2 * Math.random()), ganhador = ":thumbsdown:", profit = -bet;
 
         if (player === 0) player = 3
@@ -84,6 +87,6 @@ module.exports = {
         user.misc.money += profit;
         user.save();
 
-        return interaction.reply(mensagem)
+        return interaction.reply({ content: mensagem, ephemeral: user.misc.ghost_mode })
     }
 }

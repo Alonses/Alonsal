@@ -4,10 +4,10 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_resumo_diario')
-        .setDescription('⌠🤖⌡ Veja um resumo diário de forma manual')
+        .setName("c_resumo_diario")
+        .setDescription("⌠🤖⌡ Veja o resumo diário de forma manual")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 
@@ -16,7 +16,7 @@ module.exports = {
         const proxima_att = (date1.getTime() / 1000) + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels().filter((c) => c.type === 0).size
-        let members = 0, processamento = '🎲 Processamento\n'
+        let members = 0, processamento = "🎲 Processamento\n"
 
         client.guilds().forEach(async guild => {
             members += guild.memberCount - 1

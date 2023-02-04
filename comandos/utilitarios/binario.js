@@ -4,73 +4,78 @@ const binario = require('../../arquivos/json/text/binario.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('binary')
+        .setName("binary")
         .setNameLocalizations({
             "pt-BR": 'binario',
             "es-ES": 'binario',
             "fr": 'binarie',
-            "it": 'binario'
+            "it": 'binario',
+            "ru": 'бинарный'
         })
-        .setDescription('⌠💡⌡ (De)code from/to binary')
+        .setDescription("⌠💡⌡ (De)code from/to binary")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o binario',
             "es-ES": '⌠💡⌡ (Des)codificar de/a binario',
             "fr": '⌠💡⌡ (Dé)coder de/vers binaire',
-            "it": '⌠💡⌡ (Da) codice da/per binario'
+            "it": '⌠💡⌡ (Da) codice da/per binario',
+            "ru": '⌠💡⌡ (де)код из/в двоичный код'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
-            option.setName('reverse')
+            option.setName("reverse")
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
                     "fr": 'inverse',
                     "it": 'inversione'
                 })
-                .setDescription('Invert output result')
+                .setDescription("Invert output result")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
                     "fr": 'Inverser le résultat de sortie',
-                    "it": 'invertire il risultato di output'
+                    "it": 'invertire il risultato di output',
+                    "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
-            option.setName('operation')
+            option.setName("operation")
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',
                     "fr": 'operation',
-                    "it": 'operazione'
+                    "it": 'operazione',
+                    "ru": 'операция'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Forçar uma operação',
                     "es-ES": 'Forzar una operación',
                     "fr": 'Forcer une opération',
-                    "it": 'forzare un\'operazione'
+                    "it": 'forzare un\'operazione',
+                    "ru": 'форсировать операцию'
                 })
                 .addChoices(
                     { name: 'Encode', value: '0' },
                     { name: 'Decode', value: '1' }
                 )),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -103,15 +108,15 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = client.tls.phrase(client, interaction, "util.binario.codificado")
+        let titulo = client.tls.phrase(user, "util.binario.codificado")
 
         if (codificar.opera)
-            titulo = client.tls.phrase(client, interaction, "util.binario.decodificado")
+            titulo = client.tls.phrase(user, "util.binario.decodificado")
 
         // Confirma que a operação não resultou em uma string vazia
         if (texto_ordenado.replaceAll("\x00", "").length < 1) {
-            texto_ordenado = client.tls.phrase(client, interaction, "util.binario.resul_vazio")
-            titulo = client.tls.phrase(client, interaction, "util.binario.titulo_vazio")
+            texto_ordenado = client.tls.phrase(user, "util.binario.resul_vazio")
+            titulo = client.tls.phrase(user, "util.binario.titulo_vazio")
         }
 
         const embed = new EmbedBuilder()
@@ -123,9 +128,9 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter({ text: aviso })
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             .catch(() => {
-                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
+                client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
             })
     }
 }

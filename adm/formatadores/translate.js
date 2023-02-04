@@ -1,18 +1,12 @@
-const { existsSync, writeFileSync } = require('fs')
-
-const { getUser } = require('../../adm/database/schemas/User.js')
-
 const status = {
     0: ':octagonal_sign: | ',
     1: ':mag: | ',
     2: ':warning: | '
 }
 
-const cache = {}
+function reply(interaction, user, target, ephemeral, type) {
 
-function reply(client, interaction, target, ephemeral, type) {
-
-    let phrase = translate(client, interaction, target)
+    let phrase = translate(user, target)
 
     if (typeof type !== "undefined")
         phrase = `${status[type]}${phrase}`
@@ -20,9 +14,9 @@ function reply(client, interaction, target, ephemeral, type) {
     interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
 
-function editReply(client, interaction, target, type) {
+function editReply(interaction, user, target, type) {
 
-    let phrase = translate(client, interaction, target)
+    let phrase = translate(user, target)
 
     if (typeof type !== "undefined")
         phrase = `${status[type]}${phrase}`
@@ -30,27 +24,18 @@ function editReply(client, interaction, target, type) {
     interaction.editReply({ content: phrase })
 }
 
-function phrase(client, interaction, target) {
+function phrase(user, target) {
 
-    let phrase = translate(client, interaction, target)
+    let phrase = translate(user, target)
     return phrase
 }
 
-function translate(client, interaction, target) {
+function translate(user, target) {
 
-    let id_usuario = typeof interaction == "object" ? interaction.user.id : interaction
-
-    if (!cache[id_usuario]) {
-        client.getUser(id_usuario)
-            .then(user => {
-                cache[id_usuario] = user.lang
-            })
-
-        cache[id_usuario] = "pt-br"
-    }
+    const idioma_user = user.lang;
 
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../arquivos/idiomas/${cache[id_usuario]}.json`)
+    let { data } = require(`../../arquivos/idiomas/${idioma_user}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
@@ -86,20 +71,9 @@ function translate(client, interaction, target) {
     return phrase
 }
 
-async function syncUsers() {
-
-    getUser()
-
-    writeFileSync(`./arquivos/data/translate.json`, JSON.stringify(langs))
-    delete require.cache[require.resolve(`../../arquivos/data/translate.json`)]
-}
-
-// syncUsers()
-
 module.exports = {
     reply,
     phrase,
     editReply,
-    translate,
-    syncUsers
+    translate
 }

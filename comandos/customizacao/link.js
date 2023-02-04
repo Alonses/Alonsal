@@ -4,23 +4,25 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('link')
-        .setDescription('⌠👤⌡ Connect your social networks to Alonsal')
+        .setName("link")
+        .setDescription("⌠👤⌡ Connect your social networks to Alonsal")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Link suas redes ao Alonsal',
             "es-ES": '⌠👤⌡ Conecta tus redes a Alonsal',
             "fr": '⌠👤⌡ Connectez vos réseaux à Alonsal',
-            "it": '⌠👤⌡ Collega le tue reti ad Alonsal'
+            "it": '⌠👤⌡ Collega le tue reti ad Alonsal',
+            "ru": '⌠👤⌡ Свяжите свои сети с Алонсалом'
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('steam')
-                .setDescription('⌠👤⌡ Link to Steam')
+                .setName("steam")
+                .setDescription("⌠👤⌡ Link to Steam")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Steam',
                     "es-ES": '⌠👤⌡ Enlace a Steam',
                     "fr": '⌠👤⌡ Lien vers Steam',
-                    "it": '⌠👤⌡ Collegati a Steam'
+                    "it": '⌠👤⌡ Collegati a Steam',
+                    "ru": '⌠👤⌡ Ссылка на Steam'
                 })
                 .addStringOption(option =>
                     option.setName("name")
@@ -28,25 +30,28 @@ module.exports = {
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
-                            'it': 'nome'
+                            "it": 'nome',
+                            "ru": 'имя'
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
                             "fr": 'Votre nom sur la plateforme',
-                            "it": 'Il tuo nome sulla piattaforma'
+                            "it": 'Il tuo nome sulla piattaforma',
+                            "ru": 'Ваше имя на платформе'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('lastfm')
-                .setDescription('⌠👤⌡ Link to LastFM')
+                .setName("lastfm")
+                .setDescription("⌠👤⌡ Link to LastFM")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao LastFM',
                     "es-ES": '⌠👤⌡ Enlace a LastFM',
                     "fr": '⌠👤⌡ Lien vers LastFM',
-                    "it": '⌠👤⌡ Collegati a LastFM'
+                    "it": '⌠👤⌡ Collegati a LastFM',
+                    "ru": '⌠👤⌡ Ссылка на LastFM'
                 })
                 .addStringOption(option =>
                     option.setName("name")
@@ -54,25 +59,28 @@ module.exports = {
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
-                            "it": "nome"
+                            "it": 'nome',
+                            "ru": 'имя'
                         })
                         .setDescription("Your name on the platform")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Seu nome na plataforma',
                             "es-ES": 'Tu nombre en la plataforma',
                             "fr": 'Votre nom sur la plateforme',
-                            "it": 'Il tuo nome sulla piattaforma'
+                            "it": 'Il tuo nome sulla piattaforma',
+                            "ru": 'Ваше имя на платформе'
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('pula')
-                .setDescription('⌠👤⌡ Link to Pula Prédios')
+                .setName("pula")
+                .setDescription("⌠👤⌡ Link to Pula Prédios")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Pula Prédios',
                     "es-ES": '⌠👤⌡ Enlace a Pula Prédios',
                     "fr": '⌠👤⌡ Lien vers Pula Prédios',
-                    "it": '⌠👤⌡ Collegati a Pula Prédios'
+                    "it": '⌠👤⌡ Collegati a Pula Prédios',
+                    "ru": '⌠👤⌡ Ссылка на Pula Prédios'
                 })
                 .addStringOption(option =>
                     option.setName("token")
@@ -81,58 +89,66 @@ module.exports = {
                             "pt-BR": 'O seu token único',
                             "es-ES": 'Tu ficha única',
                             "fr": 'Votre jeton unique',
-                            "it": 'Il tuo token unico'
+                            "it": 'Il tuo token unico',
+                            "ru": 'Ваш уникальный токен'
                         })
                         .setRequired(true)))
 
         .addSubcommand(subcommand =>
             subcommand
-                .setName('locale')
-                .setDescription('⌠👤⌡ Set a location')
+                .setName("locale")
+                .setDescription("⌠👤⌡ Set a location")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Definir um local',
                     "es-ES": '⌠👤⌡ Establecer una ubicación',
                     "fr": '⌠👤⌡ Définir un emplacement',
-                    "it": '⌠👤⌡ Impostare una posizione'
+                    "it": '⌠👤⌡ Impostare una posizione',
+                    "ru": '⌠👤⌡ Установить местоположение'
                 })
                 .addStringOption(option =>
                     option.setName("place")
                         .setNameLocalizations({
                             "pt-BR": 'local',
                             "es-ES": 'lugar',
-                            'it': 'posto'
+                            "fr": 'mettre',
+                            "it": 'posto',
+                            "ru": 'место'
                         })
                         .setDescription("The location to always use")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Lugar a ser definido',
                             "es-ES": 'La ubicación para usar siempre',
                             "fr": 'Lieu d\'utilisation',
-                            "it": 'La posizione da usare sempre'
+                            "it": 'La posizione da usare sempre',
+                            "ru": 'Место, которое необходимо определить'
                         })
                         .setRequired(true))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id)
         let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
+        let link_comando = ""
 
-        if (interaction.options.getSubcommand() === "steam") // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
+        if (interaction.options.getSubcommand() === "steam") { // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
             user.social.steam = entrada
-        else if (interaction.options.getSubcommand() === "lastfm") {
+            link_comando = "</steam:1018609879562334384>"
+        } else if (interaction.options.getSubcommand() === "lastfm") {
             user.social.lastfm = entrada
             plataforma = "lastfm"
+            link_comando = "</lastfm:1018609879512006796>"
         } else if (interaction.options.getSubcommand() === "locale") {
             user.misc.locale = entrada
             plataforma = "locale"
         } else {
             user.social.pula_predios = entrada
             plataforma = "Pula prédios"
+            link_comando = "</pula:1023486895327555584>"
         }
 
         user.save()
 
         if (plataforma !== "locale")
-            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0])}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0]).replace("comando_repl", link_comando)}`, ephemeral: true })
         else // Link de local do /tempo
-            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
+            return interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
     }
 }

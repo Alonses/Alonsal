@@ -2,14 +2,14 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('cattle')
+        .setName("cattle")
         .setNameLocalizations({
             "pt-BR": 'gado',
             "es-ES": 'ganado',
             "fr": 'betail',
             "it": 'bestiame'
         })
-        .setDescription('⌠😂⌡ Test someone\'s horn size')
+        .setDescription("⌠😂⌡ Test someone\'s horn size")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Teste a gadisse de alguém',
             "es-ES": '⌠😂⌡ Prueba el tamaño del cuerno de alguien',
@@ -17,14 +17,14 @@ module.exports = {
             "it": '⌠😂⌡ Metti alla prova il gadisse di qualcuno'
         })
         .addUserOption(option =>
-            option.setName('user')
+            option.setName("user")
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
                     "fr": 'user',
                     "it": 'utente'
                 })
-                .setDescription('Mention a user as a target')
+                .setDescription("Mention a user as a target")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Marque outro usuário como alvo',
                     "es-ES": 'Mencionar a otro usuario',
@@ -32,7 +32,7 @@ module.exports = {
                     "it": 'Menziona un altro utente'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction)
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
@@ -40,7 +40,7 @@ module.exports = {
         const alvo = interaction.options.getUser('user')
 
         if (client.id() === alvo.id)
-            return client.tls.reply(client, interaction, "dive.gado.error_2")
+            return client.tls.reply(interaction, user, "dive.gado.error_2", true, 2)
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)
@@ -48,13 +48,13 @@ module.exports = {
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")
-                interaction.reply(`O <@${alvo.id}> ${gadisissimo[num]}`)
+                interaction.reply({ content: `O <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
             else
-                interaction.reply(`The <@${alvo.id}> ${gadisissimo[num]}`)
+                interaction.reply({ content: `The <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
         else
             if (idioma_definido === "pt-br")
-                interaction.reply(`Você ${interaction.user} ${gadisissimo[num]}`)
+                interaction.reply({ content: `Você ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
             else
-                interaction.reply(`You ${interaction.user} ${gadisissimo[num]}`)
+                interaction.reply({ content: `You ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
     }
 }
