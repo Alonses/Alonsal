@@ -4,8 +4,8 @@ const GTADAY = 48 // minutos
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('gta')
-        .setDescription('⌠🎲⌡ Shows the current time in GTA Online')
+        .setName("gta")
+        .setDescription("⌠🎲⌡ Shows the current time in GTA Online")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Mostra a hora atual no GTA Online',
             "es-ES": '⌠🎲⌡ Muestra la hora actual en GTA Online',

@@ -2,8 +2,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('git')
-        .setDescription('⌠📡⌡ The Alonsal™️ repository')
+        .setName("git")
+        .setDescription("⌠📡⌡ The Alonsal™️ repository")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',

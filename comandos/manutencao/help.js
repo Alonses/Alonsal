@@ -5,8 +5,8 @@ const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('⌠🌎⌡ It all starts here')
+        .setName("help")
+        .setDescription("⌠🌎⌡ It all starts here")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
             "es-ES": '⌠🌎⌡ Todo comienza aquí',

@@ -5,11 +5,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('rastreio')
-        .setDescription('⌠💡|🇧🇷⌡ Rastrear um pacote no Correios')
+        .setName("rastreio")
+        .setDescription("⌠💡|🇧🇷⌡ Rastrear um pacote no Correios")
         .addStringOption(option =>
-            option.setName('codigo')
-                .setDescription('O código do pacote')
+            option.setName("codigo")
+                .setDescription("O código do pacote")
                 .setRequired(true)),
     async execute(client, user, interaction) {
 

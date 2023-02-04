@@ -4,7 +4,7 @@ const binario = require('../../arquivos/json/text/binario.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('binary')
+        .setName("binary")
         .setNameLocalizations({
             "pt-BR": 'binario',
             "es-ES": 'binario',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'binario',
             "ru": 'бинарный'
         })
-        .setDescription('⌠💡⌡ (De)code from/to binary')
+        .setDescription("⌠💡⌡ (De)code from/to binary")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o binario',
             "es-ES": '⌠💡⌡ (Des)codificar de/a binario',
@@ -21,7 +21,7 @@ module.exports = {
             "ru": '⌠💡⌡ (де)код из/в двоичный код'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
@@ -29,7 +29,7 @@ module.exports = {
                     "it": 'testo',
                     "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
@@ -39,14 +39,14 @@ module.exports = {
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
-            option.setName('reverse')
+            option.setName("reverse")
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
                     "fr": 'inverse',
                     "it": 'inversione'
                 })
-                .setDescription('Invert output result')
+                .setDescription("Invert output result")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
@@ -55,7 +55,7 @@ module.exports = {
                     "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
-            option.setName('operation')
+            option.setName("operation")
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',

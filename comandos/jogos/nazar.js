@@ -5,8 +5,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('nazar')
-        .setDescription('⌠🎲⌡ Madame Nazar\'s location today')
+        .setName("nazar")
+        .setDescription("⌠🎲⌡ Madame Nazar's location today")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Mostra onde a Madame Nazar se encontra hoje',
             "es-ES": '⌠🎲⌡ Ubicación de Madame Nazar hoy',

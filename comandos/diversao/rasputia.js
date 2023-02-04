@@ -9,8 +9,8 @@ const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('rasputia')
-		.setDescription('⌠😂⌡ Rasputia in its glory')
+		.setName("rasputia")
+		.setDescription("⌠😂⌡ Rasputia in its glory")
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Rasputia em sua glória',
 			"es-ES": '⌠😂⌡ Rasputia en todo su esplendor',
@@ -20,8 +20,8 @@ module.exports = {
 		})
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('gif')
-				.setDescription('⌠😂⌡ Invoca um gif da rasputia')
+				.setName("gif")
+				.setDescription("⌠😂⌡ Invoca um gif da rasputia")
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif da rasputia',
 					"es-ES": '⌠😂⌡ Invoca un gif de rasputia',
@@ -31,12 +31,12 @@ module.exports = {
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('frase')
-				.setDescription('⌠😂|🇧🇷⌡ Invoca uma frase do filme Norbit'))
+				.setName("frase")
+				.setDescription("⌠😂|🇧🇷⌡ Invoca uma frase do filme Norbit"))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('fala')
-				.setDescription('⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit')),
+				.setName("fala")
+				.setDescription("⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit")),
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {

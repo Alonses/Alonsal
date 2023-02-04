@@ -4,8 +4,8 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('⌠💡⌡ See your ping')
+        .setName("ping")
+        .setDescription("⌠💡⌡ See your ping")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "es-ES": '⌠💡⌡ Ver tu ping',

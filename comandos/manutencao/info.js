@@ -5,8 +5,8 @@ const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.js
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('info')
-        .setDescription('⌠📡⌡ Alonsal information')
+        .setName("info")
+        .setDescription("⌠📡⌡ Alonsal information")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Informações do Alonsal',
             "es-ES": '⌠📡⌡ Información Alonsal',

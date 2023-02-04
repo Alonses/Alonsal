@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('telemetry')
+        .setName("telemetry")
         .setNameLocalizations({
             "pt-BR": 'telemetria',
             "es-ES": 'telemetria',
@@ -10,7 +10,7 @@ module.exports = {
             "it": 'telemetria',
             "ru": 'телеметрия'
         })
-        .setDescription('⌠📡⌡ Data we collect')
+        .setDescription("⌠📡⌡ Data we collect")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Dados que coletamos',
             "es-ES": '⌠📡⌡ Datos que recopilamos',

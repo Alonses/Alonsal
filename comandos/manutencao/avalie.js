@@ -4,7 +4,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('rate')
+        .setName("rate")
         .setNameLocalizations({
             "pt-BR": 'avalie',
             "es-ES": 'evaluar',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'valutare',
             "ru": 'oценивать'
         })
-        .setDescription('⌠📡⌡ Rate me!')
+        .setDescription("⌠📡⌡ Rate me!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Me avalie!',
             "es-ES": '⌠📡⌡ Calificame!',

@@ -7,8 +7,8 @@ const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.js
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('server')
-        .setDescription('⌠💡⌡ Show server information')
+        .setName("server")
+        .setDescription("⌠💡⌡ Show server information")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja informações do servidor',
             "es-ES": '⌠💡⌡ Ver información del servidor',
@@ -18,8 +18,8 @@ module.exports = {
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('icon')
-                .setDescription('⌠💡⌡ The Server Icon')
+                .setName("icon")
+                .setDescription("⌠💡⌡ The server icon")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ O Icone do servidor',
                     "es-ES": '⌠💡⌡ El icono del servidor',
@@ -29,8 +29,8 @@ module.exports = {
                 }))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('info')
-                .setDescription('⌠💡⌡ Server Information')
+                .setName("info")
+                .setDescription("⌠💡⌡ Server information")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Informações do servidor',
                     "es-ES": '⌠💡⌡ Información del servidor',

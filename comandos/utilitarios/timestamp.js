@@ -4,8 +4,8 @@ const formata_horas = require('../../adm/formatadores/formata_horas')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('timestamp')
-        .setDescription('⌠💡⌡ Convert a date to timestamp or vice versa')
+        .setName("timestamp")
+        .setDescription("⌠💡⌡ Convert a date to timestamp or vice versa")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
             "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
@@ -15,8 +15,8 @@ module.exports = {
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('custom')
-                .setDescription('⌠💡⌡ Custom Timestamp')
+                .setName("custom")
+                .setDescription("⌠💡⌡ Custom timestamp")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp customizado',
                     "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
@@ -42,8 +42,8 @@ module.exports = {
                             "ru": 'Значение для преобразования'
                         }))
                 .addStringOption(option =>
-                    option.setName('timer')
-                        .setDescription('A quick date to book')
+                    option.setName("timer")
+                        .setDescription("A quick date to schedule")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma data rápida para marcar',
                             "es-ES": 'Una fecha rápida para reservar',
@@ -60,7 +60,7 @@ module.exports = {
                         )))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('now')
+                .setName("now")
                 .setNameLocalizations({
                     "pt-BR": 'agora',
                     "es-ES": 'ahora',
@@ -68,7 +68,7 @@ module.exports = {
                     "it": 'adesso',
                     "ru": 'сейчас'
                 })
-                .setDescription('⌠💡⌡ Current timestamp')
+                .setDescription("⌠💡⌡ Current timestamp")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "es-ES": '⌠💡⌡ Marca de tiempo actual',

@@ -2,8 +2,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('mail')
-        .setDescription('⌠📡⌡ Send messages to me!')
+        .setName("mail")
+        .setDescription("⌠📡⌡ Send messages to me!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Envie mensagens para mim!',
             "es-ES": '⌠📡⌡ ¡Envíeme un mensaje!',
@@ -12,7 +12,7 @@ module.exports = {
             "ru": '⌠📡⌡ Пишите мне!'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
@@ -20,7 +20,7 @@ module.exports = {
                     "it": 'testo',
                     "ru": 'текст'
                 })
-                .setDescription('Report bugs or give suggestions!')
+                .setDescription("Report bugs or give suggestions!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Reporte bugs ou dê sugestões!',
                     "es-ES": '¡Informar de errores o dar sugerencias!',
@@ -30,7 +30,7 @@ module.exports = {
                 })
                 .setRequired(true))
         .addAttachmentOption(option =>
-            option.setName('file')
+            option.setName("file")
                 .setNameLocalizations({
                     "pt-BR": 'arquivo',
                     "es-ES": 'archivo',
@@ -38,7 +38,7 @@ module.exports = {
                     "it": 'file',
                     "ru": 'архив'
                 })
-                .setDescription('Attach files if needed')
+                .setDescription("Attach files if needed")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Anexe arquivos se precisar',
                     "es-ES": 'Adjunte archivos si es necesario',

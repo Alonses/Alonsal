@@ -4,8 +4,8 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('discord')
-        .setDescription('⌠📡⌡ Official Alonsal™️ Server')
+        .setName("discord")
+        .setDescription("⌠📡⌡ Official Alonsal™️ Server")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
             "es-ES": '⌠📡⌡ Servidor Oficial Alonsal™️',

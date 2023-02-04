@@ -8,8 +8,8 @@ const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.js
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('mine')
-        .setDescription('⌠💡⌡ Search Minecraft items')
+        .setName("mine")
+        .setDescription("⌠💡⌡ Search Minecraft items")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise itens do Minecraft',
             "es-ES": '⌠💡⌡ Buscar elementos de Minecraft',
@@ -18,8 +18,8 @@ module.exports = {
             "ru": '⌠💡⌡ Найди предметы в майнкрафте'
         })
         .addStringOption(option =>
-            option.setName('item')
-                .setDescription('Insert an item')
+            option.setName("item")
+                .setDescription("Insert an item")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Insira um item',
                     "es-ES": 'Insertar un artículo',
