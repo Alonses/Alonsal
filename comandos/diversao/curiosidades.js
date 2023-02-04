@@ -5,8 +5,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('curiosidade')
-    .setDescription('⌠😂|🇧🇷⌡ Uma curiosidade aleatória'),
+    .setName("curiosidade")
+    .setDescription("⌠😂|🇧🇷⌡ Uma curiosidade aleatória"),
   async execute(client, user, interaction) {
 
     fetch(`${process.env.url_apisal}/curiosidades`)

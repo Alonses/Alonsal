@@ -7,8 +7,8 @@ const { gifs } = require('../../arquivos/json/gifs/cazalbe.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cazalbe')
-		.setDescription('⌠😂⌡ Cazalbe King of Prasody')
+		.setName("cazalbe")
+		.setDescription("⌠😂⌡ Cazalbe King of Prasody")
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Cazalbe rei da prassódia',
 			"fr": '⌠😂⌡ Cazalbe roi de la prasodie',
@@ -17,8 +17,8 @@ module.exports = {
 		})
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('gif')
-				.setDescription('⌠😂⌡ Summons a gif of cazalbe')
+				.setName("gif")
+				.setDescription("⌠😂⌡ Summons a gif of cazalbe")
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
 					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
@@ -28,7 +28,7 @@ module.exports = {
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('laugh')
+				.setName("laugh")
 				.setNameLocalizations({
 					"pt-BR": 'risada',
 					"es-ES": 'risa',
@@ -36,7 +36,7 @@ module.exports = {
 					"it": 'risata',
 					"ru": 'смех'
 				})
-				.setDescription('⌠😂⌡ The cazalbe laugh')
+				.setDescription("⌠😂⌡ The cazalbe laugh")
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ A risada do cazalbe',
 					"es-ES": '⌠😂⌡ La risa del cazalbe',
@@ -46,8 +46,8 @@ module.exports = {
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('piada')
-				.setDescription('⌠😂|🇧🇷⌡ Conta uma piada')),
+				.setName("piada")
+				.setDescription("⌠😂|🇧🇷⌡ Conta uma piada")),
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")

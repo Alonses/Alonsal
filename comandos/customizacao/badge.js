@@ -4,8 +4,8 @@ const create_menus = require('../../adm/discord/create_menus.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('badge')
-        .setDescription('⌠👤⌡ (Un)pin your badges!')
+        .setName("badge")
+        .setDescription("⌠👤⌡ (Un)pin your badges!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ (Des)Fixe suas badges!',
             "es-ES": '⌠👤⌡ (Un)pin sus insignias!',
@@ -14,7 +14,7 @@ module.exports = {
             "ru": '⌠👤⌡ (Не) носить значки!'
         })
         .addSubcommand(subcommand =>
-            subcommand.setName('fix')
+            subcommand.setName("fix")
                 .setNameLocalizations({
                     "pt-BR": 'fixar',
                     "es-ES": 'etiquetar',
@@ -22,7 +22,7 @@ module.exports = {
                     "it": 'evidenziare',
                     "ru": 'носить'
                 })
-                .setDescription('⌠👤⌡ Pin a badge to your profile')
+                .setDescription("⌠👤⌡ Pin a badge to your profile")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
                     "es-ES": '⌠👤⌡ Pon una insignia en tu perfil',
@@ -31,7 +31,7 @@ module.exports = {
                     "ru": '⌠👤⌡ Добавьте значок в свой профиль'
                 }))
         .addSubcommand(subcommand =>
-            subcommand.setName('remove')
+            subcommand.setName("remove")
                 .setNameLocalizations({
                     "pt-BR": 'remover',
                     "es-ES": 'retirar',
@@ -39,7 +39,7 @@ module.exports = {
                     "it": 'rimuovere',
                     "ru": 'удалять'
                 })
-                .setDescription('⌠👤⌡ Remove pinned emblem')
+                .setDescription("⌠👤⌡ Remove pinned badge")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Remover a badge do fixado',
                     "es-ES": '⌠👤⌡ Quita la insignia',

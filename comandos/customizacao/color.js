@@ -4,7 +4,7 @@ const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('color')
+        .setName("color")
         .setNameLocalizations({
             "pt-BR": 'color',
             "es-ES": 'color',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'colore',
             "ru": 'цвет'
         })
-        .setDescription('⌠🎉⌡ Change your color')
+        .setDescription("⌠🎉⌡ Change your color")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎉⌡ Altere sua cor',
             "es-ES": '⌠🎉⌡ Cambia tu color',
@@ -22,8 +22,8 @@ module.exports = {
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('static')
-                .setDescription('⌠🎉⌡ Pre-defined colors')
+                .setName("static")
+                .setDescription("⌠🎉⌡ Pre-defined colors")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠🎉⌡ Cores pré-definidas',
                     "es-ES": '⌠🎉⌡ Colores preestablecidos',
@@ -32,8 +32,8 @@ module.exports = {
                     "ru": '⌠🎉⌡ Предопределенные цвета'
                 })
                 .addStringOption(option =>
-                    option.setName('color')
-                        .setDescription('Change your profile color')
+                    option.setName("color")
+                        .setDescription("Change your profile color")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Alterar a cor do seu perfil',
                             "es-ES": 'Cambia el color de tu perfil',
@@ -57,8 +57,8 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('custom')
-                .setDescription('⌠🎉⌡ Choose your color!')
+                .setName("custom")
+                .setDescription("⌠🎉⌡ Choose your color!")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠🎉⌡ Escolha sua cor!',
                     "es-ES": '⌠🎉⌡ ¡Elige tu color!',

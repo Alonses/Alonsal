@@ -12,7 +12,7 @@ const idiomasMap = {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('language')
+        .setName("language")
         .setNameLocalizations({
             "pt-BR": 'idioma',
             "es-ES": 'idioma',
@@ -20,7 +20,7 @@ module.exports = {
             "it": 'lingua',
             "ru": 'язык'
         })
-        .setDescription('⌠👤⌡ Change the language of Alonsal')
+        .setDescription("⌠👤⌡ Change the language of Alonsal")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Altere o idioma do Alonsal',
             "es-ES": '⌠👤⌡ Cambiar el idioma de Alonsal',
@@ -29,7 +29,7 @@ module.exports = {
             "ru": '⌠👤⌡ Изменить язык Алонсала'
         })
         .addStringOption(option =>
-            option.setName('language')
+            option.setName("language")
                 .setNameLocalizations({
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
@@ -37,7 +37,7 @@ module.exports = {
                     "it": 'linguaggio',
                     "ru": 'язык'
                 })
-                .setDescription('What is the new language?')
+                .setDescription("What is the new language?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual o novo idioma?',
                     "es-ES": '¿Cuál es el nuevo idioma?',

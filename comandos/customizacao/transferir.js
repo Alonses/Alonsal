@@ -4,7 +4,7 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('pay')
+        .setName("pay")
         .setNameLocalizations({
             "pt-BR": 'dei-lhe',
             "es-ES": 'transferir',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'pagare',
             "ru": 'платить'
         })
-        .setDescription('⌠💸⌡ Transfer Bufunfa to other users')
+        .setDescription("⌠💸⌡ Transfer Bufunfa to other users")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Transfira Bufunfa para outros usuários',
             "es-ES": '⌠💸⌡ Transferir Bufunfa a otros usuarios',
@@ -21,14 +21,14 @@ module.exports = {
             "ru": '⌠💸⌡ Делиться Bufunfa с другими пользователями'
         })
         .addUserOption(option =>
-            option.setName('user')
+            option.setName("user")
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
                     "it": 'utente',
                     "ru": 'пользователь'
                 })
-                .setDescription('The user who will receive')
+                .setDescription("The user who will receive")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O usuário que receberá',
                     "es-ES": 'El usuario que recibirá',
@@ -38,7 +38,7 @@ module.exports = {
                 })
                 .setRequired(true))
         .addNumberOption(option =>
-            option.setName('amount')
+            option.setName("amount")
                 .setNameLocalizations({
                     "pt-BR": 'quantia',
                     "es-ES": 'monto',
@@ -46,7 +46,7 @@ module.exports = {
                     "it": 'quantita',
                     "ru": 'ценить'
                 })
-                .setDescription('The amount that will be transferred')
+                .setDescription("The amount that will be transferred")
                 .setDescriptionLocalizations({
                     "pt-BR": 'A quantidade que será transferida',
                     "es-ES": 'El monto a transferir',

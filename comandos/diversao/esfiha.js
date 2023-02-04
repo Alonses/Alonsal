@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('esfiha')
-		.setDescription('⌠😂⌡ Serve??')
+		.setName("esfiha")
+		.setDescription("⌠😂⌡ Serve??")
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Servidos??',
 			"es-ES": '⌠😂⌡ Servido??',

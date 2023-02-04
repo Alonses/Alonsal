@@ -4,8 +4,8 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('daily')
-        .setDescription('⌠💸⌡ Receive your daily bufunfa')
+        .setName("daily")
+        .setDescription("⌠💸⌡ Receive your daily bufunfa")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
             "es-ES": '⌠💸⌡ Recibe tu bufunfa diario',
