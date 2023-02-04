@@ -3,11 +3,11 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_ranking')
-        .setDescription('⌠🤖⌡ Altere o valor do ranking')
+        .setName("c_ranking")
+        .setDescription("⌠🤖⌡ Altere o valor do ranking")
         .addNumberOption(option =>
-            option.setName('valor')
-                .setDescription('O novo valor para o ranking')
+            option.setName("valor")
+                .setDescription("O novo valor para o ranking")
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {

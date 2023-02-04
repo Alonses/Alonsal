@@ -5,15 +5,15 @@ const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_badge')
-        .setDescription('⌠🤖⌡ Atribuir badges a usuários')
+        .setName("c_badge")
+        .setDescription("⌠🤖⌡ Atribuir badges a usuários")
         .addStringOption(option =>
-            option.setName('id')
+            option.setName("id")
                 .setDescription("O ID do usuário alvo")
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('badge')
-                .setDescription('A badge que será atribuida')
+            option.setName("badge")
+                .setDescription("A badge que será atribuida")
                 .addChoices(
                     { name: 'Tester', value: '0' },
                     { name: 'Debugger', value: '1' },

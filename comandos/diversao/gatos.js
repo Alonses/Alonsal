@@ -5,7 +5,7 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('cats')
+        .setName("cats")
         .setNameLocalizations({
             "pt-BR": 'gatos',
             "es-ES": 'gatos',
@@ -13,7 +13,7 @@ module.exports = {
             "it": 'gatti',
             "ru": 'кошки'
         })
-        .setDescription('⌠🐱⌡ Gatos!')
+        .setDescription("⌠🐱⌡ Gatos!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🐱⌡ Gatos!',
             "es-ES": '⌠🐱⌡ Gatos!',

@@ -4,8 +4,8 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('link')
-        .setDescription('⌠👤⌡ Connect your social networks to Alonsal')
+        .setName("link")
+        .setDescription("⌠👤⌡ Connect your social networks to Alonsal")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Link suas redes ao Alonsal',
             "es-ES": '⌠👤⌡ Conecta tus redes a Alonsal',
@@ -15,8 +15,8 @@ module.exports = {
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('steam')
-                .setDescription('⌠👤⌡ Link to Steam')
+                .setName("steam")
+                .setDescription("⌠👤⌡ Link to Steam")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Steam',
                     "es-ES": '⌠👤⌡ Enlace a Steam',
@@ -44,8 +44,8 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('lastfm')
-                .setDescription('⌠👤⌡ Link to LastFM')
+                .setName("lastfm")
+                .setDescription("⌠👤⌡ Link to LastFM")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao LastFM',
                     "es-ES": '⌠👤⌡ Enlace a LastFM',
@@ -73,8 +73,8 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('pula')
-                .setDescription('⌠👤⌡ Link to Pula Prédios')
+                .setName("pula")
+                .setDescription("⌠👤⌡ Link to Pula Prédios")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Linkar ao Pula Prédios',
                     "es-ES": '⌠👤⌡ Enlace a Pula Prédios',
@@ -96,8 +96,8 @@ module.exports = {
 
         .addSubcommand(subcommand =>
             subcommand
-                .setName('locale')
-                .setDescription('⌠👤⌡ Set a location')
+                .setName("locale")
+                .setDescription("⌠👤⌡ Set a location")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Definir um local',
                     "es-ES": '⌠👤⌡ Establecer una ubicación',

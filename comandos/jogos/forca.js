@@ -19,8 +19,8 @@ const padrao = {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('forca')
-        .setDescription('⌠🎲|🇧🇷⌡ O jogo da forca!')
+        .setName("forca")
+        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!")
         .addStringOption(option =>
             option.setName("entrada")
                 .setDescription("Uma letra ou a palavra inteira!")),

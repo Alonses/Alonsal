@@ -2,8 +2,8 @@ const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('baidu')
-        .setDescription('⌠😂⌡ Praise be!')
+        .setName("baidu")
+        .setDescription("⌠😂⌡ Praise be!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Louvado seja!',
             "es-ES": '⌠😂⌡ ¡Alabado seas!',

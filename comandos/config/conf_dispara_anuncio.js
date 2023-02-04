@@ -7,8 +7,8 @@ const dispara_anuncio = require('../../adm/automaticos/dispara_anuncio')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_dispara_anuncio')
-        .setDescription('⌠🤖⌡ Dispara o anúncio de games manualmente')
+        .setName("c_dispara_anuncio")
+        .setDescription("⌠🤖⌡ Dispara o anúncio de games manualmente")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 

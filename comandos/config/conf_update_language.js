@@ -8,8 +8,8 @@ const fs = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_update_language')
-        .setDescription('⌠🤖⌡ Atualizar as traduções do bot manualmente')
+        .setName("c_update_language")
+        .setDescription("⌠🤖⌡ Atualizar as traduções do bot manualmente")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 

@@ -4,8 +4,8 @@ const { readdirSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('faustop')
-        .setDescription('⌠😂⌡ Faustão\'s phrases')
+        .setName("faustop")
+        .setDescription("⌠😂⌡ Faustão\'s phrases")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Frases do faustão',
             "es-ES": '⌠😂⌡ Las frases de Faustão',

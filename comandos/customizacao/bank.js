@@ -4,7 +4,7 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('bank')
+        .setName("bank")
         .setNameLocalizations({
             "pt-BR": 'banco',
             "es-ES": 'banco',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'banca',
             "ru": 'банк'
         })
-        .setDescription('⌠💸⌡ See your Bufunfas')
+        .setDescription("⌠💸⌡ See your Bufunfas")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💸⌡ Veja suas Bufunfas',
             "es-ES": '⌠💸⌡ Mira a tus Bufunfas',
@@ -21,7 +21,7 @@ module.exports = {
             "ru": '⌠💸⌡ посмотреть свой Bufunfa'
         })
         .addUserOption(option =>
-            option.setName('user')
+            option.setName("user")
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
@@ -29,7 +29,7 @@ module.exports = {
                     "it": 'utente',
                     "ru": 'пользователь'
                 })
-                .setDescription('View another user\'s bank')
+                .setDescription("View another user\'s bank")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Visualizar o banco de outro usuário',
                     "es-ES": 'Ver el banco de otro usuario',

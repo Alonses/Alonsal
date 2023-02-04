@@ -2,18 +2,18 @@ const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionF
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_mail')
-        .setDescription('⌠🤖⌡ Enviar mensagem em canal especifico')
+        .setName("c_mail")
+        .setDescription("⌠🤖⌡ Enviar mensagem em canal especifico")
         .addStringOption(option =>
-            option.setName('texto')
+            option.setName("texto")
                 .setDescription("O texto a ser enviado")
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('canal')
+            option.setName("canal")
                 .setDescription("O canal alvo")
                 .setRequired(true))
         .addAttachmentOption(option =>
-            option.setName('imagem')
+            option.setName("imagem")
                 .setDescription("A imagem que será usada"))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {

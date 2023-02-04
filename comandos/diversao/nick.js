@@ -2,13 +2,13 @@ const { SlashCommandBuilder, PermissionsBitField } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('nickname')
+        .setName("nickname")
         .setNameLocalizations({
             "pt-BR": 'apelido',
             "es-ES": 'apellido',
             "ru": 'прозвище'
         })
-        .setDescription('⌠😂⌡ Shuffles your nickname!')
+        .setDescription("⌠😂⌡ Shuffles your nickname!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Embaralha seu apelido!',
             "es-ES": '⌠😂⌡ Mezcla tu apodo!',

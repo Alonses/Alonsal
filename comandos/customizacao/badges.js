@@ -4,8 +4,8 @@ const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('badges')
-        .setDescription('⌠👤⌡ See your badges')
+        .setName("badges")
+        .setDescription("⌠👤⌡ See your badges")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja suas badges',
             "es-ES": '⌠👤⌡ Ver tus insignias',

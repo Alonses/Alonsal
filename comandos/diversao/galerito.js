@@ -3,8 +3,8 @@ const { gifs } = require("../../arquivos/json/gifs/briga.json")
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('galerito')
-		.setDescription('⌠😂⌡ Random gifs of rogéria')
+		.setName("galerito")
+		.setDescription("⌠😂⌡ Random gifs of rogéria")
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Gifs aleatórios da rogéria',
 			"es-ES": '⌠😂⌡ Gifs aleatorios de rogéria',
