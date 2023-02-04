@@ -47,7 +47,12 @@ class CeiraClient {
 
             clientId: clientId,
             token: token,
-        }
+        },
+            this.stats = {
+                commands: 0,
+                private: 0,
+                inputs: 0
+            }
     }
 
     id() {

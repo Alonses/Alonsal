@@ -66,7 +66,27 @@ function dispara_status(client, status_apisal) {
                 client.guilds().forEach(async guild => {
                     members += guild.memberCount - 1
                 })
-                let bandeira_idiomas = client.idioma.listAll()
+
+                let bandeira_idiomas = client.idioma.listAll().split(" ")
+                let counter = 0, bandeirolas_1 = [], bandeirolas_2 = []
+
+                for (let i = 0; i < bandeira_idiomas.length; i++) {
+
+                    if (counter < 4)
+                        bandeirolas_1.push(bandeira_idiomas[i])
+                    else
+                        bandeirolas_2.push(bandeira_idiomas[i])
+
+                    if (counter == 4)
+                        bandeirolas_1.push("\n")
+
+                    if (i % 7 == 0) {
+                        counter = 0
+                        bandeirolas_2.push("\n")
+                    }
+
+                    counter++
+                }
 
                 const embed = new EmbedBuilder()
                     .setTitle(':steam_locomotive: Caldeiras aquecidas')
@@ -74,25 +94,37 @@ function dispara_status(client, status_apisal) {
                     .addFields(
                         {
                             name: ':globe_with_meridians: **Servidores**',
-                            value: `**Ativo em: **\`${client.guilds().size}\``,
+                            value: `:heart_on_fire: **Ativo: **\`${client.guilds().size}\`\n:card_box: **Canais: **\`${canais_texto.toLocaleString('pt-BR')}\`\n:busts_in_silhouette: **Usuários: **\`${members.toLocaleString('pt-BR')}\``,
                             inline: true
                         },
                         {
-                            name: ':card_box: **Canais**',
-                            value: `**Observando: **\`${canais_texto.toLocaleString('pt-BR')}\``,
+                            name: `⠀`,
+                            value: `⠀`,
                             inline: true
                         },
                         {
-                            name: ':busts_in_silhouette: **Usuários**',
-                            value: `**Escutando: **\`${members.toLocaleString('pt-BR')}\``,
+                            name: `:white_small_square: **Versão ${process.env.version}**`,
+                            value: `⠀`,
+                            inline: true
+                        },
+                    )
+                    .addFields(
+                        {
+                            name: ':moyai: **APISAL**',
+                            value: `\`${status_apisal}\``,
+                            inline: true
+                        },
+                        {
+                            name: ':earth_americas: **Idiomas**',
+                            value: bandeirolas_1.join(" "),
+                            inline: true
+                        },
+                        {
+                            name: `💠 ${commit_language}`,
+                            value: bandeirolas_2.join(" "),
                             inline: true
                         }
                     )
-                    .addFields(
-                        { name: ':white_small_square: **Versão**', value: `\`${process.env.version}\``, inline: true },
-                        { name: ':earth_americas: **Idiomas**', value: `\`💠 ${commit_language}\`${bandeira_idiomas}`, inline: true },
-                        { name: ':moyai: **APISAL**', value: `\`${status_apisal}\``, inline: true })
-                    .setFooter({ text: client.user().username, iconURL: client.user().avatarURL({ dynamic: true }) })
 
                 client.notify(process.env.status_channel, embed) // Avisa que está online em um canal
             })

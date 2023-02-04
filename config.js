@@ -67,6 +67,14 @@ function config(client) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`)
             client.discord.commands.set(command.data.name, command)
+
+            // Computando a quantidade de comandos
+            if (command.data.name.startsWith("c_"))
+                client.stats.private++
+            else
+                client.stats.commands++
+
+            client.stats.inputs += command.data.options.length
         }
     }
 }
