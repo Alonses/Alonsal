@@ -8,24 +8,26 @@ const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.js
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('mine')
-        .setDescription('⌠💡⌡ Search Minecraft items')
+        .setName("mine")
+        .setDescription("⌠💡⌡ Search Minecraft items")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise itens do Minecraft',
             "es-ES": '⌠💡⌡ Buscar elementos de Minecraft',
             "fr": '⌠💡⌡ Rechercher des articles Minecraft',
-            "it": '⌠💡⌡ Cerca oggetti Minecraft'
+            "it": '⌠💡⌡ Cerca oggetti Minecraft',
+            "ru": '⌠💡⌡ Найди предметы в майнкрафте'
         })
         .addStringOption(option =>
-            option.setName('item')
-                .setDescription('Insert an item')
+            option.setName("item")
+                .setDescription("Insert an item")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Insira um item',
                     "es-ES": 'Insertar un artículo',
                     "fr": 'Insérer un élément',
-                    "it": 'Inserire un elemento'
+                    "it": 'Inserire un elemento',
+                    "ru": 'поиск элемента'
                 })),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         let url_pesquisa = `?idioma=${idioma_definido}`, nota_rodape = ' '
@@ -39,34 +41,34 @@ module.exports = {
             .then(async dados_item => {
 
                 if (dados_item.status == 502)
-                    return client.tls.reply(client, interaction, "util.minecraft.error_1", true, 0)
+                    return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
 
                 if (dados_item.status == 404)
-                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.minecraft.nao_encontrado")} \`${interaction.options.data[0].value}\`, ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.minecraft.nao_encontrado")} \`${interaction.options.data[0].value}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
 
                 let nome_item = dados_item.internal_name
                 descricao_tipo = nome_item
 
-                let colet_suv = client.tls.phrase(client, interaction, "util.minecraft.sim")
-                let empilhavel = `${client.tls.phrase(client, interaction, "util.minecraft.ate")} ${dados_item.stats.stackable}`
-                let renovavel = client.tls.phrase(client, interaction, "util.minecraft.sim")
+                let colet_suv = client.tls.phrase(user, "util.minecraft.sim")
+                let empilhavel = `${client.tls.phrase(user, "util.minecraft.ate")} ${dados_item.stats.stackable}`
+                let renovavel = client.tls.phrase(user, "util.minecraft.sim")
 
                 let tipo_item = dados_item.stats.type
 
                 if (dados_item.stats.type === "construcao")
-                    tipo_item = client.tls.phrase(client, interaction, "util.minecraft.construcao")
+                    tipo_item = client.tls.phrase(user, "util.minecraft.construcao")
 
                 if (dados_item.type === "pocoes")
-                    tipo_item = client.tls.phrase(client, interaction, "util.minecraft.pocoes")
+                    tipo_item = client.tls.phrase(user, "util.minecraft.pocoes")
 
                 if (dados_item.stats.renewable === 0)
-                    renovavel = client.tls.phrase(client, interaction, "util.minecraft.nao")
+                    renovavel = client.tls.phrase(user, "util.minecraft.nao")
 
                 if (dados_item.stats.stackable === 0)
-                    empilhavel = client.tls.phrase(client, interaction, "util.minecraft.nao")
+                    empilhavel = client.tls.phrase(user, "util.minecraft.nao")
 
                 if (dados_item.stats.collectable === 0)
-                    colet_suv = client.tls.phrase(client, interaction, "util.minecraft.nao")
+                    colet_suv = client.tls.phrase(user, "util.minecraft.nao")
 
                 let fields = { name: "⠀", value: "⠀" }
                 let valores_item = ''
@@ -86,10 +88,10 @@ module.exports = {
                             if (alvo_json.includes(":"))
                                 alvo_json = alvo_json.split(":")[0]
 
-                            nome_item += ` of ${client.tls.phrase(client, interaction, `util.minecraft.detalhes.${alvo_json}`)}`
+                            nome_item += ` of ${client.tls.phrase(user, `util.minecraft.detalhes.${alvo_json}`)}`
                         }
 
-                        traducao_alvo = client.tls.phrase(client, interaction, `util.minecraft.detalhes.${alvo_json}`)
+                        traducao_alvo = client.tls.phrase(user, `util.minecraft.detalhes.${alvo_json}`)
                         valores_item = valores_item.replaceAll(alvo, traducao_alvo)
                     }
 
@@ -97,12 +99,10 @@ module.exports = {
                 }
 
                 if ((parseFloat((dados_item.stats.version)) - 1) * 100 > 19)
-                    nota_rodape = client.tls.phrase(client, interaction, "util.minecraft.nota_rodape")
+                    nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")
 
                 if (nota_rodape.includes("item_repl"))
                     nota_rodape = nota_rodape.replace("item_repl", pesquisa)
-
-                const user = await client.getUser(interaction.user.id)
 
                 const embed = new EmbedBuilder()
                     .setTitle(dados_item.name)
@@ -110,34 +110,34 @@ module.exports = {
                     .setImage(dados_item.icon)
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.mc_coracao)}** ${client.tls.phrase(client, interaction, "util.minecraft.coletavel")}**`,
+                            name: `${client.emoji(emojis.mc_coracao)}** ${client.tls.phrase(user, "util.minecraft.coletavel")}**`,
                             value: `\`${colet_suv}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_bamboo_sign)} **${client.tls.phrase(client, interaction, "util.minecraft.tipo")}**`,
+                            name: `${client.emoji(emojis.mc_bamboo_sign)} **${client.tls.phrase(user, "util.minecraft.tipo")}**`,
                             value: `\`${tipo_item}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_goat_copper_horn)} **${client.tls.phrase(client, interaction, "util.minecraft.versao_add")}**`,
+                            name: `${client.emoji(emojis.mc_goat_copper_horn)} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
                             value: `\`${dados_item.stats.version}\``,
                             inline: true
                         }
                     )
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.mc_chest)} **${client.tls.phrase(client, interaction, "util.minecraft.empilhavel")}**`,
+                            name: `${client.emoji(emojis.mc_chest)} **${client.tls.phrase(user, "util.minecraft.empilhavel")}**`,
                             value: `\`${empilhavel}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_cornflower)} **${client.tls.phrase(client, interaction, "util.minecraft.renovavel")}**`,
+                            name: `${client.emoji(emojis.mc_cornflower)} **${client.tls.phrase(user, "util.minecraft.renovavel")}**`,
                             value: `\`${renovavel}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_name_tag)} **${client.tls.phrase(client, interaction, "util.minecraft.nome_interno")}**`,
+                            name: `${client.emoji(emojis.mc_name_tag)} **${client.tls.phrase(user, "util.minecraft.nome_interno")}**`,
                             value: `**\`minecraft:${dados_item.internal_name}\`**`,
                             inline: true
                         }, fields
@@ -164,7 +164,7 @@ module.exports = {
 
                     let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_wiki.replaceAll(" ", "_")}`
 
-                    link_artigo = `${client.tls.phrase(client, interaction, "util.minecraft.mais_detalhes_wiki").replace("link_repl", link_artigo)}`
+                    link_artigo = `${client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki").replace("link_repl", link_artigo)}`
 
                     embed.addFields(
                         {
@@ -175,7 +175,7 @@ module.exports = {
                     )
                 }
 
-                return interaction.reply({ embeds: [embed], ephemeral: true })
+                return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
     }
 }

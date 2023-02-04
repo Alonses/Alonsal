@@ -4,38 +4,42 @@ const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('color')
+        .setName("color")
         .setNameLocalizations({
             "pt-BR": 'color',
             "es-ES": 'color',
             "fr": 'couleur',
-            "it": 'colore'
+            "it": 'colore',
+            "ru": 'цвет'
         })
-        .setDescription('⌠🎉⌡ Change your color')
+        .setDescription("⌠🎉⌡ Change your color")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎉⌡ Altere sua cor',
             "es-ES": '⌠🎉⌡ Cambia tu color',
             "fr": '⌠🎉⌡ Change ta couleur',
-            "it": '⌠🎉⌡ Cambia colore'
+            "it": '⌠🎉⌡ Cambia colore',
+            "ru": '⌠🎉⌡ Измени свой цвет'
         })
         .addSubcommand(subcommand =>
             subcommand
-                .setName('static')
-                .setDescription('⌠🎉⌡ Pre-defined colors')
+                .setName("static")
+                .setDescription("⌠🎉⌡ Pre-defined colors")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠🎉⌡ Cores pré-definidas',
                     "es-ES": '⌠🎉⌡ Colores preestablecidos',
                     "fr": '⌠🎉⌡ Couleurs prédéfinies',
-                    "it": '⌠🎉⌡ Colori preimpostati'
+                    "it": '⌠🎉⌡ Colori preimpostati',
+                    "ru": '⌠🎉⌡ Предопределенные цвета'
                 })
                 .addStringOption(option =>
-                    option.setName('color')
-                        .setDescription('Change your profile color')
+                    option.setName("color")
+                        .setDescription("Change your profile color")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Alterar a cor do seu perfil',
                             "es-ES": 'Cambia el color de tu perfil',
                             "fr": 'Changer la couleur de votre profil',
-                            "it": 'Cambia il colore del tuo profilo'
+                            "it": 'Cambia il colore del tuo profilo',
+                            "ru": 'Изменить цвет профиля'
                         })
                         .addChoices(
                             { name: 'Blue B$200', value: '0.0' },
@@ -53,20 +57,21 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('custom')
-                .setDescription('⌠🎉⌡ Choose your color!')
+                .setName("custom")
+                .setDescription("⌠🎉⌡ Choose your color!")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠🎉⌡ Escolha sua cor!',
                     "es-ES": '⌠🎉⌡ ¡Elige tu color!',
                     "fr": '⌠🎉⌡ Choisissez votre couleur!',
-                    "it": '⌠🎉⌡ Scegli il tuo colore!'
+                    "it": '⌠🎉⌡ Scegli il tuo colore!',
+                    "ru": '⌠🎉⌡ Выбери свой цвет!'
                 })
                 .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true))
                 .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true))
                 .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true))),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id), colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
+        const colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
         let entrada = "", new_color
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
@@ -75,7 +80,7 @@ module.exports = {
             entrada = interaction.options.data[0].options[0].value
 
             if (user.misc.color === colors[entrada.split(".")[1]])
-                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(client, interaction, "misc.color.cor_ativa")}`, ephemeral: true })
+                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(user, "misc.color.cor_ativa")}`, ephemeral: true })
         } else { // Cor customizada
 
             const rgb = {
@@ -102,13 +107,13 @@ module.exports = {
             })
 
             if (valor_invalido)
-                return interaction.reply({ content: client.tls.phrase(client, interaction, "misc.color.error"), ephemeral: true })
+                return interaction.reply({ content: client.tls.phrase(user, "misc.color.error"), ephemeral: true })
 
             // Convertendo do RGB para HEX
             new_color = rgbToHex(rgb.r, rgb.g, rgb.b)
 
             if (user.misc.color === new_color)
-                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(client, interaction, "misc.color.cor_ativa")}`, ephemeral: true })
+                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(user, "misc.color.cor_ativa")}`, ephemeral: true })
         }
 
         let cor_demonstracao = entrada.split(".")[1] === "10" ? alea_hex() : colors[entrada.split(".")[1]]
@@ -121,15 +126,15 @@ module.exports = {
         }
 
         if (entrada.split(".")[1] === 10)
-            nota_cor_aleatoria = `\n:rainbow: ${client.tls.phrase(client, interaction, "misc.color.rand_color")}`
+            nota_cor_aleatoria = `\n:rainbow: ${client.tls.phrase(user, "misc.color.rand_color")}`
 
         // Enviando o embed para validação
         const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(client, interaction, "misc.color.titulo"))
-            .setDescription(`\`\`\`${client.tls.phrase(client, interaction, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
+            .setTitle(client.tls.phrase(user, "misc.color.titulo"))
+            .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
             .setColor(cor_demonstracao)
             .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
-            .setFooter({ text: client.tls.phrase(client, interaction, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para a cor customizada
         const row = create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)

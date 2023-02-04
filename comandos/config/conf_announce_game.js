@@ -4,36 +4,36 @@ const dispara_anuncio = require('../../adm/automaticos/dispara_anuncio.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_anunciar')
-        .setDescription('⌠🤖⌡ Anúnciar games/dlcs free')
+        .setName("c_anunciar")
+        .setDescription("⌠🤖⌡ Anúnciar games/dlcs free")
         .addStringOption(option =>
-            option.setName('nome')
-                .setDescription('O nome do conteúdo')
+            option.setName("nome")
+                .setDescription("O nome do conteúdo")
                 .setRequired(true))
         .addNumberOption(option =>
-            option.setName('preço')
-                .setDescription('O preço do conteúdo')
+            option.setName("preço")
+                .setDescription("O preço do conteúdo")
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('expiração')
-                .setDescription('A data limite da promoção')
+            option.setName("expiração")
+                .setDescription("A data limite da promoção")
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('link')
-                .setDescription('O link do conteúdo')
+            option.setName("link")
+                .setDescription("O link do conteúdo")
                 .setRequired(true))
         .addAttachmentOption(option =>
-            option.setName('imagem')
+            option.setName("imagem")
                 .setDescription("A imagem que será exibida"))
         .addStringOption(option =>
-            option.setName('tipo')
-                .setDescription('O tipo do conteudo')
+            option.setName("tipo")
+                .setDescription("O tipo do conteudo")
                 .addChoices(
                     { name: 'Jogo', value: 'jogo' },
                     { name: 'DLC/Expansão', value: 'dlc' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0]) return
 

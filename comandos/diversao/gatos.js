@@ -5,26 +5,28 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('cats')
+        .setName("cats")
         .setNameLocalizations({
-            "pt-BR": "gatos",
+            "pt-BR": 'gatos',
             "es-ES": 'gatos',
             "fr": 'chats',
-            "it": 'gatti'
+            "it": 'gatti',
+            "ru": 'кошки'
         })
-        .setDescription('⌠🐱⌡ Gatos!')
+        .setDescription("⌠🐱⌡ Gatos!")
         .setDescriptionLocalizations({
-            "pt-BR": "⌠🐱⌡ Gatos!",
+            "pt-BR": '⌠🐱⌡ Gatos!',
             "es-ES": '⌠🐱⌡ Gatos!',
             "fr": '⌠🐱⌡ Chats!',
-            "it": '⌠🐱⌡ Gatti!'
+            "it": '⌠🐱⌡ Gatti!',
+            "ru": '⌠🐱⌡ кошки!'
         }),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         fetch(`https://api.thecatapi.com/v1/images/search?api_key=${process.env.catapi}`)
             .then(res => res.json())
             .then(res => {
-                interaction.reply(res[0].url)
+                interaction.reply({ content: res[0].url, ephemeral: user.misc.ghost_mode })
             })
     }
 }

@@ -7,56 +7,57 @@ const { gifs } = require('../../arquivos/json/gifs/cazalbe.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cazalbe')
-		.setDescription('⌠😂⌡ Cazalbe King of Prasody')
+		.setName("cazalbe")
+		.setDescription("⌠😂⌡ Cazalbe King of Prasody")
 		.setDescriptionLocalizations({
 			"pt-BR": '⌠😂⌡ Cazalbe rei da prassódia',
 			"fr": '⌠😂⌡ Cazalbe roi de la prasodie',
-			"it": '⌠😂⌡ Cazalbe re della prasodia'
+			"it": '⌠😂⌡ Cazalbe re della prasodia',
+			"ru": '⌠😂⌡ Cazalbe король прасодии'
 		})
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('gif')
-				.setDescription('⌠😂⌡ Summons a gif of cazalbe')
+				.setName("gif")
+				.setDescription("⌠😂⌡ Summons a gif of cazalbe")
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
 					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
 					"fr": '⌠😂⌡ Invoque un gif de cazalbe',
-					"it": '⌠😂⌡ Evoca una gif di cazalbe'
+					"it": '⌠😂⌡ Evoca una gif di cazalbe',
+					"ru": '⌠😂⌡ отправить cazalbe gif'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('laugh')
+				.setName("laugh")
 				.setNameLocalizations({
 					"pt-BR": 'risada',
 					"es-ES": 'risa',
 					"fr": 'rire',
-					"it": 'risata'
+					"it": 'risata',
+					"ru": 'смех'
 				})
-				.setDescription('⌠😂⌡ The cazalbe laugh')
+				.setDescription("⌠😂⌡ The cazalbe laugh")
 				.setDescriptionLocalizations({
 					"pt-BR": '⌠😂⌡ A risada do cazalbe',
 					"es-ES": '⌠😂⌡ La risa del cazalbe',
 					"fr": '⌠😂⌡ Le rire cazalbe',
-					"it": '⌠😂⌡ La risata di Cazalbe'
+					"it": '⌠😂⌡ La risata di Cazalbe',
+					"ru": '⌠😂⌡ Cazalbe cмех'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('piada')
-				.setDescription('⌠😂|🇧🇷⌡ Conta uma piada')),
-	async execute(client, interaction) {
+				.setName("piada")
+				.setDescription("⌠😂|🇧🇷⌡ Conta uma piada")),
+	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			return interaction.reply(gifs[Math.round((gifs.length - 1) * Math.random())])
+			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
 		else if (interaction.options.getSubcommand() === "laugh") {
 			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.ogg')
-			return interaction.reply({ files: [file] })
+			return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
 		} else {
 
 			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
-
-			const user = await client.getUser(interaction.user.id)
-			await interaction.deferReply()
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
 				.then(response => response.json())
@@ -68,7 +69,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`${res.question}\n${res.answer}`)
 
-					interaction.editReply({ embeds: [embed] })
+					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
 				})
 		}
 	}

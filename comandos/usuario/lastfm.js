@@ -4,39 +4,41 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const formata_texto = require('../../adm/formatadores/formata_texto')
-const regula_porcentagem = require('../../adm/funcoes/regula_porcentagem')
 
 let horas_tocadas, horas_passadas
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('lastfm')
-        .setDescription('⌠👤⌡ Someone\'s Profile on LastFM')
+        .setName("lastfm")
+        .setDescription("⌠👤⌡ Someone's Profile on LastFM")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
             "es-ES": '⌠👤⌡ Perfil de alguien en LastFM',
             "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM',
-            "it": '⌠👤⌡ Profilo di qualcuno su LastFM'
+            "it": '⌠👤⌡ Profilo di qualcuno su LastFM',
+            "ru": '⌠👤⌡ Посмотреть чей-то профиль на LastFM'
         })
         .addStringOption(option =>
-            option.setName('url')
-                .setDescription('The username')
+            option.setName("url")
+                .setDescription("The username")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
                     "fr": 'Nom de profil',
-                    "it": 'il nome utente'
+                    "it": 'il nome utente',
+                    "ru": 'Имя пользователя'
                 }))
         .addUserOption(option =>
-            option.setName('user')
-                .setDescription('A discord user')
+            option.setName("user")
+                .setDescription("A discord user")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',
                     "fr": 'Un utilisateur de discord',
-                    "it": 'Un utente della discord'
+                    "it": 'Un utente della discord',
+                    "ru": 'Дискорд-пользователь'
                 })),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         let idioma_definido = client.idioma.getLang(interaction), texto_entrada = ""
         idioma_definido = idioma_definido === "al-br" ? "pt-br" : idioma_definido
@@ -60,15 +62,16 @@ module.exports = {
             texto_entrada = params.url
 
         alvo = interaction.options.getUser('user') || interaction.user
-        const user = await client.getUser(alvo.id)
+        const user_alvo = await client.getUser(alvo.id)
+
+        // user_alvo -> usuário marcado pelo comando
+        // user -> usuário que disparou o comando
 
         if (!texto_entrada) // Verificando se o usuário possui link com a steam
-            if (!user.social || !user.social.lastfm)
-                return client.tls.reply(client, interaction, "util.lastfm.sem_link", true, 1)
+            if (!user_alvo.social || !user_alvo.social.lastfm)
+                return client.tls.reply(interaction, user, "util.lastfm.sem_link", true, 1)
             else
-                texto_entrada = user.social.lastfm
-
-        await interaction.deferReply()
+                texto_entrada = user_alvo.social.lastfm
 
         try {
             const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
@@ -79,7 +82,7 @@ module.exports = {
                 .then(async res => {
 
                     if (res.includes("Página não encontrada"))
-                        return interaction.editReply(client.tls.phrase(client, interaction, "util.lastfm.error_1"))
+                        return interaction.reply(client.tls.phrase(user, "util.lastfm.error_1"))
 
                     let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
@@ -100,7 +103,7 @@ module.exports = {
                             musica_obsessao = formata_texto(obsessao.split("</a>")[0].split(">")[1])
                             artista_obsessao = formata_texto(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
 
-                            obsessao = `💿 ${client.tls.phrase(client, interaction, "util.lastfm.obsessao")}\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
+                            obsessao = `💿 ${client.tls.phrase(user, "util.lastfm.obsessao")}\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
                         }
 
                         if (res.includes("modal?action=scrobbling-now-theirs\"")) {
@@ -108,7 +111,7 @@ module.exports = {
 
                             musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] === "unloved" ? "🖤 " : "💙 "
 
-                            obsessao += `🎶 ${client.tls.phrase(client, interaction, "util.lastfm.em_scrobble")}: \n${musica_curtida}${scrobble_atual}`
+                            obsessao += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}: \n${musica_curtida}${scrobble_atual}`
                         }
 
                         if (obsessao !== "")
@@ -162,7 +165,7 @@ module.exports = {
 
                                         tempo_reproducao_passada = semanal.split("class=\"listening-report-highlight-comparison\">")[3].split(" (semana passada)")[0].split("vs. ")[1].trim()
 
-                                        indicador_tempo = regula_porcentagem(tempo_reproducao, tempo_reproducao_passada, 1, client, interaction)
+                                        indicador_tempo = regula_porcentagem(tempo_reproducao, tempo_reproducao_passada, 1, client, user)
                                     }
 
                                     // Álbuns
@@ -187,23 +190,23 @@ module.exports = {
                                 }
 
                                 const embed = new EmbedBuilder()
-                                    .setTitle(client.tls.phrase(client, interaction, "util.lastfm.perfil_musical").replace("nome_repl", nome))
+                                    .setTitle(client.tls.phrase(user, "util.lastfm.perfil_musical").replace("nome_repl", nome))
                                     .setThumbnail(avatar)
                                     .setURL(usuario_alvo)
-                                    .setColor(client.embed_color(user.misc.color))
+                                    .setColor(client.embed_color(user_alvo.misc.color))
                                     .addFields(
                                         {
-                                            name: `:saxophone: ${client.tls.phrase(client, interaction, "util.lastfm.geral")}`,
-                                            value: `:notes: **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **${client.tls.phrase(client, interaction, "util.lastfm.media_dia")}: **\`${media_scrobbles}\``,
+                                            name: `:saxophone: ${client.tls.phrase(user, "util.lastfm.geral")}`,
+                                            value: `:notes: **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_scrobbles}\``,
                                             inline: true
                                         },
                                         {
                                             name: `⠀`,
-                                            value: `:man_singer: **${client.tls.phrase(client, interaction, "util.lastfm.artistas")}: **\`${artistas_ouvidos}\`\n:blue_heart: **${client.tls.phrase(client, interaction, "util.lastfm.faixas_favoritas")}: **\`${faixas_preferidas}\``,
+                                            value: `:man_singer: **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_ouvidos}\`\n:blue_heart: **${client.tls.phrase(user, "util.lastfm.faixas_favoritas")}: **\`${faixas_preferidas}\``,
                                             inline: true
                                         },
                                         {
-                                            name: `:birthday: ${client.tls.phrase(client, interaction, "util.user.conta_criada")}`,
+                                            name: `:birthday: ${client.tls.phrase(user, "util.user.conta_criada")}`,
                                             value: `**${criacao_conta}**`,
                                             inline: true
                                         }
@@ -215,19 +218,46 @@ module.exports = {
                                 if (!semanal.includes("não ouviu nenhuma música :("))
                                     embed.addFields(
                                         {
-                                            name: `:calendar: ${client.tls.phrase(client, interaction, "util.lastfm.semanal")}`,
-                                            value: `:blue_book: **${client.tls.phrase(client, interaction, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n:man_singer: **${client.tls.phrase(client, interaction, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(client, interaction, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n:alarm_clock: **${client.tls.phrase(client, interaction, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
+                                            name: `:calendar: ${client.tls.phrase(user, "util.lastfm.semanal")}`,
+                                            value: `:blue_book: **${client.tls.phrase(user, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n:man_singer: **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n:alarm_clock: **${client.tls.phrase(user, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
                                             inline: false
                                         }
                                     )
 
-                                interaction.editReply({ embeds: [embed] })
+                                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
                             })
                     } else
-                        client.tls.editReply(client, interaction, "util.lastfm.sem_scrobbles")
+                        client.tls.reply(interaction, user, "util.lastfm.sem_scrobbles", user.misc.ghost_mode, 1)
                 })
         } catch (err) {
             console.log(err)
         }
     }
+}
+
+function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
+
+    if (hora) { // Formatando a hora para números inteiros
+        stats_semana = parseInt(stats_semana.split(" horas")[0])
+        stats_passado = parseInt(stats_passado.split(" horas")[0])
+
+        if (stats_semana !== 1)
+            horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.horas")}`
+        else
+            horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.hora")}`
+
+        if (stats_passado !== 1)
+            horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.horas")}`
+        else
+            horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.hora")}`
+    }
+
+    porcentagem = (100 * stats_semana) / stats_passado
+
+    if (stats_semana < stats_passado)
+        porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
+    else
+        porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
+
+    return porcentagem
 }

@@ -4,67 +4,71 @@ const morse = require('../../arquivos/json/text/morse.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('morse')
-        .setDescription('⌠💡⌡ (De)code from/to morse')
+        .setName("morse")
+        .setDescription("⌠💡⌡ (De)code from/to morse")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
             "fr": '⌠💡⌡ (Dé)coder de/vers morse',
-            "it": '⌠💡⌡ (Da) codice da/per morse'
+            "it": '⌠💡⌡ (Da) codice da/per morse',
+            "ru": '⌠💡⌡ (Де)код в/из азбуки Морзе'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
-            option.setName('reverse')
+            option.setName("reverse")
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
                     "fr": 'inverse',
                     "it": 'inversione'
                 })
-                .setDescription('Invert output result')
+                .setDescription("Invert output result")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
                     "fr": 'Inverser le résultat de sortie',
-                    "it": 'invertire il risultato di output'
+                    "it": 'invertire il risultato di output',
+                    "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
-            option.setName('operation')
+            option.setName("operation")
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',
                     "fr": 'operation',
-                    "it": 'operazione'
+                    "it": 'operazione',
+                    "ru": 'операция'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Forçar uma operação',
                     "es-ES": 'Forzar una operación',
                     "fr": 'Forcer une opération',
-                    "it": 'forzare un\'operazione'
+                    "it": 'forzare un\'operazione',
+                    "ru": 'форсировать операцию'
                 })
                 .addChoices(
                     { name: 'Encode', value: '0' },
                     { name: 'Decode', value: '1' }
                 )),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let entradas = interaction.options.data, aviso = ""
 
@@ -93,7 +97,7 @@ module.exports = {
                     texto[carac] = `${morse[texto[carac]]} `
                 else {
                     texto[carac] = ""
-                    aviso = client.tls.phrase(client, interaction, "util.morse.caracteres")
+                    aviso = client.tls.phrase(user, "util.morse.caracteres")
                 }
             }
         } else { // Decodificando
@@ -110,14 +114,14 @@ module.exports = {
 
         // Montando 
         let texto_ordenado = texto.join("")
-        let titulo = client.tls.phrase(client, interaction, "util.morse.codificado")
+        let titulo = client.tls.phrase(user, "util.morse.codificado")
 
         if (codificar.opera)
-            titulo = client.tls.phrase(client, interaction, "util.morse.decodificado")
+            titulo = client.tls.phrase(user, "util.morse.decodificado")
 
         if (texto_ordenado.length === 0) {
-            texto_ordenado = client.tls.phrase(client, interaction, "util.morse.carac_invalidos")
-            titulo = client.tls.phrase(client, interaction, "util.morse.error")
+            texto_ordenado = client.tls.phrase(user, "util.morse.carac_invalidos")
+            titulo = client.tls.phrase(user, "util.morse.error")
         }
 
         const embed = new EmbedBuilder()
@@ -129,9 +133,9 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter({ text: aviso })
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             .catch(() => {
-                client.tls.reply(client, interaction, "util.binario.error_1", true, 0)
+                client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
             })
     }
 }

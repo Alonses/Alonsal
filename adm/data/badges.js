@@ -46,7 +46,7 @@ async function buildAllBadges(client, interaction) {
         const name = badge_names[id]
         const emoji = client.emoji(badge_ids[id])
 
-        text += `${emoji} \`${name}\`, ${client.tls.phrase(client, interaction, "dive.badges.ganhou")} <t:${item.value}:f>\n`
+        text += `${emoji} \`${name}\`, ${client.tls.phrase(user, "dive.badges.ganhou")} <t:${item.value}:f>\n`
     })
 
     return text

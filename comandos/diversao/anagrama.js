@@ -2,39 +2,42 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('anagram')
+        .setName("anagram")
         .setNameLocalizations({
             "pt-BR": 'anagrama',
             "es-ES": 'anagrama',
             "fr": 'anagramme',
-            "it": 'anagramma'
+            "it": 'anagramma',
+            "ru": 'анаграмма'
         })
-        .setDescription('⌠😂⌡ Generates anagrams based on input')
+        .setDescription("⌠😂⌡ Generates anagrams based on input")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
             "es-ES": '⌠😂⌡ Genera anagramas basados ​​en la entrada',
             "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée',
-            "it": '⌠😂⌡ Genera anagrammi in base all\'input'
+            "it": '⌠😂⌡ Genera anagrammi in base all\'input',
+            "ru": '⌠😂⌡ Генерирует анаграммы на основе ввода'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        const user = await client.getUser(interaction.user.id)
         const texto_entrada = interaction.options.data[0].value
         let cor_embed = client.embed_color(user.misc.color)
 
@@ -67,7 +70,7 @@ module.exports = {
         const anagrama_formado = []
         let exib_formatado = "", qtd_quebras = []
         const repeticoes = result > 3 ? 3 : result
-        const combinacoes = result > 3 ? client.tls.phrase(client, interaction, "dive.anagrama.combinacoes") : client.tls.phrase(client, interaction, "dive.anagrama.combinacao")
+        const combinacoes = result > 3 ? client.tls.phrase(user, "dive.anagrama.combinacoes") : client.tls.phrase(user, "dive.anagrama.combinacao")
 
         for (let i = 0; i < repeticoes; i++) {
             anagrama_formado.push(await shuffleArray(fatori_fix).join(''))
@@ -80,16 +83,16 @@ module.exports = {
         }
 
         if (cor_embed === '0xfbff3d')
-            exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(client, interaction, "dive.anagrama.sorte")}_`
+            exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(user, "dive.anagrama.sorte")}_`
 
         const anagrama = new EmbedBuilder()
-            .setTitle(`:abc: ${client.tls.phrase(client, interaction, "dive.anagrama.anagrama")}`)
+            .setTitle(`:abc: ${client.tls.phrase(user, "dive.anagrama.anagrama")}`)
             .setColor(cor_embed)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setDescription(`${client.tls.phrase(client, interaction, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(client, interaction, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
-            .setFooter({ text: `${client.tls.phrase(client, interaction, "dive.anagrama.sequencia")} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
+            .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
+            .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
 
-        return interaction.reply({ embeds: [anagrama] })
+        return interaction.reply({ embeds: [anagrama], ephemeral: user.misc.ghost_mode })
     }
 }
 

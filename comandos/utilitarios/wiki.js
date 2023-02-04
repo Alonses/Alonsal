@@ -7,63 +7,68 @@ const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('wiki')
-        .setDescription('⌠💡⌡ Search for something on the wiki')
+        .setName("wiki")
+        .setDescription("⌠💡⌡ Search for something on the wiki")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
             "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki',
-            "it": '⌠💡⌡ Cerca qualcosa sul wiki'
+            "it": '⌠💡⌡ Cerca qualcosa sul wiki',
+            "ru": '⌠💡⌡ Ищите что-нибудь в вики'
         })
         .addStringOption(option =>
-            option.setName('search')
+            option.setName("search")
                 .setNameLocalizations({
                     "pt-BR": 'pesquisa',
                     "es-ES": 'busqueda',
                     "fr": 'chercher',
-                    "it": 'ricerca'
+                    "it": 'ricerca',
+                    "ru": 'поиск'
                 })
-                .setDescription('I\'m lucky')
+                .setDescription("I'm lucky")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
                     "es-ES": 'Estoy con suerte',
                     "fr": 'J\'ai de la chance',
-                    "it": 'Sono fortunato'
+                    "it": 'Sono fortunato',
+                    "ru": 'я удачлив'
                 })
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('language')
+            option.setName("language")
                 .setNameLocalizations({
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
                     "fr": 'langue',
-                    "it": 'linguaggio'
+                    "it": 'linguaggio',
+                    "ru": 'язык'
                 })
-                .setDescription('In which language?')
+                .setDescription("In which language?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Em qual idioma?',
                     "es-ES": '¿En qué idioma?',
                     "fr": 'Dans quelle langue?',
-                    "it": 'In quale lingua?'
+                    "it": 'In quale lingua?',
+                    "ru": 'На каком языке?'
                 })
                 .addChoices(
-                    { name: 'Portugues', value: 'pt-br' },
                     { name: 'English', value: 'en-us' },
                     { name: 'Español', value: 'es-es' },
                     { name: 'Français', value: 'fr-fr' },
-                    { name: 'Italiano', value: 'it-it' }
+                    { name: 'Italiano', value: 'it-it' },
+                    { name: 'Português', value: 'pt-br' },
+                    { name: 'Русский', value: 'ru-ru' }
                 )),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
-        let idioma_definido = client.idioma.getLang(interaction) === "al-br" ? "pt-br" : client.idioma.getLang(interaction)
-        const user = await client.getUser(interaction.user.id)
+        let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang
         const content = interaction.options.data[0].value
 
         if (interaction.options.data.length > 1)
             idioma_definido = interaction.options.data[1].value
 
         if (content.includes("slondo")) // Pesquisa por slondo
-            return client.tls.reply(client, interaction, "util.wiki.wiki_slondo")
+            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo")
 
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
@@ -76,7 +81,7 @@ module.exports = {
                 const fields = []
 
                 if (res.RelatedTopics.length > 0)
-                    fields.push({ name: `:books: ${client.tls.phrase(client, interaction, "util.wiki.topicos_rel")}`, value: "\u200B" })
+                    fields.push({ name: `:books: ${client.tls.phrase(user, "util.wiki.topicos_rel")}`, value: "\u200B" })
 
                 for (const topic of res.RelatedTopics) {
                     counter++
@@ -107,19 +112,19 @@ module.exports = {
                         .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setURL(res.AbstractURL)
 
-                    interaction.reply({ embeds: [Embed] })
+                    interaction.reply({ embeds: [Embed], ephemeral: user.misc.ghost_mode })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.auto_pesquisa")} :v`)
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`, ephemeral: user.misc.ghost_mode })
                     else
-                        interaction.reply(`${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`)
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: user.misc.ghost_mode })
                 }
             })
             .catch(() => {
-                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(client, interaction, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(client, interaction, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
             })
     }
 }

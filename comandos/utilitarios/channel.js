@@ -5,53 +5,54 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('cinfo')
-        .setDescription('⌠💡⌡ Show channel details')
+        .setName("channel")
+        .setDescription("⌠💡⌡ Show channel details")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
             "es-ES": '⌠💡⌡ Ver detalles del canal',
             "fr": '⌠💡⌡ Afficher les détails de la chaîne',
-            "it": '⌠💡⌡ Visualizza i dettagli del canale'
+            "it": '⌠💡⌡ Visualizza i dettagli del canale',
+            "ru": '⌠💡⌡ Подробнее о канале'
         })
         .addChannelOption(option =>
-            option.setName('channel')
+            option.setName("channel")
                 .setNameLocalizations({
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
                     "fr": 'chaîne',
-                    "it": 'canale'
+                    "it": 'canale',
+                    "ru": 'канал'
                 })
-                .setDescription('Mention a channel')
+                .setDescription("Mention a channel")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Marque um canal como alvo',
                     "es-ES": 'Mencionar un canal como objetivo',
                     "fr": 'Mentionner une chaîne',
-                    "it": 'Menzionare un canale'
+                    "it": 'Menzionare un canale',
+                    "ru": 'упомянуть канал'
                 })),
-    async execute(client, interaction) {
-
-        const user = await client.getUser(interaction.user.id)
+    async execute(client, user, interaction) {
 
         let canal = interaction.options.getChannel('channel') || interaction.channel
         // Coletando os dados do canal informado
 
-        let nsfw = client.tls.phrase(client, interaction, "util.minecraft.nao")
+        let nsfw = client.tls.phrase(user, "util.minecraft.nao")
         if (canal.nsfw)
-            nsfw = client.tls.phrase(client, interaction, "util.minecraft.sim")
+            nsfw = client.tls.phrase(user, "util.minecraft.sim")
 
         const data_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:f>` // Criação do canal
         const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
         let userlimit, bitrate = ""
 
-        let topico = `\`\`\`${canal.topic || client.tls.phrase(client, interaction, "util.canal.sem_topico")}\`\`\``
+        let topico = `\`\`\`${canal.topic || client.tls.phrase(user, "util.canal.sem_topico")}\`\`\``
 
         if (typeof canal.bitrate !== "undefined") {
-            topico = `\`\`\`🔊 ${client.tls.phrase(client, interaction, "util.canal.canal_voz")}\`\`\``
+            topico = `\`\`\`🔊 ${client.tls.phrase(user, "util.canal.canal_voz")}\`\`\``
 
             userlimit = canal.userLimit
 
             if (userlimit === 0)
-                userlimit = client.tls.phrase(client, interaction, "util.canal.sem_limites")
+                userlimit = client.tls.phrase(user, "util.canal.sem_limites")
 
             bitrate = `${canal.bitrate / 1000}kbps`
         }
@@ -70,12 +71,12 @@ module.exports = {
                     .setDescription(topico)
                     .addFields(
                         {
-                            name: `:globe_with_meridians: **${client.tls.phrase(client, interaction, "util.canal.id_canal")}**`,
+                            name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.id_canal")}**`,
                             value: `\`${canal.id}\``,
                             inline: true
                         },
                         {
-                            name: `:label: **${client.tls.phrase(client, interaction, "util.canal.mencao")}**`,
+                            name: `:label: **${client.tls.phrase(user, "util.canal.mencao")}**`,
                             value: `\`<#${canal.id}>\``,
                             inline: true
                         },
@@ -94,7 +95,7 @@ module.exports = {
 
                 infos_ch.addFields(
                     {
-                        name: `:birthday: ${client.tls.phrase(client, interaction, "util.server.criacao")}`,
+                        name: `:birthday: ${client.tls.phrase(user, "util.server.criacao")}`,
                         value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
                         inline: true
                     }
@@ -103,7 +104,7 @@ module.exports = {
                 if (typeof canal.bitrate !== "undefined")
                     infos_ch.addFields(
                         {
-                            name: `:mega: ${client.tls.phrase(client, interaction, "util.canal.transmissao")}`,
+                            name: `:mega: ${client.tls.phrase(user, "util.canal.transmissao")}`,
                             value: `:radio: **Bitrate: **\`${bitrate}\`\n:busts_in_silhouette: **Max. users: **\`${userlimit}\``,
                             inline: true
                         }
@@ -113,13 +114,13 @@ module.exports = {
                     if (canal.rateLimitPerUser > 0)
                         infos_ch.addFields(
                             {
-                                name: `:name_badge: ${client.tls.phrase(client, interaction, "util.canal.modo_lento")}`,
-                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(client, interaction, "util.unidades.segundos")}\``,
+                                name: `:name_badge: ${client.tls.phrase(user, "util.canal.modo_lento")}`,
+                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(user, "util.unidades.segundos")}\``,
                                 inline: true
                             }
                         )
 
-                return interaction.reply({ embeds: [infos_ch] })
+                return interaction.reply({ embeds: [infos_ch], ephemeral: user.misc.ghost_mode })
             })
     }
 }

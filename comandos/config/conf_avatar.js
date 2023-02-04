@@ -2,21 +2,21 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_avatar')
-        .setDescription('⌠🤖⌡ Altere o avatar do Alonsal')
+        .setName("c_avatar")
+        .setDescription("⌠🤖⌡ Altere o avatar do Alonsal")
         .addAttachmentOption(option =>
-            option.setName('foto')
-                .setDescription('A nova foto para o bot')
+            option.setName("foto")
+                .setDescription("A nova foto de perfil do bot")
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         if (!client.owners.includes(interaction.user.id)) return
 
         novo_perfil = interaction.options.data[0].attachment.attachment
 
         if (!novo_perfil.includes(".png") && !novo_perfil.includes(".jpg") && !novo_perfil.includes(".jpeg") && !novo_perfil.includes(".bmp"))
-            return interaction.reply(":octagonal_sign: | Envie um link/arquivo diferente de gif")
+            return interaction.reply(":octagonal_sign: | Envie um link/arquivo de formato diferente")
 
         const att_avatar = new EmbedBuilder()
             .setTitle(`:bust_in_silhouette: O Avatar do ${client.user().username} foi alterado`)

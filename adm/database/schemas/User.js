@@ -14,7 +14,8 @@ const schema = new mongoose.Schema({
         daily: String,
         money: { type: Number, default: 0 },
         embed: { type: String, default: "#29BB8E" },
-        locale: { type: String, default: "" }
+        locale: { type: String, default: "" },
+        ghost_mode: { type: Boolean, default: false }
     },
     badges: {
         fixed_badge: String,

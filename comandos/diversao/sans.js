@@ -2,31 +2,34 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('sans')
-        .setDescription('⌠😂⌡ WrItE LiKe tHaT QuIcKlY')
+        .setName("sans")
+        .setDescription("⌠😂⌡ WrItE LiKe tHaT QuIcKlY")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo',
             "es-ES": '⌠😂⌡ EsCrIbE AsI MuY RaPiDo',
             "fr": '⌠😂⌡ ÉcRiVeZ CoMmE CeCi rApIdEmEnT',
-            "it": '⌠😂⌡ ScRiVi vElOcEmEnTe cOn qUeStO StIlE'
+            "it": '⌠😂⌡ ScRiVi vElOcEmEnTe cOn qUeStO StIlE',
+            "ru": '⌠😂⌡ ПиШи тАк бЫсТрО'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
-                    "it": 'testo'
+                    "it": 'testo',
+                    "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
-                    "it": 'Scrivi qualcosa!'
+                    "it": 'Scrivi qualcosa!',
+                    "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true)),
-    async execute(client, interaction) {
+    async execute(client, user, interaction) {
 
         const texto_entrada = interaction.options.data[0].value.split("")
 
@@ -36,6 +39,6 @@ module.exports = {
             else
                 texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
-        interaction.reply({ content: `\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``, ephemeral: true })
+        interaction.reply({ content: `\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``, ephemeral: user.misc.ghost_mode })
     }
 }

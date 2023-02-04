@@ -18,6 +18,9 @@ client.discord.once('ready', async () => {
 
 	await require('./adm/eventos/status.js')({ client })
 
+	// Eventos secundários
+	require('./adm/eventos/events.js')({ client })
+
 	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
 })
 
@@ -46,30 +49,29 @@ client.discord.on('messageCreate', async (message) => {
 
 client.discord.on('interactionCreate', async interaction => {
 
+	const user = await client.getUser(interaction.user.id)
+
 	if (interaction.isSelectMenu()) // Interações geradas no uso de menus de seleção
-		return require('./adm/interacoes/menus.js')({ client, interaction })
+		return require('./adm/interacoes/menus.js')({ client, user, interaction })
 
 	if (interaction.isButton()) // Interações geradas no uso de botões
-		return require('./adm/interacoes/buttons.js')({ client, interaction })
+		return require('./adm/interacoes/buttons.js')({ client, user, interaction })
 
 	if (!interaction.isChatInputCommand()) return
-	if (!interaction.guild) return client.tls.reply(client, interaction, "inic.error.comando_dm")
+	if (!interaction.guild) return client.tls.reply(user, "inic.error.comando_dm")
 
 	const command = client.discord.commands.get(interaction.commandName)
 	if (!command) return
 
-	await command.execute(client, interaction)
+	await command.execute(client, user, interaction)
 		.then(() => {
 			require('./adm/eventos/log.js')({ client, interaction, command })
 		})
 		.catch(err => {
 			require('./adm/eventos/error.js')({ client, err })
-			client.tls.reply(client, interaction, "inic.error.epic_embed_fail", true, 0)
+			client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
 		})
 })
-
-// Eventos secundários
-require('./adm/eventos/events.js')({ client })
 
 database.setup(process.env.dburi)
 client.login(client.x.token)

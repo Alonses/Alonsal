@@ -1,6 +1,6 @@
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
-module.exports = async ({ client, interaction }) => {
+module.exports = async ({ client, user, interaction }) => {
 
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
 
@@ -9,7 +9,6 @@ module.exports = async ({ client, interaction }) => {
         // Formatando o ID do botão para o propósito esperado
         const data_cor = interaction.customId.split("[")[1].split("]")[0]
 
-        let user = await client.getUser(interaction.user.id)
         const colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM'], precos = [200, 300, 400, 500, 50]
 
         const preco = precos[parseInt(data_cor.split(".")[0])]
@@ -38,9 +37,9 @@ module.exports = async ({ client, interaction }) => {
         // Salvando os dados
         user.save()
 
-        interaction.update({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(client, interaction, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
     }
 
     if (id_button === `Canc_${interaction.user.id}`)
-        interaction.update({ content: `:anger: | ${client.tls.phrase(client, interaction, "misc.color.att_cancelada")}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: `:anger: | ${client.tls.phrase(user, "misc.color.att_cancelada")}`, embeds: [], components: [], ephemeral: true })
 }
