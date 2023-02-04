@@ -4,8 +4,8 @@ const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.js
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('coin')
-        .setDescription('⌠🎲⌡ Play heads or tails')
+        .setName("coin")
+        .setDescription("⌠🎲⌡ Play heads or tails")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Jogue cara ou coroa',
             "es-ES": '⌠🎲⌡ Juega cara o cruz',
@@ -14,7 +14,7 @@ module.exports = {
             "ru": '⌠🎲⌡ Играть орлом или решкой'
         })
         .addStringOption(option =>
-            option.setName('choise')
+            option.setName("choise")
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
@@ -22,7 +22,7 @@ module.exports = {
                     "it": 'scelta',
                     "ru": 'выбор'
                 })
-                .setDescription('Heads or tails?')
+                .setDescription("Heads or tails?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Cara ou coroa?',
                     "es-ES": '¿Cara o cruz?',

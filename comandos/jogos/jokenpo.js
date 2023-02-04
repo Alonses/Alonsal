@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('jokenpo')
-        .setDescription('⌠🎲⌡ Play jokenpo')
+        .setName("jokenpo")
+        .setDescription("⌠🎲⌡ Play jokenpo")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ Jogue jokenpô',
             "es-ES": '⌠🎲⌡ Juega jokenpo',
@@ -12,7 +12,7 @@ module.exports = {
             "ru": '⌠🎲⌡ Играть в Джокенпо'
         })
         .addStringOption(option =>
-            option.setName('choise')
+            option.setName("choise")
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
@@ -20,7 +20,7 @@ module.exports = {
                     "it": 'scelta',
                     "ru": 'выбор'
                 })
-                .setDescription('What\'s your choice?')
+                .setDescription("What's your choice?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual a sua escolha?',
                     "es-ES": '¿Cual es tu eleccion?',

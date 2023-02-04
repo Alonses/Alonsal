@@ -4,8 +4,8 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('pulapredios')
-        .setDescription('⌠🎲⌡ The Pula Game!')
+        .setName("pulapredios")
+        .setDescription("⌠🎲⌡ The Pula Game!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',

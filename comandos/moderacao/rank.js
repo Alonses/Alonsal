@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = requir
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('xp')
+        .setName("xp")
         .setDescription("⌠💂⌡ Adjust some user's XP")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
@@ -13,7 +13,7 @@ module.exports = {
             "ru": '⌠💂⌡ Настройка опыта некоторых пользователей'
         })
         .addUserOption(option =>
-            option.setName('user')
+            option.setName("user")
                 .setNameLocalizations({
                     "pt-BR": 'usuario',
                     "es-ES": 'usuario',
@@ -30,8 +30,8 @@ module.exports = {
                 })
                 .setRequired(true))
         .addNumberOption(option =>
-            option.setName('xp')
-                .setDescription('What is the new XP?')
+            option.setName("xp")
+                .setDescription("What is the new XP?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Qual o novo XP?',
                     "es-ES": '¿Qué es el nuevo XP?',

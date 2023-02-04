@@ -5,8 +5,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('channel')
-        .setDescription('⌠💡⌡ Show channel details')
+        .setName("channel")
+        .setDescription("⌠💡⌡ Show channel details")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
             "es-ES": '⌠💡⌡ Ver detalles del canal',
@@ -15,7 +15,7 @@ module.exports = {
             "ru": '⌠💡⌡ Подробнее о канале'
         })
         .addChannelOption(option =>
-            option.setName('channel')
+            option.setName("channel")
                 .setNameLocalizations({
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
@@ -23,7 +23,7 @@ module.exports = {
                     "it": 'canale',
                     "ru": 'канал'
                 })
-                .setDescription('Mention a channel')
+                .setDescription("Mention a channel")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Marque um canal como alvo',
                     "es-ES": 'Mencionar un canal como objetivo',

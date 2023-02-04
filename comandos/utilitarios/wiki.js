@@ -7,8 +7,8 @@ const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('wiki')
-        .setDescription('⌠💡⌡ Search for something on the wiki')
+        .setName("wiki")
+        .setDescription("⌠💡⌡ Search for something on the wiki")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
@@ -17,7 +17,7 @@ module.exports = {
             "ru": '⌠💡⌡ Ищите что-нибудь в вики'
         })
         .addStringOption(option =>
-            option.setName('search')
+            option.setName("search")
                 .setNameLocalizations({
                     "pt-BR": 'pesquisa',
                     "es-ES": 'busqueda',
@@ -25,7 +25,7 @@ module.exports = {
                     "it": 'ricerca',
                     "ru": 'поиск'
                 })
-                .setDescription('I\'m lucky')
+                .setDescription("I'm lucky")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Estou com sorte',
                     "es-ES": 'Estoy con suerte',
@@ -35,7 +35,7 @@ module.exports = {
                 })
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('language')
+            option.setName("language")
                 .setNameLocalizations({
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
@@ -43,7 +43,7 @@ module.exports = {
                     "it": 'linguaggio',
                     "ru": 'язык'
                 })
-                .setDescription('In which language?')
+                .setDescription("In which language?")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Em qual idioma?',
                     "es-ES": '¿En qué idioma?',

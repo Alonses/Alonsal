@@ -4,14 +4,14 @@ const create_buttons = require('../../adm/discord/create_buttons')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('invite')
+        .setName("invite")
         .setNameLocalizations({
             "pt-BR": 'convite',
             "es-ES": 'invitacion',
             "fr": 'invitation',
             "it": 'invito'
         })
-        .setDescription('⌠📡⌡ Invite Alonsal right now!')
+        .setDescription("⌠📡⌡ Invite Alonsal right now!")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
             "es-ES": '⌠📡⌡ ¡Invita a Alonsal ahora mismo!',

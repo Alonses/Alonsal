@@ -5,7 +5,7 @@ const { isInteger, forEach } = require('mathjs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('calculator')
+        .setName("calculator")
         .setNameLocalizations({
             "pt-BR": 'calculadora',
             "es-ES": 'calculadora',
@@ -13,7 +13,7 @@ module.exports = {
             "it": 'calcolatrice',
             "ru": 'калькулятор'
         })
-        .setDescription('⌠💡⌡ Find math problem results')
+        .setDescription("⌠💡⌡ Find math problem results")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Ache resultados de problemas matemáticos',
             "es-ES": '⌠💡⌡ Encuentra los resultados de los problemas matemáticos',
@@ -22,7 +22,7 @@ module.exports = {
             "ru": '⌠💡⌡ Найдите результаты математических задач'
         })
         .addStringOption(option =>
-            option.setName('equation')
+            option.setName("equation")
                 .setNameLocalizations({
                     "pt-BR": 'equação',
                     "es-ES": 'ecuacion',
@@ -30,7 +30,7 @@ module.exports = {
                     "it": 'equazione',
                     "ru": 'уравнение'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',

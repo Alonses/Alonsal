@@ -2,8 +2,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('password')
-        .setDescription('⌠💡⌡ Generate random passwords')
+        .setName("password")
+        .setDescription("⌠💡⌡ Generate random passwords")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
             "es-ES": '⌠💡⌡ Genera contraseñas aleatorias',
@@ -12,7 +12,7 @@ module.exports = {
             "ru": '⌠💡⌡ Генерация случайных паролей'
         })
         .addStringOption(option =>
-            option.setName('length')
+            option.setName("length")
                 .setNameLocalizations({
                     "pt-BR": 'tamanho',
                     "es-ES": 'tamano',
@@ -20,7 +20,7 @@ module.exports = {
                     "it": 'lunghezza',
                     "ru": 'длина'
                 })
-                .setDescription('from 12 to 350')
+                .setDescription("from 12 to 350")
                 .setDescriptionLocalizations({
                     "pt-BR": 'de 12 até 350',
                     "es-ES": 'de 12 a 350',

@@ -1,12 +1,12 @@
 const { readdirSync, unlinkSync } = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../adm/data/badges')
+// const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('data')
-        .setDescription('⌠👤⌡ Everything we know about you')
+        .setName("data")
+        .setDescription("⌠👤⌡ Everything we know about you")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
             "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',

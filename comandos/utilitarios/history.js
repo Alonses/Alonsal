@@ -7,25 +7,25 @@ const formata_texto = require('../../adm/formatadores/formata_texto.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('history')
-        .setDescription('⌠💡|🇧🇷⌡ Fatos que ocorreram no mundo em determinada data')
+        .setName("history")
+        .setDescription("⌠💡|🇧🇷⌡ Fatos que ocorreram no mundo em determinada data")
         .addSubcommand(subcommand =>
             subcommand
-                .setName('unico')
-                .setDescription('⌠💡|🇧🇷⌡ Apenas um acontecimento')
+                .setName("unico")
+                .setDescription("⌠💡|🇧🇷⌡ Apenas um acontecimento")
                 .addStringOption(option =>
-                    option.setName('data')
-                        .setDescription('Uma data específica, neste formato 21/01'))
+                    option.setName("data")
+                        .setDescription("Uma data específica, neste formato 21/01"))
                 .addStringOption(option =>
-                    option.setName('especifico')
-                        .setDescription('1, 2, 3...')))
+                    option.setName("especifico")
+                        .setDescription("1, 2, 3...")))
         .addSubcommand(subcommand =>
             subcommand
-                .setName('lista')
-                .setDescription('⌠💡|🇧🇷⌡ Listar todos os acontecimentos do dia')
+                .setName("lista")
+                .setDescription("⌠💡|🇧🇷⌡ Listar todos os acontecimentos do dia")
                 .addStringOption(option =>
-                    option.setName('data')
-                        .setDescription('Uma data específica, neste formato 21/01'))),
+                    option.setName("data")
+                        .setDescription("Uma data específica, neste formato 21/01"))),
     async execute(client, user, interaction) {
 
         let data = ""

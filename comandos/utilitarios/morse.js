@@ -4,8 +4,8 @@ const morse = require('../../arquivos/json/text/morse.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('morse')
-        .setDescription('⌠💡⌡ (De)code from/to morse')
+        .setName("morse")
+        .setDescription("⌠💡⌡ (De)code from/to morse")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
@@ -14,7 +14,7 @@ module.exports = {
             "ru": '⌠💡⌡ (Де)код в/из азбуки Морзе'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
@@ -22,7 +22,7 @@ module.exports = {
                     "it": 'testo',
                     "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',
@@ -32,14 +32,14 @@ module.exports = {
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
-            option.setName('reverse')
+            option.setName("reverse")
                 .setNameLocalizations({
                     "pt-BR": 'reverso',
                     "es-ES": 'reverso',
                     "fr": 'inverse',
                     "it": 'inversione'
                 })
-                .setDescription('Invert output result')
+                .setDescription("Invert output result")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Inverter resultado de saída',
                     "es-ES": 'Invertir resultado de salida',
@@ -48,7 +48,7 @@ module.exports = {
                     "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
-            option.setName('operation')
+            option.setName("operation")
                 .setNameLocalizations({
                     "pt-BR": 'operacao',
                     "es-ES": 'operacion',

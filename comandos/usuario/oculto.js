@@ -4,7 +4,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ghostmode')
+        .setName("ghostmode")
         .setNameLocalizations({
             "pt-BR": 'fantasma',
             "es-ES": 'fantasma',
@@ -12,7 +12,7 @@ module.exports = {
             "it": 'fantasma',
             "ru": 'призрак'
         })
-        .setDescription('⌠👤⌡ All commands you use will be shown just for you')
+        .setDescription("⌠👤⌡ All commands you use will be shown just for you")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Todos os comandos que você usar serão mostrados apenas para você',
             "es-ES": '⌠👤⌡ Todos los comandos que use se mostrarán solo para usted',

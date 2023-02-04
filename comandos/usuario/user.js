@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { buildAllBadges } = require('../../adm/data/badges')
+// const { buildAllBadges } = require('../../adm/data/badges')
 
 // const busca_achievements = require('../../adm/data/conquistas')
 
@@ -86,7 +86,7 @@ module.exports = {
                     "ru": '⌠👤⌡ пользовательский баннер'
                 })
                 .addUserOption(option =>
-                    option.setName('user')
+                    option.setName("user")
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',

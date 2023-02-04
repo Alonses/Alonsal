@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('sans')
-        .setDescription('⌠😂⌡ WrItE LiKe tHaT QuIcKlY')
+        .setName("sans")
+        .setDescription("⌠😂⌡ WrItE LiKe tHaT QuIcKlY")
         .setDescriptionLocalizations({
             "pt-BR": '⌠😂⌡ EsCrEvA DeSsA FoRmA RaPidÃo',
             "es-ES": '⌠😂⌡ EsCrIbE AsI MuY RaPiDo',
@@ -12,7 +12,7 @@ module.exports = {
             "ru": '⌠😂⌡ ПиШи тАк бЫсТрО'
         })
         .addStringOption(option =>
-            option.setName('text')
+            option.setName("text")
                 .setNameLocalizations({
                     "pt-BR": 'texto',
                     "es-ES": 'texto',
@@ -20,7 +20,7 @@ module.exports = {
                     "it": 'testo',
                     "ru": 'текст'
                 })
-                .setDescription('Write something!')
+                .setDescription("Write something!")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Escreva algo!',
                     "es-ES": '¡Escribe algo!',

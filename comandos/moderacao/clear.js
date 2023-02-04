@@ -2,8 +2,8 @@ const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = requir
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('clear')
-        .setDescription('⌠💂⌡ Delete multiple chat messages')
+        .setName("clear")
+        .setDescription("⌠💂⌡ Delete multiple chat messages")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ Exclui várias mensagens do chat',
             "es-ES": '⌠💂⌡ Eliminar varios mensajes de chat',

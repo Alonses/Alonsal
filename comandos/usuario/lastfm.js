@@ -9,8 +9,8 @@ let horas_tocadas, horas_passadas
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('lastfm')
-        .setDescription('⌠👤⌡ Someone\'s Profile on LastFM')
+        .setName("lastfm")
+        .setDescription("⌠👤⌡ Someone's Profile on LastFM")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
             "es-ES": '⌠👤⌡ Perfil de alguien en LastFM',
@@ -19,8 +19,8 @@ module.exports = {
             "ru": '⌠👤⌡ Посмотреть чей-то профиль на LastFM'
         })
         .addStringOption(option =>
-            option.setName('url')
-                .setDescription('The username')
+            option.setName("url")
+                .setDescription("The username")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O nome do usuário',
                     "es-ES": 'El nombre de usuario',
@@ -29,8 +29,8 @@ module.exports = {
                     "ru": 'Имя пользователя'
                 }))
         .addUserOption(option =>
-            option.setName('user')
-                .setDescription('A discord user')
+            option.setName("user")
+                .setDescription("A discord user")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Um usuário do discord',
                     "es-ES": 'Un usuario de discord',

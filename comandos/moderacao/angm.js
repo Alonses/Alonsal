@@ -3,7 +3,7 @@ const { writeFileSync, existsSync, unlinkSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('notify')
+        .setName("notify")
         .setNameLocalizations({
             "pt-BR": 'notificar',
             "es-ES": 'notificar',
@@ -11,7 +11,7 @@ module.exports = {
             "it": 'notificare',
             "ru": 'уведомление'
         })
-        .setDescription('⌠💂⌡ (Dis)Enable announces for free games')
+        .setDescription("⌠💂⌡ (Dis)Enable announces for free games")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ (Des)Habilitar anúncio de games free',
             "es-ES": '⌠💂⌡ (Des)Habilitar anuncios para juegos gratis',
@@ -20,14 +20,14 @@ module.exports = {
             "ru": '⌠💂⌡ (Dis)Включить рекламу бесплатных игр'
         })
         .addRoleOption(option =>
-            option.setName('role')
+            option.setName("role")
                 .setNameLocalizations({
                     "pt-BR": 'cargo',
                     "es-ES": 'rol',
                     "it": 'roule',
                     "ru": 'роль'
                 })
-                .setDescription('The role that will be notified')
+                .setDescription("The role that will be notified")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O cargo que será notificado',
                     "es-ES": 'El rol a ser notificado',
@@ -36,7 +36,7 @@ module.exports = {
                     "ru": 'Роль, которую нужно уведомить'
                 }))
         .addChannelOption(option =>
-            option.setName('channel')
+            option.setName("channel")
                 .setNameLocalizations({
                     "pt-BR": 'canal',
                     "es-ES": 'canal',
@@ -44,7 +44,7 @@ module.exports = {
                     "it": 'canale',
                     "ru": 'канал'
                 })
-                .setDescription('The channel that will be used')
+                .setDescription("The channel that will be used")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O canal que será usado',
                     "es-ES": 'El canal que se utilizará',
@@ -53,7 +53,7 @@ module.exports = {
                     "ru": 'Канал, который будет использоваться'
                 }))
         .addStringOption(option =>
-            option.setName('language')
+            option.setName("language")
                 .setNameLocalizations({
                     "pt-BR": 'idioma',
                     "es-ES": 'idioma',
@@ -61,7 +61,7 @@ module.exports = {
                     "it": 'linguaggio',
                     "ru": 'язык'
                 })
-                .setDescription('The language to be used')
+                .setDescription("The language to be used")
                 .setDescriptionLocalizations({
                     "pt-BR": 'O idioma que será utilizado',
                     "es-ES": 'El lenguaje a utilizar',

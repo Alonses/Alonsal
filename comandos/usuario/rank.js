@@ -16,8 +16,8 @@ const medals = {
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('rank')
-        .setDescription('⌠👤⌡ See Alonsal\'s ranking')
+        .setName("rank")
+        .setDescription("⌠👤⌡ See Alonsal's ranking")
         .setDescriptionLocalizations({
             "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
             "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
@@ -26,8 +26,8 @@ module.exports = {
             "ru": '⌠👤⌡ Посмотреть рейтинг Алонсала'
         })
         .addSubcommand(subcommand =>
-            subcommand.setName('server')
-                .setDescription('⌠👤⌡ See server ranking')
+            subcommand.setName("server")
+                .setDescription("⌠👤⌡ See server ranking")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
                     "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
@@ -36,14 +36,14 @@ module.exports = {
                     "ru": '⌠👤⌡ Посмотреть рейтинг серверов'
                 })
                 .addStringOption(option =>
-                    option.setName('page')
+                    option.setName("page")
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
                             "it": 'pagina',
                             "ru": 'страница'
                         })
-                        .setDescription('One page to display')
+                        .setDescription("One page to display")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',
@@ -52,14 +52,14 @@ module.exports = {
                             "ru": 'Одна страница для отображения'
                         }))
                 .addUserOption(option =>
-                    option.setName('user')
+                    option.setName("user")
                         .setNameLocalizations({
                             "pt-BR": 'usuario',
                             "es-ES": 'usuario',
                             "it": 'utente',
                             "ru": 'пользователь'
                         })
-                        .setDescription('User to display')
+                        .setDescription("User to display")
                         .setDescriptionLocalizations({
                             "pt-BR": 'O Usuário para exibir',
                             "es-ES": 'Usuario a mostrar',
@@ -68,8 +68,8 @@ module.exports = {
                             "ru": 'Пользователь для отображения'
                         })))
         .addSubcommand(subcommand =>
-            subcommand.setName('global')
-                .setDescription('⌠👤⌡ See the global ranking')
+            subcommand.setName("global")
+                .setDescription("⌠👤⌡ See the global ranking")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠👤⌡ Veja o ranking global',
                     "es-ES": '⌠👤⌡ Ver el ranking mundial',
@@ -78,14 +78,14 @@ module.exports = {
                     "ru": '⌠👤⌡ Смотрите глобальный рейтинг'
                 })
                 .addStringOption(option =>
-                    option.setName('page')
+                    option.setName("page")
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
                             "es-ES": 'pagina',
                             "it": 'pagina',
                             "ru": 'страница'
                         })
-                        .setDescription('One page to display')
+                        .setDescription("One page to display")
                         .setDescriptionLocalizations({
                             "pt-BR": 'Uma página para exibir',
                             "es-ES": 'Una pagina para mostrar',

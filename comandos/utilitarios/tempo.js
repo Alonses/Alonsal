@@ -14,7 +14,7 @@ const time_url = "http://api.timezonedb.com/v2.1/get-time-zone?"
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('weather')
+        .setName("weather")
         .setNameLocalizations({
             "pt-BR": 'tempo',
             "es-ES": 'tiempo',
@@ -22,7 +22,7 @@ module.exports = {
             "it": 'clima',
             "ru": 'погода'
         })
-        .setDescription('⌠💡⌡ Show current weather somewhere')
+        .setDescription("⌠💡⌡ Show current weather somewhere")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💡⌡ Mostra o clima atual em algum local',
             "es-ES": '⌠💡⌡ Muestra el clima actual en algún lugar',
@@ -31,7 +31,7 @@ module.exports = {
             "ru": '⌠💡⌡ Посмотреть текущую погоду где-нибудь'
         })
         .addStringOption(option =>
-            option.setName('place')
+            option.setName("place")
                 .setNameLocalizations({
                     "pt-BR": 'local',
                     "es-ES": 'lugar',
@@ -39,7 +39,7 @@ module.exports = {
                     "it": 'posto',
                     "ru": 'место'
                 })
-                .setDescription('Enter a location')
+                .setDescription("Enter a location")
                 .setDescriptionLocalizations({
                     "pt-BR": 'Insira um local',
                     "es-ES": 'Ingrese una ubicación',
