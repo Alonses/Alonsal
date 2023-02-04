@@ -15,7 +15,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         let novo_valor = parseInt(interaction.options.data[0].value)
-        const valor_ranking = novo_valor == 0 ? 2 : novo_valor
+        const valor_ranking = novo_valor === 0 ? 2 : novo_valor
 
         fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
             if (err) throw err

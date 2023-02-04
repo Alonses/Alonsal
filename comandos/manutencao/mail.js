@@ -56,10 +56,10 @@ module.exports = {
         let entradas = interaction.options.data
 
         entradas.forEach(valor => {
-            if (valor.name == "text")
+            if (valor.name === "text")
                 corpo_mensagem.texto = valor.value
 
-            if (valor.name == "file")
+            if (valor.name === "file")
                 corpo_mensagem.arquivo = valor.attachment.attachment
         })
 
