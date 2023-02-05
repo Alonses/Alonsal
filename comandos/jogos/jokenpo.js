@@ -13,7 +13,6 @@ module.exports = {
         })
         .addStringOption(option =>
             option.setName("choose")
-
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',

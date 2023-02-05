@@ -39,7 +39,7 @@ module.exports = {
 
         await interaction.deferReply()
 
-        let entradas = interaction.options.data
+        const entradas = interaction.options.data
 
         const item = {
             nome: null,

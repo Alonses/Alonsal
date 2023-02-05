@@ -9,7 +9,7 @@ module.exports = async ({ client, interaction }) => {
 
     if (!fs.existsSync(dir)) fs.writeFile(dir, '0', err => {
         if (err) throw err;
-    });
+    })
 
     fs.readFile(dir, 'utf8', function (err, data) {
         if (err) throw err

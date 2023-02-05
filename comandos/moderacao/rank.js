@@ -46,7 +46,7 @@ module.exports = {
         const membro_sv = await interaction.guild.members.cache.get(interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
-            return client.tls.reply(interaction, user, "mode.adm.moderadores", true)
+            return client.tls.reply(interaction, user, "mode.xp.permissao", true, 3)
 
         const usuario = interaction.options.getUser('user')
 

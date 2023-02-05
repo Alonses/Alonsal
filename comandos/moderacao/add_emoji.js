@@ -8,19 +8,51 @@ module.exports = {
         .setName("add")
         .setDescription("⌠💂⌡ Add emojis and stickers to the server")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Adicione emojis e figurinhas ao servidor'
+            "pt-BR": '⌠💂⌡ Adicione emojis e figurinhas ao servidor',
+            "es-ES": '⌠💂⌡ Agrega emojis y stickers al servidor',
+            "fr": '⌠💂⌡ Ajoutez des emojis et des autocollants au serveur',
+            "it": '⌠💂⌡ Aggiungi emoji e adesivi al server',
+            "ru": '⌠💂⌡ Добавляйте смайлики и стикеры на сервер'
         })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("emoji")
-                .setDescription("⌠💂⌡ Adicionar um emoji")
+                .setDescription("⌠💂⌡ Add an emoji")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💂⌡ Adicionar um emoji',
+                    "es-ES": '⌠💂⌡ Agrega un emoji',
+                    "fr": '⌠💂⌡ Ajouter un emoji',
+                    "it": '⌠💂⌡ Aggiungi un\'emoji',
+                    "ru": '⌠💂⌡ Добавить смайлик'
+                })
                 .addStringOption(option =>
-                    option.setName("nome")
-                        .setDescription("O nome do novo emoji")
+                    option.setName("name")
+                        .setNameLocalizations({
+                            "pt-BR": 'nome',
+                            "es-ES": 'nombre',
+                            "fr": 'nom',
+                            "it": 'nome',
+                            "ru": 'имя'
+                        })
+                        .setDescription("The name of the new emoji")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'O nome do novo emoji',
+                            "es-ES": 'El nombre del nuevo emoji.',
+                            "fr": 'Le nom du nouvel emoji',
+                            "it": 'Il nome della nuova emoji',
+                            "ru": 'Название нового смайлика'
+                        })
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("emoji")
-                        .setDescription("Emoji de outro servidor"))
+                        .setDescription("Emoji from another server")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Emoji de outro servidor',
+                            "es-ES": 'Emoji de otro servidor',
+                            "fr": 'Emoji d\'un autre serveur',
+                            "it": 'Emoji da un altro server',
+                            "ru": 'Эмодзи с другого сервера'
+                        }))
                 .addAttachmentOption(option =>
                     option.setName("file")
                         .setNameLocalizations({
@@ -30,21 +62,67 @@ module.exports = {
                             "it": 'file',
                             "ru": 'архив'
                         })
-                        .setDescription("Attach files if needed")
+                        .setDescription("Attach an image")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Anexe uma imagem'
+                            "pt-BR": 'Anexe uma imagem',
+                            "es-ES": 'Adjuntar una imagen',
+                            "fr": 'Joindre une image',
+                            "it": 'Allegare un\'immagine',
+                            "ru": 'Прикрепить изображение'
                         })))
         .addSubcommand(subcommand =>
             subcommand
-                .setName("figurinha")
-                .setDescription("⌠💂⌡ Adicionar uma figurinha")
+                .setName("sticker")
+                .setNameLocalizations({
+                    "pt-BR": 'figurinha',
+                    "es-ES": 'cifra',
+                    "fr": 'chiffre',
+                    "it": 'figura',
+                    "ru": 'фигура'
+                })
+                .setDescription("⌠💂⌡ Add a sticker")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💂⌡ Adicionar uma figurinha',
+                    "es-ES": '⌠💂⌡ Agrega una pegatina',
+                    "fr": '⌠💂⌡ Ajouter un autocollant',
+                    "it": '⌠💂⌡ Aggiungi un adesivo',
+                    "ru": '⌠💂⌡ Добавить наклейку'
+                })
                 .addStringOption(option =>
                     option.setName("nome")
-                        .setDescription("O nome da nova figurinha")
+                        .setNameLocalizations({
+                            "pt-BR": 'nome',
+                            "es-ES": 'nombre',
+                            "fr": 'nom',
+                            "it": 'nome',
+                            "ru": 'имя'
+                        })
+                        .setDescription("The name of the new sticker")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'O nome da nova figurinha',
+                            "es-ES": 'El nombre de la nueva figura',
+                            "fr": 'Le nom de la nouvelle figurine',
+                            "it": 'Il nome della nuova figura',
+                            "ru": 'Имя новой фигуры'
+                        })
                         .setRequired(true))
                 .addStringOption(option =>
-                    option.setName("categoria")
-                        .setDescription("Uma descrição breve...")
+                    option.setName("category")
+                        .setNameLocalizations({
+                            "pt-BR": 'categoria',
+                            "es-ES": 'categoria',
+                            "fr": 'categorie',
+                            "it": 'categoria',
+                            "ru": 'категория'
+                        })
+                        .setDescription("A brief description...")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Uma breve descrição...',
+                            "es-ES": 'Una breve descripción...',
+                            "fr": 'Une brève description...',
+                            "it": 'Una breve descrizione...',
+                            "ru": 'Короткое описание...'
+                        })
                         .setRequired(true))
                 .addAttachmentOption(option =>
                     option.setName("file")
@@ -55,9 +133,13 @@ module.exports = {
                             "it": 'file',
                             "ru": 'архив'
                         })
-                        .setDescription("Attach files if needed")
+                        .setDescription("Attach an image")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Anexe uma imagem'
+                            "pt-BR": 'Anexe uma imagem',
+                            "es-ES": 'Adjuntar una imagen',
+                            "fr": 'Joindre une image',
+                            "it": 'Allegare un\'immagine',
+                            "ru": 'Прикрепить изображение'
                         })
                         .setRequired(true)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers),
@@ -68,7 +150,7 @@ module.exports = {
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
             // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
-            return interaction.reply({ content: "Eu não posso gerenciar os emojis e figurinhas deste servidor.", ephemeral: true })
+            return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         const entradas = interaction.options.data[0].options
 
@@ -82,7 +164,7 @@ module.exports = {
         // Coletando todas as entradas
         entradas.forEach(valor => {
 
-            if (valor.name == "nome")
+            if (valor.name == "name")
                 dados.nome = valor.value
 
             if (valor.name == "emoji") // Emoji personalizado
@@ -91,13 +173,13 @@ module.exports = {
             if (valor.name == "file")
                 dados.url = valor.attachment.url
 
-            if (valor.name == "categoria") // Categoria para a figurinha
+            if (valor.name == "category") // Categoria para a figurinha
                 dados.categoria = valor.value
         })
 
         // Verificando se foi informado uma URL ou uma entrada customizada
         if (!dados.url && !dados.personalizado)
-            return interaction.reply({ content: ":warning: | Insira um arquivo de imagem um mencione um emoji para usar esse comando!", ephemeral: true })
+            return client.tls.reply(interaction, user, "mode.emojis.aviso_1", true, 2)
 
         // Criando emojis
         if (interaction.options.getSubcommand() === "emoji") {
@@ -118,9 +200,9 @@ module.exports = {
                                 criar_item(dados, interaction, client, user)
                             })
                     } else
-                        return interaction.reply({ content: ":warning: | Informe um emoji customizado para adicionar", ephemeral: true })
+                        return client.tls.reply(interaction, user, "mode.emojis.emoji_custom", true, 2)
                 } catch (err) {
-                    return interaction.reply({ content: ":warning: | Informe um emoji customizado para adicionar", ephemeral: true })
+                    return client.tls.reply(interaction, user, "mode.emojis.emoji_custom", true, 2)
                 }
             } else
                 criar_item(dados, interaction, client, user)
@@ -135,23 +217,23 @@ function criar_item(dados, interaction, client, user) {
     // Criando um emoji
     if (!dados.categoria) {
         interaction.guild.emojis.create({ attachment: dados.url, name: dados.nome })
-            .then(emoji => interaction.reply({ content: `${emoji} | Emoji \`${emoji.name}\` criado com sucesso!`, ephemeral: true }))
+            .then(emoji => interaction.reply({ content: `${emoji} | ${client.tls.phrase(user, "mode.emojis.emoji_criado").replace("nome_repl", nome)}`, ephemeral: true }))
             .catch(err => {
 
                 if (err.rawError.code == 30008) // Máximos de emojis
-                    return interaction.reply({ content: ":octagonal_sign: | O número máximo de emojis para este servidor foi atingido", ephemeral: true })
+                    return client.tls.reply(interaction, user, "mode.emojis.emoji_max", true, 0)
 
-                interaction.reply({ content: ":octagonal_sign: | Não foi possível criar o emoji", ephemeral: true })
+                return client.tls.reply(interaction, user, "mode.emojis.emoji_error", true, 0)
             })
     } else { // Criando uma figurinha
 
         interaction.guild.stickers.create({ file: dados.url, name: dados.nome, tags: dados.categoria })
-            .then(sticker => interaction.reply({ content: `Figurinha \`${sticker.name}\` criada com sucesso!`, ephemeral: true }))
+            .then(sticker => interaction.reply({ content: `${client.tls.phrase(user, "mode.emojis.figurinha_criada").replace("nome_repl", sticker.name)}`, ephemeral: true }))
             .catch(err => {
                 if (err.rawError.code == 30039) // Máximo de figurinhas
-                    return interaction.reply({ content: ":octagonal_sign: | O número máximo de figurinhas para este servidor foi atingido", ephemeral: true })
+                    return client.tls.reply(interaction, user, "mode.emojis.sticker_max", true, 0)
 
-                interaction.reply({ content: ':octagonal_sign: | Não foi possível criar a figurinha', ephemeral: true })
+                return client.tls.reply(interaction, user, "mode.emojis.sticker_error", true, 0)
             })
     }
 }

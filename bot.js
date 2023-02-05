@@ -58,7 +58,7 @@ client.discord.on('interactionCreate', async interaction => {
 		return require('./adm/interacoes/buttons.js')({ client, user, interaction })
 
 	if (!interaction.isChatInputCommand()) return
-	if (!interaction.guild) return client.tls.reply(user, "inic.error.comando_dm")
+	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	const command = client.discord.commands.get(interaction.commandName)
 	if (!command) return
