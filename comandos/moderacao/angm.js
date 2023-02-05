@@ -86,7 +86,7 @@ module.exports = {
 
         // Libera configuração para proprietários e adms apenas
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
-            return client.tls.reply(interaction, user, "mode.adm.moderadores", true)
+            return client.tls.reply(interaction, user, "mode.anuncio.permissao", true, 3)
 
         let opcao_remove = false, entradas = interaction.options.data
 

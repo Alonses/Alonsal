@@ -244,7 +244,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`> ${user_alvo.username}`)
                 .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
-                .setColor(user_c.misc.embed)
+                .setColor(client.embed_color(user_c.misc.embed))
                 .setImage(url_avatar)
 
             interaction.reply({ embeds: [embed], ephemeral: true })
@@ -284,7 +284,7 @@ module.exports = {
                         const embed = new EmbedBuilder()
                             .setTitle(`> ${user_alvo.username}`)
                             .setDescription(client.tls.phrase(user, "util.avatar.download_banner").replace("link_repl", url_banner))
-                            .setColor(user_c.misc.embed)
+                            .setColor(client.embed_color(user_c.misc.embed))
                             .setImage(url_banner)
 
                         return interaction.reply({ embeds: [embed], ephemeral: true })

@@ -7,15 +7,40 @@ module.exports = {
         .setName("remove")
         .setDescription("⌠💂⌡ Remove emojis from the server")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Remove emojis do servidor'
+            "pt-BR": '⌠💂⌡ Remove emojis do servidor',
+            "es-ES": '⌠💂⌡ Eliminar emoji del servidor',
+            "fr": '⌠💂⌡ Supprimer les emoji du serveur',
+            "it": '⌠💂⌡ Elimina emoji dal server',
+            "ru": '⌠💂⌡ Удалить эмодзи с сервера'
         })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("emoji")
-                .setDescription("⌠💂⌡ Remover um emoji")
+                .setDescription("⌠💂⌡ Remove an emoji")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💂⌡ Remover um emoji',
+                    "es-ES": '⌠💂⌡ Eliminar un emoji',
+                    "fr": '⌠💂⌡ Supprimer un emoji',
+                    "it": '⌠💂⌡ Rimuovi un\'emoji',
+                    "ru": '⌠💂⌡ Удалить эмодзи с сервера'
+                })
                 .addStringOption(option =>
-                    option.setName("nome")
-                        .setDescription("O nome do emoji")
+                    option.setName("name")
+                        .setNameLocalizations({
+                            "pt-BR": 'nome',
+                            "es-ES": 'nombre',
+                            "fr": 'nom',
+                            "it": 'nome',
+                            "ru": 'имя'
+                        })
+                        .setDescription(":the name of the emoji:")
+                        .setDescriptionLocalizations({
+                            "pt-BR": ":o nome do emoji:",
+                            "es-ES": ':el nombre del emoji:',
+                            "fr": ':le nom de l\'emoji:',
+                            "it": ':il nome dell\'emoji:',
+                            "ru": ':название смайлика:'
+                        })
                         .setRequired(true)))
         // .addSubcommand(subcommand =>
         //     subcommand
@@ -32,7 +57,7 @@ module.exports = {
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
             // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
-            return interaction.reply({ content: "💂 | Eu não posso gerenciar os emojis e figurinhas deste servidor.", ephemeral: true })
+            return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         const dados = interaction.options.data[0].options[0].value
 
@@ -42,7 +67,7 @@ module.exports = {
 
                 // Verificando se o emoji é usado pelo bot
                 if (JSON.stringify(emojis).includes(id))
-                    return interaction.reply({ content: ":octagonal_sign: | Este emoji é usado por mim! Não podemos remover ele seu cornu.", ephemeral: true })
+                    return client.tls.reply(interaction, user, "mode.emojis.emoji_reservado", true, 0)
 
                 // Confirmando se o emoji é do servidor e excluindo
                 await interaction.guild.emojis.fetch(`${id}`)
@@ -51,19 +76,19 @@ module.exports = {
 
                         emoji.delete()
                             .then(() =>
-                                interaction.reply({ content: `:wastebasket: | O emoji \`${nome}\` foi removido do servidor!`, ephemeral: true }))
+                                interaction.reply({ content: `:wastebasket: | ${client.tls.phrase(user, "mode.emojis.emoji_removido").replace("nome_repl", nome)}`, ephemeral: true }))
                             .catch(() =>
-                                interaction.reply({ content: ":octagonal_sign: | Não foi possível remover este emoji", ephemeral: true })
+                                client.tls.reply(interaction, user, "mode.emojis.emoji_error_remover", true, 0)
                             )
                     })
                     .catch(err => {
                         console.log(err)
-                        return interaction.reply({ content: `:mag: | Este emoji não pertence a este servidor!\nPor favor, tente novamente`, ephemeral: true })
+                        return client.tls.reply(interaction, user, "mode.emojis.emoji_estrangeiro", true, 1)
                     })
             } else
-                return interaction.reply({ content: ":warning: | Informe um emoji customizado para adicionar", ephemeral: true })
+                return client.tls.reply(interaction, user, "mode.emojis.emoji_custom_remover", true, 2)
         } catch (err) {
-            return interaction.reply({ content: ":warning: | Informe um emoji customizado para adicionar", ephemeral: true })
+            return client.tls.reply(interaction, user, "mode.emojis.emoji_custom_remover", true, 2)
         }
     }
 }
