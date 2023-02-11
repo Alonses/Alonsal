@@ -71,18 +71,22 @@ module.exports = {
                 texto_entrada = user_alvo.social.steam
         }
 
-        try {
-            const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
+        const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
 
-            fetch(usuario_alvo)
-                .then(response => response.text())
-                .then(async res => {
+        // Aumentando o tempo de duração da resposta
+        interaction.deferReply({ ephemeral: user.misc.ghost_mode })
 
+        fetch(usuario_alvo)
+            .then(response => response.text())
+            .then(async res => {
+
+                try {
                     let status = res.split("<title>")[1]
                     status = status.split("</title>")[0]
                     status = status.replace("Steam Community :: ", "")
 
-                    if (status === "Error") return client.tls.reply(interaction, user, "util.steam.error_1", true, 1)
+                    if (status === "Error")
+                        return client.tls.editReply(interaction, user, "util.steam.error_1", true, 1)
 
                     let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas
                     let jogo_favorito = "", tempo_jogado = "", nota_rodape = interaction.user.username, anos_servico = "", background_user = "", criacoes_user = ""
@@ -391,11 +395,16 @@ module.exports = {
                             }
                         )
 
-                    interaction.reply({ embeds: [usuario_steam], ephemeral: user.misc.ghost_mode })
-                })
-        } catch (err) {
-            client.notifty(process.env.error_channel, err)
-            interaction.reply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
-        }
+                    interaction.editReply({ embeds: [usuario_steam], ephemeral: user.misc.ghost_mode })
+
+                } catch (err) {
+                    require('../../adm/eventos/error.js')({ client, err })
+                    interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
+                }
+            })
+            .catch((err) => {
+                require('../../adm/eventos/error.js')({ client, err })
+                interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
+            })
     }
 }
