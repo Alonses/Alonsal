@@ -231,6 +231,7 @@ module.exports = {
                 })
         } catch (err) {
             console.log(err)
+            client.tls.reply(interaction, user, "util.lastfm.error_2", true, 4)
         }
     }
 }
