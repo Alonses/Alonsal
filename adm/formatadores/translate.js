@@ -2,7 +2,8 @@ const status = {
     0: ':octagonal_sign: | ',
     1: ':mag: | ',
     2: ':warning: | ',
-    3: ':guard: | '
+    3: ':guard: | ',
+    4: ':anger: |'
 }
 
 function reply(interaction, user, target, ephemeral, type) {
