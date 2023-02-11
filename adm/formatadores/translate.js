@@ -3,7 +3,7 @@ const status = {
     1: ':mag: | ',
     2: ':warning: | ',
     3: ':guard: | ',
-    4: ':anger: |'
+    4: ':anger: | '
 }
 
 function reply(interaction, user, target, ephemeral, type) {
@@ -16,14 +16,14 @@ function reply(interaction, user, target, ephemeral, type) {
     interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
 
-function editReply(interaction, user, target, type) {
+function editReply(interaction, user, target, ephemeral, type) {
 
     let phrase = translate(user, target)
 
     if (typeof type !== "undefined")
         phrase = `${status[type]}${phrase}`
 
-    interaction.editReply({ content: phrase })
+    interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
 
 function phrase(user, target) {

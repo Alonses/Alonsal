@@ -73,16 +73,19 @@ module.exports = {
             else
                 texto_entrada = user_alvo.social.lastfm
 
-        try {
-            const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
-            const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
+        const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
+        const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
-            fetch(usuario_alvo)
-                .then(response => response.text())
-                .then(async res => {
+        // Aumentando o tempo de duração da resposta
+        interaction.deferReply({ ephemeral: user.misc.ghost_mode })
 
+        fetch(usuario_alvo)
+            .then(response => response.text())
+            .then(async res => {
+
+                try {
                     if (res.includes("Página não encontrada"))
-                        return interaction.reply(client.tls.phrase(user, "util.lastfm.error_1"))
+                        return client.tls.editReply(interaction, user, "util.lastfm.error_1", user.misc.ghost_mode, 1)
 
                     let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
@@ -224,15 +227,19 @@ module.exports = {
                                         }
                                     )
 
-                                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                                interaction.editReply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
                             })
                     } else
-                        client.tls.reply(interaction, user, "util.lastfm.sem_scrobbles", user.misc.ghost_mode, 1)
-                })
-        } catch (err) {
-            console.log(err)
-            client.tls.reply(interaction, user, "util.lastfm.error_2", true, 4)
-        }
+                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", user.misc.ghost_mode, 1)
+                } catch (err) {
+                    require('../../adm/eventos/error.js')({ client, err })
+                    client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
+                }
+            })
+            .catch((err) => {
+                require('../../adm/eventos/error.js')({ client, err })
+                client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
+            })
     }
 }
 
