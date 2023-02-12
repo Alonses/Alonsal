@@ -16,11 +16,11 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        fetch(`${process.env.url_apisal}/gta`)
+        fetch(`${process.env.url_apisal}/gta?idioma=${user.lang}`)
             .then(response => response.json())
             .then(async data => {
 
-                // let emoji_horario = data.gameTimeStr.slice(0, 2) < 20 && data.gameTimeStr.slice(0, 2) > 6 ? data.gameTimeStr.slice(0, 2) > 17 ? ":city_sunset:" : ":park:" : ":bridge_at_night:"
+                let emoji_horario = data.gameTimeStr.slice(0, 2) < 20 && data.gameTimeStr.slice(0, 2) > 6 ? data.gameTimeStr.slice(0, 2) > 17 ? ":city_sunset:" : ":park:" : ":bridge_at_night:"
 
                 let hours = data.gameTimeStr.split(":")[0] % 12
                 hours = hours ? hours : 12
@@ -35,10 +35,11 @@ module.exports = {
                     .addFields(
                         {
                             name: `Horário atual`,
-                            value: `:clock${hours}: \`${data.gameTimeStr}\``,
+                            value: `:clock${hours}: \`${data.gameTimeStr}\`${emoji_horario}\` \``,
                             inline: true
                         }
                     )
+
                 interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
             })
             .catch(err => {
