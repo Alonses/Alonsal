@@ -5,11 +5,11 @@
             "text": "panquecas"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/faustop"
         },
         {
-            "type": 2,
+            "type": 0,
             "text": "itens pixelados"
         },
         {
@@ -45,11 +45,11 @@
             "text": "slash commands"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/alaa"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/mine"
         },
         {
@@ -69,31 +69,31 @@
             "text": "ceira em canais_repl canais"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/daily"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/gta"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/ghostmode"
         },
         {
-            "type": 2,
+            "type": 1,
             "text": "Norbit"
         },
         {
-            "type": 2,
+            "type": 1,
             "text": "Slondinho gameplays"
         },
         {
-            "type": 2,
+            "type": 1,
             "text": "Everybody Hates Chris"
         },
         {
-            "type": 2,
+            "type": 1,
             "text": "Em busca da caça ao tomate"
         },
         {
@@ -109,31 +109,31 @@
             "text": "Adventure Communist"
         },
         {
-            "type": 2,
+            "type": 1,
             "text": "As branquelas"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "Chirp - C418"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "Rubedo - Lena Raine"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "Darude Sandstorm"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "All Star Smash Mouth"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/nikocado"
         },
         {
-            "type": 1,
+            "type": 2,
             "text": "/cat"
         }
     ]
