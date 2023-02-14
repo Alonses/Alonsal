@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder, ActivityType } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const fs = require('fs')
 
 module.exports = async ({ client }) => {
@@ -25,24 +25,11 @@ module.exports = async ({ client }) => {
                 .catch(() => {
                     dispara_status(client, "🛑 Offline")
                 })
-
-            client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Watching })
-
-            const activities = [
-                "panquecas",
-                "/faustop",
-                `baidu em ${client.guilds().size} servers`,
-                "games de graça",
-                "slash commands",
-                "itens pixelados",
-                "/alaa"
-            ]
-
-            let i = 0
-            setInterval(() => client.user().setActivity(`${activities[i++ % activities.length]}`, { type: ActivityType.Playing }), 10000)
         }
-    } else
-        client.user().setPresence({ activities: [{ name: 'ceira explosiva em servidores' }], type: ActivityType.Playing })
+    }
+
+    // Status personalizados
+    require('./presence')({ client })
 
     setTimeout(() => {
         client.idioma.listAll()
@@ -60,7 +47,7 @@ function dispara_status(client, status_apisal) {
             fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
 
                 const commit_language = data
-                const canais_texto = client.discord.channels.cache.filter((c) => c.type === 0).size
+                const canais_texto = client.channels(0).size
                 let members = 0
 
                 client.guilds().forEach(async guild => {

@@ -67,7 +67,11 @@ class CeiraClient {
         return this.discord.guilds.cache
     }
 
-    channels() {
+    channels(type) {
+
+        if (typeof type !== "undefined")
+            return this.discord.channels.cache.filter((c) => c.type === type)
+
         return this.discord.channels.cache
     }
 
