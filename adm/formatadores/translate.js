@@ -3,7 +3,8 @@ const status = {
     1: ':mag: | ',
     2: ':warning: | ',
     3: ':guard: | ',
-    4: ':anger: | '
+    4: ':anger: | ',
+    5: ':hatching_chick: | '
 }
 
 function reply(interaction, user, target, ephemeral, type) {

@@ -62,7 +62,7 @@ module.exports = {
 
         if (exclusao) { // Excluindo os dados do usuário do bot
 
-            return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+            return client.tls.reply(user, "inic.error.develop", true, 5)
 
             for (const folder of readdirSync(`./arquivos/data/rank/`)) {
                 for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {

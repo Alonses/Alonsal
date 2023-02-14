@@ -22,7 +22,7 @@
         },
         {
             "type": 2,
-            "text": "/languages"
+            "text": "/language"
         },
         {
             "type": 2,
@@ -67,6 +67,74 @@
         {
             "type": 0,
             "text": "ceira em canais_repl canais"
+        },
+        {
+            "type": 1,
+            "text": "/daily"
+        },
+        {
+            "type": 1,
+            "text": "/gta"
+        },
+        {
+            "type": 1,
+            "text": "/ghostmode"
+        },
+        {
+            "type": 2,
+            "text": "Norbit"
+        },
+        {
+            "type": 2,
+            "text": "Slondinho gameplays"
+        },
+        {
+            "type": 2,
+            "text": "Everybody Hates Chris"
+        },
+        {
+            "type": 2,
+            "text": "Em busca da caça ao tomate"
+        },
+        {
+            "type": 0,
+            "text": "Terraria"
+        },
+        {
+            "type": 0,
+            "text": "OpenTTD"
+        },
+        {
+            "type": 0,
+            "text": "Adventure Communist"
+        },
+        {
+            "type": 2,
+            "text": "As branquelas"
+        },
+        {
+            "type": 1,
+            "text": "Chirp - C418"
+        },
+        {
+            "type": 1,
+            "text": "Rubedo - Lena Raine"
+        },
+        {
+            "type": 1,
+            "text": "Darude Sandstorm"
+        },
+        {
+            "type": 1,
+            "text": "All Star Smash Mouth"
+        },
+        {
+            "type": 1,
+            "text": "/nikocado"
+        },
+        {
+            "type": 1,
+            "text": "/cat"
         }
     ]
 }

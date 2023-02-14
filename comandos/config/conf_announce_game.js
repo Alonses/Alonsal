@@ -35,9 +35,10 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-        if (interaction.user.id !== client.owners[0]) return
+        if (interaction.user.id !== client.owners[0])
+            return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar essi comando :coisaboa:", ephemeral: true })
 
-        await interaction.deferReply()
+        interaction.deferReply({ ephemeral: user.misc.ghost_mode })
 
         const entradas = interaction.options.data
 

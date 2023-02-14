@@ -15,7 +15,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+        return client.tls.reply(user, "inic.error.develop", true, 5)
 
         // console.log(user.badges.badge_list)
 
