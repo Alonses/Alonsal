@@ -249,6 +249,6 @@ module.exports = {
                 })
             })
         } else // Ranking global
-            return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+            return client.tls.reply(user, "inic.error.develop", true, 5)
     }
 }

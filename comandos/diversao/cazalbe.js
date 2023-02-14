@@ -57,7 +57,7 @@ module.exports = {
 			return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
 		} else {
 
-			return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+			return client.tls.reply(user, "inic.error.develop", true, 5)
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
 				.then(response => response.json())

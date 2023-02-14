@@ -49,7 +49,7 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        return interaction.reply({ content: 'Uma ceira bem enceirada vem por aí...', ephemeral: true })
+        return client.tls.reply(user, "inic.error.develop", true, 5)
 
         // Validando existência de badges antes do comando
         if (user.badges.badge_list.length <= 0)
