@@ -27,7 +27,7 @@ async function gera_relatorio(client, proxima_att) {
     const date1 = new Date()
     const bot = client.auto.getRelatorio()
 
-    let canais_texto = client.channels().filter((c) => c.type === 0).size
+    let canais_texto = client.channels(0).size
     let members = 0, processamento = '🎲 Processamento\n'
 
     client.guilds().forEach(async guild => {
