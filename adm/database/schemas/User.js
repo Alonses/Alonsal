@@ -5,23 +5,21 @@ const schema = new mongoose.Schema({
     uid: String,
     lang: { type: String, default: "pt-br" },
     social: {
-        steam: { type: String, default: "" },
-        lastfm: { type: String, default: "" },
-        pula_predios: { type: String, default: "" }
+        steam: { type: String, default: null },
+        lastfm: { type: String, default: null },
+        pula_predios: { type: String, default: null }
     },
     misc: {
         color: { type: String, default: "#29BB8E" },
         daily: String,
         money: { type: Number, default: 0 },
         embed: { type: String, default: "#29BB8E" },
-        locale: { type: String, default: "" },
+        locale: { type: String, default: null },
         ghost_mode: { type: Boolean, default: false }
     },
     badges: {
         fixed_badge: String,
-        badge_list: [{ key: String, value: Number }]
-    },
-    conquistas: [{ key: String, value: Number }]
+    }
 })
 
 const model = mongoose.model("User", schema)

@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-// const { buildAllBadges } = require('../../adm/data/badges')
+const { buildAllBadges } = require('../../adm/data/badges')
 
 // const busca_achievements = require('../../adm/data/conquistas')
 
@@ -191,7 +191,8 @@ module.exports = {
                     discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
-            // let badges = buildAllBadges(client, interaction)
+            let id_badges = await client.getBadges(user_alvo.id)
+            let badges = await buildAllBadges(client, user, id_badges)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
             const infos_user = new EmbedBuilder()
@@ -224,12 +225,12 @@ module.exports = {
                 )
                 .setFooter({ text: `${tipo_user} ${nota_rodape}` })
 
-            // if (badges.length > 0)
-            //     infos_user.addFields({
-            //         name: ':trophy: **Badges**',
-            //         value: badges,
-            //         inline: false
-            //     })
+            if (badges.length > 0)
+                infos_user.addFields({
+                    name: ':trophy: **Badges**',
+                    value: badges,
+                    inline: false
+                })
 
             return interaction.reply({ embeds: [infos_user], ephemeral: user.misc.ghost_mode })
 

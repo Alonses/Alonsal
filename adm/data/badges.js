@@ -9,50 +9,49 @@ const badgeTypes = {
     ALL: 2
 }
 
-module.exports.busca_badges = async (client, type, id_alvo) => {
+function busca_badges(client, type, alvo) {
 
-    // Retorna a badge bruta
+    // Retorna os dados de uma badge única
     if (type === badgeTypes.SINGLE)
-        return new Badge(badge_ids[id_alvo], badge_names[id_alvo], client.emoji(badge_ids[id_alvo]))
+        return new Badge(badge_ids[alvo], badge_names[alvo], client.emoji(badge_ids[alvo]))
 
     const all_badges = new BadgeCollection()
 
-    const user = await client.getUser(id_alvo)
-
+    // Buscando a badge fixada do usuário
     if (type === badgeTypes.FIXED) {
-        const id = user.badges.fixed_badge
+        const id = alvo.badges.fixed_badge
         if (!id) return null
         return new Badge(badge_ids[id], badge_names[id], client.emoji(badge_ids[id]))
-    } else if (user.badges.badge_list)
-        user.badges.badge_list.forEach(valor => {
-            const id = parseInt(Object.keys(valor)[0])
+    } else {
 
-            // Listando todas as badges que o usuário possui
-            all_badges.push(new Badge(badge_ids[id], badge_names[id], client.emoji(badge_ids[id])))
+        // Listando todas as badges que o usuário possui
+        const badges = client.getBadges(alvo.id)
+
+        badges.forEach(valor => {
+            all_badges.push(new Badge(badge_ids[valor.badge], badge_names[valor.badge], client.emoji(badge_ids[valor.badge])))
         })
-
+    }
 
     return all_badges
 }
 
-async function buildAllBadges(client, interaction) {
-    const id = interaction.user.id
-    const user = await client.getUser(id)
-
+async function buildAllBadges(client, user, badges) {
     let text = ""
 
-    user.badges.badge_list.forEach(item => {
-        const id = item.key
+    badges.forEach(item => {
+
+        const id = item.badge
         const name = badge_names[id]
         const emoji = client.emoji(badge_ids[id])
 
-        text += `${emoji} \`${name}\`, ${client.tls.phrase(user, "dive.badges.ganhou")} <t:${item.value}:f>\n`
+        text += `${emoji} \`${name}\`, ${client.tls.phrase(user, "dive.badges.ganhou")} <t:${item.timestamp}:f>\n`
     })
 
     return text
 }
 
 module.exports.badgeTypes = badgeTypes
+module.exports.busca_badges = busca_badges
 module.exports.buildAllBadges = buildAllBadges
 
 class Badge {
@@ -70,7 +69,7 @@ class BadgeCollection {
         this.badges.push(badge)
     }
 
-    build(client, interaction) {
-        return buildAllBadges(client, interaction)
+    build(client, badges) {
+        return buildAllBadges(client, user, badges)
     }
 }

@@ -49,27 +49,25 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        return client.tls.reply(user, "inic.error.develop", true, 5)
+        const badges = await client.getBadges(interaction.user.id)
 
         // Validando existência de badges antes do comando
-        if (user.badges.badge_list.length <= 0)
+        if (badges.length <= 0)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
 
         let all_badges = []
-        const badge_list = user.badges.badge_list
 
-        badge_list.forEach(valor => {
-            all_badges.push(parseInt(Object.keys(valor)[0]))
+        badges.forEach(valor => {
+            all_badges.push(valor.badge)
         })
 
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
-            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus(client, all_badges, interaction)], ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus(client, interaction, user, all_badges)], ephemeral: true })
         else {
             user.updateOne({ uid: id },
                 {
                     badges: {
                         fixed_badge: null,
-                        badge_list: badge_list
                     }
                 })
         }

@@ -15,20 +15,18 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        return client.tls.reply(user, "inic.error.develop", true, 5)
+        const badges = await client.getBadges(interaction.user.id)
 
-        // console.log(user.badges.badge_list)
+        // Buscando as badges do usuário
+        if (badges.length <= 0)
+            return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
 
-        // // Buscando as badges do usuário
-        // if (user.badges.badge_list.length <= 0 || !user.badges.badge_list)
-        //     return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
+        const embed = new EmbedBuilder()
+            .setTitle(`> ${client.tls.phrase(user, "dive.badges.suas_badges")}`)
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription(await buildAllBadges(client, user, badges))
+            .setFooter({ text: client.tls.phrase(user, "dive.badges.rodape") })
 
-        // const embed = new EmbedBuilder()
-        //     .setTitle(`> ${client.tls.phrase(user, "dive.badges.suas_badges")}`)
-        //     .setColor(client.embed_color(user.misc.color))
-        //     .setDescription(await buildAllBadges(client, interaction))
-        //     .setFooter({ text: client.tls.phrase(user, "dive.badges.rodape") })
-
-        // interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }
