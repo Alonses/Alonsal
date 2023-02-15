@@ -86,18 +86,7 @@ async function setLang(interaction, lang) {
     })
 }
 
-function getLang(interaction) {
-
-    // const idiomas = ["pt-br", "es-es", "fr-fr", "en-us", "it-it"]
-    // await getUser(interaction.user.id)
-    //     .then(user => {
-    //         console.log(user.locale)
-
-    //         if (idiomas.includes((user.locale)))
-    //             return user.locale
-    //         else return default_lang
-    // })
-
+function getLang() {
     return default_lang
 }
 

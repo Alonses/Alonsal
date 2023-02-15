@@ -9,6 +9,6 @@ module.exports = async ({ client, user, interaction }) => {
         user.save()
         let new_badge = busca_badges(client, badgeTypes.SINGLE, parseInt(interaction.values[0]))
 
-        interaction.update({ content: `${client.emoji(new_badge[0])} | Badge \`${new_badge[1]}\` ${client.tls.phrase(user, "dive.badges.badge_fixada")}`, components: [], ephemeral: true })
+        interaction.update({ content: `${new_badge.emoji} | Badge \`${new_badge.name}\` ${client.tls.phrase(user, "dive.badges.badge_fixada")}`, components: [], ephemeral: true })
     }
 }

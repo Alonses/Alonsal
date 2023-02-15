@@ -1,5 +1,6 @@
-const { readdirSync } = require('fs')
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+
+const { migrateBadges } = require('../../adm/database/schemas/Badge')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,17 +9,12 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-        // for (const file of readdirSync(`./arquivos/data/user/`)) {
-        //     const { id, lang, social, misc, badges, conquistas } = require(`../../arquivos/data/user/${file}`)
+        await interaction.deferReply({ ephemeral: true })
 
-        //     if (id == user.uid) {
-        //         console.log(badges.badge_list)
-        //         user.badges.badge_list = badges.badge_list
-
-        //         console.log(user.badges.badge_list)
-        //         user.save()
-        //     }
-        // }
+        await migrateBadges()
+            .then(() => {
+                interaction.editReply({ content: `:satellite: | Migração para o banco de dados concluída`, ephemeral: true })
+            })
 
         // interaction.deferReply()
 

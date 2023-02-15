@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User.js')
+const { getBadges } = require('./adm/database/schemas/Badge.js')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
@@ -99,6 +100,10 @@ class CeiraClient {
 
     getUser(id_user) {
         return getUser(id_user)
+    }
+
+    getBadges(id_user) {
+        return getBadges(id_user)
     }
 
     notify(id_alvo, conteudo) {

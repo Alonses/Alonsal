@@ -1,8 +1,8 @@
 const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
-const {busca_badges, badgeTypes} = require('../../adm/data/badges')
+const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
-module.exports = (client, dados, interaction) => {
+module.exports = (client, interaction, user, dados) => {
 
     const opcoes = []
     let insersoes = []
