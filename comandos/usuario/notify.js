@@ -14,8 +14,8 @@ module.exports = {
         })
         .setDescription("⌠👤⌡ Disables or enables bot DM notifications")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Deshabilita o habilita las notificaciones de DM de bot',
-            "es-ES": '⌠👤⌡ Todos los comandos que use se mostrarán solo para usted',
+            "pt-BR": '⌠👤⌡ Desabilitar ou habilitar as notificações do bot via DM',
+            "es-ES": '⌠👤⌡ Deshabilita o habilita las notificaciones de DM de bot',
             "fr": '⌠👤⌡ Désactive ou active les notifications DM du bot',
             "it": '⌠👤⌡ Disabilita o abilita le notifiche DM dei bot',
             "ru": '⌠👤⌡ Отключить или включить уведомления ботов в DM'
