@@ -23,10 +23,10 @@ module.exports = {
     async execute(client, user, interaction) {
 
         // Ativa ou desativa o modo fantasma e salva
-        user.misc.ghost_mode = !user.misc.ghost_mode
+        user.conf.ghost_mode = !user?.conf.ghost_mode || true
         user.save()
 
-        if (user.misc.ghost_mode)
+        if (user.conf.ghost_mode)
             interaction.reply({ content: `:ghost: | ${client.tls.phrase(user, "mode.oculto.ativo")}`, ephemeral: true })
         else
             interaction.reply({ content: `${client.emoji(emojis.ghostbusters)} | ${client.tls.phrase(user, "mode.oculto.desativo")}`, ephemeral: true })

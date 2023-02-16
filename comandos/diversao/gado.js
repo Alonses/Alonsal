@@ -48,13 +48,13 @@ module.exports = {
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")
-                interaction.reply({ content: `O <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: `O <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user?.conf.ghost_mode || false })
             else
-                interaction.reply({ content: `The <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: `The <@${alvo.id}> ${gadisissimo[num]}`, ephemeral: user?.conf.ghost_mode || false })
         else
             if (idioma_definido === "pt-br")
-                interaction.reply({ content: `Você ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: `Você ${interaction.user} ${gadisissimo[num]}`, ephemeral: user?.conf.ghost_mode || false })
             else
-                interaction.reply({ content: `You ${interaction.user} ${gadisissimo[num]}`, ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: `You ${interaction.user} ${gadisissimo[num]}`, ephemeral: user?.conf.ghost_mode || false })
     }
 }

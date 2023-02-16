@@ -19,6 +19,6 @@ module.exports = {
 			"ru": '⌠😂⌡ Занимайтесь любовью, а не войной'
 		}),
 	async execute(client, user, interaction) {
-		interaction.reply({ content: 'https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263', ephemeral: user.misc.ghost_mode })
+		interaction.reply({ content: 'https://tenor.com/view/galerito-gil-das-esfihas-meme-br-slondo-gif-15414263', ephemeral: user?.conf.ghost_mode || false })
 	}
 }

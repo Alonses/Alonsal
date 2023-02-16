@@ -15,6 +15,10 @@ async function getBadges(uid) {
     return model.find({ uid: uid })
 }
 
+async function createBadge(uid, badge_id, timestamp) {
+    await model.create({ uid: uid, badge: badge_id, timestamp: timestamp })
+}
+
 async function migrateBadges() {
 
     for (const file of readdirSync(`./arquivos/data/user/`)) {
@@ -30,4 +34,5 @@ async function migrateBadges() {
 
 module.exports.Badge = model
 module.exports.getBadges = getBadges
+module.exports.createBadge = createBadge
 module.exports.migrateBadges = migrateBadges

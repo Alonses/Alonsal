@@ -3,6 +3,8 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
+const { createBadge } = require('../../adm/database/schemas/Badge')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_badge")
@@ -40,16 +42,17 @@ module.exports = {
 
         const all_badges = []
 
-        if (user.badges.badge_list.length > 0)
-            user.badges.badge_list.forEach(valor => {
-                all_badges.push(parseInt(Object.keys(valor)[0])) // Listando todas as badges que o usuário possui
+        const badges_user = await client.getBadges(id_alvo)
+
+        if (badges_user.length > 0)
+            badges_user.forEach(valor => {
+                all_badges.push(parseInt(valor.badge)) // Listando todas as badges que o usuário possui
             })
 
         if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
 
             const date1 = new Date()
-            user.badges.badge_list.push({ key: badge_alvo, value: Math.floor(date1.getTime() / 1000) })
-            user.save()
+            await createBadge(id_alvo, badge_alvo, Math.floor(date1.getTime() / 1000))
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 
@@ -57,7 +60,8 @@ module.exports = {
 
                 let alvo = await client.getUser(user_interno.id)
 
-                user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+                if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
+                    user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
                 interaction.reply({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })

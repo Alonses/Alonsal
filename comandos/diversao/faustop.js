@@ -28,6 +28,6 @@ module.exports = {
 
         const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: 'faustop.ogg' })
 
-        return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
+        return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
     }
 }

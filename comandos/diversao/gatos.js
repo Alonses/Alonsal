@@ -26,7 +26,7 @@ module.exports = {
         fetch(`https://api.thecatapi.com/v1/images/search?api_key=${process.env.catapi}`)
             .then(res => res.json())
             .then(res => {
-                interaction.reply({ content: res[0].url, ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: res[0].url, ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

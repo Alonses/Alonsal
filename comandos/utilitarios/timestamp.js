@@ -147,6 +147,6 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter(aviso)
 
-        interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+        interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
     }
 }

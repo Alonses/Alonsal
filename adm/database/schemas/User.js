@@ -15,10 +15,11 @@ const schema = new mongoose.Schema({
         money: { type: Number, default: 0 },
         embed: { type: String, default: "#29BB8E" },
         locale: { type: String, default: null },
-        ghost_mode: { type: Boolean, default: false }
+        fixed_badge: { type: String, default: null }
     },
-    badges: {
-        fixed_badge: String,
+    conf: {
+        ghost_mode: { type: Boolean, default: false },
+        notify: { type: Boolean, default: true }
     }
 })
 

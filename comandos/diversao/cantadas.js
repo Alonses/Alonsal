@@ -19,7 +19,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`> "${res.texto}"`)
 
-                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

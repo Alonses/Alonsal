@@ -91,13 +91,14 @@ module.exports = {
         if (alvo.uid === client.id() && quantia === 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: user.misc.ghost_mode })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false })
 
-        if (alvo.uid !== client.id()) // Notificando o recebedor
-            client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
+        if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
+            if (alvo.uid !== client.id())
+                client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
 
-                // Enviando a mensagem no idioma do usuário alvo
-                user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.formata_num(bufunfas))} ${client.emoji(emojis_dancantes)}`)
-            })
+                    // Enviando a mensagem no idioma do usuário alvo
+                    user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.formata_num(bufunfas))} ${client.emoji(emojis_dancantes)}`)
+                })
     }
 }

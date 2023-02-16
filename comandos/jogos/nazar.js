@@ -28,7 +28,7 @@ module.exports = {
                     .setDescription(`${client.tls.phrase(user, "game.nazar.descricao").replace("regiao_repl", dados.location.region.name).replace("preciso_repl", dados.location.region.precise).replace("proximo_repl", dados.location.near_by[0]).replace("proximo_2_repl", dados.location.near_by[1])}`)
                     .setImage(dados.location.image)
 
-                interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
             })
             .catch(() => {
                 client.tls.reply(interaction, user, "game.nazar.error_1", true, 1)
