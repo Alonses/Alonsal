@@ -14,6 +14,6 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const baidu = new AttachmentBuilder('./arquivos/img/baidu.png')
-        interaction.reply({ content: client.tls.phrase(user, "dive.baidu.baidu"), files: [baidu], ephemeral: user.misc.ghost_mode })
+        interaction.reply({ content: client.tls.phrase(user, "dive.baidu.baidu"), files: [baidu], ephemeral: user?.conf.ghost_mode || false })
     }
 }

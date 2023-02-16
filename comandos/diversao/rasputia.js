@@ -40,7 +40,7 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
+			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user?.conf.ghost_mode || false })
 		} else if (interaction.options.getSubcommand() === "frase") {
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
@@ -53,7 +53,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
 				})
 		} else {
 			let i = 0
@@ -65,7 +65,7 @@ module.exports = {
 
 			const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${num}.ogg`, { name: 'norbit.ogg' })
 
-			return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
+			return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
 		}
 	}
 }

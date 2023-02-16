@@ -114,6 +114,6 @@ module.exports = {
         else
             somatoria = somatoria.toLocaleString("pt-BR")
 
-        interaction.reply({ content: `${client.emoji(emojis.dice)} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: user.misc.ghost_mode })
+        interaction.reply({ content: `${client.emoji(emojis.dice)} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: user?.conf.ghost_mode || false })
     }
 }

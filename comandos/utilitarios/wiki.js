@@ -112,15 +112,15 @@ module.exports = {
                         .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setURL(res.AbstractURL)
 
-                    interaction.reply({ embeds: [Embed], ephemeral: user.misc.ghost_mode })
+                    interaction.reply({ embeds: [Embed], ephemeral: user?.conf.ghost_mode || false })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`, ephemeral: user.misc.ghost_mode })
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`, ephemeral: user?.conf.ghost_mode || false })
                     else
-                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: user.misc.ghost_mode })
+                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: user?.conf.ghost_mode || false })
                 }
             })
             .catch(() => {

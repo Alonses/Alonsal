@@ -47,7 +47,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.reply({ embeds: [embed], components: [row], ephemeral: user.misc.ghost_mode })
+                interaction.reply({ embeds: [embed], components: [row], ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

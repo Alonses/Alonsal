@@ -31,7 +31,7 @@ module.exports = {
         let data = ""
 
         // Aumentando o tempo de duração da resposta
-        interaction.deferReply({ ephemeral: user.misc.ghost_mode })
+        interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
 
         if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
 
@@ -68,7 +68,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
-                    interaction.editReply({ embeds: [embed_eventos], ephemeral: user.misc.ghost_mode })
+                    interaction.editReply({ embeds: [embed_eventos], ephemeral: user?.conf.ghost_mode || false })
                 })
         } else { // Um acontecimento aleatório
 
@@ -105,7 +105,7 @@ module.exports = {
                         .setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                         .setImage(res.imagem)
 
-                    interaction.editReply({ embeds: [acontecimento], ephemeral: user.misc.ghost_mode })
+                    interaction.editReply({ embeds: [acontecimento], ephemeral: user?.conf.ghost_mode || false })
                 })
                 .catch(() => {
                     interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true })

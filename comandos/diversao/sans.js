@@ -39,6 +39,6 @@ module.exports = {
             else
                 texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
-        interaction.reply({ content: `\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``, ephemeral: user.misc.ghost_mode })
+        interaction.reply({ content: `\`\`\`${texto_entrada.join("").slice(0, 1990)}\`\`\``, ephemeral: user?.conf.ghost_mode || false })
     }
 }

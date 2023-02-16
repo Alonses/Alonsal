@@ -19,7 +19,7 @@ function busca_badges(client, type, alvo) {
 
     // Buscando a badge fixada do usuário
     if (type === badgeTypes.FIXED) {
-        const id = alvo.badges.fixed_badge
+        const id = alvo.misc.fixed_badge
         if (!id) return null
         return new Badge(badge_ids[id], badge_names[id], client.emoji(badge_ids[id]))
     } else {

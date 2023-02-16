@@ -37,7 +37,7 @@ module.exports = {
 			return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
+			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user?.conf.ghost_mode || false })
 		} else {
 
 			fetch(`${process.env.url_apisal}/random?jailson`)
@@ -50,7 +50,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
 				})
 		}
 	}

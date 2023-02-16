@@ -120,7 +120,7 @@ module.exports = {
                             }
                         )
 
-                return interaction.reply({ embeds: [infos_ch], ephemeral: user.misc.ghost_mode })
+                return interaction.reply({ embeds: [infos_ch], ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

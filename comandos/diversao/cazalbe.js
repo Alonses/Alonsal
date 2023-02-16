@@ -51,10 +51,10 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user.misc.ghost_mode })
+			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user?.conf.ghost_mode || false })
 		else if (interaction.options.getSubcommand() === "laugh") {
 			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.ogg')
-			return interaction.reply({ files: [file], ephemeral: user.misc.ghost_mode })
+			return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
 		} else {
 
 			return client.tls.reply(user, "inic.error.develop", true, 5)
@@ -69,7 +69,7 @@ module.exports = {
 						.setColor(client.embed_color(user.misc.color))
 						.setDescription(`${res.question}\n${res.answer}`)
 
-					interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
 				})
 		}
 	}

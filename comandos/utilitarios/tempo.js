@@ -289,7 +289,7 @@ module.exports = {
                                 )
                                 .setFooter({ text: nota_rodape })
 
-                            return interaction.reply({ embeds: [clima_atual], ephemeral: user.misc.ghost_mode })
+                            return interaction.reply({ embeds: [clima_atual], ephemeral: user?.conf.ghost_mode || false })
                         })
                 }
             })

@@ -40,7 +40,7 @@ module.exports = {
                         // Validando se o arquivo do emoji é um gif
                         if (image.status == 415) url_emoji = url_emoji.replace(".gif", ".png")
 
-                        return interaction.reply({ content: url_emoji, ephemeral: user.misc.ghost_mode })
+                        return interaction.reply({ content: url_emoji, ephemeral: user?.conf.ghost_mode || false })
                     })
             } else
                 return client.tls.reply(interaction, user, "mode.emojis.emoji_custom", true, 2)

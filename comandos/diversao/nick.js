@@ -34,7 +34,7 @@ module.exports = {
 
         user_alvo.setNickname(shuffleArray(apelido.split("")))
             .then(() => {
-                interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user.misc.ghost_mode })
+                interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user?.conf.ghost_mode || false })
             })
             .catch(err => {
                 console.log(err)

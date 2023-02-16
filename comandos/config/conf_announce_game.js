@@ -38,7 +38,7 @@ module.exports = {
         if (interaction.user.id !== client.owners[0])
             return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar essi comando :coisaboa:", ephemeral: true })
 
-        interaction.deferReply({ ephemeral: user.misc.ghost_mode })
+        await interaction.deferReply({ ephemeral: true })
 
         const entradas = interaction.options.data
 

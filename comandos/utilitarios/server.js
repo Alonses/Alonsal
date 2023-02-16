@@ -155,7 +155,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
-                    return interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                    return interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
                 })
         }
     }

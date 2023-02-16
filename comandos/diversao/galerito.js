@@ -14,6 +14,6 @@ module.exports = {
 		}),
 	async execute(client, user, interaction) {
 		const num = Math.round((gifs.length - 1) * Math.random())
-		interaction.reply({ content: gifs[num], ephemeral: user.misc.ghost_mode })
+		interaction.reply({ content: gifs[num], ephemeral: user?.conf.ghost_mode || false })
 	}
 }

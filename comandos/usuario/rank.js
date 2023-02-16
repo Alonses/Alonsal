@@ -243,7 +243,7 @@ module.exports = {
 
                     embed.setThumbnail(img_embed)
 
-                    interaction.reply({ embeds: [embed], ephemeral: user.misc.ghost_mode })
+                    interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
                 })
             })
         } else // Ranking global

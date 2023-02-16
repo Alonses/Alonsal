@@ -12,6 +12,6 @@ module.exports = {
 			"ru": '⌠😂⌡ Подали??'
 		}),
 	async execute(client, user, interaction) {
-		interaction.reply({ content: `${client.tls.phrase(user, "dive.esfiha.asf")} :yum: :yum: :yum:\n https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713`, ephemeral: user.misc.ghost_mode })
+		interaction.reply({ content: `${client.tls.phrase(user, "dive.esfiha.asf")} :yum: :yum: :yum:\n https://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713`, ephemeral: user?.conf.ghost_mode || false })
 	}
 }

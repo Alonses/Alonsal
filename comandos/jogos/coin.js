@@ -50,6 +50,6 @@ module.exports = {
         if (escolha !== moeda) // Errou
             resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.errou")} ${client.emoji(emojis.epic_embed_fail2)}`
 
-        return interaction.reply({ content: resultado, ephemeral: user.misc.ghost_mode })
+        return interaction.reply({ content: resultado, ephemeral: user?.conf.ghost_mode || false })
     }
 }
