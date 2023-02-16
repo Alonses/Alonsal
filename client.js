@@ -10,8 +10,11 @@ const translate = require('./adm/formatadores/translate')
 
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
-const modo_develop = 0, force_update = 0, silent = 0
-let status = 1, ranking = 1
+const update_commands = 0
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0
+
+if (update_commands)
+    modo_develop = 0, force_update = 1, silent = 1
 
 let token = process.env.token_1, clientId = process.env.client_1
 
