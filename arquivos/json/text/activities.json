@@ -135,6 +135,66 @@
         {
             "type": 2,
             "text": "/cat"
+        },
+        {
+            "type": 0,
+            "text": "notificações no void"
+        },
+        {
+            "type": 0,
+            "text": "comandos fantasmas"
+        },
+        {
+            "type": 0,
+            "text": "ghost commands"
+        },
+        {
+            "type": 0,
+            "text": "notifications in the void"
+        },
+        {
+            "type": 2,
+            "text": "Lipps Inc. - Funktown"
+        },
+        {
+            "type": 2,
+            "text": "Dschinghis Khan - Moskau"
+        },
+        {
+            "type": 0,
+            "text": "Mindustry"
+        },
+        {
+            "type": 0,
+            "text": "Factorio"
+        },
+        {
+            "type": 0,
+            "text": "Pula Prédios"
+        },
+        {
+            "type": 0,
+            "text": "My Friend Peppa Pig"
+        },
+        {
+            "type": 0,
+            "text": "Mindustry"
+        },
+        {
+            "type": 1,
+            "text": "Casos de Família"
+        },
+        {
+            "type": 1,
+            "text": "Programa do Ratinho"
+        },
+        {
+            "type": 1,
+            "text": "Apenas um Show"
+        },
+        {
+            "type": 1,
+            "text": "Peppa Pig"
         }
     ]
 }
