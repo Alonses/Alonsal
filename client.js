@@ -11,7 +11,7 @@ const translate = require('./adm/formatadores/translate')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 1, status = 1, ranking = 1, force_update = 0, silent = 0
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0
 
 if (update_commands)
     modo_develop = 0, force_update = 1, silent = 1
