@@ -38,7 +38,7 @@
         },
         {
             "type": 0,
-            "text": "minecraft"
+            "text": "Minecraft"
         },
         {
             "type": 0,
@@ -195,6 +195,30 @@
         {
             "type": 1,
             "text": "Peppa Pig"
+        },
+        {
+            "type": 2,
+            "text": "Santigold - Disparate Youth"
+        },
+        {
+            "type": 1,
+            "text": "Pesadelo na cozinha"
+        },
+        {
+            "type": 1,
+            "text": "Barbie: Lago dos cisnes"
+        },
+        {
+            "type": 2,
+            "text": "Jefferson Airplana - White Rabbit"
+        },
+        {
+            "type": 2,
+            "text": "Supertramp - Goodbye Stranger"
+        },
+        {
+            "type": 0,
+            "text": "comandos ruins no seu servidor"
         }
     ]
 }

@@ -17,6 +17,8 @@ module.exports = async function ({ client, err, local }) {
     if (process.env.error_channel)
         client.notify(process.env.error_channel, embed_error)
 
+    console.log(err)
+
     const caso = "epic_embed"
     require('../automaticos/relatorio.js')({ client, caso })
 }

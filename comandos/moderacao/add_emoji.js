@@ -164,16 +164,16 @@ module.exports = {
         // Coletando todas as entradas
         entradas.forEach(valor => {
 
-            if (valor.name == "name")
+            if (valor.name === "name")
                 dados.nome = valor.value
 
-            if (valor.name == "emoji") // Emoji personalizado
+            if (valor.name === "emoji") // Emoji personalizado
                 dados.personalizado = valor.value
 
-            if (valor.name == "file")
+            if (valor.name === "file")
                 dados.url = valor.attachment.url
 
-            if (valor.name == "category") // Categoria para a figurinha
+            if (valor.name === "category") // Categoria para a figurinha
                 dados.categoria = valor.value
         })
 
@@ -195,7 +195,7 @@ module.exports = {
                             .then(image => {
 
                                 // Validando se a imagem do emoji é um gif
-                                if (image.status == 415) dados.url = dados.url.replace(".gif", ".png")
+                                if (image.status === 415) dados.url = dados.url.replace(".gif", ".png")
 
                                 criar_item(dados, interaction, client, user)
                             })
@@ -220,10 +220,10 @@ function criar_item(dados, interaction, client, user) {
             .then(emoji => interaction.reply({ content: `${emoji} | ${client.tls.phrase(user, "mode.emojis.emoji_criado").replace("nome_repl", dados.nome)}`, ephemeral: true }))
             .catch(err => {
 
-                if (err.rawError.code == 50045)
+                if (err.rawError.code === 50045)
                     return client.tls.reply(interaction, user, "mode.emojis.emoji_size", true, 0)
 
-                if (err.rawError.code == 30008) // Máximos de emojis
+                if (err.rawError.code === 30008) // Máximos de emojis
                     return client.tls.reply(interaction, user, "mode.emojis.emoji_max", true, 0)
 
                 return client.tls.reply(interaction, user, "mode.emojis.emoji_error", true, 0)
@@ -234,10 +234,10 @@ function criar_item(dados, interaction, client, user) {
             .then(() => interaction.reply({ content: `${client.tls.phrase(user, "mode.emojis.figurinha_criada").replace("nome_repl", dados.nome)}`, ephemeral: true }))
             .catch(err => {
 
-                if (err.rawError.code == 50045)
+                if (err.rawError.code === 50045)
                     return client.tls.reply(interaction, user, "mode.emojis.sticker_size", true, 0)
 
-                if (err.rawError.code == 30039) // Máximo de figurinhas
+                if (err.rawError.code === 30039) // Máximo de figurinhas
                     return client.tls.reply(interaction, user, "mode.emojis.sticker_max", true, 0)
 
                 return client.tls.reply(interaction, user, "mode.emojis.sticker_error", true, 0)

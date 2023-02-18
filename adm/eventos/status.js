@@ -64,10 +64,10 @@ function dispara_status(client, status_apisal) {
                     else
                         bandeirolas_2.push(bandeira_idiomas[i])
 
-                    if (counter == 4)
+                    if (counter === 4)
                         bandeirolas_1.push("\n")
 
-                    if (i % 7 == 0) {
+                    if (i % 7 === 0) {
                         counter = 0
                         bandeirolas_2.push("\n")
                     }

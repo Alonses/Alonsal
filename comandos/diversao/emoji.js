@@ -38,7 +38,7 @@ module.exports = {
                     .then(image => {
 
                         // Validando se o arquivo do emoji é um gif
-                        if (image.status == 415) url_emoji = url_emoji.replace(".gif", ".png")
+                        if (image.status === 415) url_emoji = url_emoji.replace(".gif", ".png")
 
                         return interaction.reply({ content: url_emoji, ephemeral: user?.conf.ghost_mode || false })
                     })

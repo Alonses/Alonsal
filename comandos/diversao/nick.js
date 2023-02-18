@@ -18,7 +18,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        if (interaction.guild.ownerId == interaction.user.id)
+        if (interaction.guild.ownerId === interaction.user.id)
             return client.tls.reply(interaction, user, "dive.nick.permissao_1", true, 0)
 
         // Permissões do bot no servidor

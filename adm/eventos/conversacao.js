@@ -22,7 +22,7 @@ module.exports = async function ({ client, message, text }) {
         text = text.split("> ")[1] || text
         text = text.replace("alonsal", "").replace(client.id(), "").trim()
 
-        if (text.trim() == "<@>" || text.trim() == "") {
+        if (text.trim() === "<@>" || text.trim() === "") {
             let texto = sem_texto[Math.floor(sem_texto.length * Math.random())]
 
             if (texto.includes("user_replace"))

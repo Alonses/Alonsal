@@ -20,7 +20,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
     const canais_clientes = []
 
-    if (objetos_anunciados.status == 501) {
+    if (objetos_anunciados.status === 501) {
         client.notify(process.env.feeds_channel, ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
         return
     }
@@ -49,7 +49,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
         lista_links.push({ name: nome_jogo, type: 4, value: valor.link })
 
-        if (parseFloat(valor.preco) > valor_anterior || (parseInt(valor.preco) == 0 && objetos_anunciados.length == 1)) {
+        if (parseFloat(valor.preco) > valor_anterior || (parseInt(valor.preco) === 0 && objetos_anunciados.length === 1)) {
             valor_anterior = parseFloat(valor.preco)
             imagem_destaque = valor.thumbnail
         }
