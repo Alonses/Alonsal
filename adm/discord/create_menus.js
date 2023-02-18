@@ -2,7 +2,7 @@ const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
-const { fausto } = require('../../arquivos/json/text/emojis.json')
+const { fausto, rasputia } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = (alvo, client, interaction, user, dados) => {
 
@@ -12,34 +12,47 @@ module.exports = (alvo, client, interaction, user, dados) => {
     // Percorrendo as entradas informadas
     dados.forEach(valor => {
 
-        // Montando a lista de badges para escolher
-        if (alvo == "badges") {
-            const badge = busca_badges(client, badgeTypes.SINGLE, valor)
+        // Montando a lista de valores para escolher conforme o alvo de entrada
+        if (!insersoes.includes(valor)) {
 
-            if (!insersoes.includes(valor)) {
-                itens_menu.push({
-                    label: `${badge.name}`,
-                    emoji: `${badge.emoji}`,
-                    description: `${client.tls.phrase(user, "dive.badges.fixar")} ${badge.name}`,
-                    value: `${valor}`
-                })
+            let nome_label, emoji_label, descricao_label, valor_label
 
-                insersoes.push(valor)
+            if (alvo === "badges") {
+                const badge = busca_badges(client, badgeTypes.SINGLE, valor)
+
+                nome_label = badge.name
+                emoji_label = badge.emoji
+                descricao_label = `${client.tls.phrase(user, "dive.badges.fixar")} ${badge.name}`
+                valor_label = valor
             }
-        } else if (alvo == "fausto") {
 
-            // Montando a lista de sons do faustão para escolher
-            if (!insersoes.includes(valor)) {
-                itens_menu.push({
-                    label: valor,
-                    emoji: `${client.emoji(fausto)}`,
-                    description: `Escolher essa do faustop`,
-                    value: `${i - 1}`
-                })
+            if (alvo === "fausto" || alvo === "norbit") {
 
-                insersoes.push(valor)
+                nome_label = valor
+
+                if (alvo === "fausto")
+                    emoji_label = client.emoji(fausto)
+                else
+                    emoji_label = client.emoji(rasputia)
+
+                descricao_label = "Escolher essa do faustop"
+
+                if (alvo === "norbit")
+                    descricao_label = "Escolher essa do filme Norbit"
+
+                valor_label = i - 1
+
                 i++
             }
+
+            itens_menu.push({
+                label: nome_label,
+                emoji: emoji_label,
+                description: descricao_label,
+                value: `${valor_label}`
+            })
+
+            insersoes.push(valor)
         }
     })
 
@@ -47,8 +60,11 @@ module.exports = (alvo, client, interaction, user, dados) => {
     let titulo_menu = client.tls.phrase(user, "dive.badges.escolha_uma")
     let id_menu = `select_${alvo}_${interaction.user.id}`
 
-    if (alvo == "fausto")
+    if (alvo === "fausto")
         titulo_menu = "Escolha uma frase do faustão!"
+
+    if (alvo === "norbit")
+        titulo_menu = "Escolha uma frase do filme do Norbit!"
 
     const row = new ActionRowBuilder()
         .addComponents(

@@ -35,15 +35,13 @@ module.exports = {
             const data = new Date()
             let num = Math.round((i - 1) * Math.random())
 
-            if (data.getHours() == 20 && data.getMinutes() == 7)
+            if (data.getHours() === 20 && data.getMinutes() === 7)
                 num = Math.round(1 + (1 * Math.random())) > 1 ? 7 : 12;
 
             const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: 'faustop.ogg' })
 
             return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
-        } else {
-
-            return interaction.reply({ content: 'Escolha uma das frases abaixo!', components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode })
-        }
+        } else
+            return interaction.reply({ content: 'Escolha uma das frases abaixo!', components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
     }
 }

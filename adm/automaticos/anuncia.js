@@ -11,7 +11,7 @@ module.exports = async ({ client }) => {
     let controle = 0
 
     // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
-    if (date1.getDay() == 4 && date1.getHours() > 13)
+    if (date1.getDay() === 4 && date1.getHours() > 13)
         controle = 7
 
     const dias = [4, 3, 2, 1, controle, 6, 5]
@@ -35,7 +35,7 @@ function requisita_anuncio(client, aguardar_tempo) {
 
 async function gera_anuncio(client, proxima_att) {
 
-    if (process.env.client_1 == client.id())
+    if (process.env.client_1 === client.id())
         client.notify(process.env.feeds_channel, `:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
 
     fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API

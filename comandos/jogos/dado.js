@@ -85,7 +85,7 @@ module.exports = {
         let acrescimo = 0
 
         // Valor para adicionar a somatória caso informado
-        if (interaction.options.data.length == 3)
+        if (interaction.options.data.length ===3)
             acrescimo = interaction.options.data[2].value
 
         const faces = []

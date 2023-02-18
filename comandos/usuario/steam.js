@@ -307,7 +307,7 @@ module.exports = {
                     if (parseInt(jogos_user.replace(".", "")) < jogos_perfeitos)
                         nota_rodape = client.tls.phrase(user, "util.steam.suspeito")
 
-                    if (typeof conquistas_favoritas == "undefined" && typeof total_conquistas_favoritas == "undefined")
+                    if (typeof conquistas_favoritas === "undefined" && typeof total_conquistas_favoritas === "undefined")
                         jogo_favorito = ""
 
                     conquistas_user = conquistas_user.replace(",", ".").replace(/\s+/g, '')

@@ -24,7 +24,7 @@ function requisita_status(client) {
 
     let num
 
-    if (selected.length == activities.length)
+    if (selected.length === activities.length)
         selected = []
 
     // Ficará repetindo até o número não ter saído
@@ -35,7 +35,7 @@ function requisita_status(client) {
     let tempo_minimo = 0
 
     // Tempo mínimo para atividade assistindo
-    if (activities[num].type == 2)
+    if (activities[num].type === 2)
         tempo_minimo = 45000
 
     // Exibirá o status escolhido após um tempo aleatório

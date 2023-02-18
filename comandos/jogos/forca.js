@@ -54,7 +54,7 @@ module.exports = {
         } else {
 
             // Acionado caso seja escrito algo para o chute da palavra
-            if (interaction.options.data.length == 1) {
+            if (interaction.options.data.length ===1) {
                 const entrada = interaction.options.data[0].value.toLowerCase()
 
                 verifica_chute(client, entrada, interaction, user)
@@ -74,7 +74,7 @@ function verifica_chute(client, entrada, interaction, user) {
     let acerto = false
     let descobertas = games[interaction.user.id].descobertas.split(" ")
 
-    if (entrada.length == 1) { // Chutando por letras
+    if (entrada.length === 1) { // Chutando por letras
 
         // Barra caso a letra já tenha sido informada
         if (!games[interaction.user.id].entradas.includes(entrada)) {

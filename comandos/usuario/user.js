@@ -235,7 +235,7 @@ module.exports = {
             return interaction.reply({ embeds: [infos_user], ephemeral: user?.conf.ghost_mode || false })
 
             // O avatar do usuário
-        } else if (interaction.options.getSubcommand() == "avatar") {
+        } else if (interaction.options.getSubcommand() === "avatar") {
 
             const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
 

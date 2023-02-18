@@ -41,7 +41,7 @@ module.exports = {
             .then(res => res.json())
             .then(retorno => {
 
-                if (retorno.status == 404)
+                if (retorno.status === 404)
                     return client.tls.reply(interaction, user, "game.pula.error_1", true, 0)
 
                 const datas_pula = retorno.data

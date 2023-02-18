@@ -40,10 +40,10 @@ module.exports = {
             .then(response => response.json())
             .then(async dados_item => {
 
-                if (dados_item.status == 502)
+                if (dados_item.status === 502)
                     return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
 
-                if (dados_item.status == 404)
+                if (dados_item.status === 404)
                     return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.minecraft.nao_encontrado")} \`${interaction.options.data[0].value}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
 
                 let nome_item = dados_item.internal_name
@@ -160,7 +160,7 @@ module.exports = {
 
                 if (dados_item.wiki !== "") {
 
-                    let nome_wiki = idioma_definido == "pt-br" ? dados_item.name : dados_item.internal_name;
+                    let nome_wiki = idioma_definido === "pt-br" ? dados_item.name : dados_item.internal_name;
 
                     let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_wiki.replaceAll(" ", "_")}`
 

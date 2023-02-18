@@ -2,10 +2,12 @@ const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { readdirSync } = require('fs')
+const create_menus = require('../../adm/discord/create_menus.js')
 
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
 const { gifs } = require("../../arquivos/json/gifs/rasputia.json")
+const { relation } = require('../../arquivos/songs/norbit/songs.json')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -36,7 +38,11 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("fala")
-				.setDescription("⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit")),
+				.setDescription("⌠😂|🇧🇷⌡ Invoca uma fala do filme Norbit"))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName("menu")
+				.setDescription("⌠😂|🇧🇷⌡ Escolher uma frase do filme Norbit")),
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
@@ -55,7 +61,7 @@ module.exports = {
 
 					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
 				})
-		} else {
+		} else if (interaction.options.getSubcommand() === "fala") {
 			let i = 0
 
 			for (const file of readdirSync(`./arquivos/songs/norbit`).filter(file => file.endsWith('.ogg')))
@@ -66,6 +72,7 @@ module.exports = {
 			const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${num}.ogg`, { name: 'norbit.ogg' })
 
 			return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
-		}
+		} else
+			return interaction.reply({ content: 'Escolha uma das frases abaixo!', components: [create_menus("norbit", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
 	}
 }
