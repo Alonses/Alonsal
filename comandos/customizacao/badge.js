@@ -62,7 +62,7 @@ module.exports = {
         })
 
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
-            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus(client, interaction, user, all_badges)], ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus("badges", client, interaction, user, all_badges)], ephemeral: true })
         else {
             user.updateOne({ uid: interaction.user.id },
                 {

@@ -23,7 +23,11 @@ module.exports = {
     async execute(client, user, interaction) {
 
         // Ativa ou desativa o modo fantasma e salva
-        user.conf.ghost_mode = !user?.conf.ghost_mode || true
+        if (typeof user.conf.ghost_mode !== "undefined")
+            user.conf.ghost_mode = !user.conf.ghost_mode
+        else
+            user.conf.ghost_mode = true
+
         user.save()
 
         if (user.conf.ghost_mode)
