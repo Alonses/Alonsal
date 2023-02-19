@@ -6,36 +6,40 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
     uid: String,
-    sid: { type: String, default: "pt-br" },
-    xp: { Number, default: 0 }
+    sid: { type: String, default: null },
+    nickname: { type: String, default: null },
+    lastValidMessage: { type: Number, default: null },
+    warns: { type: Number, default: 0 },
+    caldeira_de_ceira: { type: Boolean, default: false },
+    xp: { type: Number, default: 0 }
 })
 
 const model = mongoose.model("Rankerver", schema)
 
-async function getRank(uid, sid) {
+async function getRankServer(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
 
     return model.find({ uid: uid, sid: sid })
 }
 
-async function createRank(uid, server_id, experience) {
+async function createRankServer(uid, server_id, experience) {
     await model.create({ uid: uid, sid: server_id, xp: experience })
 }
 
-async function migrateRank() {
+async function migrateRankServer() {
 
-    for (const file of readdirSync(`./arquivos/data/user/`)) {
-        const { badges } = require(`../../../arquivos/data/user/${file}`)
+    // Migrando os dados do JSON para o banco externo
+    for (const folder of readdirSync(`./arquivos/data/rank/`)) {
+        for (const file of readdirSync(`./arquivos/data/rank/${folder}`)) {
 
-        const id = file.split(".json")[0]
+            const data = require(`../../../arquivos/data/rank/${folder}/${file}`)
 
-        for (let i = 0; i < badges.badge_list.length; i++) {
-            await model.create({ uid: id, sid: parseInt(Object.keys(badges.badge_list[i])[0]), timestamp: parseInt(Object.values(badges.badge_list[i])[0]) })
+            await model.create({ uid: data.id, sid: folder, nickname: data.nickname, lastValidMessage: data.lastValidMessage, warns: data.warns, caldeira_de_ceira: data.caldeira_de_ceira, xp: data.xp })
         }
     }
 }
 
-module.exports.Rank = model
-module.exports.getRank = getRank
-module.exports.createRank = createRank
-module.exports.migrateRank = migrateRank
+module.exports.Rankerver = model
+module.exports.getRankServer = getRankServer
+module.exports.createRankServer = createRankServer
+module.exports.migrateRankServer = migrateRankServer

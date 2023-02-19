@@ -48,39 +48,24 @@ module.exports = {
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "mode.xp.permissao", true, 3)
 
+        // Coletando os dados do usuário informado no servidor
         const usuario = interaction.options.getUser('user')
+        let user_c = await client.getRankServer(usuario.id, interaction.guild.id)
+        user_c = user_c[0]
 
-        const user_data = {
-            id: usuario.id,
-            nickname: usuario.username,
-            lastValidMessage: 0,
-            warns: 0,
-            caldeira_de_ceira: false,
-            xp: 0
-        }
-
-        if (existsSync(`./arquivos/data/rank/${interaction.guild.id}/${user_data.id}.json`)) {
-            delete require.cache[require.resolve(`../../arquivos/data/rank/${interaction.guild.id}/${user_data.id}.json`)]
-            const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../../arquivos/data/rank/${interaction.guild.id}/${user_data.id}.json`)
-            user_data.xp = xp
-            user_data.warns = warns
-            user_data.lastValidMessage = lastValidMessage
-            user_data.caldeira_de_ceira = caldeira_de_ceira
-        }
-
+        user_c.nickname = usuario.username
         let novo_exp = parseFloat(interaction.options.get('xp').value)
 
-        user_data.xp = parseFloat(novo_exp)
+        user_c.xp = parseFloat(novo_exp)
         novo_nivel = parseFloat(novo_exp / 1000)
 
         try {
-            writeFileSync(`./arquivos/data/rank/${interaction.guild.id}/${user_data.id}.json`, JSON.stringify(user_data))
-            delete require.cache[require.resolve(`../../arquivos/data/rank/${interaction.guild.id}/${user_data.id}.json`)]
+            user_c.save()
         } catch (err) {
             console.log(err)
             return client.tls.reply(interaction, user, "mode.xp.error_2", true, 0)
         }
 
-        interaction.reply({ content: `:military_medal: | ${client.tls.phrase(user, "mode.xp.sucesso", true, 0).replace("nick_repl", user_data.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
+        interaction.reply({ content: `:military_medal: | ${client.tls.phrase(user, "mode.xp.sucesso", true, 0).replace("nick_repl", user_c.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
     }
 }

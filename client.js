@@ -3,6 +3,7 @@ const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User.js')
 const { getBadges } = require('./adm/database/schemas/Badge.js')
+const { getRankServer } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
@@ -19,7 +20,7 @@ if (update_commands)
 let token = process.env.token_1, clientId = process.env.client_1
 
 if (silent || modo_develop)
-    status = 0, ranking = 0
+    status = 0, ranking = 1
 
 // Force update é utilizado para forçar a atualização dos comandos slash
 // globais e privados do bot
@@ -107,6 +108,10 @@ class CeiraClient {
 
     getBadges(id_user) {
         return getBadges(id_user)
+    }
+
+    getRankServer(id_user, id_server) {
+        return getRankServer(id_user, id_server)
     }
 
     notify(id_alvo, conteudo) {

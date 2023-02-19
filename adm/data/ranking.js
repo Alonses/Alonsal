@@ -3,50 +3,25 @@ const DIFF = 5000
 const CALDEIRA = 60000
 
 const fs = require('fs')
-const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
 module.exports = async ({ client, message, caso }) => {
 
-    if (!existsSync(`./arquivos/data/rank/${message.guild.id}`)) {
-        mkdirSync(`./arquivos/data/rank/${message.guild.id}`, { recursive: true })
-        return
-    }
+    //            Comandos            Mensagens
+    let id_alvo = message.user?.id || message.author?.id
 
-    if (caso !== "comando") {
-        user = {
-            id: message.author.id,
-            nickname: message.author.username,
-            lastValidMessage: 0,
-            warns: 0,
-            caldeira_de_ceira: false,
-            xp: 0
-        }
-    } else {
-        user = {
-            id: message.user.id,
-            nickname: message.user.username,
-            lastValidMessage: 0,
-            warns: 0,
-            caldeira_de_ceira: false,
-            xp: 0
-        }
-    }
+    // Coletando os dados do usuário alvo
+    let user = await client.getRankServer(id_alvo, message.guild.id)
+    user = user[0]
 
-    if (existsSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`)) {
-        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
-        const { xp, lastValidMessage, warns, caldeira_de_ceira } = require(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)
-
-        user.xp = xp
-        user.warns = warns
-        user.lastValidMessage = lastValidMessage
-        user.caldeira_de_ceira = caldeira_de_ceira
-    }
+    //              Comandos                  Mensagens
+    user.nickname = message.user?.username || message.author?.username
 
     if (caso === 'messages')
         if (user.warns >= LIMIT) {
             user.caldeira_de_ceira = true
             user.warns = 0
-            writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
+
+            user.save()
             return
         }
 
@@ -60,7 +35,8 @@ module.exports = async ({ client, message, caso }) => {
     if (caso === 'messages')
         if (message.createdTimestamp - user.lastValidMessage < DIFF) {
             user.warns++
-            writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
+
+            user.save()
             return
         }
 
@@ -74,9 +50,9 @@ module.exports = async ({ client, message, caso }) => {
         } else // Experiência obtida executando comandos
             user.xp += (parseInt(data) * 1.5)
 
-        require('../automaticos/relatorio.js')({ client, caso })
+        // Registrando no relatório algumas informações
+        // require('../automaticos/relatorio.js')({ client, caso })
 
-        writeFileSync(`./arquivos/data/rank/${message.guild.id}/${user.id}.json`, JSON.stringify(user))
-        delete require.cache[require.resolve(`../../arquivos/data/rank/${message.guild.id}/${user.id}.json`)]
+        user.save()
     })
 }

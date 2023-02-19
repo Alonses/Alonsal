@@ -84,13 +84,13 @@ module.exports = async ({ client, interaction }) => {
     })
 
     // Contabilizar os comandos
-    if (client.id() === process.env.client_1) {
+    // if (client.id() === process.env.client_1) {
         // await require('../command_ranking.js')({client, interaction, content})
 
         const caso = "comando"
-        await require('../automaticos/relatorio.js')({ client, caso })
+        // await require('../automaticos/relatorio.js')({ client, caso })
 
         const message = interaction
         await require('../data/ranking.js')({ client, message, caso })
-    }
+    // }
 }
