@@ -97,6 +97,8 @@ module.exports = {
         let usuario_alvo = [], i = 0
         const users = [], usernames = [], experiencias = [], levels = []
 
+        await interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
+
         // Coleta o ID do usuário mencionado
         let rodape = interaction.user.username, user_alvo = interaction.options.getUser('user')
         let opcoes = interaction.options.data, pagina = 1
@@ -117,7 +119,7 @@ module.exports = {
 
         // Sem dados salvos no banco de ranking
         if (typeof data_usuarios === "undefined" || data_usuarios.length < 1)
-            return interaction.reply({ content: `:mag: | Sem dados para gerar o ranking!`, ephemeral: true })
+            return interaction.editReply({ content: `:mag: | Sem dados para gerar o ranking!`, ephemeral: user?.conf.ghost_mode || false })
 
         // Salvando os dados no formato apropriado
         data_usuarios.forEach(valor => {
@@ -141,7 +143,7 @@ module.exports = {
 
         if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return client.tls.reply(interaction, user, "dive.rank.error_1", true, 0)
+                return client.tls.editReply(interaction, user, "dive.rank.error_1", user?.conf.ghost_mode || false, 0)
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
@@ -219,7 +221,7 @@ module.exports = {
 
                     embed.setThumbnail(img_embed)
 
-                    interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                    interaction.editReply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
                 })
             }
         } else // Ranking global
@@ -262,7 +264,7 @@ function retorna_ranking(client, interaction, user, usernames, experiencias, lev
 
             embed.setThumbnail(img_embed)
 
-            interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+            interaction.editReply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
         })
     })
 }
