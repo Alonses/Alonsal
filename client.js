@@ -3,7 +3,8 @@ const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User.js')
 const { getBadges } = require('./adm/database/schemas/Badge.js')
-const { getRankServer } = require('./adm/database/schemas/Rank_s')
+const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
+const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
@@ -110,8 +111,16 @@ class CeiraClient {
         return getBadges(id_user)
     }
 
-    getRankServer(id_user, id_server) {
-        return getRankServer(id_user, id_server)
+    getRankServer(id_server) {
+        return getRankServer(id_server)
+    }
+
+    getUserRankServer(id_user, id_server) {
+        return getUserRankServer(id_user, id_server)
+    }
+
+    getRankGlobal() {
+        return getRankGlobal()
     }
 
     notify(id_alvo, conteudo) {
