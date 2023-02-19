@@ -50,7 +50,7 @@ module.exports = {
 
         // Coletando os dados do usuário informado no servidor
         const usuario = interaction.options.getUser('user')
-        let user_c = await client.getRankServer(usuario.id, interaction.guild.id)
+        let user_c = await client.getUserRankServer(usuario.id, interaction.guild.id)
         user_c = user_c[0]
 
         user_c.nickname = usuario.username

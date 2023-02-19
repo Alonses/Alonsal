@@ -10,7 +10,7 @@ module.exports = async ({ client, message, caso }) => {
     let id_alvo = message.user?.id || message.author?.id
 
     // Coletando os dados do usuário alvo
-    let user = await client.getRankServer(id_alvo, message.guild.id)
+    let user = await client.getUserRankServer(id_alvo, message.guild.id)
     user = user[0]
 
     //              Comandos                  Mensagens

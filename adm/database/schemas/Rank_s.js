@@ -16,7 +16,13 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Rankerver", schema)
 
-async function getRankServer(uid, sid) {
+async function getRankServer(sid) {
+    if (!await model.exists({ sid: sid })) await model.create({ sid: sid })
+
+    return model.find({ sid: sid })
+}
+
+async function getUserRankServer(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
 
     return model.find({ uid: uid, sid: sid })
@@ -41,5 +47,6 @@ async function migrateRankServer() {
 
 module.exports.Rankerver = model
 module.exports.getRankServer = getRankServer
+module.exports.getUserRankServer = getUserRankServer
 module.exports.createRankServer = createRankServer
 module.exports.migrateRankServer = migrateRankServer
