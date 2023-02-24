@@ -33,17 +33,16 @@ function calcula_dias(dia_atual, mes_atual, ano_atual) {
 
     let dias = 0, ult_mes = 0
 
-    for (let x = 0; x <= mes_atual; x++) {
+    for (let x = 0; x < mes_atual; x++) {
         let diasNoMes = new Date(ano_atual, x + 1, 0).getDate()
 
-        for (let i = 1; i <= diasNoMes; i++) {
+        for (let i = 1; i <= diasNoMes; i++)
             dias++
-        }
 
         ult_mes = diasNoMes
     }
 
-    return (dias - (ult_mes - dia_atual))
+    return dias - (ult_mes - dia_atual)
 }
 
 function estipula_indice(dias_passados, latitude) {

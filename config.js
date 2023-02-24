@@ -16,6 +16,7 @@ function config(client) {
     // Linkando os comandos slash disponíveis
     for (const folder of readdirSync(`${__dirname}/comandos/`)) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
+
             const command = require(`./comandos/${folder}/${file}`)
 
             if (!client.x.modo_develop)
