@@ -11,6 +11,9 @@ const delete_slash = 0
 
 function config(client) {
 
+    // Limpando o console e inicializando o bot
+    console.clear()
+
     client.discord.commands = new Collection()
 
     // Linkando os comandos slash disponíveis
@@ -18,8 +21,6 @@ function config(client) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 
             const command = require(`./comandos/${folder}/${file}`)
-
-            console.log(command.data.name)
 
             if (!client.x.modo_develop)
                 if (!command.data.name.startsWith('c_'))
