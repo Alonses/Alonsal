@@ -6,13 +6,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("remove")
         .setDescription("⌠💂⌡ Remove emojis from the server")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Remove emojis do servidor',
-            "es-ES": '⌠💂⌡ Eliminar emoji del servidor',
-            "fr": '⌠💂⌡ Supprimer les emoji du serveur',
-            "it": '⌠💂⌡ Elimina emoji dal server',
-            "ru": '⌠💂⌡ Удалить эмодзи с сервера'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("emoji")

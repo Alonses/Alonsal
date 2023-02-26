@@ -5,20 +5,13 @@ const create_buttons = require('../../adm/discord/create_buttons')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("color")
+        .setDescription("⌠🎉⌡ Change your color")
         .setNameLocalizations({
             "pt-BR": 'color',
             "es-ES": 'color',
             "fr": 'couleur',
             "it": 'colore',
             "ru": 'цвет'
-        })
-        .setDescription("⌠🎉⌡ Change your color")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠🎉⌡ Altere sua cor',
-            "es-ES": '⌠🎉⌡ Cambia tu color',
-            "fr": '⌠🎉⌡ Change ta couleur',
-            "it": '⌠🎉⌡ Cambia colore',
-            "ru": '⌠🎉⌡ Измени свой цвет'
         })
         .addSubcommand(subcommand =>
             subcommand

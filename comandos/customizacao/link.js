@@ -6,13 +6,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("link")
         .setDescription("⌠👤⌡ Connect your social networks to Alonsal")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Link suas redes ao Alonsal',
-            "es-ES": '⌠👤⌡ Conecta tus redes a Alonsal',
-            "fr": '⌠👤⌡ Connectez vos réseaux à Alonsal',
-            "it": '⌠👤⌡ Collega le tue reti ad Alonsal',
-            "ru": '⌠👤⌡ Свяжите свои сети с Алонсалом'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("steam")

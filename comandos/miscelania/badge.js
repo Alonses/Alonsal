@@ -6,13 +6,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("badge")
         .setDescription("⌠👤⌡ (Un)pin your badges!")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ (Des)Fixe suas badges!',
-            "es-ES": '⌠👤⌡ (Un)pin sus insignias!',
-            "fr": '⌠👤⌡ (Dé)épinglez vos badges!',
-            "it": '⌠👤⌡ (Un)appunta i tuoi badge!',
-            "ru": '⌠👤⌡ (Не) носить значки!'
-        })
         .addSubcommand(subcommand =>
             subcommand.setName("fix")
                 .setNameLocalizations({

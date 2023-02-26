@@ -17,13 +17,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("rank")
         .setDescription("⌠👤⌡ See Alonsal's ranking")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Veja o ranking do Alonsal',
-            "es-ES": '⌠👤⌡ Ver el ranking de Alonsal',
-            "fr": '⌠👤⌡ Voir le classement d\'Alonsal',
-            "it": '⌠👤⌡ Guarda la classifica di Alonsal',
-            "ru": '⌠👤⌡ Посмотреть рейтинг Алонсала'
-        })
         .addSubcommand(subcommand =>
             subcommand.setName("server")
                 .setDescription("⌠👤⌡ See server ranking")

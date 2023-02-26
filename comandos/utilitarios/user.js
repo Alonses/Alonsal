@@ -13,13 +13,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("user")
         .setDescription("⌠👤⌡ View user details")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Veja detalhes de algum usuário',
-            "es-ES": '⌠👤⌡ Ver los datos de cualquier usuario',
-            "fr": '⌠👤⌡ Afficher les détails d\'un utilisateur',
-            "it": '⌠👤⌡ Visualizza i dati di qualsiasi utente',
-            "ru": '⌠👤⌡ Просмотр любых данных пользователя'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("avatar")

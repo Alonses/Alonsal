@@ -7,13 +7,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("add")
         .setDescription("⌠💂⌡ Add emojis and stickers to the server")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Adicione emojis e figurinhas ao servidor',
-            "es-ES": '⌠💂⌡ Agrega emojis y stickers al servidor',
-            "fr": '⌠💂⌡ Ajoutez des emojis et des autocollants au serveur',
-            "it": '⌠💂⌡ Aggiungi emoji e adesivi al server',
-            "ru": '⌠💂⌡ Добавляйте смайлики и стикеры на сервер'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("emoji")

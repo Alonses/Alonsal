@@ -9,13 +9,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("faustop")
         .setDescription("⌠😂⌡ Faustão\'s phrases")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠😂⌡ Frases do faustão',
-            "es-ES": '⌠😂⌡ Las frases de Faustão',
-            "fr": '⌠😂⌡ Les phrases de Faustão',
-            "it": '⌠😂⌡ Le frasi di Faustão',
-            "ru": '⌠😂⌡ Фразы от Faustão'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("rand")
