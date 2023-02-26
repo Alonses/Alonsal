@@ -9,12 +9,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cazalbe")
 		.setDescription("⌠😂⌡ Cazalbe King of Prasody")
-		.setDescriptionLocalizations({
-			"pt-BR": '⌠😂⌡ Cazalbe rei da prassódia',
-			"fr": '⌠😂⌡ Cazalbe roi de la prasodie',
-			"it": '⌠😂⌡ Cazalbe re della prasodia',
-			"ru": '⌠😂⌡ Cazalbe король прасодии'
-		})
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("gif")

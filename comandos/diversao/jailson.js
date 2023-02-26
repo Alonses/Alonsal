@@ -9,13 +9,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("jailson")
 		.setDescription("⌠😂⌡ As soon as I can\'t resist, vaiinn")
-		.setDescriptionLocalizations({
-			"pt-BR": '⌠😂⌡ Assim que não resisto, vaiinn',
-			"es-ES": '⌠😂⌡ Así que no me resistiré, vaiinn',
-			"fr": '⌠😂⌡ Dès que je ne peux pas résister, vaiinn',
-			"it": '⌠😂⌡ Non resisterò, vaiinn',
-			"ru": '⌠😂⌡ Как только не выдержу, иду'
-		})
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("gif")

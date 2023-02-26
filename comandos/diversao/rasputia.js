@@ -13,13 +13,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("rasputia")
 		.setDescription("⌠😂⌡ Rasputia in its glory")
-		.setDescriptionLocalizations({
-			"pt-BR": '⌠😂⌡ Rasputia em sua glória',
-			"es-ES": '⌠😂⌡ Rasputia en todo su esplendor',
-			"fr": '⌠😂⌡ Rasputia dans sa splendeur',
-			"it": '⌠😂⌡ Rasputia nel suo splendore',
-			"ru": '⌠😂⌡ Rasputia во всей красе'
-		})
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("gif")

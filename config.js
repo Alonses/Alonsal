@@ -19,6 +19,8 @@ function config(client) {
 
             const command = require(`./comandos/${folder}/${file}`)
 
+            console.log(command.data.name)
+
             if (!client.x.modo_develop)
                 if (!command.data.name.startsWith('c_'))
                     commands.push(command.data.toJSON())

@@ -9,13 +9,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("server")
         .setDescription("⌠💡⌡ Show server information")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Veja informações do servidor',
-            "es-ES": '⌠💡⌡ Ver información del servidor',
-            "fr": '⌠💡⌡ Afficher les informations du serveur',
-            "it": '⌠💡⌡ Visualizza le informazioni sul server',
-            "ru": '⌠💡⌡ Просмотр информации о сервере'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("icon")

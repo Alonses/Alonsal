@@ -6,13 +6,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("timestamp")
         .setDescription("⌠💡⌡ Convert a date to timestamp or vice versa")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Converta uma data para timestamp ou vice-versa',
-            "es-ES": '⌠💡⌡ Convierte una fecha en una marca de tiempo o viceversa',
-            "fr": '⌠💡⌡ Convertir une date en horodatage ou vice versa',
-            "it": '⌠💡⌡ Converti una data in timestamp o viceversa',
-            "ru": '⌠💡⌡ Преобразование даты в метку времени и наоборот'
-        })
         .addSubcommand(subcommand =>
             subcommand
                 .setName("custom")
