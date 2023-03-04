@@ -35,7 +35,7 @@ function phrase(user, target) {
 
 function translate(user, target) {
 
-    const idioma_user = user.lang;
+    const idioma_user = user.lang
 
     // Busca as traduções para o item solicitado
     let { data } = require(`../../arquivos/idiomas/${idioma_user}.json`)
@@ -69,7 +69,7 @@ function translate(user, target) {
 
     // Verifica se não há mensagens diferentes para o mesmo retorno
     if (Array.isArray(data))
-        phrase = data[Math.floor((data.length - 1) * Math.random())]
+        phrase = data[client.random(data)]
 
     return phrase
 }

@@ -51,18 +51,18 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
-        let jooj = ["pedra", "papel", "tesoura", "pedra"];
+        let jooj = ["pedra", "papel", "tesoura", "pedra"]
 
         const escolha = interaction.options.getString("choose")
-            ?? jooj[Math.round(2 * Math.random())];
+            ?? jooj[client.random(2)]
 
-        const bet = interaction.options.getNumber("bet") ?? 0;
-        if (bet && bet > user.misc.money) return interaction.reply("Pague o aluguel");
+        const bet = interaction.options.getNumber("bet") ?? 0
+        if (bet && bet > user.misc.money) return interaction.reply("Pague o aluguel")
 
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
 
         let player = jooj.indexOf(escolha)
-        let bot = Math.round(2 * Math.random()), ganhador = ":thumbsdown:", profit = -bet;
+        let bot = client.random(2), ganhador = ":thumbsdown:", profit = -bet
 
         if (player === 0) player = 3
         if (bot === 0) bot = 3
@@ -70,19 +70,21 @@ module.exports = {
 
         if (bot < player || (player === 1 && bot === 3)) {
             ganhador = ":trophy:"
-            profit = bet;
+            profit = bet
         }
+
         if (bot === player) {
             ganhador = ":infinity:"
-            profit = 0;
+            profit = 0
         }
-        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]\n [Lucro: B$${profit}]`
+
+        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]\n[Lucro: B$${profit}]`
 
         if (idioma_definido !== "pt-br" && idioma_definido !== "al-br")
-            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]\n [Profit: B$${profit}]`
+            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]\n[Profit: B$${profit}]`
 
-        user.misc.money += profit;
-        user.save();
+        user.misc.money += profit
+        user.save()
 
         return interaction.reply({ content: mensagem, ephemeral: user?.conf.ghost_mode || false })
     }

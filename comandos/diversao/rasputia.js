@@ -1,7 +1,6 @@
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { readdirSync } = require('fs')
 const create_menus = require('../../adm/discord/create_menus.js')
 
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
@@ -39,7 +38,7 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user?.conf.ghost_mode || false })
+			return interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
 		} else if (interaction.options.getSubcommand() === "frase") {
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
@@ -55,12 +54,8 @@ module.exports = {
 					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
 				})
 		} else if (interaction.options.getSubcommand() === "fala") {
-			let i = 0
 
-			for (const file of readdirSync(`./arquivos/songs/norbit`).filter(file => file.endsWith('.ogg')))
-				i++
-
-			let num = Math.round((i - 1) * Math.random())
+			let num = client.random(client.countFiles("./arquivos/songs/norbit", "ogg") - 1)
 
 			const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${num}.ogg`, { name: 'norbit.ogg' })
 

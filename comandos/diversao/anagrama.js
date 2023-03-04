@@ -73,7 +73,7 @@ module.exports = {
         const combinacoes = result > 3 ? client.tls.phrase(user, "dive.anagrama.combinacoes") : client.tls.phrase(user, "dive.anagrama.combinacao")
 
         for (let i = 0; i < repeticoes; i++) {
-            anagrama_formado.push(await shuffleArray(fatori_fix).join(''))
+            anagrama_formado.push(await client.shuffleArray(fatori_fix).join(''))
 
             exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`
             qtd_quebras = exib_formatado.split(anagrama_formado[i])
@@ -104,13 +104,4 @@ function duplicateCount(texto_entrada) {
     }
 
     return Object.values(charMap).filter((count) => count > 0)
-}
-
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]]
-    }
-
-    return arr
 }

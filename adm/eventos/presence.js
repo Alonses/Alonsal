@@ -15,7 +15,6 @@ module.exports = async ({ client }) => {
         setTimeout(() => {
             requisita_status(client)
         }, 10000)
-
     } else
         client.user().setActivity('Baidu explosivo', { type: ActivityType.Playing })
 }
@@ -27,20 +26,19 @@ function requisita_status(client) {
     if (selected.length === activities.length)
         selected = []
 
-    // Ficará repetindo até o número não ter saído
-    do {
-        num = Math.round((activities.length - 1) * Math.random())
+    do { // Repetirá enquanto o número já tiver sido escolhido
+        num = client.random(activities.length)
     } while (selected.includes(num))
 
     let tempo_minimo = 0
 
-    // Tempo mínimo para atividade ouvindo
+    // Tempo mínimo para atividade "ouvindo"
     if (activities[num].type === 2)
-        tempo_minimo = 45000 + Math.round(50000 * Math.random())
+        tempo_minimo = client.random(50000, 45000)
 
-    // Tempo mínimo para atividade assistindo
+    // Tempo mínimo para atividade "assistindo"
     if (activities[num].type === 1)
-        tempo_minimo = 70000 + Math.round(50000 * Math.random())
+        tempo_minimo = client.random(50000, 70000)
 
     // Exibirá o status escolhido após um tempo aleatório
     setTimeout(() => {
@@ -57,5 +55,5 @@ function requisita_status(client) {
         client.user().setActivity(texto_status, { type: actionTypes[activities[num].type] })
 
         requisita_status(client)
-    }, 15000 + tempo_minimo + Math.round(5000 * Math.random()))
+    }, 15000 + client.random(5000, tempo_minimo))
 }

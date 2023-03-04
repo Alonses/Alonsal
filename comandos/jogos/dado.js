@@ -93,7 +93,7 @@ module.exports = {
 
         for (let i = 1; i < qtd_dados + 1; i++) {
 
-            const num = Math.round(qtd_faces * Math.random())
+            const num = client.random(qtd_faces)
             somatoria += num
 
             if (i < qtd_dados)

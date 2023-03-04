@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
-const { readdirSync } = require('fs')
 const create_menus = require('../../adm/discord/create_menus.js')
 
 const { relation } = require('../../arquivos/songs/faustop/songs.json')
@@ -22,14 +21,12 @@ module.exports = {
         let i = 0
 
         if (interaction.options.getSubcommand() !== "menu") {
-            for (const file of readdirSync(`./arquivos/songs/faustop`).filter(file => file.endsWith('.ogg')))
-                i++
 
             const data = new Date()
-            let num = Math.round((i - 1) * Math.random())
+            let num = client.random(client.countFiles("./arquivos/songs/faustop", "ogg") - 1)
 
             if (data.getHours() === 20 && data.getMinutes() === 7)
-                num = Math.round(1 + (1 * Math.random())) > 1 ? 7 : 12;
+                num = client.random(1, 1) > 1 ? 7 : 12
 
             const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: 'faustop.ogg' })
 

@@ -6,6 +6,6 @@ module.exports = {
 		.setName("nikocado")
 		.setDescription("⌠😂⌡ It's your fault"),
 	async execute(client, user, interaction) {
-		interaction.reply({ content: gifs[Math.round((gifs.length - 1) * Math.random())], ephemeral: user?.conf.ghost_mode || false })
+		interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
 	}
 }

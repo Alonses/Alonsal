@@ -44,7 +44,7 @@ module.exports = {
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../arquivos/json/text/${idioma_definido}/gado.json`)
-        const num = Math.round((gadisissimo.length - 1) * Math.random())
+        const num = client.random(gadisissimo)
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")

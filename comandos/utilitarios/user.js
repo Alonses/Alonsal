@@ -127,9 +127,9 @@ module.exports = {
             } else
                 avatar_user = ""
 
-            let apelido = user.username, tipo_user = "🤖"
+            let apelido = membro_sv.user.username, tipo_user = "🤖"
 
-            if (membro_sv.nickname !== null)
+            if (membro_sv.user.nickname !== null)
                 apelido = membro_sv.nickname
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
@@ -138,7 +138,7 @@ module.exports = {
             }
 
             if (!tipo_user.includes("🛡️") && !user_alvo.bot)
-                tipo_user = emojis_busto[Math.round((emojis_busto.length - 1) * Math.random())]
+                tipo_user = emojis_busto[client.random(emojis_busto)]
 
             if (user_alvo.id === client.id())
                 nota_rodape = client.tls.phrase(user, "util.user.alonsal")
