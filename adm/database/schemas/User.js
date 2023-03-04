@@ -18,6 +18,7 @@ const schema = new mongoose.Schema({
         fixed_badge: { type: String, default: null }
     },
     conf: {
+        banned: { type: Boolean, default: false },
         ghost_mode: { type: Boolean, default: false },
         notify: { type: Boolean, default: true }
     }

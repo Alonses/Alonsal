@@ -34,9 +34,13 @@ function requisita_status(client) {
 
     let tempo_minimo = 0
 
-    // Tempo mínimo para atividade assistindo
+    // Tempo mínimo para atividade ouvindo
     if (activities[num].type === 2)
-        tempo_minimo = 45000
+        tempo_minimo = 45000 + Math.round(50000 * Math.random())
+
+    // Tempo mínimo para atividade assistindo
+    if (activities[num].type === 1)
+        tempo_minimo = 70000 + Math.round(50000 * Math.random())
 
     // Exibirá o status escolhido após um tempo aleatório
     setTimeout(() => {

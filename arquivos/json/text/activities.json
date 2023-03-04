@@ -219,6 +219,54 @@
         {
             "type": 0,
             "text": "comandos ruins no seu servidor"
+        },
+        {
+            "type": 1,
+            "text": "Stranger Things"
+        },
+        {
+            "type": 1,
+            "text": "Bob Esponja - O Filme"
+        },
+        {
+            "type": 1,
+            "text": "As visões da Raven"
+        },
+        {
+            "type": 0,
+            "text": "Super Mario 64"
+        },
+        {
+            "type": 0,
+            "text": "GoldenEye 007"
+        },
+        {
+            "type": 0,
+            "text": "Star Fox 64"
+        },
+        {
+            "type": 1,
+            "text": "Acumuladores compulsivos"
+        },
+        {
+            "type": 1,
+            "text": "Muquiranas"
+        },
+        {
+            "type": 1,
+            "text": "Piscinas Incríveis"
+        },
+        {
+            "type": 2,
+            "text": "Nerdcast"
+        },
+        {
+            "type": 2,
+            "text": "Operators - Jetta"
+        },
+        {
+            "type": 2,
+            "text": "Cool Cat - Queen"
         }
     ]
 }
