@@ -51,6 +51,9 @@ client.discord.on('interactionCreate', async interaction => {
 
 	const user = await client.getUser(interaction.user.id)
 
+	// Ignorando usuários
+	if (user.conf?.banned || false) return
+
 	if (interaction.isSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require('./adm/interacoes/menus.js')({ client, user, interaction })
 

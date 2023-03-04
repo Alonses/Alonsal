@@ -55,7 +55,7 @@ module.exports = {
             if (user.conf.notify)
                 interaction.reply({ content: `${client.emoji(emojis.notify)} | ${client.tls.phrase(user, "mode.notify.ativo")}`, ephemeral: true })
             else
-                interaction.reply({ content: `${client.emoji(emojis.arnold_stop)} | ${client.tls.phrase(user, "mode.notify.desativo")}`, ephemeral: true })
+                interaction.reply({ content: `${client.emoji(emojis.pare_agr)} | ${client.tls.phrase(user, "mode.notify.desativo")}`, ephemeral: true })
 
         } else if (interaction.options.getSubcommand() === "ghostmode") {
 
