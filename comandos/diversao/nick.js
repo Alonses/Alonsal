@@ -32,7 +32,7 @@ module.exports = {
 
         let apelido = user_alvo.nickname || user_alvo.user.username
 
-        user_alvo.setNickname(shuffleArray(apelido.split("")))
+        user_alvo.setNickname(client.shuffleArray(apelido.split("").join("").trim()))
             .then(() => {
                 interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user?.conf.ghost_mode || false })
             })
@@ -41,13 +41,4 @@ module.exports = {
                 client.tls.reply(interaction, user, "dive.nick.error_1", true, 0)
             })
     }
-}
-
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]]
-    }
-
-    return arr.join("").trim()
 }

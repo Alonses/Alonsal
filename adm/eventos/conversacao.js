@@ -23,7 +23,7 @@ module.exports = async function ({ client, message, text }) {
         text = text.replace("alonsal", "").replace(client.id(), "").trim()
 
         if (text.trim() === "<@>" || text.trim() === "") {
-            let texto = sem_texto[Math.floor(sem_texto.length * Math.random())]
+            let texto = sem_texto[client.random(sem_texto.length)]
 
             if (texto.includes("user_replace"))
                 texto = texto.replace("user_replace", message.author.id)
@@ -45,7 +45,7 @@ module.exports = async function ({ client, message, text }) {
                 }
 
                 libera_conversacao = true
-            }, Math.floor(900 + (Math.random() * 800)))
+            }, Math.floor(client.random(800, 900)))
         })
     }
 }

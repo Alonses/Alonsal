@@ -1,5 +1,7 @@
 const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 
+const { readdirSync } = require('fs')
+
 const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User.js')
 const { getBadges } = require('./adm/database/schemas/Badge.js')
@@ -87,7 +89,7 @@ class CeiraClient {
 
     emoji(id_emoji) {
         if (typeof id_emoji === "object") // Escolhendo um emoji do Array com vários emojis
-            id_emoji = id_emoji[Math.round((id_emoji.length - 1) * Math.random())]
+            id_emoji = id_emoji[this.random(id_emoji)]
 
         return this.discord.emojis.cache.get(id_emoji)?.toString() || "🔍"
     }
@@ -95,8 +97,8 @@ class CeiraClient {
     embed_color(entrada) {
         if (entrada === "RANDOM")
             return alea_hex()
-        else
-            return entrada
+
+        return entrada
     }
 
     login(token) {
@@ -128,6 +130,37 @@ class CeiraClient {
             this.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
         else // texto normal
             this.discord.channels.cache.get(id_alvo).send({ content: conteudo })
+    }
+
+    // Retorna a quantidade de arquivos com determinada extensão na url espeficiada
+    countFiles(caminho, extensao) {
+        let i = 0
+
+        for (const file of readdirSync(caminho).filter(file => file.endsWith(extensao)))
+            i++
+
+        return i
+    }
+
+    // Aleatoriza o texto de entrada
+    shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]]
+        }
+
+        return arr
+    }
+
+    random(intervalo, base) {
+
+        if (typeof base === "undefined") // Valor minimo aceitável
+            base = 0
+
+        if (typeof intervalo === "object") // Recebendo um array de dados
+            intervalo = intervalo.length - 1
+
+        return base + Math.round(intervalo * Math.random())
     }
 }
 

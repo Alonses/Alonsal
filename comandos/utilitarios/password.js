@@ -30,32 +30,32 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 12
-        tamanho = tamanho <= 5 ? 12 : tamanho
+        let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 15
+        tamanho = tamanho <= 5 ? 15 : tamanho
         tamanho = tamanho >= 400 ? 350 : tamanho
 
         let bonus = ''
 
         for (let i = 0; i < 3; i++)
-            bonus += `${randomString(tamanho)}\n\n`
+            bonus += `${randomString(tamanho, client)}\n\n`
 
         const embed = new EmbedBuilder()
             .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`)
             .setURL('https://password.kaspersky.com/')
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
+            .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({ text: client.tls.phrase(user, "util.password.rodape").replace("tamanho_repl", tamanho) })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }
 
-function randomString(len) {
-    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}+=~.,;:¢¬_-£"|\\/?§'
+function randomString(len, client) {
+    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}+=~.,;:¢¬_-£"|?§'
     let randomString = ''
 
     for (let i = 0; i < len; i++) {
-        let randomPoz = Math.floor(Math.random() * charSet.length)
+        let randomPoz = client.random(charSet.length)
         randomString += charSet.slice(randomPoz, randomPoz + 1)
     }
 

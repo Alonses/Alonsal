@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 const math = require('mathjs')
-const { isInteger, forEach } = require('mathjs');
+const { isInteger } = require('mathjs')
 
 module.exports = {
     data: new SlashCommandBuilder()

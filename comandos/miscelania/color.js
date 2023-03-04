@@ -109,7 +109,7 @@ module.exports = {
                 return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(user, "misc.color.cor_ativa")}`, ephemeral: true })
         }
 
-        let cor_demonstracao = entrada.split(".")[1] === "10" ? alea_hex() : colors[entrada.split(".")[1]]
+        let cor_demonstracao = entrada.split(".")[1] === "10" ? client.embed_color("RANDOM") : colors[entrada.split(".")[1]]
         let nota_cor_aleatoria = ""
 
         // Cor customizada
@@ -141,6 +141,6 @@ function componentToHex(c) {
     return hex.length === 1 ? `0${hex}` : hex
 }
 
-function rgbToHex(r, g, b) { return `0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}` }
-
-function alea_hex() { return rgbToHex(Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)) }
+function rgbToHex(r, g, b) {
+    return `0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
+}

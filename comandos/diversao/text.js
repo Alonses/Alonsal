@@ -3,6 +3,13 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("text")
+        .setNameLocalizations({
+            "pt-BR": 'texto',
+            "es-ES": 'texto',
+            "fr": 'texte',
+            "it": 'testo',
+            "ru": 'текст'
+        })
         .setDescription("text operations")
         .addSubcommand(subcommand =>
             subcommand.setName("reverse")

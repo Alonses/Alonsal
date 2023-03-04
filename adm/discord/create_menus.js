@@ -7,7 +7,7 @@ const { fausto, rasputia } = require('../../arquivos/json/text/emojis.json')
 module.exports = (alvo, client, interaction, user, dados) => {
 
     const itens_menu = []
-    let insersoes = [], i = 1;
+    let insersoes = [], i = 1
 
     // Percorrendo as entradas informadas
     dados.forEach(valor => {

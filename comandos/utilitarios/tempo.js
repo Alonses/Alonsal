@@ -208,7 +208,7 @@ module.exports = {
                             if (typeof res.rain !== "undefined") {
                                 cabecalho_fix += "\n------------------------------"
 
-                                cabecalho_fix += `${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
+                                cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
 
                                 if (typeof res.rain["3h"] != "undefined")
                                     cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`

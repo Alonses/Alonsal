@@ -13,7 +13,7 @@ module.exports = async function ({ client }) {
     })
 
     client.discord.on("rateLimit", limit => {
-        if (!process.env.error_channel) return;
+        if (!process.env.error_channel) return
 
         const embed = new EmbedBuilder()
             .setTitle("> RateLimit :name_badge:")

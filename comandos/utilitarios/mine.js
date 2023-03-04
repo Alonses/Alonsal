@@ -160,7 +160,7 @@ module.exports = {
 
                 if (dados_item.wiki !== "") {
 
-                    let nome_wiki = idioma_definido === "pt-br" ? dados_item.name : dados_item.internal_name;
+                    let nome_wiki = idioma_definido === "pt-br" ? dados_item.name : dados_item.internal_name
 
                     let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_wiki.replaceAll(" ", "_")}`
 

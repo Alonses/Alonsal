@@ -24,7 +24,7 @@ module.exports = {
             return interaction.reply({ content: `:bank: | ${client.tls.phrase(user, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
         }
 
-        const bufunfa = Math.floor(900 + (Math.random() * 500))
+        const bufunfa = client.random(500, 1000)
 
         user.misc.money += bufunfa
         user.misc.daily = date1.toDateString('pt-BR')

@@ -80,7 +80,7 @@ function verifica_chute(client, entrada, interaction, user) {
         if (!games[interaction.user.id].entradas.includes(entrada)) {
             for (let i = 0; i < split.length; i++) {
                 if (entrada == split[i]) {
-                    descobertas[i] = `\`${entrada}\``;
+                    descobertas[i] = `\`${entrada}\``
 
                     acerto = true
                 }
