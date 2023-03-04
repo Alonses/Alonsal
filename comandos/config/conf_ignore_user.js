@@ -5,7 +5,7 @@ const { emojis } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ignore_user")
-        .setDescription("⌠👤⌡ Desliga respostas do bot para determinado usuário")
+        .setDescription("⌠🤖⌡ Desliga respostas do bot para determinado usuário")
         .addStringOption(option =>
             option.setName("usuario")
                 .setDescription("O ID do usuário")

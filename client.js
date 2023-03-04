@@ -89,7 +89,7 @@ class CeiraClient {
         if (typeof id_emoji === "object") // Escolhendo um emoji do Array com vários emojis
             id_emoji = id_emoji[Math.round((id_emoji.length - 1) * Math.random())]
 
-        return this.discord.emojis.cache.get(id_emoji).toString()
+        return this.discord.emojis.cache.get(id_emoji)?.toString() || "🔍"
     }
 
     embed_color(entrada) {
