@@ -27,7 +27,7 @@ function requisita_status(client) {
         selected = []
 
     do { // Repetirá enquanto o número já tiver sido escolhido
-        num = client.random(activities.length)
+        num = client.random(activities)
     } while (selected.includes(num))
 
     let tempo_minimo = 0

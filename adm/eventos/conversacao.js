@@ -8,7 +8,8 @@ const sem_texto = [
     "ce ta querendo picanha e n ta sabendo pedir",
     ":eyes:",
     "vai durmi",
-    "<@user_replace>"
+    "<@user_replace>",
+    "cê é pago pa fazer isso? :clown:"
 ]
 
 module.exports = async function ({ client, message, text }) {
@@ -23,7 +24,7 @@ module.exports = async function ({ client, message, text }) {
         text = text.replace("alonsal", "").replace(client.id(), "").trim()
 
         if (text.trim() === "<@>" || text.trim() === "") {
-            let texto = sem_texto[client.random(sem_texto.length)]
+            let texto = sem_texto[client.random(sem_texto)]
 
             if (texto.includes("user_replace"))
                 texto = texto.replace("user_replace", message.author.id)
