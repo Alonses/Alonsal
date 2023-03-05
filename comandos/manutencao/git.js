@@ -14,12 +14,12 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
-            .setAuthor({ name: 'GitHub', iconURL: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' })
             .setTitle(client.tls.phrase(user, "manu.git.repositorio"))
-            .setURL('https://github.com/Alonses/Alonsal')
-            .setImage('https://i.imgur.com/0tV3IQr.png')
+            .setURL("https://github.com/Alonses/Alonsal")
+            .setColor(client.embed_color(user.misc.color))
+            .setImage("https://i.imgur.com/0tV3IQr.png")
             .setDescription(client.tls.phrase(user, "manu.git.link"))
+            .setAuthor({ name: "GitHub", iconURL: "https://cdn-icons-png.flaticon.com/512/25/25231.png" })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

@@ -16,10 +16,10 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
             .setTitle(`${client.tls.phrase(user, "manu.hub.hub_alonsal")} ${client.emoji(emojis.dancando_elizabeth)}`)
-            .setURL('https://discord.gg/ZxHnxQDNwn')
-            .setImage('https://i.imgur.com/NqmwCA9.png')
+            .setURL("https://discord.gg/ZxHnxQDNwn")
+            .setColor(client.embed_color(user.misc.color))
+            .setImage("https://i.imgur.com/NqmwCA9.png")
             .setDescription(client.tls.phrase(user, "manu.hub.info"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })

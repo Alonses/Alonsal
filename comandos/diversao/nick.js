@@ -22,7 +22,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "dive.nick.permissao_1", true, 0)
 
         // Permissões do bot no servidor
-        const membro_sv = await interaction.guild.members.cache.get(client.id())
+        const membro_sv = await client.getUserGuild(interaction, client.id())
 
         // Libera configuração apenas se puder editar o apelido de outros usuários
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageNicknames) || !membro_sv.permissions.has(PermissionsBitField.Flags.ChangeNickname))
@@ -33,12 +33,7 @@ module.exports = {
         let apelido = user_alvo.nickname || user_alvo.user.username
 
         user_alvo.setNickname(client.shuffleArray(apelido.split("").join("").trim()))
-            .then(() => {
-                interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user?.conf.ghost_mode || false })
-            })
-            .catch(err => {
-                console.log(err)
-                client.tls.reply(interaction, user, "dive.nick.error_1", true, 0)
-            })
+            .then(() => interaction.reply({ content: client.tls.phrase(user, "dive.nick.apelido").replace("apelido_repl", apelido), ephemeral: user?.conf.ghost_mode || false }))
+            .catch(() => client.tls.reply(interaction, user, "dive.nick.error_1", true, 0))
     }
 }

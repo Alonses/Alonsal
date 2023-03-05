@@ -138,7 +138,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers),
     async execute(client, user, interaction) {
 
-        const membro_sv = await interaction.guild.members.cache.get(client.id())
+        const membro_sv = await client.getUserGuild(interaction, client.id())
 
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
@@ -194,7 +194,7 @@ module.exports = {
                             })
                     } else
                         return client.tls.reply(interaction, user, "mode.emojis.emoji_custom", true, 2)
-                } catch (err) {
+                } catch {
                     return client.tls.reply(interaction, user, "mode.emojis.emoji_custom", true, 2)
                 }
             } else

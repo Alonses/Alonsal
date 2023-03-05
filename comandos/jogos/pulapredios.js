@@ -16,13 +16,13 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
             .setTitle(`> Pula Prédios ${client.emoji(emojis.pula_2)}`)
-            .setURL('https://gamejolt.com/games/pula-predios/613946')
-            .setImage('https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp')
+            .setURL("https://gamejolt.com/games/pula-predios/613946")
+            .setColor(client.embed_color(user.misc.color))
+            .setImage("https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp")
             .setDescription(client.tls.phrase(user, "game.pula.conteudo"))
             .setFooter({ text: client.tls.phrase(user, "game.pula.rodape") })
 
-        return interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], ephemeral: true })
     }
 }

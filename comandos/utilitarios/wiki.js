@@ -102,15 +102,15 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const Embed = new EmbedBuilder()
-                        .setColor(client.embed_color(user.misc.color))
                         .setTitle(res.Heading)
+                        .setURL(res.AbstractURL)
+                        .setColor(client.embed_color(user.misc.color))
                         .setAuthor({ name: res.AbstractSource })
-                        .setDescription(res.AbstractText)
                         .setThumbnail(res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
                         .addFields(fields)
+                        .setDescription(res.AbstractText)
                         .setTimestamp()
                         .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
-                        .setURL(res.AbstractURL)
 
                     interaction.reply({ embeds: [Embed], ephemeral: user?.conf.ghost_mode || false })
                 } else {
@@ -123,8 +123,6 @@ module.exports = {
                         interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: user?.conf.ghost_mode || false })
                 }
             })
-            .catch(() => {
-                interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
-            })
+            .catch(() => interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true }))
     }
 }

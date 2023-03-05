@@ -34,7 +34,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute(client, user, interaction) {
 
-        const membro_sv = await interaction.guild.members.cache.get(client.id())
+        const membro_sv = await client.getUserGuild(interaction, client.id())
         const qtd_msg = interaction.options.data[0].value
 
         // Verificando se o bot pode gerenciar as mensagens do servidor
@@ -49,8 +49,6 @@ module.exports = {
 
                 interaction.reply({ content: `:recycle: | ${texto}`, ephemeral: true })
             })
-            .catch(() => {
-                client.tls.reply(interaction, user, "mode.clear.error", true, 0)
-            })
+            .catch(() => client.tls.reply(interaction, user, "mode.clear.error", true, 0))
     }
 }

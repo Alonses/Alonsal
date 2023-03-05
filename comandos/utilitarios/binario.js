@@ -121,17 +121,15 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(titulo)
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setColor(client.embed_color(user.misc.color))
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
 
         if (aviso.length > 0)
             embed.setFooter({ text: aviso })
 
         interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
-            .catch(() => {
-                client.tls.reply(interaction, user, "util.binario.error_1", true, 0)
-            })
+            .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, 0))
     }
 }
 

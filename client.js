@@ -83,10 +83,6 @@ class CeiraClient {
         return this.discord.channels.cache
     }
 
-    formata_num(valor) {
-        return parseFloat(valor).toLocaleString('pt-BR')
-    }
-
     emoji(id_emoji) {
         if (typeof id_emoji === "object") // Escolhendo um emoji do Array com vários emojis
             id_emoji = id_emoji[this.random(id_emoji)]
@@ -115,6 +111,10 @@ class CeiraClient {
 
     getRankServer(id_server) {
         return getRankServer(id_server)
+    }
+
+    getUserGuild(interaction, id_alvo) {
+        return interaction.guild.members.cache.get(id_alvo)
     }
 
     getUserRankServer(id_user, id_server) {
@@ -161,6 +161,14 @@ class CeiraClient {
             intervalo = intervalo.length - 1
 
         return base + Math.round(intervalo * Math.random())
+    }
+
+    locale(valor, locale) {
+
+        if (typeof locale === "undefined")
+            locale = "pt-br"
+
+        return valor.toLocaleString(locale)
     }
 }
 

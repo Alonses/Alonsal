@@ -34,7 +34,7 @@ module.exports = {
                     .setDescription(`\`\`\`${data.currentWeatherEmoji} - ${data.currentWeatherDescription}\`\`\``)
                     .addFields(
                         {
-                            name: `Horário atual`,
+                            name: "Horário atual",
                             value: `:clock${hours}: \`${data.gameTimeStr}\`${emoji_horario}\` \``,
                             inline: true
                         }
@@ -42,8 +42,6 @@ module.exports = {
 
                 interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
             })
-            .catch(err => {
-                interaction.reply({ content: ':octagonal_sign: | Não foi possível conectar a APISAL no momento, por favor, tente novamente mais tarde!', ephemeral: true })
-            })
+            .catch(() => interaction.reply({ content: ":octagonal_sign: | Não foi possível conectar a APISAL no momento, por favor, tente novamente mais tarde!", ephemeral: true }))
     }
 }

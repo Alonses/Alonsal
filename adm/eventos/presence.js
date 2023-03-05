@@ -10,13 +10,13 @@ module.exports = async ({ client }) => {
 
     if (client.id() === process.env.client_1) {
 
-        client.user().setActivity('Vapor p/ fora!', { type: ActivityType.Playing })
+        client.user().setActivity("Vapor p/ fora!", { type: ActivityType.Playing })
 
         setTimeout(() => {
             requisita_status(client)
         }, 10000)
     } else
-        client.user().setActivity('Baidu explosivo', { type: ActivityType.Playing })
+        client.user().setActivity("Baidu explosivo", { type: ActivityType.Playing })
 }
 
 function requisita_status(client) {

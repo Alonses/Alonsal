@@ -51,7 +51,7 @@ module.exports = {
                     for (let i = 0; i < res.length; i++) {
                         lista_eventos += `\`${i + 1}\` - [ \`${client.tls.phrase(user, "util.history.em")} ${res[i].ano}\` | \``
 
-                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(user, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano == 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(user, "util.history.este_ano")}\` ] `
+                        ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(user, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano === 1 ? lista_eventos += `${client.tls.phrase(user, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(user, "util.history.este_ano")}\` ] `
 
                         lista_eventos += `${res[i].acontecimento}\n`
                     }
@@ -107,9 +107,7 @@ module.exports = {
 
                     interaction.editReply({ embeds: [acontecimento], ephemeral: user?.conf.ghost_mode || false })
                 })
-                .catch(() => {
-                    interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true })
-                })
+                .catch(() => interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true }))
         }
     }
 }

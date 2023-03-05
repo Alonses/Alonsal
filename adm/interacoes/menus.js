@@ -17,13 +17,13 @@ module.exports = async ({ client, user, interaction }) => {
     } else if (interaction.customId === `select_fausto_${interaction.user.id}`) {
 
         // Enviando uma das frases do faustão selecionada pelo menu
-        const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${interaction.values[0]}.ogg`, { name: 'faustop.ogg' })
+        const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${interaction.values[0]}.ogg`, { name: "faustop.ogg" })
 
         interaction.update({ content: "", files: [file], components: [], ephemeral: user?.conf.ghost_mode || false })
     } else if (interaction.customId === `select_norbit_${interaction.user.id}`) {
 
         // Enviando uma das frases do filme Norbit selecionada pelo menu
-        const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${interaction.values[0]}.ogg`, { name: 'norbit.ogg' })
+        const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${interaction.values[0]}.ogg`, { name: "norbit.ogg" })
 
         interaction.update({ content: "", files: [file], components: [], ephemeral: user?.conf.ghost_mode || false })
     }

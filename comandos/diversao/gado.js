@@ -37,7 +37,7 @@ module.exports = {
         let idioma_definido = client.idioma.getLang(interaction)
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
-        const alvo = interaction.options.getUser('user')
+        const alvo = interaction.options.getUser("user")
 
         if (client.id() === alvo.id)
             return client.tls.reply(interaction, user, "dive.gado.error_2", true, 2)

@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction }) => {
         // Validando se o usuário tem dinheiro suficiente
         if (user.misc.money < preco) {
             return interaction.reply({
-                content: `:epic_embed_fail: | ${client.tls.translate(client, interaction, "misc.color.sem_money").replace("preco_repl", client.formata_num(preco))}`,
+                content: `:epic_embed_fail: | ${client.tls.translate(client, interaction, "misc.color.sem_money").replace("preco_repl", client.locale(preco))}`,
                 ephemeral: true
             })
         }

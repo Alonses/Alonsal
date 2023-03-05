@@ -33,34 +33,34 @@ module.exports = {
             .addFields(
                 {
                     name: ":gear: **Comandos**",
-                    value: `:dart: **Hoje:** \`${bot.comandos_disparados.toLocaleString('pt-BR')}\`\n:octagonal_sign: **Erros:** \`${bot.epic_embed_fails}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.comandos_disparados)}\`\n:octagonal_sign: **Erros:** \`${bot.epic_embed_fails}\``,
                     inline: true
                 },
                 {
                     name: ":medal: **Experiência**",
-                    value: `:dart: **Hoje:** \`${bot.exp_concedido.toLocaleString('pt-BR')}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.exp_concedido)}\``,
                     inline: true
                 },
                 {
                     name: ":e_mail: **Mensagens**",
-                    value: `:dart: **Hoje:** \`${bot.msgs_lidas.toLocaleString('pt-BR')}\`\n:white_check_mark: **Válidas:** \`${bot.msgs_validas.toLocaleString('pt-BR')}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.msgs_validas)}\``,
                     inline: true
                 }
             )
             .addFields(
                 {
-                    name: ':globe_with_meridians: **Servidores**',
-                    value: `**Ativo em:** \`${client.guilds().size.toLocaleString('pt-BR')}\`\n**Canais: **\`${canais_texto.toLocaleString('pt-BR')}\``,
+                    name: ":globe_with_meridians: **Servidores**",
+                    value: `**Ativo em:** \`${client.locale(client.guilds().size)}\`\n**Canais: **\`${client.locale(canais_texto)}\``,
                     inline: true
                 },
                 {
-                    name: ':busts_in_silhouette: **Usuários**',
-                    value: `**Conhecidos:** \`${members.toLocaleString('pt-BR')}\``,
+                    name: ":busts_in_silhouette: **Usuários**",
+                    value: `**Conhecidos:** \`${client.locale(members)}\``,
                     inline: true
                 },
                 {
-                    name: ':bank: Bufunfas',
-                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${bot.bufunfas.toLocaleString('pt-BR')}\`\n:money_with_wings: **Movimentado:** \`${bot.movimentado.toLocaleString('pt-BR')}\``,
+                    name: ":bank: Bufunfas",
+                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bufunfas)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.movimentado)}\``,
                     inline: true
                 }
             )

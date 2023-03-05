@@ -39,7 +39,7 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        let alvo = interaction.options.getUser('user') || interaction.user
+        let alvo = interaction.options.getUser("user") || interaction.user
         const date1 = new Date()
 
         if (user.uid === "297153970613387264")
@@ -71,7 +71,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo_embed)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${client.formata_num(user.misc.money)}\`\`\`\n${daily}`)
+            .setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$${client.locale(user.misc.money)}\`\`\`\n${daily}`)
 
         if (user.uid === interaction.user.id)
             embed.setFooter({ text: client.tls.phrase(user, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
