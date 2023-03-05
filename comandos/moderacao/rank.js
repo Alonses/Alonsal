@@ -43,13 +43,13 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-        const membro_sv = await interaction.guild.members.cache.get(interaction.user.id)
+        const membro_sv = await client.getUserGuild(interaction, interaction.user.id)
 
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "mode.xp.permissao", true, 3)
 
         // Coletando os dados do usuário informado no servidor
-        const usuario = interaction.options.getUser('user')
+        const usuario = interaction.options.getUser("user")
         let user_c = await client.getUserRankServer(usuario.id, interaction.guild.id)
         user_c = user_c[0]
 

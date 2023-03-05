@@ -85,7 +85,7 @@ module.exports = {
         let acrescimo = 0
 
         // Valor para adicionar a somatória caso informado
-        if (interaction.options.data.length ===3)
+        if (interaction.options.data.length === 3)
             acrescimo = interaction.options.data[2].value
 
         const faces = []
@@ -110,9 +110,9 @@ module.exports = {
         }
 
         if (acrescimo > 0)
-            somatoria = `[ ${somatoria} ] + ${acrescimo} ⇁ ${(somatoria + acrescimo).toLocaleString("pt-BR")}`
+            somatoria = `[ ${somatoria} ] + ${acrescimo} ⇁ ${client.locale(somatoria + acrescimo)}`
         else
-            somatoria = somatoria.toLocaleString("pt-BR")
+            somatoria = client.locale(somatoria)
 
         interaction.reply({ content: `${client.emoji(emojis.dice)} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: user?.conf.ghost_mode || false })
     }

@@ -3,12 +3,12 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async function ({ client }) {
 
     client.discord.on("guildCreate", guild => {
-        let caso = 'New'
+        let caso = "New"
         require('./servers.js')({ client, caso, guild })
     })
 
     client.discord.on("guildDelete", guild => {
-        let caso = 'Left'
+        let caso = "Left"
         require('./servers.js')({ client, caso, guild })
     })
 

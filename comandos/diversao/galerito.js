@@ -13,7 +13,6 @@ module.exports = {
 			"ru": '⌠😂⌡ Случайные гифки rogéria'
 		}),
 	async execute(client, user, interaction) {
-		const num = client.random(gifs)
-		interaction.reply({ content: gifs[num], ephemeral: user?.conf.ghost_mode || false })
+		interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
 	}
 }

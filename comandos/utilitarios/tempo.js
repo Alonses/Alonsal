@@ -198,7 +198,7 @@ module.exports = {
                             let nome_local = `${client.tls.phrase(user, "util.tempo.na")} ${res.name}`, rodape_cabecalho = ""
                             let cabecalho_fix = estacao_atual(res.coord.lat, client, user)
 
-                            if (typeof res.sys.country != "undefined")
+                            if (typeof res.sys.country !== "undefined")
                                 if (idioma_definido === "pt-br")
                                     nome_local = nome_local.replace("na", "em")
 
@@ -210,7 +210,7 @@ module.exports = {
 
                                 cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
 
-                                if (typeof res.rain["3h"] != "undefined")
+                                if (typeof res.rain["3h"] !== "undefined")
                                     cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                                 emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
@@ -220,7 +220,7 @@ module.exports = {
                             if (typeof res.snow !== "undefined") {
                                 cabecalho_fix = `${client.tls.phrase(user, "util.tempo.nevando")}\n${client.tls.phrase(user, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
 
-                                if (typeof res.rain["3h"] != "undefined")
+                                if (typeof res.rain["3h"] !== "undefined")
                                     cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.neve")} 3H: ${res.rain["3h"]}mm`
 
                                 emoji_indica_visibilidade = " 🔽"
@@ -289,12 +289,10 @@ module.exports = {
                                 )
                                 .setFooter({ text: nota_rodape })
 
-                            return interaction.reply({ embeds: [clima_atual], ephemeral: user?.conf.ghost_mode || false })
+                            interaction.reply({ embeds: [clima_atual], ephemeral: user?.conf.ghost_mode || false })
                         })
                 }
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     }
 }

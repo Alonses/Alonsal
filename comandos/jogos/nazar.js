@@ -16,7 +16,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        fetch('https://madam-nazar-location-api.herokuapp.com/location/current')
+        fetch("https://madam-nazar-location-api.herokuapp.com/location/current")
             .then(res => res.json())
             .then(dados => {
 
@@ -25,13 +25,11 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(`> ${client.tls.phrase(user, "game.nazar.titulo")}`)
                     .setColor(client.embed_color(user.misc.color))
-                    .setDescription(`${client.tls.phrase(user, "game.nazar.descricao").replace("regiao_repl", dados.location.region.name).replace("preciso_repl", dados.location.region.precise).replace("proximo_repl", dados.location.near_by[0]).replace("proximo_2_repl", dados.location.near_by[1])}`)
                     .setImage(dados.location.image)
+                    .setDescription(`${client.tls.phrase(user, "game.nazar.descricao").replace("regiao_repl", dados.location.region.name).replace("preciso_repl", dados.location.region.precise).replace("proximo_repl", dados.location.near_by[0]).replace("proximo_2_repl", dados.location.near_by[1])}`)
 
                 interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
             })
-            .catch(() => {
-                client.tls.reply(interaction, user, "game.nazar.error_1", true, 1)
-            })
+            .catch(() => client.tls.reply(interaction, user, "game.nazar.error_1", true, 1))
     }
 }

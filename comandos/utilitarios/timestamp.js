@@ -105,7 +105,7 @@ module.exports = {
 
                 timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
 
-                if ((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] == "NaN")
+                if ((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] === "NaN")
                     conversao_invalida = true
             } else { // De data normal para timestamp
                 timestamp = new Date(data).getTime() / 1000

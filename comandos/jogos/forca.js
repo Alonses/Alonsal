@@ -42,19 +42,19 @@ module.exports = {
                     }
 
                     // fetch(`https://api.dicionario-aberto.net/word/${palavra_escolhida}`)
-                        // .then(res => res.json())
-                        // .then(dados => {
+                    // .then(res => res.json())
+                    // .then(dados => {
 
-                            // const descricao_formatada = formatar_descricao(dados)
-                            // games[interaction.user.id].descricao = descricao_formatada
+                    // const descricao_formatada = formatar_descricao(dados)
+                    // games[interaction.user.id].descricao = descricao_formatada
 
-                            retorna_jogo(client, interaction, user)
-                        // })
+                    retorna_jogo(client, interaction, user)
+                    // })
                 })
         } else {
 
             // Acionado caso seja escrito algo para o chute da palavra
-            if (interaction.options.data.length ===1) {
+            if (interaction.options.data.length === 1) {
                 const entrada = interaction.options.data[0].value.toLowerCase()
 
                 verifica_chute(client, entrada, interaction, user)
@@ -79,7 +79,7 @@ function verifica_chute(client, entrada, interaction, user) {
         // Barra caso a letra já tenha sido informada
         if (!games[interaction.user.id].entradas.includes(entrada)) {
             for (let i = 0; i < split.length; i++) {
-                if (entrada == split[i]) {
+                if (entrada === split[i]) {
                     descobertas[i] = `\`${entrada}\``
 
                     acerto = true
@@ -112,7 +112,7 @@ function verifica_chute(client, entrada, interaction, user) {
 function verifica_palavra(client, interaction, user, entrada) {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
-    if (entrada == games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") == games[interaction.user.id].word) {
+    if (entrada === games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") === games[interaction.user.id].word) {
         interaction.reply({ content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\``, ephemeral: user?.conf.ghost_mode || false })
 
         games[interaction.user.id].finalizado = true

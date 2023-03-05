@@ -19,7 +19,7 @@ module.exports = async ({ client, interaction }) => {
 
         if (client.id() === process.env.client_1 && process.env.command_channel) {
             const d = new Date()
-            const day = d.toLocaleString('en-US', { weekday: 'long' })
+            const day = d.toLocaleString("en-US", { weekday: "long" })
 
             let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
             let min = formata_horas(d.getMinutes()), hr = formata_horas(d.getHours())
@@ -63,12 +63,12 @@ module.exports = async ({ client, interaction }) => {
             comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
 
             const date = d.getDate(), year = d.getFullYear()
-            const month = d.toLocaleString('en-US', { month: 'long' })
+            const month = d.toLocaleString("en-US", { month: "long" })
 
             let embed = new EmbedBuilder()
                 .setTitle("> ✨ New interaction")
                 .setColor(0x29BB8E)
-                .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${qtd_comandos.toLocaleString('pt-BR')}\` )`)
+                .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
                 .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
 
             if (url_ativacao !== "")

@@ -93,7 +93,7 @@ module.exports = {
         await interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
 
         // Coleta o ID do usuário mencionado
-        let rodape = interaction.user.username, user_alvo = interaction.options.getUser('user')
+        let rodape = interaction.user.username, user_alvo = interaction.options.getUser("user")
         let opcoes = interaction.options.data, pagina = 1
 
         // Filtrando os valores de entrada caso tenham sido declarados
@@ -165,8 +165,8 @@ module.exports = {
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
-                experiencias.push(`\`${client.formata_num(parseInt(user.xp))} EXP\``)
-                levels.push(`\`${client.formata_num(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
+                experiencias.push(`\`${client.locale(parseInt(user.xp))} EXP\``)
+                levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
             }
 
             if (!user_alvo) // Verifica se a entrada é um ID
@@ -200,7 +200,7 @@ module.exports = {
                     },
                     {
                         name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
-                        value: `\`${client.formata_num(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
+                        value: `\`${client.locale(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
                         inline: true
                     },
                     { name: "⠀", value: "⠀", inline: true }

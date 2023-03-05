@@ -79,7 +79,7 @@ module.exports = {
                     },
                     {
                         name: `:busts_in_silhouette: **${client.tls.phrase(user, "util.server.membros")}**`,
-                        value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${qtd_membros.toLocaleString('pt-BR')}\`\n:arrow_up: **Max: **\`${interaction.guild.maximumMembers.toLocaleString('pt-BR')}\``,
+                        value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${client.locale(qtd_membros)}\`\n:arrow_up: **Max: **\`${client.locale(interaction.guild.maximumMembers)}\``,
                         inline: true
                     },
                     {
@@ -148,7 +148,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
-                    return interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                    interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
                 })
         }
     }

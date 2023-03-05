@@ -175,7 +175,7 @@ module.exports = {
                     )
                 }
 
-                return interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

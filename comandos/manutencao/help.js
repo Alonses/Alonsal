@@ -21,7 +21,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "inic.ping.titulo"))
             .setColor(client.embed_color(user.misc.color))
-            .setImage('https://i.imgur.com/NqmwCA9.png')
+            .setImage("https://i.imgur.com/NqmwCA9.png")
             .setDescription(client.tls.phrase(user, "inic.ping.boas_vindas"))
             .setFooter({ text: client.tls.phrase(user, "inic.ping.idioma_dica") })
 

@@ -58,7 +58,7 @@ module.exports = {
         if (params.url)
             texto_entrada = params.url
 
-        alvo = interaction.options.getUser('user') || interaction.user
+        alvo = interaction.options.getUser("user") || interaction.user
         const user_alvo = await client.getUser(alvo.id)
 
         // user_alvo -> usuário marcado pelo comando
@@ -107,7 +107,7 @@ module.exports = {
                         bandeira_user = bandeira_user.slice(bandeira_user.length - 2)
 
                         bandeira_user = ` | :flag_${bandeira_user}:`
-                    } catch (err) {
+                    } catch {
                         bandeira_user = ""
                     }
 
@@ -128,14 +128,14 @@ module.exports = {
 
                         if (status_atual === "undefined")
                             status_atual = client.tls.phrase(user, `util.steam.${status_atual}`)
-                    } catch (err) {
+                    } catch {
                         status = client.tls.phrase(user, `util.steam.undefined`)
                     }
 
                     try {
                         nivel_user = res.split("<span class=\"friendPlayerLevelNum\">")[1]
                         nivel_user = nivel_user.split("</span>")[0]
-                    } catch (err) {
+                    } catch {
                         nivel_user = "-"
                     }
 
@@ -143,7 +143,7 @@ module.exports = {
                         jogos_user = res.split("<span class=\"count_link_label\">Games</span>&nbsp;")[1]
                         jogos_user = jogos_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         jogos_user = jogos_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         jogos_user = "-"
 
                         if (res.includes("<div class=\"label\">Games Owned</div>")) {
@@ -158,7 +158,7 @@ module.exports = {
                         insignias_user = res.split("<span class=\"count_link_label\">Badges</span>&nbsp;")[1]
                         insignias_user = insignias_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         insignias_user = insignias_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         insignias_user = "-"
                     }
 
@@ -186,7 +186,7 @@ module.exports = {
                             conquistas_user = conquistas_user.split("</div>")[0]
                         } else
                             conquistas_user = "-"
-                    } catch (err) {
+                    } catch {
                         conquistas_user = "-"
                     }
 
@@ -202,7 +202,7 @@ module.exports = {
                             tempo_semanas = `${tempo_semanas} ${client.tls.phrase(user, `util.steam.${descriminador_tempo_2}`)}`
                         else
                             tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`
-                    } catch (err) {
+                    } catch {
                         tempo_semanas = "-"
                     }
 
@@ -211,7 +211,7 @@ module.exports = {
                         porcentagem_conquistas = porcentagem_conquistas.slice(porcentagem_conquistas.length - 40)
                         porcentagem_conquistas = porcentagem_conquistas.split("<div class=\"value\">")[1]
                         porcentagem_conquistas = porcentagem_conquistas.split("</div>")[0]
-                    } catch (err) {
+                    } catch {
                         porcentagem_conquistas = "-"
                     }
 
@@ -222,7 +222,7 @@ module.exports = {
                         jogos_perfeitos = jogos_perfeitos.split("<div class=\"value\">")[1]
                         jogos_perfeitos = jogos_perfeitos.split("</div>")[0]
                         jogos_perfeitos = jogos_perfeitos.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         jogos_perfeitos = "-"
                     }
 
@@ -231,7 +231,7 @@ module.exports = {
                         reviews_user = res.split("<span class=\"count_link_label\">Reviews</span>&nbsp;")[1]
                         reviews_user = reviews_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         reviews_user = reviews_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         reviews_user = "-"
                     }
 
@@ -239,7 +239,7 @@ module.exports = {
                         capturas_user = res.split("<span class=\"count_link_label\">Screenshots</span>&nbsp;")[1]
                         capturas_user = capturas_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         capturas_user = capturas_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         capturas_user = "-"
                     }
 
@@ -247,7 +247,7 @@ module.exports = {
                         videos_user = res.split("<span class=\"count_link_label\">Videos</span>&nbsp;")[1]
                         videos_user = videos_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         videos_user = videos_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         videos_user = "-"
                     }
 
@@ -255,7 +255,7 @@ module.exports = {
                         artes_user = res.split("<span class=\"count_link_label\">Artwork</span>&nbsp;")[1]
                         artes_user = artes_user.replace("<span class=\"profile_count_link_total\">", "").split("</span>")[0]
                         artes_user = artes_user.replace(",", ".").replace(/\s+/g, '')
-                    } catch (err) {
+                    } catch {
                         artes_user = "-"
                     }
 
@@ -274,7 +274,7 @@ module.exports = {
                             tempo_jogado = dados_jogo_fav.split("<div class=\"showcase_stat\">")[1]
                             tempo_jogado = tempo_jogado.split("</div>")[0]
                             tempo_jogado = tempo_jogado.replace("<div class=\"value\">", "")
-                        } catch (err) {
+                        } catch {
                             tempo_jogado = "-"
                         }
 
@@ -282,7 +282,7 @@ module.exports = {
                             descriminador_tempo = dados_jogo_fav.split("<div class=\"label\">")[1]
                             descriminador_tempo = descriminador_tempo.split("</div>")[0]
                             descriminador_tempo = descriminador_tempo.split(" ")[0].toLocaleLowerCase()
-                        } catch (err) {
+                        } catch {
                             descriminador_tempo = "-"
                         }
 

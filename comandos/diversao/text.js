@@ -144,12 +144,12 @@ module.exports = {
 
         // Inverte o texto enviado
         if (operation === "reverse") {
-            return interaction.reply({ content: texto_entrada.split('').reverse().join(""), ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: texto_entrada.split('').reverse().join(""), ephemeral: user?.conf.ghost_mode || false })
 
         // Torna o texto nesse formato "A A A A A A"
         } else if (operation === "upper") {
 
-            return interaction.reply({ content: texto_entrada.toUpperCase().split('').join(" ").trim(), ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: texto_entrada.toUpperCase().split('').join(" ").trim(), ephemeral: user?.conf.ghost_mode || false })
 
         // Torna o texto nesse formato "AaAaAaAaAaA"
         } else if (operation === "sans") {
@@ -162,7 +162,7 @@ module.exports = {
                 else
                     texto_entrada[i] = texto_entrada[i].toLocaleLowerCase()
 
-            return interaction.reply({ content: texto_entrada.join(""), ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: texto_entrada.join(""), ephemeral: user?.conf.ghost_mode || false })
 
         // Torna o texto nesse formato "teste😂testado😂testadamente"
         } else if (operation === "emoji") {
@@ -179,7 +179,7 @@ module.exports = {
             }
 
             // Emoji padrão do discord
-            return interaction.reply({ content: texto_entrada.replaceAll(" ", emoji), ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: texto_entrada.replaceAll(" ", emoji), ephemeral: user?.conf.ghost_mode || false })
         }
     }
 }

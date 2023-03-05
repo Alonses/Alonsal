@@ -1,9 +1,9 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
+const { readdirSync } = require('fs')
+
 const create_buttons = require('../discord/create_buttons.js')
 const formata_anun = require('../formatadores/formata_games.js')
-
-const { readdirSync } = require('fs')
 
 const platformMap = {
     "epicgames.com": ["<:Logo_ep:864887054067957791>", "Epic Games"],
@@ -33,7 +33,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     }
 
     if (canais_clientes.length < 1)
-        return client.notify(process.env.feeds_channel, `:video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização`)
+        return client.notify(process.env.feeds_channel, ":video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização")
 
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google/)
 
@@ -75,8 +75,8 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
             const embed = new EmbedBuilder()
                 .setTitle(`${logo_plat} ${plataforma}`)
-                .setImage(imagem_destaque)
                 .setColor(cor_embed)
+                .setImage(imagem_destaque)
                 .setDescription(texto_anuncio)
 
             const canal_alvo = client.discord.channels.cache.get(canal.canal)
@@ -102,5 +102,5 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     client.notify(process.env.feeds_channel, aviso)
 
     if (interaction)
-        return interaction.editReply({ content: ":white_check_mark: | A atualização foi enviada à todos os canais de games", ephemeral: true })
+        interaction.editReply({ content: ":white_check_mark: | A atualização foi enviada à todos os canais de games", ephemeral: true })
 }

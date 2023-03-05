@@ -30,7 +30,7 @@ module.exports = {
 			return interaction.reply({ content: `:tropical_drink: | ${client.tls.phrase(user, "dive.jaja.nsfw_jaja")}`, ephemeral: true })
 
 		if (interaction.options.getSubcommand() === "gif") {
-			return interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
+			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
 		} else {
 
 			fetch(`${process.env.url_apisal}/random?jailson`)
@@ -39,8 +39,8 @@ module.exports = {
 
 					const embed = new EmbedBuilder()
 						.setTitle(res.nome)
-						.setThumbnail(res.foto)
 						.setColor(client.embed_color(user.misc.color))
+						.setThumbnail(res.foto)
 						.setDescription(`- "${res.texto}"`)
 
 					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })

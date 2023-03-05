@@ -43,7 +43,7 @@ function translate(user, target) {
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
             data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
-    } catch (err) {
+    } catch {
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
     }
 
@@ -53,7 +53,7 @@ function translate(user, target) {
             data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
         else
             data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
-    } catch (err) { // Tradução não existente no idioma selecionado
+    } catch { // Tradução não existente no idioma selecionado
 
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
         data = data.data

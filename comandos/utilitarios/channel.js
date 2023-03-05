@@ -33,7 +33,7 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        let canal = interaction.options.getChannel('channel') || interaction.channel
+        let canal = interaction.options.getChannel("channel") || interaction.channel
         // Coletando os dados do canal informado
 
         let nsfw = client.tls.phrase(user, "util.minecraft.nao")
@@ -63,7 +63,7 @@ module.exports = {
         fetch(icone_server)
             .then(res => {
                 if (res.status !== 200)
-                    icone_server = icone_server.replace('.gif', '.webp')
+                    icone_server = icone_server.replace(".gif", ".webp")
 
                 const infos_ch = new EmbedBuilder()
                     .setAuthor({ name: canal.name, iconURL: icone_server })
@@ -85,13 +85,13 @@ module.exports = {
                 if (bitrate === "")
                     infos_ch.addFields(
                         {
-                            name: ':underage: NSFW',
+                            name: ":underage: NSFW",
                             value: `\`${nsfw}\``,
                             inline: true
                         }
                     )
                 else
-                    infos_ch.addFields({ name: '⠀', value: '⠀', inline: true })
+                    infos_ch.addFields({ name: "⠀", value: "⠀", inline: true })
 
                 infos_ch.addFields(
                     {
@@ -120,7 +120,7 @@ module.exports = {
                             }
                         )
 
-                return interaction.reply({ embeds: [infos_ch], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [infos_ch], ephemeral: user?.conf.ghost_mode || false })
             })
     }
 }

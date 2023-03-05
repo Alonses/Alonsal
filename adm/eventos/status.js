@@ -22,9 +22,7 @@ module.exports = async ({ client }) => {
 
                     dispara_status(client, status_apisal)
                 })
-                .catch(() => {
-                    dispara_status(client, "🛑 Offline")
-                })
+                .catch(() => dispara_status(client, "🛑 Offline"))
         }
     }
 
@@ -76,33 +74,33 @@ function dispara_status(client, status_apisal) {
                 }
 
                 const embed = new EmbedBuilder()
-                    .setTitle(':steam_locomotive: Caldeiras aquecidas')
+                    .setTitle(":steam_locomotive: Caldeiras aquecidas")
                     .setColor(0x29BB8E)
                     .addFields(
                         {
-                            name: ':globe_with_meridians: **Servidores**',
-                            value: `:heart_on_fire: **Ativo: **\`${client.guilds().size}\`\n:card_box: **Canais: **\`${canais_texto.toLocaleString('pt-BR')}\`\n:busts_in_silhouette: **Usuários: **\`${members.toLocaleString('pt-BR')}\``,
+                            name: ":globe_with_meridians: **Servidores**",
+                            value: `:heart_on_fire: **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\``,
                             inline: true
                         },
                         {
-                            name: `⠀`,
-                            value: `⠀`,
+                            name: "⠀",
+                            value: "⠀",
                             inline: true
                         },
                         {
                             name: `:white_small_square: **Versão ${process.env.version}**`,
-                            value: `⠀`,
+                            value: "⠀",
                             inline: true
                         },
                     )
                     .addFields(
                         {
-                            name: ':moyai: **APISAL**',
+                            name: ":moyai: **APISAL**",
                             value: `\`${status_apisal}\``,
                             inline: true
                         },
                         {
-                            name: ':earth_americas: **Idiomas**',
+                            name: ":earth_americas: **Idiomas**",
                             value: bandeirolas_1.join(" "),
                             inline: true
                         },

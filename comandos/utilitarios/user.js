@@ -108,7 +108,7 @@ module.exports = {
 
             const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
 
-            const membro_sv = await interaction.guild.members.cache.get(user_alvo.id) // Coleta dados como membro
+            const membro_sv = await client.getUserGuild(interaction, user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
 
@@ -168,16 +168,16 @@ module.exports = {
             const flags_user = user_alvo.flags.toArray()
 
             if (!user_alvo.bot) {
-                if (flags_user.includes('HypeSquadOnlineHouse1')) // HypeSquad
+                if (flags_user.includes("HypeSquadOnlineHouse1")) // HypeSquad
                     emoji_hypesquad = client.emoji(emojis.squad_bravery)
 
-                if (flags_user.includes('HypeSquadOnlineHouse2'))
+                if (flags_user.includes("HypeSquadOnlineHouse2"))
                     emoji_hypesquad = client.emoji(emojis.squad_brilliance)
 
-                if (flags_user.includes('HypeSquadOnlineHouse3'))
+                if (flags_user.includes("HypeSquadOnlineHouse3"))
                     emoji_hypesquad = client.emoji(emojis.squad_balance)
 
-                if (flags_user.includes('PremiumEarlySupporter'))
+                if (flags_user.includes("PremiumEarlySupporter"))
                     discord_premium = client.emoji(emojis.early_supporter)
 
                 if (membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
@@ -194,12 +194,12 @@ module.exports = {
                 .setThumbnail(avatar_user)
                 .addFields(
                     {
-                        name: ':globe_with_meridians: **Discord**',
+                        name: ":globe_with_meridians: **Discord**",
                         value: `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``,
                         inline: true
                     },
                     {
-                        name: `:label: **Discord ID**`,
+                        name: ":label: **Discord ID**",
                         value: `\`${user_alvo.id}\``,
                         inline: true
                     }
@@ -220,7 +220,7 @@ module.exports = {
 
             if (badges.length > 0)
                 infos_user.addFields({
-                    name: ':trophy: **Badges**',
+                    name: ":trophy: **Badges**",
                     value: badges,
                     inline: false
                 })
@@ -237,9 +237,9 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle(`> ${user_alvo.username}`)
-                .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
                 .setColor(client.embed_color(user_c.misc.embed))
                 .setImage(url_avatar)
+                .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
 
             interaction.reply({ embeds: [embed], ephemeral: true })
 
@@ -253,18 +253,18 @@ module.exports = {
                 }
             })
 
-            let receive = '', url_banner = ''
+            let receive = "", url_banner = ""
 
             response.then(a => {
                 if (a.status !== 404) {
                     a.json().then(data => {
-                        receive = data['banner']
+                        receive = data["banner"]
 
                         if (receive !== null) {
 
-                            let format = 'png'
-                            if (receive.substring(0, 2) === 'a_') {
-                                format = 'gif'
+                            let format = "png"
+                            if (receive.substring(0, 2) === "a_") {
+                                format = "gif"
                             }
 
                             url_banner = `https://cdn.discordapp.com/banners/${user_alvo.id}/${receive}.${format}?size=2048`
@@ -277,11 +277,11 @@ module.exports = {
                         // Exibindo o banner do usuário
                         const embed = new EmbedBuilder()
                             .setTitle(`> ${user_alvo.username}`)
-                            .setDescription(client.tls.phrase(user, "util.avatar.download_banner").replace("link_repl", url_banner))
                             .setColor(client.embed_color(user_c.misc.embed))
                             .setImage(url_banner)
+                            .setDescription(client.tls.phrase(user, "util.avatar.download_banner").replace("link_repl", url_banner))
 
-                        return interaction.reply({ embeds: [embed], ephemeral: true })
+                        interaction.reply({ embeds: [embed], ephemeral: true })
                     })
                 }
             })

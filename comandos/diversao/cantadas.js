@@ -15,8 +15,8 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle(res.nome)
-                    .setThumbnail(res.foto)
                     .setColor(client.embed_color(user.misc.color))
+                    .setThumbnail(res.foto)
                     .setDescription(`> "${res.texto}"`)
 
                 interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })

@@ -79,10 +79,10 @@ module.exports = {
             qtd_quebras = exib_formatado.split(anagrama_formado[i])
 
             if (qtd_quebras.length > 2 && fatori_fix.length > 4)
-                cor_embed = '0xfbff3d'
+                cor_embed = "0xfbff3d"
         }
 
-        if (cor_embed === '0xfbff3d')
+        if (cor_embed === "0xfbff3d")
             exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(user, "dive.anagrama.sorte")}_`
 
         const anagrama = new EmbedBuilder()
@@ -90,18 +90,17 @@ module.exports = {
             .setColor(cor_embed)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
-            .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${result.toLocaleString('pt-BR')} ${combinacoes}` })
+            .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}` })
 
-        return interaction.reply({ embeds: [anagrama], ephemeral: user?.conf.ghost_mode || false })
+        interaction.reply({ embeds: [anagrama], ephemeral: user?.conf.ghost_mode || false })
     }
 }
 
 function duplicateCount(texto_entrada) {
     const charMap = {}
 
-    for (const char of texto_entrada.toLowerCase()) {
+    for (const char of texto_entrada.toLowerCase())
         charMap[char] = (charMap[char] || 0) + 1
-    }
 
     return Object.values(charMap).filter((count) => count > 0)
 }

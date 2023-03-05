@@ -45,10 +45,10 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			return interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
+			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
 		else if (interaction.options.getSubcommand() === "laugh") {
-			const file = new AttachmentBuilder('./arquivos/songs/cazalbe.ogg')
-			return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
+			const file = new AttachmentBuilder("./arquivos/songs/cazalbe.ogg")
+			interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
 		} else {
 
 			return client.tls.reply(user, "inic.error.develop", true, 5)
@@ -58,9 +58,9 @@ module.exports = {
 				.then(async res => {
 
 					const embed = new EmbedBuilder()
-						.setTitle('Cazalbé')
-						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
+						.setTitle("Cazalbé")
 						.setColor(client.embed_color(user.misc.color))
+						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
 						.setDescription(`${res.question}\n${res.answer}`)
 
 					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })

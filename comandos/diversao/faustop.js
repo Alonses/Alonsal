@@ -18,8 +18,6 @@ module.exports = {
                 .setDescription("⌠😂|🇧🇷⌡ Escolher uma frase do faustão")),
     async execute(client, user, interaction) {
 
-        let i = 0
-
         if (interaction.options.getSubcommand() !== "menu") {
 
             const data = new Date()
@@ -28,10 +26,10 @@ module.exports = {
             if (data.getHours() === 20 && data.getMinutes() === 7)
                 num = client.random(1, 1) > 1 ? 7 : 12
 
-            const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: 'faustop.ogg' })
+            const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: "faustop.ogg" })
 
-            return interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
         } else
-            return interaction.reply({ content: 'Escolha uma das frases abaixo!', components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
     }
 }

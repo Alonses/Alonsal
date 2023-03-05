@@ -61,7 +61,7 @@ module.exports = {
         if (params.url)
             texto_entrada = params.url
 
-        alvo = interaction.options.getUser('user') || interaction.user
+        alvo = interaction.options.getUser("user") || interaction.user
         const user_alvo = await client.getUser(alvo.id)
 
         // user_alvo -> usuário marcado pelo comando
@@ -204,7 +204,7 @@ module.exports = {
                                             inline: true
                                         },
                                         {
-                                            name: `⠀`,
+                                            name: "⠀",
                                             value: `:man_singer: **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_ouvidos}\`\n:blue_heart: **${client.tls.phrase(user, "util.lastfm.faixas_favoritas")}: **\`${faixas_preferidas}\``,
                                             inline: true
                                         },

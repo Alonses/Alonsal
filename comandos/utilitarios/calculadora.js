@@ -56,8 +56,8 @@ module.exports = {
             if (!isInteger(resultado))
                 resultado = resultado.toFixed(6)
 
-            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${resultado.toLocaleString('pt-BR')}\``, ephemeral: user?.conf.ghost_mode || false })
-        } catch (err) {
+            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${client.locale(resultado)}\``, ephemeral: user?.conf.ghost_mode || false })
+        } catch {
             interaction.reply({ content: `:octagonal_sign: | ${client.tls.phrase(user, "util.calc.error")}: \`${expressao}\``, ephemeral: true })
         }
     }

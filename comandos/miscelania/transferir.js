@@ -57,7 +57,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        let user_alvo = interaction.options.getUser('user')
+        let user_alvo = interaction.options.getUser("user")
         let bufunfas = interaction.options.data[1].value
 
         if (bufunfas < 0.01)
@@ -69,7 +69,7 @@ module.exports = {
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error_3")}`, ephemeral: true })
 
         // Validando se o usuário marcado não é um bot
-        const membro_sv = await interaction.guild.members.cache.get(alvo.uid)
+        const membro_sv = await client.getUserGuild(interaction, alvo.uid)
 
         if (membro_sv.user.bot && alvo.uid !== client.id())
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.user_bot")}`, ephemeral: true })
@@ -77,7 +77,7 @@ module.exports = {
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error").replace("valor_repl", client.formata_num(bufunfas))}`, ephemeral: true })
+            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error").replace("valor_repl", client.locale(bufunfas))}`, ephemeral: true })
 
         user.misc.money -= bufunfas
         alvo.misc.money += bufunfas
@@ -91,14 +91,14 @@ module.exports = {
         if (alvo.uid === client.id() && quantia === 24.69) // Funny Number
             require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
 
-        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.formata_num(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false })
+        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false })
 
         if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
             if (alvo.uid !== client.id())
                 client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
 
                     // Enviando a mensagem no idioma do usuário alvo
-                    user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.formata_num(bufunfas))} ${client.emoji(emojis_dancantes)}`)
+                    user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
                 })
     }
 }
