@@ -53,6 +53,12 @@ module.exports = {
         let user_c = await client.getUserRankServer(usuario.id, interaction.guild.id)
         user_c = user_c[0]
 
+        // Validando se o usuário tem o ranking habilitado
+        if (!await client.userRanking(user_c.uid)) {
+            client.tls.reply(interaction, user, "mode.ranking.error", true, 5)
+            return
+        }
+
         user_c.nickname = usuario.username
         let novo_exp = parseFloat(interaction.options.get('xp').value)
 

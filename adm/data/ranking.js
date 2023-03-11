@@ -13,6 +13,9 @@ module.exports = async ({ client, message, caso }) => {
     let user = await client.getUserRankServer(id_alvo, message.guild.id)
     user = user[0]
 
+    // Validando se o usuário tem o ranking habilitado
+    if (!await client.userRanking(user.uid)) return
+
     //              Comandos                  Mensagens
     user.nickname = message.user?.username || message.author?.username
 

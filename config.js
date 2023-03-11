@@ -13,6 +13,7 @@ function config(client) {
 
     // Limpando o console e inicializando o bot
     console.clear()
+    console.log("Inicializando o bot...")
 
     client.discord.commands = new Collection()
 
@@ -32,13 +33,15 @@ function config(client) {
         }
     }
 
+    console.log("Atualizando comandos")
+
     if (client.x.modo_develop || client.x.force_update) {
-        const rest = new REST({ version: '10' }).setToken(client.x.token)
+        const rest = new REST({ version: "10" }).setToken(client.x.token)
 
         if (!delete_slash) { // Registrando os comandos públicos globalmente
             if (client.x.force_update) { // Atualizando forçadamente os comandos globais
                 rest.put(Routes.applicationCommands(client.x.clientId), { body: commands })
-                    .then(() => console.log('Comandos globais atualizados com sucesso.'))
+                    .then(() => console.log("Comandos globais atualizados com sucesso."))
                     .catch(console.error)
             }
 
@@ -47,7 +50,7 @@ function config(client) {
 
             // Registrando os comandos privados no servidor
             rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guild_id), { body: commands })
-                .then(() => console.log('Comandos privados do servidor atualizados com sucesso.'))
+                .then(() => console.log("Comandos privados do servidor atualizados com sucesso."))
                 .catch(console.error)
 
         } else { // Removendo os comandos slash globalmente
@@ -66,6 +69,8 @@ function config(client) {
                 })
         }
     }
+
+    console.log("Ordenando comandos")
 
     for (const folder of readdirSync(`${__dirname}/comandos/`)) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {

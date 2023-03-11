@@ -20,7 +20,8 @@ const schema = new mongoose.Schema({
     conf: {
         banned: { type: Boolean, default: false },
         ghost_mode: { type: Boolean, default: false },
-        notify: { type: Boolean, default: true }
+        notify: { type: Boolean, default: true },
+        ranking: { type: Boolean, default: true }
     }
 })
 

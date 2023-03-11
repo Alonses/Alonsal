@@ -36,7 +36,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar essi comando :coisaboa:", ephemeral: true })
+            return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar essi comando!", ephemeral: true })
 
         await interaction.deferReply({ ephemeral: true })
 

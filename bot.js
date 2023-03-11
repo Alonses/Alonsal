@@ -11,6 +11,8 @@ config(client) // Atualiza os comandos slash do bot
 
 client.discord.once("ready", async () => {
 
+	console.log("Configurando etapas finais")
+
 	// Definindo o idioma do bot
 	idioma.setDefault("pt-br")
 
@@ -26,6 +28,10 @@ client.discord.once("ready", async () => {
 
 client.discord.on("messageCreate", async (message) => {
 
+	const user = await client.getUser(message.author.id)
+
+	// Ignorando usuários
+	if (user.conf?.banned || false) return
 	if (message.author.bot || message.webhookId) return
 
 	let text = message.content.toLowerCase()
