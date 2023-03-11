@@ -105,6 +105,18 @@ class CeiraClient {
         return getUser(id_user)
     }
 
+    async userRanking(id_user) {
+
+        // Valida se o usuário possui ranking ativo
+        let user = await this.getUser(id_user)
+        let user_ranking = true
+
+        if (typeof user.conf.ranking !== "undefined")
+            user_ranking = user.conf.ranking
+
+        return user_ranking
+    }
+
     getBadges(id_user) {
         return getBadges(id_user)
     }
@@ -132,14 +144,9 @@ class CeiraClient {
             this.discord.channels.cache.get(id_alvo).send({ content: conteudo })
     }
 
-    // Retorna a quantidade de arquivos com determinada extensão na url espeficiada
+    // Retorna a quantidade de arquivos com determinada extensão na url especificada
     countFiles(caminho, extensao) {
-        let i = 0
-
-        for (const file of readdirSync(caminho).filter(file => file.endsWith(extensao)))
-            i++
-
-        return i
+        return readdirSync(caminho).filter(file => file.endsWith(extensao)).length
     }
 
     // Aleatoriza o texto de entrada

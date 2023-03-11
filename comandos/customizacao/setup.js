@@ -41,6 +41,17 @@ module.exports = {
                     "fr": '⌠👤⌡ Toutes les commandes que vous utilisez seront affichées juste pour vous',
                     "it": '⌠👤⌡ Tutti i comandi che usi verranno mostrati solo per te',
                     "ru": '⌠👤⌡ Все команды, которые вы используете, будут показаны только для вас'
+                }))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("ranking")
+                .setDescription("⌠👤⌡ Disable or enable your XP gain")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Desabilitar ou habilitar seu ganho de XP',
+                    "es-ES": '⌠👤⌡ Deshabilite o habilite su ganancia de XP',
+                    "fr": '⌠👤⌡ Désactiver ou activer votre gain d\'XP',
+                    "it": '⌠👤⌡ Disabilita o abilita il tuo guadagno XP',
+                    "ru": '⌠👤⌡ Отключить или включить получение опыта'
                 })),
     async execute(client, user, interaction) {
 
@@ -69,8 +80,20 @@ module.exports = {
                 interaction.reply({ content: `:ghost: | ${client.tls.phrase(user, "mode.oculto.ativo")}`, ephemeral: true })
             else
                 interaction.reply({ content: `${client.emoji(emojis.ghostbusters)} | ${client.tls.phrase(user, "mode.oculto.desativo")}`, ephemeral: true })
+        } else if (interaction.options.getSubcommand() === "ranking") {
+
+            // Ativa ou desativa o modo fantasma e salva
+            if (typeof user.conf.ranking !== "undefined")
+                user.conf.ranking = !user.conf.ranking
+            else
+                user.conf.ranking = false
+
+            if (user.conf.ranking)
+                interaction.reply({ content: `:gem: | ${client.tls.phrase(user, "mode.ranking.ativo")}`, ephemeral: true })
+            else
+                interaction.reply({ content: `:exploding_head: | ${client.tls.phrase(user, "mode.ranking.desativo")}`, ephemeral: true })
         }
 
-        user.save()
+        await user.save()
     }
 }
