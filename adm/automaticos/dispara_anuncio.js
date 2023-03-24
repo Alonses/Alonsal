@@ -13,7 +13,8 @@ const platformMap = {
     "store.ubi.com": ["<:Logo_ubi:864887154483134516>", "Ubisoft"],
     "ubisoft.com": ["<:Logo_ubi:864887154483134516>", "Ubisoft"],
     "xbox.com": ["<:Logo_xb:864886938322731058>", "Xbox"],
-    "play.google": ["<:logo_pst:973395673489756220>", "Google Play"]
+    "play.google": ["<:logo_pst:973395673489756220>", "Google Play"],
+    "microsoft.com": ["<:Logo_xb:864886938322731058>", "Xbox"]
 }
 
 module.exports = async ({ client, interaction, objetos_anunciados }) => {
@@ -35,7 +36,8 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     if (canais_clientes.length < 1)
         return client.notify(process.env.feeds_channel, ":video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização")
 
-    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google/)
+    // Verificando se a plataforma informada é válida
+    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
 
     if (!matches && interaction)
         return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente", ephemeral: true })
