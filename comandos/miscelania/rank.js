@@ -110,9 +110,9 @@ module.exports = {
         else
             data_usuarios = await client.getRankGlobal()
 
-        // Sem dados salvos no banco de ranking
-        if (typeof data_usuarios === "undefined" || data_usuarios.length < 1)
-            return interaction.editReply({ content: `:mag: | Sem dados para gerar o ranking!`, ephemeral: user?.conf.ghost_mode || false })
+        // Sem dados salvos no banco de ranking para o servidor especificado
+        if (data_usuarios == null)
+            return client.tls.editReply(interaction, user, "dive.rank.error_2", user?.conf.ghost_mode || false, 1)
 
         // Salvando os dados no formato apropriado
         data_usuarios.forEach(valor => {

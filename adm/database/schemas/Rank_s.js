@@ -17,7 +17,8 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Rankerver", schema)
 
 async function getRankServer(sid) {
-    if (!await model.exists({ sid: sid })) await model.create({ sid: sid })
+    if (!await model.exists({ sid: sid }))
+        return null
 
     return model.find({ sid: sid })
 }

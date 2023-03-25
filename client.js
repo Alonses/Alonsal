@@ -94,7 +94,7 @@ class CeiraClient {
         if (entrada === "RANDOM")
             return alea_hex()
 
-        return entrada
+        return entrada.slice(-6)
     }
 
     login(token) {
