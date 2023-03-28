@@ -18,7 +18,7 @@ module.exports = {
 
         // Ativa ou desativa o modo fantasma e salva
         if (typeof user_alvo.conf.banned !== "undefined")
-            user_alvo.conf.banned = !user.conf.banned
+            user_alvo.conf.banned = !user_alvo.conf.banned
         else
             user_alvo.conf.banned = true
 
@@ -27,6 +27,6 @@ module.exports = {
         if (user_alvo.conf.banned)
             interaction.reply({ content: `${client.emoji(emojis.pare_agr)} | O usuário <@${user_alvo.uid}> será ignorado pelo bot a partir de agora!`, ephemeral: true })
         else
-            interaction.reply({ content: `${client.emoji(emojis.dog_panelaco)} | O usuário <@${user_alvo.uid}> não será mais ignorado pelo bot!`, ephemeral: true })
+            interaction.reply({ content: `${client.emoji(emojis.dog_panelaco)} | O usuário <@${user_alvo.uid}> não será mais ignorado pelo bot`, ephemeral: true })
     }
 }
