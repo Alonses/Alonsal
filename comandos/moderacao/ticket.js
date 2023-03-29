@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = requir
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("ticket")
-        .setDescription("⌠💂⌡ (Des)Ative a opção de tickets no servidor")
+        .setDescription("⌠💂⌡ (Des)Ative as denúncias em canais privados no servidor")
         .addChannelOption(option =>
             option.setName("category")
                 .setNameLocalizations({
