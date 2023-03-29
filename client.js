@@ -3,8 +3,10 @@ const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
-const { getUser } = require('./adm/database/schemas/User.js')
-const { getBadges } = require('./adm/database/schemas/Badge.js')
+const { getUser } = require('./adm/database/schemas/User')
+const { getGuild } = require('./adm/database/schemas/Guild')
+const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
+const { getBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
 const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
 
@@ -103,6 +105,18 @@ class CeiraClient {
 
     getUser(id_user) {
         return getUser(id_user)
+    }
+
+    getGuild(id_guild) {
+        return getGuild(id_guild)
+    }
+
+    getTicket(id_server, id_user) {
+        return getTicket(id_server, id_user)
+    }
+
+    dropTicket(id_server, id_user) {
+        return dropTicket(id_server, id_user)
     }
 
     async userRanking(id_user) {

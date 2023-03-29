@@ -1,7 +1,7 @@
 const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
-// udi -> User ID
+// uid -> User ID
 // sid -> Server ID
 
 const schema = new mongoose.Schema({
