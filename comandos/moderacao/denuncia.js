@@ -16,9 +16,9 @@ module.exports = {
 
         let guild = await client.getGuild(interaction.guild.id)
 
-        // Função de denúncias em chats privados desabilitada no servidor
+        // Verificando se as denúncias em canais privados estão ativas no servidor
         if (!guild.conf.tickets)
-            return client.tls.reply(user, interaction, "mode.denuncia.desativado", true, 3)
+            return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
         let channel = await client.getTicket(interaction.guild.id, interaction.user.id)
         let solicitante = await client.getUserGuild(interaction, interaction.user.id)
@@ -40,10 +40,6 @@ module.exports = {
 
                 return interaction.reply({ content: `Você já possui um canal de denúncia aberto! ( <#${channel.cid}> )`, ephemeral: true })
             }
-
-            // Verificando se as denúncias em canais privados estão ativas no servidor
-            if (!guild.conf.tickets)
-                return client.tls.reply(client, user, "mode.denuncia.desativado", true, 3)
 
             let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone');
             let bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
