@@ -15,6 +15,11 @@ module.exports = {
     async execute(client, user, interaction) {
 
         let guild = await client.getGuild(interaction.guild.id)
+
+        // Função de denúncias em chats privados desabilitada no servidor
+        if (!guild.conf.tickets)
+            return client.tls.reply(user, interaction, "mode.denuncia.desativado", true, 3)
+
         let channel = await client.getTicket(interaction.guild.id, interaction.user.id)
         let solicitante = await client.getUserGuild(interaction, interaction.user.id)
 
@@ -43,7 +48,7 @@ module.exports = {
             let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone');
             let bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
 
-            // Criando o canal e atribuindo ele a categoria especifica
+            // Criando o canal e atribuindo ele aos usuários especificos/ categoria escolhida
             interaction.guild.channels.create({
                 name: interaction.user.username,
                 type: ChannelType.GuildText,
