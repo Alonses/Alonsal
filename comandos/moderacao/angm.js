@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
-const { writeFileSync, existsSync, unlinkSync } = require('fs')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -88,47 +87,43 @@ module.exports = {
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "mode.anuncio.permissao", true, 3)
 
-        let opcao_remove = false, entradas = interaction.options.data
+        let entradas = interaction.options.data
+        let guild = await client.getGuild(interaction.guild.id)
 
-        const notificador = {
-            canal: null,
-            cargo: null,
-            idioma: null
+        const valores = {
+            role: null,
+            channel: null
         }
 
         // Coletando todas as entradas
         entradas.forEach(valor => {
             if (valor.name === "role")
-                notificador.cargo = valor.value
+                valores.role = valor.value
 
             if (valor.name === "language")
-                notificador.idioma = valor.value
+                guild.lang = valor.value
 
             if (valor.name === "channel") {
-                notificador.canal = valor.value
+                valores.channel = valor.value
 
                 if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
                     return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
             }
         })
 
-        if (!notificador.idioma)
-            notificador.idioma = client.idioma.getLang(interaction)
+        guild.games.role = valores.role
+        guild.games.channel = valores.channel
+
+        if (!guild.lang)
+            guild.lang = client.idioma.getLang(interaction)
 
         let mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) não recebe mais atts de jogos grátis`
 
-        if (!notificador.canal || !notificador.cargo) { // Removendo o anúncio do servidor 
-
-            opcao_remove = true
-
-            if (existsSync(`./arquivos/data/games/${interaction.guild.id}.json`))
-                unlinkSync(`./arquivos/data/games/${interaction.guild.id}.json`)
-        }
-
-        if (!opcao_remove) {
-            writeFileSync(`./arquivos/data/games/${interaction.guild.id}.json`, JSON.stringify(notificador))
-            delete require.cache[require.resolve(`../../arquivos/data/games/${interaction.guild.id}.json`)]
-
+        // (Des)ativando os anúncios de games do servidor
+        if (!guild.games.channel || !guild.games.role)
+            guild.conf.games = false
+        else {
+            guild.conf.games = true
             mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
         }
 
@@ -136,9 +131,12 @@ module.exports = {
 
         let feedback_user = client.tls.phrase(user, "mode.anuncio.anuncio_games")
 
-        if (opcao_remove)
+        // Anúncios de game desligados
+        if (!guild.conf.games)
             feedback_user = `:mobile_phone_off: | ${client.tls.phrase(user, "mode.anuncio.anuncio_off")}`
 
-        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${notificador.canal}>`), ephemeral: true })
+        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${guild.games.channel}>`), ephemeral: true })
+
+        await guild.save()
     }
 }
