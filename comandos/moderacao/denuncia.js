@@ -75,7 +75,7 @@ module.exports = {
         } else {
             // Sem canal de denúncias ativo
             if (channel.cid === null)
-                return interaction.reply({ content: "Você não possui um canal de denúncia aberto! ", ephemeral: true })
+                return interaction.reply({ content: "Você não possui um canal de denúncia aberto!", ephemeral: true })
 
             const date1 = new Date()
 
@@ -83,12 +83,7 @@ module.exports = {
 
             setTimeout(() => {
                 canal_servidor.permissionOverwrites.edit(solicitante, { ViewChannel: false })
-
-                try {
-                    msg.delete()
-                } catch (e) {
-                    console.log(e)
-                }
+                msg.delete()
 
                 // Apagando o ticket de denúncia do usuário
                 client.dropTicket(interaction.guild.id, interaction.user.id)

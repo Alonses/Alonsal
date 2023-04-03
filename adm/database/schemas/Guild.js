@@ -25,29 +25,26 @@ async function getGuild(sid) {
     return model.findOne({ sid: sid })
 }
 
-async function migrateGuilds() {
+async function getGameChannels() {
+    return model.find({ "conf.games": true })
+}
 
-    return
+async function migrateChannels() {
 
-    for (const file of readdirSync(`./arquivos/data/user/`)) {
-        const { id, lang, social, misc, badges, conquistas } = require(`../../../arquivos/data/user/${file}`)
+    for (const file of readdirSync(`./arquivos/data/games/`)) {
+        const { canal, cargo, idioma } = require(`../../../arquivos/data/games/${file}`)
 
-        let steam = "", lastfm = "", pula_predios = ""
-        if (social) {
-            if (typeof social.steam !== 'undefined')
-                steam = social.steam
+        let guild = await getGuild(file.replace(".json", ""))
 
-            if (typeof social.lastfm !== 'undefined')
-                lastfm = social.lastfm
+        guild.games.channel = canal
+        guild.games.role = cargo
+        guild.conf.games = true
 
-            if (typeof social.pula_predios !== 'undefined')
-                pula_predios = social.pula_predios
-        }
-
-        await model.create({ uid: id, lang: lang || "pt-br", social: { steam: social.steam || "", lastfm: social.lastfm || "", pula_predios: social.pula_predios || "" }, misc: { daily: misc.daily || "", color: misc.color || "#29BB8E", money: misc.money || 0, embed: misc.embed || "#29BB8E", locale: misc.locale || "" }, badges: { badges: badges.fixed_badge || "", badge_list: badges.badge_list || [{ key: String, value: Number }] }, conquistas: conquistas || [{ key: String, value: Number }] })
+        guild.save()
     }
 }
 
 module.exports.Guild = model
 module.exports.getGuild = getGuild
-module.exports.migrateGuilds = migrateGuilds
+module.exports.getGameChannels = getGameChannels
+module.exports.migrateChannels = migrateChannels

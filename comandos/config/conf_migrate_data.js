@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { migrateRankGlobal } = require('../../adm/database/schemas/Rank_g')
+const { migrateChannels } = require('../../adm/database/schemas/Guild')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ module.exports = {
 
         await interaction.deferReply({ ephemeral: true })
 
-        await migrateRankGlobal()
+        await migrateChannels()
             .then(() => {
                 interaction.editReply({ content: `:satellite: | Migração para o banco de dados concluída`, ephemeral: true })
             })

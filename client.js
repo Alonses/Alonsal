@@ -4,7 +4,7 @@ const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User')
-const { getGuild } = require('./adm/database/schemas/Guild')
+const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
@@ -109,6 +109,10 @@ class CeiraClient {
 
     getGuild(id_guild) {
         return getGuild(id_guild)
+    }
+
+    getGameChannels() {
+        return getGameChannels()
     }
 
     getTicket(id_server, id_user) {
