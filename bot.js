@@ -60,7 +60,7 @@ client.discord.on("interactionCreate", async interaction => {
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 
-	if (interaction.isSelectMenu()) // Interações geradas no uso de menus de seleção
+	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require("./adm/interacoes/menus.js")({ client, user, interaction })
 
 	if (interaction.isButton()) // Interações geradas no uso de botões

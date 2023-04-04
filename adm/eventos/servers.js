@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { updateGameChannel } = require('../../adm/database/schemas/Guild')
+const { removeGameChannel } = require('../../adm/database/schemas/Guild')
 
 module.exports = async ({ client, caso, guild }) => {
 
@@ -15,7 +15,7 @@ module.exports = async ({ client, caso, guild }) => {
         ocasiao = "> 🔴 Server update", cor = 0xd4130d, server_info = ""
 
         // Desligando o anúncio de games gratuitos para o servidor
-        await updateGameChannel(guild.id)
+        await removeGameChannel(guild.id)
     }
 
     const embed_sv = new EmbedBuilder()
