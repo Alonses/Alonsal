@@ -1,5 +1,4 @@
 const { readdirSync } = require('fs')
-const { multiplyDependencies } = require('mathjs')
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
@@ -31,7 +30,7 @@ async function getGameChannels() {
     return model.find({ "conf.games": true })
 }
 
-async function updateGameChannel(sid) {
+async function removeGameChannel(sid) {
     // Desliga o anúncio de games para o servidor
     const guild = await getGuild(sid)
 
@@ -57,5 +56,5 @@ async function migrateChannels() {
 module.exports.Guild = model
 module.exports.getGuild = getGuild
 module.exports.getGameChannels = getGameChannels
-module.exports.updateGameChannel = updateGameChannel
+module.exports.removeGameChannel = removeGameChannel
 module.exports.migrateChannels = migrateChannels

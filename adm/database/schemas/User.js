@@ -15,6 +15,7 @@ const schema = new mongoose.Schema({
         money: { type: Number, default: 0 },
         embed: { type: String, default: "#29BB8E" },
         locale: { type: String, default: null },
+        weather: { type: Boolean, default: true },
         fixed_badge: { type: String, default: null }
     },
     conf: {
