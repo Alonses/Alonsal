@@ -75,6 +75,6 @@ module.exports = {
 
         client.tls.reply(interaction, user, "manu.mail.sucesso_1", true)
 
-        client.notify(process.env.mail_channel, msg_user)
+        client.notify(process.env.channel_mail, msg_user)
     }
 }

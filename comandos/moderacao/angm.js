@@ -127,7 +127,7 @@ module.exports = {
             mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`
         }
 
-        client.notify(process.env.feeds_channel, mensagem)
+        client.notify(process.env.channel_feeds, mensagem)
 
         let feedback_user = client.tls.phrase(user, "mode.anuncio.anuncio_games")
 

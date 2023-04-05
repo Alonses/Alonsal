@@ -10,12 +10,12 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     const canais_clientes = await client.getGameChannels()
 
     if (objetos_anunciados.status === 501) {
-        client.notify(process.env.feeds_channel, ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
+        client.notify(process.env.channel_feeds, ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
         return
     }
 
     if (canais_clientes.length < 1)
-        return client.notify(process.env.feeds_channel, ":video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização")
+        return client.notify(process.env.channel_feeds, ":video_game: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização")
 
     // Verificando se a plataforma informada é válida
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
@@ -82,7 +82,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     if (canais_recebidos === 1)
         aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canal cliente`
 
-    client.notify(process.env.feeds_channel, aviso)
+    client.notify(process.env.channel_feeds, aviso)
 
     if (interaction)
         interaction.editReply({ content: ":white_check_mark: | A atualização foi enviada à todos os canais de games", ephemeral: true })
