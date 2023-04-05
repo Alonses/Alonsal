@@ -21,15 +21,17 @@ function config(client) {
     for (const folder of readdirSync(`${__dirname}/comandos/`)) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 
-            const command = require(`./comandos/${folder}/${file}`)
+            if (folder !== "experimental") {
+                const command = require(`./comandos/${folder}/${file}`)
 
-            if (!client.x.modo_develop)
-                if (!command.data.name.startsWith('c_'))
+                if (!client.x.modo_develop)
+                    if (!command.data.name.startsWith('c_'))
+                        commands.push(command.data.toJSON())
+                    else // Salvando comandos privados para usar apenas num servidor
+                        comandos_privados.push(command.data.toJSON())
+                else
                     commands.push(command.data.toJSON())
-                else // Salvando comandos privados para usar apenas num servidor
-                    comandos_privados.push(command.data.toJSON())
-            else
-                commands.push(command.data.toJSON())
+            }
         }
     }
 
@@ -77,13 +79,15 @@ function config(client) {
             const command = require(`./comandos/${folder}/${file}`)
             client.discord.commands.set(command.data.name, command)
 
-            // Computando a quantidade de comandos
-            if (command.data.name.startsWith("c_"))
-                client.stats.private++
-            else
-                client.stats.commands++
+            if (folder !== "experimental") {
+                // Computando a quantidade de comandos
+                if (command.data.name.startsWith("c_"))
+                    client.stats.private++
+                else
+                    client.stats.commands++
 
-            client.stats.inputs += command.data.options.length
+                client.stats.inputs += command.data.options.length
+            }
         }
     }
 }
