@@ -21,7 +21,7 @@ function config(client) {
     for (const folder of readdirSync(`${__dirname}/comandos/`)) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 
-            if (folder !== "experimental") {
+            if (folder !== "experimental" || client.x.modo_develop) {
                 const command = require(`./comandos/${folder}/${file}`)
 
                 if (!client.x.modo_develop)
@@ -79,7 +79,7 @@ function config(client) {
             const command = require(`./comandos/${folder}/${file}`)
             client.discord.commands.set(command.data.name, command)
 
-            if (folder !== "experimental") {
+            if (folder !== "experimental" || client.x.modo_develop) {
                 // Computando a quantidade de comandos
                 if (command.data.name.startsWith("c_"))
                     client.stats.private++

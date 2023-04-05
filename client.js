@@ -196,6 +196,20 @@ class CeiraClient {
 
         return valor.toLocaleString(locale)
     }
+
+    sendDM(user, value) {
+        if (user.conf?.notify || true) { // Notificando o usuário alvo caso ele receba notificações em DM do bot
+            if (user.uid !== this.id())
+                this.discord.users.fetch(user.uid, false).then((user_interno) => {
+                    // Enviando a mensagem para o usuário na DM
+                    // Verificando se a mensagem é um embed
+                    if (typeof value !== "object")
+                        user_interno.send(value)
+                    else
+                        user_interno.send({ embeds: [value] })
+                })
+        }
+    }
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, escapeSpoiler } = require('discord.js')
 
 const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 const direcao_cardial = require("../funcoes/direcao_cardial")
@@ -9,28 +9,33 @@ const direcao_cardial = require("../funcoes/direcao_cardial")
 const getCountryISO3 = require("country-iso-2-to-3")
 const formata_horas = require('./formata_horas')
 
-module.exports = async (client, user, interaction) => {
+module.exports = async (client, user, interaction, automatico) => {
 
-    let idioma_definido = client.idioma.getLang(interaction || user.uid), pesquisa = ''
-
+    let idioma_definido = user.lang || "pt-br", pesquisa = ''
     if (idioma_definido === "al-br") idioma_definido = "pt-br"
     const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
 
-    // Verifica se não há entrada customizada e se o usuário não possui um local padrão
-    if (interaction.options.data.length < 1 && !user.misc.locale) {
-        client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
-        return
-    }
+    let pesquisa_bruta, url_completa
 
-    // Usa o local padrão caso não tenha entrada definida
-    if (interaction.options.data.length < 1)
-        pesquisa = user.misc.locale
-    else // Usa a entrada customizada
-        pesquisa = interaction.options.data[0].value
+    // Requisições manuais
+    if (typeof automatico === "undefined") {
+        // Verifica se não há entrada customizada e se o usuário não possui um local padrão
+        if (interaction.options.data.length < 1 && !user.misc.locale) {
+            client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
+            return
+        }
 
-    const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
+        // Usa o local padrão caso não tenha entrada definida
+        if (interaction.options.data.length < 1)
+            pesquisa = user.misc.locale
+        else // Usa a entrada customizada
+            pesquisa = interaction.options.data[0].value
 
-    let url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=pt`
+        pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
+
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=pt`
+    } else
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${user.misc.locale}&units=metric&lang=pt`
 
     if (idioma_definido === "en-us")
         url_completa = url_completa.replace("&lang=pt", "")
@@ -148,10 +153,10 @@ module.exports = async (client, user, interaction) => {
                         // Sensação térmica dinâmica
                         let emoji_sensacao_termica = ":hot_face:"
 
-                        if (res.main.feels_like >= 13 && res.main.feels_like <= 30)
+                        if (res.main.feels_like >= 15 && res.main.feels_like <= 28)
                             emoji_sensacao_termica = ":ok_hand:"
 
-                        if (res.main.feels_like < 13)
+                        if (res.main.feels_like < 15)
                             emoji_sensacao_termica = ":cold_face:"
 
                         if (res.main.feels_like < 0)
@@ -172,6 +177,7 @@ module.exports = async (client, user, interaction) => {
                         if (res.name === "Globe")
                             nome_local = `${client.tls.phrase(user, "util.tempo.terra")} :earth_americas:`
 
+                        // Dados para chuva
                         if (typeof res.rain !== "undefined") {
                             cabecalho_fix += "\n------------------------------"
 
@@ -184,6 +190,7 @@ module.exports = async (client, user, interaction) => {
                             rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(user, "util.tempo.chuva_troll")}_`
                         }
 
+                        // Dados para neve
                         if (typeof res.snow !== "undefined") {
                             cabecalho_fix = `${client.tls.phrase(user, "util.tempo.nevando")}\n${client.tls.phrase(user, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
 
@@ -195,7 +202,8 @@ module.exports = async (client, user, interaction) => {
                             rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(user, "util.tempo.neve_troll")}_`
                         }
 
-                        if (typeof res.wind.gust !== "undefined") {
+                        // Dados para rajadas de vento
+                        if (typeof res.wind.gust !== "undefined" && user.misc?.weather) {
                             if (cabecalho_fix !== "")
                                 cabecalho_fix += "\n------------------------------"
 
@@ -207,6 +215,7 @@ module.exports = async (client, user, interaction) => {
 
                         let pressao_local = `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.pressure} kPA\``
 
+                        // Dados de pressão atmosférica
                         if (typeof res.main.grnd_level !== "undefined")
                             pressao_local = `:camping: **${client.tls.phrase(user, "util.tempo.nivel_chao")}: ** \`${res.main.grnd_level} kPA\`\n:island: **${client.tls.phrase(user, "util.tempo.nivel_mar")}: ** \`${res.main.sea_level} kPA\``
 
@@ -220,7 +229,7 @@ module.exports = async (client, user, interaction) => {
                             .setColor(client.embed_color(user.misc.color))
 
                         // Máximos de informações para o clima
-                        if (user.misc.weather || false) {
+                        if (user.misc?.weather || false) {
                             embed_clima
                                 .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                                 .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
@@ -266,17 +275,18 @@ module.exports = async (client, user, interaction) => {
                                 .addFields(
                                     {
                                         name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
-                                        value: `${emoji_indica_temp} **${client.tls.phrase(user, "util.server.atual")}**: \`${res.main.temp}°C\`\n:small_red_triangle: \`${res.main.temp_max}°C\` :small_red_triangle_down: \`${res.main.temp_min}°C\``,
+                                        name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
+                                        value: `${emoji_indica_temp} **${client.tls.phrase(user, "util.server.atual")}**: \`${res.main.temp}°C\``,
                                         inline: true
                                     },
                                     {
-                                        name: `${emoji_ceu_atual} **${client.tls.phrase(user, "util.tempo.ceu_momento")}**`,
-                                        value: `${emoji_nuvens} **${client.tls.phrase(user, "util.tempo.nuvens")}: **\`${res.clouds.all}%`,
+                                        name: `:small_red_triangle: **Max: ${res.main.temp_max}°C**`,
+                                        value: `:small_red_triangle_down: **Min: ${res.main.temp_min}°C**`,
                                         inline: true
                                     },
                                     {
-                                        name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}**`,
-                                        value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\``,
+                                        name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}: ${res.wind.speed} km/h**`,
+                                        value: "⠀",
                                         inline: true
                                     }
                                 )
@@ -292,17 +302,25 @@ module.exports = async (client, user, interaction) => {
                                         inline: true
                                     },
                                     {
-                                        name: `:compression: **${client.tls.phrase(user, "util.tempo.pressao_ar")}**`,
-                                        value: `${pressao_local}`,
+                                        name: `${emoji_ceu_atual} **${client.tls.phrase(user, "util.tempo.ceu_momento")}**`,
+                                        value: `${emoji_nuvens} **${client.tls.phrase(user, "util.tempo.nuvens")}: **\`${res.clouds.all}%\``,
                                         inline: true
                                     }
                                 )
                                 .setFooter({ text: nota_rodape })
                         }
 
-                        interaction.editReply({ embeds: [embed_clima], ephemeral: user?.conf.ghost_mode || false })
+                        if (typeof automatico === "undefined")
+                            interaction.editReply({ embeds: [embed_clima], ephemeral: user?.conf.ghost_mode || false })
+                        else
+                            client.sendDM(user, embed_clima)
                     })
             }
         }) // Erro com a API de clima
-        .catch(() => interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, ephemeral: true }))
+        .catch(() => {
+            if (typeof automatico === "undefined")
+                interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, ephemeral: true })
+            else
+                client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`)
+        })
 }

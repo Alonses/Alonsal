@@ -57,11 +57,9 @@ module.exports = {
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 
             client.discord.users.fetch(id_alvo, false).then(async (user_interno) => {
+                const alvo = await client.getUser(id_alvo)
 
-                let alvo = await client.getUser(user_interno.id)
-
-                if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
-                    user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+                client.sendDM(alvo, `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
                 interaction.reply({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
             })
