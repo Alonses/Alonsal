@@ -4,7 +4,7 @@ const { removeGameChannel } = require('../../adm/database/schemas/Guild')
 
 module.exports = async ({ client, caso, guild }) => {
 
-    if (client.id() !== process.env.client_1 || !process.env.server_channel) return
+    if (client.id() !== process.env.client_1 || !process.env.channel_server) return
 
     let ocasiao = "> 🟢 Server update", cor = 0x29BB8E
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
@@ -24,5 +24,5 @@ module.exports = async ({ client, caso, guild }) => {
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 
-    client.notify(process.env.server_channel, embed_sv)
+    client.notify(process.env.channel_server, embed_sv)
 }

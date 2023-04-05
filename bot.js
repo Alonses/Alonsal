@@ -21,7 +21,8 @@ client.discord.once("ready", async () => {
 	await require("./adm/eventos/status.js")({ client })
 
 	// Eventos secundários
-	require("./adm/eventos/events.js")({ client })
+	require("./adm/eventos/events")({ client })
+	require("./adm/automaticos/modulo")({ client })
 
 	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
 })
@@ -82,5 +83,5 @@ client.discord.on("interactionCreate", async interaction => {
 		})
 })
 
-database.setup(process.env.dburi)
+database.setup(process.env.url_dburi)
 client.login(client.x.token)

@@ -14,8 +14,8 @@ module.exports = async function ({ client, err, local }) {
         color: 0xED4245
     })
 
-    if (process.env.error_channel)
-        client.notify(process.env.error_channel, embed_error)
+    if (process.env.channel_error)
+        client.notify(process.env.channel_error, embed_error)
 
     console.log(err)
 

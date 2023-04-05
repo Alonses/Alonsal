@@ -30,7 +30,7 @@ module.exports = async (client, user, interaction) => {
 
     const pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
 
-    let url_completa = `${process.env.url_weather}appid=${process.env.weather_key}&q=${pesquisa}&units=metric&lang=pt`
+    let url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=pt`
 
     if (idioma_definido === "en-us")
         url_completa = url_completa.replace("&lang=pt", "")
@@ -52,7 +52,7 @@ module.exports = async (client, user, interaction) => {
                 interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.error_2")}`, ephemeral: true })
                 return
             } else {
-                const url_hora = `${process.env.url_time}key=${process.env.time_key}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`
+                const url_hora = `${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`
 
                 fetch(url_hora) // Buscando o horário local
                     .then(response => response.json())

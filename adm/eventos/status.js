@@ -40,7 +40,7 @@ module.exports = async ({ client }) => {
 
 function dispara_status(client, status_apisal) {
 
-    if (process.env.stats_channel) {
+    if (process.env.channel_stats) {
         setTimeout(() => {
 
             fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
@@ -112,7 +112,7 @@ function dispara_status(client, status_apisal) {
                         }
                     )
 
-                client.notify(process.env.status_channel, embed) // Avisa que está online em um canal
+                client.notify(process.env.channel_status, embed) // Avisa que está online em um canal
             })
         }, 3000)
     }

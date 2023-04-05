@@ -17,10 +17,10 @@ const translate = require('./adm/formatadores/translate')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 0
 
 if (update_commands)
-    modo_develop = 0, force_update = 1, silent = 1
+    modo_develop = 0, force_update = 1, silent = 1, modules = 0
 
 let token = process.env.token_1, clientId = process.env.client_1
 
@@ -54,6 +54,7 @@ class CeiraClient {
             force_update: force_update,
             ranking: ranking,
             status: status,
+            modules: modules,
 
             clientId: clientId,
             token: token,
