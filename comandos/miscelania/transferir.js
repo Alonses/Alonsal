@@ -93,12 +93,6 @@ module.exports = {
 
         interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false })
 
-        if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
-            if (alvo.uid !== client.id())
-                client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
-
-                    // Enviando a mensagem no idioma do usuário alvo
-                    user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
-                })
+        client.sendDM(alvo, `:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
     }
 }
