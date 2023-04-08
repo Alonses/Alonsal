@@ -153,7 +153,7 @@ module.exports = {
         const alvo = await getReport(id_alvo, interaction.guild.id)
         const date1 = new Date()
 
-        if (interaction.options.getSubcommand() === "add") {
+        if (interaction.options.getSubcommand() === "create") {
 
             alvo.archived = false
             alvo.relatory = valores.report
