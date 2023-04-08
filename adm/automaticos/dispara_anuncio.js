@@ -48,8 +48,6 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     canais_clientes.forEach(dados => {
 
         try {
-            let cor_embed = 0x29BB8E
-
             let idioma_definido = dados.lang || "pt-br"
             if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
@@ -58,7 +56,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
             const embed = new EmbedBuilder()
                 .setTitle(`${logo_plat} ${plataforma}`)
-                .setColor(cor_embed)
+                .setColor(0x29BB8E)
                 .setImage(imagem_destaque)
                 .setDescription(texto_anuncio)
 

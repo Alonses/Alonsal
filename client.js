@@ -145,7 +145,7 @@ class CeiraClient {
     }
 
     getUserGuild(interaction, id_alvo) {
-        return interaction.guild.members.cache.get(id_alvo)
+        return interaction.guild.members.fetch().then(member => member.id === id_alvo)
     }
 
     getUserRankServer(id_user, id_server) {

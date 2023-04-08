@@ -49,7 +49,7 @@ module.exports = {
                 all_badges.push(parseInt(valor.badge)) // Listando todas as badges que o usuário possui
             })
 
-        if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
+        if (!all_badges.includes(badge_alvo)) { // Atribuindo uma nova badge a um usuário
 
             const date1 = new Date()
             await createBadge(id_alvo, badge_alvo, Math.floor(date1.getTime() / 1000))

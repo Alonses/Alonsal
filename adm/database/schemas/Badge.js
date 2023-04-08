@@ -2,9 +2,9 @@ const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    uid: String,
-    badge: { type: Number, default: 0 },
-    timestamp: { type: Number, default: 0 }
+    uid: { type: String, default: null },
+    badge: { type: Number, default: null },
+    timestamp: { type: Number, default: null }
 })
 
 const model = mongoose.model("Badge", schema)

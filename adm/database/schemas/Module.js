@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    uid: String,
+    uid: { type: String, default: null },
     type: { type: Number, default: 0 },
     data: {
         text: { type: String, default: null }

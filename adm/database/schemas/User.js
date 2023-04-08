@@ -2,7 +2,7 @@ const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    uid: String,
+    uid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
     social: {
         steam: { type: String, default: null },
@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     },
     misc: {
         color: { type: String, default: "#29BB8E" },
-        daily: String,
+        daily: { type: String, default: null },
         money: { type: Number, default: 0 },
         embed: { type: String, default: "#29BB8E" },
         locale: { type: String, default: null },
