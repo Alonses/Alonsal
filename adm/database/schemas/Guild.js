@@ -2,7 +2,7 @@ const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    sid: String,
+    sid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
     games: {
         channel: { type: String, default: null },
@@ -11,9 +11,13 @@ const schema = new mongoose.Schema({
     tickets: {
         category: { type: String, default: null }
     },
+    reports: {
+        channel: { type: String, default: null },
+    },
     conf: {
         games: { type: Boolean, default: false },
-        tickets: { type: Boolean, default: false }
+        tickets: { type: Boolean, default: false },
+        reports: { type: Boolean, default: false }
     }
 })
 
@@ -30,11 +34,24 @@ async function getGameChannels() {
     return model.find({ "conf.games": true })
 }
 
-async function removeGameChannel(sid) {
+async function getReportChannels() {
+    // Lista todos os servidores com reports de usuários ativos
+    return model.find({ "conf.reports": true })
+}
+
+async function disableGameChannel(sid) {
     // Desliga o anúncio de games para o servidor
     const guild = await getGuild(sid)
 
     guild.conf.games = false
+    guild.save()
+}
+
+async function disableReportChannel(sid) {
+    // Desliga o anúncio de games para o servidor
+    const guild = await getGuild(sid)
+
+    guild.conf.reports = false
     guild.save()
 }
 
@@ -56,5 +73,7 @@ async function migrateChannels() {
 module.exports.Guild = model
 module.exports.getGuild = getGuild
 module.exports.getGameChannels = getGameChannels
-module.exports.removeGameChannel = removeGameChannel
+module.exports.disableGameChannel = disableGameChannel
+module.exports.getReportChannels = getReportChannels
+module.exports.disableReportChannel = disableReportChannel
 module.exports.migrateChannels = migrateChannels

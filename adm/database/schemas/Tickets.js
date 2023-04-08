@@ -5,8 +5,8 @@ const mongoose = require("mongoose")
 // cid -> Channel ID
 
 const schema = new mongoose.Schema({
-    sid: String,
-    uid: String,
+    sid: { type: String, default: null },
+    uid: { type: String, default: null },
     cid: { type: String, default: null }
 })
 

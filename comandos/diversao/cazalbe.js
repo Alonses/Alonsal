@@ -51,7 +51,7 @@ module.exports = {
 			interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
 		} else {
 
-			return client.tls.reply(user, "inic.error.develop", true, 5)
+			return client.tls.reply(interaction, user, "inic.error.develop", true, 5)
 
 			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
 				.then(response => response.json())

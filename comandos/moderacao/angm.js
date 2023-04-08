@@ -106,7 +106,9 @@ module.exports = {
             if (valor.name === "channel") {
                 valores.channel = valor.value
 
-                if (valor.channel.type !== 0 && valor.channel.type !== 5) // Canal inválido
+                // Tipo 0 -> Canal de texto tipo normal
+                // Tipo 5 -> Canal de texto tipo anúncios
+                if (valor.channel.type !== 0 && valor.channel.type !== 5) // Verificando se o canal mencionado é inválido
                     return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
             }
         })
