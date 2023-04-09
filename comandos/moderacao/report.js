@@ -131,7 +131,7 @@ module.exports = {
             if (valor.name === "id")
                 valores.id_alvo = valor.value
 
-            if (valor.name === "report")
+            if (valor.name === "reason")
                 valores.report = valor.value
         })
 
@@ -148,7 +148,7 @@ module.exports = {
         let dados_alvo = await interaction.guild.members.fetch(id_alvo) || null
 
         if (!dados_alvo)
-            return interaction.reply({ content: "Este usuário não faz parte desse servidor.", ephemeral: true })
+            return interaction.reply({ content: ":mag: | Este usuário não faz parte desse servidor.", ephemeral: true })
 
         const alvo = await getReport(id_alvo, interaction.guild.id)
         const date1 = new Date()

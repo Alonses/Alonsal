@@ -145,7 +145,7 @@ class CeiraClient {
     }
 
     getUserGuild(interaction, id_alvo) {
-        return interaction.guild.members.fetch().then(member => member.id === id_alvo)
+        return interaction.guild.members.fetch(id_alvo)
     }
 
     getUserRankServer(id_user, id_server) {
@@ -187,6 +187,11 @@ class CeiraClient {
             intervalo = intervalo.length - 1
 
         return base + Math.round(intervalo * Math.random())
+    }
+
+    guard_emoji() {
+        const guardas = [":man_guard:", ":woman_guard:", ":guard:"]
+        return guardas[this.random(guardas)]
     }
 
     locale(valor, locale) {

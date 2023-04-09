@@ -8,6 +8,8 @@ const actionTypes = [ActivityType.Playing, ActivityType.Watching, ActivityType.L
 
 module.exports = async ({ client }) => {
 
+    if (!client.x.silent) return
+
     if (client.id() === process.env.client_1) {
 
         client.user().setActivity("Vapor p/ fora!", { type: ActivityType.Playing })
