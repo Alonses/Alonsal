@@ -153,6 +153,9 @@ module.exports = {
         const alvo = await getReport(id_alvo, interaction.guild.id)
         const date1 = new Date()
 
+        // Atribuindo o reporte ao usuário que disparou o comadno
+        alvo.issuer = interaction.user.id
+
         if (interaction.options.getSubcommand() === "create") {
 
             alvo.archived = false

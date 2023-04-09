@@ -8,24 +8,24 @@ module.exports = async ({ client }) => {
 
     client.idioma.loadAll(client)
 
-    if (!client.x.silent) {
+    // Não notifica que o bot ficou online
+    if (client.x.status) {
 
         console.log("Disparando status")
-        // Não notifica que o bot ficou online
-        if (client.x.status) {
-            fetch(`${process.env.url_apisal}/status`)
-                .then(res => res.json())
-                .then(retorno => {
 
-                    let status_apisal = "🛑 Offline"
-                    if (retorno.status)
-                        status_apisal = "✅ Online"
+        fetch(`${process.env.url_apisal}/status`)
+            .then(res => res.json())
+            .then(retorno => {
 
-                    dispara_status(client, status_apisal)
-                })
-                .catch(() => dispara_status(client, "🛑 Offline"))
-        }
+                let status_apisal = "🛑 Offline"
+                if (retorno.status)
+                    status_apisal = "✅ Online"
+
+                dispara_status(client, status_apisal)
+            })
+            .catch(() => dispara_status(client, "🛑 Offline"))
     }
+
 
     // Status personalizados
     require('./presence')({ client })
