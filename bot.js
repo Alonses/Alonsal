@@ -11,7 +11,7 @@ config(client) // Atualiza os comandos slash do bot
 
 client.discord.once("ready", async () => {
 
-	console.log("Configurando etapas finais")
+	console.log("Executando etapas finais")
 
 	// Definindo o idioma do bot
 	idioma.setDefault("pt-br")
@@ -21,8 +21,8 @@ client.discord.once("ready", async () => {
 	await require("./adm/eventos/status.js")({ client })
 
 	// Eventos secundários
-	require("./adm/eventos/events")({ client })
-	require("./adm/automaticos/modulo")({ client })
+	await require("./adm/eventos/events")({ client })
+	await require("./adm/automaticos/modulo")({ client })
 
 	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
 })
