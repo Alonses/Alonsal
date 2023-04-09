@@ -146,12 +146,12 @@ module.exports = {
         if (operation === "reverse") {
             interaction.reply({ content: texto_entrada.split('').reverse().join(""), ephemeral: user?.conf.ghost_mode || false })
 
-        // Torna o texto nesse formato "A A A A A A"
+            // Torna o texto nesse formato "A A A A A A"
         } else if (operation === "upper") {
 
             interaction.reply({ content: texto_entrada.toUpperCase().split('').join(" ").trim(), ephemeral: user?.conf.ghost_mode || false })
 
-        // Torna o texto nesse formato "AaAaAaAaAaA"
+            // Torna o texto nesse formato "AaAaAaAaAaA"
         } else if (operation === "sans") {
 
             texto_entrada = texto_entrada.split("")
@@ -164,7 +164,7 @@ module.exports = {
 
             interaction.reply({ content: texto_entrada.join(""), ephemeral: user?.conf.ghost_mode || false })
 
-        // Torna o texto nesse formato "teste😂testado😂testadamente"
+            // Torna o texto nesse formato "teste😂testado😂testadamente"
         } else if (operation === "emoji") {
 
             let emoji = interaction.options.data[0].options[1].value
