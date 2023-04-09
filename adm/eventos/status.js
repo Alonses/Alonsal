@@ -8,7 +8,7 @@ module.exports = async ({ client }) => {
 
     client.idioma.loadAll(client)
 
-    if (client.id() === process.env.client_1) {
+    if (!client.x.silent) {
 
         console.log("Disparando status")
         // Não notifica que o bot ficou online
