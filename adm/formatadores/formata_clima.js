@@ -187,7 +187,7 @@ module.exports = async (client, user, interaction, automatico) => {
                             nome_local = nome_local.replace("na", "em")
 
                     if (res.name === "Globe")
-                        nome_local = `${client.tls.phrase(user, "util.tempo.terra")} :earth_americas:`
+                        nome_local = `${client.tls.phrase(user, "util.tempo.terra")} ${client.defaulEmoji("earth")}`
 
                     // Dados para chuva
                     if (typeof res.rain !== "undefined") {

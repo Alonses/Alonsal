@@ -202,7 +202,7 @@ module.exports = {
             for (const user of users) {
 
                 if (i < 6) { // Listando os usuários que possuem denúncias e estão no servidor
-                    usernames.push(`${client.guard_emoji()} <@${user.uid}>`)
+                    usernames.push(`${client.defaultEmoji("guard")} <@${user.uid}>`)
                     user_ids.push(`\`${(user.uid)}\``)
                 }
 
@@ -216,7 +216,7 @@ module.exports = {
             if (usernames.length > 1)
                 embed.addFields(
                     {
-                        name: `**:guard: Salafrários**`,
+                        name: `**${client.defaultEmoji("guard")} Salafrários**`,
                         value: usernames.join("\n"),
                         inline: true
                     },

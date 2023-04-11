@@ -78,20 +78,8 @@ function config(client) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`)
             client.discord.commands.set(command.data.name, command)
-
-            if (folder !== "experimental" || client.x.modo_develop) {
-                // Computando a quantidade de comandos
-                if (command.data.name.startsWith("c_"))
-                    client.stats.private++
-                else
-                    client.stats.commands++
-
-                client.stats.inputs += command.data.options.length
-            }
         }
     }
 }
 
-module.exports = {
-    config
-}
+module.exports.config = config

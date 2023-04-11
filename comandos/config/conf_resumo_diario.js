@@ -13,7 +13,7 @@ module.exports = {
 
         const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
         const bot = client.auto.getRelatorio()
-        const proxima_att = (date1.getTime() / 1000) + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
+        const proxima_att = client.timestamp() + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels(0).size
         let members = 0, processamento = "🎲 Processamento\n"

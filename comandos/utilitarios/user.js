@@ -106,8 +106,6 @@ module.exports = {
         if (interaction.options.getSubcommand() === "info") {
             let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=1024`
 
-            const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
-
             const membro_sv = await client.getUserGuild(interaction, user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
@@ -138,7 +136,7 @@ module.exports = {
             }
 
             if (!tipo_user.includes("🛡️") && !user_alvo.bot)
-                tipo_user = emojis_busto[client.random(emojis_busto)]
+                tipo_user = client.defaultEmoji("person")
 
             if (user_alvo.id === client.id())
                 nota_rodape = client.tls.phrase(user, "util.user.alonsal")

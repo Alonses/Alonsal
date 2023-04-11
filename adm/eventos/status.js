@@ -101,7 +101,7 @@ function dispara_status(client, status_apisal) {
                             inline: true
                         },
                         {
-                            name: ":earth_americas: **Idiomas**",
+                            name: `${client.defaulEmoji("earth")} **Idiomas**`,
                             value: bandeirolas_1.join(" "),
                             inline: true
                         },

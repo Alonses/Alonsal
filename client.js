@@ -15,9 +15,11 @@ const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
 
+const { default_emoji } = require('./arquivos/json/text/emojis.json')
+
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
-const update_commands = 0
+const update_commands = 1
 let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 0
 
 if (update_commands)
@@ -59,12 +61,11 @@ class CeiraClient {
 
             clientId: clientId,
             token: token,
-        },
-            this.stats = {
-                commands: 0,
-                private: 0,
-                inputs: 0
-            }
+        }
+    }
+
+    login(token) {
+        return this.discord.login(token)
     }
 
     id() {
@@ -99,10 +100,6 @@ class CeiraClient {
             return alea_hex()
 
         return entrada.slice(-6)
-    }
-
-    login(token) {
-        return this.discord.login(token)
     }
 
     getUser(id_user) {
@@ -194,11 +191,6 @@ class CeiraClient {
         return base + Math.round(intervalo * Math.random())
     }
 
-    guard_emoji() {
-        const guardas = [":man_guard:", ":woman_guard:", ":guard:"]
-        return guardas[this.random(guardas)]
-    }
-
     locale(valor, locale) {
 
         if (typeof locale === "undefined")
@@ -225,8 +217,14 @@ class CeiraClient {
                         user_interno.send({ embeds: [value] })
                 })
     }
+
+    defaultEmoji(caso) {
+        return default_emoji[caso][this.random(default_emoji[caso])]
+    }
+
+    timestamp() {
+        return Math.floor(new Date().getTime() / 1000)
+    }
 }
 
-module.exports = {
-    CeiraClient
-}
+module.exports.CeiraClient = CeiraClient

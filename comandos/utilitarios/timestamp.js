@@ -88,7 +88,7 @@ module.exports = {
             })
 
             if (!entrada)
-                entrada = Math.floor(Date.now() / 1000) + timer // Iniciando o timestamp 
+                entrada = client.timestamp() + timer // Iniciando o timestamp 
 
             if (!isNaN(entrada)) {
                 titulo = client.tls.phrase(user, "util.timestamp.timestamp_crono")
@@ -118,7 +118,7 @@ module.exports = {
             if (conversao_invalida)
                 conversao_valida = `\`${data}\` -> \`${timestamp}\``
         } else {
-            retorno = Math.floor(Date.now() / 1000)
+            retorno = client.timestamp()
             titulo = client.tls.phrase(user, "util.timestamp.timestamp_now")
         }
 
