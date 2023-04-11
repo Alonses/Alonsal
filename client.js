@@ -208,7 +208,13 @@ class CeiraClient {
     }
 
     sendDM(user, value) {
-        if (user.conf?.notify || true) { // Notificando o usuário alvo caso ele receba notificações em DM do bot
+
+        let notificar = true
+
+        if (typeof user.conf.notify !== "undefined")
+            notificar = user.conf.notify
+
+        if (notificar) // Notificando o usuário alvo caso ele receba notificações em DM do bot
             if (user.uid !== this.id())
                 this.discord.users.fetch(user.uid, false).then((user_interno) => {
                     // Enviando a mensagem para o usuário na DM
@@ -218,7 +224,6 @@ class CeiraClient {
                     else
                         user_interno.send({ embeds: [value] })
                 })
-        }
     }
 }
 
