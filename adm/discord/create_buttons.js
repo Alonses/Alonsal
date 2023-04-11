@@ -40,6 +40,14 @@ function create_buttons(lista_botoes, interaction) {
                         .setLabel(valor.name.split(":")[0])
                         .setStyle(tipos[valor.type])
                 )
+            } else if (valor.badge) {
+                // Usado para as funções de atribuição de badges aos usuários
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`${valor.name.replaceAll(" ", "").slice(0, 14).split(":")[0]}[${interaction_name}].${interaction.user.id}.${valor.badge}`)
+                        .setLabel(valor.name.split(":")[0])
+                        .setStyle(tipos[valor.type])
+                )
             } else {
 
                 if (!valor.emoji)

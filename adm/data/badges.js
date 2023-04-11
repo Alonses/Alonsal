@@ -1,12 +1,31 @@
-const { emojis } = require('../../arquivos/json/text/emojis.json')
+const { badge_ids } = require('../../arquivos/json/text/emojis.json')
 
-const badge_ids = [emojis.aln_tester, emojis.aln_debugger, emojis.aln_programmer, emojis.aln_creator, emojis.aln_waxed, emojis.aln_donater, emojis.aln_puler, emojis.aln_rosquer]
-const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer"]
+const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer", "Pionner"]
 
 const badgeTypes = {
     SINGLE: 0,
     FIXED: 1,
     ALL: 2
+}
+
+class Badge {
+    constructor(id, name, emoji) {
+        this.id = id
+        this.name = name
+        this.emoji = emoji
+    }
+}
+
+class BadgeCollection {
+    badges = []
+
+    push(badge) {
+        this.badges.push(badge)
+    }
+
+    build(client, badges) {
+        return buildAllBadges(client, user, badges)
+    }
 }
 
 function busca_badges(client, type, alvo) {
@@ -53,23 +72,3 @@ async function buildAllBadges(client, user, badges) {
 module.exports.badgeTypes = badgeTypes
 module.exports.busca_badges = busca_badges
 module.exports.buildAllBadges = buildAllBadges
-
-class Badge {
-    constructor(id, name, emoji) {
-        this.id = id
-        this.name = name
-        this.emoji = emoji
-    }
-}
-
-class BadgeCollection {
-    badges = []
-
-    push(badge) {
-        this.badges.push(badge)
-    }
-
-    build(client, badges) {
-        return buildAllBadges(client, user, badges)
-    }
-}

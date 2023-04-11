@@ -17,7 +17,7 @@ module.exports = async ({ client, alvo }) => {
             if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
             const embed = new EmbedBuilder()
-                .setTitle(`> Novo reporte ${client.guard_emoji()}`)
+                .setTitle(`> Novo reporte ${client.defaultEmoji("guard")}`)
                 .setColor(0xED4245)
                 .addFields(
                     {
@@ -26,7 +26,7 @@ module.exports = async ({ client, alvo }) => {
                         inline: true
                     },
                     {
-                        name: `${client.guard_emoji()} **Reportador**`,
+                        name: `${client.defaultEmoji("guard")} **Reportador**`,
                         value: `\`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                         inline: true
                     },

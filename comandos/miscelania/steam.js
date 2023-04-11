@@ -354,7 +354,7 @@ module.exports = {
                             },
                             {
                                 name: ":mobile_phone_off: Status",
-                                value: `\`${status_atual}\`\n:clock: **${client.tls.phrase(user, "util.steam.semanas")}: **\n\`${tempo_semanas}\``,
+                                value: `\`${status_atual}\`\n${client.defaultEmoji("clock")} **${client.tls.phrase(user, "util.steam.semanas")}: **\n\`${tempo_semanas}\``,
                                 inline: true
                             }
                         )
@@ -381,7 +381,7 @@ module.exports = {
                         usuario_steam.addFields(
                             {
                                 name: `:star: ${client.tls.phrase(user, "util.steam.jogo_favorito")}`,
-                                value: `**${client.tls.phrase(user, "util.steam.nome")}: **\`${jogo_favorito}\`\n:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n:alarm_clock: **${client.tls.phrase(user, "util.steam.tempo_jogado")}: **\`${tempo_jogado}\``,
+                                value: `**${client.tls.phrase(user, "util.steam.nome")}: **\`${jogo_favorito}\`\n:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n${client.defaultEmoji("clock")} **${client.tls.phrase(user, "util.steam.tempo_jogado")}: **\`${tempo_jogado}\``,
                                 inline: false
                             }
                         )

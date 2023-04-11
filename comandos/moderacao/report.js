@@ -161,6 +161,9 @@ module.exports = {
             if (id_alvo === null)
                 return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
 
+            if (id_alvo === client.id())
+                return interaction.reply({ content: `:octagonal_sign: | Você não pode me reportar!`, ephemeral: true })
+
             const alvo = await getReport(id_alvo, interaction.guild.id)
 
             // Atribuindo o reporte ao usuário que disparou o comadno
@@ -171,7 +174,7 @@ module.exports = {
 
                 alvo.archived = true
                 alvo.relatory = valores.report
-                alvo.timestamp = Math.floor(date1.getTime() / 1000)
+                alvo.timestamp = client.timestamp()
 
                 // Enviando o embed para validação
                 const embed = new EmbedBuilder()
@@ -183,7 +186,7 @@ module.exports = {
                             inline: true
                         },
                         {
-                            name: `${client.guard_emoji()} **Reportador**`,
+                            name: `${client.defaultEmoji("guard")} **Reportador**`,
                             value: `\`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                             inline: true
                         },
