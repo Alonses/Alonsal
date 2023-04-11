@@ -72,14 +72,14 @@ module.exports = async ({ client, user, interaction }) => {
                             adicionados++
                             await alvo.save()
                         }
+
+                    let msg_feed = `${adicionados} usuários banidos foram adicionados aos registros de mau comportados, obrigado!`
+
+                    if (adicionados < 1)
+                        msg_feed = "Nenhum usuário foi adicionado, pois não possuem justificativa de banimento ou não há banimentos no servidor."
+
+                    return interaction.update({ content: `${client.guard_emoji()} | ${msg_feed}`, embeds: [], components: [], ephemeral: true })
                 })
-
-            let msg_feed = `${adicionados} usuários banidos foram adicionados aos registros de mau comportados, obrigado!`
-
-            if (adicionados < 1)
-                msg_feed = "Nenhum usuário foi adicionado, pois não possuem justificativa de banimento ou não há banimentos no servidor."
-
-            return interaction.update({ content: `${client.guard_emoji()} | ${msg_feed}`, embeds: [], components: [], ephemeral: true })
         }
 
         if (id_button === `Canc_${interaction.user.id}`)
