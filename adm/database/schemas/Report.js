@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
     relatory: { type: String, default: null },
     timestamp: { type: Number, default: 0 },
     archived: { type: Boolean, default: false },
+    auto: { type: Boolean, default: false }
 })
 
 const model = mongoose.model("Report", schema)
@@ -18,6 +19,10 @@ async function getReport(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
 
     return model.findOne({ uid: uid, sid: sid })
+}
+
+async function removeReport(uid, sid) {
+    model.findOneAndDelete({ uid: uid, sid: sid })
 }
 
 async function getUserReports(uid) {
@@ -29,5 +34,6 @@ async function checkUserGuildReported(sid) {
 }
 
 module.exports.getReport = getReport
+module.exports.removeReport = removeReport
 module.exports.getUserReports = getUserReports
 module.exports.checkUserGuildReported = checkUserGuildReported

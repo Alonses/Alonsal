@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
 
 const { getReport } = require('../../adm/database/schemas/Report')
 
@@ -114,64 +114,119 @@ module.exports = {
                             "it": 'ID utente',
                             "ru": 'ID пользователя'
                         })))
+
+        .addSubcommand(subcommand =>
+            subcommand.setName("migrate")
+                .setDescription("⌠💂⌡ Migrate all banned users from server to alonsal")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💂⌡ Migre todos os usuários banidos do servidor para o alonsal',
+                    "es-ES": '⌠💂⌡ Migrar todos los usuarios prohibidos del servidor a alonsal',
+                    "fr": '⌠💂⌡ Migrer tous les utilisateurs bannis du serveur vers l\'alonsal',
+                    "it": '⌠💂⌡ Migra tutti gli utenti bannati dal server ad alonsal',
+                    "ru": '⌠💂⌡ Перевести всех забаненных пользователей с сервера на алонсал'
+                })
+        )
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers || PermissionFlagsBits.KickMembers),
     async execute(client, user, interaction) {
 
-        let id_alvo = interaction.options.getUser("user") || null
-        let entradas = interaction.options.data[0].options
+        if (interaction.options.getSubcommand() !== "migrate") {
 
-        const valores = {
-            id_alvo: null,
-            report: null
+            let id_alvo = interaction.options.getUser("user") || null
+            let entradas = interaction.options.data[0].options
+
+            const valores = {
+                id_alvo: null,
+                report: null
+            }
+
+            // Coletando todas as entradas
+            entradas.forEach(valor => {
+
+                if (valor.name === "id")
+                    valores.id_alvo = valor.value
+
+                if (valor.name === "reason")
+                    valores.report = valor.value
+            })
+
+            if (interaction.options.getUser("user"))
+                id_alvo = id_alvo.id
+
+            if (id_alvo === null)
+                id_alvo = valores.id_alvo
+
+            if (id_alvo === interaction.user.id)
+                return interaction.reply({ content: ":octagonal_sign: | Você não pode se incluir na lista de mau comportados!", ephemeral: true })
+
+            if (id_alvo === null)
+                return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
+
+            const alvo = await getReport(id_alvo, interaction.guild.id)
+
+            // Atribuindo o reporte ao usuário que disparou o comadno
+            alvo.issuer = interaction.user.id
+            const date1 = new Date()
+
+            if (interaction.options.getSubcommand() === "create") {
+
+                alvo.archived = true
+                alvo.relatory = valores.report
+                alvo.timestamp = Math.floor(date1.getTime() / 1000)
+
+                // Enviando o embed para validação
+                const embed = new EmbedBuilder()
+                    .setTitle("> Reportar usuário")
+                    .addFields(
+                        {
+                            name: ":bust_in_silhouette: **Discord ID**",
+                            value: `\`${alvo.uid}\`\n( <@${alvo.uid}> )`,
+                            inline: true
+                        },
+                        {
+                            name: `${client.guard_emoji()} **Reportador**`,
+                            value: `\`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
+                            inline: true
+                        },
+                        {
+                            name: ":globe_with_meridians: **Server ID**",
+                            value: `\`${alvo.sid}\`\n<t:${alvo.timestamp}:R>`,
+                            inline: true
+                        }
+                    )
+                    .setColor(0xED4245)
+                    .setDescription(`\`\`\`💢 | ${alvo.relatory}\`\`\`\nSeu reporte irá adicionar o seguinte usuário a minha lista de mau comportados.\n\nVocê pode decidir se eu irei notificar outros servidores sobre essa inclusão, se irei adicionar ele em silêncio ou se deseja cancelar este reporte.`)
+                    .setFooter({ text: 'Selecione a operação desejada nos botões abaixo.', iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+
+                // Salvando o alvo para editar posteriormente
+                await alvo.save()
+
+                // Criando os botões para a cor customizada
+                const row = client.create_buttons([{ name: `Adicionar e anunciar:report_user`, value: '1', type: 2, report: alvo.uid }, { name: `Adicionar silenciosamente:report_user`, value: '0', type: 1, report: alvo.uid }, { name: 'Cancelar:report_user', value: '0', type: 3, report: true, report: alvo.uid }], interaction)
+
+                return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+
+            } else if (interaction.options.getSubcommand() === "remove") { // Relatando que o usuário teve uma atualização
+                alvo.archived = true
+                alvo.relatory += `\n ${valores.report}`
+
+                client.tls.reply(interaction, user, "mode.report.usuario_att", true, 4)
+            }
+
+            await alvo.save()
+
+        } else { // Migrando todos os usuários banidos do servidor para o repositório do bot
+
+            // Enviando o embed para validação
+            const embed = new EmbedBuilder()
+                .setTitle("> Reporte automatizado")
+                .setDescription(`Seu reporte irá adicionar todos os usuários possuem justificativas e que estão banidos neste servidor à minha lista de usuários mau comportados.\n\n Usuários importados de forma automática não são mencionados para outros servidores, mas são exibidos em suas listas com o comando /verify server, caso os mesmos sejam membros de tal.`)
+                .setColor(0xED4245)
+                .setFooter({ text: 'Confirme ou cancele a operação nos botões abaixo.', iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+
+            // Criando os botões para a cor customizada
+            const row = client.create_buttons([{ name: `Confirmar:report_auto`, value: '1', type: 2 }, { name: 'Cancelar:report_auto', value: '0', type: 3 }], interaction)
+
+            return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         }
-
-        // Coletando todas as entradas
-        entradas.forEach(valor => {
-
-            if (valor.name === "id")
-                valores.id_alvo = valor.value
-
-            if (valor.name === "reason")
-                valores.report = valor.value
-        })
-
-        if (interaction.options.getUser("user"))
-            id_alvo = id_alvo.id
-
-        if (id_alvo === null)
-            id_alvo = valores.id_alvo
-
-        if (id_alvo === null)
-            return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
-
-        // Verificando se o usuário faz parte do servidor
-        let dados_alvo = await interaction.guild.members.fetch(id_alvo) || null
-
-        if (!dados_alvo)
-            return interaction.reply({ content: ":mag: | Este usuário não faz parte desse servidor.", ephemeral: true })
-
-        const alvo = await getReport(id_alvo, interaction.guild.id)
-        const date1 = new Date()
-
-        // Atribuindo o reporte ao usuário que disparou o comadno
-        alvo.issuer = interaction.user.id
-
-        if (interaction.options.getSubcommand() === "create") {
-
-            alvo.archived = false
-            alvo.relatory = valores.report
-            alvo.timestamp = Math.floor(date1.getTime() / 1000)
-
-            client.tls.reply(interaction, user, "mode.report.usuario_add", true, 4)
-
-            require('../../adm/automaticos/dispara_reporte')({ client, alvo, dados_alvo })
-        } else { // Relatando que o usuário teve uma atualização
-            alvo.archived = true
-            alvo.relatory += `\n ${valores.report}`
-
-            client.tls.reply(interaction, user, "mode.report.usuario_att", true, 4)
-        }
-
-        await alvo.save()
     }
 }

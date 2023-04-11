@@ -1,6 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const create_buttons = require('../discord/create_buttons.js')
 const formata_anun = require('../formatadores/formata_games.js')
 
 const { redes } = require('../../arquivos/json/text/anuncio.json')
@@ -42,7 +41,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     })
 
     // Criando os botões externos para os jogos
-    const row = create_buttons(lista_links)
+    const row = client.create_buttons(lista_links)
 
     // Enviando a notificação para vários os canais clientes
     canais_clientes.forEach(dados => {
