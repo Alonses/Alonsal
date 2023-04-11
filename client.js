@@ -8,6 +8,7 @@ const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
+const { create_buttons } = require('./adm/discord/create_buttons')
 const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
@@ -154,6 +155,10 @@ class CeiraClient {
 
     getRankGlobal() {
         return getRankGlobal()
+    }
+
+    create_buttons(lista_botoes, interaction) {
+        return create_buttons(lista_botoes, interaction)
     }
 
     notify(id_alvo, conteudo) {

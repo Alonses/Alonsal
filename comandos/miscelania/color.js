@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const create_buttons = require('../../adm/discord/create_buttons')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("color")
@@ -130,7 +128,7 @@ module.exports = {
             .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para a cor customizada
-        const row = create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
+        const row = client.create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

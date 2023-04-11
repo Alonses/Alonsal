@@ -200,13 +200,10 @@ module.exports = {
             rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
             for (const user of users) {
-                const user_a = await interaction.guild.members.fetch(user.uid)
-
-                console.log(user_a)
 
                 if (i < 6) { // Listando os usuários que possuem denúncias e estão no servidor
-                    usernames.push(`${client.guard_emoji()} \`${(user_a.nickname || user_a.user.username).replace(/ /g, "")}\``)
-                    user_ids.push(`\`${(user_a.id)}\``)
+                    usernames.push(`${client.guard_emoji()} <@${user.uid}>`)
+                    user_ids.push(`\`${(user.uid)}\``)
                 }
 
                 i++
@@ -223,7 +220,7 @@ module.exports = {
                         value: usernames.join("\n"),
                         inline: true
                     },
-                    { name: ":label: Identificador", value: user_ids.join("\n"), inline: true }
+                    { name: "**:label: Identificador**", value: user_ids.join("\n"), inline: true }
                 )
                     .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             else
