@@ -6,7 +6,7 @@ const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User')
 const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
-const { getBadges } = require('./adm/database/schemas/Badge')
+const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
 const { create_buttons } = require('./adm/discord/create_buttons')
 const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
@@ -134,8 +134,8 @@ class CeiraClient {
         return user_ranking
     }
 
-    getBadges(id_user) {
-        return getBadges(id_user)
+    getUserBadges(id_user) {
+        return getUserBadges(id_user)
     }
 
     getRankServer(id_server) {
