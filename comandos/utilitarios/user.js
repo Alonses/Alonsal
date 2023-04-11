@@ -182,7 +182,7 @@ module.exports = {
                     discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
-            let id_badges = await client.getBadges(user_alvo.id)
+            let id_badges = await client.getUserBadges(user_alvo.id)
             let badges = await buildAllBadges(client, user, id_badges)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 

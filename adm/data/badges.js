@@ -44,7 +44,7 @@ function busca_badges(client, type, alvo) {
     } else {
 
         // Listando todas as badges que o usuário possui
-        const badges = client.getBadges(alvo.id)
+        const badges = client.getUserBadges(alvo.id)
 
         badges.forEach(valor => {
             all_badges.push(new Badge(badge_ids[valor.badge], badge_names[valor.badge], client.emoji(badge_ids[valor.badge])))

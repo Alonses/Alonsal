@@ -42,7 +42,7 @@ module.exports = {
 
         const all_badges = []
 
-        const badges_user = await client.getBadges(id_alvo)
+        const badges_user = await client.getUserBadges(id_alvo)
 
         if (badges_user.length > 0)
             badges_user.forEach(valor => {

@@ -9,9 +9,7 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Badge", schema)
 
-async function getBadges(uid) {
-    if (!await model.exists({ uid: uid })) await model.create({ uid: uid })
-
+async function getUserBadges(uid) {
     return model.find({ uid: uid })
 }
 
@@ -33,6 +31,6 @@ async function migrateBadges() {
 }
 
 module.exports.Badge = model
-module.exports.getBadges = getBadges
 module.exports.createBadge = createBadge
+module.exports.getUserBadges = getUserBadges
 module.exports.migrateBadges = migrateBadges
