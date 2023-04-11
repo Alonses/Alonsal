@@ -116,6 +116,8 @@ module.exports = {
             let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
             let nota_rodape = ""
 
+            let apelido = membro_sv.user.username, tipo_user = "🤖"
+
             if (avatar_user !== null) {
                 avatar_user = avatar_user.replace(".webp", ".gif")
 
@@ -127,10 +129,8 @@ module.exports = {
             } else
                 avatar_user = ""
 
-            let apelido = membro_sv.user.username, tipo_user = "🤖"
-
-            if (membro_sv.user.nickname !== null)
-                apelido = membro_sv.nickname
+            if (membro_sv.user.nickname)
+                apelido = membro_sv.user.nickname
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 tipo_user = "🛡️"

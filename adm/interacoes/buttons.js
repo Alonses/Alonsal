@@ -6,8 +6,6 @@ module.exports = async ({ client, user, interaction }) => {
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
     const date1 = new Date()
 
-    console.log(interaction.customId)
-
     if (!interaction.customId.includes("report")) {
 
         if (id_button === `Conf_${interaction.user.id}`) {
@@ -57,6 +55,7 @@ module.exports = async ({ client, user, interaction }) => {
             let list = []
             let adicionados = 0
 
+            // Coletando os usuários que foram banidos no servidor
             interaction.guild.bans.fetch()
                 .then(async bans => {
                     list = bans.map(user => user)
@@ -65,8 +64,10 @@ module.exports = async ({ client, user, interaction }) => {
                         if (list[i].reason) {
                             let alvo = await getReport(list[i].user.id, interaction.guild.id)
 
+                            // Adicionando o usuário caso
                             alvo.relatory = list[i].reason
                             alvo.timestamp = Math.floor(date1.getTime() / 1000)
+                            alvo.issuer = interaction.user.id
                             alvo.auto = true
 
                             adicionados++
