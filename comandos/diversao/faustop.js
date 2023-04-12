@@ -28,8 +28,8 @@ module.exports = {
 
             const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: "faustop.ogg" })
 
-            interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         } else
-            interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }

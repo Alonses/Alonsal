@@ -92,7 +92,7 @@ module.exports = {
             .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
             .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}` })
 
-        interaction.reply({ embeds: [anagrama], ephemeral: user?.conf.ghost_mode || false })
+        interaction.reply({ embeds: [anagrama], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }
 

@@ -56,7 +56,7 @@ module.exports = {
             if (!isInteger(resultado))
                 resultado = resultado.toFixed(6)
 
-            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${client.locale(resultado)}\``, ephemeral: user?.conf.ghost_mode || false })
+            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${client.locale(resultado)}\``, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         } catch {
             interaction.reply({ content: `:octagonal_sign: | ${client.tls.phrase(user, "util.calc.error")}: \`${expressao}\``, ephemeral: true })
         }

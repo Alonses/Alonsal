@@ -225,6 +225,15 @@ class CeiraClient {
     timestamp() {
         return Math.floor(new Date().getTime() / 1000)
     }
+
+    ephemeral(entrada, padrao) {
+
+        // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
+        if (typeof entrada === "undefined")
+            return padrao
+        else
+            return entrada
+    }
 }
 
 module.exports.CeiraClient = CeiraClient

@@ -117,20 +117,9 @@ module.exports = {
 
             // Avatar do usuário
             let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.user.avatar}.gif?size=1024`
+            avatar_user = await client.getImage(avatar_user)
 
-            if (avatar_user !== null) {
-                avatar_user = avatar_user.replace(".webp", ".gif")
-
-                await fetch(avatar_user)
-                    .then(res => {
-                        if (res.status !== 200)
-                            avatar_user = avatar_user.replace('.gif', '.webp')
-                    })
-            } else
-                avatar_user = ""
-
-            let avisos = 0
-            let descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
+            let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
             const historico = []
 
             // Quantificando os relatórios sobre o usuário
@@ -190,7 +179,7 @@ module.exports = {
                 rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return client.tls.editReply(interaction, user, "dive.rank.error_1", user?.conf.ghost_mode || false, 0)
+                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.ephemeral(user?.conf.ghost_mode, 0), 0)
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 

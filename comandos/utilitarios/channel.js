@@ -57,8 +57,7 @@ module.exports = {
             bitrate = `${canal.bitrate / 1000}kbps`
         }
 
-        let icone_server = canal.guild.iconURL({ size: 2048 })
-        icone_server = icone_server.replace(".webp", ".gif")
+        let icone_server = canal.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
         fetch(icone_server)
             .then(res => {
