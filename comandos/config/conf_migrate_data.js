@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { migrateChannels } = require('../../adm/database/schemas/Guild')
+const { migrateBadges } = require('../../adm/database/schemas/Badge')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ module.exports = {
 
         await interaction.deferReply({ ephemeral: true })
 
-        await migrateChannels()
+        await migrateBadges()
             .then(() => {
                 interaction.editReply({ content: `:satellite: | Migração para o banco de dados concluída`, ephemeral: true })
             })
