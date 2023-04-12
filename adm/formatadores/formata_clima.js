@@ -323,7 +323,7 @@ module.exports = async (client, user, interaction, automatico) => {
                     }
 
                     if (typeof automatico === "undefined")
-                        interaction.editReply({ embeds: [embed_clima], ephemeral: user?.conf.ghost_mode || false })
+                        interaction.editReply({ embeds: [embed_clima], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
                     else
                         client.sendDM(user, embed_clima)
                 })

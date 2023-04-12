@@ -74,7 +74,7 @@ module.exports = {
         const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
 
         // Aumentando o tempo de duração da resposta
-        interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
+        interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
         fetch(usuario_alvo)
             .then(response => response.text())
@@ -331,7 +331,7 @@ module.exports = {
                         .setColor(client.embed_color(user_alvo.misc.color))
                         .addFields(
                             {
-                                name: `:ninja: ${client.tls.phrase(user, "util.steam.nivel")}`,
+                                name: `${client.defaultEmoji("gamer")} ${client.tls.phrase(user, "util.steam.nivel")}`,
                                 value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${nivel_user}\``,
                                 inline: true
                             },
@@ -395,7 +395,7 @@ module.exports = {
                             }
                         )
 
-                    interaction.editReply({ embeds: [usuario_steam], ephemeral: user?.conf.ghost_mode || false })
+                    interaction.editReply({ embeds: [usuario_steam], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
                 } catch (err) {
                     require('../../adm/eventos/error.js')({ client, err })

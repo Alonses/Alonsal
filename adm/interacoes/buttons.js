@@ -137,9 +137,10 @@ module.exports = async ({ client, user, interaction }) => {
             const caso = "movimentacao", quantia = bufunfas
             require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
-            interaction.update({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false, embeds: [], components: [] })
+            interaction.update({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0), embeds: [], components: [] })
 
-            client.sendDM(alvo, `:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
+            if (client.ephemeral(alvo?.conf.ghost_mode, 1))
+                client.sendDM(alvo, `:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
         } else
             interaction.update({ content: `:anger: | Operação cancelada!`, embeds: [], components: [], ephemeral: true })
 
@@ -163,7 +164,9 @@ module.exports = async ({ client, user, interaction }) => {
 
                 // Atribuindo silenciosamente
                 if (!interaction.customId.includes("Confirmarsilen")) {
-                    client.sendDM(alvo, `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+
+                    if (client.ephemeral(alvo?.conf.ghost_mode, 1))
+                        client.sendDM(alvo, `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
                     interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
                 } else

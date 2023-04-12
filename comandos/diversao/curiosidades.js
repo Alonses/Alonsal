@@ -21,7 +21,7 @@ module.exports = {
                 if (res.img_curio) // Imagem da curiosidade
                     embed.setImage(res.img_curio)
 
-                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
             })
     }
 }

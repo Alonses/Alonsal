@@ -13,6 +13,6 @@ module.exports = {
 		}),
 	async execute(client, user, interaction) {
 		const ceira = new AttachmentBuilder("./arquivos/img/ceira.png")
-		interaction.reply({ content: "Press :regional_indicator_f: :pensive: :fist:", files: [ceira], ephemeral: user?.conf.ghost_mode || false })
+		interaction.reply({ content: "Press :regional_indicator_f: :pensive: :fist:", files: [ceira], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 	}
 }

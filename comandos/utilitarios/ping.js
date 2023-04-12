@@ -15,7 +15,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const m = await interaction.reply({ content: "Ping?", fetchReply: true, ephemeral: user?.conf.ghost_mode || false })
+        const m = await interaction.reply({ content: "Ping?", fetchReply: true, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         const delay = m.createdTimestamp - interaction.createdTimestamp
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_1")} ${client.emoji(emojis.dancando_thanos)}`
@@ -34,6 +34,6 @@ module.exports = {
 
         mensagem += `\n${client.tls.phrase(user, "util.ping.latencia")} [ **\`${Math.round(client.discord.ws.ping)}ms\`** ]`
 
-        await interaction.editReply({ content: mensagem, ephemeral: user?.conf.ghost_mode || false })
+        await interaction.editReply({ content: mensagem, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }

@@ -41,7 +41,7 @@ module.exports = {
             const dono_membro = await interaction.guild.members.fetch(dono_sv)
             dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``
 
-            let icone_server = interaction.guild.iconURL({ size: 2048 })
+            let icone_server = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
             const canais_texto = interaction.guild.channels.cache.filter((c) => c.type === 0).size
             const canais_voz = interaction.guild.channels.cache.filter((c) => c.type === 2).size
@@ -57,8 +57,6 @@ module.exports = {
             const diferenca_criacao = `<t:${Math.floor(interaction.guild.createdAt / 1000)}:R>`
 
             if (icone_server !== null) {
-                icone_server = icone_server.replace(".webp", ".gif")
-
                 await fetch(icone_server)
                     .then(res => {
                         if (res.status !== 200)
@@ -131,11 +129,10 @@ module.exports = {
                     { name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
                 )
 
-            return interaction.reply({ embeds: [infos_sv] })
+            return interaction.reply({ embeds: [infos_sv], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         } else { // Icone do servidor
 
-            let icone_server = interaction.guild.iconURL({ size: 2048 })
-            icone_server = icone_server.replace(".webp", ".gif")
+            let icone_server = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
             fetch(icone_server)
                 .then(res => {
@@ -148,7 +145,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
-                    interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                    interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
                 })
         }
     }
