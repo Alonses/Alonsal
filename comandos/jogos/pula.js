@@ -56,7 +56,7 @@ module.exports = {
                             inline: true,
                         },
                         {
-                            name: `${client.defaultEmoji("clock")} ${client.tls.phrase(user, "game.pula.tempos")}`,
+                            name: `${client.defaultEmoji("time")} ${client.tls.phrase(user, "game.pula.tempos")}`,
                             value: `:joystick: **${client.tls.phrase(user, "game.pula.jogado")}:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **${client.tls.phrase(user, "game.pula.voando")}:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **${client.tls.phrase(user, "game.pula.em_eventos")}:** \`${datas_pula.tempo_eventos}s\``,
                             inline: true
                         },

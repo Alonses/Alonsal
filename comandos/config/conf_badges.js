@@ -68,7 +68,7 @@ module.exports = {
                         inline: true
                     },
                     {
-                        name: `**${client.defaultEmoji("clock")} Aplicação**`,
+                        name: `**${client.defaultEmoji("time")} Aplicação**`,
                         value: `<t:${client.timestamp()}:f>`,
                         inline: true
                     }

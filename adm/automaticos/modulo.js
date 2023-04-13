@@ -14,8 +14,6 @@ const week_days = {
 
 module.exports = async ({ client }) => {
 
-    return
-
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
@@ -23,14 +21,6 @@ module.exports = async ({ client }) => {
         client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
 
     atualiza_modulos(client, tempo_restante)
-}
-
-function verifica_modulo(client, tempo_restante) {
-
-    setTimeout(() => {
-        requisita_modulo(client)
-        verifica_modulo(client, 60000)
-    }, tempo_restante)
 }
 
 async function atualiza_modulos(client, tempo_restante, auto) {
@@ -43,6 +33,14 @@ async function atualiza_modulos(client, tempo_restante, auto) {
         setTimeout(() => {
             verifica_modulo(client, 60000)
         }, tempo_restante) // Executa de 60 em 60 segundos
+}
+
+function verifica_modulo(client, tempo_restante) {
+
+    setTimeout(() => {
+        requisita_modulo(client)
+        verifica_modulo(client, 60000)
+    }, tempo_restante)
 }
 
 async function requisita_modulo(client) {
@@ -64,7 +62,7 @@ async function requisita_modulo(client) {
                 lista_modulos.push({ uid: data[i].uid, type: data[i].type })
         }
 
-        if (lista_modulos.length > 1)
+        if (lista_modulos.length > 0)
             executa_modulo(client)
     })
 }
@@ -81,8 +79,8 @@ async function executa_modulo(client) {
             await formata_clima(client, user, null, true)
 
         setTimeout(() => {
-            lista_modulos.shift()
             trava_modulo = false
+            lista_modulos.shift()
 
             if (lista_modulos.length > 0)
                 executa_modulo(client)

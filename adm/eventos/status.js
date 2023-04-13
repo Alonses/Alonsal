@@ -26,7 +26,6 @@ module.exports = async ({ client }) => {
             .catch(() => dispara_status(client, "🛑 Offline"))
     }
 
-
     // Status personalizados
     require('./presence')({ client })
 
@@ -80,7 +79,7 @@ function dispara_status(client, status_apisal) {
                     .addFields(
                         {
                             name: ":globe_with_meridians: **Servidores**",
-                            value: `:heart_on_fire: **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\``,
+                            value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.locale(members)}\``,
                             inline: true
                         },
                         {
