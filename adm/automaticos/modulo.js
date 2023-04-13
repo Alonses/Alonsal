@@ -69,6 +69,9 @@ async function requisita_modulo(client) {
 
 async function executa_modulo(client) {
 
+    // Retorna caso o array de módulos esteja vazio
+    if (lista_modulos.length < 1) return
+
     // Dispara os módulos agendados
     if (!trava_modulo) {
         trava_modulo = true
@@ -78,9 +81,10 @@ async function executa_modulo(client) {
         if (lista_modulos[0].type === 0)
             await formata_clima(client, user, null, true)
 
+        lista_modulos.shift()
+
         setTimeout(() => {
             trava_modulo = false
-            lista_modulos.shift()
 
             if (lista_modulos.length > 0)
                 executa_modulo(client)
