@@ -14,7 +14,7 @@ const week_days = {
 
 module.exports = async ({ client }) => {
 
-    if (!client.x.modules) return
+    return
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
