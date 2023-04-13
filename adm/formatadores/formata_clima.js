@@ -60,13 +60,13 @@ module.exports = async (client, user, interaction, automatico) => {
                 }
             } else {
                 if (res.cod === '404' || res.cod === '400') {
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``)
+                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, true)
                     return
                 } else if (res.cod === '429') { // Erro da API
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`)
+                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, true)
                     return
                 } else if (res.id === 1873107) {
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.error_2")}`)
+                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.error_2")}`, true)
                     return
                 }
             }
@@ -325,13 +325,13 @@ module.exports = async (client, user, interaction, automatico) => {
                     if (typeof automatico === "undefined")
                         interaction.editReply({ embeds: [embed_clima], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
                     else
-                        client.sendDM(user, embed_clima)
+                        client.sendDM(user, embed_clima, true)
                 })
         }) // Erro com a API de clima
         .catch(() => {
             if (typeof automatico === "undefined")
                 interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, ephemeral: true })
             else
-                client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`)
+                client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, true)
         })
 }

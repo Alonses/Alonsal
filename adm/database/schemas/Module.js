@@ -2,32 +2,25 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
-    type: { type: Number, default: 0 },
-    data: {
-        text: { type: String, default: null }
-    },
+    type: { type: Number, default: null },
     stats: {
-        price: { type: Number, default: 0 },
-        days: { type: Number, default: 0 },
+        price: { type: Number, default: 20 },
+        days: { type: Number, default: null },
         hour: { type: String, default: null },
-        active: { type: Boolean, default: true }
+        active: { type: Boolean, default: false }
     }
 })
 
 const model = mongoose.model("Module", schema)
 
-async function getModules(uid) {
-    if (!await model.exists({ uid: uid })) await model.create({ uid: uid })
+async function getModule(uid, type) {
+    if (!await model.exists({ uid: uid, type: type })) await model.create({ uid: uid, type: type })
 
-    return model.find({ uid: uid })
+    return model.findOne({ uid: uid, type: type })
 }
 
-async function getFilteredModules() {
-    let modulos = model.find({ "stats.active": true })
-
-    modulos.map(valor => valor.uid)
-
-    console.log(modulos)
+async function deleteModule(uid, type) {
+    model.findOneAndDelete({ uid: uid, type: type })
 }
 
 async function getActiveModules() {
@@ -37,8 +30,8 @@ async function getActiveModules() {
 
 async function getModulePrice(uid) {
     // Retorna um preço pelos módulos ativos de determinado usuário
-    let modulos = model.find({ uid: uid, "stats.active": true })
-    let total = 0;
+    let modulos = await model.find({ uid: uid, "stats.active": true })
+    let total = 0
 
     modulos.forEach(element => {
         total += element.stats.price
@@ -48,7 +41,7 @@ async function getModulePrice(uid) {
 }
 
 module.exports.Badge = model
-module.exports.getModules = getModules
+module.exports.getModule = getModule
+module.exports.deleteModule = deleteModule
 module.exports.getModulePrice = getModulePrice
 module.exports.getActiveModules = getActiveModules
-module.exports.getFilteredModules = getFilteredModules
