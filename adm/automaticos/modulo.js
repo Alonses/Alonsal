@@ -19,6 +19,8 @@ module.exports = async ({ client }) => {
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
+    client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
+
     atualiza_modulos(client, tempo_restante)
 }
 
@@ -26,30 +28,8 @@ function verifica_modulo(client, tempo_restante) {
 
     setTimeout(() => {
         verifica_modulo(client, 60000)
+        requisita_modulo(client)
     }, tempo_restante)
-}
-
-async function requisita_modulo(client) {
-
-    const data1 = new Date()
-    const horario = `${data1.getHours()}:${data1.getMinutes()}`
-    const dia = data1.getDay()
-
-    fs.readFile('./arquivos/data/modules.txt', 'utf8', function (err, data) {
-
-        data = JSON.parse(data)
-
-        for (let i = 0; i < data.length; i++) {
-
-            // Verificando se o horário está correto
-            if (data[i].stats.days == 2 && data[i].stats.hour === horario)
-                agenda_modulo(client, data[i].uid, data[i].type)
-
-            // Verificando se o horário e o dia estão corretos
-            else if (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia))
-                agenda_modulo(client, data[i].uid, data[i].type)
-        }
-    })
 }
 
 async function atualiza_modulos(client, tempo_restante, auto) {
@@ -65,12 +45,29 @@ async function atualiza_modulos(client, tempo_restante, auto) {
         }, tempo_restante) // Executa de 60 em 60 segundos
 }
 
-function agenda_modulo(client, uid, type) {
+async function requisita_modulo(client) {
 
-    lista_modulos.push({ uid: uid, type: type })
+    const data1 = new Date()
+    const horario = `${data1.getHours()}:${data1.getMinutes()}`
+    const dia = data1.getDay()
 
-    if (!trava_modulo)
-        executa_modulo(client)
+    fs.readFile('./arquivos/data/modules.txt', 'utf8', function (err, data) {
+
+        data = JSON.parse(data)
+
+        for (let i = 0; i < data.length; i++) {
+            // Verificando se o horário está correto
+            if (data[i].stats.days == 2 && data[i].stats.hour === horario)
+                lista_modulos.push({ uid: data[i].uid, type: data[i].type })
+
+            // Verificando se o horário e o dia estão corretos
+            else if (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia))
+                lista_modulos.push({ uid: data[i].uid, type: data[i].type })
+        }
+
+        if (lista_modulos.length > 1)
+            executa_modulo(client)
+    })
 }
 
 async function executa_modulo(client) {
