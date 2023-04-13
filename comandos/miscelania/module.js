@@ -81,7 +81,7 @@ module.exports = {
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("clock")} Ativação**`,
+                    name: `**${client.defaultEmoji("time")} Ativação**`,
                     value: `\`${ativacao_modulo}\``,
                     inline: true
                 },
