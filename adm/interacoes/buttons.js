@@ -4,13 +4,15 @@ const { getReport, removeReport } = require('../database/schemas/Report')
 
 const { createBadge } = require('../../adm/database/schemas/Badge')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
+const { getModule, deleteModule } = require('../database/schemas/Module')
+const { atualiza_modulos } = require('../automaticos/modulo')
 
 module.exports = async ({ client, user, interaction }) => {
 
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
     const date1 = new Date()
 
-    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge")) {
+    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules")) {
 
         if (id_button === `Conf_${interaction.user.id}`) {
 
@@ -88,7 +90,7 @@ module.exports = async ({ client, user, interaction }) => {
         }
 
         if (id_button === `Canc_${interaction.user.id}`)
-            interaction.update({ content: `:anger: | Operação cancelada!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
 
     } else if (interaction.customId.includes("report_user")) {
 
@@ -117,7 +119,7 @@ module.exports = async ({ client, user, interaction }) => {
 
             await removeReport(alvo.uid, interaction.guild.id)
 
-            interaction.update({ content: `:anger: | Operação cancelada!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
         }
     } else if (interaction.customId.includes("transfer")) {
 
@@ -142,7 +144,7 @@ module.exports = async ({ client, user, interaction }) => {
             if (client.ephemeral(alvo?.conf.ghost_mode, 1))
                 client.sendDM(alvo, `:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
         } else
-            interaction.update({ content: `:anger: | Operação cancelada!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
 
     } else if (interaction.customId.includes("badge")) {
         // Atribuindo badges a usuários
@@ -173,6 +175,29 @@ module.exports = async ({ client, user, interaction }) => {
                     interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída silenciosamente ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
             })
         } else // Cancelando a atribuição da badge
-            interaction.update({ content: `:anger: | Operação cancelada!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+
+    } else if (interaction.customId.includes("modules")) {
+
+        // Tipo do módulo
+        const type = interaction.customId.split(".")[1].split("]")[0]
+
+        const modulo = await getModule(interaction.user.id, parseInt(type))
+        const ativacoes = ["nos dias úteis", "nos finais de semana", "todos os dias"]
+
+        // Ativando o módulo
+        if (interaction.customId.includes("Conf")) {
+            modulo.stats.active = true
+
+            await modulo.save()
+
+            interaction.update({ content: `:mega: | Módulo ativado! Seu módulo será enviado ${ativacoes[modulo.stats.days]} às \`${modulo.stats.hour}\``, embeds: [], components: [], ephemeral: true })
+        } else {
+            await deleteModule(interaction.user.id, parseInt(type))
+
+            interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+        }
+
+        atualiza_modulos()
     }
 }

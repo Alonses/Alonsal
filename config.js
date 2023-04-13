@@ -57,6 +57,8 @@ function config(client) {
 
         } else { // Removendo os comandos slash globalmente
 
+            console.log("Excluindo comandos slash registrados globalmente")
+
             rest.get(Routes.applicationCommands(client.x.clientId))
                 .then(data => {
                     const promises = []
@@ -66,7 +68,6 @@ function config(client) {
                         promises.push(rest.delete(deleteUrl))
                     }
 
-                    console.log("Desativando os comandos slash registrados globalmente e em servidor.")
                     return Promise.all(promises)
                 })
         }

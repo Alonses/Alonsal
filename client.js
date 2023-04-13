@@ -20,7 +20,7 @@ const { default_emoji } = require('./arquivos/json/text/emojis.json')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 0
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1
 
 if (update_commands)
     modo_develop = 0, force_update = 1, silent = 1, modules = 0
@@ -199,11 +199,11 @@ class CeiraClient {
         return valor.toLocaleString(locale)
     }
 
-    sendDM(user, value) {
+    sendDM(user, value, modulo) {
 
         let notificar = true
 
-        if (typeof user.conf.notify !== "undefined")
+        if (typeof user.conf.notify !== "undefined" && typeof modulo === "undefined")
             notificar = user.conf.notify
 
         if (notificar) // Notificando o usuário alvo caso ele receba notificações em DM do bot
