@@ -5,7 +5,7 @@ const { getActiveModules } = require("../database/schemas/Module")
 const formata_clima = require('../formatadores/formata_clima')
 
 const lista_modulos = []
-let trava_modulo = false
+let trava_modulo = false, global_client
 
 const week_days = {
     0: [1, 2, 3, 4, 5],
@@ -17,33 +17,39 @@ module.exports = async ({ client }) => {
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
-    if (client.id() === process.env.client_1)
-        client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
+    global_client = client
 
-    atualiza_modulos(client, tempo_restante)
+    if (global_client.id() === process.env.client_1)
+        global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
+
+    atualiza_modulos(global_client, tempo_restante)
 }
 
 async function atualiza_modulos(client, tempo_restante, auto) {
 
     const dados = await getActiveModules()
+    global_client = client
 
     writeFileSync("./arquivos/data/modules.txt", JSON.stringify(dados))
 
     if (dados.length > 0 && typeof auto === "undefined")
         setTimeout(() => {
-            verifica_modulo(client, 60000)
+            verifica_modulo(60000)
         }, tempo_restante) // Executa de 60 em 60 segundos
+
+    if (dados.length < 1)
+        global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos desativados, não há módulos ativos no momento.`)
 }
 
-function verifica_modulo(client, tempo_restante) {
+function verifica_modulo(tempo_restante) {
 
     setTimeout(() => {
-        requisita_modulo(client)
-        verifica_modulo(client, 60000)
+        requisita_modulo()
+        verifica_modulo(60000)
     }, tempo_restante)
 }
 
-async function requisita_modulo(client) {
+async function requisita_modulo() {
 
     const data1 = new Date()
     const horario = `${data1.getHours()}:${data1.getMinutes()}`, dia = data1.getDay()
@@ -51,6 +57,9 @@ async function requisita_modulo(client) {
     fs.readFile('./arquivos/data/modules.txt', 'utf8', function (err, data) {
 
         data = JSON.parse(data)
+
+        // Interrompe a operação caso não haja módulos listados em cache
+        if (data.length < 1) return
 
         for (let i = 0; i < data.length; i++) {
             // Verificando se o horário está correto
@@ -63,11 +72,11 @@ async function requisita_modulo(client) {
         }
 
         if (lista_modulos.length > 0)
-            executa_modulo(client)
+            executa_modulo()
     })
 }
 
-async function executa_modulo(client) {
+async function executa_modulo() {
 
     // Retorna caso o array de módulos esteja vazio
     if (lista_modulos.length < 1) return
@@ -76,10 +85,10 @@ async function executa_modulo(client) {
     if (!trava_modulo) {
         trava_modulo = true
 
-        const user = await client.getUser(lista_modulos[0].uid)
+        const user = await global_client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await formata_clima(client, user, null, true)
+            await formata_clima(global_client, user, null, true)
 
         lista_modulos.shift()
 
@@ -87,7 +96,7 @@ async function executa_modulo(client) {
             trava_modulo = false
 
             if (lista_modulos.length > 0)
-                executa_modulo(client)
+                executa_modulo()
         }, 1000)
     }
 }
