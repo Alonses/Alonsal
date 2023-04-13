@@ -19,7 +19,8 @@ module.exports = async ({ client }) => {
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
-    client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
+    if (client.id() === process.env.client_1)
+        client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
 
     atualiza_modulos(client, tempo_restante)
 }
@@ -27,8 +28,8 @@ module.exports = async ({ client }) => {
 function verifica_modulo(client, tempo_restante) {
 
     setTimeout(() => {
-        verifica_modulo(client, 60000)
         requisita_modulo(client)
+        verifica_modulo(client, 60000)
     }, tempo_restante)
 }
 
@@ -40,7 +41,6 @@ async function atualiza_modulos(client, tempo_restante, auto) {
 
     if (dados.length > 0 && typeof auto === "undefined")
         setTimeout(() => {
-            requisita_modulo(client)
             verifica_modulo(client, 60000)
         }, tempo_restante) // Executa de 60 em 60 segundos
 }
@@ -48,8 +48,7 @@ async function atualiza_modulos(client, tempo_restante, auto) {
 async function requisita_modulo(client) {
 
     const data1 = new Date()
-    const horario = `${data1.getHours()}:${data1.getMinutes()}`
-    const dia = data1.getDay()
+    const horario = `${data1.getHours()}:${data1.getMinutes()}`, dia = data1.getDay()
 
     fs.readFile('./arquivos/data/modules.txt', 'utf8', function (err, data) {
 
