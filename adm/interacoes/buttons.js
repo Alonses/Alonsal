@@ -198,6 +198,6 @@ module.exports = async ({ client, user, interaction }) => {
             interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
         }
 
-        atualiza_modulos()
+        atualiza_modulos(client)
     }
 }
