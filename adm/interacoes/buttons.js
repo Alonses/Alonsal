@@ -219,12 +219,8 @@ module.exports = async ({ client, user, interaction }) => {
             return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, timestamp)], embeds: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
 
-        console.log(operacao)
-
         if (operacao === "Apagar") {
             await dropTask(interaction.user.id, timestamp)
-
-            console.log("aq")
 
             return interaction.update({ content: ":white_check_mark: | Sua anotação foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
