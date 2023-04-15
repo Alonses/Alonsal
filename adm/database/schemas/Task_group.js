@@ -30,7 +30,7 @@ async function checkUserGroup(uid, name) {
 
 // Apaga o grupo de tasks do usuário
 async function dropGroup(uid, name) {
-    model.findOneAndDelete({ uid: uid, name: name })
+    await model.findOneAndDelete({ uid: uid, name: name })
 }
 
 module.exports.Task_group = model

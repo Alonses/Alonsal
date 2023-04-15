@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 const create_menus = require('../../adm/discord/create_menus')
-const { listAllUserTasks, createTask } = require('../../adm/database/schemas/Task')
+const { listAllUserTasks, createTask, deleteUserCachedTasks } = require('../../adm/database/schemas/Task')
 const { getUserGroups, createGroup, checkUserGroup } = require('../../adm/database/schemas/Task_group')
 
 module.exports = {
@@ -118,17 +118,21 @@ module.exports = {
             if (interaction.options.getSubcommandGroup() === "add") {
                 if (interaction.options.getSubcommand() === "task") {
 
-                    // Criando notas para serem usadas
+                    // Removendo as tarefas que estão em cache
+                    await deleteUserCachedTasks(interaction.user.id)
+
+                    // Criando uma tarefa para ser usada
                     let grupos = await getUserGroups(interaction.user.id)
 
                     if (grupos.length < 1)
                         return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista criada! Crie alguma para poder usar este comando.", ephemeral: true })
 
+                    const task = await createTask(interaction.user.id, interaction.options.getString("descricao"), date1)
+
                     // Adicionando a tarefa a uma lista automaticamente caso só exista uma lista
                     if (grupos.length == 1) {
                         nome_lista = grupos[0].name
 
-                        const task = await createTask(interaction.user.id, interaction.options.getString("descricao"), date1)
                         task.group = grupos[0].name
                         task.save()
 

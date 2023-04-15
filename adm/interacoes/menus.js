@@ -1,8 +1,9 @@
 const { AttachmentBuilder, EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
-const { getCacheTask, deleteUserCachedTasks, getTask } = require('../database/schemas/Task')
+const { getCacheTask, getTask } = require('../database/schemas/Task')
 const { getUserGroup, getUserGroups } = require('../database/schemas/Task_group')
+const task = require('../../comandos/utilitarios/task')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -34,10 +35,10 @@ module.exports = async ({ client, user, interaction }) => {
     } else if (interaction.customId === `select_groups_${interaction.user.id}`) {
 
         // Coletando dados e verificando se a tarefa ainda existe
-        const task = await getCacheTask(interaction.user.id, parseInt(interaction.values[0].split("#")[1]))
+        let task = await getCacheTask(interaction.user.id, parseInt(interaction.values[0].split("#")[1]))
 
         if (!task)
-            return interaction.update({ content: `:mag: | Não há mais notas em cache, por favor, adicione outra nota manualmente`, components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            task = await getTask(interaction.user.id, parseInt(interaction.values[0].split("#")[1]))
 
         // Atualizando os dados da tarefa
         const group_timestamp = interaction.values[0].split(".")[1]
@@ -47,9 +48,6 @@ module.exports = async ({ client, user, interaction }) => {
         task.group = group.name
 
         await task.save()
-
-        // Apagando todas as tarefas que estão em cache e não foram confirmadas anteriormente
-        deleteUserCachedTasks(interaction.user.id)
 
         interaction.update({ content: `${client.defaultEmoji("paper")} | Sua nota foi adicionada a lista \`${task.group}\` com sucesso!`, components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     } else if (interaction.customId === `select_tasks_${interaction.user.id}`) {

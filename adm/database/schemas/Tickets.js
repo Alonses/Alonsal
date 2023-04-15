@@ -20,7 +20,7 @@ async function getTicket(sid, uid) {
 
 // Apaga o ticket de denúncia do servidor
 async function dropTicket(sid, uid) {
-    model.findOneAndDelete({ sid: sid, uid: uid })
+    await model.findOneAndDelete({ sid: sid, uid: uid })
 }
 
 module.exports.Ticket = model

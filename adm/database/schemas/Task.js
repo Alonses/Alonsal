@@ -34,7 +34,7 @@ async function listAllUserTasks(uid) {
 
 // Apaga uma task do usuário
 async function dropTask(uid, timestamp) {
-    model.findOneAndDelete({ uid: uid, timestamp: timestamp })
+    await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
 }
 
 async function deleteUserCachedTasks(uid) {
