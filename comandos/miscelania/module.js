@@ -56,12 +56,13 @@ module.exports = {
             return interaction.reply({ content: ":octagonal_sign: | Você não possui Bufunfas o suficiente para usar módulos, consiga algumas com o comando /daily antes!", ephemeral: true })
 
         const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos"], ativacoes = ["Dias úteis", "Finais de semana", "Todos os dias"]
+        const type = interaction.options.getString("tipo")
 
-        const modulo = {
-            type: interaction.options.getString("tipo"),
-        }
+        // Prevenção de erros
+        if (type == 0 && !user.misc.locale)
+            return interaction.reply(":octagonal_sign: | Para ativar o módulo de clima é necessário definir um local padrão com o comando `/link locale` antes!")
 
-        const corpo_modulo = await getModule(interaction.user.id, modulo.type)
+        const corpo_modulo = await getModule(interaction.user.id, type)
 
         corpo_modulo.stats.days = interaction.options.getString("quando")
         corpo_modulo.stats.hour = `${interaction.options.getNumber("hora")}:${interaction.options.getNumber("minuto")}`

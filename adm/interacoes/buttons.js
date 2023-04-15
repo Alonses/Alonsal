@@ -6,13 +6,13 @@ const { createBadge } = require('../../adm/database/schemas/Badge')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 const { getModule, deleteModule } = require('../database/schemas/Module')
 const { atualiza_modulos } = require('../automaticos/modulo')
+const { dropTask, getTask } = require('../database/schemas/Task')
 
 module.exports = async ({ client, user, interaction }) => {
 
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
-    const date1 = new Date()
 
-    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules")) {
+    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules") && !interaction.customId.includes("task_button")) {
 
         if (id_button === `Conf_${interaction.user.id}`) {
 
@@ -199,5 +199,44 @@ module.exports = async ({ client, user, interaction }) => {
         }
 
         atualiza_modulos(client, 0, true)
+
+    } else if (interaction.customId.includes("task_button")) {
+
+        // Gerenciamento de anotações
+        const operacao = interaction.customId.split("[")[0]
+        const timestamp = parseInt(interaction.customId.split(".")[2])
+
+        if (operacao === "Alterardelista") {
+
+            const grupos = await getUserGroups(interaction.user.id)
+
+            return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        }
+
+        if (operacao === "Apagar") {
+            await dropTask(interaction.user.id, timestamp)
+
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi excluída com sucesso!", embeds: [], components: [], ephemeral: true })
+        }
+
+        if (operacao === "Marcarcomoconc") {
+
+            const task = await getTask(interaction.user.id, timestamp)
+
+            task.concluded = true
+            task.save()
+
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: true })
+        }
+
+        if (operacao === "Abrirnovamente") {
+
+            const task = await getTask(interaction.user.id, timestamp)
+
+            task.concluded = false
+            task.save()
+
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: true })
+        }
     }
 }

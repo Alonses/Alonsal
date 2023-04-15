@@ -28,7 +28,7 @@ if (update_commands)
 let token = process.env.token_1, clientId = process.env.client_1
 
 if (silent || modo_develop)
-    status = 0, ranking = 0
+    status = 0, ranking = 0, modules = 0
 
 // Force update é utilizado para forçar a atualização dos comandos slash
 // globais e privados do bot
