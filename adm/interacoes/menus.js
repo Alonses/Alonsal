@@ -6,6 +6,9 @@ const { getUserGroup, getUserGroups } = require('../database/schemas/Task_group'
 
 module.exports = async ({ client, user, interaction }) => {
 
+    if (!interaction.customId.includes(interaction.user.id))
+        return interaction.reply({ content: "Parado aí seu salafrário! Esse menu só pode ser usado pelo autor do comando!", ephemeral: true })
+
     if (interaction.customId === `select_badges_${interaction.user.id}`) {
 
         // Fixando a badge escolhida pelo usuário
@@ -33,7 +36,7 @@ module.exports = async ({ client, user, interaction }) => {
         // Coletando dados e verificando se a tarefa ainda existe
         const task = await getCacheTask(interaction.user.id, parseInt(interaction.values[0].split("#")[1]))
 
-        if (task.length < 1)
+        if (!task)
             return interaction.update({ content: `:mag: | Não há mais notas em cache, por favor, adicione outra nota manualmente`, components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
         // Atualizando os dados da tarefa

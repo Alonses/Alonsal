@@ -10,6 +10,9 @@ const { dropTask, getTask } = require('../database/schemas/Task')
 
 module.exports = async ({ client, user, interaction }) => {
 
+    if (!interaction.customId.includes(interaction.user.id))
+        return interaction.reply({ content: "Parado aí seu salafrário! Esses botões só podem ser usados pelo autor do comando!", ephemeral: true })
+
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
 
     if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules") && !interaction.customId.includes("task_button")) {
