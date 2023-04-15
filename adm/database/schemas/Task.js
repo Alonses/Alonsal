@@ -32,13 +32,21 @@ async function listAllUserTasks(uid) {
     return model.find({ uid: uid, cached: false })
 }
 
+async function listAllUserGroupTasks(uid, name) {
+    return model.find({ uid: uid, group: name })
+}
+
 // Apaga uma task do usuário
-async function dropTask(uid, timestamp) {
+async function dropTask(uid, name) {
     await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
 }
 
+async function dropTaskByGroup(uid, name) {
+    await model.deleteMany({ uid: uid, group: name })
+}
+
 async function deleteUserCachedTasks(uid) {
-    model.deleteMany({ uid: uid, cached: true })
+    await model.deleteMany({ uid: uid, cached: true })
 }
 
 module.exports.Task = model
@@ -46,5 +54,7 @@ module.exports.createTask = createTask
 module.exports.getTask = getTask
 module.exports.getCacheTask = getCacheTask
 module.exports.dropTask = dropTask
+module.exports.dropTaskByGroup = dropTaskByGroup
 module.exports.listAllUserTasks = listAllUserTasks
+module.exports.listAllUserGroupTasks = listAllUserGroupTasks
 module.exports.deleteUserCachedTasks = deleteUserCachedTasks
