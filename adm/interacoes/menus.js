@@ -1,9 +1,10 @@
 const { AttachmentBuilder, EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
-const { getCacheTask, getTask } = require('../database/schemas/Task')
+const { getCacheTask, getTask, listAllUserGroupTasks } = require('../database/schemas/Task')
 const { getUserGroup, getUserGroups } = require('../database/schemas/Task_group')
-const task = require('../../comandos/utilitarios/task')
+
+const create_menus = require('../discord/create_menus')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -50,13 +51,39 @@ module.exports = async ({ client, user, interaction }) => {
         await task.save()
 
         interaction.update({ content: `${client.defaultEmoji("paper")} | Sua nota foi adicionada a lista \`${task.group}\` com sucesso!`, components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
-    } else if (interaction.customId === `select_tasks_${interaction.user.id}`) {
+
+    } else if (interaction.customId === `select_groups_n_${interaction.user.id}`) {
+
+        // Selecionando uma lista para visualizar as tarefas incluídas nela
+        const group_timestamp = interaction.values[0].split(".")[1]
+        const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
+
+        const tarefas = await listAllUserGroupTasks(interaction.user.id, group.name)
+
+        if (tarefas.length < 1)
+            return interaction.reply({ content: ":mag: | Não há nenhuma tarefa anexada à essa lista ainda!", ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+
+        interaction.update({ content: ":mag: | Escolha uma das tarefas abaixo para mais detalhes", components: [create_menus("tasks_v", client, interaction, user, tarefas)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+
+    } else if (interaction.customId === `select_groups_r_${interaction.user.id}`) {
+
+        // Apagando uma lista especificada
+        const group_timestamp = interaction.values[0].split(".")[1]
+        const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
+
+        const tarefas = await listAllUserGroupTasks(interaction.user.id, group.name) || 0
+
+        const row = client.create_buttons([{ name: `Cancelar:delete_list`, value: '0', type: 1 }, { name: 'Apagar:delete_list', value: '0', type: 3, list_r: group_timestamp }], interaction)
+
+        interaction.update({ content: `:vertical_traffic_light: | Você está prestes a apagar esta lista e confirmar a exclusão de outras \`${tarefas.length}\` tarefas\nSelecione os botões abaixo para cancelar ou prosseguir a operação.`, components: [row], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+
+    } else if (interaction.customId === `select_tasks_${interaction.user.id}` || interaction.customId === `select_tasks_v_${interaction.user.id}`) {
 
         // Exibindo os dados de alguma tarefa selecionada
         const task = await getTask(interaction.user.id, parseInt(interaction.values[0].split(".")[1]))
 
         const embed = new EmbedBuilder()
-            .setTitle("> Sua anotação")
+            .setTitle("> Sua tarefa")
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${task.text}\`\`\``)
             .addFields(
@@ -71,7 +98,7 @@ module.exports = async ({ client, user, interaction }) => {
                     inline: true
                 }
             )
-            .setFooter({ text: "Selecione os botões abaixo para gerenciar esta anotação", iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: "Selecione os botões abaixo para gerenciar esta tarefa", iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para as funções de gestão de tarefas
         const grupos = await getUserGroups(interaction.user.id)
@@ -88,6 +115,6 @@ module.exports = async ({ client, user, interaction }) => {
             else // Apenas uma lista criada
                 row = client.create_buttons([{ name: `Abrir novamente:task_button`, value: '1', type: 2, task: task.timestamp }, { name: 'Apagar:task_button', value: '0', type: 3, task: task.timestamp }], interaction)
 
-        return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: true })
+        return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }

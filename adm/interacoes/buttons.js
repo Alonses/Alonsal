@@ -6,8 +6,8 @@ const { createBadge } = require('../../adm/database/schemas/Badge')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 const { getModule, deleteModule } = require('../database/schemas/Module')
 const { atualiza_modulos } = require('../automaticos/modulo')
-const { dropTask, getTask } = require('../database/schemas/Task')
-const { getUserGroups } = require('../database/schemas/Task_group')
+const { dropTask, getTask, dropTaskByGroup } = require('../database/schemas/Task')
+const { getUserGroups, getUserGroup, dropGroup } = require('../database/schemas/Task_group')
 
 const create_menus = require('../discord/create_menus')
 
@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const id_button = `${interaction.customId.split("[")[0]}${interaction.customId.split("]")[1]}`
 
-    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules") && !interaction.customId.includes("task_button")) {
+    if (!interaction.customId.includes("report") && !interaction.customId.includes("transfer") && !interaction.customId.includes("badge") && !interaction.customId.includes("modules") && !interaction.customId.includes("task_button") && !interaction.customId.includes("delete_list")) {
 
         if (id_button === `Conf_${interaction.user.id}`) {
 
@@ -222,7 +222,7 @@ module.exports = async ({ client, user, interaction }) => {
         if (operacao === "Apagar") {
             await dropTask(interaction.user.id, timestamp)
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Marcarcomoconc") {
@@ -232,7 +232,7 @@ module.exports = async ({ client, user, interaction }) => {
             task.concluded = true
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Abrirnovamente") {
@@ -242,7 +242,28 @@ module.exports = async ({ client, user, interaction }) => {
             task.concluded = false
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        }
+
+    } else if (interaction.customId.includes("delete_list")) {
+
+        // Gerenciamento de listas de tarefas
+        const operacao = interaction.customId.split("[")[0]
+
+        console.log(operacao, interaction.customId)
+
+        if (operacao === "Canc")
+            return interaction.update({ content: `${client.defaultEmoji("paper")} | Exclusão da lista de tarefas cancelada.`, embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        else {
+
+            // Apagando a lista especificada e as tarefas vinculadas a ela
+            const group_timestamp = interaction.customId.split(".")[2]
+            const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
+
+            await dropTaskByGroup(interaction.user.id, group.name)
+            await dropGroup(interaction.user.id, group.timestamp)
+
+            interaction.update({ content: ":wastebasket: | `Lista` e `tarefas` vinculadas excluídas com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
     }
 }
