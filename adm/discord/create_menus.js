@@ -1,10 +1,10 @@
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
 const { fausto, rasputia } = require('../../arquivos/json/text/emojis.json')
 
-module.exports = (alvo, client, interaction, user, dados) => {
+module.exports = (alvo, client, interaction, user, dados, timestamp) => {
 
     const itens_menu = []
     let insersoes = [], i = 1
@@ -45,6 +45,24 @@ module.exports = (alvo, client, interaction, user, dados) => {
                 i++
             }
 
+            if (alvo == "tasks") {
+
+                // Listando tarefas
+                nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
+                emoji_label = client.defaultEmoji("paper")
+                descricao_label = `Criado em ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
+                valor_label = `${valor.uid}.${valor.timestamp}`
+            }
+
+            if (alvo == "groups") {
+
+                // Listando listas de tarefas
+                nome_label = valor.name.length > 15 ? `${valor.name.slice(0, 25)}...` : valor.name
+                emoji_label = client.defaultEmoji("paper")
+                descricao_label = "Incluir nesta lista"
+                valor_label = `${valor.uid}#${timestamp}.${valor.timestamp}`
+            }
+
             itens_menu.push({
                 label: nome_label,
                 emoji: emoji_label,
@@ -66,9 +84,15 @@ module.exports = (alvo, client, interaction, user, dados) => {
     if (alvo === "norbit")
         titulo_menu = "Escolha uma frase do filme do Norbit!"
 
+    if (alvo === "tasks")
+        titulo_menu = "Escolha uma das tarefas abaixo para mais detalhes!"
+
+    if (alvo === "groups")
+        titulo_menu = "Escolha uma das listas abaixo para vincular esta!"
+
     const row = new ActionRowBuilder()
         .addComponents(
-            new SelectMenuBuilder()
+            new StringSelectMenuBuilder()
                 .setCustomId(id_menu)
                 .setPlaceholder(titulo_menu)
                 .addOptions(itens_menu)

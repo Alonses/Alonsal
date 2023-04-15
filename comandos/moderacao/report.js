@@ -203,8 +203,8 @@ module.exports = {
                 // Salvando o alvo para editar posteriormente
                 await alvo.save()
 
-                // Criando os botões para a cor customizada
-                const row = client.create_buttons([{ name: `Adicionar e anunciar:report_user`, value: '1', type: 2, report: alvo.uid }, { name: `Adicionar silenciosamente:report_user`, value: '0', type: 1, report: alvo.uid }, { name: 'Cancelar:report_user', value: '0', type: 3, report: true, report: alvo.uid }], interaction)
+                // Criando os botões para as funções de reporte
+                const row = client.create_buttons([{ name: `Adicionar e anunciar:report_user`, value: '1', type: 2, report: alvo.uid }, { name: `Adicionar silenciosamente:report_user`, value: '0', type: 1, report: alvo.uid }, { name: 'Cancelar:report_user', value: '0', type: 3, report: alvo.uid }], interaction)
 
                 return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
 

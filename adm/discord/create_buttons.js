@@ -48,6 +48,14 @@ function create_buttons(lista_botoes, interaction) {
                         .setLabel(valor.name.split(":")[0])
                         .setStyle(tipos[valor.type])
                 )
+            } else if (valor.task) {
+                // Usado para as funções de gerenciamento de anotações
+                row_buttons.addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`${valor.name.replaceAll(" ", "").slice(0, 14).split(":")[0]}[${interaction_name}].${interaction.user.id}.${valor.task}`)
+                        .setLabel(valor.name.split(":")[0])
+                        .setStyle(tipos[valor.type])
+                )
             } else {
 
                 if (!valor.emoji)
