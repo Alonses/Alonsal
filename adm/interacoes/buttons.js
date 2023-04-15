@@ -7,6 +7,9 @@ const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 const { getModule, deleteModule } = require('../database/schemas/Module')
 const { atualiza_modulos } = require('../automaticos/modulo')
 const { dropTask, getTask } = require('../database/schemas/Task')
+const { getUserGroups } = require('../database/schemas/Task_group')
+
+const create_menus = require('../discord/create_menus')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -213,13 +216,17 @@ module.exports = async ({ client, user, interaction }) => {
 
             const grupos = await getUserGroups(interaction.user.id)
 
-            return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, timestamp)], embeds: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
+
+        console.log(operacao)
 
         if (operacao === "Apagar") {
             await dropTask(interaction.user.id, timestamp)
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi excluída com sucesso!", embeds: [], components: [], ephemeral: true })
+            console.log("aq")
+
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Marcarcomoconc") {
@@ -229,7 +236,7 @@ module.exports = async ({ client, user, interaction }) => {
             task.concluded = true
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: true })
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Abrirnovamente") {
@@ -239,7 +246,7 @@ module.exports = async ({ client, user, interaction }) => {
             task.concluded = false
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: true })
+            return interaction.update({ content: ":white_check_mark: | Sua anotação foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         }
     }
 }

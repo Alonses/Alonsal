@@ -22,7 +22,7 @@ async function getReport(uid, sid) {
 }
 
 async function removeReport(uid, sid) {
-    model.findOneAndDelete({ uid: uid, sid: sid })
+    await model.findOneAndDelete({ uid: uid, sid: sid })
 }
 
 async function getUserReports(uid) {

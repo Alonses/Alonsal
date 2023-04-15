@@ -20,7 +20,7 @@ async function getModule(uid, type) {
 }
 
 async function deleteModule(uid, type) {
-    model.findOneAndDelete({ uid: uid, type: type })
+    await model.findOneAndDelete({ uid: uid, type: type })
 }
 
 async function getActiveModules() {
