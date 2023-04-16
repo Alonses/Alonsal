@@ -19,9 +19,6 @@ module.exports = async ({ client }) => {
 
     global_client = client
 
-    if (global_client.id() === process.env.client_1)
-        global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
-
     atualiza_modulos(global_client, tempo_restante)
 }
 
