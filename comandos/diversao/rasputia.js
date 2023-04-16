@@ -34,12 +34,12 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("menu")
-				.setDescription("⌠😂|🇧🇷⌡ Escolher uma frase do filme Norbit")),
+				.setDescription("⌠😂|🇧🇷⌡ Escolha uma frase do filme Norbit")),
 	async execute(client, user, interaction) {
 
-		if (interaction.options.getSubcommand() === "gif") {
+		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
-		} else if (interaction.options.getSubcommand() === "frase") {
+		else if (interaction.options.getSubcommand() === "frase") {
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
 				.then(response => response.json())
@@ -61,6 +61,6 @@ module.exports = {
 
 			interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 		} else
-			interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("norbit", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+			interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [create_menus("norbit", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 	}
 }

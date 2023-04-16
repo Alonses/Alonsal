@@ -10,15 +10,15 @@ module.exports = {
         .setDescription("⌠😂⌡ Faustão\'s phrases")
         .addSubcommand(subcommand =>
             subcommand
-                .setName("rand")
-                .setDescription("⌠😂|🇧🇷⌡ Invoca uma frase aleatória do faustão"))
+                .setName("fala")
+                .setDescription("⌠😂|🇧🇷⌡ Invoca uma fala aleatória do faustão"))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("menu")
-                .setDescription("⌠😂|🇧🇷⌡ Escolher uma frase do faustão")),
+                .setDescription("⌠😂|🇧🇷⌡ Escolha uma fala do faustão")),
     async execute(client, user, interaction) {
 
-        if (interaction.options.getSubcommand() !== "menu") {
+        if (interaction.options.getSubcommand() === "menu") {
 
             const data = new Date()
             let num = client.random(client.countFiles("./arquivos/songs/faustop", "ogg") - 1)
@@ -30,6 +30,6 @@ module.exports = {
 
             interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         } else
-            interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [create_menus("fausto", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }
