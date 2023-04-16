@@ -1,91 +1,92 @@
-const { readdirSync, unlinkSync } = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-// const { busca_badges, badgeTypes } = require('../../adm/data/badges')
+const create_menus = require('../../adm/discord/create_menus.js')
+const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("data")
         .setDescription("⌠👤⌡ Everything we know about you")
-        .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
-            "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',
-            "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous',
-            "it": '⌠👤⌡ Tutto quello che sappiamo di te',
-            "ru": '⌠👤⌡ Все, что мы знаем о тебе'
-        })
-        .addBooleanOption(option =>
-            option.setName("delete")
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("summary")
+                .setNameLocalizations({
+                    "pt-BR": 'resumo',
+                    "es-ES": 'resumen',
+                    "fr": 'resume',
+                    "it": 'riepilogo',
+                    "ru": 'все'
+                })
+                .setDescription("⌠👤⌡ Everything we know about you")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Tudo o que sabemos sobre você',
+                    "es-ES": '⌠👤⌡ Todo lo que sabemos de ti',
+                    "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous',
+                    "it": '⌠👤⌡ Tutto quello che sappiamo di te',
+                    "ru": '⌠👤⌡ Все, что мы знаем о тебе'
+                })
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("delete")
                 .setNameLocalizations({
                     "pt-BR": 'excluir',
-                    "es-ES": 'eliminar',
-                    "fr": 'nettoyer',
-                    "it": 'elimina',
-                    "ru": 'удалять'
+                    "es-ES": 'borrar',
+                    "fr": 'supprimer',
+                    "it": 'eliminare',
+                    "ru": 'удалить'
                 })
-                .setDescription("Request the deletion of your data in Alonsal")
+                .setDescription("⌠👤⌡ Request the deletion of your data in Alonsal")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Solicitar a exclusão de seus dados no Alonsal',
-                    "es-ES": 'Solicitar la eliminación de sus datos en Alonsal',
-                    "fr": 'Demander la suppression de vos données d\'Alonsal',
-                    "it": 'Richiedi la cancellazione dei tuoi dati in Alonsal',
-                    "ru": 'Запросить удаление ваших данных на Alonsal'
-                })),
+                    "pt-BR": '⌠👤⌡ Solicitar a exclusão de seus dados no Alonsal',
+                    "es-ES": '⌠👤⌡ Solicitar la eliminación de sus datos en Alonsal',
+                    "fr": '⌠👤⌡ Demander la suppression de vos données d\'Alonsal',
+                    "it": '⌠👤⌡ Richiedi la cancellazione dei tuoi dati in Alonsal',
+                    "ru": '⌠👤⌡ Запросить удаление ваших данных на Alonsal'
+                })
+        ),
     async execute(client, user, interaction) {
 
-        const solicitar_exclusao = interaction.options.data
-        let exclusao = false
+        // Lista todos os dados que o bot salvou do usuário
+        if (interaction.options.getSubcommand() === "summary") {
+            const ranking = []
+            const guild_ranking = await client.getUserRankServers(user.uid, interaction.guild.id)
 
-        if (solicitar_exclusao.length > 0)
-            exclusao = interaction.options.data[0].value
+            // Listando os servidores que o usuário possui ranking
+            guild_ranking.forEach(valor => {
+                let server = client.guilds().get(valor.sid)
 
-        const ranking = []
+                if (!server)
+                    nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
+                else
+                    nome_server = server.name
 
-        for (const folder of readdirSync(`./arquivos/data/rank/`)) {
-            for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {
-                if (file.includes(interaction.user.id)) {
+                ranking.push(nome_server)
+            })
 
-                    let server = client.guilds().get(folder)
+            if (ranking.length < 1)
+                return client.tls.reply(interaction, user, "manu.data.sem_dados", true)
 
-                    if (!server)
-                        nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
-                    else
-                        nome_server = server.name
-
-                    ranking.push(nome_server)
-                }
-            }
-        }
-
-        if (ranking.length < 1)
-            return client.tls.reply(interaction, user, "manu.data.sem_dados", true)
-
-        if (exclusao) { // Excluindo os dados do usuário do bot
-
-            return client.tls.reply(user, "inic.error.develop", true, 5)
-
-            for (const folder of readdirSync(`./arquivos/data/rank/`)) {
-                for (const file of readdirSync(`./arquivos/data/rank/${folder}`).filter(file => file.endsWith('.json'))) {
-                    if (file.includes(interaction.user.id))
-                        unlinkSync(`./arquivos/data/rank/${folder}/${file}`)
-                }
-            }
-
-            client.tls.reply(interaction, user, "manu.data.dados_removidos")
-        } else {
             dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}\`\`\``
 
-            // if (user.redes.length > 0) {
-            //     dados_conhecidos += '\n**Links externos: **\n'
+            // Listando as redes linkadas
+            if (user.social) {
+                dados_conhecidos += '\n:globe_with_meridians: **Links externos: **\n'
 
-            //     user.redes.forEach(valor => {
-            //         if (Object.values(valor)[0]) // Listando as redes linkadas
-            //             dados_conhecidos += `\`${Object.keys(valor)[0]}\`, `
-            //     })
-            // }
+                if (user?.social.steam)
+                    dados_conhecidos += `\`Steam\`, `
 
-            // if (user.badges.badge_list.length > 0)
-            //     dados_conhecidos += `\n\n**Badges:**\n${busca_badges(client, badgeTypes.ALL, interaction.user.id, interaction).build(client, interaction)}`
+                if (user?.social.lastfm)
+                    dados_conhecidos += `\`LastFM\`, `
+
+                if (user?.social.pula_predios)
+                    dados_conhecidos += `\`Pula prédios\``
+            }
+
+            const id_badges = await client.getBadges(user.uid)
+
+            if (id_badges.length > 0)
+                dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(user, "manu.data.dados_conhecidos"))
@@ -93,7 +94,31 @@ module.exports = {
                 .setDescription(`${client.tls.phrase(user, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
                 .setFooter({ text: client.tls.phrase(user, "manu.data.dica_rodape") })
 
+                .addFields(
+                    {
+                        name: `${valida_valor(user?.conf.ghost_mode)} **Modo fantasma**`,
+                        value: "⠀",
+                        inline: true
+                    },
+                    {
+                        name: `${valida_valor(user?.conf.notify)} **Notificações em DM**`,
+                        value: "⠀",
+                        inline: true
+                    },
+                    {
+                        name: `${valida_valor(user?.conf.ranking)} **Ranking ativo**`,
+                        value: "⠀",
+                        inline: true
+                    }
+                )
+
             interaction.reply({ embeds: [embed], ephemeral: true })
+
+        } else { // Exclui os dados do usuário coletados pelo bot
+
+            const opcoes = [1, 2, 3, 4]
+
+            interaction.reply({ content: "Escolha uma das opções abaixo", components: [create_menus("data", client, interaction, user, opcoes)], ephemeral: user?.conf.ghost_mode || false })
         }
     }
 }
@@ -128,4 +153,17 @@ function lista_servidores(servidores, linha_corte, client) {
     }
 
     return nome_servidores
+}
+
+function valida_valor(valor) {
+
+    let retorno = ":white_check_mark:"
+
+    if (typeof valor !== "undefined" && valor !== null)
+        if (valor)
+            retorno = ":white_check_mark:"
+        else
+            retorno = ":no_entry:"
+
+    return retorno
 }

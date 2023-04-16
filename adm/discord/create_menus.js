@@ -41,9 +41,17 @@ module.exports = (alvo, client, interaction, user, dados) => {
                     descricao_label = "Escolher essa do filme Norbit"
 
                 valor_label = i - 1
-
-                i++
             }
+
+            if (alvo == "data") {
+
+                nome_label = `data ${i}`
+                emoji_label = client.emoji(fausto)
+                descricao_label = `data ${i}`
+                valor_label = i
+            }
+
+            i++
 
             itens_menu.push({
                 label: nome_label,
