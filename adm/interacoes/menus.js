@@ -31,6 +31,12 @@ module.exports = async ({ client, user, interaction }) => {
         const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${escolha}.ogg`, { name: "faustop.ogg" })
 
         interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+    } else if (interaction.customId === `select_galerito_${interaction.user.id}`) {
+
+        // Enviando uma das frases do galerito selecionada pelo menu
+        const file = new AttachmentBuilder(`./arquivos/songs/galerito/galerito_${escolha}.ogg`, { name: "galerito.ogg" })
+
+        interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     } else if (interaction.customId === `select_norbit_${interaction.user.id}`) {
 
         // Enviando uma das frases do filme Norbit selecionada pelo menu
