@@ -19,7 +19,7 @@ module.exports = {
                     .setThumbnail(res.foto)
                     .setDescription(`> "${res.texto}"`)
 
-                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
             })
     }
 }

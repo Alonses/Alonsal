@@ -8,8 +8,7 @@ const actionTypes = [ActivityType.Playing, ActivityType.Watching, ActivityType.L
 
 module.exports = async ({ client }) => {
 
-    if (client.id() === process.env.client_1) {
-
+    if (client.x.status) {
         client.user().setActivity("Vapor p/ fora!", { type: ActivityType.Playing })
 
         setTimeout(() => {

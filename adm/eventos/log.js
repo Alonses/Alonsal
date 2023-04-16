@@ -17,7 +17,7 @@ module.exports = async ({ client, interaction }) => {
         qtd_comandos = parseInt(data)
         qtd_comandos++
 
-        if (client.id() === process.env.client_1 && process.env.command_channel) {
+        if (client.id() === process.env.client_1 && process.env.channel_command) {
             const d = new Date()
             const day = d.toLocaleString("en-US", { weekday: "long" })
 
@@ -75,7 +75,7 @@ module.exports = async ({ client, interaction }) => {
                 embed.setURL(`${url_ativacao}`)
 
             // Envia um log de telemetria com o comando disparado
-            client.notify(process.env.command_channel, embed)
+            client.notify(process.env.channel_command, embed)
         }
 
         fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {

@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const create_buttons = require('../../adm/discord/create_buttons')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("color")
@@ -64,7 +62,7 @@ module.exports = {
                 .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true))),
     async execute(client, user, interaction) {
 
-        const colors = ['0x7289DA', '0xD62D20', '0xFFD319', '0x36802D', '0xFFFFFF', '0xF27D0C', '0x44008B', '0x000000', '0x29BB8E', '0x2F3136', 'RANDOM']
+        const colors = ['7289DA', 'D62D20', 'FFD319', '36802D', 'FFFFFF', 'F27D0C', '44008B', '000000', '29BB8E', '2F3136', 'RANDOM']
         let entrada = "", new_color
 
         formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
@@ -130,7 +128,7 @@ module.exports = {
             .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para a cor customizada
-        const row = create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
+        const row = client.create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

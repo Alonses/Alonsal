@@ -1,9 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
 
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
-
-const { createBadge } = require('../../adm/database/schemas/Badge')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,7 +19,10 @@ module.exports = {
                     { name: 'Programmer', value: '2' },
                     { name: 'Creator', value: '3' },
                     { name: 'Waxed', value: '4' },
-                    { name: 'Rosquer', value: '7' }
+                    { name: 'Donater', value: '5' },
+                    { name: 'Puler', value: '6' },
+                    { name: 'Rosquer', value: '7' },
+                    { name: 'Pionner', value: '8' }
                 )
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
@@ -42,29 +42,43 @@ module.exports = {
 
         const all_badges = []
 
-        const badges_user = await client.getBadges(id_alvo)
+        const badges_user = await client.getUserBadges(id_alvo)
 
         if (badges_user.length > 0)
             badges_user.forEach(valor => {
                 all_badges.push(parseInt(valor.badge)) // Listando todas as badges que o usuário possui
             })
 
-        if (!all_badges.includes(badge_alvo)) { // Adicionando uma nova badge
-
-            const date1 = new Date()
-            await createBadge(id_alvo, badge_alvo, Math.floor(date1.getTime() / 1000))
+        if (!all_badges.includes(badge_alvo)) { // Atribuindo uma nova badge a um usuário
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 
-            client.discord.users.fetch(id_alvo, false).then(async (user_interno) => {
+            const embed = new EmbedBuilder()
+                .setTitle("> Conceder Badge")
+                .setColor(client.embed_color(user.misc.color))
+                .addFields(
+                    {
+                        name: `**${client.defaultEmoji("person")} Destinatário**`,
+                        value: `<@${id_alvo}>`,
+                        inline: true
+                    },
+                    {
+                        name: `**:label: Badge**`,
+                        value: `${badge.emoji} \`${badge.name}\``,
+                        inline: true
+                    },
+                    {
+                        name: `**${client.defaultEmoji("time")} Aplicação**`,
+                        value: `<t:${client.timestamp()}:f>`,
+                        inline: true
+                    }
+                )
+                .setFooter({ text: "Selecione a operação desejada nos botões abaixo.", iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-                let alvo = await client.getUser(user_interno.id)
+            // Criando os botões para o menu de badges
+            const row = client.create_buttons([{ name: `Confirmar e notificar:badges.[${badge_alvo}]`, value: '1', type: 2, badge: id_alvo }, { name: `Confirmar silenciosamente:badges.[${badge_alvo}]`, value: '0', type: 1, badge: id_alvo }, { name: 'Cancelar:badges', value: '0', type: 3 }], interaction)
 
-                if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
-                    user_interno.send(`${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
-
-                interaction.reply({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, ephemeral: true })
-            })
+            return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         } else
             interaction.reply({ content: `:octagonal_sign: | O usuário <@!${id_alvo}> já possui a Badge mencionada!`, ephemeral: true })
     }

@@ -86,6 +86,6 @@ module.exports = {
         user.misc.money += profit
         user.save()
 
-        interaction.reply({ content: mensagem, ephemeral: user?.conf.ghost_mode || false })
+        interaction.reply({ content: mensagem, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }

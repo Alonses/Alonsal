@@ -11,7 +11,7 @@ config(client) // Atualiza os comandos slash do bot
 
 client.discord.once("ready", async () => {
 
-	console.log("Configurando etapas finais")
+	console.log("Executando etapas finais")
 
 	// Definindo o idioma do bot
 	idioma.setDefault("pt-br")
@@ -21,7 +21,8 @@ client.discord.once("ready", async () => {
 	await require("./adm/eventos/status.js")({ client })
 
 	// Eventos secundários
-	require("./adm/eventos/events.js")({ client })
+	await require("./adm/eventos/events")({ client })
+	await require("./adm/automaticos/modulo")({ client })
 
 	console.log(`Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
 })
@@ -60,7 +61,7 @@ client.discord.on("interactionCreate", async interaction => {
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 
-	if (interaction.isSelectMenu()) // Interações geradas no uso de menus de seleção
+	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require("./adm/interacoes/menus.js")({ client, user, interaction })
 
 	if (interaction.isButton()) // Interações geradas no uso de botões
@@ -82,5 +83,5 @@ client.discord.on("interactionCreate", async interaction => {
 		})
 })
 
-database.setup(process.env.dburi)
+database.setup(process.env.url_dburi)
 client.login(client.x.token)

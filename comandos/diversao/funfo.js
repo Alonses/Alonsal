@@ -6,6 +6,6 @@ module.exports = {
         .setDescription("⌠😂|🇧🇷⌡ Funfo?"),
     async execute(client, user, interaction) {
         const file = new AttachmentBuilder("./arquivos/songs/alaa.ogg")
-        interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
+        interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     }
 }

@@ -56,7 +56,7 @@ module.exports = {
                             inline: true,
                         },
                         {
-                            name: `:clock: ${client.tls.phrase(user, "game.pula.tempos")}`,
+                            name: `${client.defaultEmoji("time")} ${client.tls.phrase(user, "game.pula.tempos")}`,
                             value: `:joystick: **${client.tls.phrase(user, "game.pula.jogado")}:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **${client.tls.phrase(user, "game.pula.voando")}:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **${client.tls.phrase(user, "game.pula.em_eventos")}:** \`${datas_pula.tempo_eventos}s\``,
                             inline: true
                         },
@@ -87,7 +87,7 @@ module.exports = {
                 if (parseInt(datas_pula.recorde) > 0)
                     embed.setDescription(`\`\`\`${client.tls.phrase(user, "game.pula.recorde").replace("pontos_repl", client.locale(datas_pula.recorde)).replace("distancia_repl", (datas_pula.distancia_percorrida / 1000).toFixed(2))}\`\`\``)
 
-                interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
             })
             .catch(() => client.tls.reply(interaction, user, "game.pula.error_2", true, 0))
     }

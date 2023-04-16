@@ -38,7 +38,7 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif") {
-			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: user?.conf.ghost_mode || false })
+			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 		} else if (interaction.options.getSubcommand() === "frase") {
 
 			fetch(`${process.env.url_apisal}/random?rasputia`)
@@ -51,7 +51,7 @@ module.exports = {
 						.setThumbnail(res.foto)
 						.setDescription(`- "${res.texto}"`)
 
-					interaction.reply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+					interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 				})
 		} else if (interaction.options.getSubcommand() === "fala") {
 
@@ -59,8 +59,8 @@ module.exports = {
 
 			const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${num}.ogg`, { name: "norbit.ogg" })
 
-			interaction.reply({ files: [file], ephemeral: user?.conf.ghost_mode || false })
+			interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 		} else
-			interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("norbit", client, interaction, user, relation)], ephemeral: user?.conf.ghost_mode || false })
+			interaction.reply({ content: "Escolha uma das frases abaixo!", components: [create_menus("norbit", client, interaction, user, relation)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 	}
 }

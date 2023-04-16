@@ -57,8 +57,7 @@ module.exports = {
             bitrate = `${canal.bitrate / 1000}kbps`
         }
 
-        let icone_server = canal.guild.iconURL({ size: 2048 })
-        icone_server = icone_server.replace(".webp", ".gif")
+        let icone_server = canal.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
         fetch(icone_server)
             .then(res => {
@@ -120,7 +119,7 @@ module.exports = {
                             }
                         )
 
-                interaction.reply({ embeds: [infos_ch], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [infos_ch], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
             })
     }
 }

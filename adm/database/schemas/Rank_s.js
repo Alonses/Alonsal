@@ -1,14 +1,14 @@
 const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
-// udi -> User ID
+// uid -> User ID
 // sid -> Server ID
 
 const schema = new mongoose.Schema({
-    uid: String,
+    uid: { type: String, default: null },
     sid: { type: String, default: null },
     nickname: { type: String, default: null },
-    lastValidMessage: { type: Number, default: null },
+    lastValidMessage: { type: Number, default: 0 },
     warns: { type: Number, default: 0 },
     caldeira_de_ceira: { type: Boolean, default: false },
     xp: { type: Number, default: 0 }
@@ -17,7 +17,8 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Rankerver", schema)
 
 async function getRankServer(sid) {
-    if (!await model.exists({ sid: sid })) await model.create({ sid: sid })
+    if (!await model.exists({ sid: sid }))
+        return null
 
     return model.find({ sid: sid })
 }

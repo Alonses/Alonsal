@@ -28,8 +28,8 @@ function loadAll(client) {
                         if (err) throw err
                     })
 
-                    if (process.env.lang_channel)
-                        client.channels().get(process.env.lang_channel).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
+                    if (process.env.channel_lang)
+                        client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
                     else
                         console.log(`Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
 

@@ -36,7 +36,7 @@ function requisita_anuncio(client, aguardar_tempo) {
 async function gera_anuncio(client, proxima_att) {
 
     if (process.env.client_1 === client.id())
-        client.notify(process.env.feeds_channel, `:video_game: :sparkles: | Disparando automaticamente anúncios de jogos gratuitos`)
+        client.notify(process.env.channel_feeds, `:video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos`)
 
     fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API
         .then(response => response.json())
@@ -53,7 +53,7 @@ async function gera_anuncio(client, proxima_att) {
 
 function next_att(client, tempo_restante) {
 
-    tempo_restante = Math.floor((Date.now() / 1000) + (tempo_restante / 1000))
+    tempo_restante = Math.floor(client.timestamp() + (tempo_restante / 1000))
 
-    client.notify(process.env.feeds_channel, `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
+    client.notify(process.env.channel_feeds, `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)
 }

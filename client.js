@@ -3,27 +3,32 @@ const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
 const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
-const { getUser } = require('./adm/database/schemas/User.js')
-const { getBadges } = require('./adm/database/schemas/Badge.js')
+const { getUser } = require('./adm/database/schemas/User')
+const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
+const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
+const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
+const { create_buttons } = require('./adm/discord/create_buttons')
 const { getRankServer, getUserRankServer, getUserRankServers } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
 
+const { default_emoji } = require('./arquivos/json/text/emojis.json')
+
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 1, status = 1, ranking = 1, force_update = 0, silent = 0
+let modo_develop = 1, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1
 
 if (update_commands)
-    modo_develop = 0, force_update = 1, silent = 1
+    modo_develop = 0, force_update = 1, silent = 1, modules = 0
 
 let token = process.env.token_1, clientId = process.env.client_1
 
 if (silent || modo_develop)
-    status = 0, ranking = 0
+    status = 0, ranking = 0, modules = 0
 
 // Force update é utilizado para forçar a atualização dos comandos slash
 // globais e privados do bot
@@ -52,15 +57,15 @@ class CeiraClient {
             force_update: force_update,
             ranking: ranking,
             status: status,
+            modules: modules,
 
             clientId: clientId,
             token: token,
-        },
-            this.stats = {
-                commands: 0,
-                private: 0,
-                inputs: 0
-            }
+        }
+    }
+
+    login(token) {
+        return this.discord.login(token)
     }
 
     id() {
@@ -94,15 +99,27 @@ class CeiraClient {
         if (entrada === "RANDOM")
             return alea_hex()
 
-        return entrada
-    }
-
-    login(token) {
-        return this.discord.login(token)
+        return entrada.slice(-6)
     }
 
     getUser(id_user) {
         return getUser(id_user)
+    }
+
+    getGuild(id_guild) {
+        return getGuild(id_guild)
+    }
+
+    getGameChannels() {
+        return getGameChannels()
+    }
+
+    getTicket(id_server, id_user) {
+        return getTicket(id_server, id_user)
+    }
+
+    dropTicket(id_server, id_user) {
+        return dropTicket(id_server, id_user)
     }
 
     async userRanking(id_user) {
@@ -117,8 +134,8 @@ class CeiraClient {
         return user_ranking
     }
 
-    getBadges(id_user) {
-        return getBadges(id_user)
+    getUserBadges(id_user) {
+        return getUserBadges(id_user)
     }
 
     getRankServer(id_server) {
@@ -129,16 +146,16 @@ class CeiraClient {
         return interaction.guild.members.cache.get(id_alvo)
     }
 
-    getUserRankServers(id_user, id_server) {
-        return getUserRankServers(id_user, id_server)
-    }
-
     getUserRankServer(id_user, id_server) {
         return getUserRankServer(id_user, id_server)
     }
 
     getRankGlobal() {
         return getRankGlobal()
+    }
+
+    create_buttons(lista_botoes, interaction) {
+        return create_buttons(lista_botoes, interaction)
     }
 
     notify(id_alvo, conteudo) {
@@ -181,8 +198,42 @@ class CeiraClient {
 
         return valor.toLocaleString(locale)
     }
+
+    sendDM(user, value, modulo) {
+
+        let notificar = true
+
+        if (typeof user.conf.notify !== "undefined" && typeof modulo === "undefined")
+            notificar = user.conf.notify
+
+        if (notificar) // Notificando o usuário alvo caso ele receba notificações em DM do bot
+            if (user.uid !== this.id())
+                this.discord.users.fetch(user.uid, false).then((user_interno) => {
+                    // Enviando a mensagem para o usuário na DM
+                    // Verificando se a mensagem é um embed
+                    if (typeof value !== "object")
+                        user_interno.send(value)
+                    else
+                        user_interno.send({ embeds: [value] })
+                })
+    }
+
+    defaultEmoji(caso) {
+        return default_emoji[caso][this.random(default_emoji[caso])]
+    }
+
+    timestamp() {
+        return Math.floor(new Date().getTime() / 1000)
+    }
+
+    ephemeral(entrada, padrao) {
+
+        // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
+        if (typeof entrada === "undefined")
+            return padrao
+        else
+            return entrada
+    }
 }
 
-module.exports = {
-    CeiraClient
-}
+module.exports.CeiraClient = CeiraClient

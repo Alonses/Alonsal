@@ -51,7 +51,7 @@ module.exports = {
 }
 
 function randomString(len, client) {
-    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}+=~.,;:¢¬_-£"|?§'
+    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}~.,;:¢¬_-£"|?'
     let randomString = ''
 
     for (let i = 0; i < len; i++) {
