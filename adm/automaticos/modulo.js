@@ -3,6 +3,7 @@ const fs = require('fs')
 
 const { getActiveModules } = require("../database/schemas/Module")
 const formata_clima = require('../formatadores/formata_clima')
+const formata_frase = require('../formatadores/formata_frase.js')
 
 const lista_modulos = []
 let trava_modulo = false, global_client
@@ -18,6 +19,11 @@ module.exports = async ({ client }) => {
     const tempo_restante = 10 - date1.getSeconds()
 
     global_client = client
+
+    if (tempo_restante > 1000)
+        console.log(`📣 Disparando os módulos em ${tempo_restante} segundos`)
+    else
+        console.log(`📣 Disparando os módulos agora!`)
 
     atualiza_modulos(global_client, tempo_restante)
 }
@@ -86,6 +92,9 @@ async function executa_modulo() {
 
         if (lista_modulos[0].type === 0)
             await formata_clima(global_client, user, null, true)
+
+        if (lista_modulos[0].type === 1)
+            await formata_frase(global_client, user)
 
         lista_modulos.shift()
 
