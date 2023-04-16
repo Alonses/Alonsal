@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 const create_menus = require('../../adm/discord/create_menus.js')
 
