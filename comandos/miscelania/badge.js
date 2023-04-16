@@ -42,7 +42,7 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        const badges = await client.getBadges(interaction.user.id)
+        const badges = await client.getUserBadges(interaction.user.id)
 
         // Validando existência de badges antes do comando
         if (badges.length <= 0)

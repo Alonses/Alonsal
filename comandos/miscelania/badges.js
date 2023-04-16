@@ -15,7 +15,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const badges = await client.getBadges(interaction.user.id)
+        const badges = await client.getUserBadges(interaction.user.id)
 
         // Buscando as badges do usuário
         if (badges.length <= 0)

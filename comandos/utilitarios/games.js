@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const create_buttons = require('../../adm/discord/create_buttons')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("games")
@@ -39,7 +37,7 @@ module.exports = {
                 })
 
                 // Criando os botões externos para os jogos
-                const row = create_buttons(objeto_jogos)
+                const row = client.create_buttons(objeto_jogos)
 
                 const embed = new EmbedBuilder()
                     .setTitle(client.tls.phrase(user, "mode.anuncio.ativos"))
@@ -47,7 +45,7 @@ module.exports = {
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.reply({ embeds: [embed], components: [row], ephemeral: user?.conf.ghost_mode || false })
+                interaction.reply({ embeds: [embed], components: [row], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
             })
     }
 }

@@ -8,23 +8,22 @@ module.exports = async ({ client }) => {
 
     client.idioma.loadAll(client)
 
-    if (client.id() === process.env.client_1) {
+    // Não notifica que o bot ficou online
+    if (client.x.status) {
 
         console.log("Disparando status")
-        // Não notifica que o bot ficou online
-        if (client.x.status) {
-            fetch(`${process.env.url_apisal}/status`)
-                .then(res => res.json())
-                .then(retorno => {
 
-                    let status_apisal = "🛑 Offline"
-                    if (retorno.status)
-                        status_apisal = "✅ Online"
+        fetch(`${process.env.url_apisal}/status`)
+            .then(res => res.json())
+            .then(retorno => {
 
-                    dispara_status(client, status_apisal)
-                })
-                .catch(() => dispara_status(client, "🛑 Offline"))
-        }
+                let status_apisal = "🛑 Offline"
+                if (retorno.status)
+                    status_apisal = "✅ Online"
+
+                dispara_status(client, status_apisal)
+            })
+            .catch(() => dispara_status(client, "🛑 Offline"))
     }
 
     // Status personalizados
@@ -40,7 +39,7 @@ module.exports = async ({ client }) => {
 
 function dispara_status(client, status_apisal) {
 
-    if (process.env.stats_channel) {
+    if (process.env.channel_stats) {
         setTimeout(() => {
 
             fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
@@ -80,7 +79,7 @@ function dispara_status(client, status_apisal) {
                     .addFields(
                         {
                             name: ":globe_with_meridians: **Servidores**",
-                            value: `:heart_on_fire: **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\``,
+                            value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.locale(members)}\``,
                             inline: true
                         },
                         {
@@ -101,7 +100,7 @@ function dispara_status(client, status_apisal) {
                             inline: true
                         },
                         {
-                            name: ":earth_americas: **Idiomas**",
+                            name: `${client.defaultEmoji("earth")} **Idiomas**`,
                             value: bandeirolas_1.join(" "),
                             inline: true
                         },
@@ -112,7 +111,7 @@ function dispara_status(client, status_apisal) {
                         }
                     )
 
-                client.notify(process.env.status_channel, embed) // Avisa que está online em um canal
+                client.notify(process.env.channel_status, embed) // Avisa que está online em um canal
             })
         }, 3000)
     }

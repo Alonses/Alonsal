@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
@@ -79,26 +79,26 @@ module.exports = {
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error").replace("valor_repl", client.locale(bufunfas))}`, ephemeral: true })
 
-        user.misc.money -= bufunfas
-        alvo.misc.money += bufunfas
+        const embed = new EmbedBuilder()
+            .setTitle("> Nova transferência")
+            .setColor(client.embed_color(user.misc.color))
+            .addFields(
+                {
+                    name: `**${client.defaultEmoji("money")} Transferindo**`,
+                    value: `\`B$ ${formata_num(bufunfas)}\``,
+                    inline: true
+                },
+                {
+                    name: `**${client.defaultEmoji("person")} Destinatário**`,
+                    value: `<@${alvo.uid}>`,
+                    inline: true
+                }
+            )
+            .setFooter({ text: "Selecione a operação desejada nos botões abaixo.", iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-        user.save()
-        alvo.save()
+        // Criando os botões para o menu de transferências
+        const row = client.create_buttons([{ name: `Confirmar:transfer.${alvo.uid}[${bufunfas}]`, value: '1', type: 2 }, { name: 'Cancelar:transfer', value: '0', type: 3 }], interaction)
 
-        const caso = "movimentacao", quantia = bufunfas
-        require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
-
-        if (alvo.uid === client.id() && quantia === 24.69) // Funny Number
-            require('../../adm/data/conquistas')(client, 1, interaction.user.id, interaction)
-
-        interaction.reply({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: user?.conf.ghost_mode || false })
-
-        if (alvo?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
-            if (alvo.uid !== client.id())
-                client.discord.users.fetch(alvo.uid, false).then((user_interno) => {
-
-                    // Enviando a mensagem no idioma do usuário alvo
-                    user_interno.send(`:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
-                })
+        return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }

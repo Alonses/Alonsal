@@ -52,7 +52,18 @@ module.exports = {
                     "fr": '⌠👤⌡ Désactiver ou activer votre gain d\'XP',
                     "it": '⌠👤⌡ Disabilita o abilita il tuo guadagno XP',
                     "ru": '⌠👤⌡ Отключить или включить получение опыта'
-                })),
+                }))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("weather")
+                .setNameLocalizations({
+                    "pt-BR": 'tempo',
+                    "es-ES": 'tiempo',
+                    "fr": 'climat',
+                    "it": 'clima',
+                    "ru": 'погода'
+                })
+                .setDescription("⌠👤⌡ Defina o tipo de retorno para requisições de clima")),
     async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "notifications") {
@@ -92,6 +103,17 @@ module.exports = {
                 interaction.reply({ content: `:gem: | ${client.tls.phrase(user, "mode.ranking.ativo")}`, ephemeral: true })
             else
                 interaction.reply({ content: `:exploding_head: | ${client.tls.phrase(user, "mode.ranking.desativo")}`, ephemeral: true })
+        } else if (interaction.options.getSubcommand() === "weather") {
+
+            if (typeof user.misc.weather !== "undefined")
+                user.misc.weather = !user.misc.weather
+            else
+                user.misc.weather = false
+
+            if (user.misc.weather)
+                interaction.reply({ content: `:sparkles: | Mostrarei todas as informações sobre o clima nas próximas interações.`, ephemeral: true })
+            else
+                interaction.reply({ content: `:partly_sunny: | Mostrarei apenas as informações básicas para o clima nas próximas interações.`, ephemeral: true })
         }
 
         await user.save()

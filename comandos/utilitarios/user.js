@@ -106,8 +106,6 @@ module.exports = {
         if (interaction.options.getSubcommand() === "info") {
             let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=1024`
 
-            const emojis_busto = ["🧙‍♂️", "🧙‍♀️", "👮‍♀️", "🦹‍♂️ ", "👩‍🚀", "💂‍♂️", "👨‍🎓", "🧟", "👨‍🏭", "🧛‍♂️", "🧛‍♀️", "👨‍✈️", "👩‍✈️", "👨‍🌾", "💃", "🕺", "👨‍💼", "🧝‍♂️"]
-
             const membro_sv = await client.getUserGuild(interaction, user_alvo.id) // Coleta dados como membro
             let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
             let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
@@ -116,8 +114,9 @@ module.exports = {
             let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
             let nota_rodape = ""
 
+            let apelido = membro_sv.user.username, tipo_user = "🤖"
+
             if (avatar_user !== null) {
-                avatar_user = avatar_user.replace(".webp", ".gif")
 
                 await fetch(avatar_user)
                     .then(res => {
@@ -127,10 +126,8 @@ module.exports = {
             } else
                 avatar_user = ""
 
-            let apelido = membro_sv.user.username, tipo_user = "🤖"
-
-            if (membro_sv.user.nickname !== null)
-                apelido = membro_sv.nickname
+            if (membro_sv.user.nickname)
+                apelido = membro_sv.user.nickname
 
             if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 tipo_user = "🛡️"
@@ -138,7 +135,7 @@ module.exports = {
             }
 
             if (!tipo_user.includes("🛡️") && !user_alvo.bot)
-                tipo_user = emojis_busto[client.random(emojis_busto)]
+                tipo_user = client.defaultEmoji("person")
 
             if (user_alvo.id === client.id())
                 nota_rodape = client.tls.phrase(user, "util.user.alonsal")
@@ -184,7 +181,7 @@ module.exports = {
                     discord_premium += ` ${client.emoji(emojis.boost)}`
             }
 
-            let id_badges = await client.getBadges(user_alvo.id)
+            let id_badges = await client.getUserBadges(user_alvo.id)
             let badges = await buildAllBadges(client, user, id_badges)
             // let achievements = busca_achievements(client, all, user.id, interaction)
 
@@ -225,7 +222,7 @@ module.exports = {
                     inline: false
                 })
 
-            return interaction.reply({ embeds: [infos_user], ephemeral: user?.conf.ghost_mode || false })
+            return interaction.reply({ embeds: [infos_user], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
             // O avatar do usuário
         } else if (interaction.options.getSubcommand() === "avatar") {

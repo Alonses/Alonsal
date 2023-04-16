@@ -90,7 +90,7 @@ module.exports = {
         let usuario_alvo = [], i = 0
         const users = [], usernames = [], experiencias = [], levels = []
 
-        await interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
+        await interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
         // Coleta o ID do usuário mencionado
         let rodape = interaction.user.username, user_alvo = interaction.options.getUser("user")
@@ -110,9 +110,9 @@ module.exports = {
         else
             data_usuarios = await client.getRankGlobal()
 
-        // Sem dados salvos no banco de ranking
-        if (typeof data_usuarios === "undefined" || data_usuarios.length < 1)
-            return interaction.editReply({ content: `:mag: | Sem dados para gerar o ranking!`, ephemeral: user?.conf.ghost_mode || false })
+        // Sem dados salvos no banco de ranking para o servidor especificado
+        if (data_usuarios == null)
+            return client.tls.editReply(interaction, user, "dive.rank.error_2", client.ephemeral(user?.conf.ghost_mode, 0), 1)
 
         // Salvando os dados no formato apropriado
         data_usuarios.forEach(valor => {
@@ -136,7 +136,7 @@ module.exports = {
 
         if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return client.tls.editReply(interaction, user, "dive.rank.error_1", user?.conf.ghost_mode || false, 0)
+                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.ephemeral(user?.conf.ghost_mode, 0), 0)
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
@@ -214,7 +214,7 @@ module.exports = {
 
                     embed.setThumbnail(img_embed)
 
-                    interaction.editReply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                    interaction.editReply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
                 })
             }
         } else // Ranking global
@@ -257,7 +257,7 @@ function retorna_ranking(client, interaction, user, usernames, experiencias, lev
 
             embed.setThumbnail(img_embed)
 
-            interaction.editReply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+            interaction.editReply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         })
     })
 }

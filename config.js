@@ -21,15 +21,17 @@ function config(client) {
     for (const folder of readdirSync(`${__dirname}/comandos/`)) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
 
-            const command = require(`./comandos/${folder}/${file}`)
+            if (folder !== "experimental" || client.x.modo_develop) {
+                const command = require(`./comandos/${folder}/${file}`)
 
-            if (!client.x.modo_develop)
-                if (!command.data.name.startsWith('c_'))
+                if (!client.x.modo_develop)
+                    if (!command.data.name.startsWith('c_'))
+                        commands.push(command.data.toJSON())
+                    else // Salvando comandos privados para usar apenas num servidor
+                        comandos_privados.push(command.data.toJSON())
+                else
                     commands.push(command.data.toJSON())
-                else // Salvando comandos privados para usar apenas num servidor
-                    comandos_privados.push(command.data.toJSON())
-            else
-                commands.push(command.data.toJSON())
+            }
         }
     }
 
@@ -55,6 +57,8 @@ function config(client) {
 
         } else { // Removendo os comandos slash globalmente
 
+            console.log("Excluindo comandos slash registrados globalmente")
+
             rest.get(Routes.applicationCommands(client.x.clientId))
                 .then(data => {
                     const promises = []
@@ -64,7 +68,6 @@ function config(client) {
                         promises.push(rest.delete(deleteUrl))
                     }
 
-                    console.log("Desativando os comandos slash registrados globalmente e em servidor.")
                     return Promise.all(promises)
                 })
         }
@@ -76,14 +79,6 @@ function config(client) {
         for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
             const command = require(`./comandos/${folder}/${file}`)
             client.discord.commands.set(command.data.name, command)
-
-            // Computando a quantidade de comandos
-            if (command.data.name.startsWith("c_"))
-                client.stats.private++
-            else
-                client.stats.commands++
-
-            client.stats.inputs += command.data.options.length
         }
     }
 }

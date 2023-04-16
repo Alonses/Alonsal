@@ -77,7 +77,7 @@ module.exports = {
         const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
         // Aumentando o tempo de duração da resposta
-        interaction.deferReply({ ephemeral: user?.conf.ghost_mode || false })
+        interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
         fetch(usuario_alvo)
             .then(response => response.text())
@@ -85,7 +85,7 @@ module.exports = {
 
                 try {
                     if (res.includes("Página não encontrada"))
-                        return client.tls.editReply(interaction, user, "util.lastfm.error_1", user?.conf.ghost_mode || false, 1)
+                        return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.ephemeral(user?.conf.ghost_mode, 0), 1)
 
                     let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
@@ -205,7 +205,7 @@ module.exports = {
                                         },
                                         {
                                             name: "⠀",
-                                            value: `:man_singer: **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_ouvidos}\`\n:blue_heart: **${client.tls.phrase(user, "util.lastfm.faixas_favoritas")}: **\`${faixas_preferidas}\``,
+                                            value: `${client.defaultEmoji("singer")} **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_ouvidos}\`\n${client.defaultEmoji("heart")} **${client.tls.phrase(user, "util.lastfm.faixas_favoritas")}: **\`${faixas_preferidas}\``,
                                             inline: true
                                         },
                                         {
@@ -221,16 +221,16 @@ module.exports = {
                                 if (!semanal.includes("não ouviu nenhuma música :("))
                                     embed.addFields(
                                         {
-                                            name: `:calendar: ${client.tls.phrase(user, "util.lastfm.semanal")}`,
-                                            value: `:blue_book: **${client.tls.phrase(user, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n:man_singer: **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n:alarm_clock: **${client.tls.phrase(user, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
+                                            name: `${client.defaultEmoji("calendar")} ${client.tls.phrase(user, "util.lastfm.semanal")}`,
+                                            value: `${client.defaultEmoji("album")} **${client.tls.phrase(user, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n${client.defaultEmoji("singer")} **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
                                             inline: false
                                         }
                                     )
 
-                                interaction.editReply({ embeds: [embed], ephemeral: user?.conf.ghost_mode || false })
+                                interaction.editReply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
                             })
                     } else
-                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", user?.conf.ghost_mode || false, 1)
+                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.ephemeral(user?.conf.ghost_mode, 0), 1)
                 } catch (err) {
                     require('../../adm/eventos/error.js')({ client, err })
                     client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
