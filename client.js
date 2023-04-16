@@ -6,7 +6,7 @@ const { alea_hex } = require('./adm/funcoes/hex_color')
 const { getUser } = require('./adm/database/schemas/User.js')
 const { getBadges } = require('./adm/database/schemas/Badge.js')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
-const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
+const { getRankServer, getUserRankServer, getUserRankServers } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
 const auto = require('./adm/data/relatorio')
@@ -15,7 +15,7 @@ const translate = require('./adm/formatadores/translate')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0
+let modo_develop = 1, status = 1, ranking = 1, force_update = 0, silent = 0
 
 if (update_commands)
     modo_develop = 0, force_update = 1, silent = 1
@@ -127,6 +127,10 @@ class CeiraClient {
 
     getUserGuild(interaction, id_alvo) {
         return interaction.guild.members.cache.get(id_alvo)
+    }
+
+    getUserRankServers(id_user, id_server) {
+        return getUserRankServers(id_user, id_server)
     }
 
     getUserRankServer(id_user, id_server) {

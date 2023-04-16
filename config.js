@@ -88,6 +88,4 @@ function config(client) {
     }
 }
 
-module.exports = {
-    config
-}
+module.exports.config = config
