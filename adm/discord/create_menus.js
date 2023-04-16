@@ -33,7 +33,7 @@ module.exports = (alvo, client, interaction, user, dados, timestamp) => {
 
                 if (alvo === "fausto")
                     emoji_label = client.emoji(fausto)
-                else if (alvo === "rasputia")
+                else if (alvo === "norbit")
                     emoji_label = client.emoji(rasputia)
                 else
                     emoji_label = client.emoji(galerito)
