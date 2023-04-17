@@ -116,6 +116,8 @@ module.exports = {
 
         } else { // Exclui os dados do usuário coletados pelo bot
 
+            return client.tls.reply(interaction, user, "inic.error.develop", true, 5)
+
             const opcoes = [1, 2, 3, 4]
 
             interaction.reply({ content: "Escolha uma das opções abaixo", components: [create_menus("data", client, interaction, user, opcoes)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
