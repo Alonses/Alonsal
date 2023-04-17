@@ -130,7 +130,7 @@ module.exports = {
             link_comando = "</lastfm:1018609879512006796>"
         } else if (interaction.options.getSubcommand() === "locale") {
 
-            interaction.deferReply({ ephemeral: true })
+            await interaction.deferReply({ ephemeral: true })
 
             user.misc.locale = entrada
             plataforma = "locale"

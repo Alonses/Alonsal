@@ -69,7 +69,7 @@ function translate(user, target) {
 
     // Verifica se não há mensagens diferentes para o mesmo retorno
     if (Array.isArray(data))
-        phrase = data[client.random(data)]
+        phrase = data[Math.floor((data.length - 1) * Math.random())]
 
     return phrase
 }
