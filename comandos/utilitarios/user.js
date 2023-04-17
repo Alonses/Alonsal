@@ -222,7 +222,7 @@ module.exports = {
                     inline: false
                 })
 
-            return interaction.reply({ embeds: [infos_user], ephemeral: user?.conf.ghost_mode || false })
+            return interaction.reply({ embeds: [infos_user], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
 
             // O avatar do usuário
         } else if (interaction.options.getSubcommand() === "avatar") {

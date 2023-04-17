@@ -2,7 +2,7 @@ const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 
-const { fausto, rasputia } = require('../../arquivos/json/text/emojis.json')
+const { fausto, rasputia, galerito } = require('../../arquivos/json/text/emojis.json')
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = (alvo, client, interaction, user, dados, timestamp) => {
@@ -27,25 +27,38 @@ module.exports = (alvo, client, interaction, user, dados, timestamp) => {
                 valor_label = valor
             }
 
-            if (alvo === "fausto" || alvo === "norbit") {
+            if (alvo === "fausto" || alvo === "norbit" || alvo === "galerito") {
 
                 nome_label = valor
 
                 if (alvo === "fausto")
                     emoji_label = client.emoji(fausto)
-                else
+                else if (alvo === "norbit")
                     emoji_label = client.emoji(rasputia)
+                else
+                    emoji_label = client.emoji(galerito)
 
+                // Descrição da opção no menu
                 descricao_label = "Escolher essa do faustop"
 
                 if (alvo === "norbit")
                     descricao_label = "Escolher essa do filme Norbit"
 
-                valor_label = i - 1
+                if (alvo === "galerito")
+                    descricao_label = "Escolher essa da rogéria"
 
-                i++
+                valor_label = i - 1
             }
 
+            if (alvo == "data") {
+
+                nome_label = `data ${i}`
+                emoji_label = client.emoji(fausto)
+                descricao_label = `data ${i}`
+                valor_label = i
+            }
+
+            i++
             if (alvo === "tasks" || alvo === "tasks_v") {
 
                 // Listando tarefas
@@ -91,6 +104,9 @@ module.exports = (alvo, client, interaction, user, dados, timestamp) => {
 
     if (alvo === "norbit")
         titulo_menu = "Escolha uma frase do filme do Norbit!"
+
+    if (alvo === "galerito")
+        titulo_menu = "Escolha uma frase do galerito e cia!"
 
     if (alvo === "tasks" || alvo === "tasks_v")
         titulo_menu = "Escolha uma das tarefas para mais detalhes!"

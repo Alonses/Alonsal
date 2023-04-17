@@ -6,32 +6,50 @@ const { getUserGroup, getUserGroups } = require('../database/schemas/Task_group'
 
 const create_menus = require('../discord/create_menus')
 
+const { clear_data } = require('../../adm/data/update_data')
+
+
 module.exports = async ({ client, user, interaction }) => {
 
+    const escolha = interaction.values[0]
     if (!interaction.customId.includes(interaction.user.id))
         return interaction.reply({ content: "Parado aí seu salafrário! Esse menu só pode ser usado pelo autor do comando!", ephemeral: true })
 
     if (interaction.customId === `select_badges_${interaction.user.id}`) {
 
         // Fixando a badge escolhida pelo usuário
-        user.misc.fixed_badge = interaction.values[0]
+        user.misc.fixed_badge = escolha
 
         user.save()
-        let new_badge = busca_badges(client, badgeTypes.SINGLE, parseInt(interaction.values[0]))
+        let new_badge = busca_badges(client, badgeTypes.SINGLE, parseInt(escolha))
 
         interaction.update({ content: `${new_badge.emoji} | Badge \`${new_badge.name}\` ${client.tls.phrase(user, "dive.badges.badge_fixada")}`, components: [], ephemeral: true })
 
     } else if (interaction.customId === `select_fausto_${interaction.user.id}`) {
 
         // Enviando uma das frases do faustão selecionada pelo menu
-        const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${interaction.values[0]}.ogg`, { name: "faustop.ogg" })
+        const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${escolha}.ogg`, { name: "faustop.ogg" })
+
+        interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+    } else if (interaction.customId === `select_galerito_${interaction.user.id}`) {
+
+        // Enviando uma das frases do galerito selecionada pelo menu
+        const file = new AttachmentBuilder(`./arquivos/songs/galerito/galerito_${escolha}.ogg`, { name: "galerito.ogg" })
 
         interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     } else if (interaction.customId === `select_norbit_${interaction.user.id}`) {
 
         // Enviando uma das frases do filme Norbit selecionada pelo menu
-        const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${interaction.values[0]}.ogg`, { name: "norbit.ogg" })
+        const file = new AttachmentBuilder(`./arquivos/songs/norbit/norbit_${escolha}.ogg`, { name: "norbit.ogg" })
 
+        interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+
+    } else if (interaction.customId === `select_data_${interaction.user.id}`) {
+
+        // Excluindo dados do usuário
+        clear_data(user, escolha)
+
+        return
         interaction.update({ content: "", files: [file], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
     } else if (interaction.customId === `select_groups_${interaction.user.id}`) {
 

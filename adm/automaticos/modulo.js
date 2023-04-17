@@ -3,6 +3,7 @@ const fs = require('fs')
 
 const { getActiveModules } = require("../database/schemas/Module")
 const formata_clima = require('../formatadores/formata_clima')
+const formata_frase = require('../formatadores/formata_frase.js')
 
 const lista_modulos = []
 let trava_modulo = false, global_client
@@ -19,8 +20,10 @@ module.exports = async ({ client }) => {
 
     global_client = client
 
-    if (global_client.id() === process.env.client_1)
-        global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos ativos, frequência de atualização de \`60\` segundos`)
+    if (tempo_restante > 1000)
+        console.log(`📣 Disparando os módulos em ${tempo_restante} segundos`)
+    else
+        console.log(`📣 Disparando os módulos agora!`)
 
     atualiza_modulos(global_client, tempo_restante)
 }
@@ -89,6 +92,9 @@ async function executa_modulo() {
 
         if (lista_modulos[0].type === 0)
             await formata_clima(global_client, user, null, true)
+
+        if (lista_modulos[0].type === 1)
+            await formata_frase(global_client, user)
 
         lista_modulos.shift()
 

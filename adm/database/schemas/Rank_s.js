@@ -23,6 +23,12 @@ async function getRankServer(sid) {
     return model.find({ sid: sid })
 }
 
+async function getUserRankServers(uid, sid) {
+    if (!await model.exists({ uid: uid })) await model.create({ uid: uid, sid: sid })
+
+    return model.find({ uid: uid })
+}
+
 async function getUserRankServer(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
 
@@ -49,5 +55,6 @@ async function migrateRankServer() {
 module.exports.Rankerver = model
 module.exports.getRankServer = getRankServer
 module.exports.getUserRankServer = getUserRankServer
+module.exports.getUserRankServers = getUserRankServers
 module.exports.createRankServer = createRankServer
 module.exports.migrateRankServer = migrateRankServer

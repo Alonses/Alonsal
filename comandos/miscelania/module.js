@@ -25,7 +25,7 @@ module.exports = {
                 })
                 .addChoices(
                     { name: '🌩️ Clima', value: '0' },
-                    // { name: '🖊️ Frase', value: '1' },
+                    { name: '🖊️ Frase', value: '1' },
                     // { name: '🏯 Eventos históricos', value: '2' }
                 )
                 .setRequired(true))
