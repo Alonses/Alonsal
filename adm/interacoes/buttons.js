@@ -250,8 +250,6 @@ module.exports = async ({ client, user, interaction }) => {
         // Gerenciamento de listas de tarefas
         const operacao = interaction.customId.split("[")[0]
 
-        console.log(operacao, interaction.customId)
-
         if (operacao === "Canc")
             return interaction.update({ content: `${client.defaultEmoji("paper")} | Exclusão da lista de tarefas cancelada.`, embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
         else {
