@@ -226,7 +226,7 @@ class CeiraClient {
         return Math.floor(new Date().getTime() / 1000)
     }
 
-    ephemeral(entrada, padrao) {
+    decider(entrada, padrao) {
 
         // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
         if (typeof entrada === "undefined")

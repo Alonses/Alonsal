@@ -22,7 +22,8 @@ const schema = new mongoose.Schema({
         banned: { type: Boolean, default: false },
         ghost_mode: { type: Boolean, default: false },
         notify: { type: Boolean, default: true },
-        ranking: { type: Boolean, default: true }
+        ranking: { type: Boolean, default: true },
+        global_tasks: { type: Boolean, default: true }
     }
 })
 

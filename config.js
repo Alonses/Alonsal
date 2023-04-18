@@ -24,13 +24,13 @@ function config(client) {
             if (folder !== "experimental" || client.x.modo_develop) {
                 const command = require(`./comandos/${folder}/${file}`)
 
-                if (!client.x.modo_develop)
+                // if (!client.x.modo_develop)
                     if (!command.data.name.startsWith('c_'))
                         commands.push(command.data.toJSON())
                     else // Salvando comandos privados para usar apenas num servidor
                         comandos_privados.push(command.data.toJSON())
-                else
-                    commands.push(command.data.toJSON())
+                // else
+                    // commands.push(command.data.toJSON())
             }
         }
     }

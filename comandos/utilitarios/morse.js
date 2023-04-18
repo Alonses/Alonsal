@@ -133,7 +133,7 @@ module.exports = {
         if (aviso.length > 0)
             embed.setFooter({ text: aviso })
 
-        interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, 0))
     }
 }

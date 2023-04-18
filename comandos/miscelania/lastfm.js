@@ -77,7 +77,7 @@ module.exports = {
         const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
         // Aumentando o tempo de duração da resposta
-        interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         fetch(usuario_alvo)
             .then(response => response.text())
@@ -85,7 +85,7 @@ module.exports = {
 
                 try {
                     if (res.includes("Página não encontrada"))
-                        return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.ephemeral(user?.conf.ghost_mode, 0), 1)
+                        return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
                     let descricao = "", criacao_conta, avatar, nome, obsessao = "", musica_obsessao, artista_obsessao, media_scrobbles = 0, musicas_ouvidas, artistas_ouvidos, faixas_preferidas = 0, scrobble_atual = ""
 
@@ -227,10 +227,10 @@ module.exports = {
                                         }
                                     )
 
-                                interaction.editReply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                                interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                             })
                     } else
-                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.ephemeral(user?.conf.ghost_mode, 0), 1)
+                        client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode, 0), 1)
                 } catch (err) {
                     require('../../adm/eventos/error.js')({ client, err })
                     client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)

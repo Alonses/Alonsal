@@ -74,7 +74,7 @@ module.exports = {
         const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
 
         // Aumentando o tempo de duração da resposta
-        interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         fetch(usuario_alvo)
             .then(response => response.text())
@@ -395,7 +395,7 @@ module.exports = {
                             }
                         )
 
-                    interaction.editReply({ embeds: [usuario_steam], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                    interaction.editReply({ embeds: [usuario_steam], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
                 } catch (err) {
                     require('../../adm/eventos/error.js')({ client, err })

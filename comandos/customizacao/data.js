@@ -49,8 +49,7 @@ module.exports = {
 
         // Lista todos os dados que o bot salvou do usuário
         if (interaction.options.getSubcommand() === "summary") {
-            const ranking = []
-            const guild_ranking = await client.getUserRankServers(user.uid, interaction.guild.id)
+            const ranking = [], guild_ranking = await client.getUserRankServers(user.uid, interaction.guild.id)
 
             // Listando os servidores que o usuário possui ranking
             guild_ranking.forEach(valor => {
@@ -120,7 +119,7 @@ module.exports = {
 
             const opcoes = [1, 2, 3, 4]
 
-            interaction.reply({ content: "Escolha uma das opções abaixo", components: [create_menus("data", client, interaction, user, opcoes)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            interaction.reply({ content: "Escolha uma das opções abaixo", components: [create_menus("data", client, interaction, user, opcoes)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     }
 }

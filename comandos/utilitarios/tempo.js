@@ -39,7 +39,7 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        await interaction.deferReply({ ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         requisita_clima(client, user, interaction)
     }

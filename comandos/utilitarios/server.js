@@ -129,7 +129,7 @@ module.exports = {
                     { name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
                 )
 
-            return interaction.reply({ embeds: [infos_sv], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.reply({ embeds: [infos_sv], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         } else { // Icone do servidor
 
             let icone_server = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
@@ -145,7 +145,7 @@ module.exports = {
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 
-                    interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 })
         }
     }
