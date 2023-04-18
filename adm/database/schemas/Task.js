@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
 
 // uid -> User ID
+// sid -> Server ID
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
+    sid: { type: String, default: null },
     group: { type: String, default: null },
     text: { type: String, default: null },
     timestamp: { type: Number, default: 0 },
@@ -13,11 +15,11 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Task", schema)
 
-async function createTask(uid, text, timestamp) {
+async function createTask(uid, sid, text, timestamp) {
 
-    if (!await model.exists({ uid: uid, text: text, timestamp: timestamp })) await model.create({ uid: uid, text: text, timestamp: timestamp })
+    if (!await model.exists({ uid: uid, sid: sid, text: text, timestamp: timestamp })) await model.create({ uid: uid, sid: sid, text: text, timestamp: timestamp })
 
-    return model.findOne({ uid: uid, text: text, timestamp: timestamp })
+    return model.findOne({ uid: uid, sid: sid, text: text, timestamp: timestamp })
 }
 
 async function getTask(uid, timestamp) {
@@ -32,12 +34,16 @@ async function listAllUserTasks(uid) {
     return model.find({ uid: uid, cached: false })
 }
 
+async function listAllUserGuildTask(uid, sid) {
+    return model.find({ uid: uid, cached: false, sid: sid })
+}
+
 async function listAllUserGroupTasks(uid, name) {
     return model.find({ uid: uid, group: name })
 }
 
 // Apaga uma task do usuário
-async function dropTask(uid, name) {
+async function dropTask(uid, timestamp) {
     await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
 }
 
@@ -56,5 +62,6 @@ module.exports.getCacheTask = getCacheTask
 module.exports.dropTask = dropTask
 module.exports.dropTaskByGroup = dropTaskByGroup
 module.exports.listAllUserTasks = listAllUserTasks
+module.exports.listAllUserGuildTask = listAllUserGuildTask
 module.exports.listAllUserGroupTasks = listAllUserGroupTasks
 module.exports.deleteUserCachedTasks = deleteUserCachedTasks
