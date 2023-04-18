@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getBot, dropBot } = require('../database/schemas/Bot')
+const { getBot, dailyReset } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
 
@@ -81,5 +81,5 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`, inline: false })
 
     await client.notify(process.env.channel_stats, embed)
-    await dropBot(client.id()) // Reseta o relatório
+    await dailyReset(client.id()) // Reseta o relatório
 }

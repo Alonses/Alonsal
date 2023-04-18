@@ -1,8 +1,8 @@
+const { getBot } = require('../database/schemas/Bot')
+
 const LIMIT = 5
 const DIFF = 5000
 const CALDEIRA = 60000
-
-const fs = require('fs')
 
 module.exports = async ({ client, message, caso }) => {
 
@@ -44,18 +44,17 @@ module.exports = async ({ client, message, caso }) => {
         }
 
     // Coletando o XP atual e somando ao total do usuário
-    fs.readFile('./arquivos/data/rank_value.txt', 'utf8', function (err, data) {
+    const bot = getBot(client.id())
 
-        if (caso === 'messages') {
-            user.xp += parseInt(data)
-            user.lastValidMessage = message.createdTimestamp
-            user.warns = 0
-        } else // Experiência obtida executando comandos
-            user.xp += (parseInt(data) * 1.5)
+    if (caso === 'messages') {
+        user.xp += bot.persis.ranking
+        user.lastValidMessage = message.createdTimestamp
+        user.warns = 0
+    } else // Experiência obtida executando comandos
+        user.xp += bot.persis.ranking * 1.5
 
-        // Registrando no relatório algumas informações
-        require('../automaticos/relatorio')({ client, caso })
+    // Registrando no relatório algumas informações
+    require('../automaticos/relatorio')({ client, caso })
 
-        user.save()
-    })
+    user.save()
 }

@@ -1,87 +1,74 @@
 const { EmbedBuilder } = require('discord.js')
-const fs = require('fs')
 
+const { getBot } = require('../database/schemas/Bot.js')
 const formata_horas = require('../formatadores/formata_horas.js')
 
 module.exports = async ({ client, interaction }) => {
 
-    const dir = "./arquivos/data/ativacoes.txt"
+    const bot = await getBot(client.id())
 
-    if (!fs.existsSync(dir)) fs.writeFile(dir, '0', err => {
-        if (err) throw err
-    })
+    qtd_comandos = bot.persis.ranking++
 
-    fs.readFile(dir, 'utf8', function (err, data) {
-        if (err) throw err
+    if (client.id() === process.env.client_1 && process.env.channel_command) {
+        const d = new Date()
+        const day = d.toLocaleString("en-US", { weekday: "long" })
 
-        qtd_comandos = parseInt(data)
-        qtd_comandos++
+        let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
+        let min = formata_horas(d.getMinutes()), hr = formata_horas(d.getHours())
 
-        if (client.id() === process.env.client_1 && process.env.channel_command) {
-            const d = new Date()
-            const day = d.toLocaleString("en-US", { weekday: "long" })
-
-            let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
-            let min = formata_horas(d.getMinutes()), hr = formata_horas(d.getHours())
-
-            let ampm = "am"
-            if (hr > 12) {
-                hr -= 12
-                ampm = "pm"
-            }
-
-            let comando_inserido = interaction.commandName, entradas = []
-            let filtrador = interaction.options.data
-
-            filtrador.forEach(valor => {
-                // Listando todos os parâmetros usados na interação
-                let entrada = `${valor.name}: ⬛`
-                let opcoes_internas_comando = []
-
-                if (!valor.value)
-                    entrada = valor.name
-
-                if (valor.options) { // Opções internas da interação
-                    opcoes_comando = valor.options
-                    opcoes_comando.forEach(opcao => {
-
-                        opcao_interna = `${opcao.name}: ⬛`
-
-                        if (!opcao.value)
-                            opcao_interna = ""
-
-                        opcoes_internas_comando.push(opcao_interna)
-                    })
-
-                    // Mesclando as opções internas com o possível subcomando da interação
-                    entrada = `${entrada} ${opcoes_internas_comando.join(" ")}`
-                }
-
-                entradas.push(entrada)
-            })
-
-            comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
-
-            const date = d.getDate(), year = d.getFullYear()
-            const month = d.toLocaleString("en-US", { month: "long" })
-
-            let embed = new EmbedBuilder()
-                .setTitle("> ✨ New interaction")
-                .setColor(0x29BB8E)
-                .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
-                .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
-
-            if (url_ativacao !== "")
-                embed.setURL(`${url_ativacao}`)
-
-            // Envia um log de telemetria com o comando disparado
-            client.notify(process.env.channel_command, embed)
+        let ampm = "am"
+        if (hr > 12) {
+            hr -= 12
+            ampm = "pm"
         }
 
-        fs.writeFile('./arquivos/data/ativacoes.txt', parseInt(qtd_comandos, 10).toString(), (err) => {
-            if (err) throw err
+        let comando_inserido = interaction.commandName, entradas = []
+        let filtrador = interaction.options.data
+
+        filtrador.forEach(valor => {
+            // Listando todos os parâmetros usados na interação
+            let entrada = `${valor.name}: ⬛`
+            let opcoes_internas_comando = []
+
+            if (!valor.value)
+                entrada = valor.name
+
+            if (valor.options) { // Opções internas da interação
+                opcoes_comando = valor.options
+                opcoes_comando.forEach(opcao => {
+
+                    opcao_interna = `${opcao.name}: ⬛`
+
+                    if (!opcao.value)
+                        opcao_interna = ""
+
+                    opcoes_internas_comando.push(opcao_interna)
+                })
+
+                // Mesclando as opções internas com o possível subcomando da interação
+                entrada = `${entrada} ${opcoes_internas_comando.join(" ")}`
+            }
+
+            entradas.push(entrada)
         })
-    })
+
+        comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
+
+        const date = d.getDate(), year = d.getFullYear()
+        const month = d.toLocaleString("en-US", { month: "long" })
+
+        let embed = new EmbedBuilder()
+            .setTitle("> ✨ New interaction")
+            .setColor(0x29BB8E)
+            .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
+            .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
+
+        if (url_ativacao !== "")
+            embed.setURL(`${url_ativacao}`)
+
+        // Envia um log de telemetria com o comando disparado
+        client.notify(process.env.channel_command, embed)
+    }
 
     // Contabilizar os comandos
     if (client.x.ranking) {

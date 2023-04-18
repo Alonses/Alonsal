@@ -2,55 +2,51 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { getUser } = require('../database/schemas/User.js')
+const { getBot } = require('../database/schemas/Bot.js')
+
 const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
-const fs = require('fs')
 
 let default_lang
 
 // Carrega todos os idiomas do bot diretamente do git
-function loadAll(client) {
+async function loadAll(client) {
     if (!existsSync(`./arquivos/idiomas/`))
         mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
-    fs.readFile('./arquivos/data/language.txt', 'utf8', function (err, data) {
+    const bot = await getBot(client.id())
 
-        fetch("https://github.com/Alonses/Alondioma")
-            .then(response => response.text())
-            .then(async res => {
+    fetch("https://github.com/Alonses/Alondioma")
+        .then(response => response.text())
+        .then(async res => {
 
-                // Buscando o commit mais recente
-                const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
+            // Buscando o commit mais recente
+            const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
-                if (cod_commit !== data) {
-                    console.log("Sincronizando com os idiomas mais recentes.")
+            if (cod_commit !== bot.persis.alondioma) {
+                console.log("Sincronizando com os idiomas mais recentes.")
 
-                    fs.writeFile('./arquivos/data/language.txt', cod_commit, (err) => {
-                        if (err) throw err
+                if (process.env.channel_lang)
+                    client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
+                else
+                    console.log(`🈂️ | Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
+
+                fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
+                    .then(res => res.json())
+                    .then(content => {
+                        for (let i = 0; i < content.length; i++) {
+                            const idioma = content[i]
+
+                            if (!idioma.name.endsWith(".json")) continue
+
+                            fetch(idioma.download_url)
+                                .then(res => res.json())
+                                .then(res => {
+                                    writeFileSync(`./arquivos/idiomas/${idioma.name}`, JSON.stringify(res))
+                                })
+                        }
                     })
-
-                    if (process.env.channel_lang)
-                        client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
-                    else
-                        console.log(`🈂️ | Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
-
-                    fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
-                        .then(res => res.json())
-                        .then(content => {
-                            for (let i = 0; i < content.length; i++) {
-                                const idioma = content[i]
-
-                                if (!idioma.name.endsWith(".json")) continue
-
-                                fetch(idioma.download_url)
-                                    .then(res => res.json())
-                                    .then(res => {
-                                        writeFileSync(`./arquivos/idiomas/${idioma.name}`, JSON.stringify(res))
-                                    })
-                            }
-                        })
-                }
-            })
-    })
+            }
+        })
 }
 
 // Lista todas as bandeiras de idiomas carregados

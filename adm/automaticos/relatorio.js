@@ -19,13 +19,13 @@ module.exports = async ({ client, caso, quantia }) => {
     } else {
 
         if (caso === "messages") {
-            bot.exp.exp_concedido += parseFloat(data)
+            bot.exp.exp_concedido += bot.persis.ranking
             bot.exp.msgs_validas += 1
             bot.exp.msgs_lidas += 1
         }
 
         if (caso === "comando") {
-            bot.exp.exp_concedido += (parseFloat(data) * 1.5)
+            bot.exp.exp_concedido += bot.persis.ranking * 1.5
             bot.cmd.ativacoes += 1
             bot.exp.msgs_lidas += 1
             bot.exp.msgs_validas += 1
