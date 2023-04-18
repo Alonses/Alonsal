@@ -6,6 +6,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
+const { getBot } = require('../../adm/database/schemas/Bot')
 
 const medals = {
     0: ":first_place:",
@@ -222,42 +223,41 @@ module.exports = {
     }
 }
 
-function retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape) {
+async function retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape) {
 
-    fs.readFile('./arquivos/data/rank_value.txt', 'utf8', async function (err, data) {
+    const bot = await getBot(client.id())
 
-        embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", parseInt(data)))
-            .addFields(
-                {
-                    name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
-                    value: usernames.join("\n"),
-                    inline: true
-                },
-                {
-                    name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
-                    value: experiencias.join("\n"),
-                    inline: true
-                },
-                {
-                    name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
-                    value: levels.join("\n"),
-                    inline: true
-                }
-            )
-            .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+    const embed = new EmbedBuilder()
+        .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
+        .setColor(client.embed_color(user.misc.color))
+        .setDescription(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", bot.persis.ranking))
+        .addFields(
+            {
+                name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
+                value: usernames.join("\n"),
+                inline: true
+            },
+            {
+                name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
+                value: experiencias.join("\n"),
+                inline: true
+            },
+            {
+                name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
+                value: levels.join("\n"),
+                inline: true
+            }
+        )
+        .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-        img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
+    img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
-        fetch(img_embed).then(res => {
-            if (res.status !== 200)
-                img_embed = img_embed.replace('.gif', '.webp')
+    fetch(img_embed).then(res => {
+        if (res.status !== 200)
+            img_embed = img_embed.replace('.gif', '.webp')
 
-            embed.setThumbnail(img_embed)
+        embed.setThumbnail(img_embed)
 
-            interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        })
+        interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     })
 }

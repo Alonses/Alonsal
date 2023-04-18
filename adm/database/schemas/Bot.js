@@ -2,6 +2,11 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
+    persis: {
+        commands: { type: Number, default: 0 },
+        ranking: { type: Number, default: 5 },
+        alondioma: { type: String, default: 0 }
+    },
     cmd: {
         ativacoes: { type: Number, default: 0 },
         erros: { type: Number, default: 0 }
@@ -24,6 +29,25 @@ async function getBot(bit) {
     if (!await model.exists({ bit: bit })) await model.create({ bit: bit })
 
     return model.findOne({ bit: bit })
+}
+
+async function dailyReset(bit) {
+
+    // Reseta os dados diários do bot
+    const bot = await getBot(bit)
+
+    bot.cmd.ativacoes = 0
+    bot.cmd.erros = 0
+
+    bot.exp.exp_concedido = 0
+    bot.exp.msgs_validas = 0
+    bot.exp.msgs_lidas = 0
+
+    bot.bfu.gerado = 0
+    bot.bfu.movido = 0
+    bot.bfu.reback = 0
+
+    bot.save()
 }
 
 async function dropBot(bit) {
@@ -54,5 +78,6 @@ module.exports.User = model
 module.exports = {
     getBot,
     dropBot,
+    dailyReset,
     migrateData
 }
