@@ -58,6 +58,9 @@ module.exports = async ({ client, user, interaction }) => {
         const group_timestamp = interaction.values[0].split(".")[1]
         const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
 
+        atualiza_valores(task, interaction)
+        atualiza_valores(group, interaction)
+
         task.cached = false
         task.group = group.name
 
@@ -71,6 +74,8 @@ module.exports = async ({ client, user, interaction }) => {
         const group_timestamp = interaction.values[0].split(".")[1]
         const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
         let tarefas
+
+        atualiza_valores(group, interaction)
 
         // Verificando se o usuário desabilitou as tasks globais
         if (client.decider(user?.conf.global_tasks, 1))
@@ -90,6 +95,8 @@ module.exports = async ({ client, user, interaction }) => {
         const group = await getUserGroup(interaction.user.id, parseInt(group_timestamp))
         let tarefas
 
+        atualiza_valores(group, interaction)
+
         // Verificando se o usuário desabilitou as tasks globais
         if (client.decider(user?.conf.global_tasks, 1))
             tarefas = await listAllUserGroupTasks(interaction.user.id, group.name)
@@ -104,6 +111,8 @@ module.exports = async ({ client, user, interaction }) => {
 
         // Exibindo os dados de alguma tarefa selecionada
         const task = await getTask(interaction.user.id, parseInt(interaction.values[0].split(".")[1]))
+
+        atualiza_valores(task, interaction)
 
         const embed = new EmbedBuilder()
             .setTitle("> Sua tarefa")
@@ -144,5 +153,14 @@ module.exports = async ({ client, user, interaction }) => {
                 row = client.create_buttons([{ name: `Abrir novamente:task_button`, value: '1', type: 2, task: task.timestamp }, { name: 'Apagar:task_button', value: '0', type: 3, task: task.timestamp }], interaction)
 
         return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    }
+}
+
+// Atualiza os dados das tarefas e listas
+async function atualiza_valores(alvo, interaction) {
+
+    if (!alvo.sid) {
+        alvo.sid = interaction.guild.id
+        alvo.save()
     }
 }

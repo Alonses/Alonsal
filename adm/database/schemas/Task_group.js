@@ -24,8 +24,6 @@ async function getUserGroup(uid, timestamp) {
 
 async function listAllUserGroups(uid, sid) {
 
-    console.log(uid, sid)
-
     if (sid)
         return model.find({ uid: uid, sid: sid })
 
