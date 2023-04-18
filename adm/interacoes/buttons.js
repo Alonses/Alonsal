@@ -233,7 +233,11 @@ module.exports = async ({ client, user, interaction }) => {
 
         if (operacao === "Marcarcomoconc") {
 
-            const task = await getTask(interaction.user.id, null, timestamp)
+            const task = await getTask(interaction.user.id, timestamp)
+
+            // Verificando se a task não possui algum servidor mencionado
+            if (!task.sid)
+                task.sid = interaction.guild.id
 
             task.concluded = true
             task.save()
@@ -244,6 +248,10 @@ module.exports = async ({ client, user, interaction }) => {
         if (operacao === "Abrirnovamente") {
 
             const task = await getTask(interaction.user.id, timestamp)
+
+            // Verificando se a task não possui algum servidor mencionado
+            if (!task.sid)
+                task.sid = interaction.guild.id
 
             task.concluded = false
             task.save()

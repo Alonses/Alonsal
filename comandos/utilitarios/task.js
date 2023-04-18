@@ -179,6 +179,12 @@ module.exports = {
                         task.group = grupos[0].name
                         task.save()
 
+                        // Verificando se a lista não possui algum servidor mencionado
+                        if (typeof grupos[0].sid === "undefined") {
+                            grupos[0].sid = interaction.guid.id
+                            grupos[0].save()
+                        }
+
                         return interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua nova tarefa foi adicionada automaticamente na lista \`${task.group}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     } else
                         interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
