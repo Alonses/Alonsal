@@ -1,10 +1,11 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
+const { getBot, dropBot } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
 
-    if (client.id() !== process.env.client_1) return
+    if (!client.x.relatorio) return
 
     const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
     const tempo_restante = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
@@ -24,8 +25,7 @@ function requisita_relatorio(client, aguardar_tempo) {
 
 async function gera_relatorio(client, proxima_att) {
 
-    const date1 = new Date()
-    const bot = client.auto.getRelatorio()
+    const date1 = new Date(), bot = await getBot(client.id())
 
     let canais_texto = client.channels(0).size
     let members = 0, processamento = '🎲 Processamento\n'
@@ -45,17 +45,17 @@ async function gera_relatorio(client, proxima_att) {
         .addFields(
             {
                 name: ":gear: **Comandos**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.comandos_disparados)}\`\n:octagonal_sign: **Erros:** \`${bot.epic_embed_fails}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.cmd.ativacoes)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.cmd.erros)}\``,
                 inline: true
             },
             {
                 name: ":medal: **Experiência**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.exp_concedido)}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.exp.exp_concedido)}\``,
                 inline: true
             },
             {
                 name: ":e_mail: **Mensagens**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.msgs_validas)}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.exp.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.exp.msgs_validas)}\``,
                 inline: true
             }
         )
@@ -72,7 +72,7 @@ async function gera_relatorio(client, proxima_att) {
             },
             {
                 name: ":bank: Bufunfas",
-                value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bufunfas)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.movimentado)}\``,
+                value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
                 inline: true
             }
         )
@@ -81,5 +81,5 @@ async function gera_relatorio(client, proxima_att) {
         .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`, inline: false })
 
     await client.notify(process.env.channel_stats, embed)
-    client.auto.resRelatorio() // Reseta o relatório
+    await dropBot(client.id()) // Reseta o relatório
 }

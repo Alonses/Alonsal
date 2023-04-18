@@ -20,5 +20,5 @@ module.exports = async function ({ client, err, local }) {
     console.log(err)
 
     const caso = "epic_embed"
-    require('../automaticos/relatorio.js')({ client, caso })
+    require('../automaticos/relatorio')({ client, caso })
 }

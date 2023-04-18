@@ -31,7 +31,7 @@ function loadAll(client) {
                     if (process.env.channel_lang)
                         client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
                     else
-                        console.log(`Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
+                        console.log(`🈂️ | Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
 
                     fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                         .then(res => res.json())

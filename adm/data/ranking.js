@@ -54,7 +54,7 @@ module.exports = async ({ client, message, caso }) => {
             user.xp += (parseInt(data) * 1.5)
 
         // Registrando no relatório algumas informações
-        // require('../automaticos/relatorio.js')({ client, caso })
+        require('../automaticos/relatorio')({ client, caso })
 
         user.save()
     })

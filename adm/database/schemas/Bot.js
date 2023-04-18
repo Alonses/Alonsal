@@ -1,0 +1,58 @@
+const mongoose = require("mongoose")
+
+const schema = new mongoose.Schema({
+    uid: { type: String, default: null },
+    cmd: {
+        ativacoes: { type: Number, default: 0 },
+        erros: { type: Number, default: 0 }
+    },
+    exp: {
+        exp_concedido: { type: Number, default: 0 },
+        msgs_lidas: { type: Number, default: 0 },
+        msgs_validas: { type: Number, default: 0 }
+    },
+    bfu: {
+        gerado: { type: Number, default: 0 },
+        movido: { type: Number, default: 0 },
+        reback: { type: Number, default: 0 }
+    }
+})
+
+const model = mongoose.model("Bot", schema)
+
+async function getBot(bit) {
+    if (!await model.exists({ bit: bit })) await model.create({ bit: bit })
+
+    return model.findOne({ bit: bit })
+}
+
+async function dropBot(bit) {
+    await model.findOneAndDelete({ bit: bit })
+}
+
+async function migrateData(client) {
+
+    // Migrando os dados do json para o banco de dados externo
+    const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails, bufunfas, movimentado } = require(`../../../arquivos/data/relatorio.json`)
+
+    const bot = await getBot(client.id())
+
+    bot.cmd.ativacoes = comandos_disparados
+    bot.cmd.erros = epic_embed_fails
+
+    bot.exp.exp_concedido = exp_concedido
+    bot.exp.msgs_validas = msgs_validas
+    bot.exp.msgs_lidas = msgs_lidas
+
+    bot.bfu.gerado = bufunfas
+    bot.bfu.movido = movimentado
+
+    bot.save()
+}
+
+module.exports.User = model
+module.exports = {
+    getBot,
+    dropBot,
+    migrateData
+}

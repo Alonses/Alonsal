@@ -12,7 +12,6 @@ const { create_buttons } = require('./adm/discord/create_buttons')
 const { getRankServer, getUserRankServer, getUserRankServers } = require('./adm/database/schemas/Rank_s')
 
 const idioma = require('./adm/data/idioma')
-const auto = require('./adm/data/relatorio')
 const translate = require('./adm/formatadores/translate')
 
 const { default_emoji } = require('./arquivos/json/text/emojis.json')
@@ -20,15 +19,15 @@ const { default_emoji } = require('./arquivos/json/text/emojis.json')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1
 
 if (update_commands)
-    modo_develop = 0, force_update = 1, silent = 1, modules = 0
+    modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
 
 let token = process.env.token_1, clientId = process.env.client_1
 
 if (silent || modo_develop)
-    status = 0, ranking = 0, modules = 0
+    status = 0, ranking = 0, modules = 0, relatorio = 0
 
 // Force update é utilizado para forçar a atualização dos comandos slash
 // globais e privados do bot
@@ -50,14 +49,14 @@ class CeiraClient {
     constructor() {
         this.discord = cli,
             this.tls = translate,
-            this.idioma = idioma,
-            this.auto = auto
+            this.idioma = idioma
         this.x = { // Variáveis de configuração inicial do bot
             modo_develop: modo_develop,
             force_update: force_update,
             ranking: ranking,
             status: status,
             modules: modules,
+            relatorio: relatorio,
 
             clientId: clientId,
             token: token,
