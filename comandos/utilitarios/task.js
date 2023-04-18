@@ -160,7 +160,7 @@ module.exports = {
                     if (grupos.length < 1)
                         return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista criada! Crie alguma para poder usar este comando.", ephemeral: true })
 
-                    const task = await createTask(interaction.user.id, interaction.options.getString("description"), date1)
+                    const task = await createTask(interaction.user.id, interaction.guild.id, interaction.options.getString("description"), date1)
 
                     // Adicionando a tarefa a uma lista automaticamente caso só exista uma lista
                     if (grupos.length == 1) {
