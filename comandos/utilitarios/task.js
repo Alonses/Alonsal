@@ -1,8 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const { listAllUserTasks, createTask } = require('../../adm/database/schemas/Task')
+const { listAllUserGroups, createGroup, checkUserGroup } = require('../../adm/database/schemas/Task_group')
+
 const create_menus = require('../../adm/discord/create_menus')
-const { listAllUserTasks, createTask, deleteUserCachedTasks } = require('../../adm/database/schemas/Task')
-const { getUserGroups, createGroup, checkUserGroup } = require('../../adm/database/schemas/Task_group')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -123,7 +124,7 @@ module.exports = {
                 if (casos.aberto < 1)
                     return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma tarefa em aberto! Crie alguma para poder usar este comando.", ephemeral: true })
 
-                interaction.reply({ content: ":mag: | Escolha uma das notas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 0))], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                interaction.reply({ content: ":mag: | Escolha uma das notas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 0))], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
             } else if (interaction.options.getSubcommand() === "completed") {
 
@@ -131,17 +132,23 @@ module.exports = {
                 if (casos.finalizado < 1)
                     return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma tarefa finalizada! Finalize algumas para poder usar este comando.", ephemeral: true })
 
-                interaction.reply({ content: ":mag: | Escolha uma das tarefas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 1))], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                interaction.reply({ content: ":mag: | Escolha uma das tarefas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 1))], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             } else {
 
-                // Navegando por tarefas que pertencem a listas
-                const groups = await getUserGroups(interaction.user.id)
+                // Navegando por listas de tarefas
+                let grupos
+
+                // Verificando se o usuário desabilitou as tasks globais
+                if (client.decider(user?.conf.global_tasks, 1))
+                    grupos = await listAllUserGroups(interaction.user.id)
+                else
+                    grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                 // Listando listas
-                if (groups.length < 1)
+                if (grupos.length < 1)
                     return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista para poder navegar!", ephemeral: true })
 
-                interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para visualizar anotações.", components: [create_menus("groups_n", client, interaction, user, groups)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para visualizar anotações.", components: [create_menus("groups_n", client, interaction, user, grupos)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
             }
         } else {
@@ -151,11 +158,14 @@ module.exports = {
             if (interaction.options.getSubcommandGroup() === "add") {
                 if (interaction.options.getSubcommand() === "task") {
 
-                    // Removendo as tarefas que estão em cache
-                    await deleteUserCachedTasks(interaction.user.id)
+                    // Criando uma nova tarefa
+                    let grupos
 
-                    // Criando uma tarefa para ser usada
-                    let grupos = await getUserGroups(interaction.user.id)
+                    // Verificando se o usuário desabilitou as tasks globais
+                    if (client.decider(user?.conf.global_tasks, 1))
+                        grupos = await listAllUserGroups(interaction.user.id)
+                    else
+                        grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                     if (grupos.length < 1)
                         return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista criada! Crie alguma para poder usar este comando.", ephemeral: true })
@@ -169,34 +179,46 @@ module.exports = {
                         task.group = grupos[0].name
                         task.save()
 
-                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua nova tarefa foi adicionada automaticamente na lista \`${task.group}\`!`, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua nova tarefa foi adicionada automaticamente na lista \`${task.group}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     } else
-                        interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                        interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 } else {
 
                     // Verificando se o nome da nova lista não existe ainda
-                    const check_group = await checkUserGroup(interaction.user.id, interaction.options.getString("description"))
+                    let check_group
+
+                    // Verificando se o usuário desabilitou as tasks globais
+                    if (client.decider(user?.conf.global_tasks, 1))
+                        check_group = await checkUserGroup(interaction.user.id, interaction.options.getString("description"))
+                    else
+                        check_group = await checkUserGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id)
 
                     if (check_group.length > 0)
                         return interaction.reply({ content: ":octagonal_sign: | Você já possui uma lista com esse nome! Por favor, insira uma lista com outro nome", ephemeral: true })
 
                     // Criando listas
-                    createGroup(interaction.user.id, interaction.options.getString("description"), date1)
+                    createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, date1)
 
-                    interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua lista foi criada, use o comando \`/tarefas add tarefa\` para adicionar tarefas!`, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua lista foi criada, use o comando \`/tarefas add tarefa\` para adicionar tarefas!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             } else {
-                // Excluindo tarefas e listas
 
+                // Excluindo tarefas e listas
                 if (interaction.options.getSubcommand() === "group") {
 
-                    const grupos = await getUserGroups(interaction.user.id)
+                    let grupos
+
+                    // Verificando se o usuário desabilitou as tasks globais
+                    if (client.decider(user?.conf.global_tasks, 1))
+                        grupos = await listAllUserGroups(interaction.user.id)
+                    else
+                        grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                     // Removendo listas
                     if (grupos.length < 1)
                         return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista para poder excluir!", ephemeral: true })
 
-                    interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para excluir.", components: [create_menus("groups_r", client, interaction, user, grupos)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para excluir.", components: [create_menus("groups_r", client, interaction, user, grupos)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             }
         }

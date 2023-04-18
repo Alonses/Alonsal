@@ -26,19 +26,19 @@ async function getTask(uid, timestamp) {
     return model.findOne({ uid: uid, timestamp: timestamp })
 }
 
-async function getCacheTask(uid, timestamp) {
-    return model.findOne({ uid: uid, cached: true, timestamp: timestamp })
-}
+async function listAllUserTasks(uid, sid) {
 
-async function listAllUserTasks(uid) {
+    if (sid)
+        return model.find({ uid: uid, cached: false, sid: sid })
+
     return model.find({ uid: uid, cached: false })
 }
 
-async function listAllUserGuildTask(uid, sid) {
-    return model.find({ uid: uid, cached: false, sid: sid })
-}
+async function listAllUserGroupTasks(uid, name, sid) {
 
-async function listAllUserGroupTasks(uid, name) {
+    if (sid)
+        return model.find({ uid: uid, group: name, sid: sid })
+
     return model.find({ uid: uid, group: name })
 }
 
@@ -51,17 +51,12 @@ async function dropTaskByGroup(uid, name) {
     await model.deleteMany({ uid: uid, group: name })
 }
 
-async function deleteUserCachedTasks(uid) {
-    await model.deleteMany({ uid: uid, cached: true })
-}
-
 module.exports.Task = model
-module.exports.createTask = createTask
-module.exports.getTask = getTask
-module.exports.getCacheTask = getCacheTask
-module.exports.dropTask = dropTask
-module.exports.dropTaskByGroup = dropTaskByGroup
-module.exports.listAllUserTasks = listAllUserTasks
-module.exports.listAllUserGuildTask = listAllUserGuildTask
-module.exports.listAllUserGroupTasks = listAllUserGroupTasks
-module.exports.deleteUserCachedTasks = deleteUserCachedTasks
+module.exports = {
+    createTask,
+    getTask,
+    dropTask,
+    dropTaskByGroup,
+    listAllUserTasks,
+    listAllUserGroupTasks
+}

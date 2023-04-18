@@ -21,7 +21,7 @@ async function getReport(uid, sid) {
     return model.findOne({ uid: uid, sid: sid })
 }
 
-async function removeReport(uid, sid) {
+async function dropReport(uid, sid) {
     await model.findOneAndDelete({ uid: uid, sid: sid })
 }
 
@@ -34,6 +34,6 @@ async function checkUserGuildReported(sid) {
 }
 
 module.exports.getReport = getReport
-module.exports.removeReport = removeReport
+module.exports.dropReport = dropReport
 module.exports.getUserReports = getUserReports
 module.exports.checkUserGuildReported = checkUserGuildReported

@@ -189,7 +189,7 @@ module.exports = {
                 rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.ephemeral(user?.conf.ghost_mode, 0), 0)
+                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 0)
 
             const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 

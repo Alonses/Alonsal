@@ -1,13 +1,13 @@
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
-const { getReport, removeReport } = require('../database/schemas/Report')
+const { getReport, dropReport } = require('../database/schemas/Report')
 
 const { createBadge } = require('../../adm/database/schemas/Badge')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
 const { getModule, deleteModule } = require('../database/schemas/Module')
 const { atualiza_modulos } = require('../automaticos/modulo')
 const { dropTask, getTask, dropTaskByGroup } = require('../database/schemas/Task')
-const { getUserGroups, getUserGroup, dropGroup } = require('../database/schemas/Task_group')
+const { listAllUserGroups, getUserGroup, dropGroup } = require('../database/schemas/Task_group')
 
 const create_menus = require('../discord/create_menus')
 
@@ -123,7 +123,7 @@ module.exports = async ({ client, user, interaction }) => {
         } else if (id_button.includes("Cancelar") && id_button.includes(interaction.user.id)) {
             // Removendo o usuário da lista de reportados
 
-            await removeReport(alvo.uid, interaction.guild.id)
+            await dropReport(alvo.uid, interaction.guild.id)
 
             interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
         }
@@ -145,9 +145,9 @@ module.exports = async ({ client, user, interaction }) => {
             const caso = "movimentacao", quantia = bufunfas
             require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
 
-            interaction.update({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.ephemeral(user?.conf.ghost_mode, 0), embeds: [], components: [] })
+            interaction.update({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [], components: [] })
 
-            if (client.ephemeral(alvo?.conf.ghost_mode, 1))
+            if (client.decider(alvo?.conf.ghost_mode, 1))
                 client.sendDM(alvo, `:bank: | ${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
         } else
             interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
@@ -173,7 +173,7 @@ module.exports = async ({ client, user, interaction }) => {
                 // Atribuindo silenciosamente
                 if (!interaction.customId.includes("Confirmarsilen")) {
 
-                    if (client.ephemeral(alvo?.conf.ghost_mode, 1))
+                    if (client.decider(alvo?.conf.ghost_mode, 1))
                         client.sendDM(alvo, `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
 
                     interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
@@ -214,25 +214,31 @@ module.exports = async ({ client, user, interaction }) => {
 
         if (operacao === "Alterardelista") {
 
-            const grupos = await getUserGroups(interaction.user.id)
+            let grupos
 
-            return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, timestamp)], embeds: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            // Verificando se o usuário desabilitou as tasks globais
+            if (client.decider(user?.conf.global_tasks, 1))
+                grupos = await listAllUserGroups(interaction.user.id)
+            else
+                grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+
+            return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, timestamp)], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Apagar") {
             await dropTask(interaction.user.id, timestamp)
 
-            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Marcarcomoconc") {
 
-            const task = await getTask(interaction.user.id, timestamp)
+            const task = await getTask(interaction.user.id, null, timestamp)
 
             task.concluded = true
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
 
         if (operacao === "Abrirnovamente") {
@@ -242,7 +248,7 @@ module.exports = async ({ client, user, interaction }) => {
             task.concluded = false
             task.save()
 
-            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
 
     } else if (interaction.customId.includes("delete_list")) {
@@ -251,7 +257,7 @@ module.exports = async ({ client, user, interaction }) => {
         const operacao = interaction.customId.split("[")[0]
 
         if (operacao === "Canc")
-            return interaction.update({ content: `${client.defaultEmoji("paper")} | Exclusão da lista de tarefas cancelada.`, embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            return interaction.update({ content: `${client.defaultEmoji("paper")} | Exclusão da lista de tarefas cancelada.`, embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         else {
 
             // Apagando a lista especificada e as tarefas vinculadas a ela
@@ -261,7 +267,7 @@ module.exports = async ({ client, user, interaction }) => {
             await dropTaskByGroup(interaction.user.id, group.name)
             await dropGroup(interaction.user.id, group.timestamp)
 
-            interaction.update({ content: ":wastebasket: | `Lista` e `tarefas` vinculadas excluídas com sucesso!", embeds: [], components: [], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+            interaction.update({ content: ":wastebasket: | `Lista` e `tarefas` vinculadas excluídas com sucesso!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     }
 }

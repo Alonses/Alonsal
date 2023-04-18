@@ -40,7 +40,7 @@ module.exports = {
                         }
                     )
 
-                interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+                interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             })
             .catch(() => interaction.reply({ content: ":octagonal_sign: | Não foi possível conectar a APISAL no momento, por favor, tente novamente mais tarde!", ephemeral: true }))
     }

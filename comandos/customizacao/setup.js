@@ -63,7 +63,14 @@ module.exports = {
                     "it": 'clima',
                     "ru": 'погода'
                 })
-                .setDescription("⌠👤⌡ Defina o tipo de retorno para requisições de clima")),
+                .setDescription("⌠👤⌡ Defina o tipo de retorno para requisições de clima"))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("tasks")
+                .setNameLocalizations({
+                    "pt-BR": 'tarefas'
+                })
+                .setDescription("⌠👤⌡ Defina se tarefas serão por servidor ou globais")),
     async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "notifications") {
@@ -114,6 +121,18 @@ module.exports = {
                 interaction.reply({ content: `:sparkles: | Mostrarei todas as informações sobre o clima nas próximas interações.`, ephemeral: true })
             else
                 interaction.reply({ content: `:partly_sunny: | Mostrarei apenas as informações básicas para o clima nas próximas interações.`, ephemeral: true })
+        } else if (interaction.options.getSubcommand() === "tasks") {
+
+            // Ativa ou desativa as tarefas globais
+            if (typeof user.conf.global_tasks !== "undefined")
+                user.conf.global_tasks = !user.conf.global_tasks
+            else
+                user.conf.global_tasks = false
+
+            if (user.conf.global_tasks)
+                interaction.reply({ content: `${client.defaultEmoji("paper")} :unlock: | Agora as tarefas serão mostradas globalmente.\nVocê conseguirá ver todas as suas listas e tarefas em qualquer servidor em que eu também estiver!`, ephemeral: true })
+            else
+                interaction.reply({ content: `${client.defaultEmoji("paper")} :lock: | Agora as tarefas serão mostradas por servidor, separadamente.\nVocê poderá criar listas com o mesmo nome para servidores diferentes.`, ephemeral: true })
         }
 
         await user.save()

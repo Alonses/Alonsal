@@ -45,10 +45,10 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 		else if (interaction.options.getSubcommand() === "laugh") {
 			const file = new AttachmentBuilder("./arquivos/songs/cazalbe.ogg")
-			interaction.reply({ files: [file], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 		} else {
 
 			return client.tls.reply(interaction, user, "inic.error.develop", true, 5)
@@ -63,7 +63,7 @@ module.exports = {
 						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
 						.setDescription(`${res.question}\n${res.answer}`)
 
-					interaction.reply({ embeds: [embed], ephemeral: client.ephemeral(user?.conf.ghost_mode, 0) })
+					interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 				})
 		}
 	}
