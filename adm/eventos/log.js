@@ -88,9 +88,9 @@ module.exports = async ({ client, interaction }) => {
         // await require('../command_ranking.js')({client, interaction, content})
 
         const caso = "comando"
-        await require('../automaticos/relatorio.js')({ client, caso })
+        await require('../automaticos/relatorio')({ client, caso })
 
         const message = interaction
-        await require('../data/ranking.js')({ client, message, caso })
+        await require('../data/ranking')({ client, message, caso })
     }
 }

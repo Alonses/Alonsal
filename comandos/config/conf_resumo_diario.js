@@ -1,6 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
+const { getBot } = require('../../adm/database/schemas/Bot')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,8 +12,8 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        const date1 = new Date() // Ficará esperando até meia noite para executar a rotina
-        const bot = client.auto.getRelatorio()
+        // Ficará esperando até meia noite para executar a rotina
+        const date1 = new Date(), bot = await getBot(client.id())
         const proxima_att = client.timestamp() + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels(0).size
@@ -28,22 +29,22 @@ module.exports = {
             processamento += `${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`
 
         let embed = new EmbedBuilder()
-            .setTitle("Resumo diário :mega:")
+            .setTitle("> Resumo diário até o momento :mega:")
             .setColor(0x29BB8E)
             .addFields(
                 {
                     name: ":gear: **Comandos**",
-                    value: `:dart: **Hoje:** \`${client.locale(bot.comandos_disparados)}\`\n:octagonal_sign: **Erros:** \`${bot.epic_embed_fails}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.cmd.comandos_disparados)}\`\n:octagonal_sign: **Erros:** \`${bot.cmd.erros}\``,
                     inline: true
                 },
                 {
                     name: ":medal: **Experiência**",
-                    value: `:dart: **Hoje:** \`${client.locale(bot.exp_concedido)}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.exp.exp_concedido)}\``,
                     inline: true
                 },
                 {
                     name: ":e_mail: **Mensagens**",
-                    value: `:dart: **Hoje:** \`${client.locale(bot.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.msgs_validas)}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.exp.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.exp.msgs_validas)}\``,
                     inline: true
                 }
             )
@@ -60,7 +61,7 @@ module.exports = {
                 },
                 {
                     name: ":bank: Bufunfas",
-                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bufunfas)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.movimentado)}\``,
+                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
                     inline: true
                 }
             )

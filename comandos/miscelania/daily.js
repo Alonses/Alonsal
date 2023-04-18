@@ -29,8 +29,8 @@ module.exports = {
         user.misc.money += bufunfa
         user.misc.daily = date1.toDateString('pt-BR')
 
-        const caso = "bufunfa", quantia = bufunfa
-        require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
+        const caso = "gerado", quantia = bufunfa
+        require('../../adm/automaticos/relatorio')({ client, caso, quantia })
 
         user.save()
 

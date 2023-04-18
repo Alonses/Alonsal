@@ -53,8 +53,10 @@ async function migrateRankServer() {
 }
 
 module.exports.Rankerver = model
-module.exports.getRankServer = getRankServer
-module.exports.getUserRankServer = getUserRankServer
-module.exports.getUserRankServers = getUserRankServers
-module.exports.createRankServer = createRankServer
-module.exports.migrateRankServer = migrateRankServer
+module.exports = {
+    getRankServer,
+    getUserRankServer,
+    getUserRankServers,
+    createRankServer,
+    migrateRankServer
+}

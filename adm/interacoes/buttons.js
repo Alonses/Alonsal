@@ -39,8 +39,8 @@ module.exports = async ({ client, user, interaction }) => {
 
             user.misc.money -= preco
 
-            const caso = "movimentacao", quantia = preco
-            await require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
+            const caso = "movido", quantia = preco
+            await require('../../adm/automaticos/relatorio')({ client, caso, quantia })
 
             // Diferente da cor cor aleatória e da cor customizada
             if (data_cor.split(".")[0] !== '10' && data_cor.split(".")[0] !== '4')
@@ -142,8 +142,8 @@ module.exports = async ({ client, user, interaction }) => {
             user.save()
             alvo.save()
 
-            const caso = "movimentacao", quantia = bufunfas
-            require('../../adm/automaticos/relatorio.js')({ client, caso, quantia })
+            const caso = "movido", quantia = bufunfas
+            require('../../adm/automaticos/relatorio')({ client, caso, quantia })
 
             interaction.update({ content: `:bank: :white_check_mark: | ${client.tls.phrase(user, "misc.pay.sucesso").replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [], components: [] })
 
