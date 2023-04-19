@@ -41,7 +41,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        const expressao = interaction.options.data[0].value
+        const expressao = interaction.options.getString("equation")
 
         if (expressao.length < 2)
             return client.tls.reply(interaction, user, "util.calc.aviso_1")

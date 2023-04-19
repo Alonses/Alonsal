@@ -55,7 +55,7 @@ async function disableReportChannel(sid) {
     guild.save()
 }
 
-async function migrateChannels() {
+async function migrateGameChannels() {
 
     for (const file of readdirSync(`./arquivos/data/games/`)) {
         const { canal, cargo, idioma } = require(`../../../arquivos/data/games/${file}`)
@@ -71,9 +71,11 @@ async function migrateChannels() {
 }
 
 module.exports.Guild = model
-module.exports.getGuild = getGuild
-module.exports.getGameChannels = getGameChannels
-module.exports.disableGameChannel = disableGameChannel
-module.exports.getReportChannels = getReportChannels
-module.exports.disableReportChannel = disableReportChannel
-module.exports.migrateChannels = migrateChannels
+module.exports = {
+    getGuild,
+    getGameChannels,
+    disableGameChannel,
+    getReportChannels,
+    disableReportChannel,
+    migrateGameChannels
+}

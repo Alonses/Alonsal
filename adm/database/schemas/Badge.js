@@ -49,6 +49,8 @@ async function migrateBadges() {
 }
 
 module.exports.Badge = model
-module.exports.createBadge = createBadge
-module.exports.getUserBadges = getUserBadges
-module.exports.migrateBadges = migrateBadges
+module.exports = {
+    createBadge,
+    getUserBadges,
+    migrateBadges
+}

@@ -58,7 +58,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         let user_alvo = interaction.options.getUser("user")
-        let bufunfas = interaction.options.data[1].value
+        let bufunfas = interaction.options.getNumber("amount")
 
         if (bufunfas < 0.01)
             return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error_2")}`, ephemeral: true })

@@ -62,10 +62,10 @@ module.exports = {
     async execute(client, user, interaction) {
 
         let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang
-        const content = interaction.options.data[0].value
+        const content = interaction.options.getString("search")
 
         if (interaction.options.data.length > 1)
-            idioma_definido = interaction.options.data[1].value
+            idioma_definido = interaction.options.getString("language")
 
         if (content.includes("slondo")) // Pesquisa por slondo
             return client.tls.reply(interaction, user, "util.wiki.wiki_slondo")

@@ -20,34 +20,20 @@ module.exports = {
 
         if (interaction.user.id !== client.owners[0]) return
 
-        let entradas = interaction.options.data
-
         const corpo_mail = {
-            texto: null,
-            canal: null,
-            anexo: null
+            texto: interaction.options.getString("texto"),
+            canal: interaction.options.getString("canal"),
+            anexo: interaction.options.getAttachment("imagem")
         }
 
-        entradas.forEach(valor => {
-            if (valor.name === "texto")
-                corpo_mail.texto = valor.value
-
-            if (valor.name === "canal")
-                corpo_mail.canal = valor.value
-
-            if (valor.name === "imagem")
-                corpo_mail.anexo = valor.attachment.attachment
-        })
-
-        let img_game
         const canal_alvo = await client.channels().get(corpo_mail.canal)
 
         if (canal_alvo.type === 0 || canal_alvo.type === 5) {
             if (canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages)) {
                 if (corpo_mail.anexo) {
-                    img_game = new AttachmentBuilder(corpo_mail.anexo)
+                    const img_anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 
-                    canal_alvo.send({ content: corpo_mail.texto, files: [img_game] })
+                    canal_alvo.send({ content: corpo_mail.texto, files: [img_anexo] })
                 } else
                     canal_alvo.send({ content: corpo_mail.texto })
 

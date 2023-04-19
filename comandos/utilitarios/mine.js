@@ -34,7 +34,7 @@ module.exports = {
 
         // Entrada customizada, ativa caso o usuário tenha pesquisado por algo
         if (interaction.options.data.length > 0)
-            url_pesquisa += `&item=${interaction.options.data[0].value}`
+            url_pesquisa += `&item=${interaction.options.getString("item")}`
 
         fetch(`${process.env.url_apisal}/mine${url_pesquisa}`)
             .then(response => response.json())
@@ -44,7 +44,7 @@ module.exports = {
                     return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
 
                 if (dados_item.status === 404)
-                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.minecraft.nao_encontrado")} \`${interaction.options.data[0].value}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.minecraft.nao_encontrado")} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
 
                 let nome_item = dados_item.internal_name
                 descricao_tipo = nome_item

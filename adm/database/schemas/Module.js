@@ -19,7 +19,7 @@ async function getModule(uid, type) {
     return model.findOne({ uid: uid, type: type })
 }
 
-async function deleteModule(uid, type) {
+async function dropModule(uid, type) {
     await model.findOneAndDelete({ uid: uid, type: type })
 }
 
@@ -41,7 +41,9 @@ async function getModulePrice(uid) {
 }
 
 module.exports.Badge = model
-module.exports.getModule = getModule
-module.exports.deleteModule = deleteModule
-module.exports.getModulePrice = getModulePrice
-module.exports.getActiveModules = getActiveModules
+module.exports = {
+    getModule,
+    dropModule,
+    getModulePrice,
+    getActiveModules
+}

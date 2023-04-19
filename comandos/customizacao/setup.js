@@ -70,7 +70,7 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'tarefas'
                 })
-                .setDescription("⌠👤⌡ Defina se tarefas serão por servidor ou globais")),
+                .setDescription("⌠👤⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente")),
     async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "notifications") {

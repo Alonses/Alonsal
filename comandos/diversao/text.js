@@ -139,7 +139,7 @@ module.exports = {
                         .setRequired(true))),
     async execute(client, user, interaction) {
 
-        let texto_entrada = interaction.options.data[0].options[0].value
+        let texto_entrada = interaction.options.getString("text") || interaction.options.getString("emoji")
         const operation = interaction.options.getSubcommand()
 
         // Inverte o texto enviado
@@ -167,7 +167,7 @@ module.exports = {
             // Torna o texto nesse formato "teste😂testado😂testadamente"
         } else if (operation === "emoji") {
 
-            let emoji = interaction.options.data[0].options[1].value
+            let emoji = interaction.options.getString("emoji")
 
             // Emoji customizado
             if (emoji.startsWith("<") && emoji.endsWith(">")) {

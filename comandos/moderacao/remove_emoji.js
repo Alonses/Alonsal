@@ -35,13 +35,6 @@ module.exports = {
                             "ru": ':название смайлика:'
                         })
                         .setRequired(true)))
-        // .addSubcommand(subcommand =>
-        //     subcommand
-        //         .setName("figurinha")
-        //         .setDescription("⌠💂⌡ Remover uma figurinha")
-        //         .addStringOption(option =>
-        //             option.setName("nome")
-        //                 .setDescription("O nome da figurinha")))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers),
     async execute(client, user, interaction) {
 
@@ -52,7 +45,7 @@ module.exports = {
             // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
-        const dados = interaction.options.data[0].options[0].value
+        const dados = interaction.options.getString("emoji")
 
         try { // Removendo um emoji customizado do servidor
             if (dados.startsWith("<") && dados.endsWith(">")) {

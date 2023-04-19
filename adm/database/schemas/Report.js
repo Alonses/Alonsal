@@ -33,7 +33,10 @@ async function checkUserGuildReported(sid) {
     return model.find({ sid: sid, archived: false })
 }
 
-module.exports.getReport = getReport
-module.exports.dropReport = dropReport
-module.exports.getUserReports = getUserReports
-module.exports.checkUserGuildReported = checkUserGuildReported
+module.exports.Report = model
+module.exports = {
+    getReport,
+    dropReport,
+    getUserReports,
+    checkUserGuildReported
+}

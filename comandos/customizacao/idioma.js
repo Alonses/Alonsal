@@ -57,7 +57,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        let novo_idioma = interaction.options.data[0].value
+        let novo_idioma = interaction.options.getString("language")
 
         // Validando e coletando os dados do idioma
         const matches = novo_idioma.match(/pt|al|en|es|fr|it|ru/)

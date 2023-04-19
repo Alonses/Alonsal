@@ -13,7 +13,7 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        let novo_valor = parseInt(interaction.options.data[0].value)
+        let novo_valor = parseInt(interaction.options.getNumber("valor"))
         const valor_ranking = novo_valor === 0 ? 2 : novo_valor
 
         const bot = await client.getBot()

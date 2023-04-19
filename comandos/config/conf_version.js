@@ -15,7 +15,7 @@ module.exports = {
             return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar essi comando!", ephemeral: true })
 
         const bot = await client.getBot()
-        bot.persis.version = interaction.options.data[0].value
+        bot.persis.version = interaction.options.getString("versao")
         bot.save()
 
         interaction.reply({ content: `:placard: | Versão do ${client.user().username} alterado para \`${bot.persis.version}\``, ephemeral: true })

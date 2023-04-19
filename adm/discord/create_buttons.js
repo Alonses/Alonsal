@@ -88,4 +88,6 @@ function create_buttons(lista_botoes, interaction) {
     return row_buttons
 }
 
-module.exports.create_buttons = create_buttons
+module.exports = {
+    create_buttons
+}

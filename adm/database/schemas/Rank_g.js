@@ -46,6 +46,8 @@ async function migrateRankGlobal() {
 }
 
 module.exports.Rankobal = model
-module.exports.getRankGlobal = getRankGlobal
-module.exports.createRankGlobal = createRankGlobal
-module.exports.migrateRankGlobal = migrateRankGlobal
+module.exports = {
+    getRankGlobal,
+    createRankGlobal,
+    migrateRankGlobal
+}

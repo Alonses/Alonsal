@@ -118,7 +118,7 @@ module.exports = {
                         .setRequired(true))),
     async execute(client, user, interaction) {
 
-        let plataforma = "steam", entrada = interaction.options.data[0].options[0].value
+        let plataforma = "steam", entrada = interaction.options.getString("name") || interaction.options.getString("token") || interaction.options.getString("place")
         let link_comando = "", invalido = false
 
         if (interaction.options.getSubcommand() === "steam") { // Linkando a Steam, LastFM e Pula Prédios ao usuário discord

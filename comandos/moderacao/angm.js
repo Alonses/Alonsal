@@ -87,34 +87,29 @@ module.exports = {
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "mode.anuncio.permissao", true, 3)
 
-        let entradas = interaction.options.data
         let guild = await client.getGuild(interaction.guild.id)
 
         const valores = {
-            role: null,
-            channel: null
+            role: interaction.options.getRole("role"),
+            channel: interaction.options.getChannel("channel"),
+            lang: interaction.options.getString("language")
         }
 
-        // Coletando todas as entradas
-        entradas.forEach(valor => {
-            if (valor.name === "role")
-                valores.role = valor.value
+        if (valores.role) {
+            valores.role = valores.role.id
+            guild.games.role = valores.role
+        }
 
-            if (valor.name === "language")
-                guild.lang = valor.value
+        if (valores.channel) {
 
-            if (valor.name === "channel") {
-                valores.channel = valor.value
+            // Tipo 0 -> Canal de texto tipo normal
+            // Tipo 5 -> Canal de texto tipo anúncios
+            if (valores.channel.type !== 0 && valores.channel.type !== 5) // Verificando se o canal mencionado é inválido
+                return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
 
-                // Tipo 0 -> Canal de texto tipo normal
-                // Tipo 5 -> Canal de texto tipo anúncios
-                if (valor.channel.type !== 0 && valor.channel.type !== 5) // Verificando se o canal mencionado é inválido
-                    return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
-            }
-        })
-
-        guild.games.role = valores.role
-        guild.games.channel = valores.channel
+            valores.channel = valores.channel.id
+            guild.games.channel = valores.channel
+        }
 
         if (!guild.lang)
             guild.lang = client.idioma.getLang(interaction)
@@ -122,7 +117,7 @@ module.exports = {
         let mensagem = `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) não recebe mais atts de jogos grátis`
 
         // (Des)ativando os anúncios de games do servidor
-        if (!guild.games.channel || !guild.games.role)
+        if (!valores.channel || !valores.role)
             guild.conf.games = false
         else {
             guild.conf.games = true

@@ -27,7 +27,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        const dados = interaction.options.data[0].value
+        const dados = interaction.options.getString("emoji")
 
         try {
             if (dados.startsWith("<") && dados.endsWith(">")) {

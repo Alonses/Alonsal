@@ -24,5 +24,7 @@ async function dropTicket(sid, uid) {
 }
 
 module.exports.Ticket = model
-module.exports.getTicket = getTicket
-module.exports.dropTicket = dropTicket
+module.exports = {
+    getTicket,
+    dropTicket
+}

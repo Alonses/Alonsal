@@ -29,7 +29,7 @@ module.exports = async (client, user, interaction, automatico) => {
         if (interaction.options.data.length < 1)
             pesquisa = user.misc.locale
         else // Usa a entrada customizada
-            pesquisa = interaction.options.data[0].value
+            pesquisa = interaction.options.getString("place")
 
         pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
 

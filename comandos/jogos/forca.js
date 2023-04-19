@@ -55,7 +55,7 @@ module.exports = {
 
             // Acionado caso seja escrito algo para o chute da palavra
             if (interaction.options.data.length === 1) {
-                const entrada = interaction.options.data[0].value.toLowerCase()
+                const entrada = interaction.options.getString("entrada").toLowerCase()
 
                 verifica_chute(client, entrada, interaction, user)
             }

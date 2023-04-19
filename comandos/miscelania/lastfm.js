@@ -44,19 +44,9 @@ module.exports = {
         idioma_definido = idioma_definido === "al-br" ? "pt-br" : idioma_definido
 
         const params = {
-            url: null,
-            user: null
+            url: interaction.options.getString("url"),
+            user: interaction.options.getUser("user")
         }
-
-        let entradas = interaction.options.data
-
-        entradas.forEach(valor => {
-            if (valor.name === "url")
-                params.url = valor.value
-
-            if (valor.name === "user")
-                params.user = valor.value
-        })
 
         if (params.url)
             texto_entrada = params.url

@@ -52,7 +52,7 @@ module.exports = {
                     "it": '⌠💂⌡ Controlla gli utenti del server segnalati',
                     "ru": '⌠💂⌡ Проверьте зарегистрированных пользователей сервера'
                 })
-                .addNumberOption(option =>
+                .addIntegerOption(option =>
                     option.setName("page")
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
@@ -67,42 +67,24 @@ module.exports = {
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare',
                             "ru": 'Одна страница для отображения'
-                        })))
+                        })
+                        .setMinValue(1)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute(client, user, interaction) {
 
-        let opcoes = interaction.options.data, pagina = 1, i = 0
-
-        // Filtrando os valores de entrada caso tenham sido declarados
-        opcoes.forEach(valor => {
-            if (valor.name === "page")
-                pagina = valor.value < 1 ? 1 : valor.value
-        })
+        let pagina = interaction.options.getInteger("page") || 1, i = 0
+        pagina = pagina < 1 ? 1 : pagina
 
         // Verificando um usuário manualmente
         if (interaction.options.getSubcommand() === "user") {
-            let id_alvo = interaction.options.getUser("user") || null
-            let entradas = interaction.options.data[0].options
 
-            const valores = {
-                id_alvo: null
-            }
+            let id_alvo = interaction.options.getUser("user") || interaction.options.getString("id")
 
-            // Coletando todas as entradas
-            entradas.forEach(valor => {
-                if (valor.name === "id")
-                    valores.id_alvo = valor.value
-            })
-
-            if (interaction.options.getUser("user"))
-                id_alvo = id_alvo.id
-
-            if (!id_alvo)
-                id_alvo = valores.id_alvo
-
-            // Sem usuário informado
-            if (!id_alvo)
+            if (!id_alvo) // Sem usuário informado
                 return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
+
+            if (typeof id_alvo === "object")
+                id_alvo = id_alvo.id
 
             // Coletando os dados de histórico do usuário
             const reports = await getUserReports(id_alvo)

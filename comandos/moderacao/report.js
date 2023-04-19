@@ -132,22 +132,11 @@ module.exports = {
         if (interaction.options.getSubcommand() !== "migrate") {
 
             let id_alvo = interaction.options.getUser("user") || null
-            let entradas = interaction.options.data[0].options
 
             const valores = {
-                id_alvo: null,
-                report: null
+                id_alvo: interaction.options.getString("id"),
+                report: interaction.options.getString("reason")
             }
-
-            // Coletando todas as entradas
-            entradas.forEach(valor => {
-
-                if (valor.name === "id")
-                    valores.id_alvo = valor.value
-
-                if (valor.name === "reason")
-                    valores.report = valor.value
-            })
 
             if (interaction.options.getUser("user"))
                 id_alvo = id_alvo.id
@@ -178,7 +167,7 @@ module.exports = {
 
                 // Enviando o embed para validação
                 const embed = new EmbedBuilder()
-                    .setTitle("> Reportar usuário")
+                    .setTitle("> Reportar usuário :passport_control:")
                     .addFields(
                         {
                             name: ":bust_in_silhouette: **Discord ID**",
