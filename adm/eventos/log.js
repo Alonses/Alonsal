@@ -12,7 +12,6 @@ module.exports = async ({ client, interaction }) => {
 
     qtd_comandos = bot.persis.commands
 
-
     const d = new Date()
     const day = d.toLocaleString("en-US", { weekday: "long" })
 
