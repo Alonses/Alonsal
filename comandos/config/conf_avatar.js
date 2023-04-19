@@ -13,15 +13,15 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        novo_perfil = interaction.options.data[0].attachment.attachment
+        let arquivo = interaction.options.getAttachment("foto")
 
-        if (!novo_perfil.includes(".png") && !novo_perfil.includes(".jpg") && !novo_perfil.includes(".jpeg") && !novo_perfil.includes(".bmp"))
-            return interaction.reply(":octagonal_sign: | Envie um link/arquivo de formato diferente")
+        if (!arquivo.contentType.includes("image/"))
+            return interaction.reply(":octagonal_sign: | Envie um arquivo de imagem!")
 
         const att_avatar = new EmbedBuilder()
             .setTitle(`:bust_in_silhouette: O Avatar do ${client.user().username} foi alterado`)
             .setColor(0x29BB8E)
-            .setImage(novo_perfil)
+            .setImage(arquivo.attachment)
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
 
         await client.user().setAvatar(novo_perfil)

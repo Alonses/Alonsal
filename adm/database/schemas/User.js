@@ -57,5 +57,7 @@ async function migrateUsers() {
 }
 
 module.exports.User = model
-module.exports.getUser = getUser
-module.exports.migrateUsers = migrateUsers
+module.exports = {
+    getUser,
+    migrateUsers
+}

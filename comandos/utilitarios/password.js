@@ -11,7 +11,7 @@ module.exports = {
             "it": '⌠💡⌡ Genera password casuali',
             "ru": '⌠💡⌡ Генерация случайных паролей'
         })
-        .addStringOption(option =>
+        .addIntegerOption(option =>
             option.setName("length")
                 .setNameLocalizations({
                     "pt-BR": 'tamanho',
@@ -27,13 +27,12 @@ module.exports = {
                     "fr": 'de 12 à 350',
                     "it": 'da 12 a 350',
                     "ru": 'от 12 до 350'
-                })),
+                })
+                .setMinValue(15)
+                .setMaxValue(450)),
     async execute(client, user, interaction) {
 
-        let tamanho = interaction.options.data.length > 0 ? parseInt(interaction.options.data[0].value) : 15
-        tamanho = tamanho <= 5 ? 15 : tamanho
-        tamanho = tamanho >= 400 ? 350 : tamanho
-
+        const tamanho = interaction.options.getInteger("length")
         let bonus = ''
 
         for (let i = 0; i < 3; i++)

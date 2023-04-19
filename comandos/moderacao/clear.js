@@ -35,7 +35,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const membro_sv = await client.getUserGuild(interaction, client.id())
-        const qtd_msg = interaction.options.data[0].value
+        const qtd_msg = interaction.options.getNumber("amount")
 
         // Verificando se o bot pode gerenciar as mensagens do servidor
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))

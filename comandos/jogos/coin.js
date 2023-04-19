@@ -37,7 +37,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        const escolha = parseInt(interaction.options.data[0].value)
+        const escolha = parseInt(interaction.options.getString("choise"))
 
         const moeda = Math.round(Math.random())
         let emoji_exib = ":coin:"

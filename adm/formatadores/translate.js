@@ -5,7 +5,8 @@ const status = {
     3: '💂 | ',
     4: '💢 | ',
     5: '🐣 | ',
-    6: '📣 | '
+    6: '📣 | ',
+    7: '🛂 | '
 }
 
 function reply(interaction, user, target, ephemeral, type) {

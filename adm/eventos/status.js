@@ -87,7 +87,7 @@ function dispara_status(client, status_apisal) {
                         inline: true
                     },
                     {
-                        name: `:white_small_square: **Versão ${process.env.version}**`,
+                        name: `:white_small_square: **Versão ${bot.persis.version}**`,
                         value: "⠀",
                         inline: true
                     },

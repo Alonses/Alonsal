@@ -38,7 +38,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        const texto_entrada = interaction.options.data[0].value
+        const texto_entrada = interaction.options.getString("text")
         let cor_embed = client.embed_color(user.misc.color)
 
         const caracteres = duplicateCount(texto_entrada)

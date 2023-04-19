@@ -69,6 +69,8 @@ async function buildAllBadges(client, user, badges) {
     return text
 }
 
-module.exports.badgeTypes = badgeTypes
-module.exports.busca_badges = busca_badges
-module.exports.buildAllBadges = buildAllBadges
+module.exports = {
+    badgeTypes,
+    busca_badges,
+    buildAllBadges
+}

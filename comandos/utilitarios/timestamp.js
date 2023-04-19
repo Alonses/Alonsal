@@ -17,7 +17,7 @@ module.exports = {
                     "it": '⌠💡⌡ Timestamp personalizzato',
                     "ru": '⌠💡⌡ Пользовательская временная метка'
                 })
-                .addStringOption(option =>
+                .addIntegerOption(option =>
                     option.setName("time")
                         .setNameLocalizations({
                             "pt-BR": 'tempo',
@@ -33,7 +33,8 @@ module.exports = {
                             "fr": 'La valeur à convertir',
                             "it": 'Il valore da convertire',
                             "ru": 'Значение для преобразования'
-                        }))
+                        })
+                        .setMinValue(0))
                 .addStringOption(option =>
                     option.setName("timer")
                         .setDescription("A quick date to schedule")
@@ -71,21 +72,13 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        let timestamp, aviso = "", conversao_invalida = false
         let titulo = client.tls.phrase(user, "util.timestamp.timestamp_1")
-        let data = interaction.options.data[0].value, retorno, entrada = null, timer = 0
-        let conversao_valida = ""
+        let timestamp, aviso = "", conversao_invalida = false, conversao_valida = "", retorno
 
-        if (interaction.options.getSubcommand() !== "now") { // Entrada customizada
-            let opcoes = interaction.options.data[0].options
+        if (interaction.options.getSubcommand() === "custom") { // Entrada customizada
 
-            opcoes.forEach(valor => {
-                if (valor.name === "time")
-                    entrada = parseInt(valor.value)
-
-                if (valor.name === "timer")
-                    timer = parseInt(valor.value) * 60
-            })
+            let entrada = interaction.options.getInteger("time") || null
+            let timer = parseInt(interaction.options.getString("timer")) || 0
 
             if (!entrada)
                 entrada = client.timestamp() + timer // Iniciando o timestamp 

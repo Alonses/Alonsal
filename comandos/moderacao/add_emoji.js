@@ -145,30 +145,17 @@ module.exports = {
             // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
-        const entradas = interaction.options.data[0].options
-
+        // Coletando todas as entradas
         const dados = {
-            nome: null,
-            personalizado: null,
-            categoria: null,
-            url: null
+            nome: interaction.options.getString("name"),
+            personalizado: interaction.options.getString("emoji"),
+            categoria: interaction.options.getString("category"),
+            url: interaction.options.getAttachment("file")
         }
 
-        // Coletando todas as entradas
-        entradas.forEach(valor => {
-
-            if (valor.name === "name")
-                dados.nome = valor.value
-
-            if (valor.name === "emoji") // Emoji personalizado
-                dados.personalizado = valor.value
-
-            if (valor.name === "file")
-                dados.url = valor.attachment.url
-
-            if (valor.name === "category") // Categoria para a figurinha
-                dados.categoria = valor.value
-        })
+        // Verificando se um arquivo customizado foi inserido
+        if (dados.url)
+            dados.url = dados.url.attachment
 
         // Verificando se foi informado uma URL ou uma entrada customizada
         if (!dados.url && !dados.personalizado)

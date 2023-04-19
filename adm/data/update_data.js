@@ -42,5 +42,7 @@ function clear_data(user, value) {
     }
 }
 
-module.exports.clear_data = clear_data
-module.exports.update_data = update_data
+module.exports = {
+    clear_data,
+    update_data
+}

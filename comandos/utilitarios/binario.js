@@ -77,24 +77,13 @@ module.exports = {
                 )),
     async execute(client, user, interaction) {
 
-        let entradas = interaction.options.data, aviso = ""
+        let aviso = ""
 
         const codificar = {
-            texto: null,
-            reverso: 0,
-            opera: 0
+            texto: interaction.options.getString("text"),
+            reverso: interaction.options.getString("reverse"),
+            opera: interaction.options.getString("operation")
         }
-
-        entradas.forEach(valor => {
-            if (valor.name === "text")
-                codificar.texto = valor.value
-
-            if (valor.name === "reverse")
-                codificar.reverso = valor.value
-
-            if (valor.name === "operation")
-                codificar.opera = parseInt(valor.value)
-        })
 
         if (!codificar.opera) // Codificando
             texto = textToBinary(codificar.texto)

@@ -80,13 +80,9 @@ module.exports = {
                 .setMaxValue(50000)),
     async execute(client, user, interaction) {
 
-        const qtd_dados = interaction.options.data[0].value
-        const qtd_faces = interaction.options.data[1].value
-        let acrescimo = 0
-
-        // Valor para adicionar a somatória caso informado
-        if (interaction.options.data.length === 3)
-            acrescimo = interaction.options.data[2].value
+        const qtd_dados = interaction.options.getInteger("amount")
+        const qtd_faces = interaction.options.getInteger("faces")
+        const acrescimo = interaction.options.getInteger("accrual") || 0
 
         const faces = []
         let somatoria = 0

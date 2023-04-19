@@ -13,7 +13,7 @@ module.exports = {
                 .setRequired(true)),
     async execute(client, user, interaction) {
 
-        const texto_entrada = interaction.options.data[0].value
+        const texto_entrada = interaction.options.getString("codigo")
 
         fetch(`https://proxyapp.correios.com.br/v1/sro-rastro/${texto_entrada}`)
             .then(res => res.json())

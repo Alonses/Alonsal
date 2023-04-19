@@ -49,32 +49,40 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const corpo_mensagem = {
-            texto: null,
-            arquivo: null,
+            text: interaction.options.getString("text"),
+            file: interaction.options.getAttachment("file"),
         }
 
-        let entradas = interaction.options.data
+        let conteudo_texto = ""
 
-        entradas.forEach(valor => {
-            if (valor.name === "text")
-                corpo_mensagem.texto = valor.value
+        if (corpo_mensagem.file) {
 
-            if (valor.name === "file")
-                corpo_mensagem.arquivo = valor.attachment.attachment
-        })
+            conteudo_texto = `[Clique aqui](${corpo_mensagem.file.attachment}) para baixar o arquivo`
+
+            // Verificando se o anexo é um arquivo de texto
+            if (corpo_mensagem.file.contentType.includes("text/plain"))
+                conteudo_texto += `\`\`\`${client.defaultEmoji("paper")} Arquivo anexado:\n${await formataArquivo(corpo_mensagem.file)}\`\`\``
+        }
 
         const msg_user = new EmbedBuilder()
-            .setTitle("> :mailbox_with_mail: Nova mensagem!")
-            .setDescription(`-----------------------\nEnviado por \`${interaction.user.id}\`\n\n Mensagem: \`${corpo_mensagem.texto.replaceAll("`", "'")}\``)
-            .setFooter({ text: `Autor: ${interaction.user.username}` })
+            .setTitle("> Nova mensagem! :mailbox_with_mail:")
             .setColor(0xffffff)
+            .setDescription(`-----------------------\nEnviado por \`${interaction.user.id}\`\n\n Mensagem: \`${corpo_mensagem.text.replaceAll("`", "'")}\`\n${conteudo_texto}`)
+            .setFooter({ text: `Autor: ${interaction.user.username}`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setTimestamp()
 
-        if (corpo_mensagem.arquivo)
-            msg_user.setImage(corpo_mensagem.arquivo)
+        // Inserindo uma imagem no embed
+        if (corpo_mensagem.file)
+            msg_user.setImage(corpo_mensagem.file.attachment)
 
         client.tls.reply(interaction, user, "manu.mail.sucesso_1", true)
-
         client.notify(process.env.channel_mail, msg_user)
     }
+}
+
+async function formataArquivo(attachment) {
+    const response = await fetch(attachment.attachment)
+    const data = await response.text()
+
+    return data.trim().slice(0, 1000)
 }

@@ -30,26 +30,19 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        let entradas = interaction.options.data, id_alvo, badge_alvo
+        let id_alvo = interaction.options.getString("id")
+        let badge_alvo = interaction.options.getString("badge")
 
-        entradas.forEach(valor => {
-            if (valor.name === "id")
-                id_alvo = valor.value
+        const all_badges = [], badges_user = await client.getUserBadges(id_alvo)
 
-            if (valor.name === "badge")
-                badge_alvo = parseInt(valor.value)
-        })
-
-        const all_badges = []
-
-        const badges_user = await client.getUserBadges(id_alvo)
-
+        // Listando todas as badges que o usuário possui
         if (badges_user.length > 0)
             badges_user.forEach(valor => {
-                all_badges.push(parseInt(valor.badge)) // Listando todas as badges que o usuário possui
+                all_badges.push(parseInt(valor.badge))
             })
 
-        if (!all_badges.includes(badge_alvo)) { // Atribuindo uma nova badge a um usuário
+        // Atribuindo uma nova badge ao usuário
+        if (!all_badges.includes(badge_alvo)) {
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 

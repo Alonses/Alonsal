@@ -26,7 +26,7 @@ module.exports = {
                     "it": '⌠👤⌡ Vedi classifica server',
                     "ru": '⌠👤⌡ Посмотреть рейтинг серверов'
                 })
-                .addNumberOption(option =>
+                .addIntegerOption(option =>
                     option.setName("page")
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
@@ -41,7 +41,8 @@ module.exports = {
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare',
                             "ru": 'Одна страница для отображения'
-                        }))
+                        })
+                        .setMinValue(1))
                 .addUserOption(option =>
                     option.setName("user")
                         .setNameLocalizations({
@@ -68,7 +69,7 @@ module.exports = {
                     "it": '⌠👤⌡ Guarda la classifica globale',
                     "ru": '⌠👤⌡ Смотрите глобальный рейтинг'
                 })
-                .addNumberOption(option =>
+                .addIntegerOption(option =>
                     option.setName("page")
                         .setNameLocalizations({
                             "pt-BR": 'pagina',
@@ -83,25 +84,20 @@ module.exports = {
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare',
                             "ru": 'Одна страница для отображения'
-                        }))),
+                        })
+                        .setMinValue(1))),
     async execute(client, user, interaction) {
 
-        let usuario_alvo = [], i = 0
+        let usuario_alvo = [], i = 0, data_usuarios
         const users = [], usernames = [], experiencias = [], levels = []
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         // Coleta o ID do usuário mencionado
         let rodape = interaction.user.username, user_alvo = interaction.options.getUser("user")
-        let opcoes = interaction.options.data, pagina = 1
+        let pagina = interaction.options.getInteger("page") || 1
 
-        // Filtrando os valores de entrada caso tenham sido declarados
-        opcoes.forEach(valor => {
-            if (valor.name === "page")
-                pagina = valor.value < 1 ? 1 : valor.value
-        })
-
-        let data_usuarios
+        pagina = pagina < 1 ? 1 : pagina
 
         // Coletando os dados para o servidor ou para o global
         if (interaction.options.getSubcommand() === "server")

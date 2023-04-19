@@ -35,8 +35,8 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
 
-            if (interaction.options.data[0].options.length > 0) // Data customizada
-                data = `?data=${interaction.options.data[0].options[0].value}`
+            if (interaction.options.getString("data")) // Data customizada
+                data = `?data=${interaction.options.getString("data")}`
 
             fetch(`${process.env.url_apisal}/history${data}`)
                 .then(response => response.json())

@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
+const { rgbToHex } = require('../../adm/funcoes/hex_color')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("color")
@@ -57,54 +59,33 @@ module.exports = {
                     "it": '⌠🎉⌡ Scegli il tuo colore!',
                     "ru": '⌠🎉⌡ Выбери свой цвет!'
                 })
-                .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true))
-                .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true))
-                .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true))),
+                .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true).setMaxValue(255).setMinValue(0))
+                .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true).setMaxValue(255).setMinValue(0))
+                .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true).setMaxValue(255).setMinValue(0))),
     async execute(client, user, interaction) {
 
         const colors = ['7289DA', 'D62D20', 'FFD319', '36802D', 'FFFFFF', 'F27D0C', '44008B', '000000', '29BB8E', '2F3136', 'RANDOM']
         let entrada = "", new_color
 
-        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
-
+        // Cor pré-definida
         if (interaction.options.getSubcommand() === "static") {
-            entrada = interaction.options.data[0].options[0].value
+            entrada = interaction.options.getString("color")
 
             if (user.misc.color === colors[entrada.split(".")[1]])
-                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(user, "misc.color.cor_ativa")}`, ephemeral: true })
+                return client.tls.reply(interaction, user, "misc.color.cor_ativa", true, 7)
         } else { // Cor customizada
 
             const rgb = {
-                r: null,
-                g: null,
-                b: null
+                r: interaction.options.getNumber("r"),
+                g: interaction.options.getNumber("g"),
+                b: interaction.options.getNumber("b")
             }
-
-            let entradas = interaction.options.data[0].options, valor_invalido = false
-
-            // Validando os valores de entrada customizados
-            entradas.forEach(valor => {
-                if (valor.value < 0 || valor.value > 255)
-                    valor_invalido = true
-
-                if (valor.name === "r")
-                    rgb.r = valor.value
-
-                if (valor.name === "g")
-                    rgb.g = valor.value
-
-                if (valor.name === "b")
-                    rgb.b = valor.value
-            })
-
-            if (valor_invalido)
-                return interaction.reply({ content: client.tls.phrase(user, "misc.color.error"), ephemeral: true })
 
             // Convertendo do RGB para HEX
             new_color = rgbToHex(rgb.r, rgb.g, rgb.b)
 
             if (user.misc.color === new_color)
-                return interaction.reply({ content: `:passport_control: | ${client.tls.phrase(user, "misc.color.cor_ativa")}`, ephemeral: true })
+                return client.tls.reply(interaction, user, "misc.color.cor_ativa", true, 7)
         }
 
         let cor_demonstracao = entrada.split(".")[1] === "10" ? client.embed_color("RANDOM") : colors[entrada.split(".")[1]]
@@ -132,13 +113,4 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
-}
-
-function componentToHex(c) {
-    var hex = c.toString(16)
-    return hex.length === 1 ? `0${hex}` : hex
-}
-
-function rgbToHex(r, g, b) {
-    return `0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
 }
