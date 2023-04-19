@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    uid: { type: String, default: null },
+    bit: { type: String, default: null },
     persis: {
         version: { type: String, default: null },
         commands: { type: Number, default: 0 },
