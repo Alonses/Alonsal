@@ -24,6 +24,10 @@ async function loadAll(client) {
             if (cod_commit !== bot.persis.alondioma) {
                 console.log("Sincronizando com os idiomas mais recentes.")
 
+                // Salvando o commit de traduções mais recente no banco
+                bot.persis.alondioma = cod_commit
+                bot.save()
+
                 if (process.env.channel_lang)
                     client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
                 else
