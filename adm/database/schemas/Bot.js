@@ -3,9 +3,10 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     persis: {
+        version: { type: String, default: '3.2' },
         commands: { type: Number, default: 0 },
         ranking: { type: Number, default: 5 },
-        alondioma: { type: String, default: 0 }
+        alondioma: { type: String, default: null }
     },
     cmd: {
         ativacoes: { type: Number, default: 0 },
