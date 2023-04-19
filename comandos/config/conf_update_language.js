@@ -23,14 +23,13 @@ module.exports = {
             .then(response => response.text())
             .then(async res => {
 
-                // Buscando o commit mais recente
+                // Salvando o commit de traduções mais recente no banco 
                 const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
                 bot.persis.alondioma = cod_commit
                 bot.save()
 
                 interaction.reply({ content: `:sa: | Baixando o pacote de traduções do commit \`${cod_commit}\``, ephemeral: true })
-
                 client.notify(process.env.channel_feeds, `:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
 
                 fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")

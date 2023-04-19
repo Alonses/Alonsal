@@ -33,7 +33,7 @@ module.exports = {
             .addFields(
                 {
                     name: ":gear: **Comandos**",
-                    value: `:dart: **Hoje:** \`${client.locale(bot.cmd.comandos_disparados)}\`\n:octagonal_sign: **Erros:** \`${bot.cmd.erros}\``,
+                    value: `:dart: **Hoje:** \`${client.locale(bot.cmd.ativacoes)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.cmd.erros)}\``,
                     inline: true
                 },
                 {

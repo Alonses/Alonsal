@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
 
+// bit -> Bot ID
+
 const schema = new mongoose.Schema({
     bit: { type: String, default: null },
     persis: {
-        version: { type: String, default: null },
+        version: { type: String, default: "1.0" },
         commands: { type: Number, default: 0 },
         ranking: { type: Number, default: 5 },
         alondioma: { type: String, default: null }
