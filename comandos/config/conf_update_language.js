@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { mkdirSync, writeFileSync, existsSync } = require('fs')
-const { getBot } = require('../../adm/database/schemas/Bot')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +17,7 @@ module.exports = {
         if (!existsSync(`./arquivos/idiomas/`))
             mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
-        const bot = await getBot(client.id())
+        const bot = await client.getBot()
 
         fetch("https://github.com/Alonses/Alondioma")
             .then(response => response.text())

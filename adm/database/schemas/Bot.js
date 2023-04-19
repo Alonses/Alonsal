@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     persis: {
-        version: { type: String, default: '3.2' },
+        version: { type: String, default: null },
         commands: { type: Number, default: 0 },
         ranking: { type: Number, default: 5 },
         alondioma: { type: String, default: null }
@@ -60,7 +60,7 @@ async function migrateData(client) {
     // Migrando os dados do json para o banco de dados externo
     const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails, bufunfas, movimentado } = require(`../../../arquivos/data/relatorio.json`)
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot()
 
     bot.cmd.ativacoes = comandos_disparados
     bot.cmd.erros = epic_embed_fails

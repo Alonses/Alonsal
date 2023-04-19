@@ -1,5 +1,3 @@
-const { getBot } = require('../database/schemas/Bot')
-
 const LIMIT = 5
 const DIFF = 5000
 const CALDEIRA = 60000
@@ -19,7 +17,7 @@ module.exports = async ({ client, message, caso }) => {
     //              Comandos                  Mensagens
     user.nickname = message.user?.username || message.author?.username
 
-    if (caso === 'messages')
+    if (caso === "messages")
         if (user.warns >= LIMIT) {
             user.caldeira_de_ceira = true
             user.warns = 0
@@ -32,10 +30,10 @@ module.exports = async ({ client, message, caso }) => {
     if (user.caldeira_de_ceira) {
         if (message.createdTimestamp - user.lastValidMessage > CALDEIRA)
             user.caldeira_de_ceira = false
-        else if (caso === 'messages') return
+        else if (caso === "messages") return
     }
 
-    if (caso === 'messages')
+    if (caso === "messages")
         if (message.createdTimestamp - user.lastValidMessage < DIFF) {
             user.warns++
 
@@ -44,9 +42,9 @@ module.exports = async ({ client, message, caso }) => {
         }
 
     // Coletando o XP atual e somando ao total do usuário
-    const bot = getBot(client.id())
+    const bot = await client.getBot()
 
-    if (caso === 'messages') {
+    if (caso === "messages") {
         user.xp += bot.persis.ranking
         user.lastValidMessage = message.createdTimestamp
         user.warns = 0

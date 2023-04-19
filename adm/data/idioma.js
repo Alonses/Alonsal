@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { getUser } = require('../database/schemas/User.js')
-const { getBot } = require('../database/schemas/Bot.js')
 
 const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
 
@@ -13,7 +12,7 @@ async function loadAll(client) {
     if (!existsSync(`./arquivos/idiomas/`))
         mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot()
 
     fetch("https://github.com/Alonses/Alondioma")
         .then(response => response.text())

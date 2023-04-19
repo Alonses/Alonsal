@@ -1,7 +1,8 @@
-const { writeFileSync } = require('fs')
 const fs = require('fs')
 
+const { writeFileSync } = require('fs')
 const { getActiveModules } = require("../database/schemas/Module")
+
 const formata_clima = require('../formatadores/formata_clima')
 const formata_frase = require('../formatadores/formata_frase.js')
 

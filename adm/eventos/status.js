@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { EmbedBuilder } = require('discord.js')
-const { getBot } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
 
@@ -42,7 +41,7 @@ function dispara_status(client, status_apisal) {
     if (process.env.channel_stats) {
         setTimeout(async () => {
 
-            const bot = await getBot(client.id())
+            const bot = await client.getBot()
 
             const commit_language = bot.persis.alondioma
             const canais_texto = client.channels(0).size

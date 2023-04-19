@@ -1,7 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getBot } = require('../../adm/database/schemas/Bot')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,7 +12,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         // Ficará esperando até meia noite para executar a rotina
-        const date1 = new Date(), bot = await getBot(client.id())
+        const date1 = new Date(), bot = await client.getBot()
         const proxima_att = client.timestamp() + (((23 - date1.getHours()) * 3600) + ((60 - date1.getMinutes()) * 60) + ((60 - date1.getSeconds())))
 
         let canais_texto = client.channels(0).size
