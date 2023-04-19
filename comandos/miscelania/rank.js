@@ -1,12 +1,10 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const fs = require('fs')
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
-const { getBot } = require('../../adm/database/schemas/Bot')
 
 const medals = {
     0: ":first_place:",
@@ -225,7 +223,7 @@ module.exports = {
 
 async function retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape) {
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot()
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)

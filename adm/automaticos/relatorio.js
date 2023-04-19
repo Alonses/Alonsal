@@ -1,8 +1,6 @@
-const { getBot } = require("../database/schemas/Bot")
-
 module.exports = async ({ client, caso, quantia }) => {
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot()
 
     // Movimentações de bufunfas
     if (caso === "gerado" || caso === "movido" || caso === "reback") {

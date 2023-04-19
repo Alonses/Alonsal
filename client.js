@@ -9,7 +9,8 @@ const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
 const { create_buttons } = require('./adm/discord/create_buttons')
-const { getRankServer, getUserRankServer, getUserRankServers } = require('./adm/database/schemas/Rank_s')
+const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
+const { getBot } = require('./adm/database/schemas/Bot')
 
 const idioma = require('./adm/data/idioma')
 const translate = require('./adm/formatadores/translate')
@@ -99,6 +100,10 @@ class CeiraClient {
             return alea_hex()
 
         return entrada.slice(-6)
+    }
+
+    getBot() {
+        return getBot(clientId)
     }
 
     getUser(id_user) {

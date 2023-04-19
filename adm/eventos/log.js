@@ -1,13 +1,12 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getBot } = require('../database/schemas/Bot.js')
 const formata_horas = require('../formatadores/formata_horas.js')
 
 module.exports = async ({ client, interaction }) => {
 
     if (!client.x.ranking) return
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot()
     bot.persis.commands++
     bot.save()
 

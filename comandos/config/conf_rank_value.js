@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { getBot } = require('../../adm/database/schemas/Bot')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ranking")
@@ -18,7 +16,7 @@ module.exports = {
         let novo_valor = parseInt(interaction.options.data[0].value)
         const valor_ranking = novo_valor === 0 ? 2 : novo_valor
 
-        const bot = await getBot(client.id())
+        const bot = await client.getBot()
 
         bot.persis.ranking = valor_ranking
         bot.save()

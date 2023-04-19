@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { emojis } = require('../../arquivos/json/text/emojis.json')
-const { getBot, dailyReset } = require('../database/schemas/Bot')
+const { dailyReset } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
 
@@ -25,7 +25,7 @@ function requisita_relatorio(client, aguardar_tempo) {
 
 async function gera_relatorio(client, proxima_att) {
 
-    const date1 = new Date(), bot = await getBot(client.id())
+    const date1 = new Date(), bot = await client.getBot()
 
     let canais_texto = client.channels(0).size
     let members = 0, processamento = '🎲 Processamento\n'
