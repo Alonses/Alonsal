@@ -47,7 +47,7 @@ client.discord.on("messageCreate", async (message) => {
 		const caso = "messages"
 		if (message.content.length > 6 && client.x.ranking) await require("./adm/data/ranking.js")({ client, message, caso })
 
-		require("./adm/eventos/comandos_antigos.js")({ client, message })
+		require("./adm/eventos/comandos_antigos")({ client, message })
 	} catch (err) { // Erro no comando
 		const local = "commands"
 		require("./adm/eventos/error.js")({ client, err, local })

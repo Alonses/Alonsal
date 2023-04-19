@@ -2,7 +2,6 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { EmbedBuilder } = require('discord.js')
-const fs = require('fs')
 const { getBot } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
