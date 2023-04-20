@@ -59,9 +59,9 @@ module.exports = {
                     "it": '⌠🎉⌡ Scegli il tuo colore!',
                     "ru": '⌠🎉⌡ Выбери свой цвет!'
                 })
-                .addNumberOption(option => option.setName("r").setDescription("R").setRequired(true).setMaxValue(255).setMinValue(0))
-                .addNumberOption(option => option.setName("g").setDescription("G").setRequired(true).setMaxValue(255).setMinValue(0))
-                .addNumberOption(option => option.setName("b").setDescription("B").setRequired(true).setMaxValue(255).setMinValue(0))),
+                .addIntegerOption(option => option.setName("r").setDescription("R").setRequired(true).setMaxValue(255).setMinValue(0))
+                .addIntegerOption(option => option.setName("g").setDescription("G").setRequired(true).setMaxValue(255).setMinValue(0))
+                .addIntegerOption(option => option.setName("b").setDescription("B").setRequired(true).setMaxValue(255).setMinValue(0))),
     async execute(client, user, interaction) {
 
         const colors = ['7289DA', 'D62D20', 'FFD319', '36802D', 'FFFFFF', 'F27D0C', '44008B', '000000', '29BB8E', '2F3136', 'RANDOM']
@@ -76,9 +76,9 @@ module.exports = {
         } else { // Cor customizada
 
             const rgb = {
-                r: interaction.options.getNumber("r"),
-                g: interaction.options.getNumber("g"),
-                b: interaction.options.getNumber("b")
+                r: interaction.options.getInteger("r"),
+                g: interaction.options.getInteger("g"),
+                b: interaction.options.getInteger("b")
             }
 
             // Convertendo do RGB para HEX

@@ -20,13 +20,13 @@ module.exports = {
                     "it": 'lunghezza',
                     "ru": 'длина'
                 })
-                .setDescription("from 12 to 350")
+                .setDescription("from 15 to 350")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'de 12 até 350',
-                    "es-ES": 'de 12 a 350',
-                    "fr": 'de 12 à 350',
-                    "it": 'da 12 a 350',
-                    "ru": 'от 12 до 350'
+                    "pt-BR": 'de 15 até 350',
+                    "es-ES": 'de 15 a 350',
+                    "fr": 'de 15 à 350',
+                    "it": 'da 15 a 350',
+                    "ru": 'от 15 до 350'
                 })
                 .setMinValue(15)
                 .setMaxValue(450)),
