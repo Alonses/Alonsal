@@ -24,7 +24,7 @@ module.exports = {
             .setImage(arquivo.attachment)
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
 
-        await client.user().setAvatar(novo_perfil)
+        await client.user().setAvatar(arquivo.attachment)
 
         interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true })
         client.notify(process.env.channel_feeds, att_avatar)

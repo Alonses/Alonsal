@@ -29,8 +29,8 @@ module.exports = {
             option.setName("tipo")
                 .setDescription("O tipo do conteudo")
                 .addChoices(
-                    { name: 'Jogo', value: '0' },
-                    { name: 'DLC/Expansão', value: '1' },
+                    { name: 'Jogo', value: 'jogo' },
+                    { name: 'DLC/Expansão', value: 'dlc' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
