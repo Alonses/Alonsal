@@ -1,6 +1,6 @@
 # Alonsal
 
-O Alonsal é um Bot multitarefas para o Discord
+O Alonsal é um Bot multitarefas para o Discord<br>
 Ele atua em diversas áreas e apresenta diversas funções!
 
 Dentre as áreas de atuação, separamos por esses tópicos: //
