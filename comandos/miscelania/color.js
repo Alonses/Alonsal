@@ -65,7 +65,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const colors = ['7289DA', 'D62D20', 'FFD319', '36802D', 'FFFFFF', 'F27D0C', '44008B', '000000', '29BB8E', '2F3136', 'RANDOM']
-        let entrada = "", new_color
+        let entrada = "", new_color = ''
 
         // Cor pré-definida
         if (interaction.options.getSubcommand() === "static") {
@@ -95,6 +95,9 @@ module.exports = {
         if (interaction.options.getSubcommand() === "custom") {
             cor_demonstracao = new_color
             entrada = "4.0"
+
+            // Atribuindo o digito auxiliar da cor customizada
+            new_color = `-${new_color}`
         }
 
         if (entrada.split(".")[1] === 10)
@@ -109,7 +112,7 @@ module.exports = {
             .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para a cor customizada
-        const row = client.create_buttons([{ name: `Confirmar:${entrada}-${new_color}`, value: '1', type: 2 }, { name: 'Cancelar:0.0', value: '0', type: 3 }], interaction)
+        const row = client.create_buttons([{ id: "custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${entrada}${new_color}` }, { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

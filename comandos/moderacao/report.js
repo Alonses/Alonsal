@@ -167,7 +167,7 @@ module.exports = {
 
                 // Enviando o embed para validação
                 const embed = new EmbedBuilder()
-                    .setTitle("> Reportar usuário :passport_control:")
+                    .setTitle(client.tls.phrase(user, "mode.report.reportando", 7))
                     .addFields(
                         {
                             name: ":bust_in_silhouette: **Discord ID**",
@@ -175,7 +175,7 @@ module.exports = {
                             inline: true
                         },
                         {
-                            name: `${client.defaultEmoji("guard")} **Reportador**`,
+                            name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "mode.report.reportador")}**`,
                             value: `\`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                             inline: true
                         },
@@ -186,14 +186,14 @@ module.exports = {
                         }
                     )
                     .setColor(0xED4245)
-                    .setDescription(`\`\`\`💢 | ${alvo.relatory}\`\`\`\nSeu reporte irá adicionar o seguinte usuário a minha lista de mau comportados.\n\nVocê pode decidir se eu irei notificar outros servidores sobre essa inclusão, se irei adicionar ele em silêncio ou se deseja cancelar este reporte.`)
-                    .setFooter({ text: 'Selecione a operação desejada nos botões abaixo.', iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+                    .setDescription(`\`\`\`💢 | ${alvo.relatory}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}`)
+                    .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
                 // Salvando o alvo para editar posteriormente
                 await alvo.save()
 
                 // Criando os botões para as funções de reporte
-                const row = client.create_buttons([{ name: `Adicionar e anunciar:report_user`, value: '1', type: 2, report: alvo.uid }, { name: `Adicionar silenciosamente:report_user`, value: '0', type: 1, report: alvo.uid }, { name: 'Cancelar:report_user', value: '0', type: 3, report: alvo.uid }], interaction)
+                const row = client.create_buttons([{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), value: '1', type: 2, data: `1|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, data: `2|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: `0|${alvo.uid}` }], interaction)
 
                 return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
 
@@ -210,13 +210,13 @@ module.exports = {
 
             // Enviando o embed para validação
             const embed = new EmbedBuilder()
-                .setTitle("> Reporte automatizado")
-                .setDescription(`Seu reporte irá adicionar todos os usuários possuem justificativas e que estão banidos neste servidor à minha lista de usuários mau comportados.\n\n Usuários importados de forma automática não são mencionados para outros servidores, mas são exibidos em suas listas com o comando /verify server, caso os mesmos sejam membros de tal.`)
+                .setTitle(client.tls.phrase(user, "mode.report.automatizado"))
                 .setColor(0xED4245)
-                .setFooter({ text: 'Confirme ou cancele a operação nos botões abaixo.', iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+                .setDescription(client.tls.phrase(user, "mode.report.descricao_automatizado"))
+                .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
             // Criando os botões para a cor customizada
-            const row = client.create_buttons([{ name: `Confirmar:report_auto`, value: '1', type: 2 }, { name: 'Cancelar:report_auto', value: '0', type: 3 }], interaction)
+            const row = client.create_buttons([{ id: "report_auto", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: 1 }, { id: "report_auto", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
 
             return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         }

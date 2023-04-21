@@ -61,43 +61,41 @@ module.exports = {
         let bufunfas = interaction.options.getNumber("amount")
 
         if (bufunfas < 0.01)
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error_2")}`, ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error_2", [9, 0]), ephemeral: true })
 
         const alvo = await client.getUser(user_alvo.id)
 
         if (alvo.uid === user.uid)
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error_3")}`, ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error_3", [9, 0]), ephemeral: true })
 
         // Validando se o usuário marcado não é um bot
         const membro_sv = await client.getUserGuild(interaction, alvo.uid)
 
         if (membro_sv.user.bot && alvo.uid !== client.id())
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.user_bot")}`, ephemeral: true })
-
-        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
+            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.user_bot", [9, 0]), ephemeral: true })
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: `:bank: :octagonal_sign: | ${client.tls.phrase(user, "misc.pay.error").replace("valor_repl", client.locale(bufunfas))}`, ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error", [9, 0]).replace("valor_repl", client.locale(bufunfas)), ephemeral: true })
 
         const embed = new EmbedBuilder()
-            .setTitle("> Nova transferência")
+            .setTitle(client.tls.phrase(user, "misc.pay.nova_transferencia"))
             .setColor(client.embed_color(user.misc.color))
             .addFields(
                 {
-                    name: `**${client.defaultEmoji("money")} Transferindo**`,
-                    value: `\`B$ ${formata_num(bufunfas)}\``,
+                    name: `**${client.defaultEmoji("money")} ${client.tls.phrase(user, "misc.pay.transferindo")}**`,
+                    value: `\`B$ ${client.locale(bufunfas)}\``,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("person")} Destinatário**`,
+                    name: `**${client.defaultEmoji("person")} ${client.tls.phrase(user, "misc.pay.destinatario")}**`,
                     value: `<@${alvo.uid}>`,
                     inline: true
                 }
             )
-            .setFooter({ text: "Selecione a operação desejada nos botões abaixo.", iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para o menu de transferências
-        const row = client.create_buttons([{ name: `Confirmar:transfer.${alvo.uid}[${bufunfas}]`, value: '1', type: 2 }, { name: 'Cancelar:transfer', value: '0', type: 3 }], interaction)
+        const row = client.create_buttons([{ id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${alvo.uid}[${bufunfas}` }, { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
 
         return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

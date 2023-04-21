@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const create_menus = require('../../adm/discord/create_menus.js')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("badge")
@@ -54,8 +52,13 @@ module.exports = {
             all_badges.push(valor.badge)
         })
 
+        const data = {
+            alvo: "badges",
+            values: all_badges
+        }
+
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
-            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [create_menus("badges", client, interaction, user, all_badges)], ephemeral: true })
+            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [client.create_menus(client, interaction, user, data)], ephemeral: true })
         else {
             user.updateOne({ uid: interaction.user.id },
                 {

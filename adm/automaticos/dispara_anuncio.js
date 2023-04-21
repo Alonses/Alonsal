@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const formata_anun = require('../formatadores/formata_games.js')
+const { formata_anun } = require('../formatadores/formata_games')
 
 const { redes } = require('../../arquivos/json/text/anuncio.json')
 

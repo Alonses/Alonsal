@@ -8,7 +8,8 @@ const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
-const { create_buttons } = require('./adm/discord/create_buttons')
+const { create_buttons } = require('./adm/interacoes/generators/create_buttons')
+const { create_menus } = require('./adm/interacoes/generators/create_menus')
 const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
 const { getBot } = require('./adm/database/schemas/Bot')
 
@@ -158,8 +159,12 @@ class CeiraClient {
         return getRankGlobal()
     }
 
-    create_buttons(lista_botoes, interaction) {
-        return create_buttons(lista_botoes, interaction)
+    create_buttons(data, interaction) {
+        return create_buttons(data, interaction)
+    }
+
+    create_menus(client, interaction, user, data) {
+        return create_menus(client, interaction, user, data)
     }
 
     notify(id_alvo, conteudo) {
@@ -237,6 +242,13 @@ class CeiraClient {
             return padrao
         else
             return entrada
+    }
+
+    atualiza_dados(alvo, interaction) {
+        if (!alvo.sid) {
+            alvo.sid = interaction.guild.id
+            alvo.save()
+        }
     }
 }
 

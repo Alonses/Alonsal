@@ -6,7 +6,11 @@ const status = {
     4: '💢 | ',
     5: '🐣 | ',
     6: '📣 | ',
-    7: '🛂 | '
+    7: '🛂 | ',
+    8: '🚦 | ',
+    9: '🏦 | ',
+    10: '✅ | ',
+    11: '⭕ | '
 }
 
 function reply(interaction, user, target, ephemeral, type) {
@@ -23,15 +27,19 @@ function editReply(interaction, user, target, ephemeral, type) {
 
     let phrase = translate(user, target)
 
-    if (typeof type !== "undefined")
+    if (type) // Códigos de emojis padrões
         phrase = `${status[type]}${phrase}`
 
     interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
 
-function phrase(user, target) {
+function phrase(user, target, type) {
 
     let phrase = translate(user, target)
+
+    if (type) // Códigos de emojis padrões
+        return `${status[type]}${phrase}`
+
     return phrase
 }
 

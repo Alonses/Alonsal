@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
-const create_menus = require('../../adm/discord/create_menus.js')
-
 const { gifs } = require("../../arquivos/json/gifs/galerito.json")
 const { relation } = require('../../arquivos/songs/galerito/songs.json')
 
@@ -39,7 +37,14 @@ module.exports = {
 			const file = new AttachmentBuilder(`./arquivos/songs/galerito/galerito_${num}.ogg`, { name: "galerito.ogg" })
 
 			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-		} else
-			interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [create_menus("galerito", client, interaction, user, relation)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+		} else {
+
+			const data = {
+				alvo: "galerito",
+				values: relation
+			}
+
+			interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+		}
 	}
 }

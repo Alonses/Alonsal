@@ -31,7 +31,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         let id_alvo = interaction.options.getString("id")
-        let badge_alvo = interaction.options.getString("badge")
+        let badge_alvo = parseInt(interaction.options.getString("badge"))
 
         const all_badges = [], badges_user = await client.getUserBadges(id_alvo)
 
@@ -66,10 +66,10 @@ module.exports = {
                         inline: true
                     }
                 )
-                .setFooter({ text: "Selecione a operação desejada nos botões abaixo.", iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
             // Criando os botões para o menu de badges
-            const row = client.create_buttons([{ name: `Confirmar e notificar:badges.[${badge_alvo}]`, value: '1', type: 2, badge: id_alvo }, { name: `Confirmar silenciosamente:badges.[${badge_alvo}]`, value: '0', type: 1, badge: id_alvo }, { name: 'Cancelar:badges', value: '0', type: 3 }], interaction)
+            const row = client.create_buttons([{ id: "badges", name: client.tls.phrase(user, "menu.botoes.confirmar_notificando"), value: '1', type: 2, data: `1|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, data: `2|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
 
             return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         } else

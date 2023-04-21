@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const create_menus = require('../../adm/discord/create_menus.js')
 const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
@@ -119,7 +118,12 @@ module.exports = {
 
             const opcoes = [1, 2, 3, 4]
 
-            interaction.reply({ content: "Escolha uma das opções abaixo", components: [create_menus("data", client, interaction, user, opcoes)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            const data = {
+                alvo: "data",
+                values: opcoes
+            }
+
+            interaction.reply({ content: "Escolha uma das opções abaixo", components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     }
 }

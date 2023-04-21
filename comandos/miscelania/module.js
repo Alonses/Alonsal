@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const { getModule } = require('../../adm/database/schemas/Module')
 const { getModulePrice } = require('../../adm/database/schemas/Module')
 
@@ -53,14 +54,14 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (user.misc.money < 20)
-            return interaction.reply({ content: ":octagonal_sign: | Você não possui Bufunfas o suficiente para usar módulos, consiga algumas com o comando /daily antes!", ephemeral: true })
+            return client.tls.reply(interaction, user, "misc.modulo.sem_bufunfa", true, 0)
 
-        const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos"], ativacoes = ["Dias úteis", "Finais de semana", "Todos os dias"]
+        const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
         const type = interaction.options.getString("tipo")
 
         // Prevenção de erros
         if (type == 0 && !user.misc.locale)
-            return interaction.reply(":octagonal_sign: | Para ativar o módulo de clima é necessário definir um local padrão com o comando `/link locale` antes!")
+            return client.tls.reply(interaction, user, "misc.modulo.sem_locale", true, 0)
 
         const corpo_modulo = await getModule(interaction.user.id, type)
 
@@ -73,30 +74,30 @@ module.exports = {
         const montante = await getModulePrice(interaction.user.id)
 
         const embed = new EmbedBuilder()
-            .setTitle("> Criando um módulo")
+            .setTitle(client.tls.phrase(user, "misc.modulo.cabecalho_menu"))
             .setColor(client.embed_color(user.misc.color))
             .addFields(
                 {
-                    name: `**${client.defaultEmoji("types")} Tipo de módulo**`,
+                    name: `**${client.defaultEmoji("types")} ${client.tls.phrase(user, "misc.modulo.tipo")}**`,
                     value: `\`${tipos_modulo[corpo_modulo.type]}\``,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("time")} Ativação**`,
+                    name: `**${client.defaultEmoji("time")} ${client.tls.phrase(user, "misc.modulo.ativacao")}**`,
                     value: `\`${ativacao_modulo}\``,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("money")} Valor**`,
+                    name: `**${client.defaultEmoji("money")} ${client.tls.phrase(user, "misc.modulo.valor")}**`,
                     value: `\`B$ ${corpo_modulo.stats.price}\``,
                     inline: true
                 },
             )
             .setDescription(`:nerd: | Este módulo irá descontar \`B$${corpo_modulo.stats.price} p/ dia\`, quanto mais módulos ativar,\nmais bufunfas serão descontadas do seu banco por dia.\n\nAtualmente o valor por operar seus módulos é \`B$${montante} p/dia\`.\n----------------------------------------------------------------------------`)
-            .setFooter({ text: "Use os botões abaixo para confirmar ou cancelar.", iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para o menu de badges
-        const row = client.create_buttons([{ name: `Confirmar:modules.${corpo_modulo.type}`, value: '1', type: 2 }, { name: `Cancelar:modules.${corpo_modulo.type}`, value: '0', type: 3 }], interaction)
+        const row = client.create_buttons([{ id: "modules", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${corpo_modulo.type}` }, { id: "modules", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: `0|${corpo_modulo.type}` }], interaction)
 
         return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
