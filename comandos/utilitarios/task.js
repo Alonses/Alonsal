@@ -3,8 +3,6 @@ const { SlashCommandBuilder } = require('discord.js')
 const { listAllUserTasks, createTask } = require('../../adm/database/schemas/Task')
 const { listAllUserGroups, createGroup, checkUserGroup } = require('../../adm/database/schemas/Task_group')
 
-const create_menus = require('../../adm/discord/create_menus')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("tasks")
@@ -81,7 +79,7 @@ module.exports = {
                                 .setNameLocalizations({
                                     "pt-BR": 'descricao'
                                 })
-                                .setDescription("Qual será o nome do grupo?")
+                                .setDescription("Qual será o nome da lista?")
                                 .setRequired(true))))
         .addSubcommandGroup(subcommandgroup =>
             subcommandgroup
@@ -89,11 +87,11 @@ module.exports = {
                 .setDescription("⌠💡⌡ Remove listas")
                 .addSubcommand(subcommand =>
                     subcommand
-                        .setName("group")
+                        .setName("list")
                         .setNameLocalizations({
                             "pt-BR": 'lista'
                         })
-                        .setDescription("⌠💡⌡ Remove an group")
+                        .setDescription("⌠💡⌡ Remove an list")
                         .setDescriptionLocalizations({
                             "pt-BR": '⌠💡⌡ Remova uma lista'
                         }))),
@@ -109,7 +107,7 @@ module.exports = {
         if (!interaction.options.getSubcommandGroup()) {
 
             if (tarefas.length < 1)
-                return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma tarefa criada! Crie alguma para poder usar este comando.", ephemeral: true })
+                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa", true, 0)
 
             for (let i = 0; i < tarefas.length; i++) {
                 if (tarefas[i].concluded)
@@ -122,109 +120,135 @@ module.exports = {
 
                 // Tarefas abertas
                 if (casos.aberto < 1)
-                    return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma tarefa em aberto! Crie alguma para poder usar este comando.", ephemeral: true })
+                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_a", true, 0)
 
-                interaction.reply({ content: ":mag: | Escolha uma das notas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 0))], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                const data = {
+                    alvo: "tarefas",
+                    values: filtra_tarefas(tarefas, 0)
+                }
+
+                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
             } else if (interaction.options.getSubcommand() === "completed") {
 
                 // Tarefas finalizadas
                 if (casos.finalizado < 1)
-                    return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma tarefa finalizada! Finalize algumas para poder usar este comando.", ephemeral: true })
+                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_f", true, 0)
 
-                interaction.reply({ content: ":mag: | Escolha uma das tarefas abaixo para mais detalhes", components: [create_menus("tasks", client, interaction, user, filtra_tarefas(tarefas, 1))], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                const data = {
+                    alvo: "tarefas",
+                    values: filtra_tarefas(tarefas, 1)
+                }
+
+                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             } else {
 
                 // Navegando por listas de tarefas
-                let grupos
+                let listas
 
                 // Verificando se o usuário desabilitou as tasks globais
                 if (client.decider(user?.conf.global_tasks, 1))
-                    grupos = await listAllUserGroups(interaction.user.id)
+                    listas = await listAllUserGroups(interaction.user.id)
                 else
-                    grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+                    listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                 // Listando listas
-                if (grupos.length < 1)
-                    return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista para poder navegar!", ephemeral: true })
+                if (listas.length < 1)
+                    return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, 0)
 
-                interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para visualizar anotações.", components: [create_menus("groups_n", client, interaction, user, grupos)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                const data = {
+                    alvo: "listas_navegar",
+                    values: listas
+                }
 
+                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             }
         } else {
 
-            const date1 = parseInt(new Date() / 1000)
+            const timestamp = parseInt(new Date() / 1000)
 
             if (interaction.options.getSubcommandGroup() === "add") {
                 if (interaction.options.getSubcommand() === "task") {
 
                     // Criando uma nova tarefa
-                    let grupos
+                    let listas
 
                     // Verificando se o usuário desabilitou as tasks globais
                     if (client.decider(user?.conf.global_tasks, 1))
-                        grupos = await listAllUserGroups(interaction.user.id)
+                        listas = await listAllUserGroups(interaction.user.id)
                     else
-                        grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+                        listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
-                    if (grupos.length < 1)
-                        return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista criada! Crie alguma para poder usar este comando.", ephemeral: true })
+                    if (listas.length < 1)
+                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista", true, 0)
 
-                    const task = await createTask(interaction.user.id, interaction.guild.id, interaction.options.getString("description"), date1)
+                    const task = await createTask(interaction.user.id, interaction.guild.id, interaction.options.getString("description"), timestamp)
 
                     // Adicionando a tarefa a uma lista automaticamente caso só exista uma lista
-                    if (grupos.length == 1) {
-                        nome_lista = grupos[0].name
+                    if (listas.length == 1) {
+                        nome_lista = listas[0].name
 
-                        task.group = grupos[0].name
+                        task.group = listas[0].name
                         task.save()
 
                         // Verificando se a lista não possui algum servidor mencionado
-                        if (typeof grupos[0].sid === "undefined") {
-                            grupos[0].sid = interaction.guid.id
-                            grupos[0].save()
+                        if (typeof listas[0].sid === "undefined") {
+                            listas[0].sid = interaction.guid.id
+                            listas[0].save()
                         }
 
-                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua nova tarefa foi adicionada automaticamente na lista \`${task.group}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-                    } else
-                        interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [create_menus("groups", client, interaction, user, grupos, date1)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.tarefa_adicionada")} \`${task.group}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    } else {
+
+                        const data = {
+                            alvo: "listas",
+                            values: listas,
+                            timestamp: timestamp
+                        }
+
+                        interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    }
                 } else {
 
-                    // Verificando se o nome da nova lista não existe ainda
-                    let check_group
+                    let check_list
 
                     // Verificando se o usuário desabilitou as tasks globais
                     if (client.decider(user?.conf.global_tasks, 1))
-                        check_group = await checkUserGroup(interaction.user.id, interaction.options.getString("description"))
+                        check_list = await checkUserGroup(interaction.user.id, interaction.options.getString("description"))
                     else
-                        check_group = await checkUserGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id)
+                        check_list = await checkUserGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id)
 
-                    if (check_group.length > 0)
-                        return interaction.reply({ content: ":octagonal_sign: | Você já possui uma lista com esse nome! Por favor, insira uma lista com outro nome", ephemeral: true })
+                    if (check_list.length > 0) // Verificando se o nome da nova lista não existe ainda
+                        return client.tls.reply(interaction, user, "util.tarefas.lista_repetida", true, 0)
 
                     // Criando listas
-                    createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, date1)
+                    createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, timestamp)
 
-                    interaction.reply({ content: `${client.defaultEmoji("paper")} | Sua lista foi criada, use o comando \`/tarefas add tarefa\` para adicionar tarefas!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.lista_criada")}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             } else {
 
                 // Excluindo tarefas e listas
-                if (interaction.options.getSubcommand() === "group") {
+                if (interaction.options.getSubcommand() === "list") {
 
-                    let grupos
+                    let listas
 
                     // Verificando se o usuário desabilitou as tasks globais
                     if (client.decider(user?.conf.global_tasks, 1))
-                        grupos = await listAllUserGroups(interaction.user.id)
+                        listas = await listAllUserGroups(interaction.user.id)
                     else
-                        grupos = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+                        listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                     // Removendo listas
-                    if (grupos.length < 1)
-                        return interaction.reply({ content: ":octagonal_sign: | Você não possui nenhuma lista para poder excluir!", ephemeral: true })
+                    if (listas.length < 1)
+                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_r", true, 0)
 
-                    interaction.reply({ content: ":mag: | Escolha uma das listas abaixo para excluir.", components: [create_menus("groups_r", client, interaction, user, grupos)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    const data = {
+                        alvo: "listas_remover",
+                        values: listas
+                    }
+
+                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_e"), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             }
         }

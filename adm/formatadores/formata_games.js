@@ -1,6 +1,6 @@
 const { emojis } = require('../../arquivos/json/text/emojis.json')
 
-module.exports = (client, objeto_anunciado, plataforma, idioma_definido) => {
+function formata_games(client, objeto_anunciado, plataforma, idioma_definido) {
 
     const { data } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
     const game = data.game
@@ -46,4 +46,8 @@ function nome_games(objeto_anunciado) {
         return str.slice(0, str.length - 2).replaceAll(", ", " & ")
     } else
         return `_\`${objeto_anunciado[0].nome}\`_`
+}
+
+module.exports = {
+    formata_games
 }

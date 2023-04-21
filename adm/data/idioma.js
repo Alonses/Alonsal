@@ -9,6 +9,10 @@ let default_lang
 
 // Carrega todos os idiomas do bot diretamente do git
 async function loadAll(client) {
+
+    // Previne que o bot atualize seus pacotes de idioma caso esteja atualizando seus comandos ( localmente )
+    if (client.x.force_update) return
+
     if (!existsSync(`./arquivos/idiomas/`))
         mkdirSync(`./arquivos/idiomas/`, { recursive: true })
 
