@@ -42,8 +42,8 @@ module.exports = {
 
         const badges = await client.getUserBadges(interaction.user.id)
 
-        // Validando existência de badges antes do comando
-        if (badges.length <= 0)
+        // Validando se o usuário possui badges
+        if (badges.length < 1)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
 
         let all_badges = []
@@ -60,12 +60,8 @@ module.exports = {
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
             return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [client.create_menus(client, interaction, user, data)], ephemeral: true })
         else {
-            user.updateOne({ uid: interaction.user.id },
-                {
-                    misc: {
-                        fixed_badge: null,
-                    }
-                })
+            user.misc.fixed_badge = null
+            user.save()
         }
 
         // Removendo a badge fixada

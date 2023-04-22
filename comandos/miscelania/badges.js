@@ -17,8 +17,8 @@ module.exports = {
 
         const badges = await client.getUserBadges(interaction.user.id)
 
-        // Buscando as badges do usuário
-        if (badges.length <= 0)
+        // Validando se o usuário possui badges
+        if (badges.length < 1)
             return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
 
         const embed = new EmbedBuilder()
