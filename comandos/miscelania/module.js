@@ -30,13 +30,13 @@ module.exports = {
                     // { name: '🏯 Eventos históricos', value: '2' }
                 )
                 .setRequired(true))
-        .addNumberOption(option =>
+        .addIntegerOption(option =>
             option.setName("hora")
                 .setMaxValue(24)
                 .setMinValue(0)
                 .setDescription("Em qual horário?")
                 .setRequired(true))
-        .addNumberOption(option =>
+        .addIntegerOption(option =>
             option.setName("minuto")
                 .setMaxValue(60)
                 .setMinValue(0)
@@ -66,7 +66,7 @@ module.exports = {
         const corpo_modulo = await getModule(interaction.user.id, type)
 
         corpo_modulo.stats.days = interaction.options.getString("quando")
-        corpo_modulo.stats.hour = `${interaction.options.getNumber("hora")}:${interaction.options.getNumber("minuto")}`
+        corpo_modulo.stats.hour = `${interaction.options.getInteger("hora")}:${interaction.options.getInteger("minuto")}`
 
         await corpo_modulo.save()
 
@@ -93,7 +93,7 @@ module.exports = {
                     inline: true
                 },
             )
-            .setDescription(`:nerd: | Este módulo irá descontar \`B$${corpo_modulo.stats.price} p/ dia\`, quanto mais módulos ativar,\nmais bufunfas serão descontadas do seu banco por dia.\n\nAtualmente o valor por operar seus módulos é \`B$${montante} p/dia\`.\n----------------------------------------------------------------------------`)
+            .setDescription(client.tls.phrase(user, "misc.modulos.descricao").replace("modulos_price_repl", corpo_modulo.stats.price).replace("montante_repl", montante))
             .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para o menu de badges

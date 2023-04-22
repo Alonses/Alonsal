@@ -6,10 +6,9 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
-    group: { type: String, default: null },
     text: { type: String, default: null },
     timestamp: { type: Number, default: 0 },
-    cached: { type: Boolean, default: false },
+    g_timestamp: { type: Number, defaul: null },
     concluded: { type: Boolean, default: false }
 })
 
@@ -29,17 +28,13 @@ async function getTask(uid, timestamp) {
 async function listAllUserTasks(uid, sid) {
 
     if (sid)
-        return model.find({ uid: uid, cached: false, sid: sid })
+        return model.find({ uid: uid, sid: sid })
 
-    return model.find({ uid: uid, cached: false })
+    return model.find({ uid: uid })
 }
 
-async function listAllUserGroupTasks(uid, name, sid) {
-
-    if (sid)
-        return model.find({ uid: uid, group: name, sid: sid })
-
-    return model.find({ uid: uid, group: name })
+async function listAllUserGroupTasks(uid, g_timestamp) {
+    return model.find({ uid: uid, g_timestamp: g_timestamp })
 }
 
 // Apaga uma task do usuário
@@ -47,8 +42,8 @@ async function dropTask(uid, timestamp) {
     await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
 }
 
-async function dropTaskByGroup(uid, name) {
-    await model.deleteMany({ uid: uid, group: name })
+async function dropTaskByGroup(uid, g_timestamp) {
+    await model.deleteMany({ uid: uid, g_timestamp: g_timestamp })
 }
 
 module.exports.Task = model

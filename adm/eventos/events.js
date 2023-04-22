@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async function ({ client }) {
 
-    console.log("Ligando eventos")
+    console.log("🟠 | Ligando eventos")
 
     client.discord.on("guildCreate", guild => {
         let caso = "New"
@@ -24,4 +24,6 @@ module.exports = async function ({ client }) {
 
         client.notify(process.env.channel_error, embed)
     })
+
+    console.log("🟢 | Eventos acionados com sucesso")
 }

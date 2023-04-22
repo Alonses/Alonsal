@@ -10,7 +10,7 @@ module.exports = async ({ client }) => {
     // Não notifica que o bot ficou online
     if (client.x.status) {
 
-        console.log("Disparando status")
+        console.log("🟠 | Disparando status")
 
         fetch(`${process.env.url_apisal}/status`)
             .then(res => res.json())
@@ -109,6 +109,8 @@ function dispara_status(client, status_apisal) {
                         inline: true
                     }
                 )
+
+            console.log("🟢 | Status enviado")
 
             client.notify(process.env.channel_status, embed) // Avisa que está online em um canal
         }, 3000)

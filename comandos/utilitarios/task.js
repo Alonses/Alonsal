@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { listAllUserTasks, createTask } = require('../../adm/database/schemas/Task')
+const { createTask } = require('../../adm/database/schemas/Task')
 const { listAllUserGroups, createGroup, checkUserGroup } = require('../../adm/database/schemas/Task_group')
 
 module.exports = {
@@ -97,72 +97,15 @@ module.exports = {
                         }))),
     async execute(client, user, interaction) {
 
-        const casos = {
-            aberto: 0,
-            finalizado: 0
-        }
-
-        const tarefas = await listAllUserTasks(interaction.user.id)
-
         if (!interaction.options.getSubcommandGroup()) {
-
-            if (tarefas.length < 1)
-                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa", true, 0)
-
-            for (let i = 0; i < tarefas.length; i++) {
-                if (tarefas[i].concluded)
-                    casos.finalizado++
-                else
-                    casos.aberto++
-            }
-
-            if (interaction.options.getSubcommand() === "available") {
-
-                // Tarefas abertas
-                if (casos.aberto < 1)
-                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_a", true, 0)
-
-                const data = {
-                    alvo: "tarefas",
-                    values: filtra_tarefas(tarefas, 0)
-                }
-
-                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-
-            } else if (interaction.options.getSubcommand() === "completed") {
-
-                // Tarefas finalizadas
-                if (casos.finalizado < 1)
-                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_f", true, 0)
-
-                const data = {
-                    alvo: "tarefas",
-                    values: filtra_tarefas(tarefas, 1)
-                }
-
-                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            } else {
-
-                // Navegando por listas de tarefas
-                let listas
-
-                // Verificando se o usuário desabilitou as tasks globais
-                if (client.decider(user?.conf.global_tasks, 1))
-                    listas = await listAllUserGroups(interaction.user.id)
-                else
-                    listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
-
-                // Listando listas
-                if (listas.length < 1)
-                    return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, 0)
-
-                const data = {
-                    alvo: "listas_navegar",
-                    values: listas
-                }
-
-                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            }
+            if (interaction.options.getSubcommand() === "available") { // Tarefas disponíveis
+                const operador = "a"
+                return require('../../adm/interacoes/chunks/tarefas')({ client, user, interaction, operador })
+            } else if (interaction.options.getSubcommand() === "completed") { // Tarefas completadas
+                const operador = "f"
+                return require('../../adm/interacoes/chunks/tarefas')({ client, user, interaction, operador })
+            } else
+                return require('../../adm/interacoes/chunks/listas_navegar')({ client, user, interaction })
         } else {
 
             const timestamp = parseInt(new Date() / 1000)
@@ -197,7 +140,7 @@ module.exports = {
                             listas[0].save()
                         }
 
-                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.tarefa_adicionada")} \`${task.group}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.tarefa_adicionada")} \`${nome_lista}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     } else {
 
                         const data = {
@@ -253,16 +196,4 @@ module.exports = {
             }
         }
     }
-}
-
-function filtra_tarefas(tarefas, caso) {
-
-    const array = []
-
-    // Filtrando o array para o estado de conclusão
-    for (let i = 0; i < tarefas.length; i++)
-        if (tarefas[i].concluded == caso)
-            array.push(tarefas[i])
-
-    return array
 }
