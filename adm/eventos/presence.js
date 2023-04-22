@@ -8,6 +8,9 @@ const actionTypes = [ActivityType.Playing, ActivityType.Watching, ActivityType.L
 
 module.exports = async ({ client }) => {
 
+    // Impede que o bot atualize o status
+    if (client.x.force_update) return
+
     if (client.x.status) {
         client.user().setActivity("Vapor p/ fora!", { type: ActivityType.Playing })
 
