@@ -8,8 +8,9 @@ function create_buttons(dados, interaction) {
     // Passando pelo array de botões e criando novos
     dados.forEach(botao => {
 
-        if (!botao.id.includes("report_user"))
-            botao.name = botao.name.length > 25 ? `${botao.name.slice(0, 25)}...` : botao.name
+        if (botao.id)
+            if (!botao.id.includes("report_user"))
+                botao.name = botao.name.length > 25 ? `${botao.name.slice(0, 25)}...` : botao.name
 
         if (botao.type === 4) {
             if (!botao.emoji)
