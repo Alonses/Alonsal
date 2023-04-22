@@ -4,6 +4,9 @@ const { disableGameChannel, disableReportChannel } = require('../../adm/database
 
 module.exports = async ({ client, caso, guild }) => {
 
+    // Previne que o bot responda a interações enquanto estiver atualizando comandos
+    if (client.x.force_update) return
+
     if (client.id() !== process.env.client_1 || !process.env.channel_server) return
 
     let ocasiao = "> 🟢 Server update", cor = 0x29BB8E

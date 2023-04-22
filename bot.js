@@ -30,6 +30,9 @@ client.discord.once("ready", async () => {
 
 client.discord.on("messageCreate", async (message) => {
 
+	// Previne que o bot responda a interações enquanto estiver atualizando comandos
+	if (client.x.force_update) return
+
 	const user = await client.getUser(message.author.id)
 
 	// Ignorando usuários
@@ -56,6 +59,9 @@ client.discord.on("messageCreate", async (message) => {
 })
 
 client.discord.on("interactionCreate", async interaction => {
+
+	// Previne que o bot responda a interações enquanto estiver atualizando comandos
+	if (client.x.force_update) return
 
 	const user = await client.getUser(interaction.user.id)
 
