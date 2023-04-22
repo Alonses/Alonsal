@@ -261,7 +261,5 @@ function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
     else
         porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
 
-    console.log(stats_passado, stats_semana, porcentagem)
-
     return porcentagem
 }

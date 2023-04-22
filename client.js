@@ -12,6 +12,8 @@ const { create_buttons } = require('./adm/interacoes/generators/create_buttons')
 const { create_menus } = require('./adm/interacoes/generators/create_menus')
 const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
 const { getBot } = require('./adm/database/schemas/Bot')
+const { listAllUserTasks } = require('./adm/database/schemas/Task')
+const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
 
 const idioma = require('./adm/data/idioma')
 const translate = require('./adm/formatadores/translate')
@@ -22,16 +24,17 @@ const { default_emoji } = require('./arquivos/json/text/emojis.json')
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
 let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1
-
-if (update_commands)
-    modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
-
 let token = process.env.token_1, clientId = process.env.client_1
+
+// Ative para limpar os comandos slash locais e globais
+let delete_slash = 0
+
+if (update_commands) // Force update é utilizado para forçar a atualização dos comandos slash
+    modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
 
 if (silent || modo_develop)
     status = 0, ranking = 0, modules = 0, relatorio = 0
 
-// Force update é utilizado para forçar a atualização dos comandos slash
 // globais e privados do bot
 if (modo_develop)
     token = process.env.token_2, clientId = process.env.client_2
@@ -59,6 +62,7 @@ class CeiraClient {
             status: status,
             modules: modules,
             relatorio: relatorio,
+            delete_slash: delete_slash,
 
             clientId: clientId,
             token: token,
@@ -248,6 +252,26 @@ class CeiraClient {
         if (!alvo.sid) {
             alvo.sid = interaction.guild.id
             alvo.save()
+        }
+    }
+
+    async update_tasks(interaction) {
+
+        const tasks = await listAllUserTasks(interaction.user.id)
+        const listas = await listAllUserGroups(interaction.user.id)
+
+        // Vincula a task com a lista usando o timestamp da lista
+        for (let i = 0; i < tasks.length; i++) {
+            for (let x = 0; x < listas.length; x++) {
+                if (!tasks[i].g_timestamp) {
+                    if (tasks[i].group === listas[x].name) {
+
+                        tasks[i].g_timestamp = listas[x].timestamp
+                        tasks[i].group = null
+                        await tasks[i].save()
+                    }
+                }
+            }
         }
     }
 }

@@ -47,7 +47,8 @@ module.exports = {
                     "es-ES": 'La cantidad a apostar',
                     "fr": 'Le montant à miser',
                     "it": 'L\'importo da scommettere'
-                })),
+                })
+                .setMinValue(0.01)),
     async execute(client, user, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
@@ -57,7 +58,9 @@ module.exports = {
             ?? jooj[client.random(2)]
 
         const bet = interaction.options.getNumber("bet") ?? 0
-        if (bet && bet > user.misc.money) return interaction.reply("Pague o aluguel")
+
+        if (bet && bet > user.misc.money) // Sem Bufunfas para poder apostar
+            return client.tls.phrase(interaction, user, "game.jokenpo.erro_aposta", true, [9, 4])
 
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
 

@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     }
 
-    // user.misc.money -= preco
+    user.misc.money -= preco
 
     const caso = "movido", quantia = preco
     await require('../../../automaticos/relatorio')({ client, caso, quantia })

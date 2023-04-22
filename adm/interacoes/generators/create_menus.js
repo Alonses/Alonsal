@@ -66,14 +66,14 @@ function create_menus(client, interaction, user, dados) {
                 nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
 
                 emoji_label = valor.concluded ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
-                descricao_label = `Criado em ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? "Finalizada" : "Em aberto"}`
+                descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
 
                 if (dados.alvo == "tarefas") {
                     emoji_label = client.defaultEmoji("paper")
-                    descricao_label = `Criado em ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
+                    descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
                 }
 
-                valor_label = `${dados.alvo}|${valor.uid}.${valor.timestamp}`
+                valor_label = `${dados.alvo}|${valor.uid}.${valor.timestamp}.${dados.operador}`
             }
 
             if (dados.alvo.includes("listas")) {
@@ -81,7 +81,7 @@ function create_menus(client, interaction, user, dados) {
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = valor.name.length > 15 ? `${valor.name.slice(0, 25)}...` : valor.name
                 emoji_label = client.defaultEmoji("paper")
-                descricao_label = "Selecionar essa lista"
+                descricao_label = client.tls.phrase(user, "util.tarefas.selecionar_lista")
                 valor_label = `${dados.alvo}|${valor.uid}.${valor.timestamp}.${dados.timestamp}`
 
                 // valor.timestamp -> timestamp da lista
@@ -112,7 +112,7 @@ function create_menus(client, interaction, user, dados) {
     if (dados.alvo === "galerito")
         titulo_menu = "Escolha uma frase do galerito e cia!"
 
-    if (dados.alvo === "tarefas" || dados.alvo === "tarefas_visualizar")
+    if (dados.alvo.includes("tarefa"))
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_tarefa_visualizar")
 
     if (dados.alvo === "listas")
