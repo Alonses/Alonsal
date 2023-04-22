@@ -99,10 +99,10 @@ module.exports = {
 
         if (!interaction.options.getSubcommandGroup()) {
             if (interaction.options.getSubcommand() === "available") { // Tarefas disponíveis
-                const operador = "a"
+                const operador = "a|tarefas"
                 return require('../../adm/interacoes/chunks/tarefas')({ client, user, interaction, operador })
             } else if (interaction.options.getSubcommand() === "completed") { // Tarefas completadas
-                const operador = "f"
+                const operador = "f|tarefas"
                 return require('../../adm/interacoes/chunks/tarefas')({ client, user, interaction, operador })
             } else
                 return require('../../adm/interacoes/chunks/listas_navegar')({ client, user, interaction })

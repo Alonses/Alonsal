@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
 
         // Validando se há tasks registradas para o usuário
         if (tarefas.length < 1)
-            return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa", true, 0)
+            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa", true, 0, interaction.customId)
 
         for (let i = 0; i < tarefas.length; i++) {
             if (tarefas[i].concluded)
@@ -28,10 +28,10 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 casos.aberto++
         }
 
-        if (operador === "a") {
+        if (operador === "a|tarefas") {
             // Tarefas abertas
             if (casos.aberto < 1)
-                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_a", true, 0)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, 0, interaction.customId)
 
             const data = {
                 alvo: "tarefas",
@@ -39,13 +39,16 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 operador: operador
             }
 
-            interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+            if (!interaction.customId)
+                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+            else
+                interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
         }
 
-        if (operador === "f") {
+        if (operador === "f|tarefas") {
             // Tarefas finalizadas
             if (casos.finalizado < 1)
-                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_f", true, 0)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, 0, interaction.customId)
 
             const data = {
                 alvo: "tarefas",
@@ -53,7 +56,10 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 operador: "f"
             }
 
-            interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+            if (!interaction.customId)
+                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+            else
+                interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
         }
     } else {
 
@@ -63,7 +69,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
         const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
 
         if (tarefas.length < 1)
-            return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1)
+            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
 
         const data = {
             alvo: "tarefa_visualizar",

@@ -24,6 +24,17 @@ function phrase(user, target, type) {
     return phrase
 }
 
+function report(interaction, user, target, ephemeral, type, button) {
+
+    let phrase = translate(user, target)
+    phrase = check_emojis(phrase, type)
+
+    if (button) // Valida se a interação partiu de um botão
+        interaction.update({ content: phrase, ephemeral: ephemeral, embeds: [], components: [] })
+    else
+        interaction.reply({ content: phrase, ephemeral: ephemeral })
+}
+
 function translate(user, target) {
 
     const idioma_user = user.lang
@@ -91,6 +102,7 @@ function lista_emojis(type) {
 module.exports = {
     reply,
     phrase,
+    report,
     editReply,
     translate
 }
