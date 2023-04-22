@@ -248,7 +248,7 @@ module.exports = {
                         values: listas
                     }
 
-                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_e"), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_e", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             }
         }
