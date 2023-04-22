@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
+const { getUserRankServers } = require('../../adm/database/schemas/Rank_s')
 const { buildAllBadges } = require('../../adm/data/badges')
 
 module.exports = {
@@ -48,15 +49,18 @@ module.exports = {
 
         // Lista todos os dados que o bot salvou do usuário
         if (interaction.options.getSubcommand() === "summary") {
-            const ranking = [], guild_ranking = await client.getUserRankServers(user.uid, interaction.guild.id)
+            const ranking = [], guild_ranking = await getUserRankServers(user.uid, interaction.guild.id)
+
+            let nota_servidores = ""
 
             // Listando os servidores que o usuário possui ranking
             guild_ranking.forEach(valor => {
                 let server = client.guilds().get(valor.sid)
 
-                if (!server)
+                if (!server) {
                     nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
-                else
+                    nota_servidores = `\n\n${client.tls.phrase(user, "manu.data.nota_servidores", 1)}`
+                } else
                     nome_server = server.name
 
                 ranking.push(nome_server)
@@ -65,11 +69,11 @@ module.exports = {
             if (ranking.length < 1)
                 return client.tls.reply(interaction, user, "manu.data.sem_dados", true)
 
-            dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}\`\`\``
+            dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}${nota_servidores}\`\`\``
 
             // Listando as redes linkadas
             if (user.social) {
-                dados_conhecidos += '\n:globe_with_meridians: **Links externos: **\n'
+                dados_conhecidos += `\n:globe_with_meridians: **${client.tls.phrase(user, "manu.data.links_externos")}:**\n`
 
                 if (user?.social.steam)
                     dados_conhecidos += `\`Steam\`, `
@@ -81,7 +85,7 @@ module.exports = {
                     dados_conhecidos += `\`Pula prédios\``
             }
 
-            const id_badges = await client.getBadges(user.uid)
+            const id_badges = await client.getUserBadges(user.uid)
 
             if (id_badges.length > 0)
                 dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`
@@ -94,17 +98,17 @@ module.exports = {
 
                 .addFields(
                     {
-                        name: `${valida_valor(user?.conf.ghost_mode)} **Modo fantasma**`,
+                        name: `**${valida_valor(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
                         value: "⠀",
                         inline: true
                     },
                     {
-                        name: `${valida_valor(user?.conf.notify)} **Notificações em DM**`,
+                        name: `**${valida_valor(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
                         value: "⠀",
                         inline: true
                     },
                     {
-                        name: `${valida_valor(user?.conf.ranking)} **Ranking ativo**`,
+                        name: `**${valida_valor(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
                         value: "⠀",
                         inline: true
                     }
@@ -123,7 +127,7 @@ module.exports = {
                 values: opcoes
             }
 
-            interaction.reply({ content: "Escolha uma das opções abaixo", components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            interaction.reply({ content: client.tls.phrase(user, "menu.botoes.selecionar_opcap"), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     }
 }

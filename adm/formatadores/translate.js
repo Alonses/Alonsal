@@ -1,24 +1,9 @@
-const status = {
-    0: '🛑 | ',
-    1: '🔍 | ',
-    2: '⚠️ | ',
-    3: '💂 | ',
-    4: '💢 | ',
-    5: '🐣 | ',
-    6: '📣 | ',
-    7: '🛂 | ',
-    8: '🚦 | ',
-    9: '🏦 | ',
-    10: '✅ | ',
-    11: '⭕ | '
-}
+const { status } = require('../../arquivos/json/text/emojis.json')
 
 function reply(interaction, user, target, ephemeral, type) {
 
     let phrase = translate(user, target)
-
-    if (typeof type !== "undefined")
-        phrase = `${status[type]}${phrase}`
+    phrase = check_emojis(phrase, type)
 
     interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
@@ -26,9 +11,7 @@ function reply(interaction, user, target, ephemeral, type) {
 function editReply(interaction, user, target, ephemeral, type) {
 
     let phrase = translate(user, target)
-
-    if (type) // Códigos de emojis padrões
-        phrase = `${status[type]}${phrase}`
+    phrase = check_emojis(phrase, type)
 
     interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
@@ -36,9 +19,7 @@ function editReply(interaction, user, target, ephemeral, type) {
 function phrase(user, target, type) {
 
     let phrase = translate(user, target)
-
-    if (type) // Códigos de emojis padrões
-        return `${status[type]}${phrase}`
+    phrase = check_emojis(phrase, type)
 
     return phrase
 }
@@ -82,6 +63,29 @@ function translate(user, target) {
         phrase = data[Math.floor((data.length - 1) * Math.random())]
 
     return phrase
+}
+
+function check_emojis(phrase, type) {
+
+    if (typeof type !== "undefined") {
+        if (typeof type === "object") // Array de emojis
+            phrase = `${lista_emojis(type)} | ${phrase}`
+        else // Emoji único
+            phrase = `${status[type]} | ${phrase}`
+    }
+
+    return phrase
+}
+
+function lista_emojis(type) {
+
+    const emojis = []
+
+    type.forEach(emoji => {
+        emojis.push(status[emoji])
+    })
+
+    return emojis.join(" ")
 }
 
 module.exports = {

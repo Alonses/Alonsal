@@ -76,7 +76,7 @@ module.exports = {
                 return interaction.reply({ content: `${client.tls.phrase(user, "mode.denuncia.canal_aberto")} ( <#${channel.cid}> )`, ephemeral: true })
             }
 
-            let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone');
+            let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone')
             let bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
 
             // Criando o canal e atribuindo ele aos usuários especificos/ categoria escolhida

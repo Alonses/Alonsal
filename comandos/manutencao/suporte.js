@@ -23,11 +23,11 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const embed = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
             .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
+            .setColor(client.embed_color(user.misc.color))
             .setURL("https://picpay.me/slondo")
-            .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
             .setImage("https://i.imgur.com/incYvy2.jpg")
+            .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

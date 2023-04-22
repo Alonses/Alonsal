@@ -17,8 +17,8 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.hub.hub_alonsal")} ${client.emoji(emojis.dancando_elizabeth)}`)
-            .setURL("https://discord.gg/ZxHnxQDNwn")
             .setColor(client.embed_color(user.misc.color))
+            .setURL("https://discord.gg/ZxHnxQDNwn")
             .setImage("https://i.imgur.com/NqmwCA9.png")
             .setDescription(client.tls.phrase(user, "manu.hub.info"))
 
