@@ -248,6 +248,10 @@ function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
             horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.horas")}`
         else
             horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.hora")}`
+    } else {
+        // Convertendo os números em formato de string para poder calcular
+        stats_semana = parseInt(stats_semana.replace(".", ""))
+        stats_passado = parseInt(stats_passado.replace(".", ""))
     }
 
     porcentagem = (100 * stats_semana) / stats_passado
@@ -256,6 +260,8 @@ function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
         porcentagem = `🔽 ${(100 - porcentagem).toFixed(2)}`
     else
         porcentagem = `🔼 ${(porcentagem - 100).toFixed(2)}`
+
+    console.log(stats_passado, stats_semana, porcentagem)
 
     return porcentagem
 }

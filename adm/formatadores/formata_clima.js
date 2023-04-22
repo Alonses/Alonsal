@@ -75,7 +75,7 @@ module.exports = async (client, user, interaction, automatico) => {
                 .then(response => response.json())
                 .then(async res_hora => {
 
-                    let dados_att = new Date((res.dt + res.timezone) * 1000)
+                    let dados_att = new Date((res.dt + res.timezone + 3000) * 1000)
                     dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)} (*)`
 
                     let bandeira_pais = "", nome_pais = "", horario_local
