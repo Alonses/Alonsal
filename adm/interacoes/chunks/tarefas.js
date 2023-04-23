@@ -2,7 +2,7 @@ const { listAllUserTasks, listAllUserGroupTasks } = require('../../database/sche
 
 module.exports = async ({ client, user, interaction, operador }) => {
 
-    if (!operador.includes("x")) {
+    if (!operador.includes("x") && !operador.includes("k")) {
 
         const casos = {
             aberto: 0,
@@ -61,6 +61,25 @@ module.exports = async ({ client, user, interaction, operador }) => {
             else
                 interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
         }
+    } else if (operador.includes("k")) {
+
+        // Retornando a lista superior ( apenas uma lista criada )
+        const lista_timestamp = parseInt(operador.split("|")[1])
+
+        // Retornando o usuário para a lista escolhida anteriormente
+        const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
+
+        if (tarefas.length < 1)
+            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+
+        const data = {
+            alvo: "tarefa_visualizar",
+            values: tarefas,
+            operador: `k.${lista_timestamp}`
+        }
+
+        interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+
     } else {
 
         const lista_timestamp = parseInt(operador.split("|")[1])
