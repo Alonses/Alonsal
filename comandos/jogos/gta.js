@@ -34,7 +34,7 @@ module.exports = {
                     .setDescription(`\`\`\`${data.currentWeatherEmoji} - ${data.currentWeatherDescription}\`\`\``)
                     .addFields(
                         {
-                            name: "Horário atual",
+                            name: client.tls.phrase(user, "game.gta.horario_atual"),
                             value: `:clock${hours}: \`${data.gameTimeStr}\`${emoji_horario}\` \``,
                             inline: true
                         }
@@ -42,6 +42,6 @@ module.exports = {
 
                 interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             })
-            .catch(() => interaction.reply({ content: ":octagonal_sign: | Não foi possível conectar a APISAL no momento, por favor, tente novamente mais tarde!", ephemeral: true }))
+            .catch(() => client.tls.reply(interaction, user, "game.gta.erro_apisal", true, 0))
     }
 }

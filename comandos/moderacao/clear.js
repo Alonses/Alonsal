@@ -6,7 +6,7 @@ module.exports = {
         .setDescription("⌠💂⌡ Delete multiple chat messages")
         .setDescriptionLocalizations({
             "pt-BR": '⌠💂⌡ Exclui várias mensagens do chat',
-            "es-ES": '⌠💂⌡ Eliminar vários mensajes de chat',
+            "es-ES": '⌠💂⌡ Eliminar varios mensajes de chat',
             "fr": '⌠💂⌡ Supprimer plusieurs messages de chat',
             "it": '⌠💂⌡ Elimina più messaggi di chat',
             "ru": '⌠💂⌡ Удалить несколько сообщений из чата'

@@ -145,13 +145,13 @@ module.exports = {
                 id_alvo = valores.id_alvo
 
             if (id_alvo === interaction.user.id)
-                return interaction.reply({ content: ":octagonal_sign: | Você não pode se incluir na lista de mau comportados!", ephemeral: true })
+                return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, 0)
 
             if (id_alvo === null)
                 return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
 
             if (id_alvo === client.id())
-                return interaction.reply({ content: `:octagonal_sign: | Você não pode me reportar!`, ephemeral: true })
+                return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, 0)
 
             const alvo = await getReport(id_alvo, interaction.guild.id)
 

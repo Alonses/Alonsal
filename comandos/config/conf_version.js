@@ -12,13 +12,13 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar esse comando!", ephemeral: true })
+            return client.tls.phrase(interaction, user, "inic.error.comando_restrito", true, 18)
 
         const bot = await client.getBot()
         bot.persis.version = interaction.options.getString("versao")
         await bot.save()
 
-        interaction.reply({ content: `:placard: | Versão do ${client.user().username} alterada para \`${bot.persis.version}\``, ephemeral: true })
-        client.notify(process.env.channel_feeds, `:placard: | Versão do ${client.user().username} alterada para \`${bot.persis.version}\``)
+        interaction.reply({ content: `:placard: | A Versão do ${client.user().username} foi atualizada para \`${bot.persis.version}\``, ephemeral: true })
+        client.notify(process.env.channel_feeds, `:placard: | A Versão do ${client.user().username} foi atualizada para \`${bot.persis.version}\``)
     }
 }
