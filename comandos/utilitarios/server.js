@@ -141,7 +141,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                         .setTitle(interaction.guild.name)
-                        .setDescription(client.tls.phrase(user, "util.avatar.download_icon").replace("link_repl", icone_server))
+                        .setDescription(client.replace(client.tls.phrase(user, "util.avatar.download_icon"), icone_server))
                         .setColor(client.embed_color(user.misc.color))
                         .setImage(icone_server)
 

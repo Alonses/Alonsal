@@ -44,7 +44,7 @@ async function disableGameChannel(sid) {
     const guild = await getGuild(sid)
 
     guild.conf.games = false
-    guild.save()
+    await guild.save()
 }
 
 async function disableReportChannel(sid) {
@@ -52,13 +52,13 @@ async function disableReportChannel(sid) {
     const guild = await getGuild(sid)
 
     guild.conf.reports = false
-    guild.save()
+    await guild.save()
 }
 
 async function migrateGameChannels() {
 
     for (const file of readdirSync(`./arquivos/data/games/`)) {
-        const { canal, cargo, idioma } = require(`../../../arquivos/data/games/${file}`)
+        const { canal, cargo } = require(`../../../arquivos/data/games/${file}`)
 
         let guild = await getGuild(file.replace(".json", ""))
 
@@ -66,7 +66,7 @@ async function migrateGameChannels() {
         guild.games.role = cargo
         guild.conf.games = true
 
-        guild.save()
+        await guild.save()
     }
 }
 

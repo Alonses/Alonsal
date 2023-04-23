@@ -197,7 +197,7 @@ function criar_item(dados, interaction, client, user) {
     // Criando um emoji
     if (!dados.categoria) {
         interaction.guild.emojis.create({ attachment: dados.url, name: dados.nome })
-            .then(emoji => interaction.reply({ content: `${emoji} | ${client.tls.phrase(user, "mode.emojis.emoji_criado").replace("nome_repl", dados.nome)}`, ephemeral: true }))
+            .then(emoji => interaction.reply({ content: client.replace(`${emoji} | ${client.tls.phrase(user, "mode.emojis.emoji_criado")}`, dados.nome), ephemeral: true }))
             .catch(err => {
 
                 if (err.rawError.code === 50045)
@@ -211,7 +211,7 @@ function criar_item(dados, interaction, client, user) {
     } else { // Criando uma figurinha
 
         interaction.guild.stickers.create({ file: dados.url, name: dados.nome, tags: dados.categoria })
-            .then(() => interaction.reply({ content: `${client.tls.phrase(user, "mode.emojis.figurinha_criada").replace("nome_repl", dados.nome)}`, ephemeral: true }))
+            .then(() => interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.emojis.figurinha_criada"), dados.nome), ephemeral: true }))
             .catch(err => {
 
                 if (err.rawError.code === 50045)

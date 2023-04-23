@@ -93,7 +93,7 @@ module.exports = {
                     inline: true
                 },
             )
-            .setDescription(client.tls.phrase(user, "misc.modulos.descricao").replace("modulos_price_repl", corpo_modulo.stats.price).replace("montante_repl", montante))
+            .setDescription(client.replace(client.tls.phrase(user, "misc.modulo.descricao"), [corpo_modulo.stats.price, montante]))
             .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para o menu de badges

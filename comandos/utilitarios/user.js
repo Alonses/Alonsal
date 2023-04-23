@@ -236,7 +236,7 @@ module.exports = {
                 .setTitle(`> ${user_alvo.username}`)
                 .setColor(client.embed_color(user_c.misc.embed))
                 .setImage(url_avatar)
-                .setDescription(client.tls.phrase(user, "util.avatar.download_avatar").replace("link_repl", url_avatar))
+                .setDescription(client.replace(client.tls.phrase(user, "util.avatar.download_avatar"), url_avatar))
 
             interaction.reply({ embeds: [embed], ephemeral: true })
 
@@ -276,7 +276,7 @@ module.exports = {
                             .setTitle(`> ${user_alvo.username}`)
                             .setColor(client.embed_color(user_c.misc.embed))
                             .setImage(url_banner)
-                            .setDescription(client.tls.phrase(user, "util.avatar.download_banner").replace("link_repl", url_banner))
+                            .setDescription(client.replace(client.tls.phrase(user, "util.avatar.download_banner"), url_banner))
 
                         interaction.reply({ embeds: [embed], ephemeral: true })
                     })

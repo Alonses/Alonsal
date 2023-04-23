@@ -18,7 +18,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
 
     if (!matches && interaction)
-        return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente", ephemeral: true })
+        return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente.", ephemeral: true })
 
     const plataforma = redes[matches[0]][1], logo_plat = redes[matches[0]][0]
     let canais_recebidos = 0, imagem_destaque, valor_anterior = 0
@@ -75,7 +75,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
 
     if (canais_recebidos === 1)
-        aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canal cliente`
+        aviso = ":white_check_mark: | Aviso de Jogos gratuitos enviado para `1` canal cliente"
 
     client.notify(process.env.channel_feeds, aviso)
 

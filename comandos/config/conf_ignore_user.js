@@ -22,7 +22,7 @@ module.exports = {
         else
             user_alvo.conf.banned = true
 
-        user_alvo.save()
+        await user_alvo.save()
 
         if (user_alvo.conf.banned)
             interaction.reply({ content: `${client.emoji(emojis.pare_agr)} | O usuário <@${user_alvo.uid}> será ignorado pelo bot a partir de agora!`, ephemeral: true })

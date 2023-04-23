@@ -8,7 +8,7 @@ module.exports = async ({ client, interaction }) => {
 
     const bot = await client.getBot()
     bot.persis.commands++
-    bot.save()
+    await bot.save()
 
     qtd_comandos = bot.persis.commands
 

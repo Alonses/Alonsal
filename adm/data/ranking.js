@@ -22,7 +22,7 @@ module.exports = async ({ client, message, caso }) => {
             user.caldeira_de_ceira = true
             user.warns = 0
 
-            user.save()
+            await user.save()
             return
         }
 
@@ -37,7 +37,7 @@ module.exports = async ({ client, message, caso }) => {
         if (message.createdTimestamp - user.lastValidMessage < DIFF) {
             user.warns++
 
-            user.save()
+            await user.save()
             return
         }
 
@@ -54,5 +54,5 @@ module.exports = async ({ client, message, caso }) => {
     // Registrando no relatório algumas informações
     require('../automaticos/relatorio')({ client, caso })
 
-    user.save()
+    await user.save()
 }

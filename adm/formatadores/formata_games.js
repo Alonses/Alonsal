@@ -12,26 +12,20 @@ function formata_games(client, objeto_anunciado, plataforma, idioma_definido) {
         valor_total += parseFloat(item.preco)
     })
 
-    if (objeto_anunciado[0].link.match(/store.steam/))
-        link_app = `\n\n${client.emoji(emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`.replace("plat_repl", plataforma)
-
     valor_total = valor_total.toFixed(2)
 
-    // Escolhendo o caso e o texto que será usado para o anúncio
-    if (objeto_anunciado[0].tipo !== "dlc") {
+    // Verificando se há menção do tipo de anúncio
+    if (!objeto_anunciado[0].tipo)
+        objeto_anunciado[0].tipo = "game"
 
-        texto_formatado = texto_formatado = game["anuncio"]["anuncio_game_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+    if (objeto_anunciado[0].link.match(/store.steam/))
+        link_app = client.replace(`\n\n${client.emoji(emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
 
-        if (objeto_anunciado.length > 1)
-            texto_formatado = texto_formatado = game["anuncio"]["anuncio_game_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
+    // Um item anunciado
+    texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])
 
-    } else if (objeto_anunciado[0].tipo === "dlc") {
-
-        texto_formatado = texto_formatado = game["anuncio"]["anuncio_dlc_1"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
-
-        if (objeto_anunciado.length > 1)
-            texto_formatado = game["anuncio"]["anuncio_dlc_2"].replace("nomes_repl", nome_games(objeto_anunciado)).replace("data_repl", objeto_anunciado[0].expira).replace("valor_repl", valor_total).replace("plat_repl", plataforma)
-    }
+    if (objeto_anunciado.length > 1) // Vários itens anunciados
+        texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_2`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])
 
     return `${texto_formatado}${link_app}`
 }

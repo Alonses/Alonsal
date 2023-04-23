@@ -129,18 +129,16 @@ module.exports = {
 
                     // Adicionando a tarefa a uma lista automaticamente caso só exista uma lista
                     if (listas.length == 1) {
-                        nome_lista = listas[0].name
-
-                        task.group = listas[0].name
-                        task.save()
+                        task.g_timestamp = listas[0].timestamp
+                        await task.save()
 
                         // Verificando se a lista não possui algum servidor mencionado
                         if (typeof listas[0].sid === "undefined") {
                             listas[0].sid = interaction.guid.id
-                            listas[0].save()
+                            await listas[0].save()
                         }
 
-                        return interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.tarefa_adicionada")} \`${nome_lista}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        return interaction.reply({ content: `${client.tls.phrase(user, "util.tarefas.tarefa_adicionada", client.defaultEmoji("paper"))} \`${listas[0].name}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     } else {
 
                         const data = {
@@ -167,7 +165,7 @@ module.exports = {
                     // Criando listas
                     createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, timestamp)
 
-                    interaction.reply({ content: `${client.defaultEmoji("paper")} | ${client.tls.phrase(user, "util.tarefas.lista_criada")}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_criada", client.defaultEmoji("paper")), ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             } else {
 

@@ -82,9 +82,9 @@ module.exports = {
                 user.conf.notify = false
 
             if (user.conf.notify)
-                interaction.reply({ content: `${client.emoji(emojis.notify)} | ${client.tls.phrase(user, "mode.notify.ativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.notify.ativo", client.emoji(emojis.notify)), ephemeral: true })
             else
-                interaction.reply({ content: `${client.emoji(emojis.pare_agr)} | ${client.tls.phrase(user, "mode.notify.desativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.notify.desativo", client.emoji(emojis.pare_agr)), ephemeral: true })
 
         } else if (interaction.options.getSubcommand() === "ghostmode") {
 
@@ -97,7 +97,7 @@ module.exports = {
             if (user.conf.ghost_mode)
                 interaction.reply({ content: `:ghost: | ${client.tls.phrase(user, "mode.oculto.ativo")}`, ephemeral: true })
             else
-                interaction.reply({ content: `${client.emoji(emojis.ghostbusters)} | ${client.tls.phrase(user, "mode.oculto.desativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.oculto.desativo", client.emoji(emojis.ghostbusters)), ephemeral: true })
         } else if (interaction.options.getSubcommand() === "ranking") {
 
             // Ativa ou desativa o modo fantasma e salva

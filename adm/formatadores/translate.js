@@ -79,10 +79,17 @@ function translate(user, target) {
 function check_emojis(phrase, type) {
 
     if (typeof type !== "undefined") {
-        if (typeof type === "object") // Array de emojis
-            phrase = `${lista_emojis(type)} | ${phrase}`
-        else // Emoji único
-            phrase = `${status[type]} | ${phrase}`
+        if (typeof type === "object") { // Array de emojis
+            if (type[0].length > 8)
+                phrase = `${type} | ${phrase}`
+            else
+                phrase = `${lista_emojis(type)} | ${phrase}`
+        } else { // Emoji único
+            if (type.length > 8 || isNaN(type))
+                phrase = `${type} | ${phrase}`
+            else
+                phrase = `${status[type]} | ${phrase}`
+        }
     }
 
     return phrase

@@ -7,7 +7,7 @@ module.exports = async ({ client }) => {
 
     if (client.id() !== process.env.client_1 && client.x.status) return
 
-    const date1 = new Date() // Ficará esperando até quinta feira aos meio dia para executar a rotina
+    const date1 = new Date() // Ficará esperando até quinta feira ao meio dia para executar a rotina
     let controle = 0
 
     // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
@@ -22,7 +22,7 @@ module.exports = async ({ client }) => {
 
     setTimeout(() => {
         gera_anuncio(client, 604800000)
-        requisita_anuncio(client, 604800000) // Altera o valor para sempre executar à meia-noite
+        requisita_anuncio(client, 604800000)
     }, tempo_restante) // Executa de 1 em 1 semana
 }
 

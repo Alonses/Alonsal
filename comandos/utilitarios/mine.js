@@ -44,7 +44,7 @@ module.exports = {
                     return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
 
                 if (dados_item.status === 404)
-                    return interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.minecraft.nao_encontrado")} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({ content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji(emojis_negativos))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
 
                 let nome_item = dados_item.internal_name
                 descricao_tipo = nome_item
@@ -102,7 +102,7 @@ module.exports = {
                     nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")
 
                 if (nota_rodape.includes("item_repl"))
-                    nota_rodape = nota_rodape.replace("item_repl", pesquisa)
+                    nota_rodape = client.replace(nota_rodape, pesquisa)
 
                 const embed = new EmbedBuilder()
                     .setTitle(dados_item.name)
@@ -161,10 +161,8 @@ module.exports = {
                 if (dados_item.wiki !== "") {
 
                     let nome_wiki = idioma_definido === "pt-br" ? dados_item.name : dados_item.internal_name
-
                     let link_artigo = `https://minecraft.fandom.com/pt/wiki/${nome_wiki.replaceAll(" ", "_")}`
-
-                    link_artigo = `${client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki").replace("link_repl", link_artigo)}`
+                    link_artigo = client.replace(client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki"), link_artigo)
 
                     embed.addFields(
                         {

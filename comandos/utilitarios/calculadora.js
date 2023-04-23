@@ -48,17 +48,17 @@ module.exports = {
 
         try {
             let resultado = math.evaluate(expressao)
-            let emoji_res = ":chart_with_upwards_trend:"
+            let emoji_res = "📈"
 
             if (resultado < 0)
-                emoji_res = ":chart_with_downwards_trend:"
+                emoji_res = "📉"
 
             if (!isInteger(resultado))
                 resultado = resultado.toFixed(6)
 
-            interaction.reply({ content: `${emoji_res} | ${client.tls.phrase(user, "util.calc.resultado")}: \`${client.locale(resultado)}\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            interaction.reply({ content: `${client.tls.phrase(user, "util.calc.resultado", emoji_res)}: \`${client.locale(resultado)}\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         } catch {
-            interaction.reply({ content: `:octagonal_sign: | ${client.tls.phrase(user, "util.calc.error")}: \`${expressao}\``, ephemeral: true })
+            interaction.reply({ content: `${client.tls.phrase(user, "util.calc.error", 0)}: \`${expressao}\``, ephemeral: true })
         }
     }
 }

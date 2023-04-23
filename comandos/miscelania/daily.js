@@ -32,8 +32,8 @@ module.exports = {
         const caso = "gerado", quantia = bufunfa
         require('../../adm/automaticos/relatorio')({ client, caso, quantia })
 
-        user.save()
+        await user.save()
 
-        interaction.reply({ content: `:money_with_wings: | ${client.tls.phrase(user, "misc.daily.daily").replace("valor_repl", client.locale(bufunfa))} ${client.emoji(emojis_dancantes)}`, ephemeral: true })
+        interaction.reply({ content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji(emojis_dancantes)}`, client.locale(bufunfa)), ephemeral: true })
     }
 }

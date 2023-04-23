@@ -49,24 +49,24 @@ module.exports = async (client, user, interaction, automatico) => {
 
             if (typeof automatico === "undefined") {
                 if (res.cod === '404' || res.cod === '400') {
-                    interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
+                    interaction.editReply({ content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
                     return
                 } else if (res.cod === '429') { // Erro da API
-                    interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, ephemeral: true })
+                    interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
                     return
                 } else if (res.id === 1873107) {
-                    interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.error_2")}`, ephemeral: true })
+                    interaction.editReply({ content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), ephemeral: true })
                     return
                 }
             } else {
                 if (res.cod === '404' || res.cod === '400') {
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_2")} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, true)
+                    client.sendDM(user, `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, true)
                     return
                 } else if (res.cod === '429') { // Erro da API
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, true)
+                    client.sendDM(user, client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), true)
                     return
                 } else if (res.id === 1873107) {
-                    client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.error_2")}`, true)
+                    client.sendDM(user, client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), true)
                     return
                 }
             }
@@ -330,8 +330,8 @@ module.exports = async (client, user, interaction, automatico) => {
         }) // Erro com a API de clima
         .catch(() => {
             if (typeof automatico === "undefined")
-                interaction.editReply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, ephemeral: true })
+                interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
             else
-                client.sendDM(user, `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.tempo.aviso_3")}`, true)
+                client.sendDM(user, client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), true)
         })
 }

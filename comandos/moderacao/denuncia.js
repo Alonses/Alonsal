@@ -100,10 +100,9 @@ module.exports = {
                 ],
             })
                 .then(async new_channel => {
-                    interaction.reply({ content: `${client.tls.phrase(user, "mode.denuncia.introducao").replace("chat_repl", new_channel)}`, ephemeral: true })
+                    interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.denuncia.introducao"), new_channel), ephemeral: true })
 
                     channel.cid = new_channel.id
-
                     await channel.save()
                 })
                 .catch(() => client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
@@ -114,7 +113,7 @@ module.exports = {
 
             const date1 = new Date()
 
-            const msg = await interaction.reply({ content: `${client.tls.phrase(user, "mode.denuncia.fechando_canal").replace("tempo_repl", `<t:${Math.floor((date1.getTime() + 10000) / 1000)}:R>`)}`, ephemeral: true })
+            const msg = await interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.denuncia.fechando_canal"), `<t:${Math.floor((date1.getTime() + 10000) / 1000)}:R>`), ephemeral: true })
 
             setTimeout(() => {
                 canal_servidor.permissionOverwrites.edit(solicitante, { ViewChannel: false })

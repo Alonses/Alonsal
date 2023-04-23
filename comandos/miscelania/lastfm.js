@@ -183,7 +183,7 @@ module.exports = {
                                 }
 
                                 const embed = new EmbedBuilder()
-                                    .setTitle(client.tls.phrase(user, "util.lastfm.perfil_musical").replace("nome_repl", nome))
+                                    .setTitle(client.replace(client.tls.phrase(user, "util.lastfm.perfil_musical"), nome))
                                     .setThumbnail(avatar)
                                     .setURL(usuario_alvo)
                                     .setColor(client.embed_color(user_alvo.misc.color))

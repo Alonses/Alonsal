@@ -43,7 +43,7 @@ module.exports = {
             .setURL("https://password.kaspersky.com/")
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
-            .setFooter({ text: client.tls.phrase(user, "util.password.rodape").replace("tamanho_repl", tamanho) })
+            .setFooter({ text: client.replace(client.tls.phrase(user, "util.password.rodape"), tamanho) })
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }

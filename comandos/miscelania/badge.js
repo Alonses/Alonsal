@@ -61,7 +61,7 @@ module.exports = {
             return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [client.create_menus(client, interaction, user, data)], ephemeral: true })
         else {
             user.misc.fixed_badge = null
-            user.save()
+            await user.save()
         }
 
         // Removendo a badge fixada

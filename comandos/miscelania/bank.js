@@ -47,14 +47,12 @@ module.exports = {
         else if (user.uid === client.discord.user.id)
             user.misc.money = 1000000000000
 
-        formata_num = (valor) => valor.toLocaleString("pt-BR", { minimunFractionDigits: 2 })
-
         let daily = `${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji(emojis_dancantes)}`
         let titulo_embed = client.tls.phrase(user, "misc.banco.suas_bufunfas")
 
         if (user.uid !== interaction.user.id) {
             daily = ""
-            titulo_embed = `> ${client.tls.phrase(user, "misc.banco.bufunfas_outros").replace("nome_repl", alvo.username)}`
+            titulo_embed = client.replace(client.tls.phrase(user, "misc.banco.bufunfas_outros"), alvo.username)
         }
 
         if (user.misc.daily && user.uid === interaction.user.id) {

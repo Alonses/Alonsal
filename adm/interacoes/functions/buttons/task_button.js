@@ -29,13 +29,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
             timestamp: timestamp
         }
 
-        return interaction.update({ content: ":mag: | Escolha uma das listas abaixo para adicionar esta tarefa.", components: [client.create_menus(client, interaction, user, data)], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 10), components: [client.create_menus(client, interaction, user, data)], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     if (operacao === 0) {
         await dropTask(interaction.user.id, timestamp)
 
-        return interaction.update({ content: ":white_check_mark: | Sua tarefa foi excluída com sucesso!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_excluida", 10), embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     if (operacao === 1) {
@@ -47,9 +47,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
             task.sid = interaction.guild.id
 
         task.concluded = true
-        task.save()
+        await task.save()
 
-        return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas concluídas!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_movida_1", 10), embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     if (operacao === 3) {
@@ -61,8 +61,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             task.sid = interaction.guild.id
 
         task.concluded = false
-        task.save()
+        await task.save()
 
-        return interaction.update({ content: ":white_check_mark: | Sua tarefa foi movida para as notas em aberto novamente!", embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_movida_2", 10), embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 }

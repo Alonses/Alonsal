@@ -132,8 +132,7 @@ module.exports = {
         if (!guild.conf.games)
             feedback_user = `:mobile_phone_off: | ${client.tls.phrase(user, "mode.anuncio.anuncio_off")}`
 
-        interaction.reply({ content: feedback_user.replace("repl_canal", `<#${guild.games.channel}>`), ephemeral: true })
-
         await guild.save()
+        interaction.reply({ content: client.replace(feedback_user, `<#${guild.games.channel}>`), ephemeral: true })
     }
 }

@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Cancelando a atribuição da badge
     if (!operacao)
-        return interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     const id_alvo = interaction.customId.split("|")[2].split(".")[0]
     const badge_alvo = parseInt(interaction.customId.split("|")[2].split(".")[1])
@@ -30,9 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Atribuindo e notificando
         if (operacao === 1) {
-
-            if (client.decider(alvo?.conf.ghost_mode, 1))
-                client.sendDM(alvo, `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(alvo, "dive.badges.new_badge").replace("nome_repl", badge.name).replace("emoji_repl", badge.emoji)}`)
+            client.sendDM(alvo, client.replace(client.tls.phrase(alvo, "dive.badges.new_badge", client.emoji(emojis_dancantes)), [badge.name, badge.emoji]))
 
             interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
         } else // Atribuindo silenciosamente

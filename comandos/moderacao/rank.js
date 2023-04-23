@@ -65,12 +65,12 @@ module.exports = {
         novo_nivel = parseFloat(novo_exp / 1000)
 
         try {
-            user_c.save()
+            await user_c.save()
         } catch (err) {
             console.log(err)
             return client.tls.reply(interaction, user, "mode.xp.error_2", true, 0)
         }
 
-        interaction.reply({ content: `:military_medal: | ${client.tls.phrase(user, "mode.xp.sucesso", true, 0).replace("nick_repl", user_c.nickname).replace("exp_repl", novo_exp.toFixed(2)).replace("nivel_repl", novo_nivel.toFixed(2))}`, ephemeral: true })
+        interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.xp.sucesso", 17), [user_c.nickname, novo_exp.toFixed(2), novo_nivel.toFixed(2)]), ephemeral: true })
     }
 }

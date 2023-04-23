@@ -50,7 +50,7 @@ async function dailyReset(bit) {
     bot.bfu.movido = 0
     bot.bfu.reback = 0
 
-    bot.save()
+    await bot.save()
 }
 
 async function dropBot(bit) {
@@ -74,7 +74,7 @@ async function migrateData(client) {
     bot.bfu.gerado = bufunfas
     bot.bfu.movido = movimentado
 
-    bot.save()
+    await bot.save()
 }
 
 module.exports.User = model

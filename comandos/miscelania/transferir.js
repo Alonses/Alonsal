@@ -75,7 +75,7 @@ module.exports = {
             return interaction.reply({ content: client.tls.phrase(user, "misc.pay.user_bot", [9, 0]), ephemeral: true })
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error", [9, 0]).replace("valor_repl", client.locale(bufunfas)), ephemeral: true })
+            return interaction.reply({ content: client.replace(client.tls.phrase(user, "misc.pay.error", [9, 0]), client.locale(bufunfas)), ephemeral: true })
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "misc.pay.nova_transferencia"))

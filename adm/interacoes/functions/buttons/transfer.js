@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirma
 
     if (!operacao)
-        return interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Transferindo Bufunfas entre usuários
     const id_alvo = dados.split(".")[2].split("[")[0]
@@ -20,14 +20,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     user.misc.money -= bufunfas
     alvo.misc.money += bufunfas
 
-    user.save()
-    alvo.save()
+    await user.save()
+    await alvo.save()
 
     const caso = "movido", quantia = bufunfas
     require('../../../automaticos/relatorio')({ client, caso, quantia })
 
-    interaction.update({ content: `${client.tls.phrase(user, "misc.pay.sucesso", [9, 10]).replace("valor_repl", client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [], components: [] })
+    interaction.update({ content: `${client.replace(client.tls.phrase(user, "misc.pay.sucesso", [9, 10]), client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [], components: [] })
 
     // Notificando o usuário que recebeu as Bufunfas
-    client.sendDM(alvo, `${client.tls.phrase(alvo, "misc.pay.notifica").replace("user_repl", user.uid).replace("valor_repl", client.locale(bufunfas))} ${client.emoji(emojis_dancantes)}`)
+    client.sendDM(alvo, client.replace(client.tls.phrase(alvo, "misc.pay.notifica", client.emoji(emojis_dancantes)), [user.uid, client.locale(bufunfas)]))
 }
