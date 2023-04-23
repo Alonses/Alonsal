@@ -14,6 +14,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (dados.includes("x"))
         operador = `x|${dados.split(".")[3]}`
 
+    if (dados.includes("k"))
+        operador = `k|${dados.split(".")[3]}`
+
     if (lista)
         nome_lista = lista.name
 
