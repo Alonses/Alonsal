@@ -244,7 +244,7 @@ class CeiraClient {
         return !entrada ? padrao : entrada
     }
 
-    async tualiza_dados(alvo, interaction) {
+    async atualiza_dados(alvo, interaction) {
         if (!alvo.sid) {
             alvo.sid = interaction.guild.id
             await alvo.save()
