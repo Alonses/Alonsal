@@ -36,7 +36,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0])
-            return interaction.reply({ content: ":spy: | Parado ai! Você não pode usar esse comando!", ephemeral: true })
+            return client.tls.phrase(interaction, user, "inic.error.comando_restrito", true, 18)
 
         await interaction.deferReply({ ephemeral: true })
 
