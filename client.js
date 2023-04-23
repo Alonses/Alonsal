@@ -214,21 +214,21 @@ class CeiraClient {
 
     sendDM(user, value, modulo) {
 
-        let notificar = true
+        // Previne que o bot envie DM's para si mesmo
+        if (user.uid === this.id()) return
 
-        if (typeof user.conf.notify !== "undefined" && typeof modulo === "undefined")
-            notificar = user.conf.notify
+        if (modulo)
+            user.conf.notify = 1
 
-        if (notificar) // Notificando o usuário alvo caso ele receba notificações em DM do bot
-            if (user.uid !== this.id())
-                this.discord.users.fetch(user.uid, false).then((user_interno) => {
-                    // Enviando a mensagem para o usuário na DM
-                    // Verificando se a mensagem é um embed
-                    if (typeof value !== "object")
-                        user_interno.send(value)
-                    else
-                        user_interno.send({ embeds: [value] })
-                })
+        // Notificando o usuário alvo caso ele receba notificações em DM do bot
+        if (this.decider(user?.conf.notify, 1))
+            this.discord.users.fetch(user.uid, false).then((user_interno) => {
+                // Verificando se a mensagem é um embed
+                if (typeof value !== "object")
+                    user_interno.send(value)
+                else
+                    user_interno.send({ embeds: [value] })
+            })
     }
 
     defaultEmoji(caso) {
@@ -240,18 +240,14 @@ class CeiraClient {
     }
 
     decider(entrada, padrao) {
-
         // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
-        if (typeof entrada === "undefined")
-            return padrao
-        else
-            return entrada
+        return !entrada ? padrao : entrada
     }
 
-    atualiza_dados(alvo, interaction) {
+    async tualiza_dados(alvo, interaction) {
         if (!alvo.sid) {
             alvo.sid = interaction.guild.id
-            alvo.save()
+            await alvo.save()
         }
     }
 
@@ -273,6 +269,20 @@ class CeiraClient {
                 }
             }
         }
+    }
+
+    replace(string, valores) {
+
+        // Substitui partes do texto por outros valores
+        if (typeof valores === "object") { // Array com vários dados para alterar
+            while (valores.length > 0) {
+                string = string.replace("auto_repl", valores[0])
+                valores.shift()
+            }
+        } else // Apenas um valor para substituição
+            string = string.replaceAll("auto_repl", valores)
+
+        return string
     }
 }
 

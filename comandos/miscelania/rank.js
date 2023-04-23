@@ -224,7 +224,7 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``.replace("place_exp", bot.persis.ranking))
+        .setDescription(client.replace(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
             {
                 name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,

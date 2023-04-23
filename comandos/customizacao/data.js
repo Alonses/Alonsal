@@ -156,7 +156,7 @@ function lista_servidores(servidores, linha_corte, client) {
         servidores_restantes = servidores.length - qtd_servidores
 
         if (servidores_restantes > 1)
-            nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.outros_servers").replace("server_repl", servidores_restantes)}`
+            nome_servidores = `${nome_servidores} ${client.replace(client.tls.phrase(user, "manu.data.outros_servers"), servidores_restantes)}`
         else
             nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.um_server")}`
     }

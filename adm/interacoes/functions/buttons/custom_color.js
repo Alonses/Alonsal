@@ -1,4 +1,4 @@
-const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
+const { emojis_dancantes, emojis_negativos } = require('../../../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar
 
     if (!operacao)
-        interaction.update({ content: `:anger: | ${client.tls.phrase(user, "misc.color.att_cancelada")}`, embeds: [], components: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Formatando o ID do botão para o propósito esperado
     const data_cor = `${dados.split(".")[2]}.${dados.split(".")[3]}`
@@ -19,12 +19,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const preco = precos[parseInt(data_cor.split(".")[0])]
 
     // Validando se o usuário tem dinheiro suficiente
-    if (user.misc.money < preco) {
-        return interaction.reply({
-            content: `:epic_embed_fail: | ${client.tls.translate(client, interaction, "misc.color.sem_money").replace("preco_repl", client.locale(preco))}`,
-            ephemeral: true
-        })
-    }
+    if (user.misc.money < preco)
+        return interaction.update({ content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji(emojis_negativos)), client.locale(preco)), ephemeral: true })
 
     user.misc.money -= preco
 
@@ -40,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         user.misc.color = data_cor.split("-")[1]
 
     // Salvando os dados
-    user.save()
+    await user.save()
 
-    interaction.update({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "misc.color.cor_att")}`, embeds: [], components: [], ephemeral: true })
+    interaction.update({ content: client.tls.phrase(user, "misc.color.cor_att", client.emoji(emojis_dancantes)), embeds: [], components: [], ephemeral: true })
 }

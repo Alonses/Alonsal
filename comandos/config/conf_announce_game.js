@@ -53,7 +53,7 @@ module.exports = {
             item.thumbnail = item.thumbnail.attachment
 
         if (!item.tipo)
-            item.tipo = "jogo"
+            item.tipo = "game"
 
         const objetos_anunciados = [item]
 

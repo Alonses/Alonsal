@@ -20,7 +20,7 @@ module.exports = {
         const bot = await client.getBot()
 
         bot.persis.ranking = valor_ranking
-        bot.save()
+        await bot.save()
 
         interaction.reply({ content: `:tropical_drink: | Agora o ranking dará \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando`, ephemeral: true })
         client.notify(process.env.channel_feeds, `:medal: | Ranking do Alonsal ajustado para \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando`)

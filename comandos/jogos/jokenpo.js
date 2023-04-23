@@ -87,7 +87,7 @@ module.exports = {
             mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]\n[Profit: B$${profit}]`
 
         user.misc.money += profit
-        user.save()
+        await user.save()
 
         interaction.reply({ content: mensagem, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }

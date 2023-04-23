@@ -19,7 +19,7 @@ module.exports = async (client, modo, id_alvo, interaction) => {
             user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
         }
 
-        user.save()
+        await user.save()
 
         if (user?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
             client.discord.users.fetch(user.id, false).then((user_interno) => {

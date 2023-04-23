@@ -152,11 +152,11 @@ module.exports = {
         }
 
         if (!invalido)
-            user.save()
+            await user.save()
 
         if (plataforma !== "locale")
-            interaction.reply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.lastfm.new_link").replaceAll("plat_repl", plataforma.toLocaleLowerCase().split(" ")[0]).replace("comando_repl", link_comando)}`, ephemeral: true })
+            interaction.reply({ content: client.replace(client.tls.phrase(user, "util.lastfm.new_link", client.emoji(emojis_dancantes)), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando]), ephemeral: true })
         else if (!invalido)// Link de local do /tempo
-            interaction.editReply({ content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "util.tempo.new_link").replace("entrada_repl", entrada)}`, ephemeral: true })
+            interaction.editReply({ content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada), ephemeral: true })
     }
 }

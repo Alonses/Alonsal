@@ -67,8 +67,8 @@ module.exports = {
         if (interaction.options.data.length > 1)
             idioma_definido = interaction.options.getString("language")
 
-        if (content.includes("slondo")) // Pesquisa por slondo
-            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo")
+        if (content.includes("slondo")) // Pesquisando por "slondo"
+            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo", client.decider(user?.conf.ghost_mode, 0))
 
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
@@ -118,11 +118,11 @@ module.exports = {
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.auto_pesquisa")} :v`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.auto_pesquisa", client.emoji(emojis_negativos))} :v`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     else
-                        interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 }
             })
-            .catch(() => interaction.reply({ content: `${client.emoji(emojis_negativos)} | ${client.tls.phrase(user, "util.wiki.sem_dados")} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true }))
+            .catch(() => interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true }))
     }
 }

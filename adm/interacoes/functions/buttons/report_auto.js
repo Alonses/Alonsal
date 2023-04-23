@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirma
 
     if (!operacao)
-        interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Reportando os usuários banidos do servidor de forma automática
     if (operacao === 1) {
@@ -37,12 +37,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
                         await alvo.save()
                     }
 
-                let msg_feed = `${adicionados} usuários banidos foram adicionados aos registros de mau comportados, obrigado!`
+                let msg_feed = client.replace(client.tls.phrase(user, "mode.report.usuarios_reportados", client.defaultEmoji("guard")), adicionados)
+
+                if (adicionados === 1)
+                    msg_feed = client.tls.phrase(user, "mode.report.usuario_reportado", client.defaultEmoji("guard"))
 
                 if (adicionados < 1)
-                    msg_feed = "Nenhum usuário foi adicionado, pois não possuem justificativa de banimento ou não há banimentos no servidor."
+                    msg_feed = client.tls.phrase(user, "mode.report.sem_reportados", client.defaultEmoji("guard"))
 
-                return interaction.update({ content: `${client.defaultEmoji("guard")} | ${msg_feed}`, embeds: [], components: [], ephemeral: true })
+                return interaction.update({ content: msg_feed, embeds: [], components: [], ephemeral: true })
             })
     }
 }

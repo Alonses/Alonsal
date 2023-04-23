@@ -30,7 +30,7 @@ async function loadAll(client) {
 
                 // Salvando o commit de traduções mais recente no banco
                 bot.persis.alondioma = cod_commit
-                bot.save()
+                await bot.save()
 
                 if (process.env.channel_lang)
                     client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)

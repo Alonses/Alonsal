@@ -108,9 +108,9 @@ module.exports = {
             await guild.save()
 
             if (guild.conf.reports)
-                interaction.reply({ content: `:telephone: | ${client.tls.phrase(user, "mode.report.ativo").replace("canal_repl", `<#${guild.reports.channel}>`)}`, ephemeral: true })
+                interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.report.ativo", 15), `<#${guild.reports.channel}>`), ephemeral: true })
             else
-                interaction.reply({ content: `:mailbox_closed: | ${client.tls.phrase(user, "mode.report.desativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.report.desativo", 16), ephemeral: true })
         }
     }
 }

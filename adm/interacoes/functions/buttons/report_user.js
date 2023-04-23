@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Removendo o usuário da lista de reportados
 
         await dropReport(alvo.uid, interaction.guild.id)
-        interaction.update({ content: ":o: | Operação cancelada!", embeds: [], components: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     }
 
     // Reportando um usuário mau comportado
@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         alvo.archived = false
         await alvo.save()
 
-        interaction.update({ content: `${client.defaultEmoji("guard")} | ${client.tls.phrase(user, "mode.report.usuario_add")}`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: client.tls.phrase(user, "mode.report.usuario_add", client.defaultEmoji("guard")), embeds: [], components: [], ephemeral: true })
         require('../../../automaticos/dispara_reporte')({ client, alvo })
     }
 
@@ -37,6 +37,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         alvo.archived = false
         await alvo.save()
 
-        interaction.update({ content: `${client.defaultEmoji("guard")} | O usuário foi adicionado silenciosamente a lista de mau comportados, obrigado!`, embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: client.tls.phrase(user, "mode.report.adicionado_silenciosamente", client.defaultEmoji("guard")), embeds: [], components: [], ephemeral: true })
     }
 }
