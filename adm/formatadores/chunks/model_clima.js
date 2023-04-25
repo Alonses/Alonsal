@@ -3,11 +3,11 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
-const direcao_cardial = require("../funcoes/direcao_cardial")
+const { emojis, emojis_negativos } = require('../../../arquivos/json/text/emojis.json')
+const direcao_cardial = require("../../funcoes/direcao_cardial")
 
 const getCountryISO3 = require("country-iso-2-to-3")
-const formata_horas = require('./formata_horas')
+const formata_horas = require('../formata_horas')
 
 module.exports = async (client, user, interaction, automatico) => {
 
@@ -81,8 +81,8 @@ module.exports = async (client, user, interaction, automatico) => {
                     let bandeira_pais = "", nome_pais = "", horario_local
                     let nota_rodape = `${client.tls.phrase(user, "util.tempo.dados_atts")} ${dados_att}`
 
-                    const indicaTemp = require('../../adm/funcoes/indica_temperatura.js')
-                    const estacao_atual = require('../../adm/funcoes/estacao_atual.js')
+                    const indicaTemp = require('../../funcoes/indica_temperatura.js')
+                    const estacao_atual = require('../../funcoes/estacao_atual.js')
 
                     if (typeof res.sys.country !== "undefined") {
                         bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`

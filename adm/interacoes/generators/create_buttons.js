@@ -32,14 +32,22 @@ function create_buttons(dados, interaction) {
 
             // Usado para as funções que alteram o banco de dados
             if (botao.data) {
-                row_buttons.addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`${botao.id}|${interaction.user.id}.${botao.data}`)
-                        .setLabel(botao.name)
-                        .setStyle(tipos[botao.type])
-                )
+                if (!botao.emoji)
+                    row_buttons.addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`${botao.id}|${interaction.user.id}.${botao.data}`)
+                            .setLabel(botao.name)
+                            .setStyle(tipos[botao.type])
+                    )
+                else // Botão com emoji definido
+                    row_buttons.addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`${botao.id}|${interaction.user.id}.${botao.data}`)
+                            .setLabel(botao.name)
+                            .setStyle(tipos[botao.type])
+                            .setEmoji(botao.emoji)
+                    )
             } else {
-
                 if (!botao.emoji)
                     row_buttons.addComponents(
                         new ButtonBuilder()
@@ -47,7 +55,7 @@ function create_buttons(dados, interaction) {
                             .setLabel(botao.name)
                             .setStyle(tipos[botao.type])
                     )
-                else
+                else // Botão com emoji definido
                     row_buttons.addComponents(
                         new ButtonBuilder()
                             .setLabel(botao.name)

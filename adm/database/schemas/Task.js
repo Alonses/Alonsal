@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     text: { type: String, default: null },
-    timestamp: { type: Number, default: 0 },
+    timestamp: { type: Number, default: null },
     g_timestamp: { type: Number, defaul: null },
     concluded: { type: Boolean, default: false }
 })

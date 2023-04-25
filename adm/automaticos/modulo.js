@@ -3,8 +3,9 @@ const fs = require('fs')
 const { writeFileSync } = require('fs')
 const { getActiveModules } = require("../database/schemas/Module")
 
-const formata_clima = require('../formatadores/formata_clima')
-const formata_frase = require('../formatadores/formata_frase.js')
+const model_clima = require('../formatadores/chunks/model_clima')
+const model_frase = require('../formatadores/chunks/model_frase.js')
+const model_history = require('../formatadores/chunks/model_history')
 
 const lista_modulos = []
 let trava_modulo = false, global_client
@@ -40,7 +41,7 @@ async function atualiza_modulos(client, tempo_restante, auto) {
 
     if (dados.length > 0 && typeof auto === "undefined")
         setTimeout(() => {
-            verifica_modulo(60000)
+            verifica_modulo(tempo_restante)
         }, tempo_restante) // Executa de 60 em 60 segundos
 
     if (dados.length < 1)
@@ -94,10 +95,32 @@ async function executa_modulo() {
         const user = await global_client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await formata_clima(global_client, user, null, true)
+            await model_clima(global_client, user, null, true)
 
         if (lista_modulos[0].type === 1)
-            await formata_frase(global_client, user)
+            await model_frase(global_client, user)
+
+        if (lista_modulos[0].type === 2) {
+
+            if (!lista_modulos[0].data) // Sem definição de tipo de envio
+                await global_client.sendDM(user, "Você não definiu se o módulo do history será resumido ou completo\nPor padrão, enviarei uma versão resumida para você!", true)
+
+            // Definindo qual tipo de anúncio do history será
+            let dados = {
+                data: "",
+                especifico: "acon=1"
+            }
+
+            // History resumido
+            if (lista_modulos[0].data === 2 || !lista_modulos[0].data) {
+                dados = {
+                    data: "",
+                    especifico: "acon=1"
+                }
+            }
+
+            await model_history(global_client, user, null, dados)
+        }
 
         lista_modulos.shift()
 

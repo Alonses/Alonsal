@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const requisita_clima = require('../../adm/formatadores/formata_clima')
+const model_clima = require('../../adm/formatadores/chunks/model_clima')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,7 +40,6 @@ module.exports = {
     async execute(client, user, interaction) {
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-
-        requisita_clima(client, user, interaction)
+        return model_clima(client, user, interaction)
     }
 }

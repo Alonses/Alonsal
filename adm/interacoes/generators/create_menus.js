@@ -58,8 +58,6 @@ function create_menus(client, interaction, user, dados) {
                 valor_label = i
             }
 
-            i++
-
             if (dados.alvo === "tarefas" || dados.alvo === "tarefa_visualizar") {
 
                 // Listando tarefas
@@ -88,6 +86,17 @@ function create_menus(client, interaction, user, dados) {
                 // dados.timestamp -> timestamp da tarefa
             }
 
+            if (dados.alvo === "modulo_visualizar") {
+
+                // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
+                nome_label = `Módulo ${i}`
+                emoji_label = valor.stats.active ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
+                descricao_label = `${valor.stats.active ? "Ativado" : "Desativado"} | ${client.tls.phrase(user, "util.tarefas.selecionar_lista")}`
+                valor_label = `${dados.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
+            }
+
+            i++
+
             itens_menu.push({
                 label: nome_label,
                 emoji: emoji_label,
@@ -114,6 +123,9 @@ function create_menus(client, interaction, user, dados) {
 
     if (dados.alvo.includes("tarefa"))
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_tarefa_visualizar")
+
+    if (dados.alvo === "modulo_visualizar")
+        titulo_menu = "Escolha um dos módulos abaixo"
 
     if (dados.alvo === "listas")
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_vincular")

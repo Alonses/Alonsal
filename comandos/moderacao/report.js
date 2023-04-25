@@ -193,7 +193,7 @@ module.exports = {
                 await alvo.save()
 
                 // Criando os botões para as funções de reporte
-                const row = client.create_buttons([{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), value: '1', type: 2, data: `1|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, data: `2|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: `0|${alvo.uid}` }], interaction)
+                const row = client.create_buttons([{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), value: '1', type: 2, emoji: '📣', data: `1|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, emoji: '📫', data: `2|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: '🛑', data: `0|${alvo.uid}` }], interaction)
 
                 return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
 
@@ -216,7 +216,7 @@ module.exports = {
                 .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
             // Criando os botões para a cor customizada
-            const row = client.create_buttons([{ id: "report_auto", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: 1 }, { id: "report_auto", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
+            const row = client.create_buttons([{ id: "report_auto", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, emoji: '✅', data: 1 }, { id: "report_auto", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: '🛑', data: 0 }], interaction)
 
             return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         }
