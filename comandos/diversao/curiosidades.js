@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,15 +13,22 @@ module.exports = {
             .then(response => response.json())
             .then(async res => {
 
-                const embed = new EmbedBuilder()
-                    .setColor(client.embed_color(user.misc.color))
-                    .setAuthor({ name: res.nome, iconURL: res.foto })
-                    .setDescription(res.texto)
+                let descricao_curio = res.texto
 
-                if (res.img_curio) // Imagem da curiosidade
-                    embed.setImage(res.img_curio)
+                if (res.data_curio) // Imagem da curiosidade
+                    if (res.data_curio.includes("youtu.be"))
+                        descricao_curio = `${res.texto}\n${res.data_curio}`
+                    else {
+                        if (!res.data_curio.includes("tenor.com")) { // Imagens em anexo
+                            const file = new AttachmentBuilder(res.data_curio, `image.jpeg`)
 
-                interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                            return interaction.reply({ content: `〽️ | ${descricao_curio}`, files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        } else // Gifs
+                            return interaction.reply({ content: `〽️ | ${descricao_curio}\n${res.data_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    }
+
+                // Enviando um texto normal sem arquivos anexados
+                interaction.reply({ content: `〽️ | ${descricao_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             })
     }
 }
