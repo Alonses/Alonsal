@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { model_anun } = require('../formatadores/chunks/model_games')
+const { model_games } = require('../formatadores/chunks/model_games')
 const { redes } = require('../../arquivos/json/text/anuncio.json')
 
 module.exports = async ({ client, interaction, objetos_anunciados }) => {
@@ -47,7 +47,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
             let idioma_definido = dados.lang || "pt-br"
             if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
-            let texto_anuncio = model_anun(client, objetos_anunciados, plataforma, idioma_definido)
+            let texto_anuncio = model_games(client, objetos_anunciados, plataforma, idioma_definido)
             marcacao = `<@&${dados.games.role}>`
 
             const embed = new EmbedBuilder()
