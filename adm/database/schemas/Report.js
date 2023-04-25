@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     issuer: { type: String, default: null },
     relatory: { type: String, default: null },
-    timestamp: { type: Number, default: 0 },
+    timestamp: { type: Number, default: null },
     archived: { type: Boolean, default: false },
     auto: { type: Boolean, default: false }
 })

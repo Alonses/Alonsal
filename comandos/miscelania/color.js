@@ -112,7 +112,7 @@ module.exports = {
             .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para a cor customizada
-        const row = client.create_buttons([{ id: "custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${entrada}${new_color}` }, { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, data: 0 }], interaction)
+        const row = client.create_buttons([{ id: "custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${entrada}${new_color}` }, { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: '🛑', data: 0 }], interaction)
 
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }

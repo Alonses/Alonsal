@@ -1,8 +1,8 @@
-const { emojis } = require('../../arquivos/json/text/emojis.json')
+const { emojis } = require('../../../arquivos/json/text/emojis.json')
 
-function formata_games(client, objeto_anunciado, plataforma, idioma_definido) {
+function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
 
-    const { data } = require(`../../arquivos/idiomas/${idioma_definido}.json`)
+    const { data } = require(`../../../arquivos/idiomas/${idioma_definido}.json`)
     const game = data.game
 
     let texto_formatado, valor_total = 0, link_app = ""
@@ -43,5 +43,5 @@ function nome_games(objeto_anunciado) {
 }
 
 module.exports = {
-    formata_games
+    model_games
 }

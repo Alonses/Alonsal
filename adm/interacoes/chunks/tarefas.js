@@ -96,7 +96,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
             operador: `x.${lista_timestamp}`
         }
 
-        const row = client.create_buttons([{ id: "return_button", name: 'Retornar', value: '1', type: 0, data: `listas_navegar` }], interaction)
+        const row = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: '↩️', data: `listas_navegar` }], interaction)
 
         interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data), row], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
     }

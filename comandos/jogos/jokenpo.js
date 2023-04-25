@@ -12,7 +12,7 @@ module.exports = {
             "ru": '⌠🎲⌡ Играть в Джокенпо'
         })
         .addStringOption(option =>
-            option.setName("choose")
+            option.setName("choice")
                 .setNameLocalizations({
                     "pt-BR": 'escolha',
                     "es-ES": 'eleccion',
@@ -54,7 +54,7 @@ module.exports = {
         const idioma_definido = client.idioma.getLang(interaction)
         let jooj = ["pedra", "papel", "tesoura", "pedra"]
 
-        const escolha = interaction.options.getString("choose")
+        const escolha = interaction.options.getString("choice")
             ?? jooj[client.random(2)]
 
         const bet = interaction.options.getNumber("bet") ?? 0

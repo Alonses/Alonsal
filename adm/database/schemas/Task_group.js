@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, defaul: null },
     name: { type: String, default: null },
-    timestamp: { type: Number, default: 0 }
+    timestamp: { type: Number, default: null }
 })
 
 const model = mongoose.model("Task_group", schema)

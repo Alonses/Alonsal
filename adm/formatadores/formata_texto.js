@@ -1,5 +1,8 @@
 module.exports = (string) => {
 
+    if (!string)
+        return "`Sem texto`"
+
     string = string.replaceAll("&quot;", "\"")
     string = string.replaceAll("&#039;", "'")
     string = string.replaceAll("&amp;", "&")
