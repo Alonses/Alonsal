@@ -1,6 +1,8 @@
-const { EmbedBuilder, time } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 
 const { getModule, getModulesPrice } = require('../../../database/schemas/Module')
+
+const formata_horas = require('../../../formatadores/formata_horas')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -8,9 +10,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const timestamp = parseInt(dados.split(".")[1])
     const modulo = await getModule(interaction.user.id, timestamp)
 
-    const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
+    const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos", "🃏 Charadas"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
 
-    const ativacao_modulo = `${ativacoes[modulo.stats.days]} às ${modulo.stats.hour}`
+    const ativacao_modulo = `${ativacoes[modulo.stats.days]} às ${formata_horas(modulo.stats.hour.split(":")[0], modulo.stats.hour.split(":")[1])}`
     const montante = await getModulesPrice(interaction.user.id)
 
     const embed = new EmbedBuilder()
