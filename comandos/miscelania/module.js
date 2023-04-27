@@ -3,6 +3,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const { verifyUserModules, createModule } = require('../../adm/database/schemas/Module')
 const { getModulesPrice } = require('../../adm/database/schemas/Module')
 
+const formata_horas = require('../../adm/formatadores/formata_horas')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("module")
@@ -45,7 +47,8 @@ module.exports = {
                         .addChoices(
                             { name: '🌩️ Clima', value: '0' },
                             { name: '🖊️ Frase', value: '1' },
-                            { name: '🏯 Eventos históricos', value: '2' }
+                            { name: '🏯 Eventos históricos', value: '2' },
+                            { name: '🃏 Charadas', value: '3' }
                         )
                         .setRequired(true))
                 .addIntegerOption(option =>
@@ -135,7 +138,7 @@ module.exports = {
             if (user.misc.money < 20)
                 return client.tls.reply(interaction, user, "misc.modulo.sem_bufunfa", true, 0)
 
-            const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
+            const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos", "🃏 Charadas"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
             const type = parseInt(interaction.options.getString("choice"))
 
             // Verificando quantos módulos de um tipo existem para o usuário
@@ -151,8 +154,11 @@ module.exports = {
             const corpo_modulo = await createModule(interaction.user.id, type)
             const timestamp = client.timestamp()
 
+            if (type === 3) // Módulo de charadas
+                corpo_modulo.stats.price = 1
+
             corpo_modulo.stats.days = interaction.options.getString("when")
-            corpo_modulo.stats.hour = `${interaction.options.getInteger("hour")}:${interaction.options.getInteger("minute")}`
+            corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour"), interaction.options.getInteger("minute"))
             corpo_modulo.stats.timestamp = timestamp
 
             await corpo_modulo.save()

@@ -6,6 +6,7 @@ const { getActiveModules } = require("../database/schemas/Module")
 const model_clima = require('../formatadores/chunks/model_clima')
 const model_frase = require('../formatadores/chunks/model_frase.js')
 const model_history = require('../formatadores/chunks/model_history')
+const model_charada = require('../formatadores/chunks/model_charada')
 
 const lista_modulos = []
 let trava_modulo = false, global_client
@@ -102,7 +103,7 @@ async function executa_modulo() {
 
         if (lista_modulos[0].type === 2) {
 
-            if (!lista_modulos[0].data) // Sem definição de tipo de envio
+            if (lista_modulos[0].data === 0) // Sem definição de tipo de envio
                 await global_client.sendDM(user, "Você não definiu se o módulo do history será resumido ou completo\nPor padrão, enviarei uma versão resumida para você!", true)
 
             // Definindo qual tipo de anúncio do history será
@@ -121,6 +122,10 @@ async function executa_modulo() {
 
             await model_history(global_client, user, null, dados)
         }
+
+        // Charadas
+        if (lista_modulos[0].type === 3)
+            await model_charada(global_client, user, null, true)
 
         lista_modulos.shift()
 

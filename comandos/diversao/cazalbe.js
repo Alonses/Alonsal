@@ -1,9 +1,8 @@
-const fetch = (...args) =>
-	import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 const { gifs } = require('../../arquivos/json/gifs/cazalbe.json')
+
+const model_charada = require('../../adm/formatadores/chunks/model_charada')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -49,22 +48,7 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === "laugh") {
 			const file = new AttachmentBuilder("./arquivos/songs/cazalbe.ogg")
 			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-		} else {
-
-			return client.tls.reply(interaction, user, "inic.error.develop", true, 5)
-
-			fetch("https://api-charadas.herokuapp.com/puzzle?lang=ptbr")
-				.then(response => response.json())
-				.then(async res => {
-
-					const embed = new EmbedBuilder()
-						.setTitle("Cazalbé")
-						.setColor(client.embed_color(user.misc.color))
-						.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Carlos_Alberto_in_2019.jpg/1200px-Carlos_Alberto_in_2019.jpg')
-						.setDescription(`${res.question}\n${res.answer}`)
-
-					interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-				})
-		}
+		} else
+			model_charada(client, user, interaction)
 	}
 }
