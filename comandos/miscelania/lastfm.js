@@ -189,8 +189,8 @@ module.exports = {
                                     .setColor(client.embed_color(user_alvo.misc.color))
                                     .addFields(
                                         {
-                                            name: `:saxophone: ${client.tls.phrase(user, "util.lastfm.geral")}`,
-                                            value: `:notes: **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_scrobbles}\``,
+                                            name: `${client.defaultEmoji("instrument")} ${client.tls.phrase(user, "util.lastfm.geral")}`,
+                                            value: `${client.defaultEmoji("music")} **Scrobbles: **\`${musicas_ouvidas}\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_scrobbles}\``,
                                             inline: true
                                         },
                                         {
@@ -212,7 +212,7 @@ module.exports = {
                                     embed.addFields(
                                         {
                                             name: `${client.defaultEmoji("calendar")} ${client.tls.phrase(user, "util.lastfm.semanal")}`,
-                                            value: `${client.defaultEmoji("album")} **${client.tls.phrase(user, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n${client.defaultEmoji("singer")} **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n:notes: **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
+                                            value: `${client.defaultEmoji("album")} **${client.tls.phrase(user, "util.lastfm.albuns")}: **\`${albuns_semanal} vs ${albuns_semana_passada}\` \`${indicador_album}%\`\n${client.defaultEmoji("singer")} **${client.tls.phrase(user, "util.lastfm.artistas")}: **\`${artistas_semanal} vs ${artistas_semana_passada}\` \`${indicador_artista}%\`\n${client.defaultEmoji("instrument")} **Scrobbles: **\`${scrobbles_semanal} vs ${scrobbles_semana_passada}\` \`${indicador_scrobbles}%\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${media_semanal} vs ${media_semana_passada}\` \`${indicador_media}%\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.lastfm.tempo_tocado")}: **\`${horas_tocadas} vs ${horas_passadas}\` \`${indicador_tempo}%\``,
                                             inline: false
                                         }
                                     )
