@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
 
-const { getUserReports, checkUserGuildReported } = require('../../adm/database/schemas/Report')
+const { getUserReports, getReportedUsers } = require('../../adm/database/schemas/Report')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -153,10 +153,10 @@ module.exports = {
             await interaction.deferReply({ ephemeral: true })
 
             const users = [], usernames = [], user_ids = []
-            const data_usuarios = await checkUserGuildReported(interaction.guild.id)
+            const usuarios_reportados = await getReportedUsers()
 
             // Salvando os dados no formato apropriado
-            data_usuarios.forEach(valor => {
+            usuarios_reportados.forEach(valor => {
                 users.push(valor)
             })
 
