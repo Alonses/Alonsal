@@ -180,47 +180,55 @@ module.exports = {
 
             rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
-            for (const user of users) {
+            const id_membros_guild = []
 
-                if (i < 6) { // Listando os usuários que possuem denúncias e estão no servidor
-                    const membro_server = await client.getUserGuild(interaction, user.uid)
+            interaction.guild.members.fetch()
+                .then(membros => {
 
-                    if (membro_server) {
-                        usernames.push(`${client.defaultEmoji("diamond")} <@${user.uid}>`)
-                        user_ids.push(`\`${(user.uid)}\``)
+                    // Listando todos os usuários do servidor para comparação
+                    membros.forEach(membro => { id_membros_guild.push(membro.user.id) })
+
+                    for (const user of users) {
+
+                        if (i < 6) { // Listando os usuários que possuem denúncias e estão no servidor
+
+                            if (id_membros_guild.includes(user.uid)) {
+                                usernames.push(`${client.defaultEmoji("diamond")} <@${user.uid}>`)
+                                user_ids.push(`\`${(user.uid)}\``)
+                            }
+                        }
+
+                        i++
                     }
-                }
 
-                i++
-            }
+                    const embed = new EmbedBuilder()
+                        .setTitle(`> ${interaction.guild.name}`)
+                        .setColor(client.embed_color(user.misc.color))
 
-            const embed = new EmbedBuilder()
-                .setTitle(`> ${interaction.guild.name}`)
-                .setColor(client.embed_color(user.misc.color))
+                    if (usernames.length > 0)
+                        embed.addFields(
+                            {
+                                name: `**${client.defaultEmoji("guard")} Salafrários**`,
+                                value: usernames.join("\n"),
+                                inline: true
+                            },
+                            { name: "**:label: Identificador**", value: user_ids.join("\n"), inline: true }
+                        )
+                            .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                    else
+                        embed.setDescription("```✅ | Não há usuários que foram denúnciados externamente neste servidor!```")
 
-            if (usernames.length > 1)
-                embed.addFields(
-                    {
-                        name: `**${client.defaultEmoji("guard")} Salafrários**`,
-                        value: usernames.join("\n"),
-                        inline: true
-                    },
-                    { name: "**:label: Identificador**", value: user_ids.join("\n"), inline: true }
-                )
-                    .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            else
-                embed.setDescription("```✅ | Não há usuários que foram denúnciados externamente neste servidor!```")
+                    img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 
-            img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
+                    fetch(img_embed).then(res => {
+                        if (res.status !== 200)
+                            img_embed = img_embed.replace('.gif', '.webp')
 
-            fetch(img_embed).then(res => {
-                if (res.status !== 200)
-                    img_embed = img_embed.replace('.gif', '.webp')
+                        embed.setThumbnail(img_embed)
 
-                embed.setThumbnail(img_embed)
-
-                interaction.editReply({ embeds: [embed], ephemeral: true })
-            })
+                        interaction.editReply({ embeds: [embed], ephemeral: true })
+                    })
+                })
         }
     }
 }
