@@ -131,24 +131,16 @@ module.exports = {
 
         if (interaction.options.getSubcommand() !== "migrate") {
 
-            let id_alvo = interaction.options.getUser("user") || null
+            let id_alvo = interaction.options.getUser("user") || interaction.options.getString("id")
 
-            const valores = {
-                id_alvo: interaction.options.getString("id"),
-                report: interaction.options.getString("reason")
-            }
+            if (!id_alvo)
+                return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
 
-            if (interaction.options.getUser("user"))
+            if (typeof id_alvo === "object")
                 id_alvo = id_alvo.id
-
-            if (id_alvo === null)
-                id_alvo = valores.id_alvo
 
             if (id_alvo === interaction.user.id)
                 return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, 0)
-
-            if (id_alvo === null)
-                return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
 
             if (id_alvo === client.id())
                 return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, 0)
@@ -157,12 +149,11 @@ module.exports = {
 
             // Atribuindo o reporte ao usuário que disparou o comadno
             alvo.issuer = interaction.user.id
-            const date1 = new Date()
 
             if (interaction.options.getSubcommand() === "create") {
 
-                alvo.archived = true
-                alvo.relatory = valores.report
+                alvo.archived = false
+                alvo.relatory = interaction.options.getString("reason")
                 alvo.timestamp = client.timestamp()
 
                 // Enviando o embed para validação
@@ -199,7 +190,7 @@ module.exports = {
 
             } else if (interaction.options.getSubcommand() === "remove") { // Relatando que o usuário teve uma atualização
                 alvo.archived = true
-                alvo.relatory += `\n ${valores.report}`
+                alvo.relatory += `\n🔰 | ${interaction.options.getString("reason")}`
 
                 client.tls.reply(interaction, user, "mode.report.usuario_att", true, 4)
             }
