@@ -190,7 +190,7 @@ module.exports = {
 
             } else if (interaction.options.getSubcommand() === "remove") { // Relatando que o usuário teve uma atualização
                 alvo.archived = true
-                alvo.relatory += `\n🔰 | ${interaction.options.getString("reason")}`
+                alvo.relatory = `${alvo.relatory}\n🔰 | ${interaction.options.getString("reason")}`
 
                 client.tls.reply(interaction, user, "mode.report.usuario_att", true, 4)
             }
@@ -207,7 +207,7 @@ module.exports = {
                 .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
             // Criando os botões para a cor customizada
-            const row = client.create_buttons([{ id: "report_auto", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, emoji: '✅', data: 1 }, { id: "report_auto", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: 0 }], interaction)
+            const row = client.create_buttons([{ id: "report_auto", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, emoji: client.emoji(10), data: 1 }, { id: "report_auto", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: 0 }], interaction)
 
             return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         }

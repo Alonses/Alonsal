@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     msg_feed = client.tls.phrase(user, "mode.report.usuario_reportado", client.defaultEmoji("guard"))
 
                 if (adicionados < 1)
-                    msg_feed = client.tls.phrase(user, "mode.report.sem_reportados", client.defaultEmoji("guard"))
+                    msg_feed = client.tls.phrase(user, "mode.report.sem_usuarios", client.defaultEmoji("guard"))
 
                 return interaction.update({ content: msg_feed, embeds: [], components: [], ephemeral: true })
             })

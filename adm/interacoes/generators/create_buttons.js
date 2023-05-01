@@ -31,7 +31,7 @@ function create_buttons(dados, interaction) {
         } else {
 
             // Usado para as funções que alteram o banco de dados
-            if (botao.data) {
+            if (typeof botao.data !== "undefined") {
                 if (!botao.emoji)
                     row_buttons.addComponents(
                         new ButtonBuilder()
