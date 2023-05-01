@@ -29,6 +29,10 @@ async function getUserReports(uid) {
     return model.find({ uid: uid, archived: false })
 }
 
+async function getReportedUsers() {
+    return model.find({ archived: false })
+}
+
 async function checkUserGuildReported(sid) {
     return model.find({ sid: sid, archived: false })
 }
@@ -38,5 +42,6 @@ module.exports = {
     getReport,
     dropReport,
     getUserReports,
+    getReportedUsers,
     checkUserGuildReported
 }
