@@ -95,7 +95,9 @@ function get_emoji(valores) {
             if (valores.length < 8 && typeof valores === "number")
                 emoji = status[valores]
     } else if (typeof valores === "number")
-        emoji = status[valores] // Emoji único
+        emoji = status[valores] // Emoji por números de identificador
+    else
+        emoji = valores // Emojis já definidos
 
     return emoji
 }
