@@ -138,7 +138,6 @@ module.exports = {
             if (user.misc.money < 20)
                 return client.tls.reply(interaction, user, "misc.modulo.sem_bufunfa", true, 0)
 
-            const tipos_modulo = ["🌩️ Clima", "🖊️ Frases", "🏯 Eventos históricos", "🃏 Charadas"], ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis"), client.tls.phrase(user, "misc.modulo.finais_semana"), client.tls.phrase(user, "misc.modulo.todos_os_dias")]
             const type = parseInt(interaction.options.getString("choice"))
 
             // Verificando quantos módulos de um tipo existem para o usuário
@@ -163,7 +162,7 @@ module.exports = {
 
             await corpo_modulo.save()
 
-            const ativacao_modulo = `${ativacoes[corpo_modulo.stats.days]} às ${corpo_modulo.stats.hour}`
+            const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${corpo_modulo.stats.days}`)} às ${corpo_modulo.stats.hour}`
             const montante = await getModulesPrice(interaction.user.id)
 
             const embed = new EmbedBuilder()
@@ -172,7 +171,7 @@ module.exports = {
                 .addFields(
                     {
                         name: `**${client.defaultEmoji("types")} ${client.tls.phrase(user, "misc.modulo.tipo")}**`,
-                        value: `\`${tipos_modulo[corpo_modulo.type]}\``,
+                        value: `\`${client.tls.phrase(user, `misc.modulo.modulo_${corpo_modulo.type}`)}\``,
                         inline: true
                     },
                     {

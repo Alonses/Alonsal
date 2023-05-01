@@ -168,7 +168,7 @@ module.exports = {
                 paginas = 1
 
             if (users.length > 6)
-                rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
+                rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "mode.report.rodape")}`
 
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                 return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 0)
@@ -178,7 +178,7 @@ module.exports = {
             for (let x = 0; x < remover; x++)
                 users.shift()
 
-            rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
+            rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.report.rodape")}`
 
             const id_membros_guild = []
 
@@ -208,15 +208,15 @@ module.exports = {
                     if (usernames.length > 0)
                         embed.addFields(
                             {
-                                name: `**${client.defaultEmoji("guard")} Salafrários**`,
+                                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}**`,
                                 value: usernames.join("\n"),
                                 inline: true
                             },
-                            { name: "**:label: Identificador**", value: user_ids.join("\n"), inline: true }
+                            { name: `**:label: ${client.tls.phrase(user, "mode.report.identificador")}**`, value: user_ids.join("\n"), inline: true }
                         )
                             .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                     else
-                        embed.setDescription("```✅ | Não há usuários que foram denúnciados externamente neste servidor!```")
+                        embed.setDescription(client.tls.phrase(user, "mode.report.sem_reportes_guild", 10))
 
                     img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 

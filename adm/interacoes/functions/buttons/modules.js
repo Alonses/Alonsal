@@ -35,13 +35,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
 
-        const ativacoes = [client.tls.phrase(user, "misc.modulo.dias_uteis_2"), client.tls.phrase(user, "misc.modulo.finais_semana_2"), client.tls.phrase(user, "misc.modulo.todos_os_dias_2")]
-
         // Ativando o módulo
         modulo.stats.active = true
         await modulo.save()
 
-        interaction.update({ content: client.replace(client.tls.phrase(user, "misc.modulo.modulo_ativado", 6), [ativacoes[modulo.stats.days], modulo.stats.hour]), embeds: [], components: [], ephemeral: true })
+        interaction.update({ content: client.replace(client.tls.phrase(user, "misc.modulo.modulo_ativado", 6), [client.tls.phrase(user, `misc.modulo.ativacao_min_${modulo.stats.days}`), modulo.stats.hour]), embeds: [], components: [], ephemeral: true })
     }
 
     // Atualizando os módulos salvos localmente
