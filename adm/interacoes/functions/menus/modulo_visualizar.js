@@ -42,9 +42,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let row
 
     if (modulo.stats.active) // Módulo ativado
-        row = client.create_buttons([{ id: "module_button", name: 'Desativar', value: '0', type: 1, data: `2|${modulo.stats.timestamp}` }, { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), value: '0', type: 3, emoji: '🗑️', data: `0|${modulo.stats.timestamp}` }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: '↩️', data: `modulos` }], interaction)
+        row = client.create_buttons([{ id: "module_button", name: 'Desativar', value: '0', type: 1, data: `2|${modulo.stats.timestamp}` }, { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), value: '0', type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: client.emoji(19), data: `modulos` }], interaction)
     else // Módulo desativado
-        row = client.create_buttons([{ id: "module_button", name: 'Ativar', value: '1', type: 2, data: `1|${modulo.stats.timestamp}` }, { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), value: '0', type: 3, emoji: '🗑️', data: `0|${modulo.stats.timestamp}` }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: '↩️', data: `modulos` }], interaction)
+        row = client.create_buttons([{ id: "module_button", name: 'Ativar', value: '1', type: 2, data: `1|${modulo.stats.timestamp}` }, { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), value: '0', type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: client.emoji(19), data: `modulos` }], interaction)
 
     return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 }

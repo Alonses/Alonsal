@@ -95,7 +95,7 @@ module.exports = {
             .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
         // Criando os botões para o menu de transferências
-        const row = client.create_buttons([{ id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${alvo.uid}[${bufunfas}` }, { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: '🛑', data: 0 }], interaction)
+        const row = client.create_buttons([{ id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '1', type: 2, data: `1|${alvo.uid}[${bufunfas}` }, { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: 0 }], interaction)
 
         return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
