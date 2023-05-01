@@ -2,6 +2,8 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async function ({ client }) {
 
+    if (client.x.force_update) return
+
     console.log("🟠 | Ligando eventos")
 
     client.discord.on("guildCreate", guild => {

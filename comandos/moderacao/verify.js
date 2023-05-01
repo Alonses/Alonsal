@@ -183,8 +183,12 @@ module.exports = {
             for (const user of users) {
 
                 if (i < 6) { // Listando os usuários que possuem denúncias e estão no servidor
-                    usernames.push(`${client.defaultEmoji("guard")} <@${user.uid}>`)
-                    user_ids.push(`\`${(user.uid)}\``)
+                    const membro_server = await interaction.guild.members.find(member => member.id === user.uid)
+
+                    if (membro_server) {
+                        usernames.push(`${client.defaultEmoji("diamond")} <@${user.uid}>`)
+                        user_ids.push(`\`${(user.uid)}\``)
+                    }
                 }
 
                 i++

@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction }) => {
         if (tarefas.length < 1)
             return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
 
-        data.title = client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1)
+        data.title = `:mega: | ${client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1)}`
         data.alvo = "tarefa_visualizar"
         data.values = tarefas
         data.operador = `k.${listas[0].timestamp}`

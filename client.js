@@ -93,11 +93,23 @@ class CeiraClient {
         return this.discord.channels.cache
     }
 
-    emoji(id_emoji) {
-        if (typeof id_emoji === "object") // Escolhendo um emoji do Array com vários emojis
-            id_emoji = id_emoji[this.random(id_emoji)]
+    emoji(dados) {
 
-        return this.discord.emojis.cache.get(id_emoji)?.toString() || "🔍"
+        let id_emoji = dados
+
+        if (typeof dados === "object") // Escolhendo um emoji do Array com vários emojis
+            if (dados[0].length > 8)
+                dados = id_emoji[this.random(id_emoji)]
+
+        let emoji = "🔍"
+
+        // Emojis customizados
+        if (typeof dados === "string")
+            emoji = this.discord.emojis.cache.get(dados)?.toString() || "🔍"
+        else // Emojis por códigos de status
+            emoji = translate.get_emoji(dados)
+
+        return emoji
     }
 
     embed_color(entrada) {

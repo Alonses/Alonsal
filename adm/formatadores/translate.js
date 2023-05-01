@@ -78,21 +78,26 @@ function translate(user, target) {
 
 function check_emojis(phrase, type) {
 
-    if (typeof type !== "undefined") {
-        if (typeof type === "object") { // Array de emojis
-            if (type[0].length > 8)
-                phrase = `${type} | ${phrase}`
-            else
-                phrase = `${lista_emojis(type)} | ${phrase}`
-        } else { // Emoji único
-            if (type.length > 8 || isNaN(type))
-                phrase = `${type} | ${phrase}`
-            else
-                phrase = `${status[type]} | ${phrase}`
-        }
-    }
+    if (typeof type !== "undefined")
+        phrase = `${get_emoji(type, phrase)} | ${phrase}`
 
     return phrase
+}
+
+function get_emoji(valores) {
+
+    let emoji = ""
+
+    if (typeof valores === "object") { // Array de emojis
+        if (valores[0].length < 8)
+            emoji = lista_emojis(valores)
+        else // Emoji único
+            if (valores.length < 8 && typeof valores === "number")
+                emoji = status[valores]
+    } else if (typeof valores === "number")
+        emoji = status[valores] // Emoji único
+
+    return emoji
 }
 
 function lista_emojis(type) {
@@ -111,5 +116,6 @@ module.exports = {
     phrase,
     report,
     editReply,
-    translate
+    translate,
+    get_emoji
 }
