@@ -41,8 +41,6 @@ async function migrateRankGlobal() {
             // await model.create({ uid: data.id, sid: folder, nickname: data.nickname, lastValidMessage: data.lastValidMessage, warns: data.warns, caldeira_de_ceira: data.caldeira_de_ceira, xp: data.xp })
         }
     }
-
-    console.log(users)
 }
 
 module.exports.Rankobal = model

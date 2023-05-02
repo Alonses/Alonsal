@@ -44,8 +44,6 @@ async function migrateBadges() {
             }
         }
     }
-
-    console.log(`${entradas} novas entradas`)
 }
 
 module.exports.Badge = model

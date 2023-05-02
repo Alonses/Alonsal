@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const model_clima = require('../../adm/formatadores/chunks/model_clima')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("weather")
@@ -40,6 +38,6 @@ module.exports = {
     async execute(client, user, interaction) {
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        return model_clima(client, user, interaction)
+        require('../../adm/formatadores/chunks/model_clima')(client, user, interaction)
     }
 }

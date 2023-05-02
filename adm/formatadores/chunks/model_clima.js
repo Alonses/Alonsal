@@ -9,66 +9,45 @@ const direcao_cardial = require("../../funcoes/direcao_cardial")
 const getCountryISO3 = require("country-iso-2-to-3")
 const formata_horas = require('../formata_horas')
 
-module.exports = async (client, user, interaction, automatico) => {
+module.exports = async (client, user, interaction) => {
 
-    let idioma_definido = user.lang || "pt-br", pesquisa = ''
-    if (idioma_definido === "al-br") idioma_definido = "pt-br"
-    const translations = require(`i18n-country-code/locales/${idioma_definido.slice(0, 2)}.json`)
+    let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang || "pt-br", pesquisa, pesquisa_bruta, url_completa
+    let lang_min = idioma_definido.slice(0, 2) === "ru" ? "en" : idioma_definido.slice(0, 2)
 
-    let pesquisa_bruta, url_completa
+    const translations = require(`i18n-country-code/locales/${lang_min}.json`)
 
     // Requisições manuais
-    if (typeof automatico === "undefined") {
+    if (interaction) {
         // Verifica se não há entrada customizada e se o usuário não possui um local padrão
-        if (interaction.options.data.length < 1 && !user.misc.locale) {
-            client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
-            return
-        }
+        if (interaction.options.data.length < 1 && !user.misc.locale)
+            return client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
 
         // Usa o local padrão caso não tenha entrada definida
-        if (interaction.options.data.length < 1)
-            pesquisa = user.misc.locale
-        else // Usa a entrada customizada
-            pesquisa = interaction.options.getString("place")
-
+        pesquisa = interaction.options.getString("place") || user.misc.locale
         pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
 
-        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=pt`
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=${lang_min}`
     } else
-        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${user.misc.locale}&units=metric&lang=pt`
-
-    if (idioma_definido === "en-us")
-        url_completa = url_completa.replace("&lang=pt", "")
-
-    if (idioma_definido === "fr-fr")
-        url_completa = url_completa.replace("&lang=pt", "&lang=fr")
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${user.misc.locale}&units=metric&lang=${lang_min}`
 
     fetch(url_completa)
         .then(response => response.json())
         .then(async res => {
 
-            if (typeof automatico === "undefined") {
-                if (res.cod === '404' || res.cod === '400') {
-                    interaction.editReply({ content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
-                    return
-                } else if (res.cod === '429') { // Erro da API
-                    interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
-                    return
-                } else if (res.id === 1873107) {
-                    interaction.editReply({ content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), ephemeral: true })
-                    return
-                }
+            if (interaction) {
+                if (res.cod === '404' || res.cod === '400')
+                    return interaction.editReply({ content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
+                else if (res.cod === '429')// Erro da API
+                    return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
+                else if (res.id === 1873107)
+                    return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), ephemeral: true })
             } else {
-                if (res.cod === '404' || res.cod === '400') {
-                    client.sendDM(user, `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, true)
-                    return
-                } else if (res.cod === '429') { // Erro da API
-                    client.sendDM(user, client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), true)
-                    return
-                } else if (res.id === 1873107) {
-                    client.sendDM(user, client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), true)
-                    return
-                }
+                if (res.cod === '404' || res.cod === '400')
+                    return client.sendDM(user, { data: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\`` }, true)
+                else if (res.cod === '429') // Erro da API
+                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)) }, true)
+                else if (res.id === 1873107)
+                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)) }, true)
             }
 
             fetch(`${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`) // Buscando o horário local
@@ -84,7 +63,7 @@ module.exports = async (client, user, interaction, automatico) => {
                     const indicaTemp = require('../../funcoes/indica_temperatura.js')
                     const estacao_atual = require('../../funcoes/estacao_atual.js')
 
-                    if (typeof res.sys.country !== "undefined") {
+                    if (res.sys.country) {
                         bandeira_pais = `:flag_${(res.sys.country).toLowerCase()}:`
 
                         const cod_pais = getCountryISO3(res.sys.country)
@@ -123,7 +102,7 @@ module.exports = async (client, user, interaction, automatico) => {
                     const hora = formata_horas(horario_local.getHours()) // Preservar o digito 0
                     const dia = horario_local.getDate()
 
-                    let mes = horario_local.toLocaleString(idioma_definido.slice(0, 2), { month: 'long' })
+                    let mes = horario_local.toLocaleString(lang_min, { month: 'long' })
                     let hours = horario_local.getHours()
 
                     hours %= 12
@@ -182,20 +161,20 @@ module.exports = async (client, user, interaction, automatico) => {
                     let nome_local = `${client.tls.phrase(user, "util.tempo.na")} ${res.name}`, rodape_cabecalho = ""
                     let cabecalho_fix = estacao_atual(res.coord.lat, client, user)
 
-                    if (typeof res.sys.country !== "undefined")
-                        if (idioma_definido === "pt-br")
+                    if (res.sys.country)
+                        if (lang_min === "pt")
                             nome_local = nome_local.replace("na", "em")
 
                     if (res.name === "Globe")
                         nome_local = `${client.tls.phrase(user, "util.tempo.terra")} ${client.defaultEmoji("earth")}`
 
                     // Dados para chuva
-                    if (typeof res.rain !== "undefined") {
+                    if (res.rain) {
                         cabecalho_fix += "\n------------------------------"
 
                         cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
 
-                        if (typeof res.rain["3h"] !== "undefined")
+                        if (typeof res.rain["3h"])
                             cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
@@ -203,10 +182,10 @@ module.exports = async (client, user, interaction, automatico) => {
                     }
 
                     // Dados para neve
-                    if (typeof res.snow !== "undefined") {
+                    if (res.snow) {
                         cabecalho_fix = `${client.tls.phrase(user, "util.tempo.nevando")}\n${client.tls.phrase(user, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
 
-                        if (typeof res.rain["3h"] !== "undefined")
+                        if (res.rain["3h"])
                             cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.neve")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_visibilidade = " 🔽"
@@ -215,7 +194,7 @@ module.exports = async (client, user, interaction, automatico) => {
                     }
 
                     // Dados para rajadas de vento
-                    if (typeof res.wind.gust !== "undefined" && user.misc?.weather) {
+                    if (res.wind.gust && user.misc?.weather) {
                         if (cabecalho_fix !== "")
                             cabecalho_fix += "\n------------------------------"
 
@@ -228,7 +207,7 @@ module.exports = async (client, user, interaction, automatico) => {
                     let pressao_local = `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.pressure} kPA\``
 
                     // Dados de pressão atmosférica
-                    if (typeof res.main.grnd_level !== "undefined")
+                    if (res.main.grnd_level)
                         pressao_local = `:camping: **${client.tls.phrase(user, "util.tempo.nivel_chao")}: ** \`${res.main.grnd_level} kPA\`\n:island: **${client.tls.phrase(user, "util.tempo.nivel_mar")}: ** \`${res.main.sea_level} kPA\``
 
                     let emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, rodape_cabecalho)
@@ -258,7 +237,7 @@ module.exports = async (client, user, interaction, automatico) => {
                                 },
                                 {
                                     name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}**`,
-                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(user, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg, idioma_definido)}\`\n:eye: **${client.tls.phrase(user, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
+                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(user, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg)}\`\n:eye: **${client.tls.phrase(user, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
                                     inline: true
                                 }
                             )
@@ -322,16 +301,16 @@ module.exports = async (client, user, interaction, automatico) => {
                             .setFooter({ text: nota_rodape })
                     }
 
-                    if (typeof automatico === "undefined")
-                        interaction.editReply({ embeds: [embed_clima], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    if (interaction)
+                        return interaction.editReply({ embeds: [embed_clima], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                     else
-                        client.sendDM(user, embed_clima, true)
+                        return client.sendDM(user, { embed: embed_clima }, true)
                 })
         }) // Erro com a API de clima
         .catch(() => {
-            if (typeof automatico === "undefined")
-                interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
+            if (interaction)
+                return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
             else
-                client.sendDM(user, client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), true)
+                return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)) }, true)
         })
 }

@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await modulo.save()
 
-        return interaction.update({ content: 'Seu módulo foi ativo novamente!', components: [], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "misc.modulo.ativado", 20), components: [], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     if (operacao === 2) {
@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await modulo.save()
 
-        return interaction.update({ content: 'Seu módulo foi desativado!', components: [], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "misc.modulo.desativado", 21), components: [], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     if (operacao === 0) {
@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await dropModule(interaction.user.id, modulo.type, timestamp)
 
-        return interaction.update({ content: 'Seu módulo foi apagado', embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({ content: client.tls.phrase(user, "misc.modulo.excluido", 13), embeds: [], components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 
     atualiza_modulos(client, 0, true)

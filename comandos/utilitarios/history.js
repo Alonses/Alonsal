@@ -54,7 +54,7 @@ module.exports = {
                 especifico: especifico
             }
 
-            return require('../../adm/formatadores/chunks/model_history.js')(client, user, interaction, dados)
+            return require('../../adm/formatadores/chunks/model_history')(client, user, dados, interaction)
         }
     }
 }

@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const formata_texto = require('../formata_texto.js')
 
-module.exports = async (client, user, interaction, dados) => {
+module.exports = async (client, user, dados, interaction) => {
 
     if (!dados)
         dados = ""
@@ -18,9 +18,9 @@ module.exports = async (client, user, interaction, dados) => {
 
                 if (res.status)
                     if (interaction)
-                        return interaction.editReply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
+                        return interaction.editReply({ content: client.tls.phrase(user, "util.history.sem_entradas_valor"), ephemeral: true })
                     else
-                        return client.sendDM(user, 'Não há acontecimentos para hoje!', true)
+                        return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
                 let lista_eventos = "", data_eventos = ""
                 const ano_atual = new Date().getFullYear()
@@ -46,9 +46,9 @@ module.exports = async (client, user, interaction, dados) => {
                     .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                 if (interaction)
-                    interaction.editReply({ embeds: [embed_eventos], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    return interaction.editReply({ embeds: [embed_eventos], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 else
-                    client.sendDM(user, embed_eventos, true)
+                    return client.sendDM(user, { embed: embed_eventos }, true)
             })
     } else {
 
@@ -59,9 +59,9 @@ module.exports = async (client, user, interaction, dados) => {
 
                 if (res.status)
                     if (interaction)
-                        return interaction.editReply({ content: "Não há acontecimentos para esses valores especificados, tente novamente", ephemeral: true })
+                        return interaction.editReply({ content: client.tls.phrase(user, "util.history.sem_entradas_valor"), ephemeral: true })
                     else
-                        return client.sendDM(user, 'Não há acontecimentos para hoje!', true)
+                        return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
                 const acontecimento = new EmbedBuilder()
                     .setTitle(formata_texto(res.acontecimento))
@@ -79,13 +79,13 @@ module.exports = async (client, user, interaction, dados) => {
                 if (interaction)
                     interaction.editReply({ embeds: [acontecimento], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 else
-                    client.sendDM(user, acontecimento, true)
+                    client.sendDM(user, { embed: acontecimento }, true)
             })
             .catch(() => {
                 if (interaction)
-                    interaction.editReply({ content: "Houve um erro com este :x", ephemeral: true })
+                    interaction.editReply({ content: client.tls.phrase(user, "util.history.erro_eventos"), ephemeral: true })
                 else
-                    client.sendDM(user, 'Ouve um erro ao buscar um acontecimento pela história!', true)
+                    client.sendDM(user, { data: client.tls.phrase(user, "util.history.erro_eventos") }, true)
             })
     }
 }

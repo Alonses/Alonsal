@@ -224,7 +224,7 @@ class CeiraClient {
         return valor.toLocaleString(locale)
     }
 
-    sendDM(user, value, modulo) {
+    sendDM(user, dados, modulo) {
 
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === this.id()) return
@@ -235,11 +235,14 @@ class CeiraClient {
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
         if (this.decider(user?.conf.notify, 1))
             this.discord.users.fetch(user.uid, false).then((user_interno) => {
-                // Verificando se a mensagem é um embed
-                if (typeof value !== "object")
-                    user_interno.send(value)
+
+                // Verificando qual é o tipo de conteúdo que será enviado
+                if (dados.embed)
+                    user_interno.send({ embeds: [dados.embed] })
+                else if (dados.file)
+                    user_interno.send({ content: dados.data, files: [dados.file] })
                 else
-                    user_interno.send({ embeds: [value] })
+                    user_interno.send(dados.data)
             })
     }
 

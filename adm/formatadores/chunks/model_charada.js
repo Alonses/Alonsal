@@ -1,6 +1,6 @@
 const { getCharada } = require('../../database/schemas/Charadas')
 
-module.exports = async (client, user, interaction, automatico) => {
+module.exports = async (client, user, interaction) => {
 
     const res = await getCharada()
     const texto = `🃏 | ${res[0].question}\n\n${res[0].answer}`
@@ -8,5 +8,5 @@ module.exports = async (client, user, interaction, automatico) => {
     if (interaction)
         interaction.reply({ content: texto, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     else
-        client.sendDM(user, texto, true)
+        client.sendDM(user, { data: texto }, true)
 }

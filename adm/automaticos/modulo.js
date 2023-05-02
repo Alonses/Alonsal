@@ -7,6 +7,9 @@ const model_clima = require('../formatadores/chunks/model_clima')
 const model_frase = require('../formatadores/chunks/model_frase.js')
 const model_history = require('../formatadores/chunks/model_history')
 const model_charada = require('../formatadores/chunks/model_charada')
+const model_curiosidades = require('../formatadores/chunks/model_curiosidades')
+
+const formata_horas = require('../formatadores/formata_horas')
 
 const lista_modulos = []
 let trava_modulo = false, global_client
@@ -60,7 +63,7 @@ function verifica_modulo(tempo_restante) {
 async function requisita_modulo() {
 
     const data1 = new Date()
-    const horario = `${data1.getHours()}:${data1.getMinutes()}`, dia = data1.getDay()
+    const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
 
     fs.readFile('./arquivos/data/modules.txt', 'utf8', function (err, data) {
 
@@ -96,7 +99,7 @@ async function executa_modulo() {
         const user = await global_client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await model_clima(global_client, user, null, true)
+            await model_clima(global_client, user)
 
         if (lista_modulos[0].type === 1)
             await model_frase(global_client, user)
@@ -104,7 +107,7 @@ async function executa_modulo() {
         if (lista_modulos[0].type === 2) {
 
             if (lista_modulos[0].data === 0) // Sem definição de tipo de envio
-                await global_client.sendDM(user, "Você não definiu se o módulo do history será resumido ou completo\nPor padrão, enviarei uma versão resumida para você!", true)
+                await global_client.sendDM(user, { data: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
 
             // Definindo qual tipo de anúncio do history será
             let dados = {
@@ -120,12 +123,16 @@ async function executa_modulo() {
                 }
             }
 
-            await model_history(global_client, user, null, dados)
+            await model_history(global_client, user, dados)
         }
 
         // Charadas
         if (lista_modulos[0].type === 3)
-            await model_charada(global_client, user, null, true)
+            await model_charada(global_client, user)
+
+        // Curiosidades
+        if (lista_modulos[0].type === 4)
+            await model_curiosidades(global_client, user)
 
         lista_modulos.shift()
 

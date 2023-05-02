@@ -48,7 +48,8 @@ module.exports = {
                             { name: '🌩️ Clima', value: '0' },
                             { name: '🖊️ Frase', value: '1' },
                             { name: '🏯 Eventos históricos', value: '2' },
-                            { name: '🃏 Charadas', value: '3' }
+                            { name: '🃏 Charadas', value: '3' },
+                            { name: '〽️ Curiosidades', value: '4' }
                         )
                         .setRequired(true))
                 .addIntegerOption(option =>
@@ -144,7 +145,7 @@ module.exports = {
             const modulos_semelhantes = await verifyUserModules(interaction.user.id, type)
 
             if (modulos_semelhantes.length > 2)
-                return interaction.reply({ content: "Você pode ativar apenas 3 de cada tipo de módulo!", ephemeral: true })
+                return interaction.reply({ content: client.tls.phrase(user, "misc.modulo.limite_modulos"), ephemeral: true })
 
             // Prevenção de erros
             if (type == 0 && !user.misc.locale)
@@ -153,11 +154,11 @@ module.exports = {
             const corpo_modulo = await createModule(interaction.user.id, type)
             const timestamp = client.timestamp()
 
-            if (type === 3) // Módulo de charadas
+            if (type === 3 || type === 4) // Módulo de charadas
                 corpo_modulo.stats.price = 1
 
             corpo_modulo.stats.days = interaction.options.getString("when")
-            corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour"), interaction.options.getInteger("minute"))
+            corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour") || '0', interaction.options.getInteger("minute") || '0')
             corpo_modulo.stats.timestamp = timestamp
 
             await corpo_modulo.save()
