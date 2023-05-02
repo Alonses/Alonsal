@@ -68,7 +68,7 @@ module.exports = async (client, user, interaction, dados) => {
                     .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                     .setURL(res.fonte)
                     .setColor(client.embed_color(user.misc.color))
-                    .setDescription(res.descricao)
+                    .setDescription(formata_texto(res.descricao))
                     .setImage(res.imagem)
 
                 if (interaction)
