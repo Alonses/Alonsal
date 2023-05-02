@@ -67,8 +67,7 @@ module.exports = {
                                 client.tls.reply(interaction, user, "mode.emojis.emoji_error_remover", true, 0)
                             )
                     })
-                    .catch(err => {
-                        console.log(err)
+                    .catch(() => {
                         return client.tls.reply(interaction, user, "mode.emojis.emoji_estrangeiro", true, 1)
                     })
             } else

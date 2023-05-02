@@ -2,8 +2,6 @@ const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
 
 const { gifs } = require('../../arquivos/json/gifs/cazalbe.json')
 
-const model_charada = require('../../adm/formatadores/chunks/model_charada')
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cazalbe")
@@ -49,6 +47,6 @@ module.exports = {
 			const file = new AttachmentBuilder("./arquivos/songs/cazalbe.ogg")
 			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 		} else
-			model_charada(client, user, interaction)
+			require('../../adm/formatadores/chunks/model_charada')(client, user, interaction)
 	}
 }

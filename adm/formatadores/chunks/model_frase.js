@@ -13,5 +13,5 @@ module.exports = async (client, user) => {
     else
         frase = client.tls.phrase(user, "modu.frases.noite")
 
-    client.sendDM(user, frase, true)
+    client.sendDM(user, { data: frase }, true)
 }

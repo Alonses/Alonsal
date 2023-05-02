@@ -66,8 +66,7 @@ module.exports = {
 
         try {
             await user_c.save()
-        } catch (err) {
-            console.log(err)
+        } catch {
             return client.tls.reply(interaction, user, "mode.xp.error_2", true, 0)
         }
 

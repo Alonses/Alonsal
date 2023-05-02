@@ -25,12 +25,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (modulo.type === 2 && modulo.data === null) {
 
             const embed = new EmbedBuilder()
-                .setTitle("> Definir tipo de retorno")
+                .setTitle(client.tls.phrase(user, "misc.modulo.definir_tipo"))
                 .setColor(client.embed_color(user.misc.color))
-                .setDescription("Escolha o que preferir!\nVocê pode definir se deseja um `retorno completo`, ou algo `simplificado`.\n\n-> No `retorno completo` te mostrarei a lista completa dos acontecimentos do dia.\n-> O `retorno resumido` irei mostrar apenas um evento, esse escolhido como o mais importante do dia.")
-                .setFooter({ text: "Qual deles você prefere? Selecione um tipo abaixo para começarmos!", iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                .setDescription(client.tls.phrase(user, "misc.modulo.descricao_tipo_history"))
+                .setFooter({ text: client.tls.phrase(user, "misc.modulo.rodape_tipo_modulo"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-            const row = client.create_buttons([{ id: "history_button", name: 'Completo', emoji: '📰', value: '1', type: 2, data: `1|${timestamp}` }, { id: "history_button", name: 'Resumido', emoji: '🔖', value: '1', type: 0, data: `2|${timestamp}` }], interaction)
+            const row = client.create_buttons([{ id: "history_button", name: client.tls.phrase(user, "menu.botoes.completo"), emoji: '📰', value: '1', type: 2, data: `1|${timestamp}` }, { id: "history_button", name: client.tls.phrase(user, "menu.botoes.resumido"), emoji: '🔖', value: '1', type: 0, data: `2|${timestamp}` }], interaction)
 
             return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }

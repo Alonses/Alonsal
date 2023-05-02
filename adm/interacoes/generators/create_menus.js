@@ -87,11 +87,10 @@ function create_menus(client, interaction, user, dados) {
             }
 
             if (dados.alvo === "modulo_visualizar") {
-
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
-                nome_label = `Módulo ${i}`
+                nome_label = `${client.tls.phrase(user, `misc.modulo.modulo_${valor.type}`)}`
                 emoji_label = valor.stats.active ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
-                descricao_label = `${valor.stats.active ? "Ativado" : "Desativado"} | ${client.tls.phrase(user, "util.tarefas.selecionar_lista")}`
+                descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} às ${valor.stats.hour}`
                 valor_label = `${dados.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
             }
 
