@@ -69,10 +69,10 @@ module.exports = async ({ client, message, caso }) => {
         }
 
         if (message.createdTimestamp - user_global.lastValidMessage < DIFF) {
-            user.warns++
+            user_global.warns++
 
             validador = true
-            await user.save()
+            await user_global.save()
         }
 
         if (validador)
@@ -87,7 +87,7 @@ module.exports = async ({ client, message, caso }) => {
         user.lastValidMessage = message.createdTimestamp
         user.warns = 0
 
-        user_global += bot.persis.ranking
+        user_global.xp += bot.persis.ranking
         user_global.lastValidMessage = message.createdTimestamp
         user_global.warns = 0
 
