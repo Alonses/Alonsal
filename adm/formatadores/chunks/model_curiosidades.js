@@ -19,19 +19,21 @@ module.exports = async (client, user, interaction) => {
                         const file = new AttachmentBuilder(res.data_curio, `image.jpeg`)
 
                         if (interaction)
-                            return interaction.reply({ content: `〽️ | ${descricao_curio}`, files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                            interaction.reply({ content: `〽️ | ${descricao_curio}`, files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                         else
-                            return client.sendDM(user, { data: `〽️ | ${descricao_curio}`, file: file }, true)
+                            client.sendDM(user, { data: `〽️ | ${descricao_curio}`, files: file }, true)
                     } else // Gifs
                         if (interaction)
-                            return interaction.reply({ content: `〽️ | ${descricao_curio}\n${res.data_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                            interaction.reply({ content: `〽️ | ${descricao_curio}\n${res.data_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                         else
-                            return client.sendDM(user, { data: `〽️ | ${descricao_curio}\n${res.data_curio}` }, true)
+                            client.sendDM(user, { data: `〽️ | ${descricao_curio}\n${res.data_curio}` }, true)
+
+                    return
                 }
 
             if (interaction) // Enviando um texto normal sem arquivos anexados
-                return interaction.reply({ content: `〽️ | ${descricao_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({ content: `〽️ | ${descricao_curio}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             else
-                return client.sendDM(user, { data: `〽️ | ${descricao_curio}` }, true)
+                client.sendDM(user, { data: `〽️ | ${descricao_curio}` }, true)
         })
 }
