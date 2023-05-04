@@ -3,8 +3,11 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('../../adm/data/badges')
+const { getRankGlobal } = require('../../adm/database/schemas/Rank_g')
+const { getRankServer } = require('../../adm/database/schemas/Rank_s')
+
+const { emojis } = require('../../arquivos/json/text/emojis.json')
 
 const medals = {
     0: ":first_place:",
@@ -89,7 +92,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         let usuario_alvo = [], i = 0, data_usuarios
-        const users = [], usernames = [], experiencias = [], levels = []
+        const users = [], usernames = [], experiencias = [], levels = [], servers = []
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
@@ -101,9 +104,9 @@ module.exports = {
 
         // Coletando os dados para o servidor ou para o global
         if (interaction.options.getSubcommand() === "server")
-            data_usuarios = await client.getRankServer(interaction.guild.id)
+            data_usuarios = await getRankServer(interaction.guild.id)
         else
-            data_usuarios = await client.getRankGlobal()
+            data_usuarios = await getRankGlobal()
 
         // Sem dados salvos no banco de ranking para o servidor especificado
         if (data_usuarios == null)
@@ -141,6 +144,8 @@ module.exports = {
             rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
         }
 
+        const user_i = user
+
         for (const user of users) {
             if (user_alvo)
                 if (user.uid === user_alvo.id) {
@@ -161,17 +166,30 @@ module.exports = {
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
                 experiencias.push(`\`${client.locale(parseInt(user.xp))} EXP\``)
-                levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
-            }
 
-            if (!user_alvo) // Verifica se a entrada é um ID
-                i++
+                if (interaction.options.getSubcommand() === "server")
+                    levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
+                else {
+
+                    let server = client.guilds().get(user.sid || '0')
+
+                    if (!server)
+                        nome_server = client.tls.phrase(user_i, "manu.data.server_desconhecido")
+                    else
+                        nome_server = server.name
+
+                    servers.push(`\`${nome_server}\``)
+                }
+
+                if (!user_alvo) // Verifica se a entrada é um ID
+                    i++
+            }
         }
 
         if (interaction.options.getSubcommand() === "server") { // Exibindo o rank normalmente
 
             if (!user_alvo) // Sem usuário alvo definido
-                retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape)
+                retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape)
             else { // Com usuário alvo definido
 
                 if (usuario_alvo.length === 0)
@@ -213,18 +231,27 @@ module.exports = {
                 })
             }
         } else // Ranking global
-            retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape)
+            retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape)
     }
 }
 
-async function retorna_ranking(client, interaction, user, usernames, experiencias, levels, rodape) {
+async function retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape) {
 
     const bot = await client.getBot()
+
+    // Apenas é mostrado caso seja verificação por servidor
+    let descricao_banner = `${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n`
+    let nome_embed = `${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`
+
+    if (interaction.options.getSubcommand() !== "server") {
+        descricao_banner = ""
+        nome_embed = client.tls.phrase(user, "dive.rank.rank_global")
+    }
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.replace(`\`\`\`fix\n${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n   >✳️> place_expX EXP <✳️<\`\`\``, bot.persis.ranking))
+        .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
             {
                 name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
@@ -232,17 +259,29 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
                 inline: true
             },
             {
-                name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
+                name: `:postal_horn: **${client.tls.phrase(user, "dive.rank.experiencia")}**`,
                 value: experiencias.join("\n"),
-                inline: true
-            },
-            {
-                name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
-                value: levels.join("\n"),
                 inline: true
             }
         )
         .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+
+    if (interaction.options.getSubcommand() === "server")
+        embed.addFields(
+            {
+                name: `:beginner: **${client.tls.phrase(user, "dive.rank.nivel")}**`,
+                value: levels.join("\n"),
+                inline: true
+            }
+        )
+    else
+        embed.addFields(
+            {
+                name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.servidor")}**`,
+                value: servers.join("\n"),
+                inline: true
+            }
+        )
 
     img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 

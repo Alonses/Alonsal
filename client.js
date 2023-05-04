@@ -7,10 +7,9 @@ const { getUser } = require('./adm/database/schemas/User')
 const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getUserBadges } = require('./adm/database/schemas/Badge')
-const { getRankGlobal } = require('./adm/database/schemas/Rank_g')
 const { create_buttons } = require('./adm/interacoes/generators/create_buttons')
 const { create_menus } = require('./adm/interacoes/generators/create_menus')
-const { getRankServer, getUserRankServer } = require('./adm/database/schemas/Rank_s')
+const { getUserRankServer } = require('./adm/database/schemas/Rank_s')
 const { getBot } = require('./adm/database/schemas/Bot')
 const { listAllUserTasks } = require('./adm/database/schemas/Task')
 const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
@@ -159,20 +158,12 @@ class CeiraClient {
         return getUserBadges(id_user)
     }
 
-    getRankServer(id_server) {
-        return getRankServer(id_server)
-    }
-
     getUserGuild(interaction, id_alvo) {
         return interaction.guild.members.cache.get(id_alvo)
     }
 
     getUserRankServer(id_user, id_server) {
         return getUserRankServer(id_user, id_server)
-    }
-
-    getRankGlobal() {
-        return getRankGlobal()
     }
 
     create_buttons(data, interaction) {
@@ -239,8 +230,8 @@ class CeiraClient {
                 // Verificando qual é o tipo de conteúdo que será enviado
                 if (dados.embed)
                     user_interno.send({ embeds: [dados.embed] })
-                else if (dados.file)
-                    user_interno.send({ content: dados.data, files: [dados.file] })
+                else if (dados.files)
+                    user_interno.send({ content: dados.data, files: [dados.files] })
                 else
                     user_interno.send(dados.data)
             })

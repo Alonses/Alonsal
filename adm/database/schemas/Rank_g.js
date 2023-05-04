@@ -1,13 +1,12 @@
-const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
-// uid -> User ID
-// sid -> Server ID
+const { getAllUsers } = require('./Rank_s')
 
-const users = {}
+// uid -> User ID
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
+    sid: { type: String, default: null },
     nickname: { type: String, default: null },
     lastValidMessage: { type: Number, default: null },
     warns: { type: Number, default: 0 },
@@ -18,34 +17,46 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Rankobal", schema)
 
 async function getRankGlobal() {
-    if (!await model.exists()) return
-
-    return model.find()
+    return model.find({})
 }
 
-async function createRankGlobal(uid, server_id, experience) {
-    await model.create({ uid: uid, sid: server_id, xp: experience })
+async function getUserGlobalRank(uid, experience, nickname, sid) {
+    if (!await model.exists({ uid: uid })) return model.create({ uid: uid, xp: experience, nickname: nickname, sid: sid })
+
+    return model.findOne({ uid: uid })
 }
+
+const users_ranking = []
+const maior_ranking = []
 
 async function migrateRankGlobal() {
 
-    // Migrando os dados do JSON para o banco externo
-    for (const folder of readdirSync(`./arquivos/data/rank/`)) {
-        for (const file of readdirSync(`./arquivos/data/rank/${folder}`)) {
+    const usuarios = await getAllUsers()
 
-            let i = 0
-            const data = require(`../../../arquivos/data/rank/${folder}/${file}`)
+    for (let i = 0; i < usuarios.length; i++) {
+        users_ranking.push(usuarios[i])
+    }
 
-            users[file.split(".json")[0]] = data
-
-            // await model.create({ uid: data.id, sid: folder, nickname: data.nickname, lastValidMessage: data.lastValidMessage, warns: data.warns, caldeira_de_ceira: data.caldeira_de_ceira, xp: data.xp })
+    for (let i = 0; i < users_ranking.length; i++) {
+        for (let x = 0; x < usuarios.length; x++) {
+            if (users_ranking[i].uid === usuarios[x].uid)
+                if (maior_ranking[i]) {
+                    if (maior_ranking[i].xp < usuarios[x].xp)
+                        maior_ranking[i].xp = usuarios[x].xp
+                } else
+                    maior_ranking[i] = users_ranking[x]
         }
+    }
+
+    // Salvando no banco
+    for (let i = 0; i < maior_ranking.length; i++) {
+        await getUserGlobalRank(maior_ranking[i].uid, maior_ranking[i].xp, maior_ranking[i].nickname, maior_ranking[i].sid)
     }
 }
 
 module.exports.Rankobal = model
 module.exports = {
     getRankGlobal,
-    createRankGlobal,
+    getUserGlobalRank,
     migrateRankGlobal
 }

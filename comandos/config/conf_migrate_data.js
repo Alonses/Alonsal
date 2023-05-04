@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { migrateCharadas } = require('../../adm/database/schemas/Charadas')
+const { migrateRankGlobal } = require('../../adm/database/schemas/Rank_g')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,9 +9,11 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
+        return
+
         await interaction.deferReply({ ephemeral: true })
 
-        await migrateCharadas(client)
+        await migrateRankGlobal(client)
             .then(() => {
                 interaction.editReply({ content: `:satellite: | Migração para o banco de dados concluída`, ephemeral: true })
             })
