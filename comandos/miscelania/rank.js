@@ -130,7 +130,7 @@ module.exports = {
             paginas = 1
 
         if (users.length > 6)
-            rodape = `( 1 | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
+            rodape = `( 1 | ${paginas} ) - ${paginas}`
 
         if (!user_alvo) {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
@@ -141,7 +141,7 @@ module.exports = {
             for (let x = 0; x < remover; x++)
                 users.shift()
 
-            rodape = `( ${pagina} | ${paginas} ) - ${paginas} ${client.tls.phrase(user, "dive.rank.rodape")}`
+            rodape = `( ${pagina} | ${paginas} ) - ${paginas}`
         }
 
         const user_i = user
@@ -246,10 +246,12 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
     if (interaction.options.getSubcommand() !== "server") {
         descricao_banner = ""
         nome_embed = client.tls.phrase(user, "dive.rank.rank_global")
-    }
+        rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape_global")}`  // Rodapé do rank global
+    } else // Rodapé do rank de servidor
+        rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}`
 
     const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`)
+        .setTitle(nome_embed)
         .setColor(client.embed_color(user.misc.color))
         .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
