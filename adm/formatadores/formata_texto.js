@@ -9,8 +9,8 @@ module.exports = (string) => {
     string = string.replaceAll("&#34;", "\"")
     string = string.replaceAll("&#39;", "'")
     string = string.replaceAll("<br />", " ")
-    string = string.replaceAll("<strong>", "")
-    string = string.replaceAll("</strong>", "")
+    string = string.replaceAll("<strong>", "").replaceAll("</strong>", "")
+    string = string.replaceAll("<em>", "").replaceAll("</em>", "")
 
     string = string.trim()
 
