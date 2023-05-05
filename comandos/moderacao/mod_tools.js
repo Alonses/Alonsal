@@ -45,10 +45,14 @@ module.exports = {
                             "it": 'Menzionare un canale',
                             "ru": 'упомянуть канал'
                         })))
+        .addSubcommand(subcommand =>
+            subcommand.setName("ranking")
+                .setDescription("⌠💂⌡ (Des)Ative a exibição do servidor no ranking global"))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
     async execute(client, user, interaction) {
 
         let canal_alvo = null
+        const guild = await client.getGuild(interaction.guild.id)
 
         if (interaction.options.getSubcommand() === "ticket") {
             const membro_sv = await client.getUserGuild(interaction, client.id())
@@ -66,8 +70,6 @@ module.exports = {
                     return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, 0)
             }
 
-            let guild = await client.getGuild(interaction.guild.id)
-
             // Ativa ou desativa os tickets no servidor
             guild.conf.tickets = !user.conf.tickets
 
@@ -83,7 +85,7 @@ module.exports = {
                 interaction.reply({ content: `:mailbox: | ${client.tls.phrase(user, "mode.ticket.ativo")}`, ephemeral: true })
             else
                 interaction.reply({ content: `:mailbox_closed: | ${client.tls.phrase(user, "mode.ticket.desativo")}`, ephemeral: true })
-        } else {
+        } else if (interaction.options.getSubcommand() === "report") {
 
             // Categoria alvo para o bot criar os canais
             if (interaction.options.getChannel("channel")) {
@@ -93,8 +95,6 @@ module.exports = {
                 if (canal_alvo !== 0)
                     return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, 0)
             }
-
-            let guild = await client.getGuild(interaction.guild.id)
 
             // Ativa ou desativa os tickets no servidor
             guild.conf.reports = !user.conf.reports
@@ -111,6 +111,18 @@ module.exports = {
                 interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.report.ativo", 15), `<#${guild.reports.channel}>`), ephemeral: true })
             else
                 interaction.reply({ content: client.tls.phrase(user, "mode.report.desativo", 16), ephemeral: true })
+
+        } else {
+
+            // Ativa ou desativa a visualização do servidor no ranking global
+            guild.conf.public = !user.conf.public
+
+            await guild.save()
+
+            if (guild.conf.public)
+                interaction.reply({ content: `${client.defaultEmoji("earth")} | O nome do servidor será mostrado no ranking global para todos os servidores agora!`, ephemeral: true })
+            else
+                interaction.reply({ content: `${client.defaultEmoji("detective")} | O servidor não será mais mostrado no ranking global.`, ephemeral: true })
         }
     }
 }

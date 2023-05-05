@@ -17,7 +17,8 @@ const schema = new mongoose.Schema({
     conf: {
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },
-        reports: { type: Boolean, default: false }
+        reports: { type: Boolean, default: false },
+        public: { type: Boolean, default: false }
     }
 })
 

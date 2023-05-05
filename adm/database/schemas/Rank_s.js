@@ -11,7 +11,8 @@ const schema = new mongoose.Schema({
     lastValidMessage: { type: Number, default: null },
     warns: { type: Number, default: 0 },
     caldeira_de_ceira: { type: Boolean, default: false },
-    xp: { type: Number, default: 0 }
+    xp: { type: Number, default: 0 },
+    internal_xp: { type: Number, default: 0 }
 })
 
 const model = mongoose.model("Rankerver", schema)
@@ -56,6 +57,17 @@ async function migrateRankServer() {
     }
 }
 
+async function updateUserRank() {
+
+    const users = await this.getAllUsers()
+
+    for (let i = 0; i < users.length; i++) {
+        users[i].internal_xp = users[i].xp
+
+        await users[i].save()
+    }
+}
+
 module.exports.Rankerver = model
 module.exports = {
     getAllUsers,
@@ -63,5 +75,6 @@ module.exports = {
     getUserRankServer,
     getUserRankServers,
     createRankServer,
-    migrateRankServer
+    migrateRankServer,
+    updateUserRank
 }

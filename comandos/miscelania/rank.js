@@ -91,7 +91,7 @@ module.exports = {
                         .setMinValue(1))),
     async execute(client, user, interaction) {
 
-        let usuario_alvo = [], i = 0, data_usuarios
+        let usuario_alvo = [], i = 0, data_usuarios, remover = 0
         const users = [], usernames = [], experiencias = [], levels = [], servers = []
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
@@ -136,7 +136,7 @@ module.exports = {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                 return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 0)
 
-            const remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
+            remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
             for (let x = 0; x < remover; x++)
                 users.shift()
@@ -161,7 +161,7 @@ module.exports = {
                 if (fixed_badge) fixed_badge = fixed_badge.emoji
 
                 if (parseInt(pagina) !== 1)
-                    usernames.push(`:bust_in_silhouette: \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
+                    usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
                 else
                     usernames.push(`${medals[i] || ":medal:"} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
