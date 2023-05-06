@@ -15,6 +15,8 @@ const medals = {
     2: ":third_place:"
 }
 
+const servidores = {}
+
 let paginas, pagina, nav_buttons = true
 
 module.exports = async (client, user, interaction, entrada, caso, defer) => {
@@ -118,12 +120,18 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
                 levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
             else {
 
-                let server = client.guilds().get(user.sid || '0')
+                let nome_server
 
-                if (!server)
+                // Checando no cache se o nome está salvo
+                try {
+                    if (!servidores[user.sid]) {
+                        nome_server = client.guilds().get(user.sid || '0')
+                        servidores[nome_server.id] = nome_server.name
+                    } else
+                        nome_server = servidores[user.sid]
+                } catch {
                     nome_server = client.tls.phrase(user_i, "util.steam.undefined")
-                else
-                    nome_server = server.name
+                }
 
                 servers.push(`\`${nome_server}\``)
             }

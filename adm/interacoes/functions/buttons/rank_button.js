@@ -26,8 +26,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 3 || operacao === 5) {
 
-        await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        let data_usuarios
         defer = true
+        await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         // Coletando os dados para o servidor ou para o global
         if (escopo === "server")
