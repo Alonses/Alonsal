@@ -9,7 +9,6 @@ const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { create_buttons } = require('./adm/interacoes/generators/create_buttons')
 const { create_menus } = require('./adm/interacoes/generators/create_menus')
-const { getUserRankServer } = require('./adm/database/schemas/Rank_s')
 const { getBot } = require('./adm/database/schemas/Bot')
 const { listAllUserTasks } = require('./adm/database/schemas/Task')
 const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
@@ -160,10 +159,6 @@ class CeiraClient {
 
     getUserGuild(interaction, id_alvo) {
         return interaction.guild.members.cache.get(id_alvo)
-    }
-
-    getUserRankServer(id_user, id_server) {
-        return getUserRankServer(id_user, id_server)
     }
 
     create_buttons(data, interaction) {
