@@ -257,16 +257,20 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
 
         embed.setThumbnail(img_embed)
 
-        if (!nav_buttons) {
-            if (paginas > 1)
-                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            else
-                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        } else {
-            if (paginas > 1)
-                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            else
-                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        try {
+            if (!nav_buttons) {
+                if (paginas > 1)
+                    await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                else
+                    await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            } else {
+                if (paginas > 1)
+                    await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                else
+                    await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            }
+        } catch (err) {
+            require("../../eventos/error")({ client, err })
         }
     })
 }
