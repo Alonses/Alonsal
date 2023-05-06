@@ -25,6 +25,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 3 || operacao === 5) {
 
+        await interaction.deferUpdate()
+
         // Coletando os dados para o servidor ou para o global
         if (escopo === "server")
             data_usuarios = await getRankServer(interaction.guild.id)
