@@ -6,6 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const escopo = dados.split(".")[3]
     let pagina = parseInt(dados.split(".")[2])
     const operacao = parseInt(dados.split(".")[1])
+    let defer = false
 
     // ID de operações
     // 1 -> Voltar para a página inicial
@@ -25,7 +26,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 3 || operacao === 5) {
 
-        await interaction.deferUpdate()
+        await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        defer = true
 
         // Coletando os dados para o servidor ou para o global
         if (escopo === "server")
@@ -64,5 +66,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
             pagina = parseInt(data_usuarios.length / 6)
     }
 
-    require('../../../formatadores/chunks/model_rank')(client, user, interaction, pagina, escopo)
+    require('../../../formatadores/chunks/model_rank')(client, user, interaction, pagina, escopo, defer)
 }
