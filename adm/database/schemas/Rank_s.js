@@ -21,11 +21,11 @@ async function getRankServer(sid) {
     if (!await model.exists({ sid: sid }))
         return null
 
-    return model.find({ sid: sid })
+    return model.find({ sid: sid }).sort({ xp: -1 }).limit(100)
 }
 
 async function getAllUsers() {
-    return model.find({})
+    return model.find()
 }
 
 async function getUserRankServers(uid, sid) {

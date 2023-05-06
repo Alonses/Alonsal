@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Rankobal", schema)
 
 async function getRankGlobal() {
-    return model.find({})
+    return model.find().sort({ xp: -1 }).limit(100)
 }
 
 async function getUserGlobalRank(uid, experience, nickname, sid) {
