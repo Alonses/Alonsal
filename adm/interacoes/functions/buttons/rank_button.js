@@ -1,12 +1,12 @@
-const { getRankGlobal } = require('../../../database/schemas/Rank_g')
+const { getRankGlobal, findUserGlobalRankIndex } = require('../../../database/schemas/Rank_g')
 const { getRankServer } = require('../../../database/schemas/Rank_s')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
+    let defer = false
     const escopo = dados.split(".")[3]
     let pagina = parseInt(dados.split(".")[2])
     const operacao = parseInt(dados.split(".")[1])
-    let defer = false
 
     // ID de operações
     // 1 -> Voltar para a página inicial
@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 4)
         pagina++
 
-    if (operacao === 3 || operacao === 5) {
+    if (operacao === 3) {
 
         let data_usuarios
         // await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
@@ -35,25 +35,30 @@ module.exports = async ({ client, user, interaction, dados }) => {
         else
             data_usuarios = await getRankGlobal()
 
-        // Encontrando o usuário no ranking
-        if (operacao === 3) {
+        let posicao = 1
 
-            let posicao = 1
-
-            for (let i = 0; i < data_usuarios.length; i++) {
-                if (interaction.user.id !== data_usuarios[i].uid)
-                    posicao++
-                else
-                    break
-            }
-
-            // Arredonda para cima a página com o usuário
-            pagina = Math.ceil(posicao / 6)
+        for (let i = 0; i < data_usuarios.length; i++) {
+            if (interaction.user.id !== data_usuarios[i].uid)
+                posicao++
+            else
+                break
         }
 
-        // Movendo para a última página do ranking
-        if (operacao === 5)
-            pagina = Math.ceil(data_usuarios.length / 6)
+        // Arredonda para cima a página com o usuário
+        pagina = Math.ceil(posicao / 6)
+    }
+
+    if (operacao === 5) {
+
+        let data_usuarios
+
+        // Coletando os dados para o servidor ou para o global
+        if (escopo === "server")
+            data_usuarios = await getRankServer(interaction.guild.id)
+        else
+            data_usuarios = await getRankGlobal()
+
+        pagina = Math.ceil(data_usuarios.length / 6)
     }
 
     require('../../../formatadores/chunks/model_rank')(client, user, interaction, pagina, escopo, defer)
