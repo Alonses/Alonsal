@@ -115,7 +115,10 @@ module.exports = {
         } else {
 
             // Ativa ou desativa a visualização do servidor no ranking global
-            guild.conf.public = !user.conf.public
+            if (typeof guild.conf.public !== "undefined")
+                guild.conf.public = !guild.conf.public
+            else
+                guild.conf.public = false
 
             await guild.save()
 

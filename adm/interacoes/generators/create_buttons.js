@@ -1,70 +1,36 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
-function create_buttons(dados, interaction) {
+function create_buttons(lista, interaction) {
 
     const row_buttons = new ActionRowBuilder()
     const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
 
     // Passando pelo array de botões e criando novos
-    dados.forEach(botao => {
+    lista.forEach(dados => {
 
-        if (botao.id)
-            if (!botao.id.includes("report_user"))
-                botao.name = botao.name.length > 25 ? `${botao.name.slice(0, 25)}...` : botao.name
+        if (dados.id && !dados.id.includes("report_user"))
+            dados.name = dados.name.length > 25 ? `${dados.name.slice(0, 25)}...` : dados.name
 
-        if (botao.type === 4) {
-            if (!botao.emoji)
-                row_buttons.addComponents(
-                    new ButtonBuilder()
-                        .setLabel(botao.name)
-                        .setURL(botao.value)
-                        .setStyle(tipos[botao.type])
-                )
-            else
-                row_buttons.addComponents(
-                    new ButtonBuilder()
-                        .setLabel(botao.name)
-                        .setURL(botao.value)
-                        .setStyle(tipos[botao.type])
-                        .setEmoji(botao.emoji)
-                )
-        } else {
+        const botao = new ButtonBuilder()
+            .setLabel(dados.name)
+            .setStyle(tipos[dados.type])
 
-            // Usado para as funções que alteram o banco de dados
-            if (typeof botao.data !== "undefined") {
-                if (!botao.emoji)
-                    row_buttons.addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`${botao.id}|${interaction.user.id}.${botao.data}`)
-                            .setLabel(botao.name)
-                            .setStyle(tipos[botao.type])
-                    )
-                else // Botão com emoji definido
-                    row_buttons.addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`${botao.id}|${interaction.user.id}.${botao.data}`)
-                            .setLabel(botao.name)
-                            .setStyle(tipos[botao.type])
-                            .setEmoji(botao.emoji)
-                    )
-            } else {
-                if (!botao.emoji)
-                    row_buttons.addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`${botao.id}|${interaction.user.id}`)
-                            .setLabel(botao.name)
-                            .setStyle(tipos[botao.type])
-                    )
-                else // Botão com emoji definido
-                    row_buttons.addComponents(
-                        new ButtonBuilder()
-                            .setLabel(botao.name)
-                            .setURL(botao.value)
-                            .setStyle(tipos[botao.type])
-                            .setEmoji(botao.emoji)
-                    )
-            }
+        if (dados.type === 4) // Botão de link
+            botao.setURL(dados.value)
+        else {
+            if (dados.data) // Botão normal com dados anexados
+                botao.setCustomId(`${dados.id}|${interaction.user.id}.${dados.data}`)
+            else // Botão normal sem dados anexados
+                botao.setCustomId(`${dados.id}|${interaction.user.id}`)
         }
+
+        if (dados.emoji) // Botão com emoji declarado
+            botao.setEmoji(dados.emoji)
+
+        if (typeof dados.disabled !== "undefined") // Botão com click desativado
+            botao.setDisabled(dados.disabled)
+
+        row_buttons.addComponents(botao)
     })
 
     return row_buttons
