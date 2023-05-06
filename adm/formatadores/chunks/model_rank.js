@@ -15,20 +15,23 @@ const medals = {
     2: ":third_place:"
 }
 
-let paginas, pagina, nav_buttons = false
+let paginas, pagina, nav_buttons = true
 
-module.exports = async (client, user, interaction, entrada, caso) => {
+module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
     const users = [], usernames = [], experiencias = [], levels = [], servers = []
 
-    if (typeof entrada === "undefined") {
+    if (typeof entrada === "undefined")
         escopo = interaction.options.getSubcommand()
-        nav_buttons = false
-    } else {
+    else
         escopo = caso
+
+    // Interações que exigem mais tempo
+    if (typeof defer !== "undefined")
+        nav_buttons = defer
+    else
         nav_buttons = true
-    }
 
     // Coleta o ID do usuário mencionado
     let rodape = interaction.user.username, user_alvo = null
@@ -133,7 +136,7 @@ module.exports = async (client, user, interaction, entrada, caso) => {
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo) // Sem usuário alvo definido
-            retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape, escopo)
+            retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo, defer)
         else { // Com usuário alvo definido
 
             if (usuario_alvo.length === 0)
@@ -175,10 +178,10 @@ module.exports = async (client, user, interaction, entrada, caso) => {
             })
         }
     } else // Ranking global
-        retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape, escopo)
+        retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo)
 }
 
-async function retorna_ranking(client, interaction, user, usernames, experiencias, levels, servers, rodape, escopo) {
+async function retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo) {
 
     const bot = await client.getBot()
 
@@ -257,20 +260,16 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
 
         embed.setThumbnail(img_embed)
 
-        try {
-            if (!nav_buttons) {
-                if (paginas > 1)
-                    await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-                else
-                    await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            } else {
-                if (paginas > 1)
-                    await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-                else
-                    await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            }
-        } catch (err) {
-            require("../../eventos/error")({ client, err })
+        if (nav_buttons) {
+            if (paginas > 1)
+                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            else
+                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        } else {
+            if (paginas > 1)
+                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            else
+                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     })
 }
