@@ -30,11 +30,11 @@ async function getUserReports(uid) {
 }
 
 async function getReportedUsers() {
-    return model.find({ archived: false })
+    return model.find({ archived: false }).limit(100)
 }
 
 async function checkUserGuildReported(sid) {
-    return model.find({ sid: sid, archived: false })
+    return model.find({ sid: sid, archived: false }).limit(100)
 }
 
 module.exports.Report = model

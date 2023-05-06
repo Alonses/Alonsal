@@ -26,6 +26,10 @@ async function getUserGlobalRank(uid, experience, nickname, sid) {
     return model.findOne({ uid: uid })
 }
 
+async function findUserGlobalRankIndex(uid) {
+    return model.find({ uid: uid })
+}
+
 const users_ranking = []
 const maior_ranking = []
 
@@ -58,5 +62,6 @@ module.exports.Rankobal = model
 module.exports = {
     getRankGlobal,
     getUserGlobalRank,
-    migrateRankGlobal
+    migrateRankGlobal,
+    findUserGlobalRankIndex
 }

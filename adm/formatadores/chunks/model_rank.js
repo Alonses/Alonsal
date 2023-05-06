@@ -22,7 +22,7 @@ let paginas, pagina, nav_buttons = true
 module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
-    const usernames = [], experiencias = [], levels = [], servers = []
+    const usernames = [], experiencias = [], levels = [], servers = [], ids = []
 
     if (typeof entrada === "undefined")
         escopo = interaction.options.getSubcommand()
@@ -104,6 +104,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             else
                 usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
 
+            ids.push(user.uid)
             experiencias.push(`\`${client.locale(parseInt(user.xp))} EXP\``)
 
             if (escopo === "server")
@@ -134,7 +135,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo) // Sem usuário alvo definido
-            retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo)
+            retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
         else { // Com usuário alvo definido
 
             if (usuario_alvo.length === 0)
@@ -176,17 +177,21 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             })
         }
     } else // Ranking global
-        retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo)
+        retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
 }
 
-async function retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo) {
+async function retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo) {
 
     const bot = await client.getBot()
 
     // Apenas é mostrado caso seja verificação por servidor
     let descricao_banner = `${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n`
     let nome_embed = `${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`
-    rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}`
+
+    if (paginas > 1)
+        rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}`
+    else
+        rodape = ""
 
     if (escopo !== "server") {
         descricao_banner = ""
@@ -209,7 +214,9 @@ async function retorna_ranking(client, user, interaction, usernames, experiencia
                 inline: true
             }
         )
-        .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+
+    if (rodape !== "")
+        embed.setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
     if (escopo === "server")
         embed.addFields(
@@ -248,6 +255,9 @@ async function retorna_ranking(client, user, interaction, usernames, experiencia
 
     if (pagina === paginas - 1) // Penúltima página
         b_disabled[4] = true
+
+    if (ids.includes(interaction.user.id)) // Página com o usuário
+        b_disabled[2] = true
 
     if (paginas > 1)
         row = client.create_buttons([{ id: "rank_button", name: '⏪', value: '1', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', value: '1', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', value: '1', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', value: '1', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', value: '1', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
