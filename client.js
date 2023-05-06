@@ -21,7 +21,7 @@ const { default_emoji } = require('./arquivos/json/text/emojis.json')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1
+let modo_develop = 0, status = 0, ranking = 1, force_update = 0, silent = 1, modules = 1, relatorio = 1
 let token = process.env.token_1, clientId = process.env.client_1
 
 // Ative para limpar os comandos slash locais e globais
