@@ -3,9 +3,9 @@ const { getRankServer } = require('../../../database/schemas/Rank_s')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const operacao = parseInt(dados.split(".")[1])
-    let pagina = parseInt(dados.split(".")[2])
     const escopo = dados.split(".")[3]
+    let pagina = parseInt(dados.split(".")[2])
+    const operacao = parseInt(dados.split(".")[1])
 
     // ID de operações
     // 1 -> Voltar para a página inicial
