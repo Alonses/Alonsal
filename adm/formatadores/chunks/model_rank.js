@@ -251,7 +251,7 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
     if (paginas > 1)
         row = client.create_buttons([{ id: "rank_button", name: '⏪', value: '1', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', value: '1', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', value: '1', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', value: '1', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', value: '1', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
 
-    fetch(img_embed).then(res => {
+    fetch(img_embed).then(async res => {
         if (res.status !== 200)
             img_embed = img_embed.replace('.gif', '.webp')
 
@@ -259,14 +259,14 @@ async function retorna_ranking(client, interaction, user, usernames, experiencia
 
         if (!nav_buttons) {
             if (paginas > 1)
-                interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             else
-                interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         } else {
             if (paginas > 1)
-                interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             else
-                interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     })
 }
