@@ -22,7 +22,7 @@ let paginas, pagina, nav_buttons = true
 module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
-    const users = [], usernames = [], experiencias = [], levels = [], servers = []
+    const usernames = [], experiencias = [], levels = [], servers = []
 
     if (typeof entrada === "undefined")
         escopo = interaction.options.getSubcommand()
@@ -61,41 +61,31 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
     if (data_usuarios == null)
         return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
 
-    // Salvando os dados no formato apropriado
-    data_usuarios.forEach(valor => {
-        users.push(valor)
-    })
-
-    // Ordena os usuários em ordem decrescente de XP
-    users.sort(function (a, b) {
-        return (a.xp < b.xp) ? 1 : ((b.xp < a.xp) ? -1 : 0)
-    })
-
     // Verificando a quantidade de entradas e estimando o número de páginas
-    const pages = users.length / 6
+    const pages = data_usuarios.length / 6
     paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
 
-    if ((users.length / 6) < 1)
+    if ((data_usuarios.length / 6) < 1)
         paginas = 1
 
-    if (users.length > 6)
+    if (data_usuarios.length > 6)
         rodape = `( 1 | ${paginas} ) - ${paginas}`
 
     if (!user_alvo) {
         if (pagina > paginas) // Número de página escolhida maior que as disponíveis
             return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 0)
 
-        remover = pagina === paginas ? (pagina - 1) * 6 : users.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
+        remover = pagina === paginas ? (pagina - 1) * 6 : data_usuarios.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
 
         for (let x = 0; x < remover; x++)
-            users.shift()
+            data_usuarios.shift()
 
         rodape = `( ${pagina} | ${paginas} ) - ${paginas}`
     }
 
     const user_i = user
 
-    for (const user of users) {
+    for (const user of data_usuarios) {
         if (user_alvo)
             if (user.uid === user_alvo.id) {
                 usuario_alvo.push(user.xp)
@@ -144,7 +134,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo) // Sem usuário alvo definido
-            retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo, defer)
+            retorna_ranking(client, user, interaction, usernames, experiencias, levels, servers, rodape, escopo)
         else { // Com usuário alvo definido
 
             if (usuario_alvo.length === 0)

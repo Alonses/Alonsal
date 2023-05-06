@@ -27,8 +27,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 3 || operacao === 5) {
 
         let data_usuarios
-        defer = true
-        await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        // await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         // Coletando os dados para o servidor ou para o global
         if (escopo === "server")
@@ -38,21 +37,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Encontrando o usuário no ranking
         if (operacao === 3) {
-            const users = []
-
-            data_usuarios.forEach(valor => {
-                users.push(valor)
-            })
-
-            // Ordena os usuários em ordem decrescente de XP
-            users.sort(function (a, b) {
-                return (a.xp < b.xp) ? 1 : ((b.xp < a.xp) ? -1 : 0)
-            })
 
             let posicao = 1
 
-            for (let i = 0; i < users.length; i++) {
-                if (interaction.user.id !== users[i].uid)
+            for (let i = 0; i < data_usuarios.length; i++) {
+                if (interaction.user.id !== data_usuarios[i].uid)
                     posicao++
                 else
                     break
@@ -64,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Movendo para a última página do ranking
         if (operacao === 5)
-            pagina = parseInt(data_usuarios.length / 6)
+            pagina = Math.ceil(data_usuarios.length / 6)
     }
 
     require('../../../formatadores/chunks/model_rank')(client, user, interaction, pagina, escopo, defer)
