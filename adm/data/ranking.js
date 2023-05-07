@@ -121,11 +121,13 @@ async function verifica_servers(user, user_global) {
     // Verifica todos os servidores em busca do servidor com maior XP
     // salvando o maior servidor no ranking global
     const servers = await getUserRankServers(user.uid)
+    let maior = 0
 
     servers.forEach(servidor => {
-        if (servidor.ixp >= user_global.xp) {
+        if (servidor.ixp > maior) {
+            maior = servidor.ixp
             user_global.xp = servidor.ixp
-            user_global.sid = id_maior
+            user_global.sid = servidor.sid
         }
     })
 
