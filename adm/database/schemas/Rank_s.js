@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     warns: { type: Number, default: 0 },
     caldeira_de_ceira: { type: Boolean, default: false },
     xp: { type: Number, default: 0 },
-    internal_xp: { type: Number, default: 0 }
+    ixp: { type: Number, default: 0 }
 })
 
 const model = mongoose.model("Rankerver", schema)
@@ -28,8 +28,8 @@ async function getAllUsers() {
     return model.find()
 }
 
-async function getUserRankServers(uid, sid) {
-    if (!await model.exists({ uid: uid })) await model.create({ uid: uid, sid: sid })
+async function getUserRankServers(uid) {
+    if (!await model.exists({ uid: uid })) return
 
     return model.find({ uid: uid })
 }

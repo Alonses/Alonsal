@@ -49,12 +49,12 @@ module.exports = {
 
         // Lista todos os dados que o bot salvou do usuário
         if (interaction.options.getSubcommand() === "summary") {
-            const ranking = [], guild_ranking = await getUserRankServers(user.uid, interaction.guild.id)
+            const ranking = [], guilds_ranking = await getUserRankServers(user.uid)
 
             let nota_servidores = ""
 
             // Listando os servidores que o usuário possui ranking
-            guild_ranking.forEach(valor => {
+            guilds_ranking.forEach(valor => {
                 let server = client.guilds().get(valor.sid)
 
                 if (!server) {
