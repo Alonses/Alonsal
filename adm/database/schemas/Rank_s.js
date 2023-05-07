@@ -3,6 +3,8 @@ const mongoose = require("mongoose")
 
 // uid -> User ID
 // sid -> Server ID
+// ixp -> XP utilizado pelo Bot ( imutável pelo usuário )
+// o IXP é um campo que o bot faz uso para contabilizar o ranking global
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
