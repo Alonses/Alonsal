@@ -21,7 +21,7 @@ async function getRankServer(sid) {
     if (!await model.exists({ sid: sid }))
         return null
 
-    return model.find({ sid: sid }).sort({ xp: -1 }).limit(100)
+    return model.find({ sid: sid }).sort({ xp: -1 }).limit(50)
 }
 
 async function getAllUsers() {
