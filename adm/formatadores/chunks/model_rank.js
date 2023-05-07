@@ -62,7 +62,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
         return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
-    const paginas = Math.ceil(data_usuarios.length / 6)
+    paginas = Math.ceil(data_usuarios.length / 6)
 
     if (!user_alvo) {
         if (pagina > paginas) // Número de página escolhida maior que as disponíveis
@@ -74,8 +74,8 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             data_usuarios.shift()
     }
 
-    if (data_usuarios.length > 6 && !user_alvo)
-        rodape = `( 1 | ${paginas} ) - ${paginas}`
+    if (paginas > 1 && !user_alvo)
+        rodape = `( ${pagina} | ${paginas} ) - ${paginas}`
 
     const user_i = user
 
