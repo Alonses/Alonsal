@@ -1,5 +1,7 @@
 module.exports = async ({ client, caso, quantia }) => {
 
+    if (!client.x.relatorio) return
+
     const bot = await client.getBot()
 
     // Movimentações de bufunfas

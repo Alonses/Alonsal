@@ -1,18 +1,29 @@
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
-const { getUserRankServer } = require('../database/schemas/Rank_s')
+const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
 
-const LIMIT = 5
-const DIFF = 5000
-const CALDEIRA = 60000
+const CHECKS = {
+    LIMIT: 5,
+    DIFF: 5000,
+    HOLD: 60000
+}
 
 module.exports = async ({ client, message, caso }) => {
+
+    if (!client.x.ranking) return
 
     //            Comandos            Mensagens
     let id_alvo = message.user?.id || message.author?.id
 
     // Coletando os dados do usuário alvo
     let user = await getUserRankServer(id_alvo, message.guild.id)
-    let user_global = await getUserGlobalRank(id_alvo, user.xp, user.nickname, message.guild.id)
+
+    // Sincronizando o XP interno de todos os servidores que o usuário faz parte
+    if (!user.ixp) {
+        user.ixp = user.xp
+        await sincroniza_xp(user)
+    }
+
+    let user_global = await getUserGlobalRank(id_alvo, user.ixp, user.nickname, message.guild.id)
 
     // Validando se o usuário tem o ranking habilitado
     if (!await client.userRanking(user.uid)) return
@@ -24,7 +35,7 @@ module.exports = async ({ client, message, caso }) => {
 
         let validador = false
 
-        if (user.warns >= LIMIT) {
+        if (user.warns >= CHECKS.LIMIT) {
             user.caldeira_de_ceira = true
             user.warns = 0
 
@@ -32,7 +43,7 @@ module.exports = async ({ client, message, caso }) => {
             await user.save()
         }
 
-        if (user_global.warns > LIMIT) {
+        if (user_global.warns > CHECKS.LIMIT) {
             user_global.caldeira_de_ceira = true
             user_global.warns = 0
 
@@ -44,15 +55,15 @@ module.exports = async ({ client, message, caso }) => {
             return
     }
 
-    // Limitando o ganho de XP por span no chat
+    // Limitando o ganho de XP por spam no chat
     if (user.caldeira_de_ceira) {
-        if (message.createdTimestamp - user.lastValidMessage > CALDEIRA)
+        if (message.createdTimestamp - user.lastValidMessage > CHECKS.HOLD)
             user.caldeira_de_ceira = false
         else if (caso === "messages") return
     }
 
     if (user_global.caldeira_de_ceira) {
-        if (message.createdTimestamp - user_global.lastValidMessage > CALDEIRA)
+        if (message.createdTimestamp - user_global.lastValidMessage > CHECKS.HOLD)
             user_global.caldeira_de_ceira = false
         else if (caso === "messages") return
     }
@@ -61,14 +72,14 @@ module.exports = async ({ client, message, caso }) => {
 
         let validador = false
 
-        if (message.createdTimestamp - user.lastValidMessage < DIFF) {
+        if (message.createdTimestamp - user.lastValidMessage < CHECKS.DIFF) {
             user.warns++
 
             validador = true
             await user.save()
         }
 
-        if (message.createdTimestamp - user_global.lastValidMessage < DIFF) {
+        if (message.createdTimestamp - user_global.lastValidMessage < CHECKS.DIFF) {
             user_global.warns++
 
             validador = true
@@ -84,6 +95,8 @@ module.exports = async ({ client, message, caso }) => {
 
     if (caso === "messages") {
         user.xp += bot.persis.ranking
+        user.ixp += bot.persis.ranking
+
         user.lastValidMessage = message.createdTimestamp
         user.warns = 0
 
@@ -93,13 +106,40 @@ module.exports = async ({ client, message, caso }) => {
 
     } else { // Experiência obtida executando comandos
         user.xp += bot.persis.ranking * 1.5
+        user.ixp += bot.persis.ranking
 
         user_global.xp += bot.persis.ranking * 1.5
     }
 
     // Registrando no relatório algumas informações
     require('../automaticos/relatorio')({ client, caso })
+    verifica_servers(user, user_global)
+}
+
+async function verifica_servers(user, user_global) {
+
+    // Verifica todos os servidores em busca do servidor com maior XP
+    // salvando o maior servidor no ranking global
+    const servers = await getUserRankServers(user.uid)
+
+    servers.forEach(servidor => {
+        if (servidor.ixp >= user_global.xp) {
+            user_global.xp = servidor.ixp
+            user_global.sid = id_maior
+        }
+    })
 
     await user.save()
     await user_global.save()
+}
+
+async function sincroniza_xp(user) {
+
+    const servidores = await getUserRankServers(user.uid)
+
+    servidores.forEach(async servidor => {
+        servidor.ixp = servidor.xp
+
+        await servidor.save()
+    })
 }

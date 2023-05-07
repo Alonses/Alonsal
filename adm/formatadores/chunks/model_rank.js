@@ -62,14 +62,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
         return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
-    const pages = data_usuarios.length / 6
-    paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
-
-    if ((data_usuarios.length / 6) < 1)
-        paginas = 1
-
-    if (data_usuarios.length > 6)
-        rodape = `( 1 | ${paginas} ) - ${paginas}`
+    const paginas = Math.ceil(data_usuarios.length / 6)
 
     if (!user_alvo) {
         if (pagina > paginas) // Número de página escolhida maior que as disponíveis
@@ -79,9 +72,10 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
         for (let x = 0; x < remover; x++)
             data_usuarios.shift()
-
-        rodape = `( ${pagina} | ${paginas} ) - ${paginas}`
     }
+
+    if (data_usuarios.length > 6 && !user_alvo)
+        rodape = `( 1 | ${paginas} ) - ${paginas}`
 
     const user_i = user
 
@@ -110,7 +104,6 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             if (escopo === "server")
                 levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
             else {
-
                 let nome_server
 
                 // Checando no cache se o nome está salvo
@@ -268,16 +261,21 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
 
         embed.setThumbnail(img_embed)
 
-        if (nav_buttons) {
-            if (paginas > 1)
-                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            else
-                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        } else {
-            if (paginas > 1)
-                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            else
-                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        try {
+            if (nav_buttons) {
+                if (paginas > 1)
+                    await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                else
+                    await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            } else {
+                if (paginas > 1)
+                    await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                else
+                    await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            }
+        } catch (err) {
+            require("../../../adm/eventos/error.js")({ client, err })
+            client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
         }
     })
 }
