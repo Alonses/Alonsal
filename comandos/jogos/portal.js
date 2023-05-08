@@ -42,7 +42,7 @@ module.exports = {
         let z = interaction.options.getInteger("z")
 
         // Do nether para a superfície ( *8 )
-        let operacao = 0, caso = `🍀 Superfície -> 🔥 Nether`, dimension = "na Superfície", to_dimension = "o Nether"
+        let operacao = 0, caso = `🍀 ${client.tls.phrase(user, "game.portal.superficie")} -> 🔥 Nether`, dimension = client.tls.phrase(user, "game.portal.na_superficie"), to_dimension = client.tls.phrase(user, "game.portal.o_nether")
 
         if (interaction.options.getString("destiny"))
             operacao = parseInt(interaction.options.getString("destiny"))
@@ -50,7 +50,7 @@ module.exports = {
         if (operacao === 0) { // Para a superfície
             x /= 8, z /= 8
 
-            caso = `🔥 Nether -> 🍀 Superfície`, dimension = "no Nether", to_dimension = "a Superfície"
+            caso = `🔥 Nether -> 🍀 ${client.tls.phrase(user, "game.portal.superficie")}`, dimension = client.tls.phrase(user, "game.portal.no_nether"), to_dimension = client.tls.phrase(user, "game.portal.a_superficie")
         } else
             x *= 8, z *= 8
 
@@ -60,9 +60,9 @@ module.exports = {
         z = interaction.options.getInteger("z")
 
         const embed = new EmbedBuilder()
-            .setTitle("> Coordenadas de portais")
+            .setTitle(client.tls.phrase(user, "game.portal.titulo"))
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`${client.emoji(emojis.mc_portal)} Seu portal principal precisa ser montado nas seguintes coordenadas ${dimension}\`\`\`fix\nX: ${x_i}; Z: ${z_i}\`\`\`\n${client.emoji(emojis.mc_portal_frame)} Um novo portal será criado nas seguintes coordenadas ao atravessar para ${to_dimension}\`\`\`fix\nX: ${x}; Z: ${z}\`\`\`\n:mag: | Habilite as coordenadas apertando F3 (na Edição Java) ou nas configurações de mundo pela Edição Bedrock.\n\n:warning: | Note que os portais precisam ter um distânciamento mínimo entre as coordenadas para que sejam vinculados corretamente, caso existam portais muito próximos, a linkagem entre eles não irá funcionar.`)
+            .setDescription(client.replace(client.tls.phrase("game.portal.descricao"), [client.emoji(emojis.mc_portal), dimension, x_i, z_i, client.emoji(emojis.mc_portal_frame), to_dimension, x, z]))
             .setFooter({ text: caso, iconURL: interaction.user.avatarURL({ dynamic: true }) })
         interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
