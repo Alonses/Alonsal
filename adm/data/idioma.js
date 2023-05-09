@@ -32,7 +32,7 @@ async function loadAll(client) {
                 bot.persis.alondioma = cod_commit
                 await bot.save()
 
-                if (process.env.channel_lang)
+                if (client.id() === process.env.client_1) // Notifica no canal apenas para o bot principal
                     client.channels().get(process.env.channel_lang).send(`:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)
                 else
                     console.log(`🈂️ | Pacote de traduções do ${client.user().username} sincronizado com o commit ${cod_commit}`)
