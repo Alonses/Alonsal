@@ -63,14 +63,32 @@ module.exports = {
                     "it": 'clima',
                     "ru": 'погода'
                 })
-                .setDescription("⌠👤⌡ Defina o tipo de retorno para requisições de clima"))
+                .setDescription("⌠👤⌡ Set the return type for weather requests")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Defina o tipo de retorno para requisições de clima',
+                    "es-ES": '⌠👤⌡ Establecer el tipo de retorno para las solicitudes meteorológicas',
+                    "fr": '⌠👤⌡ Définir le type de retour pour les requêtes météo',
+                    "it": '⌠👤⌡ Imposta il tipo di ritorno per le richieste meteo',
+                    "ru": '⌠👤⌡ Установить тип возвращаемого значения для запросов о погоде'
+                }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("tasks")
                 .setNameLocalizations({
-                    "pt-BR": 'tarefas'
+                    "pt-BR": 'tarefas',
+                    "es-ES": 'tareas',
+                    "fr": 'taches',
+                    "it": 'appunti',
+                    "ru": 'задания'
                 })
-                .setDescription("⌠👤⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente")),
+                .setDescription("⌠👤⌡ Define whether tasks will be accessible only on servers or globally")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠👤⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente',
+                    "es-ES": '⌠👤⌡ Establecer si las tareas estarán disponibles solo en servidores o globalmente',
+                    "fr": '⌠👤⌡ Définissez si les tâches seront disponibles uniquement sur les serveurs ou globalement',
+                    "it": '⌠👤⌡ Imposta se le attività saranno disponibili solo sui server o a livello globale',
+                    "ru": '⌠👤⌡ Установите, будут ли задачи доступны только на серверах или глобально'
+                })),
     async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "notifications") {
@@ -95,7 +113,7 @@ module.exports = {
                 user.conf.ghost_mode = true
 
             if (user.conf.ghost_mode)
-                interaction.reply({ content: `:ghost: | ${client.tls.phrase(user, "mode.oculto.ativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.oculto.ativo", 28), ephemeral: true })
             else
                 interaction.reply({ content: client.tls.phrase(user, "mode.oculto.desativo", client.emoji(emojis.ghostbusters)), ephemeral: true })
         } else if (interaction.options.getSubcommand() === "ranking") {
@@ -107,9 +125,9 @@ module.exports = {
                 user.conf.ranking = false
 
             if (user.conf.ranking)
-                interaction.reply({ content: `:gem: | ${client.tls.phrase(user, "mode.ranking.ativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.ranking.ativo", 26), ephemeral: true })
             else
-                interaction.reply({ content: `:exploding_head: | ${client.tls.phrase(user, "mode.ranking.desativo")}`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.ranking.desativo", 27), ephemeral: true })
         } else if (interaction.options.getSubcommand() === "weather") {
 
             if (typeof user.misc.weather !== "undefined")
@@ -118,9 +136,9 @@ module.exports = {
                 user.misc.weather = false
 
             if (user.misc.weather)
-                interaction.reply({ content: `:sparkles: | Mostrarei todas as informações sobre o clima nas próximas interações.`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.weather.ativo", 25), ephemeral: true })
             else
-                interaction.reply({ content: `:partly_sunny: | Mostrarei apenas as informações básicas para o clima nas próximas interações.`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.weather.desativo", 24), ephemeral: true })
         } else if (interaction.options.getSubcommand() === "tasks") {
 
             // Ativa ou desativa as tarefas globais
@@ -130,9 +148,9 @@ module.exports = {
                 user.conf.global_tasks = false
 
             if (user.conf.global_tasks)
-                interaction.reply({ content: `${client.defaultEmoji("paper")} :unlock: | Agora as tarefas serão mostradas globalmente.\nVocê conseguirá ver todas as suas listas e tarefas em qualquer servidor em que eu também estiver!`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.tasks.ativo", [client.defaultEmoji("paper"), 22]), ephemeral: true })
             else
-                interaction.reply({ content: `${client.defaultEmoji("paper")} :lock: | Agora as tarefas serão mostradas por servidor, separadamente.\nVocê poderá criar listas com o mesmo nome para servidores diferentes.`, ephemeral: true })
+                interaction.reply({ content: client.tls.phrase(user, "mode.tasks.desativo", [client.defaultEmoji("paper"), 23]), ephemeral: true })
         }
 
         await user.save()

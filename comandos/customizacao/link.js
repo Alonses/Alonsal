@@ -86,7 +86,6 @@ module.exports = {
                             "ru": 'Ваш уникальный токен'
                         })
                         .setRequired(true)))
-
         .addSubcommand(subcommand =>
             subcommand
                 .setName("locale")

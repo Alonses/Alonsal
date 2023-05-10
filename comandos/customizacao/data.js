@@ -24,8 +24,7 @@ module.exports = {
                     "fr": '⌠👤⌡ Tout ce que l\'on sait sur vous',
                     "it": '⌠👤⌡ Tutto quello che sappiamo di te',
                     "ru": '⌠👤⌡ Все, что мы знаем о тебе'
-                })
-        )
+                }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("delete")
@@ -43,8 +42,7 @@ module.exports = {
                     "fr": '⌠👤⌡ Demander la suppression de vos données d\'Alonsal',
                     "it": '⌠👤⌡ Richiedi la cancellazione dei tuoi dati in Alonsal',
                     "ru": '⌠👤⌡ Запросить удаление ваших данных на Alonsal'
-                })
-        ),
+                })),
     async execute(client, user, interaction) {
 
         // Lista todos os dados que o bot salvou do usuário

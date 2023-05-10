@@ -11,6 +11,9 @@ module.exports = (string) => {
     string = string.replaceAll("<br />", " ")
     string = string.replaceAll("<strong>", "").replaceAll("</strong>", "")
     string = string.replaceAll("<em>", "").replaceAll("</em>", "")
+    string = string.replace("<p class=\"truncate-text\">", "")
+    string = string.replace("</span><span                            class=\"disclose-hide\"                            id=\"about-me-expanded\"                        >", "")
+    string = string.replace("<span                            class=\"truncated-text\"                        >", "")
 
     string = string.trim()
 
