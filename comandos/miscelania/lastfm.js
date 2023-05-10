@@ -81,7 +81,8 @@ module.exports = {
 
                     if (!res.includes("ainda não ouviu nenhuma música.")) {
                         if (res.includes("<div class=\"about-me-header\">")) {
-                            descricao = `_- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"_`
+                            descricao = formata_texto(`- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"`)
+                            descricao = `${descricao.split("</span>")[0]}"`
                         }
 
                         if (res.includes("<span class=\"header-scrobble-since\">"))
