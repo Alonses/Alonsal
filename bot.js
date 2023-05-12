@@ -5,6 +5,7 @@ const { config } = require('./config')
 
 const idioma = require('./adm/data/idioma')
 const database = require('./adm/database/database')
+const { getBot } = require('./adm/database/schemas/Bot')
 
 let client = new CeiraClient()
 config(client) // Atualiza os comandos slash do bot
@@ -40,6 +41,12 @@ client.discord.on("messageCreate", async (message) => {
 	if (message.author.bot || message.webhookId) return
 
 	let text = message.content.toLowerCase()
+
+	// Recursos de Broadcast
+	const bot = await getBot(client.id())
+
+	if (bot?.transmission.status)
+		require("./adm/eventos/broadcast.js")({ client, bot, message })
 
 	// Respostas automatizadas por IA
 	if (text.includes(client.id()) || text.includes("alonsal")) {

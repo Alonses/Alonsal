@@ -55,7 +55,7 @@ function create_menus(client, interaction, user, dados) {
                 nome_label = `data ${i}`
                 emoji_label = client.emoji(faustop)
                 descricao_label = `data ${i}`
-                valor_label = i
+                valor_label = `data|${interaction.user.id}.${i}`
             }
 
             if (dados.alvo === "tarefas" || dados.alvo === "tarefa_visualizar") {

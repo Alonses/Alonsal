@@ -2,6 +2,11 @@ const mongoose = require("mongoose")
 
 // bit -> Bot ID
 
+// Transmission assets
+// id_broad -> Canal que será usado para enviar mensagens "manuais" pelo bot
+// id_cast -> Canal que o bot irá usar para enviar respostas do chat
+// id_author -> ID do usuário que ativou o recurso
+
 const schema = new mongoose.Schema({
     bit: { type: String, default: null },
     persis: {
@@ -18,6 +23,12 @@ const schema = new mongoose.Schema({
         exp_concedido: { type: Number, default: 0 },
         msgs_lidas: { type: Number, default: 0 },
         msgs_validas: { type: Number, default: 0 }
+    },
+    transmission: {
+        status: { type: Boolean, default: false },
+        id_broad: { type: String, default: null },
+        id_cast: { type: String, default: null },
+        author: { type: String, default: null }
     },
     bfu: {
         gerado: { type: Number, default: 0 },

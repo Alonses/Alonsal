@@ -30,11 +30,7 @@ function clear_data(user, value) {
             user.misc.locale = null
         }
 
-        // if (i == 3) {
-        //     delete user.social.steam
-        // }
-
-        if (i == 4) {
+        if (i == 3) {
             user.social.steam = null
             user.social.lastfm = null
             user.social.pula_predios = null
