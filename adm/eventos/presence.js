@@ -53,6 +53,9 @@ function requisita_status(client) {
         if (texto_status.includes("canais_repl"))
             texto_status = texto_status.replace("canais_repl", client.channels(0).size)
 
+        if (texto_status.includes("activities_repl"))
+            texto_status = texto_status.replace("activities_repl", activities.length)
+
         // Exibindo o status personalizado de forma aleatória por um tempo
         client.user().setActivity(texto_status, { type: actionTypes[activities[num].type] })
 

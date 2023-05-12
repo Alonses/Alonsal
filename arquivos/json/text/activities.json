@@ -154,11 +154,11 @@
         },
         {
             "type": 2,
-            "text": "Lipps Inc. - Funktown"
+            "text": "Funktown - Lipps Inc."
         },
         {
             "type": 2,
-            "text": "Dschinghis Khan - Moskau"
+            "text": "Moskau - Dschinghis Khan"
         },
         {
             "type": 0,
@@ -447,6 +447,110 @@
         {
             "type": 0,
             "text": "Mr. President"
+        },
+        {
+            "type": 2,
+            "text": "The Goonies 'R' Good Enough - Cyndi Lauper"
+        },
+        {
+            "type": 2,
+            "text": "/tasks"
+        },
+        {
+            "type": 2,
+            "text": "/module"
+        },
+        {
+            "type": 2,
+            "text": "/portal"
+        },
+        {
+            "type": 2,
+            "text": "/translate"
+        },
+        {
+            "type": 2,
+            "text": "/rank global"
+        },
+        {
+            "type": 2,
+            "text": "Surrender - Cheap Trick"
+        },
+        {
+            "type": 2,
+            "text": "Stand Tall - Lena Raine"
+        },
+        {
+            "type": 2,
+            "text": "Infinite Amethyst - Lena Raine"
+        },
+        {
+            "type": 2,
+            "text": "An Ordinary Day - Kumi Tanioka"
+        },
+        {
+            "type": 2,
+            "text": "One More Day - Lena Raine"
+        },
+        {
+            "type": 2,
+            "text": "Relic - Aaron Cherof"
+        },
+        {
+            "type": 2,
+            "text": "Echo in the Wind - Aaron Cherof"
+        },
+        {
+            "type": 2,
+            "text": "A Familiar Room - Aaron Cherof"
+        },
+        {
+            "type": 2,
+            "text": "Crescent Dunes - Aaron Cherof"
+        },
+        {
+            "type": 1,
+            "text": "Patrulha do consumidor"
+        },
+        {
+            "type": 1,
+            "text": "Master Trash"
+        },
+        {
+            "type": 1,
+            "text": "GamesEduUu"
+        },
+        {
+            "type": 2,
+            "text": "Não Ouvo Podcasts"
+        },
+        {
+            "type": 1,
+            "text": "cid cidoso"
+        },
+        {
+            "type": 0,
+            "text": "módulos na sua DM"
+        },
+        {
+            "type": 0,
+            "text": "spam na sua DM"
+        },
+        {
+            "type": 0,
+            "text": "bufunfas na minha conta"
+        },
+        {
+            "type": 0,
+            "text": "recursos ruins para você"
+        },
+        {
+            "type": 0,
+            "text": "baidus em discords alheios"
+        },
+        {
+            "type": 0,
+            "text": "activities_repl status p/ minuto"
         }
     ]
 }

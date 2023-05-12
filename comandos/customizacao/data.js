@@ -114,19 +114,8 @@ module.exports = {
 
             interaction.reply({ embeds: [embed], ephemeral: true })
 
-        } else { // Exclui os dados do usuário coletados pelo bot
-
-            return client.tls.reply(interaction, user, "inic.error.develop", true, 5)
-
-            const opcoes = [1, 2, 3, 4]
-
-            const data = {
-                alvo: "data",
-                values: opcoes
-            }
-
-            interaction.reply({ content: client.tls.phrase(user, "menu.botoes.selecionar_opcap"), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        }
+        } else // Exclui os dados do usuário coletados pelo bot
+            return require('../../adm/interacoes/chunks/data')({ client, user, interaction })
     }
 }
 
