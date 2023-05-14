@@ -33,6 +33,10 @@ async function dropModule(uid, type, timestamp) {
     await model.findOneAndDelete({ uid: uid, type: type, "stats.timestamp": timestamp })
 }
 
+async function dropAllUserModules(uid) {
+    await model.findOneAndDelete({ uid: uid })
+}
+
 async function verifyUserModules(uid, type) {
     return model.find({ uid: uid, type: type })
 }
@@ -62,5 +66,6 @@ module.exports = {
     getModulesPrice,
     getActiveModules,
     listAllUserModules,
+    dropAllUserModules,
     verifyUserModules
 }

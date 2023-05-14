@@ -43,11 +43,16 @@ async function dropGroup(uid, timestamp) {
     await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
 }
 
+async function dropAllUserGroups(uid) {
+    await model.deleteMany({ uid: uid })
+}
+
 module.exports.Task_group = model
 module.exports = {
     createGroup,
     getUserGroup,
     checkUserGroup,
+    dropAllUserGroups,
     listAllUserGroups,
     dropGroup
 }

@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { getUserRankServers } = require('../../adm/database/schemas/Rank_s')
 const { buildAllBadges } = require('../../adm/data/badges')
+const emoji_button = require('../../adm/funcoes/emoji_button')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -35,13 +36,13 @@ module.exports = {
                     "it": 'eliminare',
                     "ru": 'удалить'
                 })
-                .setDescription("⌠👤⌡ Request the deletion of your data in Alonsal")
+                .setDescription("⌠👤⌡ Delete your data on Alonsal")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Solicitar a exclusão de seus dados no Alonsal',
-                    "es-ES": '⌠👤⌡ Solicitar la eliminación de sus datos en Alonsal',
-                    "fr": '⌠👤⌡ Demander la suppression de vos données d\'Alonsal',
-                    "it": '⌠👤⌡ Richiedi la cancellazione dei tuoi dati in Alonsal',
-                    "ru": '⌠👤⌡ Запросить удаление ваших данных на Alonsal'
+                    "pt-BR": '⌠👤⌡ Excluir seus dados no Alonsal',
+                    "es-ES": '⌠👤⌡ Elimina tus datos en Alonsal',
+                    "fr": '⌠👤⌡ Supprimer vos données sur Alonsal',
+                    "it": '⌠👤⌡ Elimina i tuoi dati su Alonsal',
+                    "ru": '⌠👤⌡ Удалите свои данные об Алонсале'
                 })),
     async execute(client, user, interaction) {
 
@@ -96,17 +97,17 @@ module.exports = {
 
                 .addFields(
                     {
-                        name: `**${valida_valor(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
+                        name: `**${emoji_button(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
                         value: "⠀",
                         inline: true
                     },
                     {
-                        name: `**${valida_valor(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
+                        name: `**${emoji_button(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
                         value: "⠀",
                         inline: true
                     },
                     {
-                        name: `**${valida_valor(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
+                        name: `**${emoji_button(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
                         value: "⠀",
                         inline: true
                     }
@@ -114,7 +115,7 @@ module.exports = {
 
             interaction.reply({ embeds: [embed], ephemeral: true })
 
-        } else // Exclui os dados do usuário coletados pelo bot
+        } else // Menu para realizar a exclusão de dados do usuário
             return require('../../adm/interacoes/chunks/data')({ client, user, interaction })
     }
 }
@@ -149,17 +150,4 @@ function lista_servidores(servidores, linha_corte, client) {
     }
 
     return nome_servidores
-}
-
-function valida_valor(valor) {
-
-    let retorno = ":white_check_mark:"
-
-    if (typeof valor !== "undefined" && valor !== null)
-        if (valor)
-            retorno = ":white_check_mark:"
-        else
-            retorno = ":no_entry:"
-
-    return retorno
 }

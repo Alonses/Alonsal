@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
+const { randomString } = require('../../adm/funcoes/random_string')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("password")
@@ -32,7 +34,8 @@ module.exports = {
                 .setMaxValue(450)),
     async execute(client, user, interaction) {
 
-        const tamanho = interaction.options.getInteger("length")
+        const tamanho = interaction.options.getInteger("length") || 15
+
         let bonus = ''
 
         for (let i = 0; i < 3; i++)
@@ -47,21 +50,4 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], ephemeral: true })
     }
-}
-
-function randomString(len, client) {
-    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}~.,;:¢¬_-£"|?'
-    let randomString = ''
-
-    for (let i = 0; i < len; i++) {
-        let randomPoz = client.random(charSet.length)
-        randomString += charSet.slice(randomPoz, randomPoz + 1)
-    }
-
-    return shuffle(randomString.split(''))
-}
-
-function shuffle(o) {
-    for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x)
-        return o.join("")
 }

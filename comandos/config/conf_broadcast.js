@@ -58,7 +58,6 @@ module.exports = {
         } else {
 
             // Ativando ou desativando o recurso de broadcast do bot
-
             if (typeof bot.transmission.status === "undefined") return
 
             bot.transmission.status = !bot.transmission.status
@@ -66,6 +65,9 @@ module.exports = {
             if (bot.transmission.status) { // Reativando
                 interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo novamente, agora enviarei mensagens para o canal <#${bot.transmission.id_cast}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`, ephemeral: true })
                 timer_broadcast(client, bot)
+
+                // Alterando o chat de broad conforme onde o comando foi acionado para ativar novamente
+                bot.transmission.id_broad = interaction.channel.id
             } else { // Desligando
                 interaction.reply({ content: `:zzz: | O Broadcast entre canais foi desligado.`, ephemeral: true })
                 encerra_brodcast(client, bot, true)

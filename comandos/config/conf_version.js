@@ -12,7 +12,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (interaction.user.id !== client.owners[0])
-            return client.tls.phrase(interaction, user, "inic.error.comando_restrito", true, 18)
+            return client.tls.reply(interaction, user, "inic.error.comando_restrito", true, 18)
 
         const bot = await client.getBot()
         bot.persis.version = interaction.options.getString("versao")

@@ -46,12 +46,17 @@ async function dropTaskByGroup(uid, g_timestamp) {
     await model.deleteMany({ uid: uid, g_timestamp: g_timestamp })
 }
 
+async function dropAllUserTasks(uid) {
+    await model.deleteMany({ uid: uid })
+}
+
 module.exports.Task = model
 module.exports = {
     createTask,
     getTask,
     dropTask,
     dropTaskByGroup,
+    dropAllUserTasks,
     listAllUserTasks,
     listAllUserGroupTasks
 }
