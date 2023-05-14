@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const { getUserRankServers } = require('../../adm/database/schemas/Rank_s')
 const { buildAllBadges } = require('../../adm/data/badges')
+
 const emoji_button = require('../../adm/funcoes/emoji_button')
 
 module.exports = {
@@ -42,7 +43,7 @@ module.exports = {
                     "es-ES": '⌠👤⌡ Elimina tus datos en Alonsal',
                     "fr": '⌠👤⌡ Supprimer vos données sur Alonsal',
                     "it": '⌠👤⌡ Elimina i tuoi dati su Alonsal',
-                    "ru": '⌠👤⌡ Удалите свои данные об Алонсале'
+                    "ru": '⌠👤⌡ Удалите свои данные в Alonsal'
                 })),
     async execute(client, user, interaction) {
 
@@ -138,7 +139,7 @@ function lista_servidores(servidores, linha_corte, client) {
         ultima_posicao = nome_servidores.lastIndexOf(", ")
 
         // Quantidade de servidores listados anteriormente
-        qtd_servidores = (nome_servidores.match(/,/g) || []).length
+        let qtd_servidores = (nome_servidores.match(/,/g) || []).length
 
         nome_servidores = nome_servidores.slice(0, ultima_posicao)
         servidores_restantes = servidores.length - qtd_servidores

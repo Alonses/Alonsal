@@ -61,7 +61,7 @@ async function clear_data({ client, user, interaction, operador, caso }) {
                 user.misc.fixed_badge = null
 
             if (alvos[i] === 5)  // Excluindo o rank de servidores desconhecidos
-                dropUnknownRankServers(user)
+                dropUnknownRankServers(user.uid)
 
             if (alvos[i] === 6) // Excluindo o rank do servidor
                 dropUserRankServer(user.uid, interaction.guild.id)
