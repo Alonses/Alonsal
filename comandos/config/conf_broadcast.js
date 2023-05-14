@@ -53,7 +53,7 @@ module.exports = {
 
             timer_broadcast(client, bot)
 
-            interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_cast}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`, ephemeral: true })
+            interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_broad}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`, ephemeral: true })
 
         } else {
 
@@ -67,7 +67,7 @@ module.exports = {
                 timer_broadcast(client, bot)
 
                 // Alterando o chat de broad conforme onde o comando foi acionado para ativar novamente
-                bot.transmission.id_broad = interaction.channel.id
+                bot.transmission.id_cast = interaction.channel.id
             } else { // Desligando
                 interaction.reply({ content: `:zzz: | O Broadcast entre canais foi desligado.`, ephemeral: true })
                 encerra_brodcast(client, bot, true)

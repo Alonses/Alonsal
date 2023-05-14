@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -136,6 +136,34 @@ module.exports = {
                             "it": 'Scegline uno!',
                             "ru": 'Выбери один!'
                         })
+                        .setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand.setName("counter")
+                .setDescription("⌠😂⌡ Count characters in text")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠😂⌡ Conte caracteres no texto',
+                    "es-ES": '⌠😂⌡ Contar caracteres en texto',
+                    "fr": '⌠😂⌡ Compter les caractères dans le texte',
+                    "it": '⌠😂⌡ Contare i caratteri nel testo',
+                    "ru": '⌠😂⌡ Считать символы в тексте'
+                })
+                .addStringOption(option =>
+                    option.setName("text")
+                        .setNameLocalizations({
+                            "pt-BR": 'texto',
+                            "es-ES": 'texto',
+                            "fr": 'texte',
+                            "it": 'testo',
+                            "ru": 'текст'
+                        })
+                        .setDescription("Write something!")
+                        .setDescriptionLocalizations({
+                            "pt-BR": 'Escreva algo!',
+                            "es-ES": '¡Escribe algo!',
+                            "fr": 'Écris quelque chose!',
+                            "it": 'Scrivi qualcosa!',
+                            "ru": 'Напиши что-нибудь!'
+                        })
                         .setRequired(true))),
     async execute(client, user, interaction) {
 
@@ -180,6 +208,32 @@ module.exports = {
 
             // Emoji padrão do discord
             interaction.reply({ content: texto_entrada.replaceAll(" ", emoji), ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+
+        } else if (operation === "counter") {
+
+            // Contador de caracteres e palavras
+            const palavras = texto_entrada.split(" ").length
+            const caracteres_c = texto_entrada.length
+            const caracteres_s = texto_entrada.replaceAll(" ", "").length
+
+            const embed = new EmbedBuilder()
+                .setTitle(client.tls.phrase(user, "dive.counter.titulo"))
+                .setColor(client.embed_color(user.misc.color))
+                .setDescription(`${client.tls.phrase(user, "dive.counter.entrada")} \`\`\`fix\n${texto_entrada.length > 500 ? `${texto_entrada.slice(0, 495)}...` : texto_entrada}\`\`\``)
+                .addFields(
+                    {
+                        name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "dive.counter.caracteres")}**`,
+                        value: `:milky_way: **${client.tls.phrase(user, "dive.counter.com_espaco")}** \`${caracteres_c}\`\n:newspaper: **${client.tls.phrase(user, "dive.counter.sem_espaco")}** \`${caracteres_s}\``,
+                        inline: true
+                    },
+                    {
+                        name: `${client.defaultEmoji("metrics")} **${client.tls.phrase(user, "dive.counter.palavras")}**`,
+                        value: `**${client.tls.phrase(user, "dive.counter.quantidade")}** \`${palavras}\``,
+                        inline: true
+                    }
+                )
+
+            interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     }
 }
