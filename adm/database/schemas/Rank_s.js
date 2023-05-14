@@ -46,6 +46,23 @@ async function createRankServer(uid, server_id, experience) {
     await model.create({ uid: uid, sid: server_id, xp: experience })
 }
 
+async function dropUserRankServer(uid, sid) {
+    await model.findOneAndDelete({ uid: uid, sid: sid })
+}
+
+async function dropUnknownRankServers(uid) {
+
+    const guilds_ranking = await getUserRankServers(uid)
+
+    // Procurando servidores que o usuário possui rank porém o bot não está incluso
+    guilds_ranking.forEach(async valor => {
+        let server = await client.guilds().get(valor.sid)
+
+        if (!server)
+            await dropUserRankServer(uid, valor.sid)
+    })
+}
+
 async function migrateRankServer() {
 
     // Migrando os dados do JSON para o banco externo
@@ -78,5 +95,7 @@ module.exports = {
     getUserRankServers,
     createRankServer,
     migrateRankServer,
-    updateUserRank
+    updateUserRank,
+    dropUserRankServer,
+    dropUnknownRankServers
 }

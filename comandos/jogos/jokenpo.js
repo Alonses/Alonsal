@@ -60,7 +60,7 @@ module.exports = {
         const bet = interaction.options.getNumber("bet") ?? 0
 
         if (bet && bet > user.misc.money) // Sem Bufunfas para poder apostar
-            return client.tls.phrase(interaction, user, "game.jokenpo.erro_aposta", true, [9, 4])
+            return client.tls.reply(interaction, user, "game.jokenpo.erro_aposta", true, [9, 4])
 
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
 

@@ -30,6 +30,10 @@ async function findUserGlobalRankIndex(uid) {
     return model.find({ uid: uid })
 }
 
+async function dropUserGlobalRank(uid) {
+    await model.findOneAndDelete({ uid: uid })
+}
+
 const users_ranking = []
 const maior_ranking = []
 
@@ -63,5 +67,6 @@ module.exports = {
     getRankGlobal,
     getUserGlobalRank,
     migrateRankGlobal,
+    dropUserGlobalRank,
     findUserGlobalRankIndex
 }

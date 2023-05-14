@@ -50,21 +50,28 @@ function translate(user, target) {
     }
 
     try {
-        // Compactando a tradução alvo em um único valor
-        if (!target.includes("minecraft.detalhes"))
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
-        else
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+        if (!target.includes("manu.data.selects")) {
+            // Compactando a tradução alvo em um único valor
+            if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes"))
+                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+            else
+                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+        } else
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
+
     } catch { // Tradução não existente no idioma selecionado
 
         data = { data } = require(`../../arquivos/idiomas/pt-br.json`)
         data = data.data
 
-        // Retornando a tradução em PT-BR (idioma padrão)
-        if (!target.includes("minecraft.detalhes"))
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
-        else
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+        if (!target.includes("manu.data.selects")) {
+            // Retornando a tradução em PT-BR (idioma padrão)
+            if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes"))
+                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+            else
+                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+        } else
+            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
     }
 
     let phrase = data

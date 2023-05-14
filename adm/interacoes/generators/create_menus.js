@@ -50,12 +50,12 @@ function create_menus(client, interaction, user, dados) {
                 valor_label = `${dados.alvo}|${interaction.user.id}.${i - 1}`
             }
 
-            if (dados.alvo == "data") {
+            if (dados.alvo.includes("dado")) {
 
-                nome_label = `data ${i}`
-                emoji_label = client.emoji(faustop)
-                descricao_label = `data ${i}`
-                valor_label = `data|${interaction.user.id}.${i}`
+                nome_label = client.tls.phrase(user, `manu.data.selects.${valor}`)
+                emoji_label = client.defaultEmoji("paper")
+                descricao_label = client.tls.phrase(user, "menu.menus.escolha_mais_detalhes")
+                valor_label = `data|${interaction.user.id}.${valor}`
             }
 
             if (dados.alvo === "tarefas" || dados.alvo === "tarefa_visualizar") {
@@ -131,6 +131,9 @@ function create_menus(client, interaction, user, dados) {
 
     if (dados.alvo === "listas_navegar")
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_navegar")
+
+    if (dados.alvo === "dados_navegar")
+        titulo_menu = client.tls.phrase(user, "manu.data.tipo_dado")
 
     if (dados.alvo === "listas_remover")
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_apagar")

@@ -551,6 +551,14 @@
         {
             "type": 0,
             "text": "activities_repl status p/ minuto"
+        },
+        {
+            "type": 2,
+            "text": "/data delete"
+        },
+        {
+            "type": 2,
+            "text": "/panel"
         }
     ]
 }
