@@ -163,7 +163,7 @@ module.exports = {
 
             await corpo_modulo.save()
 
-            const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${corpo_modulo.stats.days}`)} às ${corpo_modulo.stats.hour}`
+            const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${corpo_modulo.stats.days}`)} ${corpo_modulo.stats.hour}`
             const montante = await getModulesPrice(interaction.user.id)
 
             const embed = new EmbedBuilder()
