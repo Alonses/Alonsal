@@ -25,8 +25,8 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
             .setColor(client.embed_color(user.misc.color))
-            .setURL("https://picpay.me/slondo")
-            .setImage("https://i.imgur.com/incYvy2.jpg")
+            .setURL("https://picpay.me/slondotk")
+            .setImage("https://i.imgur.com/dq5IvDq.jpg")
             .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
 
         interaction.reply({ embeds: [embed], ephemeral: true })

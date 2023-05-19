@@ -81,4 +81,4 @@ Todos os direitos vão diretamente para eles por fornecerem conteúdos de forma 
 Basta convidar o Alonsal para um servidor e voalá, todos os comandos estarão disponíveis para uso! <br>
 Para sugerir comandos, melhorias ou reportar bugs, utilize o comando `/mail`
 
-[Clique aqui](https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1614150720) para convidar o Alonsal hoje mesmo e descobrir as maravilhas da Ceira™️ Solutions
+[Clique aqui](https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=1614150720) para convidar o Alonsal hoje mesmo e descobrir as maravilhas da Ceira™️ Solutions!
