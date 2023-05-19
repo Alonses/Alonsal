@@ -90,7 +90,7 @@ function create_menus(client, interaction, user, dados) {
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = `${client.tls.phrase(user, `misc.modulo.modulo_${valor.type}`)}`
                 emoji_label = valor.stats.active ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
-                descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} ${client.tls.phrase(user, "as")} ${valor.stats.hour}`
+                descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} ${valor.stats.hour}`
                 valor_label = `${dados.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
             }
 

@@ -106,7 +106,7 @@
         },
         {
             "type": 0,
-            "text": "Adventure Communist"
+            "text": "AdVenture Communist"
         },
         {
             "type": 1,
@@ -122,11 +122,11 @@
         },
         {
             "type": 2,
-            "text": "Darude Sandstorm"
+            "text": "Sandstorm - Darude"
         },
         {
             "type": 2,
-            "text": "All Star Smash Mouth"
+            "text": "All Star - Smash Mouth"
         },
         {
             "type": 2,
@@ -154,7 +154,7 @@
         },
         {
             "type": 2,
-            "text": "Funktown - Lipps Inc."
+            "text": "Funkytown - Lipps Inc."
         },
         {
             "type": 2,
@@ -177,10 +177,6 @@
             "text": "My Friend Peppa Pig"
         },
         {
-            "type": 0,
-            "text": "Mindustry"
-        },
-        {
             "type": 1,
             "text": "Casos de Família"
         },
@@ -198,7 +194,7 @@
         },
         {
             "type": 2,
-            "text": "Santigold - Disparate Youth"
+            "text": "Disparate Youth - Santigold"
         },
         {
             "type": 1,
@@ -210,11 +206,11 @@
         },
         {
             "type": 2,
-            "text": "Jefferson Airplana - White Rabbit"
+            "text": "White Rabbit - Jefferson Airplane"
         },
         {
             "type": 2,
-            "text": "Supertramp - Goodbye Stranger"
+            "text": "Goodbye Stranger - Supertramp"
         },
         {
             "type": 0,
@@ -326,7 +322,7 @@
         },
         {
             "type": 2,
-            "text": "The miracle - Queen"
+            "text": "The Miracle - Queen"
         },
         {
             "type": 0,
@@ -559,6 +555,54 @@
         {
             "type": 2,
             "text": "/panel"
+        },
+        {
+            "type": 0,
+            "text": "mineirinho adventures"
+        },
+        {
+            "type": 0,
+            "text": "The Outlast Trials"
+        },
+        {
+            "type": 0,
+            "text": "Sons Of The Forest"
+        },
+        {
+            "type": 0,
+            "text": "Minecraft Dungeons"
+        },
+        {
+            "type": 0,
+            "text": "Minecraft Legends"
+        },
+        {
+            "type": 0,
+            "text": "Bloons TD 6"
+        },
+        {
+            "type": 0,
+            "text": "AdVenture Captalist"
+        },
+        {
+            "type": 0,
+            "text": "Portal 2"
+        },
+        {
+            "type": 0,
+            "text": "Starbound"
+        },
+        {
+            "type": 0,
+            "text": "Stardew Valley"
+        },
+        {
+            "type": 0,
+            "text": "Unturned"
+        },
+        {
+            "type": 0,
+            "text": "Mad Max"
         }
     ]
 }
