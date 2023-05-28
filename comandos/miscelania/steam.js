@@ -313,9 +313,10 @@ module.exports = {
                     if (reviews_user !== "-")
                         jogos_user_embed += `\n**${client.tls.phrase(user, "util.steam.analises")}: **\`${reviews_user}\``
 
+                    const row = client.create_buttons([{ name: "Steam", value: usuario_alvo, type: 4, emoji: "🌐" }], interaction)
+
                     const usuario_steam = new EmbedBuilder()
                         .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
-                        .setURL(usuario_alvo)
                         .setAuthor({ name: "Steam", iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0" })
                         .setThumbnail(avatar_user)
                         .setColor(client.embed_color(user_alvo.misc.color))
@@ -385,7 +386,7 @@ module.exports = {
                             }
                         )
 
-                    interaction.editReply({ embeds: [usuario_steam], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.editReply({ embeds: [usuario_steam], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
                 } catch (err) {
                     require('../../adm/eventos/error.js')({ client, err })

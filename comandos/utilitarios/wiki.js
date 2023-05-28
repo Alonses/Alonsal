@@ -101,9 +101,10 @@ module.exports = {
                 if (res.Heading !== "") {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
+                    const row = client.create_buttons([{ name: client.tls.phrase(user, "util.wiki.artigo_completo"), value: res.AbstractURL, type: 4, emoji: "🌐" }], interaction)
+
                     const Embed = new EmbedBuilder()
                         .setTitle(res.Heading)
-                        .setURL(res.AbstractURL)
                         .setColor(client.embed_color(user.misc.color))
                         .setAuthor({ name: res.AbstractSource })
                         .setThumbnail(res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
@@ -112,7 +113,7 @@ module.exports = {
                         .setTimestamp()
                         .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-                    interaction.reply({ embeds: [Embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({ embeds: [Embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)

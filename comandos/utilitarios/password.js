@@ -41,13 +41,14 @@ module.exports = {
         for (let i = 0; i < 3; i++)
             bonus += `${randomString(tamanho, client)}\n\n`
 
+        const row = client.create_buttons([{ name: client.tls.phrase(user, "util.password.testar_senha"), value: "https://password.kaspersky.com/", type: 4, emoji: "🌐" }], interaction)
+
         const embed = new EmbedBuilder()
-            .setTitle(`:lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`)
-            .setURL("https://password.kaspersky.com/")
+            .setTitle(`> :lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`)
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({ text: client.replace(client.tls.phrase(user, "util.password.rodape"), tamanho) })
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }

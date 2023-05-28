@@ -63,10 +63,11 @@ module.exports = async (client, user, dados, interaction) => {
                     else
                         return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
+                const row = client.create_buttons([{ name: "Ver mais detalhes", type: 4, emoji: "🌐", value: res.fonte }], interaction)
+
                 const acontecimento = new EmbedBuilder()
                     .setTitle(formata_texto(res.acontecimento))
                     .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
-                    .setURL(res.fonte)
                     .setColor(client.embed_color(user.misc.color))
                     .setDescription(formata_texto(res.descricao))
                     .setImage(res.imagem)
@@ -77,9 +78,9 @@ module.exports = async (client, user, dados, interaction) => {
                     acontecimento.setFooter({ text: res.data_acontecimento, iconURL: client.discord.user.avatarURL({ dynamic: true }) })
 
                 if (interaction)
-                    interaction.editReply({ embeds: [acontecimento], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.editReply({ embeds: [acontecimento], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                 else
-                    client.sendDM(user, { embed: acontecimento }, true)
+                    client.sendDM(user, { embed: acontecimento, components: row }, true)
             })
             .catch(() => {
                 if (interaction)
