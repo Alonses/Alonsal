@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -54,78 +54,7 @@ module.exports = {
         let canal_alvo = null
         const guild = await client.getGuild(interaction.guild.id)
 
-        if (interaction.options.getSubcommand() === "ticket") {
-            const membro_sv = await client.getUserGuild(interaction, client.id())
-
-            // Permissões para gerenciar canais e cargos necessária para a função de tickets
-            if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
-                return client.tls.reply(interaction, user, "mode.ticket.permissao", true, 3)
-
-            // Categoria alvo para o bot criar os canais
-            if (interaction.options.getChannel("category")) {
-                canal_alvo = interaction.options.getChannel("category").type
-
-                // Mencionado um tipo de canal errado
-                if (canal_alvo !== 4)
-                    return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, 0)
-            }
-
-            // Ativa ou desativa os tickets no servidor
-            guild.conf.tickets = !user.conf.tickets
-
-            // Se usado sem mencionar categoria, desliga função
-            if (canal_alvo === null)
-                guild.conf.tickets = false
-            else
-                guild.tickets.category = interaction.options.getChannel("category").id
-
-            await guild.save()
-
-            if (guild.conf.tickets)
-                interaction.reply({ content: `:mailbox: | ${client.tls.phrase(user, "mode.ticket.ativo")}`, ephemeral: true })
-            else
-                interaction.reply({ content: `:mailbox_closed: | ${client.tls.phrase(user, "mode.ticket.desativo")}`, ephemeral: true })
-        } else if (interaction.options.getSubcommand() === "report") {
-
-            // Categoria alvo para o bot criar os canais
-            if (interaction.options.getChannel("channel")) {
-                canal_alvo = interaction.options.getChannel("channel").type
-
-                // Mencionado um tipo de canal errado
-                if (canal_alvo !== 0)
-                    return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, 0)
-            }
-
-            // Ativa ou desativa os tickets no servidor
-            guild.conf.reports = !user.conf.reports
-
-            // Se usado sem mencionar categoria, desliga função
-            if (canal_alvo === null)
-                guild.conf.reports = false
-            else
-                guild.reports.channel = interaction.options.getChannel("channel").id
-
-            await guild.save()
-
-            if (guild.conf.reports)
-                interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.report.ativo", 15), `<#${guild.reports.channel}>`), ephemeral: true })
-            else
-                interaction.reply({ content: client.tls.phrase(user, "mode.report.desativo", 16), ephemeral: true })
-
-        } else {
-
-            // Ativa ou desativa a visualização do servidor no ranking global
-            if (typeof guild.conf.public !== "undefined")
-                guild.conf.public = !guild.conf.public
-            else
-                guild.conf.public = false
-
-            await guild.save()
-
-            if (guild.conf.public)
-                interaction.reply({ content: `${client.defaultEmoji("earth")} | O nome do servidor será mostrado no ranking global para todos os servidores agora!`, ephemeral: true })
-            else
-                interaction.reply({ content: `${client.defaultEmoji("detective")} | O servidor não será mais mostrado no ranking global.`, ephemeral: true })
-        }
+        // Solicitando a função e executando
+        require(`./subcommands/conf_${interaction.options.getSubcommand()}`)({ client, user, interaction, guild, canal_alvo })
     }
 }

@@ -183,10 +183,11 @@ module.exports = {
                                     }
                                 }
 
+                                const row = client.create_buttons([{ name: "LastFM", value: usuario_alvo, type: 4, emoji: "🌐" }], interaction)
+
                                 const embed = new EmbedBuilder()
                                     .setTitle(client.replace(client.tls.phrase(user, "util.lastfm.perfil_musical"), nome))
                                     .setThumbnail(avatar)
-                                    .setURL(usuario_alvo)
                                     .setColor(client.embed_color(user_alvo.misc.color))
                                     .addFields(
                                         {
@@ -218,7 +219,7 @@ module.exports = {
                                         }
                                     )
 
-                                interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                                interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
                             })
                     } else
                         client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode, 0), 1)

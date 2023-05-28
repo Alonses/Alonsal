@@ -223,9 +223,12 @@ class CeiraClient {
             this.discord.users.fetch(user.uid, false).then((user_interno) => {
 
                 // Verificando qual é o tipo de conteúdo que será enviado
-                if (dados.embed)
-                    user_interno.send({ embeds: [dados.embed] })
-                else if (dados.files)
+                if (dados.embed) {
+                    if (!dados.components)
+                        user_interno.send({ embeds: [dados.embed] })
+                    else
+                        user_interno.send({ embeds: [dados.embed], components: [dados.components] })
+                } else if (dados.files)
                     user_interno.send({ content: dados.data, files: [dados.files] })
                 else
                     user_interno.send(dados.data)

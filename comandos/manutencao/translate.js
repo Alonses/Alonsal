@@ -22,13 +22,14 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
+        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alondioma" }], interaction)
+
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
             .setTitle(`${client.tls.phrase(user, "manu.traduz.titulo")} ${client.emoji(emojis.dancando)}`)
-            .setURL("https://github.com/Alonses/Alondioma")
             .setDescription(client.tls.phrase(user, "manu.traduz.descricao"))
             .setImage("https://i.imgur.com/zSVqxhV.png")
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }

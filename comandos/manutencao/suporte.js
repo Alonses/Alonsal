@@ -22,13 +22,14 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
+        const row = client.create_buttons([{ name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji(emojis.mc_bolo), value: "https://picpay.me/slondo" }, { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }], interaction)
+
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
             .setColor(client.embed_color(user.misc.color))
-            .setURL("https://picpay.me/slondotk")
-            .setImage("https://i.imgur.com/dq5IvDq.jpg")
+            .setImage("https://i.imgur.com/VCneT1l.png")
             .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     }
 }
