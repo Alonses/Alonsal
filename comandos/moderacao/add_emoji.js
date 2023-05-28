@@ -203,7 +203,7 @@ function criar_item(dados, interaction, client, user) {
                 if (err.rawError.code === 50045)
                     return client.tls.reply(interaction, user, "mode.emojis.emoji_size", true, 0)
 
-                if (err.rawError.code === 30008) // Máximos de emojis
+                if (err.rawError.code === 30008) // Máximo de emojis
                     return client.tls.reply(interaction, user, "mode.emojis.emoji_max", true, 0)
 
                 return client.tls.reply(interaction, user, "mode.emojis.emoji_error", true, 0)
