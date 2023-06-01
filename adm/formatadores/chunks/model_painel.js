@@ -11,17 +11,17 @@ module.exports = async (client, user, interaction) => {
         .addFields(
             {
                 name: `**${emoji_button(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
-                value: "⠀",
+                value: "`Ao ativar, apenas você verá o retorno dos comandos /slash que usar!`",
                 inline: true
             },
             {
                 name: `**${emoji_button(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
-                value: "⠀",
+                value: "`Controle das notificações que te envio por DM.`",
                 inline: true
             },
             {
                 name: `**${emoji_button(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
-                value: "⠀",
+                value: "`Desligue para desativar o seu ganho de XP no meu ranking.`",
                 inline: true
             }
         )
