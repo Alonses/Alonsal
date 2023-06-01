@@ -31,19 +31,21 @@ module.exports = {
 
         let data = ""
 
+        if (interaction.options.getString("data")) // Data customizada
+            data = `?data=${interaction.options.getString("data")}`
+
         // Aumentando o tempo de duração da resposta
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
-        if (interaction.options.getSubcommand() === "lista") { // Lista de eventos
+        if (interaction.options.getSubcommand() === "lista") // Lista de eventos
+            return require('../../adm/formatadores/chunks/model_history.js')(client, user, data, interaction)
+        else {
 
-            if (interaction.options.getString("data")) // Data customizada
-                data = `?data=${interaction.options.getString("data")}`
+            // Apenas um acontecimento
+            let especifico = "acon=alea"
 
-            return require('../../adm/formatadores/chunks/model_history.js')(client, user, interaction, data)
-        } else { // Um acontecimento aleatório
-
-            data = `data=${interaction.options.getString("data")}` || ""
-            let especifico = `acon=${interaction.options.getInteger("especifico")}` || "acon=alea"
+            if (interaction.options.getInteger("especifico"))
+                especifico = `acon=${interaction.options.getInteger("especifico")}`
 
             // Filtrando os valores de entrada caso tenham sido declarados
             if (data.length > 0)

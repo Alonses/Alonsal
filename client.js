@@ -224,7 +224,7 @@ class CeiraClient {
 
                 // Verificando qual é o tipo de conteúdo que será enviado
                 if (dados.embed) {
-                    if (!dados.components)
+                    if (typeof dados.components === "undefined")
                         user_interno.send({ embeds: [dados.embed] })
                     else
                         user_interno.send({ embeds: [dados.embed], components: [dados.components] })
@@ -245,7 +245,7 @@ class CeiraClient {
 
     decider(entrada, padrao) {
         // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
-        return !entrada ? padrao : entrada
+        return typeof entrada === "undefined" ? padrao : entrada
     }
 
     async atualiza_dados(alvo, interaction) {

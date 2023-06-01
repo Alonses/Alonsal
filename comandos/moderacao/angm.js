@@ -78,7 +78,7 @@ module.exports = {
                     { name: 'Русский', value: 'ru-ru' }
                 )
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
     async execute(client, user, interaction) {
 
         const membro_sv = await client.getUserGuild(interaction, interaction.user.id)

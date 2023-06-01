@@ -6,6 +6,7 @@ const { config } = require('./config')
 const idioma = require('./adm/data/idioma')
 const database = require('./adm/database/database')
 const { getBot } = require('./adm/database/schemas/Bot')
+const { getGuild } = require('./adm/database/schemas/Guild')
 
 let client = new CeiraClient()
 config(client) // Atualiza os comandos slash do bot
@@ -35,6 +36,7 @@ client.discord.on("messageCreate", async (message) => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(message.author.id)
+	const guild = await getGuild(message.guild.id)
 
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
@@ -49,7 +51,7 @@ client.discord.on("messageCreate", async (message) => {
 		require("./adm/eventos/broadcast.js")({ client, bot, message })
 
 	// Respostas automatizadas por IA
-	if (text.includes(client.id()) || text.includes("alonsal")) {
+	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1)) {
 		await require("./adm/eventos/conversacao.js")({ client, message, text })
 		return
 	}

@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
-const emoji_button = require('../../funcoes/emoji_button')
+
+const { emoji_button, type_button } = require('../../funcoes/emoji_button')
 
 module.exports = async (client, user, interaction) => {
 
@@ -32,21 +33,4 @@ module.exports = async (client, user, interaction) => {
         interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
     else
         interaction.update({ embeds: [embed], components: [row], ephemeral: true })
-}
-
-function type_button(dado) {
-
-    // Tipos de botões
-    // true -> Ativado ( verde | 2 )
-    // false -> Desativado ( cinza | 0 )
-
-    let retorno = 2
-
-    if (typeof dado !== "undefined" && dado !== null)
-        if (dado)
-            retorno = 2
-        else
-            retorno = 1
-
-    return retorno
 }

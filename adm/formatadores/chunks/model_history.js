@@ -63,7 +63,7 @@ module.exports = async (client, user, dados, interaction) => {
                     else
                         return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
-                const row = client.create_buttons([{ name: "Ver mais detalhes", type: 4, emoji: "🌐", value: res.fonte }], interaction)
+                const row = client.create_buttons([{ name: "Ver mais detalhes", value: res.fonte, type: 4, emoji: "🌐" }], interaction ?? "")
 
                 const acontecimento = new EmbedBuilder()
                     .setTitle(formata_texto(res.acontecimento))
