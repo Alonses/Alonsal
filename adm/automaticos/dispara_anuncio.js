@@ -44,7 +44,7 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
     canais_clientes.forEach(dados => {
 
         try {
-            let idioma_definido = dados.lang || "pt-br"
+            let idioma_definido = dados.lang ?? "pt-br"
             if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
             let texto_anuncio = model_games(client, objetos_anunciados, plataforma, idioma_definido)

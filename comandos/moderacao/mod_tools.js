@@ -23,8 +23,7 @@ module.exports = {
                             "fr": 'Mentionner une catégorie comme cible',
                             "it": 'Indica una categoria come obiettivo',
                             "ru": 'Упоминание категории в качестве цели'
-                        }))
-        )
+                        })))
         .addSubcommand(subcommand =>
             subcommand.setName("report")
                 .setDescription("⌠💂⌡ (Des)Ative os reports de usuários externos no servidor")
@@ -45,10 +44,7 @@ module.exports = {
                             "it": 'Menzionare un canale',
                             "ru": 'упомянуть канал'
                         })))
-        .addSubcommand(subcommand =>
-            subcommand.setName("ranking")
-                .setDescription("⌠💂⌡ (Des)Ative a exibição do servidor no ranking global"))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(client, user, interaction) {
 
         let canal_alvo = null
