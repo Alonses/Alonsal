@@ -1,4 +1,5 @@
 const { getGuild } = require('../../../database/schemas/Guild')
+const { verificar_broadcast } = require('../../../eventos/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -28,6 +29,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
             guild.conf.broadcast = !guild.conf.broadcast
         else
             guild.conf.broadcast = true
+
+        // Broadcast desligado
+        if (!guild.conf.broadcast)
+            verificar_broadcast(client, interaction)
 
     } else if (escolha === 3) {
 

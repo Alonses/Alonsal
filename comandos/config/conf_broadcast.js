@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { getBot } = require('../../adm/database/schemas/Bot')
-const { timer_broadcast, checa_broadcast, encerra_brodcast } = require('../../adm/eventos/broadcast')
+const { timer_broadcast, checa_broadcast, encerra_broadcast } = require('../../adm/eventos/broadcast')
 
 module.exports = {
     data: new SlashCommandBuilder()
