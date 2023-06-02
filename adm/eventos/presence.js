@@ -1,8 +1,12 @@
+const fetch = (...args) =>
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
 const { ActivityType } = require('discord.js')
 
 const { activities } = require('../../arquivos/json/text/activities.json')
+const formata_texto = require('../formatadores/formata_texto')
 
-let selected = []
+let selected = [], timeout_presence, status_atual
 
 const actionTypes = [ActivityType.Playing, ActivityType.Watching, ActivityType.Listening]
 
@@ -43,7 +47,7 @@ function requisita_status(client) {
         tempo_minimo = client.random(50000, 70000)
 
     // Exibirá o status escolhido após um tempo aleatório
-    setTimeout(() => {
+    timeout_presence = setTimeout(() => {
 
         let texto_status = activities[num].text
 
@@ -62,3 +66,36 @@ function requisita_status(client) {
         requisita_status(client)
     }, 15000 + client.random(5000, tempo_minimo))
 }
+
+function acompanha_scrobble(client, user) {
+
+    clearTimeout(timeout_presence)
+
+    fetch(`https://www.last.fm/pt/user/${user}`)
+        .then(response => response.text())
+        .then(async res => {
+
+            if (res.includes("modal?action=scrobbling-now-theirs\"")) {
+
+                let scrobble_atual = `${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
+
+                if (scrobble_atual !== status_atual) {
+                    // Exibindo o status personalizado sincronizado com o LastFM
+                    client.user().setActivity(scrobble_atual, { type: actionTypes[2] })
+
+                    status_atual = scrobble_atual
+                }
+
+                // Acionando a função novamente
+                setTimeout(() => {
+                    acompanha_scrobble(client, user)
+                }, 15000)
+            } else {
+                requisita_status(client)
+                client.notify(process.env.channel_feeds, `:radio: | O Acompanhamento de Scrobbles foi desligado por inatividade.`)
+            }
+        })
+}
+
+module.exports.requisita_status = requisita_status
+module.exports.acompanha_scrobble = acompanha_scrobble
