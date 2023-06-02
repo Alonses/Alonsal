@@ -24,7 +24,7 @@ module.exports = async (client, user, interaction, pagina) => {
             },
             {
                 name: `**${emoji_button(guild?.conf.broadcast)} Permitir Broadcast**`,
-                value: "`Usuários do servidor podem conversar com o Slondo usando o Alonsal neste servidor através do comando`\n/broadcast",
+                value: "`Usuários do servidor podem conversar com o Slondo usando o Alonsal neste servidor através do comando`\n</broadcast:1114316224663396472>",
                 inline: true
             },
             {
