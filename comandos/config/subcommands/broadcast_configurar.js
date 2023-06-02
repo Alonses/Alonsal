@@ -32,7 +32,7 @@ module.exports = async ({ client, interaction, bot }) => {
 
     timer_broadcast(client, bot)
 
-    interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_broad}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`, ephemeral: true })
+    interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_broad}>\nUse este canal para receber mensagens do canal definido e conversar com outros usuários remotamente!`, ephemeral: true })
 
     await bot.save()
 }

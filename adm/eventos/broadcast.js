@@ -1,5 +1,7 @@
 const { PermissionsBitField, AttachmentBuilder } = require('discord.js')
+
 const { getGuild } = require('../database/schemas/Guild')
+const { getBot } = require('../database/schemas/Bot')
 
 let TIMER = 300000
 let timeout_broadcast = null
@@ -24,7 +26,7 @@ module.exports = async function ({ client, bot, message }) {
         const canal_alvo = await client.channels().get(bot.transmission.id_broad)
 
         if (!canal_alvo) // Canal enviado não existe mais ou está bloqueado
-            return encerra_brodcast(client, bot)
+            return encerra_broadcast(client, bot)
 
         if (canal_alvo.type === 0 || canal_alvo.type === 5) {
             if (canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages)) {
@@ -41,8 +43,11 @@ module.exports = async function ({ client, bot, message }) {
                 // Gerencia o tempo que o broadcast ficará disponível
                 timer_broadcast(client, bot)
 
-            } else
+            } else {
                 message.reply(":satellite: :octagonal_sign: | Eu não posso enviar mensagens neste canal escolhido para o broadcast!\nPor favor, tente um outro ID")
+
+                encerra_broadcast(client, bot)
+            }
         }
     } else {
 
@@ -95,20 +100,31 @@ async function checa_broadcast(client, bot) {
     return status
 }
 
-async function encerra_brodcast(client, bot, force) {
+async function encerra_broadcast(client, bot, force) {
 
     clearTimeout(timeout_broadcast)
 
+    client.notify(bot.transmission.id_broad, ":octagonal_sign: :satellite: :octagonal_sign:")
+
     // Forçando o encerramento do broadcast
-    if (typeof force === "undefined") {
-
-        const canal_alvo = await client.channels().get(bot.transmission.id_cast)
-        canal_alvo.send({ content: `:robot: | O broadcast foi terminado pois o canal alvo não está mais acessível.\n<@${bot.transmission.author}>` })
-
+    if (typeof force === "undefined")
         await bot.save()
+}
+
+async function verificar_broadcast(client, interaction) {
+
+    const bot = await getBot(client.id())
+
+    const canal_alvo = await client.channels().get(bot.transmission.id_broad)
+
+    if (canal_alvo.guild.id === interaction.guild.id) {
+        client.notify(bot.transmission.id_cast, ":octagonal_sign: :satellite: | O Servidor desativou o Broadcast, não é possível iniciar um outro Broadcast para os canais dele no momento.")
+
+        encerra_broadcast(client, bot)
     }
 }
 
 module.exports.checa_broadcast = checa_broadcast
 module.exports.timer_broadcast = timer_broadcast
-module.exports.encerra_brodcast = encerra_brodcast
+module.exports.encerra_broadcast = encerra_broadcast
+module.exports.verificar_broadcast = verificar_broadcast

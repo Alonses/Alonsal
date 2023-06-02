@@ -1,5 +1,5 @@
 const { getGuild } = require('../../../adm/database/schemas/Guild')
-const { timer_broadcast, encerra_brodcast } = require('../../../adm/eventos/broadcast')
+const { timer_broadcast, encerra_broadcast } = require('../../../adm/eventos/broadcast')
 
 module.exports = async ({ client, interaction, bot }) => {
 
@@ -18,11 +18,13 @@ module.exports = async ({ client, interaction, bot }) => {
         interaction.reply({ content: `:satellite: | O Broadcast entre canais está ativo novamente, agora enviarei mensagens para o canal <#${bot.transmission.id_cast}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`, ephemeral: true })
         timer_broadcast(client, bot)
 
+        client.notify(bot.transmission.id_broad, ":satellite: :satellite: :satellite:")
+
         // Alterando o chat de broad conforme onde o comando foi acionado para ativar novamente
         bot.transmission.id_cast = interaction.channel.id
     } else { // Desligando
         interaction.reply({ content: `:zzz: | O Broadcast entre canais foi desligado.`, ephemeral: true })
-        encerra_brodcast(client, bot, true)
+        encerra_broadcast(client, bot, true)
     }
 
     await bot.save()
