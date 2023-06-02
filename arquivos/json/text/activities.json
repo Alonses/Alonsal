@@ -603,6 +603,30 @@
         {
             "type": 0,
             "text": "Mad Max"
+        },
+        {
+            "type": 2,
+            "text": "/panel"
+        },
+        {
+            "type": 2,
+            "text": "/broadcast"
+        },
+        {
+            "type": 2,
+            "text": "Sweet Nothin's - Brenda Lee"
+        },
+        {
+            "type": 2,
+            "text": "Nadine - Chuck Berry"
+        },
+        {
+            "type": 2,
+            "text": "Johnny B. Goode - Chuck Berry"
+        },
+        {
+            "type": 2,
+            "text": "Born To Be Wild - Steppenwolf"
         }
     ]
 }

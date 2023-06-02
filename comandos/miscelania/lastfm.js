@@ -63,7 +63,7 @@ module.exports = {
             else
                 texto_entrada = user_alvo.social.lastfm
 
-        const usuario_alvo = `https://last.fm/pt/user/${texto_entrada}`
+        const usuario_alvo = `https://www.last.fm/pt/user/${texto_entrada}`
         const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
         // Aumentando o tempo de duração da resposta
