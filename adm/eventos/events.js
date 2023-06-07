@@ -7,13 +7,23 @@ module.exports = async function ({ client }) {
     console.log("🟠 | Ligando eventos")
 
     client.discord.on("guildCreate", guild => {
-        let caso = "New"
-        require('./servers.js')({ client, caso, guild })
+        let caso = "new"
+        require('./discord/guild.js')({ client, caso, guild })
     })
 
     client.discord.on("guildDelete", guild => {
-        let caso = "Left"
-        require('./servers.js')({ client, caso, guild })
+        let caso = "left"
+        require('./discord/guild.js')({ client, caso, guild })
+    })
+
+    client.discord.on("messageDelete", message => {
+        let caso = "delete"
+        require('./discord/message.js')(client, caso, message)
+    })
+
+    client.discord.on("messageUpdate", (old_message, new_message) => {
+        let caso = "update"
+        require('./discord/message.js')(client, caso, [old_message, new_message])
     })
 
     client.discord.on("rateLimit", limit => {

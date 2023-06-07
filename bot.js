@@ -5,8 +5,6 @@ const { config } = require('./config')
 
 const idioma = require('./adm/data/idioma')
 const database = require('./adm/database/database')
-const { getBot } = require('./adm/database/schemas/Bot')
-const { getGuild } = require('./adm/database/schemas/Guild')
 
 let client = new CeiraClient()
 config(client) // Atualiza os comandos slash do bot
@@ -17,13 +15,11 @@ client.discord.once("ready", async () => {
 
 	// Definindo o idioma do bot
 	idioma.setDefault("pt-br")
-
 	client.owners = process.env.owner_id.split(", ")
-
-	await require("./adm/eventos/status.js")({ client })
 
 	// Eventos secundários
 	await require("./adm/eventos/events")({ client })
+	await require("./adm/eventos/status.js")({ client })
 	await require("./adm/automaticos/modulo")({ client })
 
 	console.log(`🟢 | Caldeiras do(a) ${client.user().username} aquecidas, pronto para operar`)
@@ -36,7 +32,7 @@ client.discord.on("messageCreate", async (message) => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(message.author.id)
-	const guild = await getGuild(message.guild.id)
+	const guild = await client.getGuild(message.guild.id)
 
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
@@ -45,7 +41,7 @@ client.discord.on("messageCreate", async (message) => {
 	let text = message.content.toLowerCase()
 
 	// Recursos de Broadcast
-	const bot = await getBot(client.id())
+	const bot = await client.getBot(client.id())
 
 	if (bot?.transmission.status)
 		require("./adm/eventos/broadcast.js")({ client, bot, message })

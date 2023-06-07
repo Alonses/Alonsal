@@ -1,4 +1,3 @@
-const { getGuild } = require('../../../adm/database/schemas/Guild')
 const { timer_broadcast, encerra_broadcast } = require('../../../adm/eventos/broadcast')
 
 module.exports = async ({ client, interaction, bot }) => {
@@ -7,7 +6,7 @@ module.exports = async ({ client, interaction, bot }) => {
     if (typeof bot.transmission.status === "undefined") return
 
     const canal_alvo = await client.channels().get(bot.transmission.id_broad)
-    const guild = await getGuild(canal_alvo.guild.id)
+    const guild = await client.getGuild(canal_alvo.guild.id)
 
     if (!client.decider(guild.conf?.broadcast, 0))
         return interaction.reply({ content: ":o: | O broadcast para o servidor que possui este ID está desabilitado.", ephemeral: true })

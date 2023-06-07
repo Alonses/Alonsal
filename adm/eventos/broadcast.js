@@ -1,8 +1,5 @@
 const { PermissionsBitField, AttachmentBuilder } = require('discord.js')
 
-const { getGuild } = require('../database/schemas/Guild')
-const { getBot } = require('../database/schemas/Bot')
-
 let TIMER = 300000
 let timeout_broadcast = null
 
@@ -91,7 +88,7 @@ async function checa_broadcast(client, bot) {
         bot.transmission.status = false
         await bot.save()
 
-        const guild = getGuild(canal_alvo.guild.id)
+        const guild = client.getGuild(canal_alvo.guild.id)
 
         if (client.decider(guild.conf?.broadcast, 0))
             canal_alvo.send({ content: `:robot: | O broadcast foi terminado devido a inatividade.\n<@${bot.transmission.author}>` })
@@ -113,7 +110,7 @@ async function encerra_broadcast(client, bot, force) {
 
 async function verificar_broadcast(client, interaction) {
 
-    const bot = await getBot(client.id())
+    const bot = await client.getBot(client.id())
 
     const canal_alvo = await client.channels().get(bot.transmission.id_broad)
 

@@ -14,13 +14,17 @@ const schema = new mongoose.Schema({
     reports: {
         channel: { type: String, default: null },
     },
+    logger: {
+        channel: { type: String, default: null },
+    },
     conf: {
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },
         reports: { type: Boolean, default: false },
         public: { type: Boolean, default: false },
         conversation: { type: Boolean, default: true },
-        broadcast: { type: Boolean, default: false }
+        broadcast: { type: Boolean, default: false },
+        logger: { type: Boolean, default: false }
     }
 })
 

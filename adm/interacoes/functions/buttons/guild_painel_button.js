@@ -1,10 +1,9 @@
-const { getGuild } = require('../../../database/schemas/Guild')
 const { verificar_broadcast } = require('../../../eventos/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
-    const guild = await getGuild(interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
     let pagina = 0
 
     // Tratamento dos cliques
