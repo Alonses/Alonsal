@@ -2,14 +2,15 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, caso, message) => {
 
-    if (message.author.id === client.id())
-        return
-
     let guild, autor, local
 
-    if (caso === "delete")
+    if (caso === "delete") {
+
+        // Verificando se o autor da mensagem excluída é o bot
+        if (message.author.bot) return
+
         guild = await client.getGuild(message.guildId)
-    else
+    } else
         guild = await client.getGuild(message[0].guildId)
 
     // Verificando se a guild habilitou o logger
