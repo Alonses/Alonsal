@@ -2,6 +2,9 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, caso, message) => {
 
+    if (message.author.id === client.id())
+        return
+
     let guild, autor, local
 
     if (caso === "delete")
@@ -20,7 +23,7 @@ module.exports = async (client, caso, message) => {
         embed.setTitle("> Mensagem Atualizada :pencil:")
             .setFooter({ text: message[0].author.username })
 
-        texto = `Mensagem antiga: \`\`\`${formata_text(message[0].content)}\`\`\`\nMensagem atualizada: \`\`\`${formata_text(message[1].content)}\`\`\``
+        texto = `Uma [mensagem](${message[0].url}) foi atualizada por <@${message[0].author.id}>\n\nMensagem antiga: \`\`\`${formata_text(message[0].content)}\`\`\`\nMensagem atualizada: \`\`\`${formata_text(message[1].content)}\`\`\``
         autor = message[0].author.id
         local = message[0].channelId
     }
@@ -30,7 +33,7 @@ module.exports = async (client, caso, message) => {
             .setColor(0xED4245)
             .setFooter({ text: message.author.username })
 
-        texto = `Conteúdo excluído: \`\`\`${formata_text(message.content)}\`\`\``
+        texto = `Uma [mensagem](${message.url}) foi excluída por <@${message.author.id}>\n\nConteúdo excluído: \`\`\`${formata_text(message.content)}\`\`\``
         autor = message.author.id
         local = message.channelId
     }
