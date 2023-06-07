@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { getGuild } = require('../../adm/database/schemas/Guild')
-
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const { emoji_button, type_button } = require('../../adm/funcoes/emoji_button')
 
@@ -18,7 +16,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const guild = await getGuild(interaction.guild.id)
+        const guild = await client.getGuild(interaction.guild.id)
 
         // Verificando se o Broadcast é permitido no servidor
         if (!client.decider(guild?.conf.broadcast, 0))

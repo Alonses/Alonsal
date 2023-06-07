@@ -1,8 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { getBot } = require('../../adm/database/schemas/Bot')
-const { timer_broadcast, checa_broadcast, encerra_broadcast } = require('../../adm/eventos/broadcast')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_broadcast")
@@ -26,7 +23,7 @@ module.exports = {
 
         if (interaction.user.id !== client.owners[0]) return
 
-        const bot = await getBot(client.id())
+        const bot = await client.getBot(client.id())
 
         // Solicitando a função e executando
         return require(`./subcommands/broadcast_${interaction.options.getSubcommand()}`)({ client, interaction, bot })

@@ -1,12 +1,10 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { getGuild } = require('../../database/schemas/Guild')
-
 const { emoji_button, type_button } = require('../../funcoes/emoji_button')
 
 module.exports = async (client, user, interaction, pagina) => {
 
-    const guild = await getGuild(interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
     const membro_sv = await client.getUserGuild(interaction, interaction.user.id)
 
     const embed = new EmbedBuilder()

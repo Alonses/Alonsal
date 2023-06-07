@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { disableGameChannel, disableReportChannel } = require('../../adm/database/schemas/Guild')
+const { disableGameChannel, disableReportChannel } = require('../../database/schemas/Guild')
 
 module.exports = async ({ client, caso, guild }) => {
 
@@ -14,7 +14,7 @@ module.exports = async ({ client, caso, guild }) => {
 
     let server_info = `\n\n:busts_in_silhouette: Members ( \`${guild.memberCount - 1}\` )\n:placard: Channels ( \`${canais}\` )`
 
-    if (caso === "Left") {
+    if (caso === "left") {
         ocasiao = "> 🔴 Server update", cor = 0xd4130d, server_info = ""
 
         // Desligando o anúncio de games gratuitos e reports de usuários para o servidor

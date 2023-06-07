@@ -1,15 +1,13 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getGuild } = require('../../../database/schemas/Guild')
+const { timer_broadcast } = require('../../../eventos/broadcast')
 
 const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
-const { getBot } = require('../../../database/schemas/Bot')
-const { timer_broadcast } = require('../../../eventos/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
-    const guild = await getGuild(interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
     // 1 -> Solicitar Broadcast
@@ -60,12 +58,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     } else {
 
-        const bot = await getBot(client.id())
+        const bot = await client.getBot(client.id())
         const id_broadcast = dados.split(".")[2]
 
         // Verificando se a Função de Broadcast não foi desativada após a solicitação
         const canal_alvo = await client.channels().get(id_broadcast)
-        const guild = await getGuild(canal_alvo.guild.id)
+        const guild = await client.getGuild(canal_alvo.guild.id)
 
         if (!client.decider(guild.conf?.broadcast, 0)) // Servidor com broadcast desativado
             return interaction.update({ content: ":o: | O broadcast para o servidor que possui este ID está desabilitado.", components: [] })
