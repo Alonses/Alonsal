@@ -16,14 +16,14 @@ module.exports = async function ({ client }) {
         require('./discord/guild.js')({ client, caso, guild })
     })
 
-    client.discord.on("messageDelete", message => {
+    client.discord.on("messageDelete", (msg) => {
         let caso = "delete"
-        require('./discord/message.js')(client, caso, message)
+        require('./discord/message.js')(client, caso, msg)
     })
 
-    client.discord.on("messageUpdate", (old_message, new_message) => {
+    client.discord.on("messageUpdate", (old_msg, new_msg) => {
         let caso = "update"
-        require('./discord/message.js')(client, caso, [old_message, new_message])
+        require('./discord/message.js')(client, caso, [old_msg, new_msg])
     })
 
     client.discord.on("rateLimit", limit => {
