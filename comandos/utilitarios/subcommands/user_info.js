@@ -93,6 +93,12 @@ module.exports = async ({ client, user, interaction }) => {
     let badges = await buildAllBadges(client, user, id_badges)
     // let achievements = busca_achievements(client, all, user.id, interaction)
 
+    let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``
+
+    // Usuário sem discriminador
+    if (user_alvo.discriminator == 0)
+        nome_usuario = `\`@${user_alvo.username.replace(/ /g, "")}\``
+
     const infos_user = new EmbedBuilder()
         .setTitle(`> ${apelido} ${emoji_hypesquad} ${discord_premium}`)
         .setColor(client.embed_color(user_c.misc.color))
@@ -100,7 +106,7 @@ module.exports = async ({ client, user, interaction }) => {
         .addFields(
             {
                 name: ":globe_with_meridians: **Discord**",
-                value: `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``,
+                value: `${nome_usuario}\n( <@${user_alvo.id}>)`,
                 inline: true
             },
             {

@@ -11,7 +11,11 @@ module.exports = async ({ client, user, interaction }) => {
 
     let dono_sv = interaction.guild.ownerId
     const dono_membro = await interaction.guild.members.fetch(dono_sv)
-    dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n\`${dono_sv}\``
+
+    dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n( ${dono_membro} )`
+
+    if (dono_membro.user.discriminator == 0)
+        dono_sv = `\`@${dono_membro.user.username.replace(/ /g, "")}\`\n( ${dono_membro} )`
 
     let icone_server = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
 

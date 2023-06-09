@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, IntentsBitField } = require('discord.js')
+const { Client, GatewayIntentBits, IntentsBitField, Partials } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
@@ -45,7 +45,8 @@ const cli = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
         IntentsBitField.Flags.GuildMembers
-    ]
+    ],
+    partials: [Partials.Message]
 })
 
 class CeiraClient {

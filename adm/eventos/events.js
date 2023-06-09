@@ -2,30 +2,39 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async function ({ client }) {
 
+    // Previne que o bot responda a eventos enquanto estiver atualizando comandos
     if (client.x.force_update) return
 
     console.log("🟠 | Ligando eventos")
 
+    // Eventos de servidores ( entrada e saída )
     client.discord.on("guildCreate", guild => {
-        let caso = "new"
-        require('./discord/guild.js')({ client, caso, guild })
+        require('./discord/guild_join.js')({ client, guild })
     })
 
     client.discord.on("guildDelete", guild => {
-        let caso = "left"
-        require('./discord/guild.js')({ client, caso, guild })
+        require('./discord/guild_left.js')({ client, guild })
     })
 
+    // Eventos de mensagens
     client.discord.on("messageDelete", (msg) => {
-        let caso = "delete"
-        require('./discord/message.js')(client, caso, msg)
+        require('./discord/message_deleted.js')(client, msg)
     })
 
     client.discord.on("messageUpdate", (old_msg, new_msg) => {
-        let caso = "update"
-        require('./discord/message.js')(client, caso, [old_msg, new_msg])
+        require('./discord/message_edited.js')(client, [old_msg, new_msg])
     })
 
+    // Eventos de membros do servidor
+    client.discord.on("guildMemberAdd", guild => {
+        require('./discord/member_join.js')(client, guild)
+    })
+
+    client.discord.on("guildMemberRemove", guild => {
+        require('./discord/member_left.js')(client, guild)
+    })
+
+    // Evento do rate limit da API do discord
     client.discord.on("rateLimit", limit => {
         if (!process.env.channel_error) return
 
