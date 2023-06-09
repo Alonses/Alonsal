@@ -87,7 +87,8 @@ client.discord.on("interactionCreate", async interaction => {
 	const command = client.discord.commands.get(interaction.commandName)
 	if (!command) return
 
-	await command.execute(client, user, interaction)
+	// Executando o comando
+	command.execute(client, user, interaction)
 		.then(() => {
 			require("./adm/eventos/log.js")({ client, interaction, command })
 		})
