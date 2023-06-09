@@ -29,9 +29,9 @@ module.exports = async (client, dados) => {
 
     // User é um BOT
     if (user_alvo.bot)
-        embed.setFields(
+        embed.addFields(
             {
-                name: `:robot: **É um bot**`,
+                name: `:robot: **É um Bot!**`,
                 value: "⠀",
                 inline: true
             }
