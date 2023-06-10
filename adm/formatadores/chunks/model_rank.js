@@ -1,6 +1,3 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
 const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../data/badges')
@@ -142,6 +139,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             const embed = new EmbedBuilder()
                 .setTitle(`${user_alvo.username} ${fixed_badge}`)
                 .setColor(client.embed_color(user_a.misc.color))
+                .setThumbnail(user_alvo.avatarURL({ dynamic: true, size: 2048 }))
                 .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
             embed.addFields(
@@ -158,16 +156,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
                 { name: "⠀", value: "⠀", inline: true }
             )
 
-            let img_embed = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.avatar}.gif?size=512`
-
-            fetch(img_embed).then(res => {
-                if (res.status !== 200)
-                    img_embed = img_embed.replace('.gif', '.webp')
-
-                embed.setThumbnail(img_embed)
-
-                interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            })
+            interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     } else // Ranking global
         retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
@@ -194,6 +183,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
     const embed = new EmbedBuilder()
         .setTitle(nome_embed)
         .setColor(client.embed_color(user.misc.color))
+        .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
         .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
             {
@@ -228,10 +218,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
             }
         )
 
-    img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
-    let row = []
-
-    const b_disabled = [false, false, false, false, false]
+    const row = [], b_disabled = [false, false, false, false, false]
 
     if (pagina < 2) { // Primeira página
         b_disabled[0] = true
@@ -255,27 +242,20 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
     if (paginas > 1)
         row = client.create_buttons([{ id: "rank_button", name: '⏪', value: '1', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', value: '1', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', value: '1', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', value: '1', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', value: '1', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
 
-    fetch(img_embed).then(async res => {
-        if (res.status !== 200)
-            img_embed = img_embed.replace('.gif', '.webp')
-
-        embed.setThumbnail(img_embed)
-
-        try {
-            if (nav_buttons) {
-                if (paginas > 1)
-                    await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-                else
-                    await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            } else {
-                if (paginas > 1)
-                    await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-                else
-                    await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            }
-        } catch (err) {
-            require("../../../adm/eventos/error.js")({ client, err })
-            client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
+    try {
+        if (nav_buttons) {
+            if (paginas > 1)
+                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            else
+                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        } else {
+            if (paginas > 1)
+                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            else
+                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
-    })
+    } catch (err) {
+        require("../../../adm/eventos/error.js")({ client, err })
+        client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
+    }
 }

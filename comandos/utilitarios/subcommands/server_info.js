@@ -1,6 +1,3 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
 const { EmbedBuilder } = require('discord.js')
 
 const { emojis, emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
@@ -17,7 +14,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (dono_membro.user.discriminator == 0)
         dono_sv = `\`@${dono_membro.user.username.replace(/ /g, "")}\`\n( ${dono_membro} )`
 
-    let icone_server = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
+    const icone_server = interaction.guild.iconURL({ size: 2048 })
 
     const canais_texto = interaction.guild.channels.cache.filter((c) => c.type === 0).size
     const canais_voz = interaction.guild.channels.cache.filter((c) => c.type === 2).size
@@ -31,15 +28,6 @@ module.exports = async ({ client, user, interaction }) => {
 
     const data_criacao = `<t:${Math.floor(interaction.guild.createdAt / 1000)}:f>` // Criação do servidor
     const diferenca_criacao = `<t:${Math.floor(interaction.guild.createdAt / 1000)}:R>`
-
-    if (icone_server !== null) {
-        await fetch(icone_server)
-            .then(res => {
-                if (res.status !== 200)
-                    icone_server = icone_server.replace('.gif', '.webp')
-            })
-    } else
-        icone_server = ""
 
     const infos_sv = new EmbedBuilder()
         .setTitle(interaction.guild.name)

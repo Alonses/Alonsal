@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, alvo }) => {
 
     // Enviando o embed para validação
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.report.reportado", 7))
+        .setTitle(`> ${client.tls.phrase(user, "mode.report.reportado")} 🛂`)
         .addFields(
             {
                 name: ":bust_in_silhouette: **Discord ID**",

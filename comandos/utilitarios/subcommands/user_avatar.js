@@ -10,11 +10,13 @@ module.exports = async ({ client, user, interaction }) => {
     if (!url_avatar)
         return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_avatar"), ephemeral: true })
 
+    const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: icone_server }], interaction)
+
     const embed = new EmbedBuilder()
         .setTitle(`> ${user_alvo.username}`)
         .setColor(client.embed_color(user_c.misc.embed))
         .setImage(url_avatar)
-        .setDescription(client.replace(client.tls.phrase(user, "util.avatar.download_avatar"), url_avatar))
+        .setDescription(client.tls.phrase(user, "util.avatar.download_avatar"))
 
-    interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.reply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 }
