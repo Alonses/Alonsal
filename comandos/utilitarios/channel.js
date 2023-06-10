@@ -1,6 +1,3 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
@@ -57,69 +54,61 @@ module.exports = {
             bitrate = `${canal.bitrate / 1000}kbps`
         }
 
-        let icone_server = canal.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
+        const infos_ch = new EmbedBuilder()
+            .setAuthor({ name: canal.name, iconURL: canal.guild.iconURL({ size: 2048 }) })
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription(topico)
+            .addFields(
+                {
+                    name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.id_canal")}**`,
+                    value: `\`${canal.id}\``,
+                    inline: true
+                },
+                {
+                    name: `:label: **${client.tls.phrase(user, "util.canal.mencao")}**`,
+                    value: `\`<#${canal.id}>\``,
+                    inline: true
+                },
+            )
 
-        fetch(icone_server)
-            .then(res => {
-                if (res.status !== 200)
-                    icone_server = icone_server.replace(".gif", ".webp")
+        if (bitrate === "")
+            infos_ch.addFields(
+                {
+                    name: ":underage: NSFW",
+                    value: `\`${nsfw}\``,
+                    inline: true
+                }
+            )
+        else
+            infos_ch.addFields({ name: "⠀", value: "⠀", inline: true })
 
-                const infos_ch = new EmbedBuilder()
-                    .setAuthor({ name: canal.name, iconURL: icone_server })
-                    .setColor(client.embed_color(user.misc.color))
-                    .setDescription(topico)
-                    .addFields(
-                        {
-                            name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.id_canal")}**`,
-                            value: `\`${canal.id}\``,
-                            inline: true
-                        },
-                        {
-                            name: `:label: **${client.tls.phrase(user, "util.canal.mencao")}**`,
-                            value: `\`<#${canal.id}>\``,
-                            inline: true
-                        },
-                    )
+        infos_ch.addFields(
+            {
+                name: `:birthday: ${client.tls.phrase(user, "util.server.criacao")}`,
+                value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
+                inline: true
+            }
+        )
 
-                if (bitrate === "")
-                    infos_ch.addFields(
-                        {
-                            name: ":underage: NSFW",
-                            value: `\`${nsfw}\``,
-                            inline: true
-                        }
-                    )
-                else
-                    infos_ch.addFields({ name: "⠀", value: "⠀", inline: true })
+        if (typeof canal.bitrate !== "undefined")
+            infos_ch.addFields(
+                {
+                    name: `:mega: ${client.tls.phrase(user, "util.canal.transmissao")}`,
+                    value: `:radio: **Bitrate: **\`${bitrate}\`\n:busts_in_silhouette: **Max. users: **\`${userlimit}\``,
+                    inline: true
+                }
+            )
 
+        if (typeof canal.rateLimitPerUser !== "undefined")
+            if (canal.rateLimitPerUser > 0)
                 infos_ch.addFields(
                     {
-                        name: `:birthday: ${client.tls.phrase(user, "util.server.criacao")}`,
-                        value: `${data_criacao}\n [ ${diferenca_criacao} ]`,
+                        name: `:name_badge: ${client.tls.phrase(user, "util.canal.modo_lento")}`,
+                        value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(user, "util.unidades.segundos")}\``,
                         inline: true
                     }
                 )
 
-                if (typeof canal.bitrate !== "undefined")
-                    infos_ch.addFields(
-                        {
-                            name: `:mega: ${client.tls.phrase(user, "util.canal.transmissao")}`,
-                            value: `:radio: **Bitrate: **\`${bitrate}\`\n:busts_in_silhouette: **Max. users: **\`${userlimit}\``,
-                            inline: true
-                        }
-                    )
-
-                if (typeof canal.rateLimitPerUser !== "undefined")
-                    if (canal.rateLimitPerUser > 0)
-                        infos_ch.addFields(
-                            {
-                                name: `:name_badge: ${client.tls.phrase(user, "util.canal.modo_lento")}`,
-                                value: `\`${canal.rateLimitPerUser} ${client.tls.phrase(user, "util.unidades.segundos")}\``,
-                                inline: true
-                            }
-                        )
-
-                interaction.reply({ embeds: [infos_ch], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-            })
+        interaction.reply({ embeds: [infos_ch], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 }

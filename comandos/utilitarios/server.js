@@ -1,9 +1,4 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
-const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()

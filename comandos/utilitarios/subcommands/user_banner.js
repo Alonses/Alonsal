@@ -36,14 +36,16 @@ module.exports = async ({ client, user, interaction }) => {
                 if (url_banner.length < 1)
                     return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_banner", 0), ephemeral: true })
 
+                const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }], interaction)
+
                 // Exibindo o banner do usuário
                 const embed = new EmbedBuilder()
                     .setTitle(`> ${user_alvo.username}`)
                     .setColor(client.embed_color(user_c.misc.embed))
                     .setImage(url_banner)
-                    .setDescription(client.replace(client.tls.phrase(user, "util.avatar.download_banner"), url_banner))
+                    .setDescription(client.tls.phrase(user, "util.avatar.download_banner"))
 
-                interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
             })
         }
     })

@@ -52,15 +52,16 @@ module.exports = async ({ client, user, interaction }) => {
                     if (id_membros_guild.includes(user.uid)) {
                         usernames.push(`${client.defaultEmoji("diamond")} <@${user.uid}>`)
                         user_ids.push(`\`${(user.uid)}\``)
+
+                        i++
                     }
                 }
-
-                i++
             }
 
             const embed = new EmbedBuilder()
                 .setTitle(`> ${interaction.guild.name}`)
                 .setColor(client.embed_color(user.misc.color))
+                .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
 
             if (usernames.length > 0)
                 embed.addFields(
@@ -75,15 +76,6 @@ module.exports = async ({ client, user, interaction }) => {
             else
                 embed.setDescription(client.tls.phrase(user, "mode.report.sem_reportes_guild", 10))
 
-            img_embed = interaction.guild.iconURL({ size: 2048 }).replace(".webp", ".gif")
-
-            fetch(img_embed).then(res => {
-                if (res.status !== 200)
-                    img_embed = img_embed.replace('.gif', '.webp')
-
-                embed.setThumbnail(img_embed)
-
-                interaction.editReply({ embeds: [embed], ephemeral: true })
-            })
+            interaction.editReply({ embeds: [embed], ephemeral: true })
         })
 }

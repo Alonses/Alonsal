@@ -22,23 +22,10 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     let apelido = user_alvo.nickname !== null ? user_alvo.nickname : user_alvo.user.username
+    let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
 
     // Avatar do usuário
-    let avatar_user = `https://cdn.discordapp.com/avatars/${user_alvo.id}/${user_alvo.user.avatar}.gif?size=1024`
-
-    if (avatar_user !== null) {
-        avatar_user = avatar_user.replace(".webp", ".gif")
-
-        await fetch(avatar_user)
-            .then(res => {
-                if (res.status !== 200)
-                    avatar_user = avatar_user.replace('.gif', '.webp')
-            })
-    } else
-        avatar_user = ""
-
-    let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
-    const historico = []
+    const avatar_user = user_alvo.avatarURL({ dynamic: true, size: 2048 }), historico = []
 
     // Quantificando os relatórios sobre o usuário
     reports.forEach(valor => {
