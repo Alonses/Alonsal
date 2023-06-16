@@ -37,7 +37,15 @@ module.exports = async (client, message) => {
         .setFooter({ text: message[0].author.username })
         .setTimestamp()
 
-    client.notify(guild.logger.channel, embed)
+    if (message[1].content.includes("https")) {
+        const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
+        row = client.create_buttons([{ name: "Abrir no navegador", type: 4, emoji: "🌐", value: link_img }])
+    }
+
+    if (row)
+        client.notify(guild.logger.channel, { embed: embed, components: row })
+    else
+        client.notify(guild.logger.channel, embed)
 }
 
 function formata_text(texto) {

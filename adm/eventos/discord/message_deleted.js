@@ -6,14 +6,29 @@ module.exports = async (client, message) => {
     if (message.partial) return
     if (message.author.bot) return
 
-    let guild = await client.getGuild(message.guildId)
+    let guild = await client.getGuild(message.guildId), attachments = []
 
     // Verificando se a guild habilitou o logger
     if (!client.decider(guild.conf?.logger, 0)) return
 
-    let texto = `:wastebasket: | Uma [mensagem](${message.url}) foi excluída por <@${message.author.id}>\n\n**Conteúdo excluído:** \`\`\`${formata_text(message.content)}\`\`\``
-    let autor = message.author.id
-    let local = message.channelId
+    if (message.attachments) {
+        message.attachments.forEach(attach => {
+            attachments.push(attach.attachment)
+        })
+    }
+
+    let texto_mensagem = message.content
+
+    // Mensagem sem texto enviado
+    if (!message.content)
+        texto_mensagem = "Sem texto incluso"
+
+    // Apenas arquivos enviados
+    if (attachments.length > 0 && !message.content)
+        texto_mensagem = attachments.join("\n\n")
+
+    let texto = `:wastebasket: | Uma [mensagem](${message.url}) foi excluída por <@${message.author.id}>\n\n**Conteúdo excluído:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
+    let autor = message.author.id, local = message.channelId, row = null
 
     const embed = new EmbedBuilder()
         .setTitle("> Mensagem Excluída")
@@ -34,7 +49,15 @@ module.exports = async (client, message) => {
         .setFooter({ text: message.author.username })
         .setTimestamp()
 
-    client.notify(guild.logger.channel, embed)
+    if (texto_mensagem.includes("https")) {
+        const link_img = `https${texto_mensagem.split("https")[1].split(" ")[0]}`
+        row = client.create_buttons([{ name: "Abrir no navegador", type: 4, emoji: "🌐", value: link_img }])
+    }
+
+    if (row)
+        client.notify(guild.logger.channel, { embed: embed, components: row })
+    else
+        client.notify(guild.logger.channel, embed)
 }
 
 function formata_text(texto) {

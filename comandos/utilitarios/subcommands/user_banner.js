@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction }) => {
                 if (url_banner.length < 1)
                     return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_banner", 0), ephemeral: true })
 
-                const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }], interaction)
+                const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }])
 
                 // Exibindo o banner do usuário
                 const embed = new EmbedBuilder()

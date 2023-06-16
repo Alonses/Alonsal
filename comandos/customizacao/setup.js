@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("setup")
@@ -55,6 +53,7 @@ module.exports = {
                 interaction.reply({ content: client.tls.phrase(user, "mode.weather.ativo", 25), ephemeral: true })
             else
                 interaction.reply({ content: client.tls.phrase(user, "mode.weather.desativo", 24), ephemeral: true })
+
         } else if (interaction.options.getSubcommand() === "tasks") {
 
             // Ativa ou desativa as tarefas globais
