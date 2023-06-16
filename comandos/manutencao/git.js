@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("git")
@@ -15,7 +13,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" }], interaction)
+        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" }])
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "manu.git.repositorio"))

@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("help")
@@ -15,7 +13,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: client.tls.phrase(user, "inic.ping.site"), value: 'http://alonsal.glitch.me/', type: 4 }, { name: client.tls.phrase(user, "inic.inicio.suporte"), value: process.env.url_support, type: 4, emoji: emojis.icon_rules_channel }], interaction)
+        const row = client.create_buttons([{ name: client.tls.phrase(user, "inic.ping.site"), value: 'http://alonsal.glitch.me/', type: 4 }, { name: client.tls.phrase(user, "inic.inicio.suporte"), value: process.env.url_support, type: 4, emoji: client.emoji("icon_rules_channel") }], interaction)
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "inic.ping.titulo"))

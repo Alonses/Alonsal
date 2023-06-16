@@ -20,7 +20,7 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alondioma" }], interaction)
+        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alondioma" }])
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
