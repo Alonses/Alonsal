@@ -36,7 +36,8 @@ module.exports = {
                             "fr": 'Le role qui sera notifié',
                             "it": 'La roule da notificare',
                             "ru": 'Роль, которую нужно уведомить'
-                        }))
+                        })
+                        .setRequired(true))
                 .addChannelOption(option =>
                     option.setName("channel")
                         .setNameLocalizations({
@@ -53,7 +54,8 @@ module.exports = {
                             "fr": 'Le canal qui sera utilisé',
                             "it": 'Il canale che verrà utilizzato',
                             "ru": 'Канал, который будет использоваться'
-                        }))
+                        })
+                        .setRequired(true))
                 .addStringOption(option =>
                     option.setName("language")
                         .setNameLocalizations({
