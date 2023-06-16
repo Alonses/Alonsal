@@ -15,8 +15,7 @@ module.exports = async (client, message) => {
     if (!client.decider(guild.conf?.logger, 0)) return
 
     let texto = `:pencil: | Uma [mensagem](${message[0].url}) foi atualizada por <@${message[0].author.id}>\n\n**Mensagem antiga:** \`\`\`${formata_text(message[0].content)}\`\`\`\n**Mensagem atualizada:** \`\`\`${formata_text(message[1].content)}\`\`\``
-    let autor = message[0].author.id
-    let local = message[0].channelId
+    let autor = message[0].author.id, local = message[0].channelId, row = null
 
     const embed = new EmbedBuilder()
         .setTitle("> Mensagem Atualizada")
