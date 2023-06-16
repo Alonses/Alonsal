@@ -213,7 +213,7 @@ module.exports = async (client, user, interaction, dados) => {
     const b_disabled = [false, false, false, false]
     b_disabled[operacao] = true
 
-    const row = client.create_buttons([{ id: "user_info_button", name: "Perfil", value: '1', type: 1, emoji: '👤', data: `0|${user_alvo.id}`, disabled: b_disabled[0] }, { id: "user_info_button", name: "Permissões", value: '1', type: 1, emoji: '🏷️', data: `1|${user_alvo.id}`, disabled: b_disabled[1] }, { id: "user_info_button", name: "Badges", value: '1', type: 1, emoji: '🏆', data: `2|${user_alvo.id}`, disabled: b_disabled[2] }, { id: "user_info_button", name: "Histórico", value: '1', type: 1, emoji: '📠', data: `3|${user_alvo.id}`, disabled: b_disabled[3] }], interaction)
+    const row = client.create_buttons([{ id: "user_info_button", name: "Perfil", type: 1, emoji: '👤', data: `0|${user_alvo.id}`, disabled: b_disabled[0] }, { id: "user_info_button", name: "Permissões", type: 1, emoji: '🏷️', data: `1|${user_alvo.id}`, disabled: b_disabled[1] }, { id: "user_info_button", name: "Badges", type: 1, emoji: '🏆', data: `2|${user_alvo.id}`, disabled: b_disabled[2] }, { id: "user_info_button", name: "Histórico", type: 1, emoji: '📠', data: `3|${user_alvo.id}`, disabled: b_disabled[3] }], interaction)
 
     if (!interaction.customId)
         return interaction.reply({ embeds: [infos_user], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })

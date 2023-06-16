@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 3) {
 
         if (!guild.games.channel || !guild.games.role)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal e um cargo o comando </notify:1018632996787589283> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal e um cargo o comando </notify config:1018632996787589283> antes de poder ativar pelo painel.`, ephemeral: true })
         else {
             // Ativa ou desativa o anúncio de games gratuitos no servidor
             if (typeof guild.conf.games !== "undefined")

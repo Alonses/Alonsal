@@ -69,7 +69,7 @@ module.exports = {
                 .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
             // Criando os botões para o menu de badges
-            const row = client.create_buttons([{ id: "badges", name: client.tls.phrase(user, "menu.botoes.confirmar_notificando"), value: '1', type: 2, data: `1|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, data: `2|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: 0 }], interaction)
+            const row = client.create_buttons([{ id: "badges", name: client.tls.phrase(user, "menu.botoes.confirmar_notificando"), type: 2, data: `1|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), type: 1, data: `2|${id_alvo}.${badge_alvo}` }, { id: "badges", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }], interaction)
 
             return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
         } else

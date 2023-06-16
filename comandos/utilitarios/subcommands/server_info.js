@@ -90,7 +90,11 @@ module.exports = async ({ client, user, interaction }) => {
         )
     else
         infos_sv.addFields(
-            { name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`, value: '⠀', inline: true }
+            {
+                name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`,
+                value: '⠀',
+                inline: true
+            }
         )
 
     return interaction.reply({ embeds: [infos_sv], ephemeral: client.decider(user?.conf.ghost_mode, 0) })

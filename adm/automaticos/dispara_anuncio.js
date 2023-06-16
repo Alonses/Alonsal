@@ -1,9 +1,10 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { model_games } = require('../formatadores/chunks/model_games')
+const { getGameChannelById } = require('../database/schemas/Guild')
 const { redes } = require('../../arquivos/json/text/anuncio.json')
 
-module.exports = async ({ client, interaction, objetos_anunciados }) => {
+module.exports = async ({ client, interaction, objetos_anunciados, guild_channel }) => {
 
     const canais_clientes = await client.getGameChannels()
 
@@ -48,7 +49,6 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
             if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
             let texto_anuncio = model_games(client, objetos_anunciados, plataforma, idioma_definido)
-            marcacao = `<@&${dados.games.role}>`
 
             const embed = new EmbedBuilder()
                 .setTitle(`${logo_plat} ${plataforma}`)
@@ -58,18 +58,33 @@ module.exports = async ({ client, interaction, objetos_anunciados }) => {
 
             const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
 
-            // Enviando os anúncios para os canais
-            if (canal_alvo.type === 0 || canal_alvo.type === 5) {
-                if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
-                    canal_alvo.send({ content: marcacao, embeds: [embed], components: [row] }) // Permissão para enviar mensagens no canal
+            if (canal_alvo) {
+                // Enviando os anúncios para os canais
+                if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
-                    canais_recebidos++
+                    // Permissão para enviar mensagens no canal
+                    if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
+
+                        if (typeof guild_channel === "undefined") // Anúnciando em todos os servidores
+                            canal_alvo.send({ content: `<@&${dados.games.role}>`, embeds: [embed], components: [row] })
+                        else if (guild_channel === dados.games.channel) // Anúnciando apenas no servidor alvo
+                            canal_alvo.send({ content: `<@&${dados.games.role}>`, embeds: [embed], components: [row] })
+
+                        canais_recebidos++
+                    }
                 }
+            } else {
+                // Canal ou servidor desconhecido
+                dados.conf.games = false
+                dados.save()
             }
         } catch (err) {
             require('../eventos/error.js')({ client, err })
         }
     })
+
+    if (typeof guild_channel !== "undefined")
+        return
 
     let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
 
