@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ignore_user")
@@ -25,8 +23,8 @@ module.exports = {
         await user_alvo.save()
 
         if (user_alvo.conf.banned)
-            interaction.reply({ content: `${client.emoji(emojis.pare_agr)} | O usuário <@${user_alvo.uid}> será ignorado pelo bot a partir de agora!`, ephemeral: true })
+            interaction.reply({ content: `${client.emoji("pare_agr")} | O usuário <@${user_alvo.uid}> será ignorado pelo bot a partir de agora!`, ephemeral: true })
         else
-            interaction.reply({ content: `${client.emoji(emojis.dog_panelaco)} | O usuário <@${user_alvo.uid}> não será mais ignorado pelo bot`, ephemeral: true })
+            interaction.reply({ content: `${client.emoji("dog_panelaco")} | O usuário <@${user_alvo.uid}> não será mais ignorado pelo bot`, ephemeral: true })
     }
 }

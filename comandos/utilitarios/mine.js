@@ -4,7 +4,7 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const formata_texto = require('../../adm/formatadores/formata_texto')
-const { emojis, emojis_negativos } = require('../../arquivos/json/text/emojis.json')
+const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -110,34 +110,34 @@ module.exports = {
                     .setImage(dados_item.icon)
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.mc_coracao)}** ${client.tls.phrase(user, "util.minecraft.coletavel")}**`,
+                            name: `${client.emoji("mc_coracao")}** ${client.tls.phrase(user, "util.minecraft.coletavel")}**`,
                             value: `\`${colet_suv}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_bamboo_sign)} **${client.tls.phrase(user, "util.minecraft.tipo")}**`,
+                            name: `${client.emoji("mc_bamboo_sign")} **${client.tls.phrase(user, "util.minecraft.tipo")}**`,
                             value: `\`${tipo_item}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_goat_copper_horn)} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
+                            name: `${client.emoji("mc_goat_copper_horn")} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
                             value: `\`${dados_item.stats.version}\``,
                             inline: true
                         }
                     )
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.mc_chest)} **${client.tls.phrase(user, "util.minecraft.empilhavel")}**`,
+                            name: `${client.emoji("mc_chest")} **${client.tls.phrase(user, "util.minecraft.empilhavel")}**`,
                             value: `\`${empilhavel}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_cornflower)} **${client.tls.phrase(user, "util.minecraft.renovavel")}**`,
+                            name: `${client.emoji("mc_cornflower")} **${client.tls.phrase(user, "util.minecraft.renovavel")}**`,
                             value: `\`${renovavel}\``,
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_name_tag)} **${client.tls.phrase(user, "util.minecraft.nome_interno")}**`,
+                            name: `${client.emoji("mc_name_tag")} **${client.tls.phrase(user, "util.minecraft.nome_interno")}**`,
                             value: `**\`minecraft:${dados_item.internal_name}\`**`,
                             inline: true
                         }, fields
@@ -152,7 +152,7 @@ module.exports = {
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_anvil)} **Durabilidade: ${dados_item.durability + 1}**`,
+                            name: `${client.emoji("mc_anvil")} **Durabilidade: ${dados_item.durability + 1}**`,
                             value: "⠀",
                             inline: true
                         }
@@ -166,7 +166,7 @@ module.exports = {
 
                     embed.addFields(
                         {
-                            name: `${client.emoji(emojis.mc_logo_wikipedia)} Wiki sobre ${dados_item.name}`,
+                            name: `${client.emoji("mc_logo_wikipedia")} Wiki sobre ${dados_item.name}`,
                             value: `\`\`\`fix\n${formata_texto(dados_item.wiki)}\`\`\`\n${link_artigo}`,
                             inline: false
                         }

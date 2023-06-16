@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("portal")
@@ -62,7 +60,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "game.portal.titulo"))
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.replace(client.tls.phrase(user, "game.portal.descricao"), [client.emoji(emojis.mc_portal), dimension, x_i, z_i, client.emoji(emojis.mc_portal_frame), to_dimension, x, z]))
+            .setDescription(client.replace(client.tls.phrase(user, "game.portal.descricao"), [client.emoji("mc_portal"), dimension, x_i, z_i, client.emoji("mc_portal_frame"), to_dimension, x, z]))
             .setFooter({ text: caso, iconURL: interaction.user.avatarURL({ dynamic: true }) })
         interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }

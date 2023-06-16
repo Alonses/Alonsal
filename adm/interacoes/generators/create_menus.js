@@ -3,7 +3,6 @@ const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { busca_badges, badgeTypes } = require('../../data/badges')
 
 const { faustop, rasputia, galerito } = require('../../../arquivos/json/text/emojis.json')
-const { emojis } = require('../../../arquivos/json/text/emojis.json')
 
 function create_menus(client, interaction, user, dados) {
 
@@ -63,7 +62,7 @@ function create_menus(client, interaction, user, dados) {
                 // Listando tarefas
                 nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
 
-                emoji_label = valor.concluded ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
+                emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                 descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
 
                 if (dados.alvo == "tarefas") {
@@ -89,7 +88,7 @@ function create_menus(client, interaction, user, dados) {
             if (dados.alvo === "modulo_visualizar") {
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = `${client.tls.phrase(user, `misc.modulo.modulo_${valor.type}`)}`
-                emoji_label = valor.stats.active ? client.emoji(emojis.mc_approve) : client.emoji(emojis.mc_oppose)
+                emoji_label = valor.stats.active ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                 descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} ${valor.stats.hour}`
                 valor_label = `${dados.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
             }

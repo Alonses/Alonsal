@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis, emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
+const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.emoji(emojis_dancantes)} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
-                value: `${client.emoji(emojis.bigchad)} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
+                value: `${client.emoji("bigchad")} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                 inline: true
             }
         )
@@ -83,7 +83,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (interaction.guild.premiumSubscriptionCount > 0)
         infos_sv.addFields(
             {
-                name: `${client.emoji(emojis.boost)} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
+                name: `${client.emoji("boost")} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
                 value: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
                 inline: true
             }

@@ -70,7 +70,11 @@ module.exports = async ({ client, user, interaction }) => {
                         value: usernames.join("\n"),
                         inline: true
                     },
-                    { name: `**:label: ${client.tls.phrase(user, "mode.report.identificador")}**`, value: user_ids.join("\n"), inline: true }
+                    {
+                        name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
+                        value: user_ids.join("\n"),
+                        inline: true
+                    }
                 )
                     .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             else

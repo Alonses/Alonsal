@@ -3,8 +3,6 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const { buildAllBadges } = require('../../data/badges')
 const { getUserReports } = require('../../database/schemas/Report')
 
-const { emojis } = require('../../../arquivos/json/text/emojis.json')
-
 module.exports = async (client, user, interaction, dados) => {
 
     // Códigos de operação
@@ -74,19 +72,19 @@ module.exports = async (client, user, interaction, dados) => {
 
     if (!user_alvo.bot) {
         if (flags_user.includes("HypeSquadOnlineHouse1")) // HypeSquad
-            emoji_hypesquad = client.emoji(emojis.squad_bravery)
+            emoji_hypesquad = client.emoji("squad_bravery")
 
         if (flags_user.includes("HypeSquadOnlineHouse2"))
-            emoji_hypesquad = client.emoji(emojis.squad_brilliance)
+            emoji_hypesquad = client.emoji("squad_brilliance")
 
         if (flags_user.includes("HypeSquadOnlineHouse3"))
-            emoji_hypesquad = client.emoji(emojis.squad_balance)
+            emoji_hypesquad = client.emoji("squad_balance")
 
         if (flags_user.includes("PremiumEarlySupporter"))
-            discord_premium = client.emoji(emojis.early_supporter)
+            discord_premium = client.emoji("early_supporter")
 
         if (membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
-            discord_premium += ` ${client.emoji(emojis.boost)}`
+            discord_premium += ` ${client.emoji("boost")}`
     }
 
     // Permissões e cargos do usuário
@@ -142,7 +140,7 @@ module.exports = async (client, user, interaction, dados) => {
                 inline: true
             },
             {
-                name: ":label: **Discord ID**",
+                name: `${client.emoji("icon_id")} **Discord ID**`,
                 value: `\`${user_alvo.id}\``,
                 inline: true
             }

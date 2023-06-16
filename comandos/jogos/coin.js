@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { emojis, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
+const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -48,7 +48,7 @@ module.exports = {
         let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.acertou")} ${client.emoji(emojis_dancantes)}`
 
         if (escolha !== moeda) // Errou
-            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.errou")} ${client.emoji(emojis.epic_embed_fail2)}`
+            resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.errou")} ${client.emoji("epic_embed_fail2")}`
 
         interaction.reply({ content: resultado, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }

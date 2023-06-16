@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis, emojis_negativos } = require('../../../arquivos/json/text/emojis.json')
+const { emojis_negativos } = require('../../../arquivos/json/text/emojis.json')
 const direcao_cardial = require("../../funcoes/direcao_cardial")
 
 const getCountryISO3 = require("country-iso-2-to-3")
@@ -178,7 +178,7 @@ module.exports = async (client, user, interaction) => {
                             cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
-                        rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(user, "util.tempo.chuva_troll")}_`
+                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(user, "util.tempo.chuva_troll")}_`
                     }
 
                     // Dados para neve
@@ -190,7 +190,7 @@ module.exports = async (client, user, interaction) => {
 
                         emoji_indica_visibilidade = " 🔽"
 
-                        rodape_cabecalho = `${client.emoji(emojis.trollface)} _${client.tls.phrase(user, "util.tempo.neve_troll")}_`
+                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(user, "util.tempo.neve_troll")}_`
                     }
 
                     // Dados para rajadas de vento

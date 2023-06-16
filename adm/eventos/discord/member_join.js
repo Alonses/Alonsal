@@ -15,7 +15,7 @@ module.exports = async (client, dados) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **Membro**`,
-                value: `**:label: ID:** \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
+                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
         )

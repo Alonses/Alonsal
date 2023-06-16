@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("pula")
@@ -51,7 +49,7 @@ module.exports = {
                     .setColor(client.embed_color(user_pula.misc.color))
                     .addFields(
                         {
-                            name: `${client.emoji(emojis.pula_2)} **${client.tls.phrase(user, "game.pula.gerais")}**`,
+                            name: `${client.emoji("pula_2")} **${client.tls.phrase(user, "game.pula.gerais")}**`,
                             value: `:part_alternation_mark: **${client.tls.phrase(user, "game.pula.pulos")}:** \`${client.locale(datas_pula.pulos)}\`\n:rocket: **${client.tls.phrase(user, "game.pula.mods_ativos")}:** \`${client.locale(datas_pula.mods)}\`\n:skull_crossbones: **${client.tls.phrase(user, "game.pula.mortes")}:** \`${client.locale(datas_pula.mortes)}\``,
                             inline: true,
                         },
@@ -61,7 +59,7 @@ module.exports = {
                             inline: true
                         },
                         {
-                            name: `${client.emoji(emojis.mc_esmeralda)} **${client.tls.phrase(user, "game.pula.moedas")}**`,
+                            name: `${client.emoji("mc_esmeralda")} **${client.tls.phrase(user, "game.pula.moedas")}**`,
                             value: `:bank: **${client.tls.phrase(user, "game.pula.coletadas")}:** \`${client.locale(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **${client.tls.phrase(user, "game.pula.gastas")}:** \`${client.locale(datas_pula.moedas_gastas)}\`\n:moneybag: **${client.tls.phrase(user, "game.pula.guardadas")}:** \`${client.locale(datas_pula.moedas)}\``,
                             inline: true
                         },
