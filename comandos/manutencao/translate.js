@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("translate")
@@ -26,7 +24,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(client.embed_color(user.misc.color))
-            .setTitle(`${client.tls.phrase(user, "manu.traduz.titulo")} ${client.emoji(emojis.dancando)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.traduz.titulo")} ${client.emoji("dancando")}`)
             .setDescription(client.tls.phrase(user, "manu.traduz.descricao"))
             .setImage("https://i.imgur.com/zSVqxhV.png")
 

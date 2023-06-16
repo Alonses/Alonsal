@@ -6,6 +6,9 @@ module.exports = async (client, message) => {
     if (message[0].partial) return
     if (message[0].author.bot) return
 
+    // Mensagem com o mesmo conteúdo (links de gifs e imagens)
+    if (message[0].content === message[1].content) return
+
     let guild = await client.getGuild(message[0].guildId)
 
     // Verificando se a guild habilitou o logger
@@ -22,12 +25,12 @@ module.exports = async (client, message) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **Autor**`,
-                value: `**:label: ID:** \`${autor}\`\n( <@${autor}> )`,
+                value: `${client.emoji("icon_id")} \`${autor}\`\n( <@${autor}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("paper")} **Local**`,
-                value: `**:label: ID:** \`${local}\`\n( <#${local}> )`,
+                value: `${client.emoji("icon_id")} \`${local}\`\n( <#${local}> )`,
                 inline: true
             }
         )

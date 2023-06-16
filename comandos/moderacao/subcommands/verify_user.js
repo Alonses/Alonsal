@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             },
             {
-                name: ":label: **Discord ID**",
+                name: `${client.emoji("icon_id")} **Discord ID**`,
                 value: `\`${user_alvo.id}\``,
                 inline: true
             },

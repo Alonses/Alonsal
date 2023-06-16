@@ -1,7 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_resumo_diario")
@@ -60,7 +58,7 @@ module.exports = {
                 },
                 {
                     name: ":bank: Bufunfas",
-                    value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
+                    value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
                     inline: true
                 }
             )

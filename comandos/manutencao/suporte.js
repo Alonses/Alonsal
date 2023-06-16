@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("support")
@@ -22,10 +20,10 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji(emojis.mc_bolo), value: "https://picpay.me/slondo" }, { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }], interaction)
+        const row = client.create_buttons([{ name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" }, { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }], interaction)
 
         const embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji(emojis.mc_bolo)}`)
+            .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`)
             .setColor(client.embed_color(user.misc.color))
             .setImage("https://i.imgur.com/VCneT1l.png")
             .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))

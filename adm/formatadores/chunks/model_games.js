@@ -1,5 +1,3 @@
-const { emojis } = require('../../../arquivos/json/text/emojis.json')
-
 function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
 
     const { data } = require(`../../../arquivos/idiomas/${idioma_definido}.json`)
@@ -19,7 +17,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
         objeto_anunciado[0].tipo = "game"
 
     if (objeto_anunciado[0].link.match(/store.steam/))
-        link_app = client.replace(`\n\n${client.emoji(emojis.lg_steam)} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
+        link_app = client.replace(`\n\n${client.emoji("lg_steam")} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
 
     // Um item anunciado
     texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])

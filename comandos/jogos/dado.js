@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("dice")
@@ -110,6 +108,6 @@ module.exports = {
         else
             somatoria = client.locale(somatoria)
 
-        interaction.reply({ content: `${client.emoji(emojis.dice)} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({ content: `${client.emoji("dice")} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }
 }

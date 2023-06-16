@@ -16,7 +16,7 @@ const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
 const idioma = require('./adm/data/idioma')
 const translate = require('./adm/formatadores/translate')
 
-const { default_emoji } = require('./arquivos/json/text/emojis.json')
+const { emojis, default_emoji } = require('./arquivos/json/text/emojis.json')
 
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
@@ -103,9 +103,13 @@ class CeiraClient {
         let emoji = "🔍"
 
         // Emojis customizados
-        if (typeof dados === "string")
+        if (typeof dados === "string") {
+
+            if (isNaN(parseInt(dados))) // Emoji por nome próprio do JSON de emojis
+                dados = emojis[dados]
+
             emoji = this.discord.emojis.cache.get(dados)?.toString() || "🔍"
-        else // Emojis por códigos de status
+        } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
         return emoji

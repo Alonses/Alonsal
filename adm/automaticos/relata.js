@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis } = require('../../arquivos/json/text/emojis.json')
 const { dailyReset } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
@@ -72,7 +71,7 @@ async function gera_relatorio(client, proxima_att) {
             },
             {
                 name: ":bank: Bufunfas",
-                value: `${client.emoji(emojis.mc_esmeralda)} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
+                value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
                 inline: true
             }
         )

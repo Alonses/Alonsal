@@ -4,8 +4,6 @@ const { busca_badges, badgeTypes } = require('../../data/badges')
 const { getRankGlobal } = require('../../database/schemas/Rank_g')
 const { getRankServer } = require('../../database/schemas/Rank_s')
 
-const { emojis } = require('../../../arquivos/json/text/emojis.json')
-
 const medals = {
     0: ":first_place:",
     1: ":second_place:",
@@ -187,7 +185,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
             {
-                name: `${client.emoji(emojis.mc_honeycomb)} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
+                name: `${client.emoji("mc_honeycomb")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                 value: usernames.join("\n"),
                 inline: true
             },
