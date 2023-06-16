@@ -16,9 +16,9 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     if (dados.channel) {
-
         // Tipo 0 -> Canal de texto tipo normal
         // Tipo 5 -> Canal de texto tipo anúncios
+
         if (dados.channel.type !== 0 && dados.channel.type !== 5) // Verificando se o canal mencionado é inválido
             return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
 
@@ -57,6 +57,8 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             }
         )
+
+    await guild.save()
 
     interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
 }
