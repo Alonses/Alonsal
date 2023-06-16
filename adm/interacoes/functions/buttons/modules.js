@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 .setDescription(client.tls.phrase(user, "misc.modulo.descricao_tipo_history"))
                 .setFooter({ text: client.tls.phrase(user, "misc.modulo.rodape_tipo_modulo"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-            const row = client.create_buttons([{ id: "history_button", name: client.tls.phrase(user, "menu.botoes.completo"), emoji: '📰', value: '1', type: 2, data: `1|${timestamp}` }, { id: "history_button", name: client.tls.phrase(user, "menu.botoes.resumido"), emoji: '🔖', value: '1', type: 0, data: `2|${timestamp}` }], interaction)
+            const row = client.create_buttons([{ id: "history_button", name: client.tls.phrase(user, "menu.botoes.completo"), emoji: '📰', type: 2, data: `1|${timestamp}` }, { id: "history_button", name: client.tls.phrase(user, "menu.botoes.resumido"), emoji: '🔖', type: 0, data: `2|${timestamp}` }], interaction)
 
             return interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }

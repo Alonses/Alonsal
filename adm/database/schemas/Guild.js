@@ -41,6 +41,10 @@ async function getGameChannels() {
     return model.find({ "conf.games": true })
 }
 
+async function getGameChannelById(id) {
+    return model.findOne({ "games.channel": id })
+}
+
 async function getReportChannels() {
     // Lista todos os servidores com reports de usuários ativos
     return model.find({ "conf.reports": true })
@@ -83,6 +87,7 @@ module.exports = {
     getGameChannels,
     disableGameChannel,
     getReportChannels,
+    getGameChannelById,
     disableReportChannel,
     migrateGameChannels
 }

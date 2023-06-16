@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     botoes = shuffleArray(botoes)
 
-    const row = client.create_buttons([{ id: "data_finalize_button", name: botoes[0], value: '0', type: 1, data: `1.${define_button(opcao, botoes[0])}.${dados}` }, { id: "data_finalize_button", name: botoes[1], value: '0', type: 1, data: `2.${define_button(opcao, botoes[1])}.${dados}` }, { id: "data_finalize_button", name: botoes[2], value: '0', type: 1, data: `3.${define_button(opcao, botoes[2])}.${dados}` }, { id: "data_finalize_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: '0' }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: client.emoji(19), data: "data" }], interaction)
+    const row = client.create_buttons([{ id: "data_finalize_button", name: botoes[0], type: 1, data: `1.${define_button(opcao, botoes[0])}.${dados}` }, { id: "data_finalize_button", name: botoes[1], type: 1, data: `2.${define_button(opcao, botoes[1])}.${dados}` }, { id: "data_finalize_button", name: botoes[2], type: 1, data: `3.${define_button(opcao, botoes[2])}.${dados}` }, { id: "data_finalize_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: '0' }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "data" }], interaction)
 
     interaction.update({ content: client.replace(client.tls.phrase(user, "manu.data.ultima_confirmacao", 8), opcao), components: [row], embeds: [], ephemeral: true })
 }

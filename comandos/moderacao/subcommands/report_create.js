@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, alvo }) => {
     await alvo.save()
 
     // Criando os botões para as funções de reporte
-    const row = client.create_buttons([{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), value: '1', type: 2, emoji: '📣', data: `1|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), value: '0', type: 1, emoji: '📫', data: `2|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: `0|${alvo.uid}` }], interaction)
+    const row = client.create_buttons([{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), type: 2, emoji: '📣', data: `1|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), type: 1, emoji: '📫', data: `2|${alvo.uid}` }, { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${alvo.uid}` }], interaction)
 
     return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
 }

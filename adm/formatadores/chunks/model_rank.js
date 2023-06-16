@@ -240,7 +240,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         b_disabled[2] = true
 
     if (paginas > 1)
-        row = client.create_buttons([{ id: "rank_button", name: '⏪', value: '1', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', value: '1', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', value: '1', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', value: '1', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', value: '1', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
+        row = client.create_buttons([{ id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
 
     try {
         if (nav_buttons) {

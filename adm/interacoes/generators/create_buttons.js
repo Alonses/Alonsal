@@ -5,6 +5,13 @@ function create_buttons(lista, interaction) {
     const row_buttons = new ActionRowBuilder()
     const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
 
+    // Cores de botões
+    // 0 -> Azul
+    // 1 -> Cinza
+    // 2 -> Verde
+    // 3 -> Vermelho
+    // 4 -> Cinza ( link )
+
     // Passando pelo array de botões e criando novos
     lista.forEach(dados => {
 

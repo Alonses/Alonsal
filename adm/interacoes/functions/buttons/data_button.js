@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
     }
 
-    const row = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: client.emoji(19), data: "dados_navegar" }], interaction)
+    const row = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "dados_navegar" }], interaction)
 
     interaction.update({ content: data.title, components: [client.create_menus(client, interaction, user, data), row], embeds: [], ephemeral: true })
 }

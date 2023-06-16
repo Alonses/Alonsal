@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .setDescription(client.replace(client.tls.phrase(user, "manu.data.descricao_embed", 2), [escolha_user, dados_para_exclusao]))
         .setFooter({ text: client.tls.phrase(user, "manu.data.rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-    const row = client.create_buttons([{ id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), value: '0', emoji: client.emoji(10), type: 2, data: `1.${escolha}` }, { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), value: '0', type: 3, emoji: client.emoji(0), data: '0' }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), value: '1', type: 0, emoji: client.emoji(19), data: `data.${escolha}` }], interaction)
+    const row = client.create_buttons([{ id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), emoji: client.emoji(10), type: 2, data: `1.${escolha}` }, { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: '0' }, { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `data.${escolha}` }], interaction)
 
     interaction.update({ embeds: [embed], components: [row], ephemeral: true })
 }

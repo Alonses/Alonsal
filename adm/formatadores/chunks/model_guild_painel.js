@@ -59,7 +59,7 @@ module.exports = async (client, user, interaction, pagina) => {
 
     c_menu[pagina] = true
 
-    let botoes = [{ id: "menu_guild_painel_button", name: '◀️', value: '1', type: 0, data: '0', disabled: c_menu[0] }]
+    let botoes = [{ id: "menu_guild_painel_button", name: '◀️', type: 0, data: '0', disabled: c_menu[0] }]
 
     // Falta de permissões para gerenciar o sistema de denúncias
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
@@ -81,14 +81,14 @@ module.exports = async (client, user, interaction, pagina) => {
     // Primeira página de botões de configuração do Alonsal
     // Alonsal Falador; Broadcast e Anúncio de games
     if (pagina === 0)
-        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Alonsal Falador', value: '1', type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '1', disabled: c_buttons[0] }, { id: "guild_painel_button", name: 'Permitir Broadcast', value: '1', type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '2', disabled: c_buttons[1] }, { id: "guild_painel_button", name: 'Anúncio de Games', value: '1', type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: '3', disabled: c_buttons[2] }])
+        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Alonsal Falador', type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '1', disabled: c_buttons[0] }, { id: "guild_painel_button", name: 'Permitir Broadcast', type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '2', disabled: c_buttons[1] }, { id: "guild_painel_button", name: 'Anúncio de Games', type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: '3', disabled: c_buttons[2] }])
 
     // Segunda página de botões de configuração do Alonsal
     // Denúncias in-server; Reportes externos e Visibilidade Global
     if (pagina === 1)
-        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Denúncias In-server', value: '1', type: type_button(guild?.conf.tickets), emoji: emoji_button(guild?.conf.tickets), data: '4', disabled: c_buttons[3] }, { id: "guild_painel_button", name: 'Reports externos', value: '1', type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: '5', disabled: c_buttons[4] }, { id: "guild_painel_button", name: 'Visível Globalmente', value: '1', type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '6', disabled: c_buttons[5] }])
+        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Denúncias In-server', type: type_button(guild?.conf.tickets), emoji: emoji_button(guild?.conf.tickets), data: '4', disabled: c_buttons[3] }, { id: "guild_painel_button", name: 'Reports externos', type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: '5', disabled: c_buttons[4] }, { id: "guild_painel_button", name: 'Visível Globalmente', type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '6', disabled: c_buttons[5] }])
 
-    botoes.push({ id: "menu_guild_painel_button", name: '▶️', value: '1', type: 0, data: '1', disabled: c_menu[1] })
+    botoes.push({ id: "menu_guild_painel_button", name: '▶️', type: 0, data: '1', disabled: c_menu[1] })
 
     const row = client.create_buttons(botoes, interaction)
 
