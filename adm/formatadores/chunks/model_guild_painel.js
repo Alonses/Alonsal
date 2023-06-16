@@ -13,6 +13,9 @@ module.exports = async (client, user, interaction, pagina) => {
         .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
         .setFooter({ text: client.tls.phrase(user, "manu.painel.rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
+    if (typeof pagina === "undefined")
+        pagina = 0
+
     if (pagina === 0) {
         embed.addFields(
             {
@@ -50,9 +53,6 @@ module.exports = async (client, user, interaction, pagina) => {
             }
         )
     }
-
-    if (typeof pagina === "undefined")
-        pagina = 0
 
     const c_buttons = [false, false, false, false, false, false]
     const c_menu = [false, false]
