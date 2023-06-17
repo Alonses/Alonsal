@@ -3,7 +3,7 @@ const fs = require('fs')
 const { writeFileSync } = require('fs')
 const { getActiveModules } = require("../database/schemas/Module")
 
-const model_clima = require('../formatadores/chunks/model_clima')
+const model_weather = require('../formatadores/chunks/model_weather')
 const model_frase = require('../formatadores/chunks/model_frase.js')
 const model_history = require('../formatadores/chunks/model_history')
 const model_charada = require('../formatadores/chunks/model_charada')
@@ -99,7 +99,7 @@ async function executa_modulo() {
         const user = await global_client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await model_clima(global_client, user)
+            await model_weather(global_client, user)
 
         if (lista_modulos[0].type === 1)
             await model_frase(global_client, user)

@@ -1,7 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { model_games } = require('../formatadores/chunks/model_games')
-const { getGameChannelById } = require('../database/schemas/Guild')
+
 const { redes } = require('../../arquivos/json/text/anuncio.json')
 
 module.exports = async ({ client, interaction, objetos_anunciados, guild_channel }) => {
@@ -74,9 +74,11 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                     }
                 }
             } else {
-                // Canal ou servidor desconhecido
-                dados.conf.games = false
-                dados.save()
+                if (client.id() === process.env.client_1) {
+                    // Canal ou servidor desconhecido ( funciona apenas no bot principal )
+                    dados.conf.games = false
+                    dados.save()
+                }
             }
         } catch (err) {
             require('../eventos/error.js')({ client, err })
