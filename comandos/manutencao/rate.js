@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("rate")
         .setNameLocalizations({
-            "pt-BR": 'avalie',
+            "pt-BR": 'avaliar',
             "es-ES": 'evaluar',
             "fr": 'evaluer',
             "it": 'valutare',

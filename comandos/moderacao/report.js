@@ -117,12 +117,12 @@ module.exports = {
 
         .addSubcommand(subcommand =>
             subcommand.setName("migrate")
-                .setDescription("⌠💂⌡ Migrate all banned users from server to alonsal")
+                .setDescription("⌠💂⌡ Migrate all banned users from server to Alonsal")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Migre todos os usuários banidos do servidor para o alonsal',
-                    "es-ES": '⌠💂⌡ Migrar todos los usuarios prohibidos del servidor a alonsal',
-                    "fr": '⌠💂⌡ Migrer tous les utilisateurs bannis du serveur vers l\'alonsal',
-                    "it": '⌠💂⌡ Migra tutti gli utenti bannati dal server ad alonsal',
+                    "pt-BR": '⌠💂⌡ Migre todos os usuários banidos do servidor para o Alonsal',
+                    "es-ES": '⌠💂⌡ Migrar todos los usuarios prohibidos del servidor a Alonsal',
+                    "fr": '⌠💂⌡ Migrer tous les utilisateurs bannis du serveur vers l\'Alonsal',
+                    "it": '⌠💂⌡ Migra tutti gli utenti bannati dal server ad Alonsal',
                     "ru": '⌠💂⌡ Перевести всех забаненных пользователей с сервера на алонсал'
                 })
         )

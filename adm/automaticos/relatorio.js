@@ -27,8 +27,16 @@ module.exports = async ({ client, caso, quantia }) => {
         if (caso === "comando") {
             bot.exp.exp_concedido += bot.persis.ranking * 1.5
             bot.cmd.ativacoes += 1
-            bot.exp.msgs_lidas += 1
-            bot.exp.msgs_validas += 1
+        }
+
+        if (caso === "botao") {
+            bot.exp.exp_concedido += bot.persis.ranking * 0.5
+            bot.cmd.botoes += 1
+        }
+
+        if (caso === "menu") {
+            bot.exp.exp_concedido += bot.persis.ranking * 0.5
+            bot.cmd.menus += 1
         }
 
         if (caso === "msg_enviada")

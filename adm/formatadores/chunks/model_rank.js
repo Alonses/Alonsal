@@ -216,7 +216,8 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
             }
         )
 
-    const row = [], b_disabled = [false, false, false, false, false]
+    let row = []
+    const b_disabled = [false, false, false, false, false]
 
     if (pagina < 2) { // Primeira página
         b_disabled[0] = true

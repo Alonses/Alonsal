@@ -17,6 +17,8 @@ const schema = new mongoose.Schema({
     },
     cmd: {
         ativacoes: { type: Number, default: 0 },
+        botoes: { type: Number, default: 0 },
+        menus: { type: Number, default: 0 },
         erros: { type: Number, default: 0 }
     },
     exp: {

@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setThumbnail(icone_server)
         .addFields(
             {
-                name: `:globe_with_meridians: ${client.tls.phrase(user, "util.server.id_server")}`,
+                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${interaction.guild.id}\``,
                 inline: true
             },

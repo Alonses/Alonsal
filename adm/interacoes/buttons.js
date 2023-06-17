@@ -14,4 +14,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Solicitando a função e executando
     require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados })
+
+    const message = interaction, caso = "botao"
+    await require('../data/ranking')({ client, message, caso })
 }

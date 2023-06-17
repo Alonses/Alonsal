@@ -15,9 +15,8 @@ module.exports = async (client, modo, id_alvo, interaction) => {
         const date1 = new Date()
         user.conquistas.push(constructJson(modo, Math.floor(date1.getTime() / 1000)))
 
-        if (modo === 1) { // Badge por transferir um funny number para o alonsal
+        if (modo === 1) // Badge por transferir um funny number para o alonsal
             user.badges.badge_list.push(constructJson('5', Math.floor(date1.getTime() / 1000)))
-        }
 
         await user.save()
 
