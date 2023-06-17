@@ -20,4 +20,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Solicitando a função e executando
     require(`./functions/menus/${funcao}`)({ client, user, interaction, dados })
+
+    const message = interaction, caso = "menu"
+    await require('../data/ranking')({ client, message, caso })
 }

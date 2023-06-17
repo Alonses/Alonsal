@@ -71,10 +71,6 @@ module.exports = async ({ client, interaction }) => {
         client.notify(process.env.channel_command, embed)
     }
 
-    // Contabiliza os comandos ativados
-    const caso = "comando"
-    await require('../automaticos/relatorio')({ client, caso })
-
-    const message = interaction
+    const message = interaction, caso = "comando"
     await require('../data/ranking')({ client, message, caso })
 }

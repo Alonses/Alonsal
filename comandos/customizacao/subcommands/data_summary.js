@@ -3,11 +3,11 @@ const { EmbedBuilder } = require('discord.js')
 const { getUserRankServers } = require('../../../adm/database/schemas/Rank_s')
 const { buildAllBadges } = require('../../../adm/data/badges')
 
-const emoji_button = require('../../../adm/funcoes/emoji_button')
+const { emoji_button } = require('../../../adm/funcoes/emoji_button')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    const ranking = [], guilds_ranking = await getUserRankServers(user.uid)
+    const ranking = [], guilds_ranking = await getUserRankServers(interaction.user.id)
 
     let nota_servidores = ""
 
@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (ranking.length < 1)
         return client.tls.reply(interaction, user, "manu.data.sem_dados", true)
 
-    dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client)}${nota_servidores}\`\`\``
+    dados_conhecidos = `**${client.tls.phrase(user, "manu.data.ranking_guilds")}:**\`\`\`fix\n${lista_servidores(ranking, 250, client, user)}${nota_servidores}\`\`\``
 
     // Listando as redes linkadas
     if (user.social) {
@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction }) => {
     return interaction.reply({ embeds: [embed], ephemeral: true })
 }
 
-function lista_servidores(servidores, linha_corte, client) {
+function lista_servidores(servidores, linha_corte, client, user) {
 
     let nome_servidores = servidores.join(", ")
 

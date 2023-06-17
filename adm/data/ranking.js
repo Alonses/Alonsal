@@ -104,11 +104,16 @@ module.exports = async ({ client, message, caso }) => {
         user_global.lastValidMessage = message.createdTimestamp
         user_global.warns = 0
 
-    } else { // Experiência obtida executando comandos
+    } else if (caso === "comando") { // Experiência obtida executando comandos
         user.xp += bot.persis.ranking * 1.5
-        user.ixp += bot.persis.ranking
+        user.ixp += bot.persis.ranking * 1.5
 
         user_global.xp += bot.persis.ranking * 1.5
+    } else { // Experiência obtida ao usar botões ou menus
+        user.xp += bot.persis.ranking * 0.5
+        user.ixp += bot.persis.ranking * 0.5
+
+        user_global.xp += bot.persis.ranking * 0.5
     }
 
     // Registrando no relatório algumas informações

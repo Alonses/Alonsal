@@ -10,7 +10,7 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("about")
-                .setDescriptionLocalizations({
+                .setNameLocalizations({
                     "pt-BR": 'sobre'
                 })
                 .setDescription("⌠👤⌡ Change your description on Alonsal")
