@@ -1,7 +1,4 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const dispara_anuncio = require('../../../automaticos/dispara_anuncio.js')
+const { free_games } = require('../../../funcoes/free_games.js')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -27,16 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     interaction.update({ content: client.replace(client.tls.phrase(user, "mode.anuncio.anuncio_games", client.emoji(29)), `<#${guild.games.channel}>`), components: [], embeds: [], ephemeral: true })
 
     if (operacao === 2) {
-        fetch(`${process.env.url_apisal}/games`)
-            .then(response => response.json())
-            .then(async objetos_anunciados => {
-
-                const guild_channel = guild.games.channel
-                dispara_anuncio({ client, objetos_anunciados, guild_channel })
-            })
-            .catch(err => {
-                const local = "games"
-                require('../../../eventos/error.js')({ client, err, local })
-            })
+        const guild_channel = guild.games.channel
+        free_games({ client, guild_channel })
     }
 }

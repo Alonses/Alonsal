@@ -1,4 +1,4 @@
-const dispara_anuncio = require('../../../adm/automaticos/dispara_anuncio.js')
+const { free_games } = require('../../../adm/funcoes/free_games.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -12,15 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
     else
         interaction.reply({ content: `:video_game: | Um novo anúncio foi enviado no <#${guild.games.channel}>, o anúncio de games não está ativo neste servidor no momento.\nUtilize o painel do servidor para ativar o recurso, ou o comando </notify config:1018632996787589283> novamente.`, ephemeral: true })
 
-    fetch(`${process.env.url_apisal}/games`)
-        .then(response => response.json())
-        .then(async objetos_anunciados => {
-
-            const guild_channel = guild.games.channel
-            dispara_anuncio({ client, objetos_anunciados, guild_channel })
-        })
-        .catch(err => {
-            const local = "games"
-            require('../../../adm/eventos/error.js')({ client, err, local })
-        })
+    // Enviando os games para anunciar no servidor
+    const guild_channel = guild.games.channel
+    free_games({ client, guild_channel })
 }

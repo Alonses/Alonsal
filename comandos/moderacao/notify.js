@@ -84,13 +84,13 @@ module.exports = {
                         )
                 ))
         .addSubcommand(subcommand =>
-            subcommand.setName("announce")
+            subcommand.setName("now")
                 .setNameLocalizations({
-                    "pt-BR": 'anunciar',
-                    "es-ES": 'anunciar',
-                    "fr": 'langue',
-                    "it": 'linguaggio',
-                    "ru": 'язык'
+                    "pt-BR": 'agora',
+                    "es-ES": 'ahora',
+                    "fr": 'maintenant',
+                    "it": 'ora',
+                    "ru": 'сейчас'
                 })
                 .setDescription("⌠💂⌡ Announce currently active promotions")
                 .setDescriptionLocalizations({
