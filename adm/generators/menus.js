@@ -1,8 +1,8 @@
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../data/badges')
+const { busca_badges, badgeTypes } = require('../data/badges')
 
-const { faustop, rasputia, galerito } = require('../../../arquivos/json/text/emojis.json')
+const { faustop, rasputia, galerito } = require('../../arquivos/json/text/emojis.json')
 
 function create_menus(client, interaction, user, dados) {
 
@@ -148,6 +148,4 @@ function create_menus(client, interaction, user, dados) {
     return row
 }
 
-module.exports = {
-    create_menus
-}
+module.exports.create_menus = create_menus
