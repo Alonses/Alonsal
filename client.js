@@ -7,8 +7,9 @@ const { getUser } = require('./adm/database/schemas/User')
 const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 const { getTicket, dropTicket } = require('./adm/database/schemas/Tickets')
 const { getUserBadges } = require('./adm/database/schemas/Badge')
-const { create_buttons } = require('./adm/interacoes/generators/create_buttons')
-const { create_menus } = require('./adm/interacoes/generators/create_menus')
+const { create_buttons } = require('./adm/generators/buttons')
+const { create_menus } = require('./adm/generators/menus')
+const { create_profile } = require('./adm/generators/profile')
 const { getBot } = require('./adm/database/schemas/Bot')
 const { listAllUserTasks } = require('./adm/database/schemas/Task')
 const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
@@ -172,6 +173,10 @@ class CeiraClient {
 
     create_menus(client, interaction, user, data) {
         return create_menus(client, interaction, user, data)
+    }
+
+    create_profile(client, interaction, user, id_alvo) {
+        return create_profile(client, interaction, user, id_alvo)
     }
 
     notify(id_alvo, conteudo) {

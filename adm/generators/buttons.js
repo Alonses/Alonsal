@@ -43,6 +43,4 @@ function create_buttons(lista, interaction) {
     return row_buttons
 }
 
-module.exports = {
-    create_buttons
-}
+module.exports.create_buttons = create_buttons

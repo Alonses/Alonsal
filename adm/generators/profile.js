@@ -1,0 +1,117 @@
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+
+async function create_profile({ client, interaction, user, id_alvo, operador }) {
+
+    let user_alvo = await client.getUserGuild(interaction, id_alvo), operacao = 0
+    const membro_sv = user_alvo
+
+    if (!user_alvo) // Usuário foi removido do cache do bot
+        return interaction.update({ content: ":o: | Este comando está desatualizado! Por favor, use o mesmo novamente.", components: [] })
+
+    user_alvo = user_alvo.user
+
+    if (typeof operador !== "undefined")
+        operacao = operador
+
+    // if (user_alvo.id == id_alvo)
+    //     user_alvo = interaction.user
+
+    const user_data = await client.getUser(id_alvo)
+    const avatar_user = user_alvo.avatarURL({ dynamic: true, size: 2048 })
+
+    let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
+    let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
+
+    let data_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:f>` // Cadastro do usuário
+    let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
+
+    let apelido = membro_sv.nickname || user_alvo.username, tipo_user = "🤖", nota_rodape = ""
+    let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_data.discriminator}\``
+
+    // Usuário sem discriminador
+    if (user_alvo.discriminator == 0)
+        nome_usuario = `\`@${user_alvo.username.replace(/ /g, "")}\``
+
+    let emoji_hypesquad = "⠀", discord_premium = "⠀"
+    const flags_user = membro_sv.flags.toArray()
+
+    if (!user_alvo.bot) {
+        if (flags_user.includes("HypeSquadOnlineHouse1")) // HypeSquad
+            emoji_hypesquad = client.emoji("squad_bravery")
+
+        if (flags_user.includes("HypeSquadOnlineHouse2"))
+            emoji_hypesquad = client.emoji("squad_brilliance")
+
+        if (flags_user.includes("HypeSquadOnlineHouse3"))
+            emoji_hypesquad = client.emoji("squad_balance")
+
+        if (flags_user.includes("PremiumEarlySupporter"))
+            discord_premium = client.emoji("early_supporter")
+
+        if (membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
+            discord_premium += ` ${client.emoji("boost")}`
+    }
+
+    // Usuário sem discriminador
+    if (user_data.discriminator == 0)
+        nome_usuario = `\`@${user_data.username.replace(/ /g, "")}\``
+
+    if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
+        tipo_user = "🛡️"
+        nota_rodape = client.tls.phrase(user, "util.user.moderador")
+    }
+
+    if (!tipo_user.includes("🛡️") && !user_data.bot)
+        tipo_user = client.defaultEmoji("person")
+
+    if (user_data.uid === client.id())
+        nota_rodape = client.tls.phrase(user, "util.user.alonsal")
+
+    if (process.env.ids_enceirados.includes(user_data.uid)) {
+        if (nota_rodape !== "")
+            nota_rodape += ", "
+
+        nota_rodape += client.tls.phrase(user, "util.user.enceirado")
+    }
+
+    const embed = new EmbedBuilder()
+        .setTitle(`> ${apelido} ${emoji_hypesquad} ${discord_premium}`)
+        .setColor(client.embed_color(user_data.misc.color))
+        .addFields(
+            {
+                name: `${client.emoji("icon_mention")} ${nome_usuario}`,
+                value: `( <@${user_data.uid}> )`,
+                inline: true
+            },
+            {
+                name: `${client.emoji("icon_id")} **Discord**`,
+                value: `\`${user_data.uid}\``,
+                inline: true
+            }
+        )
+        .setFooter({ text: `${tipo_user} ${nota_rodape}` })
+
+    if (operacao === 0)
+        embed.addFields(
+            {
+                name: `:birthday: **${client.tls.phrase(user, "util.user.conta_criada")}**`,
+                value: `${data_criacao}\n( ${diferenca_criacao} )`,
+                inline: false
+            },
+            {
+                name: `:parachute: **${client.tls.phrase(user, "util.user.entrada")}**`,
+                value: `${data_entrada}\n( ${diferenca_entrada} )`,
+                inline: false
+            }
+        )
+
+    if (user_data.profile.about && operacao === 0)
+        embed.setDescription(user_data.profile.about)
+
+    if (avatar_user) // Usuário com avatar definido
+        embed.setThumbnail(avatar_user)
+
+    return embed
+}
+
+module.exports.create_profile = create_profile
