@@ -13,9 +13,6 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
     if (typeof operador !== "undefined")
         operacao = operador
 
-    // if (user_alvo.id == id_alvo)
-    //     user_alvo = interaction.user
-
     const user_data = await client.getUser(id_alvo)
     const avatar_user = user_alvo.avatarURL({ dynamic: true, size: 2048 })
 
@@ -33,7 +30,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         nome_usuario = `\`@${user_alvo.username.replace(/ /g, "")}\``
 
     let emoji_hypesquad = "⠀", discord_premium = "⠀"
-    const flags_user = membro_sv.flags.toArray()
+    const flags_user = user_alvo.flags.toArray()
 
     if (!user_alvo.bot) {
         if (flags_user.includes("HypeSquadOnlineHouse1")) // HypeSquad

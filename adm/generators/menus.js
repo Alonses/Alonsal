@@ -93,6 +93,14 @@ function create_menus(client, interaction, user, dados) {
                 valor_label = `${dados.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
             }
 
+            if (dados.alvo === "profile_custom_navegar") {
+                // Listando todas as opções para customização de perfil
+                nome_label = `Customização de perfil ${valor}`
+                emoji_label = client.emoji(faustop)
+                descricao_label = `Ver mais detalhes`
+                valor_label = `${dados.alvo}|${interaction.user.id}.${valor}`
+            }
+
             i++
 
             itens_menu.push({
@@ -136,6 +144,9 @@ function create_menus(client, interaction, user, dados) {
 
     if (dados.alvo === "listas_remover")
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_apagar")
+
+    if (dados.alvo === "profile_custom_navegar")
+        titulo_menu = "Selecione um para começar"
 
     const row = new ActionRowBuilder()
         .addComponents(
