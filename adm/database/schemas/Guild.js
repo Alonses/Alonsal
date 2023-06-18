@@ -47,7 +47,19 @@ async function getGameChannelById(id) {
 
 async function getReportChannels() {
     // Lista todos os servidores com reports de usuários ativos
-    return model.find({ "conf.reports": true })
+    const servidores = await model.find({ "conf.reports": true })
+    const lista = []
+
+    servidores.forEach(servidor => {
+        lista.push(servidor.sid)
+    })
+
+    return lista
+}
+
+async function getPublicGuilds() {
+    // Lista todos os servidores com visibilidade ativa globalmente
+    return model.find({ "conf.public": true })
 }
 
 async function disableGameChannel(sid) {
@@ -85,6 +97,7 @@ module.exports.Guild = model
 module.exports = {
     getGuild,
     getGameChannels,
+    getPublicGuilds,
     disableGameChannel,
     getReportChannels,
     getGameChannelById,

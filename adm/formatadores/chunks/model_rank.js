@@ -1,6 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../data/badges')
+
+const { getPublicGuilds } = require('../../database/schemas/Guild')
 const { getRankGlobal } = require('../../database/schemas/Rank_g')
 const { getRankServer } = require('../../database/schemas/Rank_s')
 
@@ -18,6 +20,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
     const usernames = [], experiencias = [], levels = [], servers = [], ids = []
+    const public_servers = await getPublicGuilds()
 
     if (typeof entrada === "undefined")
         escopo = interaction.options.getSubcommand()
@@ -101,16 +104,19 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             else {
                 let nome_server
 
-                // Checando no cache se o nome está salvo
-                try {
-                    if (!servidores[user.sid]) {
-                        nome_server = client.guilds().get(user.sid || '0')
-                        servidores[nome_server.id] = nome_server.name
-                    } else
-                        nome_server = servidores[user.sid]
-                } catch {
+                if (public_servers.includes(user.sid)) {
+                    // Checando no cache se o nome está salvo
+                    try {
+                        if (!servidores[user.sid]) {
+                            nome_server = client.guilds().get(user.sid || '0')
+                            servidores[nome_server.id] = nome_server.name
+                        } else
+                            nome_server = servidores[user.sid]
+                    } catch {
+                        nome_server = client.tls.phrase(user_i, "util.steam.undefined")
+                    }
+                } else
                     nome_server = client.tls.phrase(user_i, "util.steam.undefined")
-                }
 
                 servers.push(`\`${nome_server}\``)
             }

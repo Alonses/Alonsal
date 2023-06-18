@@ -1,6 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
-
-const { buildAllBadges } = require('../../data/badges')
+const { buildAllBadges, busca_badges } = require('../../data/badges')
 const { getUserReports } = require('../../database/schemas/Report')
 
 module.exports = async (client, user, interaction, dados) => {
@@ -41,7 +39,7 @@ module.exports = async (client, user, interaction, dados) => {
         }
 
         permissoes_fn = permissoes_fn.slice(0, 2000)
-        cargos_fn = membro_sv.roles.cache.map(r => `${r}`).join(" ")
+        cargos_fn = membro_sv.roles.cache.map(r => `${r}`).join(" ").replace(" @everyone", "")
 
         infos_user.addFields(
             {
@@ -63,6 +61,16 @@ module.exports = async (client, user, interaction, dados) => {
         let id_badges = await client.getUserBadges(id_alvo)
         badges = await buildAllBadges(client, user, id_badges)
         // let achievements = busca_achievements(client, all, user.id, interaction)
+
+        if (user.misc.fixed_badge) {
+            const fixed_badge = busca_badges(client, 1, user)
+
+            infos_user.addFields({
+                name: `**:pushpin: Badge fixada**`,
+                value: `${fixed_badge.emoji} \`${fixed_badge.name}\``,
+                inline: false
+            })
+        }
 
         if (badges.length > 0)
             infos_user.addFields({

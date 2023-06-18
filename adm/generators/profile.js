@@ -81,7 +81,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
                 inline: true
             },
             {
-                name: `${client.emoji("icon_id")} **Discord**`,
+                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${user_data.uid}\``,
                 inline: true
             }
