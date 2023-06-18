@@ -21,18 +21,18 @@ module.exports = async ({ client, alvo }) => {
                 .setColor(0xED4245)
                 .addFields(
                     {
-                        name: ":bust_in_silhouette: **Discord ID**",
-                        value: `\`${alvo.uid}\`\n( <@${alvo.uid}> )`,
+                        name: ":bust_in_silhouette: **Usuário**",
+                        value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
                         inline: true
                     },
                     {
                         name: `${client.defaultEmoji("guard")} **Reportador**`,
-                        value: `\`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
+                        value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                         inline: true
                     },
                     {
-                        name: ":globe_with_meridians: **Server ID**",
-                        value: `\`${alvo.sid}\`\n<t:${alvo.timestamp}:R>`,
+                        name: ":globe_with_meridians: **Server**",
+                        value: `${client.emoji("icon_id")} \`${alvo.sid}\`\n<t:${alvo.timestamp}:R>`,
                         inline: true
                     }
                 )

@@ -22,12 +22,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setFields(
                 {
                     name: `**${client.defaultEmoji("person")} Solicitante**`,
-                    value: `\`${interaction.user.id}\`\n( <@${interaction.user.id}> )`,
+                    value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n( <@${interaction.user.id}> )`,
                     inline: true
                 },
                 {
                     name: `**${client.defaultEmoji("paper")} Canal**`,
-                    value: `\`${interaction.channel.id}\`\n<#${interaction.channel.id}>`,
+                    value: `${client.emoji("icon_id")} \`${interaction.channel.id}\`\n<#${interaction.channel.id}>`,
                     inline: true
                 }
             )

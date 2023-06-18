@@ -24,6 +24,11 @@ module.exports = async ({ client, user, interaction }) => {
     let apelido = user_alvo.nickname !== null ? user_alvo.nickname : user_alvo.user.username
     let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
 
+    let user_name = `\`${user_alvo.user.username.replace(/ /g, "")}#${user_alvo.user.discriminator}\`\n( ${user_alvo} )`
+
+    if (user_alvo.user.discriminator == 0)
+        user_name = `\`@${user_alvo.user.username.replace(/ /g, "")}\`\n( ${user_alvo} )`
+
     // Avatar do usuário
     const avatar_user = user_alvo.avatarURL({ dynamic: true, size: 2048 }), historico = []
 
@@ -43,12 +48,12 @@ module.exports = async ({ client, user, interaction }) => {
         .setThumbnail(avatar_user)
         .addFields(
             {
-                name: ":globe_with_meridians: **Discord**",
-                value: `\`${user_alvo.user.username.replace(/ /g, "")}#${user_alvo.user.discriminator}\``,
+                name: ":globe_with_meridians: **Usuário**",
+                value: user_name,
                 inline: true
             },
             {
-                name: `${client.emoji("icon_id")} **Discord ID**`,
+                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${user_alvo.id}\``,
                 inline: true
             },
