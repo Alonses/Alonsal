@@ -1,4 +1,5 @@
 module.exports = (degrees) => {
+
     const cards = ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"]
     degrees += 22.5
 

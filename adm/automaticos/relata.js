@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { dailyReset } = require('../database/schemas/Bot')
 
 module.exports = async ({ client }) => {
