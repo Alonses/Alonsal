@@ -174,7 +174,7 @@ module.exports = async (client, user, interaction) => {
 
                         cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
 
-                        if (typeof res.rain["3h"])
+                        if (res.rain["3h"]) // Dados de chuva para 3 horas
                             cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
@@ -185,7 +185,7 @@ module.exports = async (client, user, interaction) => {
                     if (res.snow) {
                         cabecalho_fix = `${client.tls.phrase(user, "util.tempo.nevando")}\n${client.tls.phrase(user, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
 
-                        if (res.rain["3h"])
+                        if (res.rain["3h"]) // Dadps de nevasca para 3 horas
                             cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.neve")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_visibilidade = " 🔽"

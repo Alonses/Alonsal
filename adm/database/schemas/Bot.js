@@ -53,6 +53,8 @@ async function dailyReset(bit) {
     const bot = await getBot(bit)
 
     bot.cmd.ativacoes = 0
+    bot.cmd.botoes = 0
+    bot.cmd.menus = 0
     bot.cmd.erros = 0
 
     bot.exp.exp_concedido = 0

@@ -1,4 +1,5 @@
 function randomString(len, client) {
+
     const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeeͪfghijklmnopqrstuvwxyz0123456789!@#$%¨&*()^[]{}~.,;:¢¬_-£"|?'
     let randomString = ''
 
