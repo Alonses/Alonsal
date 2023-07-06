@@ -8,7 +8,8 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 
     const canais_clientes = await client.getGameChannels()
 
-    if (objetos_anunciados.status === 501)
+    // Status desconhecido ou sem link de anúncio
+    if (objetos_anunciados.status === 501 || typeof objetos_anunciados[0].link === "undefined")
         return client.notify(process.env.channel_feeds, ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
 
     if (canais_clientes.length < 1)
