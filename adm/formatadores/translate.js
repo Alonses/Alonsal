@@ -13,7 +13,7 @@ function editReply(interaction, user, target, ephemeral, type) {
     let phrase = translate(user, target)
     phrase = check_emojis(phrase, type)
 
-    interaction.editReply({ content: phrase, ephemeral: ephemeral })
+    return interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
 
 function phrase(user, target, type) {
