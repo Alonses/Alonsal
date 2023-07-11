@@ -61,6 +61,7 @@ module.exports = {
                 texto_entrada = user_alvo.social.steam
         }
 
+        texto_entrada = texto_entrada.replace("https://steamcommunity.com/id/", "")
         const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
 
         // Aumentando o tempo de duração da resposta
