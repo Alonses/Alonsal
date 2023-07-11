@@ -61,8 +61,15 @@ module.exports = {
                 texto_entrada = user_alvo.social.steam
         }
 
+        // Perfis com links customizados
         texto_entrada = texto_entrada.replace("https://steamcommunity.com/id/", "")
-        const usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
+        let usuario_alvo = `https://steamcommunity.com/id/${texto_entrada}`
+
+        // Perfis sem links customizados
+        if (texto_entrada.includes("https://steamcommunity.com/profiles/")) {
+            texto_entrada = texto_entrada.replace("https://steamcommunity.com/profiles/", "")
+            usuario_alvo = `https://steamcommunity.com/profiles/${texto_entrada}`
+        }
 
         // Aumentando o tempo de duração da resposta
         interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
