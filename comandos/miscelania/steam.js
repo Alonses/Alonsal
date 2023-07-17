@@ -87,7 +87,7 @@ module.exports = {
                         return client.tls.editReply(interaction, user, "util.steam.error_1", true, 1)
 
                     let bandeira_user, nivel_user, status_atual, jogos_user, insignias_user, conquistas_user, conquistas_favoritas, total_conquistas_favoritas, porcentagem_conquistas, capturas_user, videos_user, artes_user, tempo_semanas
-                    let jogo_favorito = "", tempo_jogado = "", nota_rodape = interaction.user.username, anos_servico = "", background_user = "", criacoes_user = ""
+                    let jogo_favorito = "", tempo_jogado = "", nota_rodape = "", anos_servico = "", background_user = "", criacoes_user = "", game_atual = ""
 
                     if (res.includes("<video playsinline autoplay muted loop poster=\"")) {
                         background_user = res.split("<video playsinline autoplay muted loop poster=\"")[1]
@@ -104,7 +104,7 @@ module.exports = {
                         bandeira_user = bandeira_user.replace(".gif", "")
                         bandeira_user = bandeira_user.slice(bandeira_user.length - 2)
 
-                        bandeira_user = ` | :flag_${bandeira_user}:`
+                        bandeira_user = ` :flag_${bandeira_user}:`
                     } catch {
                         bandeira_user = ""
                     }
@@ -121,11 +121,23 @@ module.exports = {
 
                     try {
                         status_atual = res.split("<div class=\"profile_in_game_header\">")[1]
+
+                        // Perfil em jogo no momento
+                        if (status_atual.includes("<div class=\"profile_in_game_name\">")) {
+                            game_atual = status_atual.split("<div class=\"profile_in_game_name\">")[1]
+                            game_atual = game_atual.split("</div>")[0]
+                        }
+
                         status_atual = status_atual.split("</div>")[0]
                         status_atual = status_atual.replace("Currently ", "")
 
-                        if (status_atual === "undefined")
-                            status_atual = client.tls.phrase(user, `util.steam.${status_atual}`)
+                        if (status_atual === "Online")
+                            status_atual = `**:green_circle: Online**`
+                        else if (status_atual === "In-Game")
+                            status_atual = `**:blue_circle: Jogando**`
+                        else
+                            status_atual = `**:black_circle: Offline**`
+
                     } catch {
                         status = client.tls.phrase(user, `util.steam.undefined`)
                     }
@@ -161,31 +173,22 @@ module.exports = {
                     }
 
                     try {
-                        if (res.includes("<div class=\"label\">Achievements</div>")) {
-                            const blocos_conquistas = res.split("<div class=\"label\">Achievements</div>")
-
-                            conquistas_user = blocos_conquistas[0]
-
-                            if (blocos_conquistas.length > 2) {
-                                conquistas_favoritas = conquistas_user.slice(conquistas_user.length - 120)
-                                conquistas_favoritas = conquistas_favoritas.split("<div class=\"value\">")[1]
-                                conquistas_favoritas = conquistas_favoritas.split("</div>")[0]
-
-                                total_conquistas_favoritas = res.split(`&nbsp; <span class=\"ellipsis\">${conquistas_favoritas}`)[1]
-                                total_conquistas_favoritas = total_conquistas_favoritas.split("</span>")[0]
-                                total_conquistas_favoritas = total_conquistas_favoritas.replace("of ", "")
-                            }
-
-                            if (blocos_conquistas.length > 2)
-                                conquistas_user = blocos_conquistas[1]
-
-                            conquistas_user = conquistas_user.slice(conquistas_user.length - 120)
+                        if (res.includes("achievements in")) {
+                            conquistas_user = res.split("achievements in")[1]
                             conquistas_user = conquistas_user.split("<div class=\"value\">")[1]
                             conquistas_user = conquistas_user.split("</div>")[0]
                         } else
                             conquistas_user = "-"
                     } catch {
                         conquistas_user = "-"
+                    }
+
+                    if (res.includes("<div class=\"favoritegame_showcase\">")) {
+
+                        const bloco_conquistas = res.split("<div class=\"favoritegame_showcase\">")[1]
+                        conquistas_favoritas = bloco_conquistas.split("<div class=\"achievement_progress_bar_ctn\">")[0]
+                        conquistas_favoritas = conquistas_favoritas.split("<span class=\"ellipsis\">")[1]
+                        conquistas_favoritas = conquistas_favoritas.split("</span>")[0].replace("of", "/")
                     }
 
                     try {
@@ -197,9 +200,9 @@ module.exports = {
                         tempo_semanas = parseFloat(tempo_semanas.split(" ")[0])
 
                         if (idioma_definido === "pt-br")
-                            tempo_semanas = `${tempo_semanas} ${client.tls.phrase(user, `util.steam.${descriminador_tempo_2}`)}`
+                            tempo_semanas = `▶ ${tempo_semanas} ${client.tls.phrase(user, `util.steam.${descriminador_tempo_2}`)}`
                         else
-                            tempo_semanas = `${tempo_semanas} ${descriminador_tempo_2}`
+                            tempo_semanas = `▶ ${tempo_semanas} ${descriminador_tempo_2}`
                     } catch {
                         tempo_semanas = "-"
                     }
@@ -292,11 +295,9 @@ module.exports = {
                         tempo_jogado = `${tempo_jogado} ${descriminador_tempo}`
                     }
 
-                    if (res.includes(" data-tooltip-html=\"Years of Service&lt;br&gt;")) {
-
-                        anos_servico = res.split(" data-tooltip-html=\"Years of Service&lt;br&gt;")[1]
-                        anos_servico = anos_servico.split(".\" >")[0]
-                        anos_servico = anos_servico.split("Member since ")[1]
+                    if (res.includes("Member since ")) {
+                        anos_servico = res.split("Member since ")[1]
+                        anos_servico = anos_servico.split(".\">")[0]
                     }
 
                     if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
@@ -305,7 +306,7 @@ module.exports = {
                     if (parseInt(jogos_user.replace(".", "")) < jogos_perfeitos)
                         nota_rodape = client.tls.phrase(user, "util.steam.suspeito")
 
-                    if (typeof conquistas_favoritas === "undefined" && typeof total_conquistas_favoritas === "undefined")
+                    if (!conquistas_favoritas && !total_conquistas_favoritas)
                         jogo_favorito = ""
 
                     conquistas_user = conquistas_user.replace(",", ".").replace(/\s+/g, '')
@@ -317,9 +318,8 @@ module.exports = {
                     if (artes_user !== "-")
                         criacoes_user += `\n:paintbrush: **${client.tls.phrase(user, "util.steam.artes")}: **\`${artes_user}\``
 
-                    let jogos_user_embed = `**Total: **\`${jogos_user}\``
                     if (reviews_user !== "-")
-                        jogos_user_embed += `\n**${client.tls.phrase(user, "util.steam.analises")}: **\`${reviews_user}\``
+                        reviews_user = `${client.defaultEmoji("pen")} **${client.tls.phrase(user, "util.steam.analises")}: **\`${reviews_user}\``
 
                     const row = client.create_buttons([{ name: "Steam", value: usuario_alvo, type: 4, emoji: "🌐" }], interaction)
 
@@ -327,47 +327,46 @@ module.exports = {
                         .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
                         .setAuthor({ name: "Steam", iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0" })
                         .setThumbnail(avatar_user)
+                        .addFields(
+                            {
+                                name: `${client.defaultEmoji("gamer")} **${client.tls.phrase(user, "util.steam.nivel")} ${nivel_user}**`,
+                                value: `:red_envelope: **${insignias_user} ${client.tls.phrase(user, "util.steam.insignias")}**`,
+                                inline: true
+                            })
                         .setColor(client.embed_color(user_alvo.misc.color))
-                        .addFields(
-                            {
-                                name: `${client.defaultEmoji("gamer")} ${client.tls.phrase(user, "util.steam.nivel")}`,
-                                value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${nivel_user}\``,
-                                inline: true
-                            },
-                            {
-                                name: `:video_game: ${client.tls.phrase(user, "util.steam.jogos")}`,
-                                value: `${jogos_user_embed}`,
-                                inline: true
-                            },
-                            {
-                                name: `:red_envelope: ${client.tls.phrase(user, "util.steam.insignias")}`,
-                                value: `**Total: **\`${insignias_user}\``,
-                                inline: true
-                            },
-                        )
-                        .addFields(
-                            {
-                                name: `:trophy: ${client.tls.phrase(user, "util.steam.conquistas")}`,
-                                value: `**Total: **\`${conquistas_user}\`\n**${client.tls.phrase(user, "util.steam.porcentagem")}:** \`${porcentagem_conquistas}\`\n**${client.tls.phrase(user, "util.steam.jogos_perfeitos")}: **\`${jogos_perfeitos}\``,
-                                inline: true
-                            },
-                            {
-                                name: ":mobile_phone_off: Status",
-                                value: `\`${status_atual}\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.steam.semanas")}: **\n\`${tempo_semanas}\``,
-                                inline: true
-                            }
-                        )
-                        .setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
+                    // Adicionando uma nota no rodape do perfil
+                    if (nota_rodape !== "")
+                        usuario_steam.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-                    if (background_user.length > 0)
-                        usuario_steam.setImage(background_user)
-
-                    if (criacoes_user !== "")
+                    // Jogos do usuário
+                    if (jogos_user !== "-")
                         usuario_steam.addFields(
                             {
-                                name: `:piñata: ${client.tls.phrase(user, "util.steam.criacoes")}`,
-                                value: `${criacoes_user}`,
+                                name: `:video_game: **${jogos_user} ${client.tls.phrase(user, "util.steam.jogos")}**`,
+                                value: `${reviews_user}`,
+                                inline: true
+                            })
+                    else
+                        usuario_steam.addFields(
+                            { name: "⠀", value: "⠀", inline: true }
+                        )
+
+                    // Status de atividade do usuário
+                    usuario_steam.addFields(
+                        {
+                            name: status_atual,
+                            value: "⠀",
+                            inline: true
+                        }
+                    )
+
+                    // Conquistas, games completos e porcentagem
+                    if (conquistas_user !== "-" || porcentagem_conquistas !== "-" || jogos_perfeitos !== "-")
+                        usuario_steam.addFields(
+                            {
+                                name: `:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}**`,
+                                value: `**Total: **\`${conquistas_user}\`\n**${client.tls.phrase(user, "util.steam.porcentagem")}:** \`${porcentagem_conquistas}\`\n**${client.tls.phrase(user, "util.steam.jogos_perfeitos")}: **\`${jogos_perfeitos}\``,
                                 inline: true
                             }
                         )
@@ -376,21 +375,50 @@ module.exports = {
                             { name: "⠀", value: "⠀", inline: true }
                         )
 
+                    // Imagem personalizada de fundo
+                    if (background_user.length > 0)
+                        usuario_steam.setImage(background_user)
+
+                    // Criações do usuário
+                    if (criacoes_user !== "")
+                        usuario_steam.addFields(
+                            {
+                                name: `:piñata: **${client.tls.phrase(user, "util.steam.criacoes")}**`,
+                                value: `${criacoes_user}`,
+                                inline: true
+                            })
+
+                    // Tempo de jogo nas últimas 2 semanas
+                    if (tempo_semanas !== "-")
+                        usuario_steam.addFields(
+                            { name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.steam.semanas")}**\n\`${tempo_semanas}\``, value: "⠀", inline: true }
+                        )
+                    else
+                        usuario_steam.addFields(
+                            { name: "⠀", value: "⠀", inline: true }
+                        )
+
+                    // Card de jogo favorito no perfil
                     if (jogo_favorito !== "")
                         usuario_steam.addFields(
                             {
                                 name: `:star: ${client.tls.phrase(user, "util.steam.jogo_favorito")}`,
-                                value: `**${client.tls.phrase(user, "util.steam.nome")}: **\`${jogo_favorito}\`\n:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}: **\`${conquistas_favoritas} /${total_conquistas_favoritas}\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.steam.tempo_jogado")}: **\`${tempo_jogado}\``,
+                                value: `**${client.tls.phrase(user, "util.steam.nome")}: **\`${jogo_favorito}\`\n:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}: **\`${conquistas_favoritas}\`\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.steam.tempo_jogado")}: **\`${tempo_jogado}\``,
                                 inline: false
                             }
                         )
 
+                    // Jogando atualmente
+                    if (game_atual !== "")
+                        usuario_steam.setDescription(`\`\`\`fix\n${client.defaultEmoji("playing")} ${game_atual}\`\`\``)
+
+                    // Tempo de criação da conta
                     if (anos_servico !== "")
                         usuario_steam.addFields(
                             {
                                 name: `:birthday: ${client.tls.phrase(user, "util.user.entrada")}`,
                                 value: `\`${anos_servico}\``,
-                                inline: true
+                                inline: false
                             }
                         )
 
