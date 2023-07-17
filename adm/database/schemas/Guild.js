@@ -53,11 +53,10 @@ async function getReportChannels() {
 async function getPublicGuilds() {
     // Lista todos os servidores com visibilidade ativa globalmente
     const servidores = model.find({ "conf.public": true })
-
     const lista = []
 
     servidores.forEach(servidor => {
-        lista.push(servidor)
+        lista.push(servidor.sid)
     })
 
     return lista
