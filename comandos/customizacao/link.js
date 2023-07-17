@@ -121,8 +121,22 @@ module.exports = {
         let link_comando = "", invalido = false
 
         if (interaction.options.getSubcommand() === "steam") { // Linkando a Steam, LastFM e Pula Prédios ao usuário discord
+
             user.social.steam = entrada
             link_comando = "</steam:1018609879562334384>"
+
+            await interaction.deferReply({ ephemeral: true })
+
+            // Verificando se o local existe antes de salvar
+            await fetch(`https://steamcommunity.com/id/${user.social.steam}`)
+                .then(response => response.text())
+                .then(async res => {
+
+                    if (res.includes("The specified profile could not be found.")) {
+                        interaction.editReply({ content: ":mag: | O nome fornecido não é utilizado por nenhum perfil na Steam, por favor, tente novamente.", ephemeral: true })
+                        invalido = true
+                    }
+                })
         } else if (interaction.options.getSubcommand() === "lastfm") {
             user.social.lastfm = entrada
             plataforma = "lastfm"
@@ -150,12 +164,13 @@ module.exports = {
             link_comando = "</pula:1023486895327555584>"
         }
 
-        if (!invalido)
+        if (!invalido) {
             await user.save()
 
-        if (plataforma !== "locale")
-            interaction.reply({ content: client.replace(client.tls.phrase(user, "util.lastfm.new_link", client.emoji(emojis_dancantes)), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando]), ephemeral: true })
-        else if (!invalido)// Link de local do /tempo
-            interaction.editReply({ content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada), ephemeral: true })
+            if (plataforma !== "locale")
+                interaction.reply({ content: client.replace(client.tls.phrase(user, "util.lastfm.new_link", client.emoji(emojis_dancantes)), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando]), ephemeral: true })
+            else // Link de local do /tempo
+                interaction.editReply({ content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada), ephemeral: true })
+        }
     }
 }
