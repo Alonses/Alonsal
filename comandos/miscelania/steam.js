@@ -297,7 +297,7 @@ module.exports = {
 
                     if (res.includes("Member since ")) {
                         anos_servico = res.split("Member since ")[1]
-                        anos_servico = anos_servico.split(".\">")[0]
+                        anos_servico = anos_servico.split(".\" >")[0]
                     }
 
                     if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
