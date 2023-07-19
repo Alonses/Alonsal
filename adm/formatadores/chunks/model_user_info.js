@@ -17,7 +17,7 @@ module.exports = async (client, user, interaction, dados) => {
         operador = parseInt(dados.split(".")[1])
         id_alvo = dados.split(".")[2]
     } else
-        id_alvo = interaction.options.getUser("user") || interaction.user.id
+        id_alvo = interaction.options.getUser("user")?.id || interaction.user.id
 
     const membro_sv = await client.getUserGuild(interaction, id_alvo)
     const infos_user = await client.create_profile({ client, interaction, user, id_alvo, operador })
