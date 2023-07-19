@@ -62,8 +62,10 @@ module.exports = async (client, user, interaction, dados) => {
         badges = await buildAllBadges(client, user, id_badges)
         // let achievements = busca_achievements(client, all, user.id, interaction)
 
-        if (user.misc.fixed_badge) {
-            const fixed_badge = busca_badges(client, 1, user)
+        const internal_user = await client.getUser(id_alvo)
+
+        if (internal_user.misc.fixed_badge) {
+            const fixed_badge = busca_badges(client, 1, internal_user)
 
             infos_user.addFields({
                 name: `**:pushpin: Badge fixada**`,
