@@ -6,14 +6,9 @@ const { readdirSync } = require('fs')
 let commands = []
 const comandos_privados = []
 
-function config(client) {
+function slash_commands(client) {
 
-    // Limpando o console e inicializando o bot
-    console.clear()
     client.x.timestamp = client.timestamp()
-
-    console.log("🟠 | Inicializando o bot...")
-
     client.discord.commands = new Collection()
 
     // Linkando os comandos slash disponíveis
@@ -88,4 +83,4 @@ function config(client) {
     }
 }
 
-module.exports.config = config
+module.exports.slash_commands = slash_commands

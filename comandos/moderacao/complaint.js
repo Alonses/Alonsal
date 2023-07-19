@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const { getTicket } = require('../../adm/database/schemas/Tickets')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("complaint")
@@ -55,7 +57,7 @@ module.exports = {
         if (!guild.conf.tickets)
             return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
-        let channel = await client.getTicket(interaction.guild.id, interaction.user.id)
+        let channel = await getTicket(interaction.guild.id, interaction.user.id)
         let solicitante = await client.getUserGuild(interaction, interaction.user.id)
 
         // Buscando os dados do canal no servidor
