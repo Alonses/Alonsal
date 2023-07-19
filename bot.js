@@ -1,13 +1,15 @@
 require('dotenv').config()
 
 const { CeiraClient } = require('./client')
-const { config } = require('./config')
+const { slash_commands } = require('./commands')
+const { internal_functions } = require('./functions')
 
 const idioma = require('./adm/data/idioma')
 const database = require('./adm/database/database')
 
 let client = new CeiraClient()
-config(client) // Atualiza os comandos slash do bot
+internal_functions(client) // Registra as funções internas do bot
+slash_commands(client) // Atualiza os comandos slash do bot
 
 client.discord.once("ready", async () => {
 

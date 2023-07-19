@@ -26,7 +26,7 @@ module.exports = async ({ client, message, caso }) => {
     let user_global = await getUserGlobalRank(id_alvo, user.ixp, user.nickname, message.guild.id)
 
     // Validando se o usuário tem o ranking habilitado
-    if (!await client.userRanking(user.uid)) return
+    if (!await client.verifyUserRanking(user.uid)) return
 
     //              Comandos                  Mensagens
     user.nickname = message.user?.username || message.author?.username

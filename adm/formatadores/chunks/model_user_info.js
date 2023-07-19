@@ -22,6 +22,9 @@ module.exports = async (client, user, interaction, dados) => {
     const membro_sv = await client.getUserGuild(interaction, id_alvo)
     const infos_user = await client.create_profile({ client, interaction, user, id_alvo, operador })
 
+    if (!membro_sv) // Usuário foi removido do cache do bot
+        return interaction.update({ content: ":o: | Este comando está desatualizado! Por favor, use o mesmo novamente.", components: [] })
+
     // Permissões e cargos
     if (operador === 1) {
 

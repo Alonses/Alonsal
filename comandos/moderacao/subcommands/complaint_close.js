@@ -1,3 +1,5 @@
+const { dropTicket } = require('../../../adm/database/schemas/Tickets')
+
 module.exports = async ({ client, user, interaction, channel, solicitante, canal_servidor }) => {
 
     // Sem canal de denúncias ativo
@@ -13,7 +15,7 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
         msg.delete()
 
         // Apagando o ticket de denúncia do usuário
-        client.dropTicket(interaction.guild.id, interaction.user.id)
+        dropTicket(interaction.guild.id, interaction.user.id)
         // canal_servidor.delete()
     }, 10000)
 }
