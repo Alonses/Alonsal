@@ -13,6 +13,8 @@ const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
 
 const { emojis, default_emoji } = require('./arquivos/json/text/emojis.json')
 
+const translate = require('./adm/formatadores/translate')
+
 function internal_functions(client) {
 
     // Limpando o console e inicializando o bot
