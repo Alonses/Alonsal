@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async (client, message) => {
 
     // Verificando se o autor da mensagem excluída é o bot
-    if (message.partial) return
+    if (message.partial || !client.x.logger) return
     if (message.author.bot) return
 
     let guild = await client.getGuild(message.guildId), attachments = []
@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
     if (attachments.length > 0 && !message.content)
         texto_mensagem = attachments.join("\n\n")
 
-    let texto = `:wastebasket: | Uma [mensagem](${message.url}) foi excluída por <@${message.author.id}>\n\n**Conteúdo excluído:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
+    let texto = `:wastebasket: | Uma [mensagem](${message.url}) de <@${message.author.id}> foi excluída\n\n**Conteúdo excluído:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
     let autor = message.author.id, local = message.channelId, row = null
 
     const embed = new EmbedBuilder()

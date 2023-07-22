@@ -120,12 +120,14 @@ function internal_functions(client) {
 
     client.notify = (id_alvo, conteudo) => {
 
-        if (typeof conteudo === "object") // embed
-            if (typeof conteudo.components === "undefined")
+        if (typeof conteudo === "object") { // embed
+            if (!conteudo.components && !conteudo.content)
                 client.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
-            else
+            else if (conteudo.components)
                 client.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo.embed], components: [conteudo.components] })
-        else // texto normal
+            else if (conteudo.content)
+                client.discord.channels.cache.get(id_alvo).send({ content: conteudo.content, embeds: [conteudo.embed] })
+        } else // texto normal
             client.discord.channels.cache.get(id_alvo).send({ content: conteudo })
     }
 
@@ -153,29 +155,33 @@ function internal_functions(client) {
         return string
     }
 
-    client.sendDM = (user, dados, modulo) => {
+    client.sendDM = (user, dados, force) => {
 
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === client.id()) return
 
-        if (modulo)
+        if (force)
             user.conf.notify = 1
 
-        // Notificando o usuário alvo caso ele receba notificações em DM do bot
-        if (client.decider(user?.conf.notify, 1))
-            client.discord.users.fetch(user.uid, false).then((user_interno) => {
+        try {
+            // Notificando o usuário alvo caso ele receba notificações em DM do bot
+            if (client.decider(user?.conf.notify, 1))
+                client.discord.users.fetch(user.uid).then((user_interno) => {
 
-                // Verificando qual é o tipo de conteúdo que será enviado
-                if (dados.embed) {
-                    if (typeof dados.components === "undefined")
-                        user_interno.send({ embeds: [dados.embed] })
+                    // Verificando qual é o tipo de conteúdo que será enviado
+                    if (dados.embed) {
+                        if (!dados.components)
+                            user_interno.send({ embeds: [dados.embed] })
+                        else
+                            user_interno.send({ embeds: [dados.embed], components: [dados.components] })
+                    } else if (dados.files)
+                        user_interno.send({ content: dados.data, files: [dados.files] })
                     else
-                        user_interno.send({ embeds: [dados.embed], components: [dados.components] })
-                } else if (dados.files)
-                    user_interno.send({ content: dados.data, files: [dados.files] })
-                else
-                    user_interno.send(dados.data)
-            })
+                        user_interno.send(dados.data)
+                })
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     // Aleatoriza o texto de entrada

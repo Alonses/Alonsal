@@ -1,5 +1,5 @@
 
-module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
+module.exports = async ({ client, user, interaction, guild }) => {
 
     // Ativa ou desativa a visualização do servidor no ranking global
     if (typeof guild.conf.public !== "undefined")

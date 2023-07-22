@@ -49,13 +49,15 @@ client.discord.on("messageCreate", async (message) => {
 		require("./adm/eventos/broadcast.js")({ client, bot, message })
 
 	// Respostas automatizadas por IA
-	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1)) {
-		await require("./adm/eventos/conversacao.js")({ client, message, text })
-		return
-	}
+	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
+		return await require("./adm/eventos/conversacao.js")({ client, message, text })
 
 	try { // Atualizando o XP dos usuários
 		const caso = "messages"
+
+		if (guild.conf.spam) // Sistema anti-spam do servidor
+			require("./adm/eventos/spam.js")({ client, message, user, guild })
+
 		if (message.content.length > 6 && client.x.ranking) await require("./adm/data/ranking.js")({ client, message, caso })
 
 		require("./adm/eventos/comandos_antigos")({ client, message })
