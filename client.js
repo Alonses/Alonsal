@@ -6,7 +6,7 @@ const translate = require('./adm/formatadores/translate')
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1
+let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1, logger = 1
 let token = process.env.token_1, clientId = process.env.client_1
 
 // Ative para limpar os comandos slash locais e globais
@@ -16,7 +16,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
     modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
 
 if (silent || modo_develop)
-    status = 0, ranking = 0, modules = 0, relatorio = 0
+    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 0
 
 // globais e privados do bot
 if (modo_develop)
@@ -31,7 +31,8 @@ const cli = new Client({
         GatewayIntentBits.MessageContent,
         IntentsBitField.Flags.GuildMembers
     ],
-    partials: [Partials.Message]
+    partials: [Partials.Message],
+    disableEveryone: false
 })
 
 class CeiraClient {
@@ -40,16 +41,17 @@ class CeiraClient {
             this.tls = translate,
             this.idioma = idioma
         this.x = { // Variáveis de configuração inicial do bot
+            status: status,
+            logger: logger,
+            modules: modules,
+            ranking: ranking,
+            relatorio: relatorio,
             modo_develop: modo_develop,
             force_update: force_update,
-            ranking: ranking,
-            status: status,
-            modules: modules,
-            relatorio: relatorio,
             delete_slash: delete_slash,
 
-            clientId: clientId,
             token: token,
+            clientId: clientId
         }
     }
 

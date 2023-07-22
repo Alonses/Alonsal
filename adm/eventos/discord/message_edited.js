@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async (client, message) => {
 
     // Verificando se o autor da mensagem editada é o bot
-    if (message[0].partial) return
+    if (message[0].partial || !client.x.logger) return
     if (message[0].author.bot) return
 
     // Mensagem com o mesmo conteúdo (links de gifs e imagens)

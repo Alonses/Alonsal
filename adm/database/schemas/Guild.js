@@ -24,7 +24,8 @@ const schema = new mongoose.Schema({
         public: { type: Boolean, default: false },
         conversation: { type: Boolean, default: true },
         broadcast: { type: Boolean, default: false },
-        logger: { type: Boolean, default: false }
+        logger: { type: Boolean, default: false },
+        spam: { type: Boolean, default: false }
     }
 })
 

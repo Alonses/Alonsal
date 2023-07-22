@@ -10,9 +10,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Alonsal Falador
     // 2 -> Permitir Broadcast
     // 3 -> Anúncio de Games
+
     // 4 -> Denúncias in-server
     // 5 -> Reportes de usuários mau comportados
-    // 6 -> Servidor visível globalmente
+    // 6 -> Logger do servidor
+
+    // 7 -> Módulo anti-spam
+    // 8 -> Servidor visível globalmente
 
     if (escolha === 1) {
         // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
@@ -68,6 +72,28 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
     } else if (escolha === 6) {
 
+        if (!guild.logger.channel)
+            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal com o comando </conf log:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+        else {
+            // Ativa ou desativa o relatório de eventos do servidor
+            if (typeof guild.conf.logger !== "undefined")
+                guild.conf.logger = !guild.conf.logger
+            else
+                guild.conf.logger = false
+        }
+    } else if (escolha === 7) {
+
+        if (!guild.logger.channel)
+            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal com o comando </conf log:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+        else {
+            // Ativa ou desativa o módulo anti-spam do servidor
+            if (typeof guild.conf.spam !== "undefined")
+                guild.conf.spam = !guild.conf.spam
+            else
+                guild.conf.spam = false
+        }
+    } else if (escolha === 8) {
+
         // Ativa ou desativa a exibição pública no ranking global
         if (typeof guild.conf.public !== "undefined")
             guild.conf.public = !guild.conf.public
@@ -77,6 +103,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha > 3)
         pagina = 1
+
+    if (escolha > 6)
+        pagina = 2
 
     await guild.save()
 
