@@ -43,9 +43,10 @@ module.exports = {
 
         const channel = interaction.channel
 
-        channel.bulkDelete(qtd_msg)
-            .then(() => {
-                const texto = qtd_msg > 1 ? `\`${qtd_msg} ${client.tls.phrase(user, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(user, "mode.clear.apagado_2")}`
+        channel.bulkDelete(qtd_msg, true)
+            .then(messages => {
+                const count = messages.size;
+                const texto = count > 1 ? `\`${count} ${client.tls.phrase(user, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(user, "mode.clear.apagado_2")}`
 
                 interaction.reply({ content: `:recycle: | ${texto}`, ephemeral: true })
             })
