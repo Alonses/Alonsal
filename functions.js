@@ -119,7 +119,7 @@ function internal_functions(client) {
     }
 
     client.notify = (id_alvo, conteudo) => {
-
+        if (!id_alvo) return;
         if (typeof conteudo === "object") { // embed
             if (!conteudo.components && !conteudo.content)
                 client.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
