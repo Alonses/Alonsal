@@ -73,7 +73,6 @@ client.discord.on("interactionCreate", async interaction => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(interaction.user.id)
-
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 
@@ -85,14 +84,16 @@ client.discord.on("interactionCreate", async interaction => {
 	if (interaction.isButton()) // Interações geradas no uso de botões
 		return require("./adm/interacoes/buttons.js")({ client, user, interaction })
 
-	if (!interaction.isChatInputCommand()) return
+	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
-	const command = client.discord.commands.get(interaction.commandName)
+	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 	if (!command) return
 
+	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;
+
 	// Executando o comando
-	command.execute(client, user, interaction)
+	action(client, user, interaction)
 		.then(() => {
 			require("./adm/eventos/log.js")({ client, interaction, command })
 		})
