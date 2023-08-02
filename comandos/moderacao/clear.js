@@ -33,9 +33,9 @@ module.exports = {
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     menu_data: new ContextMenuCommandBuilder()
-	.setName("Clear")
-	.setType(ApplicationCommandType.Message)
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+        .setName("Clear")
+        .setType(ApplicationCommandType.Message)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute(client, user, interaction) {
         const qtd_msg = interaction.options.getInteger("amount")
         deleteMessages(client, user, interaction, qtd_msg)
@@ -44,12 +44,12 @@ module.exports = {
         const messageDate = interaction.targetMessage.createdAt;
 
         interaction.targetMessage.channel.messages.fetch()
-        .then(messages => {
-            const count = messages.filter(m => m.createdAt >= messageDate).size;
+            .then(messages => {
+                const count = messages.filter(m => m.createdAt >= messageDate).size;
 
-            deleteMessages(client, user, interaction, count)
-        })
-        .catch(console.error);
+                deleteMessages(client, user, interaction, count)
+            })
+            .catch(console.error);
     }
 }
 
