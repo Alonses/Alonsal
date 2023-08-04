@@ -54,6 +54,7 @@ module.exports = async ({ client, interaction }) => {
         })
 
         comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
+        comando_inserido = comando_inserido.toLowerCase()
 
         const date = d.getDate(), year = d.getFullYear()
         const month = d.toLocaleString("en-US", { month: "long" })

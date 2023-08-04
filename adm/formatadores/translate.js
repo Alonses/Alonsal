@@ -85,8 +85,8 @@ function translate(user, target) {
 
 function check_emojis(phrase, type) {
 
-    if (typeof type !== "undefined")
-        phrase = `${get_emoji(type, phrase)} | ${phrase}`
+    if (type)
+        phrase = `${get_emoji(type)} | ${phrase}`
 
     return phrase
 }
@@ -96,7 +96,7 @@ function get_emoji(valores) {
     let emoji = ""
 
     if (typeof valores === "object") { // Array de emojis
-        if (valores[0].length < 8)
+        if (valores[0].length < 8 || typeof valores[0] === "number")
             emoji = lista_emojis(valores)
         else // Emoji único
             if (valores.length < 8 && typeof valores === "number")
