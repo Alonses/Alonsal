@@ -33,7 +33,14 @@ module.exports = {
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     menu_data: new ContextMenuCommandBuilder()
-        .setName("Clear")
+        .setName("Clear below")
+        .setNameLocalizations({
+            "pt-BR": 'Limpar abaixo',
+            "es-ES": 'Eliminar a continuación',
+            "fr": 'Supprimer ci-dessous',
+            "it": 'Cancella sotto',
+            "ru": 'удалить ниже'
+        })
         .setType(ApplicationCommandType.Message)
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute(client, user, interaction) {
@@ -54,6 +61,7 @@ module.exports = {
 }
 
 async function deleteMessages(client, user, interaction, qtd_msg) {
+
     const membro_sv = await client.getUserGuild(interaction, client.id())
 
     // Verificando se o bot pode gerenciar as mensagens do servidor
