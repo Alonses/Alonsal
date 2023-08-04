@@ -95,6 +95,11 @@ function slash_commands(client) {
                 const command = require(`./comandos/${folder}/${file}`)
                 client.discord.commands.set(command.data.name, command)
 
+                // Comandos de menu de contexto com nomes diferentes dos comandos principais
+                if ('menu_data' in command && 'menu' in command)
+                    if (!client.discord.commands.get(command.menu_data.name.toLowerCase()))
+                        client.discord.commands.set(command.menu_data.name.toLowerCase(), command)
+
                 // Comandos do menu de contexto
                 if (existsSync(`${__dirname}/comandos/${folder}/context`)) {
                     for (const file of readdirSync(`${__dirname}/comandos/${folder}/context`).filter(file => file.endsWith('.js'))) {
