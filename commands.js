@@ -1,7 +1,7 @@
 const { REST } = require('@discordjs/rest')
 const { Routes, Collection } = require('discord.js')
 
-const { readdirSync } = require('fs')
+const { readdirSync, existsSync } = require('fs')
 
 let commands = []
 const comandos_privados = []
@@ -18,17 +18,30 @@ function slash_commands(client) {
 
                 if (folder !== "experimental" || client.x.modo_develop) {
                     const command = require(`./comandos/${folder}/${file}`)
-                    
+
                     if (!client.x.modo_develop)
-                        if (!command.data.name.startsWith('c_')) {
+                        if (!command.data.name.startsWith('c_'))
                             commands.push(command.data.toJSON())
-                            if ('menu_data' in command && 'menu' in command)
-                                commands.push(command.menu_data.toJSON())
-                        }
                         else // Salvando comandos privados para usar apenas num servidor
                             comandos_privados.push(command.data.toJSON())
                     else
                         commands.push(command.data.toJSON())
+
+                    // Comandos do menu de contexto
+                    if ('menu_data' in command && 'menu' in command)
+                        commands.push(command.menu_data.toJSON())
+                }
+            }
+
+            // Comandos do menu de contexto
+            if (existsSync(`${__dirname}/comandos/${folder}/context`)) {
+                for (const file of readdirSync(`${__dirname}/comandos/${folder}/context`).filter(file => file.endsWith('.js'))) {
+                    if (folder !== "experimental" || client.x.modo_develop) {
+                        const command = require(`./comandos/${folder}/context/${file}`)
+
+                        if ('menu_data' in command && 'menu' in command)
+                            commands.push(command.menu_data.toJSON())
+                    }
                 }
             }
         }
@@ -81,6 +94,18 @@ function slash_commands(client) {
             for (const file of readdirSync(`${__dirname}/comandos/${folder}`).filter(file => file.endsWith('.js'))) {
                 const command = require(`./comandos/${folder}/${file}`)
                 client.discord.commands.set(command.data.name, command)
+
+                // Comandos do menu de contexto
+                if (existsSync(`${__dirname}/comandos/${folder}/context`)) {
+                    for (const file of readdirSync(`${__dirname}/comandos/${folder}/context`).filter(file => file.endsWith('.js'))) {
+                        if (folder !== "experimental" || client.x.modo_develop) {
+                            const command = require(`./comandos/${folder}/context/${file}`)
+
+                            if ('menu_data' in command && 'menu' in command)
+                                client.discord.commands.set(command.menu_data.name.toLowerCase(), command)
+                        }
+                    }
+                }
             }
         }
     }
