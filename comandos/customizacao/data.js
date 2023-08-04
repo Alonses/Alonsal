@@ -45,6 +45,6 @@ module.exports = {
         if (interaction.options.getSubcommand() === "summary") // Lista todos os dados que o bot salvou do usuário
             return require("./subcommands/data_summary")({ client, user, interaction })
         else // Menu para realizar a exclusão dos dados do usuário
-            return require('../../adm/interacoes/chunks/data')({ client, user, interaction })
+            return require("../../adm/interacoes/chunks/data")({ client, user, interaction })
     }
 }
