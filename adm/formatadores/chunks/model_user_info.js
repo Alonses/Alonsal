@@ -25,7 +25,7 @@ module.exports = async (client, user, interaction, dados) => {
     if (!membro_sv) { // Usuário foi removido do cache do bot
         interaction.update({ content: ":o: | Este comando está desatualizado! Por favor, use o mesmo novamente.", components: [] })
             .catch(err => {
-                client.error({ client, err })
+                client.error({ err })
             })
 
         return
