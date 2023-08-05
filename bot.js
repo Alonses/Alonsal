@@ -63,7 +63,7 @@ client.discord.on("messageCreate", async (message) => {
 		require("./adm/eventos/comandos_antigos")({ client, message })
 	} catch (err) { // Erro no comando
 		const local = "commands"
-		client.error({ client, err, local })
+		client.error({ err, local })
 	}
 })
 
