@@ -393,12 +393,12 @@ module.exports = async ({ client, user, interaction }) => {
                 interaction.editReply({ embeds: [usuario_steam], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
             } catch (err) {
-                require('../../adm/eventos/error.js')({ client, err })
+                client.error({ err })
                 interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
             }
         })
         .catch((err) => {
-            require('../../adm/eventos/error.js')({ client, err })
+            client.error({ err })
             interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
         })
 }

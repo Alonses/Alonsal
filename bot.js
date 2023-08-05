@@ -63,7 +63,7 @@ client.discord.on("messageCreate", async (message) => {
 		require("./adm/eventos/comandos_antigos")({ client, message })
 	} catch (err) { // Erro no comando
 		const local = "commands"
-		require("./adm/eventos/error.js")({ client, err, local })
+		client.error({ client, err, local })
 	}
 })
 
@@ -98,7 +98,7 @@ client.discord.on("interactionCreate", async interaction => {
 			require("./adm/eventos/log.js")({ client, interaction, command })
 		})
 		.catch(err => {
-			require("./adm/eventos/error.js")({ client, err })
+			client.error({ err })
 			client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
 		})
 })

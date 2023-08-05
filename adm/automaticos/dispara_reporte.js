@@ -44,6 +44,6 @@ module.exports = async ({ client, alvo }) => {
                         canal_alvo.send({ embeds: [embed] }) // Permissão para enviar mensagens no canal
         })
     } catch (err) {
-        require('../eventos/error.js')({ client, err })
+        client.error({ err })
     }
 }

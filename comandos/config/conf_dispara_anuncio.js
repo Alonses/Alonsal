@@ -25,7 +25,7 @@ module.exports = {
             })
             .catch(err => {
                 const local = "games"
-                require('../eventos/error.js')({ client, err, local })
+                client.error({ err, local })
             })
     }
 }

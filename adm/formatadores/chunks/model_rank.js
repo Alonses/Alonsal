@@ -260,7 +260,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
                 await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         }
     } catch (err) {
-        require("../../../adm/eventos/error.js")({ client, err })
+        client.error({ err })
         client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
     }
 }

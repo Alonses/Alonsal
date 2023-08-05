@@ -12,7 +12,7 @@ function free_games({ client, guild_channel }) {
         })
         .catch(err => {
             const local = "games"
-            require('../eventos/error.js')({ client, err, local })
+            client.error({ err, local })
         })
 }
 
