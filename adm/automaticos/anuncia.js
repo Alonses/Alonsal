@@ -45,7 +45,7 @@ async function gera_anuncio(client, proxima_att) {
         })
         .catch(err => {
             const local = "games"
-            require('../eventos/error.js')({ client, err, local })
+            client.error({ err, local })
         })
 
     next_att(client, proxima_att)

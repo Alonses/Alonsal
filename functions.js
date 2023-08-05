@@ -23,6 +23,10 @@ function internal_functions(client) {
     console.log("🟠 | Inicializando o bot...")
     console.log("🟠 | Vinculando as funções internas")
 
+    client.error = async (err) => {
+        require("./adm/eventos/error")({ client, err })
+    }
+
     client.atualiza_dados = async (alvo, interaction) => {
         if (!alvo.sid) {
             alvo.sid = interaction.guild.id

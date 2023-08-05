@@ -82,7 +82,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                 }
             }
         } catch (err) {
-            require('../eventos/error.js')({ client, err })
+            client.error({ err })
         }
     })
 
