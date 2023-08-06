@@ -13,7 +13,14 @@ module.exports = {
         .setDescription("⌠💸⌡ See your Bufunfas")
         .addSubcommand(subcommand =>
             subcommand
-                .setName("resumo")
+                .setName("statement")
+                .setNameLocalizations({
+                    "pt-BR": 'extrato',
+                    "es-ES": 'extracto',
+                    "fr": 'extrait',
+                    "it": 'estratto',
+                    "ru": 'счет'
+                })
                 .setDescription("⌠💸⌡ See your Bufunfas")
                 .setDescriptionLocalizations({
                     "pt-BR": '⌠💸⌡ Veja suas Bufunfas',
@@ -42,9 +49,13 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("rank")
-                .setDescription("⌠💸⌡ See your Bufunfas")
+                .setDescription("⌠💸⌡ See the ranking of bourgeois")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💸⌡ Rank de burgueses'
+                    "pt-BR": '⌠💸⌡ Veja o ranking de burgueses',
+                    "es-ES": '⌠💸⌡ Ver el ranking de burgués',
+                    "fr": '⌠💸⌡ Voir le classement bourgeois',
+                    "it": '⌠💸⌡ Vedi la classifica borghese',
+                    "ru": '⌠💸⌡ Посмотреть буржуйский рейтинг'
                 })
                 .addIntegerOption(option =>
                     option.setName("page")

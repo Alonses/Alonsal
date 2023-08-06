@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
+const { getUserStatements, dropAllUserStatements } = require('../../../adm/database/schemas/Statement')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -19,21 +20,34 @@ module.exports = async ({ client, user, interaction }) => {
         titulo_embed = client.replace(client.tls.phrase(user, "misc.banco.bufunfas_outros"), alvo.username)
     }
 
-    if (user.misc.daily && user_interno.uid === interaction.user.id) {
+    let data_atual = date1.toDateString('pt-BR')
+    if (data_atual == user.misc.daily && user_interno.uid === interaction.user.id) {
         const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
         daily = `${client.tls.phrase(user, "misc.banco.daily")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
     }
 
-    let lang = "fix"
+    let lang = "fix", extrato = ""
 
     if (user_interno.misc.money < 0)
         lang = "diff"
 
+    if (interaction.user.id === user_interno.uid) {
+
+        const movimentacoes = await getUserStatements(user_interno.uid)
+
+        movimentacoes.forEach(movimentacao => {
+            extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${movimentacao.value}, ${movimentacao?.operation || "desconhecido"}\n`
+        })
+
+        if (extrato !== "")
+            extrato = `\n\n**Suas últimas movimentações**\`\`\`${extrato}\`\`\``
+    }
+
     const embed = new EmbedBuilder()
         .setTitle(titulo_embed)
         .setColor(client.embed_color(user_interno.misc.color))
-        .setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$ ${client.locale(user_interno.misc.money)}\`\`\`\n${daily}`)
+        .setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$ ${client.locale(user_interno.misc.money)}\`\`\`\n${daily}${extrato}`)
 
     if (user_interno.uid === interaction.user.id)
         embed.setFooter({ text: client.tls.phrase(user, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })

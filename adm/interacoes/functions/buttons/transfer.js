@@ -1,4 +1,5 @@
 const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
+const { createStatement } = require('../../../database/schemas/Statement')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -22,6 +23,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     await user.save()
     await alvo.save()
+
+    const user_i = await client.getCachedUser(alvo.uid)
+
+    // Registrando as movimentações de bufunfas para os usuários
+    await createStatement(user.uid, `Depósito enviado para ${user_i.username}`, false, bufunfas, client.timestamp())
+    await createStatement(alvo.uid, `Depósito recebido de ${interaction.user.username}`, true, bufunfas, client.timestamp())
 
     const caso = "movido", quantia = bufunfas
     require('../../../automaticos/relatorio')({ client, caso, quantia })

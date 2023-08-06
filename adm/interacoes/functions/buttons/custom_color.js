@@ -1,5 +1,7 @@
 const { emojis_dancantes, emojis_negativos } = require('../../../../arquivos/json/text/emojis.json')
 
+const { createStatement } = require('../../../database/schemas/Statement')
+
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1])
@@ -37,6 +39,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Salvando os dados
     await user.save()
+
+    // Registrando as movimentações de bufunfas para o usuário
+    await createStatement(user.uid, `Customização do perfil (cor)`, false, preco, client.timestamp())
 
     interaction.update({ content: client.tls.phrase(user, "misc.color.cor_att", client.emoji(emojis_dancantes)), embeds: [], components: [], ephemeral: true })
 }

@@ -27,12 +27,15 @@ module.exports = {
         const bufunfa = client.random(500, 1000)
 
         user.misc.money += bufunfa
-        user.misc.daily = date1.toDateString('pt-BR')
+        user.misc.daily = data_atual
 
         const caso = "gerado", quantia = bufunfa
         require('../../adm/automaticos/relatorio')({ client, caso, quantia })
 
         await user.save()
+
+        // Registrando as movimentações de bufunfas para o usuário
+        await createStatement(user.uid, `Recebido do /daily`, true, bufunfa, client.timestamp())
 
         interaction.reply({ content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji(emojis_dancantes)}`, client.locale(bufunfa)), ephemeral: true })
     }

@@ -1,6 +1,7 @@
 const { dropAllUserModules } = require("../database/schemas/Module")
 const { dropUserGlobalRank } = require("../database/schemas/Rank_g")
 const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/Rank_s")
+const { dropAllUserStatements } = require("../database/schemas/Statement")
 const { dropAllUserTasks } = require("../database/schemas/Task")
 const { dropAllUserGroups } = require("../database/schemas/Task_group")
 
@@ -77,8 +78,10 @@ async function clear_data({ client, user, interaction, operador, caso }) {
             if (alvos[i] === 9) // Excluindo todos os módulos
                 dropAllUserModules(user.uid)
 
-            if (alvos[i] === 10) // Zerando as bufunfas do usuário
+            if (alvos[i] === 10) { // Zerando as bufunfas do usuário e limpando o histórico de movimentações
                 user.misc.money = 0
+                dropAllUserStatements(user.uid)
+            }
 
             if (alvos[i] === 11) // Dados extras que podem ser excluídos
                 user.misc.weather = true
