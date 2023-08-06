@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     } else {
 
-        const bot = await client.getBot(client.id())
+        const bot = await client.getBot()
         const id_broadcast = dados.split(".")[2]
 
         // Verificando se a Função de Broadcast não foi desativada após a solicitação

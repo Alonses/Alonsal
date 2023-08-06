@@ -24,13 +24,13 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("guild")
-                .setDescription("⌠👤⌡ Control my functions")
+                .setDescription("⌠💂⌡ Control my functions")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Controle minhas funções',
-                    "es-ES": '⌠👤⌡ Controlar mis funciones',
-                    "fr": '⌠👤⌡ Contrôler mes fonctions',
-                    "it": '⌠👤⌡ Controllare le mie funzioni',
-                    "ru": '⌠👤⌡ контролировать мои функции'
+                    "pt-BR": '⌠💂⌡ Controle minhas funções',
+                    "es-ES": '⌠💂⌡ Controlar mis funciones',
+                    "fr": '⌠💂⌡ Contrôler mes fonctions',
+                    "it": '⌠💂⌡ Controllare le mie funzioni',
+                    "ru": '⌠💂⌡ контролировать мои функции'
                 })),
     async execute(client, user, interaction) {
 

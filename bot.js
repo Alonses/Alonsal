@@ -43,7 +43,7 @@ client.discord.on("messageCreate", async (message) => {
 	let text = message.content.toLowerCase()
 
 	// Recursos de Broadcast
-	const bot = await client.getBot(client.id())
+	const bot = await client.getBot()
 
 	if (bot?.transmission.status)
 		require("./adm/eventos/broadcast.js")({ client, bot, message })
@@ -88,19 +88,24 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
+	console.log(interaction.commandName)
+
 	if (!command) return
 
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;
 
-	// Executando o comando
-	action(client, user, interaction)
-		.then(() => {
-			require("./adm/eventos/log.js")({ client, interaction, command })
-		})
-		.catch(err => {
-			client.error({ err })
-			client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
-		})
+	console.log(action)
+
+	try {
+		// Executando o comando
+		action(client, user, interaction)
+			.then(() => {
+				require("./adm/eventos/log.js")({ client, interaction, command })
+			})
+	} catch (err) {
+		console.log(err)
+		client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
+	}
 })
 
 database.setup(process.env.url_dburi)

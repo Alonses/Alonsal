@@ -10,17 +10,17 @@ module.exports = {
             "it": 'modulo',
             "ru": 'модуль'
         })
-        .setDescription("⌠👤⌡ Define modules with pre-programmed functions")
+        .setDescription("⌠🎉⌡ Define modules with pre-programmed functions")
         .addSubcommand(subcommand =>
             subcommand
                 .setName("add")
-                .setDescription("⌠👤⌡ Create a new module with pre-programmed functions")
+                .setDescription("⌠🎉⌡ Create a new module with pre-programmed functions")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Criar um novo módulo com funções pré-programadas',
-                    "es-ES": '⌠👤⌡ Crea un nuevo módulo con funciones preprogramadas',
-                    "fr": '⌠👤⌡ Créez un nouveau module avec des fonctions préprogrammées',
-                    "it": '⌠👤⌡ Crea un nuovo modulo con funzioni preprogrammate',
-                    "ru": '⌠👤⌡ Создать новый модуль с запрограммированными функциями'
+                    "pt-BR": '⌠🎉⌡ Criar um novo módulo com funções pré-programadas',
+                    "es-ES": '⌠🎉⌡ Crea un nuevo módulo con funciones preprogramadas',
+                    "fr": '⌠🎉⌡ Créez un nouveau module avec des fonctions préprogrammées',
+                    "it": '⌠🎉⌡ Crea un nuovo modulo con funzioni preprogrammate',
+                    "ru": '⌠🎉⌡ Создать новый модуль с запрограммированными функциями'
                 })
                 .addStringOption(option =>
                     option.setName("choice")
@@ -120,13 +120,13 @@ module.exports = {
                     "it": 'elenco',
                     "ru": 'список'
                 })
-                .setDescription("⌠👤⌡ Browse your modules")
+                .setDescription("⌠🎉⌡ Browse your modules")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Navegue por seus módulos',
-                    "es-ES": '⌠👤⌡ Explora tus módulos',
-                    "fr": '⌠👤⌡ Parcourez vos modules',
-                    "it": '⌠👤⌡ Sfoglia i tuoi moduli',
-                    "ru": '⌠👤⌡ Смотрите свои модули'
+                    "pt-BR": '⌠🎉⌡ Navegue por seus módulos',
+                    "es-ES": '⌠🎉⌡ Explora tus módulos',
+                    "fr": '⌠🎉⌡ Parcourez vos modules',
+                    "it": '⌠🎉⌡ Sfoglia i tuoi moduli',
+                    "ru": '⌠🎉⌡ Смотрите свои модули'
                 })),
     async execute(client, user, interaction) {
 

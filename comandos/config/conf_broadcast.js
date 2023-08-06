@@ -23,7 +23,7 @@ module.exports = {
 
         if (interaction.user.id !== client.owners[0]) return
 
-        const bot = await client.getBot(client.id())
+        const bot = await client.getBot()
 
         // Solicitando a função e executando
         return require(`./subcommands/broadcast_${interaction.options.getSubcommand()}`)({ client, interaction, bot })
