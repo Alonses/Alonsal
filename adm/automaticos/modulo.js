@@ -150,15 +150,23 @@ async function executa_modulo() {
 
 async function cobra_modulo(client) {
 
-    const users = {}
+    const users = {}, modules = {}, data1 = new Date()
     const active_modules = await getActiveModules()
+    const dia = data1.getDay()
 
     // Somando todos os módulos ativos em chaves únicas por ID de usuário
     active_modules.forEach(modulo => {
-        if (users[modulo.uid])
-            users[modulo.uid] += modulo.stats.price
-        else
-            users[modulo.uid] = modulo.stats.price
+
+        // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário
+        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(dia)) {
+            if (users[modulo.uid]) {
+                users[modulo.uid] += modulo.stats.price
+                modules[modulo.uid]++
+            } else {
+                users[modulo.uid] = modulo.stats.price
+                modules[modulo.uid] = 1
+            }
+        }
     })
 
     const ids = Object.keys(users)
@@ -181,7 +189,7 @@ async function cobra_modulo(client) {
         }
 
         // Registrando as movimentações de bufunfas para o usuário
-        await createStatement(user.uid, `Manutenção de módulos`, false, users[identificador], client.timestamp())
+        await createStatement(user.uid, `Manutenção de módulos ( ${modules[identificador]} )`, false, users[identificador], client.timestamp())
     })
 
     const caso = "reback", quantia = total

@@ -94,7 +94,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji("icon_id")} **ID**`,
+                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: ids.join("\n"),
                 inline: true
             }
