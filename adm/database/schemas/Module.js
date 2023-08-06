@@ -46,6 +46,16 @@ async function listAllUserModules(uid) {
     return model.find({ uid: uid })
 }
 
+async function shutdownAllUserModules(uid) {
+    const user_modules = await listAllUserModules(uid)
+
+    // Desliga todos os módulos do usuário
+    user_modules.forEach(async modulo => {
+        modulo.stats.active = true
+        await modulo.save()
+    })
+}
+
 // Retorna um preço pelos módulos ativos de determinado usuário
 async function getModulesPrice(uid) {
     let modulos = await model.find({ uid: uid, "stats.active": true })
@@ -67,5 +77,6 @@ module.exports = {
     getActiveModules,
     listAllUserModules,
     dropAllUserModules,
-    verifyUserModules
+    verifyUserModules,
+    shutdownAllUserModules
 }

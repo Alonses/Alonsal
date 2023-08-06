@@ -1,7 +1,10 @@
 const fs = require('fs')
 
 const { writeFileSync } = require('fs')
-const { getActiveModules } = require("../database/schemas/Module")
+
+const { getUser } = require('../database/schemas/User')
+const { getActiveModules, shutdownAllUserModules } = require("../database/schemas/Module")
+const { createStatement } = require('../database/schemas/Statement')
 
 const model_weather = require('../formatadores/chunks/model_weather')
 const model_frase = require('../formatadores/chunks/model_frase.js')
@@ -145,4 +148,45 @@ async function executa_modulo() {
     }
 }
 
+async function cobra_modulo(client) {
+
+    const users = {}
+    const active_modules = await getActiveModules()
+
+    // Somando todos os módulos ativos em chaves únicas por ID de usuário
+    active_modules.forEach(modulo => {
+        if (users[modulo.uid])
+            users[modulo.uid] += modulo.stats.price
+        else
+            users[modulo.uid] = modulo.stats.price
+    })
+
+    const ids = Object.keys(users)
+    let total = 0
+
+    ids.forEach(async identificador => {
+
+        const user = await getUser(identificador)
+        user.misc.money -= users[identificador]
+        total += users[identificador]
+
+        await user.save()
+
+        // Desliga todos os módulos do usuário caso ele não tenha Bufunfas
+        if (user.misc.money < users[identificador]) {
+            shutdownAllUserModules(identificador)
+
+            // Avisando o usuário sobre o desligamento dos módulos
+            return client.sendDM(user, { data: ":mobile_phone_off: | Seus módulos foram desativados!\nGaranta que tenha Bufunfas em sua conta do Alonsal para poder ativar recursos como este!\n\nVocê pode ganhar bufunfas com o comando </daily:1020794974377353338> ou através de depósitos e games" }, true)
+        }
+
+        // Registrando as movimentações de bufunfas para o usuário
+        await createStatement(user.uid, `Manutenção de módulos`, false, users[identificador], client.timestamp())
+    })
+
+    const caso = "reback", quantia = total
+    require('./relatorio')({ client, caso, quantia })
+}
+
 module.exports.atualiza_modulos = atualiza_modulos
+module.exports.cobra_modulo = cobra_modulo

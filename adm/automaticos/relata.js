@@ -1,4 +1,5 @@
 const { dailyReset } = require('../database/schemas/Bot')
+const { cobra_modulo } = require('./modulo')
 
 module.exports = async ({ client }) => {
 
@@ -26,4 +27,5 @@ async function gera_relatorio(client) {
 
     await client.notify(process.env.channel_stats, embed)
     await dailyReset(client.id()) // Reseta o relatório
+    await cobra_modulo(client) // Cobra pelos módulos ativos pelos usuários
 }

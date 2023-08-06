@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
         if (extrato !== "")
-            extrato = `\n\n**Suas últimas movimentações**\`\`\`${extrato}\`\`\``
+            extrato = `\n\n${client.defaultEmoji("metrics")} **Suas últimas movimentações**\`\`\`${extrato}\`\`\``
     }
 
     const embed = new EmbedBuilder()
@@ -52,5 +52,5 @@ module.exports = async ({ client, user, interaction }) => {
     if (user_interno.uid === interaction.user.id)
         embed.setFooter({ text: client.tls.phrase(user, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
 
-    interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.reply({ embeds: [embed], ephemeral: true })
 }
