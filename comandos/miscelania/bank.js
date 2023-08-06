@@ -92,6 +92,6 @@ module.exports = {
     async menu(client, user, interaction) {
 
         // Redirecionando o evento
-        require("../../adm/formatadores/chunks/bank_resume")({ client, user, interaction })
-    },
+        require("../../adm/formatadores/chunks/bank_statement")({ client, user, interaction })
+    }
 }
