@@ -114,6 +114,10 @@ function internal_functions(client) {
         return interaction.guild.members.cache.get(id_alvo)
     }
 
+    client.getCachedUser = (id_alvo) => {
+        return client.discord.users.fetch(id_alvo)
+    }
+
     client.locale = (valor, locale) => {
 
         if (typeof locale === "undefined")

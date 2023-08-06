@@ -35,17 +35,17 @@ module.exports = {
                             "ru": 'Изменить цвет профиля'
                         })
                         .addChoices(
-                            { name: 'Blue B$200', value: '0.0' },
-                            { name: 'Red B$200', value: '0.1' },
-                            { name: 'Green B$200', value: '0.3' },
-                            { name: 'Cyan B$200', value: '0.8' },
-                            { name: 'Yellow B$300', value: '1.2' },
-                            { name: 'Orange B$300', value: '1.5' },
-                            { name: 'Purple B$300', value: '2.6' },
-                            { name: 'Gray B$300', value: '1.9' },
-                            { name: 'White B$400', value: '2.4' },
-                            { name: 'Black B$400', value: '2.7' },
-                            { name: 'Random B$500', value: '3.10' }
+                            { name: 'Blue B$ 200', value: '0.0' },
+                            { name: 'Red B$ 200', value: '0.1' },
+                            { name: 'Green B$ 200', value: '0.3' },
+                            { name: 'Cyan B$ 200', value: '0.8' },
+                            { name: 'Yellow B$ 300', value: '1.2' },
+                            { name: 'Orange B$ 300', value: '1.5' },
+                            { name: 'Purple B$ 300', value: '2.6' },
+                            { name: 'Gray B$ 300', value: '1.9' },
+                            { name: 'White B$ 400', value: '2.4' },
+                            { name: 'Black B$ 400', value: '2.7' },
+                            { name: 'Random B$ 500', value: '3.10' }
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>

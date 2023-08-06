@@ -56,7 +56,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
     }
 
     // Sem dados salvos no banco de ranking para o servidor especificado
-    if (data_usuarios == null)
+    if (!data_usuarios)
         return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
@@ -223,26 +223,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         )
 
     let row = []
-    const b_disabled = [false, false, false, false, false]
-
-    if (pagina < 2) { // Primeira página
-        b_disabled[0] = true
-        b_disabled[1] = true
-    }
-
-    if (pagina < 3) // Segunda página
-        b_disabled[0] = true
-
-    if (pagina === paginas) { // Última página
-        b_disabled[3] = true
-        b_disabled[4] = true
-    }
-
-    if (pagina === paginas - 1) // Penúltima página
-        b_disabled[4] = true
-
-    if (ids.includes(interaction.user.id)) // Página com o usuário
-        b_disabled[2] = true
+    const b_disabled = require("../../funcoes/navegacao_rank")({ pagina, paginas, ids, interaction })
 
     if (paginas > 1)
         row = client.create_buttons([{ id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
