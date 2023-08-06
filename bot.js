@@ -88,13 +88,9 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
-	console.log(interaction.commandName)
 
 	if (!command) return
-
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;
-
-	console.log(action)
 
 	try {
 		// Executando o comando
@@ -103,7 +99,7 @@ client.discord.on("interactionCreate", async interaction => {
 				require("./adm/eventos/log.js")({ client, interaction, command })
 			})
 	} catch (err) {
-		console.log(err)
+		client.error({ err })
 		client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
 	}
 })
