@@ -81,10 +81,10 @@ module.exports = {
             profit = 0
         }
 
-        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]\n[Lucro: B$${profit}]`
+        let mensagem = `Jokenpô! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- Você\n[ ${ganhador} ]\n[Lucro: \`B$ ${profit}\`]`
 
         if (idioma_definido !== "pt-br" && idioma_definido !== "al-br")
-            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]\n[Profit: B$${profit}]`
+            mensagem = `Jokenpo! \n[ ${emojis[bot]} ] Bot\n[ ${emojis[player]} ] <- You\n[ ${ganhador} ]\n[Profit: \`B$ ${profit}\`]`
 
         user.misc.money += profit
         await user.save()

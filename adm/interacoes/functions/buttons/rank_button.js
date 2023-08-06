@@ -48,6 +48,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 break
         }
 
+        if (posicao > data_usuarios.length)
+            posicao = 1
+
         // Arredonda para cima a página com o usuário
         pagina = Math.ceil(posicao / 6)
     }

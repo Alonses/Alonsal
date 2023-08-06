@@ -44,6 +44,10 @@ async function getUser(uid) {
     return model.findOne({ uid: uid })
 }
 
+async function getRankMoney() {
+    return model.find({ "misc.money": { $gt: 0.01 } }).sort({ "misc.money": -1 }).limit(25)
+}
+
 async function migrateUsers() {
 
     for (const file of readdirSync(`./arquivos/data/user/`)) {
@@ -68,5 +72,6 @@ async function migrateUsers() {
 module.exports.User = model
 module.exports = {
     getUser,
-    migrateUsers
+    migrateUsers,
+    getRankMoney
 }
