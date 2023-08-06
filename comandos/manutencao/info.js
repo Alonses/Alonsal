@@ -4,7 +4,13 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("info")
+        .setName("information")
+        .setNameLocalizations({
+            "pt-BR": 'informacoes',
+            "es-ES": 'informacion',
+            "it": 'informazione',
+            "ru": 'информация'
+        })
         .setDescription("⌠📡⌡ Alonsal information")
         .setDescriptionLocalizations({
             "pt-BR": '⌠📡⌡ Informações do Alonsal',

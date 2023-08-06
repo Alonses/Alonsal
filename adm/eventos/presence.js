@@ -47,7 +47,7 @@ function requisita_status(client) {
         tempo_minimo = client.random(50000, 80000)
 
     // Exibirá o status escolhido após um tempo aleatório
-    timeout_presence = setTimeout(() => {
+    timeout_presence = setTimeout(async () => {
 
         let texto_status = activities[num].text
 
@@ -59,6 +59,16 @@ function requisita_status(client) {
 
         if (texto_status.includes("activities_repl"))
             texto_status = texto_status.replace("activities_repl", activities.length)
+
+        if (texto_status.includes("version_repl")) {
+            const bot = await client.getBot()
+            texto_status = texto_status.replace("version_repl", bot.persis.version)
+        }
+
+        if (texto_status.includes("commands_repl")) {
+            const bot = await client.getBot()
+            texto_status = texto_status.replace("commands_repl", bot.persis.commands)
+        }
 
         // Exibindo o status personalizado de forma aleatória por um tempo
         client.user().setActivity(texto_status, { type: actionTypes[activities[num].type] })

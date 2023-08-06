@@ -110,7 +110,7 @@ async function encerra_broadcast(client, bot, force) {
 
 async function verificar_broadcast(client, interaction) {
 
-    const bot = await client.getBot(client.id())
+    const bot = await client.getBot()
 
     const canal_alvo = await client.channels().get(bot.transmission.id_broad)
 

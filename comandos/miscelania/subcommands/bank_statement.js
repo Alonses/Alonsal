@@ -1,7 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
+const { getUserStatements } = require('../../../adm/database/schemas/Statement')
+
 const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
-const { getUserStatements, dropAllUserStatements } = require('../../../adm/database/schemas/Statement')
 
 module.exports = async ({ client, user, interaction }) => {
 

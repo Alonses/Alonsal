@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("setup")
-        .setDescription("⌠👤⌡ Control bot functions and preferences")
+        .setDescription("⌠🎉⌡ Control bot functions and preferences")
         .addSubcommand(subcommand =>
             subcommand
                 .setName("weather")
@@ -14,13 +14,13 @@ module.exports = {
                     "it": 'clima',
                     "ru": 'погода'
                 })
-                .setDescription("⌠👤⌡ Set the return type for weather requests")
+                .setDescription("⌠🎉⌡ Set the return type for weather requests")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Defina o tipo de retorno para requisições de clima',
-                    "es-ES": '⌠👤⌡ Establecer el tipo de retorno para las solicitudes meteorológicas',
-                    "fr": '⌠👤⌡ Définir le type de retour pour les requêtes météo',
-                    "it": '⌠👤⌡ Imposta il tipo di ritorno per le richieste meteo',
-                    "ru": '⌠👤⌡ Установить тип возвращаемого значения для запросов о погоде'
+                    "pt-BR": '⌠🎉⌡ Defina o tipo de retorno para requisições de clima',
+                    "es-ES": '⌠🎉⌡ Establecer el tipo de retorno para las solicitudes meteorológicas',
+                    "fr": '⌠🎉⌡ Définir le type de retour pour les requêtes météo',
+                    "it": '⌠🎉⌡ Imposta il tipo di ritorno per le richieste meteo',
+                    "ru": '⌠🎉⌡ Установить тип возвращаемого значения для запросов о погоде'
                 }))
         .addSubcommand(subcommand =>
             subcommand
@@ -32,13 +32,13 @@ module.exports = {
                     "it": 'appunti',
                     "ru": 'задания'
                 })
-                .setDescription("⌠👤⌡ Define whether tasks will be accessible only on servers or globally")
+                .setDescription("⌠🎉⌡ Define whether tasks will be accessible only on servers or globally")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente',
-                    "es-ES": '⌠👤⌡ Establecer si las tareas estarán disponibles solo en servidores o globalmente',
-                    "fr": '⌠👤⌡ Définissez si les tâches seront disponibles uniquement sur les serveurs ou globalement',
-                    "it": '⌠👤⌡ Imposta se le attività saranno disponibili solo sui server o a livello globale',
-                    "ru": '⌠👤⌡ Установите, будут ли задачи доступны только на серверах или глобально'
+                    "pt-BR": '⌠🎉⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente',
+                    "es-ES": '⌠🎉⌡ Establecer si las tareas estarán disponibles solo en servidores o globalmente',
+                    "fr": '⌠🎉⌡ Définissez si les tâches seront disponibles uniquement sur les serveurs ou globalement',
+                    "it": '⌠🎉⌡ Imposta se le attività saranno disponibili solo sui server o a livello globale',
+                    "ru": '⌠🎉⌡ Установите, будут ли задачи доступны только на серверах или глобально'
                 })),
     async execute(client, user, interaction) {
 
