@@ -30,7 +30,7 @@ module.exports = async function ({ client, message, user, guild }) {
     if (messages.length > 10 && repeticoes < 2)
         await dropUserMessage(user.uid, messages[9].mid)
 
-    if (repeticoes > 3)
+    if (repeticoes > 4)
         nerfa_spam(client, user, guild, message, texto)
 }
 

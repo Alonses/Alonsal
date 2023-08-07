@@ -3,6 +3,8 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
+const { createStatement } = require('../../adm/database/schemas/Statement')
+
 const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 const games = new Map()
@@ -41,15 +43,7 @@ module.exports = {
                         finalizado: false
                     }
 
-                    // fetch(`https://api.dicionario-aberto.net/word/${palavra_escolhida}`)
-                    // .then(res => res.json())
-                    // .then(dados => {
-
-                    // const descricao_formatada = formatar_descricao(dados)
-                    // games[interaction.user.id].descricao = descricao_formatada
-
                     retorna_jogo(client, interaction, user)
-                    // })
                 })
         } else {
 
@@ -109,13 +103,19 @@ function verifica_chute(client, entrada, interaction, user) {
     }
 }
 
-function verifica_palavra(client, interaction, user, entrada) {
+async function verifica_palavra(client, interaction, user, entrada) {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
     if (entrada === games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") === games[interaction.user.id].word) {
-        interaction.reply({ content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({ content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\nVocê ganhou \`B$ 50\` Bufunfas pelo acerto!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         games[interaction.user.id].finalizado = true
+
+        user.misc.money += 50
+        await user.save()
+
+        createStatement(user.uid, `Jogos e entretenimento (forca)`, true, 50, client.timestamp())
+
     } else if (entrada.length > 1 || games[interaction.user.id].erros >= 7) {
         interaction.reply({ content: `${client.emoji(emojis_dancantes)} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
