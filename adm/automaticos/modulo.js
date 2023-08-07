@@ -152,13 +152,12 @@ async function cobra_modulo(client) {
 
     const users = {}, modules = {}, data1 = new Date()
     const active_modules = await getActiveModules()
-    const dia = data1.getDay()
 
     // Somando todos os módulos ativos em chaves únicas por ID de usuário
     active_modules.forEach(modulo => {
 
         // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário
-        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(dia)) {
+        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(data1.getDay())) {
             if (users[modulo.uid]) {
                 users[modulo.uid] += modulo.stats.price
                 modules[modulo.uid]++

@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const { createStatement } = require('../../adm/database/schemas/Statement')
+
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
