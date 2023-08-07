@@ -50,7 +50,8 @@ module.exports = {
                     "fr": 'Le montant à miser',
                     "it": 'L\'importo da scommettere'
                 })
-                .setMinValue(0.01)),
+                .setMinValue(0.01)
+                .setMaxValue(1000)),
     async execute(client, user, interaction) {
 
         const idioma_definido = client.idioma.getLang(interaction)
@@ -93,9 +94,9 @@ module.exports = {
 
         // Registrando as movimentações de bufunfas para o usuário
         if (profit > 0)
-            await createStatement(user.uid, `Apostas em jogos (jokenpo)`, true, profit, client.timestamp())
+            await createStatement(user.uid, `Jogos e entretenimento (jokenpo)`, true, profit, client.timestamp())
         else if (profit < 0)
-            await createStatement(user.uid, `Apostas em jogos (jokenpo)`, false, profit * -1, client.timestamp())
+            await createStatement(user.uid, `Jogos e entretenimento (jokenpo)`, false, profit * -1, client.timestamp())
 
         interaction.reply({ content: mensagem, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
     }

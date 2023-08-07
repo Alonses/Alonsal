@@ -1,5 +1,7 @@
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
+const { createStatement } = require('../database/schemas/Statement')
+const { getUser } = require('../database/schemas/User')
 
 const CHECKS = {
     LIMIT: 5,
@@ -16,6 +18,7 @@ module.exports = async ({ client, message, caso }) => {
 
     // Coletando os dados do usuário alvo
     let user = await getUserRankServer(id_alvo, message.guild.id)
+    let user_data = await getUser(id_alvo)
 
     // Sincronizando o XP interno de todos os servidores que o usuário faz parte
     if (!user.ixp) {
@@ -92,6 +95,7 @@ module.exports = async ({ client, message, caso }) => {
 
     // Coletando o XP atual e somando ao total do usuário
     const bot = await client.getBot()
+    let xp_anterior = user.ixp
 
     if (caso === "messages") {
         user.xp += bot.persis.ranking
@@ -114,6 +118,15 @@ module.exports = async ({ client, message, caso }) => {
         user.ixp += bot.persis.ranking * 0.5
 
         user_global.xp += bot.persis.ranking * 0.5
+    }
+
+    // Bônus em Bufunfas por subir de nível
+    if (parseInt(user.ixp / 1000) !== parseInt(xp_anterior / 1000)) {
+        user_data.misc.money += 350
+
+        // Registrando as movimentações de bufunfas para o usuário
+        createStatement(user_data.uid, `Bônus por subir de nível`, true, 350, client.timestamp())
+        client.sendDM(user_data, { data: `${client.emoji("mc_esmeralda")} | Você subiu de nível!\nComo recompensa, foram creditadas \`B$ 350\` Bufunfas em sua conta, use o comando </bank statement:1020854564657844234> para verificar seu histórico de transações.` }, false)
     }
 
     // Registrando no relatório algumas informações
