@@ -55,8 +55,8 @@ client.discord.on("messageCreate", async (message) => {
 	try { // Atualizando o XP dos usuários
 		const caso = "messages"
 
-		// if (guild.conf.spam) // Sistema anti-spam do servidor
-			// require("./adm/eventos/spam.js")({ client, message, user, guild })
+		if (guild.conf.spam) // Sistema anti-spam do servidor
+			require("./adm/eventos/spam.js")({ client, message, user, guild })
 
 		if (message.content.length > 6 && client.x.ranking) await require("./adm/data/ranking.js")({ client, message, caso })
 

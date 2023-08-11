@@ -169,13 +169,11 @@ async function cobra_modulo(client) {
     })
 
     const ids = Object.keys(users)
-    let total = 0
-
     ids.forEach(async identificador => {
 
         const user = await getUser(identificador)
         user.misc.money -= users[identificador]
-        total += users[identificador]
+        let total = users[identificador]
 
         await user.save()
 
@@ -189,10 +187,10 @@ async function cobra_modulo(client) {
 
         // Registrando as movimentações de bufunfas para o usuário
         await createStatement(user.uid, `Manutenção de módulos ( ${modules[identificador]} )`, false, users[identificador], client.timestamp())
-    })
 
-    const caso = "reback", quantia = total
-    require('./relatorio')({ client, caso, quantia })
+        const caso = "reback", quantia = total
+        await require('./relatorio')({ client, caso, quantia })
+    })
 }
 
 module.exports.atualiza_modulos = atualiza_modulos
