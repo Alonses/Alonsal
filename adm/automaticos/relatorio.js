@@ -5,18 +5,9 @@ module.exports = async ({ client, caso, quantia }) => {
     const bot = await client.getBot()
 
     // Movimentações de bufunfas
-    if (caso === "gerado" || caso === "movido" || caso === "reback") {
-
-        if (caso === "gerado")
-            bot.bfu.gerado += quantia
-
-        if (caso === "movido")
-            bot.bfu.movido += quantia
-
-        if (caso === "reback")
-            bot.bfu.movido += quantia
-
-    } else {
+    if (caso === "gerado" || caso === "movido" || caso === "reback")
+        bot.bfu[caso] += quantia
+    else {
 
         if (caso === "messages") {
             bot.exp.exp_concedido += bot.persis.ranking

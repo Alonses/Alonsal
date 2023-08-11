@@ -5,32 +5,34 @@ let bloqueia_operacao = 0
 
 module.exports = async function ({ client, message, user, guild }) {
 
-    let repeticoes = 0, ult_message = "", ult_timestamp = 0, texto = ""
+    let repeticoes = 0, texto = ""
+
+    const ult_message = {
+        body: null,
+        timestamp: null
+    }
 
     const conteudo = message.content.trim().toLowerCase()
     await createMessage(user.uid, guild.sid, message.channelId, message.id, conteudo, message.createdTimestamp)
 
     const messages = await getUserMessages(user.uid, guild.sid)
+    messages.forEach(internal_message => {
 
-    if (messages.length > 0) {
-        messages.forEach(internal_message => {
+        if (ult_message.body)
+            if (((ult_message.body === internal_message.content) && (((ult_message.timestamp / 1000) - (internal_message.timestamp / 1000)) < 4)) || (((ult_message.timestamp / 1000) - (internal_message.timestamp / 1000)) < 1)) {
+                repeticoes++
 
-            if (ult_message !== 0)
-                if (((ult_message === internal_message.content) && ((ult_timestamp - internal_message.timestamp) < 1000)) || ((ult_timestamp - internal_message.timestamp) < 400)) {
-                    repeticoes++
+                texto += `-> ${internal_message.content} \n\n`
+            }
 
-                    texto += `-> ${internal_message.content} \n\n`
-                }
-
-            ult_message = internal_message.content
-            ult_timestamp = internal_message.timestamp
-        })
-    }
+        ult_message.body = internal_message.content
+        ult_message.timestamp = internal_message.timestamp
+    })
 
     if (messages.length > 10 && repeticoes < 2)
         await dropUserMessage(user.uid, messages[9].mid)
 
-    if (repeticoes > 4)
+    if (repeticoes > 5)
         nerfa_spam(client, user, guild, message, texto)
 }
 
