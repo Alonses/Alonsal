@@ -61,25 +61,25 @@ Clique na imagem abaixo para ser redirecionado ao site!
 
 Para uma melhor visualização dos códigos Alonsais, usamos padrões ao criar elementos da biblioteca do Discord.JS!
 - `EmbedBuilder`
-> Ordem de construção
-> setTitle
-> setColor
-> setAuthor
-> setThumbnail / setImage
-> setDescription
-> setFields / addFields
-> setTimestamp
+> Ordem de construção <br><br>
+> setTitle <br>
+> setColor <br>
+> setAuthor <br>
+> setThumbnail / setImage <br>
+> setDescription <br>
+> setFields / addFields <br>
+> setTimestamp <br>
 > setFooter
 
 -> Caso um embed possua "setadores" que são dependentes de condições lógicas, a inclusão deles serão realizadas após o fim do bloco completo do `EmbedBuilder`.
 
 - `Replyes / Updates`
-> Ordem de construção
-> content
-> embeds
-> files
-> components
-> fetchReply
+> Ordem de construção <br><br>
+> content <br>
+> embeds <br>
+> files <br>
+> components <br>
+> fetchReply <br>
 > ephemeral
 
 <h2>🔣 Fontes 🔣</h2>
