@@ -55,8 +55,11 @@ module.exports = {
         }
 
         const infos_ch = new EmbedBuilder()
-            .setAuthor({ name: canal.name, iconURL: canal.guild.iconURL({ size: 2048 }) })
             .setColor(client.embed_color(user.misc.color))
+            .setAuthor({
+                name: canal.name,
+                iconURL: canal.guild.iconURL({ size: 2048 })
+            })
             .setDescription(topico)
             .addFields(
                 {
@@ -109,6 +112,9 @@ module.exports = {
                     }
                 )
 
-        interaction.reply({ embeds: [infos_ch], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            embeds: [infos_ch],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }

@@ -36,11 +36,20 @@ module.exports = async (client, user, interaction) => {
 
             if (interaction) {
                 if (res.cod === '404' || res.cod === '400')
-                    return interaction.editReply({ content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``, ephemeral: true })
+                    return interaction.editReply({
+                        content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
+                        ephemeral: true
+                    })
                 else if (res.cod === '429')// Erro da API
-                    return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
+                    return interaction.editReply({
+                        content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)),
+                        ephemeral: true
+                    })
                 else if (res.id === 1873107)
-                    return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)), ephemeral: true })
+                    return interaction.editReply({
+                        content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)),
+                        ephemeral: true
+                    })
             } else {
                 if (res.cod === '404' || res.cod === '400')
                     return client.sendDM(user, { data: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\`` }, true)
@@ -222,8 +231,8 @@ module.exports = async (client, user, interaction) => {
                     // Máximos de informações para o clima
                     if (user.misc?.weather || false) {
                         embed_clima
-                            .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
+                            .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .addFields(
                                 {
                                     name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
@@ -258,11 +267,13 @@ module.exports = async (client, user, interaction) => {
                                     inline: true
                                 }
                             )
-                            .setFooter({ text: nota_rodape })
+                            .setFooter({
+                                text: nota_rodape
+                            })
                     } else { // Minímo de informações para o clima
                         embed_clima
-                            .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
+                            .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .addFields(
                                 {
                                     name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
@@ -298,18 +309,26 @@ module.exports = async (client, user, interaction) => {
                                     inline: true
                                 }
                             )
-                            .setFooter({ text: nota_rodape })
+                            .setFooter({
+                                text: nota_rodape
+                            })
                     }
 
                     if (interaction)
-                        return interaction.editReply({ embeds: [embed_clima], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        return interaction.editReply({
+                            embeds: [embed_clima],
+                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        })
                     else
                         return client.sendDM(user, { embed: embed_clima }, true)
                 })
         }) // Erro com a API de clima
         .catch(() => {
             if (interaction)
-                return interaction.editReply({ content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)), ephemeral: true })
+                return interaction.editReply({
+                    content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)),
+                    ephemeral: true
+                })
             else
                 return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)) }, true)
         })

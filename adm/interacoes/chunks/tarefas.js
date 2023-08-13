@@ -39,10 +39,20 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 operador: operador
             }
 
-            if (!interaction.customId)
-                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
-            else
-                interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+            if (!interaction.customId) // Interação original
+                interaction.reply({
+                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                    embeds: [],
+                    components: [client.create_menus(client, interaction, user, data)],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+            else // Interação por botões/menus
+                interaction.update({
+                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                    embeds: [],
+                    components: [client.create_menus(client, interaction, user, data)],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
         }
 
         if (operador === "f|tarefas") {
@@ -57,9 +67,19 @@ module.exports = async ({ client, user, interaction, operador }) => {
             }
 
             if (!interaction.customId)
-                interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+                interaction.reply({
+                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                    embeds: [],
+                    components: [client.create_menus(client, interaction, user, data)],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             else
-                interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+                interaction.update({
+                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                    embeds: [],
+                    components: [client.create_menus(client, interaction, user, data)],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
         }
     } else if (operador.includes("k")) {
 
@@ -78,7 +98,12 @@ module.exports = async ({ client, user, interaction, operador }) => {
             operador: `k.${lista_timestamp}`
         }
 
-        interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+        interaction.update({
+            content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+            embeds: [],
+            components: [client.create_menus(client, interaction, user, data)],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 
     } else {
 
@@ -96,9 +121,16 @@ module.exports = async ({ client, user, interaction, operador }) => {
             operador: `x.${lista_timestamp}`
         }
 
-        const row = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }], interaction)
+        const row = client.create_buttons([
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+        ], interaction)
 
-        interaction.update({ content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1), components: [client.create_menus(client, interaction, user, data), row], ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [] })
+        interaction.update({
+            content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+            embeds: [],
+            components: [client.create_menus(client, interaction, user, data), row],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }
 

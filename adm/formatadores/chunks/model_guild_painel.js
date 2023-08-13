@@ -8,10 +8,13 @@ module.exports = async (client, user, interaction, pagina) => {
     const membro_sv = await client.getUserGuild(interaction, interaction.user.id)
 
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu"))
+        .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor"))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
-        .setFooter({ text: client.tls.phrase(user, "manu.painel.rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
+        .setFooter({
+            text: client.tls.phrase(user, "manu.painel.rodape"),
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
 
     if (typeof pagina === "undefined")
         pagina = 0
@@ -19,18 +22,18 @@ module.exports = async (client, user, interaction, pagina) => {
     if (pagina === 0)
         embed.addFields(
             {
-                name: `**${emoji_button(guild?.conf.conversation)} Alonsal Falador**`,
-                value: "`O Alonsal poderá responder outros usuários se incluirem seu nome em alguma mensagem`",
+                name: `**${emoji_button(guild?.conf.conversation)} ${client.tls.phrase(user, "manu.painel.alonsal_falador")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_falador")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(guild?.conf.broadcast)} Permitir Broadcast**`,
-                value: "`Usuários do servidor podem conversar com o Slondo usando o Alonsal neste servidor através do comando`\n</broadcast:1114316224663396472>",
+                name: `**${emoji_button(guild?.conf.broadcast)} ${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
+                value: `${client.tls.phrase(user, "manu.painel.desc_broadcast")}`,
                 inline: true
             },
             {
-                name: `**${emoji_button(guild?.conf.games)} Anúncio de Games**`,
-                value: "`O Alonsal enviará anúncios de jogos gratuitos automaticamente.`",
+                name: `**${emoji_button(guild?.conf.games)} ${client.tls.phrase(user, "manu.painel.anuncio_games")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_games")}\``,
                 inline: true
             }
         )
@@ -38,18 +41,18 @@ module.exports = async (client, user, interaction, pagina) => {
     if (pagina == 1)
         embed.addFields(
             {
-                name: `**${emoji_button(guild?.conf.tickets)} Denúncias In-server**`,
-                value: "`Usuários podem usar o Alonsal para fazer denúncias dentro do próprio servidor.`",
+                name: `**${emoji_button(guild?.conf.tickets)} ${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(guild?.conf.reports)} Reports Externos**`,
-                value: "`Reportes de usuários mau comportados serão enviados no servidor.`",
+                name: `**${emoji_button(guild?.conf.reports)} ${client.tls.phrase(user, "manu.painel.reports_externos")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_reports")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(guild?.conf.logger)} Log de eventos**`,
-                value: "`Log de eventos do servidor`",
+                name: `**${emoji_button(guild?.conf.logger)} ${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_logger")}\``,
                 inline: true
             }
         )
@@ -57,18 +60,18 @@ module.exports = async (client, user, interaction, pagina) => {
     if (pagina == 2)
         embed.addFields(
             {
-                name: `**${emoji_button(guild?.conf.spam)} Anti-spam**`,
-                value: "`Mensagens que forem consideradas spam serão apagadas e o autor será castigado.`",
+                name: `**${emoji_button(guild?.conf.spam)} ${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_spam")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(guild?.conf.public)} Visível globalmente**`,
-                value: "`O Nome do servidor será exibido no comando`\n</rank global:1018609879562334383>",
+                name: `**${emoji_button(guild?.conf.public)} ${client.tls.phrase(user, "manu.painel.visibilidade_global")}**`,
+                value: `${client.tls.phrase(user, "manu.painel.desc_global")}`,
                 inline: true
             },
             {
-                name: `**${emoji_button(0)} Misterioso**`,
-                value: "`Uma ceira misteriosa será incluida aqui futuramente`",
+                name: `**${emoji_button(0)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
                 inline: true
             }
         )
@@ -106,24 +109,52 @@ module.exports = async (client, user, interaction, pagina) => {
     // Primeira página de botões de configuração do Alonsal
     // Alonsal Falador; Broadcast e Anúncio de games
     if (pagina === 0)
-        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Alonsal Falador', type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '1', disabled: c_buttons[0] }, { id: "guild_painel_button", name: 'Permitir Broadcast', type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '2', disabled: c_buttons[1] }, { id: "guild_painel_button", name: 'Anúncio de Games', type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: '3', disabled: c_buttons[2] }])
+        botoes = botoes.concat([
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '1', disabled: c_buttons[0] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '2', disabled: c_buttons[1] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: '3', disabled: c_buttons[2] }
+        ])
 
     // Segunda página de botões de configuração do Alonsal
     // Denúncias in-server; Reportes externos e Log de eventos
     if (pagina === 1)
-        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Denúncias In-server', type: type_button(guild?.conf.tickets), emoji: emoji_button(guild?.conf.tickets), data: '4', disabled: c_buttons[3] }, { id: "guild_painel_button", name: 'Reports externos', type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: '5', disabled: c_buttons[4] }, { id: "guild_painel_button", name: 'Log de eventos', type: type_button(guild?.conf.logger), emoji: emoji_button(guild?.conf.logger), data: '6', disabled: c_buttons[5] }])
+        botoes = botoes.concat([
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: type_button(guild?.conf.tickets), emoji: emoji_button(guild?.conf.tickets), data: '4', disabled: c_buttons[3] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: '5', disabled: c_buttons[4] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: type_button(guild?.conf.logger), emoji: emoji_button(guild?.conf.logger), data: '6', disabled: c_buttons[5] }
+        ])
 
     // Terceira página de botões de configuração do Alonsal
     // Módulo anti-spam e Visibilidade Global
     if (pagina === 2)
-        botoes = botoes.concat([{ id: "guild_painel_button", name: 'Anti-spam', type: type_button(guild?.conf.spam), emoji: emoji_button(guild?.conf.spam), data: '7', disabled: c_buttons[6] }, { id: "guild_painel_button", name: 'Visível Globalmente', type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '8', disabled: c_buttons[7] }, { id: "guild_painel_button", name: 'Misterioso', type: type_button(0), emoji: emoji_button(0), data: 'X', disabled: true }])
+        botoes = botoes.concat([
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: type_button(guild?.conf.spam), emoji: emoji_button(guild?.conf.spam), data: '7', disabled: c_buttons[6] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '8', disabled: c_buttons[7] },
+            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(0), data: 'X', disabled: true }
+        ])
 
-    botoes.push({ id: "menu_guild_painel_button", name: '▶️', type: 0, data: `${pagina}.1`, disabled: c_menu[1] })
+    botoes.push({
+        id: "menu_guild_painel_button",
+        name: '▶️',
+        type: 0,
+        data: `${pagina}.1`,
+        disabled: c_menu[1]
+    })
 
     const row = client.create_buttons(botoes, interaction)
 
     if (!interaction.customId)
-        interaction.reply({ content: "", embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            content: "",
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     else
-        interaction.update({ content: "", embeds: [embed], components: [row], ephemeral: true })
+        interaction.update({
+            content: "",
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
 }

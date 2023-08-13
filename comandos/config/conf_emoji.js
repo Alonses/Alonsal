@@ -35,20 +35,30 @@ module.exports = {
             .setTitle("Todos os emojis registrados")
             .setColor(0x29BB8E)
             .setDescription(emojis_registrados)
-            .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
+            .setFooter({
+                text: `Quantidade: ${Object.keys(emojis).length}`
+            })
 
         if (emojis_registrados_2.length < 1)
-            interaction.reply({ embeds: [emojis_global] })
+            interaction.reply({
+                embeds: [emojis_global]
+            })
 
         if (emojis_registrados_2.length > 0) {
             const emojis_global2 = new EmbedBuilder()
                 .setTitle("Todos os emojis registrados")
                 .setColor(0x29BB8E)
                 .setDescription(emojis_registrados_2)
-                .setFooter({ text: `Quantidade: ${Object.keys(emojis).length}` })
+                .setFooter({
+                    text: `Quantidade: ${Object.keys(emojis).length}`
+                })
 
-            interaction.channel.send({ embeds: [emojis_global2] })
-            interaction.reply({ embeds: [emojis_global] })
+            interaction.channel.send({
+                embeds: [emojis_global2]
+            })
+            interaction.reply({
+                embeds: [emojis_global]
+            })
         }
     }
 }

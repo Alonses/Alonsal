@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
     await guild.save()
 
     if (guild.conf.spam)
-        interaction.reply({ content: `${client.defaultEmoji("guard")} | O módulo anti-spam foi ativo! <#${guild.logger.channel}>\nO Canal mencionado será usado para o logger ( </conf log:1094346210636214304> ) também caso ele seja ativado.\n\nSe você usar o comando do logger mencionando um outro canal, o anti-spam enviará todos os relatórios no mesmo canal do logger, e vice-versa\n(ambos os módulos utilizam o mesmo canal ${client.emoji("epic_embed_fail2")} )`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.spam.ativado", true, client.defaultEmoji("guard"), [`<#${guild.logger.channel}>`, client.emoji("epic_embed_fail2")])
     else
-        interaction.reply({ content: `${client.defaultEmoji("guard")} | O módulo anti-spam foi desativado.`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.spam.desativado", true, client.defaultEmoji("guard"))
 }

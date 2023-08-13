@@ -125,7 +125,9 @@ module.exports = {
             user.social.steam = entrada
             link_comando = "</steam:1018609879562334384>"
 
-            await interaction.deferReply({ ephemeral: true })
+            await interaction.deferReply({
+                ephemeral: true
+            })
 
             // Verificando se o local existe antes de salvar
             await fetch(`https://steamcommunity.com/id/${user.social.steam}`)
@@ -133,7 +135,10 @@ module.exports = {
                 .then(async res => {
 
                     if (res.includes("The specified profile could not be found.")) {
-                        interaction.editReply({ content: ":mag: | O nome fornecido não é utilizado por nenhum perfil na Steam, por favor, tente novamente.", ephemeral: true })
+                        interaction.editReply({
+                            content: client.tls.phrase(user, "util.steam.nome_invalido", 1),
+                            ephemeral: true
+                        })
                         invalido = true
                     }
                 })
@@ -143,7 +148,9 @@ module.exports = {
             link_comando = "</lastfm:1018609879512006796>"
         } else if (interaction.options.getSubcommand() === "locale") {
 
-            await interaction.deferReply({ ephemeral: true })
+            await interaction.deferReply({
+                ephemeral: true
+            })
 
             user.misc.locale = entrada
             plataforma = "locale"
@@ -154,7 +161,10 @@ module.exports = {
                 .then(async res => {
 
                     if (res.cod === '404') {
-                        interaction.editReply({ content: ":mag: | Não encontrei nenhum local com este nome, por favor, tente novamente.", ephemeral: true })
+                        interaction.editReply({
+                            content: client.tls.phrase(user, "util.tempo.sem_local", 1),
+                            ephemeral: true
+                        })
                         invalido = true
                     }
                 })
@@ -168,9 +178,12 @@ module.exports = {
             await user.save()
 
             if (plataforma !== "locale")
-                interaction.reply({ content: client.replace(client.tls.phrase(user, "util.lastfm.new_link", client.emoji(emojis_dancantes)), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando]), ephemeral: true })
+                client.tls.reply(interaction, user, "util.lastfm.new_link", true, client.emoji(emojis_dancantes), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando])
             else // Link de local do /tempo
-                interaction.editReply({ content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada), ephemeral: true })
+                interaction.editReply({
+                    content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada),
+                    ephemeral: true
+                })
         }
     }
 }

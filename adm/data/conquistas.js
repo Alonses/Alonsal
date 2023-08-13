@@ -22,7 +22,9 @@ module.exports = async (client, modo, id_alvo, interaction) => {
 
         if (user?.conf.notify || true) // Notificando o usuário alvo caso ele receba notificações em DM do bot
             client.discord.users.fetch(user.id, false).then((user_interno) => {
-                user_interno.send('Você acabou de ganhar uma Conquista!')
+                user_interno.send({
+                    content: "Você acabou de ganhar uma Conquista!"
+                })
             })
     }
 }

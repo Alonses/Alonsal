@@ -44,7 +44,7 @@ module.exports = {
 
         // Validando se o usuário possui badges
         if (badges.length < 1)
-            return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
+            return client.tls.reply(interaction, user, "dive.badges.error_1", true, 1)
 
         let all_badges = []
 
@@ -58,13 +58,20 @@ module.exports = {
         }
 
         if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
-            return interaction.reply({ content: client.tls.phrase(user, "dive.badges.cabecalho_menu"), components: [client.create_menus(client, interaction, user, data)], ephemeral: true })
+            return interaction.reply({
+                content: client.tls.phrase(user, "dive.badges.cabecalho_menu"),
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: true
+            })
         else {
             user.misc.fixed_badge = null
             await user.save()
         }
 
         // Removendo a badge fixada
-        interaction.reply({ content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`, ephemeral: true })
+        interaction.reply({
+            content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`,
+            ephemeral: true
+        })
     }
 }

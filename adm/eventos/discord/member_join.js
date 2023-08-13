@@ -19,8 +19,10 @@ module.exports = async (client, dados) => {
                 inline: true
             }
         )
-        .setFooter({ text: user_alvo.username })
         .setTimestamp()
+        .setFooter({
+            text: user_alvo.username
+        })
 
     // User é um BOT
     if (user_alvo.bot)

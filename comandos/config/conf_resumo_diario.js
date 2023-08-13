@@ -10,6 +10,9 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const embed = await require('../../adm/generators/relatorio')({ client })
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: true
+        })
     }
 }

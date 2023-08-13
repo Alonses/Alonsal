@@ -15,7 +15,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmando a exclusão
 
     if (operacao === 0)
-        return interaction.update({ content: client.tls.phrase(user, "manu.data.operacao_cancelada", 11), components: [], ephemeral: true })
+        return interaction.update({
+            content: client.tls.phrase(user, "manu.data.operacao_cancelada", 11),
+            components: [],
+            ephemeral: true
+        })
 
     // Realizando a exclusão dos dados do usuário
     clear_data({ client, user, interaction, operador, caso })

@@ -62,7 +62,7 @@ module.exports = {
 
                         emoji.delete()
                             .then(() =>
-                                interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.emojis.emoji_removido", 13), nome), ephemeral: true }))
+                                client.tls.reply(interaction, user, "mode.emojis.emoji_removido", true, 13, nome))
                             .catch(() =>
                                 client.tls.reply(interaction, user, "mode.emojis.emoji_error_remover", true, 0)
                             )

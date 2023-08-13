@@ -38,7 +38,9 @@ module.exports = {
         if (interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "inic.error.comando_restrito", true, 18)
 
-        await interaction.deferReply({ ephemeral: true })
+        await interaction.deferReply({
+            ephemeral: true
+        })
 
         const item = {
             nome: interaction.options.getString("nome"),

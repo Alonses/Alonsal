@@ -40,7 +40,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 3) {
 
         if (!guild.games.channel || !guild.games.role)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal e um cargo o comando </notify config:1018632996787589283> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "game.anuncio.falta_vinculo", 0),
+                ephemeral: true
+            })
         else {
             // Ativa ou desativa o anúncio de games gratuitos no servidor
             if (typeof guild.conf.games !== "undefined")
@@ -51,7 +54,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 4) {
 
         if (!guild.reports.channel)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal com o comando </conf ticket:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "mode.denuncia.falta_vinculo", 0),
+                ephemeral: true
+            })
         else {
             // Ativa ou desativa a função de denúncias in-server pelo bot
             if (typeof guild.conf.tickets !== "undefined")
@@ -62,7 +68,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 5) {
 
         if (!guild.tickets.category)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar uma categoria com o comando </conf report:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "mode.report.falta_vinculo", 0),
+                ephemeral: true
+            })
         else {
             // Ativa ou desativa o relatório de outros usuários mau comportados no servidor
             if (typeof guild.conf.reports !== "undefined")
@@ -73,7 +82,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 6) {
 
         if (!guild.logger.channel)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal com o comando </conf log:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
+                ephemeral: true
+            })
         else {
             // Ativa ou desativa o relatório de eventos do servidor
             if (typeof guild.conf.logger !== "undefined")
@@ -84,7 +96,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 7) {
 
         if (!guild.logger.channel)
-            return interaction.update({ content: `:octagonal_sign: | É preciso configurar um canal com o comando </conf log:1094346210636214304> antes de poder ativar pelo painel.`, ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
+                ephemeral: true
+            })
         else {
             // Ativa ou desativa o módulo anti-spam do servidor
             if (typeof guild.conf.spam !== "undefined")

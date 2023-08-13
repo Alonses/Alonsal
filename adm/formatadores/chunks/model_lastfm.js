@@ -36,7 +36,9 @@ module.exports = async ({ client, user, interaction }) => {
     const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
     // Aumentando o tempo de duração da resposta
-    interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.deferReply({
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 
     fetch(usuario_alvo)
         .then(response => response.text())
@@ -52,6 +54,7 @@ module.exports = async ({ client, user, interaction }) => {
                     if (res.includes("<div class=\"about-me-header\">")) {
                         descricao = formata_texto(`- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"`)
                         descricao = `${descricao.split("</span>")[0]}"`
+                        descricao = descricao.replace(/\s{2,}/g, ' ').replace("\" ", "\"")
                     }
 
                     if (res.includes("<span class=\"header-scrobble-since\">"))
@@ -152,12 +155,14 @@ module.exports = async ({ client, user, interaction }) => {
                                 }
                             }
 
-                            const row = client.create_buttons([{ name: "LastFM", value: usuario_alvo, type: 4, emoji: "🌐" }], interaction)
+                            const row = client.create_buttons([
+                                { name: "LastFM", value: usuario_alvo, type: 4, emoji: "🌐" }
+                            ], interaction)
 
                             const embed = new EmbedBuilder()
                                 .setTitle(client.replace(client.tls.phrase(user, "util.lastfm.perfil_musical"), nome))
-                                .setThumbnail(avatar)
                                 .setColor(client.embed_color(user_alvo.misc.color))
+                                .setThumbnail(avatar)
                                 .addFields(
                                     {
                                         name: `${client.defaultEmoji("instrument")} ${client.tls.phrase(user, "util.lastfm.geral")}`,
@@ -188,7 +193,11 @@ module.exports = async ({ client, user, interaction }) => {
                                     }
                                 )
 
-                            interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                            interaction.editReply({
+                                embeds: [embed],
+                                components: [row],
+                                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                            })
                         })
                 } else
                     client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode, 0), 1)

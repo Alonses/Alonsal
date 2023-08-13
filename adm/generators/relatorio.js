@@ -22,6 +22,7 @@ module.exports = async ({ client }) => {
     const embed = new EmbedBuilder()
         .setTitle("> Resumo diário :mega:")
         .setColor(0x29BB8E)
+        .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
         .addFields(
             {
                 name: ":gear: **Comandos**",
@@ -56,9 +57,16 @@ module.exports = async ({ client }) => {
                 inline: true
             }
         )
-        .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
-        .addFields({ name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`, value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`, inline: false })
-        .addFields({ name: `:satellite: Ativo desde`, value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`, inline: false })
+        .addFields({
+            name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`,
+            value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`,
+            inline: false
+        })
+        .addFields({
+            name: `:satellite: Ativo desde`,
+            value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
+            inline: false
+        })
 
     return embed
 }

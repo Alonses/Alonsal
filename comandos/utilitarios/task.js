@@ -207,7 +207,10 @@ module.exports = {
                             await listas[0].save()
                         }
 
-                        return interaction.reply({ content: `${client.tls.phrase(user, "util.tarefas.tarefa_adicionada", client.defaultEmoji("paper"))} \`${listas[0].name}\`!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        return interaction.reply({
+                            content: `${client.tls.phrase(user, "util.tarefas.tarefa_adicionada", client.defaultEmoji("paper"))} \`${listas[0].name}\`!`,
+                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        })
                     } else {
 
                         const data = {
@@ -216,7 +219,11 @@ module.exports = {
                             timestamp: timestamp
                         }
 
-                        interaction.reply({ content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        interaction.reply({
+                            content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 1),
+                            components: [client.create_menus(client, interaction, user, data)],
+                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        })
                     }
                 } else {
 
@@ -231,10 +238,10 @@ module.exports = {
                     if (check_list.length > 0) // Verificando se o nome da nova lista não existe ainda
                         return client.tls.reply(interaction, user, "util.tarefas.lista_repetida", true, 0)
 
-                    // Criando listas
+                    // Criando a lista
                     createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, timestamp)
 
-                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_criada", client.defaultEmoji("paper")), ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    client.tls.reply(interaction, user, "util.tarefas.lista_criada", client.decider(user?.conf.ghost_mode, 0), client.defaultEmoji("paper"))
                 }
             } else {
 
@@ -258,7 +265,11 @@ module.exports = {
                         values: listas
                     }
 
-                    interaction.reply({ content: client.tls.phrase(user, "util.tarefas.lista_e", 1), components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({
+                        content: client.tls.phrase(user, "util.tarefas.lista_e", 1),
+                        components: [client.create_menus(client, interaction, user, data)],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
                 }
             }
         }

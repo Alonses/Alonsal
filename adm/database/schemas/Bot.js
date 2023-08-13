@@ -42,9 +42,14 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Bot", schema)
 
 async function getBot(bit) {
-    if (!await model.exists({ bit: bit })) await model.create({ bit: bit })
+    if (!await model.exists({ bit: bit }))
+        await model.create({
+            bit: bit
+        })
 
-    return model.findOne({ bit: bit })
+    return model.findOne({
+        bit: bit
+    })
 }
 
 async function dailyReset(bit) {
@@ -69,7 +74,9 @@ async function dailyReset(bit) {
 }
 
 async function dropBot(bit) {
-    await model.findOneAndDelete({ bit: bit })
+    await model.findOneAndDelete({
+        bit: bit
+    })
 }
 
 async function migrateData(client) {

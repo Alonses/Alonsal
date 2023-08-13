@@ -29,8 +29,18 @@ module.exports = async ({ client, user, interaction }) => {
         values: modulos
     }
 
-    if (!interaction.customId)
-        interaction.reply({ content: data.title, components: [client.create_menus(client, interaction, user, data)], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-    else
-        interaction.update({ content: data.title, components: [client.create_menus(client, interaction, user, data)], embeds: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    if (!interaction.customId) // Interação original
+        interaction.reply({
+            content: data.title,
+            embeds: [],
+            components: [client.create_menus(client, interaction, user, data)],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
+    else // Interação por botões/menus
+        interaction.update({
+            content: data.title,
+            embeds: [],
+            components: [client.create_menus(client, interaction, user, data)],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 }

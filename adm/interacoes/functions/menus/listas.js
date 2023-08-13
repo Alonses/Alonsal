@@ -18,5 +18,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     task.g_timestamp = timestamp_lista
     await task.save()
 
-    interaction.update({ content: client.replace(client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper")), lista.name), components: [], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.update({
+        content: client.replace(client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper")), lista.name),
+        components: [],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 }

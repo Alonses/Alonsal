@@ -19,7 +19,9 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }], interaction)
+        const row = client.create_buttons([
+            { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }
+        ], interaction)
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "manu.convite.titulo"))
@@ -27,6 +29,10 @@ module.exports = {
             .setImage("https://i.imgur.com/NqmwCA9.png")
             .setDescription(client.tls.phrase(user, "manu.convite.convite"))
 
-        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

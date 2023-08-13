@@ -67,6 +67,9 @@ module.exports = {
         const frase_idioma = idiomasMap[matches[0]][1]
 
         await user.save()
-        interaction.reply({ content: frase_idioma, ephemeral: true })
+        interaction.reply({
+            content: frase_idioma,
+            ephemeral: true
+        })
     }
 }

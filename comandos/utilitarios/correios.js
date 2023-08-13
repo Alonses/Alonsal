@@ -55,9 +55,15 @@ module.exports = {
                         .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(user, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
 
                     if (nota_rodape.length > 1)
-                        embed.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                        embed.setFooter({
+                            text: nota_rodape,
+                            iconURL: interaction.user.avatarURL({ dynamic: true })
+                        })
 
-                    return interaction.reply({ embeds: [embed], ephemeral: true })
+                    return interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    })
                 } else
                     return client.tls.reply(interaction, user, "util.rastreio.codigo_invalido", true, 1)
             })

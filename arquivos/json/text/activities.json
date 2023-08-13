@@ -695,6 +695,26 @@
         {
             "type": 2,
             "text": "commands_repl comandos disparados!"
+        },
+        {
+            "type": 0,
+            "text": "The Logical Song - Supertramp"
+        },
+        {
+            "type": 0,
+            "text": "Breakfast In America - Supertramp"
+        },
+        {
+            "type": 0,
+            "text": "Knowing Me, Knowing You - ABBA"
+        },
+        {
+            "type": 0,
+            "text": "Crazy Train - Ozzy Osbourne"
+        },
+        {
+            "type": 0,
+            "text": "Cars - Gary Numan"
         }
     ]
 }

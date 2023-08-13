@@ -18,7 +18,10 @@ module.exports = async (client, user, dados, interaction) => {
 
                 if (res.status)
                     if (interaction)
-                        return interaction.editReply({ content: client.tls.phrase(user, "util.history.sem_entradas_valor"), ephemeral: true })
+                        return interaction.editReply({
+                            content: client.tls.phrase(user, "util.history.sem_entradas_valor"),
+                            ephemeral: true
+                        })
                     else
                         return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
@@ -41,12 +44,18 @@ module.exports = async (client, user, dados, interaction) => {
 
                 const embed_eventos = new EmbedBuilder()
                     .setTitle(client.tls.phrase(user, "util.history.acontecimentos_1"))
-                    .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                     .setColor(client.embed_color(user.misc.color))
+                    .setAuthor({
+                        name: "History",
+                        iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png"
+                    })
                     .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                 if (interaction)
-                    return interaction.editReply({ embeds: [embed_eventos], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    return interaction.editReply({
+                        embeds: [embed_eventos],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
                 else
                     return client.sendDM(user, { embed: embed_eventos }, true)
             })
@@ -59,32 +68,53 @@ module.exports = async (client, user, dados, interaction) => {
 
                 if (res.status)
                     if (interaction)
-                        return interaction.editReply({ content: client.tls.phrase(user, "util.history.sem_entradas_valor"), ephemeral: true })
+                        return interaction.editReply({
+                            content: client.tls.phrase(user, "util.history.sem_entradas_valor"),
+                            ephemeral: true
+                        })
                     else
                         return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
-                const row = client.create_buttons([{ name: "Ver mais detalhes", value: res.fonte, type: 4, emoji: "🌐" }], interaction ?? "")
+                const row = client.create_buttons([
+                    { name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), value: res.fonte, type: 4, emoji: "🌐" }
+                ], interaction ?? "")
 
                 const acontecimento = new EmbedBuilder()
                     .setTitle(formata_texto(res.acontecimento))
-                    .setAuthor({ name: "History", iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png" })
                     .setColor(client.embed_color(user.misc.color))
-                    .setDescription(formata_texto(res.descricao))
+                    .setAuthor({
+                        name: "History",
+                        iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png"
+                    })
                     .setImage(res.imagem)
+                    .setDescription(formata_texto(res.descricao))
 
                 if (interaction)
-                    acontecimento.setFooter({ text: res.data_acontecimento, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                    acontecimento.setFooter({
+                        text: res.data_acontecimento,
+                        iconURL: interaction.user.avatarURL({ dynamic: true })
+                    })
                 else
-                    acontecimento.setFooter({ text: res.data_acontecimento, iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+                    acontecimento.setFooter({
+                        text: res.data_acontecimento,
+                        iconURL: client.discord.user.avatarURL({ dynamic: true })
+                    })
 
                 if (interaction)
-                    interaction.editReply({ embeds: [acontecimento], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.editReply({
+                        embeds: [acontecimento],
+                        components: [row],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
                 else
                     client.sendDM(user, { embed: acontecimento, components: row }, true)
             })
             .catch(() => {
                 if (interaction)
-                    interaction.editReply({ content: client.tls.phrase(user, "util.history.erro_eventos"), ephemeral: true })
+                    interaction.editReply({
+                        content: client.tls.phrase(user, "util.history.erro_eventos"),
+                        ephemeral: true
+                    })
                 else
                     client.sendDM(user, { data: client.tls.phrase(user, "util.history.erro_eventos") }, true)
             })

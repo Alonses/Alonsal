@@ -40,7 +40,9 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     // Aumentando o tempo de duração da resposta
-    interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.deferReply({
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 
     fetch(usuario_alvo)
         .then(response => response.text())
@@ -289,11 +291,17 @@ module.exports = async ({ client, user, interaction }) => {
                 if (reviews_user !== "-")
                     reviews_user = `${client.defaultEmoji("pen")} **${client.tls.phrase(user, "util.steam.analises")}: **\`${reviews_user}\``
 
-                const row = client.create_buttons([{ name: "Steam", value: usuario_alvo, type: 4, emoji: "🌐" }], interaction)
+                const row = client.create_buttons([
+                    { name: "Steam", value: usuario_alvo, type: 4, emoji: "🌐" }
+                ], interaction)
 
                 const usuario_steam = new EmbedBuilder()
                     .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
-                    .setAuthor({ name: "Steam", iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0" })
+                    .setColor(client.embed_color(user_alvo.misc.color))
+                    .setAuthor({
+                        name: "Steam",
+                        iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0"
+                    })
                     .setThumbnail(avatar_user)
                     .addFields(
                         {
@@ -301,11 +309,13 @@ module.exports = async ({ client, user, interaction }) => {
                             value: `:red_envelope: **${insignias_user} ${client.tls.phrase(user, "util.steam.insignias")}**`,
                             inline: true
                         })
-                    .setColor(client.embed_color(user_alvo.misc.color))
 
                 // Adicionando uma nota no rodape do perfil
                 if (nota_rodape !== "")
-                    usuario_steam.setFooter({ text: nota_rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                    usuario_steam.setFooter({
+                        text: nota_rodape,
+                        iconURL: interaction.user.avatarURL({ dynamic: true })
+                    })
 
                 // Jogos do usuário
                 if (jogos_user !== "-")
@@ -390,7 +400,11 @@ module.exports = async ({ client, user, interaction }) => {
                         }
                     )
 
-                interaction.editReply({ embeds: [usuario_steam], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.editReply({
+                    embeds: [usuario_steam],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
 
             } catch (err) {
                 client.error({ err })

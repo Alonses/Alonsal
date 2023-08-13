@@ -35,7 +35,9 @@ module.exports = {
             data = `?data=${interaction.options.getString("data")}`
 
         // Aumentando o tempo de duração da resposta
-        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        await interaction.deferReply({
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 
         if (interaction.options.getSubcommand() === "lista") // Lista de eventos
             return require('../../adm/formatadores/chunks/model_history.js')(client, user, data, interaction)

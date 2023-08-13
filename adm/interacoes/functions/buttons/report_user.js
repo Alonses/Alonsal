@@ -27,7 +27,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
         alvo.archived = false
         await alvo.save()
 
-        interaction.update({ content: client.tls.phrase(user, "mode.report.usuario_add", client.defaultEmoji("guard")), embeds: [], components: [], ephemeral: true })
+        interaction.update({
+            content: client.tls.phrase(user, "mode.report.usuario_add", client.defaultEmoji("guard")),
+            embeds: [],
+            components: [],
+            ephemeral: true
+        })
         require('../../../automaticos/dispara_reporte')({ client, alvo })
     }
 
@@ -37,6 +42,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         alvo.archived = false
         await alvo.save()
 
-        interaction.update({ content: client.tls.phrase(user, "mode.report.adicionado_silenciosamente", client.defaultEmoji("guard")), embeds: [], components: [], ephemeral: true })
+        interaction.update({
+            content: client.tls.phrase(user, "mode.report.adicionado_silenciosamente", client.defaultEmoji("guard")),
+            embeds: [],
+            components: [],
+            ephemeral: true
+        })
     }
 }

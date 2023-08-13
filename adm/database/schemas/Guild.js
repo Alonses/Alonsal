@@ -32,28 +32,41 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Guild", schema)
 
 async function getGuild(sid) {
-    if (!await model.exists({ sid: sid })) await model.create({ sid: sid })
+    if (!await model.exists({ sid: sid }))
+        await model.create({
+            sid: sid
+        })
 
-    return model.findOne({ sid: sid })
+    return model.findOne({
+        sid: sid
+    })
 }
 
 async function getGameChannels() {
     // Lista todos os servidores com anúncios de games ativos
-    return model.find({ "conf.games": true })
+    return model.find({
+        "conf.games": true
+    })
 }
 
 async function getGameChannelById(id) {
-    return model.findOne({ "games.channel": id })
+    return model.findOne({
+        "games.channel": id
+    })
 }
 
 async function getReportChannels() {
     // Lista todos os servidores com reports de usuários ativos
-    return model.find({ "conf.reports": true })
+    return model.find({
+        "conf.reports": true
+    })
 }
 
 async function getPublicGuilds() {
     // Lista todos os servidores com visibilidade ativa globalmente
-    const servidores = await model.find({ "conf.public": true })
+    const servidores = await model.find({
+        "conf.public": true
+    })
     const lista = []
 
     servidores.forEach(servidor => {

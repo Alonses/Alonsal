@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
     await guild.save()
 
     if (guild.conf.logger)
-        interaction.reply({ content: `${client.defaultEmoji("guard")} | O log de eventos do servidor agora está ativo, todos os eventos serão enviados no canal <#${guild.logger.channel}>.`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.logger.ativado", true, client.defaultEmoji("guard"), `<#${guild.logger.channel}>`)
     else
-        interaction.reply({ content: ":o: | O log de eventos do servidor agora está desativado\nUse o </panel guild:1107163338930126869>, ou o comando </conf log:1094346210636214304> mencionando um canal para ativar novamente!", ephemeral: true })
+        client.tls.reply(interaction, user, "mode.logger.desativado", true, 11)
 }

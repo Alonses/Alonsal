@@ -1,11 +1,24 @@
 const { status } = require('../../arquivos/json/text/emojis.json')
 
-function reply(interaction, user, target, ephemeral, type) {
+function reply(interaction, user, target, ephemeral, type, replace) {
 
     let phrase = translate(user, target)
     phrase = check_emojis(phrase, type)
 
-    interaction.reply({ content: phrase, ephemeral: ephemeral })
+    if (replace) { // Substitui partes do texto por outros valores
+        if (typeof replace === "object") { // Array com vários dados para alterar
+            while (replace.length > 0) {
+                phrase = phrase.replace("auto_repl", replace[0])
+                replace.shift()
+            }
+        } else // Apenas um valor para substituição
+            phrase = phrase.replaceAll("auto_repl", replace)
+    }
+
+    interaction.reply({
+        content: phrase,
+        ephemeral: ephemeral
+    })
 }
 
 function editReply(interaction, user, target, ephemeral, type) {
@@ -13,7 +26,10 @@ function editReply(interaction, user, target, ephemeral, type) {
     let phrase = translate(user, target)
     phrase = check_emojis(phrase, type)
 
-    return interaction.editReply({ content: phrase, ephemeral: ephemeral })
+    return interaction.editReply({
+        content: phrase,
+        ephemeral: ephemeral
+    })
 }
 
 function phrase(user, target, type) {
@@ -30,17 +46,26 @@ function report(interaction, user, target, ephemeral, type, button) {
     phrase = check_emojis(phrase, type)
 
     if (button) // Valida se a interação partiu de um botão
-        interaction.update({ content: phrase, ephemeral: ephemeral, embeds: [], components: [] })
+        interaction.update({
+            content: phrase,
+            embeds: [],
+            components: [],
+            ephemeral: ephemeral
+        })
     else
-        interaction.reply({ content: phrase, ephemeral: ephemeral })
+        interaction.reply({
+            content: phrase,
+            ephemeral: ephemeral
+        })
 }
 
-function translate(user, target) {
+function translate(alvo, target) {
 
-    const idioma_user = user.lang
+    // Pode ser usado para referenciar usuários ou servidores
+    const idioma_alvo = alvo.lang
 
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../arquivos/idiomas/${idioma_user}.json`)
+    let { data } = require(`../../arquivos/idiomas/${idioma_alvo}.json`)
 
     try { // Buscando o item no idioma padrão (pt-br)
         if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])

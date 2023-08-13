@@ -17,7 +17,10 @@ module.exports = {
 
         acompanha_scrobble(client, user.social.lastfm)
 
-        interaction.reply({ content: `${client.emoji(emojis_dancantes)} | O ${client.user().username} agora está acompanhando os seus Scrobbles\nPare de ouvir as músicas por alguns segundos para desligar o acompanhamento.`, ephemeral: true })
+        interaction.reply({
+            content: `${client.emoji(emojis_dancantes)} | O ${client.user().username} agora está acompanhando os seus Scrobbles\nPare de ouvir as músicas por alguns segundos para desligar o acompanhamento.`,
+            ephemeral: true
+        })
         client.notify(process.env.channel_feeds, `:radio: | O ${client.user().username} agora está acompanhando os Scrobbles de ${interaction.user}.`)
     }
 }

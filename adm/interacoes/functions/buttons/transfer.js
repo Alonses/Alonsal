@@ -27,13 +27,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const user_i = await client.getCachedUser(alvo.uid)
 
     // Registrando as movimentações de bufunfas para os usuários
-    await createStatement(user.uid, `Depósito enviado para ${user_i.username}`, false, bufunfas, client.timestamp())
-    await createStatement(alvo.uid, `Depósito recebido de ${interaction.user.username}`, true, bufunfas, client.timestamp())
+    await createStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas, client.timestamp())
+    await createStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas, client.timestamp())
 
     const caso = "movido", quantia = bufunfas
     require('../../../automaticos/relatorio')({ client, caso, quantia })
 
-    interaction.update({ content: `${client.replace(client.tls.phrase(user, "misc.pay.sucesso", [9, 10]), client.locale(bufunfas))} <@!${alvo.uid}>`, ephemeral: client.decider(user?.conf.ghost_mode, 0), embeds: [], components: [] })
+    interaction.update({
+        content: `${client.replace(client.tls.phrase(user, "misc.pay.sucesso", [9, 10]), client.locale(bufunfas))} <@!${alvo.uid}>`,
+        embeds: [],
+        components: [],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 
     // Notificando o usuário que recebeu as Bufunfas
     client.sendDM(alvo, { data: client.replace(client.tls.phrase(alvo, "misc.pay.notifica", client.emoji(emojis_dancantes)), [user.uid, client.locale(bufunfas)]) })

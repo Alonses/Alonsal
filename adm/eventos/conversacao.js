@@ -30,7 +30,9 @@ module.exports = async function ({ client, message, text }) {
                 texto = texto.replace("user_replace", message.author.id)
 
             libera_conversacao = true
-            return message.channel.send(texto)
+            return message.channel.send({
+                content: texto
+            })
         }
 
         cleverbot(text).then(res => {
@@ -38,7 +40,9 @@ module.exports = async function ({ client, message, text }) {
             conversations.push(res.trim())
 
             setTimeout(() => {
-                message.channel.send(res)
+                message.channel.send({
+                    content: res
+                })
 
                 if (conversations.length > 100) {
                     conversations.shift()

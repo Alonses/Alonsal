@@ -127,12 +127,18 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(titulo)
             .setColor(client.embed_color(user.misc.color))
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setAuthor({
+                name: interaction.user.username,
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
             .setDescription(`${conversao_valida}${dica_conversao}`)
 
         if (aviso.length > 0)
             embed.setFooter(aviso)
 
-        interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }

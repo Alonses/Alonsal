@@ -8,9 +8,11 @@ module.exports = async ({ client, user, interaction }) => {
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
 
     if (!url_avatar)
-        return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_avatar"), ephemeral: true })
+        return client.tls.reply(interaction, user, "util.avatar.sem_avatar", true)
 
-    const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_avatar }])
+    const row = client.create_buttons([
+        { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_avatar }
+    ])
 
     const embed = new EmbedBuilder()
         .setTitle(`> ${user_alvo.username}`)
@@ -18,5 +20,9 @@ module.exports = async ({ client, user, interaction }) => {
         .setImage(url_avatar)
         .setDescription(client.tls.phrase(user, "util.avatar.download_avatar"))
 
-    interaction.reply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.reply({
+        embeds: [embed],
+        components: [row],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 }

@@ -122,11 +122,11 @@ module.exports = async ({ client, message, caso }) => {
 
     // Bônus em Bufunfas por subir de nível
     if (parseInt(user.ixp / 1000) !== parseInt(xp_anterior / 1000)) {
-        user_data.misc.money += 350
+        user_data.misc.money += 250
 
         // Registrando as movimentações de bufunfas para o usuário
-        createStatement(user_data.uid, `Bônus por subir de nível`, true, 350, client.timestamp())
-        client.sendDM(user_data, { data: `${client.emoji("mc_esmeralda")} | Você subiu de nível!\nComo recompensa, foram creditadas \`B$ 350\` Bufunfas em sua conta, use o comando </bank statement:1020854564657844234> para verificar seu histórico de transações.` }, false)
+        createStatement(user_data.uid, "misc.b_historico.nivel", true, 250, client.timestamp())
+        client.sendDM(user_data, { data: client.tls.phrase(user, "misc.b_historico.nivel_descricao", client.emoji("mc_esmeralnda")) }, false)
     }
 
     // Registrando no relatório algumas informações

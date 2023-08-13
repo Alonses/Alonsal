@@ -19,6 +19,7 @@ module.exports = async ({ client, alvo }) => {
             const embed = new EmbedBuilder()
                 .setTitle(`> Novo reporte ${client.defaultEmoji("guard")}`)
                 .setColor(0xED4245)
+                .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
                 .addFields(
                     {
                         name: ":bust_in_silhouette: **Usuário**",
@@ -36,12 +37,13 @@ module.exports = async ({ client, alvo }) => {
                         inline: true
                     }
                 )
-                .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
 
             if (canal_alvo) // Enviando os anúncios para os canais
                 if (canal_alvo.type === 0 || canal_alvo.type === 5)
                     if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel))
-                        canal_alvo.send({ embeds: [embed] }) // Permissão para enviar mensagens no canal
+                        canal_alvo.send({
+                            embeds: [embed]
+                        }) // Permissão para enviar mensagens no canal
         })
     } catch (err) {
         client.error({ err })

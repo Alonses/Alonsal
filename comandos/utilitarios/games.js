@@ -33,7 +33,11 @@ module.exports = {
                     let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
                     jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(user, "mode.anuncio.ate_data")} ${valor.expira} ]`)
-                    objeto_jogos.push({ name: nome_jogo, type: 4, value: valor.link })
+                    objeto_jogos.push({
+                        name: nome_jogo,
+                        type: 4,
+                        value: valor.link
+                    })
                 })
 
                 // Criando os botões externos para os jogos
@@ -41,11 +45,15 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle(client.tls.phrase(user, "mode.anuncio.ativos"))
-                    .setThumbnail(res[0].thumbnail)
                     .setColor(client.embed_color(user.misc.color))
+                    .setThumbnail(res[0].thumbnail)
                     .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
 
-                interaction.reply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             })
     }
 }

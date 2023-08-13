@@ -108,6 +108,9 @@ module.exports = {
         else
             somatoria = client.locale(somatoria)
 
-        interaction.reply({ content: `${client.emoji("dice")} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            content: `${client.emoji("dice")} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``,
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }

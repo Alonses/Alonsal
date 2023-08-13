@@ -29,14 +29,20 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+			interaction.reply({
+				content: gifs[client.random(gifs)],
+				ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			})
 		else if (interaction.options.getSubcommand() === "fala") {
 
 			const num = client.random(client.countFiles("./arquivos/songs/galerito", "ogg") - 1)
 
 			const file = new AttachmentBuilder(`./arquivos/songs/galerito/galerito_${num}.ogg`, { name: "galerito.ogg" })
 
-			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+			interaction.reply({
+				files: [file],
+				ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			})
 		} else {
 
 			const data = {
@@ -44,7 +50,11 @@ module.exports = {
 				values: relation
 			}
 
-			interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+			interaction.reply({
+				content: client.tls.phrase(user, "menu.menus.escolher_frase", 6),
+				components: [client.create_menus(client, interaction, user, data)],
+				ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			})
 		}
 	}
 }

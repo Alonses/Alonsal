@@ -16,34 +16,57 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Module", schema)
 
 async function getActiveModules() {
-    return model.find({ "stats.active": true })
+    return model.find({
+        "stats.active": true
+    })
 }
 
 async function createModule(uid, type, timestamp) {
-    await model.create({ uid: uid, type: type, "stats.timestamp": timestamp })
+    await model.create({
+        uid: uid,
+        type: type,
+        "stats.timestamp": timestamp
+    })
 
-    return model.findOne({ uid: uid, "stats.timestamp": timestamp })
+    return model.findOne({
+        uid: uid,
+        "stats.timestamp": timestamp
+    })
 }
 
 async function getModule(uid, timestamp) {
-    return model.findOne({ uid: uid, "stats.timestamp": timestamp })
+    return model.findOne({
+        uid: uid,
+        "stats.timestamp": timestamp
+    })
 }
 
 async function dropModule(uid, type, timestamp) {
-    await model.findOneAndDelete({ uid: uid, type: type, "stats.timestamp": timestamp })
+    await model.findOneAndDelete({
+        uid: uid,
+        type: type,
+        "stats.timestamp": timestamp
+    })
 }
 
 async function dropAllUserModules(uid) {
-    await model.findOneAndDelete({ uid: uid })
+    await model.findOneAndDelete({
+        uid: uid
+    })
 }
 
 async function verifyUserModules(uid, type) {
-    return model.find({ uid: uid, type: type })
+    return model.find({
+        uid: uid,
+        type: type
+    })
 }
 
 // Lista todos os módulos de determinado usuário
 async function listAllUserModules(uid) {
-    return model.find({ uid: uid })
+    return model.find({
+        uid: uid
+    })
 }
 
 async function shutdownAllUserModules(uid) {
@@ -58,8 +81,12 @@ async function shutdownAllUserModules(uid) {
 
 // Retorna um preço pelos módulos ativos de determinado usuário
 async function getModulesPrice(uid) {
-    let modulos = await model.find({ uid: uid, "stats.active": true })
     let total = 0
+    let modulos = await model.find({
+        uid: uid,
+        "stats.active": true
+    })
+
 
     modulos.forEach(element => {
         total += element.stats.price

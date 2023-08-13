@@ -19,7 +19,10 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
 
     if (!matches && interaction)
-        return interaction.editReply({ content: ":octagonal_sign: | Plataforma inválida, tente novamente.", ephemeral: true })
+        return interaction.editReply({
+            content: ":octagonal_sign: | Plataforma inválida, tente novamente.",
+            ephemeral: true
+        })
 
     const plataforma = redes[matches[0]][1], logo_plat = redes[matches[0]][0]
     let canais_recebidos = 0, imagem_destaque, valor_anterior = 0
@@ -28,7 +31,11 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
 
-        lista_links.push({ name: nome_jogo, type: 4, value: valor.link })
+        lista_links.push({
+            name: nome_jogo,
+            type: 4,
+            value: valor.link
+        })
 
         if (parseFloat(valor.preco) > valor_anterior || (parseInt(valor.preco) === 0 && objetos_anunciados.length === 1)) {
             valor_anterior = parseFloat(valor.preco)
@@ -67,9 +74,17 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                     if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
 
                         if (typeof guild_channel === "undefined") // Anúnciando em todos os servidores
-                            canal_alvo.send({ content: `<@&${dados.games.role}>`, embeds: [embed], components: [row] })
+                            canal_alvo.send({
+                                content: `<@&${dados.games.role}>`,
+                                embeds: [embed],
+                                components: [row]
+                            })
                         else if (guild_channel === dados.games.channel) // Anúnciando apenas no servidor alvo
-                            canal_alvo.send({ content: `<@&${dados.games.role}>`, embeds: [embed], components: [row] })
+                            canal_alvo.send({
+                                content: `<@&${dados.games.role}>`,
+                                embeds: [embed],
+                                components: [row]
+                            })
 
                         canais_recebidos++
                     }
@@ -97,5 +112,8 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     client.notify(process.env.channel_feeds, aviso)
 
     if (interaction)
-        interaction.editReply({ content: ":white_check_mark: | A atualização foi enviada à todos os canais de games", ephemeral: true })
+        interaction.editReply({
+            content: ":white_check_mark: | A atualização foi enviada à todos os canais de games",
+            ephemeral: true
+        })
 }

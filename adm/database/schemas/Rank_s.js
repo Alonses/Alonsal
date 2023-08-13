@@ -23,7 +23,11 @@ async function getRankServer(sid) {
     if (!await model.exists({ sid: sid }))
         return null
 
-    return model.find({ sid: sid }).sort({ xp: -1 }).limit(50)
+    return model.find({
+        sid: sid
+    }).sort({
+        xp: -1
+    }).limit(50)
 }
 
 async function getAllUsers() {
@@ -31,23 +35,41 @@ async function getAllUsers() {
 }
 
 async function getUserRankServers(uid) {
-    if (!await model.exists({ uid: uid })) return
+    if (!await model.exists({
+        uid: uid
+    })) return
 
-    return model.find({ uid: uid })
+    return model.find({
+        uid: uid
+    })
 }
 
 async function getUserRankServer(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
+    if (!await model.exists({ uid: uid, sid: sid }))
+        await model.create({
+            uid: uid,
+            sid: sid
+        })
 
-    return model.findOne({ uid: uid, sid: sid })
+    return model.findOne({
+        uid: uid,
+        sid: sid
+    })
 }
 
 async function createRankServer(uid, server_id, experience) {
-    await model.create({ uid: uid, sid: server_id, xp: experience })
+    await model.create({
+        uid: uid,
+        sid: server_id,
+        xp: experience
+    })
 }
 
 async function dropUserRankServer(uid, sid) {
-    await model.findOneAndDelete({ uid: uid, sid: sid })
+    await model.findOneAndDelete({
+        uid: uid,
+        sid: sid
+    })
 }
 
 async function dropUnknownRankServers(uid) {
@@ -71,7 +93,15 @@ async function migrateRankServer() {
 
             const data = require(`../../../arquivos/data/rank/${folder}/${file}`)
 
-            await model.create({ uid: data.id, sid: folder, nickname: data.nickname, lastValidMessage: data.lastValidMessage, warns: data.warns, caldeira_de_ceira: data.caldeira_de_ceira, xp: data.xp })
+            await model.create({
+                uid: data.id,
+                sid: folder,
+                nickname: data.nickname,
+                lastValidMessage: data.lastValidMessage,
+                warns: data.warns,
+                caldeira_de_ceira: data.caldeira_de_ceira,
+                xp: data.xp
+            })
         }
     }
 }

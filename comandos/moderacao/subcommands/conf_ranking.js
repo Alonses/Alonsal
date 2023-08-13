@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     await guild.save()
 
     if (guild.conf.public)
-        interaction.reply({ content: `${client.defaultEmoji("earth")} | O nome do servidor será mostrado no ranking global para todos os servidores agora!`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.public.ativado", true, client.defaultEmoji("earth"))
     else
-        interaction.reply({ content: `${client.defaultEmoji("detective")} | O servidor não será mais mostrado no ranking global.`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.public.desativado", true, client.defaultEmoji("detective"))
 }

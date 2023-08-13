@@ -32,8 +32,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (operacao === 1) {
             client.sendDM(alvo, { data: client.replace(client.tls.phrase(alvo, "dive.badges.new_badge", client.emoji(emojis_dancantes)), [badge.name, badge.emoji]) })
 
-            interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({
+                content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`,
+                embeds: [],
+                components: [],
+                ephemeral: true
+            })
         } else // Atribuindo silenciosamente
-            interaction.update({ content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída silenciosamente ao usuário ${user_interno}!`, embeds: [], components: [], ephemeral: true })
+            interaction.update({
+                content: `${client.emoji(emojis_dancantes)} | Badge \`${badge.name}\` ${badge.emoji} atribuída silenciosamente ao usuário ${user_interno}!`,
+                embeds: [],
+                components: [],
+                ephemeral: true
+            })
     })
 }

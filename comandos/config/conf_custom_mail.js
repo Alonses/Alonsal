@@ -33,14 +33,28 @@ module.exports = {
                 if (corpo_mail.anexo) {
                     const img_anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 
-                    canal_alvo.send({ content: corpo_mail.texto, files: [img_anexo] })
+                    canal_alvo.send({
+                        content: corpo_mail.texto,
+                        files: [img_anexo]
+                    })
                 } else
-                    canal_alvo.send({ content: corpo_mail.texto })
+                    canal_alvo.send({
+                        content: corpo_mail.texto
+                    })
 
-                interaction.reply({ content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`, ephemeral: true })
+                interaction.reply({
+                    content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`,
+                    ephemeral: true
+                })
             } else
-                interaction.reply({ content: ":octagonal_sign: | Canal desconhecido", ephemeral: true })
+                interaction.reply({
+                    content: ":octagonal_sign: | Canal desconhecido",
+                    ephemeral: true
+                })
         } else
-            interaction.reply({ content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`, ephemeral: true })
+            interaction.reply({
+                content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`,
+                ephemeral: true
+            })
     }
 }

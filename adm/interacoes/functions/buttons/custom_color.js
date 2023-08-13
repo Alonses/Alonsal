@@ -22,7 +22,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Validando se o usuário tem dinheiro suficiente
     if (user.misc.money < preco)
-        return interaction.update({ content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji(emojis_negativos)), client.locale(preco)), ephemeral: true })
+        return interaction.update({
+            content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji(emojis_negativos)), client.locale(preco)),
+            ephemeral: true
+        })
 
     user.misc.money -= preco
 
@@ -41,7 +44,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await user.save()
 
     // Registrando as movimentações de bufunfas para o usuário
-    await createStatement(user.uid, `Customização do perfil (cor)`, false, preco, client.timestamp())
+    await createStatement(user.uid, "misc.b_historico.cor_perfil", false, preco, client.timestamp())
 
-    interaction.update({ content: client.tls.phrase(user, "misc.color.cor_att", client.emoji(emojis_dancantes)), embeds: [], components: [], ephemeral: true })
+    interaction.update({
+        content: client.tls.phrase(user, "misc.color.cor_att", client.emoji(emojis_dancantes)),
+        embeds: [],
+        components: [],
+        ephemeral: true
+    })
 }

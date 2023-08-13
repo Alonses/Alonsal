@@ -20,14 +20,20 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alondioma" }])
+        const row = client.create_buttons([
+            { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alondioma" }
+        ])
 
         const embed = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
             .setTitle(`${client.tls.phrase(user, "manu.traduz.titulo")} ${client.emoji("dancando")}`)
-            .setDescription(client.tls.phrase(user, "manu.traduz.descricao"))
+            .setColor(client.embed_color(user.misc.color))
             .setImage("https://i.imgur.com/zSVqxhV.png")
+            .setDescription(client.tls.phrase(user, "manu.traduz.descricao"))
 
-        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

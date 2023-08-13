@@ -16,25 +16,43 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Report", schema)
 
 async function getReport(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid })) await model.create({ uid: uid, sid: sid })
+    if (!await model.exists({ uid: uid, sid: sid }))
+        await model.create({
+            uid: uid,
+            sid: sid
+        })
 
-    return model.findOne({ uid: uid, sid: sid })
+    return model.findOne({
+        uid: uid,
+        sid: sid
+    })
 }
 
 async function dropReport(uid, sid) {
-    await model.findOneAndDelete({ uid: uid, sid: sid })
+    await model.findOneAndDelete({
+        uid: uid,
+        sid: sid
+    })
 }
 
 async function getUserReports(uid) {
-    return model.find({ uid: uid, archived: false })
+    return model.find({
+        uid: uid,
+        archived: false
+    })
 }
 
 async function getReportedUsers() {
-    return model.find({ archived: false }).limit(50)
+    return model.find({
+        archived: false
+    }).limit(50)
 }
 
 async function checkUserGuildReported(sid) {
-    return model.find({ sid: sid, archived: false }).limit(50)
+    return model.find({
+        sid: sid,
+        archived: false
+    }).limit(50)
 }
 
 module.exports.Report = model

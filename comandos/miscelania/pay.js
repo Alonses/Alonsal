@@ -59,21 +59,21 @@ module.exports = {
         let bufunfas = interaction.options.getNumber("amount")
 
         if (bufunfas < 0.01)
-            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error_2", [9, 0]), ephemeral: true })
+            return client.tls.reply(interaction, user, "misc.pay.error_2", true, [9, 0])
 
         const alvo = await client.getUser(user_alvo.id)
 
         if (alvo.uid === user.uid)
-            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.error_3", [9, 0]), ephemeral: true })
+            return client.tls.reply(interaction, user, "misc.pay.error_3", true, [9, 0])
 
         // Validando se o usuário marcado não é um bot
         const membro_sv = await client.getUserGuild(interaction, alvo.uid)
 
         if (membro_sv.user.bot && alvo.uid !== client.id())
-            return interaction.reply({ content: client.tls.phrase(user, "misc.pay.user_bot", [9, 0]), ephemeral: true })
+            return client.tls.reply(interaction, user, "misc.pay.user_bot", true, [9, 0])
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
-            return interaction.reply({ content: client.replace(client.tls.phrase(user, "misc.pay.error", [9, 0]), client.locale(bufunfas)), ephemeral: true })
+            return client.tls.reply(interaction, user, "misc.pay.error", true, [9, 0], client.locale(bufunfas))
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "misc.pay.nova_transferencia"))
@@ -90,11 +90,21 @@ module.exports = {
                     inline: true
                 }
             )
-            .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setFooter({
+                text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
 
         // Criando os botões para o menu de transferências
-        const row = client.create_buttons([{ id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${alvo.uid}[${bufunfas}` }, { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }], interaction)
+        const row = client.create_buttons([
+            { id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${alvo.uid}[${bufunfas}` },
+            { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
+        ], interaction)
 
-        return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        return interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

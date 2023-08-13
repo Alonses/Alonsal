@@ -18,6 +18,9 @@ module.exports = {
         for (let key in used)
             text += `${key}: **${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB**\n`
 
-        interaction.reply({ content: text, ephemeral: true })
+        interaction.reply({
+            content: text,
+            ephemeral: true
+        })
     }
 }

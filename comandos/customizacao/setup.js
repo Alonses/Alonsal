@@ -50,9 +50,9 @@ module.exports = {
                 user.misc.weather = false
 
             if (user.misc.weather)
-                interaction.reply({ content: client.tls.phrase(user, "mode.weather.ativo", 25), ephemeral: true })
+                client.tls.reply(interaction, user, "mode.weather.ativo", true, 25)
             else
-                interaction.reply({ content: client.tls.phrase(user, "mode.weather.desativo", 24), ephemeral: true })
+                client.tls.reply(interaction, user, "mode.weather.desativo", true, 24)
 
         } else if (interaction.options.getSubcommand() === "tasks") {
 
@@ -63,9 +63,9 @@ module.exports = {
                 user.conf.global_tasks = false
 
             if (user.conf.global_tasks)
-                interaction.reply({ content: client.tls.phrase(user, "mode.tasks.ativo", [client.defaultEmoji("paper"), 22]), ephemeral: true })
+                client.tls.reply(interaction, user, "mode.tasks.ativo", true, null, [client.defaultEmoji("paper"), 22])
             else
-                interaction.reply({ content: client.tls.phrase(user, "mode.tasks.desativo", [client.defaultEmoji("paper"), 23]), ephemeral: true })
+                client.tls.reply(interaction, user, "mode.tasks.desativo", true, null, [client.defaultEmoji("paper"), 23])
         }
 
         await user.save()
