@@ -23,7 +23,10 @@ module.exports = async (client, user, interaction, dados) => {
     const infos_user = await client.create_profile({ client, interaction, user, id_alvo, operador })
 
     if (!membro_sv) { // Usuário foi removido do cache do bot
-        interaction.update({ content: ":o: | Este comando está desatualizado! Por favor, use o mesmo novamente.", components: [] })
+        interaction.update({
+            content: client.tls.phrase(user, "menu.botoes.comando_desatualizado"),
+            components: []
+        })
             .catch(err => {
                 client.error({ err })
             })
@@ -77,7 +80,7 @@ module.exports = async (client, user, interaction, dados) => {
             const fixed_badge = busca_badges(client, 1, internal_user)
 
             infos_user.addFields({
-                name: `**:pushpin: Badge fixada**`,
+                name: `**:pushpin: ${client.tls.phrase(user, "manu.data.selects.uni.4")}**`,
                 value: `${fixed_badge.emoji} \`${fixed_badge.name}\``,
                 inline: false
             })
@@ -90,7 +93,7 @@ module.exports = async (client, user, interaction, dados) => {
                 inline: false
             })
         else
-            infos_user.setDescription(`\`\`\`🏆 | Este usuário não ganhou nenhuma badge ainda!\`\`\``)
+            infos_user.setDescription(`\`\`\`🏆 | ${client.tls.phrase(user, "dive.badges.sem_badge")}\`\`\``)
     }
 
     // Reportes sobre o usuário
@@ -119,17 +122,30 @@ module.exports = async (client, user, interaction, dados) => {
                     }
                 )
         else
-            infos_user.setDescription(`\`\`\`✅ | Este usuário não possui reportes\`\`\``)
+            infos_user.setDescription(`\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``)
     }
 
     // Liga e desliga os botões conforme a página que o usuário se encontra
     const b_disabled = [false, false, false, false]
     b_disabled[operador] = true
 
-    const row = client.create_buttons([{ id: "user_info_button", name: "Perfil", type: 1, emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] }, { id: "user_info_button", name: "Permissões", type: 1, emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] }, { id: "user_info_button", name: "Badges", type: 1, emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] }, { id: "user_info_button", name: "Histórico", type: 1, emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }], interaction)
+    const row = client.create_buttons([
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.perfil"), type: 1, emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.permissoes"), type: 1, emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
+        { id: "user_info_button", name: "Badges", type: 1, emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] },
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: 1, emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
+    ], interaction)
 
     if (!interaction.customId)
-        return interaction.reply({ embeds: [infos_user], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.reply({
+            embeds: [infos_user],
+            components: [row],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     else
-        return interaction.update({ embeds: [infos_user], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        return interaction.update({
+            embeds: [infos_user],
+            components: [row],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 }

@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
     await guild.save()
 
     if (guild.conf.tickets)
-        interaction.reply({ content: `:mailbox: | ${client.tls.phrase(user, "mode.ticket.ativo")}`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.ticket.ativo", true, 31)
     else
-        interaction.reply({ content: `:mailbox_closed: | ${client.tls.phrase(user, "mode.ticket.desativo")}`, ephemeral: true })
+        client.tls.reply(interaction, user, "mode.ticket.desativo", true, 16)
 }

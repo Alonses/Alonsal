@@ -52,8 +52,6 @@ module.exports = async ({ client, user, interaction }) => {
         .setTitle(client.tls.phrase(user, "manu.data.dados_conhecidos"))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(`${client.tls.phrase(user, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
-        .setFooter({ text: client.tls.phrase(user, "manu.data.dica_rodape") })
-
         .addFields(
             {
                 name: `**${emoji_button(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
@@ -71,8 +69,14 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             }
         )
+        .setFooter({
+            text: client.tls.phrase(user, "manu.data.dica_rodape")
+        })
 
-    return interaction.reply({ embeds: [embed], ephemeral: true })
+    return interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+    })
 }
 
 function lista_servidores(servidores, linha_corte, client, user) {

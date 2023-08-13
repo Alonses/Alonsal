@@ -23,5 +23,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const menu = client.create_menus(client, interaction, user, data)
 
-    return interaction.update({ content: ":mag: | Escolha uma das opções abaixo para customizar seu perfil", components: [menu], ephemeral: true })
+    return interaction.update({
+        content: client.tls.phrase(user, "misc.perfil.escolha_abaixo_customizar_perfil", 1),
+        components: [menu],
+        ephemeral: true
+    })
 }

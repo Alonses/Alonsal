@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
         texto_mensagem = attachments.join("\n\n")
 
     let texto = `:wastebasket: | Uma [mensagem](${message.url}) de <@${message.author.id}> foi excluída\n\n**Conteúdo excluído:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
-    let autor = message.author.id, local = message.channelId, row = null
+    let autor = message.author.id, local = message.channelId, row
 
     const embed = new EmbedBuilder()
         .setTitle("> Mensagem Excluída")
@@ -46,12 +46,17 @@ module.exports = async (client, message) => {
                 inline: true
             }
         )
-        .setFooter({ text: message.author.username })
         .setTimestamp()
+        .setFooter({
+            text: message.author.username
+        })
 
     if (texto_mensagem.includes("https")) {
         const link_img = `https${texto_mensagem.split("https")[1].split(" ")[0]}`
-        row = client.create_buttons([{ name: "Abrir no navegador", type: 4, emoji: "🌐", value: link_img }])
+
+        row = client.create_buttons([
+            { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+        ])
     }
 
     if (row)

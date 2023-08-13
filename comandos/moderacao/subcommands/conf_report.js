@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
     await guild.save()
 
     if (guild.conf.reports)
-        interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.report.ativo", 15), `<#${guild.reports.channel}>`), ephemeral: true })
+        client.tls.reply(interaction, user, "mode.report.ativo", true, 15, `<#${guild.reports.channel}>`)
     else
-        interaction.reply({ content: client.tls.phrase(user, "mode.report.desativo", 16), ephemeral: true })
+        client.tls.reply(interaction, user, "mode.report.desativo", true, 16)
 }

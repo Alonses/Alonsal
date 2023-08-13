@@ -18,7 +18,10 @@ module.exports = {
         bot.persis.version = interaction.options.getString("versao")
         await bot.save()
 
-        interaction.reply({ content: `:placard: | A Versão do ${client.user().username} foi atualizada para \`${bot.persis.version}\``, ephemeral: true })
+        interaction.reply({
+            content: `:placard: | A Versão do ${client.user().username} foi atualizada para \`${bot.persis.version}\``,
+            ephemeral: true
+        })
         client.notify(process.env.channel_feeds, `:placard: | A Versão do ${client.user().username} foi atualizada para \`${bot.persis.version}\``)
     }
 }

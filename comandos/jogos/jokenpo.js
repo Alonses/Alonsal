@@ -94,10 +94,13 @@ module.exports = {
 
         // Registrando as movimentações de bufunfas para o usuário
         if (profit > 0)
-            await createStatement(user.uid, `Jogos e entretenimento (jokenpo)`, true, profit, client.timestamp())
+            await createStatement(user.uid, "misc.b_historico.jogos_jokenpo", true, profit, client.timestamp())
         else if (profit < 0)
-            await createStatement(user.uid, `Jogos e entretenimento (jokenpo)`, false, profit * -1, client.timestamp())
+            await createStatement(user.uid, "misc.b_historico.jogos_jokenpo", false, profit * -1, client.timestamp())
 
-        interaction.reply({ content: mensagem, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            content: mensagem,
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }

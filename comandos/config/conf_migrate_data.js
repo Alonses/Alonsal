@@ -11,11 +11,16 @@ module.exports = {
 
         return
 
-        await interaction.deferReply({ ephemeral: true })
+        await interaction.deferReply({
+            ephemeral: true
+        })
 
         await migrateRankGlobal(client)
             .then(() => {
-                interaction.editReply({ content: `:satellite: | Migração para o banco de dados concluída`, ephemeral: true })
+                interaction.editReply({
+                    content: `:satellite: | Migração para o banco de dados concluída`,
+                    ephemeral: true
+                })
             })
 
         // interaction.deferReply()

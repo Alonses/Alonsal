@@ -65,6 +65,6 @@ module.exports = {
 
         await user_c.save()
 
-        interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.xp.sucesso", 17), [user_c.nickname, novo_exp.toFixed(2), novo_nivel.toFixed(2)]), ephemeral: true })
+        client.tls.reply(interaction, user, "mode.xp.sucesso", true, 17, [user_c.nickname, novo_exp.toFixed(2), novo_nivel.toFixed(2)])
     }
 }

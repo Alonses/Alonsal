@@ -68,8 +68,11 @@ module.exports = {
             .setTitle("> Nova mensagem! :mailbox_with_mail:")
             .setColor(0xffffff)
             .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${corpo_mensagem.text.replaceAll("`", "'")}\`\n${conteudo_texto}`)
-            .setFooter({ text: `Autor: ${interaction.user.username}`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
             .setTimestamp()
+            .setFooter({
+                text: `Autor: ${interaction.user.username}`,
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
 
         // Inserindo uma imagem no embed
         if (corpo_mensagem.file)

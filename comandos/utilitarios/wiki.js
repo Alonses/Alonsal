@@ -81,7 +81,10 @@ module.exports = {
                 const fields = []
 
                 if (res.RelatedTopics.length > 0)
-                    fields.push({ name: `:books: ${client.tls.phrase(user, "util.wiki.topicos_rel")}`, value: "\u200B" })
+                    fields.push({
+                        name: `:books: ${client.tls.phrase(user, "util.wiki.topicos_rel")}`,
+                        value: "\u200B"
+                    })
 
                 for (const topic of res.RelatedTopics) {
                     counter++
@@ -101,7 +104,9 @@ module.exports = {
                 if (res.Heading !== "") {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
-                    const row = client.create_buttons([{ name: client.tls.phrase(user, "util.wiki.artigo_completo"), value: res.AbstractURL, type: 4, emoji: "🌐" }], interaction)
+                    const row = client.create_buttons([
+                        { name: client.tls.phrase(user, "util.wiki.artigo_completo"), value: res.AbstractURL, type: 4, emoji: "🌐" }
+                    ], interaction)
 
                     const Embed = new EmbedBuilder()
                         .setTitle(res.Heading)
@@ -111,19 +116,32 @@ module.exports = {
                         .addFields(fields)
                         .setDescription(res.AbstractText)
                         .setTimestamp()
-                        .setFooter({ text: 'DuckDuckGo API', iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                        .setFooter({
+                            text: 'DuckDuckGo API',
+                            iconURL: interaction.user.avatarURL({ dynamic: true })
+                        })
 
-                    interaction.reply({ embeds: [Embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                    interaction.reply({
+                        embeds: [Embed],
+                        components: [row],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.auto_pesquisa", client.emoji(emojis_negativos))} :v`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        client.tls.reply(interaction, user, "util.wiki.auto_pesquisa", client.decider(user?.conf.ghost_mode, 0), client.emoji(emojis_negativos))
                     else
-                        interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                        interaction.reply({
+                            content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        })
                 }
             })
-            .catch(() => interaction.reply({ content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true }))
+            .catch(() => interaction.reply({
+                content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                ephemeral: true
+            }))
     }
 }

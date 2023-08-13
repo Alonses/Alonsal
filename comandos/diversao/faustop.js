@@ -26,7 +26,10 @@ module.exports = {
 
             const file = new AttachmentBuilder(`./arquivos/songs/faustop/faustop_${num}.ogg`, { name: "faustop.ogg" })
 
-            interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            interaction.reply({
+                files: [file],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
         } else {
 
             const data = {
@@ -34,7 +37,11 @@ module.exports = {
                 values: relation
             }
 
-            interaction.reply({ content: ":mega: | Escolha uma das frases abaixo!", components: [client.create_menus(client, interaction, user, data)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            interaction.reply({
+                content: client.tls.phrase(user, "menu.menus.escolher_frase", 6),
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
         }
     }
 }

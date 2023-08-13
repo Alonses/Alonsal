@@ -12,7 +12,10 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
     if (channel.cid !== null) {
         canal_servidor.permissionOverwrites.edit(solicitante, { ViewChannel: true })
 
-        return interaction.reply({ content: `${client.tls.phrase(user, "mode.denuncia.canal_aberto")} ( <#${channel.cid}> )`, ephemeral: true })
+        return interaction.reply({
+            content: `${client.tls.phrase(user, "mode.denuncia.canal_aberto")} ( <#${channel.cid}> )`,
+            ephemeral: true
+        })
     }
 
     let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone')
@@ -39,7 +42,7 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
         ],
     })
         .then(async new_channel => {
-            interaction.reply({ content: client.replace(client.tls.phrase(user, "mode.denuncia.introducao"), new_channel), ephemeral: true })
+            client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel)
 
             channel.cid = new_channel.id
             await channel.save()

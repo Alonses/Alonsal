@@ -29,7 +29,10 @@ module.exports = {
                 bot.persis.alondioma = cod_commit
                 await bot.save()
 
-                interaction.reply({ content: `:sa: | Baixando o pacote de traduções do commit \`${cod_commit}\``, ephemeral: true })
+                interaction.reply({
+                    content: `:sa: | Baixando o pacote de traduções do commit \`${cod_commit}\``,
+                    ephemeral: true
+                })
 
                 if (client.id() === process.env.client_1) // Notifica apenas caso seja o bot principal
                     client.notify(process.env.channel_feeds, `:sa: | Pacote de traduções do ${client.user().username} sincronizado com o commit \`${cod_commit}\``)

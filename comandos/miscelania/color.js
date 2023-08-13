@@ -106,14 +106,24 @@ module.exports = {
         // Enviando o embed para validação
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "misc.color.titulo"))
-            .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
             .setColor(cor_demonstracao)
             .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
-            .setFooter({ text: client.tls.phrase(user, "misc.color.footer"), iconURL: client.discord.user.avatarURL({ dynamic: true }) })
+            .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
+            .setFooter({
+                text: client.tls.phrase(user, "misc.color.footer"),
+                iconURL: client.discord.user.avatarURL({ dynamic: true })
+            })
 
         // Criando os botões para a cor customizada
-        const row = client.create_buttons([{ id: "custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${entrada}${new_color}` }, { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }], interaction)
+        const row = client.create_buttons([
+            { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${entrada}${new_color}` },
+            { id: "custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
+        ], interaction)
 
-        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

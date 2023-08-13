@@ -19,14 +19,19 @@ module.exports = {
 
         // Validando se o usuário possui badges
         if (badges.length < 1)
-            return interaction.reply({ content: `:mag: | ${client.tls.phrase(user, "dive.badges.error_1")}`, ephemeral: true })
+            return client.tls.reply(interaction, user, "dive.badges.error_1", true, 1)
 
         const embed = new EmbedBuilder()
             .setTitle(`> ${client.tls.phrase(user, "dive.badges.suas_badges")}`)
             .setColor(client.embed_color(user.misc.color))
             .setDescription(await buildAllBadges(client, user, badges))
-            .setFooter({ text: client.tls.phrase(user, "dive.badges.rodape") })
+            .setFooter({
+                text: client.tls.phrase(user, "dive.badges.rodape")
+            })
 
-        interaction.reply({ embeds: [embed], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: true
+        })
     }
 }

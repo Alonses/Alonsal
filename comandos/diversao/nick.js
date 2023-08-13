@@ -33,7 +33,7 @@ module.exports = {
         let apelido = user_alvo.nickname || user_alvo.user.username
 
         user_alvo.setNickname(client.shuffleArray(apelido.split("").join("").trim()))
-            .then(() => interaction.reply({ content: client.replace(client.tls.phrase(user, "dive.nick.apelido"), apelido), ephemeral: client.decider(user?.conf.ghost_mode, 0) }))
+            .then(() => client.tls.reply(interaction, user, "dive.nick.apelido", client.decider(user?.conf.ghost_mode, 0), null, apelido))
             .catch(() => client.tls.reply(interaction, user, "dive.nick.error_1", true, 0))
     }
 }

@@ -14,7 +14,10 @@ module.exports = {
 
         if (interaction.user.id !== client.owners[0]) return
 
-        interaction.reply({ content: ":video_game: | Enviando os anúncios para os canais clientes.", ephemeral: true })
+        interaction.reply({
+            content: ":video_game: | Enviando os anúncios para os canais clientes.",
+            ephemeral: true
+        })
 
         client.notify(process.env.channel_feeds, `:video_game: :sparkles: | Disparando manualmente os anúncios de jogos gratuitos.`)
 

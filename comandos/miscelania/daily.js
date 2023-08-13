@@ -23,7 +23,10 @@ module.exports = {
         if (data_atual === user.misc.daily) {
             const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
-            return interaction.reply({ content: `:bank: | ${client.tls.phrase(user, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`, ephemeral: true })
+            return interaction.reply({
+                content: `:bank: | ${client.tls.phrase(user, "misc.daily.error")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`,
+                ephemeral: true
+            })
         }
 
         const bufunfa = client.random(500, 1000)
@@ -37,8 +40,11 @@ module.exports = {
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        await createStatement(user.uid, `Recebido do /daily`, true, bufunfa, client.timestamp())
+        await createStatement(user.uid, "misc.b_historico.daily", true, bufunfa, client.timestamp())
 
-        interaction.reply({ content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji(emojis_dancantes)}`, client.locale(bufunfa)), ephemeral: true })
+        interaction.reply({
+            content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji(emojis_dancantes)}`, client.locale(bufunfa)),
+            ephemeral: true
+        })
     }
 }

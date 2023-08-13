@@ -88,11 +88,19 @@ module.exports = {
         const anagrama = new EmbedBuilder()
             .setTitle(`:abc: ${client.tls.phrase(user, "dive.anagrama.anagrama")}`)
             .setColor(cor_embed)
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+            .setAuthor({
+                name: interaction.user.username,
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
             .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
-            .setFooter({ text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}` })
+            .setFooter({
+                text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}`
+            })
 
-        interaction.reply({ embeds: [anagrama], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            embeds: [anagrama],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }
 

@@ -38,11 +38,20 @@ module.exports = async ({ client, user, interaction }) => {
         const movimentacoes = await getUserStatements(user_interno.uid)
 
         movimentacoes.forEach(movimentacao => {
-            extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${movimentacao.value}, ${movimentacao?.operation || "desconhecido"}\n`
+            // Traduzindo a movimentação conforme o idioma do usuário
+            let traducao = movimentacao.operation
+
+            if (movimentacao.operation.split(".").length > 2) // Modelo com string traduzível
+                traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0])
+
+            if (movimentacao.operation.includes("|"))
+                traducao = client.replace(traducao, movimentacao.operation.split("|")[1])
+
+            extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${movimentacao.value}, ${traducao}\n`
         })
 
         if (extrato !== "")
-            extrato = `\n\n${client.defaultEmoji("metrics")} **Suas últimas movimentações**\`\`\`${extrato}\`\`\``
+            extrato = `\n\n${client.defaultEmoji("metrics")} **${client.tls.phrase(user, "misc.b_historico.movimentacoes")}**\`\`\`${extrato}\`\`\``
     }
 
     const embed = new EmbedBuilder()
@@ -51,7 +60,13 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$ ${client.locale(user_interno.misc.money)}\`\`\`\n${daily}${extrato}`)
 
     if (user_interno.uid === interaction.user.id)
-        embed.setFooter({ text: client.tls.phrase(user, "misc.banco.dica_rodape"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
+        embed.setFooter({
+            text: client.tls.phrase(user, "misc.banco.dica_rodape"),
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
 
-    interaction.reply({ embeds: [embed], ephemeral: true })
+    interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+    })
 }

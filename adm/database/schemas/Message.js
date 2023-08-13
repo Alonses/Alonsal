@@ -17,19 +17,38 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Message", schema)
 
 async function getUserMessages(uid, sid) {
-    return model.find({ uid: uid, sid: sid }).sort({ timestamp: -1 })
+    return model.find({
+        uid: uid,
+        sid: sid
+    })
+        .sort({
+            timestamp: -1
+        })
 }
 
 async function createMessage(uid, sid, cid, mid, content, timestamp) {
-    await model.create({ uid: uid, sid: sid, cid: cid, mid: mid, content: content, timestamp: timestamp })
+    await model.create({
+        uid: uid,
+        sid: sid,
+        cid: cid,
+        mid: mid,
+        content: content,
+        timestamp: timestamp
+    })
 }
 
 async function dropUserMessage(uid, mid) {
-    await model.findOneAndDelete({ uid: uid, mid: mid })
+    await model.findOneAndDelete({
+        uid: uid,
+        mid: mid
+    })
 }
 
 async function dropAllUserMessages(uid, sid) {
-    await model.deleteMany({ uid: uid, sid: sid })
+    await model.deleteMany({
+        uid: uid,
+        sid: sid
+    })
 }
 
 module.exports.Message = model

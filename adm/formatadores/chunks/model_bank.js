@@ -84,7 +84,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .setDescription(daily)
         .addFields(
             {
-                name: `${client.emoji("mc_honeycomb")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
+                name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                 value: usernames.join("\n"),
                 inline: true
             },
@@ -99,23 +99,46 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             }
         )
-        .setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+        .setFooter({
+            text: rodape,
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
 
     let row = []
     const b_disabled = require("../../funcoes/navegacao_rank")({ pagina, paginas, ids, interaction })
 
     if (paginas > 1)
-        row = client.create_buttons([{ id: "rank_bank_button", name: '⏪', type: 1, data: `1|${pagina}.rank_bank_navegar`, disabled: b_disabled[0] }, { id: "rank_bank_button", name: '◀️', type: 1, data: `2|${pagina}.rank_bank_navegar`, disabled: b_disabled[1] }, { id: "rank_bank_button", name: '🔘', type: 0, data: `3|${pagina}.rank_bank_navegar`, disabled: b_disabled[2] }, { id: "rank_bank_button", name: '▶️', type: 1, data: `4|${pagina}.rank_bank_navegar`, disabled: b_disabled[3] }, { id: "rank_bank_button", name: '⏩', type: 1, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }], interaction)
+        row = client.create_buttons([
+            { id: "rank_bank_button", name: '⏪', type: 1, data: `1|${pagina}.rank_bank_navegar`, disabled: b_disabled[0] },
+            { id: "rank_bank_button", name: '◀️', type: 1, data: `2|${pagina}.rank_bank_navegar`, disabled: b_disabled[1] },
+            { id: "rank_bank_button", name: '🔘', type: 0, data: `3|${pagina}.rank_bank_navegar`, disabled: b_disabled[2] },
+            { id: "rank_bank_button", name: '▶️', type: 1, data: `4|${pagina}.rank_bank_navegar`, disabled: b_disabled[3] },
+            { id: "rank_bank_button", name: '⏩', type: 1, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }
+        ], interaction)
 
-    if (!dados) {
-        if (paginas > 1)
-            await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        else
-            await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-    } else {
-        if (paginas > 1)
-            await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
-        else
-            await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    if (!dados) { // Verifica se não é uma interação recorrente ( criada por botões )
+        if (paginas > 1) // Com mais de uma página no ranking
+            await interaction.editReply({
+                embeds: [embed],
+                components: [row],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else // Apenas uma página no ranking
+            await interaction.editReply({
+                embeds: [embed],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+    } else { // Interação criada por botões
+        if (paginas > 1) // Com mais de uma página no ranking
+            await interaction.update({
+                embeds: [embed],
+                components: [row],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else // Apenas uma página no ranking
+            await interaction.update({
+                embeds: [embed],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
     }
 }

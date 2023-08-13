@@ -20,7 +20,10 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" }, { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }], interaction)
+        const row = client.create_buttons([
+            { name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
+            { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
+        ], interaction)
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`)
@@ -28,6 +31,10 @@ module.exports = {
             .setImage("https://i.imgur.com/VCneT1l.png")
             .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
 
-        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

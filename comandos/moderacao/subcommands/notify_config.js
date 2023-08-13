@@ -34,25 +34,29 @@ module.exports = async ({ client, user, interaction }) => {
     if (!dados.lang)
         dados.lang = guild.lang
 
-    const row = client.create_buttons([{ id: "notify_button", name: "Ativar", type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}` }, { id: "notify_button", name: "Ativar e anunciar", type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}` }, { id: "notify_button", name: "Cancelar", type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }], interaction)
+    const row = client.create_buttons([
+        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}` },
+        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar_anunciando"), type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}` },
+        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
+    ], interaction)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Configurações de anúncios 🎮")
+        .setTitle(client.tls.phrase(user, "mode.anuncio.config_titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("Ative ou cancele o módulo de anúncios de games.\n\nO Módulo de games enviará anúncios de jogos que estiverem de graça automaticamente no seu servidor, você pode ativar este módulo agora de duas formas, simplesmente ativando, ou o melhor deles, ativando e já disparando uma notificação com todos os games que estão gratuitos agora!\n\nSelecione uma das opções abaixo ou cancele para descartar as alterações.")
+        .setDescription(client.tls.phrase(user, "mode.anuncio.config_descricao"))
         .setFields(
             {
-                name: ":label: **Cargo**",
+                name: `:label: **${client.tls.phrase(user, "mode.anuncio.cargo")}**`,
                 value: `( <@&${dados.role}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("channel")} **Canal**`,
+                name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.canal.canal")}**`,
                 value: `( <#${dados.channel}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("translate")} **Idioma :flag_${dados.lang.slice(3, 5)}:**`,
+                name: `${client.defaultEmoji("translate")} **${client.tls.phrase(user, "mode.anuncio.idioma")} :flag_${dados.lang.slice(3, 5)}:**`,
                 value: "⠀",
                 inline: true
             }
@@ -60,5 +64,9 @@ module.exports = async ({ client, user, interaction }) => {
 
     await guild.save()
 
-    interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+    interaction.reply({
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }

@@ -6,7 +6,10 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
     const membro_sv = user_alvo
 
     if (!user_alvo) // Usuário foi removido do cache do bot
-        return interaction.update({ content: ":o: | Este comando está desatualizado! Por favor, use o mesmo novamente.", components: [] })
+        return interaction.update({
+            content: client.tls.phrase(user, "menu.botoes.comando_desatualizado", 11),
+            components: []
+        })
 
     user_alvo = user_alvo.user
 
@@ -86,7 +89,9 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
                 inline: true
             }
         )
-        .setFooter({ text: `${tipo_user} ${nota_rodape}` })
+        .setFooter({
+            text: `${tipo_user} ${nota_rodape}`
+        })
 
     if (operacao === 0)
         embed.addFields(

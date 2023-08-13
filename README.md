@@ -57,6 +57,31 @@ Clique na imagem abaixo para ser redirecionado ao site!
 
 <img src="https://user-images.githubusercontent.com/56841881/231592171-2db80fab-c3cb-4842-b392-765ba71bb08e.png">
 
+<h2>🐱‍🏍 Formatação</h2>
+
+Para uma melhor visualização dos códigos Alonsais, usamos padrões ao criar elementos da biblioteca do Discord.JS!
+- `EmbedBuilder`
+> Ordem de construção
+> setTitle
+> setColor
+> setAuthor
+> setThumbnail / setImage
+> setDescription
+> setFields / addFields
+> setTimestamp
+> setFooter
+
+-> Caso um embed possua "setadores" que são dependentes de condições lógicas, a inclusão deles serão realizadas após o fim do bloco completo do `EmbedBuilder`.
+
+- `Replyes / Updates`
+> Ordem de construção
+> content
+> embeds
+> files
+> components
+> fetchReply
+> ephemeral
+
 <h2>🔣 Fontes 🔣</h2>
 
 O Alonsal faz uso direto da [APISAL](https://github.com/odnols/APISAL), uma API planejada do zero para fornecer diversas soluções de forma prática

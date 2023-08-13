@@ -17,21 +17,35 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Rankobal", schema)
 
 async function getRankGlobal() {
-    return model.find().sort({ xp: -1 }).limit(50)
+    return model.find().sort({
+        xp: -1
+    }).limit(50)
 }
 
-async function getUserGlobalRank(uid, experience, nickname, sid) {
-    if (!await model.exists({ uid: uid })) return model.create({ uid: uid, xp: experience, nickname: nickname, sid: sid })
+async function getUserGlobalRank(uid, xp, nickname, sid) {
+    if (!await model.exists({ uid: uid }))
+        return model.create({
+            uid: uid,
+            xp: xp,
+            nickname: nickname,
+            sid: sid
+        })
 
-    return model.findOne({ uid: uid })
+    return model.findOne({
+        uid: uid
+    })
 }
 
 async function findUserGlobalRankIndex(uid) {
-    return model.find({ uid: uid })
+    return model.find({
+        uid: uid
+    })
 }
 
 async function dropUserGlobalRank(uid) {
-    await model.findOneAndDelete({ uid: uid })
+    await model.findOneAndDelete({
+        uid: uid
+    })
 }
 
 const users_ranking = []

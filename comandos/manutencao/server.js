@@ -13,7 +13,9 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const row = client.create_buttons([{ name: client.tls.phrase(user, "manu.hub.conectar"), value: process.env.url_support, type: 4, emoji: client.emoji("icon_rules_channel") }], interaction)
+        const row = client.create_buttons([
+            { name: client.tls.phrase(user, "manu.hub.conectar"), value: process.env.url_support, type: 4, emoji: client.emoji("icon_rules_channel") }
+        ], interaction)
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.hub.hub_alonsal")} ${client.emoji("dancando_elizabeth")}`)
@@ -21,6 +23,10 @@ module.exports = {
             .setImage("https://i.imgur.com/NqmwCA9.png")
             .setDescription(client.tls.phrase(user, "manu.hub.info"))
 
-        interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
     }
 }

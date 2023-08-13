@@ -31,17 +31,17 @@ module.exports = {
                     "it": 'Un utente della discord',
                     "ru": 'Дискорд-пользователь'
                 })),
-    // menu_data: new ContextMenuCommandBuilder()
-    //     .setName("LastFM")
-    //     .setType(ApplicationCommandType.User),
+    menu_data: new ContextMenuCommandBuilder()
+        .setName("LastFM")
+        .setType(ApplicationCommandType.User),
     async execute(client, user, interaction) {
 
         // Redirecionando o evento
-        require("../../adm/formatadores/chunks/model_lastm")({ client, user, interaction })
+        require("../../adm/formatadores/chunks/model_lastfm")({ client, user, interaction })
     },
     async menu(client, user, interaction) {
 
         // Redirecionando o evento
-        require("../../adm/formatadores/chunks/model_lastm")({ client, user, interaction })
+        require("../../adm/formatadores/chunks/model_lastfm")({ client, user, interaction })
     }
 }

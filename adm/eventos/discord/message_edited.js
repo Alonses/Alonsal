@@ -15,7 +15,7 @@ module.exports = async (client, message) => {
     if (!client.decider(guild.conf?.logger, 0)) return
 
     let texto = `:pencil: | Uma [mensagem](${message[0].url}) foi atualizada por <@${message[0].author.id}>\n\n**Mensagem antiga:** \`\`\`${formata_text(message[0].content)}\`\`\`\n**Mensagem atualizada:** \`\`\`${formata_text(message[1].content)}\`\`\``
-    let autor = message[0].author.id, local = message[0].channelId, row = null
+    let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()
         .setTitle("> Mensagem Atualizada")
@@ -33,12 +33,17 @@ module.exports = async (client, message) => {
                 inline: true
             }
         )
-        .setFooter({ text: message[0].author.username })
         .setTimestamp()
+        .setFooter({
+            text: message[0].author.username
+        })
 
     if (message[1].content.includes("https")) {
         const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
-        row = client.create_buttons([{ name: "Abrir no navegador", type: 4, emoji: "🌐", value: link_img }])
+
+        row = client.create_buttons([
+            { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+        ])
     }
 
     if (row)

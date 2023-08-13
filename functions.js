@@ -130,13 +130,23 @@ function internal_functions(client) {
         if (!id_alvo) return;
         if (typeof conteudo === "object") { // embed
             if (!conteudo.components && !conteudo.content)
-                client.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo] })
+                client.discord.channels.cache.get(id_alvo).send({
+                    embeds: [conteudo]
+                })
             else if (conteudo.components)
-                client.discord.channels.cache.get(id_alvo).send({ embeds: [conteudo.embed], components: [conteudo.components] })
+                client.discord.channels.cache.get(id_alvo).send({
+                    embeds: [conteudo.embed],
+                    components: [conteudo.components]
+                })
             else if (conteudo.content)
-                client.discord.channels.cache.get(id_alvo).send({ content: conteudo.content, embeds: [conteudo.embed] })
+                client.discord.channels.cache.get(id_alvo).send({
+                    content: conteudo.content,
+                    embeds: [conteudo.embed]
+                })
         } else // texto normal
-            client.discord.channels.cache.get(id_alvo).send({ content: conteudo })
+            client.discord.channels.cache.get(id_alvo).send({
+                content: conteudo
+            })
     }
 
     client.random = (intervalo, base) => {
@@ -179,11 +189,19 @@ function internal_functions(client) {
                     // Verificando qual é o tipo de conteúdo que será enviado
                     if (dados.embed) {
                         if (!dados.components)
-                            user_interno.send({ embeds: [dados.embed] })
+                            user_interno.send({
+                                embeds: [dados.embed]
+                            })
                         else
-                            user_interno.send({ embeds: [dados.embed], components: [dados.components] })
+                            user_interno.send({
+                                embeds: [dados.embed],
+                                components: [dados.components]
+                            })
                     } else if (dados.files)
-                        user_interno.send({ content: dados.data, files: [dados.files] })
+                        user_interno.send({
+                            content: dados.data,
+                            files: [dados.files]
+                        })
                     else
                         user_interno.send(dados.data)
                 })

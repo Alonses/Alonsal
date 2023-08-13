@@ -12,8 +12,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         user.profile.about = null
         await user.save()
 
-        return interaction.reply({ content: ":o: | Operação cancelada.", components: [], embeds: [], ephemeral: true })
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true)
     }
 
-    interaction.update({ content: `${client.emoji(emojis_dancantes)} | Seu perfil foi atualizado!`, components: [], ephemeral: true })
+    client.tls.report(interaction, user, "misc.perfil.perfil_atualizado", true, client.emoji(emojis_dancantes))
 }

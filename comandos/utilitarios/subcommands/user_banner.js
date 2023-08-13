@@ -34,9 +34,11 @@ module.exports = async ({ client, user, interaction }) => {
 
                 // Usuário sem banner customizado
                 if (url_banner.length < 1)
-                    return interaction.reply({ content: client.tls.phrase(user, "util.avatar.sem_banner", 0), ephemeral: true })
+                    return client.tls.reply(interaction, user, "util.avatar.sem_banner", true, 0)
 
-                const row = client.create_buttons([{ name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }])
+                const row = client.create_buttons([
+                    { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }
+                ])
 
                 // Exibindo o banner do usuário
                 const embed = new EmbedBuilder()
@@ -45,7 +47,11 @@ module.exports = async ({ client, user, interaction }) => {
                     .setImage(url_banner)
                     .setDescription(client.tls.phrase(user, "util.avatar.download_banner"))
 
-                interaction.reply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             })
         }
     })

@@ -39,13 +39,22 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("User", schema)
 
 async function getUser(uid) {
-    if (!await model.exists({ uid: uid })) await model.create({ uid: uid })
+    if (!await model.exists({ uid: uid }))
+        await model.create({
+            uid: uid
+        })
 
-    return model.findOne({ uid: uid })
+    return model.findOne({
+        uid: uid
+    })
 }
 
 async function getRankMoney() {
-    return model.find({ "misc.money": { $gt: 0.01 } }).sort({ "misc.money": -1 }).limit(25)
+    return model.find({
+        "misc.money": { $gt: 0.01 }
+    }).sort({
+        "misc.money": -1
+    }).limit(25)
 }
 
 async function migrateUsers() {
@@ -65,7 +74,24 @@ async function migrateUsers() {
                 pula_predios = social.pula_predios
         }
 
-        await model.create({ uid: id, lang: lang || "pt-br", social: { steam: social.steam || "", lastfm: social.lastfm || "", pula_predios: social.pula_predios || "" }, misc: { daily: misc.daily || "", color: misc.color || "#29BB8E", money: misc.money || 0, embed: misc.embed || "#29BB8E", locale: misc.locale || "" }, badges: { badges: badges.fixed_badge || "", badge_list: badges.badge_list || [{ key: String, value: Number }] }, conquistas: conquistas || [{ key: String, value: Number }] })
+        await model.create({
+            uid: id,
+            lang: lang || "pt-br",
+            social: {
+                steam: social.steam || "",
+                lastfm: social.lastfm || "",
+                pula_predios: social.pula_predios || ""
+            }, misc: {
+                daily: misc.daily || "",
+                color: misc.color || "#29BB8E",
+                money: misc.money || 0,
+                embed: misc.embed || "#29BB8E",
+                locale: misc.locale || ""
+            }, badges: {
+                badges: badges.fixed_badge || "",
+                badge_list: badges.badge_list || [{ key: String, value: Number }]
+            }, conquistas: conquistas || [{ key: String, value: Number }]
+        })
     }
 }
 

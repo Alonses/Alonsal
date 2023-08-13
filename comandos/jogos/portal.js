@@ -61,7 +61,14 @@ module.exports = {
             .setTitle(client.tls.phrase(user, "game.portal.titulo"))
             .setColor(client.embed_color(user.misc.color))
             .setDescription(client.replace(client.tls.phrase(user, "game.portal.descricao"), [client.emoji("mc_portal"), dimension, x_i, z_i, client.emoji("mc_portal_frame"), to_dimension, x, z]))
-            .setFooter({ text: caso, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-        interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            .setFooter({
+                text: caso,
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }

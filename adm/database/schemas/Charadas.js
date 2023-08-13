@@ -13,7 +13,12 @@ const model = mongoose.model("Charada", schema)
 var counter = 0
 
 async function createCharada(value) {
-    await model.create({ qid: counter, question: value.pergunta, answer: value.resposta })
+    await model.create({
+        qid: counter,
+        question: value.pergunta,
+        answer: value.resposta
+    })
+
     counter = counter++
 }
 

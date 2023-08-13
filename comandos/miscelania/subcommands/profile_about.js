@@ -8,7 +8,14 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = await client.create_profile({ client, interaction, user, id_alvo, operador })
 
     // Criando os botões para a cor customizada
-    const row = client.create_buttons([{ id: "profile_about", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: "1" }, { id: "profile_about", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }], interaction)
+    const row = client.create_buttons([
+        { id: "profile_about", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: "1" },
+        { id: "profile_about", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
+    ], interaction)
 
-    interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+    interaction.reply({
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }

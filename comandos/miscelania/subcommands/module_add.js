@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction }) => {
     const modulos_semelhantes = await verifyUserModules(interaction.user.id, type)
 
     if (modulos_semelhantes.length > 2)
-        return interaction.reply({ content: client.tls.phrase(user, "misc.modulo.limite_modulos"), ephemeral: true })
+        return client.tls.reply(interaction, user, "misc.modulo.limite_modulos", true, 4)
 
     // Prevenção de erros
     if (type == 0 && !user.misc.locale)
@@ -40,6 +40,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "misc.modulo.cabecalho_menu"))
         .setColor(client.embed_color(user.misc.color))
+        .setDescription(client.replace(client.tls.phrase(user, "misc.modulo.descricao"), [corpo_modulo.stats.price, montante]))
         .addFields(
             {
                 name: `**${client.defaultEmoji("types")} ${client.tls.phrase(user, "misc.modulo.tipo")}**`,
@@ -57,11 +58,20 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             }
         )
-        .setDescription(client.replace(client.tls.phrase(user, "misc.modulo.descricao"), [corpo_modulo.stats.price, montante]))
-        .setFooter({ text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"), iconURL: interaction.user.avatarURL({ dynamic: true }) })
+        .setFooter({
+            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
 
     // Criando os botões para o menu de badges
-    const row = client.create_buttons([{ id: "modules", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${timestamp}` }, { id: "modules", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${timestamp}` }], interaction)
+    const row = client.create_buttons([
+        { id: "modules", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${timestamp}` },
+        { id: "modules", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${timestamp}` }
+    ], interaction)
 
-    return interaction.reply({ embeds: [embed], components: [row], ephemeral: true })
+    return interaction.reply({
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }

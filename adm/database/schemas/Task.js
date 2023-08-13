@@ -16,38 +16,68 @@ const model = mongoose.model("Task", schema)
 
 async function createTask(uid, sid, text, timestamp) {
 
-    if (!await model.exists({ uid: uid, sid: sid, text: text, timestamp: timestamp })) await model.create({ uid: uid, sid: sid, text: text, timestamp: timestamp })
+    if (!await model.exists({ uid: uid, sid: sid, text: text, timestamp: timestamp }))
+        await model.create({
+            uid: uid,
+            sid: sid,
+            text: text,
+            timestamp: timestamp
+        })
 
-    return model.findOne({ uid: uid, sid: sid, text: text, timestamp: timestamp })
+    return model.findOne({
+        uid: uid,
+        sid: sid,
+        text: text,
+        timestamp: timestamp
+    })
 }
 
 async function getTask(uid, timestamp) {
-    return model.findOne({ uid: uid, timestamp: timestamp })
+    return model.findOne({
+        uid: uid,
+        timestamp: timestamp
+    })
 }
 
 async function listAllUserTasks(uid, sid) {
 
     if (sid)
-        return model.find({ uid: uid, sid: sid })
+        return model.find({
+            uid: uid,
+            sid: sid
+        })
 
-    return model.find({ uid: uid })
+    return model.find({
+        uid: uid
+    })
 }
 
 async function listAllUserGroupTasks(uid, g_timestamp) {
-    return model.find({ uid: uid, g_timestamp: g_timestamp })
+    return model.find({
+        uid: uid,
+        g_timestamp: g_timestamp
+    })
 }
 
 // Apaga uma task do usuário
 async function dropTask(uid, timestamp) {
-    await model.findOneAndDelete({ uid: uid, timestamp: timestamp })
+    await model.findOneAndDelete({
+        uid: uid,
+        timestamp: timestamp
+    })
 }
 
 async function dropTaskByGroup(uid, g_timestamp) {
-    await model.deleteMany({ uid: uid, g_timestamp: g_timestamp })
+    await model.deleteMany({
+        uid: uid,
+        g_timestamp: g_timestamp
+    })
 }
 
 async function dropAllUserTasks(uid) {
-    await model.deleteMany({ uid: uid })
+    await model.deleteMany({
+        uid: uid
+    })
 }
 
 module.exports.Task = model

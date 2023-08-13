@@ -26,7 +26,10 @@ module.exports = {
 
         await client.user().setAvatar(arquivo.attachment)
 
-        interaction.reply({ content: ":bust_in_silhouette: | Avatar enceirado atualizado", ephemeral: true })
+        interaction.reply({
+            content: ":bust_in_silhouette: | Avatar enceirado atualizado",
+            ephemeral: true
+        })
         client.notify(process.env.channel_feeds, att_avatar)
     }
 }

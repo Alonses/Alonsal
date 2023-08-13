@@ -97,5 +97,8 @@ module.exports = async ({ client, user, interaction }) => {
             }
         )
 
-    return interaction.reply({ embeds: [infos_sv], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    return interaction.reply({
+        embeds: [infos_sv],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 }

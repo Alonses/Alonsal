@@ -107,17 +107,23 @@ async function verifica_palavra(client, interaction, user, entrada) {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
     if (entrada === games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") === games[interaction.user.id].word) {
-        interaction.reply({ content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\nVocê ganhou \`B$ 50\` Bufunfas pelo acerto!`, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}`,
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 
         games[interaction.user.id].finalizado = true
 
         user.misc.money += 50
         await user.save()
 
-        createStatement(user.uid, `Jogos e entretenimento (forca)`, true, 50, client.timestamp())
+        createStatement(user.uid, "misc.b_historico.jogos_forca", true, 50, client.timestamp())
 
     } else if (entrada.length > 1 || games[interaction.user.id].erros >= 7) {
-        interaction.reply({ content: `${client.emoji(emojis_dancantes)} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``, ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        interaction.reply({
+            content: `${client.emoji(emojis_dancantes)} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``,
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
 
         games[interaction.user.id].finalizado = true
     }
@@ -150,7 +156,12 @@ async function retorna_jogo(client, interaction, user) {
         .setTitle(client.tls.phrase(user, "game.forca.titulo"))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(`${games[interaction.user.id].descobertas} ${painel} ${entradas}\n${client.tls.phrase(user, "game.forca.comando")}`)
-        .setFooter({ text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - games[interaction.user.id].erros)}` })
+        .setFooter({
+            text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - games[interaction.user.id].erros)}`
+        })
 
-    interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    interaction.reply({
+        embeds: [embed],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    })
 }

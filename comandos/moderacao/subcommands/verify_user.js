@@ -46,9 +46,10 @@ module.exports = async ({ client, user, interaction }) => {
         .setTitle(`> ${apelido}`)
         .setColor(client.embed_color(user_c.misc.color))
         .setThumbnail(avatar_user)
+        .setDescription(descricao)
         .addFields(
             {
-                name: ":globe_with_meridians: **Usuário**",
+                name: `**:bust_in_silhouette: ${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: user_name,
                 inline: true
             },
@@ -63,7 +64,9 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             }
         )
-        .setDescription(descricao)
 
-    return interaction.reply({ embeds: [infos_user], ephemeral: true })
+    return interaction.reply({
+        embeds: [infos_user],
+        ephemeral: true
+    })
 }

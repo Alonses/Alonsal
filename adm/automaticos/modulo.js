@@ -78,11 +78,17 @@ async function requisita_modulo() {
         for (let i = 0; i < data.length; i++) {
             // Verificando se o horário está correto
             if (data[i].stats.days == 2 && data[i].stats.hour === horario)
-                lista_modulos.push({ uid: data[i].uid, type: data[i].type })
+                lista_modulos.push({
+                    uid: data[i].uid,
+                    type: data[i].type
+                })
 
             // Verificando se o horário e o dia estão corretos
             else if (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia))
-                lista_modulos.push({ uid: data[i].uid, type: data[i].type })
+                lista_modulos.push({
+                    uid: data[i].uid,
+                    type: data[i].type
+                })
         }
 
         if (lista_modulos.length > 0)
@@ -182,11 +188,11 @@ async function cobra_modulo(client) {
             shutdownAllUserModules(identificador)
 
             // Avisando o usuário sobre o desligamento dos módulos
-            return client.sendDM(user, { data: ":mobile_phone_off: | Seus módulos foram desativados!\nGaranta que tenha Bufunfas em sua conta do Alonsal para poder ativar recursos como este!\n\nVocê pode ganhar bufunfas com o comando </daily:1020794974377353338> ou através de depósitos e games" }, true)
+            return client.sendDM(user, { data: client.tls.phrase(user, "misc.modulo.auto_desativado", client.emoji(30)) }, true)
         }
 
         // Registrando as movimentações de bufunfas para o usuário
-        await createStatement(user.uid, `Manutenção de módulos ( ${modules[identificador]} )`, false, users[identificador], client.timestamp())
+        await createStatement(user.uid, `misc.b_historico.modulos|${modules[identificador]}`, false, users[identificador], client.timestamp())
 
         const caso = "reback", quantia = total
         await require('./relatorio')({ client, caso, quantia })

@@ -31,11 +31,18 @@ module.exports = async function ({ client, bot, message }) {
                     const anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 
                     if (corpo_mail.anexo && !corpo_mail.texto) // Apenas um anexo
-                        canal_alvo.send({ files: [anexo] })
+                        canal_alvo.send({
+                            files: [anexo]
+                        })
                     else // Texto e anexo
-                        canal_alvo.send({ content: corpo_mail.texto, files: [anexo] })
+                        canal_alvo.send({
+                            content: corpo_mail.texto,
+                            files: [anexo]
+                        })
                 } else
-                    canal_alvo.send({ content: corpo_mail.texto })
+                    canal_alvo.send({
+                        content: corpo_mail.texto
+                    })
 
                 // Gerencia o tempo que o broadcast ficará disponível
                 timer_broadcast(client, bot)
@@ -54,9 +61,14 @@ module.exports = async function ({ client, bot, message }) {
         if (corpo_mail.anexo) {
             const img_anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 
-            canal_alvo.send({ content: `${corpo_mail.author_nick} -> ${corpo_mail.texto}`, files: [img_anexo] })
+            canal_alvo.send({
+                content: `${corpo_mail.author_nick} -> ${corpo_mail.texto}`,
+                files: [img_anexo]
+            })
         } else
-            canal_alvo.send({ content: `${corpo_mail.author_nick} -> ${corpo_mail.texto}` })
+            canal_alvo.send({
+                content: `${corpo_mail.author_nick} -> ${corpo_mail.texto}`
+            })
     }
 }
 
@@ -72,7 +84,9 @@ function timer_broadcast(client, bot) {
         bot.transmission.status = false
         await bot.save()
 
-        canal_alvo.send({ content: `:robot: | O broadcast foi terminado devido a inatividade.\n<@${bot.transmission.author}>` })
+        canal_alvo.send({
+            content: `:robot: | O broadcast foi terminado devido a inatividade.\n<@${bot.transmission.author}>`
+        })
     }, TIMER)
 }
 
@@ -91,7 +105,9 @@ async function checa_broadcast(client, bot) {
         const guild = client.getGuild(canal_alvo.guild.id)
 
         if (client.decider(guild.conf?.broadcast, 0))
-            canal_alvo.send({ content: `:robot: | O broadcast foi terminado devido a inatividade.\n<@${bot.transmission.author}>` })
+            canal_alvo.send({
+                content: `:robot: | O broadcast foi terminado devido a inatividade.\n<@${bot.transmission.author}>`
+            })
     }
 
     return status
@@ -111,7 +127,6 @@ async function encerra_broadcast(client, bot, force) {
 async function verificar_broadcast(client, interaction) {
 
     const bot = await client.getBot()
-
     const canal_alvo = await client.channels().get(bot.transmission.id_broad)
 
     if (canal_alvo.guild.id === interaction.guild.id) {

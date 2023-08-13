@@ -10,11 +10,17 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Badge", schema)
 
 async function getUserBadges(uid) {
-    return model.find({ uid: uid })
+    return model.find({
+        uid: uid
+    })
 }
 
 async function createBadge(uid, badge_id, timestamp) {
-    await model.create({ uid: uid, badge: badge_id, timestamp: timestamp })
+    await model.create({
+        uid: uid,
+        badge: badge_id,
+        timestamp: timestamp
+    })
 }
 
 async function migrateBadges() {
@@ -37,7 +43,11 @@ async function migrateBadges() {
 
                 // Verificando se o usuário não possui a badge importada
                 if (!badges_array.includes(parseInt(Object.keys(badge_list[i])[0]))) {
-                    await model.create({ uid: id_user, badge: parseInt(Object.keys(badge_list[i])[0]), timestamp: parseInt(Object.values(badge_list[i])[0]) })
+                    await model.create({
+                        uid: id_user,
+                        badge: parseInt(Object.keys(badge_list[i])[0]),
+                        timestamp: parseInt(Object.values(badge_list[i])[0])
+                    })
 
                     entradas++
                 }

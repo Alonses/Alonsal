@@ -28,7 +28,10 @@ module.exports = {
                     .setImage(dados.location.image)
                     .setDescription(client.replace(client.tls.phrase(user, "game.nazar.descricao"), [dados.location.region.name, dados.location.region.precise, dados.location.near_by[0], dados.location.near_by[1]]))
 
-                interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             })
             .catch(() => client.tls.reply(interaction, user, "game.nazar.error_1", true, 1))
     }

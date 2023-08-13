@@ -144,7 +144,10 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
                 .setTitle(`${user_alvo.username} ${fixed_badge}`)
                 .setColor(client.embed_color(user_a.misc.color))
                 .setThumbnail(user_alvo.avatarURL({ dynamic: true, size: 2048 }))
-                .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                .setFooter({
+                    text: interaction.user.username,
+                    iconURL: interaction.user.avatarURL({ dynamic: true })
+                })
 
             embed.addFields(
                 {
@@ -160,7 +163,10 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
                 { name: "⠀", value: "⠀", inline: true }
             )
 
-            interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+            interaction.editReply({
+                embeds: [embed],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
         }
     } else // Ranking global
         retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
@@ -191,7 +197,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
         .addFields(
             {
-                name: `${client.emoji("mc_honeycomb")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
+                name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                 value: usernames.join("\n"),
                 inline: true
             },
@@ -203,7 +209,10 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         )
 
     if (rodape !== "")
-        embed.setFooter({ text: rodape, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+        embed.setFooter({
+            text: rodape,
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
 
     if (escopo === "server")
         embed.addFields(
@@ -226,19 +235,39 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
     const b_disabled = require("../../funcoes/navegacao_rank")({ pagina, paginas, ids, interaction })
 
     if (paginas > 1)
-        row = client.create_buttons([{ id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] }, { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] }, { id: "rank_button", name: '🔘', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] }, { id: "rank_button", name: '▶️', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] }, { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }], interaction)
+        row = client.create_buttons([
+            { id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] },
+            { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] },
+            { id: "rank_button", name: '🔘', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] },
+            { id: "rank_button", name: '▶️', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] },
+            { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }
+        ], interaction)
 
     try {
         if (nav_buttons) {
             if (paginas > 1)
-                await interaction.editReply({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             else
-                await interaction.editReply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.editReply({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
         } else {
             if (paginas > 1)
-                await interaction.update({ embeds: [embed], components: [row], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.update({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             else
-                await interaction.update({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                await interaction.update({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
         }
     } catch (err) {
         client.error({ err })

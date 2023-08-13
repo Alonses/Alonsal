@@ -42,10 +42,16 @@ module.exports = {
 	async execute(client, user, interaction) {
 
 		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply({ content: gifs[client.random(gifs)], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+			interaction.reply({
+				content: gifs[client.random(gifs)],
+				ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			})
 		else if (interaction.options.getSubcommand() === "laugh") {
 			const file = new AttachmentBuilder("./arquivos/songs/cazalbe.ogg")
-			interaction.reply({ files: [file], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+			interaction.reply({
+				files: [file],
+				ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			})
 		} else
 			require('../../adm/formatadores/chunks/model_charada')(client, user, interaction)
 	}

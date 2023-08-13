@@ -22,7 +22,10 @@ module.exports = {
                 for (let key in used)
                     text += `${key}: ${used[key]} MB\n`
 
-                interaction.reply({ content: `\`\`\`${texto_apisal}\n\n${text}\`\`\``, ephemeral: true })
+                interaction.reply({
+                    content: `\`\`\`${texto_apisal}\n\n${text}\`\`\``,
+                    ephemeral: true
+                })
             })
     }
 }

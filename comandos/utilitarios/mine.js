@@ -44,7 +44,10 @@ module.exports = {
                     return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
 
                 if (dados_item.status === 404)
-                    return interaction.reply({ content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji(emojis_negativos))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`, ephemeral: true })
+                    return interaction.reply({
+                        content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji(emojis_negativos))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                        ephemeral: true
+                    })
 
                 let nome_item = dados_item.internal_name
                 descricao_tipo = nome_item
@@ -142,7 +145,9 @@ module.exports = {
                             inline: true
                         }, fields
                     )
-                    .setFooter({ text: nota_rodape })
+                    .setFooter({
+                        text: nota_rodape
+                    })
 
                 if (dados_item.durability)
                     embed.addFields(
@@ -173,7 +178,10 @@ module.exports = {
                     )
                 }
 
-                interaction.reply({ embeds: [embed], ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+                interaction.reply({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
             })
     }
 }

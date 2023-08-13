@@ -63,7 +63,9 @@ module.exports = async ({ client, interaction }) => {
             .setTitle("> ✨ New interaction")
             .setColor(0x29BB8E)
             .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
-            .setFooter({ text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}` })
+            .setFooter({
+                text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}`
+            })
 
         if (url_ativacao !== "")
             embed.setURL(`${url_ativacao}`)
