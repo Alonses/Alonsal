@@ -55,12 +55,12 @@ module.exports = async (client, user, interaction, dados) => {
 
         infos_user.addFields(
             {
-                name: `${client.defaultEmoji("guard")} **Cargos**`,
+                name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "util.server.cargos")}**`,
                 value: `${cargos_fn}`,
                 inline: false
             },
             {
-                name: `:shield: **Permissões**`,
+                name: `**:shield: ${client.tls.phrase(user, "menu.botoes.permissoes")}**`,
                 value: `${permissoes_fn}`,
                 inline: false
             }
