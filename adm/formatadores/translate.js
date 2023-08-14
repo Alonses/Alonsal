@@ -62,7 +62,7 @@ function report(interaction, user, target, ephemeral, type, button) {
 function translate(alvo, target) {
 
     // Pode ser usado para referenciar usuários ou servidores
-    const idioma_alvo = alvo.lang
+    const idioma_alvo = alvo.lang || "pt-br"
 
     // Busca as traduções para o item solicitado
     let { data } = require(`../../arquivos/idiomas/${idioma_alvo}.json`)
