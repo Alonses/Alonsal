@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction }) => {
             // Traduzindo a movimentação conforme o idioma do usuário
             let traducao = movimentacao.operation
 
-            if (!traducao) {
+            if (traducao) {
                 if (movimentacao.operation.split(".").length > 2) // Modelo com string traduzível
                     traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0])
 
