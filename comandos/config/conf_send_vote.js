@@ -31,6 +31,11 @@ module.exports = {
             { id: "vote_button", name: '日本語', emoji: "🇯🇵", type: 1, data: "jp" }
         ], interaction)
 
+        interaction.reply({
+            content: `:mailbox: | O embed para votação foi enviado ao canal <#${id_alvo}> com sucesso!`,
+            ephemeral: true
+        })
+
         client.notify(id_alvo, { embed: embed, components: row })
     }
 }
