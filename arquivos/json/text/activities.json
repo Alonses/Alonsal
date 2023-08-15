@@ -715,6 +715,10 @@
         {
             "type": 0,
             "text": "Cars - Gary Numan"
+        },
+        {
+            "type": 2,
+            "text": "/vote!"
         }
     ]
 }
