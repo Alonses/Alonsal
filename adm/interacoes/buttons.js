@@ -5,7 +5,7 @@ module.exports = async ({ client, user, interaction }) => {
     const criador = dados.split(".")[0] // ID do criador do menu
 
     // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
-    if (criador !== interaction.user.id)
+    if (criador !== interaction.user.id && funcao !== "vote_button")
         return client.tls.reply(interaction, user, "menu.menus.criador_botoes", true, 7)
 
     // Dados extras
