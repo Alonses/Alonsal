@@ -41,10 +41,10 @@ module.exports = async ({ client, user, interaction }) => {
             // Traduzindo a movimentação conforme o idioma do usuário
             let traducao = movimentacao.operation
 
-            if (movimentacao.operation.split(".").length > 2) // Modelo com string traduzível
+            if (movimentacao?.operation.split(".").length > 2) // Modelo com string traduzível
                 traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0])
 
-            if (movimentacao.operation.includes("|"))
+            if (movimentacao?.operation.includes("|"))
                 traducao = client.replace(traducao, movimentacao.operation.split("|")[1])
 
             extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${movimentacao.value}, ${traducao}\n`
