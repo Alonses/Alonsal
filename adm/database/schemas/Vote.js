@@ -23,8 +23,8 @@ async function registryVote(uid) {
 
 async function getVotes() {
 
-    const votes = await model.find({})
-    const total = {}
+    const votes = await model.find({}), total = {}
+    total.qtd = votes.length
 
     // Soma todos os votos registrados
     votes.forEach(voto => {
@@ -38,8 +38,16 @@ async function getVotes() {
     return total
 }
 
+async function verifyUser(uid) {
+    return model.findOne({
+        uid: uid
+    })
+}
+
+
 module.exports.Vote = model
 module.exports = {
     getVotes,
+    verifyUser,
     registryVote
 }

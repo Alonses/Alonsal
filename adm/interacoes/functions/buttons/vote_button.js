@@ -1,10 +1,25 @@
 const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
 
-const { registryVote } = require("../../../database/schemas/Vote")
+const { registryVote, verifyUser } = require("../../../database/schemas/Vote")
 const { createBadge } = require("../../../database/schemas/Badge")
 const { busca_badges, badgeTypes } = require("../../../data/badges")
 
 module.exports = async ({ client, user, interaction, dados }) => {
+
+    // Bloqueia novos votos após o encerramento
+    if (client.timestamp() >= 1692460800) {
+
+        const verify_user = await verifyUser(interaction.user.id)
+        let texto = client.tls.phrase(user, "inic.vote.encerrada", client.emoji("mc_approve"))
+
+        if (verify_user)
+            texto += `\n${client.tls.phrase(user, "inic.vote.encerrada_votador", client.emoji(emojis_dancantes))}`
+
+        return interaction.reply({
+            content: texto,
+            ephemeral: true
+        })
+    }
 
     const vote = dados.split(".")[1]
     const dados_voto = await registryVote(interaction.user.id)
