@@ -26,7 +26,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
     let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
 
     let apelido = membro_sv.nickname || user_alvo.username, tipo_user = "🤖", nota_rodape = ""
-    let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_data.discriminator}\``
+    let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``
 
     // Usuário sem discriminador
     if (user_alvo.discriminator == 0)
@@ -51,10 +51,6 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         if (membro_sv.premiumSinceTimestamp) // Impulsionadores do servidor
             discord_premium += ` ${client.emoji("boost")}`
     }
-
-    // Usuário sem discriminador
-    if (user_data.discriminator == 0)
-        nome_usuario = `\`@${user_data.username.replace(/ /g, "")}\``
 
     if (membro_sv.permissions.has(PermissionsBitField.Flags.Administrator)) {
         tipo_user = "🛡️"
