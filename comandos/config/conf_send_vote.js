@@ -5,7 +5,7 @@ const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_send_vote")
-        .setDescription("⌠🤖⌡ Verificar os resultados da votação")
+        .setDescription("⌠🤖⌡ Envie o embed de votação em algum servidor!")
         .addStringOption(option =>
             option.setName("canal")
                 .setDescription("O canal que será enviado")
@@ -16,9 +16,7 @@ module.exports = {
         if (!client.owners.includes(interaction.user.id)) return
 
         const id_alvo = interaction.options.getString("canal")
-
         const canal_alvo = client.discord.channels.cache.get(id_alvo)
-
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji(emojis_dancantes)}`)
