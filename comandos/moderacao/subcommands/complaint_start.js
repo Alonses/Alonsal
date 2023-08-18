@@ -18,8 +18,8 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
         })
     }
 
-    let everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone')
-    let bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
+    const everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone')
+    const bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
 
     // Criando o canal e atribuindo ele aos usuários especificos/ categoria escolhida
     interaction.guild.channels.create({
