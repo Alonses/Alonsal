@@ -69,6 +69,9 @@ module.exports = {
         // Validando se o usuário marcado não é um bot
         const membro_sv = await client.getUserGuild(interaction, alvo.uid)
 
+        if (!membro_sv) // Validando se o usuário marcado saiu do servidor
+            return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
+
         if (membro_sv.user.bot && alvo.uid !== client.id())
             return client.tls.reply(interaction, user, "misc.pay.user_bot", true, [9, 0])
 
