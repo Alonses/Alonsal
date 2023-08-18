@@ -77,41 +77,43 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
 
     const user_i = user
 
-    for (const user of data_usuarios) {
+    for (const user_interno of data_usuarios) {
         if (user_alvo)
-            if (user.uid === user_alvo.id) {
-                usuario_alvo.push(user.xp)
+            if (user_interno.uid === user_alvo.id) {
+                usuario_alvo.push(user_interno.xp)
                 break
             }
 
         if (i < 6) {
             // Procurando a Badge fixada do usuário
-            const user_a = await client.getUser(user.uid)
+            const user_a = await client.getUser(user_interno.uid)
 
             let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_a) || ""
             if (fixed_badge) fixed_badge = fixed_badge.emoji
 
-            if (parseInt(pagina) !== 1)
-                usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
-            else
-                usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(user.nickname).replace(/ /g, "")}\` ${fixed_badge}`)
+            const nome_usuario = user_interno.nickname ? user_interno.nickname : client.tls.phrase(user, "util.steam.undefined")
 
-            ids.push(user.uid)
-            experiencias.push(`\`${client.locale(parseInt(user.xp))} EXP\``)
+            if (parseInt(pagina) !== 1)
+                usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(nome_usuario).replace(/ /g, "")}\` ${fixed_badge}`)
+            else
+                usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(nome_usuario).replace(/ /g, "")}\` ${fixed_badge}`)
+
+            ids.push(user_interno.uid)
+            experiencias.push(`\`${client.locale(parseInt(user_interno.xp))} EXP\``)
 
             if (escopo === "server")
-                levels.push(`\`${client.locale(Math.floor(user.xp / 1000))}\` - \`${((user.xp % 1000) / 1000).toFixed(2)}%\``)
+                levels.push(`\`${client.locale(Math.floor(user_interno.xp / 1000))}\` - \`${((user_interno.xp % 1000) / 1000).toFixed(2)}%\``)
             else {
                 let nome_server
 
-                if (public_servers.includes(user.sid)) {
+                if (public_servers.includes(user_interno.sid)) {
                     // Checando no cache se o nome está salvo
                     try {
-                        if (!servidores[user.sid]) {
-                            nome_server = client.guilds().get(user.sid || '0')
+                        if (!servidores[user_interno.sid]) {
+                            nome_server = client.guilds().get(user_interno.sid || '0')
                             servidores[nome_server.id] = nome_server.name
                         } else
-                            nome_server = servidores[user.sid]
+                            nome_server = servidores[user_interno.sid]
                     } catch {
                         nome_server = client.tls.phrase(user_i, "util.steam.undefined")
                     }
