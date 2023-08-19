@@ -51,17 +51,17 @@ module.exports = {
                 })),
     async execute(client, user, interaction) {
 
-        let guild = await client.getGuild(interaction.guild.id)
+        const guild = await client.getGuild(interaction.guild.id)
 
         // Verificando se as denúncias em canais privados estão ativas no servidor
         if (!guild.conf.tickets)
             return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
-        let channel = await getTicket(interaction.guild.id, interaction.user.id)
-        let solicitante = await client.getUserGuild(interaction, interaction.user.id)
+        const channel = await getTicket(interaction.guild.id, interaction.user.id)
+        const solicitante = await client.getUserGuild(interaction, interaction.user.id)
 
         // Buscando os dados do canal no servidor
-        let canal_servidor = interaction.guild.channels.cache.find(c => c.id === channel.cid)
+        const canal_servidor = interaction.guild.channels.cache.find(c => c.id === channel.cid)
 
         // Solicitando a função e executando
         require(`./subcommands/complaint_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel, solicitante, canal_servidor })
