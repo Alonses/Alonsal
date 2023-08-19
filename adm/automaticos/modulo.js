@@ -91,6 +91,16 @@ async function requisita_modulo() {
                 })
         }
 
+        let estagio = 1
+
+        if (horario === "13:00")
+            require("./encerra_votacao")({ client, estagio })
+
+        if (horario === "13:30") {
+            estagio = 2
+            require("./encerra_votacao")({ client, estagio })
+        }
+
         if (lista_modulos.length > 0)
             executa_modulo()
     })
