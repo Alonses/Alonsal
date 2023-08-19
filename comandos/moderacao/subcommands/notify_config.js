@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction }) => {
         // Tipo 5 -> Canal de texto tipo anúncios
 
         if (dados.channel.type !== 0 && dados.channel.type !== 5) // Verificando se o canal mencionado é inválido
-            return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, 0)
+            return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, client.defaultEmoji("types"))
 
         dados.channel = dados.channel.id
         guild.games.channel = dados.channel
@@ -34,9 +34,15 @@ module.exports = async ({ client, user, interaction }) => {
     if (!dados.lang)
         dados.lang = guild.lang
 
+    const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
+
+    // Verificando permissões para enviar mensagens no canal
+    if (!canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) || !canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel))
+        return client.tls.reply(interaction, user, "mode.anuncio.permissao_envio", true, client.defaultEmoji("guard"))
+
     const row = client.create_buttons([
-        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}` },
-        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar_anunciando"), type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}` },
+        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}.${dados.lang}` },
+        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar_anunciando"), type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}.${dados.lang}` },
         { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
     ], interaction)
 
