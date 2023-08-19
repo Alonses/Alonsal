@@ -1,6 +1,16 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
+const { getVotes } = require("../../adm/database/schemas/Vote")
+
 const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
+
+const idiomas = {
+    "de": "alemão",
+    "nl": "holândes",
+    "se": "sueco",
+    "tr": "turco",
+    "jp": "japonês"
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -21,25 +31,33 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        const embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji(emojis_dancantes)}`)
-            .setColor(0x29BB8E)
-            .setDescription(`${client.replace(client.tls.phrase(user, "inic.vote.descricao"), [client.emoji(emojis_dancantes), client.emoji(emojis_dancantes)])} <t:1692460800:f>!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl:`)
-            .setFooter({
-                text: client.tls.phrase(user, "inic.vote.rodape")
-            })
+        const votos = await getVotes()
 
-        const row = client.create_buttons([
-            { id: "vote_button", name: 'Deutsch', emoji: "🇩🇪", type: 1, data: "de" },
-            { id: "vote_button", name: 'Nederlands', emoji: "🇳🇱", type: 1, data: "nl" },
-            { id: "vote_button", name: 'Svenska', emoji: "🇸🇪", type: 1, data: "se" },
-            { id: "vote_button", name: 'Türkçe', emoji: "🇹🇷", type: 1, data: "tr" },
-            { id: "vote_button", name: '日本語', emoji: "🇯🇵", type: 1, data: "jp" }
-        ], interaction)
+        let maior = {
+            qtd: 0,
+            name: null
+        }
+
+        // Ajustando o idioma com maior número de votos
+        Object.keys(votos).forEach(voto => {
+            if (votos[voto] > maior.qtd && voto !== "qtd") {
+                maior.qtd = votos[voto]
+                maior.name = voto
+            }
+        })
+
+        let escolha = maior.name
+
+        const embed = new EmbedBuilder()
+            .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji(emojis_dancantes)} ${client.emoji(emojis_dancantes)} ${client.emoji(emojis_dancantes)}`)
+            .setColor(0x29BB8E)
+            .setDescription(`${client.replace(`${client.tls.phrase(user, "inic.vote.votacao_encerrada_1")}\n\n${client.tls.phrase(user, "inic.vote.votacao_encerrada_2")}`, [votos.qtd, client.emoji("aln_voter"), maior.qtd, idiomas[escolha], client.emoji(emojis_dancantes), client.emoji(emojis_dancantes)])}\n\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:`)
+            .setFooter({
+                text: client.tls.phrase(user, "inic.vote.rodape_encerrado")
+            })
 
         interaction.reply({
             embeds: [embed],
-            components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }
