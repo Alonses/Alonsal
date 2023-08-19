@@ -91,16 +91,16 @@ async function requisita_modulo() {
                 })
         }
 
-        let estagio = 1
-        let client = global_client
+        // let estagio = 1
+        // let client = global_client
 
-        if (horario === "13:05")
-            require("./encerra_votacao")({ client, estagio })
+        // if (horario === "13:05")
+        //     require("./encerra_votacao")({ client, estagio })
 
-        if (horario === "13:30") {
-            estagio = 2
-            require("./encerra_votacao")({ client, estagio })
-        }
+        // if (horario === "13:30") {
+        //     estagio = 2
+        //     require("./encerra_votacao")({ client, estagio })
+        // }
 
         if (lista_modulos.length > 0)
             executa_modulo()
