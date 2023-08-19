@@ -92,8 +92,9 @@ async function requisita_modulo() {
         }
 
         let estagio = 1
+        let client = global_client
 
-        if (horario === "13:00")
+        if (horario === "13:05")
             require("./encerra_votacao")({ client, estagio })
 
         if (horario === "13:30") {
