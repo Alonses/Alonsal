@@ -38,6 +38,10 @@ module.exports = async (client, message) => {
             text: message[0].author.username
         })
 
+    const user = {
+        lang: "pt-br"
+    }
+
     if (message[1].content.includes("https")) {
         const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
 
