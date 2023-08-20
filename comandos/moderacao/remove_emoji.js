@@ -42,10 +42,9 @@ module.exports = {
 
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
-            // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, client.emoji(0))
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
-        const dados = interaction.options.getString("emoji")
+        const dados = interaction.options.getString("name")
 
         try { // Removendo um emoji customizado do servidor
             if (dados.startsWith("<") && dados.endsWith(">")) {

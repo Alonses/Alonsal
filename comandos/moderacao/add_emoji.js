@@ -82,7 +82,7 @@ module.exports = {
                     "ru": '⌠💂⌡ Добавить наклейку'
                 })
                 .addStringOption(option =>
-                    option.setName("nome")
+                    option.setName("name")
                         .setNameLocalizations({
                             "pt-BR": 'nome',
                             "es-ES": 'nombre',
@@ -142,7 +142,6 @@ module.exports = {
 
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
-            // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, client.emoji(0))
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         // Coletando todas as entradas
@@ -200,7 +199,7 @@ function criar_item(dados, interaction, client, user) {
             attachment: dados.url,
             name: dados.nome
         })
-            .then(emoji => client.tls.reply(interaction, user, "mode.emojis.emoji_criado", true, emoji, dados.nome))
+            .then(emoji => interaction.reply({ content: `${emoji} | ${client.replace(client.tls.phrase(user, "mode.emojis.emoji_criado"), dados.nome)}`, ephemeral: true }))
             .catch(err => {
 
                 if (err.rawError.code === 50045)
@@ -218,7 +217,7 @@ function criar_item(dados, interaction, client, user) {
             name: dados.nome,
             tags: dados.categoria
         })
-            .then(() => client.tls.reply(interaction, user, "mode.emojis.figurinha_criada", true, null, dados.nome))
+            .then(() => client.tls.reply(interaction, user, "mode.emojis.figurinha_criada", true, 35, dados.nome))
             .catch(err => {
 
                 if (err.rawError.code === 50045)
