@@ -19,7 +19,7 @@ module.exports = async (client, user, interaction, dados) => {
     } else
         id_alvo = interaction.options.getUser("user")?.id || interaction.user.id
 
-    const membro_sv = await client.getUserGuild(interaction, id_alvo)
+    const membro_sv = await client.getMemberGuild(interaction, id_alvo)
 
     if (!membro_sv) // Usuário fora do servidor (pode ser gerado por menus de contexto)
         return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)

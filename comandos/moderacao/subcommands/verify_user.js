@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
     // Coletando os dados de histórico do usuário
     const reports = await getUserReports(id_alvo)
     const user_c = await client.getUser(id_alvo)
-    const user_alvo = await client.getUserGuild(interaction, id_alvo) // Dados de membro do servidor
+    const user_alvo = await client.getMemberGuild(interaction, id_alvo) // Dados de membro do servidor
 
     // Usuário não faz parte do servidor
     if (!user_alvo)

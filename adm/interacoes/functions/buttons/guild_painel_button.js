@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 const { verificar_broadcast } = require('../../../eventos/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -17,6 +19,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // 7 -> Módulo anti-spam
     // 8 -> Servidor visível globalmente
+    // 9 -> AutoBan 
 
     if (escolha === 1) {
         // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
@@ -114,6 +117,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
             guild.conf.public = !guild.conf.public
         else
             guild.conf.public = false
+    } else if (escolha === 9) {
+
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+        // Permissões para banir outros membros
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
+            return client.tls.report(interaction, user, "mode.report.auto_ban_painel", true, 7, null, true)
+
+        // Ativa ou desativa a opção de autoBan do comando /reporte
+        if (typeof guild.conf.auto_ban !== "undefined")
+            guild.conf.auto_ban = !guild.conf.auto_ban
+        else
+            guild.conf.auto_ban = true
     }
 
     if (escolha > 3)

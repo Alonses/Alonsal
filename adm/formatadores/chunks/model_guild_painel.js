@@ -5,7 +5,7 @@ const { emoji_button, type_button } = require('../../funcoes/emoji_button')
 module.exports = async (client, user, interaction, pagina) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    const membro_sv = await client.getUserGuild(interaction, interaction.user.id)
+    const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor"))
@@ -70,13 +70,13 @@ module.exports = async (client, user, interaction, pagina) => {
                 inline: true
             },
             {
-                name: `**${emoji_button(0)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                name: `**${emoji_button(guild?.conf.auto_ban)} AutoBan**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_autoban")}\``,
                 inline: true
             }
         )
 
-    const c_buttons = [false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
@@ -130,7 +130,7 @@ module.exports = async (client, user, interaction, pagina) => {
         botoes = botoes.concat([
             { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: type_button(guild?.conf.spam), emoji: emoji_button(guild?.conf.spam), data: '7', disabled: c_buttons[6] },
             { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '8', disabled: c_buttons[7] },
-            { id: "guild_painel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(0), data: 'X', disabled: true }
+            { id: "guild_painel_button", name: "AutoBan", type: type_button(guild?.conf.auto_ban), emoji: emoji_button(guild?.conf.auto_ban), data: '9', disabled: c_buttons[8] }
         ])
 
     botoes.push({

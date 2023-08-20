@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
 
         // Validando se há tasks registradas para o usuário
         if (tarefas.length < 1)
-            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa", true, 0, interaction.customId)
+            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa", true, client.emoji(0), interaction.customId)
 
         for (let i = 0; i < tarefas.length; i++) {
             if (tarefas[i].concluded)
@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
         if (operador === "a|tarefas") {
             // Tarefas abertas
             if (casos.aberto < 1)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, 0, interaction.customId)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, client.emoji(0), interaction.customId)
 
             const data = {
                 alvo: "tarefas",
@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
         if (operador === "f|tarefas") {
             // Tarefas finalizadas
             if (casos.finalizado < 1)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, 0, interaction.customId)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, client.emoji(0), interaction.customId)
 
             const data = {
                 alvo: "tarefas",

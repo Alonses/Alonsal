@@ -40,7 +40,7 @@ function phrase(user, target, type) {
     return phrase
 }
 
-function report(interaction, user, target, ephemeral, type, button) {
+function report(interaction, user, target, ephemeral, type, button, update) {
 
     let phrase = translate(user, target)
     phrase = check_emojis(phrase, type)
@@ -50,6 +50,11 @@ function report(interaction, user, target, ephemeral, type, button) {
             content: phrase,
             embeds: [],
             components: [],
+            ephemeral: ephemeral
+        })
+    else if (update)
+        interaction.update({
+            content: phrase,
             ephemeral: ephemeral
         })
     else

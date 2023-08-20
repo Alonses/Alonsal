@@ -110,8 +110,8 @@ function internal_functions(client) {
         return getUserBadges(id_user)
     }
 
-    client.getUserGuild = (interaction, id_alvo) => {
-        return interaction.guild.members.cache.get(id_alvo)
+    client.getMemberGuild = (interaction, id_alvo) => {
+        return interaction.guild.members.fetch(id_alvo)
     }
 
     client.getCachedUser = (id_alvo) => {

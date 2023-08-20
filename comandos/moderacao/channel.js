@@ -43,7 +43,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(client, user, interaction) {
 
-        const membro_sv = await client.getUserGuild(interaction, client.id())
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
 
         // Permissões para gerenciar canais e cargos necessária para a função de tickets
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
