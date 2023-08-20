@@ -106,6 +106,10 @@ module.exports = async (client, user, interaction, pagina) => {
         c_buttons[7] = true
     }
 
+    // Falta de permissões para banir membros
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
+        c_buttons[8] = true
+
     // Primeira página de botões de configuração do Alonsal
     // Alonsal Falador; Broadcast e Anúncio de games
     if (pagina === 0)
