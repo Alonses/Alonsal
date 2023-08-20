@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
         ]
     })
         .then(async new_channel => {
-            client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel)
+            client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel.id)
 
             channel.cid = new_channel.id
             await channel.save()

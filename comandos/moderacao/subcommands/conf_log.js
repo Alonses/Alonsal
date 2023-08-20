@@ -6,7 +6,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
 
         // Mencionado um tipo de canal errado
         if (canal_alvo !== 0)
-            return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, 0)
+            return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.emoji(0))
     }
 
     // Ativa ou desativa o logger no servidor

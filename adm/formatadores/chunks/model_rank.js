@@ -273,6 +273,6 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         }
     } catch (err) {
         client.error({ err })
-        client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, 0)
+        client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, client.emoji(0))
     }
 }

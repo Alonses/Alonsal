@@ -40,7 +40,7 @@ module.exports = {
             .then(retorno => {
 
                 if (retorno.status === 404)
-                    return client.tls.reply(interaction, user, "game.pula.error_1", true, 0)
+                    return client.tls.reply(interaction, user, "game.pula.error_1", true, client.emoji(0))
 
                 const datas_pula = retorno.data
 
@@ -90,6 +90,6 @@ module.exports = {
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             })
-            .catch(() => client.tls.reply(interaction, user, "game.pula.error_2", true, 0))
+            .catch(() => client.tls.reply(interaction, user, "game.pula.error_2", true, client.emoji(0)))
     }
 }

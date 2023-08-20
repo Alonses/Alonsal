@@ -142,7 +142,7 @@ module.exports = {
 
         // Verificando se o bot pode gerenciar emojis e stickers
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageEmojisAndStickers))
-            // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, 0)
+            // return client.tls.reply(interaction, user, "mode.clear.permissao_2", true, client.emoji(0))
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         // Coletando todas as entradas
@@ -204,12 +204,12 @@ function criar_item(dados, interaction, client, user) {
             .catch(err => {
 
                 if (err.rawError.code === 50045)
-                    return client.tls.reply(interaction, user, "mode.emojis.emoji_size", true, 0)
+                    return client.tls.reply(interaction, user, "mode.emojis.emoji_size", true, client.emoji(0))
 
                 if (err.rawError.code === 30008) // Máximo de emojis
-                    return client.tls.reply(interaction, user, "mode.emojis.emoji_max", true, 0)
+                    return client.tls.reply(interaction, user, "mode.emojis.emoji_max", true, client.emoji(0))
 
-                return client.tls.reply(interaction, user, "mode.emojis.emoji_error", true, 0)
+                return client.tls.reply(interaction, user, "mode.emojis.emoji_error", true, client.emoji(0))
             })
     } else { // Criando uma figurinha
 
@@ -222,12 +222,12 @@ function criar_item(dados, interaction, client, user) {
             .catch(err => {
 
                 if (err.rawError.code === 50045)
-                    return client.tls.reply(interaction, user, "mode.emojis.sticker_size", true, 0)
+                    return client.tls.reply(interaction, user, "mode.emojis.sticker_size", true, client.emoji(0))
 
                 if (err.rawError.code === 30039) // Máximo de figurinhas
-                    return client.tls.reply(interaction, user, "mode.emojis.sticker_max", true, 0)
+                    return client.tls.reply(interaction, user, "mode.emojis.sticker_max", true, client.emoji(0))
 
-                return client.tls.reply(interaction, user, "mode.emojis.sticker_error", true, 0)
+                return client.tls.reply(interaction, user, "mode.emojis.sticker_error", true, client.emoji(0))
             })
     }
 }

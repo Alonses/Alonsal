@@ -45,6 +45,6 @@ module.exports = {
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             })
-            .catch(() => client.tls.reply(interaction, user, "game.gta.erro_apisal", true, 0))
+            .catch(() => client.tls.reply(interaction, user, "game.gta.erro_apisal", true, client.emoji(0)))
     }
 }

@@ -192,7 +192,7 @@ module.exports = {
                         listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
                     if (listas.length < 1)
-                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista", true, 0)
+                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista", true, client.emoji(0))
 
                     const task = await createTask(interaction.user.id, interaction.guild.id, interaction.options.getString("description"), timestamp)
 
@@ -236,7 +236,7 @@ module.exports = {
                         check_list = await checkUserGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id)
 
                     if (check_list.length > 0) // Verificando se o nome da nova lista não existe ainda
-                        return client.tls.reply(interaction, user, "util.tarefas.lista_repetida", true, 0)
+                        return client.tls.reply(interaction, user, "util.tarefas.lista_repetida", true, client.emoji(0))
 
                     // Criando a lista
                     createGroup(interaction.user.id, interaction.options.getString("description"), interaction.guild.id, timestamp)
@@ -258,7 +258,7 @@ module.exports = {
 
                     // Removendo listas
                     if (listas.length < 1)
-                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_r", true, 0)
+                        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_r", true, client.emoji(0))
 
                     const data = {
                         alvo: "listas_remover",

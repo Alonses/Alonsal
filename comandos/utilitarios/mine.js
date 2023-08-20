@@ -41,7 +41,7 @@ module.exports = {
             .then(async dados_item => {
 
                 if (dados_item.status === 502)
-                    return client.tls.reply(interaction, user, "util.minecraft.error_1", true, 0)
+                    return client.tls.reply(interaction, user, "util.minecraft.error_1", true, client.emoji(0))
 
                 if (dados_item.status === 404)
                     return interaction.reply({
