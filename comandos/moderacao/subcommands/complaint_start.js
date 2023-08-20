@@ -20,6 +20,7 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
 
     const everyone = interaction.guild.roles.cache.find(r => r.name === '@everyone')
     const bot = await client.getUserGuild(interaction, client.id()) // Liberando ao canal para o bot
+    const guild = await client.getGuild(interaction.guild.id)
 
     // Criando o canal e atribuindo ele aos usuários especificos/ categoria escolhida
     interaction.guild.channels.create({
@@ -39,7 +40,7 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
                 id: bot,
                 allow: [PermissionsBitField.Flags.ViewChannel]
             }
-        ],
+        ]
     })
         .then(async new_channel => {
             client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel)
