@@ -80,5 +80,5 @@ async function deleteMessages(client, user, interaction, qtd_msg) {
                 ephemeral: true
             })
         })
-        .catch(() => client.tls.reply(interaction, user, "mode.clear.error", true, 0))
+        .catch(() => client.tls.reply(interaction, user, "mode.clear.error", true, client.emoji(0)))
 }

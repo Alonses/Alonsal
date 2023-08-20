@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     let id_alvo = interaction.options.getUser("user") || interaction.options.getString("id")
 
     if (!id_alvo) // Sem usuário informado
-        return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
+        return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
 
     if (typeof id_alvo === "object")
         id_alvo = id_alvo.id

@@ -20,13 +20,13 @@ module.exports = {
 
         // Verificando se o Broadcast é permitido no servidor
         if (!client.decider(guild?.conf.broadcast, 0))
-            return client.tls.reply(interaction, user, "mode.broadcast.desativado", true, 0)
+            return client.tls.reply(interaction, user, "mode.broadcast.desativado", true, client.emoji(0))
 
         const canal_alvo = await client.channels().get(interaction.channel.id)
 
         // Sem permissão para enviar mensagens
         if (!canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages))
-            return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, 0)
+            return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, client.emoji(0))
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "mode.broadcast.solicitando")} ${client.emoji(emojis_dancantes)}`)

@@ -136,16 +136,16 @@ module.exports = {
             let id_alvo = interaction.options.getUser("user") || interaction.options.getString("id")
 
             if (!id_alvo)
-                return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, 0)
+                return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
 
             if (typeof id_alvo === "object")
                 id_alvo = id_alvo.id
 
             if (id_alvo === interaction.user.id)
-                return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, 0)
+                return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
 
             if (id_alvo === client.id())
-                return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, 0)
+                return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
 
             const alvo = await getReport(id_alvo, interaction.guild.id)
 

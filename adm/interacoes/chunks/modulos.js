@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Listando listas
     if (modulos.length < 1)
-        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, 0)
+        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, client.emoji(0))
 
     const data = {
         title: client.tls.phrase(user, "util.tarefas.lista_escolher", 1),

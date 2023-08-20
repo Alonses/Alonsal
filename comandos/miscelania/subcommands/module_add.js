@@ -8,7 +8,7 @@ const formata_horas = require('../../../adm/formatadores/formata_horas')
 module.exports = async ({ client, user, interaction }) => {
 
     if (user.misc.money < 20)
-        return client.tls.reply(interaction, user, "misc.modulo.sem_bufunfa", true, 0)
+        return client.tls.reply(interaction, user, "misc.modulo.sem_bufunfa", true, client.emoji(0))
 
     const type = parseInt(interaction.options.getString("choice"))
 
@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Prevenção de erros
     if (type == 0 && !user.misc.locale)
-        return client.tls.reply(interaction, user, "misc.modulo.sem_locale", true, 0)
+        return client.tls.reply(interaction, user, "misc.modulo.sem_locale", true, client.emoji(0))
 
     const corpo_modulo = await createModule(interaction.user.id, type)
     const timestamp = client.timestamp()

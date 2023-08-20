@@ -131,6 +131,6 @@ module.exports = {
             embeds: [embed],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
-            .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, 0))
+            .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, client.emoji(0)))
     }
 }

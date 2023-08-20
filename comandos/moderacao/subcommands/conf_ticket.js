@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
 
         // Mencionado um tipo de canal errado
         if (canal_alvo !== 4)
-            return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, 0)
+            return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.emoji(0))
     }
 
     // Ativa ou desativa os tickets no servidor
