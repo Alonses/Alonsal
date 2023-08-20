@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { getReport } = require('../../adm/database/schemas/Report')
 
@@ -114,7 +114,6 @@ module.exports = {
                             "it": 'ID utente',
                             "ru": 'ID пользователя'
                         })))
-
         .addSubcommand(subcommand =>
             subcommand.setName("migrate")
                 .setDescription("⌠💂⌡ Migrate all banned users from server to Alonsal")
@@ -147,14 +146,18 @@ module.exports = {
             if (id_alvo === client.id()) // Impede que o usuário reporte o bot
                 return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
 
-            const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+            if (isNaN(id_alvo) || id_alvo.length < 18) // ID inválido
+                return client.tls.reply(interaction, user, "mode.report.id_invalido", true, client.defaultEmoji("types"))
 
-            if (membro_guild.user.bot) // Impede que outros bots sejam reportados
-                return interaction.reply({ content: `${client.emoji(0)} | Você não pode reportar outros bots!`, ephemeral: true })
+            const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+                .catch(() => { return null })
+
+            if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
+                return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
 
             const alvo = await getReport(id_alvo, interaction.guild.id)
 
-            // Atribuindo o reporte ao usuário que disparou o comadno
+            // Atribuindo o reporte ao usuário que disparou o comando
             alvo.issuer = interaction.user.id
 
             return require(`./subcommands/report_${interaction.options.getSubcommand()}`)({ client, user, interaction, alvo })

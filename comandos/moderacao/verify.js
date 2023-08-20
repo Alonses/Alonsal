@@ -29,17 +29,8 @@ module.exports = {
                             "fr": 'Mentionner un utilisateur comme cible',
                             "it": 'Menziona un altro utente',
                             "ru": 'Упомянуть другого пользователя'
-                        }))
-                .addStringOption(option =>
-                    option.setName("id")
-                        .setDescription("The user ID")
-                        .setDescriptionLocalizations({
-                            "pt-BR": 'O ID do usuário',
-                            "es-ES": 'Identificación de usuario',
-                            "fr": 'ID de l\'utilisateur',
-                            "it": 'ID utente',
-                            "ru": 'ID пользователя'
-                        })))
+                        })
+                        .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("guild")
                 .setDescription("⌠💂⌡ Check reported server users")
@@ -71,6 +62,7 @@ module.exports = {
     async execute(client, user, interaction) {
 
         // Solicitando a função e executando
-        require(`./subcommands/verify_${interaction.options.getSubcommand()}`)({ client, user, interaction })
+        require(`./subcommands/verify_${interaction.options.getSubcommand()
+            }`)({ client, user, interaction })
     }
 }

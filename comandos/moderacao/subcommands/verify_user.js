@@ -4,22 +4,17 @@ const { getUserReports } = require('../../../adm/database/schemas/Report')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    let id_alvo = interaction.options.getUser("user") || interaction.options.getString("id")
+    let id_alvo = interaction.options.getUser("user").id
+    const user_alvo = await client.getMemberGuild(interaction, id_alvo) // Dados de membro do servidor
+        .catch(() => { return null })
 
-    if (!id_alvo) // Sem usuário informado
-        return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
-
-    if (typeof id_alvo === "object")
-        id_alvo = id_alvo.id
+    // Usuário não faz parte do servidor (caso o usuário saia do servidor enquanto o comando é executado)
+    if (!user_alvo)
+        return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     // Coletando os dados de histórico do usuário
     const reports = await getUserReports(id_alvo)
     const user_c = await client.getUser(id_alvo)
-    const user_alvo = await client.getMemberGuild(interaction, id_alvo) // Dados de membro do servidor
-
-    // Usuário não faz parte do servidor
-    if (!user_alvo)
-        return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     let apelido = user_alvo.nickname !== null ? user_alvo.nickname : user_alvo.user.username
     let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
