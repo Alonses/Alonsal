@@ -48,33 +48,33 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Verificando se a opção de banir o usuário ao fazer um report está ativa
     if (guild?.conf.auto_ban) {
 
-        const guild_member = await client.getMemberGuild(interaction, alvo.uid)
         const bot_member = await client.getMemberGuild(interaction, client.id())
 
-        // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo
-        if (interaction.member.roles.highest.position < guild_member.roles.highest.position)
-            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_hierarquia", 7)}`
-
-        // Verificando se a hierarquia do bot é maior que o do alvo
-        if (bot_member.roles.highest.position < guild_member.roles.highest.position)
-            texto_retorno = `\n${client.tls.phrase(user, "mode.report.auto_ban_hierarquia_bot", 7)}`
-
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-
         // Permissões para banir outros membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
+        if (!bot_member.permissions.has(PermissionsBitField.Flags.BanMembers))
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_permissao", 7)}`
-        else // Banindo o usuário do servidor automaticamente
-            if (guild_member) {
 
-                interaction.guild.members.ban(guild_member, {
-                    reason: alvo.relatory,
-                    deleteMessageSeconds: 3 * 24 * 60 * 60 // 3 dias
-                })
+        const guild_member = await client.getMemberGuild(interaction, alvo.uid)
+            .catch(() => { return null })
 
-                texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`
-            } else
-                texto_retorno += client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", [client.defaultEmoji("guard"), client.emoji(1)])
+        if (guild_member) {
+            // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo
+            if (interaction.member.roles.highest.position < guild_member.roles.highest.position)
+                texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_hierarquia", 7)}`
+
+            // Verificando se a hierarquia do bot é maior que o do alvo
+            if (bot_member.roles.highest.position < guild_member.roles.highest.position)
+                texto_retorno = `\n${client.tls.phrase(user, "mode.report.auto_ban_hierarquia_bot", 7)}`
+
+            // Banindo o usuário do servidor automaticamente
+            interaction.guild.members.ban(guild_member, {
+                reason: alvo.relatory,
+                deleteMessageSeconds: 3 * 24 * 60 * 60 // 3 dias
+            })
+
+            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`
+        } else
+            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
     }
 
     interaction.update({
