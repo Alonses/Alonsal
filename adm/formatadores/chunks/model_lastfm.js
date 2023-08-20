@@ -215,14 +215,33 @@ module.exports = async ({ client, user, interaction }) => {
 function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
 
     if (hora) { // Formatando a hora para números inteiros
-        stats_semana = parseInt(stats_semana.split(" horas")[0])
-        stats_passado = parseInt(stats_passado.split(" horas")[0])
+        let hr_tempo = 0 // Usado para converter dias em horas
 
+        // Checando se há dias de reprodução registrados
+        if (stats_semana.includes("dia")) {
+            hr_tempo = parseInt(stats_semana.split("dia")[0]) * 24
+
+            hr_tempo += parseInt(stats_semana.split(",")[1].split("hora")[0])
+            stats_semana = hr_tempo
+        } else // Apenas horas
+            stats_semana = parseInt(stats_semana.split(" horas")[0])
+
+        // Checando se há dias de reprodução registrados
+        if (stats_passado.includes("dia")) {
+            hr_tempo = parseInt(stats_passado.split("dia")[0]) * 24
+
+            hr_tempo += parseInt(stats_passado.split(",")[1].split("hora")[0])
+            stats_passado = hr_tempo
+        } else // Apenas horas
+            stats_passado = parseInt(stats_passado.split(" horas")[0])
+
+        // Verificando a quantidade de horas para poder ajustar
         if (stats_semana !== 1)
             horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.horas")}`
         else
             horas_tocadas = `${stats_semana}${client.tls.phrase(user, "util.unidades.hora")}`
 
+        // Verificando a quantidade de horas para poder ajustar
         if (stats_passado !== 1)
             horas_passadas = `${stats_passado}${client.tls.phrase(user, "util.unidades.horas")}`
         else
