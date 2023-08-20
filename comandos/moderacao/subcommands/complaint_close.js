@@ -8,11 +8,10 @@ module.exports = async ({ client, user, interaction, channel, solicitante, canal
 
     const date1 = new Date()
 
-    const msg = await client.tls.reply(interaction, user, "mode.denuncia.fechando_canal", true, null, `<t:${Math.floor((date1.getTime() + 10000) / 1000)}:R>`)
+    client.tls.reply(interaction, user, "mode.denuncia.fechando_canal", true, null, `<t:${Math.floor((date1.getTime() + 10000) / 1000)}:R>`)
 
     setTimeout(() => {
         canal_servidor.permissionOverwrites.edit(solicitante, { ViewChannel: false })
-        msg.delete()
 
         // Apagando o ticket de denúncia do usuário
         dropTicket(interaction.guild.id, interaction.user.id)
