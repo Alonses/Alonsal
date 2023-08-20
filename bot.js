@@ -94,7 +94,7 @@ client.discord.on("interactionCreate", async interaction => {
 
 	try {
 		// Executando o comando
-		await action(client, user, interaction)
+		action(client, user, interaction)
 			.then(() => {
 				require("./adm/eventos/log.js")({ client, interaction, command })
 			})
