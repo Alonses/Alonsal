@@ -2,7 +2,7 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
 
-    const membro_sv = await client.getUserGuild(interaction, client.id())
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
 
     // Permissões para gerenciar canais e cargos necessária para a função de tickets
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
 
         // Mencionado um tipo de canal errado
         if (canal_alvo !== 4)
-            return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.emoji(0))
+            return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.defaultEmoji("types"))
     }
 
     // Ativa ou desativa os tickets no servidor

@@ -62,7 +62,7 @@ module.exports = {
 
 async function deleteMessages(client, user, interaction, qtd_msg) {
 
-    const membro_sv = await client.getUserGuild(interaction, client.id())
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
 
     // Verificando se o bot pode gerenciar as mensagens do servidor
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))

@@ -25,7 +25,8 @@ const schema = new mongoose.Schema({
         conversation: { type: Boolean, default: true },
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
-        spam: { type: Boolean, default: false }
+        spam: { type: Boolean, default: false },
+        auto_ban: { type: Boolean, default: false }
     }
 })
 

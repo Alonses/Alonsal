@@ -6,11 +6,17 @@ module.exports = async ({ client, user, interaction, alvo }) => {
     alvo.relatory = interaction.options.getString("reason")
     alvo.timestamp = client.timestamp()
 
+    const guild = await client.getGuild(interaction.guild.id)
+    let auto_ban = ""
+
+    if (guild?.conf.auto_ban)
+        auto_ban = `\n\n\`\`\`${client.tls.phrase(user, "mode.report.auto_ban_descricao", 34)}\`\`\``
+
     // Enviando o embed para validação
     const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.report.reportado")} 🛂`)
+        .setTitle(`${client.tls.phrase(user, "mode.report.reportado")} 🛂`)
         .setColor(0xED4245)
-        .setDescription(`\`\`\`💢 | ${alvo.relatory}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}`)
+        .setDescription(`\`\`\`📃 | Descrição fornecida:\n\n${alvo.relatory}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}${auto_ban}`)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,

@@ -58,7 +58,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
         const channel = await getTicket(interaction.guild.id, interaction.user.id)
-        const solicitante = await client.getUserGuild(interaction, interaction.user.id)
+        const solicitante = await client.getMemberGuild(interaction, interaction.user.id)
 
         // Buscando os dados do canal no servidor
         const canal_servidor = interaction.guild.channels.cache.find(c => c.id === channel.cid)

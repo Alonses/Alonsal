@@ -2,7 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 async function create_profile({ client, interaction, user, id_alvo, operador }) {
 
-    let user_alvo = await client.getUserGuild(interaction, id_alvo), operacao = 0
+    let user_alvo = await client.getMemberGuild(interaction, id_alvo), operacao = 0
     const membro_sv = user_alvo
 
     if (!user_alvo) // Usuário foi removido do cache do bot

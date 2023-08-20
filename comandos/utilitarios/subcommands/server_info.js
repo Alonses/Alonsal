@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
 
     let dono_sv = interaction.guild.ownerId
-    const dono_membro = await interaction.guild.members.fetch(dono_sv)
+    const dono_membro = await client.getMemberGuild(interaction, dono_sv)
 
     dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\`\n( ${dono_membro} )`
 
