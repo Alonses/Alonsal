@@ -1,6 +1,5 @@
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
-const { createStatement } = require('../database/schemas/Statement')
 const { getUser } = require('../database/schemas/User')
 
 const CHECKS = {
@@ -125,12 +124,14 @@ module.exports = async ({ client, message, caso }) => {
         user_data.misc.money += 250
 
         // Registrando as movimentações de bufunfas para o usuário
-        createStatement(user_data.uid, "misc.b_historico.nivel", true, 250, client.timestamp())
+        client.registryStatement(user_data.uid, "misc.b_historico.nivel", true, 250)
         client.sendDM(user_data, { data: client.tls.phrase(user, "misc.b_historico.nivel_descricao", client.emoji("mc_esmeralda")) }, false)
+
+        client.journal("gerado", 250)
     }
 
     // Registrando no relatório algumas informações
-    require('../automaticos/relatorio')({ client, caso })
+    client.journal(caso)
     verifica_servers(user, user_global)
 }
 

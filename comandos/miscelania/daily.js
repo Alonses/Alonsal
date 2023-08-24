@@ -1,9 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { createStatement } = require('../../adm/database/schemas/Statement')
-
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("daily")
@@ -29,21 +25,18 @@ module.exports = {
             })
         }
 
-        const bufunfa = client.random(500, 1000)
+        const bufunfa = client.random(600, 1200)
 
         user.misc.money += bufunfa
         user.misc.daily = data_atual
-
-        const caso = "gerado", quantia = bufunfa
-        require('../../adm/automaticos/relatorio')({ client, caso, quantia })
-
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        await createStatement(user.uid, "misc.b_historico.daily", true, bufunfa, client.timestamp())
+        await client.registryStatement(user.uid, "misc.b_historico.daily", true, bufunfa)
+        await client.journal("gerado", bufunfa)
 
         interaction.reply({
-            content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji(emojis_dancantes)}`, client.locale(bufunfa)),
+            content: client.replace(`${client.tls.phrase(user, "misc.daily.daily", 14)} ${client.emoji("emojis_dancantes")}`, client.locale(bufunfa)),
             ephemeral: true
         })
     }

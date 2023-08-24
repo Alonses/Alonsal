@@ -4,7 +4,6 @@ const { writeFileSync } = require('fs')
 
 const { getUser } = require('../database/schemas/User')
 const { getActiveModules, shutdownAllUserModules } = require("../database/schemas/Module")
-const { createStatement } = require('../database/schemas/Statement')
 
 const model_weather = require('../formatadores/chunks/model_weather')
 const model_frase = require('../formatadores/chunks/model_frase.js')
@@ -203,10 +202,8 @@ async function cobra_modulo(client) {
         }
 
         // Registrando as movimentações de bufunfas para o usuário
-        await createStatement(user.uid, `misc.b_historico.modulos|${modules[identificador]}`, false, users[identificador], client.timestamp())
-
-        const caso = "reback", quantia = total
-        await require('./relatorio')({ client, caso, quantia })
+        await client.registryStatement(user.uid, `misc.b_historico.modulos|${modules[identificador]}`, false, users[identificador])
+        await client.journal("reback", total)
     })
 }
 

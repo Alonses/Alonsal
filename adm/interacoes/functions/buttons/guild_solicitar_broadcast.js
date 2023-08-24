@@ -2,8 +2,6 @@ const { EmbedBuilder } = require('discord.js')
 
 const { timer_broadcast } = require('../../../eventos/broadcast')
 
-const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
@@ -44,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await client.notify(process.env.channel_mail, { embed: broadcast, components: row })
         interaction.update({
-            content: `${client.emoji(emojis_dancantes)} | ${client.tls.phrase(user, "mode.broadcast.pedido_registrado")}`,
+            content: `${client.emoji("emojis_dancantes")} | ${client.tls.phrase(user, "mode.broadcast.pedido_registrado")}`,
             embeds: [],
             components: [],
             ephemeral: true

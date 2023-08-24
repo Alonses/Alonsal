@@ -1,5 +1,3 @@
-const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
@@ -15,5 +13,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true)
     }
 
-    client.tls.report(interaction, user, "misc.perfil.perfil_atualizado", true, client.emoji(emojis_dancantes))
+    client.tls.report(interaction, user, "misc.perfil.perfil_atualizado", true, client.emoji("emojis_dancantes"))
 }

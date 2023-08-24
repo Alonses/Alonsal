@@ -1,7 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
-
 module.exports = async ({ client, user, interaction }) => {
 
     const niveis_verificacao = ["NONE", "LOW", "MEDIUM", "HIGH", "HIGHEST"]
@@ -74,7 +72,7 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(emojis_dancantes)} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
+                name: `${client.emoji("emojis_dancantes")} **Emojis ( ${interaction.guild.emojis.cache.size} )**`,
                 value: `${client.emoji("bigchad")} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                 inline: true
             }

@@ -2,8 +2,6 @@ const { EmbedBuilder } = require("discord.js")
 
 const { getVotes } = require("../database/schemas/Vote")
 
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-
 const msgs = {
     "828706023430160384": "1140839551330439258",
     "755119535555608647": "1140844096785764483",
@@ -28,7 +26,7 @@ module.exports = async ({ client, estagio }) => {
     }
 
     const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji(emojis_dancantes)} ${client.emoji(emojis_dancantes)} ${client.emoji(emojis_dancantes)}`)
+        .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")}`)
         .setColor(0x29BB8E)
         .setFooter({
             text: client.tls.phrase(user, "inic.vote.rodape_encerrado")
@@ -37,7 +35,7 @@ module.exports = async ({ client, estagio }) => {
     const votos = await getVotes()
 
     if (estagio == 1)
-        embed.setDescription(`${client.replace(`${client.tls.phrase(user, "inic.vote.votacao_encerrada_1")}\n\n${client.tls.phrase(user, "inic.vote.votacao_encerrada_3")}`, [votos.qtd, client.emoji("aln_voter"), client.emoji(emojis_dancantes)])}!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:`)
+        embed.setDescription(`${client.replace(`${client.tls.phrase(user, "inic.vote.votacao_encerrada_1")}\n\n${client.tls.phrase(user, "inic.vote.votacao_encerrada_3")}`, [votos.qtd, client.emoji("aln_voter"), client.emoji("emojis_dancantes")])}!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:`)
 
     if (estagio == 2) {
 
@@ -57,7 +55,7 @@ module.exports = async ({ client, estagio }) => {
         let escolha = maior.name
 
         embed.setImage("https://media.tenor.com/ndfMtqlPeLcAAAAd/fireworks-anime-hanabi.gif")
-        embed.setDescription(`${client.replace(`${client.tls.phrase(user, "inic.vote.votacao_encerrada_1")}\n\n${client.tls.phrase(user, "inic.vote.votacao_encerrada_2")}`, [votos.qtd, client.emoji("aln_voter"), maior.qtd, idiomas[escolha], client.emoji(emojis_dancantes), client.emoji(emojis_dancantes)])}\n\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:`)
+        embed.setDescription(`${client.replace(`${client.tls.phrase(user, "inic.vote.votacao_encerrada_1")}\n\n${client.tls.phrase(user, "inic.vote.votacao_encerrada_2")}`, [votos.qtd, client.emoji("aln_voter"), maior.qtd, idiomas[escolha], client.emoji("emojis_dancantes"), client.emoji("emojis_dancantes")])}\n\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:\n:flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}: :flag_${escolha}:`)
     }
 
     Object.keys(msgs).forEach(async mensagem => {

@@ -3,12 +3,7 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { createStatement } = require('../../adm/database/schemas/Statement')
-
-const { emojis_negativos, emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-
 const games = new Map()
-
 const padrao = {
     0: "┌———\n│\n│\n│",
     1: "┌———\n│  O\n│\n│",
@@ -108,7 +103,7 @@ async function verifica_palavra(client, interaction, user, entrada) {
     // Verifica se a palavra foi completa ou se o chute foi certeiro
     if (entrada === games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") === games[interaction.user.id].word) {
         interaction.reply({
-            content: `${client.emoji(emojis_negativos)} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}`,
+            content: `${client.emoji("emojis_negativos")} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}`,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
 
@@ -117,11 +112,12 @@ async function verifica_palavra(client, interaction, user, entrada) {
         user.misc.money += 50
         await user.save()
 
-        createStatement(user.uid, "misc.b_historico.jogos_forca", true, 50, client.timestamp())
+        client.registryStatement(user.uid, "misc.b_historico.jogos_forca", true, 150)
+        client.journal("gerado", 150)
 
     } else if (entrada.length > 1 || games[interaction.user.id].erros >= 7) {
         interaction.reply({
-            content: `${client.emoji(emojis_dancantes)} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``,
+            content: `${client.emoji("emojis_dancantes")} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
 

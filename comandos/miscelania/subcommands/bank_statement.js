@@ -2,8 +2,6 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getUserStatements } = require('../../../adm/database/schemas/Statement')
 
-const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
-
 module.exports = async ({ client, user, interaction }) => {
 
     const date1 = new Date()
@@ -13,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (user_interno.uid === client.discord.user.id)
         user_interno.misc.money = 1000000000000
 
-    let daily = `${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji(emojis_dancantes)}`
+    let daily = `${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji("emojis_dancantes")}`
     let titulo_embed = client.tls.phrase(user, "misc.banco.suas_bufunfas")
 
     if (user_interno.uid !== interaction.user.id) {
@@ -48,7 +46,7 @@ module.exports = async ({ client, user, interaction }) => {
                 if (movimentacao.operation.includes("|"))
                     traducao = client.replace(traducao, movimentacao.operation.split("|")[1])
 
-                extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${movimentacao.value}, ${traducao}\n`
+                extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${client.locale(movimentacao.value)}, ${traducao}\n`
             }
         })
 
