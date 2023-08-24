@@ -4,7 +4,6 @@ const fetch = (...args) =>
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 const formata_texto = require('../../adm/formatadores/formata_texto')
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -45,7 +44,7 @@ module.exports = {
 
                 if (dados_item.status === 404)
                     return interaction.reply({
-                        content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji(emojis_negativos))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                        content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji("emojis_negativos"))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
                         ephemeral: true
                     })
 

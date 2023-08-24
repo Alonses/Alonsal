@@ -1,9 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { createStatement } = require('../../adm/database/schemas/Statement')
-
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("coin")
@@ -68,7 +64,7 @@ module.exports = {
         if (moeda === 1)
             emoji_exib = ":crown:"
 
-        let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.acertou")} ${client.emoji(emojis_dancantes)}\n[Lucro: \`B$ ${profit}\`]`
+        let resultado = `[ ${emoji_exib} ] ${client.tls.phrase(user, "game.cara.acertou")} ${client.emoji("emojis_dancantes")}\n[Lucro: \`B$ ${profit}\`]`
 
         if (escolha !== moeda) { // Errou
             profit = -bet
@@ -79,10 +75,13 @@ module.exports = {
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        if (profit > 0)
-            await createStatement(user.uid, "misc.b_historico.jogos_cara", true, profit, client.timestamp())
-        else if (profit < 0)
-            await createStatement(user.uid, "misc.b_historico.jogos_cara", false, profit * -1, client.timestamp())
+        if (profit > 0) {
+            await client.registryStatement(user.uid, "misc.b_historico.jogos_cara", true, profit)
+            await client.journal("gerado", profit)
+        } else if (profit < 0) {
+            await client.registryStatement(user.uid, "misc.b_historico.jogos_cara", false, profit * -1)
+            await client.journal("reback", profit * -1)
+        }
 
         interaction.reply({
             content: resultado,

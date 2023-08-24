@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("link")
@@ -178,10 +176,10 @@ module.exports = {
             await user.save()
 
             if (plataforma !== "locale")
-                client.tls.reply(interaction, user, "util.lastfm.new_link", true, client.emoji(emojis_dancantes), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando])
+                client.tls.reply(interaction, user, "util.lastfm.new_link", true, client.emoji("emojis_dancantes"), [plataforma.toLocaleLowerCase().split(" ")[0], link_comando])
             else // Link de local do /tempo
                 interaction.editReply({
-                    content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji(emojis_dancantes)), entrada),
+                    content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji("emojis_dancantes")), entrada),
                     ephemeral: true
                 })
         }

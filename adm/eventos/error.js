@@ -18,7 +18,5 @@ module.exports = async function ({ client, err, local }) {
         client.notify(process.env.channel_error, embed_error)
 
     console.log(err)
-
-    const caso = "epic_embed"
-    require('../automaticos/relatorio')({ client, caso })
+    client.journal("epic_embed")
 }

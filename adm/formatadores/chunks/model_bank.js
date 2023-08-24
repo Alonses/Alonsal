@@ -1,8 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../data/badges')
-
-const { emojis_dancantes } = require('../../../arquivos/json/text/emojis.json')
 const { getRankMoney } = require('../../database/schemas/User')
 
 const medals = {
@@ -70,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Rodapé do Embed de ranking
     rodape = paginas > 1 ? `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}` : rodape
-    let daily = `:bank: ${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji(emojis_dancantes)}`
+    let daily = `:bank: ${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji("emojis_dancantes")}`
 
     if (user.misc.daily) {
         const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)

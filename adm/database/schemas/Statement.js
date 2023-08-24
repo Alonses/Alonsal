@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Statement", schema)
 
-async function createStatement(uid, operation, type, value, timestamp) {
+async function registryStatement(uid, operation, type, value, timestamp) {
 
     const statements = await getUserStatements(uid)
     if (statements.length > 9) //  Exclui a última movimentação após 10 novas entradas
@@ -50,7 +50,7 @@ async function dropAllUserStatements(uid) {
 
 module.exports.Statement = model
 module.exports = {
-    createStatement,
+    registryStatement,
     getUserStatements,
     dropUserStatement,
     dropAllUserStatements

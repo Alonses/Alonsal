@@ -1,17 +1,18 @@
 const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./adm/funcoes/hex_color')
+const { getBot } = require('./adm/database/schemas/Bot')
 const { getUser } = require('./adm/database/schemas/User')
-const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
-const { getUserBadges } = require('./adm/database/schemas/Badge')
-const { create_buttons } = require('./adm/generators/buttons')
 const { create_menus } = require('./adm/generators/menus')
 const { create_profile } = require('./adm/generators/profile')
-const { getBot } = require('./adm/database/schemas/Bot')
+const { create_buttons } = require('./adm/generators/buttons')
+const { getUserBadges } = require('./adm/database/schemas/Badge')
 const { listAllUserTasks } = require('./adm/database/schemas/Task')
+const { registryStatement } = require('./adm/database/schemas/Statement')
 const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
+const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
 
-const { emojis, default_emoji } = require('./arquivos/json/text/emojis.json')
+const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./arquivos/json/text/emojis.json')
 
 const translate = require('./adm/formatadores/translate')
 
@@ -80,8 +81,15 @@ function internal_functions(client) {
         // Emojis customizados
         if (typeof dados === "string") {
 
-            if (isNaN(parseInt(dados))) // Emoji por nome próprio do JSON de emojis
-                dados = emojis[dados]
+            if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
+
+                if (dados = "emojis_dancantes")
+                    dados = emojis_dancantes[client.random(emojis_dancantes)]
+                else if (dados = "emojis_negativos")
+                    dados = emojis_negativos[client.random(emojis_negativos)]
+                else
+                    dados = emojis[dados]
+            }
 
             emoji = client.discord.emojis.cache.get(dados)?.toString() || "🔍"
         } else // Emojis por códigos de status
@@ -126,6 +134,10 @@ function internal_functions(client) {
         return valor.toLocaleString(locale)
     }
 
+    client.journal = async (caso, quantia) => {
+        require('./adm/automaticos/relatorio')({ client, caso, quantia })
+    }
+
     client.notify = (id_alvo, conteudo) => {
         if (!id_alvo) return;
 
@@ -160,6 +172,10 @@ function internal_functions(client) {
         return base + Math.round(intervalo * Math.random())
     }
 
+    client.registryStatement = (user, traducao, caso, valor) => {
+        return registryStatement(user, traducao, caso, valor, client.timestamp())
+    }
+
     client.replace = (string, valores) => {
 
         // Substitui partes do texto por outros valores
@@ -176,38 +192,46 @@ function internal_functions(client) {
 
     client.sendDM = (user, dados, force) => {
 
+        let notifications
+
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === client.id()) return
 
         if (force)
             user.conf.notify = 1
 
-        try {
-            // Notificando o usuário alvo caso ele receba notificações em DM do bot
-            if (client.decider(user?.conf.notify, 1))
-                client.discord.users.fetch(user.uid).then((user_interno) => {
+        // Notificando o usuário alvo caso ele receba notificações em DM do bot
+        if (client.decider(user?.conf.notify, 1))
+            client.discord.users.fetch(user.uid).then((user_interno) => {
 
-                    // Verificando qual é o tipo de conteúdo que será enviado
-                    if (dados.embed) {
-                        if (!dados.components)
-                            user_interno.send({
-                                embeds: [dados.embed]
-                            })
-                        else
-                            user_interno.send({
-                                embeds: [dados.embed],
-                                components: [dados.components]
-                            })
-                    } else if (dados.files)
+                // Verificando qual é o tipo de conteúdo que será enviado
+                if (dados.embed) {
+                    if (!dados.components)
                         user_interno.send({
-                            content: dados.data,
-                            files: [dados.files]
+                            embeds: [dados.embed]
                         })
+                            .catch(() => notifications = 1)
                     else
-                        user_interno.send(dados.data)
-                })
-        } catch (err) {
-            console.log(err)
+                        user_interno.send({
+                            embeds: [dados.embed],
+                            components: [dados.components]
+                        })
+                            .catch(() => notifications = 1)
+                } else if (dados.files)
+                    user_interno.send({
+                        content: dados.data,
+                        files: [dados.files]
+                    })
+                        .catch(() => notifications = 1)
+                else
+                    user_interno.send(dados.data)
+                        .catch(() => notifications = 1)
+            })
+
+        // Usuário com DM bloqueada
+        if (notifications) {
+            user.conf.notify = false
+            user.save()
         }
     }
 

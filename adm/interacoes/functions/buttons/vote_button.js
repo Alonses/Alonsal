@@ -1,5 +1,3 @@
-const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
-
 const { registryVote, verifyUser } = require("../../../database/schemas/Vote")
 const { createBadge } = require("../../../database/schemas/Badge")
 const { busca_badges, badgeTypes } = require("../../../data/badges")
@@ -13,7 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         let texto = client.tls.phrase(user, "inic.vote.encerrada", client.emoji("mc_approve"))
 
         if (verify_user)
-            texto += `\n${client.tls.phrase(user, "inic.vote.encerrada_votador", client.emoji(emojis_dancantes))}`
+            texto += `\n${client.tls.phrase(user, "inic.vote.encerrada_votador", client.emoji("emojis_dancantes"))}`
 
         return interaction.reply({
             content: texto,
@@ -49,7 +47,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     interaction.reply({
-        content: `${client.replace(client.tls.phrase(user, "inic.vote.voto_registrado", client.emoji(emojis_dancantes)), vote)}${badge_bonus}`,
+        content: `${client.replace(client.tls.phrase(user, "inic.vote.voto_registrado", client.emoji("emojis_dancantes")), vote)}${badge_bonus}`,
         ephemeral: true
     })
 }

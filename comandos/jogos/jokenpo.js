@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { createStatement } = require('../../adm/database/schemas/Statement')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("jokenpo")
@@ -93,10 +91,13 @@ module.exports = {
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        if (profit > 0)
-            await createStatement(user.uid, "misc.b_historico.jogos_jokenpo", true, profit, client.timestamp())
-        else if (profit < 0)
-            await createStatement(user.uid, "misc.b_historico.jogos_jokenpo", false, profit * -1, client.timestamp())
+        if (profit > 0) {
+            await client.registryStatement(user.uid, "misc.b_historico.jogos_jokenpo", true, profit)
+            client.journal("gerado", profit)
+        } else if (profit < 0) {
+            await client.registryStatement(user.uid, "misc.b_historico.jogos_jokenpo", false, profit * -1)
+            client.journal("reback", profit * -1)
+        }
 
         interaction.reply({
             content: mensagem,

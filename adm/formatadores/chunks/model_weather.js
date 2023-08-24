@@ -3,7 +3,6 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-const { emojis_negativos } = require('../../../arquivos/json/text/emojis.json')
 const direcao_cardial = require("../../funcoes/direcao_cardial")
 
 const getCountryISO3 = require("country-iso-2-to-3")
@@ -37,26 +36,26 @@ module.exports = async (client, user, interaction) => {
             if (interaction) {
                 if (res.cod === '404' || res.cod === '400')
                     return interaction.editReply({
-                        content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
+                        content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
                         ephemeral: true
                     })
                 else if (res.cod === '429')// Erro da API
                     return interaction.editReply({
-                        content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)),
+                        content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
                         ephemeral: true
                     })
                 else if (res.id === 1873107)
                     return interaction.editReply({
-                        content: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)),
+                        content: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")),
                         ephemeral: true
                     })
             } else {
                 if (res.cod === '404' || res.cod === '400')
-                    return client.sendDM(user, { data: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji(emojis_negativos))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\`` }, true)
+                    return client.sendDM(user, { data: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"))} \`${pesquisa}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\`` }, true)
                 else if (res.cod === '429') // Erro da API
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)) }, true)
+                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
                 else if (res.id === 1873107)
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.error_2", client.emoji(emojis_negativos)) }, true)
+                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")) }, true)
             }
 
             fetch(`${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`) // Buscando o horário local
@@ -326,10 +325,10 @@ module.exports = async (client, user, interaction) => {
         .catch(() => {
             if (interaction)
                 return interaction.editReply({
-                    content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)),
+                    content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
                     ephemeral: true
                 })
             else
-                return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji(emojis_negativos)) }, true)
+                return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
         })
 }

@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { emojis_dancantes } = require('../../arquivos/json/text/emojis.json')
 const { emoji_button, type_button } = require('../../adm/funcoes/emoji_button')
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, client.emoji(0))
 
         const embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "mode.broadcast.solicitando")} ${client.emoji(emojis_dancantes)}`)
+            .setTitle(`${client.tls.phrase(user, "mode.broadcast.solicitando")} ${client.emoji("emojis_dancantes")}`)
             .setColor(client.embed_color(user.misc.color))
             .setDescription(client.tls.phrase(user, "mode.broadcast.descricao"))
             .setFooter({
@@ -38,7 +37,7 @@ module.exports = {
             })
 
         const row = client.create_buttons([
-            { id: "guild_solicitar_broadcast", name: client.tls.phrase(user, "menu.botoes.solicitar"), type: 1, emoji: client.emoji(emojis_dancantes), data: "1" },
+            { id: "guild_solicitar_broadcast", name: client.tls.phrase(user, "menu.botoes.solicitar"), type: 1, emoji: client.emoji("emojis_dancantes"), data: "1" },
             { id: "guild_solicitar_broadcast", name: "Broadcast", type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: "2" }
         ], interaction)
 

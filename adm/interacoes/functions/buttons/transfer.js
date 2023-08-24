@@ -1,5 +1,3 @@
-const { emojis_dancantes } = require('../../../../arquivos/json/text/emojis.json')
-const { createStatement } = require('../../../database/schemas/Statement')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -27,11 +25,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const user_i = await client.getCachedUser(alvo.uid)
 
     // Registrando as movimentações de bufunfas para os usuários
-    await createStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas, client.timestamp())
-    await createStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas, client.timestamp())
-
-    const caso = "movido", quantia = bufunfas
-    require('../../../automaticos/relatorio')({ client, caso, quantia })
+    await client.registryStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas)
+    await client.registryStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas)
+    await client.journal("movido", bufunfas)
 
     interaction.update({
         content: `${client.replace(client.tls.phrase(user, "misc.pay.sucesso", [9, 10]), client.locale(bufunfas))} <@!${alvo.uid}>`,
@@ -41,5 +37,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 
     // Notificando o usuário que recebeu as Bufunfas
-    client.sendDM(alvo, { data: client.replace(client.tls.phrase(alvo, "misc.pay.notifica", client.emoji(emojis_dancantes)), [user.uid, client.locale(bufunfas)]) })
+    client.sendDM(alvo, { data: client.replace(client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes")), [user.uid, client.locale(bufunfas)]) })
 }

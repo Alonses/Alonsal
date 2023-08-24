@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { emojis_negativos } = require('../../arquivos/json/text/emojis.json')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("wiki")
@@ -131,16 +129,16 @@ module.exports = {
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        client.tls.reply(interaction, user, "util.wiki.auto_pesquisa", client.decider(user?.conf.ghost_mode, 0), client.emoji(emojis_negativos))
+                        client.tls.reply(interaction, user, "util.wiki.auto_pesquisa", client.decider(user?.conf.ghost_mode, 0), client.emoji("emojis_negativos"))
                     else
                         interaction.reply({
-                            content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                            content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji("emojis_negativos"))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
                             ephemeral: client.decider(user?.conf.ghost_mode, 0)
                         })
                 }
             })
             .catch(() => interaction.reply({
-                content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji(emojis_negativos))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
+                content: `${client.tls.phrase(user, "util.wiki.sem_dados", client.emoji("emojis_negativos"))} [ \`${content}\` ], ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
                 ephemeral: true
             }))
     }

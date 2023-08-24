@@ -1,7 +1,3 @@
-const { emojis_dancantes, emojis_negativos } = require('../../../../arquivos/json/text/emojis.json')
-
-const { createStatement } = require('../../../database/schemas/Statement')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1])
@@ -23,14 +19,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Validando se o usuário tem dinheiro suficiente
     if (user.misc.money < preco)
         return interaction.update({
-            content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji(emojis_negativos)), client.locale(preco)),
+            content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos")), client.locale(preco)),
             ephemeral: true
         })
 
     user.misc.money -= preco
 
-    const caso = "movido", quantia = preco
-    await require('../../../automaticos/relatorio')({ client, caso, quantia })
+    await client.journal("movido", preco)
 
     // Diferente da cor cor aleatória e da cor customizada
     if (data_cor.split(".")[0] !== '10' && data_cor.split(".")[0] !== '4')
@@ -44,10 +39,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await user.save()
 
     // Registrando as movimentações de bufunfas para o usuário
-    await createStatement(user.uid, "misc.b_historico.cor_perfil", false, preco, client.timestamp())
+    await client.registryStatement(user.uid, "misc.b_historico.cor_perfil", false, preco)
+    await client.journal("reback", preco)
 
     interaction.update({
-        content: client.tls.phrase(user, "misc.color.cor_att", client.emoji(emojis_dancantes)),
+        content: client.tls.phrase(user, "misc.color.cor_att", client.emoji("emojis_dancantes")),
         embeds: [],
         components: [],
         ephemeral: true
