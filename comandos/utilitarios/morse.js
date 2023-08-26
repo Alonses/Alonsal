@@ -7,61 +7,67 @@ module.exports = {
         .setName("morse")
         .setDescription("⌠💡⌡ (De)code from/to morse")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
+            "de": '⌠💡⌡ In/von Morse codieren',
             "es-ES": '⌠💡⌡ (Des)codificar de/a morse',
             "fr": '⌠💡⌡ (Dé)coder de/vers morse',
             "it": '⌠💡⌡ (Da) codice da/per morse',
+            "pt-BR": '⌠💡⌡ (De)codifique do/para o morse',
             "ru": '⌠💡⌡ (Де)код в/из азбуки Морзе'
         })
         .addStringOption(option =>
             option.setName("text")
                 .setNameLocalizations({
-                    "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
                     "it": 'testo',
+                    "pt-BR": 'texto',
                     "ru": 'текст'
                 })
                 .setDescription("Write something!")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Escreva algo!',
+                    "de": 'Schreibe etwas!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
                     "it": 'Scrivi qualcosa!',
+                    "pt-BR": 'Escreva algo!',
                     "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true))
         .addBooleanOption(option =>
             option.setName("reverse")
                 .setNameLocalizations({
-                    "pt-BR": 'reverso',
+                    "de": 'umkehren',
                     "es-ES": 'reverso',
                     "fr": 'inverse',
-                    "it": 'inversione'
+                    "it": 'inversione',
+                    "pt-BR": 'reverso'
                 })
                 .setDescription("Invert output result")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Inverter resultado de saída',
+                    "de": 'Ausgabeergebnis invertieren',
                     "es-ES": 'Invertir resultado de salida',
                     "fr": 'Inverser le résultat de sortie',
                     "it": 'invertire il risultato di output',
+                    "pt-BR": 'Inverter resultado de saída',
                     "ru": 'инвертировать вывод'
                 }))
         .addStringOption(option =>
             option.setName("operation")
                 .setNameLocalizations({
-                    "pt-BR": 'operacao',
+                    "de": 'betrieb',
                     "es-ES": 'operacion',
                     "fr": 'operation',
                     "it": 'operazione',
+                    "pt-BR": 'operacao',
                     "ru": 'операция'
                 })
                 .setDescription("Force an operation")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Forçar uma operação',
+                    "de": 'eine Operation erzwingen',
                     "es-ES": 'Forzar una operación',
                     "fr": 'Forcer une opération',
                     "it": 'forzare un\'operazione',
+                    "pt-BR": 'Forçar uma operação',
                     "ru": 'форсировать операцию'
                 })
                 .addChoices(

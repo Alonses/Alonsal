@@ -8,21 +8,30 @@ module.exports = {
         .setName("pula")
         .setDescription("⌠🎲⌡ The Pula Game!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
+            "de": '⌠🎲⌡ Das Pula-Spiel!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',
             "fr": '⌠🎲⌡ Le Jeu Pula!',
             "it": '⌠🎲⌡ Il gioco di Pola!',
+            "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "ru": '⌠🎲⌡ Игра от Pula!'
         })
         .addUserOption(option =>
             option.setName("user")
-                .setDescription("A discord user")
+                .setNameLocalizations({
+                    "de": 'benutzer',
+                    "es-ES": 'usuario',
+                    "it": 'utente',
+                    "pt-BR": 'usuario',
+                    "ru": 'пользователь'
+                })
+                .setDescription("Mention a user")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Um usuário do discord',
-                    "es-ES": 'Un usuario de discord',
-                    "fr": 'Un utilisateur de discord',
-                    "it": 'Un utente della discordia',
-                    "ru": 'Дискорд-пользователь'
+                    "de": 'Erwähnen Sie einen anderen Benutzer',
+                    "es-ES": 'Mencionar a otro usuario',
+                    "fr": 'Mentionner un utilisateur',
+                    "it": 'Menziona un altro utente',
+                    "pt-BR": 'Mencione outro usuário',
+                    "ru": 'Упомянуть другого пользователя'
                 })),
     async execute(client, user, interaction) {
 

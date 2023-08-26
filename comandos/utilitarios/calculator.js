@@ -4,10 +4,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("calculator")
         .setNameLocalizations({
-            "pt-BR": 'calculadora',
+            "de": 'taschenrechner',
             "es-ES": 'calculadora',
             "fr": 'calculatrice',
             "it": 'calcolatrice',
+            "pt-BR": 'calculadora',
             "ru": 'калькулятор'
         })
         .setDescription("⌠💡⌡ Find math problem results")
@@ -15,35 +16,39 @@ module.exports = {
             subcommand
                 .setName("equation")
                 .setNameLocalizations({
-                    "pt-BR": 'equacao',
+                    "de": 'gleichung',
                     "es-ES": 'ecuacion',
                     "fr": 'equation',
                     "it": 'equazione',
+                    "pt-BR": 'equacao',
                     "ru": 'уравнение'
                 })
                 .setDescription("⌠💡⌡ Find math problem results")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Ache resultados de problemas matemáticos',
+                    "de": '⌠💡⌡ Finden Sie Ergebnisse von mathematischen Problemen',
                     "es-ES": '⌠💡⌡ Encuentra los resultados de los problemas matemáticos',
                     "fr": '⌠💡⌡ Trouver les résultats des problèmes mathématiques',
                     "it": '⌠💡⌡ Trova i risultati dei problemi di matematica',
+                    "pt-BR": '⌠💡⌡ Ache resultados de problemas matemáticos',
                     "ru": '⌠💡⌡ Найдите результаты математических задач'
                 })
                 .addStringOption(option =>
                     option.setName("equation")
                         .setNameLocalizations({
-                            "pt-BR": 'equacao',
+                            "de": 'gleichung',
                             "es-ES": 'ecuacion',
                             "fr": 'equation',
                             "it": 'equazione',
+                            "pt-BR": 'equacao',
                             "ru": 'уравнение'
                         })
                         .setDescription("Write something!")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Escreva algo!',
+                            "de": 'Schreibe etwas!',
                             "es-ES": '¡Escribe algo!',
                             "fr": 'Écris quelque chose!',
                             "it": 'Scrivi qualcosa!',
+                            "pt-BR": 'Escreva algo!',
                             "ru": 'Напиши что-нибудь!'
                         })
                         .setRequired(true)))
@@ -51,35 +56,39 @@ module.exports = {
             subcommand
                 .setName("circle")
                 .setNameLocalizations({
-                    "pt-BR": 'circulo',
+                    "de": 'kreis',
                     "es-ES": 'circulo',
                     "fr": 'cercle',
                     "it": 'cerchio',
+                    "pt-BR": 'circulo',
                     "ru": 'круг'
                 })
                 .setDescription("⌠💡⌡ Discover values of circular objects")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Descubra os valores dos objetos circulares',
+                    "de": '⌠💡⌡ Entdecken Sie die Werte kreisförmiger Objekte',
                     "es-ES": '⌠💡⌡ Descubre valores de objetos circulares',
                     "fr": '⌠💡⌡ Découvrez les valeurs des objets circulaires',
                     "it": '⌠💡⌡ Scopri i valori degli oggetti circolari',
+                    "pt-BR": '⌠💡⌡ Descubra os valores dos objetos circulares',
                     "ru": '⌠💡⌡ Откройте для себя значения круглых объектов'
                 })
                 .addStringOption(option =>
                     option.setName("input")
                         .setNameLocalizations({
-                            "pt-BR": 'entrada',
+                            "de": 'typ',
                             "es-ES": 'entrada',
                             "fr": 'entree',
                             "it": 'entrata',
+                            "pt-BR": 'entrada',
                             "ru": 'вход'
                         })
                         .setDescription("The input type")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O tipo da sua entrada',
+                            "de": 'Die Art Ihrer Eingabe',
                             "es-ES": 'El tipo de entrada',
                             "fr": 'Le type d\'entrée',
                             "it": 'Il tipo di ingresso',
+                            "pt-BR": 'O tipo da sua entrada',
                             "ru": 'тип ввода'
                         })
                         .addChoices(
@@ -92,18 +101,20 @@ module.exports = {
                 .addNumberOption(option =>
                     option.setName("value")
                         .setNameLocalizations({
-                            "pt-BR": 'valor',
+                            "de": 'wert',
                             "es-ES": 'valor',
                             "fr": 'valeur',
                             "it": 'valore',
+                            "pt-BR": 'valor',
                             "ru": 'ценить'
                         })
                         .setDescription("The entry value")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O valor de entrada',
+                            "de": 'der Eingabewert',
                             "es-ES": 'El valor de entrada',
                             "fr": 'La valeur d\'entrée',
                             "it": 'Il valore di entrata',
+                            "pt-BR": 'O valor de entrada',
                             "ru": 'значение входа'
                         })
                         .setMinValue(0)

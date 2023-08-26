@@ -8,54 +8,60 @@ module.exports = {
         .setName("wiki")
         .setDescription("⌠💡⌡ Search for something on the wiki")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
+            "de": '⌠💡⌡ Suchen Sie etwas im Wiki',
             "es-ES": '⌠💡⌡ Busca algo en la wiki',
             "fr": '⌠💡⌡ Rechercher quelque chose sur le wiki',
             "it": '⌠💡⌡ Cerca qualcosa sul wiki',
+            "pt-BR": '⌠💡⌡ Pesquise sobre algo na wiki',
             "ru": '⌠💡⌡ Ищите что-нибудь в вики'
         })
         .addStringOption(option =>
             option.setName("search")
                 .setNameLocalizations({
-                    "pt-BR": 'pesquisa',
+                    "de": 'suchen',
                     "es-ES": 'busqueda',
                     "fr": 'chercher',
                     "it": 'ricerca',
+                    "pt-BR": 'pesquisa',
                     "ru": 'поиск'
                 })
                 .setDescription("I'm lucky")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Estou com sorte',
+                    "de": 'Ich bin glücklich',
                     "es-ES": 'Estoy con suerte',
                     "fr": 'J\'ai de la chance',
                     "it": 'Sono fortunato',
+                    "pt-BR": 'Estou com sorte',
                     "ru": 'я удачлив'
                 })
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("language")
                 .setNameLocalizations({
-                    "pt-BR": 'idioma',
+                    "de": 'sprache',
                     "es-ES": 'idioma',
                     "fr": 'langue',
                     "it": 'linguaggio',
+                    "pt-BR": 'idioma',
                     "ru": 'язык'
                 })
                 .setDescription("In which language?")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Em qual idioma?',
+                    "de": 'In welcher Sprache?',
                     "es-ES": '¿En qué idioma?',
                     "fr": 'Dans quelle langue?',
                     "it": 'In quale lingua?',
+                    "pt-BR": 'Em qual idioma?',
                     "ru": 'На каком языке?'
                 })
                 .addChoices(
-                    { name: 'English', value: 'en-us' },
-                    { name: 'Español', value: 'es-es' },
-                    { name: 'Français', value: 'fr-fr' },
-                    { name: 'Italiano', value: 'it-it' },
-                    { name: 'Português', value: 'pt-br' },
-                    { name: 'Русский', value: 'ru-ru' }
+                    { name: '🇩🇪 Deutsch', value: 'de-de' },
+                    { name: '🇺🇸 English', value: 'en-us' },
+                    { name: '🇪🇸 Español', value: 'es-es' },
+                    { name: '🇫🇷 Français', value: 'fr-fr' },
+                    { name: '🇮🇹 Italiano', value: 'it-it' },
+                    { name: '🇧🇷 Português', value: 'pt-br' },
+                    { name: '🇷🇺 Русский', value: 'ru-ru' }
                 )),
     async execute(client, user, interaction) {
 

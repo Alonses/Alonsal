@@ -7,10 +7,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("tasks")
         .setNameLocalizations({
-            "pt-BR": 'tarefas',
+            "de": 'aufgaben',
             "es-ES": 'tareas',
             "fr": 'taches',
             "it": 'appunti',
+            "pt-BR": 'tarefas',
             "ru": 'задания'
         })
         .setDescription("⌠💡⌡ Create tasks and lists")
@@ -18,54 +19,60 @@ module.exports = {
             subcommand
                 .setName("available")
                 .setNameLocalizations({
-                    "pt-BR": "disponiveis",
+                    "de": 'verfügbar',
                     "es-ES": 'disponible',
                     "fr": 'disponible',
                     "it": 'disponibile',
+                    "pt-BR": "disponiveis",
                     "ru": 'горничные'
                 })
                 .setDescription("⌠💡⌡ View tasks in progress")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Veja as tarefas em progresso',
+                    "de": '⌠💡⌡ Laufende Aufgaben anzeigen',
                     "es-ES": '⌠💡⌡ Ver tareas en curso',
                     "fr": '⌠💡⌡ Voir les tâches en cours',
                     "it": '⌠💡⌡ Visualizza le attività in corso',
+                    "pt-BR": '⌠💡⌡ Veja as tarefas em progresso',
                     "ru": '⌠💡⌡ Просмотр текущих задач'
                 }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("completed")
                 .setNameLocalizations({
-                    "pt-BR": "concluidas",
+                    "de": 'vollständig',
                     "es-ES": 'terminado',
                     "fr": 'complete',
                     "it": 'completato',
+                    "pt-BR": "concluidas",
                     "ru": 'заключил'
                 })
                 .setDescription("⌠💡⌡ View completed tasks")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Veja as tarefas finalizadas',
+                    "de": '⌠💡⌡ Abgeschlossene Aufgaben anzeigen',
                     "es-ES": '⌠💡⌡ Ver tareas completadas',
                     "fr": '⌠💡⌡ Afficher les tâches terminées',
                     "it": '⌠💡⌡ Visualizza le attività completate',
+                    "pt-BR": '⌠💡⌡ Veja as tarefas finalizadas',
                     "ru": '⌠💡⌡ Просмотр выполненных задач'
                 }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("lists")
                 .setNameLocalizations({
-                    "pt-BR": "listas",
+                    "de": 'listen',
                     "es-ES": 'lista',
                     "fr": 'listes',
                     "it": 'elenchi',
+                    "pt-BR": "listas",
                     "ru": 'списки'
                 })
                 .setDescription("⌠💡⌡ Navigate tasks using lists")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Navegue pelas tarefas usando listas',
+                    "de": '⌠💡⌡ Navigieren Sie durch Aufgaben mithilfe von Listen',
                     "es-ES": '⌠💡⌡ Navega por tareas usando listas',
                     "fr": '⌠💡⌡ Naviguez dans les tâches à l\'aide de listes',
                     "it": '⌠💡⌡ Naviga tra le attività utilizzando gli elenchi',
+                    "pt-BR": '⌠💡⌡ Navegue pelas tarefas usando listas',
                     "ru": '⌠💡⌡ Навигация по задачам со списками'
                 }))
         .addSubcommandGroup(subcommandgroup =>
@@ -76,34 +83,38 @@ module.exports = {
                     subcommand
                         .setName("task")
                         .setNameLocalizations({
-                            "pt-BR": 'tarefa',
+                            "de": 'aufgabe',
                             "es-ES": 'tarea',
                             "fr": 'tache',
                             "it": 'compito',
+                            "pt-BR": 'tarefa',
                             "ru": 'задача'
                         })
                         .setDescription("⌠💡⌡ Crie uma tarefa nova")
                         .setDescriptionLocalizations({
-                            "pt-BR": '⌠💡⌡ Crie uma tarefa nova',
+                            "de": '⌠💡⌡ Erstellen Sie eine neue Aufgabe',
                             "es-ES": '⌠💡⌡ Crear una nueva tarea',
                             "fr": '⌠💡⌡ Créer une nouvelle tâche',
                             "it": '⌠💡⌡ Crea una nuova compito',
+                            "pt-BR": '⌠💡⌡ Crie uma tarefa nova',
                             "ru": '⌠💡⌡ Создать новую задачу'
                         })
                         .addStringOption(option =>
                             option.setName("description")
                                 .setNameLocalizations({
-                                    "pt-BR": 'descricao',
+                                    "de": 'beschreibung',
                                     "es-ES": 'descripcion',
                                     "it": 'descrizione',
+                                    "pt-BR": 'descricao',
                                     "ru": 'описание'
                                 })
                                 .setDescription("What will be noted?")
                                 .setDescriptionLocalizations({
-                                    "pt-BR": 'O que será anotado?',
+                                    "de": 'Beschreiben Sie Ihre Aufgabe',
                                     "es-ES": 'Describe tu tarea',
                                     "fr": 'Décrivez votre tâche',
                                     "it": 'Descrivi il tuo compito',
+                                    "pt-BR": 'O que será anotado?',
                                     "ru": 'опишите вашу задачу'
                                 })
                                 .setRequired(true)))
@@ -111,34 +122,38 @@ module.exports = {
                     subcommand
                         .setName("list")
                         .setNameLocalizations({
-                            "pt-BR": "lista",
+                            "de": 'liste',
                             "es-ES": 'lista',
                             "fr": 'liste',
                             "it": 'elenco',
+                            "pt-BR": "lista",
                             "ru": 'список'
                         })
                         .setDescription("⌠💡⌡ Add a list")
                         .setDescriptionLocalizations({
-                            "pt-BR": '⌠💡⌡ Adicione uma lista',
+                            "de": '⌠💡⌡ Fügen Sie eine Liste hinzu',
                             "es-ES": '⌠💡⌡ Añadir lista',
                             "fr": '⌠💡⌡ Ajouter une liste',
                             "it": '⌠💡⌡ Aggiungi elenco',
+                            "pt-BR": '⌠💡⌡ Adicione uma lista',
                             "ru": '⌠💡⌡ Добавить список'
                         })
                         .addStringOption(option =>
                             option.setName("description")
                                 .setNameLocalizations({
-                                    "pt-BR": 'descricao',
+                                    "de": 'beschreibung',
                                     "es-ES": 'descripcion',
                                     "it": 'descrizione',
+                                    "pt-BR": 'descricao',
                                     "ru": 'описание'
                                 })
                                 .setDescription("What will the name of the list be?")
                                 .setDescriptionLocalizations({
-                                    "pt-BR": 'Qual será o nome da lista?',
+                                    "de": 'Wie wird die Liste heißen?',
                                     "es-ES": '¿Cuál será el nombre de la lista?',
                                     "fr": 'Quel sera le nom de la liste?',
                                     "it": 'Quale sarà il nome della lista?',
+                                    "pt-BR": 'Qual será o nome da lista?',
                                     "ru": 'Как будет называться список?'
                                 })
                                 .setRequired(true))))
@@ -150,18 +165,20 @@ module.exports = {
                     subcommand
                         .setName("list")
                         .setNameLocalizations({
-                            "pt-BR": 'lista',
+                            "de": 'liste',
                             "es-ES": 'lista',
                             "fr": 'liste',
                             "it": 'elenco',
+                            "pt-BR": 'lista',
                             "ru": 'список'
                         })
                         .setDescription("⌠💡⌡ Remove an list")
                         .setDescriptionLocalizations({
-                            "pt-BR": '⌠💡⌡ Remova uma lista',
+                            "de": '⌠💡⌡ Eine Liste entfernen',
                             "es-ES": '⌠💡⌡ Eliminar lista',
                             "fr": '⌠💡⌡ Supprimer la liste',
                             "it": '⌠💡⌡ Elimina elenco',
+                            "pt-BR": '⌠💡⌡ Remova uma lista',
                             "ru": '⌠💡⌡ Удалить список'
                         }))),
     async execute(client, user, interaction) {
