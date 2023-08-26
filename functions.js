@@ -83,9 +83,9 @@ function internal_functions(client) {
 
             if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
 
-                if (dados = "emojis_dancantes")
+                if (dados == "emojis_dancantes")
                     dados = emojis_dancantes[client.random(emojis_dancantes)]
-                else if (dados = "emojis_negativos")
+                else if (dados == "emojis_negativos")
                     dados = emojis_negativos[client.random(emojis_negativos)]
                 else
                     dados = emojis[dados]

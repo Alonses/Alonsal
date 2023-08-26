@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("games")
         .setNameLocalizations({
+            "de": 'spiele',
             "es-ES": 'juegos',
             "fr": 'jeux',
             "it": 'giochi',
@@ -14,10 +15,11 @@ module.exports = {
         })
         .setDescription("⌠💡⌡ The free game(s) of the moment")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
+            "de": '⌠💡⌡ Die neuesten kostenlosen Spiele',
             "es-ES": '⌠💡⌡ El(los) juego(s) gratuito(s) del momento',
             "fr": '⌠💡⌡ Le(s) jeu(x) gratuit(s) du moment',
             "it": '⌠💡⌡ Il/i gioco/i gratuito/i del momento',
+            "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "ru": '⌠💡⌡ Текущие бесплатные игры'
         }),
     async execute(client, user, interaction) {

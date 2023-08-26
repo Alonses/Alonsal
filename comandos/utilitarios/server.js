@@ -9,10 +9,11 @@ module.exports = {
                 .setName("icon")
                 .setDescription("⌠💡⌡ The server icon")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ O Icone do servidor',
+                    "de": '⌠💡⌡ Das Serversymbol',
                     "es-ES": '⌠💡⌡ El icono del servidor',
                     "fr": '⌠💡⌡ L\'icône du serveur',
                     "it": '⌠💡⌡ L\'icona del server',
+                    "pt-BR": '⌠💡⌡ O Icone do servidor',
                     "ru": '⌠💡⌡ Значок сервера'
                 }))
         .addSubcommand(subcommand =>
@@ -20,10 +21,11 @@ module.exports = {
                 .setName("info")
                 .setDescription("⌠💡⌡ Server information")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Informações do servidor',
+                    "de": '⌠💡⌡ Serverinformationen',
                     "es-ES": '⌠💡⌡ Información del servidor',
                     "fr": '⌠💡⌡ Informations sur le serveur',
                     "it": '⌠💡⌡ Informazioni sul server',
+                    "pt-BR": '⌠💡⌡ Informações do servidor',
                     "ru": '⌠💡⌡ Информация о сервере'
                 })),
     async execute(client, user, interaction) {

@@ -7,31 +7,34 @@ module.exports = {
         .setName("password")
         .setDescription("⌠💡⌡ Generate random passwords")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
+            "de": '⌠💡⌡ Generieren Sie zufällige Passwörter',
             "es-ES": '⌠💡⌡ Genera contraseñas aleatorias',
             "fr": '⌠💡⌡ Générer des mots de passe aléatoires',
             "it": '⌠💡⌡ Genera password casuali',
+            "pt-BR": '⌠💡⌡ Gere senhas aleatórias',
             "ru": '⌠💡⌡ Генерация случайных паролей'
         })
         .addIntegerOption(option =>
             option.setName("length")
                 .setNameLocalizations({
-                    "pt-BR": 'tamanho',
+                    "de": 'größe',
                     "es-ES": 'tamano',
                     "fr": 'longueur',
                     "it": 'lunghezza',
+                    "pt-BR": 'tamanho',
                     "ru": 'длина'
                 })
                 .setDescription("from 15 to 350")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'de 15 até 350',
+                    "de": 'von 15 bis 350',
                     "es-ES": 'de 15 a 350',
                     "fr": 'de 15 à 350',
                     "it": 'da 15 a 350',
+                    "pt-BR": 'de 15 até 350',
                     "ru": 'от 15 до 350'
                 })
                 .setMinValue(15)
-                .setMaxValue(450)),
+                .setMaxValue(350)),
     async execute(client, user, interaction) {
 
         const tamanho = interaction.options.getInteger("length") || 15

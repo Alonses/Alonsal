@@ -11,27 +11,30 @@ module.exports = {
                 .setName("custom")
                 .setDescription("⌠💡⌡ Custom timestamp")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Timestamp customizado',
+                    "de": '⌠💡⌡ Benutzerdefinierter Zeitstempel',
                     "es-ES": '⌠💡⌡ Marca de tiempo personalizada',
                     "fr": '⌠💡⌡ Horodatage personnalisé',
                     "it": '⌠💡⌡ Timestamp personalizzato',
+                    "pt-BR": '⌠💡⌡ Timestamp customizado',
                     "ru": '⌠💡⌡ Пользовательская временная метка'
                 })
                 .addIntegerOption(option =>
                     option.setName("time")
                         .setNameLocalizations({
-                            "pt-BR": 'tempo',
+                            "de": 'zeit',
                             "es-ES": 'tiempo',
                             "fr": 'temps',
                             "it": 'volta',
+                            "pt-BR": 'tempo',
                             "ru": 'время'
                         })
                         .setDescription("The value to be converted")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O Valor a ser convertido',
+                            "de": 'Der umzuwandelnde Wert',
                             "es-ES": 'El valor a convertir',
                             "fr": 'La valeur à convertir',
                             "it": 'Il valore da convertire',
+                            "pt-BR": 'O Valor a ser convertido',
                             "ru": 'Значение для преобразования'
                         })
                         .setMinValue(0))
@@ -39,10 +42,11 @@ module.exports = {
                     option.setName("timer")
                         .setDescription("A quick date to schedule")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Uma data rápida para marcar',
+                            "de": 'Vereinbaren Sie eine kurze Beratung',
                             "es-ES": 'Una fecha rápida para reservar',
                             "fr": 'Une date rapide à réserver',
                             "it": 'Un\'ora veloce per raccogliere',
+                            "pt-BR": 'Uma data rápida para marcar',
                             "ru": 'Бронирование быстрой даты'
                         })
                         .addChoices(
@@ -56,18 +60,20 @@ module.exports = {
             subcommand
                 .setName("now")
                 .setNameLocalizations({
-                    "pt-BR": 'agora',
+                    "de": 'jetzt',
                     "es-ES": 'ahora',
                     "fr": 'present',
                     "it": 'adesso',
+                    "pt-BR": 'agora',
                     "ru": 'сейчас'
                 })
                 .setDescription("⌠💡⌡ Current timestamp")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ Timestamp atual',
+                    "de": '⌠💡⌡ Aktueller Zeitstempel',
                     "es-ES": '⌠💡⌡ Marca de tiempo actual',
                     "fr": '⌠💡⌡ Horodatage actuel',
                     "it": '⌠💡⌡ Timestamp attuale',
+                    "pt-BR": '⌠💡⌡ Timestamp atual',
                     "ru": '⌠💡⌡ Текущая метка времени'
                 })),
     async execute(client, user, interaction) {

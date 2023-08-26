@@ -5,10 +5,11 @@ module.exports = {
         .setName("ping")
         .setDescription("⌠💡⌡ See your ping")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Veja seu ping',
+            "de": '⌠💡⌡ Überprüfen Sie Ihren Ping',
             "es-ES": '⌠💡⌡ Ver tu ping',
             "fr": '⌠💡⌡ Voir votre ping',
             "it": '⌠💡⌡ Guarda il tuo ping',
+            "pt-BR": '⌠💡⌡ Veja seu ping',
             "ru": '⌠💡⌡ Проверьте свой пинг'
         }),
     async execute(client, user, interaction) {

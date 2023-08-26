@@ -9,26 +9,29 @@ module.exports = {
                 .setName("avatar")
                 .setDescription("⌠💡⌡ The user's avatar")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💡⌡ O Avatar do usuário',
+                    "de": '⌠💡⌡ Benutzer-Avatar',
                     "es-ES": '⌠💡⌡ El avatar de usuario',
                     "fr": '⌠💡⌡ L\'avatar de l\'utilisateur',
                     "it": '⌠💡⌡ L\'utente avatar',
+                    "pt-BR": '⌠💡⌡ O Avatar do usuário',
                     "ru": '⌠💡⌡ Аватар пользователя'
                 })
                 .addUserOption(option =>
                     option.setName("user")
                         .setNameLocalizations({
-                            "pt-BR": 'usuario',
+                            "de": 'benutzer',
                             "es-ES": 'usuario',
                             "it": 'utente',
+                            "pt-BR": 'usuario',
                             "ru": 'пользователь'
                         })
-                        .setDescription("Mention a user as a target")
+                        .setDescription("Mention a user")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Marque outro usuário como alvo',
+                            "de": 'einen Benutzer erwähnen',
                             "es-ES": 'Mencionar a otro usuario',
-                            "fr": 'Mentionner un utilisateur comme cible',
+                            "fr": 'Mentionner un utilisateur',
                             "it": 'Menziona un altro utente',
+                            "pt-BR": 'Mencione outro usuário',
                             "ru": 'Упомянуть другого пользователя'
                         })))
         .addSubcommand(subcommand =>
@@ -50,12 +53,12 @@ module.exports = {
                             "it": 'utente',
                             "ru": 'пользователь'
                         })
-                        .setDescription("Mention a user as a target")
+                        .setDescription("Mention a user")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Marque outro usuário como alvo',
                             "es-ES": 'Mencionar a otro usuario',
-                            "fr": 'Mentionner un utilisateur comme cible',
+                            "fr": 'Mentionner un utilisateur',
                             "it": 'Menziona un altro utente',
+                            "pt-BR": 'Mencione outro usuário',
                             "ru": 'Упомянуть другого пользователя'
                         })))
         .addSubcommand(subcommand =>
@@ -72,17 +75,19 @@ module.exports = {
                 .addUserOption(option =>
                     option.setName("user")
                         .setNameLocalizations({
-                            "pt-BR": 'usuario',
+                            "de": 'benutzer',
                             "es-ES": 'usuario',
                             "it": 'utente',
+                            "pt-BR": 'usuario',
                             "ru": 'пользователь'
                         })
-                        .setDescription("Mention a user as a target")
+                        .setDescription("Mention a user")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Marque outro usuário como alvo',
+                            "de": 'Erwähnen Sie einen anderen Benutzer',
                             "es-ES": 'Mencionar a otro usuario',
-                            "fr": 'Mentionner un utilisateur comme cible',
+                            "fr": 'Mentionner un utilisateur',
                             "it": 'Menziona un altro utente',
+                            "pt-BR": 'Mencione outro usuário',
                             "ru": 'Упомянуть другого пользователя'
                         }))),
     async execute(client, user, interaction) {

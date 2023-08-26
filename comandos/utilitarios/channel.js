@@ -5,27 +5,30 @@ module.exports = {
         .setName("channel")
         .setDescription("⌠💡⌡ Show channel details")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
+            "de": '⌠💡⌡ Siehe Kanaldetails',
             "es-ES": '⌠💡⌡ Ver detalles del canal',
             "fr": '⌠💡⌡ Afficher les détails de la chaîne',
             "it": '⌠💡⌡ Visualizza i dettagli del canale',
+            "pt-BR": '⌠💡⌡ Veja detalhes de algum canal',
             "ru": '⌠💡⌡ Подробнее о канале'
         })
         .addChannelOption(option =>
             option.setName("channel")
                 .setNameLocalizations({
-                    "pt-BR": 'canal',
+                    "de": 'kanal',
                     "es-ES": 'canal',
                     "fr": 'chaîne',
                     "it": 'canale',
+                    "pt-BR": 'canal',
                     "ru": 'канал'
                 })
                 .setDescription("Mention a channel")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Marque um canal como alvo',
+                    "de": 'einen Kanal erwähnen',
                     "es-ES": 'Mencionar un canal como objetivo',
                     "fr": 'Mentionner une chaîne',
                     "it": 'Menzionare un canale',
+                    "pt-BR": 'Marque um canal como alvo',
                     "ru": 'упомянуть канал'
                 })),
     async execute(client, user, interaction) {
