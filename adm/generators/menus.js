@@ -4,6 +4,18 @@ const { busca_badges, badgeTypes } = require('../data/badges')
 
 const { faustop, rasputia, galerito } = require('../../arquivos/json/text/emojis.json')
 
+const translate = {
+    "faustop": "Escolha uma frase do faustão!",
+    "norbit": "Escolha uma frase do filme do Norbit!",
+    "galerito": "Escolha uma frase do galerito e cia!",
+    "modulo_visualizar": "misc.modulo.selecionar_modulo",
+    "listas": "util.tarefas.escolher_lista_vincular",
+    "listas_navegar": "util.tarefas.escolher_lista_navegar",
+    "dados_navegar": "manu.data.tipo_dado",
+    "listas_remover": "util.tarefas.escolher_lista_apagar",
+    "profile_custom_navegar": "Selecione um abaixo para começar"
+}
+
 function create_menus(client, interaction, user, dados) {
 
     const itens_menu = []
@@ -118,35 +130,14 @@ function create_menus(client, interaction, user, dados) {
     let titulo_menu = client.tls.phrase(user, "dive.badges.escolha_uma")
     let id_menu = `select_${dados.alvo}_${interaction.user.id}`
 
-    if (dados.alvo === "faustop")
-        titulo_menu = "Escolha uma frase do faustão!"
-
-    if (dados.alvo === "norbit")
-        titulo_menu = "Escolha uma frase do filme do Norbit!"
-
-    if (dados.alvo === "galerito")
-        titulo_menu = "Escolha uma frase do galerito e cia!"
-
     if (dados.alvo.includes("tarefa"))
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_tarefa_visualizar")
 
-    if (dados.alvo === "modulo_visualizar")
-        titulo_menu = client.tls.phrase(user, "misc.modulo.selecionar_modulo")
-
-    if (dados.alvo === "listas")
-        titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_vincular")
-
-    if (dados.alvo === "listas_navegar")
-        titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_navegar")
-
-    if (dados.alvo === "dados_navegar")
-        titulo_menu = client.tls.phrase(user, "manu.data.tipo_dado")
-
-    if (dados.alvo === "listas_remover")
-        titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_lista_apagar")
-
-    if (dados.alvo === "profile_custom_navegar")
-        titulo_menu = "Selecione um para começar"
+    if (translate[dados.alvo]) // Verificando qual será o menu inserido e adicionando uma frase
+        if (translate[dados.alvo].split(".").length > 1)
+            titulo_menu = client.tls.phrase(user, translate[dados.alvo])
+        else
+            titulo_menu = translate[dados.alvo]
 
     const row = new ActionRowBuilder()
         .addComponents(
