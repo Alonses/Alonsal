@@ -19,12 +19,12 @@ module.exports = async ({ client, user, interaction }) => {
     //     modulos[i].save()
     // }
 
-    // Listando listas
+    // Verificando se há modulos configurados
     if (modulos.length < 1)
-        return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, client.emoji(0))
+        return client.tls.reply(interaction, user, "misc.modulo.sem_modulo", true, client.emoji(0))
 
     const data = {
-        title: client.tls.phrase(user, "util.tarefas.lista_escolher", 1),
+        title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
         alvo: "modulo_visualizar",
         values: modulos
     }
