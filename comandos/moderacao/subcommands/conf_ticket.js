@@ -1,8 +1,9 @@
 const { PermissionsBitField } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
+module.exports = async ({ client, user, interaction, guild }) => {
 
     const membro_sv = await client.getMemberGuild(interaction, client.id())
+    let canal_alvo
 
     // Permissões para gerenciar canais e cargos necessária para a função de tickets
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
@@ -10,21 +11,31 @@ module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
 
     // Categoria alvo para o bot criar os canais
     if (interaction.options.getChannel("category")) {
-        canal_alvo = interaction.options.getChannel("category").type
 
         // Mencionado um tipo de canal errado
-        if (canal_alvo !== 4)
+        if (interaction.options.getChannel("category").type !== 4)
             return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.defaultEmoji("types"))
+
+        canal_alvo = interaction.options.getChannel("category").id
+        guild.tickets.category = canal_alvo
     }
 
-    // Ativa ou desativa os tickets no servidor
-    guild.conf.tickets = !user.conf.tickets
+    // Sem canal informado no comando e nenhum canal salvo no banco do bot
+    if (!canal_alvo && typeof guild.tickets.category === "undefined")
+        return interaction.reply({
+            content: ":o: | Você não possui mencionou nenhuma categoria, e não possui uma categoria salva em cache!\nPor favor, utilize o comando novamente mencionando uma categoria",
+            ephemeral: true
+        })
 
-    // Se usado sem mencionar categoria, desliga função
-    if (canal_alvo === null)
-        guild.conf.tickets = false
+    // Ativa ou desativa os tickets de denúncia no servidor
+    if (typeof guild.conf.tickets === "undefined")
+        guild.conf.tickets = true
     else
-        guild.tickets.category = interaction.options.getChannel("category").id
+        guild.conf.tickets = !guild.conf.tickets
+
+    // Se usado sem mencionar categoria, desliga os tickets de denuncia
+    if (!canal_alvo)
+        guild.conf.tickets = false
 
     await guild.save()
 
