@@ -104,8 +104,7 @@ module.exports = {
                             "fr": 'Mentionner une chaîne',
                             "it": 'Menzionare un canale',
                             "ru": 'упомянуть канал'
-                        })
-                        .setRequired(true)))
+                        })))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(client, user, interaction) {
 
