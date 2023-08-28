@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
     if (!canal_alvo && typeof guild.logger.channel === "undefined")
         return interaction.reply({
-            content: ":o: | Você não possui mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
+            content: ":o: | Você não mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
             ephemeral: true
         })
 
