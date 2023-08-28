@@ -1,4 +1,3 @@
-
 module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
@@ -16,14 +15,11 @@ module.exports = async ({ client, user, interaction, guild }) => {
     }
 
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
-    if (!canal_alvo && typeof guild.reports.channel === "undefined")
-        return interaction.reply({
-            content: ":o: | Você não mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
-            ephemeral: true
-        })
+    if (!canal_alvo && !guild.reports.channel)
+        return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
     // Ativa ou desativa os reportes no servidor
-    if (typeof guild.conf.reports === "undefined")
+    if (!guild.conf.reports)
         guild.conf.reports = false
     else
         guild.conf.reports = !guild.conf.reports

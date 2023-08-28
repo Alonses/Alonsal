@@ -15,14 +15,11 @@ module.exports = async ({ client, user, interaction, guild }) => {
     }
 
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
-    if (!canal_alvo && typeof guild.logger.channel === "undefined")
-        return interaction.reply({
-            content: ":o: | Você não mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
-            ephemeral: true
-        })
+    if (!canal_alvo && !guild.logger.channel)
+        return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
     // Ativa ou desativa o logger no servidor
-    if (typeof guild.conf.logger === "undefined")
+    if (!guild.conf.logger)
         guild.conf.logger = true
     else
         guild.conf.logger = !guild.conf.logger

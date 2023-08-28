@@ -1,4 +1,3 @@
-
 module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
@@ -10,19 +9,17 @@ module.exports = async ({ client, user, interaction, guild }) => {
         if (interaction.options.getChannel("channel").type !== 0)
             return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.defaultEmoji("types"))
 
+        // Atribuindo o canal passado para o antispam
         canal_alvo = interaction.options.getChannel("channel").id
         guild.logger.channel = canal_alvo
     }
 
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
-    if (!canal_alvo && typeof guild.logger.channel === "undefined")
-        return interaction.reply({
-            content: ":o: | Você não mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
-            ephemeral: true
-        })
+    if (!canal_alvo && !guild.logger.channel)
+        return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
     // Ativa ou desativa o sistema antispam no servidor
-    if (typeof guild.conf.spam === "undefined")
+    if (!guild.conf.spam)
         guild.conf.spam = true
     else
         guild.conf.spam = !guild.conf.spam

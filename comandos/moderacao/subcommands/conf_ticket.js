@@ -21,14 +21,11 @@ module.exports = async ({ client, user, interaction, guild }) => {
     }
 
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
-    if (!canal_alvo && typeof guild.tickets.category === "undefined")
-        return interaction.reply({
-            content: ":o: | Você não mencionou nenhuma categoria, e não possui uma categoria salva em cache!\nPor favor, utilize o comando novamente mencionando uma categoria",
-            ephemeral: true
-        })
+    if (!canal_alvo && !guild.tickets.category)
+        return client.tls.reply(interaction, user, "mode.ticket.sem_categoria", true, 1)
 
     // Ativa ou desativa os tickets de denúncia no servidor
-    if (typeof guild.conf.tickets === "undefined")
+    if (!guild.conf.tickets)
         guild.conf.tickets = true
     else
         guild.conf.tickets = !guild.conf.tickets

@@ -2,7 +2,7 @@
 module.exports = async ({ client, user, interaction, guild }) => {
 
     // Ativa ou desativa a visualização do servidor no ranking global
-    if (typeof guild.conf.public !== "undefined")
+    if (guild.conf.public)
         guild.conf.public = !guild.conf.public
     else
         guild.conf.public = false
