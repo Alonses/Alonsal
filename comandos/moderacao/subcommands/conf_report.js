@@ -1,23 +1,36 @@
 
-module.exports = async ({ client, user, interaction, guild, canal_alvo }) => {
+module.exports = async ({ client, user, interaction, guild }) => {
+
+    let canal_alvo
 
     // Categoria alvo para o bot criar os canais
     if (interaction.options.getChannel("channel")) {
-        canal_alvo = interaction.options.getChannel("channel").type
 
         // Mencionado um tipo de canal errado
-        if (canal_alvo !== 0)
+        if (interaction.options.getChannel("channel").type !== 0)
             return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.defaultEmoji("types"))
+
+        // Atribuindo o canal passado para o reportador
+        canal_alvo = interaction.options.getChannel("channel").id
+        guild.reports.channel = canal_alvo
     }
 
-    // Ativa ou desativa os tickets no servidor
-    guild.conf.reports = !user.conf.reports
+    // Sem canal informado no comando e nenhum canal salvo no banco do bot
+    if (!canal_alvo && typeof guild.reports.channel === "undefined")
+        return interaction.reply({
+            content: ":o: | Você não possui mencionou nenhum canal, e não possui um canal salvo em cache!\nPor favor, utilize o comando novamente mencionando um canal",
+            ephemeral: true
+        })
 
-    // Se usado sem mencionar categoria, desliga função
-    if (canal_alvo === null)
+    // Ativa ou desativa os reportes no servidor
+    if (typeof guild.conf.reports === "undefined")
         guild.conf.reports = false
     else
-        guild.reports.channel = interaction.options.getChannel("channel").id
+        guild.conf.reports = !guild.conf.reports
+
+    // Se usado sem mencionar o canal, desliga os reportes no servidor
+    if (!canal_alvo)
+        guild.conf.reports = false
 
     await guild.save()
 
