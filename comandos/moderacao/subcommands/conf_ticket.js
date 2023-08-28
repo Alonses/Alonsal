@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
     if (!canal_alvo && typeof guild.tickets.category === "undefined")
         return interaction.reply({
-            content: ":o: | Você não possui mencionou nenhuma categoria, e não possui uma categoria salva em cache!\nPor favor, utilize o comando novamente mencionando uma categoria",
+            content: ":o: | Você não mencionou nenhuma categoria, e não possui uma categoria salva em cache!\nPor favor, utilize o comando novamente mencionando uma categoria",
             ephemeral: true
         })
 
