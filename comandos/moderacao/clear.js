@@ -48,15 +48,15 @@ module.exports = {
         deleteMessages(client, user, interaction, qtd_msg)
     },
     async menu(client, user, interaction) {
-        const messageDate = interaction.targetMessage.createdAt;
+        const messageDate = interaction.targetMessage.createdAt
 
         interaction.targetMessage.channel.messages.fetch()
             .then(messages => {
-                const count = messages.filter(m => m.createdAt >= messageDate).size;
+                const count = messages.filter(m => m.createdAt >= messageDate).size
 
                 deleteMessages(client, user, interaction, count)
             })
-            .catch(console.error);
+            .catch(console.error)
     }
 }
 
@@ -72,7 +72,7 @@ async function deleteMessages(client, user, interaction, qtd_msg) {
 
     channel.bulkDelete(qtd_msg, true)
         .then(messages => {
-            const count = messages.size;
+            const count = messages.size
             const texto = count > 1 ? `\`${count} ${client.tls.phrase(user, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(user, "mode.clear.apagado_2")}`
 
             interaction.reply({
