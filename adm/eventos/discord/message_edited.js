@@ -11,7 +11,7 @@ module.exports = async (client, message) => {
 
     let guild = await client.getGuild(message[0].guildId)
 
-    // Verificando se a guild habilitou o logger
+    // Verificando se o servidor habilitou o logger
     if (!client.decider(guild.conf?.logger, 0)) return
 
     let texto = `:pencil: | Uma [mensagem](${message[0].url}) foi atualizada por <@${message[0].author.id}>\n\n**Mensagem antiga:** \`\`\`${formata_text(message[0].content)}\`\`\`\n**Mensagem atualizada:** \`\`\`${formata_text(message[1].content)}\`\`\``
