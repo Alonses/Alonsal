@@ -33,7 +33,7 @@ module.exports = async (client, message) => {
     const embed = new EmbedBuilder()
         .setTitle("> Mensagem Excluída")
         .setColor(0xED4245)
-        .setDescription(texto)
+        .setDescription(texto.slice(0, 4095))
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **Autor**`,
