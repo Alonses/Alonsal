@@ -1,20 +1,20 @@
 const { readdirSync } = require('fs')
 
-const { alea_hex } = require('./adm/funcoes/hex_color')
-const { getBot } = require('./adm/database/schemas/Bot')
-const { getUser } = require('./adm/database/schemas/User')
-const { create_menus } = require('./adm/generators/menus')
-const { create_profile } = require('./adm/generators/profile')
-const { create_buttons } = require('./adm/generators/buttons')
-const { getUserBadges } = require('./adm/database/schemas/Badge')
-const { listAllUserTasks } = require('./adm/database/schemas/Task')
-const { registryStatement } = require('./adm/database/schemas/Statement')
-const { listAllUserGroups } = require('./adm/database/schemas/Task_group')
-const { getGuild, getGameChannels } = require('./adm/database/schemas/Guild')
+const { alea_hex } = require('./core/functions/hex_color')
+const { getBot } = require('./core/database/schemas/Bot')
+const { getUser } = require('./core/database/schemas/User')
+const { create_menus } = require('./core/generators/menus')
+const { create_profile } = require('./core/generators/profile')
+const { create_buttons } = require('./core/generators/buttons')
+const { getUserBadges } = require('./core/database/schemas/Badge')
+const { listAllUserTasks } = require('./core/database/schemas/Task')
+const { registryStatement } = require('./core/database/schemas/Statement')
+const { listAllUserGroups } = require('./core/database/schemas/Task_group')
+const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
 
-const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./arquivos/json/text/emojis.json')
+const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
-const translate = require('./adm/formatadores/translate')
+const translate = require('./core/formatters/translate')
 
 function internal_functions(client) {
 
@@ -25,7 +25,7 @@ function internal_functions(client) {
     console.log("🟠 | Vinculando as funções internas")
 
     client.error = async ({ err, local }) => {
-        require("./adm/eventos/error")({ client, err, local })
+        require("./core/events/error")({ client, err, local })
     }
 
     client.atualiza_dados = async (alvo, interaction) => {
@@ -135,7 +135,7 @@ function internal_functions(client) {
     }
 
     client.journal = async (caso, quantia) => {
-        require('./adm/automaticos/relatorio')({ client, caso, quantia })
+        require('./core/auto/edit_journal')({ client, caso, quantia })
     }
 
     client.notify = (id_alvo, conteudo) => {
