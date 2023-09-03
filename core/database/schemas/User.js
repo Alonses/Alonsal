@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
         pula_predios: { type: String, default: null }
     },
     profile: {
+        avatar: { type: String, default: null },
         about: { type: String, default: null },
         join: { type: Boolean, default: true },
         creation: { type: Boolean, default: true },

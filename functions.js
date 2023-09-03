@@ -166,7 +166,7 @@ function internal_functions(client) {
         if (!id_alvo) return
 
         if (typeof conteudo === "object") { // embed
-            if (!conteudo.components && !conteudo.content)
+            if (!conteudo.components && !conteudo.content && !conteudo.file)
                 client.discord.channels.cache.get(id_alvo).send({
                     embeds: [conteudo]
                 })
@@ -179,6 +179,11 @@ function internal_functions(client) {
                 client.discord.channels.cache.get(id_alvo).send({
                     content: conteudo.content,
                     embeds: [conteudo.embed]
+                })
+            else if (conteudo.file) // Usado pelo canvas com embed
+                client.discord.channels.cache.get(id_alvo).send({
+                    embeds: [conteudo.embed],
+                    files: [conteudo.file]
                 })
         } else // texto normal
             client.discord.channels.cache.get(id_alvo).send({

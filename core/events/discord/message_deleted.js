@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, message }) => {
 
@@ -11,6 +11,19 @@ module.exports = async ({ client, message }) => {
     // Verificando se a guild habilitou o logger
     if (!client.decider(guild.conf?.logger, 0)) return
 
+    // Permissão para ver o registro de auditoria
+    const bot = await client.getMemberGuild(message, client.id())
+    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
+        return client.notify(guild.logger.channel, `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}`)
+
+    // Coletando dados sobre o evento
+    const fetchedLogs = await message.guild.fetchAuditLogs({
+        type: AuditLogEvent.MessageDelete,
+        limit: 1,
+    })
+
+    const registroAudita = fetchedLogs.entries.first()
+
     if (message.attachments) {
         message.attachments.forEach(attach => {
             attachments.push(attach.attachment)
@@ -21,27 +34,33 @@ module.exports = async ({ client, message }) => {
 
     // Mensagem sem texto enviado
     if (!message.content)
-        texto_mensagem = "Sem texto incluso"
+        texto_mensagem = client.tls.phrase(guild, "mode.logger.sem_texto")
 
     // Apenas arquivos enviados
     if (attachments.length > 0 && !message.content)
         texto_mensagem = attachments.join("\n\n")
 
-    let texto = `:wastebasket: | Uma [mensagem](${message.url}) de <@${message.author.id}> foi excluída\n\n**Conteúdo excluído:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
+    let texto = `:wastebasket: | <@${message.author.id}> excluiu uma [mensagem](${message.url})`
     let autor = message.author.id, local = message.channelId, row
 
+    // Mensagem excluída por um moderador
+    if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+        texto = `:wastebasket: | Uma [mensagem](${message.url}) de <@${message.author.id}> foi excluída`
+
+    texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}}:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
+
     const embed = new EmbedBuilder()
-        .setTitle("> Mensagem Excluída")
+        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
         .setColor(0xED4245)
         .setDescription(texto.slice(0, 4095))
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **Autor**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
                 value: `${client.emoji("icon_id")} \`${autor}\`\n( <@${autor}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("paper")} **Local**`,
+                name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "util.rastreio.local")}**`,
                 value: `${client.emoji("icon_id")} \`${local}\`\n( <#${local}> )`,
                 inline: true
             }
@@ -50,6 +69,16 @@ module.exports = async ({ client, message }) => {
         .setFooter({
             text: message.author.username
         })
+
+    // Mensagem excluída por um moderador
+    if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+        embed.addFields(
+            {
+                name: `${client.defaultEmoji("guard")} **Excluído por**`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
+                inline: false
+            }
+        )
 
     const user = {
         lang: "pt-br"

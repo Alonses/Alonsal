@@ -1,10 +1,18 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, AuditLogEvent } = require('discord.js')
 
 module.exports = async ({ client, guild, dados }) => {
 
     const user_alvo = dados[0].user
     let texto = "", removidos = [], adicionados = []
     let old_member = dados[0], new_member = dados[1]
+
+    // Coletando dados sobre o evento
+    const fetchedLogs = await dados[0].guild.fetchAuditLogs({
+        type: AuditLogEvent.MemberRoleUpdate,
+        limit: 1,
+    })
+
+    const registroAudita = fetchedLogs.entries.first()
 
     if (old_member.roles.cache.size > new_member.roles.cache.size)
         old_member.roles.cache.forEach(role => {
@@ -41,6 +49,11 @@ module.exports = async ({ client, guild, dados }) => {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
                 value: `<t:${parseInt(new_member.joinedTimestamp / 1000)}:F> ( <t:${Math.floor(new_member.joinedTimestamp / 1000)}:R> )`,
                 inline: true
+            },
+            {
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "util.logger.alterador")}**`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
+                inline: false
             }
         )
         .setTimestamp()
@@ -48,7 +61,7 @@ module.exports = async ({ client, guild, dados }) => {
             text: user_alvo.username
         })
 
-    // User é um BOT
+    // Usuário é um BOT
     if (user_alvo.bot)
         embed.addFields(
             {
