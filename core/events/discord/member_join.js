@@ -10,7 +10,7 @@ module.exports = async (client, dados) => {
     const user_alvo = dados.user
 
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.logger(guild, "mode.logger.novo_membro"))
+        .setTitle(client.tls.phrase(guild, "mode.logger.novo_membro"))
         .setColor(0x29BB8E)
         .setFields(
             {
