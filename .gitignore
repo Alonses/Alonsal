@@ -9,3 +9,4 @@ prefixes/
 files/data/*
 files/languages/*
 *.sfk
+edit.js
