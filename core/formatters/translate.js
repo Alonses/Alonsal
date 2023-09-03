@@ -34,6 +34,10 @@ function editReply(interaction, user, target, ephemeral, type) {
 
 function phrase(user, target, type) {
 
+    // User é utilizado para definir o idioma de retorno
+    // Target é a chave de tradução
+    // Type é um valor para emoji, anexado com | no inicio da tradução
+
     let phrase = translate(user, target)
     phrase = check_emojis(phrase, type)
 

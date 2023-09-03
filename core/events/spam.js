@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require("discord.js")
+
 const { getUserMessages, dropUserMessage, dropAllUserMessages, createMessage } = require("../database/schemas/Message")
 
 let bloqueia_operacao = 0
@@ -46,17 +47,17 @@ async function nerfa_spam(client, user, guild, message, texto) {
         let tempo_timeout = 3600000 // 1 Hora
 
         const embed = new EmbedBuilder()
-            .setTitle("> Prevenção de Spam")
+            .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
             .setColor(0xED4245)
-            .setDescription(`${client.defaultEmoji("guard")} | O usuário ${user_guild} foi mutado por \`${(tempo_timeout / 1000) / 60} minutos\` devido à repetidas\nmensagens enviadas em tempos aproximados.\n\`\`\`${texto.slice(0, 999)}\`\`\``)
+            .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, (tempo_timeout / 1000) / 60])}\n\`\`\`${texto.slice(0, 999)}\`\`\``)
             .addFields(
                 {
-                    name: `${client.defaultEmoji("person")} **Membro**`,
+                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                     value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
                     inline: true
                 },
                 {
-                    name: `${client.defaultEmoji("calendar")} **Vigência**`,
+                    name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
                     value: `<t:${client.timestamp() + (tempo_timeout / 1000)}:f>\n( <t:${client.timestamp() + (tempo_timeout / 1000)}:R> )`,
                     inline: true
                 }
@@ -67,10 +68,10 @@ async function nerfa_spam(client, user, guild, message, texto) {
         if (url_avatar)
             embed.setThumbnail(url_avatar)
 
-        user_guild.timeout(tempo_timeout, "Fazendo spam no servidor")
+        user_guild.timeout(tempo_timeout, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
             .then(async () => {
 
-                client.notify(guild.logger.channel, { content: `@here ${user_guild} foi colocado em castigo devido a spam`, embed: embed })
+                client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.aviso_spam"), user_guild), embed: embed })
                 const messages = await getUserMessages(user.uid, guild.sid)
 
                 // Excluindo as mensagens enviadas pelo usuário que foram consideradas como spam
@@ -94,7 +95,7 @@ async function nerfa_spam(client, user, guild, message, texto) {
                 embed.setDescription(`${client.defaultEmoji("guard")} | Não foi possível interromper um spam do usuário ${user_guild} por falta de permissões do bot\nAs mensagens enviadas consideradas spam são as seguintes.\n\`\`\`${texto.slice(0, 999)}\`\`\``)
                     .setFields(
                         {
-                            name: `${client.defaultEmoji("person")} **Membro**`,
+                            name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                             value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
                             inline: true
                         }

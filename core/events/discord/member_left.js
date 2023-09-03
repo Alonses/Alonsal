@@ -10,16 +10,16 @@ module.exports = async (client, dados) => {
     const user_alvo = dados.user
 
     const embed = new EmbedBuilder()
-        .setTitle("> Um membro saiu!")
+        .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
         .setColor(0xED4245)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **Membro**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("calendar")} **Entrada original**`,
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.logger.entrada_original")}**`,
                 value: `<t:${parseInt(dados.joinedTimestamp / 1000)}:F> )`,
                 inline: true
             }
@@ -33,7 +33,7 @@ module.exports = async (client, dados) => {
     if (user_alvo.bot)
         embed.addFields(
             {
-                name: `:robot: **É um Bot!**`,
+                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
                 value: "⠀",
                 inline: true
             }

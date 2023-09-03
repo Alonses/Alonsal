@@ -7,5 +7,9 @@ module.exports = async (client, dados) => {
 
     // Alterando os cargos do usuário
     if (dados[0]._roles !== dados[1]._roles)
-        return require('./endpoints/member_role')(client, guild, dados)
+        return require('./endpoints/member_role')({ client, guild, dados })
+
+    // Usuário atualizou a foto de perfil
+    if (dados[0]._roles === dados[1]._roles)
+        return require('./endpoints/member_avatar')({ client, guild, dados })
 }

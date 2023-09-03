@@ -17,8 +17,8 @@ module.exports = async function ({ client }) {
     })
 
     // Eventos de mensagens
-    client.discord.on("messageDelete", (msg) => {
-        require('./discord/message_deleted.js')(client, msg)
+    client.discord.on("messageDelete", message => {
+        require('./discord/message_deleted.js')({ client, message })
     })
 
     client.discord.on("messageUpdate", (old_msg, new_msg) => {
