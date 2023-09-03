@@ -44,6 +44,12 @@ async function nerfa_spam(client, user, guild, message, texto) {
         bloqueia_operacao = 1
 
         let user_guild = await client.getMemberGuild(message, user.uid)
+
+        if (!user_guild) { // Validando se o usuário saiu do servidor
+            bloqueia_operacao = 0
+            return
+        }
+
         let tempo_timeout = 3600000 // 1 Hora
 
         const embed = new EmbedBuilder()

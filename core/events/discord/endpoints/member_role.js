@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({ client, guild, dados }) => {
 
     const user_alvo = dados[0].user
-    let texto = "", removidos = [], adicionados = [], permissoes_fn = ""
+    let texto = "", removidos = [], adicionados = []
     let old_member = dados[0], new_member = dados[1]
 
     if (old_member.roles.cache.size > new_member.roles.cache.size)
@@ -24,22 +24,8 @@ module.exports = async ({ client, guild, dados }) => {
         texto += `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${removidos.join(", ")}`
 
     // Membros não salvos no cache
-    if (texto.length < 1) return
-
-    const permissoes_user = new_member.permissions.toArray()
-
-    // Listando todas as permissões do usuário
-    for (let i = 0; i < permissoes_user.length; i++) {
-        if (typeof permissoes_user[i + 1] === "undefined")
-            permissoes_fn += " & "
-
-        permissoes_fn += `\`${permissoes_user[i]}\``
-
-        if (typeof permissoes_user[i + 2] !== "undefined")
-            permissoes_fn += ", "
-    }
-
-    permissoes_fn = permissoes_fn.slice(0, 2000)
+    if (adicionados.length > 1 || removidos.length > 1 || old_member.roles.cache.size == 0 || texto.length < 1)
+        return
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))
@@ -72,10 +58,11 @@ module.exports = async ({ client, guild, dados }) => {
             }
         )
 
+    // Listando todas as permissões do usuário
     embed.addFields(
         {
             name: `**:shield: ${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
-            value: `${permissoes_fn}`,
+            value: client.list(new_member.permissions.toArray(), 2000),
             inline: false
         }
     )
