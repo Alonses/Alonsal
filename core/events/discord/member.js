@@ -6,7 +6,7 @@ module.exports = async (client, dados) => {
     if (!client.decider(guild.conf?.logger, 0) || !client.x.logger) return
 
     // Alterando os cargos do usuário
-    if (dados[0]._roles !== dados[1]._roles)
+    if (dados[0]._roles !== dados[1]._roles && dados[0]._roles.length > 0)
         return require('./endpoints/member_role')({ client, guild, dados })
 
     // Usuário atualizou a foto de perfil

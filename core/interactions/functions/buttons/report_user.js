@@ -55,9 +55,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_permissao", 7)}`
 
         const guild_member = await client.getMemberGuild(interaction, alvo.uid)
-            .catch(() => { return null })
 
-        if (guild_member) {
+        if (!guild_member)
+            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
+        else {
             // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo
             if (interaction.member.roles.highest.position < guild_member.roles.highest.position)
                 texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_hierarquia", 7)}`
@@ -73,8 +74,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             })
 
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`
-        } else
-            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
+        }
     }
 
     interaction.update({

@@ -9,8 +9,7 @@ module.exports = async (client, user, interaction, dados) => {
     // 2 -> Badges
     // 3 -> Histórico de reportes
 
-    let operador = 0, historico = []
-    let id_alvo, badges, descricao_reportes, avisos_reportes = 0, permissoes_fn = "", cargos_fn
+    let id_alvo, operador = 0
 
     // Coletando os dados do usuário
     if (dados) {
@@ -41,31 +40,18 @@ module.exports = async (client, user, interaction, dados) => {
     // Permissões e cargos
     if (operador === 1) {
 
-        const permissoes_user = membro_sv.permissions.toArray()
-
-        // Listando todas as permissões do usuário
-        for (let i = 0; i < permissoes_user.length; i++) {
-            if (typeof permissoes_user[i + 1] === "undefined")
-                permissoes_fn += " & "
-
-            permissoes_fn += `\`${permissoes_user[i]}\``
-
-            if (typeof permissoes_user[i + 2] !== "undefined")
-                permissoes_fn += ", "
-        }
-
-        permissoes_fn = permissoes_fn.slice(0, 2000)
-        cargos_fn = membro_sv.roles.cache.map(r => `${r}`).join(" ").replace(" @everyone", "")
+        // Listando todas as permissões e cargos do usuário
+        const cargos_user = membro_sv.roles.cache.map(r => `${r}`).join(" ").replace(" @everyone", "").slice(0, 2000)
 
         infos_user.addFields(
             {
                 name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "util.server.cargos")}**`,
-                value: `${cargos_fn}`,
+                value: `${cargos_user}`,
                 inline: false
             },
             {
                 name: `**:shield: ${client.tls.phrase(user, "menu.botoes.permissoes")}**`,
-                value: `${permissoes_fn}`,
+                value: client.list(membro_sv.permissions.toArray(), 2000),
                 inline: false
             }
         )
@@ -75,7 +61,7 @@ module.exports = async (client, user, interaction, dados) => {
     if (operador === 2) {
 
         let id_badges = await client.getUserBadges(id_alvo)
-        badges = await buildAllBadges(client, user, id_badges)
+        let badges = await buildAllBadges(client, user, id_badges)
         // let achievements = busca_achievements(client, all, user.id, interaction)
 
         const internal_user = await client.getUser(id_alvo)
@@ -105,6 +91,7 @@ module.exports = async (client, user, interaction, dados) => {
 
         // Coletando os dados de histórico do usuário
         const reports = await getUserReports(id_alvo)
+        let avisos_reportes = 0, descricao_reportes, historico = []
 
         // Quantificando os relatórios sobre o usuário
         reports.forEach(valor => {

@@ -119,7 +119,10 @@ function internal_functions(client) {
     }
 
     client.getMemberGuild = (interaction, id_alvo) => {
-        return interaction.guild.members.fetch(id_alvo)
+        let membro = interaction.guild.members.fetch(id_alvo)
+            .catch(() => { return null })
+
+        return membro
     }
 
     client.getCachedUser = (id_alvo) => {
@@ -136,6 +139,27 @@ function internal_functions(client) {
 
     client.journal = async (caso, quantia) => {
         require('./core/auto/edit_journal')({ client, caso, quantia })
+    }
+
+    client.list = (valores, tamanho_maximo) => {
+
+        let lista = ""
+
+        for (let i = 0; i < valores.length; i++) {
+            if (typeof valores[i + 1] === "undefined")
+                lista += " & "
+
+            lista += `\`${valores[i]}\``
+
+            if (typeof valores[i + 2] !== "undefined")
+                lista += ", "
+        }
+
+        if (tamanho_maximo)
+            if (lista.length > tamanho_maximo)
+                lista = `${lista.slice(0, tamanho_maximo)}...`
+
+        return lista
     }
 
     client.notify = (id_alvo, conteudo) => {
