@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, IntentsBitField, Partials } = require('discord.js')
 
-const idioma = require('./adm/data/idioma')
-const translate = require('./adm/formatadores/translate')
+const idioma = require('./core/data/language')
+const translate = require('./core/formatters/translate')
 
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
@@ -16,7 +16,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
     modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
 
 if (silent || modo_develop)
-    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 0
+    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 1
 
 // globais e privados do bot
 if (modo_develop)
@@ -31,7 +31,10 @@ const cli = new Client({
         GatewayIntentBits.MessageContent,
         IntentsBitField.Flags.GuildMembers
     ],
-    partials: [Partials.Message],
+    partials: [
+        Partials.Message,
+        Partials.GuildMember
+    ],
     disableEveryone: false
 })
 
