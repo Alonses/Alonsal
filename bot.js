@@ -35,12 +35,19 @@ client.discord.on("messageCreate", async (message) => {
 
 	const user = await client.getUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
+	const user_guild = await client.getMemberGuild(message, user.uid)
 
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 	if (message.author.bot || message.webhookId) return
 
 	let text = message.content.toLowerCase()
+
+	// Sincronizando os dados do usuário
+	if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
+		user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
+		await user.save()
+	}
 
 	// Recursos de Broadcast
 	const bot = await client.getBot()
@@ -55,8 +62,8 @@ client.discord.on("messageCreate", async (message) => {
 	try { // Atualizando o XP dos usuários
 		const caso = "messages"
 
-		if (guild.conf.spam) // Sistema anti-spam do servidor
-			require("./core/events/spam.js")({ client, message, user, guild })
+		// if (guild.conf.spam) // Sistema anti-spam do servidor
+			// require("./core/events/spam.js")({ client, message, user, guild })
 
 		if (message.content.length > 6 && client.x.ranking) await require("./core/data/ranking.js")({ client, message, caso })
 

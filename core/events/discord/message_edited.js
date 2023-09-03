@@ -24,17 +24,17 @@ module.exports = async (client, message) => {
     let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()
-        .setTitle("> Mensagem Atualizada")
+        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
         .setColor(0xffffff)
         .setDescription(texto.slice(0, 4095))
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **Autor**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
                 value: `${client.emoji("icon_id")} \`${autor}\`\n( <@${autor}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("paper")} **Local**`,
+                name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "util.rastreio.local")}**`,
                 value: `${client.emoji("icon_id")} \`${local}\`\n( <#${local}> )`,
                 inline: true
             }

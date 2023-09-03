@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
@@ -21,8 +23,19 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Ativa ou desativa o logger no servidor
     if (!guild.conf.logger)
         guild.conf.logger = true
-    else
+    else {
+
+        // Verificando se o bot possui permissões para ver o registro de auditoria
+        if (!guild.conf.logger) {
+            const bot = await client.getMemberGuild(interaction, client.id())
+
+            // Permissão para ver o registro de auditoria
+            if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
+                return client.tls.reply(interaction, user, "mode.logger.permissao", true, 7)
+        }
+
         guild.conf.logger = !guild.conf.logger
+    }
 
     // Se usado sem mencionar um canal, desliga o logger
     if (!canal_alvo)

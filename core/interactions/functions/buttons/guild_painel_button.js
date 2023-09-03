@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { verificar_broadcast } = require('../../../eventos/broadcast')
+const { verificar_broadcast } = require('../../../events/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -91,9 +91,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
             })
         else {
             // Ativa ou desativa o relatório de eventos do servidor
-            if (typeof guild.conf.logger !== "undefined")
+            if (typeof guild.conf.logger !== "undefined") {
+
+                // Verificando se o bot possui permissões para ver o registro de auditoria
+                if (!guild.conf.logger) {
+                    const bot = await client.getMemberGuild(interaction, client.id())
+
+                    // Em caso negativo, desabilita o recurso
+                    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
+                        return client.tls.report(interaction, user, "mode.logger.permissao", true, 7, null, true)
+                }
+
                 guild.conf.logger = !guild.conf.logger
-            else
+            } else
                 guild.conf.logger = false
         }
     } else if (escolha === 7) {

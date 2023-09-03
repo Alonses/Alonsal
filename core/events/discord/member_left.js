@@ -29,7 +29,7 @@ module.exports = async (client, dados) => {
             text: user_alvo.username
         })
 
-    // User é um BOT
+    // Usuário é um BOT
     if (user_alvo.bot)
         embed.addFields(
             {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { timer_broadcast } = require('../../../eventos/broadcast')
+const { timer_broadcast } = require('../../../events/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
