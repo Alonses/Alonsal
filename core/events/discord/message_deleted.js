@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async (client, message) => {
+module.exports = async ({ client, message }) => {
 
     // Verificando se o autor da mensagem excluída é o bot
     if (message.partial || !client.x.logger) return

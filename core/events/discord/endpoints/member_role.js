@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async (client, guild, dados) => {
+module.exports = async ({ client, guild, dados }) => {
 
     const user_alvo = dados[0].user
     let texto = "", removidos = [], adicionados = [], permissoes_fn = ""
@@ -17,15 +17,14 @@ module.exports = async (client, guild, dados) => {
                 adicionados.push(`<@&${role.id}>`)
         })
 
-    // Membros não salvos no cache
-    if (adicionados.length > 1 || removidos.length > 1 || old_member.length == 0)
-        return
-
     if (adicionados.length > 0)
-        texto += `\n**:sparkle: Adicionado:** ${adicionados.join(", ")}`
+        texto += `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${adicionados.join(", ")}`
 
     if (removidos.length > 0)
-        texto += `\n**:no_entry_sign: Removido:** ${removidos.join(", ")}`
+        texto += `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${removidos.join(", ")}`
+
+    // Membros não salvos no cache
+    if (texto.length < 1) return
 
     const permissoes_user = new_member.permissions.toArray()
 
@@ -43,12 +42,12 @@ module.exports = async (client, guild, dados) => {
     permissoes_fn = permissoes_fn.slice(0, 2000)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Cargos atualizados")
+        .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))
         .setColor(0x29BB8E)
         .setDescription(texto)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **Membro**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
@@ -67,7 +66,7 @@ module.exports = async (client, guild, dados) => {
     if (user_alvo.bot)
         embed.addFields(
             {
-                name: `:robot: **É um Bot!**`,
+                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
                 value: "⠀",
                 inline: true
             }
@@ -75,7 +74,7 @@ module.exports = async (client, guild, dados) => {
 
     embed.addFields(
         {
-            name: `**:shield: ${client.tls.phrase(guild, "menu.botoes.permissoes")}**`,
+            name: `**:shield: ${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
             value: `${permissoes_fn}`,
             inline: false
         }

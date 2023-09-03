@@ -1,16 +1,16 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async (client, dados) => {
+module.exports = async ({ client, guild, dados }) => {
 
     const user_alvo = dados[0].user
 
     const embed = new EmbedBuilder()
-        .setTitle("> Avatar atualizado")
+        .setTitle(client.tls.phrase(guild, "mode.logger.titulo_avatar"))
         .setColor(0x29BB8E)
-        .setDescription(":frame_photo: | O novo avatar do usuário é este!")
+        .setDescription(client.tls.phrase(guild, "mode.logger.novo_avatar", 35))
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **Membro**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
@@ -24,7 +24,7 @@ module.exports = async (client, dados) => {
     if (user_alvo.bot)
         embed.addFields(
             {
-                name: `:robot: **É um Bot!**`,
+                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
                 value: "⠀",
                 inline: true
             }
