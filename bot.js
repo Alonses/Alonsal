@@ -76,6 +76,7 @@ client.discord.on("interactionCreate", async interaction => {
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 
+	// Atualiza o formato de salvamento das tasks
 	client.update_tasks(interaction)
 
 	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
