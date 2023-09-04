@@ -24,7 +24,7 @@ module.exports = async (client, message) => {
     let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
+        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_editada"))
         .setColor(0xffffff)
         .setDescription(texto.slice(0, 4095))
         .setFields(
