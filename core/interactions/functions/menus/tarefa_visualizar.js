@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         else // Apenas uma lista criada
             row = client.create_buttons([
                 { id: "task_button", name: client.tls.phrase(user, "menu.botoes.marcar_concluida"), type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` },
-                { id: "task_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(19), data: `0|${task.timestamp}` },
+                { id: "task_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
                 { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
             ], interaction)
     else // Tarefas finalizadas

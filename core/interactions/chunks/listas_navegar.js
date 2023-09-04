@@ -1,7 +1,7 @@
 const { listAllUserGroups } = require('../../database/schemas/Task_group')
 const { listAllUserGroupTasks } = require('../../database/schemas/Task')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, autor_original }) => {
 
     // Navegando por listas de tarefas
     let listas
@@ -29,7 +29,10 @@ module.exports = async ({ client, user, interaction }) => {
         const tarefas = await listAllUserGroupTasks(interaction.user.id, listas[0].timestamp)
 
         if (tarefas.length < 1)
-            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            if (autor_original)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            else
+                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         data.title = `:mega: | ${client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1)}`
         data.alvo = "tarefa_visualizar"
@@ -37,16 +40,23 @@ module.exports = async ({ client, user, interaction }) => {
         data.operador = `k.${listas[0].timestamp}`
     }
 
-    if (!interaction.customId) // Interação original
+    if (autor_original) {
+        if (!interaction.customId) // Interação original
+            interaction.reply({
+                content: data.title,
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else // Interação por botões / menus
+            interaction.update({
+                content: data.title,
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+    } else // Envia uma interação secundária efémera para o usuário que não é o autor original
         interaction.reply({
             content: data.title,
             components: [client.create_menus(client, interaction, user, data)],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
-    else // Interação por botões / menus
-        interaction.update({
-            content: data.title,
-            components: [client.create_menus(client, interaction, user, data)],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: true
         })
 }

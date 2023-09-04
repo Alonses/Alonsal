@@ -1,6 +1,6 @@
 const { listAllUserTasks, listAllUserGroupTasks } = require('../../database/schemas/Task')
 
-module.exports = async ({ client, user, interaction, operador }) => {
+module.exports = async ({ client, user, interaction, operador, autor_original }) => {
 
     if (!operador.includes("x") && !operador.includes("k")) {
 
@@ -31,7 +31,10 @@ module.exports = async ({ client, user, interaction, operador }) => {
         if (operador === "a|tarefas") {
             // Tarefas abertas
             if (casos.aberto < 1)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, client.emoji(0), interaction.customId)
+                if (autor_original)
+                    return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, client.emoji(0), interaction.customId)
+                else
+                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_a", true, client.emoji(0))
 
             const data = {
                 alvo: "tarefas",
@@ -39,26 +42,38 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 operador: operador
             }
 
-            if (!interaction.customId) // Interação original
+            if (autor_original) {
+                if (!interaction.customId) // Interação original
+                    interaction.reply({
+                        content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                        embeds: [],
+                        components: [client.create_menus(client, interaction, user, data)],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+                else // Interação por botões/menus
+
+                    interaction.update({
+                        content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                        embeds: [],
+                        components: [client.create_menus(client, interaction, user, data)],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+            } else // Envia uma interação secundária efémera para o usuário que não é o autor original
                 interaction.reply({
                     content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                     embeds: [],
                     components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else // Interação por botões/menus
-                interaction.update({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: true
                 })
         }
 
         if (operador === "f|tarefas") {
             // Tarefas finalizadas
             if (casos.finalizado < 1)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, client.emoji(0), interaction.customId)
+                if (autor_original)
+                    return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, client.emoji(0), interaction.customId)
+                else
+                    return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_f", true, client.emoji(0))
 
             const data = {
                 alvo: "tarefas",
@@ -66,19 +81,27 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 operador: "f"
             }
 
-            if (!interaction.customId)
+            if (autor_original) {
+                if (!interaction.customId)
+                    interaction.reply({
+                        content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                        embeds: [],
+                        components: [client.create_menus(client, interaction, user, data)],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+                else
+                    interaction.update({
+                        content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                        embeds: [],
+                        components: [client.create_menus(client, interaction, user, data)],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+            } else // Envia uma interação secundária efémera para o usuário que não é o autor original
                 interaction.reply({
                     content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                     embeds: [],
                     components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else
-                interaction.update({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: true
                 })
         }
     } else if (operador.includes("k")) {
@@ -90,7 +113,10 @@ module.exports = async ({ client, user, interaction, operador }) => {
         const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
 
         if (tarefas.length < 1)
-            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            if (autor_original)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            else
+                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         const data = {
             alvo: "tarefa_visualizar",
@@ -113,7 +139,10 @@ module.exports = async ({ client, user, interaction, operador }) => {
         const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
 
         if (tarefas.length < 1)
-            return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            if (autor_original)
+                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            else
+                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         const data = {
             alvo: "tarefa_visualizar",
@@ -125,12 +154,20 @@ module.exports = async ({ client, user, interaction, operador }) => {
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
         ], interaction)
 
-        interaction.update({
-            content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-            embeds: [],
-            components: [client.create_menus(client, interaction, user, data), row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+        if (autor_original)
+            interaction.update({
+                content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                embeds: [],
+                components: [client.create_menus(client, interaction, user, data), row],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else
+            interaction.reply({
+                content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                embeds: [],
+                components: [client.create_menus(client, interaction, user, data), row],
+                ephemeral: true
+            })
     }
 }
 
