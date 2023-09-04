@@ -1,7 +1,7 @@
 const { buildAllBadges, busca_badges } = require('../../data/badges')
 const { getUserReports } = require('../../database/schemas/Report')
 
-module.exports = async (client, user, interaction, dados) => {
+module.exports = async (client, user, interaction, dados, autor_original) => {
 
     // Códigos de operação
     // 0 -> Perfil
@@ -127,16 +127,23 @@ module.exports = async (client, user, interaction, dados) => {
         { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: 1, emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
     ], interaction)
 
-    if (!interaction.customId)
+    if (autor_original) {
+        if (!interaction.customId)
+            return interaction.reply({
+                embeds: [infos_user],
+                components: [row],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else
+            return interaction.update({
+                embeds: [infos_user],
+                components: [row],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+    } else // Envia uma interação secundária efémera para o usuário que não é o autor original
         return interaction.reply({
             embeds: [infos_user],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
-    else
-        return interaction.update({
-            embeds: [infos_user],
-            components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: true
         })
 }

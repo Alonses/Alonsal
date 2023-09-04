@@ -1,6 +1,7 @@
+const { EmbedBuilder } = require('discord.js')
+
 const { getModule, dropModule } = require('../../../database/schemas/Module')
 const { atualiza_modulos } = require('../../../auto/module')
-const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -50,10 +51,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
         modulo.stats.active = true
         await modulo.save()
 
+        // Botão de atalho para navegar pelos módulos criados
+        let row = client.create_buttons([
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_modulos"), type: 1, emoji: client.defaultEmoji("paper"), data: `modulos` }
+        ], interaction)
+
         interaction.update({
             content: client.replace(client.tls.phrase(user, "misc.modulo.modulo_ativado", 6), [client.tls.phrase(user, `misc.modulo.ativacao_min_${modulo.stats.days}`), modulo.stats.hour]),
             embeds: [],
-            components: [],
+            components: [row],
             ephemeral: true
         })
     }

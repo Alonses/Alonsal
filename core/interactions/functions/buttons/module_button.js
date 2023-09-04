@@ -12,6 +12,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Ligar módulo
     // 2 -> Desligar módulo
 
+    let row = client.create_buttons([
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }
+    ], interaction)
+
     if (operacao === 1) {
 
         // Ativando o módulo
@@ -23,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.modulo.ativado", 20),
             embeds: [],
-            components: [],
+            components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }
@@ -39,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.modulo.desativado", 21),
             embeds: [],
-            components: [],
+            components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }
@@ -54,7 +58,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.modulo.excluido", 13),
             embeds: [],
-            components: [],
+            components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }
