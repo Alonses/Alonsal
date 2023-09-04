@@ -234,7 +234,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         )
 
     let row = []
-    const b_disabled = require("../../functions/navegacao_rank")({ pagina, paginas, ids, interaction })
+    const b_disabled = require("../../functions/rank_navigation")({ pagina, paginas, ids, interaction })
 
     if (paginas > 1)
         row = client.create_buttons([
