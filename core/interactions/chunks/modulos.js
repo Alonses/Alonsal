@@ -8,7 +8,12 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     // Verificando se há modulos configurados
     if (modulos.length < 1)
         if (!interaction.customId || !autor_original)
-            return client.tls.reply(interaction, user, "misc.modulo.sem_modulo", true, client.emoji(0))
+            return interaction.reply({
+                content: client.tls.phrase(user, "misc.modulo.sem_modulo", client.emoji(0)),
+                embeds: [],
+                components: [],
+                ephemeral: true
+            })
         else
             return client.tls.report(interaction, user, "misc.modulo.sem_modulo", true, client.emoji(0), null, true)
 

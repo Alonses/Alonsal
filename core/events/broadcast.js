@@ -129,6 +129,9 @@ async function verificar_broadcast(client, interaction) {
     const bot = await client.getBot()
     const canal_alvo = await client.channels().get(bot.transmission.id_broad)
 
+    if (!canal_alvo)
+        return // Canal não encontrado
+
     if (canal_alvo.guild.id === interaction.guild.id) {
         client.notify(bot.transmission.id_cast, ":octagonal_sign: :satellite: | O Servidor desativou o Broadcast, não é possível iniciar um outro Broadcast para os canais dele no momento.")
 

@@ -4,7 +4,7 @@ const { getModule, getModulesPrice } = require('../../../database/schemas/Module
 
 const formata_horas = require('../../../formatters/formata_horas')
 
-module.exports = async ({ client, user, interaction, dados, autor_original }) => {
+module.exports = async ({ client, user, interaction, dados }) => {
 
     // Exibindo os dados de alguma tarefa selecionada
     const timestamp = parseInt(dados.split(".")[1])

@@ -3,10 +3,15 @@ const { EmbedBuilder } = require('discord.js')
 const { getTask } = require('../../../database/schemas/Task')
 const { listAllUserGroups, getUserGroup } = require('../../../database/schemas/Task_group')
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     // Exibindo os dados de alguma tarefa selecionada
     let nome_lista = client.tls.phrase(user, "util.tarefas.sem_lista_v"), operador = dados.split(".")[2]
+
+    if (!autor_original) { // O usuário que reagiu ao botão não é o autor original do comando
+        let operador = `${dados.split(".")[2]}|tarefas`
+        return require('../../chunks/tarefas')({ client, user, interaction, operador, autor_original })
+    }
 
     const task = await getTask(interaction.user.id, parseInt(dados.split(".")[1]))
     const lista = await getUserGroup(interaction.user.id, task.g_timestamp)

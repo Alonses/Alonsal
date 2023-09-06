@@ -18,9 +18,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     task.g_timestamp = timestamp_lista
     await task.save()
 
+    // Botão para levar o usuário até a lista que foi incluída a tarefa
+    let row = client.create_buttons([
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_lista"), type: 1, emoji: client.defaultEmoji("paper"), data: `k.${timestamp_lista}` }
+    ], interaction)
+
     interaction.update({
         content: client.replace(client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper")), lista.name),
-        components: [],
+        components: [row],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })
 }

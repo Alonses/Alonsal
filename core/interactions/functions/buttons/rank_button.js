@@ -1,7 +1,7 @@
-const { getRankGlobal, findUserGlobalRankIndex } = require('../../../database/schemas/Rank_g')
+const { getRankGlobal } = require('../../../database/schemas/Rank_g')
 const { getRankServer } = require('../../../database/schemas/Rank_s')
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     let defer = false
     const escopo = dados.split(".")[3]
@@ -24,11 +24,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 4)
         pagina++
 
-    if (operacao === 3 || operacao === 5) {
+    if (operacao === 3 || operacao === 5 || !autor_original) {
         defer = true
-        await interaction.deferUpdate({
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+
+        if (autor_original)
+            await interaction.deferUpdate({
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
+        else
+            await interaction.deferReply({
+                ephemeral: true
+            })
     }
 
     if (operacao === 3) {
@@ -70,5 +76,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
         pagina = Math.ceil(data_usuarios.length / 6)
     }
 
-    require('../../../formatters/chunks/model_rank')(client, user, interaction, pagina, escopo, defer)
+    require('../../../formatters/chunks/model_rank')(client, user, interaction, pagina, escopo, defer, autor_original)
 }
