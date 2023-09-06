@@ -19,7 +19,7 @@ module.exports = {
 
         // Verificando se o Broadcast é permitido no servidor
         if (!client.decider(guild?.conf.broadcast, 0))
-            return client.tls.reply(interaction, user, "mode.broadcast.desativado", true, client.emoji(0))
+            return client.tls.reply(interaction, user, "mode.broadcast.desligado", true, client.emoji(0))
 
         const canal_alvo = await client.channels().get(interaction.channel.id)
 

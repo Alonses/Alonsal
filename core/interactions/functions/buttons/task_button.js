@@ -29,10 +29,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
             timestamp: timestamp
         }
 
+        let row = client.create_buttons([
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `a|tarefas` }
+        ], interaction)
+
         return interaction.update({
-            content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 10),
+            content: client.tls.phrase(user, "util.tarefas.tarefa_lista", client.defaultEmoji("paper")),
             embeds: [],
-            components: [client.create_menus(client, interaction, user, data)],
+            components: [client.create_menus(client, interaction, user, data), row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }

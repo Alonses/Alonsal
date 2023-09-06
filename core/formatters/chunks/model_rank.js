@@ -16,7 +16,7 @@ const servidores = {}
 
 let paginas, pagina, nav_buttons = true
 
-module.exports = async (client, user, interaction, entrada, caso, defer) => {
+module.exports = async (client, user, interaction, entrada, caso, defer, autor_original) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
     const usernames = [], experiencias = [], levels = [], servers = [], ids = []
@@ -131,7 +131,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo) // Sem usuário alvo definido
-            retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
+            retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original)
         else { // Com usuário alvo definido
 
             if (usuario_alvo.length === 0)
@@ -171,10 +171,10 @@ module.exports = async (client, user, interaction, entrada, caso, defer) => {
             })
         }
     } else // Ranking global
-        retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo)
+        retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original)
 }
 
-async function retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo) {
+async function retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original) {
 
     const bot = await client.getBot()
 
@@ -246,29 +246,43 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
         ], interaction)
 
     try {
-        if (nav_buttons) {
-            if (paginas > 1)
-                await interaction.editReply({
-                    embeds: [embed],
-                    components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else
-                await interaction.editReply({
-                    embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
+        if (autor_original) {
+            if (nav_buttons) {
+                if (paginas > 1)
+                    await interaction.editReply({
+                        embeds: [embed],
+                        components: [row],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+                else
+                    await interaction.editReply({
+                        embeds: [embed],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+            } else {
+                if (paginas > 1)
+                    await interaction.update({
+                        embeds: [embed],
+                        components: [row],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+                else
+                    await interaction.update({
+                        embeds: [embed],
+                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    })
+            }
         } else {
             if (paginas > 1)
-                await interaction.update({
+                await interaction.editReply({
                     embeds: [embed],
                     components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: true
                 })
             else
-                await interaction.update({
+                await interaction.editReply({
                     embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: true
                 })
         }
     } catch (err) {

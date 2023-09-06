@@ -11,7 +11,7 @@ const medals = {
 
 let paginas, pagina
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     const date1 = new Date()
     const data_usuarios = await getRankMoney()
@@ -114,29 +114,43 @@ module.exports = async ({ client, user, interaction, dados }) => {
             { id: "rank_bank_button", name: '⏩', type: 1, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }
         ], interaction)
 
-    if (!dados) { // Verifica se não é uma interação recorrente ( criada por botões )
+    if (autor_original) {
+        if (!dados) { // Verifica se não é uma interação recorrente ( criada por botões )
+            if (paginas > 1) // Com mais de uma página no ranking
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+            else // Apenas uma página no ranking
+                await interaction.editReply({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+        } else { // Interação criada por botões
+            if (paginas > 1) // Com mais de uma página no ranking
+                await interaction.update({
+                    embeds: [embed],
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+            else // Apenas uma página no ranking
+                await interaction.update({
+                    embeds: [embed],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+        }
+    } else {
         if (paginas > 1) // Com mais de uma página no ranking
             await interaction.editReply({
                 embeds: [embed],
                 components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                ephemeral: true
             })
         else // Apenas uma página no ranking
             await interaction.editReply({
                 embeds: [embed],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-    } else { // Interação criada por botões
-        if (paginas > 1) // Com mais de uma página no ranking
-            await interaction.update({
-                embeds: [embed],
-                components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        else // Apenas uma página no ranking
-            await interaction.update({
-                embeds: [embed],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                ephemeral: true
             })
     }
 }

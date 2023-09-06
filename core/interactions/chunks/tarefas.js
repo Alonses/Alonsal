@@ -113,9 +113,19 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
 
         if (tarefas.length < 1)
-            if (autor_original)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
-            else
+            if (autor_original) {
+
+                // Botão para retornar até as listas do usuário
+                let row = client.create_buttons([
+                    { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+                ], interaction)
+
+                return interaction.update({
+                    content: client.tls.phrase(user, "util.tarefas.sem_tarefa_l", 1),
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+            } else
                 return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         const data = {
@@ -139,9 +149,19 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
 
         if (tarefas.length < 1)
-            if (autor_original)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
-            else
+            if (autor_original) {
+
+                // Botão para retornar até as listas do usuário
+                let row = client.create_buttons([
+                    { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+                ], interaction)
+
+                return interaction.update({
+                    content: client.tls.phrase(user, "util.tarefas.sem_tarefa_l", 1),
+                    components: [row],
+                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                })
+            } else
                 return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         const data = {

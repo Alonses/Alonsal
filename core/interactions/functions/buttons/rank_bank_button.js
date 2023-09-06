@@ -1,6 +1,6 @@
 const { getRankMoney } = require('../../../database/schemas/User')
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     let pagina = parseInt(dados.split(".")[2])
     const operacao = parseInt(dados.split(".")[1])
@@ -11,6 +11,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 3 -> Mostrar usuário no ranking
     // 4 -> Próxima página
     // 5 -> Ir para a última página
+
+    // Defere a interação para um usuário diferente do autor, e envia um card efemero para o mesmo
+    if (!autor_original)
+        await interaction.deferReply({
+            ephemeral: true
+        })
 
     if (operacao === 1)
         pagina = 1
@@ -48,5 +54,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     dados = pagina
 
-    require('../../../formatters/chunks/model_bank')({ client, user, interaction, dados })
+    require('../../../formatters/chunks/model_bank')({ client, user, interaction, dados, autor_original })
 }
