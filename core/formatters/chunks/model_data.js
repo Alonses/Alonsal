@@ -69,12 +69,12 @@ module.exports = async ({ client, user, interaction }) => {
             }
         )
         .setFooter({
-            text: 'Use os botões abaixo para decidir o que fará em seguida!'
+            text: client.tls.phrase(user, "manu.data.selecionar_menus")
         })
 
     const row = client.create_buttons([
-        { id: "data_menu_button", name: "Central de exclusão", type: 3, emoji: client.emoji(13), data: '1' },
-        { id: "data_menu_button", name: "Telemetria", type: 1, emoji: client.emoji(36), data: '2' }
+        { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.central_exclusao"), type: 3, emoji: client.emoji(13), data: '1' },
+        { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.telemetria"), type: 1, emoji: client.emoji(36), data: '2' }
     ], interaction)
 
     if (!interaction.customId)
