@@ -14,10 +14,11 @@ module.exports = {
 				.setName("gif")
 				.setDescription("⌠😂⌡ Summons a gif of jaja")
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
+					"de": '⌠😂⌡ Beschwört ein Jaja-GIF',
 					"es-ES": '⌠😂⌡ Invoca un gif de jaja',
 					"fr": '⌠😂⌡ Invoque un gif de jaja',
 					"it": '⌠😂⌡ Evoca una gif di Jaja',
+					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
 					"ru": '⌠😂⌡ Отправить jaja gif'
 				}))
 		.addSubcommand(subcommand =>

@@ -8,20 +8,22 @@ module.exports = {
         .setName("emoji")
         .setDescription("⌠😂⌡ Increase emojis")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠😂⌡ Amplie os emojis',
+            "de": '⌠😂⌡ Emojis vergrößern',
             "es-ES": '⌠😂⌡ Ampliar emojis',
             "fr": '⌠😂⌡ Augmenter les émoticônes',
             "it": '⌠😂⌡ Aumenta le emoticon',
+            "pt-BR": '⌠😂⌡ Amplie os emojis',
             "ru": '⌠😂⌡ Увеличить смайлики'
         })
         .addStringOption(option =>
             option.setName("emoji")
                 .setDescription(":the name of the emoji:")
                 .setDescriptionLocalizations({
-                    "pt-BR": ":o nome do emoji:",
+                    "de": ':der Name des Emojis:',
                     "es-ES": ':el nombre del emoji:',
                     "fr": ':le nom de l\'emoji:',
                     "it": ':il nome dell\'emoji:',
+                    "pt-BR": ":o nome do emoji:",
                     "ru": ':название смайлика:'
                 })
                 .setRequired(true)),

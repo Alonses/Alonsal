@@ -5,27 +5,30 @@ module.exports = {
         .setName("jokenpo")
         .setDescription("⌠🎲⌡ Play jokenpo")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ Jogue jokenpô',
+            "de": '⌠🎲⌡ Spielen Sie Jokepo',
             "es-ES": '⌠🎲⌡ Juega jokenpo',
             "fr": '⌠🎲⌡ Jouer au jokenpo',
             "it": '⌠🎲⌡ Gioca a jokenpo',
+            "pt-BR": '⌠🎲⌡ Jogue jokenpô',
             "ru": '⌠🎲⌡ Играть в Джокенпо'
         })
         .addStringOption(option =>
             option.setName("choice")
                 .setNameLocalizations({
-                    "pt-BR": 'escolha',
+                    "de": 'auswahl',
                     "es-ES": 'eleccion',
                     "fr": 'choix',
                     "it": 'scelta',
+                    "pt-BR": 'escolha',
                     "ru": 'выбор'
                 })
                 .setDescription("What's your choice?")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Qual a sua escolha?',
+                    "de": 'Was ist deine Wahl?',
                     "es-ES": '¿Cual es tu eleccion?',
                     "fr": 'Quel est ton choix?',
                     "it": 'Qual\'è la tua scelta?',
+                    "pt-BR": 'Qual a sua escolha?',
                     "ru": 'Каков ваш выбор?'
                 })
                 .addChoices(
@@ -36,17 +39,23 @@ module.exports = {
         .addNumberOption(option =>
             option.setName('bet')
                 .setNameLocalizations({
-                    "pt-BR": 'aposta',
+                    "de": 'wette',
                     "es-ES": 'apuesta',
                     "fr": 'pari',
-                    "it": 'scommessa'
+                    "it": 'scommessa',
+                    "pt-BR": 'aposta',
+                    "it": 'scommessa',
+                    "ru": 'прогноз'
                 })
                 .setDescription('The amount to bet')
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A quantia que sera apostada',
+                    "de": 'Wettbetrag',
                     "es-ES": 'La cantidad a apostar',
                     "fr": 'Le montant à miser',
-                    "it": 'L\'importo da scommettere'
+                    "it": 'Valore della scommessa',
+                    "pt-BR": 'A quantia que sera apostada',
+                    "it": 'L\'importo da scommettere',
+                    "ru": 'ценность ставки'
                 })
                 .setMinValue(0.01)
                 .setMaxValue(1000)),

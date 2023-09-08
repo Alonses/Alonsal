@@ -7,10 +7,11 @@ module.exports = {
         .setName("broadcast")
         .setDescription("⌠📡⌡ Start a broadcast")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Iniciar um broadcast',
+            "de": '⌠📡⌡ Starten Sie eine Übertragung',
             "es-ES": '⌠📡⌡ Iniciar una transmisión',
             "fr": '⌠📡⌡ Lancer une diffusion',
             "it": '⌠📡⌡ Avviare una trasmissione',
+            "pt-BR": '⌠📡⌡ Iniciar um broadcast',
             "ru": '⌠📡⌡ начать трансляцию'
         }),
     async execute(client, user, interaction) {

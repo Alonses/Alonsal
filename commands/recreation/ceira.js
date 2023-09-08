@@ -5,10 +5,11 @@ module.exports = {
 		.setName("ceira")
 		.setDescription("⌠😂⌡ Waxed Java")
 		.setDescriptionLocalizations({
-			"pt-BR": '⌠😂⌡ Java enceirado',
+			"de": '⌠😂⌡ Java-Wachs',
 			"es-ES": '⌠😂⌡ Java encerado',
 			"fr": '⌠😂⌡ Java ciré',
 			"it": '⌠😂⌡ Java cerato',
+			"pt-BR": '⌠😂⌡ Java enceirado',
 			"ru": '⌠😂⌡ Вощеная Ява'
 		}),
 	async execute(client, user, interaction) {

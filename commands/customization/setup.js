@@ -8,36 +8,40 @@ module.exports = {
             subcommand
                 .setName("weather")
                 .setNameLocalizations({
-                    "pt-BR": 'tempo',
+                    "de": 'wetter',
                     "es-ES": 'tiempo',
                     "fr": 'climat',
                     "it": 'clima',
+                    "pt-BR": 'tempo',
                     "ru": 'погода'
                 })
                 .setDescription("⌠🎉⌡ Set the return type for weather requests")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Defina o tipo de retorno para requisições de clima',
+                    "de": '⌠🎉⌡ Rückgabetyp für Wetteranfragen festlegen',
                     "es-ES": '⌠🎉⌡ Establecer el tipo de retorno para las solicitudes meteorológicas',
                     "fr": '⌠🎉⌡ Définir le type de retour pour les requêtes météo',
                     "it": '⌠🎉⌡ Imposta il tipo di ritorno per le richieste meteo',
+                    "pt-BR": '⌠🎉⌡ Defina o tipo de retorno para requisições de clima',
                     "ru": '⌠🎉⌡ Установить тип возвращаемого значения для запросов о погоде'
                 }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("tasks")
                 .setNameLocalizations({
-                    "pt-BR": 'tarefas',
+                    "de": 'aufgaben',
                     "es-ES": 'tareas',
                     "fr": 'taches',
                     "it": 'appunti',
+                    "pt-BR": 'tarefas',
                     "ru": 'задания'
                 })
                 .setDescription("⌠🎉⌡ Define whether tasks will be accessible only on servers or globally")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente',
+                    "de": '⌠🎉⌡ Definieren Sie, ob Aufgaben nur auf Servern oder global zugänglich sein sollen',
                     "es-ES": '⌠🎉⌡ Establecer si las tareas estarán disponibles solo en servidores o globalmente',
                     "fr": '⌠🎉⌡ Définissez si les tâches seront disponibles uniquement sur les serveurs ou globalement',
                     "it": '⌠🎉⌡ Imposta se le attività saranno disponibili solo sui server o a livello globale',
+                    "pt-BR": '⌠🎉⌡ Defina se tarefas serão acessíveis apenas em servidores ou globalmente',
                     "ru": '⌠🎉⌡ Установите, будут ли задачи доступны только на серверах или глобально'
                 })),
     async execute(client, user, interaction) {

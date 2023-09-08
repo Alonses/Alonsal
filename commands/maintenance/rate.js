@@ -2,20 +2,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("rate")
+        .setName("review")
         .setNameLocalizations({
+            "de": 'analyse',
+            "es-ES": 'analisis',
+            "fr": 'analyse',
+            "it": 'analisi',
             "pt-BR": 'avaliar',
-            "es-ES": 'evaluar',
-            "fr": 'evaluer',
-            "it": 'valutare',
-            "ru": 'oценивать'
+            "ru": 'анализ'
         })
-        .setDescription("⌠📡⌡ Rate me!")
+        .setDescription("⌠📡⌡ Review me!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Me avalie!',
+            "de": '⌠📡⌡ Bewerte mich!',
             "es-ES": '⌠📡⌡ Calificame!',
             "fr": '⌠📡⌡ Notez moi!',
             "it": '⌠📡⌡ Valutami!',
+            "pt-BR": '⌠📡⌡ Me avalie!',
             "ru": '⌠📡⌡ Оцените меня!'
         }),
     async execute(client, user, interaction) {

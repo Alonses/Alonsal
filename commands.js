@@ -67,23 +67,19 @@ function slash_commands(client) {
                 .then(() => console.log("🟢 | Comandos privados do servidor atualizados com sucesso."))
                 .catch(console.error)
 
-        } else { // Removendo os comandos slash globalmente
+        } else { // Removendo os comandos slash
 
-            console.log("🟠 | Excluindo comandos slash registrados globalmente")
+            console.log("🟠 | Excluindo os comandos slash")
 
-            rest.get(Routes.applicationCommands(client.x.clientId))
-                .then(data => {
-                    const promises = []
+            // Comandos da guild
+            rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guild_id), { body: [] })
+                .then(() => console.log('🟢 | Comandos slash do servidor removidos com sucesso.'))
+                .catch(console.error)
 
-                    for (const command of data) {
-                        const deleteUrl = `${Routes.applicationCommands(client.x.clientId)}/${command.id}`
-                        promises.push(rest.delete(deleteUrl))
-                    }
-
-                    console.log("🟢 | Comandos slash globais removidos com sucesso")
-
-                    return Promise.all(promises)
-                })
+            // Comandos globais
+            rest.put(Routes.applicationCommands(client.x.clientId), { body: [] })
+                .then(() => console.log('🟢 | Comandos slash globais removidos com sucesso.'))
+                .catch(console.error)
         }
     }
 

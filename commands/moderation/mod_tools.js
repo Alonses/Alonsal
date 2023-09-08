@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("conf")
-        .setDescription("⌠💂⌡ Gerencie funcões do servidor")
+        .setDescription("⌠💂⌡ Manage server roles")
         .addSubcommand(subcommand =>
             subcommand.setName("ticket")
                 .setDescription("⌠💂⌡ (Un)Enable reporting in private channels on the server")

@@ -5,33 +5,58 @@ module.exports = {
         .setName("portal")
         .setDescription("⌠🎲⌡ View the coordinate for a portal")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ Veja a coordenada para um portal'
+            "de": '⌠🎲⌡ Sehen Sie sich die Koordinaten eines Portals an',
+            "es-ES": '⌠🎲⌡ Ver las coordenadas de un portal',
+            "fr": '⌠🎲⌡ Voir les coordonnées d\'un portail',
+            "it": '⌠🎲⌡ Vedi le coordinate di un portale',
+            "pt-BR": '⌠🎲⌡ Veja a coordenada para um portal',
+            "ru": '⌠🎲⌡ Посмотреть координаты портала',
         })
         .addIntegerOption(option =>
             option.setName("x")
                 .setDescription("The x position in the current dimension")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A posição x na dimensão atual'
+                    "de": 'Die Position von x in der aktuellen Dimension',
+                    "es-ES": 'La posición de x en la dimensión actual.',
+                    "fr": 'La position de x dans la dimension actuelle',
+                    "it": 'La posizione di x nella dimensione corrente',
+                    "pt-BR": 'A posição x na dimensão atual',
+                    "ru": 'Положение x в текущем измерении'
                 })
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName("z")
                 .setDescription("The z position in the current dimension")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A posição z na dimensão atual'
+                    "de": 'Die Position von z in der aktuellen Dimension',
+                    "es-ES": 'La posición de z en la dimensión actual.',
+                    "fr": 'La position de z dans la dimension actuelle',
+                    "it": 'La posizione di z nella dimensione corrente',
+                    "pt-BR": 'A posição z na dimensão atual',
+                    "ru": 'Положение z в текущем измерении'
                 })
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("destiny")
                 .setNameLocalizations({
-                    "pt-BR": 'destino'
+                    "de": 'ziel',
+                    "es-ES": 'destino',
+                    "fr": 'destin',
+                    "it": 'destino',
+                    "pt-BR": 'destino',
+                    "ru": 'судьба',
                 })
                 .setDescription("Where do you want to go?")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Para onde deseja ir?'
+                    "de": 'Wohin willst du gehen?',
+                    "es-ES": '¿A donde quieres ir?',
+                    "fr": 'Où veux-tu aller?',
+                    "it": 'Dove vuoi andare?',
+                    "pt-BR": 'Para onde deseja ir?',
+                    "ru": 'Куда ты хочешь пойти?'
                 })
                 .addChoices(
-                    { name: '🍀 Superfície', value: '0' },
+                    { name: '🍀 Overworld', value: '0' },
                     { name: '🔥 Nether', value: '1' }
                 )),
     async execute(client, user, interaction) {

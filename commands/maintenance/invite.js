@@ -4,17 +4,20 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("invite")
         .setNameLocalizations({
-            "pt-BR": 'convite',
+            "de": 'einladen',
             "es-ES": 'invitacion',
             "fr": 'invitation',
-            "it": 'invito'
+            "it": 'invito',
+            "pt-BR": 'convite',
+            "ru": 'пригласить',
         })
         .setDescription("⌠📡⌡ Invite Alonsal right now!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
+            "de": '⌠📡⌡ Jetzt Alonsal einladen!',
             "es-ES": '⌠📡⌡ ¡Invita a Alonsal ahora mismo!',
             "fr": '⌠📡⌡ Invitez Alonsal maintenant!',
             "it": '⌠📡⌡ Invita Alonsal ora!',
+            "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
             "ru": '⌠📡⌡ Пригласите Алонсала прямо сейчас!'
         }),
     async execute(client, user, interaction) {

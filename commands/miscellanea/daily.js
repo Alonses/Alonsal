@@ -5,10 +5,11 @@ module.exports = {
         .setName("daily")
         .setDescription("⌠💸⌡ Receive your daily bufunfa")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
+            "de": '⌠💸⌡ Holen Sie sich Ihr tägliches Bufunfa',
             "es-ES": '⌠💸⌡ Recibe tu bufunfa diario',
             "fr": '⌠💸⌡ Recevez votre bufunfa quotidien',
             "it": '⌠💸⌡ Ottieni la tua bufunfa quotidiana',
+            "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
             "ru": '⌠💸⌡ Получай свой ежедневный Bufunfa'
         }),
     async execute(client, user, interaction) {

@@ -4,16 +4,20 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("nickname")
         .setNameLocalizations({
+            "de": 'spitznamen',
+            "es-ES": 'apodo',
+            "fr": 'pseudo',
+            "it": 'soprannome',
             "pt-BR": 'apelido',
-            "es-ES": 'apellido',
-            "ru": 'прозвище'
+            "ru": 'никнейм'
         })
         .setDescription("⌠😂⌡ Shuffles your nickname!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠😂⌡ Embaralha seu apelido!',
+            "de": '⌠😂⌡ Mischen Sie Ihren Spitznamen',
             "es-ES": '⌠😂⌡ Mezcla tu apodo!',
             "fr": '⌠😂⌡ Mélangez votre pseudo!',
             "it": '⌠😂⌡ Mescola il tuo soprannome!',
+            "pt-BR": '⌠😂⌡ Embaralha seu apelido!',
             "ru": '⌠😂⌡ Перемешайте свой никнейм!'
         }),
     async execute(client, user, interaction) {

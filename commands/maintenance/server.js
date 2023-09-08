@@ -5,10 +5,11 @@ module.exports = {
         .setName("discord")
         .setDescription("⌠📡⌡ Official Alonsal™️ Server")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
+            "de": '⌠📡⌡ Offizieller Alonsal™-Server',
             "es-ES": '⌠📡⌡ Servidor Oficial Alonsal™️',
             "fr": '⌠📡⌡ Serveur officiel Alonsal™️',
             "it": '⌠📡⌡ Server ufficiale Alonsal™️',
+            "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
             "ru": '⌠📡⌡ Официальный сервер Алонсал™'
         }),
     async execute(client, user, interaction) {

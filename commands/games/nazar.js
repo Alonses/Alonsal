@@ -8,10 +8,11 @@ module.exports = {
         .setName("nazar")
         .setDescription("⌠🎲⌡ Madame Nazar's location today")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ Mostra onde a Madame Nazar se encontra hoje',
+            "de": '⌠🎲⌡ Zeigt, wo Madam Nazar heute ist',
             "es-ES": '⌠🎲⌡ Ubicación de Madame Nazar hoy',
             "fr": '⌠🎲⌡ Emplacement de Madame Nazar aujourd\'hui',
             "it": '⌠🎲⌡ La location di Madame Nazar oggi',
+            "pt-BR": '⌠🎲⌡ Mostra onde a Madame Nazar se encontra hoje',
             "ru": '⌠🎲⌡ Показывает, где сегодня находится мадам Назар'
         }),
     async execute(client, user, interaction) {

@@ -11,28 +11,31 @@ module.exports = {
 				.setName("gif")
 				.setDescription("⌠😂⌡ Summons a gif of cazalbe")
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
+					"de": '⌠😂⌡ Beschwört ein Cazalbe-GIF',
 					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
 					"fr": '⌠😂⌡ Invoque un gif de cazalbe',
 					"it": '⌠😂⌡ Evoca una gif di cazalbe',
+					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
 					"ru": '⌠😂⌡ отправить cazalbe gif'
 				}))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("laugh")
 				.setNameLocalizations({
-					"pt-BR": 'risada',
+					"de": 'lachen',
 					"es-ES": 'risa',
 					"fr": 'rire',
 					"it": 'risata',
+					"pt-BR": 'risada',
 					"ru": 'смех'
 				})
 				.setDescription("⌠😂⌡ The cazalbe laugh")
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ A risada do cazalbe',
+					"de": '⌠😂⌡ Cazalbes Lachen',
 					"es-ES": '⌠😂⌡ La risa del cazalbe',
 					"fr": '⌠😂⌡ Le rire cazalbe',
 					"it": '⌠😂⌡ La risata di Cazalbe',
+					"pt-BR": '⌠😂⌡ A risada do cazalbe',
 					"ru": '⌠😂⌡ Cazalbe cмех'
 				}))
 		.addSubcommand(subcommand =>

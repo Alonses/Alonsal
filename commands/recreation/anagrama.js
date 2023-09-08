@@ -4,35 +4,38 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("anagram")
         .setNameLocalizations({
-            "pt-BR": 'anagrama',
+            "de": 'anagramm',
             "es-ES": 'anagrama',
             "fr": 'anagramme',
             "it": 'anagramma',
+            "pt-BR": 'anagrama',
             "ru": 'анаграмма'
         })
         .setDescription("⌠😂⌡ Generates anagrams based on input")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
+            "de": '⌠😂⌡ Erzeugt Anagramme basierend auf Ihrem Text',
             "es-ES": '⌠😂⌡ Genera anagramas basados ​​en la entrada',
             "fr": '⌠😂⌡ Génère des anagrammes basés sur l\'entrée',
             "it": '⌠😂⌡ Genera anagrammi in base all\'input',
+            "pt-BR": '⌠😂⌡ Gera anagramas com base na entrada',
             "ru": '⌠😂⌡ Генерирует анаграммы на основе ввода'
         })
         .addStringOption(option =>
             option.setName("text")
                 .setNameLocalizations({
-                    "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
                     "it": 'testo',
+                    "pt-BR": 'texto',
                     "ru": 'текст'
                 })
                 .setDescription("Write something!")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Escreva algo!',
+                    "de": 'Schreibe etwas!',
                     "es-ES": '¡Escribe algo!',
                     "fr": 'Écris quelque chose!',
                     "it": 'Scrivi qualcosa!',
+                    "pt-BR": 'Escreva algo!',
                     "ru": 'Напиши что-нибудь!'
                 })
                 .setRequired(true)),

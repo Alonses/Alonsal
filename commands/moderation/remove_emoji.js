@@ -11,27 +11,29 @@ module.exports = {
                 .setName("emoji")
                 .setDescription("⌠💂⌡ Remove an emoji")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Remover um emoji',
+                    "de": '⌠💂⌡ Ein Emoji entfernen',
                     "es-ES": '⌠💂⌡ Eliminar un emoji',
                     "fr": '⌠💂⌡ Supprimer un emoji',
                     "it": '⌠💂⌡ Rimuovi un\'emoji',
+                    "pt-BR": '⌠💂⌡ Remover um emoji',
                     "ru": '⌠💂⌡ Удалить эмодзи с сервера'
                 })
                 .addStringOption(option =>
                     option.setName("name")
                         .setNameLocalizations({
-                            "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
                             "it": 'nome',
+                            "pt-BR": 'nome',
                             "ru": 'имя'
                         })
                         .setDescription(":the name of the emoji:")
                         .setDescriptionLocalizations({
-                            "pt-BR": ":o nome do emoji:",
+                            "de": ':der Name des Emojis:',
                             "es-ES": ':el nombre del emoji:',
                             "fr": ':le nom de l\'emoji:',
                             "it": ':il nome dell\'emoji:',
+                            "pt-BR": ":o nome do emoji:",
                             "ru": ':название смайлика:'
                         })
                         .setRequired(true)))

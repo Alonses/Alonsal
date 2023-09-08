@@ -12,27 +12,29 @@ module.exports = {
                 .setName("emoji")
                 .setDescription("⌠💂⌡ Add an emoji")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Adicionar um emoji',
+                    "de": '⌠💂⌡ Füge ein Emoji hinzu',
                     "es-ES": '⌠💂⌡ Agrega un emoji',
                     "fr": '⌠💂⌡ Ajouter un emoji',
                     "it": '⌠💂⌡ Aggiungi un\'emoji',
+                    "pt-BR": '⌠💂⌡ Adicionar um emoji',
                     "ru": '⌠💂⌡ Добавить смайлик'
                 })
                 .addStringOption(option =>
                     option.setName("name")
                         .setNameLocalizations({
-                            "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
                             "it": 'nome',
+                            "pt-BR": 'nome',
                             "ru": 'имя'
                         })
                         .setDescription("The name of the new emoji")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O nome do novo emoji',
+                            "de": 'Der Name des neuen Emojis',
                             "es-ES": 'El nombre del nuevo emoji.',
                             "fr": 'Le nom du nouvel emoji',
                             "it": 'Il nome della nuova emoji',
+                            "pt-BR": 'O nome do novo emoji',
                             "ru": 'Название нового смайлика'
                         })
                         .setRequired(true))
@@ -40,98 +42,108 @@ module.exports = {
                     option.setName("emoji")
                         .setDescription("Emoji from another server")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Emoji de outro servidor',
+                            "de": 'Emoji von einem anderen Server',
                             "es-ES": 'Emoji de otro servidor',
                             "fr": 'Emoji d\'un autre serveur',
                             "it": 'Emoji da un altro server',
+                            "pt-BR": 'Emoji de outro servidor',
                             "ru": 'Эмодзи с другого сервера'
                         }))
                 .addAttachmentOption(option =>
                     option.setName("file")
                         .setNameLocalizations({
-                            "pt-BR": 'arquivo',
+                            "de": 'datei',
                             "es-ES": 'archivo',
                             "fr": 'dossier',
                             "it": 'file',
+                            "pt-BR": 'arquivo',
                             "ru": 'архив'
                         })
                         .setDescription("Attach an image")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Anexe uma imagem',
+                            "de": 'Hängen Sie ein Bild an',
                             "es-ES": 'Adjuntar una imagen',
                             "fr": 'Joindre une image',
                             "it": 'Allegare un\'immagine',
+                            "pt-BR": 'Anexe uma imagem',
                             "ru": 'Прикрепить изображение'
                         })))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("sticker")
                 .setNameLocalizations({
-                    "pt-BR": 'figurinha',
+                    "de": 'figur',
                     "es-ES": 'cifra',
                     "fr": 'chiffre',
                     "it": 'figura',
+                    "pt-BR": 'figurinha',
                     "ru": 'фигура'
                 })
                 .setDescription("⌠💂⌡ Add a sticker")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Adicionar uma figurinha',
+                    "de": '⌠💂⌡ Fügen Sie einen Aufkleber hinzu',
                     "es-ES": '⌠💂⌡ Agrega una pegatina',
                     "fr": '⌠💂⌡ Ajouter un autocollant',
                     "it": '⌠💂⌡ Aggiungi un adesivo',
+                    "pt-BR": '⌠💂⌡ Adicionar uma figurinha',
                     "ru": '⌠💂⌡ Добавить наклейку'
                 })
                 .addStringOption(option =>
                     option.setName("name")
                         .setNameLocalizations({
-                            "pt-BR": 'nome',
                             "es-ES": 'nombre',
                             "fr": 'nom',
                             "it": 'nome',
+                            "pt-BR": 'nome',
                             "ru": 'имя'
                         })
                         .setDescription("The name of the new sticker")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O nome da nova figurinha',
+                            "de": 'Der Name der neuen Figur',
                             "es-ES": 'El nombre de la nueva figura',
                             "fr": 'Le nom de la nouvelle figurine',
                             "it": 'Il nome della nuova figura',
+                            "pt-BR": 'O nome da nova figurinha',
                             "ru": 'Имя новой фигуры'
                         })
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("category")
                         .setNameLocalizations({
-                            "pt-BR": 'categoria',
+                            "de": 'kategorie',
                             "es-ES": 'categoria',
                             "fr": 'categorie',
                             "it": 'categoria',
+                            "pt-BR": 'categoria',
                             "ru": 'категория'
                         })
                         .setDescription("A brief description...")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Uma breve descrição...',
+                            "de": 'Eine kurze Beschreibung...',
                             "es-ES": 'Una breve descripción...',
                             "fr": 'Une brève description...',
                             "it": 'Una breve descrizione...',
+                            "pt-BR": 'Uma breve descrição...',
                             "ru": 'Короткое описание...'
                         })
                         .setRequired(true))
                 .addAttachmentOption(option =>
                     option.setName("file")
                         .setNameLocalizations({
-                            "pt-BR": 'arquivo',
+                            "de": 'datei',
                             "es-ES": 'archivo',
                             "fr": 'dossier',
                             "it": 'file',
+                            "pt-BR": 'arquivo',
                             "ru": 'архив'
                         })
                         .setDescription("Attach an image")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Anexe uma imagem',
+                            "de": 'Hängen Sie ein Bild an',
                             "es-ES": 'Adjuntar una imagen',
                             "fr": 'Joindre une image',
                             "it": 'Allegare un\'immagine',
+                            "pt-BR": 'Anexe uma imagem',
                             "ru": 'Прикрепить изображение'
                         })
                         .setRequired(true)))
