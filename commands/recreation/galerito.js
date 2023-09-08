@@ -12,10 +12,11 @@ module.exports = {
 				.setName("gif")
 				.setDescription("⌠😂⌡ Random gifs of rogéria")
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ Gifs aleatórios da rogéria',
+					"de": '⌠😂⌡ Zufällige GIFs von Rogeria',
 					"es-ES": '⌠😂⌡ Gifs aleatorios de rogéria',
 					"fr": '⌠😂⌡ Gifs aléatoires de rogéria',
 					"it": '⌠😂⌡ Gif casuali di rogéria',
+					"pt-BR": '⌠😂⌡ Gifs aleatórios da rogéria',
 					"ru": '⌠😂⌡ Случайные гифки rogéria'
 				}))
 		.addSubcommand(subcommand =>

@@ -7,26 +7,28 @@ module.exports = {
         .setName("xp")
         .setDescription("⌠💂⌡ Adjust some user's XP")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
+            "de": '⌠💂⌡ Passen Sie die XP eines Benutzers an',
             "es-ES": '⌠💂⌡ Ajustar la XP de algunos usuarios',
             "fr": '⌠💂⌡ Ajustez XP pour certains utilisateurs',
             "it": '⌠💂⌡ Regola gli XP di un altro utente',
+            "pt-BR": '⌠💂⌡ Ajuste o XP de algum usuário',
             "ru": '⌠💂⌡ Настройка опыта некоторых пользователей'
         })
         .addUserOption(option =>
             option.setName("user")
                 .setNameLocalizations({
-                    "pt-BR": 'usuario',
                     "es-ES": 'usuario',
                     "it": 'utente',
+                    "pt-BR": 'usuario',
                     "ru": 'пользователя'
                 })
                 .setDescription("The user to adjust")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'O usuário a ser ajustado',
+                    "de": 'Der zu definierende Benutzer',
                     "es-ES": 'El usuario para ajustar',
                     "fr": 'Utilisateur cible',
                     "it": 'L\'utente da aggiornare',
+                    "pt-BR": 'O usuário a ser ajustado',
                     "ru": 'Пользователь для установки'
                 })
                 .setRequired(true))
@@ -34,10 +36,11 @@ module.exports = {
             option.setName("xp")
                 .setDescription("What is the new XP?")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Qual o novo XP?',
+                    "de": 'Was ist das neue XP?',
                     "es-ES": '¿Qué es el nuevo XP?',
                     "fr": 'Qu\'est-ce que le nouvel XP?',
                     "it": 'Qual è il nuovo XP?',
+                    "pt-BR": 'Qual o novo XP?',
                     "ru": 'Что такое новый XP?'
                 })
                 .setRequired(true))

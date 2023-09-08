@@ -8,69 +8,77 @@ module.exports = {
             subcommand.setName("server")
                 .setDescription("⌠👤⌡ See server ranking")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
+                    "de": '⌠👤⌡ Serverranking anzeigen',
                     "es-ES": '⌠👤⌡ Ver el ranking en el servidor',
                     "fr": '⌠👤⌡ Voir le classement des serveurs',
                     "it": '⌠👤⌡ Vedi classifica server',
+                    "pt-BR": '⌠👤⌡ Veja o ranking do servidor',
                     "ru": '⌠👤⌡ Посмотреть рейтинг серверов'
                 })
                 .addIntegerOption(option =>
                     option.setName("page")
                         .setNameLocalizations({
-                            "pt-BR": 'pagina',
+                            "de": 'seite',
                             "es-ES": 'pagina',
                             "it": 'pagina',
+                            "pt-BR": 'pagina',
                             "ru": 'страница'
                         })
                         .setDescription("One page to display")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Uma página para exibir',
+                            "de": 'Eine Seite zur Anzeige',
                             "es-ES": 'Una pagina para mostrar',
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare',
+                            "pt-BR": 'Uma página para exibir',
                             "ru": 'Одна страница для отображения'
                         })
                         .setMinValue(1))
                 .addUserOption(option =>
                     option.setName("user")
                         .setNameLocalizations({
-                            "pt-BR": 'usuario',
+                            "de": 'benutzer',
                             "es-ES": 'usuario',
                             "it": 'utente',
+                            "pt-BR": 'usuario',
                             "ru": 'пользователь'
                         })
-                        .setDescription("User to display")
+                        .setDescription("Mention a user")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O Usuário para exibir',
-                            "es-ES": 'Usuario a mostrar',
-                            "fr": 'Utilisateur à afficher',
-                            "it": 'Utente da visualizzare',
-                            "ru": 'Пользователь для отображения'
+                            "de": 'Erwähnen Sie einen anderen Benutzer',
+                            "es-ES": 'Mencionar a otro usuario',
+                            "fr": 'Mentionner un utilisateur',
+                            "it": 'Menziona un altro utente',
+                            "pt-BR": 'Mencione outro usuário',
+                            "ru": 'Упомянуть другого пользователя'
                         })))
         .addSubcommand(subcommand =>
             subcommand.setName("global")
                 .setDescription("⌠👤⌡ See the global ranking")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Veja o ranking global',
+                    "de": '⌠👤⌡ Schauen Sie sich das globale Ranking an',
                     "es-ES": '⌠👤⌡ Ver el ranking mundial',
                     "fr": '⌠👤⌡ Voir le classement mondial',
                     "it": '⌠👤⌡ Guarda la classifica globale',
+                    "pt-BR": '⌠👤⌡ Veja o ranking global',
                     "ru": '⌠👤⌡ Смотрите глобальный рейтинг'
                 })
                 .addIntegerOption(option =>
                     option.setName("page")
                         .setNameLocalizations({
-                            "pt-BR": 'pagina',
+                            "de": 'seite',
                             "es-ES": 'pagina',
                             "it": 'pagina',
+                            "pt-BR": 'pagina',
                             "ru": 'страница'
                         })
                         .setDescription("One page to display")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Uma página para exibir',
+                            "de": 'Eine Seite zur Anzeige',
                             "es-ES": 'Una pagina para mostrar',
                             "fr": 'Une page à afficher',
                             "it": 'Una pagina da visualizzare',
+                            "pt-BR": 'Uma página para exibir',
                             "ru": 'Одна страница для отображения'
                         })
                         .setMinValue(1))),

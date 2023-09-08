@@ -13,12 +13,13 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName("gif")
-				.setDescription("⌠😂⌡ Invoca um gif da rasputia")
+				.setDescription("⌠😂⌡ Summons a rasputia gif")
 				.setDescriptionLocalizations({
-					"pt-BR": '⌠😂⌡ Invoca um gif da rasputia',
+					"de": '⌠😂⌡ Beschwört ein Rasputia-GIF',
 					"es-ES": '⌠😂⌡ Invoca un gif de rasputia',
 					"fr": '⌠😂⌡ Invoque un rasputia gif',
 					"it": '⌠😂⌡ Evoca una gif di rasputia',
+					"pt-BR": '⌠😂⌡ Invoca um gif da rasputia',
 					"ru": '⌠😂⌡ Отправить гифку с rasputia'
 				}))
 		.addSubcommand(subcommand =>

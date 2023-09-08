@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
+
 const { gifs } = require("../../files/json/gifs/avocado.json")
 
 module.exports = {

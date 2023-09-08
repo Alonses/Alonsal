@@ -5,45 +5,49 @@ module.exports = {
         .setName("mail")
         .setDescription("⌠📡⌡ Send messages to me!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Envie mensagens para mim!',
+            "de": '⌠📡⌡ Schreib mir eine Nachricht!',
             "es-ES": '⌠📡⌡ ¡Envíeme un mensaje!',
             "fr": '⌠📡⌡ Envoyez-moi un message!',
             "it": '⌠📡⌡ Mandami un messaggio!',
+            "pt-BR": '⌠📡⌡ Envie mensagens para mim!',
             "ru": '⌠📡⌡ Пишите мне!'
         })
         .addStringOption(option =>
             option.setName("text")
                 .setNameLocalizations({
-                    "pt-BR": 'texto',
                     "es-ES": 'texto',
                     "fr": 'texte',
                     "it": 'testo',
+                    "pt-BR": 'texto',
                     "ru": 'текст'
                 })
                 .setDescription("Report bugs or give suggestions!")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Reporte bugs ou dê sugestões!',
+                    "de": 'Melden Sie Fehler oder machen Sie Vorschläge!',
                     "es-ES": '¡Informar de errores o dar sugerencias!',
                     "fr": 'Signalez des bugs ou faites des suggestions!',
                     "it": 'Segnala bug o dai suggerimenti!',
+                    "pt-BR": 'Reporte bugs ou dê sugestões!',
                     "ru": 'Сообщайте об ошибках или делайте предложения!'
                 })
                 .setRequired(true))
         .addAttachmentOption(option =>
             option.setName("file")
                 .setNameLocalizations({
-                    "pt-BR": 'arquivo',
+                    "de": 'datei',
                     "es-ES": 'archivo',
                     "fr": 'dossier',
                     "it": 'file',
+                    "pt-BR": 'arquivo',
                     "ru": 'архив'
                 })
                 .setDescription("Attach files if needed")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Anexe arquivos se precisar',
+                    "de": 'Hängen Sie bei Bedarf Dateien an',
                     "es-ES": 'Adjunte archivos si es necesario',
                     "fr": 'Joindre des fichiers si besoin',
                     "it": 'Allega file se necessario',
+                    "pt-BR": 'Anexe arquivos se precisar',
                     "ru": 'Прикрепите файлы, если необходимо'
                 })),
     async execute(client, user, interaction) {

@@ -8,36 +8,39 @@ module.exports = {
             subcommand
                 .setName("lock")
                 .setNameLocalizations({
-                    "pt-BR": 'bloquear',
                     "es-ES": 'bloquear',
                     "fr": 'bloc',
                     "it": 'bloccare',
+                    "pt-BR": 'bloquear',
                     "ru": 'закрывать'
                 })
                 .setDescription("⌠💂⌡ Block current channel")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Bloqueie o canal atual',
+                    "de": '⌠💂⌡ Aktuellen Kanal sperren',
                     "es-ES": '⌠💂⌡ Bloquear el canal actual',
                     "fr": '⌠💂⌡ Verrouiller la chaîne actuelle',
                     "it": '⌠💂⌡ Blocca il canale corrente',
+                    "pt-BR": '⌠💂⌡ Bloqueie o canal atual',
                     "ru": '⌠💂⌡ заблокировать текущий канал'
                 }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("unlock")
                 .setNameLocalizations({
-                    "pt-BR": 'desbloquear',
+                    "de": 'freischalten',
                     "es-ES": 'desbloquear',
                     "fr": 'ouvrir',
                     "it": 'aprire',
+                    "pt-BR": 'desbloquear',
                     "ru": 'разблокировать'
                 })
                 .setDescription("⌠💂⌡ Unlock the current channel")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Desbloqueie o canal atual',
+                    "de": '⌠💂⌡ Aktuellen Kanal entsperren',
                     "es-ES": '⌠💂⌡ Desbloquear el canal actual',
                     "fr": '⌠💂⌡ Déverrouiller la chaîne actuelle',
                     "it": '⌠💂⌡ Sbloccare il canale corrente',
+                    "pt-BR": '⌠💂⌡ Desbloqueie o canal atual',
                     "ru": '⌠💂⌡ разблокировать текущий канал'
                 }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),

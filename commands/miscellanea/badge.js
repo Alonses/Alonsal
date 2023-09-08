@@ -7,35 +7,37 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand.setName("fix")
                 .setNameLocalizations({
-                    "pt-BR": 'fixar',
                     "es-ES": 'etiquetar',
                     "fr": 'epingler',
                     "it": 'evidenziare',
+                    "pt-BR": 'fixar',
                     "ru": 'носить'
                 })
                 .setDescription("⌠👤⌡ Pin a badge to your profile")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
+                    "de": '⌠👤⌡ Pinne ein Abzeichen an dein Profil',
                     "es-ES": '⌠👤⌡ Pon una insignia en tu perfil',
                     "fr": '⌠👤⌡ Épinglez un badge sur votre profil',
                     "it": '⌠👤⌡ Evidenzia un badge sul tuo profilo',
+                    "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
                     "ru": '⌠👤⌡ Добавьте значок в свой профиль'
                 }))
         .addSubcommand(subcommand =>
             subcommand.setName("remove")
                 .setNameLocalizations({
-                    "pt-BR": 'remover',
                     "es-ES": 'retirar',
                     "fr": 'retirer',
                     "it": 'rimuovere',
+                    "pt-BR": 'remover',
                     "ru": 'удалять'
                 })
                 .setDescription("⌠👤⌡ Remove pinned badge")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠👤⌡ Remover a badge do fixado',
+                    "de": '⌠👤⌡ Entferne das Abzeichen aus deinem Profil',
                     "es-ES": '⌠👤⌡ Quita la insignia',
                     "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé',
                     "it": '⌠👤⌡ Rimuovi il badge da appuntato',
+                    "pt-BR": '⌠👤⌡ Remover a badge do fixado',
                     "ru": '⌠👤⌡ Удалить значок профиля'
                 })),
     async execute(client, user, interaction) {

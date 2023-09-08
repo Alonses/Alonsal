@@ -5,27 +5,30 @@ module.exports = {
         .setName("clear")
         .setDescription("⌠💂⌡ Delete multiple chat messages")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💂⌡ Exclui várias mensagens do chat',
+            "de": '⌠💂⌡ Löscht mehrere Chatnachrichten',
             "es-ES": '⌠💂⌡ Eliminar varios mensajes de chat',
             "fr": '⌠💂⌡ Supprimer plusieurs messages de chat',
             "it": '⌠💂⌡ Elimina più messaggi di chat',
+            "pt-BR": '⌠💂⌡ Exclui várias mensagens do chat',
             "ru": '⌠💂⌡ Удалить несколько сообщений из чата'
         })
         .addIntegerOption(option =>
             option.setName("amount")
                 .setNameLocalizations({
-                    "pt-BR": 'quantia',
+                    "de": 'menge',
                     "es-ES": 'monto',
                     "fr": 'quantite',
                     "it": 'quantita',
+                    "pt-BR": 'quantia',
                     "ru": 'количество'
                 })
                 .setDescription("The amount of messages to delete")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A quantidade de mensagens para excluir',
+                    "de": 'Die Anzahl der zu löschenden Nachrichten',
                     "es-ES": 'El número de mensajes que se eliminarán',
                     "fr": 'Le nombre de messages à supprimer',
                     "it": 'La quantità di messaggi da eliminare',
+                    "pt-BR": 'A quantidade de mensagens para excluir',
                     "ru": 'Количество сообщений, которые нужно удалить'
                 })
                 .setMinValue(1)
@@ -35,10 +38,11 @@ module.exports = {
     menu_data: new ContextMenuCommandBuilder()
         .setName("Clear below")
         .setNameLocalizations({
-            "pt-BR": 'Limpar abaixo',
+            "de": 'unten löschen',
             "es-ES": 'Eliminar a continuación',
             "fr": 'Supprimer ci-dessous',
             "it": 'Cancella sotto',
+            "pt-BR": 'Limpar abaixo',
             "ru": 'удалить ниже'
         })
         .setType(ApplicationCommandType.Message)

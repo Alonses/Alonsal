@@ -5,10 +5,11 @@ module.exports = {
         .setName("git")
         .setDescription("⌠📡⌡ The Alonsal™️ repository")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
+            "de": '⌠📡⌡ Das Alonsal™️-Repository',
             "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',
             "fr": '⌠📡⌡ Le référentiel Alonsal™️',
             "it": '⌠📡⌡ Il repository Alonsal™️',
+            "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "ru": '⌠📡⌡ Репозиторий Алонсал™'
         }),
     async execute(client, user, interaction) {

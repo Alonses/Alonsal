@@ -5,10 +5,11 @@ module.exports = {
         .setName("help")
         .setDescription("⌠🌎⌡ It all starts here")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
+            "de": '⌠🌎⌡ Hier beginnt alles',
             "es-ES": '⌠🌎⌡ Todo comienza aquí',
             "fr": '⌠🌎⌡ Tout commence ici',
             "it": '⌠🌎⌡ Tutto inizia qui',
+            "pt-BR": '⌠🌎⌡ Tudo começa por aqui',
             "ru": '⌠🌎⌡ Все начинается здесь'
         }),
     async execute(client, user, interaction) {

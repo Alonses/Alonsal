@@ -4,18 +4,20 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("support")
         .setNameLocalizations({
-            "pt-BR": 'suporte',
+            "de": 'unterstützung',
             "es-ES": 'soporte',
             "fr": 'soutien',
             "it": 'supporto',
+            "pt-BR": 'suporte',
             "ru": 'поддержка'
         })
         .setDescription("⌠📡⌡ Support Alonsal")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
+            "de": '⌠📡⌡ Unterstützen Sie Alonsal',
             "es-ES": '⌠📡⌡ Apoya a Alonsal',
             "fr": '⌠📡⌡ Soutenez Alonsal',
             "it": '⌠📡⌡ Supporta Alonsal',
+            "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
             "ru": '⌠📡⌡ Поддержите Алонсала'
         }),
     async execute(client, user, interaction) {

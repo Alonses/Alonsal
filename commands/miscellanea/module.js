@@ -4,10 +4,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("module")
         .setNameLocalizations({
-            "pt-BR": 'modulo',
+            "de": 'modul',
             "es-ES": 'modulo',
             "fr": 'module',
             "it": 'modulo',
+            "pt-BR": 'modulo',
             "ru": 'модуль'
         })
         .setDescription("⌠🎉⌡ Define modules with pre-programmed functions")
@@ -16,116 +17,126 @@ module.exports = {
                 .setName("add")
                 .setDescription("⌠🎉⌡ Create a new module with pre-programmed functions")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Criar um novo módulo com funções pré-programadas',
+                    "de": '⌠🎉⌡ Erstellen Sie ein neues Modul mit vorprogrammierten Funktionen',
                     "es-ES": '⌠🎉⌡ Crea un nuevo módulo con funciones preprogramadas',
                     "fr": '⌠🎉⌡ Créez un nouveau module avec des fonctions préprogrammées',
                     "it": '⌠🎉⌡ Crea un nuovo modulo con funzioni preprogrammate',
+                    "pt-BR": '⌠🎉⌡ Criar um novo módulo com funções pré-programadas',
                     "ru": '⌠🎉⌡ Создать новый модуль с запрограммированными функциями'
                 })
                 .addStringOption(option =>
                     option.setName("choice")
                         .setNameLocalizations({
-                            "pt-BR": 'escolha',
+                            "de": 'auswahl',
                             "es-ES": 'eleccion',
                             "fr": 'choix',
                             "it": 'scelta',
+                            "pt-BR": 'escolha',
                             "ru": 'выбор'
                         })
                         .setDescription("What's your choice?")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Qual a sua escolha?',
+                            "de": 'Was ist deine Wahl?',
                             "es-ES": '¿Cual es tu eleccion?',
                             "fr": 'Quel est ton choix?',
                             "it": 'Qual\'è la tua scelta?',
+                            "pt-BR": 'Qual a sua escolha?',
                             "ru": 'Каков ваш выбор?'
                         })
                         .addChoices(
-                            { name: '🌩️ Clima', value: '0' },
-                            { name: '🖊️ Frase', value: '1' },
-                            { name: '🏯 Eventos históricos', value: '2' },
-                            { name: '🃏 Charadas', value: '3' },
-                            { name: '〽️ Curiosidades', value: '4' }
+                            { name: '🌩️ Weather', value: '0' },
+                            { name: '🖊️ Phrase', value: '1' },
+                            { name: '🏯 Historical events', value: '2' },
+                            { name: '🃏 Jokes', value: '3' },
+                            { name: '〽️ Curiosities', value: '4' }
                         )
                         .setRequired(true))
                 .addIntegerOption(option =>
                     option.setName("hour")
                         .setNameLocalizations({
-                            "pt-BR": 'hora',
+                            "de": 'stunde',
                             "es-ES": 'hora',
                             "fr": 'heure',
                             "it": 'ora',
+                            "pt-BR": 'hora',
                             "ru": 'час'
                         })
                         .setMaxValue(23)
                         .setMinValue(0)
-                        .setDescription("Em qual horário?")
+                        .setDescription("What time?")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Em qual horário?',
+                            "de": 'Zu welcher Zeit?',
                             "es-ES": '¿A que hora?',
                             "fr": 'Quelle heure?',
                             "it": 'A che ora?',
+                            "pt-BR": 'Em qual horário?',
                             "ru": 'Во сколько?'
                         })
                         .setRequired(true))
                 .addIntegerOption(option =>
                     option.setName("minute")
                         .setNameLocalizations({
-                            "pt-BR": 'minuto',
                             "es-ES": 'minuto',
                             "fr": 'minute',
                             "it": 'minuto',
+                            "pt-BR": 'minuto',
                             "ru": 'минута'
                         })
                         .setMaxValue(59)
                         .setMinValue(0)
                         .setDescription("In which minute?")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Em qual minuto?',
+                            "de": 'In welcher Minute?',
                             "es-ES": '¿En qué minuto?',
                             "fr": 'Dans quelle minute?',
                             "it": 'In che minuto?',
+                            "pt-BR": 'Em qual minuto?',
                             "ru": 'Какая минута?'
                         })
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("when")
                         .setNameLocalizations({
-                            "pt-BR": 'quando',
+                            "de": 'wann',
                             "es-ES": 'cuando',
                             "fr": 'quand',
                             "it": 'quando',
+                            "pt-BR": 'quando',
                             "ru": 'когда'
                         })
                         .setDescription("Which days?")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Em quais dias?',
+                            "de": 'An welchen Tagen?',
                             "es-ES": '¿En qué días?',
                             "fr": 'Quels jours?',
                             "it": 'In quali giorni?',
+                            "pt-BR": 'Em quais dias?',
                             "ru": 'В какие дни?'
                         })
                         .addChoices(
-                            { name: 'Dias úteis', value: '0' },
-                            { name: 'Finais de semana', value: '1' },
-                            { name: 'Todos os dias', value: '2' }
+                            { name: 'Working days', value: '0' },
+                            { name: 'Weekends', value: '1' },
+                            { name: 'Daily', value: '2' }
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("list")
                 .setNameLocalizations({
-                    "pt-BR": 'lista',
+                    "de": 'liste',
                     "es-ES": 'lista',
                     "fr": 'liste',
                     "it": 'elenco',
+                    "pt-BR": 'lista',
                     "ru": 'список'
                 })
                 .setDescription("⌠🎉⌡ Browse your modules")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Navegue por seus módulos',
+                    "de": '⌠🎉⌡ Durchsuchen Sie Ihre Module',
                     "es-ES": '⌠🎉⌡ Explora tus módulos',
                     "fr": '⌠🎉⌡ Parcourez vos modules',
                     "it": '⌠🎉⌡ Sfoglia i tuoi moduli',
+                    "pt-BR": '⌠🎉⌡ Navegue por seus módulos',
                     "ru": '⌠🎉⌡ Смотрите свои модули'
                 })),
     async execute(client, user, interaction) {

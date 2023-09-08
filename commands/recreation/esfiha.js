@@ -5,10 +5,11 @@ module.exports = {
 		.setName("esfiha")
 		.setDescription("⌠😂⌡ Serve??")
 		.setDescriptionLocalizations({
-			"pt-BR": '⌠😂⌡ Servidos??',
+			"de": '⌠😂⌡ Serviert??',
 			"es-ES": '⌠😂⌡ Servido??',
 			"fr": '⌠😂⌡ Servi??',
 			"it": '⌠😂⌡ Servito??',
+			"pt-BR": '⌠😂⌡ Servidos??',
 			"ru": '⌠😂⌡ Подали??'
 		}),
 	async execute(client, user, interaction) {

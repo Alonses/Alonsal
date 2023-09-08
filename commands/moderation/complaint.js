@@ -6,10 +6,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("complaint")
         .setNameLocalizations({
-            "pt-BR": 'denuncia',
+            "de": 'beschwerde',
             "es-ES": 'queja',
             "fr": 'plainte',
             "it": 'rimostranza',
+            "pt-BR": 'denuncia',
             "ru": 'жалоба'
         })
         .setDescription("⌠💂⌡ Report something!")
@@ -17,36 +18,38 @@ module.exports = {
             subcommand
                 .setName("start")
                 .setNameLocalizations({
-                    "pt-BR": 'iniciar',
                     "es-ES": 'comenzar',
                     "fr": 'commencer',
                     "it": 'iniziare',
+                    "pt-BR": 'iniciar',
                     "ru": 'начать'
                 })
-                .setDescription("⌠💂⌡ Inicie um chat de denúncia")
+                .setDescription("⌠💂⌡ Start a report chat")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Inicie um chat de denúncia',
+                    "de": '⌠💂⌡ Starten Sie Ihren Meldechat',
                     "es-ES": '⌠💂⌡ Iniciar un chat de informe',
                     "fr": '⌠💂⌡ Démarrer un canal de signalement',
                     "it": '⌠💂⌡ Avvia una chat di report',
+                    "pt-BR": '⌠💂⌡ Inicie um chat de denúncia',
                     "ru": '⌠💂⌡ Начать канал жалоб'
                 }))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("close")
                 .setNameLocalizations({
-                    "pt-BR": 'fechar',
                     "es-ES": 'cerrar',
                     "fr": 'fermer',
                     "it": 'chiudere',
+                    "pt-BR": 'fechar',
                     "ru": 'закрывать'
                 })
-                .setDescription("⌠💂⌡ Encerre seu chat de denúncia")
+                .setDescription("⌠💂⌡ Close your report chat")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Encerre seu chat de denúncia',
+                    "de": '⌠💂⌡ Beenden Sie Ihren Meldechat',
                     "es-ES": '⌠💂⌡ Termina tu chat de informe',
                     "fr": '⌠💂⌡ Terminer le chat de signalement',
                     "it": '⌠💂⌡ Termina la chat di segnalazione',
+                    "pt-BR": '⌠💂⌡ Encerre seu chat de denúncia',
                     "ru": '⌠💂⌡ Закрыть чат жалоб'
                 })),
     async execute(client, user, interaction) {

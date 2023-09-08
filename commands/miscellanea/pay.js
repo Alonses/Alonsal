@@ -4,52 +4,58 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("pay")
         .setNameLocalizations({
-            "pt-BR": 'dei-lhe',
+            "de": 'zahlen',
             "es-ES": 'transferir',
             "fr": 'payer',
             "it": 'pagare',
+            "pt-BR": 'dei-lhe',
             "ru": 'платить'
         })
         .setDescription("⌠💸⌡ Transfer Bufunfa to other users")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠💸⌡ Transfira Bufunfa para outros usuários',
+            "de": '⌠💸⌡ Bufunfa an andere Benutzer senden',
             "es-ES": '⌠💸⌡ Transferir Bufunfa a otros usuarios',
             "fr": '⌠💸⌡ Transférer Bufunfa à d\'autres utilisateurs',
             "it": '⌠💸⌡ Trasferisci Bufunfa ad altri utenti',
+            "pt-BR": '⌠💸⌡ Transfira Bufunfa para outros usuários',
             "ru": '⌠💸⌡ Делиться Bufunfa с другими пользователями'
         })
         .addUserOption(option =>
             option.setName("user")
                 .setNameLocalizations({
-                    "pt-BR": 'usuario',
+                    "de": 'benutzer',
                     "es-ES": 'usuario',
                     "it": 'utente',
+                    "pt-BR": 'usuario',
                     "ru": 'пользователь'
                 })
                 .setDescription("The user who will receive")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'O usuário que receberá',
+                    "de": 'Der Zielbenutzer',
                     "es-ES": 'El usuario que recibirá',
                     "fr": 'L\'utilisateur qui recevra',
                     "it": 'L\'utente che riceverà',
+                    "pt-BR": 'O usuário que receberá',
                     "ru": 'Пользователь, который получит'
                 })
                 .setRequired(true))
         .addNumberOption(option =>
             option.setName("amount")
                 .setNameLocalizations({
-                    "pt-BR": 'quantia',
+                    "de": 'menge',
                     "es-ES": 'monto',
                     "fr": 'montant',
                     "it": 'quantita',
+                    "pt-BR": 'quantia',
                     "ru": 'ценить'
                 })
                 .setDescription("The amount that will be transferred")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A quantidade que será transferida',
+                    "de": 'Der zu überweisende Betrag',
                     "es-ES": 'El monto a transferir',
                     "fr": 'Le montant à transférer',
                     "it": 'L\'importo da trasferire',
+                    "pt-BR": 'A quantidade que será transferida',
                     "ru": 'Сумма к переводу'
                 })
                 .setRequired(true)),

@@ -14,17 +14,19 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("vote")
         .setNameLocalizations({
-            "pt-BR": 'votar',
+            "de": 'umfrage',
             "es-ES": 'votar',
             "it": 'votazione',
+            "pt-BR": 'votar',
             "ru": 'голосование'
         })
         .setDescription("⌠📡⌡ Vote for the new language!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠📡⌡ Vote num novo idioma!',
+            "de": '⌠📡⌡ Stimmen Sie für eine neue Sprache!',
             "es-ES": '⌠📡⌡ ¡Vota por un nuevo idioma!',
             "fr": '⌠📡⌡ Votez pour une nouvelle langue!',
             "it": '⌠📡⌡ Vota per la nuova lingua!',
+            "pt-BR": '⌠📡⌡ Vote num novo idioma!',
             "ru": '⌠📡⌡ Голосуйте за новый язык!'
         }),
     async execute(client, user, interaction) {

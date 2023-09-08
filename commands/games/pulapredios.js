@@ -5,10 +5,11 @@ module.exports = {
         .setName("pulapredios")
         .setDescription("⌠🎲⌡ The Pula Game!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
+            "de": '⌠🎲⌡ Das Pula-Spiel!',
             "es-ES": '⌠🎲⌡ ¡El Juego de Pula!',
             "fr": '⌠🎲⌡ Le Jeu Pula!',
             "it": '⌠🎲⌡ Il gioco di Pola!',
+            "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "ru": '⌠🎲⌡ Игра от Pula!'
         }),
     async execute(client, user, interaction) {

@@ -4,35 +4,39 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("dice")
         .setNameLocalizations({
-            "pt-BR": 'dado',
+            "de": 'würfel',
             "es-ES": 'dado',
             "fr": 'des',
             "it": 'dadi',
+            "pt-BR": 'dado',
             "ru": 'отданный'
         })
         .setDescription("⌠🎲⌡ Roll one or more dice")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠🎲⌡ Rodar um ou vários dados',
+            "de": '⌠🎲⌡ Drehe einen oder mehrere Würfel',
             "es-ES": '⌠🎲⌡ Rotar uno o más dados',
             "fr": '⌠🎲⌡ Tourner un ou plusieurs dés',
             "it": '⌠🎲⌡ Tira uno o più dadi',
+            "pt-BR": '⌠🎲⌡ Rodar um ou vários dados',
             "ru": '⌠🎲⌡ Поверните один или несколько кубиков'
         })
         .addIntegerOption(option =>
             option.setName("amount")
                 .setNameLocalizations({
-                    "pt-BR": 'quantia',
+                    "de": 'menge',
                     "es-ES": 'monto',
                     "fr": 'montant',
                     "it": 'quantita',
+                    "pt-BR": 'quantia',
                     "ru": 'количество'
                 })
                 .setDescription("The amount of dice to roll")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'A quantia de dados para rolar',
+                    "de": 'Die Anzahl der zu würfelnden Würfel',
                     "es-ES": 'La cantidad de dados a tirar',
                     "fr": 'Le nombre de dés à lancer',
                     "it": 'La quantità di dadi da lanciare',
+                    "pt-BR": 'A quantia de dados para rolar',
                     "ru": 'Количество костей для броска'
                 })
                 .setMinValue(1)
@@ -41,6 +45,7 @@ module.exports = {
         .addIntegerOption(option =>
             option.setName("faces")
                 .setNameLocalizations({
+                    "de": 'gesichter',
                     "es-ES": 'caras',
                     "fr": 'visages',
                     "it": 'facce',
@@ -48,10 +53,11 @@ module.exports = {
                 })
                 .setDescription("Number of dice faces")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'Número da faces dos dados',
+                    "de": 'Anzahl der Würfelflächen',
                     "es-ES": 'Número de caras de dados',
                     "fr": 'Nombre de faces de dés',
                     "it": 'Numero di facce dei dadi',
+                    "pt-BR": 'Número da faces dos dados',
                     "ru": 'Количество граней игральных костей'
                 })
                 .setMinValue(4)
@@ -60,18 +66,20 @@ module.exports = {
         .addIntegerOption(option =>
             option.setName("accrual")
                 .setNameLocalizations({
-                    "pt-BR": 'acrescimo',
+                    "de": 'hinzufügen',
                     "es-ES": 'agregar',
                     "fr": 'ajouter',
                     "it": 'inserisci',
+                    "pt-BR": 'acrescimo',
                     "ru": 'добавить'
                 })
-                .setDescription("add in the sum")
+                .setDescription("Add in the sum")
                 .setDescriptionLocalizations({
-                    "pt-BR": 'acrescentar a somatória',
-                    "es-ES": 'agregar la suma',
-                    "fr": 'ajouter la somme',
-                    "it": 'aggiungi la somma',
+                    "de": 'Addieren Sie die Summe',
+                    "es-ES": 'Agregar la suma',
+                    "fr": 'Ajouter la somme',
+                    "it": 'Aggiungi la somma',
+                    "pt-BR": 'Acrescentar a somatória',
                     "ru": 'добавить к сумме'
                 })
                 .setMinValue(1)

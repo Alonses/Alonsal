@@ -5,10 +5,11 @@ module.exports = {
         .setName("baidu")
         .setDescription("⌠😂⌡ Praise be!")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠😂⌡ Louvado seja!',
+            "de": '⌠😂⌡Ehre sei Gott!',
             "es-ES": '⌠😂⌡ ¡Alabado seas!',
             "fr": '⌠😂⌡ Loué soit!',
             "it": '⌠😂⌡ Sia lodato!',
+            "pt-BR": '⌠😂⌡ Louvado seja!',
             "ru": '⌠😂⌡ Слава!'
         }),
     async execute(client, user, interaction) {

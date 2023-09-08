@@ -7,10 +7,11 @@ module.exports = {
         .setName("badges")
         .setDescription("⌠👤⌡ See your badges")
         .setDescriptionLocalizations({
-            "pt-BR": '⌠👤⌡ Veja suas badges',
+            "de": '⌠👤⌡ Sehen Sie sich Ihre Abzeichen an',
             "es-ES": '⌠👤⌡ Ver tus insignias',
             "fr": '⌠👤⌡ Voir vos badges',
             "it": '⌠👤⌡ Guarda i tuoi badge',
+            "pt-BR": '⌠👤⌡ Veja suas badges',
             "ru": '⌠👤⌡ Смотрите свои значки'
         }),
     async execute(client, user, interaction) {

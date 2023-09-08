@@ -7,10 +7,11 @@ module.exports = {
         .setName("color")
         .setDescription("⌠🎉⌡ Change your color")
         .setNameLocalizations({
-            "pt-BR": 'color',
+            "de": 'farbe',
             "es-ES": 'color',
             "fr": 'couleur',
             "it": 'colore',
+            "pt-BR": 'color',
             "ru": 'цвет'
         })
         .addSubcommand(subcommand =>
@@ -18,20 +19,22 @@ module.exports = {
                 .setName("static")
                 .setDescription("⌠🎉⌡ Pre-defined colors")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Cores pré-definidas',
+                    "de": '⌠🎉⌡ Vordefinierte Farben',
                     "es-ES": '⌠🎉⌡ Colores preestablecidos',
                     "fr": '⌠🎉⌡ Couleurs prédéfinies',
                     "it": '⌠🎉⌡ Colori preimpostati',
+                    "pt-BR": '⌠🎉⌡ Cores pré-definidas',
                     "ru": '⌠🎉⌡ Предопределенные цвета'
                 })
                 .addStringOption(option =>
                     option.setName("color")
                         .setDescription("Change your profile color")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'Alterar a cor do seu perfil',
+                            "de": 'Ändern Sie Ihre Profilfarbe',
                             "es-ES": 'Cambia el color de tu perfil',
                             "fr": 'Changer la couleur de votre profil',
                             "it": 'Cambia il colore del tuo profilo',
+                            "pt-BR": 'Alterar a cor do seu perfil',
                             "ru": 'Изменить цвет профиля'
                         })
                         .addChoices(
@@ -53,10 +56,11 @@ module.exports = {
                 .setName("custom")
                 .setDescription("⌠🎉⌡ Choose your color!")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Escolha sua cor!',
+                    "de": '⌠🎉⌡ Wähle deine Farbe!',
                     "es-ES": '⌠🎉⌡ ¡Elige tu color!',
                     "fr": '⌠🎉⌡ Choisissez votre couleur!',
                     "it": '⌠🎉⌡ Scegli il tuo colore!',
+                    "pt-BR": '⌠🎉⌡ Escolha sua cor!',
                     "ru": '⌠🎉⌡ Выбери свой цвет!'
                 })
                 .addIntegerOption(option => option.setName("r").setDescription("R").setRequired(true).setMaxValue(255).setMinValue(0))

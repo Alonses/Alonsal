@@ -18,7 +18,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
 if (silent || modo_develop)
     status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 0
 
-// globais e privados do bot
+// Modo de depuração do alonsal (utiliza bots secundários)
 if (modo_develop)
     token = process.env.token_2, clientId = process.env.client_2
 
