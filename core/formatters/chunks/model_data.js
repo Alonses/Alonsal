@@ -1,14 +1,13 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserRankServers } = require('../../../core/database/schemas/Rank_s')
-const { buildAllBadges } = require('../../../core/data/badges')
+const { getUserRankServers } = require('../../database/schemas/Rank_s')
+const { buildAllBadges } = require('../../data/badges')
 
-const { emoji_button } = require('../../../core/functions/emoji_button')
+const { emoji_button } = require('../../functions/emoji_button')
 
 module.exports = async ({ client, user, interaction }) => {
 
     const ranking = [], guilds_ranking = await getUserRankServers(interaction.user.id)
-
     let nota_servidores = ""
 
     // Listando os servidores que o usuário possui ranking
@@ -70,13 +69,26 @@ module.exports = async ({ client, user, interaction }) => {
             }
         )
         .setFooter({
-            text: client.tls.phrase(user, "manu.data.dica_rodape")
+            text: 'Use os botões abaixo para decidir o que fará em seguida!'
         })
 
-    return interaction.reply({
-        embeds: [embed],
-        ephemeral: true
-    })
+    const row = client.create_buttons([
+        { id: "data_menu_button", name: "Central de exclusão", type: 3, emoji: client.emoji(13), data: '1' },
+        { id: "data_menu_button", name: "Telemetria", type: 1, emoji: client.emoji(36), data: '2' }
+    ], interaction)
+
+    if (!interaction.customId)
+        return interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
+    else
+        return interaction.update({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
 }
 
 function lista_servidores(servidores, linha_corte, client, user) {
