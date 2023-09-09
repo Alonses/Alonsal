@@ -5,10 +5,10 @@ const Canvas = require('@napi-rs/canvas');
 module.exports = async ({ client, guild, user, dados }) => {
 
     const user_alvo = dados[0].user
-    let foto_antiga, foto_nova, attachment
+    let foto_antiga, foto_nova, attachment, canvas
 
     try { // Tentando gerar um canvas com as fotos alteradas
-        const canvas = Canvas.createCanvas(1000, 500)
+        canvas = Canvas.createCanvas(1000, 500)
         const context = canvas.getContext('2d')
 
         // Carregando as imagens de perfil do usuário
@@ -18,13 +18,21 @@ module.exports = async ({ client, guild, user, dados }) => {
         // Desenhando no canvas
         context.drawImage(foto_antiga, 0, 0, 500, 500);
         context.drawImage(foto_nova, 500, 0, 500, 500);
-
-        // Gerando a imagem para poder anexar ao canvas
-        attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'avatar_change.png' })
     } catch {
+
         console.log("📛 | Erro ao carregar a imagem de perfil antiga de um usuário, continuando com apenas o avatar novo")
-        attachment = null
+
+        canvas = Canvas.createCanvas(500, 500)
+        const context = canvas.getContext('2d')
+
+        foto_nova = await Canvas.loadImage(user_alvo.avatarURL({ dynamic: true }))
+
+        // Desenhando no canvas
+        context.drawImage(foto_nova, 0, 0, 500, 500);
     }
+
+    // Gerando a imagem para poder anexar ao canvas
+    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
 
     user.profile.avatar = user_alvo.avatarURL({ dynamic: true })
     await user.save() // Atualizando a foto de perfil do usuário
@@ -57,7 +65,7 @@ module.exports = async ({ client, guild, user, dados }) => {
 
     if (attachment) {
         // Enviando o embed com a comparação entre imagens
-        embed.setImage("attachment://avatar_change.png")
+        embed.setImage("attachment://new_avatar.png")
 
         client.notify(guild.logger.channel, { embed: embed, file: attachment })
     } else {
