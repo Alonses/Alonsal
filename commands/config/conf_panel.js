@@ -2,17 +2,15 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("c_resumo_diario")
-        .setDescription("⌠🤖⌡ Veja o resumo diário de forma manual")
+        .setName("c_panel")
+        .setDescription("⌠🤖⌡ Painel central do Alonsal")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
+        // Verificando autoria de quem ativou o comando
         if (!client.owners.includes(interaction.user.id)) return
 
-        const embed = await require('../../core/generators/journal')({ client })
-        interaction.reply({
-            embeds: [embed],
-            ephemeral: true
-        })
+        // Redirecionando para os módulos interativos
+        require('../../core/interactions/chunks/panel_geral')({ client, user, interaction })
     }
 }
