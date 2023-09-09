@@ -5,10 +5,10 @@ const { busca_badges, badgeTypes } = require('../../core/data/badges')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_badge")
-        .setDescription("⌠🤖⌡ Atribuir badges a usuários")
-        .addStringOption(option =>
-            option.setName("id")
-                .setDescription("O ID do usuário alvo")
+        .setDescription("⌠🤖⌡ Atribua uma badge a um usuário")
+        .addUserOption(option =>
+            option.setName("usuario")
+                .setDescription("O usuário alvo")
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("badge")
@@ -30,7 +30,7 @@ module.exports = {
 
         if (!client.owners.includes(interaction.user.id)) return
 
-        let id_alvo = interaction.options.getString("id")
+        let id_alvo = interaction.options.getUser("usuario").id
         let badge_alvo = parseInt(interaction.options.getString("badge"))
 
         const all_badges = [], badges_user = await client.getUserBadges(id_alvo)
