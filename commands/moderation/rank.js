@@ -17,10 +17,11 @@ module.exports = {
         .addUserOption(option =>
             option.setName("user")
                 .setNameLocalizations({
+                    "de": 'benutzer',
                     "es-ES": 'usuario',
                     "it": 'utente',
                     "pt-BR": 'usuario',
-                    "ru": 'пользователя'
+                    "ru": 'пользователь'
                 })
                 .setDescription("The user to adjust")
                 .setDescriptionLocalizations({

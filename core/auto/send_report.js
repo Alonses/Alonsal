@@ -10,24 +10,24 @@ module.exports = async ({ client, alvo }) => {
         return client.notify(process.env.channel_feeds, ":man_guard: | Reporte de usuários cancelado, não há canais clientes registrados para receberem a atualização.")
 
     try {
-        canais_reporte.forEach(dados => {
-            const canal_alvo = client.discord.channels.cache.get(dados.reports.channel)
+        canais_reporte.forEach(guild => {
+            const canal_alvo = client.discord.channels.cache.get(guild.reports.channel)
 
-            let idioma_definido = dados.lang || "pt-br"
-            if (idioma_definido === "al-br") idioma_definido = "pt-br"
+            if (!guild.lang)
+                guild.lang = "pt-br"
 
             const embed = new EmbedBuilder()
-                .setTitle(`> Novo reporte ${client.defaultEmoji("guard")}`)
+                .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_report")} ${client.defaultEmoji("guard")}`)
                 .setColor(0xED4245)
                 .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
                 .addFields(
                     {
-                        name: ":bust_in_silhouette: **Usuário**",
+                        name: `**:bust_in_silhouette: ${client.tls.phrase(guild, "mode.report.usuario")}**`,
                         value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("guard")} **Reportador**`,
+                        name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(guild, "mode.report.reportador")}**`,
                         value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                         inline: true
                     },

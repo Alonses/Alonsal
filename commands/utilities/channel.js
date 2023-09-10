@@ -25,10 +25,10 @@ module.exports = {
                 .setDescription("Mention a channel")
                 .setDescriptionLocalizations({
                     "de": 'einen Kanal erwähnen',
-                    "es-ES": 'Mencionar un canal como objetivo',
+                    "es-ES": 'Mencionar un canal',
                     "fr": 'Mentionner une chaîne',
                     "it": 'Menzionare un canale',
-                    "pt-BR": 'Marque um canal como alvo',
+                    "pt-BR": 'Mencione um canal',
                     "ru": 'упомянуть канал'
                 })),
     async execute(client, user, interaction) {

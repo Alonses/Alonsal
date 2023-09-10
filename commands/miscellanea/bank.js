@@ -36,7 +36,6 @@ module.exports = {
                         .setNameLocalizations({
                             "de": 'benutzer',
                             "es-ES": 'usuario',
-                            "fr": 'user',
                             "it": 'utente',
                             "pt-BR": 'usuario',
                             "ru": 'пользователь'
