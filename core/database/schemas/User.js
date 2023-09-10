@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
-    lang: { type: String, default: "pt-br" },
+    lang: { type: String, default: null },
     social: {
         steam: { type: String, default: null },
         lastfm: { type: String, default: null },

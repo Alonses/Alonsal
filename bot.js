@@ -37,6 +37,12 @@ client.discord.on("messageCreate", async (message) => {
 	const guild = await client.getGuild(message.guild.id)
 	const user_guild = await client.getMemberGuild(message, user.uid)
 
+	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
+	if (!user.lang) {
+		user.lang = guild.lang || "pt-br"
+		await user.save()
+	}
+
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 	if (message.author.bot || message.webhookId) return
@@ -82,6 +88,14 @@ client.discord.on("interactionCreate", async interaction => {
 	const user = await client.getUser(interaction.user.id)
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
+
+	const guild = await client.getGuild(interaction.guild.id)
+
+	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
+	if (!user.lang) {
+		user.lang = guild.lang || "pt-br"
+		await user.save()
+	}
 
 	// Atualiza o formato de salvamento das tasks
 	client.update_tasks(interaction)
