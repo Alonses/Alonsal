@@ -5,7 +5,7 @@ const { createMessage, getUserMessages, dropAllUserMessages } = require("../data
 let bloqueia_operacao = 0
 
 const usersmap = new Map()
-const LIMIT = 6, DIFF = 5000
+const LIMIT = 7, DIFF = 3000
 
 module.exports = async function ({ client, message, user, guild }) {
 
