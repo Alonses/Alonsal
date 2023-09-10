@@ -144,9 +144,6 @@ module.exports = {
 
             const membro_guild = await client.getMemberGuild(interaction, id_alvo)
 
-            if (!membro_guild) // Validando se o usuário marcado saiu do servidor
-                return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
-
             if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
                 return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
 
