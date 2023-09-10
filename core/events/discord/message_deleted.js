@@ -40,12 +40,12 @@ module.exports = async ({ client, message }) => {
     if (attachments.length > 0 && !message.content)
         texto_mensagem = attachments.join("\n\n")
 
-    let texto = `:wastebasket: | <@${message.author.id}> excluiu uma [mensagem](${message.url})`
+    let texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.author.id, message.url])
     let autor = message.author.id, local = message.channelId, row
 
     // Mensagem excluída por um moderador
     if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
-        texto = `:wastebasket: | Uma [mensagem](${message.url}) de <@${message.author.id}> foi excluída`
+        texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.url, message.author.id])
 
     texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}}:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
 
@@ -74,21 +74,17 @@ module.exports = async ({ client, message }) => {
     if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
         embed.addFields(
             {
-                name: `${client.defaultEmoji("guard")} **Excluído por**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.excluido")}**`,
                 value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
                 inline: false
             }
         )
 
-    const user = {
-        lang: "pt-br"
-    }
-
     if (texto_mensagem.includes("https")) {
         const link_img = `https${texto_mensagem.split("https")[1].split(" ")[0]}`
 
         row = client.create_buttons([
-            { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+            { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
         ])
     }
 
