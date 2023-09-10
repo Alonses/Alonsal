@@ -17,7 +17,7 @@ module.exports = async ({ client, alvo }) => {
                 guild.lang = "pt-br"
 
             const embed = new EmbedBuilder()
-                .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_report")} ${client.defaultEmoji("guard")}`)
+                .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)
                 .setColor(0xED4245)
                 .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
                 .addFields(

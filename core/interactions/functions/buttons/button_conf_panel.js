@@ -29,14 +29,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
             { id: "return_button", name: "Retornar", type: 0, emoji: client.emoji(19), data: "panel_geral" },
             { id: "button_conf_panel", name: "Resumo diário", type: 1, emoji: client.defaultEmoji("paper"), data: "z|journal" },
             { id: "button_conf_panel", name: "RAM", type: 1, emoji: client.emoji("ds_slash_command"), data: "z|ram" },
-            { id: "button_conf_panel", name: "Emojis", type: 1, emoji: client.emoji("emojis_dancantes"), data: "z|emojis" },
-            { id: "button_conf_panel", name: "Status da APISAL", type: 1, emoji: client.emoji(38), data: "z|apisal" }
+            { id: "button_conf_panel", name: "Emojis", type: 1, emoji: client.emoji("emojis_dancantes"), data: "z|emojis" }
         ], interaction)
-    else
+    else if (operacao === 1)
         row = client.create_buttons([
             { id: "return_button", name: "Retornar", type: 0, emoji: client.emoji(19), data: "panel_geral" },
             { id: "button_conf_panel", name: "Sincronizar Idioma", type: 1, emoji: client.emoji(37), data: "z|update_language" },
             { id: "button_conf_panel", name: "Enviar jogos gratuitos", type: 1, emoji: client.emoji(29), data: "z|send_announce" }
+        ], interaction)
+    else
+        row = client.create_buttons([
+            { id: "return_button", name: "Retornar", type: 0, emoji: client.emoji(19), data: "panel_geral" },
+            { id: "button_conf_panel", name: "Status da APISAL", type: 1, emoji: client.emoji(38), data: "z|apisal" },
+            { id: "button_conf_panel", name: "Status de Reportes", type: 1, emoji: client.defaultEmoji("guard"), data: "z|reports" }
         ], interaction)
 
     interaction.update({
