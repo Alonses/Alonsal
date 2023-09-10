@@ -1,6 +1,8 @@
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
-const Canvas = require('@napi-rs/canvas');
+const Canvas = require('@napi-rs/canvas')
+
+const usersmap = new Map()
 
 module.exports = async ({ client, guild, user, dados }) => {
 
@@ -67,13 +69,40 @@ module.exports = async ({ client, guild, user, dados }) => {
         // Enviando o embed com a comparação entre imagens
         embed.setImage("attachment://new_avatar.png")
 
-        client.notify(guild.logger.channel, { embed: embed, file: attachment })
+        envia_logger(client, user.uid, { embed: embed, file: attachment })
     } else {
 
         // Enviando apenas a nova foto de perfil do usuário
         if (user_alvo.avatarURL({ dynamic: true }))
             embed.setThumbnail(user_alvo.avatarURL({ dynamic: true }))
 
-        client.notify(guild.logger.channel, embed)
+        envia_logger(client, user.uid, embed)
+    }
+}
+
+function envia_logger(client, id_alvo, valor) {
+
+    if (!usersmap.has(id_alvo)) {
+
+        usersmap.set(id_alvo, { cached: true })
+        const guilds = client.guilds()
+
+        guilds.forEach(async guild => {
+
+            // Buscando as guilds com o log ativo
+            const internal_guild = await client.getGuild(guild.id)
+
+            if (internal_guild.conf.logger) {
+                const user = await guild.members.fetch(id_alvo)
+                    .catch(() => { return null })
+
+                if (user) // Notificando a guild sobre a alteração da foto de um membro
+                    client.notify(internal_guild.logger.channel, valor)
+            }
+        })
+
+        setTimeout(() => {
+            usersmap.delete(id_alvo)
+        }, 5000)
     }
 }

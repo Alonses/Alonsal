@@ -1,116 +1,187 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { getUserMessages, dropUserMessage, dropAllUserMessages, createMessage } = require("../database/schemas/Message")
+const { createMessage, getUserMessages, dropAllUserMessages } = require("../database/schemas/Message")
 
 let bloqueia_operacao = 0
 
+const usersmap = new Map()
+const LIMIT = 6, DIFF = 5000
+
 module.exports = async function ({ client, message, user, guild }) {
 
-    let repeticoes = 0, texto = ""
+    let user_guild = await client.getMemberGuild(message, user.uid)
 
-    const ult_message = {
-        body: null,
-        timestamp: null
-    }
+    // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
+    if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers) || user_guild.permissions.has([PermissionsBitField.Flags.BanMembers]))
+        return
 
-    const conteudo = message.content.trim().toLowerCase()
-    await createMessage(user.uid, guild.sid, message.channelId, message.id, conteudo, message.createdTimestamp)
+    if (usersmap.has(message.author.id)) {
 
-    const messages = await getUserMessages(user.uid, guild.sid)
-    messages.forEach(internal_message => {
+        const userdata = usersmap.get(message.author.id)
+        const { lastMessage, timer } = userdata
 
-        if (ult_message.body)
-            if (((ult_message.body === internal_message.content) && (((ult_message.timestamp / 1000) - (internal_message.timestamp / 1000)) < 4)) || (((ult_message.timestamp / 1000) - (internal_message.timestamp / 1000)) < 1)) {
-                repeticoes++
+        const difference = message.createdTimestamp - lastMessage.createdTimestamp
+        let msgcount = userdata.msgcount
 
-                texto += `-> ${internal_message.content} \n\n`
+        // Enviando mensagens com tempo aceitável
+        if (difference > DIFF) {
+
+            clearTimeout(timer)
+
+            userdata.msgcount = 1
+            userdata.lastMessage = message
+
+            userdata.timer = setTimeout(async () => {
+                usersmap.delete(message.author.id)
+                await dropAllUserMessages(message.author.id, guild.sid)
+            }, DIFF + 2000)
+
+            usersmap.set(message.author.id, userdata)
+
+        } else {
+
+            // Registrando a mensagem no banco para posterior exclusão
+            await createMessage(guild, message)
+            ++msgcount
+
+            if (parseInt(msgcount) === LIMIT) {
+
+                // Spam confirmado
+                if (!bloqueia_operacao) {
+                    bloqueia_operacao = 1
+
+                    // Nerfando o spam do servidor e excluindo as mensagens enviadas
+                    nerfa_spam(client, user, guild, message)
+                }
+            } else {
+                userdata.msgcount = msgcount
+                usersmap.set(message.author.id, userdata)
             }
+        }
+    } else {
+        let fn = setTimeout(async () => {
+            usersmap.delete(message.author.id)
+            await dropAllUserMessages(message.author.id, guild.sid)
+        }, DIFF + 2000)
 
-        ult_message.body = internal_message.content
-        ult_message.timestamp = internal_message.timestamp
-    })
-
-    if (messages.length > 10 && repeticoes < 2)
-        await dropUserMessage(user.uid, messages[9].mid)
-
-    if (repeticoes > 5)
-        nerfa_spam(client, user, guild, message, texto)
+        usersmap.set(message.author.id, {
+            msgcount: 1,
+            lastMessage: message,
+            timer: fn
+        })
+    }
 }
 
-async function nerfa_spam(client, user, guild, message, texto) {
+async function nerfa_spam(client, user, guild, message) {
 
-    if (!bloqueia_operacao) {
+    let user_guild = await client.getMemberGuild(message, user.uid)
 
-        bloqueia_operacao = 1
-
-        let user_guild = await client.getMemberGuild(message, user.uid)
-
-        if (!user_guild) { // Validando se o usuário saiu do servidor
-            bloqueia_operacao = 0
-            return
-        }
-
-        let tempo_timeout = 3600000 // 1 Hora
-
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
-            .setColor(0xED4245)
-            .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, (tempo_timeout / 1000) / 60])}\n\`\`\`${texto.slice(0, 999)}\`\`\``)
-            .addFields(
-                {
-                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
-                    inline: true
-                },
-                {
-                    name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                    value: `<t:${client.timestamp() + (tempo_timeout / 1000)}:f>\n( <t:${client.timestamp() + (tempo_timeout / 1000)}:R> )`,
-                    inline: true
-                }
-            )
-
-        const url_avatar = user_guild.avatarURL({ dynamic: true, size: 2048 })
-
-        if (url_avatar)
-            embed.setThumbnail(url_avatar)
-
-        user_guild.timeout(tempo_timeout, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
-            .then(async () => {
-
-                client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.aviso_spam"), user_guild), embed: embed })
-                const messages = await getUserMessages(user.uid, guild.sid)
-
-                // Excluindo as mensagens enviadas pelo usuário que foram consideradas como spam
-                messages.forEach(message => {
-                    client.discord.channels.cache.get(message.cid).messages.fetch(message.mid).then(msg => msg.delete())
-                })
-
-                let msg_user = `Você foi silenciado no servidor \`${await client.guilds().get(guild.sid).name}\` devido a várias mensagens consideradas como spam\nAs mensagens que foram consideradas como spam são as seguintes: \`\`\`${texto.slice(0, 999)}\`\`\``
-
-                if (messages[0].content.includes("https://discord.gg/"))
-                    msg_user += `\n\n${client.defaultEmoji("detective")} | Sua conta pode estar nas mãos de outras pessoas, caso veja esta mensagem, verifique suas configurações de segurança, alterando sua senha, ativando verificações em 2 etapas e desconectando sua conta de aparelhos desconhecidos para que não perca o acesso a conta.`
-
-                client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
-
-                await dropAllUserMessages(user.uid, guild.sid)
-                bloqueia_operacao = 0
-            })
-            .catch(async () => {
-
-                // Erro por falta de permissão para poder castigar um usuário
-                embed.setDescription(`${client.defaultEmoji("guard")} | Não foi possível interromper um spam do usuário ${user_guild} por falta de permissões do bot\nAs mensagens enviadas consideradas spam são as seguintes.\n\`\`\`${texto.slice(0, 999)}\`\`\``)
-                    .setFields(
-                        {
-                            name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                            value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
-                            inline: true
-                        }
-                    )
-
-                client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | Não foi possível silenciar o usuário ${user_guild} devido a falta de permissões @here\nGaranta que eu tenha a permissão \`Membros de castigo\` e que meu cargo esteja acima dos demais cargos na lista de cargos, para que eu possa previnir spam's de usuários abaixo do nível.`, embed: embed })
-
-                await dropAllUserMessages(user.uid, guild.sid)
-                bloqueia_operacao = 0
-            })
+    if (!user_guild) { // Validando se o usuário saiu do servidor
+        bloqueia_operacao = 0
+        return
     }
+
+    let tempo_timeout = 3600000 * 2 // 2 Horas
+    let entradas_spamadas = ""
+
+    // Listando as mensagens consideras SPAM e excluindo elas
+    const messages = await getUserMessages(user.uid, guild.sid)
+    messages.forEach(internal_message => {
+        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.timestamp).toLocaleTimeString()} ]\n\n`
+
+        // Excluindo as mensagens enviadas pelo usuário que foram consideradas como spam
+        client.discord.channels.cache.get(internal_message.cid).messages.fetch(internal_message.mid)
+            .then(msg => msg.delete())
+            .catch(() => console.log("🔍 | Uma mensagem não foi encontrada, continuando..."))
+    })
+
+    // Busca mensagens enviadas anteriormente (possivelmente spam) para excluir
+    filtra_spam(client, user.uid, guild.sid)
+
+    // Criando o embed de aviso para os moderadores
+    const embed = new EmbedBuilder()
+        .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
+        .setColor(0xED4245)
+        .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, (tempo_timeout / 1000) / 60])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .addFields(
+            {
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
+                inline: true
+            },
+            {
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
+                value: `<t:${client.timestamp() + (tempo_timeout / 1000)}:f>\n( <t:${client.timestamp() + (tempo_timeout / 1000)}:R> )`,
+                inline: true
+            }
+        )
+
+    if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
+        embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
+
+    user_guild.timeout(tempo_timeout, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
+        .then(async () => {
+
+            client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embed: embed })
+
+            let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+
+            if (messages[0].content.includes("https://discord.gg/"))
+                msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
+
+            client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
+
+            await dropAllUserMessages(user.uid, guild.sid)
+            bloqueia_operacao = 0
+        })
+        .catch(async () => {
+
+            // Erro por falta de permissão para poder castigar um usuário
+            embed.setDescription(`${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_1"), user_guild)}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+                .setFields(
+                    {
+                        name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                        value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
+                        inline: true
+                    }
+                )
+
+            client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embed: embed })
+
+            await dropAllUserMessages(user.uid, guild.sid)
+            bloqueia_operacao = 0
+        })
+}
+
+async function filtra_spam(client, user, id_guild) {
+
+    const guilds = client.guilds()
+    const userMessages = []
+
+    // Filtra todas as mensagens no servidor que foram enviadas pelo usuário nos últimos 20 segundos
+    guilds.forEach(async guild => {
+
+        if (guild.id === id_guild) {
+            guild.channels.cache.forEach(channel => {
+
+                if (channel.type === 0)
+                    channel.messages.fetch({
+                        limit: 20
+                    }).then(messages => {
+                        const msg = messages.filter(m => m.author.id === user)
+
+                        // Listando mensagens enviadas nos últimos 20 segundos
+                        msg.forEach(msg => {
+                            if (msg.createdTimestamp > msg.createdTimestamp - 20000)
+                                userMessages.push(msg)
+                        })
+
+                        // Excluindo as mensagens que ficaram faltando
+                        userMessages.forEach(msg => {
+                            msg.delete().catch(() => console.log("🔍 | Uma mensagem não foi encontrada, continuando..."))
+                        })
+                    })
+            })
+        }
+    })
 }
