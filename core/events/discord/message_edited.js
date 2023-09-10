@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
         novo: formata_text(message[1].content)
     }
 
-    let texto = client.replace(client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.defaultEmoji("pen")), [message[0].url, message[0].author.id, alteracoes.antigo, alteracoes.novo])
+    let texto = client.replace(client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39)), [message[0].url, message[0].author.id, alteracoes.antigo, alteracoes.novo])
     let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()
