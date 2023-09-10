@@ -1,6 +1,6 @@
+const { getUser } = require('../database/schemas/User')
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
-const { getUser } = require('../database/schemas/User')
 
 const CHECKS = {
     LIMIT: 5,
@@ -58,17 +58,15 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     // Limitando o ganho de XP por spam no chat
-    if (user.caldeira_de_ceira) {
+    if (user.caldeira_de_ceira)
         if (message.createdTimestamp - user.lastValidMessage > CHECKS.HOLD)
             user.caldeira_de_ceira = false
         else if (caso === "messages") return
-    }
 
-    if (user_global.caldeira_de_ceira) {
+    if (user_global.caldeira_de_ceira)
         if (message.createdTimestamp - user_global.lastValidMessage > CHECKS.HOLD)
             user_global.caldeira_de_ceira = false
         else if (caso === "messages") return
-    }
 
     if (caso === "messages") {
 
@@ -88,8 +86,7 @@ module.exports = async ({ client, message, caso }) => {
             await user_global.save()
         }
 
-        if (validador)
-            return
+        if (validador) return
     }
 
     // Coletando o XP atual e somando ao total do usuário

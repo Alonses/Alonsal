@@ -26,21 +26,15 @@ async function getUserMessages(uid, sid) {
         })
 }
 
-async function createMessage(uid, sid, cid, mid, content, timestamp) {
-    await model.create({
-        uid: uid,
-        sid: sid,
-        cid: cid,
-        mid: mid,
-        content: content,
-        timestamp: timestamp
-    })
-}
+async function createMessage(guild, message) {
 
-async function dropUserMessage(uid, mid) {
-    await model.findOneAndDelete({
-        uid: uid,
-        mid: mid
+    await model.create({
+        uid: message.author.id,
+        sid: guild.sid,
+        cid: message.channelId,
+        mid: message.id,
+        content: message.content.trim().toLowerCase(),
+        timestamp: message.createdTimestamp
     })
 }
 
@@ -55,6 +49,5 @@ module.exports.Message = model
 module.exports = {
     createMessage,
     getUserMessages,
-    dropUserMessage,
     dropAllUserMessages
 }
