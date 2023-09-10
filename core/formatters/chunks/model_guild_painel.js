@@ -8,7 +8,7 @@ module.exports = async (client, user, interaction, pagina) => {
     const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
 
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor"))
+        .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)
         .setColor(client.embed_color(user.misc.color))
         .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
         .setFooter({

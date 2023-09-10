@@ -12,7 +12,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     const row = client.create_buttons([
         { id: "button_conf_panel", name: "Informações", type: 1, emoji: client.defaultEmoji("paper"), data: "0" },
-        { id: "button_conf_panel", name: "Funções", type: 1, emoji: client.emoji("ds_slash_command"), data: "1" }
+        { id: "button_conf_panel", name: "Funções", type: 1, emoji: client.emoji("icon_slash_commands"), data: "1" },
+        { id: "button_conf_panel", name: "Status", type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ], interaction)
 
     if (!interaction.customId)

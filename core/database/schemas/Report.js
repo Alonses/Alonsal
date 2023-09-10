@@ -45,7 +45,7 @@ async function getUserReports(uid) {
 async function getReportedUsers() {
     return model.find({
         archived: false
-    }).limit(50)
+    })
 }
 
 async function checkUserGuildReported(sid) {
