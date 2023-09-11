@@ -83,8 +83,8 @@ client.discord.on("interactionCreate", async interaction => {
 	const user = await client.getUser(interaction.user.id)
 	if (user.conf?.banned || false) return // Ignorando usuários
 
-	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	client.verifyUserLanguage(user, interaction.guild.id)
+	// Verificando se é um comando usado num servidor
+	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	// Atualiza o formato de salvamento das tasks
 	client.update_tasks(interaction)
@@ -96,7 +96,9 @@ client.discord.on("interactionCreate", async interaction => {
 		return require("./core/interactions/buttons")({ client, user, interaction })
 
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
-	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
+
+	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
+	client.verifyUserLanguage(user, interaction.guild.id)
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
