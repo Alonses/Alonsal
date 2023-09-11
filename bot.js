@@ -34,44 +34,38 @@ client.discord.on("messageCreate", async (message) => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(message.author.id)
-	const guild = await client.getGuild(message.guild.id)
-	const user_guild = await client.getMemberGuild(message, user.uid)
-
-	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	if (!user.lang) {
-		user.lang = guild.lang || "pt-br"
-		await user.save()
-	}
 
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
 	if (message.author.bot || message.webhookId) return
 
-	let text = message.content.toLowerCase()
+	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
+	client.verifyUserLanguage(user, message.guild.id)
 
 	// Sincronizando os dados do usuário
+	const user_guild = await client.getMemberGuild(message, user.uid)
 	if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
 		user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
 		await user.save()
 	}
 
 	// Recursos de Broadcast
-	const bot = await client.getBot()
+	if (client.cached.broad_status)
+		require("./core/events/broadcast")({ client, message })
 
-	if (bot?.transmission.status)
-		require("./core/events/broadcast.js")({ client, bot, message })
+	const text = message.content.toLowerCase()
 
 	// Respostas automatizadas por IA
 	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
-		return await require("./core/events/conversacao.js")({ client, message, text })
+		return await require("./core/events/conversacao")({ client, message, text })
 
 	try { // Atualizando o XP dos usuários
-		const caso = "messages"
+		const caso = "messages", guild = await client.getGuild(message.guild.id)
 
 		if (guild.conf.spam) // Sistema anti-spam do servidor
-			require("./core/events/spam.js")({ client, message, user, guild })
+			require("./core/events/spam")({ client, message, user, guild })
 
-		if (message.content.length > 6 && client.x.ranking) await require("./core/data/ranking.js")({ client, message, caso })
+		if (message.content.length > 6 && client.x.ranking) await require("./core/data/ranking")({ client, message, caso })
 
 		require("./core/events/legacy_commands")({ client, message })
 	} catch (err) { // Erro no comando
@@ -86,25 +80,19 @@ client.discord.on("interactionCreate", async interaction => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(interaction.user.id)
-	// Ignorando usuários
-	if (user.conf?.banned || false) return
-
-	const guild = await client.getGuild(interaction.guild.id)
+	if (user.conf?.banned || false) return // Ignorando usuários
 
 	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	if (!user.lang) {
-		user.lang = guild.lang || "pt-br"
-		await user.save()
-	}
+	client.verifyUserLanguage(user, interaction.guild.id)
 
 	// Atualiza o formato de salvamento das tasks
 	client.update_tasks(interaction)
 
 	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
-		return require("./core/interactions/menus.js")({ client, user, interaction })
+		return require("./core/interactions/menus")({ client, user, interaction })
 
 	if (interaction.isButton()) // Interações geradas no uso de botões
-		return require("./core/interactions/buttons.js")({ client, user, interaction })
+		return require("./core/interactions/buttons")({ client, user, interaction })
 
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
@@ -118,7 +106,7 @@ client.discord.on("interactionCreate", async interaction => {
 		// Executando o comando
 		action(client, user, interaction)
 			.then(() => {
-				require("./core/events/log.js")({ client, interaction, command })
+				require("./core/events/log")({ client, interaction, command })
 			})
 	} catch (err) {
 		client.error({ err })
