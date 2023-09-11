@@ -3,8 +3,9 @@ const { PermissionsBitField, AttachmentBuilder } = require('discord.js')
 let TIMER = 300000
 let timeout_broadcast = null
 
-module.exports = async function ({ client, bot, message }) {
+module.exports = async function ({ client, message }) {
 
+    const bot = await client.getBot()
     const corpo_mail = {
         anexo: (message.attachments.first()),
         texto: message.content,
@@ -81,6 +82,7 @@ function timer_broadcast(client, bot) {
 
         const canal_alvo = await client.channels().get(bot.transmission.id_cast)
 
+        client.cached.broad_status = false
         bot.transmission.status = false
         await bot.save()
 
@@ -99,6 +101,7 @@ async function checa_broadcast(client, bot) {
         const canal_alvo = await client.channels().get(bot.transmission.id_cast)
         status = 1
 
+        client.cached.broad_status = false
         bot.transmission.status = false
         await bot.save()
 

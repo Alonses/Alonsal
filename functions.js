@@ -303,6 +303,17 @@ function internal_functions(client) {
         }
     }
 
+    client.verifyUserLanguage = async (user, id_guild) => {
+
+        // Valida se o usuário não possui um idioma padrão definido
+        if (!user.lang) {
+            const guild = await client.getGuild(id_guild)
+
+            user.lang = guild.lang || "pt-br"
+            await user.save()
+        }
+    }
+
     client.verifyUserRanking = async (id_user) => {
 
         // Valida se o usuário possui ranking ativo

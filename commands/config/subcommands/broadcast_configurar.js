@@ -39,6 +39,7 @@ module.exports = async ({ client, interaction, bot }) => {
     bot.transmission.id_cast = interaction.options.getChannel("local").id
     bot.transmission.author = interaction.user.id
 
+    client.cached.broad_status = true
     bot.transmission.status = true
 
     timer_broadcast(client, bot)

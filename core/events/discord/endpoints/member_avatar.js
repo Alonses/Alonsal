@@ -20,21 +20,12 @@ module.exports = async ({ client, guild, user, dados }) => {
         // Desenhando no canvas
         context.drawImage(foto_antiga, 0, 0, 500, 500);
         context.drawImage(foto_nova, 500, 0, 500, 500);
+
+        // Gerando a imagem para poder anexar ao canvas
+        attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
     } catch {
-
         console.log("📛 | Erro ao carregar a imagem de perfil antiga de um usuário, continuando com apenas o avatar novo")
-
-        canvas = Canvas.createCanvas(500, 500)
-        const context = canvas.getContext('2d')
-
-        foto_nova = await Canvas.loadImage(user_alvo.avatarURL({ dynamic: true }))
-
-        // Desenhando no canvas
-        context.drawImage(foto_nova, 0, 0, 500, 500);
     }
-
-    // Gerando a imagem para poder anexar ao canvas
-    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
 
     user.profile.avatar = user_alvo.avatarURL({ dynamic: true })
     await user.save() // Atualizando a foto de perfil do usuário
@@ -74,7 +65,7 @@ module.exports = async ({ client, guild, user, dados }) => {
 
         // Enviando apenas a nova foto de perfil do usuário
         if (user_alvo.avatarURL({ dynamic: true }))
-            embed.setThumbnail(user_alvo.avatarURL({ dynamic: true }))
+            embed.setImage(user_alvo.avatarURL({ dynamic: true }))
 
         envia_logger(client, user.uid, embed)
     }

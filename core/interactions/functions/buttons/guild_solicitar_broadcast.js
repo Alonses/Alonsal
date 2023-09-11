@@ -15,17 +15,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (escolha === 1) {
 
         const broadcast = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.broadcast.nova_solicitacao", 32))
+            .setTitle(`${client.tls.phrase(user, "mode.broadcast.nova_solicitacao")} :globe_with_meridians:`)
             .setColor(0xffffff)
-            .setDescription(client.tls.phrase(user, "mode.broadcast.solicitacao_aberta"))
+            .setDescription("Uma nova solicitação de broadcast foi aberta")
             .setFields(
                 {
-                    name: `**${client.defaultEmoji("person")} ${client.tls.phrase(user, "mode.broadcast.solicitante")}**`,
+                    name: `**${client.defaultEmoji("person")} Solicitante**`,
                     value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n( <@${interaction.user.id}> )`,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("paper")} ${client.tls.phrase("mode.canal.canal")}**`,
+                    name: `**${client.defaultEmoji("paper")} Canal**`,
                     value: `${client.emoji("icon_id")} \`${interaction.channel.id}\`\n<#${interaction.channel.id}>`,
                     inline: true
                 }
@@ -90,6 +90,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Alterando o ID do canal de broadcast para o novo solicitante
         bot.transmission.id_broad = id_broadcast
+        client.cached.broad_status = true
         bot.transmission.status = true
         await bot.save()
 

@@ -15,6 +15,7 @@ module.exports = async ({ client, interaction, bot }) => {
         })
 
     bot.transmission.status = !bot.transmission.status
+    client.cached.broad_status = bot.transmission.status
 
     if (bot.transmission.status) { // Reativando
         interaction.reply({
