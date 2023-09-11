@@ -54,13 +54,14 @@ client.discord.on("messageCreate", async (message) => {
 		require("./core/events/broadcast")({ client, message })
 
 	const text = message.content.toLowerCase()
+	const guild = await client.getGuild(message.guild.id)
 
 	// Respostas automatizadas por IA
 	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
 		return await require("./core/events/conversacao")({ client, message, text })
 
 	try { // Atualizando o XP dos usuários
-		const caso = "messages", guild = await client.getGuild(message.guild.id)
+		const caso = "messages"
 
 		if (guild.conf.spam) // Sistema anti-spam do servidor
 			require("./core/events/spam")({ client, message, user, guild })
