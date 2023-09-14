@@ -17,7 +17,6 @@ module.exports = async ({ client, message, caso }) => {
 
     // Coletando os dados do usuário alvo
     let user = await getUserRankServer(id_alvo, message.guild.id)
-    let user_data = await getUser(id_alvo)
 
     // Sincronizando o XP interno de todos os servidores que o usuário faz parte
     if (!user.ixp) {
@@ -118,11 +117,14 @@ module.exports = async ({ client, message, caso }) => {
 
     // Bônus em Bufunfas por subir de nível
     if (parseInt(user.ixp / 1000) !== parseInt(xp_anterior / 1000)) {
-        user_data.misc.money += 250
+        const internal_user = await getUser(id_alvo)
+
+        internal_user.misc.money += 250
+        await internal_user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        client.registryStatement(user_data.uid, "misc.b_historico.nivel", true, 250)
-        client.sendDM(user_data, { data: client.tls.phrase(user, "misc.b_historico.nivel_descricao", client.emoji("mc_esmeralda")) }, false)
+        client.registryStatement(internal_user.uid, "misc.b_historico.nivel", true, 250)
+        client.sendDM(internal_user, { data: client.tls.phrase(user, "misc.b_historico.nivel_descricao", client.emoji("mc_esmeralda")) }, false)
 
         client.journal("gerado", 250)
     }

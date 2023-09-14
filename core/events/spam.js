@@ -1,10 +1,9 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { createMessage, getUserMessages, dropAllUserMessages } = require("../database/schemas/Message")
-
 let bloqueia_operacao = 0
 
 const usersmap = new Map()
+const cached_messages = {}
 const LIMIT = 7, DIFF = 3000
 
 module.exports = async function ({ client, message, user, guild }) {
@@ -33,15 +32,15 @@ module.exports = async function ({ client, message, user, guild }) {
 
             userdata.timer = setTimeout(async () => {
                 usersmap.delete(message.author.id)
-                await dropAllUserMessages(message.author.id, guild.sid)
+                cached_messages[`${message.author.id}.${guild.sid}`] = []
             }, DIFF + 2000)
 
             usersmap.set(message.author.id, userdata)
 
         } else {
 
-            // Registrando a mensagem no banco para posterior exclusão
-            await createMessage(guild, message)
+            // Registrando a mensagem em cache para posterior exclusão
+            registryMessage(guild, message)
             ++msgcount
 
             if (parseInt(msgcount) === LIMIT) {
@@ -61,7 +60,7 @@ module.exports = async function ({ client, message, user, guild }) {
     } else {
         let fn = setTimeout(async () => {
             usersmap.delete(message.author.id)
-            await dropAllUserMessages(message.author.id, guild.sid)
+            cached_messages[`${message.author.id}.${guild.sid}`] = []
         }, DIFF + 2000)
 
         usersmap.set(message.author.id, {
@@ -85,12 +84,12 @@ async function nerfa_spam(client, user, guild, message) {
     let entradas_spamadas = ""
 
     // Listando as mensagens consideras SPAM e excluindo elas
-    const messages = await getUserMessages(user.uid, guild.sid)
-    messages.forEach(internal_message => {
-        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.timestamp).toLocaleTimeString()} ]\n\n`
+    const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
+    user_messages.forEach(internal_message => {
+        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
 
         // Excluindo as mensagens enviadas pelo usuário que foram consideradas como spam
-        client.discord.channels.cache.get(internal_message.cid).messages.fetch(internal_message.mid)
+        client.discord.channels.cache.get(internal_message.channelId).messages.fetch(internal_message.id)
             .then(msg => msg.delete())
             .catch(() => console.log("🔍 | Uma mensagem não foi encontrada, continuando..."))
     })
@@ -126,12 +125,12 @@ async function nerfa_spam(client, user, guild, message) {
 
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
-            if (messages[0].content.includes("https://discord.gg/"))
+            if (cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("https://discord.gg/"))
                 msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
 
-            await dropAllUserMessages(user.uid, guild.sid)
+            cached_messages[`${message.author.id}.${guild.sid}`] = []
             bloqueia_operacao = 0
         })
         .catch(async () => {
@@ -148,7 +147,7 @@ async function nerfa_spam(client, user, guild, message) {
 
             client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embed: embed })
 
-            await dropAllUserMessages(user.uid, guild.sid)
+            cached_messages[`${message.author.id}.${guild.sid}`] = []
             bloqueia_operacao = 0
         })
 }
@@ -184,4 +183,13 @@ async function filtra_spam(client, user, id_guild) {
             })
         }
     })
+}
+
+// Salva mensagens consideradas spam em cache
+function registryMessage(guild, message) {
+
+    if (!cached_messages[`${message.author.id}.${guild.sid}`])
+        cached_messages[`${message.author.id}.${guild.sid}`] = []
+
+    cached_messages[`${message.author.id}.${guild.sid}`].push(message)
 }
