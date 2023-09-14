@@ -2,17 +2,24 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 let bloqueia_operacao = 0
 
-const usersmap = new Map()
+const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
 const LIMIT = 7, DIFF = 3000
 
 module.exports = async function ({ client, message, user, guild }) {
 
-    let user_guild = await client.getMemberGuild(message, user.uid)
+    let user_guild
 
-    // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
-    if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers) || user_guild.permissions.has([PermissionsBitField.Flags.BanMembers]))
-        return
+    if (usersrole.has(message.author.id)) {
+        const userdata = usersrole.get(message.author.id)
+        const { u_g } = userdata
+        user_guild = u_g
+
+        // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
+        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers) || user_guild.permissions.has([PermissionsBitField.Flags.BanMembers]))
+            return
+    } else
+        user_guild = await client.getMemberGuild(message, user.uid)
 
     if (usersmap.has(message.author.id)) {
 
@@ -32,6 +39,7 @@ module.exports = async function ({ client, message, user, guild }) {
 
             userdata.timer = setTimeout(async () => {
                 usersmap.delete(message.author.id)
+                usersrole.delete(message.author.id)
                 cached_messages[`${message.author.id}.${guild.sid}`] = []
             }, DIFF + 2000)
 
@@ -60,6 +68,7 @@ module.exports = async function ({ client, message, user, guild }) {
     } else {
         let fn = setTimeout(async () => {
             usersmap.delete(message.author.id)
+            usersrole.delete(message.author.id)
             cached_messages[`${message.author.id}.${guild.sid}`] = []
         }, DIFF + 2000)
 
@@ -68,6 +77,12 @@ module.exports = async function ({ client, message, user, guild }) {
             lastMessage: message,
             timer: fn
         })
+
+        usersrole.set(message.author.id, {
+            u_g: user_guild
+        })
+
+        console.log(usersrole, usersmap)
     }
 }
 
