@@ -15,6 +15,7 @@ const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
 const translate = require('./core/formatters/translate')
+let libera_user_att = 0
 
 function internal_functions(client) {
 
@@ -306,11 +307,14 @@ function internal_functions(client) {
     client.verifyUserLanguage = async (user, id_guild) => {
 
         // Valida se o usuário não possui um idioma padrão definido
-        if (!user.lang) {
+        if (!user.lang && !libera_user_att) {
+
+            libera_user_att = 1
             const guild = await client.getGuild(id_guild)
 
             user.lang = guild.lang || "pt-br"
             await user.save()
+            libera_user_att = 0
         }
     }
 
