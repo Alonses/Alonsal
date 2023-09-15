@@ -124,8 +124,6 @@ module.exports = async ({ client, message, caso }) => {
 
         // Registrando as movimentações de bufunfas para o usuário
         client.registryStatement(internal_user.uid, "misc.b_historico.nivel", true, 250)
-        client.sendDM(internal_user, { data: client.tls.phrase(user, "misc.b_historico.nivel_descricao", client.emoji("mc_esmeralda")) }, false)
-
         client.journal("gerado", 250)
     }
 
