@@ -4,7 +4,7 @@ let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
-const LIMIT = 7, DIFF = 3000
+const LIMIT = 8, DIFF = 3000
 
 module.exports = async function ({ client, message, user, guild }) {
 
@@ -41,7 +41,7 @@ module.exports = async function ({ client, message, user, guild }) {
                 usersmap.delete(message.author.id)
                 usersrole.delete(message.author.id)
                 cached_messages[`${message.author.id}.${guild.sid}`] = []
-            }, DIFF + 2000)
+            }, DIFF)
 
             usersmap.set(message.author.id, userdata)
 
@@ -70,7 +70,7 @@ module.exports = async function ({ client, message, user, guild }) {
             usersmap.delete(message.author.id)
             usersrole.delete(message.author.id)
             cached_messages[`${message.author.id}.${guild.sid}`] = []
-        }, DIFF + 2000)
+        }, DIFF)
 
         usersmap.set(message.author.id, {
             msgcount: 1,
@@ -81,8 +81,6 @@ module.exports = async function ({ client, message, user, guild }) {
         usersrole.set(message.author.id, {
             u_g: user_guild
         })
-
-        console.log(usersrole, usersmap)
     }
 }
 
@@ -102,15 +100,7 @@ async function nerfa_spam(client, user, guild, message) {
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
     user_messages.forEach(internal_message => {
         entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
-
-        // Excluindo as mensagens enviadas pelo usuário que foram consideradas como spam
-        client.discord.channels.cache.get(internal_message.channelId).messages.fetch(internal_message.id)
-            .then(msg => msg.delete())
-            .catch(() => console.log("🔍 | Uma mensagem não foi encontrada, continuando..."))
     })
-
-    // Busca mensagens enviadas anteriormente (possivelmente spam) para excluir
-    filtra_spam(client, user.uid, guild.sid)
 
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()
@@ -144,9 +134,6 @@ async function nerfa_spam(client, user, guild, message) {
                 msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
-
-            cached_messages[`${message.author.id}.${guild.sid}`] = []
-            bloqueia_operacao = 0
         })
         .catch(async () => {
 
@@ -161,42 +148,32 @@ async function nerfa_spam(client, user, guild, message) {
                 )
 
             client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embed: embed })
-
-            cached_messages[`${message.author.id}.${guild.sid}`] = []
-            bloqueia_operacao = 0
         })
+
+    setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
+        remove_spam(client, user.uid, guild.sid, user_messages[0])
+    }, 3000)
 }
 
-async function filtra_spam(client, user, id_guild) {
+async function remove_spam(client, id_user, id_guild, user_message) {
 
-    const guilds = client.guilds()
-    const userMessages = []
+    const guild = client.guilds(id_guild)
 
     // Filtra todas as mensagens no servidor que foram enviadas pelo usuário nos últimos 20 segundos
-    guilds.forEach(async guild => {
+    guild.channels.cache.forEach(async channel => {
 
-        if (guild.id === id_guild) {
-            guild.channels.cache.forEach(channel => {
+        if (channel.type === 0)
+            await channel.messages.fetch({ limit: 30 })
+                .then(async messages => {
 
-                if (channel.type === 0)
-                    channel.messages.fetch({
-                        limit: 20
-                    }).then(messages => {
-                        const msg = messages.filter(m => m.author.id === user)
+                    const userMessages = [] // Listando mensagens enviadas nos últimos 20 segundos
+                    messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 20000) || m.createdTimestamp === user_message.createdTimestamp).forEach(msg => userMessages.push(msg))
+                    channel.bulkDelete(userMessages)
 
-                        // Listando mensagens enviadas nos últimos 20 segundos
-                        msg.forEach(msg => {
-                            if (msg.createdTimestamp > msg.createdTimestamp - 20000)
-                                userMessages.push(msg)
-                        })
-
-                        // Excluindo as mensagens que ficaram faltando
-                        userMessages.forEach(msg => {
-                            msg.delete().catch(() => console.log("🔍 | Uma mensagem não foi encontrada, continuando..."))
-                        })
-                    })
-            })
-        }
+                    // Desbloqueando o bot para executar novamente a moderação de spam
+                    bloqueia_operacao = 0
+                    cached_messages[`${id_user}.${id_guild}`] = []
+                })
     })
 }
 
