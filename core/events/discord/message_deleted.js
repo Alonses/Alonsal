@@ -11,10 +11,15 @@ module.exports = async ({ client, message }) => {
     // Verificando se a guild habilitou o logger
     if (!client.decider(guild.conf?.logger, 0)) return
 
-    // Permissão para ver o registro de auditoria
+    // Permissão para ver o registro de auditoria, desabilitando o logger
     const bot = await client.getMemberGuild(message, client.id())
-    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
+    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+
+        guild.conf.logger = 0
+        await guild.save()
+
         return client.notify(guild.logger.channel, `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}`)
+    }
 
     // Coletando dados sobre o evento
     const fetchedLogs = await message.guild.fetchAuditLogs({

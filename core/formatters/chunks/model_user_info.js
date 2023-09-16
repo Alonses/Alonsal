@@ -30,9 +30,7 @@ module.exports = async (client, user, interaction, dados, autor_original) => {
             content: client.tls.phrase(user, "menu.botoes.comando_desatualizado"),
             components: []
         })
-            .catch(err => {
-                client.error({ err })
-            })
+            .catch(err => { client.error({ err }) })
 
         return
     }

@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./core/functions/hex_color')
@@ -119,6 +121,7 @@ function internal_functions(client) {
         return getUserBadges(id_user)
     }
 
+    // Retorna o membro do servidor
     client.getMemberGuild = (interaction, id_alvo) => {
         let membro = interaction.guild.members.fetch(id_alvo)
             .catch(() => { return null })
@@ -126,10 +129,12 @@ function internal_functions(client) {
         return membro
     }
 
+    // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
     }
 
+    // Converte o valor numério para um formato específico
     client.locale = (valor, locale) => {
 
         if (typeof locale === "undefined")
@@ -138,10 +143,12 @@ function internal_functions(client) {
         return valor.toLocaleString(locale)
     }
 
+    // Registra os eventos no diário do bot
     client.journal = async (caso, quantia) => {
         require('./core/auto/edit_journal')({ client, caso, quantia })
     }
 
+    // Cria uma lista com vírgulas e & no último elemento
     client.list = (valores, tamanho_maximo) => {
 
         let lista = ""
@@ -163,35 +170,43 @@ function internal_functions(client) {
         return lista
     }
 
-    client.notify = (id_alvo, conteudo) => {
+    // Envia uma notificação em um canal
+    client.notify = async (id_alvo, conteudo) => {
+
         if (!id_alvo) return
+        const canal = await client.discord.channels.cache.get(id_alvo)
+
+        // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
+        if (!canal.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) || !canal.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages))
+            return
 
         if (typeof conteudo === "object") { // embed
             if (!conteudo.components && !conteudo.content && !conteudo.file)
-                client.discord.channels.cache.get(id_alvo).send({
+                canal.send({
                     embeds: [conteudo]
                 })
             else if (conteudo.components)
-                client.discord.channels.cache.get(id_alvo).send({
+                canal.send({
                     embeds: [conteudo.embed],
                     components: [conteudo.components]
                 })
             else if (conteudo.content)
-                client.discord.channels.cache.get(id_alvo).send({
+                canal.send({
                     content: conteudo.content,
                     embeds: [conteudo.embed]
                 })
             else if (conteudo.file) // Usado pelo canvas com embed
-                client.discord.channels.cache.get(id_alvo).send({
+                canal.send({
                     embeds: [conteudo.embed],
                     files: [conteudo.file]
                 })
         } else // texto normal
-            client.discord.channels.cache.get(id_alvo).send({
+            canal.send({
                 content: conteudo
             })
     }
 
+    // Retorna um valor aleatório
     client.random = (intervalo, base) => {
         if (typeof base === "undefined") // Valor minimo aceitável
             base = 0
@@ -202,13 +217,14 @@ function internal_functions(client) {
         return base + Math.round(intervalo * Math.random())
     }
 
+    // Registra uma movimentação bancária do usuário
     client.registryStatement = (user, traducao, caso, valor) => {
         return registryStatement(user, traducao, caso, valor, client.timestamp())
     }
 
+    // Substitui partes do texto por outros valores
     client.replace = (string, valores) => {
 
-        // Substitui partes do texto por outros valores
         if (typeof valores === "object") { // Array com vários dados para alterar
 
             if (valores.length > 0)
@@ -225,6 +241,7 @@ function internal_functions(client) {
         return string
     }
 
+    // Envia uma notificação em DM para o usuário
     client.sendDM = (user, dados, force) => {
 
         let notifications
@@ -284,6 +301,7 @@ function internal_functions(client) {
         return Math.floor(new Date().getTime() / 1000)
     }
 
+    // Atualiza o formato de salvamento das tarefas
     client.update_tasks = async (interaction) => {
 
         const tasks = await listAllUserTasks(interaction.user.id)
@@ -304,6 +322,23 @@ function internal_functions(client) {
         }
     }
 
+    // Verifica se o logger possui acesso ao registro de auditoria do servidor
+    client.verifyLogger = async (interaction) => {
+        const bot = await client.getMemberGuild(interaction, client.id())
+        let aprovacao = 1
+
+        // Permissão para ver o registro de auditoria, desabilitando o logger
+        if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+
+            aprovacao = 0
+            guild.conf.logger = 0
+            await guild.save()
+        }
+
+        return aprovacao
+    }
+
+    // Atualiza o idioma padrão do usuário caso não possua
     client.verifyUserLanguage = async (user, id_guild) => {
 
         // Valida se o usuário não possui um idioma padrão definido
@@ -318,9 +353,9 @@ function internal_functions(client) {
         }
     }
 
+    // Valida se o usuário possui ranking ativo
     client.verifyUserRanking = async (id_user) => {
 
-        // Valida se o usuário possui ranking ativo
         let user = await client.getUser(id_user)
         let user_ranking = true
 

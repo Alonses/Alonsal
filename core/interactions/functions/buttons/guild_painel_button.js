@@ -95,11 +95,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
                 // Verificando se o bot possui permissões para ver o registro de auditoria
                 if (!guild.conf.logger) {
-                    const bot = await client.getMemberGuild(interaction, client.id())
+                    const aprovacao = client.verifyLogger(interaction)
 
-                    // Em caso negativo, desabilita o recurso
-                    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
-                        return client.tls.report(interaction, user, "mode.logger.permissao", true, 7, null, true)
+                    if (!aprovacao)
+                        return client.notify(guild.logger.channel, `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}`)
                 }
 
                 guild.conf.logger = !guild.conf.logger
