@@ -28,6 +28,9 @@ module.exports = {
             .then(response => response.json())
             .then(async res => {
 
+                if (res.length < 1)
+                    return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
+
                 let jogos_disponiveis = []
                 let objeto_jogos = []
 
