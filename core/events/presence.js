@@ -72,6 +72,7 @@ function requisita_status(client) {
 
         // Exibindo o status personalizado de forma aleatória por um tempo
         client.user().setActivity(texto_status, { type: actionTypes[activities[num].type] })
+        client.cached.presence = num // Registrando o número do status atual
 
         requisita_status(client)
     }, 15000 + client.random(5000, tempo_minimo))

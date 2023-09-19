@@ -57,7 +57,8 @@ class CeiraClient {
             clientId: clientId
         },
             this.cached = {
-                broad_status: false
+                broad_status: false,
+                presence: null
             }
     }
 
