@@ -1,6 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { getReport, dropReport } = require('../../../database/schemas/Report')
+const { badges } = require('../../../data/badges')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -27,8 +28,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Reportando um usuário mau comportado
     if (operacao === 1) {
-        // Adicionando e reportando para outros servidores
 
+        // Adicionando e reportando para outros servidores
         alvo.archived = false
         await alvo.save()
 
@@ -37,13 +38,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     if (operacao === 2) {
-        // Adicionando sem anunciar para outros servidores
 
+        // Adicionando sem anunciar para outros servidores
         alvo.archived = false
         await alvo.save()
 
         texto_retorno = client.tls.phrase(user, "mode.report.adicionado_silenciosamente", client.defaultEmoji("guard"))
     }
+
+    // Verificando se o usuário possui a badge de reporter e concedendo caso não possua
+    client.registryBadge(user, badges.REPORTER)
 
     // Verificando se a opção de banir o usuário ao fazer um report está ativa
     if (guild?.conf.auto_ban) {

@@ -37,8 +37,8 @@ module.exports = {
     async execute(client, user, interaction) {
 
         if (interaction.options.getSubcommand() === "personal")
-            return require('../../core/formatters/chunks/model_painel')(client, user, interaction)
+            return require('../../core/formatters/chunks/model_user_panel')(client, user, interaction)
         else
-            return require('../../core/formatters/chunks/model_guild_painel')(client, user, interaction)
+            return require('../../core/formatters/chunks/model_guild_panel')(client, user, interaction)
     }
 }

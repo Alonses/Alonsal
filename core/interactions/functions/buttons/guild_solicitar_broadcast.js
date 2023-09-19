@@ -61,15 +61,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (guild.conf.broadcast)
             interaction.update({
                 content: client.tls.phrase(user, "mode.broadcast.ativado_button", 10),
-                embeds: [],
-                components: [],
                 ephemeral: true
             })
         else
             interaction.update({
                 content: client.tls.phrase(user, "mode.broadcast.desativado_button", client.emoji(0)),
-                embeds: [],
-                components: [],
                 ephemeral: true
             })
 

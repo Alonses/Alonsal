@@ -35,8 +35,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 })
 
             const row = client.create_buttons([
-                { id: "history_button", name: client.tls.phrase(user, "menu.botoes.completo"), emoji: '📰', type: 2, data: `1|${timestamp}` },
-                { id: "history_button", name: client.tls.phrase(user, "menu.botoes.resumido"), emoji: '🔖', type: 0, data: `2|${timestamp}` }
+                { id: "module_history_button", name: client.tls.phrase(user, "menu.botoes.completo"), emoji: '📰', type: 2, data: `1|${timestamp}` },
+                { id: "module_history_button", name: client.tls.phrase(user, "menu.botoes.resumido"), emoji: '🔖', type: 0, data: `2|${timestamp}` }
             ], interaction)
 
             return interaction.update({
