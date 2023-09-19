@@ -8,13 +8,14 @@ const { getUser } = require('./core/database/schemas/User')
 const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
 const { create_buttons } = require('./core/generators/buttons')
-const { getUserBadges } = require('./core/database/schemas/Badge')
+const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
 const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
+const { busca_badges, badgeTypes } = require('./core/data/badges')
 
 const translate = require('./core/formatters/translate')
 let libera_user_att = 0
@@ -215,6 +216,26 @@ function internal_functions(client) {
             intervalo = intervalo.length - 1
 
         return base + Math.round(intervalo * Math.random())
+    }
+
+    client.registryBadge = async (user, id_badge) => {
+
+        const all_badges = [], badges_user = await getUserBadges(user.uid)
+
+        // Listando todas as badges que o usuário possui
+        if (badges_user.length > 0)
+            badges_user.forEach(valor => {
+                all_badges.push(parseInt(valor.badge))
+            })
+
+        if (!all_badges.includes(id_badge)) {
+
+            // Atribuindo a badge reporter ao usuário
+            await createBadge(user.uid, id_badge, client.timestamp())
+            const badge = busca_badges(client, badgeTypes.SINGLE, id_badge)
+
+            client.sendDM(user, { data: client.replace(client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes")), [badge.name, badge.emoji]) })
+        }
     }
 
     // Registra uma movimentação bancária do usuário
