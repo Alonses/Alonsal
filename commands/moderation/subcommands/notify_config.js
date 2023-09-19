@@ -41,9 +41,9 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "mode.anuncio.permissao_envio", true, client.defaultEmoji("guard"))
 
     const row = client.create_buttons([
-        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}.${dados.lang}` },
-        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.ativar_anunciando"), type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}.${dados.lang}` },
-        { id: "notify_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
+        { id: "misc_notify_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}.${dados.lang}` },
+        { id: "misc_notify_button", name: client.tls.phrase(user, "menu.botoes.ativar_anunciando"), type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}.${dados.lang}` },
+        { id: "misc_notify_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
     ], interaction)
 
     const embed = new EmbedBuilder()

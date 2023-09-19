@@ -1,6 +1,20 @@
 const { badge_ids } = require('../../files/json/text/emojis.json')
 
-const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer", "Pionner", "Voter"]
+const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer", "Pionner", "Voter", "Reporter"]
+
+const badges = {
+    TESTER: 0,
+    DEBUGGER: 1,
+    PROGRAMMER: 2,
+    CREATOR: 3,
+    WAXED: 4,
+    DONATER: 5,
+    PULER: 6,
+    ROSQUER: 7,
+    PIONNER: 8,
+    VOTER: 9,
+    REPORTER: 10
+}
 
 const badgeTypes = {
     SINGLE: 0,
@@ -70,6 +84,7 @@ async function buildAllBadges(client, user, badges) {
 }
 
 module.exports = {
+    badges,
     badgeTypes,
     busca_badges,
     buildAllBadges

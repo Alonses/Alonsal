@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Módulo do History sem tipo de retorno definido
     if (modulo.type === 2 && modulo.data === null)
         row.components.push(client.create_buttons([
-            { id: "modules", name: client.tls.phrase(user, "menu.botoes.definir_retorno"), type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` }
+            { id: "module", name: client.tls.phrase(user, "menu.botoes.definir_retorno"), type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` }
         ], interaction).components[0])
 
     return interaction.update({

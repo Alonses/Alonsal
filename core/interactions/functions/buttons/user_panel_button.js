@@ -1,6 +1,7 @@
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
+    let pagina = 0
 
     // Tratamento dos cliques
     // 1 -> Modo fantasma
@@ -28,9 +29,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
             user.conf.ranking = !user.conf.ranking
         else
             user.conf.ranking = false
+    } else if (escolha === 4) {
+
+        // Ativa ou desativa o ranking do usuário
+        if (typeof user?.conf.public_badges !== "undefined")
+            user.conf.public_badges = !user.conf.public_badges
+        else
+            user.conf.public_badges = false
     }
+
+    if (escolha > 3)
+        pagina = 1
 
     await user.save()
 
-    require('../../../formatters/chunks/model_painel')(client, user, interaction)
+    require('../../../formatters/chunks/model_user_panel')(client, user, interaction, pagina)
 }

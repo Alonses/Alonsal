@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (criador !== interaction.user.id)
         autor_original = false
 
-    if (funcao.includes("module") && !autor_original && funcao !== "modules") // Funções de módulos
+    if (funcao.includes("module") && !autor_original && funcao !== "module") // Funções de módulos
         return require('./chunks/modulos')({ client, user, interaction, autor_original })
 
     // Dados extras

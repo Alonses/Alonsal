@@ -1,7 +1,7 @@
 const { buildAllBadges, busca_badges } = require('../../data/badges')
 const { getUserReports } = require('../../database/schemas/Report')
 
-module.exports = async (client, user, interaction, dados, autor_original) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     // Códigos de operação
     // 0 -> Perfil
@@ -58,11 +58,15 @@ module.exports = async (client, user, interaction, dados, autor_original) => {
     // Badges do usuário
     if (operador === 2) {
 
+        const internal_user = await client.getUser(id_alvo)
+
+        // Informando ao usuário do comando que essa guia está desativada para ele
+        if (!autor_original && !internal_user?.conf.public_badges)
+            return client.tls.reply(interaction, user, "manu.data.nao_compartilha_badges", true, 40)
+
         let id_badges = await client.getUserBadges(id_alvo)
         let badges = await buildAllBadges(client, user, id_badges)
         // let achievements = busca_achievements(client, all, user.id, interaction)
-
-        const internal_user = await client.getUser(id_alvo)
 
         if (internal_user.misc.fixed_badge) {
             const fixed_badge = busca_badges(client, 1, internal_user)
@@ -116,13 +120,23 @@ module.exports = async (client, user, interaction, dados, autor_original) => {
 
     // Liga e desliga os botões conforme a página que o usuário se encontra
     const b_disabled = [false, false, false, false]
+    const c_buttons = [1, 1, 1, 1]
     b_disabled[operador] = true
+    c_buttons[operador] = 2
+
+    // Desabilitando a guia de badges caso o usuário tenha escondido
+    if (!autor_original) {
+        const internal_user = await client.getUser(id_alvo)
+
+        if (!internal_user?.conf.public_badges)
+            b_disabled[2] = true
+    }
 
     const row = client.create_buttons([
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.perfil"), type: 1, emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.permissoes"), type: 1, emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
-        { id: "user_info_button", name: "Badges", type: 1, emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] },
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: 1, emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.perfil"), type: c_buttons[0], emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.permissoes"), type: c_buttons[1], emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
+        { id: "user_info_button", name: "Badges", type: c_buttons[2], emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] },
+        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: c_buttons[3], emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
     ], interaction)
 
     if (autor_original) {

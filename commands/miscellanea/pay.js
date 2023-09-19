@@ -106,8 +106,8 @@ module.exports = {
 
         // Criando os botões para o menu de transferências
         const row = client.create_buttons([
-            { id: "transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${alvo.uid}[${bufunfas}` },
-            { id: "transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
+            { id: "bank_transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: `1|${alvo.uid}[${bufunfas}` },
+            { id: "bank_transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
         ], interaction)
 
         return interaction.reply({
