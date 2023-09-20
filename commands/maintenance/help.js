@@ -15,8 +15,10 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const row = client.create_buttons([
-            { name: client.tls.phrase(user, "inic.ping.site"), value: 'http://alonsal.glitch.me/', type: 4 },
-            { name: client.tls.phrase(user, "inic.inicio.suporte"), value: process.env.url_support, type: 4, emoji: client.emoji("icon_rules_channel") }
+            { name: client.tls.phrase(user, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.glitch.me/' },
+            { name: client.tls.phrase(user, "inic.inicio.suporte"), type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support },
+            { name: client.tls.phrase(user, "manu.avalie.avaliar"), type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
+            { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
         ], interaction)
 
         const embed = new EmbedBuilder()
