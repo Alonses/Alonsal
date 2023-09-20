@@ -38,7 +38,6 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
-
         if (interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "inic.error.comando_restrito", true, 18)
 
@@ -63,8 +62,6 @@ module.exports = {
 
         if (!item.tipo)
             item.tipo = "game"
-
-        return
 
         const objetos_anunciados = [item]
         await createGame(item)
