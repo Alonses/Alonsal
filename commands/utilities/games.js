@@ -1,7 +1,8 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const { getGames, verifyInvalidGames } = require('../../core/database/schemas/Game')
+
+const { redes } = require('../../files/json/text/anuncio.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,41 +25,46 @@ module.exports = {
         }),
     async execute(client, user, interaction) {
 
-        fetch(`${process.env.url_apisal}/games`)
-            .then(response => response.json())
-            .then(async res => {
+        // Verificando pelos games que já expiraram
+        await verifyInvalidGames()
 
-                if (res.length < 1)
-                    return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
+        // Listando os games que estão gratuitos no momento
+        const games = await getGames()
+        let jogos_disponiveis = [], objeto_jogos = []
 
-                let jogos_disponiveis = []
-                let objeto_jogos = []
+        games.forEach(game => {
 
-                res.forEach(valor => {
-                    let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
+            const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
+            const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
+            let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
 
-                    jogos_disponiveis.push(`- ${valor.nome} [ ${client.tls.phrase(user, "mode.anuncio.ate_data")} ${valor.expira} ]`)
-                    objeto_jogos.push({
-                        name: nome_jogo,
-                        type: 4,
-                        value: valor.link
-                    })
-                })
+            if (game.preco === 0)
+                preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
 
-                // Criando os botões externos para os jogos
-                const row = client.create_buttons(objeto_jogos)
-
-                const embed = new EmbedBuilder()
-                    .setTitle(client.tls.phrase(user, "mode.anuncio.ativos"))
-                    .setColor(client.embed_color(user.misc.color))
-                    .setThumbnail(res[0].thumbnail)
-                    .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\`\`\`${jogos_disponiveis.join("\n")}\`\`\``)
-
-                interaction.reply({
-                    embeds: [embed],
-                    components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
+            jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]`)
+            objeto_jogos.push({
+                name: nome_jogo,
+                type: 4,
+                value: game.link
             })
+        })
+
+        if (games.length < 1)
+            return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
+
+        // Criando os botões externos para os jogos
+        const row = client.create_buttons(objeto_jogos)
+
+        const embed = new EmbedBuilder()
+            .setTitle(`> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.emoji("emojis_dancantes")}`)
+            .setColor(client.embed_color(user.misc.color))
+            .setThumbnail(games[0]?.thumbnail || "https://i.imgur.com/AEkiKGU.jpg")
+            .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`)
+
+        interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
     }
 }
