@@ -3,6 +3,9 @@ module.exports = async ({ client, user, interaction, texto_entrada }) => {
     // Torna o texto nesse formato "teste😂testado😂testadamente"
     let emoji = interaction.options.getString("emoji")
 
+    if (!emoji) // Não informou um emoji
+        return client.tls.reply(interaction, user, "dive.counter.sem_emoji", true, 5)
+
     // Emoji customizado
     if (emoji.startsWith("<") && emoji.endsWith(">")) {
         const id = emoji.match(/\d{15,}/g)[0]

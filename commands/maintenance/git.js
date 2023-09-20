@@ -15,7 +15,8 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const row = client.create_buttons([
-            { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" }
+            { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },
+            { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
         ])
 
         const embed = new EmbedBuilder()
