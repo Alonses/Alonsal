@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
+const { createGame, verifyInvalidGames } = require('../../core/database/schemas/Game')
+
 const dispara_anuncio = require('../../core/auto/send_announcement')
+const time_stamped = require('../../core/functions/time_stamped')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -35,8 +38,12 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute(client, user, interaction) {
 
+
         if (interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "inic.error.comando_restrito", true, 18)
+
+        // Verificando pelos games que já expiraram
+        verifyInvalidGames()
 
         await interaction.deferReply({
             ephemeral: true
@@ -47,7 +54,7 @@ module.exports = {
             tipo: interaction.options.getString("tipo"),
             link: interaction.options.getString("link"),
             preco: interaction.options.getNumber("preço"),
-            expira: interaction.options.getString("expiração"),
+            expira: time_stamped(interaction.options.getString("expiração")),
             thumbnail: interaction.options.getAttachment("imagem")
         }
 
@@ -57,7 +64,10 @@ module.exports = {
         if (!item.tipo)
             item.tipo = "game"
 
+        return
+
         const objetos_anunciados = [item]
+        await createGame(item)
 
         dispara_anuncio({ client, interaction, objetos_anunciados })
     }

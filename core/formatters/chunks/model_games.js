@@ -1,7 +1,9 @@
+const { redes } = require('../../../files/json/text/anuncio.json')
+
 function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
 
     const { data } = require(`../../../files/languages/${idioma_definido}.json`)
-    const game = data.game
+    const game = data.game, mode = data.mode
 
     let texto_formatado, valor_total = 0, link_app = ""
     plataforma = plataforma.split(" ")[0]
@@ -16,14 +18,27 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
     if (!objeto_anunciado[0].tipo)
         objeto_anunciado[0].tipo = "game"
 
-    if (objeto_anunciado[0].link.match(/store.steam/))
+    if (objeto_anunciado[0].link.match(/store.steam/) && objeto_anunciado.length < 2)
         link_app = client.replace(`\n\n${client.emoji("lg_steam")} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
 
     // Um item anunciado
     texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])
 
-    if (objeto_anunciado.length > 1) // Vários itens anunciados
-        texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_2`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])
+    if (objeto_anunciado.length > 1) { // Vários itens anunciados
+        const jogos_disponiveis = []
+
+        objeto_anunciado.forEach(game => {
+            const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
+            let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
+
+            if (game.preco === 0)
+                preco = mode["anuncio"]["ficara_pago"]
+
+            jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${mode["anuncio"]["ate_data"]} <t:${game.expira}:D> ]`)
+        })
+
+        texto_formatado = `${client.replace(mode["anuncio"]["games_gratuitos"], client.emoji("emojis_dancantes"))}\n\n${jogos_disponiveis.join("\n\n")}`
+    }
 
     return `${texto_formatado}${link_app}`
 }

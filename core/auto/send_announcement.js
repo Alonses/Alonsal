@@ -8,10 +8,6 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 
     const canais_clientes = await client.getGameChannels()
 
-    // Status desconhecido ou sem link de anúncio
-    if (objetos_anunciados.status === 501 || objetos_anunciados.length < 1)
-        return client.notify(process.env.channel_feeds, ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL.")
-
     if (canais_clientes.length < 1)
         return client.notify(process.env.channel_feeds, ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização.")
 
@@ -25,8 +21,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         })
 
     const plataforma = redes[matches[0]][1], logo_plat = redes[matches[0]][0]
-    let canais_recebidos = 0, imagem_destaque, valor_anterior = 0
-    let lista_links = []
+    let canais_recebidos = 0, imagem_destaque, valor_anterior = 0, lista_links = []
 
     objetos_anunciados.forEach(valor => {
         let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
