@@ -362,6 +362,8 @@ function internal_functions(client) {
     // Atualiza o idioma padrão do usuário caso não possua
     client.verifyUserLanguage = async (user, id_guild) => {
 
+        return
+
         // Valida se o usuário não possui um idioma padrão definido
         if (!user.lang && !libera_user_att) {
 
@@ -370,6 +372,7 @@ function internal_functions(client) {
 
             user.lang = guild.lang || "pt-br"
             await user.save()
+
             libera_user_att = 0
         }
     }

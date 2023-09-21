@@ -22,7 +22,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
         link_app = client.replace(`\n\n${client.emoji("lg_steam")} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
 
     // Um item anunciado
-    texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), objeto_anunciado[0].expira, valor_total, plataforma])
+    texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), `<t:${objeto_anunciado[0].expira}:D>`, valor_total, plataforma])
 
     if (objeto_anunciado.length > 1) { // Vários itens anunciados
         const jogos_disponiveis = []
