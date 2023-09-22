@@ -4,7 +4,7 @@ let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
-const LIMIT = 8, DIFF = 4000
+const LIMIT = 4, DIFF = 5000
 
 module.exports = async function ({ client, message, user, guild }) {
 
@@ -51,7 +51,7 @@ module.exports = async function ({ client, message, user, guild }) {
             registryMessage(guild, message)
             ++msgcount
 
-            if (parseInt(msgcount) === LIMIT) {
+            if (msgcount === LIMIT) {
 
                 // Spam confirmado
                 if (!bloqueia_operacao) {
@@ -66,6 +66,7 @@ module.exports = async function ({ client, message, user, guild }) {
             }
         }
     } else {
+
         let fn = setTimeout(async () => {
             usersmap.delete(message.author.id)
             usersrole.delete(message.author.id)
@@ -159,15 +160,15 @@ async function remove_spam(client, id_user, id_guild, user_message) {
 
     const guild = client.guilds(id_guild)
 
-    // Filtra todas as mensagens no servidor que foram enviadas pelo usuário nos últimos 20 segundos
+    // Filtra todas as mensagens no servidor que foram enviadas pelo usuário no último minuto
     guild.channels.cache.forEach(async channel => {
 
         if (channel.type === 0)
             await channel.messages.fetch({ limit: 30 })
                 .then(async messages => {
 
-                    const userMessages = [] // Listando mensagens enviadas nos últimos 20 segundos
-                    messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 20000) || m.createdTimestamp === user_message.createdTimestamp).forEach(msg => userMessages.push(msg))
+                    const userMessages = [] // Listando mensagens enviadas no último minuto
+                    messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 60000) || m.createdTimestamp === user_message.createdTimestamp).forEach(msg => userMessages.push(msg))
                     channel.bulkDelete(userMessages)
 
                     // Desbloqueando o bot para executar novamente a moderação de spam
