@@ -12,7 +12,9 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("Game", schema)
 
 async function getGames() {
-    return model.find({})
+    return model.find().sort({
+        expira: 1
+    })
 }
 
 async function createGame(game) {

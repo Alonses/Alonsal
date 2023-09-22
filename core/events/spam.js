@@ -4,7 +4,7 @@ let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
-const LIMIT = 8, DIFF = 3000
+const LIMIT = 8, DIFF = 4000
 
 module.exports = async function ({ client, message, user, guild }) {
 
@@ -30,7 +30,7 @@ module.exports = async function ({ client, message, user, guild }) {
         let msgcount = userdata.msgcount
 
         // Enviando mensagens com tempo aceitável
-        if (difference > DIFF) {
+        if (difference > DIFF && lastMessage.content !== message.content) {
 
             clearTimeout(timer)
 
