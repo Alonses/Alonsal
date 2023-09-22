@@ -130,7 +130,7 @@ async function nerfa_spam(client, user, guild, message) {
 
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
-            if (cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("https://discord.gg/"))
+            if (cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("http") || cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("www"))
                 msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
