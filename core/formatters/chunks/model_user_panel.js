@@ -43,13 +43,13 @@ module.exports = async (client, user, interaction, pagina) => {
                 inline: true
             },
             {
-                name: `**${emoji_button(false)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                name: `**${emoji_button(!user?.misc.weather)} ${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
+                value: client.tls.phrase(user, "manu.painel.desc_clima_resumido"),
                 inline: true
             },
             {
-                name: `**${emoji_button(false)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                name: `**${emoji_button(user?.conf.global_tasks)} ${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_tarefas_globais")}\``,
                 inline: true
             }
         )
@@ -69,12 +69,12 @@ module.exports = async (client, user, interaction, pagina) => {
         ])
 
     // Segunda página de botões de configuração do Alonsal
-    // Badges visiveis públicamente
+    // Badges visiveis públicamente, clima resumido e tarefas globais
     if (pagina === 1)
         botoes = botoes.concat([
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.badges_publicas"), type: type_button(user?.conf.public_badges), emoji: emoji_button(user?.conf.public_badges), data: '4' },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(false), emoji: emoji_button(false), data: '5', disabled: true },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(false), emoji: emoji_button(false), data: '6', disabled: true }
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.clima_resumido"), type: type_button(!user?.misc.weather), emoji: emoji_button(!user?.misc.weather), data: '5' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.tarefas_globais"), type: type_button(user?.conf.global_tasks), emoji: emoji_button(user?.conf.global_tasks), data: '6' }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.model_user_panel`, disabled: c_menu[1] })

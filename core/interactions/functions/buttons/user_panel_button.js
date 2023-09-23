@@ -8,6 +8,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 2 -> Notificações em DM
     // 3 -> Ranking do usuário
 
+    // 4 -> Badges públicas
+    // 5 -> Clima resumido
+    // 6 -> Tarefas globais
+
     if (escolha === 1) {
         // Ativa ou desativa o modo fantasma
         if (typeof user.conf.ghost_mode !== "undefined")
@@ -31,11 +35,25 @@ module.exports = async ({ client, user, interaction, dados }) => {
             user.conf.ranking = false
     } else if (escolha === 4) {
 
-        // Ativa ou desativa o ranking do usuário
-        if (typeof user?.conf.public_badges !== "undefined")
+        // Ativa ou desativa a exibição de badges publicamente
+        if (typeof user.conf.public_badges !== "undefined")
             user.conf.public_badges = !user.conf.public_badges
         else
             user.conf.public_badges = false
+    } else if (escolha === 5) {
+
+        // Ativa ou desativa a versão resumida dos retornos de clima
+        if (typeof user.misc.weather !== "undefined")
+            user.misc.weather = !user.misc.weather
+        else
+            user.misc.weather = true
+    } else if (escolha === 6) {
+
+        // Ativa ou desativa as tarefas globais
+        if (typeof user.conf.global_tasks !== "undefined")
+            user.conf.global_tasks = !user.conf.global_tasks
+        else
+            user.conf.global_tasks = true
     }
 
     if (escolha > 3)
