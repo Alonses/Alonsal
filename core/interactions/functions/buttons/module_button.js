@@ -20,6 +20,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Ativando o módulo
         const modulo = await getModule(interaction.user.id, timestamp)
+
+        // Impedindo que o módulo de clima seja ativado caso não haja um local padrão
+        if (modulo.type === 0 && !user.misc.locale)
+            return interaction.update({ content: ":octagonal_sign: | Você precisa definir um local padrão com o comando </link locale:1020561785620803674> para poder ativar este módulo", ephemeral: true })
+
         modulo.stats.active = true
 
         await modulo.save()
