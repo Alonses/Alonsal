@@ -1,6 +1,10 @@
-function componentToHex(c) {
+componentToHex = (c) => {
     let hex = c.toString(16)
     return hex.length === 1 ? `0${hex}` : hex
+}
+
+random = (valor) => {
+    return Math.round(valor * Math.random())
 }
 
 function rgbToHex(r, g, b) {
@@ -9,10 +13,6 @@ function rgbToHex(r, g, b) {
 
 function alea_hex() {
     return rgbToHex(random(255), random(255), random(255))
-}
-
-function random(valor) {
-    return Math.round(valor * Math.random())
 }
 
 module.exports = {

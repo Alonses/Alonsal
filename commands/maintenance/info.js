@@ -26,10 +26,10 @@ module.exports = {
         let row = [], ouvindo_agora = ""
 
         if (activities[client.cached.presence].link) {
-            ouvindo_agora = `\`\`\`fix\n🎶 Ouvindo agora:\n${client.defaultEmoji("instrument")} ${activities[client.cached.presence].text}\`\`\`\n\n`
+            ouvindo_agora = `\`\`\`fix\n🎶 ${client.tls.phrase(user, "manu.info.ouvindo_agora")}\n${client.defaultEmoji("instrument")} ${activities[client.cached.presence].text}\`\`\`\n\n`
 
             row = client.create_buttons([
-                { name: "Ouvir também", emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }
+                { name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }
             ], interaction)
         }
 

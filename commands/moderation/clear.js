@@ -64,7 +64,7 @@ module.exports = {
     }
 }
 
-async function deleteMessages(client, user, interaction, qtd_msg) {
+deleteMessages = async (client, user, interaction, qtd_msg) => {
 
     const membro_sv = await client.getMemberGuild(interaction, client.id())
 

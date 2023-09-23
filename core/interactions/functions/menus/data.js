@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 }
 
-async function lista_alteracoes(client, user, escolha_user) {
+lista_alteracoes = async (client, user, escolha_user) => {
 
     let phrase = ""
 

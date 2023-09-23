@@ -43,7 +43,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
     return `${texto_formatado}${link_app}`
 }
 
-function nome_games(objeto_anunciado) {
+nome_games = (objeto_anunciado) => {
 
     let str = ""
 

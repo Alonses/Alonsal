@@ -117,14 +117,6 @@ function translate(alvo, target) {
     return phrase
 }
 
-function check_emojis(phrase, type) {
-
-    if (type)
-        phrase = `${get_emoji(type)} | ${phrase}`
-
-    return phrase
-}
-
 function get_emoji(valores) {
 
     let emoji = ""
@@ -143,7 +135,15 @@ function get_emoji(valores) {
     return emoji
 }
 
-function lista_emojis(type) {
+check_emojis = (phrase, type) => {
+
+    if (type)
+        phrase = `${get_emoji(type)} | ${phrase}`
+
+    return phrase
+}
+
+lista_emojis = (type) => {
 
     const emojis = []
 

@@ -244,20 +244,23 @@ function internal_functions(client) {
     }
 
     // Substitui partes do texto por outros valores
-    client.replace = (string, valores) => {
+    client.replace = (string, valores, especifico) => {
 
-        if (typeof valores === "object") { // Array com vários dados para alterar
+        if (!especifico) {
+            if (typeof valores === "object") { // Array com vários dados para alterar
 
-            if (valores.length > 0)
-                while (valores.length > 0) {
-                    string = string.replace("auto_repl", valores[0])
-                    valores.shift()
-                }
-            else // Recebendo um objeto diferente de array
-                string = string.replace("auto_repl", valores)
+                if (valores.length > 0)
+                    while (valores.length > 0) {
+                        string = string.replace("auto_repl", valores[0])
+                        valores.shift()
+                    }
+                else // Recebendo um objeto diferente de array
+                    string = string.replace("auto_repl", valores)
 
-        } else // Apenas um valor para substituição
-            string = string.replaceAll("auto_repl", valores)
+            } else // Apenas um valor para substituição
+                string = string.replaceAll("auto_repl", valores)
+        } else
+            string = string.replaceAll(especifico[0], especifico[1])
 
         return string
     }

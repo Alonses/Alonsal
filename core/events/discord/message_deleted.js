@@ -52,7 +52,7 @@ module.exports = async ({ client, message }) => {
     if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
         texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.url, message.author.id])
 
-    texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${formata_text(texto_mensagem)}\`\`\``
+    texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
@@ -97,8 +97,4 @@ module.exports = async ({ client, message }) => {
         client.notify(guild.logger.channel, { embed: embed, components: row })
     else
         client.notify(guild.logger.channel, embed)
-}
-
-function formata_text(texto) {
-    return texto.replaceAll("`", "'")
 }

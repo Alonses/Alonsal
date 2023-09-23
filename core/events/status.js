@@ -36,7 +36,7 @@ module.exports = async ({ client }) => {
     require('../auto/await_announces')({ client })
 }
 
-function dispara_status(client, status_apisal) {
+dispara_status = (client, status_apisal) => {
 
     if (process.env.channel_stats) {
         setTimeout(async () => {

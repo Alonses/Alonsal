@@ -39,6 +39,7 @@ module.exports = {
                     "ru": 'Выберите операцию'
                 })
                 .addChoices(
+                    { name: '📠 Anagram', value: 'anagram' },
                     { name: '◀ Reverse', value: 'reverse' },
                     { name: '⏫ Upper', value: 'upper' },
                     { name: '🔠 Sans', value: 'sans' },

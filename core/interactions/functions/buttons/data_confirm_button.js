@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     for (let i = 0; i < 2; i++)
         botoes.push(randomString(5, client))
 
-    botoes = shuffleArray(botoes)
+    botoes = client.shuffleArray(botoes)
 
     const row = client.create_buttons([
         { id: "data_finalize_button", name: botoes[0], type: 1, data: `1.${define_button(opcao, botoes[0])}.${dados}` },
@@ -31,10 +31,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 }
 
-function define_button(original, atual) {
+define_button = (original, atual) => {
     return original === atual ? '1' : '0'
-}
-
-function shuffleArray(inputArray) {
-    return inputArray.sort(() => Math.random() - 0.5)
 }

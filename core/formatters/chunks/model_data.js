@@ -91,7 +91,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 }
 
-function lista_servidores(servidores, linha_corte, client, user) {
+lista_servidores = (servidores, linha_corte, client, user) => {
 
     let nome_servidores = servidores.join(", ")
 

@@ -54,7 +54,7 @@ async function atualiza_modulos(client, tempo_restante, auto) {
         global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos desativados, não há módulos ativos no momento.`)
 }
 
-function verifica_modulo(tempo_restante) {
+verifica_modulo = (tempo_restante) => {
 
     setTimeout(() => {
         requisita_modulo()
@@ -62,12 +62,12 @@ function verifica_modulo(tempo_restante) {
     }, tempo_restante)
 }
 
-async function requisita_modulo() {
+requisita_modulo = async () => {
 
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
 
-    fs.readFile('./files/data/modules.txt', 'utf8', function (err, data) {
+    fs.readFile('./files/data/modules.txt', 'utf8', (err, data) => {
 
         data = JSON.parse(data)
 
@@ -106,7 +106,7 @@ async function requisita_modulo() {
     })
 }
 
-async function executa_modulo() {
+executa_modulo = async () => {
 
     // Retorna caso o array de módulos esteja vazio
     if (lista_modulos.length < 1) return

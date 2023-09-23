@@ -71,7 +71,7 @@ module.exports = {
         const msg_user = new EmbedBuilder()
             .setTitle("> Nova mensagem! :mailbox_with_mail:")
             .setColor(0xffffff)
-            .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${corpo_mensagem.text.replaceAll("`", "'")}\`\n${conteudo_texto}`)
+            .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`)
             .setTimestamp()
             .setFooter({
                 text: `Autor: ${interaction.user.username}`,
@@ -87,7 +87,7 @@ module.exports = {
     }
 }
 
-async function formataArquivo(attachment) {
+formataArquivo = async (attachment) => {
     const response = await fetch(attachment.attachment)
     const data = await response.text()
 

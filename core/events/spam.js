@@ -85,7 +85,7 @@ module.exports = async function ({ client, message, user, guild }) {
     }
 }
 
-async function nerfa_spam(client, user, guild, message) {
+nerfa_spam = async (client, user, guild, message) => {
 
     let user_guild = await client.getMemberGuild(message, user.uid)
 
@@ -156,7 +156,7 @@ async function nerfa_spam(client, user, guild, message) {
     }, 3000)
 }
 
-async function remove_spam(client, id_user, id_guild, user_message) {
+remove_spam = (client, id_user, id_guild, user_message) => {
 
     const guild = client.guilds(id_guild)
 
@@ -179,7 +179,7 @@ async function remove_spam(client, id_user, id_guild, user_message) {
 }
 
 // Salva mensagens consideradas spam em cache
-function registryMessage(guild, message) {
+registryMessage = (guild, message) => {
 
     if (!cached_messages[`${message.author.id}.${guild.sid}`])
         cached_messages[`${message.author.id}.${guild.sid}`] = []
