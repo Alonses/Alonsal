@@ -203,7 +203,7 @@ module.exports = {
     }
 }
 
-function criar_item(dados, interaction, client, user) {
+criar_item = (dados, interaction, client, user) => {
 
     // Criando um emoji
     if (!dados.categoria) {

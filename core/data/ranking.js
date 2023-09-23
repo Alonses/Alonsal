@@ -132,7 +132,7 @@ module.exports = async ({ client, message, caso }) => {
     verifica_servers(user, user_global)
 }
 
-async function verifica_servers(user, user_global) {
+verifica_servers = async (user, user_global) => {
 
     // Verifica todos os servidores em busca do servidor com maior XP
     // salvando o maior servidor no ranking global
@@ -151,7 +151,7 @@ async function verifica_servers(user, user_global) {
     await user_global.save()
 }
 
-async function sincroniza_xp(user) {
+sincroniza_xp = async (user) => {
 
     const servidores = await getUserRankServers(user.uid)
 

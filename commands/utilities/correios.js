@@ -70,7 +70,7 @@ module.exports = {
     }
 }
 
-function emoji_status(urlIcone) {
+emoji_status = (urlIcone) => {
 
     urlIcone = urlIcone.split('/public-resources/img/')[1].split("-")[0].split(".png")[0]
 

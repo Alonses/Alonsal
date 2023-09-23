@@ -14,14 +14,14 @@ module.exports = async ({ client }) => {
     }, tempo_restante) // Executa de 1 em 1 dia
 }
 
-function requisita_relatorio(client, aguardar_tempo) {
+requisita_relatorio = (client, aguardar_tempo) => {
     setTimeout(() => {
         gera_relatorio(client)
         requisita_relatorio(client, aguardar_tempo)
     }, aguardar_tempo)
 }
 
-async function gera_relatorio(client) {
+gera_relatorio = async (client) => {
 
     const embed = await require('../generators/journal')({ client })
 

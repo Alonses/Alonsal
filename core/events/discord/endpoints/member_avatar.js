@@ -71,7 +71,7 @@ module.exports = async ({ client, guild, user, dados }) => {
     }
 }
 
-function envia_logger(client, id_alvo, valor) {
+envia_logger = (client, id_alvo, valor) => {
 
     if (!usersmap.has(id_alvo)) {
 

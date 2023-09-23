@@ -212,7 +212,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 }
 
-function regula_porcentagem(stats_semana, stats_passado, hora, client, user) {
+regula_porcentagem = (stats_semana, stats_passado, hora, client, user) => {
 
     if (hora) { // Formatando a hora para números inteiros
         let hr_tempo = 0 // Usado para converter dias em horas

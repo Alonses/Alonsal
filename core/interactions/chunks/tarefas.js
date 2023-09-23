@@ -191,7 +191,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
     }
 }
 
-function filtra_tarefas(tarefas, caso) {
+filtra_tarefas = (tarefas, caso) => {
 
     const array = []
 

@@ -21,15 +21,16 @@ module.exports = (latitude, client, user) => {
     mes_termino = parseInt(datas_estacao[indice_int].split("/")[1])
     dias_restantes = calcula_dias(21, mes_termino, data_atual.getFullYear()) - calcula_dias(data_atual.getDate(), data_atual.getMonth() + 1, data_atual.getFullYear())
 
-    if (dias_restantes > 1) dias_restantes += `${client.tls.phrase(user, "util.unidades.dias")}`
-    else dias_restantes += `${client.tls.phrase(user, "util.unidades.dia")}`
+    if (dias_restantes > 1) dias_restantes = `${client.tls.phrase(user, "util.tempo.termino")} ${dias_restantes}${client.tls.phrase(user, "util.unidades.dias")}`
+    else if (dias_restantes === 1) dias_restantes = `${client.tls.phrase(user, "util.tempo.termino")} ${dias_restantes}${client.tls.phrase(user, "util.unidades.dia")}`
+    else dias_restantes = client.tls.phrase(user, "util.tempo.termino_hoje")
 
-    estacao = `${emojis[indice]} ${client.tls.phrase(user, `util.tempo.${estacao_nome[indice]}`)}${client.tls.phrase(user, "util.tempo.termino")} ${dias_restantes}${comeco_termino}`
+    estacao = `${emojis[indice]} ${client.tls.phrase(user, `util.tempo.${estacao_nome[indice]}`)}${dias_restantes}${comeco_termino}`
 
     return estacao
 }
 
-function calcula_dias(dia_atual, mes_atual, ano_atual) {
+calcula_dias = (dia_atual, mes_atual, ano_atual) => {
 
     let dias = 0, ult_mes = 0
 
@@ -45,7 +46,7 @@ function calcula_dias(dia_atual, mes_atual, ano_atual) {
     return dias - (ult_mes - dia_atual)
 }
 
-function estipula_indice(dias_passados, latitude) {
+estipula_indice = (dias_passados, latitude) => {
 
     // Estipula um indice para a estação do local
     let indices = [1, 2, 3, 0]

@@ -16,8 +16,8 @@ module.exports = async (client, message) => {
 
     // const alteracoes = comparar_edicoes(formata_text(message[0].content), formata_text(message[1].content))
     const alteracoes = {
-        antigo: formata_text(message[0].content),
-        novo: formata_text(message[1].content)
+        antigo: client.replace(message[0].content, null, ["`", "'"]),
+        novo: client.replace(message[1].content, null, ["`", "'"])
     }
 
     let texto = client.replace(client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39)), [message[0].url, message[0].author.id, alteracoes.antigo, alteracoes.novo])
@@ -56,8 +56,4 @@ module.exports = async (client, message) => {
         client.notify(guild.logger.channel, { embed: embed, components: row })
     else
         client.notify(guild.logger.channel, embed)
-}
-
-function formata_text(texto) {
-    return texto.replaceAll("`", "'")
 }

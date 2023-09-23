@@ -29,14 +29,14 @@ module.exports = async ({ client }) => {
     }, tempo_restante) // Executa de 1 em 1 semana
 }
 
-function requisita_anuncio(client, aguardar_tempo) {
+requisita_anuncio = (client, aguardar_tempo) => {
     setTimeout(() => {
         gera_anuncio(client, aguardar_tempo)
         requisita_anuncio(client, aguardar_tempo)
     }, aguardar_tempo)
 }
 
-async function gera_anuncio(client, proxima_att) {
+gera_anuncio = async (client, proxima_att) => {
 
     if (process.env.client_1 === client.id())
         client.notify(process.env.channel_feeds, `:video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos`)
@@ -70,7 +70,7 @@ async function gera_anuncio(client, proxima_att) {
     next_att(client, proxima_att)
 }
 
-function next_att(client, tempo_restante) {
+next_att = (client, tempo_restante) => {
 
     tempo_restante = Math.floor(client.timestamp() + (tempo_restante / 1000))
 

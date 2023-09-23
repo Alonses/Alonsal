@@ -54,14 +54,14 @@ module.exports = async ({ client, user, interaction }) => {
         .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, client.emoji(0)))
 }
 
-function textToBinary(str) {
+textToBinary = (str) => {
     return str.split('').map(char => {
         return binario[char]
     }).join(' ')
 }
 
-function binaryToText(str) {
-    return str.split(" ").map(function (elem) {
+binaryToText = (str) => {
+    return str.split(" ").map((elem) => {
         return Object.keys(binario).find(key => binario[key] === elem)
     }).join("")
 }

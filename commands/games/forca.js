@@ -56,7 +56,7 @@ module.exports = {
     }
 }
 
-function verifica_chute(client, entrada, interaction, user) {
+verifica_chute = (client, entrada, interaction, user) => {
 
     const split = games[interaction.user.id].word.split("")
 
@@ -98,10 +98,10 @@ function verifica_chute(client, entrada, interaction, user) {
     }
 }
 
-async function verifica_palavra(client, interaction, user, entrada) {
+verifica_palavra = async (client, interaction, user, entrada) => {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
-    if (entrada === games[interaction.user.id].word || games[interaction.user.id].descobertas.replaceAll("`", "").replaceAll(" ", "") === games[interaction.user.id].word) {
+    if (entrada === games[interaction.user.id].word || client.replace(games[interaction.user.id].descobertas, null, ["`", "'"]).replaceAll(" ", "") === games[interaction.user.id].word) {
         interaction.reply({
             content: `${client.emoji("emojis_negativos")} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}`,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
@@ -125,7 +125,7 @@ async function verifica_palavra(client, interaction, user, entrada) {
     }
 }
 
-function lista_posicoes(palavra) {
+lista_posicoes = (palavra) => {
 
     let array = []
 
@@ -135,11 +135,11 @@ function lista_posicoes(palavra) {
     return array.join(" ")
 }
 
-function painel_jogo(interaction) {
+painel_jogo = (interaction) => {
     return `\`\`\`${padrao[games[interaction.user.id].erros]}\`\`\``
 }
 
-async function retorna_jogo(client, interaction, user) {
+retorna_jogo = async (client, interaction, user) => {
 
     const painel = painel_jogo(interaction)
     let entradas = ""
