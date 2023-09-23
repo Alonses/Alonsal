@@ -69,14 +69,21 @@ async function listAllUserModules(uid) {
     })
 }
 
-async function shutdownAllUserModules(uid) {
+async function shutdownAllUserModules(uid, type) {
     const user_modules = await listAllUserModules(uid)
 
-    // Desliga todos os módulos do usuário
-    user_modules.forEach(async modulo => {
-        modulo.stats.active = true
-        await modulo.save()
-    })
+    if (typeof type === "undefined") // Desliga todos os módulos do usuário
+        user_modules.forEach(async modulo => {
+            modulo.stats.active = false
+            await modulo.save()
+        })
+    else // Desliga todos os módulos de um tipo do usuário
+        user_modules.forEach(async modulo => {
+            if (modulo.type === type) {
+                modulo.stats.active = false
+                await modulo.save()
+            }
+        })
 }
 
 // Retorna um preço pelos módulos ativos de determinado usuário

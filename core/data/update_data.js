@@ -1,4 +1,4 @@
-const { dropAllUserModules } = require("../database/schemas/Module")
+const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/Module")
 const { dropUserGlobalRank } = require("../database/schemas/Rank_g")
 const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/Rank_s")
 const { dropAllUserStatements } = require("../database/schemas/Statement")
@@ -44,8 +44,12 @@ async function clear_data({ client, user, interaction, operador, caso }) {
 
         for (let i = 0; i < alvos.length; i++) {
 
-            if (alvos[i] === 1) // Excluindo o local padrão do comando /tempo
+            if (alvos[i] === 1) { // Excluindo o local padrão do comando /tempo
                 user.misc.locale = null
+
+                // Desativando todos os módulos de clima do usuário
+                shutdownAllUserModules(user.uid, 0)
+            }
 
             if (alvos[i] === 2) { // Excluindo as redes sociais vinculadas
                 user.social.steam = null
