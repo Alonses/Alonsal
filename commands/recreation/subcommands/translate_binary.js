@@ -56,12 +56,12 @@ module.exports = async ({ client, user, interaction }) => {
 
 textToBinary = (str) => {
     return str.split('').map(char => {
-        return binario[char]
+        return char.charCodeAt(0).toString(2);
     }).join(' ')
 }
 
 binaryToText = (str) => {
     return str.split(" ").map((elem) => {
-        return Object.keys(binario).find(key => binario[key] === elem)
+        return String.fromCharCode(parseInt(elem, 2));;
     }).join("")
 }
