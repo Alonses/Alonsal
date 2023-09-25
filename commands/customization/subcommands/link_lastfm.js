@@ -7,15 +7,12 @@ module.exports = async ({ client, user, interaction }) => {
     user.social.lastfm = interaction.options.getString("value")
 
     // Verificando se o local existe antes de salvar
-    await fetch(`https://steamcommunity.com/id/${user.social.lastfm}`)
+    await fetch(`https://www.last.fm/pt/user/${user.social.lastfm}`)
         .then(response => response.text())
         .then(async res => {
 
-            if (res.includes("The specified profile could not be found."))
-                return interaction.editReply({
-                    content: client.tls.phrase(user, "util.lastfm.error_1", 1),
-                    ephemeral: true
-                })
+            if (res.includes("Página não encontrada"))
+                return client.tls.editReply(interaction, user, "util.lastfm.error_1", true, 1)
 
             await user.save()
 
