@@ -23,7 +23,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Impedindo que o módulo de clima seja ativado caso não haja um local padrão
         if (modulo.type === 0 && !user.misc.locale)
-            return interaction.update({ content: ":octagonal_sign: | Você precisa definir um local padrão com o comando </link locale:1020561785620803674> para poder ativar este módulo", ephemeral: true })
+            return interaction.update({
+                content: client.tls.phrase(user, "util.tempo.modulo_sem_locale", client.emoji(0)),
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
 
         modulo.stats.active = true
 
