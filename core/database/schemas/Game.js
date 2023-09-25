@@ -57,7 +57,7 @@ async function verifyInvalidGames() {
             games_invalidos.push(game)
     })
 
-    if (games_invalidos.length < 1) return
+    if (games_invalidos.length == 0) return
 
     // Excluíndo do banco os games que já expiraram
     games_invalidos.forEach(async game => {
