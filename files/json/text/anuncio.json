@@ -35,6 +35,10 @@
         "microsoft.com": [
             "<:Logo_xb:864886938322731058>",
             "Xbox"
+        ],
+        "beta.bandainamcoent": [
+            "<:logo_bandai:1156044921996853258> & <:Logo_st:864887020467257364>",
+            "Bandai -> Steam"
         ]
     }
 }
