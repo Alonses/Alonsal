@@ -12,7 +12,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         return client.notify(process.env.channel_feeds, ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização.")
 
     // Verificando se a plataforma informada é válida
-    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|microsoft.com/)
+    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
 
     if (!matches && interaction)
         return interaction.editReply({
