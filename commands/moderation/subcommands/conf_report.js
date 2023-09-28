@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
@@ -17,6 +19,9 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Sem canal informado no comando e nenhum canal salvo no banco do bot
     if (!canal_alvo && !guild.reports.channel)
         return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
+    else // Sem permissão para ver ou escrever no canal mencionado
+        if (!canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) || !canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages))
+            return client.tls.reply(interaction, user, "mode.logger.falta_escrita_visualizacao", true, 1)
 
     // Ativa ou desativa os reportes no servidor
     if (!guild.conf.reports)
