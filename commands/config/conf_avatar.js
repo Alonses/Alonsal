@@ -19,7 +19,7 @@ module.exports = {
             return interaction.reply(":octagonal_sign: | Envie um arquivo de imagem!")
 
         const att_avatar = new EmbedBuilder()
-            .setTitle(`:bust_in_silhouette: O Avatar do ${client.user().username} foi alterado`)
+            .setTitle(`:bust_in_silhouette: O Avatar do ${client.username()} foi alterado`)
             .setColor(0x29BB8E)
             .setImage(arquivo.attachment)
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)

@@ -25,7 +25,7 @@ module.exports = {
         const canal_alvo = await client.channels().get(interaction.channel.id)
 
         // Sem permissão para enviar mensagens
-        if (!canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages))
+        if (!canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages]))
             return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, client.emoji(0))
 
         const embed = new EmbedBuilder()

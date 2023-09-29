@@ -115,7 +115,7 @@ module.exports = {
             .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
             .setFooter({
                 text: client.tls.phrase(user, "misc.color.footer"),
-                iconURL: client.discord.user.avatarURL({ dynamic: true })
+                iconURL: client.avatar()
             })
 
         // Criando os botões para a cor customizada

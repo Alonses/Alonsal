@@ -62,6 +62,10 @@ class CeiraClient {
             }
     }
 
+    avatar() {
+        return this.discord.user.avatarURL({ dynamic: true })
+    }
+
     login(token) {
         return this.discord.login(token)
     }
@@ -72,6 +76,10 @@ class CeiraClient {
 
     user() {
         return this.discord.user
+    }
+
+    username() {
+        return this.discord.user.username
     }
 
     guilds(id_guild) {

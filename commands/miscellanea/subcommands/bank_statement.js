@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction }) => {
     let alvo = interaction.options.getUser("user") || interaction.user
     let user_interno = await client.getUser(alvo.id)
 
-    if (user_interno.uid === client.discord.user.id)
+    if (user_interno.uid === client.id())
         user_interno.misc.money = 1000000000000
 
     let daily = `${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji("emojis_dancantes")}`

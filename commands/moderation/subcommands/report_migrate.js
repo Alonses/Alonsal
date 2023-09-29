@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.report.descricao_automatizado"))
         .setFooter({
             text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
-            iconURL: client.discord.user.avatarURL({ dynamic: true })
+            iconURL: client.avatar()
         })
 
     // Criando os botões para a cor customizada
