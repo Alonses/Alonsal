@@ -29,11 +29,10 @@ module.exports = async ({ client, message }) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    if (message.attachments) {
+    if (message.attachments)
         message.attachments.forEach(attach => {
             attachments.push(attach.attachment)
         })
-    }
 
     let texto_mensagem = message.content
 
@@ -48,9 +47,9 @@ module.exports = async ({ client, message }) => {
     let texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.author.id, message.url])
     let autor = message.author.id, local = message.channelId, row
 
-    // Mensagem excluída por um moderador
-    if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
-        texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.url, message.author.id])
+    if (registroAudita) // Verificando se foi excluída por outro usuário
+        if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+            texto = client.replace(client.tls.phrase(guild, "mode.logger.mode_exclusao", 13), [message.url, message.author.id])
 
     texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
 
@@ -75,15 +74,15 @@ module.exports = async ({ client, message }) => {
             text: message.author.username
         })
 
-    // Mensagem excluída por um moderador
-    if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
-        embed.addFields(
-            {
-                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.excluido")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
-                inline: false
-            }
-        )
+    if (registroAudita) // Verificando se foi excluída por outro usuário
+        if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+            embed.addFields(
+                {
+                    name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.excluido")}**`,
+                    value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
+                    inline: false
+                }
+            )
 
     if (texto_mensagem.includes("https")) {
         const link_img = `https${texto_mensagem.split("https")[1].split(" ")[0]}`
