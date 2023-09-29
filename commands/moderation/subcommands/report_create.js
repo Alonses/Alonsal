@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, alvo }) => {
         )
         .setFooter({
             text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
-            iconURL: client.discord.user.avatarURL({ dynamic: true })
+            iconURL: client.avatar()
         })
 
     // Salvando o alvo para editar posteriormente

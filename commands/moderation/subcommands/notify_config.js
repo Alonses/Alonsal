@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
     const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
 
     // Verificando permissões para enviar mensagens no canal
-    if (!canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) || !canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel))
+    if (!canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel]))
         return client.tls.reply(interaction, user, "mode.anuncio.permissao_envio", true, client.defaultEmoji("guard"))
 
     const row = client.create_buttons([

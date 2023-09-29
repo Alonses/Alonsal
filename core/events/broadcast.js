@@ -27,7 +27,7 @@ module.exports = async function ({ client, message }) {
             return encerra_broadcast(client, bot)
 
         if (canal_alvo.type === 0 || canal_alvo.type === 5) {
-            if (canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) && canal_alvo.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages)) {
+            if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages])) {
                 if (corpo_mail.anexo) {
                     const anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 

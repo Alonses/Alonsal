@@ -66,7 +66,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                 if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                     // Permissão para enviar mensagens no canal
-                    if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
+                    if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
 
                         if (typeof guild_channel === "undefined") // Anúnciando em todos os servidores
                             canal_alvo.send({

@@ -178,7 +178,7 @@ function internal_functions(client) {
         const canal = await client.discord.channels.cache.get(id_alvo)
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!canal.permissionsFor(client.user()).has(PermissionsBitField.Flags.ViewChannel) || !canal.permissionsFor(client.user()).has(PermissionsBitField.Flags.SendMessages))
+        if (!canal.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages]))
             return
 
         if (typeof conteudo === "object") { // embed

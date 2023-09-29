@@ -37,7 +37,7 @@ module.exports = {
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                 // Permissão para enviar mensagens no canal
-                if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel)) {
+                if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
                     interaction.reply({
                         content: `:mailbox: | O embed de votação foi enviado ao canal <#${id_alvo}> com sucesso!`,
                         ephemeral: true

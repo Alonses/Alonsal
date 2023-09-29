@@ -40,7 +40,7 @@ module.exports = async ({ client, alvo }) => {
 
             if (canal_alvo) // Enviando os anúncios para os canais
                 if (canal_alvo.type === 0 || canal_alvo.type === 5)
-                    if (canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.SendMessages) && canal_alvo.permissionsFor(client.discord.user).has(PermissionsBitField.Flags.ViewChannel))
+                    if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel]))
                         canal_alvo.send({
                             embeds: [embed]
                         }) // Permissão para enviar mensagens no canal

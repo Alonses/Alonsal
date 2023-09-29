@@ -97,7 +97,7 @@ module.exports = async (client, user, dados, interaction) => {
                 else
                     acontecimento.setFooter({
                         text: res.data_acontecimento,
-                        iconURL: client.discord.user.avatarURL({ dynamic: true })
+                        iconURL: client.avatar()
                     })
 
                 if (interaction)
