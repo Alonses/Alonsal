@@ -37,7 +37,7 @@ module.exports = {
                         .addChoices(
                             { name: '📜 Event log', value: 'log' },
                             { name: '📛 Anti-Spam', value: 'spam' },
-                            { name: '💂‍♂️ External reports', value: 'report' },
+                            { name: '📻 External reports', value: 'report' },
                             { name: '💬 Tickets', value: 'ticket' }
                         )
                         .setRequired(true))

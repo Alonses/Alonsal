@@ -12,8 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (funcao.includes("module") && !autor_original && funcao !== "module") // Funções de módulos
         return require('./chunks/modulos')({ client, user, interaction, autor_original })
 
-    // Dados extras
-    if (interaction.customId.split("|")[2])
+    if (interaction.customId.split("|")[2]) // Dados extras
         dados = `${dados}.${interaction.customId.split("|")[2]}`
 
     // Solicitando a função e executando

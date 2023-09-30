@@ -10,8 +10,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const timestamp = parseInt(dados.split(".")[1])
     const modulo = await getModule(interaction.user.id, timestamp)
 
-    const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${modulo.stats.days}`)} ${formata_horas(modulo.stats.hour.split(":")[0], modulo.stats.hour.split(":")[1])}`
     const montante = await getModulesPrice(interaction.user.id)
+    const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${modulo.stats.days}`)} ${formata_horas(modulo.stats.hour.split(":")[0], modulo.stats.hour.split(":")[1])}`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "misc.modulo.visualizar_modulo"))

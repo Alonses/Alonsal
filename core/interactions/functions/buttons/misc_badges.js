@@ -20,7 +20,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Atribuindo a badge ao usuário
     await createBadge(id_alvo, badge_alvo, client.timestamp())
-
     const badge = busca_badges(client, badgeTypes.SINGLE, badge_alvo)
 
     client.discord.users.fetch(id_alvo, false).then(async (user_interno) => {

@@ -61,8 +61,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 
             const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
 
-            if (canal_alvo) {
-                // Enviando os anúncios para os canais
+            if (canal_alvo) { // Enviando os anúncios para os canais
                 if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                     // Permissão para enviar mensagens no canal

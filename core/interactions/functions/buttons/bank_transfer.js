@@ -1,4 +1,3 @@
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     // Gerenciamento de transferência de Bufunfas entre usuários
