@@ -92,7 +92,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                 }
             }
         } catch (err) {
-            client.error({ err })
+            client.error(err, "Games")
         }
     })
 

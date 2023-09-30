@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async function ({ client, err, local }) {
+module.exports = async (client, err, local) => {
 
     let local_erro = err.stack.split("\n")[1].trim()
-    let titulo = "> CeiraException"
+    let titulo = `> CeiraException | ${local}`
 
     if (local === "games")
         titulo = "> Epic Embed Fail"

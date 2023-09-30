@@ -202,12 +202,12 @@ module.exports = async ({ client, user, interaction }) => {
                 } else
                     client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode, 0), 1)
             } catch (err) {
-                client.error({ err })
+                client.error(err, "LastFM Model")
                 client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
             }
         })
         .catch((err) => {
-            client.error({ err })
+            client.error(err, "LastFM Model")
             client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
         })
 }
