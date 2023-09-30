@@ -66,20 +66,12 @@ class CeiraClient {
         return this.discord.user.avatarURL({ dynamic: true })
     }
 
-    login(token) {
-        return this.discord.login(token)
-    }
+    channels(type) {
 
-    id() {
-        return this.discord.user.id
-    }
+        if (typeof type !== "undefined")
+            return this.discord.channels.cache.filter((c) => c.type === type)
 
-    user() {
-        return this.discord.user
-    }
-
-    username() {
-        return this.discord.user.username
+        return this.discord.channels.cache
     }
 
     guilds(id_guild) {
@@ -95,12 +87,20 @@ class CeiraClient {
         return guilds
     }
 
-    channels(type) {
+    id() {
+        return this.discord.user.id
+    }
 
-        if (typeof type !== "undefined")
-            return this.discord.channels.cache.filter((c) => c.type === type)
+    login(token) {
+        return this.discord.login(token)
+    }
 
-        return this.discord.channels.cache
+    user() {
+        return this.discord.user
+    }
+
+    username() {
+        return this.discord.user.username
     }
 }
 

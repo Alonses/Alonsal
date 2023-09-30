@@ -40,7 +40,7 @@ client.discord.on("messageCreate", async message => {
 	if (message.author.bot || message.webhookId) return
 
 	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	client.verifyUserLanguage(user, message.guild.id)
+	await client.verifyUserLanguage(user, message.guild.id)
 
 	// Sincronizando os dados do usuário
 	const user_guild = await client.getMemberGuild(message, user.uid)
@@ -97,13 +97,13 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 
 	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	client.verifyUserLanguage(user, interaction.guild.id)
+	await client.verifyUserLanguage(user, interaction.guild.id)
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;
-	
+
 	try {
 		// Executando o comando
 		await action(client, user, interaction)

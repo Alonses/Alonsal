@@ -3,8 +3,7 @@ const { Routes, Collection } = require('discord.js')
 
 const { readdirSync, existsSync } = require('fs')
 
-let commands = []
-const comandos_privados = []
+let commands = [], comandos_privados = []
 
 function slash_commands(client) {
 
