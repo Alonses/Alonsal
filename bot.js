@@ -28,7 +28,7 @@ client.discord.once("ready", async () => {
 	console.log(`⏱️ | Tempo de inicialização: ${client.timestamp() - client.x.timestamp > 1 ? `${client.timestamp() - client.x.timestamp} segundos` : '1 segundo'}`)
 })
 
-client.discord.on("messageCreate", async (message) => {
+client.discord.on("messageCreate", async message => {
 
 	// Previne que o bot responda a interações enquanto estiver atualizando comandos
 	if (client.x.force_update) return
@@ -51,27 +51,26 @@ client.discord.on("messageCreate", async (message) => {
 
 	// Recursos de Broadcast
 	if (client.cached.broad_status)
-		require("./core/events/broadcast")({ client, message })
+		await require("./core/events/broadcast")({ client, message })
 
 	const text = message.content.toLowerCase()
 	const guild = await client.getGuild(message.guild.id)
 
 	// Respostas automatizadas por IA
 	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
-		return require("./core/events/conversation")({ client, message, text })
+		return await require("./core/events/conversation")({ client, message, text })
 
 	try { // Atualizando o XP dos usuários
 		const caso = "messages"
 
 		if (guild.conf.spam) // Sistema anti-spam do servidor
-			require("./core/events/spam")({ client, message, user, guild })
+			await require("./core/events/spam")({ client, message, user, guild })
 
 		if (message.content.length > 6 && client.x.ranking) await require("./core/data/ranking")({ client, message, caso })
 
-		require("./core/events/legacy_commands")({ client, message })
+		await require("./core/events/legacy_commands")({ client, message })
 	} catch (err) { // Erro no comando
-		const local = "commands"
-		client.error({ err, local })
+		client.error(err, "Commands")
 	}
 })
 
@@ -104,15 +103,13 @@ client.discord.on("interactionCreate", async interaction => {
 
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;
-
+	
 	try {
 		// Executando o comando
-		action(client, user, interaction)
-			.then(() => {
-				require("./core/events/log")({ client, interaction, command })
-			})
+		await action(client, user, interaction)
+		await require("./core/events/log")({ client, interaction, command })
 	} catch (err) {
-		client.error({ err })
+		await client.error(err, "Slash Command")
 		client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, client.emoji(0))
 	}
 })

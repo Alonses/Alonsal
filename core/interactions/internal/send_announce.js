@@ -18,7 +18,6 @@ module.exports = async ({ client, user, interaction }) => {
             })
         })
         .catch(err => {
-            const local = "games"
-            client.error({ err, local })
+            client.error(err, "Games")
         })
 }

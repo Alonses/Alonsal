@@ -28,8 +28,8 @@ function internal_functions(client) {
     console.log("🟠 | Inicializando o bot...")
     console.log("🟠 | Vinculando as funções internas")
 
-    client.error = async ({ err, local }) => {
-        require("./core/events/error")({ client, err, local })
+    client.error = async (err, local) => {
+        await require("./core/events/error")(client, err, local)
     }
 
     client.atualiza_dados = async (alvo, interaction) => {

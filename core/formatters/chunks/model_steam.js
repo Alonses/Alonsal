@@ -407,12 +407,12 @@ module.exports = async ({ client, user, interaction }) => {
                 })
 
             } catch (err) {
-                client.error({ err })
+                client.error(err, "Steam Model")
                 interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
             }
         })
         .catch((err) => {
-            client.error({ err })
+            client.error(err, "Steam Model")
             interaction.editReply(`${client.tls.phrase(user, "util.steam.error_2")}\n<${usuario_alvo}>`)
         })
 }

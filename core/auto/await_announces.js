@@ -63,8 +63,7 @@ gera_anuncio = async (client, proxima_att) => {
             dispara_anuncio({ client, objetos_anunciados })
         })
         .catch(err => {
-            const local = "games"
-            client.error({ err, local })
+            client.error(err, "Games")
         })
 
     next_att(client, proxima_att)

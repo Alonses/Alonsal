@@ -46,6 +46,6 @@ module.exports = async ({ client, alvo }) => {
                         }) // Permissão para enviar mensagens no canal
         })
     } catch (err) {
-        client.error({ err })
+        client.error(err, "Report")
     }
 }
