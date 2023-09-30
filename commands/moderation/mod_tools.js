@@ -5,124 +5,60 @@ module.exports = {
         .setName("conf")
         .setDescription("⌠💂⌡ Manage server roles")
         .addSubcommand(subcommand =>
-            subcommand.setName("ticket")
-                .setDescription("⌠💂⌡ Configure reports in private channels on the server")
+            subcommand.setName("guild")
+                .setDescription("⌠💂⌡ Server settings")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Konfigurieren Sie Berichte in privaten Kanälen auf dem Server',
-                    "es-ES": '⌠💂⌡ Configurar informes en canales privados en el servidor',
-                    "fr": '⌠💂⌡ Configurer les rapports dans les canaux privés sur le serveur',
-                    "it": '⌠💂⌡ Configura i report nei canali privati sul server',
-                    "pt-BR": '⌠💂⌡ Configure denúncias em canais privados no servidor',
-                    "ru": '⌠💂⌡ Включить отчеты в частных каналах на сервере'
+                    "de": '⌠💂⌡ Server Einstellungen',
+                    "es-ES": '⌠💂⌡ Configuración del servidor',
+                    "fr": '⌠💂⌡ Paramètres du serveur',
+                    "it": '⌠💂⌡ Impostazioni del server',
+                    "pt-BR": '⌠💂⌡ Configurações do servidor',
+                    "ru": '⌠💂⌡ Настройки сервера'
                 })
-                .addChannelOption(option =>
-                    option.setName("category")
+                .addStringOption(option =>
+                    option.setName("operation")
                         .setNameLocalizations({
-                            "de": 'kategorie',
-                            "es-ES": 'categoria',
-                            "fr": 'categorie',
-                            "it": 'categoria',
-                            "pt-BR": 'categoria',
-                            "ru": 'категория'
+                            "de": 'betrieb',
+                            "es-ES": 'operacion',
+                            "fr": 'operation',
+                            "it": 'operazione',
+                            "pt-BR": 'operacao',
+                            "ru": 'операция'
                         })
-                        .setDescription("Mention a category")
+                        .setDescription("Select an operation")
                         .setDescriptionLocalizations({
-                            "de": 'Erwähnen Sie eine Kategorie',
-                            "es-ES": 'Menciona una categoría',
-                            "fr": 'Mentionner une catégorie',
-                            "it": 'Indica una categoria',
-                            "pt-BR": 'Mencione uma categoria',
-                            "ru": 'Введите категорию'
-                        })))
-        .addSubcommand(subcommand =>
-            subcommand.setName("report")
-                .setDescription("⌠💂⌡ Configure external user reports on the server")
-                .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Konfigurieren Sie externe Benutzerberichte auf dem Server',
-                    "es-ES": '⌠💂⌡ Configurar informes de usuarios externos en el servidor',
-                    "fr": '⌠💂⌡ Configurer les rapports des utilisateurs externes sur le serveur',
-                    "it": '⌠💂⌡ Configurare i report degli utenti esterni sul server',
-                    "pt-BR": '⌠💂⌡ Configure os reports de usuários externos no servidor',
-                    "ru": '⌠💂⌡ Включить внешние отчеты пользователей на сервере'
-                })
+                            "de": 'Wählen Sie einen Vorgang aus',
+                            "es-ES": 'Seleccione una operación',
+                            "fr": 'Sélectionnez une opération',
+                            "it": 'Seleziona un\'operazione',
+                            "pt-BR": 'Escolha uma operação',
+                            "ru": 'Выберите операцию'
+                        })
+                        .addChoices(
+                            { name: '📜 Event log', value: 'log' },
+                            { name: '📛 Anti-Spam', value: 'spam' },
+                            { name: '💂‍♂️ External reports', value: 'report' },
+                            { name: '💬 Tickets', value: 'ticket' }
+                        )
+                        .setRequired(true))
                 .addChannelOption(option =>
-                    option.setName("channel")
+                    option.setName("value")
                         .setNameLocalizations({
-                            "de": 'kanal',
-                            "es-ES": 'canal',
-                            "fr": 'chaîne',
-                            "it": 'canale',
-                            "pt-BR": 'canal',
-                            "ru": 'канал'
+                            "de": 'wert',
+                            "es-ES": 'valor',
+                            "fr": 'valeur',
+                            "it": 'valore',
+                            "pt-BR": 'valor',
+                            "ru": 'ценить'
                         })
-                        .setDescription("Mention a channel")
+                        .setDescription("The entry value")
                         .setDescriptionLocalizations({
-                            "de": 'einen Kanal erwähnen',
-                            "es-ES": 'Mencionar un canal',
-                            "fr": 'Mentionner une chaîne',
-                            "it": 'Menzionare un canale',
-                            "pt-BR": 'Mencione um canal',
-                            "ru": 'упомянуть канал'
-                        })))
-        .addSubcommand(subcommand =>
-            subcommand.setName("log")
-                .setDescription("⌠💂⌡ Configure server event logging")
-                .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Konfigurieren Sie die Serverprotokollierung',
-                    "es-ES": '⌠💂⌡ Configurar el registro de eventos del servidor',
-                    "fr": '⌠💂⌡ Configurer la journalisation des événements du serveur',
-                    "it": '⌠💂⌡ Configurare la registrazione degli eventi del server',
-                    "pt-BR": '⌠💂⌡ Configure o Log de eventos do servidor',
-                    "ru": '⌠💂⌡ Настроить ведение журнала событий сервера'
-                })
-                .addChannelOption(option =>
-                    option.setName("channel")
-                        .setNameLocalizations({
-                            "de": 'kanal',
-                            "es-ES": 'canal',
-                            "fr": 'chaîne',
-                            "it": 'canale',
-                            "pt-BR": 'canal',
-                            "ru": 'канал'
-                        })
-                        .setDescription("Mention a channel")
-                        .setDescriptionLocalizations({
-                            "de": 'einen Kanal erwähnen',
-                            "es-ES": 'Mencionar un canal',
-                            "fr": 'Mentionner une chaîne',
-                            "it": 'Menzionare un canale',
-                            "pt-BR": 'Mencione um canal',
-                            "ru": 'упомянуть канал'
-                        })))
-        .addSubcommand(subcommand =>
-            subcommand.setName("spam")
-                .setDescription("⌠💂⌡ Configure the antispam module")
-                .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Konfigurieren Sie das Antispam-Modul',
-                    "es-ES": '⌠💂⌡ Configurar el módulo antispam',
-                    "fr": '⌠💂⌡ Configurer le module anti-spam',
-                    "it": '⌠💂⌡ Configura il modulo antispam',
-                    "pt-BR": '⌠💂⌡ Configurar o módulo anti-spam',
-                    "ru": '⌠💂⌡ Настройте модуль антиспама'
-                })
-                .addChannelOption(option =>
-                    option.setName("channel")
-                        .setNameLocalizations({
-                            "de": 'kanal',
-                            "es-ES": 'canal',
-                            "fr": 'chaîne',
-                            "it": 'canale',
-                            "pt-BR": 'canal',
-                            "ru": 'канал'
-                        })
-                        .setDescription("Mention a channel")
-                        .setDescriptionLocalizations({
-                            "de": 'einen Kanal erwähnen',
-                            "es-ES": 'Mencionar un canal',
-                            "fr": 'Mentionner une chaîne',
-                            "it": 'Menzionare un canale',
-                            "pt-BR": 'Mencione um canal',
-                            "ru": 'упомянуть канал'
+                            "de": 'der Eingabewert',
+                            "es-ES": 'El valor de entrada',
+                            "fr": 'La valeur d\'entrée',
+                            "it": 'Il valore di entrata',
+                            "pt-BR": 'O valor de entrada',
+                            "ru": 'значение входа'
                         })))
         .addSubcommand(subcommand =>
             subcommand.setName("language")
@@ -169,8 +105,9 @@ module.exports = {
     async execute(client, user, interaction) {
 
         const guild = await client.getGuild(interaction.guild.id)
+        const funcao = interaction.options.getString("operation") || interaction.options.getSubcommand()
 
         // Solicitando a função e executando
-        require(`./subcommands/conf_${interaction.options.getSubcommand()}`)({ client, user, interaction, guild })
+        require(`./subcommands/conf_${funcao}`)({ client, user, interaction, guild })
     }
 }
