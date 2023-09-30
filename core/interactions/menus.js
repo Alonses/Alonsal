@@ -12,8 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (funcao === "modulo_visualizar" && !autor_original) // Funções de módulos
         return require('./chunks/modulos')({ client, user, interaction, autor_original })
 
-    // Reutilizando a função de exibir tarefas
-    if (funcao === "tarefas")
+    if (funcao === "tarefas") // Reutilizando a função de exibir tarefas
         funcao = "tarefa_visualizar"
 
     // Enviando todas as funções de menus de sons para um único arquivo

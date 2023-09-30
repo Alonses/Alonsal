@@ -7,8 +7,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Menu com opções para customizar
 
     if (operacao === 0) {
-        user.profile.about = null
 
+        user.profile.about = null
         await user.save()
 
         // Retornando a função inicial para atualizar o embed do perfil

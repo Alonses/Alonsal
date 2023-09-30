@@ -3,10 +3,11 @@ const { busca_badges, badgeTypes } = require('../../../data/badges')
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
+
     // Fixando a badge escolhida pelo usuário
     user.misc.fixed_badge = escolha
-
     await user.save()
+
     let new_badge = busca_badges(client, badgeTypes.SINGLE, escolha)
 
     interaction.update({

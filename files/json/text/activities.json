@@ -30,7 +30,7 @@
         },
         {
             "type": 0,
-            "text": "7 different languages!"
+            "text": "8 different languages!"
         },
         {
             "type": 0,
@@ -325,15 +325,15 @@
         },
         {
             "type": 0,
-            "text": "Pedras papéis e tesouras"
+            "text": "pedras papéis e tesouras"
         },
         {
             "type": 0,
-            "text": "Pipoca pros pombo da praça"
+            "text": "pipoca pros pombo da praça"
         },
         {
             "type": 0,
-            "text": "Tijolos para cima"
+            "text": "tijolos para cima"
         },
         {
             "type": 0,
@@ -689,7 +689,7 @@
             "link": "https://open.spotify.com/track/4OeFQtRyT7vsLnRTv7t8YT?si=de9600c8d76a45bc"
         },
         {
-            "type": 2,
+            "type": 0,
             "text": "games no seu servidor"
         },
         {
@@ -713,7 +713,7 @@
         },
         {
             "type": 2,
-            "text": "context menus"
+            "text": "Context menus"
         },
         {
             "type": 0,
@@ -791,7 +791,7 @@
         },
         {
             "type": 2,
-            "text": "/conf"
+            "text": "/conf guild"
         },
         {
             "type": 2,
@@ -802,6 +802,23 @@
             "type": 2,
             "text": "Sara - Starship",
             "link": "https://open.spotify.com/track/7ulldxRL7kGWuKutB3TzuT?si=f6100a26adc04271"
+        },
+        {
+            "type": 2,
+            "text": "Separate Ways (Worlds Apart) - Journey",
+            "link": "https://open.spotify.com/track/4ECNtOnqzxutZkXP4TE3n3?si=844ef54b5b3e417b"
+        },
+        {
+            "type": 2,
+            "text": "/link"
+        },
+        {
+            "type": 2,
+            "text": "/lastfm"
+        },
+        {
+            "type": 2,
+            "text": "/steam"
         }
     ]
 }

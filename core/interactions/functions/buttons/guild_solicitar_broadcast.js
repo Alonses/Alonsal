@@ -80,7 +80,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (!client.decider(guild.conf?.broadcast, 0)) // Servidor com broadcast desativado
             return interaction.update({
-                content: ":o: | O broadcast para o servidor que possui este ID está desabilitado.",
+                content: ":o: | O broadcast para este servidor está desabilitado.",
                 components: []
             })
 
