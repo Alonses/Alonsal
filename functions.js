@@ -174,11 +174,12 @@ function internal_functions(client) {
     client.notify = async (id_alvo, conteudo) => {
 
         if (!id_alvo) return
+
         const canal = await client.discord.channels.cache.get(id_alvo)
+        if (!canal) return
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!canal.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages]))
-            return
+        if (!canal.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages])) return
 
         if (typeof conteudo === "object") { // embed
             if (!conteudo.components && !conteudo.content && !conteudo.file)

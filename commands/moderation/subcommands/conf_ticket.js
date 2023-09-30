@@ -10,25 +10,39 @@ module.exports = async ({ client, user, interaction, guild }) => {
         return client.tls.reply(interaction, user, "mode.ticket.permissao", true, 3)
 
     // Categoria alvo para o bot criar os canais
-    if (interaction.options.getChannel("category")) {
+    if (interaction.options.getChannel("value")) {
 
         // Mencionado um tipo de canal errado
-        if (interaction.options.getChannel("category").type !== 4)
+        if (interaction.options.getChannel("value").type !== 4)
             return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.defaultEmoji("types"))
 
-        canal_alvo = interaction.options.getChannel("category").id
+        canal_alvo = interaction.options.getChannel("value").id
         guild.tickets.category = canal_alvo
     }
 
-    // Sem canal informado no comando e nenhum canal salvo no banco do bot
+    // Sem categoria informada no comando e nenhuma categoria salva no cache do bot
     if (!canal_alvo && !guild.tickets.category)
         return client.tls.reply(interaction, user, "mode.ticket.sem_categoria", true, 1)
+    else {
+        if (!guild.tickets.category) // Sem categoria salva em cache
+            return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
-    // Ativa ou desativa os tickets de denúncia no servidor
-    if (!guild.conf.tickets)
-        guild.conf.tickets = true
-    else
+        if (typeof canal_alvo !== "object") // Restaurando a categoria do cache
+            canal_alvo = await client.channels().get(guild.tickets.category)
+
+        if (!canal_alvo) { // Categoria salva em cache foi apagada
+            guild.conf.tickets = false
+            await guild.save()
+
+            return client.tls.reply(interaction, user, "mode.logger.categoria_excluida", true, 1)
+        }
+    }
+
+    // Inverte o status de funcionamento apenas se executar o comando sem informar uma categoria
+    if (!interaction.options.getChannel("value"))
         guild.conf.tickets = !guild.conf.tickets
+    else
+        guild.conf.tickets = true
 
     // Se usado sem mencionar categoria, desliga os tickets de denuncia
     if (!canal_alvo)
