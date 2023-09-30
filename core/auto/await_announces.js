@@ -70,7 +70,6 @@ gera_anuncio = async (client, proxima_att) => {
 }
 
 next_att = (client, tempo_restante) => {
-
     tempo_restante = Math.floor(client.timestamp() + (tempo_restante / 1000))
 
     client.notify(process.env.channel_feeds, `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n[ <t:${tempo_restante}:F> ]`)

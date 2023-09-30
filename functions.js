@@ -18,7 +18,6 @@ const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('.
 const { busca_badges, badgeTypes } = require('./core/data/badges')
 
 const translate = require('./core/formatters/translate')
-let libera_user_att = 0
 
 function internal_functions(client) {
 
@@ -362,21 +361,14 @@ function internal_functions(client) {
         return aprovacao
     }
 
-    // Atualiza o idioma padrão do usuário caso não possua
+    // Atualiza o idioma padrão do usuário caso não possua um
     client.verifyUserLanguage = async (user, id_guild) => {
 
-        return
-
-        // Valida se o usuário não possui um idioma padrão definido
-        if (!user.lang && !libera_user_att) {
-
-            libera_user_att = 1
+        if (!user.lang) { // Validando se o usuário não possui um idioma padrão
             const guild = await client.getGuild(id_guild)
 
             user.lang = guild.lang || "pt-br"
             await user.save()
-
-            libera_user_att = 0
         }
     }
 
