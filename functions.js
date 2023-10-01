@@ -217,7 +217,7 @@ function internal_functions(client) {
 
     // Registra uma movimentação bancária do usuário
     client.registryStatement = (user, traducao, caso, valor) => {
-        return registryStatement(user, traducao, caso, valor, client.timestamp())
+        return registryStatement(client, user, traducao, caso, valor)
     }
 
     // Substitui partes do texto por outros valores
