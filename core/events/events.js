@@ -48,7 +48,7 @@ module.exports = async function ({ client }) {
             .setColor(0xff0000)
             .setDescription(`Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``)
 
-        client.notify(process.env.channel_error, embed)
+        client.notify(process.env.channel_error, { embeds: [embed] })
     })
 
     console.log("🟢 | Eventos acionados com sucesso")

@@ -68,7 +68,7 @@ module.exports = {
                 conteudo_texto += `\`\`\`${client.defaultEmoji("paper")} Arquivo anexado:\n${await formataArquivo(corpo_mensagem.file)}\`\`\``
         }
 
-        const msg_user = new EmbedBuilder()
+        const embed = new EmbedBuilder()
             .setTitle("> Nova mensagem! :mailbox_with_mail:")
             .setColor(0xffffff)
             .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`)
@@ -80,10 +80,10 @@ module.exports = {
 
         // Inserindo uma imagem no embed
         if (corpo_mensagem.file)
-            msg_user.setImage(corpo_mensagem.file.attachment)
+            embed.setImage(corpo_mensagem.file.attachment)
 
         client.tls.reply(interaction, user, "manu.mail.sucesso_1", true)
-        client.notify(process.env.channel_mail, msg_user)
+        client.notify(process.env.channel_mail, { embeds: [embed] })
     }
 }
 

@@ -10,11 +10,11 @@ module.exports = async ({ client, guild }) => {
     await disableGameChannel(guild.id)
     await disableReportChannel(guild.id)
 
-    const embed_sv = new EmbedBuilder()
+    const embed = new EmbedBuilder()
         .setTitle("> 🔴 Server update")
         .setColor(0xd4130d)
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )`)
         .setTimestamp()
 
-    client.notify(process.env.channel_server, embed_sv)
+    client.notify(process.env.channel_server, { embeds: [embed] })
 }

@@ -98,7 +98,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     const aprovacao = client.verifyLogger(interaction)
 
                     if (!aprovacao)
-                        return client.notify(guild.logger.channel, `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}`)
+                        return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
                 }
 
                 guild.conf.logger = !guild.conf.logger

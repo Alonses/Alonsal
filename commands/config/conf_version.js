@@ -22,6 +22,7 @@ module.exports = {
             content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\``,
             ephemeral: true
         })
-        client.notify(process.env.channel_feeds, `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\``)
+
+        client.notify(process.env.channel_feeds, { content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\`` })
     }
 }

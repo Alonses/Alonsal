@@ -60,18 +60,18 @@ module.exports = async ({ client, guild, user, dados }) => {
         // Enviando o embed com a comparação entre imagens
         embed.setImage("attachment://new_avatar.png")
 
-        envia_logger(client, user.uid, { embed: embed, file: attachment })
+        envia_logger(client, user.uid, { embeds: [embed], files: [attachment] })
     } else {
 
         // Enviando apenas a nova foto de perfil do usuário
         if (user_alvo.avatarURL({ dynamic: true }))
             embed.setImage(user_alvo.avatarURL({ dynamic: true }))
 
-        envia_logger(client, user.uid, embed)
+        envia_logger(client, user.uid, { embeds: [embed] })
     }
 }
 
-envia_logger = (client, id_alvo, valor) => {
+envia_logger = (client, id_alvo, objeto) => {
 
     if (!usersmap.has(id_alvo)) {
 
@@ -88,7 +88,7 @@ envia_logger = (client, id_alvo, valor) => {
                     .catch(() => { return null })
 
                 if (user) // Notificando a guild sobre a alteração da foto de um membro
-                    client.notify(internal_guild.logger.channel, valor)
+                    client.notify(internal_guild.logger.channel, objeto)
             }
         })
 

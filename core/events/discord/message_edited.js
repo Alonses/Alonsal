@@ -53,7 +53,7 @@ module.exports = async (client, message) => {
     }
 
     if (row)
-        client.notify(guild.logger.channel, { embed: embed, components: row })
+        client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
     else
-        client.notify(guild.logger.channel, embed)
+        client.notify(guild.logger.channel, { embeds: [embed] })
 }

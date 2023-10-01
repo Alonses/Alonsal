@@ -7,11 +7,11 @@ module.exports = async ({ client, guild }) => {
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
     let server_info = `\n\n:busts_in_silhouette: **Members** ( \`${guild.memberCount - 1}\` )\n:placard: **Channels** ( \`${canais}\` )`
 
-    const embed_sv = new EmbedBuilder()
+    const embed = new EmbedBuilder()
         .setTitle("> 🟢 Server update")
         .setColor(0x29BB8E)
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 
-    client.notify(process.env.channel_server, embed_sv)
+    client.notify(process.env.channel_server, { embeds: [embed] })
 }

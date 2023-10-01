@@ -120,7 +120,7 @@ async function encerra_broadcast(client, bot, force) {
 
     clearTimeout(timeout_broadcast)
 
-    client.notify(bot.transmission.id_broad, ":octagonal_sign: :satellite: :octagonal_sign:")
+    client.notify(bot.transmission.id_broad, { content: ":octagonal_sign: :satellite: :octagonal_sign:" })
 
     // Forçando o encerramento do broadcast
     if (typeof force === "undefined")
@@ -136,7 +136,7 @@ async function verificar_broadcast(client, interaction) {
         return // Canal não encontrado
 
     if (canal_alvo.guild.id === interaction.guild.id) {
-        client.notify(bot.transmission.id_cast, ":octagonal_sign: :satellite: | O Servidor desativou o Broadcast, não é possível iniciar um outro Broadcast para os canais dele no momento.")
+        client.notify(bot.transmission.id_cast, { content: ":octagonal_sign: :satellite: | O Servidor desativou o Broadcast, não é possível iniciar um outro Broadcast para os canais dele no momento." })
 
         encerra_broadcast(client, bot)
     }

@@ -43,7 +43,7 @@ module.exports = {
                         ephemeral: true
                     })
 
-                    client.notify(id_alvo, { embed: embed, components: row })
+                    client.notify(id_alvo, { embeds: [embed], components: [row] })
                 } else
                     interaction.reply({
                         content: `${client.defaultEmoji("guard")} | Eu não posso enviar mensagens nesse canal ( <#${id_alvo}> ) por falta de permissões.`,

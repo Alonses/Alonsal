@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     guild.lang = idioma
     await guild.save()
 
-    client.notify(process.env.channel_feeds, `:video_game: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis`)
+    client.notify(process.env.channel_feeds, { content: `:video_game: :mega: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis` })
 
     interaction.update({
         content: client.replace(client.tls.phrase(user, "mode.anuncio.anuncio_games", client.emoji(29)), `<#${guild.games.channel}>`),
