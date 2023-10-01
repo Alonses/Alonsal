@@ -18,7 +18,7 @@ module.exports = async ({ client, message }) => {
         guild.conf.logger = 0
         await guild.save()
 
-        return client.notify(guild.logger.channel, `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}`)
+        return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
     }
 
     // Coletando dados sobre o evento
@@ -93,7 +93,7 @@ module.exports = async ({ client, message }) => {
     }
 
     if (row)
-        client.notify(guild.logger.channel, { embed: embed, components: row })
+        client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
     else
-        client.notify(guild.logger.channel, embed)
+        client.notify(guild.logger.channel, { embeds: [embed] })
 }

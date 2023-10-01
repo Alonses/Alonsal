@@ -819,6 +819,19 @@
         {
             "type": 2,
             "text": "/steam"
+        },
+        {
+            "type": 1,
+            "text": "Gordão Foguetes"
+        },
+        {
+            "type": 1,
+            "text": "Ticaracaticast"
+        },
+        {
+            "type": 2,
+            "text": "Holding Out for a Hero - Bonnie Tyler",
+            "link": "https://open.spotify.com/track/7L2eFj0KFJDmHTPMUL4ZxR?si=187a1ab675ed4017"
         }
     ]
 }

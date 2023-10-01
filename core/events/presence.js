@@ -102,7 +102,7 @@ function acompanha_scrobble(client, user) {
                 }, 15000)
             } else {
                 requisita_status(client)
-                client.notify(process.env.channel_feeds, `:radio: | O Acompanhamento de Scrobbles foi desligado por inatividade.`)
+                client.notify(process.env.channel_feeds, { content: ":radio: | O Acompanhamento de Scrobbles foi desligado por inatividade." })
             }
         })
 }

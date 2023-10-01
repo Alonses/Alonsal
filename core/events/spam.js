@@ -127,7 +127,7 @@ nerfa_spam = async (client, user, guild, message) => {
     user_guild.timeout(tempo_timeout, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
         .then(async () => {
 
-            client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embed: embed })
+            client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embeds: [embed] })
 
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
@@ -148,7 +148,7 @@ nerfa_spam = async (client, user, guild, message) => {
                     }
                 )
 
-            client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embed: embed })
+            client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
         })
 
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam

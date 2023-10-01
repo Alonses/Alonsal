@@ -85,5 +85,5 @@ module.exports = async ({ client, guild, dados }) => {
     if (url_avatar)
         embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, embed)
+    client.notify(guild.logger.channel, { embeds: [embed] })
 }

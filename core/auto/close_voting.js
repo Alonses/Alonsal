@@ -65,8 +65,8 @@ module.exports = async ({ client, estagio }) => {
             .then(message => {
                 message.edit({ embeds: [embed], row: [], components: [] })
             })
-            .catch(err => {
-                client.notify(process.env.channel_feeds, `:ballot_box: | Um card de votação do canal <#${mensagem}> não foi encontrado, seu conteúdo não foi atualizado!`)
+            .catch(() => {
+                client.notify(process.env.channel_feeds, { content: `:ballot_box: | Um card de votação do canal <#${mensagem}> não foi encontrado, seu conteúdo não foi atualizado!` })
             })
     })
 }

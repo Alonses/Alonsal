@@ -71,7 +71,7 @@ module.exports = async ({ client, interaction }) => {
             embed.setURL(`${url_ativacao}`)
 
         // Envia um log de telemetria com o comando disparado
-        client.notify(process.env.channel_command, embed)
+        client.notify(process.env.channel_command, { embeds: [embed] })
     }
 
     const message = interaction, caso = "comando"

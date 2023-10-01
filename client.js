@@ -56,10 +56,10 @@ class CeiraClient {
             token: token,
             clientId: clientId
         },
-        this.cached = {
-            broad_status: false,
-            presence: null
-        }
+            this.cached = {
+                broad_status: false,
+                presence: null
+            }
     }
 
     avatar() {

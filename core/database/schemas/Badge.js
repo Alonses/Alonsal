@@ -23,6 +23,13 @@ async function createBadge(uid, badge_id, timestamp) {
     })
 }
 
+async function removeBadge(uid, badge_id) {
+    await model.findOneAndDelete({
+        uid: uid,
+        badge: badge_id
+    })
+}
+
 async function migrateBadges() {
 
     let entradas = 0
@@ -59,6 +66,7 @@ async function migrateBadges() {
 module.exports.Badge = model
 module.exports = {
     createBadge,
+    removeBadge,
     getUserBadges,
     migrateBadges
 }

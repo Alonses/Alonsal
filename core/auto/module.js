@@ -51,7 +51,7 @@ async function atualiza_modulos(client, tempo_restante, auto) {
         }, tempo_restante) // Executa de 60 em 60 segundos
 
     if (dados.length < 1)
-        global_client.notify(process.env.channel_feeds, `:mega: :sparkles: | Módulos desativados, não há módulos ativos no momento.`)
+        global_client.notify(process.env.channel_feeds, { content: ":mega: :sparkles: | Módulos desativados, não há módulos ativos no momento." })
 }
 
 verifica_modulo = (tempo_restante) => {

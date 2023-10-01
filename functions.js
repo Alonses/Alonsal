@@ -181,30 +181,7 @@ function internal_functions(client) {
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
         if (!canal.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages])) return
 
-        if (typeof conteudo === "object") { // embed
-            if (!conteudo.components && !conteudo.content && !conteudo.file)
-                canal.send({
-                    embeds: [conteudo]
-                })
-            else if (conteudo.components)
-                canal.send({
-                    embeds: [conteudo.embed],
-                    components: [conteudo.components]
-                })
-            else if (conteudo.content)
-                canal.send({
-                    content: conteudo.content,
-                    embeds: [conteudo.embed]
-                })
-            else if (conteudo.file) // Usado pelo canvas com embed
-                canal.send({
-                    embeds: [conteudo.embed],
-                    files: [conteudo.file]
-                })
-        } else // texto normal
-            canal.send({
-                content: conteudo
-            })
+        canal.send(conteudo)
     }
 
     // Retorna um valor aleatório

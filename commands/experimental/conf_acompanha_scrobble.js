@@ -19,6 +19,7 @@ module.exports = {
             content: `${client.emoji("emojis_dancantes")} | O ${client.username()} agora está acompanhando os seus Scrobbles\nPare de ouvir as músicas por alguns segundos para desligar o acompanhamento.`,
             ephemeral: true
         })
-        client.notify(process.env.channel_feeds, `:radio: | O ${client.username()} agora está acompanhando os Scrobbles de ${interaction.user}.`)
+
+        client.notify(process.env.channel_feeds, { content: `:radio: | O ${client.username()} agora está acompanhando os Scrobbles de ${interaction.user}.` })
     }
 }

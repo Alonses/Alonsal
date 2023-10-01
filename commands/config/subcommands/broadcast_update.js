@@ -22,9 +22,9 @@ module.exports = async ({ client, interaction, bot }) => {
             content: `:satellite: | O Broadcast entre canais está ativo novamente, agora enviarei mensagens para o canal <#${bot.transmission.id_cast}>\nUse este canal para receber mensagens do canal definido e conversar com usuários remotamente!`,
             ephemeral: true
         })
-        timer_broadcast(client, bot)
 
-        client.notify(bot.transmission.id_broad, ":satellite: :satellite: :satellite:")
+        timer_broadcast(client, bot)
+        client.notify(bot.transmission.id_broad, { content: ":satellite: :satellite: :satellite:" })
 
         // Alterando o chat de broad conforme onde o comando foi acionado para ativar novamente
         bot.transmission.id_cast = interaction.channel.id

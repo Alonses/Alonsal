@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
-        const broadcast = new EmbedBuilder()
+        const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "mode.broadcast.nova_solicitacao")} :globe_with_meridians:`)
             .setColor(0xffffff)
             .setDescription("Uma nova solicitação de broadcast foi aberta")
@@ -40,7 +40,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             { id: "guild_solicitar_broadcast", name: "Alterar canal", type: 1, emoji: "📡", data: `3|${interaction.channel.id}` }
         ], interaction)
 
-        await client.notify(process.env.channel_mail, { embed: broadcast, components: row })
+        await client.notify(process.env.channel_mail, { embeds: [embed], components: [row] })
+
         interaction.update({
             content: `${client.emoji("emojis_dancantes")} | ${client.tls.phrase(user, "mode.broadcast.pedido_registrado")}`,
             embeds: [],
@@ -93,8 +94,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Iniciando o Broadcast
         timer_broadcast(client, bot)
 
-        client.notify(bot.transmission.id_broad, ":satellite: :satellite: :satellite:")
-        client.notify(bot.transmission.id_cast, `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_broad}>\nUse este canal para receber mensagens do canal definido e conversar com outros usuários remotamente!`)
+        client.notify(bot.transmission.id_broad, { content: ":satellite: :satellite: :satellite:" })
+        client.notify(bot.transmission.id_cast, { content: `:satellite: | O Broadcast entre canais está ativo, agora enviarei mensagens para o canal <#${bot.transmission.id_broad}>\nUse este canal para receber mensagens do canal definido e conversar com outros usuários remotamente!` })
 
         interaction.update({
             content: `:satellite: | Canal alterado para ( \`${id_broadcast}\` | <#${id_broadcast}> )\nUse o canal <#${bot.transmission.id_cast}> para visualizar e enviar mensagens.`,
