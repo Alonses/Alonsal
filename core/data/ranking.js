@@ -1,6 +1,8 @@
 const { getUser } = require('../database/schemas/User')
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
+const { verifyDynamicBadge } = require('../database/schemas/Badge')
+const { badges } = require('./badges')
 
 const CHECKS = {
     LIMIT: 5,
@@ -129,13 +131,13 @@ module.exports = async ({ client, message, caso }) => {
 
     // Registrando no relatório algumas informações
     client.journal(caso)
-    verifica_servers(user, user_global)
+    verifica_servers(client, user, user_global)
 }
 
-verifica_servers = async (user, user_global) => {
+verifica_servers = async (client, user, user_global) => {
 
-    // Verifica todos os servidores em busca do servidor com maior XP
-    // salvando o maior servidor no ranking global
+    /* Verifica todos os servidores em busca do servidor com maior XP
+    e salvando o maior servidor válido no ranking global */
     const servers = await getUserRankServers(user.uid)
     let maior = 0
 
@@ -149,6 +151,9 @@ verifica_servers = async (user, user_global) => {
 
     await user.save()
     await user_global.save()
+
+    // Procurando pelo usuário com maior ranking e concedendo uma badge especial
+    verifyDynamicBadge(client, "ranking", badges.CHATTERBOX)
 }
 
 sincroniza_xp = async (user) => {

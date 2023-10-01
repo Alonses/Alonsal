@@ -1,5 +1,8 @@
 const mongoose = require("mongoose")
 
+const { verifyDynamicBadge } = require("./Badge")
+const { badges } = require("../../data/badges")
+
 // uid -> User ID
 
 const schema = new mongoose.Schema({
@@ -12,7 +15,7 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Statement", schema)
 
-async function registryStatement(uid, operation, type, value, timestamp) {
+async function registryStatement(client, uid, operation, type, value) {
 
     const statements = await getUserStatements(uid)
     if (statements.length > 9) //  Exclui a última movimentação após 10 novas entradas
@@ -23,8 +26,10 @@ async function registryStatement(uid, operation, type, value, timestamp) {
         operation: operation,
         type: type,
         value: value,
-        timestamp: timestamp
+        timestamp: client.timestamp()
     })
+
+    verifyDynamicBadge(client, "bufunfas", badges.BOURGEOIS) // Verificando qual usuário possui mais bufunfas
 }
 
 async function getUserStatements(uid) {
