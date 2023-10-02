@@ -32,7 +32,7 @@ module.exports = {
                     "ru": 'Выберите операцию'
                 })
                 .addChoices(
-                    { name: '🏌️‍♂️ Server', value: 'server' },
+                    { name: '👾 Server', value: 'server' },
                     { name: '🌐 Global', value: 'global' },
                     { name: '🏦 Bank', value: 'bank' }
                 )
