@@ -13,6 +13,13 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("personal")
+                .setNameLocalizations({
+                    "de": 'personliches',
+                    "fr": 'personnel',
+                    "it": 'personnel',
+                    "pt-BR": 'pessoal',
+                    "ru": 'личная'
+                })
                 .setDescription("⌠👤⌡ Control my functions")
                 .setDescriptionLocalizations({
                     "de": '⌠👤⌡ Kontrolliere meine Ressourcen',

@@ -45,10 +45,14 @@ async function listAllUserTasks(uid, sid) {
         return model.find({
             uid: uid,
             sid: sid
+        }).sort({
+            timestamp: -1
         })
 
     return model.find({
         uid: uid
+    }).sort({
+        timestamp: -1
     })
 }
 
