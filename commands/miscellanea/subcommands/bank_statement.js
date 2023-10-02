@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getUserStatements } = require('../../../core/database/schemas/Statement')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, local }) => {
 
     const date1 = new Date()
     let alvo = interaction.options.getUser("user") || interaction.user
@@ -14,10 +14,8 @@ module.exports = async ({ client, user, interaction }) => {
     let daily = `${client.tls.phrase(user, "misc.banco.dica_comando")} ${client.emoji("emojis_dancantes")}`
     let titulo_embed = client.tls.phrase(user, "misc.banco.suas_bufunfas")
 
-    if (user_interno.uid !== interaction.user.id) {
-        daily = ""
-        titulo_embed = client.replace(client.tls.phrase(user, "misc.banco.bufunfas_outros"), alvo.username)
-    }
+    if (user_interno.uid !== interaction.user.id)
+        daily = "", titulo_embed = client.replace(client.tls.phrase(user, "misc.banco.bufunfas_outros"), alvo.username)
 
     let data_atual = date1.toDateString('pt-BR')
     if (data_atual == user.misc.daily && user_interno.uid === interaction.user.id) {
@@ -65,8 +63,14 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    interaction.reply({
-        embeds: [embed],
-        ephemeral: true
-    })
+    if (!local)
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: true
+        })
+    else
+        interaction.editReply({
+            embeds: [embed],
+            ephemeral: true
+        })
 }

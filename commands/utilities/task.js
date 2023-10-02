@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { createTask } = require('../../core/database/schemas/Task')
-const { listAllUserGroups, createGroup, checkUserGroup } = require('../../core/database/schemas/Task_group')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("tasks")
@@ -17,185 +14,148 @@ module.exports = {
         .setDescription("⌠💡⌡ Create tasks and lists")
         .addSubcommand(subcommand =>
             subcommand
-                .setName("available")
+                .setName("browse")
                 .setNameLocalizations({
-                    "de": 'verfügbar',
-                    "es-ES": 'disponible',
-                    "fr": 'disponible',
-                    "it": 'disponibile',
-                    "pt-BR": "disponiveis",
-                    "ru": 'горничные'
+                    "de": 'sehen',
+                    "es-ES": 'navegar',
+                    "fr": 'voir',
+                    "it": 'navigare',
+                    "pt-BR": "navegar",
+                    "ru": 'просматривать'
                 })
-                .setDescription("⌠💡⌡ View tasks in progress")
+                .setDescription("⌠💡⌡ See your tasks and lists")
                 .setDescriptionLocalizations({
-                    "de": '⌠💡⌡ Laufende Aufgaben anzeigen',
-                    "es-ES": '⌠💡⌡ Ver tareas en curso',
-                    "fr": '⌠💡⌡ Voir les tâches en cours',
-                    "it": '⌠💡⌡ Visualizza le attività in corso',
-                    "pt-BR": '⌠💡⌡ Veja as tarefas em progresso',
-                    "ru": '⌠💡⌡ Просмотр текущих задач'
-                }))
+                    "de": '⌠💡⌡ Sehen Sie sich Ihre Aufgaben und Listen an',
+                    "es-ES": '⌠💡⌡ Ver tus tareas y listas',
+                    "fr": '⌠💡⌡ Consultez vos tâches et listes',
+                    "it": '⌠💡⌡ Visualizza le tue attività ed elenchi',
+                    "pt-BR": '⌠💡⌡ Veja as suas tarefas e listas',
+                    "ru": '⌠💡⌡ Просматривайте свои задачи и списки'
+                })
+                .addStringOption(option =>
+                    option.setName("status")
+                        .setDescription("Select an operation")
+                        .setDescriptionLocalizations({
+                            "de": 'Wählen Sie einen Vorgang aus',
+                            "es-ES": 'Seleccione una operación',
+                            "fr": 'Sélectionnez une opération',
+                            "it": 'Seleziona un\'operazione',
+                            "pt-BR": 'Escolha uma operação',
+                            "ru": 'Выберите операцию'
+                        })
+                        .addChoices(
+                            { name: '⏳ Available', value: 'a' },
+                            { name: '✅ Completed', value: 'f' },
+                            { name: '📝 Lists', value: 'l' }
+                        )
+                        .setRequired(true)))
         .addSubcommand(subcommand =>
-            subcommand
-                .setName("completed")
-                .setNameLocalizations({
-                    "de": 'vollständig',
-                    "es-ES": 'terminado',
-                    "fr": 'complete',
-                    "it": 'completato',
-                    "pt-BR": "concluidas",
-                    "ru": 'заключил'
-                })
-                .setDescription("⌠💡⌡ View completed tasks")
-                .setDescriptionLocalizations({
-                    "de": '⌠💡⌡ Abgeschlossene Aufgaben anzeigen',
-                    "es-ES": '⌠💡⌡ Ver tareas completadas',
-                    "fr": '⌠💡⌡ Afficher les tâches terminées',
-                    "it": '⌠💡⌡ Visualizza le attività completate',
-                    "pt-BR": '⌠💡⌡ Veja as tarefas finalizadas',
-                    "ru": '⌠💡⌡ Просмотр выполненных задач'
-                }))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName("lists")
-                .setNameLocalizations({
-                    "de": 'listen',
-                    "es-ES": 'lista',
-                    "fr": 'listes',
-                    "it": 'elenchi',
-                    "pt-BR": "listas",
-                    "ru": 'списки'
-                })
-                .setDescription("⌠💡⌡ Navigate tasks using lists")
-                .setDescriptionLocalizations({
-                    "de": '⌠💡⌡ Navigieren Sie durch Aufgaben mithilfe von Listen',
-                    "es-ES": '⌠💡⌡ Navega por tareas usando listas',
-                    "fr": '⌠💡⌡ Naviguez dans les tâches à l\'aide de listes',
-                    "it": '⌠💡⌡ Naviga tra le attività utilizzando gli elenchi',
-                    "pt-BR": '⌠💡⌡ Navegue pelas tarefas usando listas',
-                    "ru": '⌠💡⌡ Навигация по задачам со списками'
-                }))
-        .addSubcommandGroup(subcommandgroup =>
-            subcommandgroup
-                .setName("add")
+            subcommand.setName("add")
                 .setDescription("⌠💡⌡ Add tasks and lists")
-                .addSubcommand(subcommand =>
-                    subcommand
-                        .setName("task")
+                .setDescriptionLocalizations({
+                    "de": '⌠💡⌡ Aufgaben und Listen hinzufügen',
+                    "es-ES": '⌠💡⌡ Agregar tareas y listas',
+                    "fr": '⌠💡⌡ Ajouter des tâches et des listes',
+                    "it": '⌠💡⌡ Aggiungi attività ed elenchi',
+                    "pt-BR": '⌠💡⌡ Adicione tarefas e listas',
+                    "ru": '⌠💡⌡ Добавляйте задачи и списки'
+                })
+                .addStringOption(option =>
+                    option.setName("scope")
                         .setNameLocalizations({
-                            "de": 'aufgabe',
-                            "es-ES": 'tarea',
-                            "fr": 'tache',
-                            "it": 'compito',
-                            "pt-BR": 'tarefa',
-                            "ru": 'задача'
+                            "de": 'umfang',
+                            "es-ES": 'alcance',
+                            "fr": 'portee',
+                            "it": 'scopo',
+                            "pt-BR": 'escopo',
+                            "ru": 'тип'
                         })
-                        .setDescription("⌠💡⌡ Crie uma tarefa nova")
+                        .setDescription("Select an operation")
                         .setDescriptionLocalizations({
-                            "de": '⌠💡⌡ Erstellen Sie eine neue Aufgabe',
-                            "es-ES": '⌠💡⌡ Crear una nueva tarea',
-                            "fr": '⌠💡⌡ Créer une nouvelle tâche',
-                            "it": '⌠💡⌡ Crea una nuova compito',
-                            "pt-BR": '⌠💡⌡ Crie uma tarefa nova',
-                            "ru": '⌠💡⌡ Создать новую задачу'
+                            "de": 'Wählen Sie einen Vorgang aus',
+                            "es-ES": 'Seleccione una operación',
+                            "fr": 'Sélectionnez une opération',
+                            "it": 'Seleziona un\'operazione',
+                            "pt-BR": 'Escolha uma operação',
+                            "ru": 'Выберите операцию'
                         })
-                        .addStringOption(option =>
-                            option.setName("description")
-                                .setNameLocalizations({
-                                    "de": 'beschreibung',
-                                    "es-ES": 'descripcion',
-                                    "it": 'descrizione',
-                                    "pt-BR": 'descricao',
-                                    "ru": 'описание'
-                                })
-                                .setDescription("What will be noted?")
-                                .setDescriptionLocalizations({
-                                    "de": 'Beschreiben Sie Ihre Aufgabe',
-                                    "es-ES": 'Describe tu tarea',
-                                    "fr": 'Décrivez votre tâche',
-                                    "it": 'Descrivi il tuo compito',
-                                    "pt-BR": 'O que será anotado?',
-                                    "ru": 'опишите вашу задачу'
-                                })
-                                .setRequired(true)))
-                .addSubcommand(subcommand =>
-                    subcommand
-                        .setName("list")
+                        .addChoices(
+                            { name: '🔖 Task', value: 'task' },
+                            { name: '📝 List', value: 'list' }
+                        )
+                        .setRequired(true))
+                .addStringOption(option =>
+                    option.setName("description")
                         .setNameLocalizations({
-                            "de": 'liste',
-                            "es-ES": 'lista',
-                            "fr": 'liste',
-                            "it": 'elenco',
-                            "pt-BR": "lista",
-                            "ru": 'список'
+                            "de": 'beschreibung',
+                            "es-ES": 'descripcion',
+                            "it": 'descrizione',
+                            "pt-BR": 'descricao',
+                            "ru": 'описание'
                         })
-                        .setDescription("⌠💡⌡ Add a list")
+                        .setDescription("What will be noted?")
                         .setDescriptionLocalizations({
-                            "de": '⌠💡⌡ Fügen Sie eine Liste hinzu',
-                            "es-ES": '⌠💡⌡ Añadir lista',
-                            "fr": '⌠💡⌡ Ajouter une liste',
-                            "it": '⌠💡⌡ Aggiungi elenco',
-                            "pt-BR": '⌠💡⌡ Adicione uma lista',
-                            "ru": '⌠💡⌡ Добавить список'
+                            "de": 'Beschreiben Sie Ihre Aufgabe',
+                            "es-ES": 'Describe tu tarea',
+                            "fr": 'Décrivez votre tâche',
+                            "it": 'Descrivi il tuo compito',
+                            "pt-BR": 'O que será anotado?',
+                            "ru": 'опишите вашу задачу'
                         })
-                        .addStringOption(option =>
-                            option.setName("description")
-                                .setNameLocalizations({
-                                    "de": 'beschreibung',
-                                    "es-ES": 'descripcion',
-                                    "it": 'descrizione',
-                                    "pt-BR": 'descricao',
-                                    "ru": 'описание'
-                                })
-                                .setDescription("What will the name of the list be?")
-                                .setDescriptionLocalizations({
-                                    "de": 'Wie wird die Liste heißen?',
-                                    "es-ES": '¿Cuál será el nombre de la lista?',
-                                    "fr": 'Quel sera le nom de la liste?',
-                                    "it": 'Quale sarà il nome della lista?',
-                                    "pt-BR": 'Qual será o nome da lista?',
-                                    "ru": 'Как будет называться список?'
-                                })
-                                .setRequired(true))))
-        .addSubcommandGroup(subcommandgroup =>
-            subcommandgroup
-                .setName("remove")
-                .setDescription("⌠💡⌡ Remove listas")
-                .addSubcommand(subcommand =>
-                    subcommand
-                        .setName("list")
+                        .setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand.setName("remove")
+                .setDescription("⌠💡⌡ Delete tasks or lists")
+                .setDescriptionLocalizations({
+                    "de": '⌠💡⌡ Aufgaben oder Listen entfernen',
+                    "es-ES": '⌠💡⌡ Eliminar tareas o listas',
+                    "fr": '⌠💡⌡ Supprimer des tâches ou des listes',
+                    "it": '⌠💡⌡ Elimina attività o elenchi',
+                    "pt-BR": '⌠💡⌡ Remova tarefas ou listas',
+                    "ru": '⌠💡⌡Удалить задачи или списки'
+                })
+                .addStringOption(option =>
+                    option.setName("scope")
                         .setNameLocalizations({
-                            "de": 'liste',
-                            "es-ES": 'lista',
-                            "fr": 'liste',
-                            "it": 'elenco',
-                            "pt-BR": 'lista',
-                            "ru": 'список'
+                            "de": 'umfang',
+                            "es-ES": 'alcance',
+                            "fr": 'portee',
+                            "it": 'scopo',
+                            "pt-BR": 'escopo',
+                            "ru": 'тип'
                         })
-                        .setDescription("⌠💡⌡ Remove an list")
+                        .setDescription("Select an operation")
                         .setDescriptionLocalizations({
-                            "de": '⌠💡⌡ Eine Liste entfernen',
-                            "es-ES": '⌠💡⌡ Eliminar lista',
-                            "fr": '⌠💡⌡ Supprimer la liste',
-                            "it": '⌠💡⌡ Elimina elenco',
-                            "pt-BR": '⌠💡⌡ Remova uma lista',
-                            "ru": '⌠💡⌡ Удалить список'
-                        }))),
+                            "de": 'Wählen Sie einen Vorgang aus',
+                            "es-ES": 'Seleccione una operación',
+                            "fr": 'Sélectionnez une opération',
+                            "it": 'Seleziona un\'operazione',
+                            "pt-BR": 'Escolha uma operação',
+                            "ru": 'Выберите операцию'
+                        })
+                        .addChoices(
+                            { name: '🔖 Task', value: 'task' },
+                            { name: '📝 List', value: 'list' }
+                        )
+                        .setRequired(true))),
     async execute(client, user, interaction) {
 
         let autor_original = true
 
-        if (!interaction.options.getSubcommandGroup()) {
-            if (interaction.options.getSubcommand() === "available") { // Tarefas disponíveis
-                const operador = "a|tarefas"
-                return require('../../core/interactions/chunks/tarefas')({ client, user, interaction, operador, autor_original })
-            } else if (interaction.options.getSubcommand() === "completed") { // Tarefas completadas
-                const operador = "f|tarefas"
-                return require('../../core/interactions/chunks/tarefas')({ client, user, interaction, operador, autor_original })
-            } else
-                return require('../../core/interactions/chunks/listas_navegar')({ client, user, interaction, autor_original })
-        } else
-            if (interaction.options.getSubcommandGroup())
-                require(`./subcommands/tasks_${interaction.options.getSubcommandGroup()}_${interaction.options.getSubcommand()}`)({ client, user, interaction, autor_original })
+        if (interaction.options.getSubcommand() === "browse") {
+            const operador = `${interaction.options.getString("status")}|tarefas`
+
+            if (interaction.options.getString("status") === "l")
+                require('../../core/interactions/chunks/listas_navegar')({ client, user, interaction, autor_original })
+            else
+                require('../../core/interactions/chunks/tarefas')({ client, user, interaction, operador, autor_original })
+        } else {
+
+            // Listando qual será o escopo da função
+            const operacao = interaction.options.getSubcommand()
+            const alvo = interaction.options.getString("scope")
+
+            require(`./subcommands/tasks_${operacao}_${alvo}`)({ client, user, interaction, autor_original })
+        }
     }
 }

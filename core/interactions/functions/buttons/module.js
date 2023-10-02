@@ -11,6 +11,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const modulo = await getModule(interaction.user.id, timestamp)
 
+    if (!modulo)
+        return interaction.update({
+            content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
+            embeds: [],
+            components: [row],
+            ephemeral: true
+        })
+
     // Códigos de operação
     // 0 -> Cancela
     // 1 -> Confirmar

@@ -16,7 +16,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     const date1 = new Date()
     const data_usuarios = await getRankMoney()
     const usernames = [], bufunfas = [], ids = []
-    let rodape = interaction.user.username, i = 0
+    let rodape = interaction.user.username, i = 0, user_alvo_data = interaction.options?.getUser("user") || null
+
+    if (user_alvo_data) {
+        const local = "rank" // Redirecionando o usuário para o banco padrão
+        return require(`../../../commands/miscellanea/subcommands/bank_statement`)({ client, user, interaction, local })
+    }
 
     if (typeof dados !== "undefined") // Enviado pelos botões de interação
         pagina = dados
@@ -31,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     paginas = Math.ceil(data_usuarios.length / 6)
 
     if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-        return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 0)
+        return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), client.emoji(1))
 
     // Removendo os usuários respectivos as primeiras páginas
     remover = pagina === paginas ? (pagina - 1) * 6 : data_usuarios.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6

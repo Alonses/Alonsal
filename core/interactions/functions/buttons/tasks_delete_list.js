@@ -1,9 +1,14 @@
 const { dropTaskByGroup } = require('../../../database/schemas/Task')
 const { dropGroup } = require('../../../database/schemas/Task_group')
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     const operacao = parseInt(dados.split(".")[1])
+
+    if (!autor_original) { // Redirecionando o usuário secundário
+        autor_original = false
+        return require('../../chunks/listas_remover')({ client, user, interaction, autor_original })
+    }
 
     // Códigos de operação
     // 0 -> Cancela

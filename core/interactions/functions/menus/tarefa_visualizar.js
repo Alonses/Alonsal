@@ -14,7 +14,29 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     }
 
     const task = await getTask(interaction.user.id, parseInt(dados.split(".")[1]))
+
+    // Botão para retornar até as listas do usuário
+    let row_2 = client.create_buttons([
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+    ], interaction)
+
+    if (!task)
+        return interaction.update({
+            content: client.tls.phrase(user, "util.tarefas.tarefa_inexistente", 1),
+            embeds: [],
+            components: [row_2],
+            ephemeral: true
+        })
+
     const lista = await getUserGroup(interaction.user.id, task.g_timestamp)
+
+    if (!lista)
+        return interaction.update({
+            content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
+            embeds: [],
+            components: [row_2],
+            ephemeral: true
+        })
 
     if (dados.includes("x"))
         operador = `x|${dados.split(".")[3]}`
@@ -75,14 +97,14 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     else // Tarefas finalizadas
         if (listas.length > 1) // Mais de uma lista criada
             row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji("mc_oppose"), data: `3|${task.timestamp}` },
+                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` },
                 { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.alterar_de_lista"), type: 1, emoji: client.defaultEmoji("paper"), data: `2|${task.timestamp}` },
                 { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
                 { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
             ], interaction)
         else // Apenas uma lista criada
             row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji("mc_oppose"), data: `3|${task.timestamp}` },
+                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` },
                 { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
                 { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
             ], interaction)

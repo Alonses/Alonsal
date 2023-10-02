@@ -7,6 +7,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const modulo = await getModule(interaction.user.id, timestamp)
 
+    if (!modulo)
+        return interaction.update({
+            content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
+            embeds: [],
+            components: [row],
+            ephemeral: true
+        })
+
     modulo.data = data
     await modulo.save()
 

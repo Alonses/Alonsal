@@ -13,6 +13,7 @@ const translate = {
     "listas_navegar": "util.tarefas.escolher_lista_navegar",
     "dados_navegar": "manu.data.tipo_dado",
     "listas_remover": "util.tarefas.escolher_lista_apagar",
+    "tarefas_remover": "util.tarefas.escolher_tarefa_apagar",
     "profile_custom_navegar": "Selecione um abaixo para começar"
 }
 
@@ -74,7 +75,7 @@ function create_menus(client, interaction, user, dados) {
                 // Listando tarefas
                 nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
 
-                emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji("mc_oppose")
+                emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji(41)
                 descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
 
                 if (dados.alvo == "tarefas") {
@@ -95,6 +96,18 @@ function create_menus(client, interaction, user, dados) {
 
                 // valor.timestamp -> timestamp da lista
                 // dados.timestamp -> timestamp da tarefa
+            }
+
+            if (dados.alvo === "tarefas_remover") {
+
+                // Listando tarefas criadas -> Usado para escolher tarefas para remover
+                nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
+                emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji(41)
+                valor_label = `${dados.alvo}|${valor.uid}.${valor.timestamp}`
+
+                descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
+
+                // valor.timestamp -> timestamp da tarefa
             }
 
             if (dados.alvo === "modulo_visualizar") {

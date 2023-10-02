@@ -67,8 +67,7 @@ async function getPublicGuilds() {
     // Lista todos os servidores com visibilidade ativa globalmente
     const servidores = await model.find({
         "conf.public": true
-    })
-    const lista = []
+    }), lista = []
 
     servidores.forEach(servidor => {
         lista.push(servidor.sid)

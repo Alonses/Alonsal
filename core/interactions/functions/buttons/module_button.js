@@ -16,10 +16,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }
     ], interaction)
 
-    if (operacao === 1) {
+    const modulo = await getModule(interaction.user.id, timestamp)
 
+    if (!modulo) // Verificando se o módulo ainda existe
+        return interaction.update({
+            content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
+            embeds: [],
+            components: [row],
+            ephemeral: true
+        })
+
+    if (operacao === 1) {
         // Ativando o módulo
-        const modulo = await getModule(interaction.user.id, timestamp)
 
         // Impedindo que o módulo de clima seja ativado caso não haja um local padrão
         if (modulo.type === 0 && !user.misc.locale)
@@ -43,9 +51,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 2) {
 
         // Desativando o módulo
-        const modulo = await getModule(interaction.user.id, timestamp)
         modulo.stats.active = false
-
         await modulo.save()
 
         return interaction.update({
@@ -59,8 +65,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 0) {
 
         // Excluindo o módulo
-        const modulo = await getModule(interaction.user.id, timestamp)
-
         await dropModule(interaction.user.id, modulo.type, timestamp)
 
         return interaction.update({
