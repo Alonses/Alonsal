@@ -51,6 +51,14 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("add")
+                .setNameLocalizations({
+                    "de": 'hinzufügen',
+                    "es-ES": 'agregar',
+                    "fr": 'ajouter',
+                    "it": 'aggiungere',
+                    "pt-BR": 'adicionar',
+                    "ru": 'добавить'
+                })
                 .setDescription("⌠💡⌡ Add tasks and lists")
                 .setDescriptionLocalizations({
                     "de": '⌠💡⌡ Aufgaben und Listen hinzufügen',
@@ -104,7 +112,15 @@ module.exports = {
                         })
                         .setRequired(true)))
         .addSubcommand(subcommand =>
-            subcommand.setName("remove")
+            subcommand.setName("delete")
+                .setNameLocalizations({
+                    "de": 'löschen',
+                    "es-ES": 'borrar',
+                    "fr": 'supprimer',
+                    "it": 'eliminare',
+                    "pt-BR": 'excluir',
+                    "ru": 'удалить'
+                })
                 .setDescription("⌠💡⌡ Delete tasks or lists")
                 .setDescriptionLocalizations({
                     "de": '⌠💡⌡ Aufgaben oder Listen entfernen',
