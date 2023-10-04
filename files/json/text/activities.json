@@ -9,6 +9,10 @@
             "text": "/faustop"
         },
         {
+            "type": 2,
+            "text": "/alonsal"
+        },
+        {
             "type": 0,
             "text": "itens pixelados"
         },
@@ -110,27 +114,27 @@
         },
         {
             "type": 2,
-            "text": "Chirp - C418",
+            "text": "🎶 Chirp - C418",
             "link": "https://open.spotify.com/track/1cjYtL6yMFDLyZYn9bDkGo?si=8e2d24f15ae44e78"
         },
         {
             "type": 2,
-            "text": "Rubedo - Lena Raine",
+            "text": "🎶 Rubedo - Lena Raine",
             "link": "https://open.spotify.com/track/4WSFiuuHYaWI8ZonADPKPX?si=965c4105003b49f0"
         },
         {
             "type": 2,
-            "text": "Aria Math - C418",
+            "text": "🎶 Aria Math - C418",
             "link": "https://open.spotify.com/track/4K0odcECsBvgzv9Lr9z4kd?si=8e55b34410354c13"
         },
         {
             "type": 2,
-            "text": "Sandstorm - Darude",
+            "text": "🎶 Sandstorm - Darude",
             "link": "https://open.spotify.com/track/6Sy9BUbgFse0n0LPA5lwy5?si=ef38b2465cd64996"
         },
         {
             "type": 2,
-            "text": "All Star - Smash Mouth",
+            "text": "🎶 All Star - Smash Mouth",
             "link": "https://open.spotify.com/track/3cfOd4CMv2snFaKAnMdnvK?si=cb40e54c9ce74dd8"
         },
         {
@@ -159,12 +163,12 @@
         },
         {
             "type": 2,
-            "text": "Funkytown - Lipps Inc.",
+            "text": "🎶 Funkytown - Lipps Inc.",
             "link": "https://open.spotify.com/track/0B5kY9i9bmP7554oU4jRoO?si=7e054a57faf24200"
         },
         {
             "type": 2,
-            "text": "Moskau - Dschinghis Khan",
+            "text": "🎶 Moskau - Dschinghis Khan",
             "link": "https://open.spotify.com/track/31wVu1EYhWOFCECXTqLWQ4?si=7c233baf953d4749"
         },
         {
@@ -201,7 +205,7 @@
         },
         {
             "type": 2,
-            "text": "Disparate Youth - Santigold",
+            "text": "🎶 Disparate Youth - Santigold",
             "link": "https://open.spotify.com/track/6h7IpnPY2C269Gmkz1f9E9?si=396b8d551d6149a1"
         },
         {
@@ -214,12 +218,12 @@
         },
         {
             "type": 2,
-            "text": "White Rabbit - Jefferson Airplane",
+            "text": "🎶 White Rabbit - Jefferson Airplane",
             "link": "https://open.spotify.com/track/4vpeKl0vMGdAXpZiQB2Dtd?si=a23c424e3a2a4909"
         },
         {
             "type": 2,
-            "text": "Goodbye Stranger - Supertramp",
+            "text": "🎶 Goodbye Stranger - Supertramp",
             "link": "https://open.spotify.com/track/67oyFnjJnn78fZP9KjeZx0?si=8f07fd0248594e41"
         },
         {
@@ -264,17 +268,17 @@
         },
         {
             "type": 2,
-            "text": "Nerdcast",
+            "text": "🎶 Nerdcast",
             "link": "https://open.spotify.com/show/22Wgt4ASeaw8mmoqAWNUn1?si=41d64c61840848fc"
         },
         {
             "type": 2,
-            "text": "Operators - Jetta",
+            "text": "🎶 Operators - Jetta",
             "link": "https://open.spotify.com/track/4omkqMv7OdPaqbxzuoiDp9?si=100c1f7e754a4ed4"
         },
         {
             "type": 2,
-            "text": "Cool Cat - Queen",
+            "text": "🎶 Cool Cat - Queen",
             "link": "https://open.spotify.com/track/7nhWtCc3v6Vem80gYPlppQ?si=8d8da0fc2f7842e0"
         },
         {
@@ -295,32 +299,32 @@
         },
         {
             "type": 2,
-            "text": "Movin' 'n' Groovin' - Duane Eddy",
+            "text": "🎶 Movin' 'n' Groovin' - Duane Eddy",
             "link": "https://open.spotify.com/track/0ySL65sgCrwFMpQjSdUewN?si=c31fb5b9fe2a4055"
         },
         {
             "type": 2,
-            "text": "Stal - C418",
+            "text": "🎶 Stal - C418",
             "link": "https://open.spotify.com/track/3YJtGYHVxcUa6EMSqHtIiW?si=e0ce7249610d4b5f"
         },
         {
             "type": 2,
-            "text": "otherside - Lena Raine",
+            "text": "🎶 otherside - Lena Raine",
             "link": "https://open.spotify.com/track/4PtJNlcpEGyNAkYy44m5fI?si=9cc2f9b1aa2340ba"
         },
         {
             "type": 2,
-            "text": "Ward - C418",
+            "text": "🎶 Ward - C418",
             "link": "https://open.spotify.com/track/02qaPvngBKTnUrNOx3v7Mq?si=de39c8cd41ad4ebb"
         },
         {
             "type": 2,
-            "text": "Radio Gaga - Queen",
+            "text": "🎶 Radio Gaga - Queen",
             "link": "https://open.spotify.com/track/1nQRg9q9uwALGzouOX5OyQ?si=9d2fd7b1239a4e1c"
         },
         {
             "type": 2,
-            "text": "Everybody Wants To Rule The World - Tears For Fears",
+            "text": "🎶 Everybody Wants To Rule The World - Tears For Fears",
             "link": "https://open.spotify.com/track/4RvWPyQ5RL0ao9LPZeSouE?si=d19c31d3a3b74945"
         },
         {
@@ -341,7 +345,7 @@
         },
         {
             "type": 2,
-            "text": "The Miracle - Queen",
+            "text": "🎶 The Miracle - Queen",
             "link": "https://open.spotify.com/track/5EQXJGm08LMM1ZtVmkYJMn?si=a99b132f3c374cf6"
         },
         {
@@ -406,7 +410,7 @@
         },
         {
             "type": 2,
-            "text": "Change - Tears For Fears",
+            "text": "🎶 Change - Tears For Fears",
             "link": "https://open.spotify.com/track/2JhIaeltCDCcp02K936tgx?si=af834967af3e44c8"
         },
         {
@@ -467,7 +471,7 @@
         },
         {
             "type": 2,
-            "text": "The Goonies 'R' Good Enough - Cyndi Lauper",
+            "text": "🎶 The Goonies 'R' Good Enough - Cyndi Lauper",
             "link": "https://open.spotify.com/track/0aKAV3r05KViNXmUEZARZy?si=54f2cda5ae68465a"
         },
         {
@@ -496,47 +500,47 @@
         },
         {
             "type": 2,
-            "text": "Surrender - Cheap Trick",
+            "text": "🎶 Surrender - Cheap Trick",
             "link": "https://open.spotify.com/track/2ccUQnjjNWT0rsNnsBpsCA?si=5806fee9f2a24dfa"
         },
         {
             "type": 2,
-            "text": "Stand Tall - Lena Raine",
+            "text": "🎶 Stand Tall - Lena Raine",
             "link": "https://open.spotify.com/track/7sWxofVkxgpgMIPWec2oMb?si=f6717e4808d54b75"
         },
         {
             "type": 2,
-            "text": "Infinite Amethyst - Lena Raine",
+            "text": "🎶 Infinite Amethyst - Lena Raine",
             "link": "https://open.spotify.com/track/3Vkyy6CB4UDEvFncUBc53z?si=ed0dc847eb664436"
         },
         {
             "type": 2,
-            "text": "An Ordinary Day - Kumi Tanioka",
+            "text": "🎶 An Ordinary Day - Kumi Tanioka",
             "link": "https://open.spotify.com/track/3U8YMQSgsLX2q1KjykuJmH?si=04b4fad1681c4b8b"
         },
         {
             "type": 2,
-            "text": "One More Day - Lena Raine",
+            "text": "🎶 One More Day - Lena Raine",
             "link": "https://open.spotify.com/track/44SxJEUxVcs2PoUV476yst?si=dc2e517b6e464384"
         },
         {
             "type": 2,
-            "text": "Relic - Aaron Cherof",
+            "text": "🎶 Relic - Aaron Cherof",
             "link": "https://open.spotify.com/track/2p7THMcCrDvFLiSfBRyXav?si=757ab8fa459f42a0"
         },
         {
             "type": 2,
-            "text": "Echo in the Wind - Aaron Cherof",
+            "text": "🎶 Echo in the Wind - Aaron Cherof",
             "link": "https://open.spotify.com/track/69313Y4puazeLhvvG3qMf9?si=1aac8211a3504578"
         },
         {
             "type": 2,
-            "text": "A Familiar Room - Aaron Cherof",
+            "text": "🎶 A Familiar Room - Aaron Cherof",
             "link": "https://open.spotify.com/track/6r9civQUuAon4vhOX0rFln?si=584fadc7460a42dc"
         },
         {
             "type": 2,
-            "text": "Crescent Dunes - Aaron Cherof",
+            "text": "🎶 Crescent Dunes - Aaron Cherof",
             "link": "https://open.spotify.com/track/7xa3C3vAkFhsj6BP9cFtox?si=02ad5df3a5024825"
         },
         {
@@ -553,7 +557,7 @@
         },
         {
             "type": 2,
-            "text": "Não Ouvo Podcasts",
+            "text": "🎶 Não Ouvo Podcasts",
             "link": "https://open.spotify.com/show/7w2wmS5tdwLBMtEN3puAxn?si=4729b53386354b47"
         },
         {
@@ -650,42 +654,42 @@
         },
         {
             "type": 2,
-            "text": "Sweet Nothin's - Brenda Lee",
+            "text": "🎶 Sweet Nothin's - Brenda Lee",
             "link": "https://open.spotify.com/track/4ZiDhG5Ift5I6reAEOBBec?si=978c96c6ae4b4d22"
         },
         {
             "type": 2,
-            "text": "Nadine - Chuck Berry",
+            "text": "🎶 Nadine - Chuck Berry",
             "link": "https://open.spotify.com/track/4NRARCtuAaxJa8z9OwKFRI?si=cc3ab6a9a4864ad0"
         },
         {
             "type": 2,
-            "text": "Johnny B. Goode - Chuck Berry",
+            "text": "🎶 Johnny B. Goode - Chuck Berry",
             "link": "https://open.spotify.com/track/3BUQFs6aFWh7EFNmI8bfL7?si=ab795cc5c21c4b9b"
         },
         {
             "type": 2,
-            "text": "Born To Be Wild - Steppenwolf",
+            "text": "🎶 Born To Be Wild - Steppenwolf",
             "link": "https://open.spotify.com/track/63OFKbMaZSDZ4wtesuuq6f?si=aabecf31f13746f5"
         },
         {
             "type": 2,
-            "text": "Breakthru - Queen",
+            "text": "🎶 Breakthru - Queen",
             "link": "https://open.spotify.com/track/5Nuxdf0f5PpaeaPm4jrhiE?si=22d49dff706e4cdd"
         },
         {
             "type": 2,
-            "text": "Goldeneye - Tina Turner",
+            "text": "🎶 Goldeneye - Tina Turner",
             "link": "https://open.spotify.com/track/2qF8cLzNvsOkayHqwPaJcV?si=144077fd27204e6e"
         },
         {
             "type": 2,
-            "text": "The Hurting - Tears For Fears",
+            "text": "🎶 The Hurting - Tears For Fears",
             "link": "https://open.spotify.com/track/0CpBiDWgrVau4bGJbkQ73R?si=f2f9f5ac68f44127"
         },
         {
             "type": 2,
-            "text": "The Best - Tina Turner",
+            "text": "🎶 The Best - Tina Turner",
             "link": "https://open.spotify.com/track/4OeFQtRyT7vsLnRTv7t8YT?si=de9600c8d76a45bc"
         },
         {
@@ -694,12 +698,12 @@
         },
         {
             "type": 2,
-            "text": "The Miracle - Queen",
+            "text": "🎶 The Miracle - Queen",
             "link": "https://open.spotify.com/track/5EQXJGm08LMM1ZtVmkYJMn?si=8e85138444024230"
         },
         {
             "type": 2,
-            "text": "On And On And On - ABBA",
+            "text": "🎶 On And On And On - ABBA",
             "link": "https://open.spotify.com/track/2dnR7o8cm9798o6KPsopki?si=50e70e2ff2174045"
         },
         {
@@ -708,7 +712,7 @@
         },
         {
             "type": 2,
-            "text": "When The Night Closes In - Secret Service",
+            "text": "🎶 When The Night Closes In - Secret Service",
             "link": "https://open.spotify.com/track/1d00tEfkM2450ndQWLXqpW?si=7e055dcd1c3a47bd"
         },
         {
@@ -733,7 +737,7 @@
         },
         {
             "type": 2,
-            "text": "Pelican - The Maccabees",
+            "text": "🎶 Pelican - The Maccabees",
             "link": "https://open.spotify.com/track/3rbVv0XOyXcI27mMaJqz4F?si=60f0c5b71fc04848"
         },
         {
@@ -746,47 +750,47 @@
         },
         {
             "type": 2,
-            "text": "The Logical Song - Supertramp",
+            "text": "🎶 The Logical Song - Supertramp",
             "link": "https://open.spotify.com/track/6mHOcVtsHLMuesJkswc0GZ?si=81dd046befdd410c"
         },
         {
             "type": 2,
-            "text": "Breakfast In America - Supertramp",
+            "text": "🎶 Breakfast In America - Supertramp",
             "link": "https://open.spotify.com/track/4a5pNRjwmzYQuEY1E7O6pj?si=3bf77643f8024eb0"
         },
         {
             "type": 2,
-            "text": "Knowing Me, Knowing You - ABBA",
+            "text": "🎶 Knowing Me, Knowing You - ABBA",
             "link": "https://open.spotify.com/track/798cuJeotvXP8UVa8GJPnD?si=12f5c7a339cb4888"
         },
         {
             "type": 2,
-            "text": "Crazy Train - Ozzy Osbourne",
+            "text": "🎶 Crazy Train - Ozzy Osbourne",
             "link": "https://open.spotify.com/track/7ACxUo21jtTHzy7ZEV56vU?si=d624b2cd9d354b82"
         },
         {
             "type": 2,
-            "text": "Cars - Gary Numan",
+            "text": "🎶 Cars - Gary Numan",
             "link": "https://open.spotify.com/track/4QQEzkxcONBthDLfzqIh9S?si=942715e568a04cff"
         },
         {
             "type": 2,
-            "text": "Oh Darling - Supertramp",
+            "text": "🎶 Oh Darling - Supertramp",
             "link": "https://open.spotify.com/track/089NMLhXz421ohFN55A3yo?si=e738c5672c494d62"
         },
         {
             "type": 2,
-            "text": "Aerie - Lena Raine",
+            "text": "🎶 Aerie - Lena Raine",
             "link": "https://open.spotify.com/track/0eCyLXuQvl6P09iymEGTXS?si=9641f2fadbba4b8c"
         },
         {
             "type": 2,
-            "text": "Firebugs - Lena Raine",
+            "text": "🎶 Firebugs - Lena Raine",
             "link": "https://open.spotify.com/track/4BmywAVIr3B5wzoExUS8j9?si=f4a6d8b84cc849d3"
         },
         {
             "type": 2,
-            "text": "Learning to Fly - Pink Floyd",
+            "text": "🎶 Learning to Fly - Pink Floyd",
             "link": "https://open.spotify.com/track/3ieDOGcOqVxScs2VZBzidt?si=20c2d36ca3294c82"
         },
         {
@@ -795,17 +799,17 @@
         },
         {
             "type": 2,
-            "text": "Circle in the Sand - Belinda Carlisle",
+            "text": "🎶 Circle in the Sand - Belinda Carlisle",
             "link": "https://open.spotify.com/track/6SVga7VUytRcZvaBc6eCTW?si=120f5f7d85fd4bbe"
         },
         {
             "type": 2,
-            "text": "Sara - Starship",
+            "text": "🎶 Sara - Starship",
             "link": "https://open.spotify.com/track/7ulldxRL7kGWuKutB3TzuT?si=f6100a26adc04271"
         },
         {
             "type": 2,
-            "text": "Separate Ways (Worlds Apart) - Journey",
+            "text": "🎶 Separate Ways (Worlds Apart) - Journey",
             "link": "https://open.spotify.com/track/4ECNtOnqzxutZkXP4TE3n3?si=844ef54b5b3e417b"
         },
         {
@@ -830,8 +834,13 @@
         },
         {
             "type": 2,
-            "text": "Holding Out for a Hero - Bonnie Tyler",
+            "text": "🎶 Holding Out for a Hero - Bonnie Tyler",
             "link": "https://open.spotify.com/track/7L2eFj0KFJDmHTPMUL4ZxR?si=187a1ab675ed4017"
+        },
+        {
+            "type": 2,
+            "text": "🎶 Rock with You - Michael Jackson",
+            "link": "https://open.spotify.com/track/7oOOI85fVQvVnK5ynNMdW7?si=5b97991499ba4fbf"
         }
     ]
 }

@@ -1,15 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-
-const idiomasMap = {
-    "al": ["al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`"],
-    "de": ["de-de", ":flag_de: | Die Sprache wurde auf `Deutsch` geändert"],
-    "en": ["en-us", ":flag_us: | Language switched to `American English`"],
-    "es": ["es-es", ":flag_es: | Idioma cambiado a `Español`"],
-    "fr": ["fr-fr", ":flag_fr: | Langue changée en `Français`"],
-    "it": ["it-it", ":flag_it: | Lingua cambiata in `Italiano`"],
-    "pt": ["pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`"],
-    "ru": ["ru-ru", ":flag_ru: | Язык изменен на `русский`"]
-}
+const { languagesMap } = require('../../core/formatters/translate')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -51,7 +41,7 @@ module.exports = {
                     "ru": 'Каким будет новый язык?'
                 })
                 .addChoices(
-                    { name: '🏴 Alonsês', value: 'al' },
+                    { name: '🏴‍☠️ Alonsês', value: 'al' },
                     { name: '🇩🇪 Deutsch', value: 'de' },
                     { name: '🇺🇸 English', value: 'en' },
                     { name: '🇪🇸 Español', value: 'es' },
@@ -69,8 +59,8 @@ module.exports = {
         const matches = novo_idioma.match(/al|de|en|es|fr|it|pt|ru/)
 
         // Resgata os dados do idioma válido
-        user.lang = idiomasMap[matches[0]][0]
-        const frase_idioma = idiomasMap[matches[0]][1]
+        user.lang = languagesMap[matches[0]][0]
+        const frase_idioma = languagesMap[matches[0]][1]
 
         await user.save()
         interaction.reply({
