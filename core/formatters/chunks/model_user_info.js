@@ -62,7 +62,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
         // Informando ao usuário do comando que essa guia está desativada para ele
         if (!autor_original && !internal_user?.conf.public_badges)
-            return client.tls.reply(interaction, user, "manu.data.nao_compartilha_badges", true, 40)
+            return client.tls.reply(interaction, user, "manu.data.nao_compartilha_badges", true, 18)
 
         let id_badges = await client.getUserBadges(id_alvo)
         let badges = await buildAllBadges(client, user, id_badges)

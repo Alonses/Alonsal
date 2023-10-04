@@ -22,7 +22,7 @@ module.exports = async ({ client }) => {
             requisita_status(client)
         }, 10000)
     } else
-        client.user().setActivity("Baidu explosivo", { type: ActivityType.Playing })
+        client.user().setActivity("💣 Baidu explosivo", { type: ActivityType.Playing })
 }
 
 async function requisita_status(client) {
