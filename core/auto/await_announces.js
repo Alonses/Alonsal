@@ -46,10 +46,10 @@ gera_anuncio = async (client, proxima_att) => {
         .then(async objetos_anunciados => {
 
             // Status desconhecido ou sem link de anúncio
-            if (objetos_anunciados.status === 501 || objetos_anunciados.status === 404)
+            if (objetos_anunciados.status === "501" || objetos_anunciados.status === "404")
                 return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL." })
 
-            if (objetos_anunciados.length < 1)
+            if (objetos_anunciados.length === 0)
                 return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Não há jogos gratuitos disponíveis na Epic Games atualmente." })
 
             // Registrando os games no banco
