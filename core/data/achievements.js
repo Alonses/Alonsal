@@ -3,7 +3,7 @@ module.exports = async (client, modo, id_alvo, interaction) => {
     const user = await client.getUser(id_alvo)
 
     // const { conquistas } = require(`../../files/languages/${user.lang}.json`)
-
+    // ceira
     const all_achievements = []
 
     user.conquistas.forEach(valor =>
