@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
     if (pagina === 0)
         if (activities[client.cached.presence]?.link) {
-            ouvindo_agora = `\`\`\`fix\n🎶 ${client.tls.phrase(user, "manu.info.ouvindo_agora")}\n${client.defaultEmoji("instrument")} ${activities[client.cached.presence].text}\`\`\`\n`
+            ouvindo_agora = `\`\`\`fix\n🎶 ${client.tls.phrase(user, "manu.info.ouvindo_agora")}\n${client.defaultEmoji("instrument")} ${activities[client.cached.presence].text.replace("🎶", "")}\`\`\`\n`
 
             row = client.create_buttons([
                 { name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }

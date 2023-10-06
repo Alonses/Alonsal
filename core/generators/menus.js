@@ -15,7 +15,8 @@ const translate = {
     "listas_remover": "util.tarefas.escolher_lista_apagar",
     "tarefas_remover": "util.tarefas.escolher_tarefa_apagar",
     "profile_custom_navegar": "Selecione um abaixo para começar",
-    "choose_language": "Choose a language!"
+    "choose_language": "Choose a language!",
+    "spam_timeout": "Defina o tempo padrão de mute!"
 }
 
 function create_menus(client, interaction, user, dados) {
@@ -132,6 +133,13 @@ function create_menus(client, interaction, user, dados) {
                 nome_label = valor.split(".")[1]
                 emoji_label = valor.split(".")[2]
                 valor_label = `${dados.alvo}|${valor.split(".")[0]}`
+            }
+
+            if (dados.alvo === "spam_timeout") {
+                // Listando as opções de tempo de mute para o anti-spam
+                nome_label = valor
+                emoji_label = client.defaultEmoji("time")
+                valor_label = `${dados.alvo}|${i}`
             }
 
             i++

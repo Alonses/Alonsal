@@ -132,7 +132,7 @@ module.exports = async (client, user, interaction, pagina) => {
     // Módulo anti-spam e Visibilidade Global
     if (pagina === 2)
         botoes = botoes.concat([
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: type_button(guild?.conf.spam), emoji: emoji_button(guild?.conf.spam), data: '7', disabled: c_buttons[6] },
+            { id: "anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: 1, emoji: client.emoji(41), data: "0", disabled: c_buttons[6] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '8', disabled: c_buttons[7] },
             { id: "guild_panel_button", name: "AutoBan", type: type_button(guild?.conf.auto_ban), emoji: emoji_button(guild?.conf.auto_ban), data: '9', disabled: c_buttons[8] }
         ])
