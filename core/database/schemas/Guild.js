@@ -17,6 +17,11 @@ const schema = new mongoose.Schema({
     logger: {
         channel: { type: String, default: null },
     },
+    spam: {
+        strikes: { type: Boolean, default: true },
+        timeout: { type: Number, default: 2 },
+        data: { type: String, default: null }
+    },
     conf: {
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },

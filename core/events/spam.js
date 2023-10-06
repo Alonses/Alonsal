@@ -1,5 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
+const { getUserStrikes, spamTimeoutMap, defaultStrikes } = require("../database/schemas/Strikes")
+
 let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
@@ -88,14 +90,24 @@ module.exports = async function ({ client, message, user, guild }) {
 nerfa_spam = async (client, user, guild, message) => {
 
     let user_guild = await client.getMemberGuild(message, user.uid)
+    let tempo_timeout = 7200, entradas_spamadas = ""
 
     if (!user_guild) { // Validando se o usuário saiu do servidor
         bloqueia_operacao = 0
         return
     }
 
-    let tempo_timeout = 3600000 * 2 // 2 Horas
-    let entradas_spamadas = ""
+    if (guild?.spam.timeout) // Tempo de mute do servidor
+        tempo_timeout = spamTimeoutMap[guild?.spam.timeout][0]
+
+    // Servidor com progressão de strikes ativo
+    if (guild?.spam.strikes) {
+        let user_strikes = await getUserStrikes(user.uid)
+        user_strikes.strikes++
+
+        tempo_timeout = defaultStrikes[user_strikes.strikes] || defaultStrikes[4]
+        await user_strikes.save()
+    }
 
     // Listando as mensagens consideras SPAM e excluindo elas
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
@@ -107,7 +119,7 @@ nerfa_spam = async (client, user, guild, message) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
         .setColor(0xED4245)
-        .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, (tempo_timeout / 1000) / 60])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, tempo_timeout / 60])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -116,7 +128,7 @@ nerfa_spam = async (client, user, guild, message) => {
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                value: `<t:${client.timestamp() + (tempo_timeout / 1000)}:f>\n( <t:${client.timestamp() + (tempo_timeout / 1000)}:R> )`,
+                value: `<t:${client.timestamp() + tempo_timeout}:f>\n( <t:${client.timestamp() + tempo_timeout}:R> )`,
                 inline: true
             }
         )
@@ -124,7 +136,7 @@ nerfa_spam = async (client, user, guild, message) => {
     if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
         embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
 
-    user_guild.timeout(tempo_timeout, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
+    user_guild.timeout(tempo_timeout * 1000, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
         .then(async () => {
 
             client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embeds: [embed] })

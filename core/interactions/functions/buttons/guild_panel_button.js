@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 5 -> Reportes de usuários mau comportados
     // 6 -> Logger do servidor
 
-    // 7 -> Módulo anti-spam
+    // 7 -> Módulo anti-spam ( Movido para anti_spam_button )
     // 8 -> Servidor visível globalmente
     // 9 -> AutoBan 
 
@@ -104,20 +104,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 guild.conf.logger = !guild.conf.logger
             } else
                 guild.conf.logger = false
-        }
-    } else if (escolha === 7) {
-
-        if (!guild.logger.channel)
-            return interaction.update({
-                content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
-                ephemeral: true
-            })
-        else {
-            // Ativa ou desativa o módulo anti-spam do servidor
-            if (typeof guild.conf.spam !== "undefined")
-                guild.conf.spam = !guild.conf.spam
-            else
-                guild.conf.spam = false
         }
     } else if (escolha === 8) {
 
