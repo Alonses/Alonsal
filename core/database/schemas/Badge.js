@@ -35,12 +35,10 @@ async function removeBadge(uid, badge_id) {
 
 async function verifyDynamicBadge(client, alvo, badge_id) {
 
-    let top_users
+    let top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
+    if (top_users.length < 2) return
+
     const users = {}
-
-    top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
-
-    if (top_users.length < 2) return;
 
     // Badges do primeiro colocado no rank de bufunfas
     await getUserBadges(top_users[0].uid)
