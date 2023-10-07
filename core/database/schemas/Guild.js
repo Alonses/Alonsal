@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
     },
     reports: {
         channel: { type: String, default: null },
+        notify: { type: Boolean, default: false }
     },
     logger: {
         channel: { type: String, default: null },
