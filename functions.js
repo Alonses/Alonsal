@@ -113,6 +113,23 @@ function internal_functions(client) {
         return getGuild(id_guild)
     }
 
+    client.getGuildChannels = async (interaction, tipo, id_configurado) => {
+
+        // Lista todos os canais de um tipo especifico no servidor
+        const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
+        const canais_alvo = []
+
+        if (!id_configurado === "undefined")
+            id_configurado = ""
+
+        canais.map(canal => {
+            if (canal.id !== id_configurado)
+                canais_alvo.push(`${canal.name}.${canal.id}`)
+        })
+
+        return canais_alvo
+    }
+
     client.getUser = (id_user) => {
         return getUser(id_user)
     }

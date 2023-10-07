@@ -1,5 +1,5 @@
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, operador }) => {
 
     // Redirecionando o evento
-    require('../../formatters/chunks/model_guild_panel')(client, user, interaction, 2)
+    require('../../formatters/chunks/model_guild_panel')(client, user, interaction, operador)
 }

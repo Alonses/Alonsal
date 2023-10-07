@@ -2,7 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { getReportChannels } = require("../database/schemas/Guild")
 
-module.exports = async ({ client, alvo }) => {
+module.exports = async ({ client, alvo, id_canal }) => {
 
     const canais_reporte = await getReportChannels()
 
@@ -28,7 +28,12 @@ module.exports = async ({ client, alvo }) => {
                                 name: `**:bust_in_silhouette: ${client.tls.phrase(guild, "mode.report.usuario")}**`,
                                 value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
                                 inline: true
-                            },
+                            }
+                        )
+
+                    // Enviando para todos os servidores ( invocado com o /report create )
+                    if (typeof id_canal === "undefined") {
+                        embed.addFields(
                             {
                                 name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(guild, "mode.report.reportador")}**`,
                                 value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
@@ -41,7 +46,16 @@ module.exports = async ({ client, alvo }) => {
                             }
                         )
 
-                    canal_alvo.send({ embeds: [embed] })
+                        canal_alvo.send({ embeds: [embed] })
+
+                    } else if (id_canal === guild.reports.channel) {
+
+                        // Enviando apenas para o servidor com notificações de entrada ativas
+                        embed.setTitle(client.tls.phrase(guild, "mode.report.reporte_registrado"))
+                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
+
+                        canal_alvo.send({ content: "@here", embeds: [embed] })
+                    }
                 }
     })
 }

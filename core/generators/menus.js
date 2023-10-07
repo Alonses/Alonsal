@@ -18,7 +18,9 @@ const translate = {
     "profile_custom_navegar": "Selecione um abaixo para começar",
     "choose_language": "Choose a language!",
     "spam_timeout": "Defina o tempo padrão de mute!",
-    "static_color": "Escolha uma cor!"
+    "static_color": "Escolha uma cor!",
+    "spam_channel": "Escolha um canal de avisos",
+    "reports_channel": "Escolha um canal de avisos"
 }
 
 function create_menus(client, interaction, user, dados) {
@@ -142,6 +144,13 @@ function create_menus(client, interaction, user, dados) {
                 nome_label = valor
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${dados.alvo}|${i}`
+            }
+
+            if (dados.alvo === "spam_channel" || dados.alvo === "reports_channel") {
+                // Listando todos os canais para seleção
+                nome_label = valor.split(".")[0]
+                emoji_label = client.defaultEmoji("channel")
+                valor_label = `${dados.alvo}|${valor.split(".")[1]}`
             }
 
             if (dados.alvo === "static_color") {

@@ -1,8 +1,32 @@
 const { EmbedBuilder } = require('discord.js')
 
+const { getUserReports } = require('../../database/schemas/Report')
+
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
+
+    // Notificando o servidor sobre a entrada de um usuário com reportes
+    if (guild?.reports.notify) {
+        let avisos = 0, historico = []
+
+        const reports = await getUserReports(dados.user.id)
+        reports.forEach(valor => {
+            avisos++
+
+            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
+        })
+
+        const alvo = {
+            uid: dados.user.id,
+            relatory: historico.join("\n\n")
+        }
+
+        if (avisos > 0) {
+            const id_canal = guild.reports.channel
+            require('../../../core/auto/send_report')({ client, alvo, id_canal })
+        }
+    }
 
     // Verificando se a guild habilitou o logger
     if (!client.decider(guild.conf?.logger, 0) || !client.x.logger) return
