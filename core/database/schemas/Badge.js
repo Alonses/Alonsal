@@ -38,10 +38,9 @@ async function verifyDynamicBadge(client, alvo, badge_id) {
     let top_users
     const users = {}
 
-    if (alvo === "bufunfas")
-        top_users = await getRankMoney()
-    else
-        top_users = await getRankGlobal()
+    top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
+
+    if (top_users.length < 2) return;
 
     // Badges do primeiro colocado no rank de bufunfas
     await getUserBadges(top_users[0].uid)
