@@ -3,6 +3,7 @@ const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { busca_badges, badgeTypes } = require('../data/badges')
 
 const { faustop, rasputia, galerito } = require('../../files/json/text/emojis.json')
+const { colorsMap } = require('../database/schemas/User')
 
 const translate = {
     "faustop": "Escolha uma frase do faustão!",
@@ -16,7 +17,8 @@ const translate = {
     "tarefas_remover": "util.tarefas.escolher_tarefa_apagar",
     "profile_custom_navegar": "Selecione um abaixo para começar",
     "choose_language": "Choose a language!",
-    "spam_timeout": "Defina o tempo padrão de mute!"
+    "spam_timeout": "Defina o tempo padrão de mute!",
+    "static_color": "Escolha uma cor!"
 }
 
 function create_menus(client, interaction, user, dados) {
@@ -140,6 +142,12 @@ function create_menus(client, interaction, user, dados) {
                 nome_label = valor
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${dados.alvo}|${i}`
+            }
+
+            if (dados.alvo === "static_color") {
+                emoji_label = colorsMap[valor][2]
+                valor_label = `${dados.alvo}|${valor}`
+                nome_label = `${valor.charAt(0).toUpperCase() + valor.slice(1)}`
             }
 
             i++
