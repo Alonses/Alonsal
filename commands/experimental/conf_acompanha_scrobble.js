@@ -7,7 +7,7 @@ module.exports = {
         .setName("c_scrobble")
         .setDescription("⌠🤖⌡ Faça o Alonsal acompanhar seus Scrobbles no LastFM")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         return
 

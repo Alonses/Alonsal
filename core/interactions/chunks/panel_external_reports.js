@@ -34,12 +34,10 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "reports_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" }
     ])
 
-    const row = client.create_buttons(botoes, interaction)
-
     interaction.update({
         content: "",
         embeds: [embed],
-        components: [row],
+        components: [client.create_buttons(botoes, interaction)],
         ephemeral: true
     })
 }

@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
             "ru": '⌠📡⌡ Официальный сервер Алонсал™'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
             { name: client.tls.phrase(user, "manu.hub.conectar"), value: process.env.url_support, type: 4, emoji: client.emoji("icon_rules_channel") }

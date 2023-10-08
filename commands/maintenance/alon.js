@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Informações do Alonsal',
             "ru": '⌠📡⌡ Информация от Алонсал'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
         const caso = 0

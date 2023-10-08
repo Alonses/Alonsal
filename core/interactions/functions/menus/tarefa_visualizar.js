@@ -72,47 +72,25 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         })
 
     // Criando os botões para as funções de gestão de tarefas
-    let row, listas
-
-    // Verificando se o usuário desabilitou as tasks globais
-    if (client.decider(user?.conf.global_tasks, 1))
-        listas = await listAllUserGroups(interaction.user.id)
-    else
-        listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }]
+    const listas = await (user?.conf.global_tasks ? listAllUserGroups(interaction.user.id) : listAllUserGroups(interaction.user.id, interaction.guild.id))
 
     if (!task.concluded) // Tarefas em aberto
-        if (listas.length > 1) // Mais de uma lista criada
-            row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.marcar_concluida"), type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.alterar_de_lista"), emoji: client.defaultEmoji("paper"), type: 1, data: `2|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
-            ], interaction)
-        else // Apenas uma lista criada
-            row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.marcar_concluida"), type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
-            ], interaction)
+        botoes = botoes.concat([{ id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.marcar_concluida"), type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` }])
     else // Tarefas finalizadas
-        if (listas.length > 1) // Mais de uma lista criada
-            row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.alterar_de_lista"), type: 1, emoji: client.defaultEmoji("paper"), data: `2|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
-            ], interaction)
-        else // Apenas uma lista criada
-            row = client.create_buttons([
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` },
-                { id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` },
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }
-            ], interaction)
+        botoes = botoes.concat([{ id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.abrir_novamente"), type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` }])
 
-    return interaction.update({
+    if (listas.length > 1) // Mais de uma lista criada
+        botoes = botoes.concat([{ id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.alterar_de_lista"), emoji: client.defaultEmoji("paper"), type: 1, data: `2|${task.timestamp}` }])
+
+    botoes = botoes.concat([{ id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` }])
+
+    const obj = {
         content: "",
         embeds: [embed],
-        components: [row],
+        components: [client.create_buttons(botoes, interaction)],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    })
+    }
+
+    client.reply(interaction, obj)
 }

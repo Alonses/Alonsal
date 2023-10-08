@@ -74,11 +74,9 @@ module.exports = {
                     "pt-BR": 'Mencione outro usuário',
                     "ru": 'Упомянуть другого пользователя'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
-        await interaction.deferReply({
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         if (interaction.options.getString("scope") !== "bank")
             require('../../core/formatters/chunks/model_rank')(client, user, interaction)

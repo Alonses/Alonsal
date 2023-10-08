@@ -86,7 +86,7 @@ module.exports = {
                             { name: '💂 In-server reports, 💂 External reports, 📜 Event log', value: '1' },
                             { name: '📛 Anti-Spam, 🌐 Global visibility, 💂 AutoBan', value: '2' }
                         ))),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let pagina = parseInt(interaction.options.getString("page")) || 0
 

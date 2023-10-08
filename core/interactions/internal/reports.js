@@ -9,13 +9,11 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> Reportes gerados ${client.defaultEmoji("guard")}`)
         .setColor(0x29BB8E)
-        .setFields(
-            {
-                name: `${client.defaultEmoji("person")} **Reportados: ${reports.length}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
+        .setFields({
+            name: `${client.defaultEmoji("person")} **Reportados: ${reports.length}**`,
+            value: "⠀",
+            inline: true
+        })
         .setFooter({
             text: "Selecione uma das opções abaixo para navegar",
             iconURL: interaction.user.avatarURL({ dynamic: true })

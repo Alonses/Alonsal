@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ O Jogo do Pula!',
             "ru": '⌠🎲⌡ Игра от Pula!'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
             { name: client.tls.phrase(user, "game.pula.jogar_agora"), type: 4, emoji: client.emoji("pula_2"), value: "https://gamejolt.com/games/pula-predios/613946" }

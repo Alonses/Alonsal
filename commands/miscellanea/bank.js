@@ -47,12 +47,12 @@ module.exports = {
             "ru": 'банк'
         })
         .setType(ApplicationCommandType.User),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
         require(`./subcommands/bank_statement`)({ client, user, interaction })
     },
-    async menu(client, user, interaction) {
+    async menu({ client, user, interaction }) {
 
         // Redirecionando o evento
         require("./subcommands/bank_statement")({ client, user, interaction })

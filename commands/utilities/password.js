@@ -35,7 +35,7 @@ module.exports = {
                 })
                 .setMinValue(15)
                 .setMaxValue(350)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const tamanho = interaction.options.getInteger("length") || 15
 

@@ -90,7 +90,7 @@ module.exports = {
                             "pt-BR": 'Mencione outro usuário',
                             "ru": 'Упомянуть другого пользователя'
                         }))),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando
         require(`./subcommands/user_${interaction.options.getSubcommand()}`)({ client, user, interaction })

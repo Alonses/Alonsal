@@ -39,7 +39,7 @@ module.exports = {
         //             "pt-BR": '⌠👤⌡ Configure seu perfil'
         //         }))
     ,
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Navegando pelos módulos
         return require(`./subcommands/profile_${interaction.options.getSubcommand()}`)({ client, user, interaction })

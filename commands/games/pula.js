@@ -33,7 +33,7 @@ module.exports = {
                     "pt-BR": 'Mencione outro usuário',
                     "ru": 'Упомянуть другого пользователя'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let alvo = interaction.options.getUser("user") || interaction.user
         const user_pula = await client.getUser(alvo.id)

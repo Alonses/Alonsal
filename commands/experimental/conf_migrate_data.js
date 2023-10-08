@@ -7,13 +7,11 @@ module.exports = {
         .setName("c_migrate")
         .setDescription("⌠🤖⌡ Migrar os dados para o banco de dados em nuvem")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         return
 
-        await interaction.deferReply({
-            ephemeral: true
-        })
+        await interaction.deferReply({ ephemeral: true })
 
         await migrateRankGlobal(client)
             .then(() => {

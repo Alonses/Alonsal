@@ -112,7 +112,7 @@ module.exports = {
                     "ru": '⌠💂⌡ Объявить об активных акциях'
                 }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando
         require(`./subcommands/notify_${interaction.options.getSubcommand()}`)({ client, user, interaction })

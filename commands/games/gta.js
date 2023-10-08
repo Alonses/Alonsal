@@ -15,7 +15,7 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ Informações do GTA Online',
             "ru": '⌠🎲⌡ ГТА Онлайн информация'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         fetch(`${process.env.url_apisal}/gta?idioma=${user.lang}`)
             .then(response => response.json())

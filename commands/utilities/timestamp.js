@@ -76,7 +76,7 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "ru": '⌠💡⌡ Текущая метка времени'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let titulo = client.tls.phrase(user, "util.timestamp.timestamp_1")
         let timestamp, aviso = "", conversao_invalida = false, conversao_valida = "", retorno

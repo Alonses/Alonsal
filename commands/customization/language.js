@@ -51,7 +51,7 @@ module.exports = {
                     { name: '🇷🇺 Русский', value: 'ru' }
                 )
                 .setRequired(true)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let novo_idioma = interaction.options.getString("language")
 

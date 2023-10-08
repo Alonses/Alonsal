@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠😂⌡ Louvado seja!',
             "ru": '⌠😂⌡ Слава!'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const baidu = new AttachmentBuilder("./files/img/baidu.png")
         interaction.reply({

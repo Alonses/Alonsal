@@ -139,23 +139,14 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: c_buttons[3], emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
     ], interaction)
 
-    if (autor_original) {
-        if (!interaction.customId)
-            return interaction.reply({
-                embeds: [infos_user],
-                components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        else
-            return interaction.update({
-                embeds: [infos_user],
-                components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-    } else // Envia uma interação secundária efémera para o usuário que não é o autor original
-        return interaction.reply({
-            embeds: [infos_user],
-            components: [row],
-            ephemeral: true
-        })
+    const obj = {
+        embeds: [infos_user],
+        components: [row],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    }
+
+    if (!autor_original)
+        obj.ephemeral = true
+
+    client.reply(interaction, obj)
 }

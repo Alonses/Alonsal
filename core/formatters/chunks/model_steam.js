@@ -40,9 +40,7 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     // Aumentando o tempo de duração da resposta
-    interaction.deferReply({
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    })
+    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
     fetch(usuario_alvo)
         .then(response => response.text())

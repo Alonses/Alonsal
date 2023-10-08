@@ -1,7 +1,5 @@
 const { checkUserGuildReported } = require("../../database/schemas/Report")
 
-const menu_navigation = require("../../functions/menu_navigation")
-
 module.exports = async ({ client, user, interaction, pagina }) => {
 
     const reportes_guild = await checkUserGuildReported(interaction.guild.id)
@@ -25,13 +23,10 @@ module.exports = async ({ client, user, interaction, pagina }) => {
         ephemeral: true
     }
 
-    let row = menu_navigation(client, interaction, reportes_guild, "remove_report_navegar", pagina || 0)
+    let row = client.menu_navigation(client, interaction, data, pagina || 0)
 
     if (row) // Botões de navegação
         obj.components.push(row)
 
-    if (!interaction.customId)
-        interaction.reply(obj)
-    else
-        interaction.update(obj)
+    client.reply(interaction, obj)
 }

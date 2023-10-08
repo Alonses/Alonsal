@@ -139,7 +139,7 @@ module.exports = {
                     "pt-BR": '⌠🎉⌡ Navegue por seus módulos',
                     "ru": '⌠🎉⌡ Смотрите свои модули'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         if (interaction.options.getSubcommand() === "add") // Criando um módulo novo
             return require('./subcommands/module_add')({ client, user, interaction })

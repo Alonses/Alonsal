@@ -28,7 +28,7 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Informações do servidor',
                     "ru": '⌠💡⌡ Информация о сервере'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando
         require(`./subcommands/server_${interaction.options.getSubcommand()}`)({ client, user, interaction })

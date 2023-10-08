@@ -7,9 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     let pagina = interaction.options.getInteger("page") || 1, i = 0
     pagina = pagina < 1 ? 1 : pagina
 
-    await interaction.deferReply({
-        ephemeral: true
-    })
+    await interaction.deferReply({ ephemeral: true })
 
     const users = [], usernames = [], user_ids = []
     const usuarios_reportados = await getReportedUsers()

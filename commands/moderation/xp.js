@@ -46,7 +46,7 @@ module.exports = {
                 })
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
 

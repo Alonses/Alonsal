@@ -50,7 +50,7 @@ module.exports = {
                     "pt-BR": 'Anexe arquivos se precisar',
                     "ru": 'Прикрепите файлы, если необходимо'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const corpo_mensagem = {
             text: interaction.options.getString("text"),

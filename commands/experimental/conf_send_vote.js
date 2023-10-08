@@ -9,7 +9,7 @@ module.exports = {
                 .setDescription("O canal que será enviado")
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         if (!client.owners.includes(interaction.user.id)) return
 

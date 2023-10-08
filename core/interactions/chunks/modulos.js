@@ -23,26 +23,15 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         values: modulos
     }
 
-    if (autor_original) {
-        if (!interaction.customId) // Interação original
-            interaction.reply({
-                content: data.title,
-                embeds: [],
-                components: [client.create_menus(client, interaction, user, data)],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        else // Interação por botões/menus
-            interaction.update({
-                content: data.title,
-                embeds: [],
-                components: [client.create_menus(client, interaction, user, data)],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-    } else // Envia uma interação secundária efémera para o usuário que não é o autor original
-        interaction.reply({
-            content: data.title,
-            embeds: [],
-            components: [client.create_menus(client, interaction, user, data)],
-            ephemeral: true
-        })
+    const obj = {
+        content: data.title,
+        embeds: [],
+        components: [client.create_menus(client, interaction, user, data)],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    }
+
+    if (!autor_original)
+        obj.ephemeral = true
+
+    client.reply(interaction, obj)
 }

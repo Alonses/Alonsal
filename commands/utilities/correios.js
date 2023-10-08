@@ -11,7 +11,7 @@ module.exports = {
             option.setName("codigo")
                 .setDescription("O código do pacote")
                 .setRequired(true)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const texto_entrada = interaction.options.getString("codigo")
 

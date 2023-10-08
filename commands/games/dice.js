@@ -84,7 +84,7 @@ module.exports = {
                 })
                 .setMinValue(1)
                 .setMaxValue(50000)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const qtd_dados = interaction.options.getInteger("amount")
         const qtd_faces = interaction.options.getInteger("faces")

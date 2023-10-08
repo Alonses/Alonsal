@@ -148,7 +148,7 @@ module.exports = {
                         })
                         .setRequired(true)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const membro_sv = await client.getMemberGuild(interaction, client.id())
 

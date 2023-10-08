@@ -36,13 +36,11 @@ module.exports = async (client, dados) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.novo_membro"))
         .setColor(0x29BB8E)
-        .setFields(
-            {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
-                inline: true
-            }
-        )
+        .setFields({
+            name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+            value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
+            inline: true
+        })
         .setTimestamp()
         .setFooter({
             text: user_alvo.username

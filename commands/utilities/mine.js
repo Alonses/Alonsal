@@ -28,7 +28,7 @@ module.exports = {
                     "pt-BR": 'Insira um item',
                     "ru": 'поиск элемента'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         let url_pesquisa = `?idioma=${idioma_definido}`, nota_rodape = ' '

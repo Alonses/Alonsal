@@ -77,18 +77,11 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.telemetria"), type: 1, emoji: client.emoji(36), data: '2' }
     ], interaction)
 
-    if (!interaction.customId)
-        return interaction.reply({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-    else
-        return interaction.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
+    client.reply(interaction, {
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }
 
 lista_servidores = (servidores, linha_corte, client, user) => {

@@ -1,8 +1,6 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({
-        ephemeral: true
-    })
+    await interaction.deferReply({ ephemeral: true })
 
     user.social.lastfm = interaction.options.getString("value")
 

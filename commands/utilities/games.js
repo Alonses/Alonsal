@@ -23,7 +23,7 @@ module.exports = {
             "pt-BR": '⌠💡⌡ O(s) jogo(s) gratuito(s) do momento',
             "ru": '⌠💡⌡ Текущие бесплатные игры'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Verificando pelos games que já expiraram
         await verifyInvalidGames()

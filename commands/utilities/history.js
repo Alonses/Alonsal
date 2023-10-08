@@ -27,7 +27,7 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName("data")
                         .setDescription("Uma data específica, neste formato 21/01"))),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let data = ""
 
@@ -35,9 +35,7 @@ module.exports = {
             data = `?data=${interaction.options.getString("data")}`
 
         // Aumentando o tempo de duração da resposta
-        await interaction.deferReply({
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         if (interaction.options.getSubcommand() === "lista") // Lista de eventos
             return require('../../core/formatters/chunks/model_history.js')(client, user, data, interaction)

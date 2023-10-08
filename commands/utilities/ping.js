@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "ru": '⌠💡⌡ Проверьте свой пинг'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const m = await interaction.reply({
             content: "Ping?",

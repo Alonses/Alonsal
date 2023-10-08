@@ -152,13 +152,11 @@ nerfa_spam = async (client, user, guild, message) => {
 
             // Erro por falta de permissão para poder castigar um usuário
             embed.setDescription(`${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_1"), user_guild)}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
-                .setFields(
-                    {
-                        name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                        value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
-                        inline: true
-                    }
-                )
+                .setFields({
+                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                    value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
+                    inline: true
+                })
 
             client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
         })

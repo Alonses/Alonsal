@@ -21,7 +21,7 @@ module.exports = {
         .addStringOption(option =>
             option.setName("entrada")
                 .setDescription("Uma letra ou a palavra inteira!")),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         if (!games[interaction.user.id]) {
             fetch('https://api.dicionario-aberto.net/random')

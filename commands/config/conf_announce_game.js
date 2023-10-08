@@ -36,17 +36,14 @@ module.exports = {
                     { name: 'DLC/Expansão', value: 'dlc' },
                 ))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         if (interaction.user.id !== client.owners[0])
             return client.tls.reply(interaction, user, "inic.error.comando_restrito", true, 18)
 
         // Verificando pelos games que já expiraram
-        verifyInvalidGames()
-
-        await interaction.deferReply({
-            ephemeral: true
-        })
+        await verifyInvalidGames()
+        await interaction.deferReply({ ephemeral: true })
 
         const item = {
             nome: interaction.options.getString("nome"),

@@ -78,18 +78,12 @@ module.exports = async (client, user, interaction, pagina) => {
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.model_user_panel`, disabled: c_menu[1] })
-    const row = client.create_buttons(botoes, interaction)
 
-    if (!interaction.customId)
-        interaction.reply({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-    else
-        interaction.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
+    const obj = {
+        embeds: [embed],
+        components: [client.create_buttons(botoes, interaction)],
+        ephemeral: true
+    }
+
+    client.reply(interaction, obj)
 }

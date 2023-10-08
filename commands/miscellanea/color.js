@@ -66,7 +66,7 @@ module.exports = {
                 .addIntegerOption(option => option.setName("r").setDescription("R").setRequired(true).setMaxValue(255).setMinValue(0))
                 .addIntegerOption(option => option.setName("g").setDescription("G").setRequired(true).setMaxValue(255).setMinValue(0))
                 .addIntegerOption(option => option.setName("b").setDescription("B").setRequired(true).setMaxValue(255).setMinValue(0))),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
         return require(`./subcommands/color_${interaction.options.getSubcommand()}`)({ client, user, interaction })

@@ -20,7 +20,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
             "ru": '⌠📡⌡ Поддержите Алонсала'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
             { name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },

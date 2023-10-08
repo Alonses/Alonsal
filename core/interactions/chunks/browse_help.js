@@ -14,16 +14,9 @@ module.exports = async ({ client, user, interaction }) => {
         .setImage("https://i.imgur.com/NqmwCA9.png")
         .setDescription(`${client.tls.phrase(user, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(user, "inic.ping.idioma_dica")}`)
 
-    if (!interaction.customId)
-        interaction.reply({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-    else
-        interaction.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
+    client.reply(interaction, {
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }

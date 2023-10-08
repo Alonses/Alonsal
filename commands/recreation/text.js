@@ -80,7 +80,7 @@ module.exports = {
                     "pt-BR": 'Escolha um!',
                     "ru": 'Выбери один!'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let texto_entrada = interaction.options.getString("text")
 
