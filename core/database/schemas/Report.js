@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
+    nick: { type: String, default: null },
     issuer: { type: String, default: null },
     relatory: { type: String, default: null },
     timestamp: { type: Number, default: null },

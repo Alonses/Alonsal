@@ -1,10 +1,5 @@
-module.exports = async ({ client, user, interaction, alvo }) => {
+module.exports = async ({ client, user, interaction }) => {
 
-    // Retirando o reporte do usuário e anexando uma justificativa
-    alvo.archived = true
-    alvo.relatory = `${alvo.relatory}\n🔰 | ${interaction.options.getString("reason")}`
-
-    client.tls.reply(interaction, user, "mode.report.usuario_att", true, 7)
-
-    await alvo.save()
+    // Redirecionando o evento
+    require('../../../core/interactions/chunks/remove_report')({ client, user, interaction })
 }
