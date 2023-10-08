@@ -4,7 +4,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1])
 
-    if (operacao === 0)
+    if (!operacao)
         return interaction.update({
             content: ":anger: | A operação foi cancelada, nenhum efeito foi aplicado...",
             embeds: [],
