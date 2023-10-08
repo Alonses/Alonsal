@@ -42,9 +42,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
     ], interaction)
 
-    return interaction.reply({
-        embeds: [embed],
-        components: [row],
-        ephemeral: true
-    })
+    if (!interaction.customId)
+        return interaction.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
+    else
+        return interaction.update({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
 }

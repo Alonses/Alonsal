@@ -24,13 +24,15 @@ const translate = {
     "remove_report": "Escolha um usuário!"
 }
 
-function create_menus(client, interaction, user, dados) {
+function create_menus(client, interaction, user, dados, pagina) {
 
     const itens_menu = []
-    let insersoes = [], i = 1
+    let insersoes = [], i = 1, indice_start = pagina || 0
 
     // Percorrendo as entradas informadas
-    dados.values.forEach(valor => {
+    for (let x = indice_start; x < dados.values.length; x++) {
+
+        let valor = dados.values[x]
 
         // Montando a lista de valores para escolher conforme o alvo de entrada
         if (!insersoes.includes(valor)) {
@@ -179,7 +181,10 @@ function create_menus(client, interaction, user, dados) {
 
             insersoes.push(valor)
         }
-    })
+
+        if (x == (25 + indice_start - 1))
+            break
+    }
 
     // Definindo titulos e ID's exclusivos para diferentes comandos
     let titulo_menu = client.tls.phrase(user, "dive.badges.escolha_uma")
