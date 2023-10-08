@@ -8,7 +8,7 @@ module.exports = async ({ client }) => {
     const proxima_att = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
     let canais_texto = client.channels(0).size
-    let members = 0, processamento = '🎲 Processamento\n'
+    let members = 0, processamento = "🎲 Processamento\n"
 
     client.guilds().forEach(async guild => {
         members += guild.memberCount - 1
@@ -63,7 +63,7 @@ module.exports = async ({ client }) => {
             inline: false
         })
         .addFields({
-            name: `:satellite: Ativo desde`,
+            name: ":satellite: Ativo desde",
             value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
             inline: false
         })

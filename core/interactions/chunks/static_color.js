@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, valor }) => {
         .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
         .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
         .setFields({
-            name: `:money_with_wings: **Preço**`,
+            name: `:money_with_wings: **${client.tls.phrase(user, "misc.color.preco")}**`,
             value: `\`B$ ${colorsPriceMap[colorsMap[entrada][1]]}\``,
             inline: false
         })
@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, valor }) => {
     // Criando os botões para a cor customizada
     const row = client.create_buttons([
         { id: "user_custom_color", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${entrada}` },
-        { id: "user_custom_color", name: "Escolher outra cor", type: 1, emoji: client.defaultEmoji("pen"), data: `2|${entrada}` },
+        { id: "user_custom_color", name: client.tls.phrase(user, "menu.botoes.escolher_cor"), type: 1, emoji: client.defaultEmoji("pen"), data: `2|${entrada}` },
         { id: "user_custom_color", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
     ], interaction)
 

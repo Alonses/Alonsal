@@ -63,9 +63,9 @@ function listAll() {
     const bandeiras = []
     let i = 0
 
-    for (const file of readdirSync(`./files/languages/`)) {
+    for (const file of readdirSync('./files/languages/')) {
 
-        let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : `:pirate_flag:`
+        let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : ":pirate_flag:"
 
         if (!bandeiras.includes(bandeira))
             bandeiras.push(bandeira)

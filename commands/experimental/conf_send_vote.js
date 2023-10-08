@@ -51,12 +51,12 @@ module.exports = {
                     })
             } else
                 interaction.reply({
-                    content: `:o: | O tipo do canal definido não é de texto, por favor tente novamente`,
+                    content: ":o: | O tipo do canal definido não é de texto, por favor tente novamente",
                     ephemeral: true
                 })
         } else
             interaction.reply({
-                content: `:mag: | O canal mencionado não existe.`,
+                content: ":mag: | O canal mencionado não existe.",
                 ephemeral: true
             })
     }

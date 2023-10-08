@@ -53,7 +53,7 @@ module.exports = {
                 })
         } else
             interaction.reply({
-                content: `:octagonal_sign: | O canal mencionado não é de texto, tente novamente`,
+                content: ":octagonal_sign: | O canal mencionado não é de texto, tente novamente",
                 ephemeral: true
             })
     }

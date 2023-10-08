@@ -57,7 +57,7 @@ module.exports = {
                         inline: true
                     },
                     {
-                        name: `**:label: Badge**`,
+                        name: "**:label: Badge**",
                         value: `${badge.emoji} \`${badge.name}\``,
                         inline: true
                     },
