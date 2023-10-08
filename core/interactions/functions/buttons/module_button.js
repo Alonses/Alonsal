@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 2 -> Desligar módulo
 
     let row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" }
     ], interaction)
 
     const modulo = await getModule(interaction.user.id, timestamp)

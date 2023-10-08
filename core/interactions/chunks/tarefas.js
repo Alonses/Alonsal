@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
             // Botão para retornar até as listas do usuário
             let row = client.create_buttons([
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_navegar" }
             ], interaction)
 
             return interaction.update({
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
             // Botão para retornar até as listas do usuário
             let row = client.create_buttons([
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_navegar" }
             ], interaction)
 
             return interaction.update({
@@ -126,7 +126,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         }
 
         const row = client.create_buttons([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_navegar" }
         ], interaction)
 
         return interaction.update({

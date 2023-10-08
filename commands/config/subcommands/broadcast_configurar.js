@@ -25,13 +25,13 @@ module.exports = async ({ client, interaction, bot }) => {
 
     if (!canal_alvo) // Canal restrito
         return interaction.reply({
-            content: `:mag: | O canal mencionado não pode ser visto!\nPor favor, tente novamente com um outro ID`,
+            content: ":mag: | O canal mencionado não pode ser visto!\nPor favor, tente novamente com um outro ID",
             ephemeral: true
         })
 
     if (canal_alvo.type !== 0 && canal_alvo.type !== 5) // Canal com tipo inválido
         return interaction.reply({
-            content: `:o: | O tipo do canal selecionado não pode receber mensagens de broadcast!\nPor favor, tente novamente com um outro ID`,
+            content: ":o: | O tipo do canal selecionado não pode receber mensagens de broadcast!\nPor favor, tente novamente com um outro ID",
             ephemeral: true
         })
 

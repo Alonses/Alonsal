@@ -16,7 +16,7 @@ module.exports = {
         await migrateRankGlobal(client)
             .then(() => {
                 interaction.editReply({
-                    content: `:satellite: | Migração para o banco de dados concluída`,
+                    content: ":satellite: | Migração para o banco de dados concluída.",
                     ephemeral: true
                 })
             })

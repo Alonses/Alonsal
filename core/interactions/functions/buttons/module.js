@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Botão de atalho para navegar pelos módulos criados
         let row = client.create_buttons([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_modulos"), type: 1, emoji: client.defaultEmoji("paper"), data: `modulos` }
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_modulos"), type: 1, emoji: client.defaultEmoji("paper"), data: "modulos" }
         ], interaction)
 
         interaction.update({

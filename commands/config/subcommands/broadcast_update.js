@@ -30,7 +30,7 @@ module.exports = async ({ client, interaction, bot }) => {
         bot.transmission.id_cast = interaction.channel.id
     } else { // Desligando
         interaction.reply({
-            content: `:zzz: | O Broadcast entre canais foi desligado.`,
+            content: ":zzz: | O Broadcast entre canais foi desligado.",
             ephemeral: true
         })
         encerra_broadcast(client, bot, true)
