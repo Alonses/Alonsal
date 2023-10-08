@@ -4,13 +4,8 @@ const { listAllUserGroupTasks } = require('../../database/schemas/Task')
 module.exports = async ({ client, user, interaction, autor_original }) => {
 
     // Navegando por listas de tarefas
-    let listas
-
     // Verificando se o usuário desabilitou as tasks globais
-    if (client.decider(user?.conf.global_tasks, 1))
-        listas = await listAllUserGroups(interaction.user.id)
-    else
-        listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+    let listas = await (user?.conf.global_tasks ? listAllUserGroups(interaction.user.id) : listAllUserGroups(interaction.user.id, interaction.guild.id))
 
     // Listando listas
     if (listas.length < 1)
@@ -40,23 +35,14 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         data.operador = `k.${listas[0].timestamp}`
     }
 
-    if (autor_original) {
-        if (!interaction.customId) // Interação original
-            interaction.reply({
-                content: data.title,
-                components: [client.create_menus(client, interaction, user, data)],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        else // Interação por botões / menus
-            interaction.update({
-                content: data.title,
-                components: [client.create_menus(client, interaction, user, data)],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-    } else // Envia uma interação secundária efémera para o usuário que não é o autor original
-        interaction.reply({
-            content: data.title,
-            components: [client.create_menus(client, interaction, user, data)],
-            ephemeral: true
-        })
+    const obj = {
+        content: data.title,
+        components: [client.create_menus(client, interaction, user, data)],
+        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    }
+
+    if (!autor_original)
+        obj.ephemeral = true
+
+    client.reply(interaction, obj)
 }

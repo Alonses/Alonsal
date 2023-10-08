@@ -25,7 +25,7 @@ module.exports = {
 			subcommand
 				.setName("frase")
 				.setDescription("⌠😂|🇧🇷⌡ Invoca uma frase do jaja")),
-	async execute(client, user, interaction) {
+	async execute({ client, user, interaction }) {
 
 		if (!interaction.channel.nsfw)
 			return client.tls.reply(interaction, user, "dive.jaja.nsfw_jaja", true, 33)

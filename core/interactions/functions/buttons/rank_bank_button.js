@@ -14,9 +14,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Defere a interação para um usuário diferente do autor, e envia um card efemero para o mesmo
     if (!autor_original)
-        await interaction.deferReply({
-            ephemeral: true
-        })
+        await interaction.deferReply({ ephemeral: true })
 
     if (operacao === 1)
         pagina = 1

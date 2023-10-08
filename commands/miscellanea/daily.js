@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠💸⌡ Pegue sua bufunfa diária',
             "ru": '⌠💸⌡ Получай свой ежедневный Bufunfa'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const date1 = new Date()
         let data_atual = date1.toDateString('pt-BR')

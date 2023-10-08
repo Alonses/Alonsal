@@ -20,7 +20,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
             "ru": '⌠📡⌡ Пригласите Алонсала прямо сейчас!'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
             { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }

@@ -12,7 +12,7 @@ module.exports = {
 			"pt-BR": '⌠😂⌡ Java enceirado',
 			"ru": '⌠😂⌡ Вощеная Ява'
 		}),
-	async execute(client, user, interaction) {
+	async execute({ client, user, interaction }) {
 		const ceira = new AttachmentBuilder("./files/img/ceira.png")
 		interaction.reply({
 			content: "Press :regional_indicator_f: :pensive: :fist:",

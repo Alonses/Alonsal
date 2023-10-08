@@ -18,6 +18,7 @@ const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('.
 const { busca_badges, badgeTypes } = require('./core/data/badges')
 
 const translate = require('./core/formatters/translate')
+const menu_navigation = require('./core/functions/menu_navigation')
 
 function internal_functions(client) {
 
@@ -151,15 +152,6 @@ function internal_functions(client) {
         return client.discord.users.fetch(id_alvo)
     }
 
-    // Converte o valor numério para um formato específico
-    client.locale = (valor, locale) => {
-
-        if (typeof locale === "undefined")
-            locale = "pt-br"
-
-        return valor.toLocaleString(locale)
-    }
-
     // Registra os eventos no diário do bot
     client.journal = async (caso, quantia) => {
         require('./core/auto/edit_journal')({ client, caso, quantia })
@@ -185,6 +177,19 @@ function internal_functions(client) {
                 lista = `${lista.slice(0, tamanho_maximo)}...`
 
         return lista
+    }
+
+    // Converte o valor numério para um formato específico
+    client.locale = (valor, locale) => {
+
+        if (typeof locale === "undefined")
+            locale = "pt-br"
+
+        return valor.toLocaleString(locale)
+    }
+
+    client.menu_navigation = (client, interaction, data, reback, pagina) => {
+        return menu_navigation(client, interaction, data, reback, pagina)
     }
 
     // Envia uma notificação em um canal
@@ -257,6 +262,15 @@ function internal_functions(client) {
             string = string.replaceAll(especifico[0], especifico[1])
 
         return string
+    }
+
+    client.reply = (interaction, obj) => {
+
+        // Respondendo as interações
+        if (interaction.customId)
+            interaction.update(obj)
+        else
+            interaction.reply(obj)
     }
 
     // Envia uma notificação em DM para o usuário

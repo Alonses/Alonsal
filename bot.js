@@ -106,7 +106,7 @@ client.discord.on("interactionCreate", async interaction => {
 
 	try {
 		// Executando o comando
-		await action(client, user, interaction)
+		await action({ client, user, interaction })
 		await require("./core/events/log")({ client, interaction, command })
 	} catch (err) {
 		await client.error(err, "Slash Command")

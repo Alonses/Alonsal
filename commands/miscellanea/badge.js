@@ -40,7 +40,7 @@ module.exports = {
                     "pt-BR": '⌠👤⌡ Remover a badge do fixado',
                     "ru": '⌠👤⌡ Удалить значок профиля'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const badges = await client.getUserBadges(interaction.user.id)
 

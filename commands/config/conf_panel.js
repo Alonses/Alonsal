@@ -5,7 +5,7 @@ module.exports = {
         .setName("c_panel")
         .setDescription("⌠🤖⌡ Painel central do Alonsal")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Verificando autoria de quem ativou o comando
         if (!client.owners.includes(interaction.user.id)) return

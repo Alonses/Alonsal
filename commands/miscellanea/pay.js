@@ -59,7 +59,7 @@ module.exports = {
                     "ru": 'Сумма к переводу'
                 })
                 .setRequired(true)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let user_alvo = interaction.options.getUser("user")
         let bufunfas = interaction.options.getNumber("amount")

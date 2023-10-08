@@ -59,7 +59,7 @@ module.exports = {
                 })
                 .setMinValue(0.01)
                 .setMaxValue(200)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const escolha = parseInt(interaction.options.getString("choise"))
         const bet = interaction.options.getNumber("bet") ?? 0

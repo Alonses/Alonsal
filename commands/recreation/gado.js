@@ -35,7 +35,7 @@ module.exports = {
                     "ru": 'Упомянуть другого пользователя'
                 })
                 .setRequired(true)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let idioma_definido = client.idioma.getLang(interaction)
         if (idioma_definido === "al-br") idioma_definido = "pt-br"

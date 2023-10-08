@@ -36,9 +36,7 @@ module.exports = async ({ client, user, interaction }) => {
     const usuario_semanal = `https://www.last.fm/pt/user/${texto_entrada}/listening-report/week`
 
     // Aumentando o tempo de duração da resposta
-    interaction.deferReply({
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    })
+    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
     fetch(usuario_alvo)
         .then(response => response.text())

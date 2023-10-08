@@ -102,7 +102,7 @@ module.exports = {
                         )
                         .setRequired(true)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)
         const funcao = interaction.options.getString("operation") || interaction.options.getSubcommand()

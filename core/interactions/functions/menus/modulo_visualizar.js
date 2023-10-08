@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
-            components: [row],
+            components: [],
             ephemeral: true
         })
 
@@ -47,31 +47,23 @@ module.exports = async ({ client, user, interaction, dados }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    let row  // Criando os botões para as funções de gestão de tarefas
+    // Criando os botões para as funções de gestão de tarefas
+    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }]
 
     if (modulo.stats.active) // Módulo ativado
-        row = client.create_buttons([
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.desativar"), emoji: client.emoji(21), type: 1, data: `2|${modulo.stats.timestamp}` },
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` },
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }
-        ], interaction)
+        botoes = botoes.concat([{ id: "module_button", name: client.tls.phrase(user, "menu.botoes.desativar"), emoji: client.emoji(21), type: 1, data: `2|${modulo.stats.timestamp}` }])
     else // Módulo desativado
-        row = client.create_buttons([
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 2, emoji: client.emoji(20), data: `1|${modulo.stats.timestamp}` },
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` },
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `modulos` }
-        ], interaction)
+        botoes = botoes.concat([{ id: "module_button", name: client.tls.phrase(user, "menu.botoes.ativar"), type: 2, emoji: client.emoji(20), data: `1|${modulo.stats.timestamp}` }])
 
-    // Módulo do History sem tipo de retorno definido
-    if (modulo.type === 2 && modulo.data === null)
-        row.components.push(client.create_buttons([
-            { id: "module", name: client.tls.phrase(user, "menu.botoes.definir_retorno"), type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` }
-        ], interaction).components[0])
+    botoes = botoes.concat([{ id: "module_button", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` }])
 
-    return interaction.update({
+    if (modulo.type === 2 && modulo.data === null) // Módulo do History sem tipo de retorno definido
+        botoes = botoes.concat([{ id: "module", name: client.tls.phrase(user, "menu.botoes.definir_retorno"), type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` }])
+
+    interaction.update({
         content: "",
         embeds: [embed],
-        components: [row],
+        components: [client.create_buttons(botoes, interaction)],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })
 }

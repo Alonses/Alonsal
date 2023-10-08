@@ -12,7 +12,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "ru": '⌠📡⌡ Репозиторий Алонсал™'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
             { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },

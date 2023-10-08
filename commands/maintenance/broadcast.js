@@ -14,7 +14,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Iniciar um broadcast',
             "ru": '⌠📡⌡ начать трансляцию'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)
 

@@ -154,7 +154,7 @@ module.exports = {
                             { name: '📝 List', value: 'list' }
                         )
                         .setRequired(true))),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let autor_original = true
 

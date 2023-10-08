@@ -59,7 +59,7 @@ module.exports = {
                     { name: '🍀 Overworld', value: '0' },
                     { name: '🔥 Nether', value: '1' }
                 )),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let x = interaction.options.getInteger("x")
         let z = interaction.options.getInteger("z")

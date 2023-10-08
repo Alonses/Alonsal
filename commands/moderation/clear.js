@@ -47,11 +47,11 @@ module.exports = {
         })
         .setType(ApplicationCommandType.Message)
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
         const qtd_msg = interaction.options.getInteger("amount")
         deleteMessages(client, user, interaction, qtd_msg)
     },
-    async menu(client, user, interaction) {
+    async menu({ client, user, interaction }) {
         const messageDate = interaction.targetMessage.createdAt
 
         interaction.targetMessage.channel.messages.fetch()

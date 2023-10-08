@@ -48,12 +48,10 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 
-    const row = client.create_buttons(botoes, interaction)
-
     interaction.update({
         content: "",
         embeds: [embed],
-        components: [row],
+        components: [client.create_buttons(botoes, interaction)],
         ephemeral: true
     })
 }

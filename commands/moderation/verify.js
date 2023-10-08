@@ -65,7 +65,7 @@ module.exports = {
                         })
                         .setMinValue(1)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando
         require(`./subcommands/verify_${interaction.options.getSubcommand()}`)({ client, user, interaction })

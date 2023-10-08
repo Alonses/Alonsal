@@ -5,7 +5,7 @@ const { activities } = require('../../../files/json/text/activities.json')
 module.exports = async ({ client, user, interaction, caso }) => {
 
     const bot = await client.getBot()
-    let row, ouvindo_agora = "", pagina = parseInt(caso) || 0
+    let botoes = [], ouvindo_agora = "", pagina = parseInt(caso) || 0
 
     if (pagina === 0)
         if (activities[client.cached.presence]?.link) {
@@ -32,44 +32,33 @@ module.exports = async ({ client, user, interaction, caso }) => {
     if (pagina === 2) // Dados sobre fontes externas
         embed.setDescription(client.tls.phrase(user, "manu.info.conteudo_3"))
 
-
     if (pagina === 0) // Página inicial
-        row = client.create_buttons([
+        botoes = botoes.concat([
             { id: "browse_info", name: client.tls.phrase(user, "inic.inicio.suporte"), type: 1, emoji: client.emoji(25), data: 1 },
             { id: "browse_info", name: client.tls.phrase(user, "manu.data.links_externos"), type: 1, emoji: client.emoji(32), data: 2 },
-        ], interaction)
+        ])
     else if (pagina === 1)
-        row = client.create_buttons([
+        botoes = botoes.concat([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
             { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` },
             { name: client.tls.phrase(user, "manu.avalie.avaliar"), type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
             { name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
             { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
-        ], interaction)
+        ])
     else if (pagina === 2)
-        row = client.create_buttons([
+        botoes = botoes.concat([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
             { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },
             { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
-        ], interaction)
-
+        ])
 
     // Botão ouvindo agora
     if (ouvindo_agora !== "")
-        row.components.push(client.create_buttons([
-            { name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }
-        ], interaction).components[0])
+        botoes = botoes.concact([{ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }])
 
-    if (!interaction.customId)
-        interaction.reply({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-    else
-        interaction.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
+    client.reply(interaction, {
+        embeds: [embed],
+        components: [client.create_buttons(botoes, interaction)],
+        ephemeral: true
+    })
 }

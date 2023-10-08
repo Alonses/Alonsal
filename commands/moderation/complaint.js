@@ -52,7 +52,7 @@ module.exports = {
                     "pt-BR": '⌠💂⌡ Encerre seu chat de denúncia',
                     "ru": '⌠💂⌡ Закрыть чат жалоб'
                 })),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)
 

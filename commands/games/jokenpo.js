@@ -59,7 +59,7 @@ module.exports = {
                 })
                 .setMinValue(0.01)
                 .setMaxValue(1000)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const idioma_definido = client.idioma.getLang(interaction)
         let jooj = ["pedra", "papel", "tesoura", "pedra"]

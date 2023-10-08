@@ -37,12 +37,12 @@ module.exports = {
     menu_data: new ContextMenuCommandBuilder()
         .setName("LastFM")
         .setType(ApplicationCommandType.User),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
         require("../../core/formatters/chunks/model_lastfm")({ client, user, interaction })
     },
-    async menu(client, user, interaction) {
+    async menu({ client, user, interaction }) {
 
         // Redirecionando o evento
         require("../../core/formatters/chunks/model_lastfm")({ client, user, interaction })

@@ -34,7 +34,7 @@ module.exports = {
 			subcommand
 				.setName("menu")
 				.setDescription("⌠😂|🇧🇷⌡ Escolha uma frase do filme Norbit")),
-	async execute(client, user, interaction) {
+	async execute({ client, user, interaction }) {
 
 		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply({

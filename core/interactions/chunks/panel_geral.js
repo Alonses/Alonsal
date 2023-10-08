@@ -16,17 +16,10 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "internal_conf_panel", name: "Status", type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ], interaction)
 
-    if (!interaction.customId)
-        interaction.reply({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-    else
-        interaction.update({
-            content: '',
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
+    client.reply(interaction, {
+        content: '',
+        embeds: [embed],
+        components: [row],
+        ephemeral: true
+    })
 }

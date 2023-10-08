@@ -1,8 +1,6 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({
-        ephemeral: true
-    })
+    await interaction.deferReply({ ephemeral: true })
 
     user.misc.locale = interaction.options.getString("value")
 

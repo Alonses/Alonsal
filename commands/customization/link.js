@@ -58,7 +58,7 @@ module.exports = {
                     "ru": 'значение входа'
                 })
                 .setRequired(true)),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         // Redirecionando para a opção respectiva
         require(`./subcommands/link_${interaction.options.getString("platform")}`)({ client, user, interaction })

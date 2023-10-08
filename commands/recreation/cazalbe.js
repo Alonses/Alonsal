@@ -42,7 +42,7 @@ module.exports = {
 			subcommand
 				.setName("piada")
 				.setDescription("⌠😂|🇧🇷⌡ Conta uma piada")),
-	async execute(client, user, interaction) {
+	async execute({ client, user, interaction }) {
 
 		if (interaction.options.getSubcommand() === "gif")
 			interaction.reply({

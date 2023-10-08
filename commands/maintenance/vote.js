@@ -29,7 +29,7 @@ module.exports = {
             "pt-BR": '⌠📡⌡ Vote num novo idioma!',
             "ru": '⌠📡⌡ Голосуйте за новый язык!'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const votos = await getVotes()
 

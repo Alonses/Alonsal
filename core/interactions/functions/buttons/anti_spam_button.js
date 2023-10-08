@@ -43,7 +43,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
             values: ["1 hora", "2 horas", "6 horas", "12 horas", "1 dia", "2 dias", "3 dias", "7 dias"]
         }
 
-        let row = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_anti_spam" }], interaction)
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_anti_spam"
+        }], interaction)
 
         return interaction.update({
             components: [client.create_menus(client, interaction, user, data), row],

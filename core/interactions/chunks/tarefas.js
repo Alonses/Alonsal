@@ -12,13 +12,8 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             finalizado: 0
         }
 
-        let tarefas
-
         // Verificando se o usuário desabilitou as tasks globais
-        if (client.decider(user?.conf.global_tasks, 1))
-            tarefas = await listAllUserTasks(interaction.user.id)
-        else
-            tarefas = await listAllUserTasks(interaction.user.id, interaction.guild.id)
+        const tarefas = await (user?.conf.global_tasks ? listAllUserTasks(interaction.user.id) : listAllUserTasks(interaction.user.id, interaction.guild.id))
 
         // Validando se há tasks registradas para o usuário
         if (tarefas.length < 1)
@@ -42,21 +37,12 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 operador: operador
             }
 
-            if (!interaction.customId) // Interação original
-                interaction.reply({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else // Interação por botões/menus
-
-                interaction.update({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                embeds: [],
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
         }
 
         if (operador === "f|tarefas") {
@@ -70,20 +56,12 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 operador: "f"
             }
 
-            if (!interaction.customId)
-                interaction.reply({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else
-                interaction.update({
-                    content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
-                    embeds: [],
-                    components: [client.create_menus(client, interaction, user, data)],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
+                embeds: [],
+                components: [client.create_menus(client, interaction, user, data)],
+                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            })
         }
     } else if (operador.includes("k")) {
 
@@ -113,7 +91,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             operador: `k.${lista_timestamp}`
         }
 
-        interaction.update({
+        return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
             components: [client.create_menus(client, interaction, user, data)],
@@ -151,7 +129,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `listas_navegar` }
         ], interaction)
 
-        interaction.update({
+        return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
             components: [client.create_menus(client, interaction, user, data), row],

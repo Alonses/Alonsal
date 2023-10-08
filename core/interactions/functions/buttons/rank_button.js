@@ -28,13 +28,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         defer = true
 
         if (autor_original)
-            await interaction.deferUpdate({
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
+            await interaction.deferUpdate({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
         else
-            await interaction.deferReply({
-                ephemeral: true
-            })
+            await interaction.deferReply({ ephemeral: true })
     }
 
     if (operacao === 3) {

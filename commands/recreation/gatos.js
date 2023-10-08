@@ -23,7 +23,7 @@ module.exports = {
             "pt-BR": '⌠🐱⌡ Gatos!',
             "ru": '⌠🐱⌡ кошки!'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         fetch(`https://api.thecatapi.com/v1/images/search?api_key=${process.env.key_catapi}`)
             .then(res => res.json())

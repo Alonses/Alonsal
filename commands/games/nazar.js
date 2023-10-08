@@ -15,7 +15,7 @@ module.exports = {
             "pt-BR": '⌠🎲⌡ Mostra onde a Madame Nazar se encontra hoje',
             "ru": '⌠🎲⌡ Показывает, где сегодня находится мадам Назар'
         }),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         fetch("https://madam-nazar-location-api.herokuapp.com/location/current")
             .then(res => res.json())

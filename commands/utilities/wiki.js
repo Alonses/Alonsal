@@ -63,7 +63,7 @@ module.exports = {
                     { name: '🇧🇷 Português', value: 'pt-br' },
                     { name: '🇷🇺 Русский', value: 'ru-ru' }
                 )),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang
         const content = interaction.options.getString("search")

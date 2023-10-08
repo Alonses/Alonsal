@@ -44,7 +44,7 @@ module.exports = {
                     "ru": '⌠💂⌡ разблокировать текущий канал'
                 }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
-    async execute(client, user, interaction) {
+    async execute({ client, user, interaction }) {
 
         const membro_sv = await client.getMemberGuild(interaction, client.id())
 
