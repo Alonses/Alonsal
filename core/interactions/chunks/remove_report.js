@@ -1,5 +1,7 @@
 const { checkUserGuildReported } = require("../../database/schemas/Report")
 
+const menu_navigation = require("../../functions/menu_navigation")
+
 module.exports = async ({ client, user, interaction, pagina }) => {
 
     const reportes_guild = await checkUserGuildReported(interaction.guild.id)
@@ -7,35 +9,29 @@ module.exports = async ({ client, user, interaction, pagina }) => {
     if (reportes_guild.length < 1)
         return interaction.reply({ content: ":mag: | Este servidor não possui nenhum reporte registraod!", ephemeral: true })
 
+    // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
+    if (reportes_guild.length < pagina * 24)
+        pagina = pagina--
+
     const data = {
         alvo: "remove_report",
         values: reportes_guild
     }
 
-    let row, b_disabled = [false, false]
-    b_disabled[pagina] = true
+    const obj = {
+        content: "Escolha um usuário abaixo para poder gerenciar",
+        embeds: [],
+        components: [client.create_menus(client, interaction, user, data, pagina || 0)],
+        ephemeral: true
+    }
 
-    if (Math.ceil(reportes_guild.length / 25) > 1)
-        row = client.create_buttons([
-            { id: "remove_report_navegar", name: '◀️', type: 1, data: `0|${pagina}.remove_report_navegar`, disabled: b_disabled[0] },
-            { id: "remove_report_navegar", name: '▶️', type: 1, data: `1|${pagina}.remove_report_navegar`, disabled: b_disabled[1] }
-        ], interaction)
+    let row = menu_navigation(client, interaction, reportes_guild, "remove_report_navegar", pagina || 0)
 
-    if (pagina > 0)
-        pagina = (pagina * 25) - 1
+    if (row) // Botões de navegação
+        obj.components.push(row)
 
     if (!interaction.customId)
-        interaction.reply({
-            content: "Escolha um usuário abaixo para poder gerenciar",
-            embeds: [],
-            components: [client.create_menus(client, interaction, user, data, pagina), row],
-            ephemeral: true
-        })
+        interaction.reply(obj)
     else
-        interaction.update({
-            content: "Escolha um usuário abaixo para poder gerenciar",
-            embeds: [],
-            components: [client.create_menus(client, interaction, user, data, pagina), row],
-            ephemeral: true
-        })
+        interaction.update(obj)
 }

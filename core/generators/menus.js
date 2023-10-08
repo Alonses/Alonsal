@@ -27,12 +27,12 @@ const translate = {
 function create_menus(client, interaction, user, dados, pagina) {
 
     const itens_menu = []
-    let insersoes = [], i = 1, indice_start = pagina || 0
+    let insersoes = [], i = 0, indice_start = pagina * 24 || 0
 
     // Percorrendo as entradas informadas
     for (let x = indice_start; x < dados.values.length; x++) {
 
-        let valor = dados.values[x]
+        const valor = dados.values[x]
 
         // Montando a lista de valores para escolher conforme o alvo de entrada
         if (!insersoes.includes(valor)) {
@@ -68,7 +68,7 @@ function create_menus(client, interaction, user, dados, pagina) {
                 if (dados.alvo === "galerito")
                     descricao_label = "Escolher essa da rogéria"
 
-                valor_label = `${dados.alvo}|${interaction.user.id}.${i - 1}`
+                valor_label = `${dados.alvo}|${interaction.user.id}.${i}`
             }
 
             if (dados.alvo.includes("dado")) {
@@ -146,7 +146,7 @@ function create_menus(client, interaction, user, dados, pagina) {
                 // Listando as opções de tempo de mute para o anti-spam
                 nome_label = valor
                 emoji_label = client.defaultEmoji("time")
-                valor_label = `${dados.alvo}|${i}`
+                valor_label = `${dados.alvo}|${i + 1}`
             }
 
             if (dados.alvo === "spam_channel" || dados.alvo === "reports_channel") {
@@ -167,7 +167,7 @@ function create_menus(client, interaction, user, dados, pagina) {
                 nome_label = valor.nick ? valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick : "Apelido desconhecido!"
                 descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
                 emoji_label = client.defaultEmoji("person")
-                valor_label = `${dados.alvo}|${valor.uid}.${valor.sid}`
+                valor_label = `${dados.alvo}|${valor.uid}.${valor.sid}.${pagina}`
             }
 
             i++
@@ -176,13 +176,13 @@ function create_menus(client, interaction, user, dados, pagina) {
                 label: nome_label,
                 emoji: emoji_label,
                 description: descricao_label,
-                value: `${valor_label}`
+                value: valor_label
             })
 
             insersoes.push(valor)
         }
 
-        if (x == (25 + indice_start - 1))
+        if (x == (24 + indice_start))
             break
     }
 
