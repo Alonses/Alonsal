@@ -30,6 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
                     // Adicionando o usuário caso
                     alvo.relatory = list[i].reason
+                    alvo.nick = list[i].user.username
                     alvo.timestamp = client.timestamp()
                     alvo.issuer = interaction.user.id
                     alvo.auto = true

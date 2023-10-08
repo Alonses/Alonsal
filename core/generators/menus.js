@@ -19,8 +19,9 @@ const translate = {
     "choose_language": "Choose a language!",
     "spam_timeout": "Defina o tempo padrão de mute!",
     "static_color": "Escolha uma cor!",
-    "spam_channel": "Escolha um canal de avisos",
-    "reports_channel": "Escolha um canal de avisos"
+    "spam_channel": "Escolha um canal de avisos!",
+    "reports_channel": "Escolha um canal de avisos!",
+    "remove_report": "Escolha um usuário!"
 }
 
 function create_menus(client, interaction, user, dados) {
@@ -148,7 +149,7 @@ function create_menus(client, interaction, user, dados) {
 
             if (dados.alvo === "spam_channel" || dados.alvo === "reports_channel") {
                 // Listando todos os canais para seleção
-                nome_label = valor.split(".")[0]
+                nome_label = valor.split(".")[0].length < 20 ? valor.split(".")[0] : `${valor.split(".")[0].slice(0, 15)}...`
                 emoji_label = client.defaultEmoji("channel")
                 valor_label = `${dados.alvo}|${valor.split(".")[1]}`
             }
@@ -157,6 +158,14 @@ function create_menus(client, interaction, user, dados) {
                 emoji_label = colorsMap[valor][2]
                 valor_label = `${dados.alvo}|${valor}`
                 nome_label = `${valor.charAt(0).toUpperCase() + valor.slice(1)}`
+            }
+
+            if (dados.alvo === "remove_report") {
+                // Listando todos os usuários com reportes no servidor
+                nome_label = valor.nick ? valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick : "Apelido desconhecido!"
+                descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
+                emoji_label = client.defaultEmoji("person")
+                valor_label = `${dados.alvo}|${valor.uid}.${valor.sid}`
             }
 
             i++

@@ -1,8 +1,38 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, alvo }) => {
+const { getReport } = require('../../../core/database/schemas/Report')
+
+module.exports = async ({ client, user, interaction }) => {
+
+    let id_alvo = interaction.options.getUser("user")
+
+    if (!id_alvo)
+        return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
+
+    if (typeof id_alvo === "object")
+        id_alvo = id_alvo.id
+
+    if (id_alvo === interaction.user.id) // Impede que o usuário se auto reporte
+        return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
+
+    if (id_alvo === client.id()) // Impede que o usuário reporte o bot
+        return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
+
+    if (isNaN(id_alvo) || id_alvo.length < 18) // ID inválido
+        return client.tls.reply(interaction, user, "mode.report.id_invalido", true, client.defaultEmoji("types"))
+
+    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+
+    if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
+        return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
+
+    const alvo = await getReport(id_alvo, interaction.guild.id)
+
+    // Atribuindo o reporte ao usuário que disparou o comando
+    alvo.issuer = interaction.user.id
 
     alvo.archived = false
+    alvo.nick = membro_guild.user.username
     alvo.relatory = interaction.options.getString("reason")
     alvo.timestamp = client.timestamp()
 
