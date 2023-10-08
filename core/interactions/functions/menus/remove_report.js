@@ -6,6 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const id_alvo = dados.split(".")[0]
     const id_guild = dados.split(".")[1]
+    const pagina = dados.split(".")[2]
 
     const alvo = await getReport(id_alvo, id_guild)
 
@@ -37,7 +38,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de reporte
     const row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "remove_report" },
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `remove_report|${pagina}` },
         { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_guild}` },
         { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
     ], interaction)
