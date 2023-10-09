@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
     // Botão ouvindo agora
     if (ouvindo_agora !== "")
-        botoes = botoes.concact([{ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }])
+        botoes = botoes.concat([{ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }])
 
     client.reply(interaction, {
         embeds: [embed],
