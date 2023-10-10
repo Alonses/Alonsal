@@ -44,7 +44,7 @@ module.exports = async ({ client, user, interaction }) => {
     botoes = botoes.concat([
         { id: "anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: type_button(guild?.conf.spam), emoji: emoji_button(guild?.conf.spam), data: "1" },
         { id: "anti_spam_button", name: "Strikes", type: type_button(guild?.spam.strikes), emoji: emoji_button(guild?.spam.strikes), data: "2" },
-        { id: "anti_spam_button", name: client.tls.phrase(user, "mode.report.tempo_minimo"), type: 1, emoji: client.defaultEmoji("time"), data: "3" },
+        { id: "anti_spam_button", name: client.tls.phrase(user, "mode.spam.tempo_minimo"), type: 1, emoji: client.defaultEmoji("time"), data: "3" },
         { id: "anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 

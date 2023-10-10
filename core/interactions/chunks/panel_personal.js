@@ -2,7 +2,9 @@ const { EmbedBuilder } = require('discord.js')
 
 const { emoji_button, type_button } = require('../../functions/emoji_button')
 
-module.exports = async (client, user, interaction, pagina) => {
+module.exports = async ({ client, user, interaction, pagina }) => {
+
+    pagina = pagina || 0
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_pessoal"))
@@ -12,9 +14,6 @@ module.exports = async (client, user, interaction, pagina) => {
             text: client.tls.phrase(user, "manu.painel.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
-
-    if (typeof pagina === "undefined")
-        pagina = 0
 
     if (pagina === 0)
         embed.addFields(
