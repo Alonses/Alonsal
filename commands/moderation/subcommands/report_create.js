@@ -4,13 +4,14 @@ const { getReport } = require('../../../core/database/schemas/Report')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    let id_alvo = interaction.options.getUser("user")
+    let user_alvo = interaction.options.getUser("user")
+    let id_alvo
 
-    if (!id_alvo)
+    if (!user_alvo)
         return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
 
-    if (typeof id_alvo === "object")
-        id_alvo = id_alvo.id
+    if (typeof user_alvo === "object")
+        id_alvo = user_alvo.id
 
     if (id_alvo === interaction.user.id) // Impede que o usuário se auto reporte
         return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
@@ -32,7 +33,7 @@ module.exports = async ({ client, user, interaction }) => {
     alvo.issuer = interaction.user.id
 
     alvo.archived = false
-    alvo.nick = membro_guild.user.username
+    alvo.nick = user_alvo.username
     alvo.relatory = interaction.options.getString("reason")
     alvo.timestamp = client.timestamp()
 

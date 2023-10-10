@@ -1,6 +1,6 @@
 const { ChannelType } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     const operacao = parseInt(dados.split(".")[1])
     const guild = await client.getGuild(interaction.guild.id)
@@ -58,16 +58,27 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "spam_channel",
+            reback: "browse_button.anti_spam_button",
+            operation: operacao,
             values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel)
         }
 
-        let row = client.create_buttons([
+        // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
+        if (data.values.length < pagina * 24)
+            pagina--
+
+        let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_anti_spam" },
             { id: "anti_spam_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
-        ], interaction)
+        ]
+
+        let row = client.menu_navigation(data, pagina || 0)
+
+        if (row.length > 0) // Botões de navegação
+            botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus(client, interaction, user, data), row],
+            components: [client.create_menus(client, interaction, user, data, pagina || 0), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
     }

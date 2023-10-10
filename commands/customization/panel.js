@@ -89,10 +89,6 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         let pagina = parseInt(interaction.options.getString("page")) || 0
-
-        if (interaction.options.getSubcommand() === "personal")
-            return require('../../core/formatters/chunks/model_user_panel')(client, user, interaction, pagina)
-        else
-            return require('../../core/formatters/chunks/model_guild_panel')(client, user, interaction, pagina)
+        return require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, pagina })
     }
 }

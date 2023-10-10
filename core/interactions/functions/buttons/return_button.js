@@ -23,10 +23,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require('../../chunks/static_color')({ client, user, interaction, valor })
     }
 
-    // Utilizado para a paginação do painel de reportados do servidor
-    if (dados.includes("remove_report")) {
+    if (dados.includes("remove_report")) { // Utilizado para a paginação do painel de reportados do servidor
         const pagina = dados.split(".")[2]
-        return require('../../chunks/remove_report')({ client, user, interaction, pagina })
+        dados = `${interaction.user.id}.3`
+
+        return require('./report_remove_user')({ client, user, interaction, dados, pagina })
     }
 
     require(`../../chunks/${operacao}`)({ client, user, interaction, operador, autor_original })

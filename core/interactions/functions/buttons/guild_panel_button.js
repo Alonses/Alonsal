@@ -135,5 +135,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     await guild.save()
 
-    require('../../../formatters/chunks/model_guild_panel')(client, user, interaction, pagina)
+    const operador = pagina
+    require('../../chunks/panel_guild')({ client, user, interaction, operador })
 }

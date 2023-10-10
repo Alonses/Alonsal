@@ -9,10 +9,11 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
 
     // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
     if (listas.length < pagina * 24)
-        pagina = pagina--
+        pagina--
 
     const data = {
         alvo: "listas_remover",
+        reback: "browse_button",
         values: listas
     }
 
@@ -22,10 +23,10 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     }
 
-    let row = client.menu_navigation(client, interaction, data, pagina || 0)
+    let row = client.menu_navigation(data, pagina || 0)
 
-    if (row) // Botões de navegação
-        obj.components.push(row)
+    if (row.length > 0) // Botões de navegação
+        obj.components.push(client.create_buttons(row, interaction))
 
     if (!autor_original)
         obj.ephemeral = true

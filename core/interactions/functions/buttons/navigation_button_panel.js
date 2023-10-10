@@ -4,13 +4,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 0 -> Página anterior
     // 1 -> Próxima página
     let pagina = parseInt(dados.split(".")[1])
-    const operador = parseInt(dados.split(".")[2])
+    const caso = parseInt(dados.split(".")[2])
     const funcao = dados.split(".")[3]
 
-    if (operador)
-        pagina++
-    else
-        pagina--
+    pagina = caso ? pagina + 1 : pagina - 1
 
-    return require(`../../../formatters/chunks/${funcao}`)(client, user, interaction, pagina)
+    return require(`../../chunks/${funcao}`)({ client, user, interaction, pagina })
 }
