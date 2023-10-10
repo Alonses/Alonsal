@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
     const c_menu = [false, false]
     c_menu[pagina] = true
 
-    let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.model_user_panel`, disabled: c_menu[0] }]
+    let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_personal`, disabled: c_menu[0] }]
 
     // Primeira página de botões de configuração do usuário
     // Modo fantasma, notificações em DM e Ranking
@@ -76,7 +76,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.tarefas_globais"), type: type_button(user?.conf.global_tasks), emoji: emoji_button(user?.conf.global_tasks), data: '6' }
         ])
 
-    botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.model_user_panel`, disabled: c_menu[1] })
+    botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })
 
     client.reply(interaction, {
         embeds: [embed],
