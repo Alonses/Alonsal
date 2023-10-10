@@ -61,5 +61,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     await user.save()
 
-    require('../../../formatters/chunks/model_user_panel')(client, user, interaction, pagina)
+    require('../../chunks/panel_personal')({ client, user, interaction, pagina })
 }
