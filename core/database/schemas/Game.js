@@ -46,7 +46,6 @@ async function dropGame(game) {
 async function verifyInvalidGames() {
 
     const games = await getGames()
-
     if (games.length < 1) return
 
     let games_invalidos = []
@@ -57,7 +56,7 @@ async function verifyInvalidGames() {
             games_invalidos.push(game)
     })
 
-    if (games_invalidos.length == 0) return
+    if (games_invalidos.length < 1) return
 
     // Excluíndo do banco os games que já expiraram
     games_invalidos.forEach(async game => {
