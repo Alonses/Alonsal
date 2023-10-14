@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async function ({ client }) {
 
     // Previne que o bot responda a eventos enquanto estiver atualizando comandos
-    if (client.x.force_update) return
+    if (client.x.force_update || !client.x.logger) return
 
     console.log("🟠 | Ligando eventos")
 
@@ -23,6 +23,14 @@ module.exports = async function ({ client }) {
 
     client.discord.on("messageUpdate", (old_msg, new_msg) => {
         require('./discord/message_edited.js')(client, [old_msg, new_msg])
+    })
+
+    client.discord.on("channelDelete", channel => {
+        require('./discord/channel_deleted.js')({ client, channel })
+    })
+
+    client.discord.on("channelCreate", channel => {
+        require('./discord/channel_created.js')({ client, channel })
     })
 
     // Eventos para atualização de usuário

@@ -3,19 +3,18 @@ const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js
 module.exports = async ({ client, message }) => {
 
     // Verificando se o autor da mensagem excluída é o bot
-    if (message.partial || !client.x.logger) return
-    if (message.author.bot) return
+    if (message.partial || message.author.bot) return
 
-    let guild = await client.getGuild(message.guildId), attachments = []
+    const guild = await client.getGuild(message.guildId), attachments = []
 
     // Verificando se a guild habilitou o logger
-    if (!client.decider(guild.conf?.logger, 0)) return
+    if (!guild.logger.message_delete || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
     const bot = await client.getMemberGuild(message, client.id())
     if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
 
-        guild.conf.logger = 0
+        guild.logger.message_delete = false
         await guild.save()
 
         return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })

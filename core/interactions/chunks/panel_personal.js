@@ -2,9 +2,9 @@ const { EmbedBuilder } = require('discord.js')
 
 const { emoji_button, type_button } = require('../../functions/emoji_button')
 
-module.exports = async ({ client, user, interaction, pagina }) => {
+module.exports = async ({ client, user, interaction, operador }) => {
 
-    pagina = pagina || 0
+    const pagina = operador || 0
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_pessoal"))

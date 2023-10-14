@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, guild }) => {
 
-    if (client.id() !== process.env.client_1 || !process.env.channel_server || !client.x.logger) return
+    if (client.id() !== process.env.client_1 || !process.env.channel_server) return
 
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
     let server_info = `\n\n:busts_in_silhouette: **Members** ( \`${guild.memberCount - 1}\` )\n:placard: **Channels** ( \`${canais}\` )`

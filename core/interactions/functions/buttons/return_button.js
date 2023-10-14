@@ -13,8 +13,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Utilizado para a paginação do painel guild
     if (dados.includes("panel_guild")) {
-        operacao = "panel_guild"
-        operador = parseInt(dados.split(".")[2])
+        operacao = dados.split(".")[1]
+        operador = parseInt(dados.split(".")[2]) || 0
     }
 
     // Utilizado para retornar a cor customizada escolhida anteriormente

@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
     let auto_ban = ""
 
-    if (guild?.conf.auto_ban)
+    if (guild?.reports.auto_ban)
         auto_ban = `\n\n\`\`\`${client.tls.phrase(user, "mode.report.auto_ban_descricao", 34)}\`\`\``
 
     // Enviando o embed para validação

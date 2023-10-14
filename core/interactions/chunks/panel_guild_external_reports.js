@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.reports)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${emoji_button(guild?.reports.notify)} **${client.tls.phrase(user, "mode.report.aviso_de_entradas")}**`,
+                value: `${emoji_button(guild?.reports.auto_ban)} **AutoBan**\n${emoji_button(guild?.reports.notify)} **${client.tls.phrase(user, "mode.report.aviso_de_entradas")}**`,
                 inline: true
             },
             {
@@ -29,9 +29,10 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     botoes = botoes.concat([
-        { id: "reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: "1" },
-        { id: "reports_button", name: client.tls.phrase(user, "mode.report.aviso_de_entradas"), type: type_button(guild?.reports.notify), emoji: emoji_button(guild?.reports.notify), data: "2" },
-        { id: "reports_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" }
+        { id: "guild_reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: type_button(guild?.conf.reports), emoji: emoji_button(guild?.conf.reports), data: "1" },
+        { id: "guild_reports_button", name: "AutoBan", type: type_button(guild?.reports.auto_ban), emoji: emoji_button(guild?.reports.auto_ban), data: "2" },
+        { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.aviso_de_entradas"), type: type_button(guild?.reports.notify), emoji: emoji_button(guild?.reports.notify), data: "3" },
+        { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 
     interaction.update({

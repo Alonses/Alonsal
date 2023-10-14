@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const { CeiraClient } = require('./client')
 const { slash_commands } = require('./commands')
 const { internal_functions } = require('./functions')

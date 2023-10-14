@@ -4,7 +4,7 @@ function emoji_button(valor) {
 
     if (typeof valor !== "undefined" && valor !== null)
         if (valor)
-            retorno = "✅"
+            retorno = valor === true ? "✅" : "❔"
         else
             retorno = "⛔"
 

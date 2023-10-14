@@ -39,16 +39,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "spam_timeout",
+            alvo: "guild_spam_timeout",
             values: ["1 hora", "2 horas", "6 horas", "12 horas", "1 dia", "2 dias", "3 dias", "7 dias"]
         }
 
         let row = client.create_buttons([{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_anti_spam"
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam"
         }], interaction)
 
         return interaction.update({
-            components: [client.create_menus(client, interaction, user, data), row],
+            components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
 
@@ -57,8 +57,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal de avisos do anti-spam
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "spam_channel",
-            reback: "browse_button.anti_spam_button",
+            alvo: "guild_spam#channel",
+            reback: "browse_button.guild_anti_spam_button",
             operation: operacao,
             values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel)
         }
@@ -68,8 +68,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_anti_spam" },
-            { id: "anti_spam_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
         ]
 
         let row = client.menu_navigation(data, pagina || 0)
@@ -78,7 +78,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus(client, interaction, user, data, pagina || 0), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
     }
@@ -86,5 +86,5 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     await guild.save()
 
     // Redirecionando a função para o painel de anti-spam
-    require('../../chunks/panel_anti_spam')({ client, user, interaction, operacao })
+    require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, operacao })
 }

@@ -3,16 +3,15 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async (client, message) => {
 
     // Verificando se o autor da mensagem editada é o bot
-    if (message[0].partial || !client.x.logger) return
-    if (message[0].author.bot) return
+    if (message[0].partial || message[0].author.bot) return
 
     // Mensagem com o mesmo conteúdo (links de gifs e imagens)
     if (message[0].content === message[1].content) return
 
-    let guild = await client.getGuild(message[0].guildId)
+    const guild = await client.getGuild(message[0].guildId)
 
     // Verificando se a guild habilitou o logger
-    if (!client.decider(guild.conf?.logger, 0)) return
+    if (!guild.logger.message_edit || !guild.conf.logger) return
 
     // const alteracoes = comparar_edicoes(formata_text(message[0].content), formata_text(message[1].content))
     const alteracoes = {
