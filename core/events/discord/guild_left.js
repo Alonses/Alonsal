@@ -4,7 +4,7 @@ const { disableGameChannel, disableReportChannel } = require('../../database/sch
 
 module.exports = async ({ client, guild }) => {
 
-    if (client.id() !== process.env.client_1 || !process.env.channel_server || !client.x.logger) return
+    if (client.id() !== process.env.client_1 || !process.env.channel_server) return
 
     // Desligando o anúncio de games gratuitos e reports de usuários para o servidor
     await disableGameChannel(guild.id)

@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                 embeds: [],
-                components: [client.create_menus(client, interaction, user, data)],
+                components: [client.create_menus({ client, interaction, user, data })],
                 ephemeral: client.decider(user?.conf.ghost_mode, 0)
             })
         }
@@ -59,7 +59,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                 embeds: [],
-                components: [client.create_menus(client, interaction, user, data)],
+                components: [client.create_menus({ client, interaction, user, data })],
                 ephemeral: client.decider(user?.conf.ghost_mode, 0)
             })
         }
@@ -94,7 +94,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
-            components: [client.create_menus(client, interaction, user, data)],
+            components: [client.create_menus({ client, interaction, user, data })],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
 
@@ -132,7 +132,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
-            components: [client.create_menus(client, interaction, user, data), row],
+            components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }

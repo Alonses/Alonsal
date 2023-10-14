@@ -22,9 +22,6 @@ const menu_navigation = require('./core/functions/menu_navigation')
 
 function internal_functions(client) {
 
-    // Limpando o console e inicializando o bot
-    console.clear()
-
     console.log("🟠 | Inicializando o bot...")
     console.log("🟠 | Vinculando as funções internas")
 
@@ -48,8 +45,8 @@ function internal_functions(client) {
         return create_buttons(data, interaction)
     }
 
-    client.create_menus = (client, interaction, user, data, pagina) => {
-        return create_menus(client, interaction, user, data, pagina)
+    client.create_menus = ({ client, interaction, user, data, pagina, multi_select }) => {
+        return create_menus({ client, interaction, user, data, pagina, multi_select })
     }
 
     client.create_profile = (client, interaction, user, id_alvo) => {
@@ -131,6 +128,18 @@ function internal_functions(client) {
         return canais_alvo
     }
 
+    client.getGuildRoles = async (interaction, id_atual) => {
+        const roles = []
+        const id_ignorar = id_atual || null
+
+        interaction.guild.roles.cache.forEach(role => {
+            if (role.id !== interaction.guild.id && role.id !== id_ignorar) // Adiciona apenas cargos customizados
+                roles.push({ id: role.id, name: role.name })
+        })
+
+        return roles
+    }
+
     client.getUser = (id_user) => {
         return getUser(id_user)
     }
@@ -177,6 +186,18 @@ function internal_functions(client) {
                 lista = `${lista.slice(0, tamanho_maximo)}...`
 
         return lista
+    }
+
+    client.listLanguages = (language) => {
+
+        const idiomas = []
+
+        Object.keys(translate.languagesMap).forEach(lang => {
+            if (lang !== language.slice(0, 2))
+                idiomas.push(lang)
+        })
+
+        return idiomas
     }
 
     // Converte o valor numério para um formato específico

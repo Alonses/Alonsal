@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     const obj = {
         content: data.title,
         embeds: [],
-        components: [client.create_menus(client, interaction, user, data)],
+        components: [client.create_menus({ client, interaction, user, data })],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     }
 

@@ -5,7 +5,7 @@ module.exports = async (client, dados) => {
     const guild = await client.getGuild(dados.guild.id)
 
     // Verificando se a guild habilitou o logger
-    if (!client.decider(guild.conf?.logger, 0) || !client.x.logger) return
+    if (!guild.logger.member_left || !guild.conf.logger) return
 
     const user_alvo = dados.user
 

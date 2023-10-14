@@ -1,6 +1,29 @@
 const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
+const loggerMap = {
+    "message_edit": "📝",
+    "message_delete": "🚮",
+    "member_image": "👤",
+    "member_role": "🔖",
+    "member_join": "🆕",
+    "member_left": "🛫",
+    "channel_created": "🆕",
+    "channel_delete": "🚮"
+}
+
+const channelTypes = {
+    0: ["💬", "Canal de texto"],
+    2: ["🔊", "Canal de voz"],
+    4: ["📂", "Categoria"],
+    5: ["📣", "Canal de anúncios"],
+    10: ["📣", "Tópico de um canal de anúncios"],
+    11: ["💬", "Tópico público"],
+    12: ["💬", "Tópico privado"],
+    13: ["📣", "Palco do servidor"],
+    15: ["📯", "Fórum"]
+}
+
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
@@ -13,10 +36,19 @@ const schema = new mongoose.Schema({
     },
     reports: {
         channel: { type: String, default: null },
-        notify: { type: Boolean, default: false }
+        notify: { type: Boolean, default: false },
+        auto_ban: { type: Boolean, default: false }
     },
     logger: {
         channel: { type: String, default: null },
+        message_edit: { type: Boolean, default: true },
+        message_delete: { type: Boolean, default: true },
+        member_image: { type: Boolean, default: true },
+        member_role: { type: Boolean, default: true },
+        member_join: { type: Boolean, default: true },
+        member_left: { type: Boolean, default: true },
+        channel_created: { type: Boolean, default: false },
+        channel_delete: { type: Boolean, default: false }
     },
     spam: {
         strikes: { type: Boolean, default: true },
@@ -31,8 +63,7 @@ const schema = new mongoose.Schema({
         conversation: { type: Boolean, default: true },
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
-        spam: { type: Boolean, default: false },
-        auto_ban: { type: Boolean, default: false }
+        spam: { type: Boolean, default: false }
     }
 })
 
@@ -122,5 +153,7 @@ module.exports = {
     getReportChannels,
     getGameChannelById,
     disableReportChannel,
-    migrateGameChannels
+    migrateGameChannels,
+    loggerMap,
+    channelTypes
 }

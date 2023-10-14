@@ -16,7 +16,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
     modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
 
 if (silent || modo_develop)
-    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 0
+    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 1
 
 // Modo de depuração do alonsal (utiliza bots secundários)
 if (modo_develop)
@@ -56,10 +56,10 @@ class CeiraClient {
             token: token,
             clientId: clientId
         },
-            this.cached = {
-                broad_status: false,
-                presence: null
-            }
+        this.cached = {
+            broad_status: false,
+            presence: null
+        }
     }
 
     avatar() {

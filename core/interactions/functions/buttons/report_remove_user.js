@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const obj = {
             content: "Escolha um usuário abaixo para poder gerenciar",
             embeds: [],
-            components: [client.create_menus(client, interaction, user, data, pagina || 0)],
+            components: [client.create_menus({ client, interaction, user, data, pagina })],
             ephemeral: true
         }
 

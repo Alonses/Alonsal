@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", client.defaultEmoji("paper")),
             embeds: [],
-            components: [client.create_menus(client, interaction, user, data), row],
+            components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     }

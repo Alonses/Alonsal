@@ -1,10 +1,12 @@
+const { languagesMap } = require('../../../formatters/translate')
+
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    guild.logger.channel = dados
+    guild.lang = languagesMap[dados][0]
 
     await guild.save()
 
     // Redirecionando o evento
-    require('../../chunks/panel_anti_spam')({ client, user, interaction })
+    require('../../chunks/panel_guild_logger')({ client, user, interaction })
 }

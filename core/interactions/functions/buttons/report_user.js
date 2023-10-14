@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     client.registryBadge(user, badges.REPORTER)
 
     // Verificando se a opção de banir o usuário ao fazer um report está ativa
-    if (guild?.conf.auto_ban) {
+    if (guild?.reports.auto_ban) {
 
         const bot_member = await client.getMemberGuild(interaction, client.id())
 

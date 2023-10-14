@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         values: ["1", "2", "3", "4", "5", "6"]
     }
 
-    const menu = client.create_menus(client, interaction, user, data)
+    const menu = client.create_menus({ client, interaction, user, data })
 
     return interaction.update({
         content: client.tls.phrase(user, "misc.perfil.escolha_abaixo_customizar_perfil", 1),

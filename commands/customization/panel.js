@@ -82,13 +82,13 @@ module.exports = {
                             "ru": 'Одна страница для отображения'
                         })
                         .addChoices(
-                            { name: '🗣 Talkative Alonsal, 📡 Broadcast, 🎮 Free Games ad', value: '0' },
-                            { name: '💂 In-server reports, 💂 External reports, 📜 Event log', value: '1' },
-                            { name: '📛 Anti-Spam, 🌐 Global visibility, 💂 AutoBan', value: '2' }
+                            { name: '📜 Event log, 📛 Anti-Spam, 🎮 Free Games ad', value: '0' },
+                            { name: '💂 In-server reports, 💂 External reports, ', value: '1' },
+                            { name: '🗣 Talkative Alonsal, 📡 Broadcast, 🌐 Global visibility', value: '2' }
                         ))),
     async execute({ client, user, interaction }) {
 
-        let pagina = parseInt(interaction.options.getString("page")) || 0
-        return require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, pagina })
+        const operador = parseInt(interaction.options.getString("page")) || 0
+        return require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, operador })
     }
 }
