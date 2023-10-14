@@ -87,6 +87,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     await guild.save()
 
-    // Redirecionando a função para o painel de anti-spam
+    // Redirecionando a função para o painel de denuncias in-server
     require('../../chunks/panel_guild_external_reports')({ client, user, interaction })
 }

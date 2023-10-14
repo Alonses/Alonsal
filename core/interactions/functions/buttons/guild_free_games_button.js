@@ -15,14 +15,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
-    // 1 -> Ativar ou desativar o módulo anti-spam
+    // 1 -> Ativar ou desativar os jogos gratuitos
     // 2 -> Anunciando os jogos gratuitos do momento
     // 3 -> Escolher cargo para notificar
     // 4 -> Escolher canal para enviar o anuncio
 
     if (operacao === 1) {
 
-        // Ativa ou desativa o módulo anti-spam do servidor
+        // Ativa ou desativa o módulo de jogos gratuitos do servidor
         if (typeof guild.conf.games !== "undefined")
             guild.conf.games = !guild.conf.games
         else
@@ -127,6 +127,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     await guild.save()
 
-    // Redirecionando a função para o painel de anti-spam
+    // Redirecionando a função para o painel de jogos gratuitos
     require('../../chunks/panel_guild_free_games')({ client, user, interaction, operacao })
 }
