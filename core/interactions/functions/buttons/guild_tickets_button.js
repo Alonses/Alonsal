@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
-    // 1 -> Ativar ou desativar o módulo anti-spam
+    // 1 -> Ativar ou desativar o módulo denuncias in-server
     // 2 -> Escolher categoria para os tickets de denúncia
 
     if (operacao === 1) {
