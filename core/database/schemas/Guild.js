@@ -9,7 +9,9 @@ const loggerMap = {
     "member_join": "🆕",
     "member_left": "🛫",
     "channel_created": "🆕",
-    "channel_delete": "🚮"
+    "channel_delete": "🚮",
+    "member_ban_add": "🔨",
+    "member_ban_remove": "✅"
 }
 
 const channelTypes = {
