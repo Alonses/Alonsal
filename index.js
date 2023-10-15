@@ -3,7 +3,7 @@ require('dotenv').config()
 const { ShardingManager } = require('discord.js')
 const shard_names = require('./files/json/text/shard_names.json')
 
-const manager = new ShardingManager('./bot.js', { token: process.env.token })
+const manager = new ShardingManager('./bot.js', { token: process.env.token_1 })
 
 // Limpando o console e inicializando o bot
 console.clear()
