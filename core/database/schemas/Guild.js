@@ -15,15 +15,15 @@ const loggerMap = {
 }
 
 const channelTypes = {
-    0: ["💬", "Canal de texto"],
-    2: ["🔊", "Canal de voz"],
-    4: ["📂", "Categoria"],
-    5: ["📣", "Canal de anúncios"],
-    10: ["📣", "Tópico de um canal de anúncios"],
-    11: ["💬", "Tópico público"],
-    12: ["💬", "Tópico privado"],
-    13: ["📣", "Palco do servidor"],
-    15: ["📯", "Fórum"]
+    0: "💬",
+    2: "🔊",
+    4: "📂",
+    5: "📣",
+    10: "📣",
+    11: "💬",
+    12: "💬",
+    13: "📣",
+    15: "📯"
 }
 
 const schema = new mongoose.Schema({
@@ -50,7 +50,9 @@ const schema = new mongoose.Schema({
         member_join: { type: Boolean, default: true },
         member_left: { type: Boolean, default: true },
         channel_created: { type: Boolean, default: false },
-        channel_delete: { type: Boolean, default: false }
+        channel_delete: { type: Boolean, default: false },
+        member_ban_add: { type: Boolean, default: true },
+        member_ban_remove: { type: Boolean, default: true }
     },
     spam: {
         strikes: { type: Boolean, default: true },

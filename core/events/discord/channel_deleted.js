@@ -1,4 +1,5 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+
 const { channelTypes } = require('../../database/schemas/Guild')
 
 module.exports = async ({ client, channel }) => {
@@ -25,11 +26,17 @@ module.exports = async ({ client, channel }) => {
     })
 
     const registroAudita = fetchedLogs.entries.first()
+    let tipo_canal
+
+    if (channelTypes[registroAudita.target.type])
+        tipo_canal = `${channelTypes[registroAudita.target.type]} ${client.tls.phrase(guild, `menu.channels.${registroAudita.target.type}`)}`
+    else
+        tipo_canal = `❔ ${client.tls.phrase(guild, "mode.logger.canal_tipo_desconhecido")}`
 
     const embed = new EmbedBuilder()
-        .setTitle("> Canal excluído")
+        .setTitle(client.tls.phrase(guild, "mode.logger.titulo_canal_excluido"))
         .setColor(0xED4245)
-        .setDescription(`:wastebasket: | Um canal foi excluído!\n\`\`\`${channelTypes[registroAudita.target.type].join(" ") || "❔ Tipo de canal desconhecido"}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.logger.canal_excluido_desc", 13)}\n\`\`\`${tipo_canal}\`\`\``)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -43,7 +50,7 @@ module.exports = async ({ client, channel }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(guild, "util.server.categoria")}**`,
-                value: `${client.emoji("icon_id")} \`${channel.parentId || 'Não definido'}\`\n( ${channel.parentId ? `<#${channel.parentId}>` : 'Não definido'} )`,
+                value: `${client.emoji("icon_id")} \`${channel.parentId || client.tls.phrase(guild, "mode.logger.sem_categoria")}\`\n( ${channel.parentId ? `<#${channel.parentId}>` : client.tls.phrase(guild, "mode.logger.sem_categoria")} )`,
                 inline: true
             }
         )

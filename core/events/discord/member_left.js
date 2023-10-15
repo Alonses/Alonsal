@@ -1,13 +1,33 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
+    const user_alvo = dados.user
 
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_left || !guild.conf.logger) return
 
-    const user_alvo = dados.user
+    // Permissão para ver o registro de auditoria, desabilitando o logger
+    const bot = await client.getMemberGuild(dados, client.id())
+    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+
+        guild.logger.member_left = false
+        await guild.save()
+
+        return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+    }
+
+    // Verificando se o usuário foi banido ou saiu sozinho
+    const fetchedLogs = await dados.guild.fetchAuditLogs({
+        type: AuditLogEvent.MemberBanAdd,
+        limit: 1,
+    })
+
+    const registroAudita = fetchedLogs.entries.first()
+
+    if (registroAudita.target.id === user_alvo.id)
+        return // Usuário foi banido 
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))

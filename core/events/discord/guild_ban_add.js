@@ -2,15 +2,13 @@ const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js
 
 module.exports = async ({ client, ban }) => {
 
-    return
-
-    const guild = await client.getGuild(ban.guildId)
+    const guild = await client.getGuild(ban.guild.id)
 
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_ban_add || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    const bot = await client.getMemberGuild(channel, client.id())
+    const bot = await client.getMemberGuild(ban, client.id())
     if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.member_ban_add = false
@@ -20,17 +18,21 @@ module.exports = async ({ client, ban }) => {
     }
 
     // Coletando dados sobre o evento
-    const fetchedLogs = await channel.guild.fetchAuditLogs({
+    const fetchedLogs = await ban.guild.fetchAuditLogs({
         type: AuditLogEvent.MemberBanAdd,
         limit: 1,
     })
 
     const registroAudita = fetchedLogs.entries.first()
+    let razao = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.sem_motivo")}\`\`\``
+
+    if (registroAudita.reason) // Banimento com motivo explicado
+        razao = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_ban")}: ${registroAudita.reason}\`\`\``
 
     const embed = new EmbedBuilder()
-        .setTitle("> Membro banido")
+        .setTitle(client.tls.phrase(guild, "mode.logger.membro_banido"))
         .setColor(0xED4245)
-        .setDescription(`${client.emoji("banidos")} | Um membro foi banido!`)
+        .setDescription(`${client.tls.phrase(guild, "mode.logger.membro_banido_desc", client.emoji("banidos"))}${razao}`)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -38,8 +40,8 @@ module.exports = async ({ client, ban }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("person")} **Membro**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.user.id}\`\n( <@${registroAudita.user.id}> )`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.target.id}\`\n( <@${registroAudita.target.id}> )`,
                 inline: true
             }
         )
