@@ -125,7 +125,7 @@ function translate(alvo, target) {
     if (Array.isArray(data))
         phrase = data[Math.floor((data.length - 1) * Math.random())]
 
-    return phrase
+    return phrase || "<translated_text>"
 }
 
 function get_emoji(valores) {

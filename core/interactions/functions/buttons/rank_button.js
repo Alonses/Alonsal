@@ -35,14 +35,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     if (operacao === 3) {
 
-        let data_usuarios
-
         // Coletando os dados para o servidor ou para o global
-        if (escopo === "server")
-            data_usuarios = await getRankServer(interaction.guild.id)
-        else
-            data_usuarios = await getRankGlobal()
-
+        const data_usuarios = await (escopo === "server" ? getRankServer(interaction.guild.id) : getRankGlobal())
         let posicao = 1
 
         for (let i = 0; i < data_usuarios.length; i++) {
@@ -60,14 +54,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     }
 
     if (operacao === 5) {
-
-        let data_usuarios
-
         // Coletando os dados para o servidor ou para o global
-        if (escopo === "server")
-            data_usuarios = await getRankServer(interaction.guild.id)
-        else
-            data_usuarios = await getRankGlobal()
+        const data_usuarios = await (escopo === "server" ? getRankServer(interaction.guild.id) : getRankGlobal())
 
         pagina = Math.ceil(data_usuarios.length / 6)
     }

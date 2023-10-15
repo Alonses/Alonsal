@@ -26,7 +26,8 @@ const translate = {
     "select_role": "menu.menus.escolher_cargo",
     "select_language": "menu.menus.escolher_idioma",
     "select_events": "menu.menus.escolher_eventos",
-    "remove_report": "menu.menus.escolher_usuario"
+    "remove_report": "menu.menus.escolher_usuario",
+    "report_browse": "menu.menus.escolher_usuario"
 }
 
 function create_menus({ client, interaction, user, data, pagina, multi_select }) {
@@ -182,9 +183,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 nome_label = `${valor.charAt(0).toUpperCase() + valor.slice(1)}`
             }
 
-            if (data.alvo === "remove_report") {
+            if (data.alvo === "remove_report" || data.alvo === "report_browse") {
                 // Listando todos os usuários com reportes no servidor
-                nome_label = valor.nick ? valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick : "Apelido desconhecido!"
+                nome_label = valor.nick ? (valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")
                 descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
                 emoji_label = client.defaultEmoji("person")
                 valor_label = `${data.alvo}|${valor.uid}.${valor.sid}.${pagina}`
