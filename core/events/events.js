@@ -49,12 +49,10 @@ module.exports = async function ({ client }) {
 
     // Eventos de gerenciamento de membros do servidor
     client.discord.on(Events.GuildBanAdd, ban => {
-        return
         require('./discord/guild_ban_add.js')({ client, ban })
     })
 
     client.discord.on(Events.GuildBanRemove, ban => {
-        return
         require('./discord/guild_ban_remove.js')({ client, ban })
     })
 

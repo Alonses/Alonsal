@@ -30,6 +30,7 @@ const cli = new Client({
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildModeration
     ],
     partials: [
         Partials.Message,
