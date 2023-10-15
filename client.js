@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, IntentsBitField, Partials } = require('discord.js')
+const { Client, GatewayIntentBits, Partials } = require('discord.js')
 
 const idioma = require('./core/data/language')
 const translate = require('./core/formatters/translate')
@@ -27,9 +27,9 @@ if (modo_develop)
 const cli = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
-        IntentsBitField.Flags.GuildMembers
     ],
     partials: [
         Partials.Message,
