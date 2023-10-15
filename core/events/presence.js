@@ -15,8 +15,11 @@ module.exports = async ({ client }) => {
     // Impede que o bot atualize o status
     if (client.x.force_update) return
 
+    client.user().setActivity("Minecraft Live 2023!", { type: ActivityType.Watching })
+
+    return
+
     if (client.x.status) {
-        client.user().setActivity("Vapor p/ fora!", { type: ActivityType.Playing })
 
         setTimeout(() => {
             requisita_status(client)

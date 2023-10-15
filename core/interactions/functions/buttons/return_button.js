@@ -28,6 +28,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const operador = dados.split(".")[1]
         dados = `${interaction.user.id}.3`
 
+        if (operador == "remove_report")
+            return require(`../../chunks/remove_report`)({ client, user, interaction, dados, pagina })
+
         return require(`./${operador}`)({ client, user, interaction, dados, pagina })
     }
 
