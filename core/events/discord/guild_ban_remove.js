@@ -2,6 +2,8 @@ const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js
 
 module.exports = async ({ client, ban }) => {
 
+    return
+
     const guild = await client.getGuild(ban.guildId)
 
     // Verificando se a guild habilitou o logger
