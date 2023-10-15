@@ -34,10 +34,6 @@ module.exports = async ({ client, user, interaction }) => {
         historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
     })
 
-    const user = {
-        
-    }
-
     if (avisos > 0)
         descricao = `\`\`\`💢 | ${client.tls.phrase(user, "mode.report.com_report")}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
 
