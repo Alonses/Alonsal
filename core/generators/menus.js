@@ -19,7 +19,7 @@ const translate = {
     "tarefas_remover": "util.tarefas.escolher_tarefa_apagar",
     "profile_custom_navegar": "menu.menus.selecionar_profile",
     "choose_language": "Choose a language!",
-    "guild_spam_timeout": "menu.menos.escolher_timeout",
+    "guild_spam_timeout": "menu.menus.escolher_timeout",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
     "select_category": "menu.menus.escolher_categoria",
