@@ -34,13 +34,13 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji("icon_id")} \`${guild.logger.channel}\`\n( <#${guild.logger.channel}> )`,
+                name: `${client.defaultEmoji("telephone")} **${client.tls.phrase(user, "mode.logger.eventos_ouvidos")}**`,
+                value: `\`${eventos.ativos} / ${eventos.total}\``,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("telephone")} **${client.tls.phrase(user, "mode.logger.eventos_ouvidos")}**`,
-                value: `\`${eventos.ativos} / ${eventos.total}\``,
+                name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
+                value: `${client.emoji("icon_id")} \`${guild.logger.channel}\`\n( <#${guild.logger.channel}> )`,
                 inline: true
             }
         )
