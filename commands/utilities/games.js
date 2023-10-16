@@ -32,25 +32,27 @@ module.exports = {
         const games = await getGames()
         let jogos_disponiveis = [], objeto_jogos = []
 
-        games.forEach(game => {
-
-            const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
-            const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
-            let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
-
-            if (game.preco === 0)
-                preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
-
-            jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]`)
-            objeto_jogos.push({
-                name: nome_jogo,
-                type: 4,
-                value: game.link
-            })
-        })
-
         if (games.length < 1)
             return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
+
+        games.forEach(game => {
+            // Jogo com tempo válido para resgate
+            if (game.expira > client.timestamp()) {
+                const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
+                const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
+                let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
+
+                if (game.preco === 0)
+                    preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
+
+                jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]`)
+                objeto_jogos.push({
+                    name: nome_jogo,
+                    type: 4,
+                    value: game.link
+                })
+            }
+        })
 
         // Criando os botões externos para os jogos
         const row = client.create_buttons(objeto_jogos)

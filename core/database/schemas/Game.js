@@ -52,7 +52,7 @@ async function verifyInvalidGames() {
 
     // Listando os games que já expiraram
     games.forEach(game => {
-        if (game.expira < new Date().getTime() / 1000)
+        if (game.expira < parseInt(new Date().getTime() / 1000))
             games_invalidos.push(game)
     })
 

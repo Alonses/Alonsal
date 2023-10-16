@@ -46,6 +46,8 @@ async function getUserReports(uid) {
 async function getReportedUsers() {
     return model.find({
         archived: false
+    }).sort({
+        timestamp: -1
     })
 }
 
@@ -53,6 +55,8 @@ async function checkUserGuildReported(sid) {
     return model.find({
         sid: sid,
         archived: false
+    }).sort({
+        timestamp: -1
     }).limit(50)
 }
 

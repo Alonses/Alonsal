@@ -3,43 +3,39 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("badge")
-        .setDescription("⌠👤⌡ (Un)pin your badges!")
-        .addSubcommand(subcommand =>
-            subcommand.setName("fix")
+        .setDescription("⌠👤⌡ Manage your badges")
+        .setDescriptionLocalizations({
+            "de": '⌠👤⌡ Verwalten Sie Ihre Abzeichen',
+            "es-ES": '⌠👤⌡ Gestiona tus insignias',
+            "fr": '⌠👤⌡ Gérez vos badges',
+            "it": '⌠👤⌡ Gestisci i tuoi badge',
+            "pt-BR": '⌠👤⌡ Gerencie suas badges',
+            "ru": '⌠👤⌡ Управляйте своими значками'
+        })
+        .addStringOption(option =>
+            option.setName("operation")
                 .setNameLocalizations({
-                    "es-ES": 'etiquetar',
-                    "fr": 'epingler',
-                    "it": 'evidenziare',
-                    "pt-BR": 'fixar',
-                    "ru": 'носить'
+                    "de": 'betrieb',
+                    "es-ES": 'operacion',
+                    "fr": 'operation',
+                    "it": 'operazione',
+                    "pt-BR": 'operacao',
+                    "ru": 'операция'
                 })
-                .setDescription("⌠👤⌡ Pin a badge to your profile")
+                .setDescription("Select an operation")
                 .setDescriptionLocalizations({
-                    "de": '⌠👤⌡ Pinne ein Abzeichen an dein Profil',
-                    "es-ES": '⌠👤⌡ Pon una insignia en tu perfil',
-                    "fr": '⌠👤⌡ Épinglez un badge sur votre profil',
-                    "it": '⌠👤⌡ Evidenzia un badge sul tuo profilo',
-                    "pt-BR": '⌠👤⌡ Fixe uma badge ao seu perfil',
-                    "ru": '⌠👤⌡ Добавьте значок в свой профиль'
-                }))
-        .addSubcommand(subcommand =>
-            subcommand.setName("remove")
-                .setNameLocalizations({
-                    "es-ES": 'retirar',
-                    "fr": 'retirer',
-                    "it": 'rimuovere',
-                    "pt-BR": 'remover',
-                    "ru": 'удалять'
+                    "de": 'Wählen Sie einen Vorgang aus',
+                    "es-ES": 'Seleccione una operación',
+                    "fr": 'Sélectionnez une opération',
+                    "it": 'Seleziona un\'operazione',
+                    "pt-BR": 'Escolha uma operação',
+                    "ru": 'Выберите операцию'
                 })
-                .setDescription("⌠👤⌡ Remove pinned badge")
-                .setDescriptionLocalizations({
-                    "de": '⌠👤⌡ Entferne das Abzeichen aus deinem Profil',
-                    "es-ES": '⌠👤⌡ Quita la insignia',
-                    "fr": '⌠👤⌡ Supprimer le badge de l\'épinglé',
-                    "it": '⌠👤⌡ Rimuovi il badge da appuntato',
-                    "pt-BR": '⌠👤⌡ Remover a badge do fixado',
-                    "ru": '⌠👤⌡ Удалить значок профиля'
-                })),
+                .addChoices(
+                    { name: '🔖 Fix', value: 'fix' },
+                    { name: '❌ Remove', value: 'remove' }
+                )
+                .setRequired(true)),
     async execute({ client, user, interaction }) {
 
         const badges = await client.getUserBadges(interaction.user.id)
@@ -59,18 +55,17 @@ module.exports = {
             values: all_badges
         }
 
-        if (interaction.options.getSubcommand() === "fix") // Menu seletor de Badges
+        if (interaction.options.getString("operation") === "fix") // Menu seletor de Badges
             return interaction.reply({
                 content: client.tls.phrase(user, "dive.badges.cabecalho_menu"),
                 components: [client.create_menus({ client, interaction, user, data })],
                 ephemeral: true
             })
-        else {
-            user.misc.fixed_badge = null
-            await user.save()
-        }
 
         // Removendo a badge fixada
+        user.misc.fixed_badge = null
+        await user.save()
+
         interaction.reply({
             content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`,
             ephemeral: true
