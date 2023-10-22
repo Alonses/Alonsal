@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
 
-    if (guild.network.member_kick) // Network de servidores
+    if (guild.network.member_kick && guild.conf.network) // Network de servidores
         client.network(guild, "kick", user_alvo.id)
 
     // Verificando se o recurso está ativo
