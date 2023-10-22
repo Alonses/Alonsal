@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const guilds = await client.getMemberGuildsByPermissions({ interaction, user, permissions })
 
         if (guilds.length < 1)
-            return interaction.update({
+            return interaction.editReply({
                 content: "Você não é moderador em outros servidores, você deve ser moderador em um outro servidor para ter acesso a essa guia!",
                 ephemeral: true
             })
@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const botoes = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }], interaction)
         const multi_select = true
 
-        return interaction.update({
+        return interaction.editReply({
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), botoes],
             ephemeral: true
         })
