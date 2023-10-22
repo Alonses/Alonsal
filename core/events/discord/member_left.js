@@ -26,8 +26,9 @@ module.exports = async (client, dados) => {
 
     const registroAudita2 = fetchedLogs2.entries.first()
 
-    if (registroAudita2.targetId === user_alvo.id) // Membro foi expulso do servidor
-        return require('./member_kick.js')({ client, guild, user_alvo, registroAudita2 })
+    if (registroAudita2)
+        if (registroAudita2.targetId === user_alvo.id) // Membro foi expulso do servidor
+            return require('./member_kick.js')({ client, guild, user_alvo, registroAudita2 })
 
     // Verificando se o usuário foi banido
     const fetchedLogs = await dados.guild.fetchAuditLogs({
@@ -37,8 +38,9 @@ module.exports = async (client, dados) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    if (registroAudita.targetId === user_alvo.id || !guild.logger.member_left)
-        return // Usuário foi banido ou recurso desativado
+    if (registroAudita)
+        if (registroAudita.targetId === user_alvo.id || !guild.logger.member_left)
+            return // Usuário foi banido ou recurso desativado
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
