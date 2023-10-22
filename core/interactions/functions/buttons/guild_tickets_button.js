@@ -2,14 +2,13 @@ const { ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    const operacao = parseInt(dados.split(".")[1])
+    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_tickets"
     const guild = await client.getGuild(interaction.guild.id)
 
-    if (!guild.tickets.category)
-        return interaction.update({
-            content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
-            ephemeral: true
-        })
+    if (!guild.tickets.category) {
+        reback = "panel_guild.1"
+        operacao = 2
+    }
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
@@ -40,7 +39,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_tickets" },
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_tickets_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "2" }
         ]
 
