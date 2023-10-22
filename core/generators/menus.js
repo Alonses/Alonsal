@@ -174,7 +174,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 } else if (alvo.includes("#link")) { // Linkagem de servidores
                     nome_label = valor.name.length > 20 ? `${valor.name.slice(0, 18)}...` : valor.name
                     emoji_label = valor.network.link ? client.emoji(44) : client.emoji("mc_oppose")
-                    descricao_label = valor.network.link ? "Servidor linkado" : "Não linkado"
+                    descricao_label = valor.network.link ? client.tls.phrase(user, "mode.network.linkado") : client.tls.phrase(user, "mode.network.nao_linkado")
                     valor_label = `${alvo.replace("#", "_")}|${valor.sid}`
                 } else { // Canais e categorias
                     nome_label = valor.split(".")[0].length < 20 ? valor.split(".")[0] : `${valor.split(".")[0].slice(0, 15)}...`

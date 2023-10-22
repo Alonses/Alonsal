@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "guild_network_button", name: "Network", type: type_button(guild?.conf.network), emoji: emoji_button(guild?.conf.network), data: "1" },
         { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.eventos_sincronizados"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
         { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.servidores"), type: 1, emoji: client.emoji(45), data: "3" },
-        { id: "guild_network_button", name: client.tls.phrase(user, "menu.network.quebrar_vinculo"), type: 1, emoji: client.emoji(44), data: "4" }
+        { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.quebrar_vinculo"), type: 1, emoji: client.emoji(44), data: "4" }
     ])
 
     interaction.update({
