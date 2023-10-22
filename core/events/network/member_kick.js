@@ -10,6 +10,11 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.KickMembers]))
         return
 
-    await guild_member.kick(`Expulso por ${registroAudita.executor.username} em ${guild_evento.name}${registroAudita.reason ? `, Motivo: ${registroAudita.reason}` : ""}`)
+    let descricao_evento = client.replace(client.tls.phrase(user, "mode.network.expulso_por"), [registroAudita.executor.username, guild_evento.name])
+
+    if (registroAudita.reason) // Razão do banimento especificada
+        descricao_evento = `${descricao_evento}${client.tls.phrase(user, "mode.network.motivo")} ${registroAudita.reason}`
+
+    await guild_member.kick(descricao_evento)
         .catch(console.error)
 }
