@@ -10,6 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.anuncio_games")} :video_game:`)
         .setColor(client.embed_color(user.misc.color))
+        .setDescription(client.tls.phrase(user, "mode.anuncio.descricao"))
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.games)} **${client.tls.phrase(user, "mode.report.status")}**`,

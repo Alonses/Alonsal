@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.log_eventos")} :scroll:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Funcionamento do log de eventos\n\nO Log de eventos do servidor registra os eventos diversos que são vistos pelo registro de auditoria de forma mais dinâmica!\n\nAtravés dos eventos ouvidos, é possível definir quais eventos eu poderei avisar através do canal (escolhido abaixo) quando ocorrer!\n\nPor padrão, o mesmo canal do log de eventos será usado para eventos considerados como spam, utilizados pelo módulo do Anti-spam.```")
+        .setDescription(client.tls.phrase(user, "mode.logger.descricao"))
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,

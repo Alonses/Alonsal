@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.denuncias_server")} ${client.defaultEmoji("guard")}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Como funciona\n\nAs denúncias in-server usam uma categoria separada para criar canais de denúncia de forma automática!\n\nOs membros do servidor poderão utilizar o comando /denuncia iniciar para abrir um canal visível apenas para os adms e o requisitante.\n\nPor padrão, os canais não são excluídos, mas o requisitante pode deixar de ver o canal de denúncias se desejar.```")
+        .setDescription(client.tls.phrase(user, "mode.ticket.descricao"))
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.tickets)} **${client.tls.phrase(user, "mode.report.status")}**`,
