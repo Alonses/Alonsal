@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
         embed.addFields(
             {
                 name: `**${emoji_button(guild?.conf.network)} Network**`,
-                value: `\`${client.tls.phrase(user, "manu.panel.desc_network")}\``,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_network")}\``,
                 inline: true
             },
             {
