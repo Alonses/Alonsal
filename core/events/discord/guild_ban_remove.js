@@ -4,7 +4,7 @@ module.exports = async ({ client, ban }) => {
 
     const guild = await client.getGuild(ban.guild.id)
 
-    if (guild.network.member_ban_add) // Network de servidores
+    if (guild.network.member_ban_add && guild.conf.network) // Network de servidores
         client.network(guild, "ban_del", ban.user.id)
 
     // Verificando se a guild habilitou o logger
