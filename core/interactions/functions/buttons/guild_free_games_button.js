@@ -4,14 +4,18 @@ const { free_games } = require('../../../functions/free_games.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    const operacao = parseInt(dados.split(".")[1])
+    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_free_games"
     const guild = await client.getGuild(interaction.guild.id)
 
-    if (!guild.games.channel || !guild.games.role)
-        return interaction.update({
-            content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
-            ephemeral: true
-        })
+    if (!guild.games.channel) {
+        reback = "panel_guild.0"
+        operacao = 4
+    }
+
+    if (guild.games.channel && !guild.games.role) {
+        reback = "panel_guild.0"
+        operacao = 3
+    }
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
@@ -81,7 +85,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_free_games" },
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" }
         ]
 
@@ -110,7 +114,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_free_games" },
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
         ]
 

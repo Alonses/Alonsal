@@ -2,36 +2,29 @@ const { PermissionsBitField, ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    const operacao = parseInt(dados.split(".")[1])
+    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_external_reports"
     const guild = await client.getGuild(interaction.guild.id)
 
-    if (!guild.logger.channel)
-        return interaction.update({
-            content: client.tls.phrase(user, "mode.logger.falta_vinculo", 0),
-            ephemeral: true
-        })
+    if (!guild.reports.channel) {
+        reback = "panel_guild.1"
+        operacao = 4
+    }
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
     // 1 -> Ativar ou desativar o módulo de reportes externos
     // 2 -> Ativar ou desativar o AutoBan
-    // 2 -> Ativar ou desativar o aviso de novos usuários reportados
-    // 3 -> Escolher canal de avisos
+    // 3 -> Ativar ou desativar o aviso de novos usuários reportados
+    // 4 -> Escolher canal de avisos
 
     if (operacao === 1) {
 
-        if (!guild.reports.channel)
-            return interaction.update({
-                content: client.tls.phrase(user, "mode.report.falta_vinculo", 0),
-                ephemeral: true
-            })
-        else {
-            // Ativa ou desativa o relatório de usuários mau comportados no servidor
-            if (typeof guild.conf.reports !== "undefined")
-                guild.conf.reports = !guild.conf.reports
-            else
-                guild.conf.reports = false
-        }
+        // Ativa ou desativa o relatório de usuários mau comportados no servidor
+        if (typeof guild.conf.reports !== "undefined")
+            guild.conf.reports = !guild.conf.reports
+        else
+            guild.conf.reports = false
+
     } else if (operacao === 2) {
 
         const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -70,7 +63,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_external_reports" },
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_reports_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" }
         ]
 
