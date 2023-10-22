@@ -17,6 +17,7 @@ const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { busca_badges, badgeTypes } = require('./core/data/badges')
 
+const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
@@ -156,6 +157,44 @@ function internal_functions(client) {
         return membro
     }
 
+    client.getMemberGuildsByPermissions = async ({ interaction, user, permissions }) => {
+
+        const guilds_user = []
+
+        for await (let valor of client.guilds()) {
+
+            const guild = valor[1]
+
+            if (guild.id !== interaction.guild.id) {
+                const membro_guild = await guild.members.fetch(user.uid)
+                    .catch(() => { return null })
+
+                if (membro_guild) // Listando as guilds que o usuário é moderador
+                    if (membro_guild.permissions.has(permissions)) {
+                        const internal_guild = await client.getGuild(guild.id)
+                        internal_guild.name = guild.name
+
+                        guilds_user.push(internal_guild)
+                    }
+            }
+        }
+
+        return guilds_user
+    }
+
+    client.getMemberPermissions = async (id_guild, id_member) => {
+        const guild = await client.guilds(id_guild)
+
+        if (!guild)
+            return null
+
+        // Retorna todas as permissões de um usuário num servidor especifico
+        const membro_guild = await guild.members.fetch(id_member)
+            .catch(() => { return null })
+
+        return membro_guild
+    }
+
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
@@ -211,6 +250,11 @@ function internal_functions(client) {
 
     client.menu_navigation = (client, interaction, data, reback, pagina) => {
         return menu_navigation(client, interaction, data, reback, pagina)
+    }
+
+    // Sincroniza as ações moderativas em servidores com o network habilitado
+    client.network = async (guild, caso, id_alvo) => {
+        return network({ client, guild, caso, id_alvo })
     }
 
     // Envia uma notificação em um canal
@@ -361,18 +405,15 @@ function internal_functions(client) {
         const listas = await listAllUserGroups(interaction.user.id)
 
         // Vincula a task com a lista usando o timestamp da lista
-        for (let i = 0; i < tasks.length; i++) {
-            for (let x = 0; x < listas.length; x++) {
-                if (!tasks[i].g_timestamp) {
+        for (let i = 0; i < tasks.length; i++)
+            for (let x = 0; x < listas.length; x++)
+                if (!tasks[i].g_timestamp)
                     if (tasks[i].group === listas[x].name) {
 
                         tasks[i].g_timestamp = listas[x].timestamp
                         tasks[i].group = null
                         await tasks[i].save()
                     }
-                }
-            }
-        }
     }
 
     // Verifica se o logger possui acesso ao registro de auditoria do servidor

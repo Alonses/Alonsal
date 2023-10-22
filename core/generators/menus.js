@@ -26,13 +26,14 @@ const translate = {
     "select_role": "menu.menus.escolher_cargo",
     "select_language": "menu.menus.escolher_idioma",
     "select_events": "menu.menus.escolher_eventos",
+    "select_link": "menu.menus.escolher_eventos",
     "remove_report": "menu.menus.escolher_usuario",
     "report_browse": "menu.menus.escolher_usuario"
 }
 
 function create_menus({ client, interaction, user, data, pagina, multi_select }) {
 
-    const itens_menu = []
+    const itens_menu = [], alvo = data.alvo
     let insersoes = [], i = 0, indice_start = pagina * 24 || 0
 
     // Percorrendo as entradas informadas
@@ -45,22 +46,22 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
 
             let nome_label, emoji_label, descricao_label, valor_label
 
-            if (data.alvo === "badges") {
+            if (alvo === "badges") {
                 const badge = busca_badges(client, badgeTypes.SINGLE, valor)
 
                 nome_label = badge.name
                 emoji_label = badge.emoji
                 descricao_label = `${client.tls.phrase(user, "dive.badges.fixar")} ${badge.name}`
-                valor_label = `${data.alvo}|${interaction.user.id}.${valor}`
+                valor_label = `${alvo}|${interaction.user.id}.${valor}`
             }
 
-            if (data.alvo === "faustop" || data.alvo === "norbit" || data.alvo === "galerito") {
+            if (alvo === "faustop" || alvo === "norbit" || alvo === "galerito") {
 
                 nome_label = valor
 
-                if (data.alvo === "faustop")
+                if (alvo === "faustop")
                     emoji_label = client.emoji(faustop)
-                else if (data.alvo === "norbit")
+                else if (alvo === "norbit")
                     emoji_label = client.emoji(rasputia)
                 else
                     emoji_label = client.emoji(galerito)
@@ -68,16 +69,16 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 // Descrição da opção no menu
                 descricao_label = "Escolher essa do faustop"
 
-                if (data.alvo === "norbit")
+                if (alvo === "norbit")
                     descricao_label = "Escolher essa do filme Norbit"
 
-                if (data.alvo === "galerito")
+                if (alvo === "galerito")
                     descricao_label = "Escolher essa da rogéria"
 
-                valor_label = `${data.alvo}|${interaction.user.id}.${i}`
+                valor_label = `${alvo}|${interaction.user.id}.${i}`
             }
 
-            if (data.alvo.includes("dado")) {
+            if (alvo.includes("dado")) {
 
                 nome_label = client.tls.phrase(user, `manu.data.selects.${valor}`)
                 emoji_label = client.defaultEmoji("paper")
@@ -85,7 +86,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 valor_label = `data|${interaction.user.id}.${valor}`
             }
 
-            if (data.alvo === "tarefas" || data.alvo === "tarefa_visualizar") {
+            if (alvo === "tarefas" || alvo === "tarefa_visualizar") {
 
                 // Listando tarefas
                 nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
@@ -93,102 +94,107 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji(40)
                 descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
 
-                if (data.alvo == "tarefas") {
+                if (alvo == "tarefas") {
                     emoji_label = client.defaultEmoji("paper")
                     descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
                 }
 
-                valor_label = `${data.alvo}|${valor.uid}.${valor.timestamp}.${data.operador}`
+                valor_label = `${alvo}|${valor.uid}.${valor.timestamp}.${data.operador}`
             }
 
-            if (data.alvo.includes("listas")) {
+            if (alvo.includes("listas")) {
 
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = valor.name.length > 15 ? `${valor.name.slice(0, 25)}...` : valor.name
                 emoji_label = client.defaultEmoji("paper")
                 descricao_label = client.tls.phrase(user, "util.tarefas.selecionar_lista")
-                valor_label = `${data.alvo}|${valor.uid}.${valor.timestamp}.${data.timestamp}`
+                valor_label = `${alvo}|${valor.uid}.${valor.timestamp}.${data.timestamp}`
 
                 // valor.timestamp -> timestamp da lista
                 // data.timestamp -> timestamp da tarefa
             }
 
-            if (data.alvo === "tarefas_remover") {
+            if (alvo === "tarefas_remover") {
 
                 // Listando tarefas criadas -> Usado para escolher tarefas para remover
                 nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
                 emoji_label = valor.concluded ? client.emoji("mc_approve") : client.emoji(40)
-                valor_label = `${data.alvo}|${valor.uid}.${valor.timestamp}`
+                valor_label = `${alvo}|${valor.uid}.${valor.timestamp}`
 
                 descricao_label = `${client.tls.phrase(user, "util.tarefas.criacao")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.concluded ? client.tls.phrase(user, "util.tarefas.finalizada") : client.tls.phrase(user, "util.tarefas.em_aberto")}`
 
                 // valor.timestamp -> timestamp da tarefa
             }
 
-            if (data.alvo === "modulo_visualizar") {
+            if (alvo === "modulo_visualizar") {
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = `${client.tls.phrase(user, `misc.modulo.modulo_${valor.type}`)}`
                 emoji_label = valor.stats.active ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                 descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} ${valor.stats.hour}`
-                valor_label = `${data.alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
+                valor_label = `${alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
             }
 
-            if (data.alvo === "profile_custom_navegar") {
+            if (alvo === "profile_custom_navegar") {
                 // Listando todas as opções para customização de perfil
                 nome_label = `Customização de perfil ${valor}`
                 emoji_label = client.emoji(faustop)
                 descricao_label = `Ver mais detalhes`
-                valor_label = `${data.alvo}|${interaction.user.id}.${valor}`
+                valor_label = `${alvo}|${interaction.user.id}.${valor}`
             }
 
-            if (data.alvo === "choose_language") {
+            if (alvo === "choose_language") {
                 // Listando os idiomas para escolher
                 nome_label = valor.split(".")[1]
                 emoji_label = valor.split(".")[2]
-                valor_label = `${data.alvo}|${valor.split(".")[0]}`
+                valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (data.alvo === "guild_spam_timeout") {
+            if (alvo === "guild_spam_timeout") {
                 // Listando as opções de tempo de mute para o anti-spam
                 nome_label = valor
                 emoji_label = client.defaultEmoji("time")
-                valor_label = `${data.alvo}|${i + 1}`
+                valor_label = `${alvo}|${i + 1}`
             }
 
-            if (data.alvo.includes("#")) {
+            if (alvo.includes("#")) {
                 // Listando todos os canais, categorias e cargos para seleção
-                if (data.alvo.includes("#role")) { // Cargos
+                if (alvo.includes("#role")) { // Cargos
                     nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
                     emoji_label = client.defaultEmoji("role")
-                    valor_label = `${data.alvo.replace("#", "_")}|${valor.id}`
-                } else if (data.alvo.includes("#language")) { // Idioma
+                    valor_label = `${alvo.replace("#", "_")}|${valor.id}`
+                } else if (alvo.includes("#language")) { // Idioma
                     nome_label = languagesMap[valor][2]
                     emoji_label = languagesMap[valor][3]
-                    valor_label = `${data.alvo.replace("#", "_")}|${valor}`
-                } else if (data.alvo.includes("#events")) { // Eventos do logger
+                    valor_label = `${alvo.replace("#", "_")}|${valor}`
+                } else if (alvo.includes("#events")) { // Eventos do logger
                     nome_label = `${loggerMap[valor.type]} ${client.tls.phrase(user, `menu.events.${valor.type}`)}`
                     emoji_label = valor.status ? client.emoji("mc_approve") : client.emoji("mc_oppose")
-                    valor_label = `${data.alvo.replace("#", "_")}|${valor.type}`
+                    valor_label = `${alvo.replace("#", "_")}|${valor.type}`
                     descricao_label = valor.status ? client.tls.phrase(user, "menu.status.ativado") : client.tls.phrase(user, "menu.status.desativado")
+                } else if (alvo.includes("#link")) { // Linkagem de servidores
+                    nome_label = valor.name.length > 20 ? `${valor.name.slice(0, 18)}...` : valor.name
+                    emoji_label = valor.network.link ? client.emoji(44) : client.emoji("mc_oppose")
+                    descricao_label = valor.network.link ? "Servidor linkado" : "Não linkado"
+                    valor_label = `${alvo.replace("#", "_")}|${valor.sid}`
                 } else { // Canais e categorias
                     nome_label = valor.split(".")[0].length < 20 ? valor.split(".")[0] : `${valor.split(".")[0].slice(0, 15)}...`
                     emoji_label = client.defaultEmoji("channel")
-                    valor_label = `${data.alvo.replace("#", "_")}|${valor.split(".")[1]}`
+                    valor_label = `${alvo.replace("#", "_")}|${valor.split(".")[1]}`
                 }
             }
 
-            if (data.alvo === "static_color") {
+            if (alvo === "static_color") {
                 emoji_label = colorsMap[valor][2]
-                valor_label = `${data.alvo}|${valor}`
+                valor_label = `${alvo}|${valor}`
                 nome_label = `${valor.charAt(0).toUpperCase() + valor.slice(1)}`
             }
 
-            if (data.alvo === "remove_report" || data.alvo === "report_browse") {
+            if (alvo === "remove_report" || alvo === "report_browse") {
                 // Listando todos os usuários com reportes no servidor
                 nome_label = valor.nick ? (valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")
                 descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
                 emoji_label = client.defaultEmoji("person")
-                valor_label = `${data.alvo}|${valor.uid}.${valor.sid}.${pagina}`
+                valor_label = `${alvo}|${valor.uid}.${valor.sid}.${pagina}`
             }
 
             i++
@@ -209,19 +215,19 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
 
     // Definindo titulos e ID's exclusivos para diferentes comandos
     let titulo_menu = client.tls.phrase(user, "dive.badges.escolha_uma")
-    let id_menu = `select_${data.alvo}_${interaction.user.id}`
+    let id_menu = `select_${alvo}_${interaction.user.id}`
 
-    if (data.alvo.includes("tarefa"))
+    if (alvo.includes("tarefa"))
         titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_tarefa_visualizar")
 
-    if (data.alvo.includes("#"))
-        titulo_menu = client.tls.phrase(user, translate[`select_${data.alvo.split("#")[1]}`])
+    if (alvo.includes("#"))
+        titulo_menu = client.tls.phrase(user, translate[`select_${alvo.split("#")[1]}`])
 
-    if (translate[data.alvo]) // Verificando qual será o menu inserido e adicionando uma frase
-        if (translate[data.alvo].split(".").length > 1)
-            titulo_menu = client.tls.phrase(user, translate[data.alvo])
+    if (translate[alvo]) // Verificando qual será o menu inserido e adicionando uma frase
+        if (translate[alvo].split(".").length > 1)
+            titulo_menu = client.tls.phrase(user, translate[alvo])
         else
-            titulo_menu = translate[data.alvo]
+            titulo_menu = translate[alvo]
 
     let min = 1, max = 1
 

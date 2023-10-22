@@ -11,7 +11,9 @@ const loggerMap = {
     "channel_created": "🆕",
     "channel_delete": "🚮",
     "member_ban_add": "🔨",
-    "member_ban_remove": "✅"
+    "member_ban_remove": "✅",
+    "member_punishment": "🔇",
+    "member_kick": "👟"
 }
 
 const channelTypes = {
@@ -52,12 +54,19 @@ const schema = new mongoose.Schema({
         channel_created: { type: Boolean, default: false },
         channel_delete: { type: Boolean, default: false },
         member_ban_add: { type: Boolean, default: true },
-        member_ban_remove: { type: Boolean, default: true }
+        member_ban_remove: { type: Boolean, default: true },
+        member_kick: { type: Boolean, default: true }
     },
     spam: {
         strikes: { type: Boolean, default: true },
         timeout: { type: Number, default: 2 },
         data: { type: String, default: null }
+    },
+    network: {
+        link: { type: String, default: null },
+        member_punishment: { type: Boolean, default: true },
+        member_ban_add: { type: Boolean, default: true },
+        member_kick: { type: Boolean, default: true }
     },
     conf: {
         games: { type: Boolean, default: false },
@@ -67,7 +76,8 @@ const schema = new mongoose.Schema({
         conversation: { type: Boolean, default: true },
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
-        spam: { type: Boolean, default: false }
+        spam: { type: Boolean, default: false },
+        network: { type: Boolean, default: false }
     }
 })
 
@@ -148,6 +158,14 @@ async function migrateGameChannels() {
     }
 }
 
+async function getNetworkedGuilds(link) {
+    // Lista todos os servidores com network ativo
+    return model.find({
+        "conf.network": true,
+        "network.link": link
+    })
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -158,6 +176,7 @@ module.exports = {
     getGameChannelById,
     disableReportChannel,
     migrateGameChannels,
+    getNetworkedGuilds,
     loggerMap,
     channelTypes
 }

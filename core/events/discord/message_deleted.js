@@ -47,7 +47,7 @@ module.exports = async ({ client, message }) => {
     let autor = message.author.id, local = message.channelId, row
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
-        if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+        if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             texto = client.replace(client.tls.phrase(guild, "mode.logger.mode_exclusao", 13), [message.url, message.author.id])
 
     texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
@@ -74,11 +74,11 @@ module.exports = async ({ client, message }) => {
         })
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
-        if (message.author.id !== registroAudita.executor.id && message.id === registroAudita.targetId)
+        if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             embed.addFields(
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.excluido")}**`,
-                    value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
+                    value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n( <@${registroAudita.executorId}> )`,
                     inline: false
                 }
             )
