@@ -44,10 +44,18 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     } else if (operacao === 3) { // Servidor sem um link de network
 
+        await interaction.deferUpdate({ ephemeral: true })
+
         // Listando todos os servidores que o usuário é moderador
         // Selecionando os servidores para vincular ao network
         const permissions = [PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.ModerateMembers]
         const guilds = await client.getMemberGuildsByPermissions({ interaction, user, permissions })
+
+        if (guilds.length < 1)
+            return interaction.update({
+                content: "Você não é moderador em outros servidores, você deve ser moderador em um outro servidor para ter acesso a essa guia!",
+                ephemeral: true
+            })
 
         // Definindo os eventos que o log irá relatar no servidor
         const data = {
