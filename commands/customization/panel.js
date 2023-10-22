@@ -83,7 +83,7 @@ module.exports = {
                         })
                         .addChoices(
                             { name: '📜 Event log, 📛 Anti-Spam, 🎮 Free Games ad', value: '0' },
-                            { name: '💂 In-server reports, 💂 External reports, ', value: '1' },
+                            { name: '📡 Networking, 💂 External reports, 💂 In-server reports', value: '1' },
                             { name: '🗣 Talkative Alonsal, 📡 Broadcast, 🌐 Global visibility', value: '2' }
                         ))),
     async execute({ client, user, interaction }) {

@@ -4,6 +4,9 @@ module.exports = async ({ client, ban }) => {
 
     const guild = await client.getGuild(ban.guild.id)
 
+    if (guild.network.member_ban_add) // Network de servidores
+        client.network(guild, "ban_add", ban.user.id)
+
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_ban_add || !guild.conf.logger) return
 
@@ -41,7 +44,7 @@ module.exports = async ({ client, ban }) => {
             },
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.target.id}\`\n( <@${registroAudita.target.id}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.targetId}\`\n( <@${registroAudita.targetId}> )`,
                 inline: true
             }
         )

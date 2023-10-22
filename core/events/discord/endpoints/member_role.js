@@ -52,7 +52,7 @@ module.exports = async ({ client, guild, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.alterador")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.executor.id}\`\n( <@${registroAudita.executor.id}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n( <@${registroAudita.executorId}> )`,
                 inline: false
             }
         )

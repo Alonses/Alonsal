@@ -38,8 +38,8 @@ module.exports = async ({ client, user, interaction, operador }) => {
     if (pagina == 1)
         embed.addFields(
             {
-                name: `**${emoji_button(guild?.conf.tickets)} ${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
+                name: `**${emoji_button(guild?.conf.network)} Network**`,
+                value: `\`O networking sincroniza ações moderativas entre servidores que fazem parte de um grupo.\``,
                 inline: true
             },
             {
@@ -48,8 +48,8 @@ module.exports = async ({ client, user, interaction, operador }) => {
                 inline: true
             },
             {
-                name: `**${emoji_button(3)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                name: `**${emoji_button(guild?.conf.tickets)} ${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
                 inline: true
             }
         )
@@ -120,9 +120,9 @@ module.exports = async ({ client, user, interaction, operador }) => {
     // Denúncias in-server; Reportes externos e AutoBan
     if (pagina === 1)
         botoes = botoes.concat([
-            { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
+            { id: "guild_network_button", name: "Network", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[8] },
             { id: "guild_reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[4] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(false), emoji: emoji_button(3), data: '9', disabled: true }
+            { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] }
         ])
 
     // Terceira página de botões de configuração do Alonsal

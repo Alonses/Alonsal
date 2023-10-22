@@ -6,7 +6,7 @@ module.exports = async (client, dados) => {
     const user_alvo = dados.user
 
     // Verificando se a guild habilitou o logger
-    if (!guild.logger.member_left || !guild.conf.logger) return
+    if (!guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
     const bot = await client.getMemberGuild(dados, client.id())
@@ -18,7 +18,18 @@ module.exports = async (client, dados) => {
         return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
     }
 
-    // Verificando se o usuário foi banido ou saiu sozinho
+    // Verificando se o usuário foi expulso do servidor
+    const fetchedLogs2 = await dados.guild.fetchAuditLogs({
+        type: AuditLogEvent.MemberKick,
+        limit: 1,
+    })
+
+    const registroAudita2 = fetchedLogs2.entries.first()
+
+    if (registroAudita2.targetId === user_alvo.id) // Membro foi expulso do servidor
+        return require('./member_kick.js')({ client, guild, user_alvo, registroAudita2 })
+
+    // Verificando se o usuário foi banido
     const fetchedLogs = await dados.guild.fetchAuditLogs({
         type: AuditLogEvent.MemberBanAdd,
         limit: 1,
@@ -26,8 +37,8 @@ module.exports = async (client, dados) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    if (registroAudita.target.id === user_alvo.id)
-        return // Usuário foi banido 
+    if (registroAudita.targetId === user_alvo.id || !guild.logger.member_left)
+        return // Usuário foi banido ou recurso desativado
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
