@@ -10,8 +10,13 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.BanMembers]))
         return
 
+    let descricao_evento = client.replace(client.tls.phrase(user, "mode.network.banido_por"), [registroAudita.executor.username, guild_evento.name])
+
+    if (registroAudita.reason) // Razão do banimento especificada
+        descricao_evento = `${descricao_evento}${client.tls.phrase(user, "mode.network.motivo")} ${registroAudita.reason}`
+
     await guild_member.ban({ // Banindo o usuário do servidor automaticamente
-        reason: `Banido por ${registroAudita.executor.username} em ${guild_evento.name}${registroAudita.reason ? `, Motivo: ${registroAudita.reason}` : ""}`,
+        reason: descricao_evento,
         deleteMessageSeconds: 3 * 24 * 60 * 60 // 3 dias
     })
         .catch(console.error)

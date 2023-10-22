@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, operador }) => {
         embed.addFields(
             {
                 name: `**${emoji_button(guild?.conf.network)} Network**`,
-                value: `\`O networking sincroniza ações moderativas entre servidores que fazem parte de um grupo.\``,
+                value: `\`${client.tls.phrase(user, "manu.panel.desc_network")}\``,
                 inline: true
             },
             {

@@ -26,7 +26,7 @@ const translate = {
     "select_role": "menu.menus.escolher_cargo",
     "select_language": "menu.menus.escolher_idioma",
     "select_events": "menu.menus.escolher_eventos",
-    "select_link": "menu.menus.escolher_eventos",
+    "select_link": "menu.menus.escolher_guilds",
     "remove_report": "menu.menus.escolher_usuario",
     "report_browse": "menu.menus.escolher_usuario"
 }

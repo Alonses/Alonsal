@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 eventos.push({ type: evento, status: guild.network[evento] })
         })
 
-        // Definindo os eventos que o log irá relatar no servidor
+        // Definindo os eventos que o network irá sincronizar no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_network#events",
@@ -53,24 +53,33 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (guilds.length < 1)
             return interaction.editReply({
-                content: "Você não é moderador em outros servidores, você deve ser moderador em um outro servidor para ter acesso a essa guia!",
+                content: client.tls.phrase(user, "mode.network.sem_servidores"),
                 ephemeral: true
             })
 
-        // Definindo os eventos que o log irá relatar no servidor
+        // Listando os servidores para o moderador
         const data = {
-            title: "Selecione os servidores para se vincularem a este",
+            title: client.tls.phrase(user, "mode.network.selecionar_servidores"),
             alvo: "guild_network#link",
             reback: "browse_button.guild_network_button",
             operation: operacao,
             values: guilds
         }
 
-        const botoes = client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }], interaction)
+        // Subtrai uma página do total ( em casos de saída de um servidor em cache )
+        if (data.values.length < pagina * 24)
+            pagina--
+
+        let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
+        let row = client.menu_navigation(data, pagina || 0)
+
+        if (row.length > 0) // Botões de navegação
+            botoes = botoes.concat(row)
+
         const multi_select = true
 
         return interaction.editReply({
-            components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), botoes],
+            components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
     } else if (operacao === 4) {
@@ -81,6 +90,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     await guild.save()
 
-    // Redirecionando a função para o painel do log de eventos
+    // Redirecionando a função para o painel do networking
     require('../../chunks/panel_guild_network')({ client, user, interaction, operacao })
 }

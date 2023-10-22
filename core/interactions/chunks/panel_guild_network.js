@@ -30,15 +30,15 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> Networking ${client.defaultEmoji("earth")}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Funcionamento do networking\n\nO networking do servidor faz a comunicação dos eventos moderativos deste servidor com outros servidores externos, quando um usuário for castigado por aqui e outros servidores fizerem parte do mesmo network deste servidor, e estiverem com o recurso ativo, o usuário também será castigado por lá!```")
+        .setDescription(client.tls.phrase(user, "mode.network.descricao"))
         .setFields(
             {
-                name: `${emoji_button(guild?.conf.network)} **Status**`,
-                value: `:globe_with_meridians: **Servidores: ${servidores.length}**`,
+                name: `${emoji_button(guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                value: `${client.emoji(45)} **${client.tls.phrase(user, "mode.network.servidores")}: ${servidores.length}**`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("telephone")} **Eventos sincronizados**`,
+                name: `${client.defaultEmoji("telephone")} **${client.tls.phrase(user, "mode.network.eventos_sincronizados")}**`,
                 value: `\`${eventos.ativos} / ${eventos.total}\``,
                 inline: true
             },
@@ -50,13 +50,13 @@ module.exports = async ({ client, user, interaction }) => {
         )
         .addFields(
             {
-                name: `${client.emoji(7)} **Permissões neste servidor**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **Registro de auditória**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **Castigar membros**`,
+                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **Banir membros**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **Expulsar membros**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             }
         )
@@ -67,9 +67,9 @@ module.exports = async ({ client, user, interaction }) => {
 
     botoes = botoes.concat([
         { id: "guild_network_button", name: "Network", type: type_button(guild?.conf.network), emoji: emoji_button(guild?.conf.network), data: "1" },
-        { id: "guild_network_button", name: "Eventos sincronizados", type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-        { id: "guild_network_button", name: "Servidores", type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-        { id: "guild_network_button", name: "Quebrar vinculo", type: 1, emoji: client.emoji(44), data: "4" }
+        { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.eventos_sincronizados"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
+        { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.servidores"), type: 1, emoji: client.emoji(45), data: "3" },
+        { id: "guild_network_button", name: client.tls.phrase(user, "menu.network.quebrar_vinculo"), type: 1, emoji: client.emoji(44), data: "4" }
     ])
 
     interaction.update({

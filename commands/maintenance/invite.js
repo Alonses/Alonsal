@@ -23,7 +23,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
-            { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=1614150720` }
+            { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }
         ], interaction)
 
         const embed = new EmbedBuilder()
