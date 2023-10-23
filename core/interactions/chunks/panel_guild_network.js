@@ -8,10 +8,28 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
 
-    const servidores = await getNetworkedGuilds(guild.network.link)
-
     // Permissões do bot no servidor
+    const servidores = await getNetworkedGuilds(guild.network.link)
     const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+    // Verificando as permissões necessárias conforme os casos
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
+        guild.conf.network = false
+
+    if (guild.network.member_ban_add) // Banimentos automaticos
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
+            guild.conf.network = false
+
+    if (guild.network.member_kick) // Expulsões automaticas
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))
+            guild.conf.network = false
+
+    if (guild.network.member_punishment) // Castigos automaticos
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))
+            guild.conf.network = false
+
+    await guild.save()
+
 
     const eventos = {
         total: 0,

@@ -2,12 +2,7 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, guild }) => {
 
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
     let canal_alvo
-
-    // Permissões para gerenciar canais e cargos necessária para a função de tickets
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
-        return client.tls.reply(interaction, user, "mode.ticket.permissao", true, 3)
 
     // Categoria alvo para o bot criar os canais
     if (interaction.options.getChannel("value")) {
@@ -47,6 +42,19 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Se usado sem mencionar categoria, desliga os tickets de denuncia
     if (!canal_alvo)
         guild.conf.tickets = false
+
+    // Verificando as permissões do bot
+    const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles])
+
+    if (!permissoes) {
+        guild.conf.tickets = false
+        await guild.save()
+
+        return client.reply(interaction, {
+            content: client.tls.phrase(user, "manu.painel.salvo_sem_permissao", [10, 7]),
+            ephemeral: true
+        })
+    }
 
     await guild.save()
 

@@ -1,4 +1,4 @@
-const { ChannelType } = require('discord.js')
+const { ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -16,6 +16,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 2 -> Escolher categoria para os tickets de denúncia
 
     if (operacao === 1) {
+
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles])
+
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
 
         // Ativa ou desativa a função de denúncias in-server
         if (typeof guild.conf.tickets !== "undefined")

@@ -42,21 +42,6 @@ module.exports = async ({ client, user, interaction, guild }) => {
     if (!guild.conf.logger)
         guild.conf.logger = true
     else {
-
-        // Verificando se o bot possui permissões para ver o registro de auditoria
-        if (!guild.conf.logger) {
-            const bot = await client.getMemberGuild(interaction, client.id())
-
-            // Permissão para ver o registro de auditoria, desabilitando o logger
-            if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
-
-                guild.conf.logger = 0
-                await guild.save()
-
-                return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
-            }
-        }
-
         // Inverte o status de funcionamento apenas se executar o comando sem informar um canal
         if (!interaction.options.getChannel("value"))
             guild.conf.logger = !guild.conf.logger
@@ -67,6 +52,19 @@ module.exports = async ({ client, user, interaction, guild }) => {
     // Se usado sem mencionar um canal, desliga o logger
     if (!canal_alvo)
         guild.conf.logger = false
+
+    // Verificando as permissões do bot
+    const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])
+
+    if (!permissoes) {
+        guild.conf.logger = false
+        await guild.save()
+
+        return client.reply(interaction, {
+            content: client.tls.phrase(user, "manu.painel.salvo_sem_permissao", [10, 7]),
+            ephemeral: true
+        })
+    }
 
     await guild.save()
 

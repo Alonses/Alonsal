@@ -11,13 +11,13 @@ module.exports = async ({ client, message }) => {
     if (!guild.logger.message_delete || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    const bot = await client.getMemberGuild(message, client.id())
-    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+    const permissoes = await client.permissions(message, client.id(), PermissionsBitField.Flags.ViewAuditLog)
+    if (!permissoes) {
 
         guild.logger.message_delete = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
     }
 
     // Coletando dados sobre o evento

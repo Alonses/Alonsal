@@ -72,7 +72,7 @@ async function dropUserRankServer(uid, sid) {
     })
 }
 
-async function dropUnknownRankServers(uid) {
+async function dropUnknownRankServers(client, uid) {
 
     const guilds_ranking = await getUserRankServers(uid)
 
