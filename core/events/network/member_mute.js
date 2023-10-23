@@ -9,8 +9,16 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
             return
 
         // Verificando se a hierarquia do bot é maior que o do alvo e se pode castigar membros
-        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.ModerateMembers]))
+        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.ModerateMembers])) {
+
+            // Desativando o recurso no servidor sem a permissão requerida
+            if (!bot_member.permissions.has([PermissionsBitField.Flags.ModerateMembers])) {
+                internal_guild.network.member_punishment = false
+                await internal_guild.save()
+            }
+
             return
+        }
 
         const timeout = registroAudita.changes[0].new ? parseInt(new Date(registroAudita.changes[0].new) - new Date()) : null
 

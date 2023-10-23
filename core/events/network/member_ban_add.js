@@ -7,8 +7,16 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
         return
 
     // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.BanMembers]))
+    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
+
+        // Desativando o recurso no servidor sem a permissão requerida
+        if (!bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
+            internal_guild.network.member_ban_add = false
+            await internal_guild.save()
+        }
+
         return
+    }
 
     let descricao_evento = client.replace(client.tls.phrase(user, "mode.network.banido_por"), [registroAudita.executor.username, guild_evento.name])
 
