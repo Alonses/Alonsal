@@ -277,8 +277,6 @@ function internal_functions(client) {
         const membro_sv = await client.getMemberGuild(interaction, id_alvo)
         let valido = false
 
-        console.log(permissao, membro_sv.permissions.has(permissao))
-
         // Verificando se o usuário possui a permissão
         if (membro_sv.permissions.has(permissao))
             valido = true
