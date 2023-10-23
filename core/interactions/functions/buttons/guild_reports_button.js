@@ -27,11 +27,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 2) {
 
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers])
 
-        // Permissões para banir outros membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
-            return client.tls.report(interaction, user, "mode.report.auto_ban_painel", true, 7, null, true)
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
 
         // Ativa ou desativa a opção de autoBan do comando /reporte
         if (typeof guild.reports.auto_ban !== "undefined")

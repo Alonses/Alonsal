@@ -1,4 +1,4 @@
-const { ChannelType } = require('discord.js')
+const { ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -19,6 +19,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1) {
 
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers])
+
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
+
         // Ativa ou desativa o módulo anti-spam do servidor
         if (typeof guild.conf.spam !== "undefined")
             guild.conf.spam = !guild.conf.spam
@@ -26,6 +34,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             guild.conf.spam = false
 
     } else if (operacao === 2) {
+
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.KickMembers])
+
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
 
         // Ativa ou desativa o sistema de strikes do anti-spam
         if (typeof guild.spam.strikes !== "undefined")

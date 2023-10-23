@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { emoji_button, type_button } = require("../../functions/emoji_button")
 
@@ -6,6 +6,16 @@ module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
+
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+    // Desabilitando o AutoBan caso o bot não possa banir os membros do servidor
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+        guild.reports.auto_ban = false
+        await guild.save()
+    }
+
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.report.reportes_externos")} ${client.defaultEmoji("guard")}`)
@@ -20,6 +30,18 @@ module.exports = async ({ client, user, interaction }) => {
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.reports.channel}\`\n( <#${guild.reports.channel}> )`,
+                inline: true
+            },
+            {
+                name: "⠀",
+                value: "⠀",
+                inline: false
+            }
+        )
+        .addFields(
+            {
+                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**`,
                 inline: true
             }
         )

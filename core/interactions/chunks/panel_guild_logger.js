@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { emoji_button, type_button } = require("../../functions/emoji_button")
 const { languagesMap } = require("../../formatters/translate")
@@ -8,6 +8,16 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
     const idioma = guild.lang !== "al-br" ? `:flag_${guild.lang.slice(3, 5)}:` : ":pirate_flag:"
+
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+    // Desabilitando o log de eventos caso o bot não possa ver o registro de auditoria do servidor
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+        guild.conf.logger = false
+        await guild.save()
+    }
+
 
     const eventos = {
         total: 0,
@@ -41,6 +51,13 @@ module.exports = async ({ client, user, interaction }) => {
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.logger.channel}\`\n( <#${guild.logger.channel}> )`,
+                inline: true
+            }
+        )
+        .addFields(
+            {
+                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
                 inline: true
             }
         )

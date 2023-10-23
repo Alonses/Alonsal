@@ -50,6 +50,9 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
+    if (!registroAudita)
+        return
+
     if (!network_map.has(registroAudita.targetId)) {
         network_map.set(registroAudita.targetId, true)
 

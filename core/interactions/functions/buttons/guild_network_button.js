@@ -16,7 +16,34 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 2 -> Escolher os eventos sincronizados no servidor
 
     if (operacao === 1) { // Ativa ou desativa o network do servidor
-        guild.conf.network = !guild.conf.network
+
+        // Verificando as permissões necessárias conforme os casos
+        let niveis_permissao = [PermissionsBitField.Flags.ViewAuditLog]
+
+        if (guild.network.member_ban_add) // Banimentos automaticos
+            niveis_permissao.push(PermissionsBitField.Flags.BanMembers)
+
+        if (guild.network.member_kick) // Expulsões automaticas
+            niveis_permissao.push(PermissionsBitField.Flags.KickMembers)
+
+        if (guild.network.member_punishment) // Castigos automaticos
+            niveis_permissao.push(PermissionsBitField.Flags.ModerateMembers)
+
+        // Verificando se o bot possui permissões requeridas conforme os recursos ativos
+        const permissoes = await client.permissions(interaction, client.id(), niveis_permissao)
+
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
+
+        // Ativa ou desativa o network do servidor
+        if (typeof guild.conf.network !== "undefined")
+            guild.conf.network = !guild.conf.network
+        else
+            guild.conf.network = true
+
     } else if (operacao === 2) {
 
         const eventos = []

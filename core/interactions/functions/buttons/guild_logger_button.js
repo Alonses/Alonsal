@@ -1,4 +1,4 @@
-const { ChannelType } = require('discord.js')
+const { ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -20,17 +20,18 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         // Verificando se o bot possui permissões para ver o registro de auditoria
-        if (typeof guild.conf.logger !== "undefined") {
-            if (!guild.conf.logger) {
-                const aprovacao = client.verifyLogger(interaction)
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])
 
-                if (!aprovacao)
-                    client.notify(guild.logger.channel, { content: `@here ${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
-            }
+        if (!permissoes)
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
+                ephemeral: true
+            })
 
-            // Ativa ou desativa o log de eventos do servidor
+        // Ativa ou desativa o log de eventos do servidor
+        if (typeof guild.conf.spam !== "undefined")
             guild.conf.logger = !guild.conf.logger
-        } else
+        else
             guild.conf.logger = true
 
     } else if (operacao === 2) {

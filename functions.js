@@ -271,6 +271,21 @@ function internal_functions(client) {
         canal.send(conteudo)
     }
 
+    client.permissions = async (interaction, id_alvo, permissao) => {
+
+        // Permissões do usuário no servidor
+        const membro_sv = await client.getMemberGuild(interaction, id_alvo)
+        let valido = false
+
+        console.log(permissao, membro_sv.permissions.has(permissao))
+
+        // Verificando se o usuário possui a permissão
+        if (membro_sv.permissions.has(permissao))
+            valido = true
+
+        return valido
+    }
+
     // Retorna um valor aleatório
     client.random = (intervalo, base) => {
         if (typeof base === "undefined") // Valor minimo aceitável
@@ -414,22 +429,6 @@ function internal_functions(client) {
                         tasks[i].group = null
                         await tasks[i].save()
                     }
-    }
-
-    // Verifica se o logger possui acesso ao registro de auditoria do servidor
-    client.verifyLogger = async (interaction) => {
-        const bot = await client.getMemberGuild(interaction, client.id())
-        let aprovacao = 1
-
-        // Permissão para ver o registro de auditoria, desabilitando o logger
-        if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
-
-            aprovacao = 0
-            guild.conf.logger = 0
-            await guild.save()
-        }
-
-        return aprovacao
     }
 
     // Atualiza o idioma padrão do usuário caso não possua um
