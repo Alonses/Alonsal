@@ -7,7 +7,7 @@ let commands = [], comandos_privados = []
 
 function slash_commands(client) {
 
-    client.x.timestamp = client.timestamp()
+    client.cached.timestamp = client.timestamp()
     client.discord.commands = new Collection()
 
     // Linkando os comandos slash disponíveis
@@ -53,7 +53,7 @@ function slash_commands(client) {
 
         if (!client.x.delete_slash) { // Registrando os comandos públicos globalmente
             if (client.x.force_update) { // Atualizando forçadamente os comandos globais
-                rest.put(Routes.applicationCommands(client.x.clientId), { body: commands })
+                rest.put(Routes.applicationCommands(client.x.id), { body: commands })
                     .then(() => console.log("🟢 | Comandos globais atualizados com sucesso."))
                     .catch(console.error)
             }
@@ -62,7 +62,7 @@ function slash_commands(client) {
                 commands = comandos_privados
 
             // Registrando os comandos privados no servidor
-            rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guild_id), { body: commands })
+            rest.put(Routes.applicationGuildCommands(client.x.id, process.env.guild_id), { body: commands })
                 .then(() => console.log("🟢 | Comandos privados do servidor atualizados com sucesso."))
                 .catch(console.error)
 
@@ -71,12 +71,12 @@ function slash_commands(client) {
             console.log("🟠 | Excluindo os comandos slash")
 
             // Comandos da guild
-            rest.put(Routes.applicationGuildCommands(client.x.clientId, process.env.guild_id), { body: [] })
+            rest.put(Routes.applicationGuildCommands(client.x.id, process.env.guild_id), { body: [] })
                 .then(() => console.log('🟢 | Comandos slash do servidor removidos com sucesso.'))
                 .catch(console.error)
 
             // Comandos globais
-            rest.put(Routes.applicationCommands(client.x.clientId), { body: [] })
+            rest.put(Routes.applicationCommands(client.x.id), { body: [] })
                 .then(() => console.log('🟢 | Comandos slash globais removidos com sucesso.'))
                 .catch(console.error)
         }

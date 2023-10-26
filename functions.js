@@ -101,7 +101,7 @@ function internal_functions(client) {
     }
 
     client.getBot = () => {
-        return getBot(client.x.clientId)
+        return getBot(client.x.id)
     }
 
     client.getGameChannels = () => {

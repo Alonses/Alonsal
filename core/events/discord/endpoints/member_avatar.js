@@ -24,7 +24,7 @@ module.exports = async ({ client, guild, user, dados }) => {
         // Gerando a imagem para poder anexar ao canvas
         attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
     } catch {
-        console.log("📛 | Erro ao carregar a imagem de perfil antiga de um usuário, continuando com apenas o avatar novo")
+        console.log("📛 | Erro ao carregar a imagem de perfil antiga de um usuário, continuando apenas com o avatar novo")
     }
 
     user.profile.avatar = user_alvo.avatarURL({ dynamic: true })
