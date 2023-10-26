@@ -3,26 +3,23 @@ require('dotenv').config()
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes
 const update_commands = 0
-let modo_develop = 0, status = 1, ranking = 1, force_update = 0, silent = 0, modules = 1, relatorio = 1, logger = 1
+let modo_develop = 0, silent = 0
 
 // Ative para limpar os comandos slash locais e globais
 let delete_slash = 0
 
 if (update_commands) // Force update é utilizado para forçar a atualização dos comandos slash
-    modo_develop = 0, force_update = 1, silent = 1, modules = 0, relatorio = 0
-
-if (silent || modo_develop)
-    status = 0, ranking = 0, modules = 0, relatorio = 0, logger = 0
+    modo_develop = 0, silent = 1
 
 const client_data = {
-    status: status,
-    logger: logger,
-    modules: modules,
-    ranking: ranking,
-    relatorio: relatorio,
     modo_develop: modo_develop,
-    force_update: force_update,
     delete_slash: delete_slash,
+    force_update: update_commands ? 1 : 0,
+    status: silent || modo_develop ? 0 : 1,
+    logger: silent || modo_develop ? 0 : 1,
+    ranking: silent || modo_develop ? 0 : 1,
+    modules: update_commands || silent || modo_develop ? 0 : 1,
+    relatorio: update_commands || silent || modo_develop ? 0 : 1,
 
     id: modo_develop ? process.env.client_2 : process.env.client_1,
     token: modo_develop ? process.env.token_2 : process.env.token_1,
