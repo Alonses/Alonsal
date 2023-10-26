@@ -891,6 +891,16 @@
         {
             "type": 0,
             "text": "Cities: Skylines II"
+        },
+        {
+            "type": 2,
+            "text": "🎶 Mothers Talk - Tears For Fears",
+            "link": "https://open.spotify.com/track/4rkULQzE34sej4SWX21QTg?si=c05a627a2b914723"
+        },
+        {
+            "type": 2,
+            "text": "🎶 White Wedding - Billy Idol",
+            "link": "https://open.spotify.com/track/6GfecUoyhgrCjVv17teSfB?si=56ab0299b6e54567"
         }
     ]
 }
