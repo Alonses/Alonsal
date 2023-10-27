@@ -18,10 +18,10 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
         return
     }
 
-    let descricao_evento = client.replace(client.tls.phrase(user, "mode.network.banido_por"), [registroAudita.executor.username, guild_evento.name])
+    let descricao_evento = client.replace(client.tls.phrase(internal_guild, "mode.network.banido_por"), [registroAudita.executor.username, guild_evento.name])
 
     if (registroAudita.reason) // Razão do banimento especificada
-        descricao_evento = `${descricao_evento}${client.tls.phrase(user, "mode.network.motivo")} ${registroAudita.reason}`
+        descricao_evento = `${descricao_evento}${client.tls.phrase(internal_guild, "mode.network.motivo")} ${registroAudita.reason}`
 
     await guild_member.ban({ // Banindo o usuário do servidor automaticamente
         reason: descricao_evento,
