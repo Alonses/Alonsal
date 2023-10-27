@@ -2,6 +2,9 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, internal_guild, cached_guild, guild_evento, registroAudita, bot_member }) => {
 
+    // Moderador não está no servidor
+    if (!guild_executor) return
+
     // Verificando se o do bot tem as permissões necessárias para desbanir membros
     if (!bot_member.permissions.has([PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.ModerateMembers])) {
 

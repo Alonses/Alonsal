@@ -63,16 +63,11 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
             // Verificando se o servidor é diferente e o recurso respectivo está sincronizado
             if (internal_guild.sid !== guild.sid && internal_guild.network[cases[caso]]) {
 
-                const guild_member = await client.getMemberPermissions(internal_guild.sid, registroAudita.targetId)
-                const guild_executor = await client.getMemberPermissions(internal_guild.sid, registroAudita.executorId)
-                const bot_member = await client.getMemberPermissions(internal_guild.sid, client.id())
                 let cached_guild = await client.guilds(internal_guild.sid)
 
-                if ((!guild_member || !guild_executor) && caso !== "ban_del")
-                    return // Membro não está no servidor
-
-                if (caso === "ban_del" && !guild_executor)
-                    return // Moderador não está no servidor
+                const bot_member = await client.getMemberPermissions(internal_guild.sid, client.id())
+                const guild_member = await client.getMemberPermissions(internal_guild.sid, registroAudita.targetId)
+                const guild_executor = await client.getMemberPermissions(internal_guild.sid, registroAudita.executorId)
 
                 // Redirecionando o evento para o end-point respectivo
                 require(`./network/member_${caso}`)({ client, internal_guild, guild_evento, cached_guild, registroAudita, id_alvo, guild_member, guild_executor, bot_member })
