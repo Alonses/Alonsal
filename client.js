@@ -47,13 +47,16 @@ class CeiraClient {
 
     guilds(id_guild) {
 
-        let guilds = this.discord.guilds.cache || []
+        let guilds_cache = this.discord.guilds.cache
+        let guilds = null
 
-        if (id_guild) // Filtrando uma guild
-            guilds.forEach(guild => {
+        if (id_guild)
+            guilds_cache.forEach(guild => {
                 if (guild.id === id_guild)
                     guilds = guild
             })
+        else
+            guilds = guilds_cache
 
         return guilds
     }

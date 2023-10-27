@@ -185,8 +185,7 @@ function internal_functions(client) {
     client.getMemberPermissions = async (id_guild, id_member) => {
         const guild = await client.guilds(id_guild)
 
-        if (!guild)
-            return null
+        if (!guild) return null
 
         // Retorna todas as permissões de um usuário num servidor especifico
         const membro_guild = await guild.members.fetch(id_member)
