@@ -2,6 +2,9 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, internal_guild, guild_evento, registroAudita, guild_member, guild_executor, bot_member }) => {
 
+    // Verificando se o membro e o executor estão no servidor
+    if (!guild_member || !guild_executor) return
+
     // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
     if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has([PermissionsBitField.Flags.BanMembers]))
         return
