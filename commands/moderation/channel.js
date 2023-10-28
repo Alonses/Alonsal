@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, ContextMenuCommandBuilder, ApplicationCommandType, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -44,6 +44,13 @@ module.exports = {
                     "ru": '⌠💂⌡ разблокировать текущий канал'
                 }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+    menu_data: new ContextMenuCommandBuilder()
+        .setName("Purge user")
+        .setNameLocalizations({
+            "pt-BR": 'Purgar usuario'
+        })
+        .setType(ApplicationCommandType.Message)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute({ client, user, interaction }) {
 
         const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -56,5 +63,32 @@ module.exports = {
 
         // Solicitando a função e executando
         require(`./subcommands/channel_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel })
+    },
+    async menu({ client, user, interaction }) {
+
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+        // Verificando se o bot pode gerenciar as mensagens do servidor
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))
+            return client.tls.reply(interaction, user, "mode.clear.permissao", true, 3)
+
+        const messageDate = interaction.targetMessage.createdAt
+        const id_alvo = interaction.targetMessage.author.id
+        const timestamp_now = client.timestamp()
+
+        // Excluindo as mensagens do usuário alvo
+        interaction.targetMessage.channel.messages.fetch()
+            .then(messages => {
+                messages.forEach(async m => {
+                    if ((m.createdAt >= messageDate || m.createdAt > timestamp_now - 180) && m.author.id === id_alvo)
+                        await m.delete()
+                })
+
+                interaction.reply({
+                    content: `:recycle: | ${client.replace(client.tls.phrase(user, "mode.clear.purge_user"), id_alvo)}`,
+                    ephemeral: true
+                })
+            })
+            .catch(() => client.tls.reply(interaction, user, "mode.clear.purge_error", true, client.emoji(0)))
     }
 }
