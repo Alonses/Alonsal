@@ -41,8 +41,16 @@ module.exports = {
         // user_pula -> Dados do usuário alvo
         // user -> Dados do usuário que disparou o comando
 
+        const row = client.create_buttons([
+            { name: client.tls.phrase(user, "game.pula.jogar_agora"), type: 4, emoji: client.emoji("pula_2"), value: "https://gamejolt.com/games/pula-predios/613946" }
+        ], interaction)
+
         if (!user_pula.social.pula_predios)
-            return client.tls.reply(interaction, user, "game.pula.vinculo", true, 1)
+            return client.reply(interaction, {
+                content: alvo.id !== interaction.user.id ? client.tls.phrase(user, "game.pula.vinculo", 1) : client.tls.phrase(user, "game.pula.sem_vinculo", 1),
+                components: [row],
+                ephemeral: true
+            })
 
         fetch(`${process.env.url_apisal}/pula?token=placholder&sync=1&token_user=${user_pula.social.pula_predios}`)
             .then(res => res.json())
@@ -56,6 +64,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(client.tls.phrase(user, "game.pula.estatisticas_pula"))
                     .setColor(client.embed_color(user_pula.misc.color))
+                    .setImage("https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp")
                     .addFields(
                         {
                             name: `${client.emoji("pula_2")} **${client.tls.phrase(user, "game.pula.gerais")}**`,
@@ -96,6 +105,7 @@ module.exports = {
 
                 interaction.reply({
                     embeds: [embed],
+                    components: [row],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             })

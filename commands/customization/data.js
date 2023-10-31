@@ -15,6 +15,6 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Redirecionando o usuário para o painel com as opções de data
-        return require("../../core/formatters/chunks/model_data")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_data")({ client, user, interaction })
     }
 }

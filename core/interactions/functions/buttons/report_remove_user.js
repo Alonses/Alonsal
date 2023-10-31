@@ -63,7 +63,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const reportes_guild = await checkUserGuildReported(interaction.guild.id)
 
         if (reportes_guild.length < 1)
-            return client.tls.reply(user, "mode.report.usuario_sem_reportes", true, 1)
+            return client.tls.reply(interaction, user, "mode.report.usuario_sem_reportes", true, 1)
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (reportes_guild.length < pagina * 24)

@@ -69,6 +69,6 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
-        return require(`./subcommands/color_${interaction.options.getSubcommand()}`)({ client, user, interaction })
+        require(`./subcommands/color_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }
 }
