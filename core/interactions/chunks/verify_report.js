@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
 
         if (valor.sid === interaction.guild.id) {
-            report_servidor = `\n:globe_with_meridians: **Reporte neste servidor:**\n\`\`\`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}\`\`\``
+            report_servidor = `\n:globe_with_meridians: **${client.tls.phrase(user, "mode.report.reporte_neste_servidor")}**\n\`\`\`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}\`\`\``
             alvo.executer = valor.issuer
         }
     })
@@ -63,7 +63,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `report_browse_user|${pagina}` }]
 
     if (alvo.executer) // Botão para remover o reporte do usuário no servidor
-        botoes = botoes.concat([{ id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_reporte"), type: 1, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` }])
+        botoes = botoes.concat([{ id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_reporte"), type: 1, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}` }])
 
     client.reply(interaction, {
         content: "",

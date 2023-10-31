@@ -22,11 +22,11 @@ module.exports = async (client, dados) => {
 
     // Alterando os cargos do usuário
     if (dados[0]._roles !== dados[1]._roles && dados[0]._roles.length > 0 && guild.logger.member_role)
-        return require('./endpoints/member_role')({ client, guild, dados })
+        return require('./member_role')({ client, guild, dados })
 
     const user = await client.getUser(dados[0].user.id)
 
     // Usuário atualizou a foto de perfil
     if (user.profile.avatar !== dados[1].user.avatarURL({ dynamic: true }) && guild.logger.member_image)
-        return require('./endpoints/member_avatar')({ client, guild, user, dados })
+        return require('./member_avatar')({ client, guild, user, dados })
 }

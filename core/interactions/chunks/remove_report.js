@@ -11,9 +11,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const alvo = await getReport(id_alvo, id_guild)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Remover reporte")
+        .setTitle(client.tls.phrase(user, "mode.report.remover_reporte"))
         .setColor(0xED4245)
-        .setDescription(`\`\`\`📃 | Descrição fornecida:\n\n${alvo.relatory}\`\`\`\nRevogar o reporte deste usuário limpará o seu histórico neste servidor, você pode confirmar essa operação ou cancelar pelos botões abaixo.`)
+        .setDescription(client.replace(client.tls.phrase(user, "mode.report.remover_reporte_desc"), alvo.relatory))
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const row = client.create_buttons([
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `remove_report|${pagina}` },
         { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_guild}` },
-        { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
+        { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${id_guild}` }
     ], interaction)
 
     client.reply(interaction, {

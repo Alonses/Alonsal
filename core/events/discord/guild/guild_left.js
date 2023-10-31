@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { disableGameChannel, disableReportChannel } = require('../../database/schemas/Guild')
+const { disableGameChannel, disableReportChannel } = require('../../../database/schemas/Guild')
 
 module.exports = async ({ client, guild }) => {
 

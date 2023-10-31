@@ -1,6 +1,6 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
-const { channelTypes } = require('../../database/schemas/Guild')
+const { channelTypes } = require('../../../database/schemas/Guild')
 
 module.exports = async ({ client, channel }) => {
 
