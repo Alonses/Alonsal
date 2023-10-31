@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserReports } = require('../../database/schemas/Report')
+const { getUserReports } = require('../../../database/schemas/Report')
 
 module.exports = async (client, dados) => {
 
@@ -24,7 +24,7 @@ module.exports = async (client, dados) => {
 
         if (avisos > 0) {
             const id_canal = guild.reports.channel
-            require('../../../core/auto/send_report')({ client, alvo, id_canal })
+            require('../../../auto/send_report')({ client, alvo, id_canal })
         }
     }
 

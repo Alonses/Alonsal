@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const row = client.create_buttons([
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `data.${escolha}` },
-        { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), emoji: client.emoji(10), type: 2, data: `1.${escolha}` },
+        { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1.${escolha}` },
         { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: '0' }
     ], interaction)
 

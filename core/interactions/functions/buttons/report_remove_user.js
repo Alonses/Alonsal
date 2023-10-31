@@ -4,26 +4,30 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     const operacao = parseInt(dados.split(".")[1])
 
-    if (operacao !== 3) {
-        if (!operacao)
-            return interaction.update({
-                content: ":anger: | A operação foi cancelada, nenhum efeito foi aplicado...",
-                embeds: [],
-                components: [],
-                ephemeral: true
-            })
+    // Códigos de operação
+    // 0 -> Cancelar
+    // 1 -> Confirma remoção
+    // 2 -> Menu para escolher o usuário
+    // 3 -> Menu para confirmar a escolha de remoção
+
+    const id_alvo = dados.split(".")[2]
+    const id_guild = dados.split(".")[3]
+
+    if (operacao === 0) { // Operação cancelada ( retorna ao embed do usuário )
+        dados = `${id_alvo}.${id_guild}.${pagina}`
+        return require('../../chunks/verify_report')({ client, user, interaction, dados })
+    }
+
+    if (operacao === 1) {
 
         // Removendo o reporte do usuário no servidor
-        const id_alvo = dados.split(".")[2]
-        const id_guild = dados.split(".")[3]
-
         await dropReport(id_alvo, id_guild)
 
         // Verificando se há outros usuários reportados no servidor para poder continuar editando
         let reportes_server = await checkUserGuildReported(id_guild), row
 
         const obj = {
-            content: ":white_check_mark: | O usuário foi removido da lista de reportes do servidor, obrigado!!",
+            content: client.tls.phrase(user, "mode.report.usuario_removido", 10),
             embeds: [],
             components: [],
             ephemeral: true
@@ -31,21 +35,35 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (reportes_server.length > 0) {
             row = client.create_buttons([
-                { id: "return_button", name: "Ver outros usuários", type: 0, emoji: client.emoji(19), data: "remove_report" }
+                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_usuarios"), type: 0, emoji: client.emoji(19), data: "remove_report" }
             ], interaction)
 
             obj.components.push(row)
         }
 
         return interaction.update(obj)
+    }
 
-    } else {
+    if (operacao === 2) {
 
+        // Criando os botões para o menu de remoção de reportes do servidor
+        const row = client.create_buttons([
+            { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
+            { id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
+        ], interaction)
+
+        // Listando os botões para confirmar e cancelar a operação
+        return interaction.update({
+            components: [row]
+        })
+    }
+
+    if (operacao === 3) {
         // Menu para navegar entre os usuários reportados
         const reportes_guild = await checkUserGuildReported(interaction.guild.id)
 
         if (reportes_guild.length < 1)
-            return interaction.reply({ content: ":mag: | Este servidor não possui nenhum reporte registrado!", ephemeral: true })
+            return client.tls.reply(user, "mode.report.usuario_sem_reportes", true, 1)
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (reportes_guild.length < pagina * 24)
@@ -59,7 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         const obj = {
-            content: "Escolha um usuário abaixo para poder gerenciar",
+            content: client.tls.phrase(user, "mode.report.escolher_usuario_gerencia"),
             embeds: [],
             components: [client.create_menus({ client, interaction, user, data, pagina })],
             ephemeral: true

@@ -9,51 +9,51 @@ module.exports = async function ({ client }) {
 
     // Eventos de servidores ( entrada e saída )
     client.discord.on(Events.GuildCreate, guild => {
-        require('./discord/guild_join.js')({ client, guild })
+        require('./discord/guild/guild_join.js')({ client, guild })
     })
 
     client.discord.on(Events.GuildDelete, guild => {
-        require('./discord/guild_left.js')({ client, guild })
+        require('./discord/guild/guild_left.js')({ client, guild })
     })
 
     // Eventos de mensagens
     client.discord.on(Events.MessageDelete, message => {
-        require('./discord/message_deleted.js')({ client, message })
+        require('./discord/guild/message_deleted.js')({ client, message })
     })
 
     client.discord.on(Events.MessageUpdate, (old_msg, new_msg) => {
-        require('./discord/message_edited.js')(client, [old_msg, new_msg])
+        require('./discord/guild/message_edited.js')(client, [old_msg, new_msg])
     })
 
     // Eventos de canais
     client.discord.on(Events.ChannelCreate, channel => {
-        require('./discord/channel_created.js')({ client, channel })
+        require('./discord/guild/channel_created.js')({ client, channel })
     })
 
     client.discord.on(Events.ChannelDelete, channel => {
-        require('./discord/channel_deleted.js')({ client, channel })
+        require('./discord/guild/channel_deleted.js')({ client, channel })
     })
 
     // Eventos de membros do servidor
     client.discord.on(Events.GuildMemberAdd, guild => {
-        require('./discord/member_join.js')(client, guild)
+        require('./discord/member/member_join.js')(client, guild)
     })
 
     client.discord.on(Events.GuildMemberRemove, guild => {
-        require('./discord/member_left.js')(client, guild)
+        require('./discord/member/member_left.js')(client, guild)
     })
 
     client.discord.on(Events.GuildMemberUpdate, (old_user, new_user) => {
-        require('./discord/member.js')(client, [old_user, new_user])
+        require('./discord/member/member.js')(client, [old_user, new_user])
     })
 
     // Eventos de gerenciamento de membros do servidor
     client.discord.on(Events.GuildBanAdd, ban => {
-        require('./discord/guild_ban_add.js')({ client, ban })
+        require('./discord/guild/guild_ban_add.js')({ client, ban })
     })
 
     client.discord.on(Events.GuildBanRemove, ban => {
-        require('./discord/guild_ban_remove.js')({ client, ban })
+        require('./discord/guild/guild_ban_remove.js')({ client, ban })
     })
 
     // Evento do rate limit da API do discord

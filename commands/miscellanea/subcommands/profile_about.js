@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Criando os botões para a cor customizada
     const row = client.create_buttons([
-        { id: "user_profile_about", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, data: "1" },
+        { id: "user_profile_about", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: "1" },
         { id: "user_profile_about", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
     ], interaction)
 

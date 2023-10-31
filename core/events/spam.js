@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { getUserStrikes, spamTimeoutMap, defaultStrikes } = require("../database/schemas/Strikes")
 
@@ -90,7 +90,7 @@ module.exports = async function ({ client, message, user, guild }) {
 nerfa_spam = async (client, user, guild, message) => {
 
     let user_guild = await client.getMemberGuild(message, user.uid)
-    let tempo_timeout = 7200, entradas_spamadas = ""
+    let tempo_timeout = 7200, operacao = "mute"
 
     if (!user_guild) { // Validando se o usuário saiu do servidor
         bloqueia_operacao = 0
@@ -105,64 +105,20 @@ nerfa_spam = async (client, user, guild, message) => {
         let user_strikes = await getUserStrikes(user.uid)
         user_strikes.strikes++
 
-        tempo_timeout = defaultStrikes[user_strikes.strikes] || defaultStrikes[4]
+        tempo_timeout = defaultStrikes[user_strikes.strikes] || null
+
+        if (!tempo_timeout)
+            operacao = "kick"
+
         await user_strikes.save()
     }
 
-    // Listando as mensagens consideras SPAM e excluindo elas
-    const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
-    user_messages.forEach(internal_message => {
-        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
-    })
-
-    // Criando o embed de aviso para os moderadores
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
-        .setColor(0xED4245)
-        .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, tempo_timeout / 60])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
-        .addFields(
-            {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
-                inline: true
-            },
-            {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                value: `<t:${client.timestamp() + tempo_timeout}:f>\n( <t:${client.timestamp() + tempo_timeout}:R> )`,
-                inline: true
-            }
-        )
-
-    if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
-        embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
-
-    user_guild.timeout(tempo_timeout * 1000, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
-        .then(async () => {
-
-            client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embeds: [embed] })
-
-            let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
-
-            if (cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("http") || cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("www"))
-                msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
-
-            client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
-        })
-        .catch(async () => {
-
-            // Erro por falta de permissão para poder castigar um usuário
-            embed.setDescription(`${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_1"), user_guild)}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
-                .setFields({
-                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
-                    inline: true
-                })
-
-            client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
-        })
+    // Redirecionando o evento
+    const guild_bot = await client.getMemberPermissions(guild.sid, client.id())
+    await require(`./spam/${operacao}_user`)({ client, message, guild, cached_messages, user, user_guild, guild_bot, tempo_timeout })
 
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
-        remove_spam(client, user.uid, guild.sid, user_messages[0])
+        remove_spam(client, user.uid, guild.sid, cached_messages[0])
     }, 3000)
 }
 
@@ -191,8 +147,8 @@ remove_spam = (client, id_user, id_guild, user_message) => {
 // Salva mensagens consideradas spam em cache
 registryMessage = (guild, message) => {
 
-    if (!cached_messages[`${message.author.id}.${guild.sid}`])
-        cached_messages[`${message.author.id}.${guild.sid}`] = []
+    if (!cached_messages[`${message.author.id}.${guild.sid} `])
+        cached_messages[`${message.author.id}.${guild.sid} `] = []
 
-    cached_messages[`${message.author.id}.${guild.sid}`].push(message)
+    cached_messages[`${message.author.id}.${guild.sid} `].push(message)
 }
