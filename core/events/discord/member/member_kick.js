@@ -26,7 +26,7 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
             },
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita2.id}\`\n( <@${registroAudita2.targetId}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita2.targetId}\`\n( <@${registroAudita2.targetId}> )`,
                 inline: true
             }
         )
