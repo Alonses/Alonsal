@@ -81,6 +81,6 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
-        return require(`./subcommands/report_${interaction.options.getSubcommand()}`)({ client, user, interaction })
+        require(`./subcommands/report_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }
 }

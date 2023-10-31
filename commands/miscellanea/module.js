@@ -142,11 +142,11 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         if (interaction.options.getSubcommand() === "add") // Criando um módulo novo
-            return require('./subcommands/module_add')({ client, user, interaction })
+            require('./subcommands/module_add')({ client, user, interaction })
         else { // Navegando pelos módulos
 
             let autor_original = true
-            return require('../../core/interactions/chunks/modulos')({ client, user, interaction, autor_original })
+            require('../../core/interactions/chunks/modulos')({ client, user, interaction, autor_original })
         }
     }
 }

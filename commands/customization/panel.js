@@ -30,22 +30,23 @@ module.exports = {
                     "ru": '⌠👤⌡ контролировать мои функции'
                 })
                 .addStringOption(option =>
-                    option.setName("page")
+                    option.setName("function")
                         .setNameLocalizations({
-                            "de": 'seite',
-                            "es-ES": 'pagina',
-                            "it": 'pagina',
-                            "pt-BR": 'pagina',
-                            "ru": 'страница'
+                            "de": 'funktion',
+                            "es-ES": 'funcion',
+                            "fr": 'fonction',
+                            "it": 'funzione',
+                            "pt-BR": 'funcao',
+                            "ru": 'функция'
                         })
-                        .setDescription("One page to display")
+                        .setDescription("A function to configure")
                         .setDescriptionLocalizations({
-                            "de": 'Eine Seite zur Anzeige',
-                            "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher',
-                            "it": 'Una pagina da visualizzare',
-                            "pt-BR": 'Uma página para exibir',
-                            "ru": 'Одна страница для отображения'
+                            "de": 'Eine Funktion zum Konfigurieren',
+                            "es-ES": 'Una función para configurar',
+                            "fr": 'Une fonction à configurer',
+                            "it": 'Una funzione da configurare',
+                            "pt-BR": 'Uma função para configurar',
+                            "ru": 'Функция для настройки'
                         })
                         .addChoices(
                             { name: '👻 Ghostmode, 🔔 DM notifications, 🏆 Ranking', value: '0' },
@@ -64,22 +65,23 @@ module.exports = {
                     "ru": '⌠💂⌡ контролировать мои функции'
                 })
                 .addStringOption(option =>
-                    option.setName("page")
+                    option.setName("function")
                         .setNameLocalizations({
-                            "de": 'seite',
-                            "es-ES": 'pagina',
-                            "it": 'pagina',
-                            "pt-BR": 'pagina',
-                            "ru": 'страница'
+                            "de": 'funktion',
+                            "es-ES": 'funcion',
+                            "fr": 'fonction',
+                            "it": 'funzione',
+                            "pt-BR": 'funcao',
+                            "ru": 'функция'
                         })
-                        .setDescription("One page to display")
+                        .setDescription("A function to configure")
                         .setDescriptionLocalizations({
-                            "de": 'Eine Seite zur Anzeige',
-                            "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher',
-                            "it": 'Una pagina da visualizzare',
-                            "pt-BR": 'Uma página para exibir',
-                            "ru": 'Одна страница для отображения'
+                            "de": 'Eine Funktion zum Konfigurieren',
+                            "es-ES": 'Una función para configurar',
+                            "fr": 'Une fonction à configurer',
+                            "it": 'Una funzione da configurare',
+                            "pt-BR": 'Uma função para configurar',
+                            "ru": 'Функция для настройки'
                         })
                         .addChoices(
                             { name: '📜 Event log, 📛 Anti-Spam, 🎮 Free Games ad', value: '0' },
@@ -88,7 +90,7 @@ module.exports = {
                         ))),
     async execute({ client, user, interaction }) {
 
-        const operador = parseInt(interaction.options.getString("page")) || 0
-        return require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, operador })
+        const operador = parseInt(interaction.options.getString("function")) || 0
+        require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, operador })
     }
 }

@@ -42,6 +42,6 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Navegando pelos módulos
-        return require(`./subcommands/profile_${interaction.options.getSubcommand()}`)({ client, user, interaction })
+        require(`./subcommands/profile_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }
 }

@@ -9,5 +9,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const operador = caso ? pagina + 1 : pagina - 1
 
-    return require(`../../chunks/${funcao}`)({ client, user, interaction, operador })
+    require(`../../chunks/${funcao}`)({ client, user, interaction, operador })
 }

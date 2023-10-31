@@ -38,7 +38,7 @@ module.exports = {
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
         if (interaction.options.getSubcommand() === "lista") // Lista de eventos
-            return require('../../core/formatters/chunks/model_history.js')(client, user, data, interaction)
+            require('../../core/formatters/chunks/model_history.js')(client, user, data, interaction)
         else {
 
             // Apenas um acontecimento
@@ -56,7 +56,7 @@ module.exports = {
                 especifico: especifico
             }
 
-            return require('../../core/formatters/chunks/model_history')(client, user, dados, interaction)
+            require('../../core/formatters/chunks/model_history')(client, user, dados, interaction)
         }
     }
 }

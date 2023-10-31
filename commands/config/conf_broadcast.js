@@ -26,6 +26,6 @@ module.exports = {
         const bot = await client.getBot()
 
         // Solicitando a função e executando
-        return require(`./subcommands/broadcast_${interaction.options.getSubcommand()}`)({ client, interaction, bot })
+        require(`./subcommands/broadcast_${interaction.options.getSubcommand()}`)({ client, interaction, bot })
     }
 }
