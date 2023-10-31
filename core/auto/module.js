@@ -31,9 +31,9 @@ module.exports = async ({ client }) => {
     global_client = client
 
     if (tempo_restante > 1000)
-        console.log(`📣 Disparando os módulos em ${tempo_restante} segundos`)
+        console.log(`📣 | Disparando os módulos em ${tempo_restante} segundos`)
     else
-        console.log(`📣 Disparando os módulos agora!`)
+        console.log(`📣 | Disparando os módulos agora!`)
 
     atualiza_modulos(global_client, tempo_restante)
 }

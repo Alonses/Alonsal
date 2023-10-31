@@ -23,7 +23,7 @@ client.discord.once("ready", async () => {
 	await require("./core/auto/module")({ client })
 
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
-	console.log(`⏱️ | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)
+	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)
 })
 
 client.discord.on("messageCreate", async message => {
