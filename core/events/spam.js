@@ -60,7 +60,7 @@ module.exports = async function ({ client, message, user, guild }) {
                     bloqueia_operacao = 1
 
                     // Nerfando o spam do servidor e excluindo as mensagens enviadas
-                    nerfa_spam(client, user, guild, message)
+                    nerfa_spam({ client, user, guild, message })
                 }
             } else {
                 userdata.msgcount = msgcount
@@ -87,7 +87,7 @@ module.exports = async function ({ client, message, user, guild }) {
     }
 }
 
-nerfa_spam = async (client, user, guild, message) => {
+nerfa_spam = async ({ client, user, guild, message }) => {
 
     let user_guild = await client.getMemberGuild(message, user.uid)
     let tempo_timeout = 7200, operacao = "mute"
@@ -115,11 +115,12 @@ nerfa_spam = async (client, user, guild, message) => {
 
     // Redirecionando o evento
     const guild_bot = await client.getMemberPermissions(guild.sid, client.id())
-    await require(`./spam/${operacao}_user`)({ client, message, guild, cached_messages, user, user_guild, guild_bot, tempo_timeout })
+    const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
+    await require(`./spam/${operacao}_user`)({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
-        remove_spam(client, user.uid, guild.sid, cached_messages[0])
-    }, 3000)
+        remove_spam(client, user.uid, guild.sid, user_messages[0])
+    }, 4000)
 }
 
 remove_spam = (client, id_user, id_guild, user_message) => {
@@ -147,8 +148,8 @@ remove_spam = (client, id_user, id_guild, user_message) => {
 // Salva mensagens consideradas spam em cache
 registryMessage = (guild, message) => {
 
-    if (!cached_messages[`${message.author.id}.${guild.sid} `])
-        cached_messages[`${message.author.id}.${guild.sid} `] = []
+    if (!cached_messages[`${message.author.id}.${guild.sid}`])
+        cached_messages[`${message.author.id}.${guild.sid}`] = []
 
-    cached_messages[`${message.author.id}.${guild.sid} `].push(message)
+    cached_messages[`${message.author.id}.${guild.sid}`].push(message)
 }

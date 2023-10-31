@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-module.exports = async ({ client, message, guild, cached_messages, user, user_guild, guild_bot, tempo_timeout }) => {
+module.exports = async ({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout }) => {
 
     let entradas_spamadas = ""
     const permissions = await client.permissions(message, client.id(), [PermissionsBitField.Flags.ModerateMembers])
@@ -10,7 +10,6 @@ module.exports = async ({ client, message, guild, cached_messages, user, user_gu
         return client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
 
     // Listando as mensagens consideras spam e excluindo elas
-    const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
     user_messages.forEach(internal_message => {
         entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
     })
@@ -44,7 +43,7 @@ module.exports = async ({ client, message, guild, cached_messages, user, user_gu
 
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
-            if (cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("http") || cached_messages[`${message.author.id}.${guild.sid}`][0].content.includes("www"))
+            if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
                 msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
