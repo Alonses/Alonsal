@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-module.exports = async ({ client, internal_guild, cached_guild, guild_evento, registroAudita, bot_member }) => {
+module.exports = async ({ client, internal_guild, cached_guild, guild_evento, guild_executor, registroAudita, bot_member }) => {
 
     // Moderador não está no servidor
     if (!guild_executor) return
