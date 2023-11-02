@@ -6,6 +6,6 @@ module.exports = {
         .setDescription("⌠😂|🇧🇷⌡ Uma curiosidade aleatória"),
     async execute({ client, user, interaction }) {
 
-        require('../../core/formatters/chunks/model_curiosidades')({ client, user, interaction })
+        require('../../core/formatters/chunks/model_curiosidades')(client, user, interaction)
     }
 }

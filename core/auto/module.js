@@ -5,12 +5,6 @@ const { writeFileSync } = require('fs')
 const { getUser } = require('../database/schemas/User')
 const { getActiveModules, shutdownAllUserModules } = require("../database/schemas/Module")
 
-const model_weather = require('../formatters/chunks/model_weather')
-const model_frase = require('../formatters/chunks/model_frase.js')
-const model_history = require('../formatters/chunks/model_history')
-const model_charada = require('../formatters/chunks/model_charada')
-const model_curiosidades = require('../formatters/chunks/model_curiosidades')
-
 const formata_horas = require('../formatters/formata_horas')
 
 const lista_modulos = []
@@ -118,10 +112,10 @@ executa_modulo = async () => {
         const user = await global_client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await model_weather(global_client, user)
+            await require('../formatters/chunks/model_weather')(global_client, user)
 
         if (lista_modulos[0].type === 1)
-            await model_frase(global_client, user)
+            await require('../formatters/chunks/model_frase.js')(global_client, user)
 
         if (lista_modulos[0].type === 2) {
 
@@ -142,16 +136,16 @@ executa_modulo = async () => {
                 }
             }
 
-            await model_history(global_client, user, dados)
+            await require('../formatters/chunks/model_history')(global_client, user, dados)
         }
 
         // Charadas
         if (lista_modulos[0].type === 3)
-            await model_charada(global_client, user)
+            await require('../formatters/chunks/model_charada')(global_client, user)
 
         // Curiosidades
         if (lista_modulos[0].type === 4)
-            await model_curiosidades(global_client, user)
+            await require('../formatters/chunks/model_curiosidades')(global_client, user)
 
         lista_modulos.shift()
 
