@@ -1,47 +1,44 @@
-const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
-
-const { relation } = require('../../files/songs/faustop/songs.json')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("faustop")
         .setDescription("⌠😂⌡ Faustão\'s phrases")
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName("fala")
-                .setDescription("⌠😂|🇧🇷⌡ Invoca uma fala aleatória do faustão"))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName("menu")
-                .setDescription("⌠😂|🇧🇷⌡ Escolha uma fala do faustão")),
+        .setDescriptionLocalizations({
+            "de": '⌠😂⌡ Sätze aus Faustão!',
+            "es-ES": '⌠😂⌡ ¡Frases de Fausto!',
+            "fr": '⌠😂⌡ Phrases de Faustão !',
+            "it": '⌠😂⌡ Frasi di Faustão!',
+            "pt-BR": '⌠😂⌡ Frases do Faustão!',
+            "ru": '⌠😂⌡ Фразы из Фаустао!'
+        })
+        .addStringOption(option =>
+            option.setName("operation")
+                .setNameLocalizations({
+                    "de": 'betrieb',
+                    "es-ES": 'operacion',
+                    "fr": 'operation',
+                    "it": 'operazione',
+                    "pt-BR": 'operacao',
+                    "ru": 'операция'
+                })
+                .setDescription("Select an operation")
+                .setDescriptionLocalizations({
+                    "de": 'Wählen Sie einen Vorgang aus',
+                    "es-ES": 'Seleccione una operación',
+                    "fr": 'Sélectionnez une opération',
+                    "it": 'Seleziona un\'operazione',
+                    "pt-BR": 'Escolha uma operação',
+                    "ru": 'Выберите операцию'
+                })
+                .addChoices(
+                    { name: '🔊 Speaks', value: 'speaks' },
+                    { name: '🧾 Menu', value: 'menu' }
+                )
+                .setRequired(true)),
     async execute({ client, user, interaction }) {
 
-        if (interaction.options.getSubcommand() === "fala") {
-
-            const data = new Date()
-            let num = client.random(client.countFiles("./files/songs/faustop", "ogg") - 1)
-
-            if (data.getHours() === 20 && data.getMinutes() === 7)
-                num = client.random(1, 1) > 1 ? 7 : 12
-
-            const file = new AttachmentBuilder(`./files/songs/faustop/faustop_${num}.ogg`, { name: "faustop.ogg" })
-
-            interaction.reply({
-                files: [file],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        } else {
-
-            const data = {
-                alvo: "faustop",
-                values: relation
-            }
-
-            interaction.reply({
-                content: client.tls.phrase(user, "menu.menus.escolher_frase", 6),
-                components: [client.create_menus({ client, interaction, user, data })],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
-            })
-        }
+        // Redirecionando o evento
+        require(`./subcommands/faustop_${interaction.options.getString("operation")}`)({ client, user, interaction })
     }
 }

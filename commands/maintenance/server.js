@@ -21,7 +21,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "manu.hub.hub_alonsal")} ${client.emoji("dancando_elizabeth")}`)
             .setColor(client.embed_color(user.misc.color))
-            .setImage("https://i.imgur.com/NqmwCA9.png")
+            .setImage("https://i.imgur.com/N8AFVTH.png")
             .setDescription(client.tls.phrase(user, "manu.hub.info"))
 
         interaction.reply({
