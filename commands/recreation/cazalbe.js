@@ -1,61 +1,45 @@
-const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js')
-
-const { gifs } = require('../../files/json/gifs/cazalbe.json')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cazalbe")
 		.setDescription("⌠😂⌡ Cazalbe King of Prasody")
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName("gif")
-				.setDescription("⌠😂⌡ Summons a gif of cazalbe")
-				.setDescriptionLocalizations({
-					"de": '⌠😂⌡ Beschwört ein Cazalbe-GIF',
-					"es-ES": '⌠😂⌡ Invoca un gif de cazalbe',
-					"fr": '⌠😂⌡ Invoque un gif de cazalbe',
-					"it": '⌠😂⌡ Evoca una gif di cazalbe',
-					"pt-BR": '⌠😂⌡ Invoca um gif do cazalbe',
-					"ru": '⌠😂⌡ отправить cazalbe gif'
-				}))
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName("laugh")
+		.setDescriptionLocalizations({
+			"de": '⌠😂⌡ Cazalbe König von Prasody',
+			"es-ES": '⌠😂⌡ Cazalbe Rey de Prasodia',
+			"fr": '⌠😂⌡ Cazalbe Roi de Prasody',
+			"it": '⌠😂⌡ Cazalbe Re di Prasodia',
+			"pt-BR": '⌠😂⌡ Cazalbe Rei da Prasódia',
+			"ru": '⌠😂⌡ Касальбе, король Прасоди'
+		})
+		.addStringOption(option =>
+			option.setName("operation")
 				.setNameLocalizations({
-					"de": 'lachen',
-					"es-ES": 'risa',
-					"fr": 'rire',
-					"it": 'risata',
-					"pt-BR": 'risada',
-					"ru": 'смех'
+					"de": 'betrieb',
+					"es-ES": 'operacion',
+					"fr": 'operation',
+					"it": 'operazione',
+					"pt-BR": 'operacao',
+					"ru": 'операция'
 				})
-				.setDescription("⌠😂⌡ The cazalbe laugh")
+				.setDescription("Select an operation")
 				.setDescriptionLocalizations({
-					"de": '⌠😂⌡ Cazalbes Lachen',
-					"es-ES": '⌠😂⌡ La risa del cazalbe',
-					"fr": '⌠😂⌡ Le rire cazalbe',
-					"it": '⌠😂⌡ La risata di Cazalbe',
-					"pt-BR": '⌠😂⌡ A risada do cazalbe',
-					"ru": '⌠😂⌡ Cazalbe cмех'
-				}))
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName("piada")
-				.setDescription("⌠😂|🇧🇷⌡ Conta uma piada")),
+					"de": 'Wählen Sie einen Vorgang aus',
+					"es-ES": 'Seleccione una operación',
+					"fr": 'Sélectionnez une opération',
+					"it": 'Seleziona un\'operazione',
+					"pt-BR": 'Escolha uma operação',
+					"ru": 'Выберите операцию'
+				})
+				.addChoices(
+					{ name: '😹 Laugh', value: 'laugh' },
+					{ name: '🤡 Joke', value: 'joke' },
+					{ name: '👾 Gif', value: 'gif' }
+				)
+				.setRequired(true)),
 	async execute({ client, user, interaction }) {
 
-		if (interaction.options.getSubcommand() === "gif")
-			interaction.reply({
-				content: gifs[client.random(gifs)],
-				ephemeral: client.decider(user?.conf.ghost_mode, 0)
-			})
-		else if (interaction.options.getSubcommand() === "laugh") {
-			const file = new AttachmentBuilder("./files/songs/cazalbe.ogg")
-			interaction.reply({
-				files: [file],
-				ephemeral: client.decider(user?.conf.ghost_mode, 0)
-			})
-		} else
-			require('../../core/formatters/chunks/model_charada')(client, user, interaction)
+		// Redirecionando o evento
+		require(`./subcommands/cazalbe_${interaction.options.getString("operation")}`)({ client, user, interaction })
 	}
 }

@@ -1,57 +1,47 @@
-const fetch = (...args) =>
-	import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
-const { gifs } = require("../../files/json/gifs/jailson.json")
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("jailson")
-		.setDescription("⌠😂⌡ As soon as I can\'t resist, vaiinn")
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName("gif")
-				.setDescription("⌠😂⌡ Summons a gif of jaja")
+		.setDescription("⌠😂⌡ So I can't resist, vaiinn")
+		.setDescriptionLocalizations({
+			"de": '⌠😂⌡Ich kann nicht widerstehen, waiinn',
+			"es-ES": '⌠😂⌡ Así que no puedo resistirme, vaiinn',
+			"fr": '⌠😂⌡ Alors je ne peux pas résister, vaiinn',
+			"it": '⌠😂⌡ Quindi non posso resistere, vaiinn',
+			"pt-BR": '⌠😂⌡ Assim eu não resisto, vaiinn',
+			"ru": '⌠😂⌡ Так что не могу устоять, ваиинн'
+		})
+		.addStringOption(option =>
+			option.setName("operation")
+				.setNameLocalizations({
+					"de": 'betrieb',
+					"es-ES": 'operacion',
+					"fr": 'operation',
+					"it": 'operazione',
+					"pt-BR": 'operacao',
+					"ru": 'операция'
+				})
+				.setDescription("Select an operation")
 				.setDescriptionLocalizations({
-					"de": '⌠😂⌡ Beschwört ein Jaja-GIF',
-					"es-ES": '⌠😂⌡ Invoca un gif de jaja',
-					"fr": '⌠😂⌡ Invoque un gif de jaja',
-					"it": '⌠😂⌡ Evoca una gif di Jaja',
-					"pt-BR": '⌠😂⌡ Invoca um gif do jaja',
-					"ru": '⌠😂⌡ Отправить jaja gif'
-				}))
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName("frase")
-				.setDescription("⌠😂|🇧🇷⌡ Invoca uma frase do jaja")),
+					"de": 'Wählen Sie einen Vorgang aus',
+					"es-ES": 'Seleccione una operación',
+					"fr": 'Sélectionnez une opération',
+					"it": 'Seleziona un\'operazione',
+					"pt-BR": 'Escolha uma operação',
+					"ru": 'Выберите операцию'
+				})
+				.addChoices(
+					{ name: '💬 Phrase', value: 'phrase' },
+					{ name: '👾 Gif', value: 'gif' }
+				)
+				.setRequired(true)),
 	async execute({ client, user, interaction }) {
 
 		if (!interaction.channel.nsfw)
 			return client.tls.reply(interaction, user, "dive.jaja.nsfw_jaja", true, 33)
 
-		if (interaction.options.getSubcommand() === "gif") {
-			interaction.reply({
-				content: gifs[client.random(gifs)],
-				ephemeral: client.decider(user?.conf.ghost_mode, 0)
-			})
-		} else {
-
-			fetch(`${process.env.url_apisal}/random?jailson`)
-				.then(response => response.json())
-				.then(async res => {
-
-					const embed = new EmbedBuilder()
-						.setTitle(res.nome)
-						.setColor(client.embed_color(user.misc.color))
-						.setThumbnail(res.foto)
-						.setDescription(`- "${res.texto}"`)
-
-					interaction.reply({
-						embeds: [embed],
-						ephemeral: client.decider(user?.conf.ghost_mode, 0)
-					})
-				})
-		}
+		// Redirecionando o evento
+		require(`./subcommands/jailson_${interaction.options.getString("operation")}`)({ client, user, interaction })
 	}
 }

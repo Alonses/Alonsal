@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const formata_horas = require('../formatters/formata_horas.js')
 
-module.exports = async ({ client, interaction }) => {
+module.exports = async ({ client, interaction, command }) => {
 
     if (client.x.relatorio) {
         const bot = await client.getBot()

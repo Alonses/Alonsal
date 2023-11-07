@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "inic.ping.titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setImage("https://i.imgur.com/NqmwCA9.png")
+        .setImage("https://i.imgur.com/N8AFVTH.png")
         .setDescription(`${client.tls.phrase(user, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(user, "inic.ping.idioma_dica")}`)
 
     client.reply(interaction, {
