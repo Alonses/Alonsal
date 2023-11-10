@@ -48,7 +48,8 @@ module.exports = {
                             { name: '🖊️ Phrase', value: '1' },
                             { name: '🏯 Historical events', value: '2' },
                             { name: '🃏 Jokes', value: '3' },
-                            { name: '〽️ Curiosities', value: '4' }
+                            { name: '〽️ Curiosities', value: '4' },
+                            { name: '💎 Minecraft Item', value: '5' }
                         )
                         .setRequired(true))
                 .addIntegerOption(option =>
@@ -114,9 +115,9 @@ module.exports = {
                             "ru": 'В какие дни?'
                         })
                         .addChoices(
-                            { name: 'Working days', value: '0' },
-                            { name: 'Weekends', value: '1' },
-                            { name: 'Daily', value: '2' }
+                            { name: '🏭 Working days', value: '0' },
+                            { name: '🛹 Weekends', value: '1' },
+                            { name: '📆 Daily', value: '2' }
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>

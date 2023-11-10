@@ -28,6 +28,9 @@ module.exports = async ({ client, user, interaction }) => {
     if (type === 3 || type === 4) // Módulo de charadas
         corpo_modulo.stats.price = 1
 
+    if (type === 5) // Módulo de itens do minecraft
+        corpo_modulo.stats.price = 5
+
     corpo_modulo.stats.days = interaction.options.getString("when")
     corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour") || '0', interaction.options.getInteger("minute") || '0')
     corpo_modulo.stats.timestamp = timestamp

@@ -147,6 +147,10 @@ executa_modulo = async () => {
         if (lista_modulos[0].type === 4)
             await require('../formatters/chunks/model_curiosidades')(global_client, user)
 
+        // Um item do minecraft
+        if (lista_modulos[0].type === 5)
+            await require('../formatters/chunks/model_mine')(global_client, user)
+
         lista_modulos.shift()
 
         setTimeout(() => {
