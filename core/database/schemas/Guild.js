@@ -31,6 +31,7 @@ const channelTypes = {
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
+    inviter: { type: String, default: null },
     games: {
         channel: { type: String, default: null },
         role: { type: String, default: null }
@@ -166,6 +167,42 @@ async function getNetworkedGuilds(link) {
     })
 }
 
+async function getRankHosters(client) {
+
+    // Lista todos os servidores com hosters salvos
+    const guilds = await model.find({
+        "inviter": { $ne: null }
+    })
+
+    const users_map = {}
+    const rank = []
+
+    guilds.forEach(guild => {
+        // Contabilizando os convites de cada hoster
+        if (users_map[guild.inviter])
+            users_map[guild.inviter]++
+        else
+            users_map[guild.inviter] = 1
+    })
+
+    Object.keys(users_map).forEach(key => {
+        rank.push({
+            "uid": key,
+            "invites": users_map[key]
+        })
+    })
+
+    // Ordenando a lista de hosters que convidaram o bot
+    rank.sort(function (a, b) {
+        if (a.invites < b.invites) return 1
+        if (a.invites > b.invites) return -1
+        return 0
+    })
+
+    // Retornando apenas os dois primeiros
+    return [await client.getUser(rank[0].uid), await client.getUser(rank[1].uid)]
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -177,6 +214,7 @@ module.exports = {
     disableReportChannel,
     migrateGameChannels,
     getNetworkedGuilds,
+    getRankHosters,
     loggerMap,
     channelTypes
 }

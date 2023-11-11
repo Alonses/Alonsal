@@ -151,8 +151,15 @@ function internal_functions(client) {
 
     // Retorna o membro do servidor
     client.getMemberGuild = (interaction, id_alvo) => {
-        let membro = interaction.guild.members.fetch(id_alvo)
-            .catch(() => { return null })
+
+        let membro = null
+
+        if (interaction.guild) // Coletando a partir de uma interação ou evento
+            membro = interaction.guild.members.fetch(id_alvo)
+                .catch(() => { return null })
+        else if (interaction.members)// Coletando direto da guild
+            membro = interaction.members.fetch(id_alvo)
+                .catch(() => { return null })
 
         return membro
     }
