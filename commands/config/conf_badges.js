@@ -23,7 +23,8 @@ module.exports = {
                     { name: 'Puler', value: '6' },
                     { name: 'Rosquer', value: '7' },
                     { name: 'Pionner', value: '8' },
-                    { name: "Reporter", value: '10' }
+                    { name: 'Reporter', value: '10' },
+                    { name: 'Sugestor', value: '13' }
                 )
                 .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),

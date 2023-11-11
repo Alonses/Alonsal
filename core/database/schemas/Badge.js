@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 
 const { getRankMoney } = require('./User')
 const { getRankGlobal } = require('./Rank_g')
+const { getRankHosters } = require('./Guild')
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
@@ -35,7 +36,13 @@ async function removeBadge(uid, badge_id) {
 
 async function verifyDynamicBadge(client, alvo, badge_id) {
 
-    let top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
+    let top_users
+
+    if (alvo !== "hoster")
+        top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
+    else // Usuários que mais convidaram o Alonsal
+        top_users = await getRankHosters(client)
+
     if (top_users.length < 2) return
 
     const users = {}

@@ -1,6 +1,6 @@
 const { badge_ids } = require('../../files/json/text/emojis.json')
 
-const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer", "Pionner", "Voter", "Reporter", "Bourgeois", "Chatterbox"]
+const badge_names = ["Tester", "Debugger", "Programmer", "Creator", "Waxed", "Donater", "Puler", "Rosquer", "Pionner", "Voter", "Reporter", "Bourgeois", "Chatterbox", "Sugestor", "Hoster"]
 
 const badges = {
     TESTER: 0,
@@ -15,7 +15,9 @@ const badges = {
     VOTER: 9,
     REPORTER: 10,
     BOURGEOIS: 11,
-    CHATTERBOX: 12
+    CHATTERBOX: 12,
+    SUGESTOR: 13,
+    HOSTER: 14
 }
 
 const badgeTypes = {
