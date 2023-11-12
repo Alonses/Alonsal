@@ -10,6 +10,7 @@ const operations = {
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
+    let pagina_guia = 0
 
     // Tratamento dos cliques
     // 0 -> Modo fantasma

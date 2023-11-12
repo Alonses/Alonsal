@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js')
+const { EmbedBuilder, ChannelType, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
@@ -103,8 +103,20 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         if (interaction.guild.verificationLevel > 1)
             verificacao += `\n\n${client.tls.phrase(user, `util.server.desc_${niveis_verificacao[interaction.guild.verificationLevel]}`)}`
 
+        const cargos = {
+            moderativos: [],
+            normais: []
+        }
+
         // Listando todos os cargos do servidor
-        const cargos_servidor = interaction.guild.roles.cache.map(r => `${r}`).join(" ").replace("@everyone", "").slice(0, 1024)
+        interaction.guild.roles.cache.map(r => {
+            if (r.permissions.has(PermissionsBitField.Flags.ModerateMembers || PermissionsBitField.Flags.ManageChannels || PermissionsBitField.Flags.ManageMessages)) {
+                if (cargos.moderativos.join(" ").length < 1024 && `<@&${r}>`.length + cargos.moderativos.join(" ").length < 1024)
+                    cargos.moderativos.push(r)
+            } else // Cargos sem permissões moderativas
+                if (cargos.normais.join(" ").length < 1024 && `<@&${r}>`.length + cargos.normais.join(" ").length < 1024 && r.id !== interaction.guild.id)
+                    cargos.normais.push(r)
+        })
 
         infos_sv.addFields(
             {
@@ -113,13 +125,18 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 inline: true
             },
             {
-                name: "⠀",
+                name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`,
                 value: "⠀",
                 inline: true
             },
             {
-                name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")} ( ${interaction.guild.roles.cache.size - 1} )**`,
-                value: `${cargos_servidor}`,
+                name: `:passport_control: **Cargos moderativos:**`,
+                value: `${cargos.moderativos.join(" ")}`,
+                inline: false
+            },
+            {
+                name: `${client.defaultEmoji("person")} **Outros cargos:**`,
+                value: `${cargos.normais.join(" ")}`,
                 inline: false
             }
         )
