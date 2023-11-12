@@ -21,16 +21,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             }
         )
 
-    // Servidor com boost ativo
-    if (interaction.guild.premiumSubscriptionCount > 0)
-        infos_sv.addFields(
-            {
-                name: `${client.emoji("boost")} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**`,
-                value: `:passport_control: **${client.tls.phrase(user, "util.server.cargos")}: ** \`${interaction.guild.roles.cache.size - 1}\``,
-                inline: true
-            }
-        )
-
     // Dados gerais do servidor
     if (operador === 0) {
 
@@ -165,8 +155,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             },
             {
                 name: `${client.emoji("gigachad")} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
-                value: "⠀",
-                inline: true
+                value: interaction.guild.premiumSubscriptionCount > 0 ? `${client.emoji("boost")} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**` : "⠀",
+                inline: true // Servidor sendo impulsionado /\
             }
         ).addFields(
             {
