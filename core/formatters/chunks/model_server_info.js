@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType } = require('discord.js')
+const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
@@ -103,8 +103,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         if (interaction.guild.verificationLevel > 1)
             verificacao += `\n\n${client.tls.phrase(user, `util.server.desc_${niveis_verificacao[interaction.guild.verificationLevel]}`)}`
 
-        // Listando todas os cargos do servidor
-        const cargos_servidor = interaction.guild.roles.cache.map(r => `${r}`).join(" ").replace("@everyone", "").slice(0, 2000)
+        // Listando todos os cargos do servidor
+        const cargos_servidor = interaction.guild.roles.cache.map(r => `${r}`).join(" ").replace("@everyone", "").slice(0, 1024)
 
         infos_sv.addFields(
             {
@@ -126,6 +126,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
         if (verificacao !== "") // Niveis de verificação ativos no servidor
             infos_sv.setDescription(`\`\`\`fix\n💂‍♂️ ${client.tls.phrase(user, "util.server.descricao_verificacao")}\n\n${verificacao}\`\`\``)
+
     }
 
     // Estatísticas do servidor
