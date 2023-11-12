@@ -79,7 +79,7 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 
-    interaction.update({
+    client.reply(interaction, {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],

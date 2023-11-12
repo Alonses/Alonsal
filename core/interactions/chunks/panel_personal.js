@@ -2,9 +2,14 @@ const { EmbedBuilder } = require('discord.js')
 
 const { emoji_button, type_button } = require('../../functions/emoji_button')
 
-module.exports = async ({ client, user, interaction, operador }) => {
+module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
-    const pagina = operador || 0
+    const pagina = pagina_guia || 0
+
+    if (operador) { // Função usada com um atalho
+        const dados = `${interaction.user.id}.${operador}`
+        return require('../functions/buttons/user_panel_button')({ client, user, interaction, dados })
+    }
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_pessoal"))
@@ -62,18 +67,18 @@ module.exports = async ({ client, user, interaction, operador }) => {
     // Modo fantasma, notificações em DM e Ranking
     if (pagina === 0)
         botoes = botoes.concat([
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ghostmode"), type: type_button(user?.conf.ghost_mode), emoji: emoji_button(user?.conf.ghost_mode), data: '1' },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.notificacoes"), type: type_button(user?.conf.notify), emoji: emoji_button(user?.conf.notify), data: '2' },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ranking"), type: type_button(user?.conf.ranking), emoji: emoji_button(user?.conf.ranking), data: '3' }
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ghostmode"), type: type_button(user?.conf.ghost_mode), emoji: emoji_button(user?.conf.ghost_mode), data: '0' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.notificacoes"), type: type_button(user?.conf.notify), emoji: emoji_button(user?.conf.notify), data: '1' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ranking"), type: type_button(user?.conf.ranking), emoji: emoji_button(user?.conf.ranking), data: '2' }
         ])
 
     // Segunda página de botões de configuração do Alonsal
     // Badges visiveis públicamente, clima resumido e tarefas globais
     if (pagina === 1)
         botoes = botoes.concat([
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.badges_publicas"), type: type_button(user?.conf.public_badges), emoji: emoji_button(user?.conf.public_badges), data: '4' },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.clima_resumido"), type: type_button(!user?.misc.weather), emoji: emoji_button(!user?.misc.weather), data: '5' },
-            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.tarefas_globais"), type: type_button(user?.conf.global_tasks), emoji: emoji_button(user?.conf.global_tasks), data: '6' }
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.badges_publicas"), type: type_button(user?.conf.public_badges), emoji: emoji_button(user?.conf.public_badges), data: '3' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.clima_resumido"), type: type_button(!user?.misc.weather), emoji: emoji_button(!user?.misc.weather), data: '4' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.tarefas_globais"), type: type_button(user?.conf.global_tasks), emoji: emoji_button(user?.conf.global_tasks), data: '5' }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })

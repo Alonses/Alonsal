@@ -6,8 +6,8 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     let modulos = await listAllUserModules(interaction.user.id)
 
     // Verificando se há modulos configurados
-    if (modulos.length < 1)
-        if (!interaction.customId || !autor_original)
+    if (modulos.length < 1 || !autor_original)
+        if (!interaction.customId)
             return interaction.reply({
                 content: client.tls.phrase(user, "misc.modulo.sem_modulo", client.emoji(0)),
                 embeds: [],
@@ -30,8 +30,10 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     }
 
-    if (!autor_original)
+    if (!autor_original) {
+        interaction.customId = null
         obj.ephemeral = true
+    }
 
     client.reply(interaction, obj)
 }
