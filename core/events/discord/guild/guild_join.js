@@ -26,7 +26,7 @@ module.exports = async ({ client, guild }) => {
                 await internal_guild.save()
             }
 
-            verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário possui mais bufunfas
+            verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
         })
     }
 

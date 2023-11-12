@@ -28,8 +28,10 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
     if (row.length > 0) // Botões de navegação
         obj.components.push(client.create_buttons(row, interaction))
 
-    if (!autor_original)
+    if (!autor_original) {
+        interaction.customId = null
         obj.ephemeral = true
+    }
 
     client.reply(interaction, obj)
 }

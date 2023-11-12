@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "guild_logger_button", name: client.tls.phrase(user, "mode.anuncio.idioma"), type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
     ])
 
-    interaction.update({
+    client.reply(interaction, {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],

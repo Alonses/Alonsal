@@ -26,5 +26,5 @@ module.exports = async ({ client, guild }) => {
 
     client.notify(process.env.channel_server, { embeds: [embed] })
 
-    verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário possui mais bufunfas
+    verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
 }

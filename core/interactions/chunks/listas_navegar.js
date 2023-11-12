@@ -41,8 +41,10 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     }
 
-    if (!autor_original)
+    if (!autor_original) {
+        interaction.customId = null
         obj.ephemeral = true
+    }
 
     client.reply(interaction, obj)
 }

@@ -2,10 +2,39 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { emoji_button, type_button } = require('../../functions/emoji_button')
 
-module.exports = async ({ client, user, interaction, operador }) => {
+const operation_codes = {
+    "talkative_alonsal": 0,
+    "broadcast": 1,
+    "free_games": 2,
+    "tickets": 3,
+    "external_reports": 4,
+    "logger": 5,
+    "anti_spam": 6,
+    "public_guild": 7,
+    "network": 8,
+}
 
-    const guild = await client.getGuild(interaction.guild.id), pagina = operador || 0
+// Funções sem guias de configuração
+const direct_functions = [0, 1, 7]
+
+module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
+
+    const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
     const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
+
+    // Códigos de funções
+    // 0 -> Alonsal falador
+    // 1 -> Broadcast
+    // 2 -> Free games
+
+    // 3 -> Tickets de denúncia
+    // 4 -> Reportes externos
+    // 5 -> Log de Eventos
+
+    // 6 -> Anti-spam
+    // 7 -> Visibilidade global
+    // 8 -> Network
+
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)
@@ -107,6 +136,18 @@ module.exports = async ({ client, user, interaction, operador }) => {
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
         c_buttons[8] = true
 
+    if (operador) // Verificando se o usuário possui permissão e ativando a função escolhida
+        if (c_buttons[operation_codes[operador]])
+            return client.tls.reply(interaction, user, "manu.painel.user_sem_permissao", 7)
+        else {
+
+            if (direct_functions.includes(operation_codes[operador])) { // Funções sem guia de configuração
+                const dados = `${interaction.user.id}.${operation_codes[operador]}`
+                return require('../functions/buttons/guild_panel_button')({ client, user, interaction, dados })
+            } else // Acessando diretamente uma guia de função
+                return require(`./panel_guild_${operador}`)({ client, user, interaction })
+        }
+
     // Primeira página de botões de configuração do Alonsal
     // Log de eventos, Anti-spam e Anúncio de games
     if (pagina === 0)
@@ -129,9 +170,9 @@ module.exports = async ({ client, user, interaction, operador }) => {
     // Alonsal Falador; Visibilidade Global e Broadcast
     if (pagina === 2)
         botoes = botoes.concat([
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '1', disabled: c_buttons[0] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '8', disabled: c_buttons[7] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '2', disabled: c_buttons[1] }
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '0', disabled: c_buttons[0] },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '1', disabled: c_buttons[1] }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })

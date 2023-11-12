@@ -49,8 +49,12 @@ module.exports = {
                             "ru": 'Функция для настройки'
                         })
                         .addChoices(
-                            { name: '👻 Ghostmode, 🔔 DM notifications, 🏆 Ranking', value: '0' },
-                            { name: '🕶 Public badges, 🌩 Weather summary, 🌐 Global tasks', value: '1' }
+                            { name: '👻 Ghostmode', value: '0' },
+                            { name: '🔔 DM notifications', value: '1' },
+                            { name: '🏆 Ranking', value: '2' },
+                            { name: '🕶 Public badges', value: '3' },
+                            { name: '🌩 Weather summary', value: '4' },
+                            { name: '🌐 Global tasks', value: '5' }
                         )))
         .addSubcommand(subcommand =>
             subcommand
@@ -84,13 +88,19 @@ module.exports = {
                             "ru": 'Функция для настройки'
                         })
                         .addChoices(
-                            { name: '📜 Event log, 📛 Anti-Spam, 🎮 Free Games ad', value: '0' },
-                            { name: '📡 Networking, 💂 External reports, 💂 In-server reports', value: '1' },
-                            { name: '🗣 Talkative Alonsal, 📡 Broadcast, 🌐 Global visibility', value: '2' }
+                            { name: '📜 Event log', value: 'logger' },
+                            { name: '📛 Anti-Spam', value: 'anti_spam' },
+                            { name: '🎮 Free Games ad', value: 'free_games' },
+                            { name: '📡 Networking', value: 'network' },
+                            { name: '💂 External reports', value: 'external_reports' },
+                            { name: '💂 In-server reports', value: 'tickets' },
+                            { name: '🗣 Talkative Alonsal', value: 'talkative_alonsal' },
+                            { name: '📡 Broadcast', value: 'broadcast' },
+                            { name: '🌐 Global visibility', value: 'public_guild' }
                         ))),
     async execute({ client, user, interaction }) {
 
-        const operador = parseInt(interaction.options.getString("function")) || 0
+        const operador = interaction.options.getString("function")
         require(`../../core/interactions/chunks/panel_${interaction.options.getSubcommand()}`)({ client, user, interaction, operador })
     }
 }

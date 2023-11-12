@@ -1,6 +1,6 @@
 module.exports = async ({ client, user, interaction, dados }) => {
     let operacao = dados.split(".")[1]
-    let operador = "", autor_original = true
+    let operador = "", autor_original = true, pagina_guia = 0
 
     if (interaction.user.id !== dados.split(".")[0])
         autor_original = false
@@ -13,8 +13,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Utilizado para a paginação do painel guild
     if (dados.includes("panel_guild")) {
+        operador = null
         operacao = dados.split(".")[1]
-        operador = parseInt(dados.split(".")[2]) || 0
+        pagina_guia = parseInt(dados.split(".")[2])
     }
 
     // Utilizado para retornar a cor customizada escolhida anteriormente
@@ -34,5 +35,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require(`./${operador}`)({ client, user, interaction, dados, pagina })
     }
 
-    require(`../../chunks/${operacao}`)({ client, user, interaction, operador, autor_original })
+    require(`../../chunks/${operacao}`)({ client, user, interaction, pagina_guia, operador, autor_original })
 }
