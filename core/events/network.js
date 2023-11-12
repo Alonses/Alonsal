@@ -15,7 +15,7 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
 
     // Permissão para ver o registro de auditoria, desabilitando o recurso
     const bot = await client.getMemberPermissions(guild.sid, client.id())
-    if (!bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!bot || bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.conf.network = false
         await guild.save()
