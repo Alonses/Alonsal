@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getUserReports } = require('../../database/schemas/Report')
 const { getUserStrikes } = require("../../database/schemas/Strikes")
+const { getUserWarns } = require('../../database/schemas/Warns')
 
 module.exports = async ({ client, user, interaction, id_cache }) => {
 
@@ -27,8 +28,8 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     // Avatar do usuário
     const avatar_user = user_alvo.user.avatarURL({ dynamic: true, size: 2048 }), historico = []
-    const user_strikes = await getUserStrikes(id_alvo)
-    const strikes = user_strikes.strikes
+    const strikes = await getUserStrikes(id_alvo, interaction.guild.id)
+    const warns = await getUserWarns(id_alvo, interaction.guild.id)
 
     // Quantificando os relatórios sobre o usuário
     reports.forEach(valor => {
@@ -57,7 +58,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
             },
             {
                 name: `**:man_guard: ${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: `**:name_badge: Strikes: ${strikes}**`,
+                value: `**:name_badge: Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total}**`,
                 inline: true
             }
         )
@@ -71,10 +72,16 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         ephemeral: true
     }
 
-    if (strikes > 0) // Botão para resetar os strikes de um usuário
-        obj.components = [client.create_buttons([
-            { id: "user_reset_strikes", name: "Limpar Strikes", type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` }
-        ], interaction)]
+    const botoes = []
+
+    if (strikes.strikes > 0) // Botão para resetar os strikes do usuário no servidor
+        botoes.push({ id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.remover_strikes"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
+
+    if (warns.total > 0) // Botão para resetar os warns do usuário no servidor
+        botoes.push({ id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.remover_warns"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
+
+    if (botoes.length > 0)
+        obj.components = [client.create_buttons(botoes, interaction)]
 
     client.reply(interaction, obj)
 }

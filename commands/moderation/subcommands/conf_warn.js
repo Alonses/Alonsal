@@ -4,30 +4,30 @@ module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
 
-    // Canal alvo para o bot enviar os relatórios de spam
+    // Canal de texto para enviar os relatórios de warns
     if (interaction.options.getChannel("value")) {
 
         // Mencionado um tipo de canal errado
         if (interaction.options.getChannel("value").type !== ChannelType.GuildText)
             return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.defaultEmoji("types"))
 
-        // Atribuindo o canal passado para o antispam
+        // Atribuindo o canal passado para o warn
         canal_alvo = interaction.options.getChannel("value")
-        guild.logger.channel = canal_alvo.id
+        guild.warn.channel = canal_alvo.id
     }
 
     // Sem canal informado no comando e nenhum canal salvo no cache do bot
-    if (!canal_alvo && !guild.logger.channel)
+    if (!canal_alvo && !guild.warn.channel)
         return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
     else {
-        if (!guild.logger.channel) // Sem canal salvo em cache
+        if (!guild.warn.channel) // Sem canal salvo em cache
             return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
         if (typeof canal_alvo !== "object") // Restaurando o canal do cache
-            canal_alvo = await client.channels().get(guild.logger.channel)
+            canal_alvo = await client.channels().get(guild.warn.channel)
 
         if (!canal_alvo) { // Canal salvo em cache foi apagado
-            guild.conf.logger = false
+            guild.conf.warn = false
             await guild.save()
 
             return client.tls.reply(interaction, user, "mode.logger.canal_excluido", true, 1)
@@ -40,18 +40,18 @@ module.exports = async ({ client, user, interaction, guild }) => {
 
     // Inverte o status de funcionamento apenas se executar o comando sem informar um canal
     if (!interaction.options.getChannel("value"))
-        guild.conf.spam = !guild.conf.spam
+        guild.conf.warn = !guild.conf.warn
     else
-        guild.conf.spam = true
+        guild.conf.warn = true
 
-    // Se usado sem mencionar categoria, desliga o sistema antispam
+    // Se usado sem mencionar categoria, desliga o sistema de warns
     if (!canal_alvo)
-        guild.conf.spam = false
+        guild.conf.warn = false
 
     await guild.save()
 
-    if (guild.conf.spam)
-        client.tls.reply(interaction, user, "mode.spam.ativado", true, client.defaultEmoji("guard"), [`<#${guild.logger.channel}>`, client.emoji("epic_embed_fail2")])
+    if (guild.conf.warn)
+        interaction.reply({ content: "🛑 | Os Warns estão habilitados nesse servidor! Agora ao usar o comando </warn> mencionando um usuário, ele será penalizado caso a quantidade de warns seja alcançada.\n\nVocê pode alterar a quantidade de warns e a ação que será tomada pelo </panel guild> a qualquer momento!", ephemeral: true })
     else
-        client.tls.reply(interaction, user, "mode.spam.desativado", true, client.defaultEmoji("guard"))
+        interaction.reply({ content: "🛑 | Os Warns agora estão desligado nesse servidor!\nUse o comando novamente ou ative através do </panel guild> para poder usar as advertências", ephemeral: true })
 }

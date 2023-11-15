@@ -1,4 +1,4 @@
-const { getUserStrikes } = require("../../../database/schemas/Strikes")
+const { getUserWarns } = require("../../../database/schemas/Warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -12,19 +12,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
-        // Removendo os strikes do usuário no servidor
-        const user_strikes = await getUserStrikes(id_alvo, interaction.guild.id)
-        user_strikes.strikes = 0
+        // Removendo os warns do usuário no servidor
+        const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
+        user_warns.total = 0
 
-        await user_strikes.save()
+        await user_warns.save()
     }
 
     if (escolha === 2) {
 
-        // Criando os botões para o menu de remoção de strikes
+        // Criando os botões para o menu de remoção de warns
         const row = client.create_buttons([
-            { id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}` },
-            { id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
+            { id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}` },
+            { id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
         ], interaction)
 
         // Listando os botões para confirmar e cancelar a operação

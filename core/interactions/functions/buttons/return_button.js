@@ -24,13 +24,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require('../../chunks/static_color')({ client, user, interaction, valor })
     }
 
-    if (dados.includes("remove_report") || dados.includes("browse_user")) { // Utilizado para a paginação do painel de reportados do servidor
+    if (dados.includes("remove_report") || dados.includes("remove_warn") || dados.includes("browse_user")) { // Utilizado para a paginação do painel de reportados do servidor
         const pagina = dados.split(".")[2]
         const operador = dados.split(".")[1]
         dados = `${interaction.user.id}.3`
 
-        if (operador == "remove_report") // Outro endpoint
+        if (operador == "remove_report") // Outro endpoint ( menu para escolher usuários reportados )
             return require('./report_remove_user')({ client, user, interaction, dados, pagina })
+
+        if (operador === "remove_warn") // Outro endpoint ( menu para escolher usuários com advertências )
+            return require('./warn_remove_user')({ client, user, interaction, dados, pagina })
 
         return require(`./${operador}`)({ client, user, interaction, dados, pagina })
     }

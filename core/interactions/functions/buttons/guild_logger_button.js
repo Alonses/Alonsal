@@ -5,6 +5,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_logger"
     const guild = await client.getGuild(interaction.guild.id)
 
+    // Sem canal de avisos definido, solicitando um canal
     if (!guild.logger.channel) {
         reback = "panel_guild.0"
         operacao = 3
@@ -29,7 +30,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Ativa ou desativa o log de eventos do servidor
-        if (typeof guild.conf.spam !== "undefined")
+        if (typeof guild.conf.logger !== "undefined")
             guild.conf.logger = !guild.conf.logger
         else
             guild.conf.logger = true

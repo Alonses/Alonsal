@@ -83,6 +83,7 @@ function translate(alvo, target) {
 
     // Pode ser usado para referenciar usuários ou servidores
     const idioma_alvo = alvo.lang || "pt-br"
+    let phrase
 
     // Busca as traduções para o item solicitado
     let { data } = require(`../../files/languages/${idioma_alvo}.json`)
@@ -106,20 +107,27 @@ function translate(alvo, target) {
 
     } catch { // Tradução não existente no idioma selecionado
 
-        data = { data } = require(`../../files/languages/pt-br.json`)
-        data = data.data
+        try {
+            data = { data } = require(`../../files/languages/pt-br.json`)
+            data = data.data
 
-        if (!target.includes("manu.data.selects")) {
-            // Retornando a tradução em PT-BR (idioma padrão)
-            if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes") && !target.includes("mode.idiomas.siglas"))
-                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
-            else
-                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
-        } else
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
+            if (!target.includes("manu.data.selects")) {
+                // Retornando a tradução em PT-BR (idioma padrão)
+                if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes") && !target.includes("mode.idiomas.siglas"))
+                    data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
+                else
+                    data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
+            } else
+                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
+        } catch {
+
+            // Utilizado apenas caso a tradução não exista no idioma padrão
+            phrase = "<unknow_key>"
+        }
     }
 
-    let phrase = data
+    if (data && !phrase) // Tradução encontrada
+        phrase = data
 
     // Verifica se não há mensagens diferentes para o mesmo retorno
     if (Array.isArray(data))

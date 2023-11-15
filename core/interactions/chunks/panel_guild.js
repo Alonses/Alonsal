@@ -12,6 +12,7 @@ const operation_codes = {
     "anti_spam": 6,
     "public_guild": 7,
     "network": 8,
+    "warns": 9
 }
 
 // Funções sem guias de configuração
@@ -86,6 +87,11 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 2)
         embed.addFields(
             {
+                name: `**${emoji_button(guild?.conf.warn)} Advertências**`,
+                value: `\`Criar advertências e punir um membro após "N" advertências.\``,
+                inline: true
+            },
+            {
                 name: `**${emoji_button(guild?.conf.conversation)} ${client.tls.phrase(user, "manu.painel.alonsal_falador")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_falador")}\``,
                 inline: true
@@ -94,20 +100,34 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 name: `**${emoji_button(guild?.conf.public)} ${client.tls.phrase(user, "manu.painel.visibilidade_global")}**`,
                 value: `${client.tls.phrase(user, "manu.painel.desc_global")}`,
                 inline: true
-            },
+            }
+        )
+
+    if (pagina === 3)
+        embed.addFields(
             {
                 name: `**${emoji_button(guild?.conf.broadcast)} ${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
                 value: `${client.tls.phrase(user, "manu.painel.desc_broadcast")}`,
                 inline: true
+            },
+            {
+                name: `**${emoji_button(0)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                inline: true
+            },
+            {
+                name: `**${emoji_button(0)} ${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                inline: true
             }
         )
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
         c_menu[0] = true
-    if (pagina == 2) // Botão para avançar
+    if (pagina == 3) // Botão para avançar
         c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_guild`, disabled: c_menu[0] }]
@@ -133,8 +153,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     }
 
     // Falta de permissões para banir membros
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers || PermissionsBitField.Flags.KickMembers)) {
         c_buttons[8] = true
+        c_buttons[9] = true
+    }
 
     if (operador) // Verificando se o usuário possui permissão e ativando a função escolhida
         if (c_buttons[operation_codes[operador]])
@@ -170,9 +192,16 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // Alonsal Falador; Visibilidade Global e Broadcast
     if (pagina === 2)
         botoes = botoes.concat([
+            { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '0', disabled: c_buttons[0] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '1', disabled: c_buttons[1] }
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] }
+        ])
+
+    if (pagina === 3)
+        botoes = botoes.concat([
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '1', disabled: c_buttons[1] },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '2', disabled: true },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '3', disabled: true }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })
