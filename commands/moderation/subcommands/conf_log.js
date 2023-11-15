@@ -1,14 +1,14 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, guild }) => {
 
     let canal_alvo
 
-    // Categoria alvo para o bot criar os canais
+    // Canal alvo para o bot enviar os logs de eventos
     if (interaction.options.getChannel("value")) {
 
         // Mencionado um tipo de canal errado
-        if (interaction.options.getChannel("value").type !== 0)
+        if (interaction.options.getChannel("value").type !== ChannelType.GuildText)
             return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.defaultEmoji("types"))
 
         // Atribuindo o canal passado para o logger

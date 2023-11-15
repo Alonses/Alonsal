@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, guild }) => {
 
@@ -8,11 +8,12 @@ module.exports = async ({ client, user, interaction, guild }) => {
     if (interaction.options.getChannel("value")) {
 
         // Mencionado um tipo de canal errado
-        if (interaction.options.getChannel("value").type !== 4)
+        if (interaction.options.getChannel("value").type !== ChannelType.GuildCategory)
             return client.tls.reply(interaction, user, "mode.ticket.tipo_canal", true, client.defaultEmoji("types"))
 
-        canal_alvo = interaction.options.getChannel("value").id
-        guild.tickets.category = canal_alvo
+        // Atribuindo a categoria passada para os tickets
+        canal_alvo = interaction.options.getChannel("value")
+        guild.tickets.category = canal_alvo.id
     }
 
     // Sem categoria informada no comando e nenhuma categoria salva no cache do bot

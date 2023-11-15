@@ -20,6 +20,8 @@ const translate = {
     "profile_custom_navegar": "menu.menus.selecionar_profile",
     "choose_language": "Choose a language!",
     "guild_spam_timeout": "menu.menus.escolher_timeout",
+    "guild_warns_timeout": "menu.menus.escolher_timeout",
+    "guild_warns_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
     "select_category": "menu.menus.escolher_categoria",
@@ -28,7 +30,9 @@ const translate = {
     "select_events": "menu.menus.escolher_eventos",
     "select_link": "menu.menus.escolher_guilds",
     "remove_report": "menu.menus.escolher_usuario",
-    "report_browse": "menu.menus.escolher_usuario"
+    "remove_warn": "menu.menus.escolher_usuario",
+    "report_browse": "menu.menus.escolher_usuario",
+    "warn_browse": "menu.menus.escolher_usuario"
 }
 
 function create_menus({ client, interaction, user, data, pagina, multi_select }) {
@@ -149,11 +153,15 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout") {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes") {
                 // Listando as opções de tempo de mute para o anti-spam
                 nome_label = valor
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
+
+                // Usado para a quantidade de repetências dos warns
+                if (alvo === "guild_warns_strikes")
+                    valor_label = `${alvo}|${valor}`
             }
 
             if (alvo.includes("#")) {
@@ -189,7 +197,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 nome_label = `${valor.charAt(0).toUpperCase() + valor.slice(1)}`
             }
 
-            if (alvo === "remove_report" || alvo === "report_browse") {
+            if (alvo === "remove_report" || alvo === "remove_warn" || alvo === "report_browse" || alvo == "warn_browse") {
                 // Listando todos os usuários com reportes no servidor
                 nome_label = valor.nick ? (valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")
                 descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`

@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
+const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 

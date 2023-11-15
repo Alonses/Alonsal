@@ -18,7 +18,6 @@ module.exports = async ({ client, user, interaction }) => {
         await guild.save()
     }
 
-
     const eventos = {
         total: 0,
         ativos: 0

@@ -5,6 +5,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_external_reports"
     const guild = await client.getGuild(interaction.guild.id)
 
+    // Sem canal de avisos definido, solicitando um canal
     if (!guild.reports.channel) {
         reback = "panel_guild.1"
         operacao = 4

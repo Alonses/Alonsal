@@ -13,7 +13,10 @@ const loggerMap = {
     "member_ban_add": "🔨",
     "member_ban_remove": "✅",
     "member_punishment": "🔇",
-    "member_kick": "👟"
+    "member_kick": "👟",
+    "member_kick_2": "👟",
+    "member_mute": "🔇",
+    "member_ban": "🔨"
 }
 
 const channelTypes = {
@@ -38,6 +41,12 @@ const schema = new mongoose.Schema({
     },
     tickets: {
         category: { type: String, default: null }
+    },
+    warn: {
+        channel: { type: String, default: null },
+        cases: { type: Number, default: 3 },
+        action: { type: String, default: 'member_mute' },
+        timeout: { type: Number, default: 2 }
     },
     reports: {
         channel: { type: String, default: null },
@@ -78,7 +87,8 @@ const schema = new mongoose.Schema({
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
         spam: { type: Boolean, default: false },
-        network: { type: Boolean, default: false }
+        network: { type: Boolean, default: false },
+        warn: { type: Boolean, default: false }
     }
 })
 
