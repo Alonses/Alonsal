@@ -27,17 +27,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .setDescription(client.replace(client.tls.phrase(user, "misc.modulo.descricao"), [modulo.stats.price, montante]))
         .addFields(
             {
-                name: `**${client.defaultEmoji("types")} ${client.tls.phrase(user, "misc.modulo.tipo")}**`,
+                name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,
                 value: `\`${client.tls.phrase(user, `misc.modulo.modulo_${modulo.type}`)}\``,
                 inline: true
             },
             {
-                name: `**${client.defaultEmoji("time")} ${client.tls.phrase(user, "misc.modulo.ativacao")}**`,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "misc.modulo.ativacao")}**`,
                 value: `\`${ativacao_modulo}\``,
                 inline: true
             },
             {
-                name: `**${client.defaultEmoji("money")} ${client.tls.phrase(user, "misc.modulo.valor")}**`,
+                name: `${client.defaultEmoji("money")} **${client.tls.phrase(user, "misc.modulo.valor")}**`,
                 value: `\`B$ ${modulo.stats.price}\``,
                 inline: true
             }

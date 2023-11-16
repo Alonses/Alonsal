@@ -20,12 +20,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setDescription("Uma nova solicitação de broadcast foi aberta")
             .setFields(
                 {
-                    name: `**${client.defaultEmoji("person")} Solicitante**`,
+                    name: `${client.defaultEmoji("person")} **Solicitante**`,
                     value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n( <@${interaction.user.id}> )`,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("paper")} Canal**`,
+                    name: `${client.defaultEmoji("paper")} **Canal**`,
                     value: `${client.emoji("icon_id")} \`${interaction.channel.id}\`\n<#${interaction.channel.id}>`,
                     inline: true
                 }

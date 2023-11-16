@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         .setColor(client.embed_color(user.misc.color))
         .addFields(
             {
-                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
+                name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${interaction.guild.id}\``,
                 inline: true
             }

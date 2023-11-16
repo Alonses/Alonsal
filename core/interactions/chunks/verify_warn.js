@@ -13,9 +13,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const member_guild = await client.getMemberGuild(interaction, user_warns)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Verificando advertência :inbox_tray:")
+        .setTitle(`${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`Esse usuário recebeu advertências neste servidor, ao completar a quantidade de advertências permitidas, ele receberá uma punição!\n\`\`\`fix\n📠 | Última descrição fornecida:\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n📠 | ${client.tls.phrase(user, "mode.warn.ultima_descricao")}\n\n${user_warns.relatory}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -31,17 +31,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         )
         .addFields(
             {
-                name: `**${client.defaultEmoji("guard")} Aplicador da última punição**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.aplicador_ultima_advertencia")}**`,
                 value: `${client.emoji("icon_id")} \`${user_warns.assigner}\`\n( <@${user_warns.assigner}> )`,
                 inline: true
             },
             {
-                name: `**${client.emoji(47)} Advertências em registro**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_registro")}**`,
                 value: `\`${user_warns.total} / ${guild.warn.cases}\``,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade do servidor**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             }

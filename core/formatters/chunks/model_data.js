@@ -53,17 +53,17 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(`${client.tls.phrase(user, "manu.data.resumo_dados")}\n\n${dados_conhecidos}`)
         .addFields(
             {
-                name: `**${emoji_button(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
+                name: `${emoji_button(user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
                 value: "⠀",
                 inline: true
             },
             {
-                name: `**${emoji_button(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
+                name: `${emoji_button(user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
                 value: "⠀",
                 inline: true
             },
             {
-                name: `**${emoji_button(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
+                name: `${emoji_button(user?.conf.ranking)} **${client.tls.phrase(user, "manu.data.ranking")}**`,
                 value: "⠀",
                 inline: true
             }

@@ -324,9 +324,7 @@ module.exports = async ({ client, user, interaction }) => {
                             inline: true
                         })
                 else
-                    usuario_steam.addFields(
-                        { name: "⠀", value: "⠀", inline: true }
-                    )
+                    usuario_steam.addFields({ name: "⠀", value: "⠀", inline: true })
 
                 // Status de atividade do usuário
                 usuario_steam.addFields(
@@ -347,9 +345,7 @@ module.exports = async ({ client, user, interaction }) => {
                         }
                     )
                 else
-                    usuario_steam.addFields(
-                        { name: "⠀", value: "⠀", inline: true }
-                    )
+                    usuario_steam.addFields({ name: "⠀", value: "⠀", inline: true })
 
                 // Imagem personalizada de fundo
                 if (background_user.length > 0)
@@ -370,9 +366,7 @@ module.exports = async ({ client, user, interaction }) => {
                         { name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "util.steam.semanas")}**\n\`${tempo_semanas}\``, value: "⠀", inline: true }
                     )
                 else
-                    usuario_steam.addFields(
-                        { name: "⠀", value: "⠀", inline: true }
-                    )
+                    usuario_steam.addFields({ name: "⠀", value: "⠀", inline: true })
 
                 // Card de jogo favorito no perfil
                 if (jogo_favorito !== "")

@@ -81,11 +81,7 @@ dispara_status = (client, status_apisal) => {
                         value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.locale(members)}\``,
                         inline: true
                     },
-                    {
-                        name: "⠀",
-                        value: "⠀",
-                        inline: true
-                    },
+                    { name: "⠀", value: "⠀", inline: true },
                     {
                         name: `:white_small_square: **Versão ${bot.persis.version}**`,
                         value: "⠀",

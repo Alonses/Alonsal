@@ -53,17 +53,17 @@ module.exports = {
                 .setColor(client.embed_color(user.misc.color))
                 .addFields(
                     {
-                        name: `**${client.defaultEmoji("person")} Destinatário**`,
+                        name: `${client.defaultEmoji("person")} **Destinatário**`,
                         value: `<@${id_alvo}>`,
                         inline: true
                     },
                     {
-                        name: "**:label: Badge**",
+                        name: ":label: **Badge**",
                         value: `${badge.emoji} \`${badge.name}\``,
                         inline: true
                     },
                     {
-                        name: `**${client.defaultEmoji("time")} Aplicação**`,
+                        name: `${client.defaultEmoji("time")} **Aplicação**`,
                         value: `<t:${client.timestamp()}:f>`,
                         inline: true
                     }

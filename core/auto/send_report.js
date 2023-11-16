@@ -25,7 +25,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                         .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
                         .addFields(
                             {
-                                name: `**:bust_in_silhouette: ${client.tls.phrase(guild, "mode.report.usuario")}**`,
+                                name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                                 value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
                                 inline: true
                             }
@@ -35,7 +35,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                     if (typeof id_canal === "undefined") {
                         embed.addFields(
                             {
-                                name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(guild, "mode.report.reportador")}**`,
+                                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.report.reportador")}**`,
                                 value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
                                 inline: true
                             },

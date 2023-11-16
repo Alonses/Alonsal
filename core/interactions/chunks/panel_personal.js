@@ -23,17 +23,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 0)
         embed.addFields(
             {
-                name: `**${emoji_button(user?.conf.ghost_mode)} ${client.tls.phrase(user, "manu.data.ghostmode")}**`,
+                name: `${emoji_button(user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_ghostmode")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(user?.conf.notify)} ${client.tls.phrase(user, "manu.data.notificacoes")}**`,
+                name: `${emoji_button(user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_notificacoes")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(user?.conf.ranking)} ${client.tls.phrase(user, "manu.data.ranking")}**`,
+                name: `${emoji_button(user?.conf.ranking)} **${client.tls.phrase(user, "manu.data.ranking")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_ranking")}\``,
                 inline: true
             }
@@ -42,17 +42,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 1)
         embed.addFields(
             {
-                name: `**${emoji_button(user?.conf.public_badges)} ${client.tls.phrase(user, "manu.data.badges_publicas")}**`,
+                name: `${emoji_button(user?.conf.public_badges)} ${client.tls.phrase(user, "manu.data.badges_publicas")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_badges_publicas")}\``,
                 inline: true
             },
             {
-                name: `**${emoji_button(!user?.misc.weather)} ${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
+                name: `${emoji_button(!user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
                 value: client.tls.phrase(user, "manu.painel.desc_clima_resumido"),
                 inline: true
             },
             {
-                name: `**${emoji_button(user?.conf.global_tasks)} ${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
+                name: `${emoji_button(user?.conf.global_tasks)} **${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_tarefas_globais")}\``,
                 inline: true
             }

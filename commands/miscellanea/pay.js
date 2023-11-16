@@ -89,12 +89,12 @@ module.exports = {
             .setColor(client.embed_color(user.misc.color))
             .addFields(
                 {
-                    name: `**${client.defaultEmoji("money")} ${client.tls.phrase(user, "misc.pay.transferindo")}**`,
+                    name: `${client.defaultEmoji("money")} **${client.tls.phrase(user, "misc.pay.transferindo")}**`,
                     value: `\`B$ ${client.locale(bufunfas)}\``,
                     inline: true
                 },
                 {
-                    name: `**${client.defaultEmoji("person")} ${client.tls.phrase(user, "misc.pay.destinatario")}**`,
+                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "misc.pay.destinatario")}**`,
                     value: `<@${alvo.uid}>`,
                     inline: true
                 }

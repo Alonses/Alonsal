@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
     await user_warns.save()
 
     const embed = new EmbedBuilder()
-        .setTitle("> Criando uma advertência :inbox_tray:")
+        .setTitle(`${client.tls.phrase(user, "mode.warn.criando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
         .setDescription(`Ao prosseguir com essa inclusão, o usuário ganhará mais uma advertência neste servidor.\n\`\`\`fix\n📠 | Descrição fornecida:\n\n${descricao_warn}\`\`\`\nNote que há um \`+ 1\` nas advertências em registro abaixo, caso você confirme essa inclusão, o novo valor será a soma (podendo resultar na aplicação da penalidade).`)
         .addFields(
@@ -26,35 +26,27 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
                 inline: true
             },
             {
-                name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "mode.report.reportador")}**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
                 value: `${client.emoji("icon_id")} \`${guild_executor.id}\`\n( <@${guild_executor.id}> )`,
                 inline: true
             },
-            {
-                name: "⠀",
-                value: "⠀",
-                inline: true
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .addFields(
             {
-                name: `**${client.emoji(47)} Advertências em registro**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_registro")}**`,
                 value: `\`( ${user_warns.total} + 1 ) / ${guild.warn.cases}\``,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade do servidor**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             },
-            {
-                name: "⠀",
-                value: "⠀",
-                inline: true
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .setFooter({
-            text: "A penalidade será aplicada apenas caso o membro atinja o limite de repetências do servidor.",
+            text: client.tls.phrase(user, "mode.warn.rodape_penalidade"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 

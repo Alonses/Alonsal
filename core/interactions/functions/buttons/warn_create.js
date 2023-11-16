@@ -13,13 +13,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 0) // Operação cancelada
         return client.reply(interaction, {
-            content: ":octagonal_sign: | A inclusão da advertência foi cancelada",
+            content: client.tls.phrase(user, "mode.warn.advertencia_cancelada"),
             embeds: [],
             components: [],
             ephemeral: true
         })
 
-    const alvo = await client.getUser(id_alvo)
+    const user_alvo = await client.getUser(id_alvo)
 
     // Acrescentando mais uma advertência ao usuário e registrando o último moderador
     const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
@@ -29,28 +29,28 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await user_warns.save()
 
     const guild = await client.getGuild(interaction.guild.id)
-    let texto_rodape = "Se você receber mais advertências a ponto de atingir o limite, a penalidade será aplicada."
+    let texto_rodape = client.tls.phrase(user_alvo, "mode.warn.aviso_penalidade")
 
     if (guild.warn.cases >= user_warns.total)
-        texto_rodape = `Você foi penalizado no servidor ${interaction.guild.name} devido a advertências recebidas.`
+        texto_rodape = client.replace(client.tls.phrase(user_alvo, "mode.warn.aviso_penalidade_aplicada"), interaction.guild.name)
 
     const embed_user = new EmbedBuilder()
-        .setTitle("> Uma advertência! :inbox_tray:")
+        .setTitle(`${client.tls.phrase(user_alvo, "mode.warn.titulo_advertencia")} :inbox_tray:`)
         .setColor(0xED4245)
-        .setDescription(`Você recebeu uma advertência do servidor ${interaction.guild.name}!\n\`\`\`fix\n📠 | Descrição fornecida:\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(client.replace(client.tls.phrase(user_alvo, "mode.warn.advertencia_recebida"), [interaction.guild.name, user_warns.relatory]))
         .addFields(
             {
-                name: `**${client.defaultEmoji("guard")} Aplicador da punição**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user_alvo, "mode.warn.aplicador_punicao")}**`,
                 value: `${client.emoji("icon_id")} \`${id_executor}\`\n( <@${id_executor}> )`,
                 inline: true
             },
             {
-                name: `**${client.emoji(47)} Advertências em registro**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user_alvo, "mode.warn.advertencias_em_registro")}**`,
                 value: `\`${user_warns.total} / ${guild.warn.cases}\``,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade do servidor**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user_alvo, "mode.warn.penalidade_server")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             }
@@ -61,18 +61,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
 
     // Avisando o usuário sobre a advertência
-    await client.sendDM(alvo, { embed: embed_user }, true)
+    await client.sendDM(user_alvo, { embed: embed_user }, true)
 
     // Enviando um embed para o servidor
-    let descricao_warn = `Um usuário recebeu uma nova advertência!`
+    let descricao_warn = client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")
 
     if (guild.warn.cases >= user_warns.total)
-        descricao_warn += `\n\n${client.emoji("banidos")} Ele atingiu o limite de advertências do servidor, a punição foi aplicada!`
+        descricao_warn += `\n\n${client.emoji("banidos")} ${client.tls.phrase(guild, "mode.warn.usuario_punicao_aplicada")}`
 
     const embed_guild = new EmbedBuilder()
-        .setTitle("> Uma advertência! :inbox_tray:")
+        .setTitle(`${client.tls.phrase(guild, "mode.warn.titulo_advertencia")} :inbox_tray:`)
         .setColor(0xED4245)
-        .setDescription(`${descricao_warn}!\n\`\`\`fix\n📠 | Descrição fornecida:\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(`${descricao_warn}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}:\n\n${user_warns.relatory}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -88,17 +88,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         )
         .addFields(
             {
-                name: `**${client.defaultEmoji("guard")} Aplicador da punição**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.aplicador_punicao")}**`,
                 value: `${client.emoji("icon_id")} \`${id_executor}\`\n( <@${id_executor}> )`,
                 inline: true
             },
             {
-                name: `**${client.emoji(47)} Advertências em registro**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(guild, "mode.warn.advertencias_em_registro")}**`,
                 value: `\`${user_warns.total} / ${guild.warn.cases}\``,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade do servidor**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "mode.warn.penalidade_server")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             }
@@ -122,7 +122,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     return client.reply(interaction, {
-        content: ":inbox_tray: | A advertência foi registrada no servidor!",
+        content: `:inbox_tray: | ${client.tls.phrase(user, "mode.warn.advertencia_registrada")}`,
         embeds: [],
         components: [],
         ephemeral: true

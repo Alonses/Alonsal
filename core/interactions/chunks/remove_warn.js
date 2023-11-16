@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Remover advertência")
+        .setTitle(client.tls.phrase(user, "mode.warn.remover_advertencia"))
         .setColor(0xED4245)
         .setDescription(client.replace(client.tls.phrase(user, "mode.report.remover_reporte_desc"), alvo.relatory))
         .addFields(
@@ -23,12 +23,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "mode.report.reportador")}**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
                 value: `${client.emoji("icon_id")} \`${alvo.assigner}\`\n( <@${alvo.assigner}> )`,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade do servidor**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             }

@@ -133,11 +133,7 @@ module.exports = async (client, user, interaction) => {
 
             if (dados_item.durability)
                 embed.addFields(
-                    {
-                        name: "⠀",
-                        value: "⠀",
-                        inline: true
-                    },
+                    { name: "⠀", value: "⠀", inline: true },
                     {
                         name: `${client.emoji("mc_anvil")} **Durabilidade: ${dados_item.durability + 1}**`,
                         value: "⠀",
