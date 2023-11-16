@@ -43,12 +43,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
         infos_user.addFields(
             {
-                name: `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "util.server.cargos")}**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "util.server.cargos")}**`,
                 value: `${cargos_user}`,
                 inline: false
             },
             {
-                name: `**:shield: ${client.tls.phrase(user, "menu.botoes.permissoes")}**`,
+                name: `:shield: **${client.tls.phrase(user, "menu.botoes.permissoes")}**`,
                 value: client.list(membro_sv.permissions.toArray(), 2000),
                 inline: false
             }
@@ -72,7 +72,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             const fixed_badge = busca_badges(client, 1, internal_user)
 
             infos_user.addFields({
-                name: `**:pushpin: ${client.tls.phrase(user, "manu.data.selects.uni.4")}**`,
+                name: `:pushpin: **${client.tls.phrase(user, "manu.data.selects.uni.4")}**`,
                 value: `${fixed_badge.emoji} \`${fixed_badge.name}\``,
                 inline: false
             })
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             infos_user.setDescription(descricao_reportes)
                 .addFields(
                     {
-                        name: `**:man_guard: ${client.tls.phrase(user, "mode.report.reporte")}: ${avisos_reportes}**`,
+                        name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos_reportes}**`,
                         value: "⠀",
                         inline: true
                     }

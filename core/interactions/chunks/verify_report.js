@@ -49,8 +49,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `**:man_guard: ${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: alvo.executer ? `**${client.defaultEmoji("guard")} ${client.tls.phrase(user, "mode.report.reportador")}**\n${client.emoji("icon_id")} \`${alvo.executer}\`\n( <@${alvo.executer}> )` : "⠀",
+                name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
+                value: alvo.executer ? `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**\n${client.emoji("icon_id")} \`${alvo.executer}\`\n( <@${alvo.executer}> )` : "⠀",
                 inline: true
             }
         )

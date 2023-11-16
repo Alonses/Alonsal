@@ -47,18 +47,18 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         .setDescription(descricao)
         .addFields(
             {
-                name: `**:bust_in_silhouette: ${client.tls.phrase(user, "mode.report.usuario")}**`,
+                name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: user_name,
                 inline: true
             },
             {
-                name: `**${client.emoji("icon_id")} ${client.tls.phrase(user, "mode.report.identificador")}**`,
+                name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${user_alvo.id}\``,
                 inline: true
             },
             {
-                name: `**:man_guard: ${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: `**:name_badge: Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total}**`,
+                name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
+                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total}**`,
                 inline: true
             }
         )

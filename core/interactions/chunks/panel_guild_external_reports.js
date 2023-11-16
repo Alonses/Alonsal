@@ -32,11 +32,7 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.emoji("icon_id")} \`${guild.reports.channel}\`\n( <#${guild.reports.channel}> )`,
                 inline: true
             },
-            {
-                name: "⠀",
-                value: "⠀",
-                inline: false
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .addFields(
             {

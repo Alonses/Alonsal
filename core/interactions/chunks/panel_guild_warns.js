@@ -33,11 +33,11 @@ module.exports = async ({ client, user, interaction }) => {
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(47)} **Repetências: \`${guild.warn.cases}\`**`,
+                value: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.repetencias")}: \`${guild.warn.cases}\`**`,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Penalidade aplicada**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_aplicada")}**`,
                 value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
                 inline: true
             },
@@ -58,11 +58,7 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             },
-            {
-                name: "⠀",
-                value: "⠀",
-                inline: true
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .setFooter({
             text: client.tls.phrase(user, "manu.painel.rodape"),
@@ -70,8 +66,8 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     botoes = botoes.concat([
-        { id: "guild_warns_button", name: "Advertências", type: type_button(guild?.conf.warn), emoji: emoji_button(guild?.conf.warn), data: "1" },
-        { id: "guild_warns_button", name: "Penalidade", type: 1, emoji: client.defaultEmoji("warn"), data: "3" }
+        { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.advertencia"), type: type_button(guild?.conf.warn), emoji: emoji_button(guild?.conf.warn), data: "1" },
+        { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.penalidade"), type: 1, emoji: client.defaultEmoji("warn"), data: "3" }
     ])
 
     // Apenas aparece se o tipo de punição for definido como mute
@@ -81,7 +77,7 @@ module.exports = async ({ client, user, interaction }) => {
         ])
 
     botoes = botoes.concat([
-        { id: "guild_warns_button", name: "Repetências", type: 1, emoji: client.emoji(47), data: "4" }
+        { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.repetencias"), type: 1, emoji: client.emoji(47), data: "4" }
     ])
 
     if (botoes.length < 5)

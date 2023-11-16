@@ -38,12 +38,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${task.text}\`\`\``)
         .addFields(
             {
-                name: `**${client.defaultEmoji("paper")} ${client.tls.phrase(user, "util.tarefas.lista")}**`,
+                name: `${client.defaultEmoji("paper")} **${client.tls.phrase(user, "util.tarefas.lista")}**`,
                 value: `\`${nome_lista}\``,
                 inline: true
             },
             {
-                name: `**${client.defaultEmoji("calendar")} ${client.tls.phrase(user, "util.server.criacao")}**`,
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "util.server.criacao")}**`,
                 value: `<t:${task.timestamp}:f>`,
                 inline: true
             }

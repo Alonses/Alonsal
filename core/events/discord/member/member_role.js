@@ -74,7 +74,7 @@ module.exports = async ({ client, guild, dados }) => {
     // Listando todas as permissões do usuário
     embed.addFields(
         {
-            name: `**:shield: ${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
+            name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
             value: client.list(new_member.permissions.toArray(), 2000),
             inline: false
         }
