@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js")
 
 const { getUserWarns } = require("../../database/schemas/Warns")
+const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
