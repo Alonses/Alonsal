@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
         )
         .addFields(
             {
-                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_registro")}**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_em_registro")}**`,
                 value: `\`( ${user_warns.total} + 1 ) / ${guild.warn.cases}\``,
                 inline: true
             },
