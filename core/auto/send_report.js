@@ -25,7 +25,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                     const embed = new EmbedBuilder()
                         .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)
                         .setColor(0xED4245)
-                        .setDescription(`\n\n\`\`\`💢 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${alvo.relatory}\`\`\``)
+                        .setDescription(`\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
                         .addFields(
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
@@ -55,7 +55,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
 
                         // Enviando apenas para o servidor com notificações de entrada ativas
                         embed.setTitle(client.tls.phrase(guild, "mode.report.reporte_registrado"))
-                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`💢 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${alvo.relatory}\`\`\``)
+                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
 
                         canal_alvo.send({ content: "@here", embeds: [embed] })
                     }

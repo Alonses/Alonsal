@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                 .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
 
             if (users_ids.length > 0)
-                embed.setDescription(`\`\`\`📻 | ${client.tls.phrase(user, "mode.report.com_reportes_guild")}\`\`\``)
+                embed.setDescription(`\`\`\`${client.tls.phrase(user, "mode.report.com_reportes_guild", 48)}\`\`\``)
                     .addFields({
                         name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}: ${users_ids.length}**`,
                         value: "⠀",

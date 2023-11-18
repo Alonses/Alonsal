@@ -35,9 +35,9 @@ module.exports = async ({ client, user, interaction, pagina }) => {
         .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
 
     if (warned_users.length > 0)
-        embed.setDescription(`\`\`\`📻 | ${client.tls.phrase(user, "mode.report.com_warns_guild")}\`\`\``)
+        embed.setDescription(`\`\`\`${client.tls.phrase(user, "mode.warn.com_warns_guild", 48)}\`\`\``)
             .addFields({
-                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}: ${warned_users.length}**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.advertidos")}: ${warned_users.length}**`,
                 value: "⠀",
                 inline: true
             })
@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
     else
-        embed.setDescription(`\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_warns_guild")}\`\`\``)
+        embed.setDescription(`\`\`\`✅ | ${client.tls.phrase(user, "mode.warn.sem_warns_guild")}\`\`\``)
 
     const obj = {
         content: client.tls.phrase(user, "mode.report.escolher_usuario"),

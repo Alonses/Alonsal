@@ -1,5 +1,7 @@
 const { ChannelType, PermissionsBitField } = require('discord.js')
 
+const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_anti_spam"
@@ -52,11 +54,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 3) {
 
+        const valores = []
+
+        Object.keys(spamTimeoutMap).forEach(key => {
+            valores.push(spamTimeoutMap[key])
+        })
+
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_spam_timeout",
-            values: ["1 hora", "2 horas", "6 horas", "12 horas", "1 dia", "2 dias", "3 dias", "7 dias"]
+            values: valores
         }
 
         let row = client.create_buttons([{

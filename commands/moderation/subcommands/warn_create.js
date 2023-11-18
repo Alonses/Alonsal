@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-const action_permission = {
+const guildActions = {
     "member_mute": [PermissionsBitField.Flags.ModerateMembers],
     "member_ban": [PermissionsBitField.Flags.BanMembers],
     "member_kick_2": [PermissionsBitField.Flags.KickMembers]
@@ -16,20 +16,20 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Verificando se a hierarquia do membro que ativou o warn é maior que o do alvo
     if (guild_executor.roles.highest.position < guild_member.roles.highest.position)
-        return interaction.reply({ content: ":octagonal_sign: | Você não pode criar uma advertência a um usuário que possui mais permissões que você!", ephemeral: true })
+        return client.tls.reply(interaction, user, "mode.warn.mod_sem_hierarquia", true, client.emoji(0))
 
     // Verificando as permissões do moderador que iniciou a advertência
-    if (!guild_executor.permissions.has(action_permission[guild.warn.action]))
-        return interaction.reply({ content: `:octagonal_sign: | Você não pode criar uma advertência neste servidor!\nA punição das advertências neste servidor estão definidas como \`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\` e você não possui ela...`, ephemeral: true })
+    if (!guild_executor.permissions.has(guildActions[guild.warn.action]))
+        return client.tls.reply(interaction, user, "mode.warn.mod_sem_permissao", true, 7, client.tls.phrase(user, `menu.events.${guild.warn.action}`))
 
     // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(action_permission[guild.warn.action])) {
+    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(guildActions[guild.warn.action])) {
 
-        let frase_retorno = ":octagonal_sign: | Eu não posso criar uma advertência a esse usuário, pois possuo menos permissões que o usuário informado!"
+        let frase_retorno = client.tls.phrase(user, "mode.warn.bot_sem_hierarquia", client.emoji(0))
 
-        // Desativando o recurso no servidor sem a permissão requerida
-        if (!bot_member.permissions.has(action_permission[guild.warn.action]))
-            frase_retorno = `:octagonal_sign: | Eu não posso criar uma advertência a esse usuário, pois não tenho permissões para \`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`.`
+        // Avisando sobre a falta de permissões do bot
+        if (!bot_member.permissions.has(guildActions[guild.warn.action]))
+            frase_retorno = client.replace(client.tls.phrase(user, "mode.warn.bot_sem_permissao", 7), client.tls.phrase(user, `menu.events.${guild.warn.action}`))
 
         return interaction.reply({ content: frase_retorno, ephemeral: true })
     }

@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 
     if (avisos > 0)
-        descricao = `\`\`\`💢 | ${client.tls.phrase(user, "mode.report.com_report")}\n\n${historico.join("\n---------\n").slice(0, 1000)}\`\`\``
+        descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n---------\n").slice(0, 1000)}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.report.historico_usuario"))

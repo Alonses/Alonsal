@@ -15,6 +15,7 @@ const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
+const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
 const { busca_badges, badgeTypes } = require('./core/data/badges')
 
 const network = require('./core/events/network')
@@ -204,6 +205,12 @@ function internal_functions(client) {
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
+    }
+
+    client.guildAction = (guild, chave_traduz) => {
+
+        // Verifica se a ação do servidor é silenciar um membro, caso positivo, retorna o tempo de mute do servidor
+        return guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}: \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[guild.warn.timeout]}`)}\`**` : ""
     }
 
     // Registra os eventos no diário do bot

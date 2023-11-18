@@ -30,6 +30,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     const avatar_user = user_alvo.user.avatarURL({ dynamic: true, size: 2048 }), historico = []
     const strikes = await getUserStrikes(id_alvo, interaction.guild.id)
     const warns = await getUserWarns(id_alvo, interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
 
     // Quantificando os relatórios sobre o usuário
     reports.forEach(valor => {
@@ -39,7 +40,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     })
 
     if (avisos > 0)
-        descricao = `\`\`\`💢 | ${client.tls.phrase(user, "mode.report.com_report")}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
+        descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
 
     const infos_user = new EmbedBuilder()
         .setTitle(`> ${apelido}`)
@@ -58,7 +59,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
             },
             {
                 name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total}**`,
+                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total} / ${guild.warn.cases}**`,
                 inline: true
             }
         )

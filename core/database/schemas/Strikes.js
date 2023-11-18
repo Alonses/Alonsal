@@ -4,14 +4,15 @@ const mongoose = require("mongoose")
 // sid - Server ID
 
 const spamTimeoutMap = {
-    1: [3600, "1 hora"],   // 1 hora
-    2: [7200, "2 horas"],   // 2 horas
-    3: [21700, "6 horas"],  // 6 horas
-    4: [43200, "12 horas"],  // 12 horas
-    5: [86400, "1 dia"],  // 1 dia
-    6: [172800, "2 dias"], // 2 dias
-    7: [259200, "3 dias"], // 3 dias
-    8: [604800, "7 dias"]  // 7 dias
+    1: 3600,   // 1 hora
+    2: 7200,   // 2 horas
+    3: 21700,  // 6 horas
+    4: 43200,  // 12 horas
+    5: 86400,  // 1 dia
+    6: 172800, // 2 dias
+    7: 259200, // 3 dias
+    8: 432000, // 5 dias
+    9: 604800  // 7 dias
 }
 
 const defaultStrikes = {

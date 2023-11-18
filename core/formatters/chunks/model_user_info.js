@@ -103,7 +103,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         })
 
         if (avisos_reportes > 0)
-            descricao_reportes = `\`\`\`💢 | ${client.tls.phrase(user, "mode.report.com_report")}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
+            descricao_reportes = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
 
         if (descricao_reportes)
             infos_user.setDescription(descricao_reportes)
