@@ -16,7 +16,8 @@ const loggerMap = {
     "member_kick": "👟",
     "member_kick_2": "👟",
     "member_mute": "🔇",
-    "member_ban": "🔨"
+    "member_ban": "🔨",
+    "member_voice_status": "📻"
 }
 
 const channelTypes = {
@@ -65,7 +66,8 @@ const schema = new mongoose.Schema({
         channel_delete: { type: Boolean, default: false },
         member_ban_add: { type: Boolean, default: true },
         member_ban_remove: { type: Boolean, default: true },
-        member_kick: { type: Boolean, default: true }
+        member_kick: { type: Boolean, default: true },
+        member_voice_status: { type: Boolean, default: false }
     },
     spam: {
         strikes: { type: Boolean, default: true },

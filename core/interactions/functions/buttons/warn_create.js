@@ -72,7 +72,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed_guild = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(guild, "mode.warn.titulo_advertencia")} :inbox_tray:`)
         .setColor(0xED4245)
-        .setDescription(`${descricao_warn}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}:\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(`${descricao_warn}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warns.relatory}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
