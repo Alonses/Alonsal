@@ -1,7 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
 const { getUserWarns } = require("../../database/schemas/Warns")
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -29,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
+                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
                 inline: true
             }
         )

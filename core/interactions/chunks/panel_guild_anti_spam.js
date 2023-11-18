@@ -38,7 +38,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${emoji_button(guild?.spam.strikes)} **${client.tls.phrase(user, "mode.spam.punicoes_niveis")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}:** \`${spamTimeoutMap[guild.spam.timeout][1]}\``,
+                value: `${emoji_button(guild?.spam.strikes)} **${client.tls.phrase(user, "mode.spam.punicoes_niveis")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}:** \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.spam.timeout]}`)}\``,
                 inline: true
             },
             {

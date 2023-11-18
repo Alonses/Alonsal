@@ -1,7 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { emoji_button, type_button } = require("../../functions/emoji_button")
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -38,7 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_aplicada")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
+                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
                 inline: true
             },
             {

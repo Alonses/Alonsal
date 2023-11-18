@@ -155,7 +155,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
 
             if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes") {
                 // Listando as opções de tempo de mute para o anti-spam
-                nome_label = valor
+                nome_label = client.tls.phrase(user, `menu.times.${valor}`)
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
 

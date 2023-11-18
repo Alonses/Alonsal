@@ -1,7 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { getUserWarns } = require('../../database/schemas/Warns')
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
 module.exports = async ({ client, user, interaction, guild, guild_member, guild_executor, bot_member }) => {
 
@@ -18,7 +17,7 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.criando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`Ao prosseguir com essa inclusão, o usuário ganhará mais uma advertência neste servidor.\n\`\`\`fix\n📠 | Descrição fornecida:\n\n${descricao_warn}\`\`\`\nNote que há um \`+ 1\` nas advertências em registro abaixo, caso você confirme essa inclusão, o novo valor será a soma (podendo resultar na aplicação da penalidade).`)
+        .setDescription(client.replace(client.tls.phrase(user, "mode.warn.descricao_inclusao_warn"), descricao_warn))
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -40,7 +39,7 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
+                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }

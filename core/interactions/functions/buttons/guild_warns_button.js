@@ -1,5 +1,13 @@
 const { ChannelType } = require('discord.js')
 
+const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
+
+const guildActions = {
+    "member_mute": 0,
+    "member_kick_2": 1,
+    "member_ban": 2
+}
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns"
@@ -29,11 +37,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 2) {
 
+        const valores = []
+
+        Object.keys(spamTimeoutMap).forEach(key => {
+            valores.push(spamTimeoutMap[key])
+        })
+
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_warns_timeout",
-            values: ["1 hora", "2 horas", "6 horas", "12 horas", "1 dia", "2 dias", "3 dias", "7 dias"]
+            values: valores
         }
 
         let row = client.create_buttons([{
@@ -47,11 +61,19 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 3) {
 
+        const operacoes = []
+
+        // Listando todas as operações com exceção da ativa no momento
+        Object.keys(guildActions).forEach(acao => {
+            if (guild.warn.action !== acao)
+                operacoes.push({ type: acao, value: guildActions[guild.warn.action] })
+        })
+
         // Definindo o evento que será realizado pelo warn
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_warns#events",
-            values: [{ type: "member_mute", value: 0 }, { type: "member_kick_2", value: 1 }, { type: "member_ban", value: 2 }]
+            values: operacoes
         }
 
         let row = client.create_buttons([{

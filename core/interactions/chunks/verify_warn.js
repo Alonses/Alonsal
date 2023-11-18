@@ -1,7 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
 const { getUserWarns } = require("../../database/schemas/Warns")
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -15,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n📠 | ${client.tls.phrase(user, "mode.warn.ultima_descricao")}\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_warns.relatory}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -42,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}: \`${spamTimeoutMap[guild.warn.timeout][1]}\`**` : ""}`,
+                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
                 inline: true
             }
         )
@@ -54,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Criando os botões para as funções de advertência
     let botoes = [
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `warn_browse_user|${pagina}` },
-        { id: "warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_warns"), type: 1, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}` }
+        { id: "warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_warns"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` }
     ]
 
     client.reply(interaction, {

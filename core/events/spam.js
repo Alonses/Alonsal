@@ -98,7 +98,7 @@ nerfa_spam = async ({ client, user, guild, message }) => {
     }
 
     if (guild?.spam.timeout) // Tempo de mute do servidor
-        tempo_timeout = spamTimeoutMap[guild?.spam.timeout][0]
+        tempo_timeout = spamTimeoutMap[guild?.spam.timeout]
 
     // Servidor com progressão de strikes ativo
     if (guild?.spam.strikes) {
