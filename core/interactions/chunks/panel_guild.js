@@ -88,7 +88,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         embed.addFields(
             {
                 name: `${emoji_button(guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `\`${client.tls.phrase(user, "mode.warn.des_advertencias")}\``,
+                value: `\`${client.tls.phrase(user, "mode.warn.desc_advertencias")}\``,
                 inline: true
             },
             {
