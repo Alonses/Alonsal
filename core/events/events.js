@@ -34,6 +34,10 @@ module.exports = async function ({ client }) {
         require('./discord/guild/channel_deleted.js')({ client, channel })
     })
 
+    client.discord.on(Events.VoiceStateUpdate, (oldState, newState) => {
+        require('./discord/guild/voice_channel.js')({ client, oldState, newState })
+    })
+
     // Eventos de membros do servidor
     client.discord.on(Events.GuildMemberAdd, guild => {
         require('./discord/member/member_join.js')(client, guild)

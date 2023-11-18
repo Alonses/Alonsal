@@ -9,6 +9,9 @@ module.exports = async ({ client, alvo, id_canal }) => {
     if (canais_reporte.length < 1)
         return client.notify(process.env.channel_feeds, { content: ":man_guard: | Reporte de usuários cancelado, não há canais clientes registrados para receberem a atualização." })
 
+    // Coletando os dados em cache do servidor do reporte
+    const cached_guild = await client.guilds(alvo.sid)
+
     canais_reporte.forEach(guild => {
         const canal_alvo = client.discord.channels.cache.get(guild.reports.channel)
 
@@ -22,7 +25,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                     const embed = new EmbedBuilder()
                         .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)
                         .setColor(0xED4245)
-                        .setDescription(`\n\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
+                        .setDescription(`\n\n\`\`\`💢 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${alvo.relatory}\`\`\``)
                         .addFields(
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
@@ -41,7 +44,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                             },
                             {
                                 name: ":globe_with_meridians: **Server**",
-                                value: `${client.emoji("icon_id")} \`${alvo.sid}\`\n<t:${alvo.timestamp}:R>`,
+                                value: `${client.emoji("icon_id")} \`${alvo.sid}\`\n( \`${cached_guild.name}\` )\n<t:${alvo.timestamp}:R>`,
                                 inline: true
                             }
                         )
@@ -52,7 +55,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
 
                         // Enviando apenas para o servidor com notificações de entrada ativas
                         embed.setTitle(client.tls.phrase(guild, "mode.report.reporte_registrado"))
-                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`💢 | ${alvo.relatory}\`\`\``)
+                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`💢 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${alvo.relatory}\`\`\``)
 
                         canal_alvo.send({ content: "@here", embeds: [embed] })
                     }
