@@ -7,7 +7,7 @@ const formata_texto = require('../formata_texto')
 
 module.exports = async (client, user, interaction) => {
 
-    let url_pesquisa = `?idioma=${user.lang}`, nota_rodape = ' '
+    let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
 
     // Entrada customizada, ativa caso o usuário tenha pesquisado por algo
     if (interaction && interaction.options.getString("item"))
@@ -83,7 +83,7 @@ module.exports = async (client, user, interaction) => {
                 fields = { name: descricao_tipo, value: `\`${valores_item}\``, inline: true }
             }
 
-            if ((parseFloat((dados_item.stats.version)) - 1) * 100 > 19)
+            if ((parseFloat((dados_item.stats.version)) - 1) * 100 > 20)
                 nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")
 
             if (nota_rodape.includes("item_repl"))
@@ -127,7 +127,9 @@ module.exports = async (client, user, interaction) => {
                         inline: true
                     }, fields
                 )
-                .setFooter({
+
+            if (nota_rodape)
+                embed.setFooter({
                     text: nota_rodape
                 })
 
