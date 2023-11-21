@@ -83,12 +83,6 @@ module.exports = async (client, user, interaction) => {
                 fields = { name: descricao_tipo, value: `\`${valores_item}\``, inline: true }
             }
 
-            if ((parseFloat((dados_item.stats.version)) - 1) * 100 > 20)
-                nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")
-
-            if (nota_rodape.includes("item_repl"))
-                nota_rodape = client.replace(nota_rodape, pesquisa)
-
             const embed = new EmbedBuilder()
                 .setTitle(dados_item.name)
                 .setColor(client.embed_color(user.misc.color))
@@ -128,10 +122,16 @@ module.exports = async (client, user, interaction) => {
                     }, fields
                 )
 
-            if (nota_rodape)
+            if ((parseFloat((dados_item.stats.version)) - 1) * 100 > 20) {
+                nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")
+
+                if (nota_rodape.includes("item_repl"))
+                    nota_rodape = client.replace(nota_rodape, pesquisa)
+
                 embed.setFooter({
                     text: nota_rodape
                 })
+            }
 
             if (dados_item.durability)
                 embed.addFields(
