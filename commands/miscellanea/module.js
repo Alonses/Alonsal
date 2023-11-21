@@ -49,7 +49,8 @@ module.exports = {
                             { name: '🏯 Historical events', value: '2' },
                             { name: '🃏 Jokes', value: '3' },
                             { name: '〽️ Curiosities', value: '4' },
-                            { name: '💎 Minecraft Item', value: '5' }
+                            { name: '💎 Minecraft Item', value: '5' },
+                            { name: '🎮 Free Games', value: '6' }
                         )
                         .setRequired(true))
                 .addIntegerOption(option =>
@@ -117,7 +118,14 @@ module.exports = {
                         .addChoices(
                             { name: '🏭 Working days', value: '0' },
                             { name: '🛹 Weekends', value: '1' },
-                            { name: '📆 Daily', value: '2' }
+                            { name: '📆 Daily', value: '2' },
+                            { name: '🛵 Sunday', value: '4' },
+                            { name: '💀 Monday', value: '5' },
+                            { name: '🤡 Tuesday', value: '6' },
+                            { name: '🐸 Wednesday', value: '7' },
+                            { name: '🚀 Thursday', value: '8' },
+                            { name: '🍺 Friday', value: '9' },
+                            { name: '🕺 Saturday', value: '10' },
                         )
                         .setRequired(true)))
         .addSubcommand(subcommand =>

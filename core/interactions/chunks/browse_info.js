@@ -1,6 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 
+const { getGames, verifyInvalidGames } = require('../../database/schemas/Game')
+
 const { activities } = require('../../../files/json/text/activities.json')
+const { getActiveModules } = require('../../database/schemas/Module')
 
 module.exports = async ({ client, user, interaction, caso }) => {
 
@@ -34,6 +37,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
     if (pagina === 0) // Página inicial
         botoes = botoes.concat([
+            { id: "browse_info", name: client.tls.phrase(user, "menu.botoes.estatisticas"), type: 1, emoji: client.defaultEmoji("metrics"), data: 3 },
             { id: "browse_info", name: client.tls.phrase(user, "inic.inicio.suporte"), type: 1, emoji: client.emoji(25), data: 1 },
             { id: "browse_info", name: client.tls.phrase(user, "manu.data.links_externos"), type: 1, emoji: client.emoji(32), data: 2 },
         ])
@@ -51,6 +55,77 @@ module.exports = async ({ client, user, interaction, caso }) => {
             { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },
             { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
         ])
+    else if (pagina === 3) {
+
+        // Verificando pelos games que já expiraram
+        await verifyInvalidGames()
+
+        const games_free = await getGames()
+
+        // Estatísticas do Alonsal
+        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alonsal!\`\`\``)
+            .addFields(
+                {
+                    name: `${client.defaultEmoji("playing")} **Miscelânea**`,
+                    value: `:mega: **Status: **\`${activities.length}\`\n:video_game: **Jogos Free: **\`${games_free.length || 0}\``,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `:trophy: **Ranking: **\`${bot.persis.ranking} EXP\`\n${client.emoji("carregando")} **Módulos ativos: **\`${(await getActiveModules()).length}\``,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `:white_small_square: **Versão ${bot.persis.version}**`,
+                    inline: true
+                }
+            )
+            .addFields(
+                {
+                    name: `${client.defaultEmoji("time")} **De hoje**`,
+                    value: `${client.emoji("icon_slash_commands")} **Comandos usados: **\`${client.locale(bot.cmd.ativacoes)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.bfu.gerado)}\``,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `:mouse_three_button: **Botões clicados: **\`${client.locale(bot.cmd.botoes)}\`\n${client.emoji("mc_nether_star")} **XP Gerado: **\`${client.locale(bot.exp.exp_concedido)}\``,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `:card_box: **Menus abertos: **\`${client.locale(bot.cmd.menus)}\``,
+                    inline: true
+                }
+            )
+            .addFields(
+                {
+                    name: `${client.defaultEmoji("calendar")} **Do histórico**`,
+                    value: `${client.emoji("icon_slash_commands")} **Comandos usados: **\`${client.locale(bot.persis.commands)}\`\n:globe_with_meridians: **Servidores: **\`${client.locale(client.guilds().size)}\`\n:name_badge: **Spams freados: **\`${client.locale(bot.persis.spam)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.persis.bufunfas)}\``,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `${client.emoji("icon_slash_commands")} **Último comando**\n<t:${bot.persis.last_interaction}:f>\n<t:${bot.persis.last_interaction}:R>`,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `:satellite: **Ativo desde**\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
+                    inline: true
+                }
+            )
+
+        botoes = botoes.concat([
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { id: "browse_info", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: 3 },
+        ])
+
+        if (games_free.length > 0) // Jogos gratuitos disponíveis para coleta
+            botoes = botoes.concat([
+                { id: "free_games", name: "Ver jogos Free", type: 1, emoji: client.emoji(29), data: 0 }
+            ])
+    }
 
     // Botão ouvindo agora
     if (ouvindo_agora !== "")

@@ -48,7 +48,7 @@ module.exports = async ({ client }) => {
             },
             {
                 name: ":globe_with_meridians: **Servidores**",
-                value: `:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\`\n:diamond_shape_with_a_dot_inside: **Ativo em:** \`${(client.locale(client.guilds().size))}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.locale(canais_texto)}\``,
+                value: `:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\`\n:diamond_shape_with_a_dot_inside: **Ativo em:** \`${client.locale(client.guilds().size)}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.locale(canais_texto)}\``,
                 inline: true
             },
             {

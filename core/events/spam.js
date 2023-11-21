@@ -121,6 +121,12 @@ nerfa_spam = async ({ client, user, guild, message }) => {
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
         remove_spam(client, user.uid, guild.sid, user_messages[0])
     }, 4000)
+
+    // Registrando o spam neutralizado no histórico
+    const bot = await client.getBot(client.x.id)
+    bot.persis.spam++
+
+    await bot.save()
 }
 
 remove_spam = (client, id_user, id_guild, user_message) => {

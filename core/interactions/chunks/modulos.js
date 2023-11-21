@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
 
     const data = {
         title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-        alvo: "modulo_visualizar",
+        alvo: "modules_browse",
         values: modulos
     }
 

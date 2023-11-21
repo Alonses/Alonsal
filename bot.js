@@ -106,6 +106,12 @@ client.discord.on("interactionCreate", async interaction => {
 		// Executando o comando
 		await action({ client, user, interaction })
 		await require("./core/events/log")({ client, interaction, command })
+
+		const bot = await client.getBot(client.x.id)
+		bot.persis.last_interaction = client.timestamp()
+
+		await bot.save()
+
 	} catch (err) {
 		await client.error(err, "Slash Command")
 		client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, client.emoji(0))

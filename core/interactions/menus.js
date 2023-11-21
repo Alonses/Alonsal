@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (criador !== interaction.user.id)
         autor_original = false
 
-    if (funcao === "modulo_visualizar" && !autor_original) // Funções de módulos
+    if (funcao === "modules_browse" && !autor_original) // Funções de módulos
         return require('./chunks/modulos')({ client, user, interaction, autor_original })
 
     if (funcao === "tarefas") // Reutilizando a função de exibir tarefas

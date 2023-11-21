@@ -6,12 +6,13 @@ const { faustop, rasputia, galerito } = require('../../files/json/text/emojis.js
 const { colorsMap } = require('../database/schemas/User')
 const { languagesMap } = require('../formatters/translate')
 const { loggerMap } = require('../database/schemas/Guild')
+const { moduleDays } = require('../database/schemas/Module')
 
 const translate = {
     "faustop": "Escolha uma frase do faustão!",
     "norbit": "Escolha uma frase do filme do Norbit!",
     "galerito": "Escolha uma frase do galerito e cia!",
-    "modulo_visualizar": "misc.modulo.selecionar_modulo",
+    "modules_browse": "misc.modulo.selecionar_modulo",
     "listas": "util.tarefas.escolher_lista_vincular",
     "listas_navegar": "util.tarefas.escolher_lista_navegar",
     "dados_navegar": "manu.data.tipo_dado",
@@ -130,12 +131,19 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 // valor.timestamp -> timestamp da tarefa
             }
 
-            if (alvo === "modulo_visualizar") {
+            if (alvo === "modules_browse") {
                 // Listando listas de tarefas -> Usado para linkar tarefas em listas criadas
                 nome_label = `${client.tls.phrase(user, `misc.modulo.modulo_${valor.type}`)}`
                 emoji_label = valor.stats.active ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                 descricao_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor.stats.days}`)} ${valor.stats.hour}`
                 valor_label = `${alvo}|${valor.uid}.${valor.stats.timestamp}.${valor.type}`
+            }
+
+            if (alvo === "modules_select_day") {
+                // Listando as opções de dia para escolha
+                nome_label = `${client.tls.phrase(user, `misc.modulo.ativacao_${valor}`)}`
+                emoji_label = moduleDays[valor]
+                valor_label = `${alvo}|${interaction.user.id}.${data.timestamp}.${valor}`
             }
 
             if (alvo === "profile_custom_navegar") {
