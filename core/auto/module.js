@@ -77,11 +77,18 @@ requisita_modulo = async () => {
                 })
 
             // Verificando se o horário e o dia estão corretos
-            else if (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia))
+            else if (data[i].stats.days < 4 && (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia)))
                 lista_modulos.push({
                     uid: data[i].uid,
                     type: data[i].type
                 })
+
+            else if (data[i].stats.days > 2 && data[i].stats.hour === horario)
+                if ((data[i].stats.days - 4) === dia) // Um dia específico
+                    lista_modulos.push({
+                        uid: data[i].uid,
+                        type: data[i].type
+                    })
         }
 
         // let estagio = 1
@@ -151,6 +158,10 @@ executa_modulo = async () => {
         if (lista_modulos[0].type === 5)
             await require('../formatters/chunks/model_mine')(global_client, user)
 
+        // Jogos gratuitos do momento
+        if (lista_modulos[0].type === 6)
+            await require('../formatters/chunks/model_free_games')(global_client, user)
+
         lista_modulos.shift()
 
         setTimeout(() => {
@@ -171,7 +182,7 @@ async function cobra_modulo(client) {
     active_modules.forEach(modulo => {
 
         // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário
-        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(data1.getDay())) {
+        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(data1.getDay()) || (modulo.stats.days - 4) === data1.getDay()) {
             if (users[modulo.uid]) {
                 users[modulo.uid] += modulo.stats.price
                 modules[modulo.uid]++

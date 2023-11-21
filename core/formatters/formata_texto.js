@@ -9,7 +9,7 @@ const cases = {
     "</strong>": "",
     "<em>": "",
     "</em>": "",
-    "<p class=\"truncate-text\">": "",
+    "<span class=\"truncated-text\" >": "",
     "</span><span class=\"disclose-hide\" id=\"about-me-expanded\" >": "",
     "&#10;": "",
     "&#8204;": ""

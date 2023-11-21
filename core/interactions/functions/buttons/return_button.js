@@ -38,5 +38,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require(`./${operador}`)({ client, user, interaction, dados, pagina })
     }
 
+    if (dados.includes("verify_module")) { // Utilizado para retornar a guia de visualização do módulo
+        dados = `${interaction.user.id}.${dados.split(".")[2]}`
+        return require('../../chunks/verify_module')({ client, user, interaction, dados })
+    }
+
     require(`../../chunks/${operacao}`)({ client, user, interaction, pagina_guia, operador, autor_original })
 }

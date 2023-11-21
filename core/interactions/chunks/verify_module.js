@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getModule, getModulesPrice } = require('../../../database/schemas/Module')
+const { getModule, getModulesPrice } = require('../../database/schemas/Module')
 
-const formata_horas = require('../../../formatters/formata_horas')
+const formata_horas = require('../../formatters/formata_horas')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -48,7 +48,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
 
     // Criando os botões para as funções de gestão de tarefas
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" }]
+    let botoes = [
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" },
+        { id: "module_button", name: client.tls.phrase(user, "menu.botoes.alterar_dia"), emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.stats.timestamp}` }
+    ]
 
     if (modulo.stats.active) // Módulo ativado
         botoes = botoes.concat([{ id: "module_button", name: client.tls.phrase(user, "menu.botoes.desativar"), emoji: client.emoji(21), type: 1, data: `2|${modulo.stats.timestamp}` }])

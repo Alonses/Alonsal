@@ -1,4 +1,4 @@
-const { verifyInvalidGames, getGames } = require('../database/schemas/Game')
+const { getGames, verifyInvalidGames } = require('../database/schemas/Game')
 
 const dispara_anuncio = require('../auto/send_announcement')
 

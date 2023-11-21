@@ -5,6 +5,13 @@ const { getModulesPrice } = require('../../../core/database/schemas/Module')
 
 const formata_horas = require('../../../core/formatters/formata_horas')
 
+const modulePrices = {
+    3: 1,
+    4: 1,
+    5: 5,
+    6: 10
+}
+
 module.exports = async ({ client, user, interaction }) => {
 
     if (user.misc.money < 20)
@@ -25,11 +32,8 @@ module.exports = async ({ client, user, interaction }) => {
     const corpo_modulo = await createModule(interaction.user.id, type)
     const timestamp = client.timestamp()
 
-    if (type === 3 || type === 4) // Módulo de charadas
-        corpo_modulo.stats.price = 1
-
-    if (type === 5) // Módulo de itens do minecraft
-        corpo_modulo.stats.price = 5
+    if (modulePrices[type]) // Módulos com preços diferentes
+        corpo_modulo.stats.price = modulePrices[type]
 
     corpo_modulo.stats.days = interaction.options.getString("when")
     corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour") || '0', interaction.options.getInteger("minute") || '0')

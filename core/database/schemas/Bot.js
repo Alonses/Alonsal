@@ -13,7 +13,10 @@ const schema = new mongoose.Schema({
         version: { type: String, default: "1.0" },
         commands: { type: Number, default: 0 },
         ranking: { type: Number, default: 5 },
-        alondioma: { type: String, default: null }
+        alondioma: { type: String, default: null },
+        last_interaction: { type: Number, default: null },
+        spam: { type: Number, default: 0 },
+        bufunfas: { type: Number, default: 0 }
     },
     cmd: {
         ativacoes: { type: Number, default: 0 },

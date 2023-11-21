@@ -1,5 +1,5 @@
 const { atualiza_modulos } = require('../../../auto/module')
-const { getModule, dropModule } = require('../../../database/schemas/Module')
+const { getModule, dropModule, moduleDays } = require('../../../database/schemas/Module')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -11,6 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 0 -> Apagar
     // 1 -> Ligar módulo
     // 2 -> Desligar módulo
+    // 3 -> Alterar dia
 
     let row = client.create_buttons([
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" }
@@ -59,6 +60,31 @@ module.exports = async ({ client, user, interaction, dados }) => {
             embeds: [],
             components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        })
+    }
+
+    if (operacao === 3) {
+
+        const dias = []
+
+        // Filtrando os dias que não estão selecionados
+        Object.keys(moduleDays).forEach(dia => {
+            if (parseInt(dia) !== modulo.stats.days)
+                dias.push(dia)
+        })
+
+        // Alterando o idioma do servidor
+        const data = {
+            title: client.tls.phrase(user, "menu.menus.escolher_dia_modulo"),
+            alvo: "modules_select_day",
+            reback: "verify_module",
+            timestamp: timestamp,
+            values: dias
+        }
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `verify_module.${timestamp}` }], interaction)],
+            ephemeral: true
         })
     }
 
