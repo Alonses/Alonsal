@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1) {
 
-        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers])
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages])
 
         if (!permissoes)
             return client.reply(interaction, {
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 2) {
 
-        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.KickMembers])
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.KickMembers])
 
         if (!permissoes)
             return client.reply(interaction, {
@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 3) {
 
-        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.KickMembers])
+        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages])
 
         if (!permissoes)
             return client.reply(interaction, {

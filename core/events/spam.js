@@ -115,8 +115,12 @@ async function nerfa_spam({ client, user, guild, message }) {
     }
 
     // Requisições vindas de links suspeitos
-    if (!cached_messages[`${message.author.id}.${guild.sid}`])
+    if (!cached_messages[`${message.author.id}.${guild.sid}`]) {
         registryMessage(guild, message)
+
+        operacao = "mute"
+        tempo_timeout = defaultStrikes[1]
+    }
 
     // Redirecionando o evento
     const guild_bot = await client.getMemberPermissions(guild.sid, client.id())
