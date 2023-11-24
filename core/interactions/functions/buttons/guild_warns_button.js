@@ -89,7 +89,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo a quantia de warns que os usuários precisam receber no servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: client.tls.phrase(user, "menu.menus.escolher_numero", 1),
             alvo: "guild_warns_strikes",
             values: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         }
@@ -102,8 +102,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
-
-
 
     } else if (operacao === 5) {
 

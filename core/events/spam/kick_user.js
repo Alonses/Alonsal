@@ -44,7 +44,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.justificativa_kick"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
             if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
-                msg_user += `\n\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
+                msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
         })

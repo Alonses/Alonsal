@@ -90,6 +90,7 @@ module.exports = {
                         .addChoices(
                             { name: '📜 Event log', value: 'logger' },
                             { name: '📛 Anti-Spam', value: 'anti_spam' },
+                            { name: '📛 Anti-Spam Configs', value: 'anti_spam.1' },
                             { name: '🎮 Free Games ad', value: 'free_games' },
                             { name: '📡 Networking', value: 'network' },
                             { name: '💂 External reports', value: 'external_reports' },

@@ -1,12 +1,13 @@
 const { PermissionsBitField } = require("discord.js")
 
 const { getUserStrikes, spamTimeoutMap, defaultStrikes } = require("../database/schemas/Strikes")
+const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_link")
 
 let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
-const LIMIT = 4, DIFF = 10000
+const DIFF = 10000
 
 module.exports = async function ({ client, message, user, guild }) {
 
@@ -53,7 +54,7 @@ module.exports = async function ({ client, message, user, guild }) {
             registryMessage(guild, message)
             ++msgcount
 
-            if (msgcount === LIMIT) {
+            if (msgcount === guild.spam.trigger_amount) {
 
                 // Spam confirmado
                 if (!bloqueia_operacao) {
@@ -87,7 +88,7 @@ module.exports = async function ({ client, message, user, guild }) {
     }
 }
 
-nerfa_spam = async ({ client, user, guild, message }) => {
+async function nerfa_spam({ client, user, guild, message }) {
 
     let user_guild = await client.getMemberGuild(message, user.uid)
     let tempo_timeout = 7200, operacao = "mute"
@@ -113,6 +114,10 @@ nerfa_spam = async ({ client, user, guild, message }) => {
         await user_strikes.save()
     }
 
+    // Requisições vindas de links suspeitos
+    if (!cached_messages[`${message.author.id}.${guild.sid}`])
+        registryMessage(guild, message)
+
     // Redirecionando o evento
     const guild_bot = await client.getMemberPermissions(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
@@ -125,6 +130,18 @@ nerfa_spam = async ({ client, user, guild, message }) => {
     // Registrando o spam neutralizado no histórico
     const bot = await client.getBot(client.x.id)
     bot.persis.spam++
+
+    // Verificando se o servidor possui o registro de links suspeitos ativo
+    if (guild.spam.suspicious_links)
+        if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www")) {
+
+            // Separando o link e registrando caso não tenha ainda
+            const link = `http${user_messages[0].content.split("http")[1].split(" ")[0]}`
+            const registro = await verifySuspiciousLink(link)
+
+            if (!registro)
+                await registerSuspiciousLink(link, guild.sid, client.timestamp())
+        }
 
     await bot.save()
 }
@@ -159,3 +176,5 @@ registryMessage = (guild, message) => {
 
     cached_messages[`${message.author.id}.${guild.sid}`].push(message)
 }
+
+module.exports.nerfa_spam = nerfa_spam
