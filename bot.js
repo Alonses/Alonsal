@@ -4,6 +4,8 @@ const { internal_functions } = require('./functions')
 
 const idioma = require('./core/data/language')
 const database = require('./core/database/database')
+const { nerfa_spam } = require('./core/events/spam')
+const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
 
 let client = new CeiraClient()
 internal_functions(client) // Registra as funções internas do bot
@@ -32,6 +34,19 @@ client.discord.on("messageCreate", async message => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(message.author.id)
+	const guild = await client.getGuild(message.guild.id)
+	const text = message.content
+
+	if (guild.spam.suspicious_links)
+		if (text.includes("http")) {
+
+			// Separando o link e registrando caso não tenha ainda
+			const link = `http${text.split("http")[1].split(" ")[0]}`
+			const registro = await verifySuspiciousLink(link)
+
+			if (registro) // Link suspeito confirmado
+				nerfa_spam({ client, user, guild, message })
+		}
 
 	// Ignorando usuários
 	if (user.conf?.banned || false) return
@@ -51,11 +66,8 @@ client.discord.on("messageCreate", async message => {
 	if (client.cached.broad_status)
 		await require("./core/events/broadcast")({ client, message })
 
-	const text = message.content.toLowerCase()
-	const guild = await client.getGuild(message.guild.id)
-
 	// Respostas automatizadas por IA
-	if ((text.includes(client.id()) || text.includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
+	if ((text.includes(client.id()) || text.toLowerCase().includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
 		return await require("./core/events/conversation")({ client, message, text })
 
 	try { // Atualizando o XP dos usuários

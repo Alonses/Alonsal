@@ -72,7 +72,9 @@ const schema = new mongoose.Schema({
     spam: {
         strikes: { type: Boolean, default: true },
         timeout: { type: Number, default: 2 },
-        data: { type: String, default: null }
+        data: { type: String, default: null },
+        trigger_amount: { type: Number, default: 5 },
+        suspicious_links: { type: Boolean, default: false }
     },
     network: {
         link: { type: String, default: null },

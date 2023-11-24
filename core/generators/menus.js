@@ -23,6 +23,7 @@ const translate = {
     "guild_spam_timeout": "menu.menus.escolher_timeout",
     "guild_warns_timeout": "menu.menus.escolher_timeout",
     "guild_warns_strikes": "menu.menus.escolher_numero",
+    "guild_spam_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
     "select_category": "menu.menus.escolher_categoria",
@@ -161,14 +162,14 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes") {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes") {
                 // Listando as opções de tempo de mute para o anti-spam
                 nome_label = client.tls.phrase(user, `menu.times.${valor}`)
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
 
                 // Usado para a quantidade de repetências dos warns
-                if (alvo === "guild_warns_strikes")
+                if (alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes")
                     valor_label = `${alvo}|${valor}`
             }
 

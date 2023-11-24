@@ -166,8 +166,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             if (direct_functions.includes(operation_codes[operador])) { // Funções sem guia de configuração
                 const dados = `${interaction.user.id}.${operation_codes[operador]}`
                 return require('../functions/buttons/guild_panel_button')({ client, user, interaction, dados })
-            } else // Acessando diretamente uma guia de função
-                return require(`./panel_guild_${operador}`)({ client, user, interaction })
+            } else { // Acessando diretamente uma guia de função
+
+                let pagina_guia = 0
+
+                if (operador.includes(".")) {
+                    pagina_guia = parseInt(operador.split(".")[1])
+                    operador = operador.split(".")[0]
+                }
+
+                return require(`./panel_guild_${operador}`)({ client, user, interaction, pagina_guia })
+            }
         }
 
     // Primeira página de botões de configuração do Alonsal
