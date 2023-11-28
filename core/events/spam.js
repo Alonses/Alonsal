@@ -150,6 +150,9 @@ async function nerfa_spam({ client, user, guild, message }) {
         }
 
     await bot.save()
+
+    // Resetando as mensagens do usuário
+    cached_messages[`${message.author.id}.${guild.sid}`] = []
 }
 
 remove_spam = (client, id_user, id_guild, user_message) => {
