@@ -115,7 +115,7 @@ async function nerfa_spam({ client, user, guild, message }) {
     }
 
     // Requisições vindas de links suspeitos
-    if (!cached_messages[`${message.author.id}.${guild.sid}`]) {
+    if (!cached_messages[`${message.author.id}.${guild.sid}`] || cached_messages[`${message.author.id}.${guild.sid}`].length < 1) {
 
         cached_messages[`${message.author.id}.${guild.sid}`] = []
         cached_messages[`${message.author.id}.${guild.sid}`].push(message)
