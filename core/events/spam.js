@@ -116,10 +116,10 @@ async function nerfa_spam({ client, user, guild, message }) {
 
     // Requisições vindas de links suspeitos
     if (!cached_messages[`${message.author.id}.${guild.sid}`]) {
-        registryMessage(guild, message)
+        cached_messages[`${message.author.id}.${guild.sid}`].push(message)
 
         operacao = "mute"
-        tempo_timeout = defaultStrikes[1]
+        tempo_timeout = defaultStrikes[2]
     }
 
     // Redirecionando o evento
@@ -140,7 +140,7 @@ async function nerfa_spam({ client, user, guild, message }) {
         if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www")) {
 
             // Separando o link e registrando caso não tenha ainda
-            const link = `http${user_messages[0].content.split("http")[1].split(" ")[0]}`
+            const link = `http${user_messages[0].content.split("http")[1].split(" ")[0].split(")")[0]}`
             const registro = await verifySuspiciousLink(link)
 
             if (!registro)
