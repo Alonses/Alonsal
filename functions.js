@@ -21,6 +21,8 @@ const { busca_badges, badgeTypes } = require('./core/data/badges')
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
+const formata_texto = require('./core/formatters/formata_texto')
+const formata_data = require('./core/formatters/formata_data')
 
 function internal_functions(client) {
 
@@ -99,6 +101,14 @@ function internal_functions(client) {
             emoji = translate.get_emoji(dados)
 
         return emoji
+    }
+
+    client.formata_data = (data) => {
+        return formata_data(data)
+    }
+
+    client.formata_texto = (texto) => {
+        return formata_texto(texto)
     }
 
     client.getBot = () => {

@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-const formata_texto = require('../../../core/formatters/formata_texto')
-
 let horas_tocadas, horas_passadas
 
 module.exports = async ({ client, user, interaction }) => {
@@ -50,13 +48,13 @@ module.exports = async ({ client, user, interaction }) => {
 
                 if (!res.includes("ainda não ouviu nenhuma música.")) {
                     if (res.includes("<div class=\"about-me-header\">")) {
-                        descricao = formata_texto(`- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"`)
+                        descricao = client.formata_texto(`- "${(res.split("<div class=\"about-me-header\">")[1].split("</p>")[0].replace("<p>", "").replace(/\n/g, "")).trim()}"`)
                         descricao = `${descricao.split("</span>")[0]}"`
                         descricao = descricao.replace(/\s{2,}/g, ' ').replace("\" ", "\"")
                     }
 
                     if (res.includes("<span class=\"header-scrobble-since\">"))
-                        criacao_conta = res.split("<span class=\"header-scrobble-since\">")[1].split("</span>")[0].replace("• em scrobble desde ", "")
+                        criacao_conta = client.formata_data(res.split("<span class=\"header-scrobble-since\">")[1].split("</span>")[0].replace("• em scrobble desde ", ""))
 
                     avatar = `https://lastfm.freetls.fastly.net/i/u/avatar170s/${res.split("alt=\"Avatar de ")[0].split("https://lastfm.freetls.fastly.net/i/u/avatar170s/")[1].replace("\"", "")}`
                     nome = res.split("Perfil musical de ")[1].split(" | Last.fm</title>")[0]
@@ -64,14 +62,14 @@ module.exports = async ({ client, user, interaction }) => {
                     if (res.includes("data-analytics-action=\"ObsessionTrackName\"")) {
                         obsessao = res.split("data-analytics-action=\"ObsessionTrackName\"")[1]
 
-                        musica_obsessao = formata_texto(obsessao.split("</a>")[0].split(">")[1])
-                        artista_obsessao = formata_texto(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
+                        musica_obsessao = client.formata_texto(obsessao.split("</a>")[0].split(">")[1])
+                        artista_obsessao = client.formata_texto(obsessao.split("data-analytics-action=\"ObsessionArtistName\"")[1].split("</a>")[0].split(">")[1])
 
                         obsessao = `💿 ${client.tls.phrase(user, "util.lastfm.obsessao")}\n${musica_obsessao} - ${artista_obsessao}\n-----------------------\n`
                     }
 
                     if (res.includes("modal?action=scrobbling-now-theirs\"")) {
-                        scrobble_atual = `${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
+                        scrobble_atual = `${client.formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${client.formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
 
                         musica_curtida = res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=\"")[1].split("\"")[0] === "unloved" ? "🖤 " : "💙 "
 
@@ -174,13 +172,13 @@ module.exports = async ({ client, user, interaction }) => {
                                     },
                                     {
                                         name: `:birthday: ${client.tls.phrase(user, "util.user.conta_criada")}`,
-                                        value: `**${criacao_conta}**`,
+                                        value: `<t:${criacao_conta}:D>\n ( <t:${criacao_conta}:R> )`,
                                         inline: true
                                     }
                                 )
 
                             if (descricao.length > 0 || obsessao.length > 0)
-                                embed.setDescription(`${descricao}${obsessao}`)
+                                embed.setDescription(`${descricao}\n${obsessao}`)
 
                             if (!semanal.includes("não ouviu nenhuma música :("))
                                 embed.addFields(

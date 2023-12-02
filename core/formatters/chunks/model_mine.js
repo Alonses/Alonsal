@@ -3,8 +3,6 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-const formata_texto = require('../formata_texto')
-
 module.exports = async (client, user, interaction) => {
 
     let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
@@ -150,7 +148,7 @@ module.exports = async (client, user, interaction) => {
                 embed.addFields(
                     {
                         name: `${client.emoji("mc_logo_wikipedia")} Wiki sobre ${dados_item.name}`,
-                        value: `\`\`\`fix\n${formata_texto(dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
+                        value: `\`\`\`fix\n${client.formata_texto(dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
                         inline: false
                     }
                 )

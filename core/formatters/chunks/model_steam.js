@@ -265,7 +265,7 @@ module.exports = async ({ client, user, interaction }) => {
 
                 if (res.includes("Member since ")) {
                     anos_servico = res.split("Member since ")[1]
-                    anos_servico = anos_servico.split(".\" >")[0]
+                    anos_servico = client.formata_data(anos_servico.split(".\">")[0].replace(",", ""))
                 }
 
                 if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")
@@ -387,7 +387,7 @@ module.exports = async ({ client, user, interaction }) => {
                     usuario_steam.addFields(
                         {
                             name: `:birthday: ${client.tls.phrase(user, "util.user.entrada")}`,
-                            value: `\`${anos_servico}\``,
+                            value: `<t:${anos_servico}:D>\n( <t:${anos_servico}:R> )`,
                             inline: false
                         }
                     )
