@@ -1,9 +1,4 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-
-const formata_texto = require('../../core/formatters/formata_texto.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -105,6 +105,7 @@ dispara_status = (client, status_apisal) => {
                         inline: true
                     }
                 )
+                .setTimestamp()
 
             console.log("🟢 | Status enviado")
 

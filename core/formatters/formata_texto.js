@@ -12,7 +12,8 @@ const cases = {
     "<span class=\"truncated-text\" >": "",
     "</span><span class=\"disclose-hide\" id=\"about-me-expanded\" >": "",
     "&#10;": "",
-    "&#8204;": ""
+    "&#8204;": "",
+    "<p class=\"truncate-text\"> ": ""
 }
 
 module.exports = (string) => {
