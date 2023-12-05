@@ -29,7 +29,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                         .addFields(
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
+                                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\`${alvo.nick}\`\n\n( <@${alvo.uid}> )`,
                                 inline: true
                             }
                         )
@@ -39,7 +39,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
                         embed.addFields(
                             {
                                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.report.reportador")}**`,
-                                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
+                                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n\`${alvo.issuer_nick}\`\n( <@${alvo.issuer}> )`,
                                 inline: true
                             },
                             {

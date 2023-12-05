@@ -5,20 +5,22 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     // Verificando se o membro e o executor estão no servidor
     if (!guild_member || !guild_executor) return
 
-    // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
-    if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has([PermissionsBitField.Flags.BanMembers]))
-        return
+    // <!> Temporário //
+    if (guild_member) { // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
+        if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has([PermissionsBitField.Flags.BanMembers]))
+            return
 
-    // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
+        // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
+        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
 
-        // Desativando o recurso no servidor sem a permissão requerida
-        if (!bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
-            internal_guild.network.member_ban_add = false
-            await internal_guild.save()
+            // Desativando o recurso no servidor sem a permissão requerida
+            if (!bot_member.permissions.has([PermissionsBitField.Flags.BanMembers])) {
+                internal_guild.network.member_ban_add = false
+                await internal_guild.save()
+            }
+
+            return
         }
-
-        return
     }
 
     let descricao_evento = client.replace(client.tls.phrase(internal_guild, "mode.network.banido_por"), [registroAudita.executor.username, guild_evento.name])

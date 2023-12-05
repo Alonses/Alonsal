@@ -10,6 +10,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const alvo = await getReport(id_alvo, id_guild)
 
+    // Atribuindo um nome ao moderador que criou o reporte no servidor
+    if (!alvo.issuer_nick) {
+        const cached_issuer = await client.getCachedUser(alvo.issuer)
+
+        alvo.issuer_nick = cached_issuer.username
+        await alvo.save()
+    }
+
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.report.remover_reporte"))
         .setColor(0xED4245)
@@ -17,12 +25,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
+                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n\`${alvo.nick ? (alvo.nick.length > 20 ? `${alvo.nick.slice(0, 20)}...` : alvo.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.uid}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
-                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n( <@${alvo.issuer}> )`,
+                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n\`${alvo.issuer_nick ? (alvo.issuer_nick.length > 20 ? `${alvo.issuer_nick.slice(0, 20)}...` : alvo.issuer_nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.issuer}> )`,
                 inline: true
             },
             {
