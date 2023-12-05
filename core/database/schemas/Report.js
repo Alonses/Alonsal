@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     nick: { type: String, default: null },
     issuer: { type: String, default: null },
+    issuer_nick: { type: String, default: null },
     relatory: { type: String, default: null },
     timestamp: { type: Number, default: null },
     archived: { type: Boolean, default: false },

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getUserReports } = require("../../database/schemas/Report")
+const { getUserReports, getReport } = require("../../database/schemas/Report")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -11,11 +11,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const alvo = {
         uid: id_alvo,
         nick: null,
-        executer: null
+        executer: null,
+        issuer_nick: null
     }
 
     const reports = await getUserReports(id_alvo)
 
+    // Navegando por todos os reportes que o usuário recebeu e listando eles
     reports.forEach(valor => {
         avisos++
 
@@ -30,6 +32,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
     })
 
+    // Atribuindo um nome ao moderador que criou o reporte no servidor
+    if (!alvo.issuer_nick && alvo.executer) {
+        const cached_issuer = await client.getCachedUser(alvo.executer)
+        const user_report = await getReport(id_alvo, interaction.guild.id)
+
+        alvo.issuer_nick = cached_issuer.username
+        user_report.issuer_nick = cached_issuer.username
+        await user_report.save()
+    }
+
     if (avisos > 0)
         descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n---------\n").slice(0, 1000)}\`\`\``
 
@@ -40,17 +52,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
+                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n\`${alvo.nick ? (alvo.nick.length > 20 ? `${alvo.nick.slice(0, 20)}...` : alvo.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.uid}> )`,
                 inline: true
             },
             {
-                name: `:label: **${client.tls.phrase(user, "util.steam.nome")}**`,
-                value: `\`${alvo.nick ? (alvo.nick.length > 20 ? `${alvo.nick.slice(0, 20)}...` : alvo.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\``,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
+                value: `${client.emoji("icon_id")} \`${alvo.executer}\`\n\`${alvo.issuer_nick ? (alvo.issuer_nick.length > 20 ? `${alvo.issuer_nick.slice(0, 20)}...` : alvo.issuer_nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.executer}> )`,
                 inline: true
             },
             {
                 name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: alvo.executer ? `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**\n${client.emoji("icon_id")} \`${alvo.executer}\`\n( <@${alvo.executer}> )` : "⠀",
+                value: "⠀",
                 inline: true
             }
         )
