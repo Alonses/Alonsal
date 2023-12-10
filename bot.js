@@ -40,8 +40,8 @@ client.discord.on("messageCreate", async message => {
 	if (guild.spam.suspicious_links)
 		if (text.includes("http")) {
 
-			// Separando o link e registrando caso não tenha ainda
-			const link = `http${text.split("http")[1].split(" ")[0]}`
+			// Verificando se é um link suspeito
+			const link = `http${text.split("http")[1].split(" ")[0].split(")")[0].split("\n")[0].trim()}`
 			const registro = await verifySuspiciousLink(link)
 
 			if (registro) // Link suspeito confirmado
