@@ -96,7 +96,7 @@ module.exports = {
                             { name: '💂 External reports', value: 'external_reports' },
                             { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🛑 Warns', value: 'warns' },
-                            { name: '🗣 Talkative Alonsal', value: 'talkative_alonsal' },
+                            { name: '🗣 Talkative Alonsal', value: 'speaker' },
                             { name: '📡 Broadcast', value: 'broadcast' },
                             { name: '🌐 Global visibility', value: 'public_guild' }
                         ))),
