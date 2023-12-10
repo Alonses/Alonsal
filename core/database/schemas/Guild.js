@@ -44,10 +44,14 @@ const schema = new mongoose.Schema({
         category: { type: String, default: null }
     },
     warn: {
+        timed: { type: Boolean, default: false },
+        progressive: { type: Boolean, default: true },
         channel: { type: String, default: null },
         cases: { type: Number, default: 3 },
+        warned: { type: String, default: 'member_mute' },
         action: { type: String, default: 'member_mute' },
-        timeout: { type: Number, default: 2 }
+        timeout: { type: Number, default: 2 },
+        reset: { type: Number, default: 7 }
     },
     reports: {
         channel: { type: String, default: null },
@@ -221,6 +225,13 @@ async function getRankHosters(client) {
     return [await client.getUser(rank[0].uid), await client.getUser(rank[1].uid)]
 }
 
+async function getTimedGuilds() {
+    // Lista todos os advertências que se expirão
+    return model.find({
+        "warn.timed": true
+    })
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -233,6 +244,7 @@ module.exports = {
     migrateGameChannels,
     getNetworkedGuilds,
     getRankHosters,
+    getTimedGuilds,
     loggerMap,
     channelTypes
 }

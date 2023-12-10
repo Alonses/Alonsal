@@ -22,8 +22,24 @@ module.exports = async ({ client, guild }) => {
 
             // Salvando o ID do usuário que adicionou o bot ao servidor
             if (user) {
+
                 internal_guild.inviter = user.id
                 await internal_guild.save()
+                const inviter = await client.getUser(user.id)
+
+                // Enviando um Embed ao usuário que adicionou o bot ao servidor
+                const row = client.create_buttons([
+                    { name: client.tls.phrase(inviter, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.glitch.me/' },
+                    { name: client.tls.phrase(inviter, "inic.inicio.suporte"), type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support }
+                ])
+
+                const embed = new EmbedBuilder()
+                    .setTitle(client.tls.phrase(inviter, "inic.ping.titulo"))
+                    .setColor(client.embed_color(inviter.misc.color))
+                    .setImage("https://i.imgur.com/N8AFVTH.png")
+                    .setDescription(`${client.tls.phrase(inviter, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(inviter, "inic.ping.idioma_dica_server")}`)
+
+                client.sendDM(inviter, { embed: embed, components: row }, true)
             }
 
             verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot

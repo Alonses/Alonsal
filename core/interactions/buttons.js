@@ -5,6 +5,9 @@ module.exports = async ({ client, user, interaction }) => {
     const criador = dados.split(".")[0] // ID do criador do menu
     let autor_original = true
 
+    const message = interaction, caso = "botao"
+    await require('../data/ranking')({ client, message, caso })
+
     // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
     if (criador !== interaction.user.id)
         autor_original = false
@@ -17,7 +20,4 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Solicitando a função e executando
     require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados, autor_original })
-
-    const message = interaction, caso = "botao"
-    await require('../data/ranking')({ client, message, caso })
 }

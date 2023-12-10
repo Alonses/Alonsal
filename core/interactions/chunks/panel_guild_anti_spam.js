@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${emoji_button(guild?.spam.strikes)} **${client.tls.phrase(user, "mode.spam.punicoes_niveis")}**\n${emoji_button(guild?.spam.suspicious_links)} **Links suspeitos**`,
+                value: `${emoji_button(guild?.spam.strikes)} **Strikes**\n${emoji_button(guild?.spam.suspicious_links)} **Links suspeitos**`,
                 inline: true
             },
             {

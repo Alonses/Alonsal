@@ -21,7 +21,7 @@ module.exports = async function ({ client, message, text, guild }) {
             return
 
     // Permissão para enviar mensagens no canal que foi chamado
-    const canal_retorno = client.discord.channels.cache.get(dados.games.channel)
+    const canal_retorno = client.discord.channels.cache.get(message.channel.id)
     if (!canal_retorno.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel]))
         return
 
