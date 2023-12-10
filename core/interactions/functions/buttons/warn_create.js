@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.cases >= user_warns.total || guild.warn.progressive)
         texto_rodape = client.replace(client.tls.phrase(user_alvo, "mode.warn.aviso_penalidade_aplicada"), interaction.guild.name)
 
-    if ((user_warns.total + 1) >= guild.warn.cases)
+    if (user_warns.total >= guild.warn.cases)
         info_advertencia = `Essa advertência resultou em "${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}".`
     else if (guild.warn.progressive)
         info_advertencia = `Essa advertência resultou em "${client.tls.phrase(user, `menu.events.${guild.warn.warned}`)}".`
@@ -85,7 +85,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.cases >= user_warns.total)
         descricao_warn += `\n\n${client.emoji("banidos")} ${client.tls.phrase(guild, "mode.warn.usuario_punicao_aplicada")}`
 
-    if ((user_warns.total + 1) >= guild.warn.cases)
+    if (user_warns.total >= guild.warn.cases)
         info_advertencia = `Essa advertência resultou em "${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}".`
     else if (guild.warn.progressive)
         info_advertencia = `Essa advertência resultou em "${client.tls.phrase(user, `menu.events.${guild.warn.warned}`)}".`
