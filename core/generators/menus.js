@@ -260,7 +260,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     let min = 1, max = 1
 
     if (multi_select) // Menu com multi-seleção
-        max = data.values.length
+        max = data.values.length - indice_start > 25 ? 25 : data.values.length - indice_start
 
     const row = new ActionRowBuilder()
         .addComponents(

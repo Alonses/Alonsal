@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Atribuindo o reporte ao usuário que disparou o comando
     alvo.issuer = interaction.user.id
-    alvo.issuer_nick = interaction.user.name
+    alvo.issuer_nick = interaction.user.username
 
     alvo.archived = false
     alvo.nick = user_alvo.username

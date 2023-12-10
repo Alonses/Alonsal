@@ -1,6 +1,8 @@
-const { ChannelType, PermissionsBitField } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
+
+    pagina = pagina || 0
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_speaker"
     const guild = await client.getGuild(interaction.guild.id)
