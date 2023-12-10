@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.2" }]
 
-    const canais_limitados = guild.speaker.channels ? guild.speaker.channels.split(";").length : 0;
+    const canais_limitados = guild.speaker.channels ? `${guild.speaker.channels.split(";").length} canais permitidos` : 'nenhum canal selecionado';
 
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.alonsal_falador")} ${client.emoji(52)}`)
@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "util.server.canais")}**`,
-                value: `${client.defaultEmoji("metrics")} \`${canais_limitados} canais permitidos\``,
+                value: `${client.defaultEmoji("metrics")} \`${canais_limitados}\``,
                 inline: true
             }
         )
