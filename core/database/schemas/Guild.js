@@ -54,6 +54,10 @@ const schema = new mongoose.Schema({
         notify: { type: Boolean, default: false },
         auto_ban: { type: Boolean, default: false }
     },
+    speaker: {
+        regional_limit: { type: Boolean, default: false },
+        channels: { type: String, default: null }
+    },
     logger: {
         channel: { type: String, default: null },
         message_edit: { type: Boolean, default: true },
@@ -87,7 +91,7 @@ const schema = new mongoose.Schema({
         tickets: { type: Boolean, default: false },
         reports: { type: Boolean, default: false },
         public: { type: Boolean, default: false },
-        conversation: { type: Boolean, default: true },
+        conversation: { type: Boolean, default: false },
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
         spam: { type: Boolean, default: false },

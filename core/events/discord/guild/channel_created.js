@@ -40,7 +40,7 @@ module.exports = async ({ client, channel }) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n( <@${registroAudita.executorId}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             },
             {
@@ -55,9 +55,6 @@ module.exports = async ({ client, channel }) => {
             }
         )
         .setTimestamp()
-        .setFooter({
-            text: registroAudita.executor.username
-        })
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

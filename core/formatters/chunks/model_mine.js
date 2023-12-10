@@ -97,7 +97,7 @@ module.exports = async (client, user, interaction) => {
                         inline: true
                     },
                     {
-                        name: `${client.emoji("mc_goat_copper_horn")} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
+                        name: `${client.emoji("mc_cyan_goat_horn")} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
                         value: `\`${dados_item.stats.version}\``,
                         inline: true
                     }

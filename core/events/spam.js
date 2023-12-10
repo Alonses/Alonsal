@@ -145,8 +145,12 @@ async function nerfa_spam({ client, user, guild, message }) {
             const link = `http${user_messages[0].content.split("http")[1].split(" ")[0].split(")")[0]}`
             const registro = await verifySuspiciousLink(link)
 
-            if (!registro)
+            if (!registro) {
                 await registerSuspiciousLink(link, guild.sid, client.timestamp())
+
+                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal
+                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${link}\` )` })
+            }
         }
 
     await bot.save()

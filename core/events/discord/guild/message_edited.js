@@ -39,7 +39,7 @@ module.exports = async (client, message) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
-                value: `${client.emoji("icon_id")} \`${autor}\`\n( <@${autor}> )`,
+                value: `${client.emoji("icon_id")} \`${autor}\`\n${client.emoji("mc_name_tag")} \`${message[0].author.username}\`\n( <@${autor}> )`,
                 inline: true
             },
             {
@@ -49,9 +49,6 @@ module.exports = async (client, message) => {
             }
         )
         .setTimestamp()
-        .setFooter({
-            text: message[0].author.username
-        })
 
     if (message[1].content.includes("https")) {
         const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
