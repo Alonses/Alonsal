@@ -164,9 +164,17 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
 
             if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes") {
                 // Listando as opções de tempo de mute para o anti-spam
-                nome_label = client.tls.phrase(user, `menu.times.${valor}`)
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
+
+                if (data.submenu) // Função com um submenu inclusa
+                    valor_label = `${alvo}|${i + 1}.${data.submenu}`
+
+                // Exibindo apenas o número
+                if (alvo === "guild_spam_strikes" || alvo === "guild_warns_strikes")
+                    nome_label = valor
+                else
+                    nome_label = client.tls.phrase(user, `menu.times.${valor}`)
 
                 // Usado para a quantidade de repetências dos warns
                 if (alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes")
@@ -188,6 +196,10 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     emoji_label = valor.status ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                     valor_label = `${alvo.replace("#", "_")}|${valor.type}`
                     descricao_label = valor.status ? client.tls.phrase(user, "menu.status.ativado") : client.tls.phrase(user, "menu.status.desativado")
+
+                    if (data.submenu) // Função com um submenu inclusa
+                        valor_label = `${alvo.replace("#", "_")}|${valor.type}.${data.submenu}`
+
                 } else if (alvo.includes("#link")) { // Linkagem de servidores
                     nome_label = valor.name.length > 20 ? `${valor.name.slice(0, 18)}...` : valor.name
                     emoji_label = valor.network.link ? client.emoji(44) : client.emoji("mc_oppose")
@@ -256,6 +268,10 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
             titulo_menu = client.tls.phrase(user, translate[alvo])
         else
             titulo_menu = translate[alvo]
+
+    if (data.submenu) // Tempo para remover advertências
+        if (data.submenu == 16)
+            titulo_menu = "Defina o tempo para remover a advertência!"
 
     let min = 1, max = 1
 

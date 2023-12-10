@@ -14,6 +14,29 @@ module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
 
+    let user_alvo = interaction.options.getUser("user")
+    let id_alvo
+
+    if (!user_alvo)
+        return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
+
+    if (typeof user_alvo === "object")
+        id_alvo = user_alvo.id
+
+    if (id_alvo === interaction.user.id) // Impede que o usuário se auto reporte
+        return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
+
+    if (id_alvo === client.id()) // Impede que o usuário reporte o bot
+        return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
+
+    if (isNaN(id_alvo) || id_alvo.length < 18) // ID inválido
+        return client.tls.reply(interaction, user, "mode.report.id_invalido", true, client.defaultEmoji("types"))
+
+    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+
+    if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
+        return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
+
     // Verificando se a hierarquia do membro que ativou o warn é maior que o do alvo
     if (guild_executor.roles.highest.position < guild_member.roles.highest.position)
         return client.tls.reply(interaction, user, "mode.warn.mod_sem_hierarquia", true, client.emoji(0))

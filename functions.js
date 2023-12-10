@@ -220,7 +220,7 @@ function internal_functions(client) {
     client.guildAction = (guild, chave_traduz) => {
 
         // Verifica se a ação do servidor é silenciar um membro, caso positivo, retorna o tempo de mute do servidor
-        return guild.warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}: \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[guild.warn.timeout]}`)}\`**` : ""
+        return guild.warn.action || guild.warn.warned === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}: \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[guild.warn.timeout]}`)}\`**` : ""
     }
 
     // Registra os eventos no diário do bot

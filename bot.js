@@ -20,9 +20,9 @@ client.discord.once("ready", async () => {
 	client.owners = process.env.owner_id.split(", ")
 
 	// Eventos secundários
+	await require("./core/auto/clock")({ client })
 	await require("./core/events/events")({ client })
 	await require("./core/events/status")({ client })
-	await require("./core/auto/module")({ client })
 
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
 	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)

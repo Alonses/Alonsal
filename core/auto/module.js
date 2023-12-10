@@ -15,48 +15,15 @@ const week_days = {
     1: [6, 0]
 }
 
-module.exports = async ({ client }) => {
-
-    if (!client.x.modules) return
-
-    const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
-    const tempo_restante = 10 - date1.getSeconds()
-
-    global_client = client
-
-    if (tempo_restante > 1000)
-        console.log(`📣 | Disparando os módulos em ${tempo_restante} segundos`)
-    else
-        console.log(`📣 | Disparando os módulos agora!`)
-
-    atualiza_modulos(global_client, tempo_restante)
-}
-
 async function atualiza_modulos(client, tempo_restante, auto) {
 
     const dados = await getActiveModules()
     global_client = client
 
     writeFileSync("./files/data/modules.txt", JSON.stringify(dados))
-
-    if (dados.length > 0 && typeof auto === "undefined")
-        setTimeout(() => {
-            verifica_modulo(tempo_restante)
-        }, tempo_restante) // Executa de 60 em 60 segundos
-
-    if (dados.length < 1)
-        global_client.notify(process.env.channel_feeds, { content: ":mega: :sparkles: | Módulos desativados, não há módulos ativos no momento." })
 }
 
-verifica_modulo = (tempo_restante) => {
-
-    setTimeout(() => {
-        requisita_modulo()
-        verifica_modulo(60000)
-    }, tempo_restante)
-}
-
-requisita_modulo = async () => {
+async function requisita_modulo() {
 
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
@@ -65,7 +32,7 @@ requisita_modulo = async () => {
 
         data = JSON.parse(data)
 
-        // Interrompe a operação caso não haja módulos listados em cache
+        // Interrompe a operação caso não haja módulos salvos em cache
         if (data.length < 1) return
 
         for (let i = 0; i < data.length; i++) {
@@ -217,4 +184,5 @@ async function cobra_modulo(client) {
 }
 
 module.exports.atualiza_modulos = atualiza_modulos
+module.exports.requisita_modulo = requisita_modulo
 module.exports.cobra_modulo = cobra_modulo
