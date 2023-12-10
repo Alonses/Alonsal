@@ -3,7 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const { emoji_button, type_button } = require('../../functions/emoji_button')
 
 const operation_codes = {
-    "talkative_alonsal": 0,
+    "speaker": 0,
     "broadcast": 1,
     "free_games": 2,
     "tickets": 3,
@@ -16,7 +16,7 @@ const operation_codes = {
 }
 
 // Funções sem guias de configuração
-const direct_functions = [0, 1, 7]
+const direct_functions = [1, 7]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
