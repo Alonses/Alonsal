@@ -1,13 +1,14 @@
 module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    const canais = guild.speaker?.channels.split(";") || []
+    const canais = guild.speaker.channels ? guild.speaker.channels.split(";") : []
 
     // Listando os canais selecionados
     Object.keys(interaction.values).forEach(indice => {
         const canal = interaction.values[indice].split("|")[1]
 
-        if (!guild.speaker.channels.includes(canal))
+        // Verificando se o canal está na lista do servidor
+        if (!guild.speaker.channels || !guild.speaker.channels.includes(canal))
             canais.push(canal)
         else // Removendo um canal que já se encontra ativo
             canais.splice(canais.indexOf(canal), 1)
