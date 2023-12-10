@@ -37,7 +37,7 @@ const translate = {
     "warn_browse": "menu.menus.escolher_usuario"
 }
 
-function create_menus({ client, interaction, user, data, pagina, multi_select }) {
+function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
 
     const itens_menu = [], alvo = data.alvo
     let insersoes = [], i = 0, indice_start = pagina * 24 || 0
@@ -195,7 +195,18 @@ function create_menus({ client, interaction, user, data, pagina, multi_select })
                     valor_label = `${alvo.replace("#", "_")}|${valor.sid}`
                 } else { // Canais e categorias
                     nome_label = valor.split(".")[0].length < 20 ? valor.split(".")[0] : `${valor.split(".")[0].slice(0, 15)}...`
-                    emoji_label = client.defaultEmoji("channel")
+
+                    if (alvo === "guild_speaker#channel") {
+
+                        // Verificando se o canal já está ativo e exibindo o emoji respectivo
+                        emoji_label = client.emoji("mc_oppose")
+
+                        if (guild.speaker.channels)
+                            if (guild.speaker.channels.includes(valor.split(".")[1]))
+                                emoji_label = client.emoji("mc_approve")
+                    } else
+                        emoji_label = client.defaultEmoji("channel")
+
                     valor_label = `${alvo.replace("#", "_")}|${valor.split(".")[1]}`
                 }
             }

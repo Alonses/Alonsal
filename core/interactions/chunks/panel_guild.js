@@ -202,7 +202,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 2)
         botoes = botoes.concat([
             { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: type_button(guild?.conf.conversation), emoji: emoji_button(guild?.conf.conversation), data: '0', disabled: c_buttons[0] },
+            { id: "guild_speaker_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[0] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] }
         ])
 

@@ -49,8 +49,8 @@ function internal_functions(client) {
         return create_buttons(data, interaction)
     }
 
-    client.create_menus = ({ client, interaction, user, data, pagina, multi_select }) => {
-        return create_menus({ client, interaction, user, data, pagina, multi_select })
+    client.create_menus = ({ client, interaction, user, data, pagina, multi_select, guild }) => {
+        return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
     }
 
     client.create_profile = (client, interaction, user, id_alvo) => {

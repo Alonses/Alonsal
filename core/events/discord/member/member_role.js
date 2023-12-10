@@ -42,7 +42,7 @@ module.exports = async ({ client, guild, dados }) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n( <@${user_alvo.id}> )`,
+                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
             {
@@ -52,14 +52,11 @@ module.exports = async ({ client, guild, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.alterador")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n( <@${registroAudita.executorId}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: false
             }
         )
         .setTimestamp()
-        .setFooter({
-            text: user_alvo.username
-        })
 
     // Usuário é um BOT
     if (user_alvo.bot)

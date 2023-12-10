@@ -59,7 +59,7 @@ module.exports = async ({ client, message }) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
-                value: `${client.emoji("icon_id")} \`${autor}\`\n( <@${autor}> )`,
+                value: `${client.emoji("icon_id")} \`${autor}\`\n${client.emoji("mc_name_tag")} \`${message.author.username}\`\n( <@${autor}> )`,
                 inline: true
             },
             {
@@ -69,16 +69,13 @@ module.exports = async ({ client, message }) => {
             }
         )
         .setTimestamp()
-        .setFooter({
-            text: message.author.username
-        })
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             embed.addFields(
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.excluido")}**`,
-                    value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n( <@${registroAudita.executorId}> )`,
+                    value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                     inline: false
                 }
             )

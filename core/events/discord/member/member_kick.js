@@ -21,19 +21,16 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita2.executorId}\`\n( <@${registroAudita2.executorId}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita2.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.executor.username}\`\n( <@${registroAudita2.executorId}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${registroAudita2.targetId}\`\n( <@${registroAudita2.targetId}> )`,
+                value: `${client.emoji("icon_id")} \`${registroAudita2.targetId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.target.username}\`\n( <@${registroAudita2.targetId}> )`,
                 inline: true
             }
         )
         .setTimestamp()
-        .setFooter({
-            text: registroAudita2.executor.username
-        })
 
     // Usuário é um BOT
     if (user_alvo.bot)

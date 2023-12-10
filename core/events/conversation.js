@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 const cleverbot = require('cleverbot-free')
 
 const conversations = []
@@ -12,7 +14,16 @@ const sem_texto = [
     "cê é pago pa fazer isso? :clown:"
 ]
 
-module.exports = async function ({ client, message, text }) {
+module.exports = async function ({ client, message, text, guild }) {
+
+    if (guild.speaker.regional_limit) // Verificando se o servidor possui trava por canais para a conversação
+        if (!guild.speaker.channels.includes(message.channel.id)) // O canal utilizado não faz parte dos canais permitidos
+            return
+
+    // Permissão para enviar mensagens no canal que foi chamado
+    const canal_retorno = client.discord.channels.cache.get(dados.games.channel)
+    if (!canal_retorno.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel]))
+        return
 
     // Trava para responder apenas uma mensagem por vez
     if (libera_conversacao) {
