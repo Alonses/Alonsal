@@ -15,6 +15,10 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Salvando os canais selecionados
     guild.speaker.channels = canais.length > 1 ? canais.join(";") : canais.length === 1 ? canais[0] : null
+
+    if (!guild.speaker.channels) // Desligando a trava de canais especificos
+        guild.speaker.regional_limit = false
+
     await guild.save()
 
     // Redirecionando o evento
