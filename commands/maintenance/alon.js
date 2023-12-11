@@ -3,13 +3,13 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("alon")
-        .setDescription("⌠📡⌡ Alonsal information")
+        .setDescription("⌠📡⌡ Alon information")
         .setDescriptionLocalizations({
-            "de": '⌠📡⌡ Alonsal-Informationen',
-            "es-ES": '⌠📡⌡ Información Alonsal',
-            "fr": '⌠📡⌡ Informations sur le Alonsal',
-            "it": '⌠📡⌡ Informazioni Alonsal',
-            "pt-BR": '⌠📡⌡ Informações do Alonsal',
+            "de": '⌠📡⌡ Alon-Informationen',
+            "es-ES": '⌠📡⌡ Información Alon',
+            "fr": '⌠📡⌡ Informations sur le Alon',
+            "it": '⌠📡⌡ Informazioni Alon',
+            "pt-BR": '⌠📡⌡ Informações do Alon',
             "ru": '⌠📡⌡ Информация от Алонсал'
         }),
     async execute({ client, user, interaction }) {

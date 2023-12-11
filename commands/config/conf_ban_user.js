@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ban")
-        .setDescription("⌠🤖⌡ Retrinja o Alonsal de responder um usuário")
+        .setDescription("⌠🤖⌡ Retrinja o Alon de responder um usuário")
         .addUserOption(option =>
             option.setName("usuario")
                 .setDescription("Mencione outro usuário")
@@ -20,10 +20,10 @@ module.exports = {
         data_user.conf.banned = !data_user.conf.banned
         await data_user.save()
 
-        let msg = ":passport_control: | O usuário foi banido de usar o Alonsal"
+        let msg = ":passport_control: | O usuário foi banido de usar o Alon"
 
         if (!data_user.conf.banned)
-            msg = ":passport_control: | O usuário foi agora pode usar o Alonsal novamente"
+            msg = ":passport_control: | O usuário foi agora pode usar o Alon novamente"
 
         interaction.reply({ content: msg, ephemeral: true })
     }

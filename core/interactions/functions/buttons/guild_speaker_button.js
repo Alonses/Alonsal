@@ -12,13 +12,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         operacao = 3
 
     // Tratamento dos cliques
-    // 1 -> (Des)Ativa o Alonsal conversador
+    // 1 -> (Des)Ativa o Alon Falador
     // 2 -> (Des)Ativa o bloqueio por canais
     // 3 -> Selecionar quais canais serão liberados para a conversação
 
     if (operacao === 1) {
 
-        // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
+        // Ativa ou desativa a capacidade do Alon falar no servidor livremente ( através do clever )
         if (typeof guild.conf.conversation !== "undefined")
             guild.conf.conversation = !guild.conf.conversation
         else
@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 2) {
 
-        // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
+        // Ativa ou desativa a capacidade do Alon falar no servidor livremente ( através do clever )
         if (typeof guild.speaker.regional_limit !== "undefined")
             guild.speaker.regional_limit = !guild.speaker.regional_limit
         else

@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
         .setThumbnail("https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/271761723_4781205238660427_2679923254801920704_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeEaDbTjIrwdCOtcagWWhVkesSC9z2rDnVexIL3PasOdV5UecFHHTVPIWqV19Eq3VfRZCnHRKRq1cLToTkrsKEim&_nc_ohc=0RgcC3ujltUAX97XDKA&_nc_oc=AQmx0z2kxoAK_y5WsuATe7C9j_M2uor_EZ2DjNPqmJD0olXXScM70c5xlhDQvVV3qVg&_nc_ht=scontent-gru1-1.xx&oh=00_AfDAgo9E37s4Nc_t_6Njz2Q3Ko5-A9be58np1JZJ0nNEOQ&oe=652140A5")
         .setDescription(`${ouvindo_agora}\n${client.tls.phrase(user, "manu.info.conteudo_1")}\n\n${client.tls.phrase(user, "manu.info.invocado_1")} \`${client.locale(bot.persis.commands + 1)}\` ${client.tls.phrase(user, "manu.info.invocado_2")} ${client.emoji("emojis_dancantes")}\n[ _${client.tls.phrase(user, "manu.info.versao")} ${bot.persis.version}_ ]\n\n${client.tls.phrase(user, "manu.info.spawn_alonsal")} <t:1618756500>`)
         .setFooter({
-            text: "Alonsal",
+            text: "Alon",
             iconURL: "https://i.imgur.com/K61ShGX.png"
         })
 
@@ -62,8 +62,8 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
         const games_free = await getGames()
 
-        // Estatísticas do Alonsal
-        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alonsal!\`\`\``)
+        // Estatísticas do Alon
+        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alon!\`\`\``)
             .addFields(
                 {
                     name: `${client.defaultEmoji("playing")} **Miscelânea**`,

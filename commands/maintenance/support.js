@@ -11,14 +11,14 @@ module.exports = {
             "pt-BR": 'suporte',
             "ru": 'поддержка'
         })
-        .setDescription("⌠📡⌡ Support Alonsal")
+        .setDescription("⌠📡⌡ Support Alon")
         .setDescriptionLocalizations({
-            "de": '⌠📡⌡ Unterstützen Sie Alonsal',
-            "es-ES": '⌠📡⌡ Apoya a Alonsal',
-            "fr": '⌠📡⌡ Soutenez Alonsal',
-            "it": '⌠📡⌡ Supporta Alonsal',
-            "pt-BR": '⌠📡⌡ Dê suporte ao Alonsal',
-            "ru": '⌠📡⌡ Поддержите Алонсала'
+            "de": '⌠📡⌡ Unterstützen Sie Alon',
+            "es-ES": '⌠📡⌡ Apoya a Alon',
+            "fr": '⌠📡⌡ Soutenez Alon',
+            "it": '⌠📡⌡ Supporta Alon',
+            "pt-BR": '⌠📡⌡ Dê suporte ao Alon',
+            "ru": '⌠📡⌡ Поддержите Alon™️'
         }),
     async execute({ client, user, interaction }) {
 

@@ -67,7 +67,7 @@ client.discord.on("messageCreate", async message => {
 		await require("./core/events/broadcast")({ client, message })
 
 	// Respostas automatizadas por IA
-	if ((text.includes(client.id()) || text.toLowerCase().includes("alonsal")) && client.decider(guild.conf?.conversation, 1))
+	if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
 		return await require("./core/events/conversation")({ client, message, text, guild })
 
 	try { // Atualizando o XP dos usuários

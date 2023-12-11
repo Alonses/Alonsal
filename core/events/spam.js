@@ -148,7 +148,7 @@ async function nerfa_spam({ client, user, guild, message }) {
             if (!registro) {
                 await registerSuspiciousLink(link, guild.sid, client.timestamp())
 
-                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal
+                // Notificando sobre a adição de um novo link suspeito ao banco do Alon
                 client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${link.split("").join(" ")}\` )` })
             }
         }
