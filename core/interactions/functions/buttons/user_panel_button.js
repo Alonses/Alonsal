@@ -4,7 +4,8 @@ const operations = {
     2: ["conf", "ranking"],
     3: ["conf", "public_badges"],
     4: ["misc", "weather"],
-    5: ["conf", "global_tasks"]
+    5: ["conf", "global_tasks"],
+    6: ["conf", "resumed"]
 }
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -21,12 +22,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 4 -> Clima resumido
     // 5 -> Tarefas globais
 
+    // 6 -> Modo compacto
+
     // Ativa ou desativa a operação selecionada
     user[operations[escolha][0]][operations[escolha][1]] = !user[operations[escolha][0]][operations[escolha][1]]
     await user.save()
 
     if (escolha > 2)
         pagina_guia = 1
+
+    if (escolha > 5)
+        pagina_guia = 2
 
     require('../../chunks/panel_personal')({ client, user, interaction, pagina_guia })
 }

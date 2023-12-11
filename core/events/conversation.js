@@ -32,7 +32,7 @@ module.exports = async function ({ client, message, text, guild }) {
         message.channel.sendTyping()
 
         text = text.split("> ")[1] || text
-        text = text.replace("alonsal", "").replace(client.id(), "").trim()
+        text = text.replace("alonsal", "").replace("alon", "").replace(client.id(), "").trim()
 
         if (text.trim() === "<@>" || text.trim() === "") {
             let texto = sem_texto[client.random(sem_texto)]

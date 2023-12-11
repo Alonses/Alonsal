@@ -58,8 +58,31 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             }
         )
 
+    if (pagina === 2)
+        embed.addFields(
+            {
+                name: `${emoji_button(user?.conf.resumed)} **Modo compacto**`,
+                value: `\`O Modo compacto remove todos os emojis do início das frases.\``,
+                inline: true
+            },
+            {
+                name: `${emoji_button(0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                inline: true
+            },
+            {
+                name: `${emoji_button(0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                inline: true
+            }
+        )
+
     const c_menu = [false, false]
-    c_menu[pagina] = true
+
+    if (pagina == 0) // Botão de voltar
+        c_menu[0] = true
+    if (pagina == 3) // Botão para avançar
+        c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_personal`, disabled: c_menu[0] }]
 
@@ -72,13 +95,20 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ranking"), type: type_button(user?.conf.ranking), emoji: emoji_button(user?.conf.ranking), data: '2' }
         ])
 
-    // Segunda página de botões de configuração do Alonsal
+    // Segunda página de botões de configuração do Alon
     // Badges visiveis públicamente, clima resumido e tarefas globais
     if (pagina === 1)
         botoes = botoes.concat([
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.badges_publicas"), type: type_button(user?.conf.public_badges), emoji: emoji_button(user?.conf.public_badges), data: '3' },
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.clima_resumido"), type: type_button(!user?.misc.weather), emoji: emoji_button(!user?.misc.weather), data: '4' },
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.tarefas_globais"), type: type_button(user?.conf.global_tasks), emoji: emoji_button(user?.conf.global_tasks), data: '5' }
+        ])
+
+    if (pagina === 2)
+        botoes = botoes.concat([
+            { id: "user_panel_button", name: "Compacto", type: type_button(user?.conf.resumed), emoji: emoji_button(user?.conf.resumed), data: '6' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '7', disabled: true },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '8', disabled: true }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })

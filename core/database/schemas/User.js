@@ -58,7 +58,8 @@ const schema = new mongoose.Schema({
         notify: { type: Boolean, default: true },
         ranking: { type: Boolean, default: true },
         global_tasks: { type: Boolean, default: true },
-        public_badges: { type: Boolean, default: true }
+        public_badges: { type: Boolean, default: true },
+        resumed: { type: Boolean, default: false }
     }
 })
 

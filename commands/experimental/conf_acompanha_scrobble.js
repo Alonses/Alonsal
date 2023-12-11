@@ -5,7 +5,7 @@ const { acompanha_scrobble } = require('../../core/events/presence')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_scrobble")
-        .setDescription("⌠🤖⌡ Faça o Alonsal acompanhar seus Scrobbles no LastFM")
+        .setDescription("⌠🤖⌡ Faça o Alon acompanhar seus Scrobbles no LastFM")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 

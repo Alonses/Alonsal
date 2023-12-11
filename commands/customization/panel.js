@@ -54,7 +54,8 @@ module.exports = {
                             { name: '🏆 Ranking', value: '2' },
                             { name: '🕶 Public badges', value: '3' },
                             { name: '🌩 Weather summary', value: '4' },
-                            { name: '🌐 Global tasks', value: '5' }
+                            { name: '🌐 Global tasks', value: '5' },
+                            { name: '💬 Compact mode', value: '6' }
                         )))
         .addSubcommand(subcommand =>
             subcommand
@@ -97,7 +98,7 @@ module.exports = {
                             { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🛑 Warns', value: 'warns' },
                             { name: '🛑 Warns Configs', value: 'warns.1' },
-                            { name: '🗣 Talkative Alonsal', value: 'speaker' },
+                            { name: '🗣 Talkative Alon', value: 'speaker' },
                             { name: '📡 Broadcast', value: 'broadcast' },
                             { name: '🌐 Global visibility', value: 'public_guild' }
                         ))),

@@ -3,14 +3,14 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("discord")
-        .setDescription("⌠📡⌡ Official Alonsal™️ Server")
+        .setDescription("⌠📡⌡ Official Alon™️ Server")
         .setDescriptionLocalizations({
-            "de": '⌠📡⌡ Offizieller Alonsal™-Server',
-            "es-ES": '⌠📡⌡ Servidor Oficial Alonsal™️',
-            "fr": '⌠📡⌡ Serveur officiel Alonsal™️',
-            "it": '⌠📡⌡ Server ufficiale Alonsal™️',
-            "pt-BR": '⌠📡⌡ Servidor oficial do Alonsal™️',
-            "ru": '⌠📡⌡ Официальный сервер Алонсал™'
+            "de": '⌠📡⌡ Offizieller Alon™-Server',
+            "es-ES": '⌠📡⌡ Servidor Oficial Alon™️',
+            "fr": '⌠📡⌡ Serveur officiel Alon™️',
+            "it": '⌠📡⌡ Server ufficiale Alon™️',
+            "pt-BR": '⌠📡⌡ Servidor oficial do Alon™️',
+            "ru": '⌠📡⌡ Официальный сервер Alon™️'
         }),
     async execute({ client, user, interaction }) {
 

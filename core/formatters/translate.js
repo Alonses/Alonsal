@@ -14,7 +14,9 @@ const languagesMap = {
 function reply(interaction, user, target, ephemeral, type, replace) {
 
     let phrase = translate(user, target)
-    phrase = check_emojis(phrase, type)
+
+    if (!user.conf.resumed) // Ignora os emojis do inicio das frases
+        phrase = check_emojis(phrase, type)
 
     if (replace) { // Substitui partes do texto por outros valores
         if (typeof replace === "object") { // Array com vários dados para alterar
@@ -35,7 +37,9 @@ function reply(interaction, user, target, ephemeral, type, replace) {
 function editReply(interaction, user, target, ephemeral, type) {
 
     let phrase = translate(user, target)
-    phrase = check_emojis(phrase, type)
+
+    if (!user.conf.resumed) // Ignora os emojis do inicio das frases
+        phrase = check_emojis(phrase, type)
 
     return interaction.editReply({
         content: phrase,
@@ -50,7 +54,9 @@ function phrase(user, target, type) {
     // Type é um valor para emoji, anexado com | no inicio da tradução
 
     let phrase = translate(user, target)
-    phrase = check_emojis(phrase, type)
+
+    if (!user.conf.resumed) // Ignora os emojis do inicio das frases
+        phrase = check_emojis(phrase, type)
 
     return phrase
 }
@@ -58,7 +64,9 @@ function phrase(user, target, type) {
 function report(interaction, user, target, ephemeral, type, button, update) {
 
     let phrase = translate(user, target)
-    phrase = check_emojis(phrase, type)
+
+    if (!user.conf.resumed) // Ignora os emojis do inicio das frases
+        phrase = check_emojis(phrase, type)
 
     if (button) // Valida se a interação partiu de um botão
         interaction.update({

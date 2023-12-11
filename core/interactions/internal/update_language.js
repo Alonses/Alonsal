@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
             await bot.save()
 
             interaction.reply({
-                content: `:sa: | Pacote de traduções do Alonsal sincronizado com o commit \`${cod_commit}\``,
+                content: `:sa: | Pacote de traduções do Alon sincronizado com o commit \`${cod_commit}\``,
                 ephemeral: true
             })
 

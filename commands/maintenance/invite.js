@@ -11,13 +11,13 @@ module.exports = {
             "pt-BR": 'convite',
             "ru": 'пригласить',
         })
-        .setDescription("⌠📡⌡ Invite Alonsal right now!")
+        .setDescription("⌠📡⌡ Invite Alon right now!")
         .setDescriptionLocalizations({
-            "de": '⌠📡⌡ Jetzt Alonsal einladen!',
-            "es-ES": '⌠📡⌡ ¡Invita a Alonsal ahora mismo!',
-            "fr": '⌠📡⌡ Invitez Alonsal maintenant!',
-            "it": '⌠📡⌡ Invita Alonsal ora!',
-            "pt-BR": '⌠📡⌡ Convide o Alonsal agora mesmo!',
+            "de": '⌠📡⌡ Jetzt Alon einladen!',
+            "es-ES": '⌠📡⌡ ¡Invita a Alon ahora mismo!',
+            "fr": '⌠📡⌡ Invitez Alon maintenant!',
+            "it": '⌠📡⌡ Invita Alon ora!',
+            "pt-BR": '⌠📡⌡ Convide o Alon agora mesmo!',
             "ru": '⌠📡⌡ Пригласите Алонсала прямо сейчас!'
         }),
     async execute({ client, user, interaction }) {

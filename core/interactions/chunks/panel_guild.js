@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
 
     // Códigos de funções
-    // 0 -> Alonsal falador
+    // 0 -> Alon falador
     // 1 -> Broadcast
     // 2 -> Free games
 
@@ -136,7 +136,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
         c_buttons[3] = true
 
-    // Falta de permissões para gerenciar o sistema de reportes, o alonsal falante, o broadcast entre servidores
+    // Falta de permissões para gerenciar o sistema de reportes, o alon falador, o broadcast entre servidores
     // o Log de eventos e o módulo anti-spam
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
         c_buttons[0] = true
@@ -179,7 +179,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             }
         }
 
-    // Primeira página de botões de configuração do Alonsal
+    // Primeira página de botões de configuração do Alon
     // Log de eventos, Anti-spam e Anúncio de games
     if (pagina === 0)
         botoes = botoes.concat([
@@ -188,7 +188,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[2] }
         ])
 
-    // Segunda página de botões de configuração do Alonsal
+    // Segunda página de botões de configuração do Alon
     // Denúncias in-server; Reportes externos e AutoBan
     if (pagina === 1)
         botoes = botoes.concat([
@@ -197,8 +197,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] }
         ])
 
-    // Terceira página de botões de configuração do Alonsal
-    // Alonsal Falador; Visibilidade Global e Broadcast
+    // Terceira página de botões de configuração do Alon
+    // Advertências; Alon Falador e Visibilidade Global
     if (pagina === 2)
         botoes = botoes.concat([
             { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
@@ -206,6 +206,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] }
         ])
 
+    // Broadcast
     if (pagina === 3)
         botoes = botoes.concat([
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '1', disabled: c_buttons[1] },

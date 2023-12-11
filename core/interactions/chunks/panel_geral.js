@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({ client, user, interaction }) => {
 
     const embed = new EmbedBuilder()
-        .setTitle("> Painel de controle do Alonsal")
+        .setTitle("> Painel de controle do Alon")
         .setColor(0x29BB8E)
         .setFooter({
             text: "Selecione uma das opções abaixo para navegar",

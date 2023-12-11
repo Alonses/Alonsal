@@ -3,13 +3,13 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("link")
-        .setDescription("⌠👤⌡ Connect your social networks to Alonsal")
+        .setDescription("⌠👤⌡ Connect your social networks to Alon")
         .setDescriptionLocalizations({
-            "de": '⌠👤⌡ Verbinden Sie Ihre sozialen Netzwerke mit Alonsal',
-            "es-ES": '⌠👤⌡ Conecta tus redes sociales a Alonsal',
-            "fr": '⌠👤⌡ Connectez vos réseaux sociaux à Alonsal',
-            "it": '⌠👤⌡ Collega i tuoi social network ad Alonsal',
-            "pt-BR": '⌠👤⌡ Conecte suas redes sociais ao Alonsal',
+            "de": '⌠👤⌡ Verbinden Sie Ihre sozialen Netzwerke mit Alon',
+            "es-ES": '⌠👤⌡ Conecta tus redes sociales a Alon',
+            "fr": '⌠👤⌡ Connectez vos réseaux sociaux à Alon',
+            "it": '⌠👤⌡ Collega i tuoi social network ad Alon',
+            "pt-BR": '⌠👤⌡ Conecte suas redes sociais ao Alon',
             "ru": '⌠👤⌡ Подключите свои социальные сети к Алонсал'
         })
         .addStringOption(option =>

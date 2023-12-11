@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     } else if (escolha === 2) {
 
-        // Ativa ou desativa a possibilidade do Alonsal realizar Broadcasting nos chats do servidor
+        // Ativa ou desativa a possibilidade do Alon realizar Broadcasting nos chats do servidor
         if (typeof guild.conf.broadcast !== "undefined")
             guild.conf.broadcast = !guild.conf.broadcast
         else
