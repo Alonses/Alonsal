@@ -33,6 +33,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 15 e 16 -> Sub menu com opções para gerenciar tempos de mute e exclusão de advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
+    if (operacao === 2 || operacao === 3)
+        await interaction.deferUpdate({ ephemeral: true })
+
     if (operacao === 1) {
 
         // Ativa ou desativa as advertências do servidor
@@ -50,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_warns_button", name: "Cronometrado", type: 1, emoji: client.defaultEmoji("time"), data: "16" }
         ], interaction)
 
-        return interaction.update({
+        return interaction.editReply({
             components: [row],
             ephemeral: true
         })
@@ -64,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_warns_button", name: "Advertência final", type: 1, emoji: client.emoji("banidos"), data: "21" }
         ], interaction)
 
-        return interaction.update({
+        return interaction.editReply({
             components: [row],
             ephemeral: true
         })
