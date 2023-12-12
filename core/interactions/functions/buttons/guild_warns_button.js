@@ -44,28 +44,28 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Submenu para escolher o escopo do tempo a ser aplicado
-        let botoes = [
+        let row = client.create_buttons([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_warns_button", name: "Ao silenciar", type: 1, emoji: client.emoji("dancando_mod"), data: "15" },
             { id: "guild_warns_button", name: "Cronometrado", type: 1, emoji: client.defaultEmoji("time"), data: "16" }
-        ]
+        ], interaction)
 
         return interaction.update({
-            components: [client.create_buttons(botoes, interaction)],
+            components: [row],
             ephemeral: true
         })
 
     } else if (operacao === 3) {
 
         // Submenu para escolher o escopo da advertência a ser configurada
-        let botoes = [
+        let row = client.create_buttons([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
             { id: "guild_warns_button", name: "Por Advertência", type: 1, emoji: client.emoji("dancando_mod"), data: "20" },
             { id: "guild_warns_button", name: "Advertência final", type: 1, emoji: client.emoji("banidos"), data: "21" }
-        ]
+        ], interaction)
 
         return interaction.update({
-            components: [client.create_buttons(botoes, interaction)],
+            components: [row],
             ephemeral: true
         })
 
