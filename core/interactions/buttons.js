@@ -5,8 +5,8 @@ module.exports = async ({ client, user, interaction }) => {
     const criador = dados.split(".")[0] // ID do criador do menu
     let autor_original = true
 
-    const message = interaction, caso = "botao"
-    await require('../data/ranking')({ client, message, caso })
+    // Experiência recebida pelo usuário
+    client.registryExperience(interaction, "botao")
 
     // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
     if (criador !== interaction.user.id)

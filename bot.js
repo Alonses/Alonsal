@@ -68,15 +68,14 @@ client.discord.on("messageCreate", async message => {
 
 	// Respostas automatizadas por IA
 	if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
-		return await require("./core/events/conversation")({ client, message, text, guild })
+		return require("./core/events/conversation")({ client, message, text, guild })
 
 	try { // Atualizando o XP dos usuários
-		const caso = "messages"
-
 		if (guild.conf.spam) // Sistema anti-spam do servidor
 			await require("./core/events/spam")({ client, message, user, guild })
 
-		if (message.content.length > 6 && client.x.ranking) await require("./core/data/ranking")({ client, message, caso })
+		if (message.content.length > 6 && client.x.ranking) // Experiência recebida pelo usuário
+			client.registryExperience(message, "messages")
 
 		await require("./core/events/legacy_commands")({ client, message })
 	} catch (err) { // Erro no comando
@@ -96,7 +95,7 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	// Atualiza o formato de salvamento das tasks
-	client.update_tasks(interaction)
+	// client.update_tasks(interaction)
 
 	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require("./core/interactions/menus")({ client, user, interaction })
