@@ -4,7 +4,7 @@ const { writeFileSync } = require('fs')
 
 const { spamTimeoutMap } = require("../database/schemas/Strikes")
 const { getTimedGuilds } = require('../database/schemas/Guild.js')
-const { checkUserGuildWarned, removeWarn } = require('../database/schemas/Warns.js')
+const { checkUserGuildWarned, removeWarn, getUserWarns } = require('../database/schemas/Warns.js')
 
 async function atualiza_warns() {
 
@@ -42,7 +42,13 @@ async function verifica_warns(client) {
             if (client.timestamp() > (warn.timestamp + spamTimeoutMap[guild.warn.reset])) {
 
                 // Removendo a advertência expirada
-                await removeWarn(warn.uid, warn.sid)
+                const user_warn = await getUserWarns(warn.uid, warn.sid)
+                user_warn.total--
+
+                if (user_warn.total === 0) // Excluindo o registro da advertência caso tenha zerado
+                    await removeWarn(warn.uid, warn.sid)
+                else
+                    await user_warn.save()
 
                 atualiza_warns()
             }
