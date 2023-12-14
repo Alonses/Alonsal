@@ -5,17 +5,18 @@ const formata_horas = require('../formatters/formata_horas.js')
 module.exports = async ({ client, interaction, command }) => {
 
     if (client.x.relatorio) {
+
         const bot = await client.getBot()
         bot.persis.commands++
-        await bot.save()
+        bot.save()
 
         qtd_comandos = bot.persis.commands
 
-        const d = new Date()
-        const day = d.toLocaleString("en-US", { weekday: "long" })
+        const today = new Date()
+        const day = today.toLocaleString("en-US", { weekday: "long" })
 
         let url_ativacao = `https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${interaction.id}`
-        let min = formata_horas(d.getMinutes()), hr = formata_horas(d.getHours())
+        let min = formata_horas(today.getMinutes()), hr = formata_horas(today.getHours())
 
         let ampm = "am"
         if (hr > 12) {
@@ -56,8 +57,8 @@ module.exports = async ({ client, interaction, command }) => {
         comando_inserido = `${comando_inserido} ${entradas.join(" ")}`
         comando_inserido = comando_inserido.toLowerCase()
 
-        const date = d.getDate(), year = d.getFullYear()
-        const month = d.toLocaleString("en-US", { month: "long" })
+        const date = today.getDate(), year = today.getFullYear()
+        const month = today.toLocaleString("en-US", { month: "long" })
 
         const embed = new EmbedBuilder()
             .setTitle("> ✨ New interaction")
@@ -74,6 +75,6 @@ module.exports = async ({ client, interaction, command }) => {
         client.notify(process.env.channel_command, { embeds: [embed] })
     }
 
-    const message = interaction, caso = "comando"
-    await require('../data/ranking')({ client, message, caso })
+    // Experiência recebida pelo usuário
+    client.registryExperience(interaction, "comando")
 }

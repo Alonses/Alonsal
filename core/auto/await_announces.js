@@ -8,6 +8,8 @@ const dispara_anuncio = require('./send_announcement')
 
 module.exports = async ({ client }) => {
 
+    return
+
     if (client.id() !== process.env.client_1 && !client.x.status) return
 
     const date1 = new Date() // Ficará esperando até quinta feira ao meio dia para executar a rotina

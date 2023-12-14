@@ -338,6 +338,11 @@ function internal_functions(client) {
         }
     }
 
+    // Registra a experiência recebida pelo membro
+    client.registryExperience = (message, caso) => {
+        require('./core/data/ranking')({ client, message, caso })
+    }
+
     // Registra uma movimentação bancária do usuário
     client.registryStatement = (user, traducao, caso, valor) => {
         return registryStatement(client, user, traducao, caso, valor)
