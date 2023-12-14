@@ -32,7 +32,7 @@ function create_buttons(lista, interaction) {
         }
 
         if (dados.emoji) // Botão com emoji declarado
-            botao.setEmoji(dados.emoji)
+            botao.setEmoji(dados.emoji || "👻")
 
         if (typeof dados.disabled !== "undefined") // Botão com click desativado
             botao.setDisabled(dados.disabled)
