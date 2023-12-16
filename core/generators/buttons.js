@@ -31,9 +31,7 @@ function create_buttons(lista, interaction) {
                 botao.setCustomId(`${dados.id}|${interaction.user.id}`)
         }
 
-        console.log(dados.emoji)
-
-        if (dados.emoji) // Botão com emoji declarado
+        if (typeof dados.emoji !== "undefined" && dados.emoji !== "undefined") // Botão com emoji declarado
             botao.setEmoji(dados.emoji || "👻")
 
         if (typeof dados.disabled !== "undefined") // Botão com click desativado
