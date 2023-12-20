@@ -103,7 +103,9 @@ function internal_functions(client) {
         if (emoji === "undefined" || !emoji)
             emoji = "🔍"
 
-        return emoji || "🔍"
+        console.log(emoji, typeof emoji)
+
+        return "🔍"
     }
 
     client.formata_data = (data) => {
