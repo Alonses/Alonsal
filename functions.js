@@ -81,7 +81,7 @@ function internal_functions(client) {
             if (dados[0].length > 8)
                 dados = id_emoji[client.random(id_emoji)]
 
-        let emoji = "🔍"
+        let emoji
 
         // Emojis customizados
         if (typeof dados === "string") {
@@ -96,11 +96,14 @@ function internal_functions(client) {
                     dados = emojis[dados]
             }
 
-            emoji = client.discord.emojis.cache.get(dados)?.toString() || "🔍"
+            emoji = client.discord.emojis.cache.get(dados)?.toString()
         } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
-        return emoji
+        if (emoji === "undefined" || !emoji)
+            emoji = "🔍"
+
+        return emoji || "🔍"
     }
 
     client.formata_data = (data) => {
