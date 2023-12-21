@@ -29,6 +29,9 @@ module.exports = async ({ client }) => {
         frequencia = 86400000
     }
 
+    if (date1.getHours() > 13) // Espera até a conclusão da próxima frequência para poder enviar o anúncio
+        tempo_restante = frequencia + tempo_restante
+
     setTimeout(() => {
         gera_anuncio(client, frequencia)
         requisita_anuncio(client, frequencia)
