@@ -100,12 +100,10 @@ function internal_functions(client) {
         } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
-        if (emoji === "undefined" || !emoji)
+        if (emoji === ":_:" || emoji.length < 1)
             emoji = "🔍"
 
-        console.log(emoji, typeof emoji)
-
-        return "🔍"
+        return emoji
     }
 
     client.formata_data = (data) => {
