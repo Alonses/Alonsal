@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji("icon_id")} \`${guild.warn.channel}\`\n( <#${guild.warn.channel}> )`,
+                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Notificações**\n${client.emoji("icon_id")} \`${guild.warn.channel}\`\n( <#${guild.warn.channel}> )`,
                 inline: true
             }
         )
@@ -59,7 +59,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
                 inline: true
             },
             {
@@ -85,7 +85,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.repetencias"), type: 1, emoji: client.emoji(47), data: "4" },
             { id: "guild_warns_button", name: "Penalidades", type: 1, emoji: client.defaultEmoji("warn"), data: "3" },
-            { id: "guild_warns_button", name: "Tempos", type: 1, emoji: client.defaultEmoji("time"), data: "2" },
+            { id: "guild_warns_button", name: "Notificações", type: type_button(guild?.warn.notify), emoji: emoji_button(guild?.warn.notify), data: "8" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" }
         ])
 

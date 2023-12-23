@@ -7,7 +7,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
     const canais_reporte = await getReportChannels()
 
     if (canais_reporte.length < 1)
-        return client.notify(process.env.channel_feeds, { content: ":man_guard: | Reporte de usuários cancelado, não há canais clientes registrados para receberem a atualização." })
+        return client.notify(process.env.channel_feeds, { content: ":man_guard: | Reporte de usuários não completado, não há canais clientes registrados para receberem a notificação." })
 
     // Coletando os dados em cache do servidor do reporte
     const cached_guild = await client.guilds(alvo.sid)

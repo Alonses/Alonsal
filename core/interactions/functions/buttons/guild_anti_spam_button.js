@@ -21,6 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Tempo de mute padrão
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
+    // 7 -> Ativar ou desativar as notificações do anti-spam
 
     if (operacao === 1) {
 
@@ -140,9 +141,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+    } else if (operacao === 7) {
+
+        // Ativa ou desativa as notificações do anti-spam do servidor
+        if (typeof guild.spam.notify !== "undefined")
+            guild.spam.notify = !guild.spam.notify
+        else
+            guild.spam.notify = false
     }
 
-    if (operacao === 9)
+    if (operacao > 3)
         pagina_guia = 1
 
     await guild.save()

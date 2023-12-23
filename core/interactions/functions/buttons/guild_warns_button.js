@@ -28,13 +28,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Escolher quantidade de repetências
     // 5 -> Escolher canal de avisos
     // 6 -> Advertências cronometradas
+    // 7 -> Ativar ou desativar as notificações progressivas
+    // 8 -> Ativar ou desativar as notificações das advertências
+
     // 9 -> Alterar de página dentro do guia
 
     // 15 e 16 -> Sub menu com opções para gerenciar tempos de mute e exclusão de advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
-
-    if (operacao === 2 || operacao === 3)
-        await interaction.deferUpdate({ ephemeral: true })
 
     if (operacao === 1) {
 
@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_warns_button", name: "Cronometrado", type: 1, emoji: client.defaultEmoji("time"), data: "16" }
         ], interaction)
 
-        return interaction.editReply({
+        return interaction.update({
             components: [row],
             ephemeral: true
         })
@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_warns_button", name: "Advertência final", type: 1, emoji: client.emoji("banidos"), data: "21" }
         ], interaction)
 
-        return interaction.editReply({
+        return interaction.update({
             components: [row],
             ephemeral: true
         })
@@ -138,6 +138,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         else
             guild.warn.progressive = false
 
+    } else if (operacao === 8) {
+
+        // Ativa ou desativa as notificações de advertências
+        if (typeof guild.warn.notify !== "undefined")
+            guild.warn.notify = !guild.warn.notify
+        else
+            guild.warn.notify = false
+
     } else if (operacao >= 20) {
 
         const operacoes = []
@@ -195,7 +203,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao === 9)
+    if (operacao >= 8)
         pagina_guia = 1
 
     await guild.save()

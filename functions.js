@@ -100,7 +100,10 @@ function internal_functions(client) {
         } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
-        return "🔍"
+        if (isNaN(parseInt(id_emoji)))
+            emoji = "🔍"
+
+        return emoji
     }
 
     client.formata_data = (data) => {
