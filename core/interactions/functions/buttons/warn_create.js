@@ -141,7 +141,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    client.notify(guild.warn.channel, { content: "@here", embeds: [embed_guild] })
+    const obj = {
+        embeds: [embed_guild]
+    }
+
+    if (guild.warn.notify) // Servidor com ping de advertência ativado
+        obj.content = "@here"
+
+    client.notify(guild.warn.channel, obj)
 
     // Usuário ultrapassou a quantidade de advertências permitida no servidor
     if (user_warns.total >= guild.warn.cases || guild.warn.progressive) {

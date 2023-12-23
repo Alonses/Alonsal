@@ -7,7 +7,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
     if (!permissions || guild_bot.roles.highest.position < user_guild.roles.highest.position)
-        return client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
+        return client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | @here ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
 
     // Listando as mensagens consideras spam e excluindo elas
     user_messages.forEach(internal_message => {
@@ -39,7 +39,15 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
     user_guild.timeout(tempo_timeout * 1000, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
         .then(async () => {
 
-            client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.spam.ping_spam"), user_guild), embeds: [embed] })
+            const obj = {
+                content: client.replace(client.tls.phrase(guild, "mode.spam.ping_expulsao"), user_guild),
+                embeds: [embed]
+            }
+
+            if (guild.warn.notify) // Servidor com ping de spam ativado
+                obj.content = `@here ${obj.content}`
+
+            client.notify(guild.logger.channel, obj)
 
             let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 

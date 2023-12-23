@@ -44,6 +44,7 @@ const schema = new mongoose.Schema({
         category: { type: String, default: null }
     },
     warn: {
+        notify: { type: Boolean, default: true },
         timed: { type: Boolean, default: false },
         progressive: { type: Boolean, default: true },
         channel: { type: String, default: null },
@@ -78,6 +79,7 @@ const schema = new mongoose.Schema({
         member_voice_status: { type: Boolean, default: false }
     },
     spam: {
+        notify: { type: Boolean, default: true },
         strikes: { type: Boolean, default: true },
         timeout: { type: Number, default: 2 },
         data: { type: String, default: null },
