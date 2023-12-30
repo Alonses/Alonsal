@@ -467,7 +467,7 @@ function internal_functions(client) {
     client.verifyWarnAction = (warn, traduz) => {
 
         // Listando as penalidades que o usuário receberá com a advertência
-        let acao_advertencia = `${loggerMap[warn.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${warn.action}`)}\`${client.guildAction(warn, traduz)}`
+        let acao_advertencia = `${loggerMap[warn.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${warn.action || "none"}`)}\`${client.guildAction(warn, traduz)}`
 
         if (warn.role) // Advertência com cargo aplicado
             acao_advertencia += `\n:label: <@&${warn.role}>`
