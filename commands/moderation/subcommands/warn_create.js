@@ -1,4 +1,5 @@
 const { PermissionsBitField } = require('discord.js')
+const { listAllGuildWarns } = require('../../../core/database/schemas/Warns_guild')
 
 const guildActions = {
     "member_mute": [PermissionsBitField.Flags.ModerateMembers],
@@ -7,6 +8,15 @@ const guildActions = {
 }
 
 module.exports = async ({ client, user, interaction }) => {
+
+    // Verificando a quantidade de advertências customizadas no servidor
+    const warns_guild = await listAllGuildWarns(interaction.guild.id)
+
+    if (warns_guild.length < 2)
+        return interaction.reply({
+            content: "🕵️‍♂️ | Antes de executar esse comando, configure as advertências através do </panel guild:1107163338930126869> na guia das `🛑 Advertências`,\npara poder definir penalidades e aplicação de cargos ao usuário.\n\nÉ necessário que pelo menos duas advertências sejam criadas para poder usar esse comando.",
+            ephemeral: true
+        })
 
     const guild_member = await client.getMemberPermissions(interaction.guild.id, interaction.options.getUser("user").id)
     const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
