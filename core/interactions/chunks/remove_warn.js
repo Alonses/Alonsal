@@ -9,7 +9,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const pagina = dados.split(".")[2]
 
     const alvo = await getUserWarns(id_alvo, id_guild)
-    const guild = await client.getGuild(interaction.guild.id)
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.warn.remover_advertencia"))
@@ -27,8 +26,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
+                name: "⠀",
+                value: "⠀",
                 inline: true
             }
         )

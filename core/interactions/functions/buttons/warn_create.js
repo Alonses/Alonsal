@@ -1,8 +1,10 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { getUserWarns } = require("../../../database/schemas/Warns")
-const { spamTimeoutMap } = require("../../../database/schemas/Strikes")
 const { loggerMap } = require("../../../database/schemas/Guild")
+const { spamTimeoutMap } = require("../../../database/schemas/Strikes")
+
+const { getUserWarns, removeWarn } = require("../../../database/schemas/Warns")
+const { listAllGuildWarns } = require('../../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -11,40 +13,39 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operacao = parseInt(dados.split(".")[1])
 
     const member_guild = await client.getMemberGuild(interaction, id_alvo)
+    const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
 
-    if (operacao === 0) // Operação cancelada
+    if (operacao === 0) { // Operação cancelada
+
+        if (user_warns.total === -1) // Removendo a advertência do banco de dados
+            await removeWarn(id_alvo, interaction.guild.id)
+
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),
             embeds: [],
             components: [],
             ephemeral: true
         })
+    }
 
     const user_alvo = await client.getUser(id_alvo)
+    const guild_warns = await listAllGuildWarns(interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
+
+    let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Acrescentando mais uma advertência ao usuário e registrando o último moderador
-    const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
-    user_warns.total++
-    user_warns.assigner = interaction.user.id
+    if (user_warns.total < guild_warns.length - 1)
+        user_warns.total++
 
+    // Verificando se existem advertências para as próximas punições do usuário
+    if (!guild_warns[user_warns.total])
+        user_warns.total = guild_warns.length - 1
+
+    user_warns.assigner = interaction.user.id
     await user_warns.save()
 
-    const guild = await client.getGuild(interaction.guild.id)
     let texto_rodape = client.tls.phrase(user_alvo, "mode.warn.aviso_penalidade")
-    let acao_advertencia, tempo_mute = 0, punicao = guild.warn.action
-
-    if (guild.warn.cases >= user_warns.total || guild.warn.progressive)
-        texto_rodape = client.replace(client.tls.phrase(user_alvo, "mode.warn.aviso_penalidade_aplicada"), interaction.guild.name)
-
-    if (user_warns.total >= guild.warn.cases)
-        acao_advertencia = client.tls.phrase(user, `menu.events.${guild.warn.action}`)
-    else if (guild.warn.progressive) {
-        acao_advertencia = client.tls.phrase(user, `menu.events.${guild.warn.warned}`)
-        punicao = guild.warn.warned
-    } else {
-        acao_advertencia = "Sem penalidades."
-        punicao = "message_edit"
-    }
 
     const embed_user = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user_alvo, "mode.warn.titulo_advertencia")} :inbox_tray:`)
@@ -58,11 +59,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **Punição**`,
-                value: `${loggerMap[punicao]}**${acao_advertencia}**`,
+                value: client.verifyWarnAction(guild_warns[user_warns.total], guild),
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${user_warns.total} / ${guild.warn.cases}**`,
+                name: `${client.emoji(47)} **Advertências: ${user_warns.total + 1} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
@@ -92,7 +93,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${user_warns.total} / ${guild.warn.cases}**`,
+                name: `${client.emoji(47)} **Advertências: ${user_warns.total + 1} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
@@ -127,31 +128,40 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     embed_guild.addFields({
         name: `${client.emoji("banidos")} **Punição**`,
-        value: `${loggerMap[punicao]}**${acao_advertencia}**`,
+        value: client.verifyWarnAction(guild_warns[user_warns.total], guild),
         inline: true
     })
 
-    const obj = {
+    client.notify(guild.warn.channel, {
+        content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
         embeds: [embed_guild]
-    }
+    })
 
-    if (guild.warn.notify) // Servidor com ping de advertência ativado
-        obj.content = "@here"
+    if (guild_warns[user_warns.total].action) // Usuário recebeu a uma advertência com penalidade
+        if (guild_warns[user_warns.total].action !== "none") {
 
-    client.notify(guild.warn.channel, obj)
+            const guild_member = await client.getMemberPermissions(interaction.guild.id, id_alvo)
+            const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
+            const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
 
-    // Usuário ultrapassou a quantidade de advertências permitida no servidor
-    if (user_warns.total >= guild.warn.cases || guild.warn.progressive) {
-
-        // Aplicando a punição ao usuario
-        const guild_member = await client.getMemberPermissions(interaction.guild.id, id_alvo)
-        const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
-        const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
-
-        if (user_warns.total >= guild.warn.cases) // Atingiu o limite de advertências do servidor
-            require(`../../../events/warn/${guild.warn.action.replace("_2", "")}`)({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member })
-        else // Penalidades por advertências recebidas
+            // Redirecionando o evento
             require(`../../../events/warn/${guild.warn.warned.replace("_2", "")}`)({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member })
+        }
+
+    if (guild_warns[user_warns.total].role) { // Advertência atual acrescenta um cargo
+
+        // Permissões do bot no servidor
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
+        const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+
+        if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
+
+            // Atribuindo o cargo ao usuário que recebeu a advertência
+            let role = interaction.guild.roles.cache.get(guild_warns[user_warns.total].role)
+
+            if (role.editable) // Verificando se o cargo é editável
+                membro_guild.roles.add(role).catch(console.error)
+        }
     }
 
     return client.reply(interaction, {
