@@ -1,15 +1,25 @@
 const { EmbedBuilder } = require("discord.js")
 
 const { getUserWarns } = require("../../database/schemas/Warns")
+const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
+const { loggerMap } = require("../../database/schemas/Guild")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const id_alvo = dados.split(".")[0]
     const pagina = dados.split(".")[2]
 
-    const guild = await client.getGuild(interaction.guild.id)
     const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
-    const member_guild = await client.getMemberGuild(interaction, user_warns)
+    const member_guild = await client.getMemberGuild(interaction, id_alvo)
+    const guild_warns = await listAllGuildWarns(interaction.guild.id)
+
+    let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+
+    // Verificando se existem advertências para as próximas punições do usuário
+    let indice_warn = user_warns.total + 1
+
+    if (!guild_warns[user_warns.total + 1])
+        indice_warn = guild_warns.length - 1
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`)
@@ -18,15 +28,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`@${user_warns.nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.logger.entrada_original")}**`,
-                value: `<t:${parseInt(member_guild.joinedTimestamp || 0 / 1000)}:F> )`,
+                value: `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F> )`,
                 inline: true
             },
-            { name: "⠀", value: "⠀", inline: true }
+            {
+                name: `${client.emoji(47)} **Advertências**`,
+                value: `\`${indice_warn} / ${indice_matriz}\``,
+                inline: true
+            }
         )
         .addFields(
             {
@@ -35,15 +49,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_em_registro")}**`,
-                value: `\`${user_warns.total} / ${guild.warn.cases}\``,
+                name: `${client.emoji("banidos")} **Próxima penalidade**`,
+                value: client.verifyWarnAction(guild_warns[indice_warn], user),
                 inline: true
             },
-            {
-                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.penalidade_server")}**`,
-                value: `\`${client.tls.phrase(user, `menu.events.${guild.warn.action}`)}\`${client.guildAction(guild, user)}`,
-                inline: true
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .setFooter({
             text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),

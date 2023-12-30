@@ -12,7 +12,7 @@ const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
 const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
-const { getGuild, getGameChannels } = require('./core/database/schemas/Guild')
+const { getGuild, getGameChannels, loggerMap } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
@@ -148,8 +148,12 @@ function internal_functions(client) {
         const id_ignorar = id_atual || null
 
         interaction.guild.roles.cache.forEach(role => {
-            if (role.id !== interaction.guild.id && role.id !== id_ignorar) // Adiciona apenas cargos customizados
-                roles.push({ id: role.id, name: role.name })
+            if (role.id !== interaction.guild.id && role.id !== id_ignorar && role.editable) { // Adiciona apenas cargos customizados
+
+                // Não exibe cargos que possuem permissões moderativas
+                if (!role.permissions.has(PermissionsBitField.Flags.ManageMessages) && !role.permissions.has(PermissionsBitField.Flags.ModerateMembers) && !role.permissions.has(PermissionsBitField.Flags.Administrator))
+                    roles.push({ id: role.id, name: role.name })
+            }
         })
 
         return roles
@@ -220,10 +224,10 @@ function internal_functions(client) {
         return client.discord.users.fetch(id_alvo)
     }
 
-    client.guildAction = (guild, chave_traduz) => {
+    client.guildAction = (warn, chave_traduz) => {
 
         // Verifica se a ação do servidor é silenciar um membro, caso positivo, retorna o tempo de mute do servidor
-        return guild.warn.action || guild.warn.warned === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}: \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[guild.warn.timeout]}`)}\`**` : ""
+        return warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}:** \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[warn.timeout]}`)}\`` : ""
     }
 
     // Registra os eventos no diário do bot
@@ -458,6 +462,29 @@ function internal_functions(client) {
                         tasks[i].group = null
                         await tasks[i].save()
                     }
+    }
+
+    client.verifyWarnAction = (warn, traduz) => {
+
+        // Listando as penalidades que o usuário receberá com a advertência
+        let acao_advertencia = `${loggerMap[warn.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${warn.action}`)}\`${client.guildAction(warn, traduz)}`
+
+        if (warn.role) // Advertência com cargo aplicado
+            acao_advertencia += `\n:label: <@&${warn.role}>`
+
+        return acao_advertencia
+    }
+
+    client.verifyGuildWarns = (guild_warns) => {
+
+        let indice_matriz
+
+        guild_warns.forEach(warn => {
+            if ((warn.action === "member_kick_2" || warn.action === "member_ban") && !indice_matriz)
+                indice_matriz = warn.rank + 1
+        })
+
+        return indice_matriz || guild_warns.length
     }
 
     // Atualiza o idioma padrão do usuário caso não possua um

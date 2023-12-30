@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     nick: { type: String, default: null },
-    total: { type: Number, default: 0 },
+    total: { type: Number, default: -1 },
     assigner: { type: String, default: null },
     relatory: { type: String, default: null },
     timestamp: { type: Number, default: null },
@@ -33,7 +33,7 @@ async function checkUserGuildWarned(sid) {
     // Listando apenas os usuários que possuem advertências registradas no servidor
     return model.find({
         sid: sid,
-        total: { $ne: 0 }
+        total: { $ne: -1 }
     }).limit(50)
 }
 

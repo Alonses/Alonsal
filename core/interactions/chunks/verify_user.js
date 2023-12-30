@@ -3,6 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 const { getUserReports } = require('../../database/schemas/Report')
 const { getUserStrikes } = require("../../database/schemas/Strikes")
 const { getUserWarns } = require('../../database/schemas/Warns')
+const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, id_cache }) => {
 
@@ -24,13 +25,16 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     let user_name = `\`${user_alvo.user.username.replace(/ /g, "")}#${user_alvo.user.discriminator}\`\n( ${user_alvo} )`
 
     if (user_alvo.user.discriminator == 0)
-        user_name = `\`@${user_alvo.user.username.replace(/ /g, "")}\`\n( ${user_alvo} )`
+        user_name = `\`${user_alvo.user.username.replace(/ /g, "")}\`\n( ${user_alvo} )`
 
     // Avatar do usuário
     const avatar_user = user_alvo.user.avatarURL({ dynamic: true, size: 2048 }), historico = []
     const strikes = await getUserStrikes(id_alvo, interaction.guild.id)
+
+    const guild_warns = await listAllGuildWarns(interaction.guild.id)
     const warns = await getUserWarns(id_alvo, interaction.guild.id)
-    const guild = await client.getGuild(interaction.guild.id)
+
+    let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Quantificando os relatórios sobre o usuário
     reports.forEach(valor => {
@@ -49,17 +53,17 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: user_name,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${user_name}`,
                 inline: true
             },
             {
-                name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
-                value: `\`${user_alvo.id}\``,
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.logger.entrada_original")}**`,
+                value: `<t:${parseInt(user_alvo.joinedTimestamp / 1000)}:F>`,
                 inline: true
             },
             {
                 name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total} / ${guild.warn.cases}**`,
+                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total} / ${indice_matriz}**`,
                 inline: true
             }
         )

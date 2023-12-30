@@ -1,5 +1,7 @@
 const { PermissionsBitField } = require("discord.js")
 
+const { removeWarn } = require("../../database/schemas/Warns")
+
 module.exports = async ({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member }) => {
 
     // Verificando se o membro e o executor estão no servidor
@@ -24,10 +26,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     await guild_member.kick(user_warns.relatory)
         .then(async () => {
             // Resetando as advertências do usuário
-            if (user_warns.total === guild.warn.cases) {
-                user_warns.total = 0
-                await user_warns.save()
-            }
+            await removeWarn(user_warns.uid, guild.sid)
         })
         .catch(console.error)
 }

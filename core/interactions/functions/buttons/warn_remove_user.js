@@ -1,4 +1,4 @@
-const { getUserWarns, checkUserGuildWarned } = require('../../../database/schemas/Warns')
+const { checkUserGuildWarned, removeWarn } = require('../../../database/schemas/Warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -21,10 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         // Removendo os warns do usuário no servidor
-        const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
-        user_warns.total = 0
-
-        await user_warns.save()
+        await removeWarn(id_alvo, interaction.guild.id)
 
         // Verificando se há outros usuários com advertência no servidor para poder continuar editando
         let advertencias_server = await checkUserGuildWarned(id_guild), row

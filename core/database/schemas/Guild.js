@@ -17,7 +17,8 @@ const loggerMap = {
     "member_kick_2": "👟",
     "member_mute": "🔇",
     "member_ban": "🔨",
-    "member_voice_status": "📻"
+    "member_voice_status": "📻",
+    "none": "📝"
 }
 
 const channelTypes = {

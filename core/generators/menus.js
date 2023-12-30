@@ -22,6 +22,7 @@ const translate = {
     "choose_language": "Choose a language!",
     "guild_spam_timeout": "menu.menus.escolher_timeout",
     "guild_warns_timeout": "menu.menus.escolher_timeout",
+    "warn_config_timeout": "menu.menus.escolher_timeout",
     "guild_warns_strikes": "menu.menus.escolher_numero",
     "guild_spam_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
@@ -162,7 +163,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes") {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout") {
                 // Listando as opções de tempo de mute para o anti-spam
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
@@ -187,15 +188,22 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
                     emoji_label = client.defaultEmoji("role")
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
+
+                    if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
+                        valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu}`
+
                 } else if (alvo.includes("#language")) { // Idioma
                     nome_label = languagesMap[valor][2]
                     emoji_label = languagesMap[valor][3]
                     valor_label = `${alvo.replace("#", "_")}|${valor}`
-                } else if (alvo.includes("#events")) { // Eventos do logger
+                } else if (alvo.includes("#events")) { // Eventos variados
                     nome_label = `${loggerMap[valor.type]} ${client.tls.phrase(user, `menu.events.${valor.type}`)}`
                     emoji_label = valor.status ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                     valor_label = `${alvo.replace("#", "_")}|${valor.type}`
                     descricao_label = valor.status ? client.tls.phrase(user, "menu.status.ativado") : client.tls.phrase(user, "menu.status.desativado")
+
+                    if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
+                        valor_label = `${alvo.replace("#", "_")}|${valor.type}.${valor.id_warn}`
 
                     if (data.submenu) // Função com um submenu inclusa
                         valor_label = `${alvo.replace("#", "_")}|${valor.type}.${data.submenu}`

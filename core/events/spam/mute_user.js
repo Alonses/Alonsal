@@ -44,7 +44,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
                 embeds: [embed]
             }
 
-            if (guild.warn.notify) // Servidor com ping de spam ativado
+            if (guild.spam.notify) // Servidor com ping de spam ativado
                 obj.content = `@here ${obj.content}`
 
             client.notify(guild.logger.channel, obj)

@@ -27,12 +27,5 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     // Mutando o membro
     await guild_member.timeout(timeout, user_warns.relatory)
-        .then(async () => {
-            // Resetando as advertências do usuário
-            if (user_warns.total === guild.warn.cases) {
-                user_warns.total = 0
-                await user_warns.save()
-            }
-        })
         .catch(console.error)
 }

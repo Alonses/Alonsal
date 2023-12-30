@@ -1,31 +1,31 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserWarns } = require('../../database/schemas/Warns')
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 const { loggerMap } = require("../../database/schemas/Guild")
+const { spamTimeoutMap } = require("../../database/schemas/Strikes")
+
+const { getUserWarns } = require('../../database/schemas/Warns')
+const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, guild, guild_member, guild_executor }) => {
 
     const user_warns = await getUserWarns(guild_member.id, interaction.guild.id)
     const descricao_warn = interaction.options.getString("reason")
-    let texto_rodape = "⠀", acao_advertencia, punicao = guild.warn.action
+    const guild_warns = await listAllGuildWarns(interaction.guild.id)
+    let texto_rodape = "⠀"
 
     // Salvando os dados do usuário
     user_warns.relatory = descricao_warn
     user_warns.nick = guild_member.user.username
     user_warns.timestamp = client.timestamp()
-
     await user_warns.save()
 
-    if ((user_warns.total + 1) >= guild.warn.cases)
-        acao_advertencia = client.tls.phrase(user, `menu.events.${guild.warn.action}`)
-    else if (guild.warn.progressive) {
-        acao_advertencia = client.tls.phrase(user, `menu.events.${guild.warn.warned}`)
-        punicao = guild.warn.warned
-    } else {
-        acao_advertencia = "Sem penalidade."
-        punicao = "message_edit"
-    }
+    // Verificando se existem advertências para as próximas punições do usuário
+    let indice_warn = user_warns.total + 1
+
+    if (!guild_warns[user_warns.total + 1])
+        indice_warn = guild_warns.length - 1
+
+    let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.criando_advertencia")} :inbox_tray:`)
@@ -44,14 +44,14 @@ module.exports = async ({ client, user, interaction, guild, guild_member, guild_
             },
             {
                 name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_em_registro")}**`,
-                value: `\`( ${user_warns.total} + 1 ) / ${guild.warn.cases}\``,
+                value: `\`( ${user_warns.total + 1} + 1 ) / ${indice_matriz}\``,
                 inline: true
             }
         )
         .addFields(
             {
                 name: `${client.emoji("banidos")} **Penalidade**`,
-                value: `${loggerMap[punicao]}**${acao_advertencia}**`,
+                value: client.verifyWarnAction(guild_warns[indice_warn], user),
                 inline: true
             }
         )
