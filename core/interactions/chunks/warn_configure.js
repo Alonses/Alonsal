@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }
         )
 
-    if (guild.warn.timeout)
+    if (guild.warn.reset)
         embed.addFields(
             {
                 name: `${client.defaultEmoji("time")} **Expiração**`,

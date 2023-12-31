@@ -1,6 +1,7 @@
 const { PermissionsBitField } = require("discord.js")
 
 const { spamTimeoutMap } = require("../../database/schemas/Strikes")
+const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
 
 module.exports = async ({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member }) => {
 
@@ -22,8 +23,10 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         return client.notify(guild.warn.channel, { content: ":octagonal_sign: | Eu não posso silenciar esse membro pois ele possui mais hierarquia que eu!\nO sistema de advertências não irá funcionar se meu cargo estiver abaixo do usuário advertido na lista de cargos do servidor!" })
     }
 
+    const guild_warns = await listAllGuildWarns(interaction.guild.id)
+
     // Tempo de mute padrão do servidor para advertências
-    const timeout = spamTimeoutMap[guild.warn.timeout] * 1000
+    const timeout = spamTimeoutMap[guild_warns[user_warns.total].timeout] * 1000
 
     // Mutando o membro
     await guild_member.timeout(timeout, user_warns.relatory)

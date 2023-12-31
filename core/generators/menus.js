@@ -21,9 +21,8 @@ const translate = {
     "profile_custom_navegar": "menu.menus.selecionar_profile",
     "choose_language": "Choose a language!",
     "guild_spam_timeout": "menu.menus.escolher_timeout",
-    "guild_warns_timeout": "menu.menus.escolher_timeout",
+    "guild_warns_reset": "menu.menus.escolher_timeout",
     "warn_config_timeout": "menu.menus.escolher_timeout",
-    "guild_warns_strikes": "menu.menus.escolher_numero",
     "guild_spam_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
@@ -163,7 +162,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_timeout" || alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout") {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout") {
                 // Listando as opções de tempo de mute para o anti-spam
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
@@ -172,13 +171,13 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     valor_label = `${alvo}|${i + 1}.${data.submenu}`
 
                 // Exibindo apenas o número
-                if (alvo === "guild_spam_strikes" || alvo === "guild_warns_strikes")
+                if (alvo === "guild_spam_strikes")
                     nome_label = valor
                 else
                     nome_label = client.tls.phrase(user, `menu.times.${valor}`)
 
                 // Usado para a quantidade de repetências dos warns
-                if (alvo === "guild_warns_strikes" || alvo === "guild_spam_strikes")
+                if (alvo === "guild_spam_strikes")
                     valor_label = `${alvo}|${valor}`
             }
 
@@ -214,7 +213,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     descricao_label = valor.network.link ? client.tls.phrase(user, "mode.network.linkado") : client.tls.phrase(user, "mode.network.nao_linkado")
                     valor_label = `${alvo.replace("#", "_")}|${valor.sid}`
                 } else { // Canais e categorias
-                    nome_label = valor.split(".")[0].length < 20 ? valor.split(".")[0] : `${valor.split(".")[0].slice(0, 15)}...`
+                    nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
 
                     if (alvo === "guild_speaker#channel") {
 
@@ -222,12 +221,12 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                         emoji_label = client.emoji("mc_oppose")
 
                         if (guild.speaker.channels)
-                            if (guild.speaker.channels.includes(valor.split(".")[1]))
+                            if (guild.speaker.channels.includes(valor.id))
                                 emoji_label = client.emoji("mc_approve")
                     } else
                         emoji_label = client.defaultEmoji("channel")
 
-                    valor_label = `${alvo.replace("#", "_")}|${valor.split(".")[1]}`
+                    valor_label = `${alvo.replace("#", "_")}|${valor.id}`
                 }
             }
 
