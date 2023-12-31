@@ -38,17 +38,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
     // 1 -> Ativar ou desativar o warn
-    // 2 -> Tempo de mute
     // 3 -> Configurar advertências
 
     // 5 -> Escolher canal de avisos
     // 6 -> Advertências cronometradas
-    // 7 -> Ativar ou desativar as notificações progressivas
     // 8 -> Ativar ou desativar as notificações das advertências
 
     // 9 -> Alterar de página dentro do guia
 
-    // 15 e 16 -> Sub menu com opções para gerenciar tempos de mute e exclusão de advertências
+    // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
     if (operacao === 1) {
@@ -58,20 +56,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             guild.conf.warn = !guild.conf.warn
         else
             guild.conf.warn = true
-
-    } else if (operacao === 2) {
-
-        // Submenu para escolher o escopo do tempo a ser aplicado
-        let row = client.create_buttons([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_warns_button", name: "Ao silenciar", type: 1, emoji: client.emoji("dancando_mod"), data: "15" },
-            { id: "guild_warns_button", name: "Cronometrado", type: 1, emoji: client.defaultEmoji("time"), data: "16" }
-        ], interaction)
-
-        return interaction.update({
-            components: [row],
-            ephemeral: true
-        })
 
     } else if (operacao === 3) {
 
@@ -153,14 +137,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Sincronizando a lista de advertências do cache
         atualiza_warns()
 
-    } else if (operacao === 7) {
-
-        // Ativa ou desativa as advertências progressivas no servidor
-        if (typeof guild.warn.progressive !== "undefined")
-            guild.warn.progressive = !guild.warn.progressive
-        else
-            guild.warn.progressive = false
-
     } else if (operacao === 8) {
 
         // Ativa ou desativa as notificações de advertências
@@ -169,38 +145,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         else
             guild.warn.notify = false
 
-    } else if (operacao >= 20) {
-
-        const operacoes = []
-
-        // Listando todas as operações com exceção da ativa no momento
-        Object.keys(guildActions).forEach(acao => {
-
-            if (operacao === 20) { // Penalidade por advertências
-                if (guild.warn.warned !== acao)
-                    operacoes.push({ type: acao, value: guildActions[guild.warn.warned] })
-            } else
-                if (guild.warn.action !== acao)
-                    operacoes.push({ type: acao, value: guildActions[guild.warn.action] })
-        })
-
-        // Definindo o evento que será realizado pelo warn
-        const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "guild_warns#events",
-            submenu: operacao,
-            values: operacoes
-        }
-
-        let row = client.create_buttons([{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
-        }], interaction)
-
-        return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
-        })
-    } else if (operacao >= 15) {
+    } else if (operacao == 16) {
 
         const valores = []
 
@@ -211,7 +156,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "guild_warns_timeout",
+            alvo: "guild_warns_reset",
             submenu: operacao,
             values: valores
         }

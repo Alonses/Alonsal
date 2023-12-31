@@ -145,7 +145,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
 
             // Redirecionando o evento
-            require(`../../../events/warn/${guild.warn.warned.replace("_2", "")}`)({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member })
+            require(`../../../events/warn/${guild_warns[user_warns.total].action.replace("_2", "")}`)({ client, user, interaction, guild, user_warns, guild_member, guild_executor, bot_member })
         }
 
     if (guild_warns[user_warns.total].role) { // Advertência atual acrescenta um cargo

@@ -6,9 +6,8 @@ const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 const { getUserWarns } = require('../../database/schemas/Warns')
 const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
-module.exports = async ({ client, user, interaction, guild, guild_member, guild_executor }) => {
+module.exports = async ({ client, user, interaction, guild, user_warns, guild_member, guild_executor }) => {
 
-    const user_warns = await getUserWarns(guild_member.id, interaction.guild.id)
     const descricao_warn = interaction.options.getString("reason")
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
     let texto_rodape = "⠀"

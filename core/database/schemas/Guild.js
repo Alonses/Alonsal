@@ -47,11 +47,7 @@ const schema = new mongoose.Schema({
     warn: {
         notify: { type: Boolean, default: true },
         timed: { type: Boolean, default: false },
-        progressive: { type: Boolean, default: true },
         channel: { type: String, default: null },
-        cases: { type: Number, default: 3 },
-        warned: { type: String, default: 'member_mute' },
-        action: { type: String, default: 'member_mute' },
         timeout: { type: Number, default: 2 },
         reset: { type: Number, default: 7 }
     },

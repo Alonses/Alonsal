@@ -135,12 +135,13 @@ function internal_functions(client) {
         if (!id_configurado === "undefined")
             id_configurado = ""
 
-        canais.map(canal => {
-            if (canal.id !== id_configurado)
-                canais_alvo.push(`${canal.name}.${canal.id}`)
+        canais.map(channel => {
+            if (channel.id !== id_configurado)
+                canais_alvo.push({ id: channel.id, name: channel.name })
         })
 
-        return canais_alvo
+        // Ordenando alfabeticamente os canais
+        return canais_alvo.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
     client.getGuildRoles = async (interaction, id_atual) => {
@@ -150,13 +151,14 @@ function internal_functions(client) {
         interaction.guild.roles.cache.forEach(role => {
             if (role.id !== interaction.guild.id && role.id !== id_ignorar && role.editable) { // Adiciona apenas cargos customizados
 
-                // Não exibe cargos que possuem permissões moderativas
+                // Não inclui cargos que possuem permissões moderativas
                 if (!role.permissions.has(PermissionsBitField.Flags.ManageMessages) && !role.permissions.has(PermissionsBitField.Flags.ModerateMembers) && !role.permissions.has(PermissionsBitField.Flags.Administrator))
                     roles.push({ id: role.id, name: role.name })
             }
         })
 
-        return roles
+        // Ordenando alfabeticamente os cargos
+        return roles.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
     client.getUser = (id_user) => {
@@ -285,6 +287,11 @@ function internal_functions(client) {
     // Sincroniza as ações moderativas em servidores com o network habilitado
     client.network = async (guild, caso, id_alvo) => {
         return network({ client, guild, caso, id_alvo })
+    }
+
+    // Remove emojis e caracteres especiais da string
+    client.normalizeString = (string) => {
+        return string.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}\p{P}\p{Z}{^$=+±\\'|`\\~<>}]/gu, "")
     }
 
     // Envia uma notificação em um canal
