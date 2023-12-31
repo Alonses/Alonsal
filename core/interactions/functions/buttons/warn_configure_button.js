@@ -1,6 +1,6 @@
 const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
-const { atualiza_warns } = require('../../../auto/warn')
-const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Warns_guild')
+
+const { getGuildWarn } = require('../../../database/schemas/Warns_guild')
 
 const guildActions = {
     "none": null,
@@ -11,7 +11,7 @@ const guildActions = {
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    let id_warn = dados.split(".")[2]
+    const id_warn = parseInt(dados.split(".")[2])
     let operacao = parseInt(dados.split(".")[1]), reback = `warn_configure_button.${id_warn}`
 
     const warn = await getGuildWarn(interaction.guild.id, id_warn) // Cria uma nova advertência caso o ID passado não exista
@@ -23,6 +23,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 3 -> Escolher tempo de mute
     // 4 -> Atualizar advertência
     // 5 -> Criar uma nova advertência
+
+    // 9 -> Guia de customização das advertências
 
     if (operacao === 1) {
 

@@ -1,9 +1,10 @@
 const { ChannelType } = require('discord.js')
 
+const { loggerMap } = require('../../../database/schemas/Guild')
 const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
+
 const { atualiza_warns } = require('../../../auto/warn')
 const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Warns_guild')
-const { loggerMap } = require('../../../database/schemas/Guild')
 
 const guildActions = {
     "member_mute": 0,
@@ -14,9 +15,9 @@ const guildActions = {
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.1", pagina_guia = 0
-    const guild = await client.getGuild(interaction.guild.id)
 
     const advertencias = await listAllGuildWarns(interaction.guild.id)
+    const guild = await client.getGuild(interaction.guild.id)
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.warn.channel || advertencias.length < 1) {
@@ -83,7 +84,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             await getGuildWarn(interaction.guild.id, 0)
 
             botoes.push({
-                id: "warn_configure_button", name: "1°", type: 1, emoji: client.emoji(39), data: `${interaction.guild.id}|0`
+                id: "warn_configure_button", name: "1°", type: 1, emoji: client.emoji(39), data: `9|0`
             })
         } else
             advertencias.forEach(warn => {
@@ -95,7 +96,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     disabled = true
 
                 botoes.push({
-                    id: "warn_configure_button", name: `${warn.rank + 1}°`, type: 1, emoji: warn.action ? loggerMap[warn.action] : client.emoji(39), data: `${warn.sid}|${warn.rank}`, disabled: disabled
+                    id: "warn_configure_button", name: `${warn.rank + 1}°`, type: 1, emoji: warn.action ? loggerMap[warn.action] : client.emoji(39), data: `9|${warn.rank}`, disabled: disabled
                 })
 
                 if (warn.action)
@@ -103,18 +104,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         indice_matriz = warn.rank
             })
 
-        if (botoes.length < 5) // Botão para adicionar uma nova advertência customizada
-            row.push({ id: "warn_configure_button", name: "Nova advertência", type: 2, emoji: client.emoji(43), data: `${interaction.guild.id}|${advertencias[advertencias.length - 1].rank + 1}` })
+        if (botoes.length < 5) // Botão para adicionar uma nova advertência
+            row.push({ id: "warn_configure_button", name: "Nova advertência", type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
 
-        const obj = {
-            components: [client.create_buttons(botoes, interaction)],
+        return interaction.update({
+            components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
             ephemeral: true
-        }
-
-        if (row.length > 0)
-            obj.components.push(client.create_buttons(row, interaction))
-
-        return interaction.update(obj)
+        })
 
     } else if (operacao === 5) {
 
