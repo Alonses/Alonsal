@@ -6,12 +6,6 @@ const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
 const { atualiza_warns } = require('../../../auto/warn')
 const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Warns_guild')
 
-const guildActions = {
-    "member_mute": 0,
-    "member_kick_2": 1,
-    "member_ban": 2
-}
-
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.1", pagina_guia = 0
@@ -50,6 +44,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
     if (operacao === 1) {
+
+        if (advertencias.length < 2)
+            return interaction.update({
+                content: `${client.emoji(47)} | É necessário definir pelo menos duas advertências customizadas para poder ativar esse recurso.`,
+                ephemeral: true
+            })
 
         // Ativa ou desativa as advertências do servidor
         if (typeof guild.conf.warn !== "undefined")

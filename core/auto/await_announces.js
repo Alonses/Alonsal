@@ -47,6 +47,8 @@ requisita_anuncio = (client, aguardar_tempo) => {
 
 gera_anuncio = async (client, proxima_att) => {
 
+    return // Temporário
+
     if (process.env.client_1 === client.id())
         client.notify(process.env.channel_feeds, { content: ":video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos" })
 

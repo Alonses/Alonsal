@@ -172,7 +172,7 @@ function internal_functions(client) {
     // Retorna o membro do servidor
     client.getMemberGuild = (interaction, id_alvo) => {
 
-        let membro = null
+        let membro
 
         if (interaction.guild) // Coletando a partir de uma interação ou evento
             membro = interaction.guild.members.fetch(id_alvo)
@@ -206,7 +206,8 @@ function internal_functions(client) {
             }
         }
 
-        return guilds_user
+        // Ordenando alfabeticamente os servidores
+        return guilds_user.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
     client.getMemberPermissions = async (id_guild, id_member) => {
@@ -313,6 +314,9 @@ function internal_functions(client) {
         // Permissões do usuário no servidor
         const membro_sv = await client.getMemberGuild(interaction, id_alvo)
         let valido = false
+
+        if (!membro_sv) // Membro não localizado
+            return false
 
         // Verificando se o usuário possui a permissão
         if (membro_sv.permissions.has(permissao))

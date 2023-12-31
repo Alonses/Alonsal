@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { emoji_button, type_button } = require("../../functions/emoji_button")
 
@@ -33,9 +33,41 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    let b_cargos = false
+
+    embed.addFields(
+        {
+            name: `${client.emoji(7)} **Permissões neste servidor**`,
+            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
+            inline: true
+        },
+        {
+            name: "⠀",
+            value: "⠀",
+            inline: true
+        },
+        {
+            name: "⠀",
+            value: "⠀",
+            inline: true
+        }
+    )
+
+    // Desabilitando o botão de escolher cargos
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+        b_cargos = true
+
+        embed.setFooter({
+            text: `Não é possível definir um cargo para o anúncio sem a permissão de "Gerenciar cargos" concedida.`,
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
+    }
+
     botoes = botoes.concat([
         { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: "1" },
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "3" },
+        { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "3", disabled: b_cargos },
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 

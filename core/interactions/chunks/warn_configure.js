@@ -43,64 +43,27 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }
         )
 
-    if (warn.action || warn.role) {
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    let b_cargos = false
 
-        let permissoes, permissoes_2 // Permissões do bot no servidor
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-
-        if (warn.action === "member_mute")
-            permissoes = `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`
-
-        if (warn.action === "member_kick_2")
-            permissoes = `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`
-
-        if (warn.action === "member_ban")
-            permissoes = `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**`
-
-        if (warn.role)
-            permissoes_2 = `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`
-
-        // Reorganizando a exibição das permissões requeridas
-        if (warn.action === "none" && permissoes_2) {
-            permissoes = permissoes_2
-            permissoes_2 = null
+    embed.addFields(
+        {
+            name: `${client.emoji(7)} **Permissões neste servidor**`,
+            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
+            inline: true
+        },
+        {
+            name: "⠀",
+            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+            inline: true
+        },
+        {
+            name: "⠀",
+            value: "⠀",
+            inline: true
         }
-
-        if (permissoes) {
-            embed.addFields(
-                {
-                    name: `${client.emoji(7)} **Permissões requeridas**`,
-                    value: permissoes,
-                    inline: true
-                }
-            )
-
-            if (permissoes_2)
-                embed.addFields(
-                    {
-                        name: "⠀",
-                        value: permissoes_2,
-                        inline: true
-                    }
-                )
-            else
-                embed.addFields(
-                    {
-                        name: "⠀",
-                        value: "⠀",
-                        inline: true
-                    }
-                )
-
-            embed.addFields(
-                {
-                    name: "⠀",
-                    value: "⠀",
-                    inline: true
-                }
-            )
-        }
-    }
+    )
 
     if (warn.role)
         embed.setFooter({
@@ -108,10 +71,25 @@ module.exports = async ({ client, user, interaction, dados }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
+    // Desabilitando o botão de escolher cargos
+    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+        b_cargos = true
+
+        embed.setFooter({
+            text: `Não é possível definir um cargo através das advertências sem a permissão de "Gerenciar cargos" concedida.`,
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
+
+        if (warn.role) { // Removendo o cargo definido anteriormente
+            warn.role = null
+            warn.save()
+        }
+    }
+
     const botoes = [
         { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `4.${id_warn}` },
         { id: "warn_configure_button", name: "Penalidade", type: 1, emoji: loggerMap[warn.action] || loggerMap["none"], data: `1.${id_warn}` },
-        { id: "warn_configure_button", name: "Cargo", type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_warn}` },
+        { id: "warn_configure_button", name: "Cargo", type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_warn}`, disabled: b_cargos },
         { id: "warn_configure_button", name: "Tempo de mute", type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_warn}` }
     ]
 

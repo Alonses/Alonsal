@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Notificações**\n${client.emoji("icon_id")} \`${guild.warn.channel}\`\n( <#${guild.warn.channel}> )`,
+                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Notificações**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
                 inline: true
             },
             {
