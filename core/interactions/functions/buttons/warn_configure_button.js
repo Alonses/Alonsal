@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "warn_config#role",
             reback: "browse_button.warn_configure_button",
             operation: operacao,
-            submenu: id_warn,
+            submenu: `x/${id_warn}`,
             values: cargos
         }
 

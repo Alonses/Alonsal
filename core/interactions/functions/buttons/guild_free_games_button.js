@@ -100,6 +100,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+
     } else if (operacao === 4) {
 
         // Definindo o canal de avisos de anúncio de games free

@@ -190,7 +190,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
 
                     if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
-                        valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu}`
+                        valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu.replace("x/", "")}`
 
                 } else if (alvo.includes("#language")) { // Idioma
                     nome_label = languagesMap[valor][2]
