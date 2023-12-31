@@ -35,10 +35,15 @@ module.exports = async ({ client, user, interaction }) => {
 
     botoes = botoes.concat([
         { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: "1" },
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.anunciar_agora"), type: 1, emoji: client.emoji(6), data: "2" },
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "3" },
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
+
+    // Mostrado apenas quando um canal e um cargo está definido para o anúncio de games do servidor
+    if (guild.games.channel && guild.games.role)
+        botoes = botoes.concat([
+            { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.anunciar_agora"), type: 1, emoji: client.emoji(6), data: "2" }
+        ])
 
     client.reply(interaction, {
         content: "",
