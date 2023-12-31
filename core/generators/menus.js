@@ -42,6 +42,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     const itens_menu = [], alvo = data.alvo
     let insersoes = [], i = 0, indice_start = pagina * 24 || 0
 
+    if (pagina > 0) // Acrescenta um indice para evitar duplicatas
+        indice_start++
+
     // Percorrendo as entradas informadas
     for (let x = indice_start; x < data.values.length; x++) {
 

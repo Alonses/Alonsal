@@ -73,6 +73,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 3) {
 
+        // Permissões do bot no servidor
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+        // Desabilitando o botão de escolher cargos
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
+            return interaction.update({
+                content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
+                ephemeral: true
+            })
+
         // Definindo o cargo que receberá o avisos de games free
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),

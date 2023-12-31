@@ -5,6 +5,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const escolha = parseInt(dados.split(".")[1])
     const id_alvo = parseInt(dados.split(".")[2])
 
+    const warns_guild = await listAllGuildWarns(interaction.guild.id)
+
     // Tratamento dos cliques
     // 0 -> Cancela
     // 1 -> Confirma
@@ -15,13 +17,20 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Removendo a advertência
         await dropGuildWarn(interaction.guild.id, id_alvo)
 
+        // Menos que o limite necessário para o recurso ser ativo
+        if ((warns_guild.length - 1) < 2) {
+            const guild = await client.getGuild(interaction.guild.id)
+
+            // Desativando as advertências do servidor
+            guild.conf.warn = false
+            await guild.save()
+        }
+
         dados = "0.3"
         return require('./guild_warns_button')({ client, user, interaction, dados })
     }
 
     if (escolha === 2) {
-
-        const warns_guild = await listAllGuildWarns(interaction.guild.id)
 
         if (warns_guild[warns_guild.length - 1].rank !== id_alvo)
             return interaction.update({

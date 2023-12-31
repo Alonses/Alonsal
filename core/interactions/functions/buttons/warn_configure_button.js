@@ -1,5 +1,6 @@
-const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
+const { PermissionsBitField } = require('discord.js')
 
+const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
 const { getGuildWarn } = require('../../../database/schemas/Warns_guild')
 
 const guildActions = {
@@ -7,6 +8,12 @@ const guildActions = {
     "member_mute": 0,
     "member_kick_2": 1,
     "member_ban": 2
+}
+
+const guildPermissions = {
+    "member_mute": [PermissionsBitField.Flags.ModerateMembers],
+    "member_ban": [PermissionsBitField.Flags.BanMembers],
+    "member_kick_2": [PermissionsBitField.Flags.KickMembers]
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -30,10 +37,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escoler a penalidade da advertência
         const eventos = []
+        const guild_bot = await client.getMemberPermissions(interaction.guild.id, client.id())
 
         Object.keys(guildActions).forEach(evento => {
-            if (evento !== warn.action)
-                eventos.push({ type: evento, status: guild.logger[evento], id_warn: id_warn })
+            if (evento !== warn.action) {
+                // Verificando se o bot possui as permissões para poder exibir no menu
+                if ((evento === "none" || guild_bot.permissions.has(guildPermissions[evento])))
+                    eventos.push({ type: evento, status: guild.logger[evento], id_warn: id_warn })
+            }
         })
 
         // Definindo os eventos que o log irá relatar no servidor
