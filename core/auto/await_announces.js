@@ -27,10 +27,10 @@ module.exports = async ({ client }) => {
     if (client.x.anuncio_diario) {
         tempo_restante = ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
         frequencia = 86400000
-    }
 
-    if (date1.getHours() > 13) // Espera até a conclusão da próxima frequência para poder enviar o anúncio
-        tempo_restante = frequencia + tempo_restante
+        if (date1.getHours() > 13) // Espera até a conclusão da próxima frequência para poder enviar o anúncio
+            tempo_restante = frequencia + tempo_restante
+    }
 
     setTimeout(() => {
         gera_anuncio(client, frequencia)
