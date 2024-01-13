@@ -36,34 +36,15 @@ module.exports = {
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("guild")
-                .setDescription("⌠💂⌡ Check reported server users")
+                .setDescription("⌠💂⌡ View warned users on the server")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Suche nach gemeldeten Benutzern auf dem Server',
-                    "es-ES": '⌠💂⌡ Verifique los usuarios del servidor informados',
-                    "fr": '⌠💂⌡ Vérifier les utilisateurs de serveur signalés',
-                    "it": '⌠💂⌡ Controlla gli utenti del server segnalati',
-                    "pt-BR": '⌠💂⌡ Verificar se há usuários reportados no servidor',
-                    "ru": '⌠💂⌡ Проверьте зарегистрированных пользователей сервера'
-                })
-                .addIntegerOption(option =>
-                    option.setName("page")
-                        .setNameLocalizations({
-                            "de": 'seite',
-                            "es-ES": 'pagina',
-                            "it": 'pagina',
-                            "pt-BR": 'pagina',
-                            "ru": 'страница'
-                        })
-                        .setDescription("One page to display")
-                        .setDescriptionLocalizations({
-                            "de": 'Eine Seite zur Anzeige',
-                            "es-ES": 'Una pagina para mostrar',
-                            "fr": 'Une page à afficher',
-                            "it": 'Una pagina da visualizzare',
-                            "pt-BR": 'Uma página para exibir',
-                            "ru": 'Одна страница для отображения'
-                        })
-                        .setMinValue(1)))
+                    "de": '⌠💂⌡ Zeigen Sie gewarnte Benutzer auf dem Server an',
+                    "es-ES": '⌠💂⌡ Ver usuarios advertidos en el servidor',
+                    "fr": '⌠💂⌡ Afficher les utilisateurs avertis sur le serveur',
+                    "it": '⌠💂⌡ Visualizza gli utenti avvisati sul server',
+                    "pt-BR": '⌠💂⌡ Ver usuários advertidos no servidor',
+                    "ru": '⌠💂⌡ Просмотр предупрежденных пользователей на сервере'
+                }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute({ client, user, interaction }) {
 

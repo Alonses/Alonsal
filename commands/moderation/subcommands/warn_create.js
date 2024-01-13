@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { getUserWarns } = require('../../../core/database/schemas/Warns')
+const { listAllUserWarns } = require('../../../core/database/schemas/Warns')
 const { listAllGuildWarns } = require('../../../core/database/schemas/Warns_guild')
 
 const guildActions = {
@@ -50,8 +50,11 @@ module.exports = async ({ client, user, interaction }) => {
     if (guild_executor.roles.highest.position < guild_member.roles.highest.position)
         return client.tls.reply(interaction, user, "mode.warn.mod_sem_hierarquia", true, client.emoji(0))
 
-    const user_warns = await getUserWarns(guild_member.id, interaction.guild.id)
-    let indice_warn = user_warns.total < 0 ? 0 : user_warns.total
+    const user_warns = await listAllUserWarns(guild_member.id, interaction.guild.id)
+    let indice_warn = user_warns.length
+
+    if (indice_warn >= warns_guild.length) // Número de warns do usuário ultrapassa o número de advertências do servidor
+        indice_warn = warns_guild.length - 1
 
     if (warns_guild[indice_warn].action) // Verificando as permissões do moderador que iniciou a advertência
         if (warns_guild[indice_warn].action !== "none") {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getUserWarns } = require("../../database/schemas/Warns")
+const { listAllUserWarns } = require("../../database/schemas/Warns")
 const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
 const { loggerMap } = require("../../database/schemas/Guild")
 
@@ -9,26 +9,26 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const id_alvo = dados.split(".")[0]
     const pagina = dados.split(".")[2]
 
-    const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
+    const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
     const member_guild = await client.getMemberGuild(interaction, id_alvo)
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
 
     let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Verificando se existem advertências para as próximas punições do usuário
-    let indice_warn = user_warns.total + 1
+    let indice_warn = user_warns.length
 
-    if (!guild_warns[user_warns.total + 1])
+    if (!guild_warns[user_warns.length])
         indice_warn = guild_warns.length - 1
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_warns.relatory}\`\`\``)
+        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_warns[user_warns.length - 1].relatory}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`@${user_warns.nick}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`@${user_warns[user_warns.length - 1].nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.aplicador_ultima_advertencia")}**`,
-                value: `${client.emoji("icon_id")} \`${user_warns.assigner}\`\n( <@${user_warns.assigner}> )`,
+                value: `${client.emoji("icon_id")} \`${user_warns[user_warns.length - 1].assigner}\`\n( <@${user_warns[user_warns.length - 1].assigner}> )`,
                 inline: true
             },
             {
@@ -63,7 +63,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Criando os botões para as funções de advertência
     let botoes = [
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `warn_browse_user|${pagina}` },
-        { id: "warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_warns"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` }
+        { id: "warn_remove_user", name: "Remover advertências", type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
+        { id: "panel_guild_browse_warns", name: "Gerenciar advertências", type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
     ]
 
     client.reply(interaction, {

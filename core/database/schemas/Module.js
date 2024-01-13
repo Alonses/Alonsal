@@ -76,7 +76,7 @@ async function dropModule(uid, type, timestamp) {
 }
 
 async function dropAllUserModules(uid) {
-    await model.findOneAndDelete({
+    await model.deleteMany({
         uid: uid
     })
 }

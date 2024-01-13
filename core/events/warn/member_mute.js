@@ -26,9 +26,9 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
 
     // Tempo de mute padrão do servidor para advertências
-    const timeout = spamTimeoutMap[guild_warns[user_warns.total].timeout] * 1000
+    const timeout = spamTimeoutMap[guild_warns[user_warns.length - 1].timeout] * 1000
 
     // Mutando o membro
-    await guild_member.timeout(timeout, user_warns.relatory)
+    await guild_member.timeout(timeout, user_warns[user_warns.length - 1].relatory)
         .catch(console.error)
 }

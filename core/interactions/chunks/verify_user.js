@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getUserReports } = require('../../database/schemas/Report')
 const { getUserStrikes } = require("../../database/schemas/Strikes")
-const { getUserWarns } = require('../../database/schemas/Warns')
+const { listAllUserWarns } = require('../../database/schemas/Warns')
 const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, id_cache }) => {
@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     const strikes = await getUserStrikes(id_alvo, interaction.guild.id)
 
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    const warns = await getUserWarns(id_alvo, interaction.guild.id)
+    const warns = await listAllUserWarns(id_alvo, interaction.guild.id)
 
     let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
@@ -45,6 +45,9 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     if (avisos > 0)
         descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
+
+    if (warns.length > 0)
+        descricao += `\`\`\`💂‍♂️ | Há advertências criadas para esse membro!\`\`\``
 
     const infos_user = new EmbedBuilder()
         .setTitle(`> ${apelido}`)
@@ -62,8 +65,8 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
                 inline: true
             },
             {
-                name: `:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
-                value: `:name_badge: **Strikes: ${strikes.strikes}**\n**:mega: Warns: ${warns.total} / ${indice_matriz}**`,
+                name: `**:mega: Warns: ${warns.length} / ${indice_matriz}**`,
+                value: `:name_badge: **Strikes: ${strikes.strikes}**\n:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
                 inline: true
             }
         )
@@ -82,8 +85,11 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     if (strikes.strikes > 0) // Botão para resetar os strikes do usuário no servidor
         botoes.push({ id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.remover_strikes"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
 
-    if (warns.total > 0) // Botão para resetar os warns do usuário no servidor
-        botoes.push({ id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.remover_warns"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
+    if (warns.length > 0) // Botão para resetar os warns do usuário no servidor
+        botoes.push(
+            { id: "user_reset_warns", name: "Remover advertências", type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
+            { id: "panel_guild_browse_warns", name: "Gerenciar advertências", type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+        )
 
     if (botoes.length > 0)
         obj.components = [client.create_buttons(botoes, interaction)]
