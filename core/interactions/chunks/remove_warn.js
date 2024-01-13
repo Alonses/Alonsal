@@ -1,14 +1,14 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getUserWarns } = require("../../database/schemas/Warns")
+const { getUserWarn } = require("../../database/schemas/Warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const id_alvo = dados.split(".")[0]
-    const id_guild = dados.split(".")[1]
+    const timestamp = dados.split(".")[1]
     const pagina = dados.split(".")[2]
 
-    const alvo = await getUserWarns(id_alvo, id_guild)
+    let alvo = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.warn.remover_advertencia"))

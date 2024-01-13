@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                 embed.setDescription(`\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_reportes_guild")}\`\`\``)
 
             const obj = {
-                content: client.tls.phrase(user, "mode.report.escolher_usuario"),
+                content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "",
                 embeds: [embed],
                 ephemeral: true
             }

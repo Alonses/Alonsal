@@ -1,27 +1,35 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { loggerMap } = require("../../database/schemas/Guild")
 const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 
-const { getUserWarns } = require('../../database/schemas/Warns')
+const { getUserWarn } = require('../../database/schemas/Warns')
 const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, guild, user_warns, guild_member, guild_executor }) => {
 
     const descricao_warn = interaction.options.getString("reason")
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    let texto_rodape = "⠀"
+    let texto_rodape = "⠀", user_warn
 
-    // Salvando os dados do usuário
-    user_warns.relatory = descricao_warn
-    user_warns.nick = guild_member.user.username
-    user_warns.timestamp = client.timestamp()
-    await user_warns.save()
+    if (user_warns.length < guild_warns.length)
+        user_warn = await getUserWarn(guild_member.id, interaction.guild.id, client.timestamp())
+    else
+        user_warn = user_warns[user_warns.length - 1]
+
+    // Atualizando os dados da advertência do usuário
+    user_warn.valid = false
+    user_warn.relatory = descricao_warn
+    user_warn.nick = guild_member.user.username
+    user_warn.assigner = interaction.user.id
+    user_warn.assigner_nick = interaction.user.username
+    user_warn.timestamp = client.timestamp()
+
+    await user_warn.save()
 
     // Verificando se existem advertências para as próximas punições do usuário
-    let indice_warn = user_warns.total + 1
+    let indice_warn = user_warns.length
 
-    if (!guild_warns[user_warns.total + 1])
+    if (!guild_warns[user_warns.length + 1])
         indice_warn = guild_warns.length - 1
 
     let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
@@ -33,7 +41,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n\`${user_warns.nick}\`\n( <@${guild_member.id}> )`,
+                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n\`${user_warn.nick}\`\n( <@${guild_member.id}> )`,
                 inline: true
             },
             {
@@ -43,7 +51,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias_em_registro")}**`,
-                value: `\`( ${user_warns.total + 1} + 1 ) / ${indice_matriz}\``,
+                value: `\`( ${user_warns.length} + 1 ) / ${indice_matriz}\``,
                 inline: true
             }
         )

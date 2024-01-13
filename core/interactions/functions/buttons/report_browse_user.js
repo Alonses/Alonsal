@@ -1,5 +1,5 @@
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    // Redirecionando o evento
-    require("../../chunks/panel_guild_browse_reports")({ client, user, interaction, pagina })
+    dados = "0.2" // Redirecionando o evento
+    require("./guild_verify_button")({ client, user, interaction, dados, pagina })
 }

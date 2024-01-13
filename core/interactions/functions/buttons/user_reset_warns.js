@@ -1,4 +1,4 @@
-const { getUserWarns } = require("../../../database/schemas/Warns")
+const { dropAllUserGuildWarns } = require("../../../database/schemas/Warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -13,10 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (escolha === 1) {
 
         // Removendo os warns do usuário no servidor
-        const user_warns = await getUserWarns(id_alvo, interaction.guild.id)
-        user_warns.total = 0
-
-        await user_warns.save()
+        dropAllUserGuildWarns(id_alvo, interaction.guild.id)
     }
 
     if (escolha === 2) {
