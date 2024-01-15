@@ -43,6 +43,9 @@ module.exports = async ({ client, user, interaction }) => {
 
     const membro_guild = await client.getMemberGuild(interaction, id_alvo)
 
+    if (!guild_member) // Membro saiu do servidor antes de acionar o comando
+        return interaction.reply({ content: "🔍 | O membro mencionado não faz mais parte desse servidor...\nNão é possível criar uma advertência para ele.", ephemeral: true })
+
     if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
         return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
 
