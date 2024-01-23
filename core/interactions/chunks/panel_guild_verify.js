@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { checkUserGuildWarned } = require('../../database/schemas/Warns')
 const { getReportedUsers } = require('../../database/schemas/Report')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -12,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const users = [], users_ids = [], id_membros_guild = []
     const usuarios_reportados = await getReportedUsers()
-    const warned_users = await checkUserGuildWarned(interaction.guild.id)
+    const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
 
     interaction.guild.members.fetch()
         .then(async membros => {

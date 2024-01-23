@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Navegando pelos usuários que foram advertidos no servidor
         await interaction.deferUpdate({ ephemeral: true })
 
-        const warned_users = await checkUserGuildWarned(interaction.guild.id)
+        const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
 
         const obj = {
             content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "🔍 | Não há usuários com advertências no servidor!",
