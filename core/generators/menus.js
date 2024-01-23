@@ -245,6 +245,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
                 emoji_label = client.defaultEmoji("person")
                 valor_label = `${alvo}|${valor.uid}.${valor.sid}.${pagina}`
+
+                if (alvo === "remove_warn" || alvo == "warn_browse")
+                    valor_label = `${alvo}|${valor.uid}.${valor.sid}.${valor.timestamp}.${pagina}`
             }
 
             i++

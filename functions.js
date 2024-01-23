@@ -23,6 +23,7 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 const formata_texto = require('./core/formatters/formata_texto')
 const formata_data = require('./core/formatters/formata_data')
+const { checkUserGuildWarned } = require('./core/database/schemas/Warns')
 
 function internal_functions(client) {
 
@@ -225,6 +226,22 @@ function internal_functions(client) {
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
+    }
+
+
+    client.getSingleWarnedGuildUser = async (id_guild) => {
+
+        const warned_users = await checkUserGuildWarned(id_guild), usuarios_validos = []
+        let warned_cache = []
+
+        for (let i = 0; i < warned_users.length; i++)
+            if (!warned_cache.includes(warned_users[i].uid)) {
+                warned_cache.push(warned_users[i].uid)
+                usuarios_validos.push(warned_users[i])
+            }
+
+        return usuarios_validos
+
     }
 
     client.guildAction = (warn, chave_traduz) => {
