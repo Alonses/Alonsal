@@ -1,4 +1,5 @@
-const { checkUserGuildWarned } = require('../../../database/schemas/Warns')
+const { EmbedBuilder } = require('discord.js')
+
 const { getReportedUsers, checkUserGuildReported } = require('../../../database/schemas/Report')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -23,9 +24,20 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         if (warned_users.length > 0) {
+
             // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
             if (warned_users.length < pagina * 24)
                 pagina--
+
+            const embed = new EmbedBuilder()
+                .setTitle("> Usuários com advertências 🛑")
+                .setColor(client.embed_color(user.misc.color))
+                .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
+                .setDescription("Todos os membros com advertências ativas no momento estão listados abaixo\n\nSelecione um para gerenciar as advertências que o membro recebeu.")
+                .setFooter({
+                    text: "Selecione um membro abaixo para gerenciar suas advertências neste servidor.",
+                    iconURL: interaction.user.avatarURL({ dynamic: true })
+                })
 
             // Menu para navegar entre os usuários com advertências do servidor
             const data = {
@@ -35,7 +47,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 values: warned_users
             }
 
-            obj.components = [client.create_menus({ client, interaction, user, data, pagina })]
+            obj.embeds = [embed]
+            obj.components = [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19) }], interaction)]
             let row = client.menu_navigation(data, pagina)
 
             if (row.length > 0) // Botões de navegação
@@ -64,13 +77,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 for (const user of usuarios_reportados) // Listando os usuários que possuem denúncias e estão no servidor
                     if (id_membros_guild.includes(user.uid)) users_ids.push(user.uid)
 
-                // Verificando a quantidade de entradas e estimando o número de páginas
-                const pages = usuarios_reportados.length / 6
-                let paginas = pages - Math.floor(pages) > 0.5 ? Math.floor(pages) + 1 : Math.floor(pages)
-
-                if (usuarios_reportados.length / 6 < 1)
-                    paginas = 1
-
                 const obj = {
                     content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "🔍 | Não há usuários reportados presentes no servidor!",
                     ephemeral: true
@@ -85,6 +91,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         if (reportes_guild.length < pagina * 24)
                             pagina--
 
+                        const embed = new EmbedBuilder()
+                            .setTitle("> Usuários reportados 💂‍♂️")
+                            .setColor(client.embed_color(user.misc.color))
+                            .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
+                            .setDescription("Todos os membros que receberam reportes externos estão listados abaixo\n\nSelecione um para verificar seus reportes recebidos em outros servidores.")
+                            .setFooter({
+                                text: "Selecione um membro abaixo para gerenciar seus reportes de outros servidores.",
+                                iconURL: interaction.user.avatarURL({ dynamic: true })
+                            })
+
                         const data = {
                             alvo: "report_browse",
                             reback: "browse_button.report_browse_user",
@@ -92,6 +108,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                             values: usuarios_reportados
                         }
 
+                        obj.embeds = [embed]
                         obj.components = [client.create_menus({ client, interaction, user, data, pagina })]
 
                         let row = client.menu_navigation(data, pagina)

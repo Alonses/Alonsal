@@ -23,7 +23,8 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 const formata_texto = require('./core/formatters/formata_texto')
 const formata_data = require('./core/formatters/formata_data')
-const { checkUserGuildWarned } = require('./core/database/schemas/Warns')
+const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/Warns')
+const { listAllGuildWarns } = require('./core/database/schemas/Warns_guild')
 
 function internal_functions(client) {
 
@@ -171,7 +172,7 @@ function internal_functions(client) {
     }
 
     // Retorna o membro do servidor
-    client.getMemberGuild = (interaction, id_alvo) => {
+    client.getMemberGuild = async (interaction, id_alvo) => {
 
         let membro
 
@@ -181,6 +182,14 @@ function internal_functions(client) {
         else if (interaction.members)// Coletando direto da guild
             membro = interaction.members.fetch(id_alvo)
                 .catch(() => { return null })
+        else {
+            // Procurando a guild e o membro usando um ID do servidor
+            const guild = await client.guilds(interaction)
+
+            if (guild)
+                membro = guild.members.fetch(id_alvo)
+                    .catch(() => { return null })
+        }
 
         return membro
     }
@@ -227,7 +236,6 @@ function internal_functions(client) {
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
     }
-
 
     client.getSingleWarnedGuildUser = async (id_guild) => {
 
@@ -536,6 +544,41 @@ function internal_functions(client) {
             user_ranking = user.conf.ranking
 
         return user_ranking
+    }
+
+    // Verificando as advertências do usuário e os cargos 
+    client.verifyUserWarnRoles = async (id_user, id_guild) => {
+
+        const guild = await client.guilds(id_guild)
+        const warns = await listAllGuildWarns(id_guild)
+        const user_warns = await listAllUserWarns(id_user, id_guild)
+
+        let i = 0
+
+        warns.forEach(async warn => {
+
+            if (warn.role) {
+                // Permissões do bot no servidor
+                const membro_sv = await client.getMemberGuild(id_guild, client.id())
+                const membro_guild = await client.getMemberGuild(id_guild, id_user)
+
+                if (!membro_sv || !membro_guild)
+                    return // Sem dados
+
+                // Removendo o cargo ao usuário que recebeu a advertência
+                if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
+                    if (i >= user_warns.length || user_warns.length === 0) {
+
+                        let role = guild.roles.cache.get(warn.role)
+
+                        if (role.editable) // Verificando se o cargo é editável
+                            membro_guild.roles.remove(role).catch(console.error)
+                    }
+                }
+            }
+
+            i++
+        })
     }
 
     console.log(`🟢 | Funções internas vinculadas com sucesso.`)
