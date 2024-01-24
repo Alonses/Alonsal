@@ -18,6 +18,9 @@ module.exports = async ({ client, user, interaction }) => {
     if (interaction.customId.split("|")[2]) // Dados extras
         dados = `${dados}.${interaction.customId.split("|")[2]}`
 
+    if (funcao.includes("chunks_")) // Botões que retornam para paineis principais
+        return require(`./chunks/${funcao.replace("chunks_", "")}`)({ client, user, interaction })
+
     // Solicitando a função e executando
     require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados, autor_original })
 }

@@ -18,8 +18,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
-        // Removendo a advertência do usuário
+        // Removendo a advertência do usuário e verificando os cargos do mesmo
         await removeUserWarn(id_alvo, interaction.guild.id, timestamp)
+        client.verifyUserWarnRoles(id_alvo, interaction.guild.id)
 
         const row = []
         const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)

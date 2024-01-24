@@ -2,12 +2,11 @@ const { EmbedBuilder } = require("discord.js")
 
 const { listAllUserWarns } = require("../../database/schemas/Warns")
 const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
-const { loggerMap } = require("../../database/schemas/Guild")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const id_alvo = dados.split(".")[0]
-    const pagina = dados.split(".")[2]
+    const pagina = dados.split(".")[3]
 
     const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
     const member_guild = await client.getMemberGuild(interaction, id_alvo)

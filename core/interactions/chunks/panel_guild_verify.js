@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction }) => {
                 .setTitle(`> ${interaction.guild.name}`)
                 .setColor(client.embed_color(user.misc.color))
                 .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                .setDescription("Esse é o painel de usuários que possuem advertências ativas no servidor, e de receberam denúncias em servidores externos e estão presentes neste servidor.")
+                .setDescription("Esse é o painel de usuários que possuem advertências ativas no servidor e que receberam denúncias em servidores externos e estão presentes neste servidor.")
                 .addFields(
                     {
                         name: `${client.emoji(0)} **Advertidos: \`${warned_users.length}\`**`,

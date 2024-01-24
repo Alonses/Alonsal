@@ -20,8 +20,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1) {
 
-        // Removendo os warns do usuário no servidor
+        // Removendo os warns e os cargos de advertências do usuário no servidor
         await dropAllUserGuildWarns(id_alvo, interaction.guild.id)
+        client.verifyUserWarnRoles(id_alvo, interaction.guild.id, 10)
 
         // Verificando se há outros usuários com advertência no servidor para poder continuar editando
         let advertencias_server = await checkUserGuildWarned(id_guild), row
