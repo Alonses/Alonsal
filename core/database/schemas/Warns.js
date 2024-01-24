@@ -39,7 +39,6 @@ async function checkUserGuildWarned(sid) {
     // Listando apenas os usuários que possuem advertências registradas no servidor
     return model.find({
         sid: sid,
-        timeout: true,
         valid: true
     }).limit(50)
 }
