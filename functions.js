@@ -42,6 +42,33 @@ function internal_functions(client) {
         }
     }
 
+    // Apagando os convites criados pelo usuário que foi expulso/banido do servidor
+    client.checkUserInvites = async (guild, id_user) => {
+
+        // Permissões do bot no servidor
+        const membro_sv = await client.getMemberGuild(guild.sid, client.id())
+
+        // Removendo o cargo ao usuário que recebeu a advertência
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))
+            return client.notify(guild.logger.channel, { content: ":passport_control: | Eu não tenho permissões para `Gerenciar servidor`, não é possível ver a lista de convites sem essa permissão concedida!\nA exclusão automática dos convites de um membro que foi expulso/banido não foi realizada. @here" })
+
+        // Excluindo os convites que o membro expulso/banido criou
+        const cached_guild = await client.guilds(guild.sid)
+        cached_guild.invites.fetch().then(invites => {
+
+            let convites = 0
+
+            invites.each(i => {
+                if (i.inviterId === id_user) {
+                    i.delete()
+                    convites++
+                }
+            })
+
+            client.notify(guild.logger.channel, { content: `:link: | O módulo de convites rastreados excluiu \`${convites} ${convites > 1 ? "convites" : "convite"}\`.` })
+        })
+    }
+
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
     client.countFiles = (caminho, extensao) => {
         return readdirSync(caminho).filter(file => file.endsWith(extensao)).length

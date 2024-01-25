@@ -18,7 +18,9 @@ const loggerMap = {
     "member_mute": "🔇",
     "member_ban": "🔨",
     "member_voice_status": "📻",
-    "none": "📝"
+    "none": "📝",
+    "invite_create": "🔗",
+    "invite_delete": "🔗"
 }
 
 const channelTypes = {
@@ -73,7 +75,9 @@ const schema = new mongoose.Schema({
         member_ban_add: { type: Boolean, default: true },
         member_ban_remove: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true },
-        member_voice_status: { type: Boolean, default: false }
+        member_voice_status: { type: Boolean, default: false },
+        invite_created: { type: Boolean, default: false },
+        invite_delete: { type: Boolean, default: false }
     },
     spam: {
         notify: { type: Boolean, default: true },
@@ -99,7 +103,8 @@ const schema = new mongoose.Schema({
         logger: { type: Boolean, default: false },
         spam: { type: Boolean, default: false },
         network: { type: Boolean, default: false },
-        warn: { type: Boolean, default: false }
+        warn: { type: Boolean, default: false },
+        nuke_invites: { type: Boolean, default: false }
     }
 })
 

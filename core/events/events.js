@@ -16,6 +16,14 @@ module.exports = async function ({ client }) {
         require('./discord/guild/guild_left.js')({ client, guild })
     })
 
+    // client.discord.on(Events.InviteCreate, invite => {
+    //     require('./discord/guild/invite_created.js')({ client, invite })
+    // })
+
+    // client.discord.on(Events.InviteDelete, invite => {
+    //     require('./discord/guild/invite_deleted.js')({ client, invite })
+    // })
+
     // Eventos de mensagens
     client.discord.on(Events.MessageDelete, message => {
         require('./discord/guild/message_deleted.js')({ client, message })
