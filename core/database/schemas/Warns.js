@@ -9,7 +9,6 @@ const schema = new mongoose.Schema({
     nick: { type: String, default: null },
     valid: { type: Boolean, default: false },
     timeout: { type: Boolean, default: true },
-    total: { type: Number, default: -1 },
     assigner: { type: String, default: null },
     assigner_nick: { type: String, default: null },
     relatory: { type: String, default: null },

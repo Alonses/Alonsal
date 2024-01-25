@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.logger.entrada_original")}**`,
-                value: `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F> )`,
+                value: `<t:${parseInt(member_guild?.joinedTimestamp || 0 / 1000)}:F> )`,
                 inline: true
             },
             {
