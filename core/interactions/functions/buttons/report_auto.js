@@ -24,6 +24,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             ephemeral: true
         })
 
+    await interaction.deferUpdate({ ephemeral: true })
+
     // Reportando os usuários banidos do servidor de forma automática
     let list = [], adicionados = 0
 
@@ -58,7 +60,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             if (adicionados < 1)
                 msg_feed = client.tls.phrase(user, "mode.report.sem_usuarios", client.defaultEmoji("guard"))
 
-            return interaction.update({
+            return interaction.editReply({
                 content: msg_feed,
                 embeds: [],
                 components: [],
