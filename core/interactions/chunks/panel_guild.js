@@ -12,11 +12,12 @@ const operation_codes = {
     "anti_spam": 6,
     "public_guild": 7,
     "network": 8,
-    "warns": 9
+    "warns": 9,
+    "tracked_invites": 10
 }
 
 // Funções sem guias de configuração
-const direct_functions = [1, 7]
+const direct_functions = [1, 7, 10]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
@@ -97,14 +98,19 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${emoji_button(guild?.conf.public)} **${client.tls.phrase(user, "manu.painel.visibilidade_global")}**`,
-                value: `${client.tls.phrase(user, "manu.painel.desc_global")}`,
+                name: `${emoji_button(guild?.conf.nuke_invites)} **Convites rastreados**`,
+                value: `\`Apaga os convites de membros quando forem banidos e expulsos.\``,
                 inline: true
             }
         )
 
     if (pagina === 3)
         embed.addFields(
+            {
+                name: `${emoji_button(guild?.conf.public)} **${client.tls.phrase(user, "manu.painel.visibilidade_global")}**`,
+                value: `${client.tls.phrase(user, "manu.painel.desc_global")}`,
+                inline: true
+            },
             {
                 name: `${emoji_button(guild?.conf.broadcast)} **${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
                 value: `${client.tls.phrase(user, "manu.painel.desc_broadcast")}`,
@@ -114,15 +120,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 name: `${emoji_button(0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
                 inline: true
-            },
-            {
-                name: `${emoji_button(0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
-                inline: true
             }
         )
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
@@ -150,6 +151,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
         c_buttons[2] = true
         c_buttons[7] = true
+        c_buttons[10] = true
     }
 
     // Falta de permissões para banir membros
@@ -203,15 +205,15 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         botoes = botoes.concat([
             { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
             { id: "guild_speaker_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[0] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] }
+            { id: "guild_panel_button", name: "Convites rastreados", type: type_button(guild?.conf.nuke_invites), emoji: emoji_button(guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] }
         ])
 
     // Broadcast
     if (pagina === 3)
         botoes = botoes.concat([
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: type_button(guild?.conf.public), emoji: emoji_button(guild?.conf.public), data: '7', disabled: c_buttons[7] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: '1', disabled: c_buttons[1] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '2', disabled: true },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '3', disabled: true }
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: type_button(0), emoji: emoji_button(3), data: '2', disabled: true }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })

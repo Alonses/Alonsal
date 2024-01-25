@@ -9,11 +9,12 @@ const { client_data } = require('./setup')
 const cli = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildInvites,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildModeration
+        GatewayIntentBits.GuildModeration,
+        GatewayIntentBits.GuildVoiceStates
     ],
     partials: [
         Partials.Message,

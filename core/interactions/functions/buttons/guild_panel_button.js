@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 const { verificar_broadcast } = require('../../../events/broadcast')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -17,6 +19,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 6 -> Módulo anti-spam ( Movido para guild_anti_spam_button )
     // 7 -> Servidor visível globalmente
     // 8 -> AutoBan ( Movido para guild_reports_button )
+
+    // 9 -> Convites Rastreados
 
     if (escolha === 0) {
         // Ativa ou desativa a capacidade do Alon falar no servidor livremente ( através do clever )
@@ -44,6 +48,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
             guild.conf.public = !guild.conf.public
         else
             guild.conf.public = false
+    } else if (escolha === 9) {
+
+        const membro_sv = await client.getMemberGuild(interaction, client.id())
+
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))
+            return interaction.update({ content: ":passport_control: | Eu não posso ver a lista de convites sem a permissão `Gerenciar servidor` concedida.", ephemeral: true })
+
+        // Ativa ou desativa os convites rastreados
+        if (typeof guild.conf.nuke_invites !== "undefined")
+            guild.conf.nuke_invites = !guild.conf.nuke_invites
+        else
+            guild.conf.nuke_invites = true
     }
 
     await guild.save()
