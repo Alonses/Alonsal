@@ -18,14 +18,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
+        const row = [], user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+
         // Removendo a advertência do usuário e verificando os cargos do mesmo
         await removeUserWarn(id_alvo, interaction.guild.id, timestamp)
         client.verifyUserWarnRoles(id_alvo, interaction.guild.id)
 
-        const row = []
-        const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
-
-        if (user_warns.length > 0)
+        if (user_warns.length - 1 > 0)
             row.push({ id: "panel_guild_browse_warns", name: "Remover outras", type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` },)
 
         const obj = {
@@ -37,6 +36,39 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (row.length > 0) // Botão para ver outras advertências
             obj.components = [client.create_buttons(row, interaction)]
+
+        const guild = await client.getGuild(interaction.guild.id)
+
+        if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
+
+            let warns_restantes = `\nO usuário agora possui outras \`${user_warns.length - 1} advertências\` ativas neste servidor`
+
+            if ((user_warns.length - 1) === 1)
+                warns_restantes = `\nO usuário possui apenas outra \`1 advertência\` ativa neste servidor`
+
+            const embed = new EmbedBuilder()
+                .setTitle(`> Uma Advertência foi removida! :inbox_tray:`)
+                .setColor(0xED4245)
+                .setDescription(`Uma advertência de <@${id_alvo}> foi removida!${warns_restantes}`)
+                .addFields(
+                    {
+                        name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warns[0].nick}\`\n( <@${id_alvo}> )`,
+                        inline: true
+                    },
+                    {
+                        name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                        inline: true
+                    }
+                )
+                .setTimestamp()
+
+            client.notify(guild.warn.channel, {
+                content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
+                embeds: [embed]
+            })
+        }
 
         return client.reply(interaction, obj)
     }

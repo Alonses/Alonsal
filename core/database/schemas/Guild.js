@@ -48,10 +48,11 @@ const schema = new mongoose.Schema({
     },
     warn: {
         notify: { type: Boolean, default: true },
+        notify_exclusion: { type: Boolean, default: true },
         timed: { type: Boolean, default: false },
         channel: { type: String, default: null },
         timeout: { type: Number, default: 2 },
-        reset: { type: Number, default: 7 }
+        reset: { type: Number, default: 7 },
     },
     reports: {
         channel: { type: String, default: null },
