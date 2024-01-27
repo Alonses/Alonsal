@@ -2,7 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { spamTimeoutMap } = require("../../../database/schemas/Strikes")
 
-const { removeUserWarn, listAllCachedUserWarns } = require("../../../database/schemas/Warns")
+const { removeUserWarn, listAllCachedUserWarns, listAllUserWarns } = require("../../../database/schemas/Warns")
 const { listAllGuildWarns } = require('../../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -39,11 +39,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     user_warn.valid = true
     await user_warn.save()
 
+    const active_user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+    const indice_warn = active_user_warns.length > guild_warns.length ? guild_warns.length - 1 : active_user_warns.length - 1
+
     let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
     let texto_rodape = "Essa advertência não resultou em uma punição no servidor."
 
-    if (guild_warns[user_warns.length].action)
-        if (guild_warns[user_warns.length].action !== "none")
+    if (guild_warns[indice_warn].action)
+        if (guild_warns[indice_warn].action !== "none")
             texto_rodape = "Essa advertência também concedeu uma punição no servidor."
 
     // Embed de aviso para o membro que recebeu a advertência
@@ -59,11 +62,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **Punição**`,
-                value: client.verifyWarnAction(guild_warns[user_warns.length], guild),
+                value: client.verifyWarnAction(guild_warns[indice_warn], guild),
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${user_warns.length} / ${indice_matriz}**`,
+                name: `${client.emoji(47)} **Advertências: ${active_user_warns.length} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
@@ -93,7 +96,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${user_warns.length} / ${indice_matriz}**`,
+                name: `${client.emoji(47)} **Advertências: ${active_user_warns.length} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
@@ -128,7 +131,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     embed_guild.addFields({
         name: `${client.emoji("banidos")} **Punição**`,
-        value: client.verifyWarnAction(guild_warns[user_warns.length], guild),
+        value: client.verifyWarnAction(guild_warns[indice_warn], guild),
         inline: true
     })
 
@@ -137,18 +140,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
         embeds: [embed_guild]
     })
 
-    if (guild_warns[user_warns.length].action) // Usuário recebeu a uma advertência com penalidade
-        if (guild_warns[user_warns.length].action !== "none") {
+    if (guild_warns[indice_warn].action) // Usuário recebeu a uma advertência com penalidade
+        if (guild_warns[indice_warn].action !== "none") {
 
             const guild_member = await client.getMemberPermissions(interaction.guild.id, id_alvo)
             const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
             const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
 
             // Redirecionando o evento
-            require(`../../../events/warn/${guild_warns[user_warns.length].action.replace("_2", "")}`)({ client, user, interaction, guild, user_warns, user_warn, guild_member, guild_executor, bot_member })
+            require(`../../../events/warn/${guild_warns[indice_warn].action.replace("_2", "")}`)({ client, user, interaction, guild, active_user_warns, user_warn, guild_member, guild_executor, bot_member })
         }
 
-    if (guild_warns[user_warns.length].role) { // Advertência atual acrescenta um cargo
+    if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo
 
         // Permissões do bot no servidor
         const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -157,11 +160,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
 
             // Atribuindo o cargo ao usuário que recebeu a advertência
-            let role = interaction.guild.roles.cache.get(guild_warns[user_warns.length].role)
+            let role = interaction.guild.roles.cache.get(guild_warns[indice_warn].role)
 
             if (role.editable) // Verificando se o cargo é editável
                 membro_guild.roles.add(role).catch(console.error)
-        }
+        } else
+            client.notify(guild.warn.channel, { // Sem permissão para gerenciar cargos
+                content: ":passport_control: | Uma advertência com cargos foi criada, porém eu não possuo permissões para `Gerenciar cargos`,\no cargo não foi atribuído ao membro que recebeu a advertência. @here",
+            })
     }
 
     return client.reply(interaction, {

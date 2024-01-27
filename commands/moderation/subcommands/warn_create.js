@@ -54,10 +54,7 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "mode.warn.mod_sem_hierarquia", true, client.emoji(0))
 
     const user_warns = await listAllUserWarns(guild_member.id, interaction.guild.id)
-    let indice_warn = user_warns.length
-
-    if (indice_warn >= warns_guild.length) // Número de warns do usuário ultrapassa o número de advertências do servidor
-        indice_warn = warns_guild.length - 1
+    const indice_warn = user_warns.length >= warns_guild.length ? warns_guild.length - 1 : user_warns.length
 
     if (warns_guild[indice_warn].action) // Verificando as permissões do moderador que iniciou a advertência
         if (warns_guild[indice_warn].action !== "none") {

@@ -1,4 +1,6 @@
-const { checkUserGuildWarned, dropAllUserGuildWarns } = require('../../../database/schemas/Warns')
+const { EmbedBuilder } = require('discord.js')
+
+const { checkUserGuildWarned, dropAllUserGuildWarns, listAllUserWarns } = require('../../../database/schemas/Warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -20,6 +22,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1) {
 
+        const user_warn = await listAllUserWarns(id_alvo, interaction.guild.id)
+
         // Removendo os warns e os cargos de advertências do usuário no servidor
         await dropAllUserGuildWarns(id_alvo, interaction.guild.id)
         client.verifyUserWarnRoles(id_alvo, interaction.guild.id, 10)
@@ -28,7 +32,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         let advertencias_server = await checkUserGuildWarned(id_guild), row
 
         const obj = {
-            content: client.tls.phrase(user, "mode.report.usuario_removido", 10),
+            content: "✅ | As advertências do usuário neste servidor foram todas removidas.",
             embeds: [],
             components: [],
             ephemeral: true
@@ -40,6 +44,33 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ], interaction)
 
             obj.components.push(row)
+        }
+
+        const guild = await client.getGuild(interaction.guild.id)
+
+        if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
+            const embed = new EmbedBuilder()
+                .setTitle(`> Advertências reiniciadas :inbox_tray:`)
+                .setColor(0xED4245)
+                .setDescription(`As advertências de <@${id_alvo}> foram reiniciadas!\nO usuário agora não possui mais advertências neste servidor.`)
+                .addFields(
+                    {
+                        name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
+                        inline: true
+                    },
+                    {
+                        name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                        inline: true
+                    }
+                )
+                .setTimestamp()
+
+            client.notify(guild.warn.channel, {
+                content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
+                embeds: [embed]
+            })
         }
 
         return interaction.update(obj)

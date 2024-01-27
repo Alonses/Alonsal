@@ -27,12 +27,8 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     await user_warn.save()
 
     // Verificando se existem advertências para as próximas punições do usuário
-    let indice_warn = user_warns.length
-
-    if (!guild_warns[user_warns.length + 1])
-        indice_warn = guild_warns.length - 1
-
-    let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+    const indice_warn = user_warns.length >= guild_warns.length ? guild_warns.length - 1 : user_warns.length
+    const indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.criando_advertencia")} :inbox_tray:`)

@@ -49,16 +49,16 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> Advertências :octagonal_sign:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Funcionamento do sistema de advertências\n\nEsse sistema registra advertências a longo prazo criado pelos moderadores do servidor, ao criar várias advertências para um usuário, se esse usuário atingir o limite de advertências, uma penalidade será aplicada!\n\nVocê pode definir qual será a penalidade, a quantidade de advertências requeridas e o tempo de mute (caso decida por mutar um usuário) pelos botões abaixo.\n\n🧻 Advertência com validade:\nAo ativar esse recurso, as advertências serão removidas após um tempo definido de forma automática, você pode usar esse recurso de modo a não precisar verificar o usuário toda vez, removendo suas advertências manualmente.```")
+        .setDescription("```🧻 Funcionamento do sistema de advertências\n\nEsse sistema registra advertências a longo prazo criado pelos moderadores do servidor!\n\nVocê pode definir qual será a penalidade, a quantidade de advertências do servidor e as penalidades pelos botões abaixo.\n\n🧻 Advertência com validade:\nAo ativar esse recurso, as advertências serão removidas após um tempo definido de forma automática, você pode usar esse recurso de modo a não precisar verificar um usuário toda vez, removendo suas advertências manualmente.```")
         .setFields(
             {
                 name: `${emoji_button(guild?.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${emoji_button(guild?.warn.timed)} **Com validade**\n${client.emoji(47)} **Advertências: \`${advertencias.length}\`**${indice_matriz ? `\n${client.emoji(54)} **Expulso na \`${indice_matriz}°\`**` : ""}`,
+                value: `${emoji_button(guild?.warn.timed)} **Com validade**\n${client.emoji(47)} **Advertências: \`${advertencias.length}\`**${indice_matriz ? `\n${client.emoji(54)} **Expulsão na \`${indice_matriz}°\`**` : ""}`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Notificações**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
                 inline: true
             },
             {
@@ -89,7 +89,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.advertencias"), type: type_button(guild?.conf.warn), emoji: emoji_button(guild?.conf.warn), data: "1" },
             { id: "guild_warns_button", name: "Com validade", type: type_button(guild?.warn.timed), emoji: emoji_button(guild?.warn.timed), data: "6" },
-            { id: "guild_warns_button", name: "Notificações", type: type_button(guild?.warn.notify), emoji: emoji_button(guild?.warn.notify), data: "8" },
+            { id: "guild_warns_button", name: "Notificações", type: 1, emoji: client.emoji(41), data: "15" },
             { id: "guild_warns_button", name: "Ajustes", type: 1, emoji: client.emoji(41), data: "9" }
         ])
     else

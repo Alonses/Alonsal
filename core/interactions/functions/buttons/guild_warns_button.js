@@ -1,4 +1,6 @@
-const { ChannelType } = require('discord.js')
+const { ChannelType, EmbedBuilder } = require('discord.js')
+
+const { emoji_button, type_button } = require("../../../functions/emoji_button")
 
 const { loggerMap } = require('../../../database/schemas/Guild')
 const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
@@ -39,6 +41,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 8 -> Ativar ou desativar as notificações das advertências
 
     // 9 -> Alterar de página dentro do guia
+    // 10 -> Ativar ou desativar as notificações de exclusões de advertências
+
+    // 15 -> Sub menu com as opções para gerenciar as notificações
 
     // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
@@ -144,6 +149,62 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             guild.warn.notify = !guild.warn.notify
         else
             guild.warn.notify = false
+
+        operacao = 15
+
+        await guild.save()
+
+    } else if (operacao === 10) {
+
+        // Ativa ou desativa as notificações de advertências
+        if (typeof guild.warn.notify_exclusion !== "undefined")
+            guild.warn.notify_exclusion = !guild.warn.notify_exclusion
+        else
+            guild.warn.notify_exclusion = false
+
+        operacao = 15
+
+        await guild.save()
+    }
+
+    // Sub menu com as opções de notificações
+    if (operacao == 15) {
+
+        const guild = await client.getGuild(interaction.guild.id)
+
+        const embed = new EmbedBuilder()
+            .setTitle(`> Advertências :octagonal_sign:`)
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription("```📣 Notificações em advertências\n\nDefina se eu irei notificar as novas advertências com um ping @here\nE se irei exibir quando as advertências forem apagadas!```")
+            .setFields(
+                {
+                    name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
+                    value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify_exclusion)} **Notificar remoção**`,
+                    inline: true
+                },
+                { name: "⠀", value: "⠀", inline: true }
+            )
+            .setFooter({
+                text: "Defina as notificações para as advertências pelos botões abaixo",
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+
+        let row = client.create_buttons([
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" },
+            { id: "guild_warns_button", name: "Menções", type: type_button(guild?.warn.notify), emoji: emoji_button(guild?.warn.notify), data: "8" },
+            { id: "guild_warns_button", name: "Notificar remoção", type: type_button(guild?.warn.notify_exclusion), emoji: emoji_button(guild?.warn.notify_exclusion), data: "10" }
+        ], interaction)
+
+        return interaction.update({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        })
 
     } else if (operacao == 16) {
 
