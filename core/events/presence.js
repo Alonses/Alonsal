@@ -84,7 +84,7 @@ function acompanha_scrobble(client, user) {
 
             if (res.includes("modal?action=scrobbling-now-theirs\"")) {
 
-                let scrobble_atual = `${client.formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${client.formata_texto(res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
+                let scrobble_atual = `${client.execute("formatters", "formata_texto", res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[1].split("\"")[0])} - ${client.execute("formatters", "formata_texto", res.split("modal?action=scrobbling-now-theirs\"")[0].split("data-toggle-button-current-state=")[2].split("title=\"")[2].split("\"")[0])}`
 
                 if (scrobble_atual !== status_atual) {
                     // Exibindo o status personalizado sincronizado com o LastFM

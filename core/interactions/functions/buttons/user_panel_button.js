@@ -5,7 +5,8 @@ const operations = {
     3: ["conf", "public_badges"],
     4: ["misc", "weather"],
     5: ["conf", "global_tasks"],
-    6: ["conf", "resumed"]
+    6: ["conf", "resumed"],
+    7: ["conf", "cached_guilds"]
 }
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -23,6 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 5 -> Tarefas globais
 
     // 6 -> Modo compacto
+    // 7 -> Servidores conhecidos
 
     // Ativa ou desativa a operação selecionada
     user[operations[escolha][0]][operations[escolha][1]] = !user[operations[escolha][0]][operations[escolha][1]]

@@ -1,7 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { emoji_button, type_button } = require("../../functions/emoji_button")
-
 const { spamTimeoutMap } = require("../../database/schemas/Strikes")
 const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
 
@@ -52,13 +50,13 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .setDescription("```🧻 Funcionamento do sistema de advertências\n\nEsse sistema registra advertências a longo prazo criado pelos moderadores do servidor!\n\nVocê pode definir qual será a penalidade, a quantidade de advertências do servidor e as penalidades pelos botões abaixo.\n\n🧻 Advertência com validade:\nAo ativar esse recurso, as advertências serão removidas após um tempo definido de forma automática, você pode usar esse recurso de modo a não precisar verificar um usuário toda vez, removendo suas advertências manualmente.```")
         .setFields(
             {
-                name: `${emoji_button(guild?.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${emoji_button(guild?.warn.timed)} **Com validade**\n${client.emoji(47)} **Advertências: \`${advertencias.length}\`**${indice_matriz ? `\n${client.emoji(54)} **Expulsão na \`${indice_matriz}°\`**` : ""}`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.warn.timed)} **Com validade**\n${client.emoji(47)} **Advertências: \`${advertencias.length}\`**${indice_matriz ? `\n${client.emoji(54)} **Expulsão na \`${indice_matriz}°\`**` : ""}`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
                 inline: true
             },
             {
@@ -70,12 +68,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .addFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }
@@ -87,8 +85,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (pagina === 0)
         botoes = botoes.concat([
-            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.advertencias"), type: type_button(guild?.conf.warn), emoji: emoji_button(guild?.conf.warn), data: "1" },
-            { id: "guild_warns_button", name: "Com validade", type: type_button(guild?.warn.timed), emoji: emoji_button(guild?.warn.timed), data: "6" },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.advertencias"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.warn), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn), data: "1" },
+            { id: "guild_warns_button", name: "Com validade", type: client.execute("functions", "emoji_button.type_button", guild?.warn.timed), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.timed), data: "6" },
             { id: "guild_warns_button", name: "Notificações", type: 1, emoji: client.emoji(41), data: "15" },
             { id: "guild_warns_button", name: "Ajustes", type: 1, emoji: client.emoji(41), data: "9" }
         ])

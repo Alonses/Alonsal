@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { emoji_button, type_button } = require('../../core/functions/emoji_button')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("broadcast")
@@ -39,7 +37,7 @@ module.exports = {
 
         const row = client.create_buttons([
             { id: "guild_solicitar_broadcast", name: client.tls.phrase(user, "menu.botoes.solicitar"), type: 1, emoji: client.emoji("emojis_dancantes"), data: "1" },
-            { id: "guild_solicitar_broadcast", name: "Broadcast", type: type_button(guild?.conf.broadcast), emoji: emoji_button(guild?.conf.broadcast), data: "2" }
+            { id: "guild_solicitar_broadcast", name: "Broadcast", type: client.execute("functions", "emoji_button.type_button", guild?.conf.broadcast), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.broadcast), data: "2" }
         ], interaction)
 
         interaction.reply({

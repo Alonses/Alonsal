@@ -1,9 +1,16 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
+const { dropUserGuild } = require('../../../database/schemas/User_guilds.js')
+
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
+    const user = await client.getUser(dados.user.id)
+
     const user_alvo = dados.user
+
+    if (user.conf?.cached_guilds) // Removendo o servidor salvo em cache do usuário
+        await dropUserGuild(user.uid, dados.guild.id)
 
     // Verificando se a guild habilitou o logger
     if (!guild.conf.logger) return

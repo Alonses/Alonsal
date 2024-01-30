@@ -1,7 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { emoji_button, type_button } = require("../../functions/emoji_button")
-
 module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
@@ -13,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.anuncio.descricao"))
         .setFields(
             {
-                name: `${emoji_button(guild?.conf.games)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -40,7 +38,7 @@ module.exports = async ({ client, user, interaction }) => {
     embed.addFields(
         {
             name: `${client.emoji(7)} **Permissões neste servidor**`,
-            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
+            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
             inline: true
         },
         {
@@ -66,7 +64,7 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     botoes = botoes.concat([
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: type_button(guild?.conf.games), emoji: emoji_button(guild?.conf.games), data: "1" },
+        { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.games), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.games), data: "1" },
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "3", disabled: b_cargos },
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])

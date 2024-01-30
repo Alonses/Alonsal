@@ -1,7 +1,5 @@
 const { ChannelType, EmbedBuilder } = require('discord.js')
 
-const { emoji_button, type_button } = require("../../../functions/emoji_button")
-
 const { loggerMap } = require('../../../database/schemas/Guild')
 const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
 
@@ -179,12 +177,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             .setFields(
                 {
                     name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                    value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `${client.emoji(20)} ${emoji_button(guild?.warn.notify_exclusion)} **Notificar remoção**`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion)} **Notificar remoção**`,
                     inline: true
                 },
                 { name: "⠀", value: "⠀", inline: true }
@@ -196,8 +194,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         let row = client.create_buttons([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" },
-            { id: "guild_warns_button", name: "Menções", type: type_button(guild?.warn.notify), emoji: emoji_button(guild?.warn.notify), data: "8" },
-            { id: "guild_warns_button", name: "Notificar remoção", type: type_button(guild?.warn.notify_exclusion), emoji: emoji_button(guild?.warn.notify_exclusion), data: "10" }
+            { id: "guild_warns_button", name: "Menções", type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify), data: "8" },
+            { id: "guild_warns_button", name: "Notificar remoção", type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion), data: "10" }
         ], interaction)
 
         return interaction.update({

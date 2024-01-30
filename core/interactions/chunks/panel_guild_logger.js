@@ -1,6 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { emoji_button, type_button } = require("../../functions/emoji_button")
 const { languagesMap } = require("../../formatters/translate")
 
 module.exports = async ({ client, user, interaction }) => {
@@ -38,7 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.logger.descricao"))
         .setFields(
             {
-                name: `${emoji_button(guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
                 inline: true
             },
@@ -56,7 +55,7 @@ module.exports = async ({ client, user, interaction }) => {
         .addFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
                 inline: true
             }
         )
@@ -66,7 +65,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     botoes = botoes.concat([
-        { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: type_button(guild?.conf.logger), emoji: emoji_button(guild?.conf.logger), data: "1" },
+        { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1" },
         { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
         { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
         { id: "guild_logger_button", name: client.tls.phrase(user, "mode.anuncio.idioma"), type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }

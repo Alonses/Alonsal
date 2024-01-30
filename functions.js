@@ -2,16 +2,16 @@ const { PermissionsBitField } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
-const { alea_hex } = require('./core/functions/hex_color')
 const { getBot } = require('./core/database/schemas/Bot')
+const { alea_hex } = require('./core/functions/hex_color')
 const { getUser } = require('./core/database/schemas/User')
 const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
 const { create_buttons } = require('./core/generators/buttons')
-const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
 const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
+const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
 const { getGuild, getGameChannels, loggerMap } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
@@ -21,10 +21,10 @@ const { busca_badges, badgeTypes } = require('./core/data/badges')
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
-const formata_texto = require('./core/formatters/formata_texto')
-const formata_data = require('./core/formatters/formata_data')
-const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/Warns')
+
 const { listAllGuildWarns } = require('./core/database/schemas/Warns_guild')
+const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/Warns')
+const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
 function internal_functions(client) {
 
@@ -135,12 +135,13 @@ function internal_functions(client) {
         return emoji
     }
 
-    client.formata_data = (data) => {
-        return formata_data(data)
-    }
+    // Executa funções dinâmicas utilizando os dados fornecidos
+    client.execute = (folder, funcao, data) => {
 
-    client.formata_texto = (texto) => {
-        return formata_texto(texto)
+        if (!funcao.includes("."))
+            return require(`./core/${folder}/${funcao}`)(data)
+        else
+            return require(`./core/${folder}/${funcao.split(".")[0]}`)[funcao.split(".")[1]](data)
     }
 
     client.getBot = () => {
@@ -224,22 +225,30 @@ function internal_functions(client) {
     client.getMemberGuildsByPermissions = async ({ interaction, user, permissions }) => {
 
         const guilds_user = []
+        let servidores = await listAllUserGuilds(user.uid)
 
-        for await (let valor of client.guilds()) {
+        if (servidores.length < 1) // Membro não possui servidores salvos em cache
+            servidores = await client.guilds()
 
-            const guild = valor[1]
+        for await (let valor of servidores) {
+
+            const guild = valor.length > 1 ? valor[1] : await client.guilds(valor.sid)
 
             if (guild.id !== interaction.guild.id) {
                 const membro_guild = await guild.members.fetch(user.uid)
                     .catch(() => { return null })
 
-                if (membro_guild) // Listando as guilds que o usuário é moderador
+                if (membro_guild) { // Listando as guilds que o usuário é moderador
                     if (membro_guild.permissions.has(permissions)) {
                         const internal_guild = await client.getGuild(guild.id)
                         internal_guild.name = guild.name
 
                         guilds_user.push(internal_guild)
                     }
+
+                    // Registrando os servidores que o usuário faz parte
+                    registerUserGuild(user.uid, guild.id)
+                }
             }
         }
 
@@ -550,6 +559,31 @@ function internal_functions(client) {
         return indice_matriz || guild_warns.length
     }
 
+    // Salva todos os servidores que um usuário esta em cache
+    client.verifyUserGuilds = async (id_alvo, interaction) => {
+
+        const servidores = await client.guilds()
+        let qtd_servidores = 0
+
+        for await (let server of servidores) {
+
+            const guild = server[1]
+            const membro_guild = await guild.members.fetch(id_alvo)
+                .catch(() => { return null })
+
+            if (membro_guild) { // Registrando os servidores que o usuário faz parte
+                registerUserGuild(id_alvo, guild.id)
+                qtd_servidores++
+            }
+        }
+
+        if (interaction)
+            interaction.editReply({
+                content: `🚀 | Os servidores salvos em cache foram atualizados!\nAtualmente você está em \`${qtd_servidores} servidores\``,
+                ephemeral: true
+            })
+    }
+
     // Atualiza o idioma padrão do usuário caso não possua um
     client.verifyUserLanguage = async (user, id_guild) => {
 
@@ -577,14 +611,15 @@ function internal_functions(client) {
     client.verifyUserWarnRoles = async (id_user, id_guild) => {
 
         const guild = await client.guilds(id_guild)
-        const warns = await listAllGuildWarns(id_guild)
+        const guild_warns = await listAllGuildWarns(id_guild)
         const user_warns = await listAllUserWarns(id_user, id_guild)
 
         let i = 0
 
-        warns.forEach(async warn => {
+        guild_warns.forEach(async guild_warn => {
 
-            if (warn.role) {
+            if (guild_warn.role) {
+
                 // Permissões do bot no servidor
                 const membro_sv = await client.getMemberGuild(id_guild, client.id())
                 const membro_guild = await client.getMemberGuild(id_guild, id_user)
@@ -596,7 +631,7 @@ function internal_functions(client) {
                 if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
                     if (i >= user_warns.length || user_warns.length === 0) {
 
-                        let role = guild.roles.cache.get(warn.role)
+                        let role = guild.roles.cache.get(guild_warn.role)
 
                         if (role.editable) // Verificando se o cargo é editável
                             membro_guild.roles.remove(role).catch(console.error)
