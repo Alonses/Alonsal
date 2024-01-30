@@ -230,9 +230,9 @@ function internal_functions(client) {
         if (servidores.length < 1) // Membro não possui servidores salvos em cache
             servidores = await client.guilds()
 
-        for await (let valor of servidores) {
+        for await (let server of servidores) {
 
-            const guild = valor.length > 1 ? valor[1] : await client.guilds(valor.sid)
+            const guild = server.sid ? await client.guilds(server.sid) : server[1]
 
             if (guild.id !== interaction.guild.id) {
                 const membro_guild = await guild.members.fetch(user.uid)
