@@ -148,7 +148,7 @@ module.exports = async (client, user, interaction) => {
                 embed.addFields(
                     {
                         name: `${client.emoji("mc_logo_wikipedia")} Wiki sobre ${dados_item.name}`,
-                        value: `\`\`\`fix\n${client.formata_texto(dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
+                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
                         inline: false
                     }
                 )

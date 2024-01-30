@@ -4,6 +4,7 @@ const { getUserRankServers } = require('../../database/schemas/Rank_s')
 const { buildAllBadges } = require('../../data/badges')
 
 const { emoji_button } = require('../../functions/emoji_button')
+const { listAllUserGuilds } = require('../../database/schemas/User_guilds')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -42,6 +43,11 @@ module.exports = async ({ client, user, interaction }) => {
             dados_conhecidos += `\`Pula prédios\``
     }
 
+    const user_guilds = await listAllUserGuilds(user.uid)
+
+    if (user_guilds.length > 0)
+        dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} Servidores em cache:**\n\`${user_guilds.length} servidores conhecidos\``
+
     const id_badges = await client.getUserBadges(user.uid)
 
     if (id_badges.length > 0)
@@ -74,10 +80,12 @@ module.exports = async ({ client, user, interaction }) => {
 
     const row = client.create_buttons([
         { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.central_exclusao"), type: 3, emoji: client.emoji(13), data: '1' },
-        { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.telemetria"), type: 1, emoji: client.emoji(36), data: '2' }
+        { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.telemetria"), type: 1, emoji: client.emoji(36), data: '2' },
+        { id: "data_menu_button", name: "Sincronizar servidores", type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
     ], interaction)
 
     client.reply(interaction, {
+        content: "",
         embeds: [embed],
         components: [row],
         ephemeral: true

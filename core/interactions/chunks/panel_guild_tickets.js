@@ -1,7 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { emoji_button, type_button } = require("../../functions/emoji_button")
-
 module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
@@ -23,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.ticket.descricao"))
         .setFields(
             {
-                name: `${emoji_button(guild?.conf.tickets)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -37,12 +35,12 @@ module.exports = async ({ client, user, interaction }) => {
         .addFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
         )
@@ -52,7 +50,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     botoes = botoes.concat([
-        { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: type_button(guild?.conf.tickets), emoji: emoji_button(guild?.conf.tickets), data: "1" },
+        { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.tickets), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets), data: "1" },
         { id: "guild_tickets_button", name: client.tls.phrase(user, "util.server.categoria"), type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ])
 

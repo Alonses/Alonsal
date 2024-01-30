@@ -1,13 +1,17 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { getUserReports } = require('../../../database/schemas/Report')
+const { registerUserGuild } = require('../../../database/schemas/User_guilds')
 
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
+    const user = await client.getUser(dados.user.id)
 
-    // Notificando o servidor sobre a entrada de um usuário com reportes
-    if (guild?.reports.notify) {
+    if (user.conf?.cached_guilds) // Salvando o novo servidor ao usuário
+        await registerUserGuild(user.uid, dados.guild.id)
+
+    if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
         let avisos = 0, historico = []
 
         const reports = await getUserReports(dados.user.id)

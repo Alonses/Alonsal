@@ -30,6 +30,7 @@ class CeiraClient {
         this.idioma = idioma
         this.x = client_data
         this.cached = {
+            last_interaction: 0,
             broad_status: false,
             presence: null
         }
@@ -53,10 +54,7 @@ class CeiraClient {
         let guilds = null
 
         if (id_guild)
-            guilds_cache.forEach(guild => {
-                if (guild.id === id_guild)
-                    guilds = guild
-            })
+            guilds = guilds_cache.filter(guild => guild.id === id_guild)[0]
         else
             guilds = guilds_cache
 

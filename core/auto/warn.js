@@ -33,21 +33,27 @@ async function verifica_warns(client) {
         // Interrompe a operação caso não haja advertências salvas em cache
         if (data.length < 1) return
 
+        const guilds_map = {}
+
         for (let i = 0; i < data.length; i++) {
 
             const warn = data[i]
-            const guild = await client.getGuild(warn.sid)
+            const guild = guilds_map[warn.sid] ? guilds_map[warn.sid] : await client.getGuild(warn.sid)
+
+            if (!guilds_map[warn.sid]) // Salvando a guild em cache
+                guilds_map[warn.sid] = guild
 
             // Verificando se a advertência ultrapassou o tempo de exclusão
             if (client.timestamp() > (warn.timestamp + spamTimeoutMap[guild.warn.reset])) {
 
                 // Excluindo o registro da advertência caso tenha zerado e verificando os cargos do usuário
-                await removeUserWarn(warn.uid, warn.sid)
+                await removeUserWarn(warn.uid, warn.sid, warn.timestamp)
                 client.verifyUserWarnRoles(warn.uid, warn.sid)
-
-                atualiza_warns()
             }
         }
+
+        // Atualizando as advertências em cache
+        atualiza_warns()
     })
 }
 
