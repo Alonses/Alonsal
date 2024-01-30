@@ -54,7 +54,7 @@ class CeiraClient {
         let guilds = null
 
         if (id_guild)
-            guilds = guilds_cache.filter(guild => guild.id === id_guild)[0]
+            guilds = guilds_cache.filter(guild => guild.id === id_guild).entries().next().value[1]
         else
             guilds = guilds_cache
 
