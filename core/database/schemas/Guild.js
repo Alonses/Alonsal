@@ -189,7 +189,6 @@ async function migrateGameChannels() {
 async function getNetworkedGuilds(link) {
     // Lista todos os servidores com network ativo
     return model.find({
-        "conf.network": true,
         "network.link": link
     })
 }

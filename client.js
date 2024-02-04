@@ -51,10 +51,13 @@ class CeiraClient {
     guilds(id_guild) {
 
         let guilds_cache = this.discord.guilds.cache
-        let guilds = null
+        let guilds
 
         if (id_guild)
-            guilds = guilds_cache.filter(guild => guild.id === id_guild).entries().next().value[1]
+            guilds_cache.forEach(guild => {
+                if (guild.id === id_guild)
+                    guilds = guild
+            })
         else
             guilds = guilds_cache
 
