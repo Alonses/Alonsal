@@ -50,7 +50,7 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    if (!registroAudita)
+    if (!registroAudita || (client.x.debug_mode && registroAudita.executorId === "665002572926681128"))
         return
 
     if (!network_map.has(registroAudita.targetId)) {
