@@ -22,7 +22,7 @@ module.exports = async ({ client, channel }) => {
     // Coletando dados sobre o evento
     const fetchedLogs = await channel.guild.fetchAuditLogs({
         type: AuditLogEvent.ChannelDelete,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita = fetchedLogs.entries.first()

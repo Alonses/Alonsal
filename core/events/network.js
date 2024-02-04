@@ -33,26 +33,26 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
         if (caso === "ban_add") // Coletando dados sobre o evento
             fetchedLogs = await guild_evento.fetchAuditLogs({
                 type: AuditLogEvent.MemberBanAdd,
-                limit: 1,
+                limit: 1
             })
         else if (caso === "ban_del")
             fetchedLogs = await guild_evento.fetchAuditLogs({
                 type: AuditLogEvent.MemberBanRemove,
-                limit: 1,
+                limit: 1
             })
         else if (caso === "mute")
             fetchedLogs = await guild_evento.fetchAuditLogs({
                 type: AuditLogEvent.MemberUpdate,
-                limit: 1,
+                limit: 1
             })
         else if (caso === "kick")
             fetchedLogs = await guild_evento.fetchAuditLogs({
                 type: AuditLogEvent.MemberKick,
-                limit: 1,
+                limit: 1
             })
 
         const registroAudita = fetchedLogs.entries.first()
-        if (!registroAudita) return
+        if (!registroAudita || registroAudita.targetId !== id_alvo) return
 
         // Navegando pelos servidores do network
         for (let i = 0; i < guilds_network.length; i++) {
