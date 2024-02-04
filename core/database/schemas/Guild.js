@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const loggerMap = {
     "message_edit": "📝",
     "message_delete": "🚮",
+    "member_nick": "🔖",
     "member_image": "👤",
     "member_role": "🔖",
     "member_join": "🆕",
