@@ -23,7 +23,7 @@ module.exports = async ({ client, ban }) => {
     // Coletando dados sobre o evento
     const fetchedLogs = await ban.guild.fetchAuditLogs({
         type: AuditLogEvent.MemberBanAdd,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita = fetchedLogs.entries.first()

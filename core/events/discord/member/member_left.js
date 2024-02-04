@@ -30,7 +30,7 @@ module.exports = async (client, dados) => {
     // Verificando se o usuário foi expulso do servidor
     const fetchedLogs2 = await dados.guild.fetchAuditLogs({
         type: AuditLogEvent.MemberKick,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita2 = fetchedLogs2.entries.first()
@@ -42,7 +42,7 @@ module.exports = async (client, dados) => {
     // Verificando se o usuário foi banido
     const fetchedLogs = await dados.guild.fetchAuditLogs({
         type: AuditLogEvent.MemberBanAdd,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita = fetchedLogs.entries.first()

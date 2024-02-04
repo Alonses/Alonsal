@@ -23,7 +23,7 @@ module.exports = async ({ client, message }) => {
     // Coletando dados sobre o evento
     const fetchedLogs = await message.guild.fetchAuditLogs({
         type: AuditLogEvent.MessageDelete,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita = fetchedLogs.entries.first()

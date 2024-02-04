@@ -9,7 +9,7 @@ module.exports = async ({ client, guild, dados }) => {
     // Coletando dados sobre o evento
     const fetchedLogs = await dados[0].guild.fetchAuditLogs({
         type: AuditLogEvent.MemberRoleUpdate,
-        limit: 1,
+        limit: 1
     })
 
     const registroAudita = fetchedLogs.entries.first()
