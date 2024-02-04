@@ -29,7 +29,6 @@ module.exports = async ({ client, user, interaction }) => {
 
     await guild.save()
 
-
     const eventos = {
         total: 0,
         ativos: 0
@@ -51,7 +50,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(45)} **${client.tls.phrase(user, "mode.network.servidores")}: ${servidores.length}**`,
+                value: `${client.emoji(45)} **${client.tls.phrase(user, "mode.network.servidores")} no link: ${servidores.length}**`,
                 inline: true
             },
             {

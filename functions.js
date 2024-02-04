@@ -234,22 +234,23 @@ function internal_functions(client) {
 
             const guild = server.sid ? await client.guilds(server.sid) : server[1]
 
-            if (guild.id !== interaction.guild.id) {
-                const membro_guild = await guild.members.fetch(user.uid)
-                    .catch(() => { return null })
+            if (guild?.id) // verificando se o servidor possui os dados corretos
+                if (guild.id !== interaction.guild.id) {
+                    const membro_guild = await guild.members.fetch(user.uid)
+                        .catch(() => { return null })
 
-                if (membro_guild) { // Listando as guilds que o usuário é moderador
-                    if (membro_guild.permissions.has(permissions)) {
-                        const internal_guild = await client.getGuild(guild.id)
-                        internal_guild.name = guild.name
+                    if (membro_guild) { // Listando as guilds que o usuário é moderador
+                        if (membro_guild.permissions.has(permissions)) {
+                            const internal_guild = await client.getGuild(guild.id)
+                            internal_guild.name = guild.name
 
-                        guilds_user.push(internal_guild)
+                            guilds_user.push(internal_guild)
+                        }
+
+                        // Registrando os servidores que o usuário faz parte
+                        registerUserGuild(user.uid, guild.id)
                     }
-
-                    // Registrando os servidores que o usuário faz parte
-                    registerUserGuild(user.uid, guild.id)
                 }
-            }
         }
 
         // Ordenando alfabeticamente os servidores
@@ -257,8 +258,8 @@ function internal_functions(client) {
     }
 
     client.getMemberPermissions = async (id_guild, id_member) => {
-        const guild = await client.guilds(id_guild)
 
+        const guild = await client.guilds(id_guild)
         if (!guild) return null
 
         // Retorna todas as permissões de um usuário num servidor especifico
