@@ -34,11 +34,13 @@ module.exports = async ({ client, guild, user, dados }) => {
         .setTitle(client.tls.phrase(guild, "mode.logger.titulo_avatar"))
         .setColor(0x29BB8E)
         .setDescription(client.tls.phrase(guild, "mode.logger.novo_avatar", 35))
-        .setFields({
-            name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-            value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
-            inline: true
-        })
+        .setFields(
+            {
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
+                inline: true
+            }
+        )
         .setTimestamp()
 
     // Usuário é um BOT

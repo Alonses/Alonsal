@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.logger.entrada_original")}**`,
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "util.user.entrada")}**`,
                 value: `<t:${parseInt(member_guild?.joinedTimestamp || 0 / 1000)}:F> )`,
                 inline: true
             },

@@ -27,8 +27,8 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-                value: `<t:${parseInt(user_guild.joinedTimestamp / 1000)}:F> ( <t:${Math.floor(user_guild.joinedTimestamp / 1000)}:R> )`,
-                inline: true
+                value: `<t:${parseInt(user_guild.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(user_guild.joinedTimestamp / 1000)}:R> )`,
+                inline: false
             }
         )
 

@@ -60,14 +60,14 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.logger.entrada_original")}**`,
-                value: `<t:${parseInt(user_alvo.joinedTimestamp / 1000)}:F>`,
-                inline: true
-            },
-            {
                 name: `**:mega: Warns: ${warns.length} / ${indice_matriz}**`,
                 value: `:name_badge: **Strikes: ${strikes.strikes}**\n:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
                 inline: true
+            },
+            {
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "util.user.entrada")}**`,
+                value: `<t:${parseInt(user_alvo.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(user_alvo.joinedTimestamp / 1000)}:R> )`,
+                inline: false
             }
         )
 
