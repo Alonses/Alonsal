@@ -46,14 +46,9 @@ module.exports = async ({ client, guild, dados }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-                value: `<t:${parseInt(new_member.joinedTimestamp / 1000)}:F> ( <t:${Math.floor(new_member.joinedTimestamp / 1000)}:R> )`,
-                inline: true
-            },
-            {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.alterador")}**`,
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
-                inline: false
+                inline: true
             }
         )
         .setTimestamp()
@@ -68,8 +63,13 @@ module.exports = async ({ client, guild, dados }) => {
             }
         )
 
-    // Listando todas as permissões do usuário
+    // Listando as permissões do usuário
     embed.addFields(
+        {
+            name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
+            value: `<t:${parseInt(new_member.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(new_member.joinedTimestamp / 1000)}:R> )`,
+            inline: false
+        },
         {
             name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
             value: client.list(new_member.permissions.toArray(), 2000),

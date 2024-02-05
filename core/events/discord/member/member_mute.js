@@ -7,7 +7,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
 
     const embed = new EmbedBuilder()
-        .setTitle(timeout ? "🔇 Membro castigado" : "🔊 Remoção de castigo")
+        .setTitle(timeout ? "> Membro castigado 🔇" : "> Remoção de castigo 🔊")
         .setColor(timeout ? 0xED4245 : 0xffffff)
         .setFields(
             {
@@ -16,19 +16,27 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.logger.entrada_original")}**`,
-                value: `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F> )`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
         )
         .setTimestamp()
 
-    if (timeout) // Exibindo o tempo de castigo do usuário
+    if (timeout) // Exibindo o tempo de castigo que o membro recebeu
         embed.addFields(
             {
                 name: `${client.defaultEmoji("time")} **Tempo de castigo**`,
-                value: `<t:${parseInt(client.timestamp() + (timeout / 1000))}:F> )`,
-                inline: true
+                value: `<t:${parseInt(client.timestamp() + (timeout / 1000))}:F>\n( <t:${parseInt(client.timestamp() + (timeout / 1000))}:R> )`,
+                inline: false
+            }
+        )
+    else
+        embed.addFields(
+            {
+                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
+                value: `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(member_guild.joinedTimestamp / 1000)}:R> )`,
+                inline: false
             }
         )
 

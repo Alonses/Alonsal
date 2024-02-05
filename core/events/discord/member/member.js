@@ -35,7 +35,7 @@ module.exports = async (client, dados) => {
         return require('./member_nick')({ client, guild, registroAudita, dados })
 
     // Membro foi mutado
-    if (dados[0].communicationDisabledUntilTimestamp !== dados[1].communicationDisabledUntilTimestamp && dados[0].communicationDisabledUntilTimestamp && guild.logger.member_punishment)
+    if (dados[0].communicationDisabledUntilTimestamp !== dados[1].communicationDisabledUntilTimestamp && guild.logger.member_punishment)
         return require('./member_mute')({ client, guild, registroAudita, dados })
 
     // Membro teve os cargos atualizados
