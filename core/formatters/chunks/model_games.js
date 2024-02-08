@@ -18,9 +18,6 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
     if (!objeto_anunciado[0].tipo)
         objeto_anunciado[0].tipo = "game"
 
-    if (objeto_anunciado[0].link.match(/store.steam/) && objeto_anunciado.length < 2)
-        link_app = client.replace(`\n\n${client.emoji("lg_steam")} ${game["anuncio"]["link_app"]}\nsteam://store/${objeto_anunciado[0].link.split("app/")[1].split("/")[0]}`, plataforma)
-
     // Um item anunciado
     texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), `<t:${objeto_anunciado[0].expira}:D>`, valor_total, plataforma])
 
@@ -40,7 +37,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
         texto_formatado = `${client.replace(mode["anuncio"]["games_gratuitos"], client.emoji("emojis_dancantes"))}\n\n${jogos_disponiveis.join("\n\n")}`
     }
 
-    return `${texto_formatado}${link_app}`
+    return texto_formatado
 }
 
 nome_games = (objeto_anunciado) => {
