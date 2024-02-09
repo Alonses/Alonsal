@@ -38,6 +38,10 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
                 membros_sv = members.map(member => member.id) // ID's dos membros do servidor
             })
 
+        // Temporário
+        for (let i = 0; i < 560; i++)
+            membros_sv.shift()
+
         updates[0] = membros_sv.length
 
         await interaction.update({
@@ -45,7 +49,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
             ephemeral: true
         })
 
-        timestamp = client.timestamp() + (updates[0] * 1.5) + 1
+        timestamp = parseInt(client.timestamp() + (updates[0] * 1.5) + 1)
         alterar_users(client, user, interaction, 0)
     } else
         interaction.update({
