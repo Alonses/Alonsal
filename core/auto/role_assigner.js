@@ -38,10 +38,6 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
                 membros_sv = members.map(member => member.id) // ID's dos membros do servidor
             })
 
-        // Temporário
-        for (let i = 0; i < 560; i++)
-            membros_sv.shift()
-
         updates[0] = membros_sv.length
 
         await interaction.update({
@@ -108,14 +104,18 @@ async function alterar_users(client, user, interaction, contador) {
         membros_sv.shift()
 
         if (membros_sv.length > 0) {
-            interaction.editReply({ content: `${emoji_dancante} | Atualizando usuários: \`${contador} de ${updates[0]}\`\n( Término estimado <t:${timestamp}:R> )` })
+            if ((timestamp - client.timestamp()) < 850)
+                interaction.editReply({ content: `${emoji_dancante} | Atualizando usuários: \`${contador} de ${updates[0]}\`\n( Término estimado <t:${timestamp}:R> )` })
+
             alterar_users(client, user, interaction, contador)
         } else {
             operacao_ativa = 0
-            interaction.editReply({
-                content: `:checkered_flag: | Operação concluída\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\``,
-                components: []
-            })
+
+            if ((timestamp - client.timestamp()) < 850)
+                interaction.editReply({
+                    content: `:checkered_flag: | Operação concluída\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\``,
+                    components: []
+                })
 
             client.sendDM(user, { data: `:checkered_flag: | Operação concluída!\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\`` })
         }
