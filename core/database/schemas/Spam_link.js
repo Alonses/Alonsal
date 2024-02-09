@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     register: { type: String, default: null }
 })
 
-const model = mongoose.model("SpamLink", schema)
+const model = mongoose.model("Spam_Link", schema)
 
 async function verifySuspiciousLink(link) {
 
@@ -41,7 +41,7 @@ async function dropSuspiciousLink(link) {
     })
 }
 
-module.exports.SpamLink = model
+module.exports.Spam_Link = model
 module.exports = {
     getSuspiciousLink,
     dropSuspiciousLink,
