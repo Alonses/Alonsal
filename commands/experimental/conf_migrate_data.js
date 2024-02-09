@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { migrateRankGlobal } = require('../../core/database/schemas/Rank_g')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_migrate")
