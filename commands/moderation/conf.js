@@ -102,6 +102,15 @@ module.exports = {
                             { name: '🇷🇺 Русский', value: 'ru-ru' }
                         )
                         .setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand.setName("roles")
+                .setNameLocalizations({
+                    "pt-BR": 'cargos'
+                })
+                .setDescription("⌠💂⌡ Assign roles to server members")
+                .setDescriptionLocalizations({
+                    "pt-BR": '⌠💂⌡ Atribua cargos para membros do servidor',
+                }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute({ client, user, interaction }) {
 

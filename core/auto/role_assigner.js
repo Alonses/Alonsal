@@ -7,6 +7,7 @@ let updates = [0, 0, 0, 0, 0]
 let emoji_dancante
 let cargos
 let repeticao
+let timestamp
 
 module.exports = async ({ client, user, interaction, force_stop }) => {
 
@@ -44,6 +45,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
             ephemeral: true
         })
 
+        timestamp = client.timestamp() + (updates[0] * 1.5) + 1
         alterar_users(client, user, interaction, 0)
     } else
         interaction.update({
@@ -102,7 +104,7 @@ async function alterar_users(client, user, interaction, contador) {
         membros_sv.shift()
 
         if (membros_sv.length > 0) {
-            interaction.editReply({ content: `${emoji_dancante} | Atualizando usuários: \`${contador} de ${updates[0]}\`` })
+            interaction.editReply({ content: `${emoji_dancante} | Atualizando usuários: \`${contador} de ${updates[0]}\`\n( Término estimado <t:${timestamp}:R> )` })
             alterar_users(client, user, interaction, contador)
         } else {
             operacao_ativa = 0
