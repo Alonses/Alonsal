@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     link: { type: String, default: null },
-    register: { type: String, default: null }
+    timestamp: { type: String, default: null }
 })
 
 const model = mongoose.model("Spam_Link", schema)
@@ -30,7 +30,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
     await model.create({
         link: link,
         sid: guild_id,
-        register: timestamp
+        timestamp: timestamp
     })
 }
 
