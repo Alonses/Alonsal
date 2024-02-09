@@ -447,7 +447,7 @@ function internal_functions(client) {
         } else
             string = string.replaceAll(especifico[0], especifico[1])
 
-        return string
+        return string.replaceAll("`", "'")
     }
 
     client.reply = (interaction, obj) => {
