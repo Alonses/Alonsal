@@ -17,7 +17,7 @@ module.exports = async (client, user, interaction) => {
         if (interaction) // Sem games para anunciar no momento
             return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
         else
-            client.sendDM(user, { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
+            client.sendDM(user, { data: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
 
     games.forEach(game => {
         // Jogo com tempo válido para resgate

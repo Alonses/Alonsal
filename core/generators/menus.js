@@ -191,6 +191,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     emoji_label = client.defaultEmoji("role")
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
 
+                    if (valor.id === "all")
+                        emoji_label = "🃏"
+
                     if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
                         valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu.replace("x/", "")}`
 
