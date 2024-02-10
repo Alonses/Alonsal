@@ -432,8 +432,7 @@ function internal_functions(client) {
     client.replace = (string, valores, especifico) => {
 
         if (!especifico) {
-            if (typeof valores === "object") { // Array com vários dados para alterar
-
+            if (valores && typeof valores === "object") { // Array com vários dados para alterar
                 if (valores.length > 0)
                     while (valores.length > 0) {
                         string = string.replace("auto_repl", valores[0])
@@ -447,7 +446,7 @@ function internal_functions(client) {
         } else
             string = string.replaceAll(especifico[0], especifico[1])
 
-        return string.replaceAll("`", "'")
+        return string
     }
 
     client.reply = (interaction, obj) => {
