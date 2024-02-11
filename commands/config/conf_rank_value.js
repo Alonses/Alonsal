@@ -27,6 +27,6 @@ module.exports = {
             ephemeral: true
         })
 
-        client.notify(process.env.channel_feeds, { content: `:medal: | Ranking do Alon ajustado para \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando` })
+        client.notify(process.env.channel_feeds, { content: `:medal: | Ranking do Alonsal ajustado para \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando` })
     }
 }

@@ -67,14 +67,14 @@ module.exports = {
                 }))
         .addSubcommand(subcommand =>
             subcommand.setName("migrate")
-                .setDescription("⌠💂⌡ Migrate all banned users from server to Alon")
+                .setDescription("⌠💂⌡ Migrate all banned users from server to Alonsal")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Migrieren Sie alle gesperrten Benutzer vom Server nach Alon',
-                    "es-ES": '⌠💂⌡ Migrar todos los usuarios prohibidos del servidor a Alon',
-                    "fr": '⌠💂⌡ Migrer tous les utilisateurs bannis du serveur vers l\'Alon',
-                    "it": '⌠💂⌡ Migra tutti gli utenti bannati dal server ad Alon',
-                    "pt-BR": '⌠💂⌡ Migre todos os usuários banidos do servidor para o Alon',
-                    "ru": '⌠💂⌡ Перевести всех забаненных пользователей с сервера на Alon'
+                    "de": '⌠💂⌡ Migrieren Sie alle gesperrten Benutzer vom Server nach Alonsal',
+                    "es-ES": '⌠💂⌡ Migrar todos los usuarios prohibidos del servidor a Alonsal',
+                    "fr": '⌠💂⌡ Migrer tous les utilisateurs bannis du serveur vers l\'Alonsal',
+                    "it": '⌠💂⌡ Migra tutti gli utenti bannati dal server ad Alonsal',
+                    "pt-BR": '⌠💂⌡ Migre todos os usuários banidos do servidor para o Alonsal',
+                    "ru": '⌠💂⌡ Перевести всех забаненных пользователей с сервера на Alonsal'
                 })
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers || PermissionFlagsBits.KickMembers),

@@ -100,7 +100,7 @@ module.exports = {
                             { name: '🛑 Warns', value: 'warns' },
                             { name: '🛑 Warns Configs', value: 'warns.1' },
                             { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🗣 Talkative Alon', value: 'speaker' },
+                            { name: '🗣 Talkative Alonsal', value: 'speaker' },
                             { name: '📡 Broadcast', value: 'broadcast' },
                             { name: '🌐 Global visibility', value: 'public_guild' }
                         ))),

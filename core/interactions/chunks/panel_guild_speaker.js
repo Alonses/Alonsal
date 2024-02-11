@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.alonsal_falador")} ${client.emoji(52)}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Como funciona\n\nO Alon falador é um recurso que poder ser usado para conversar com o bot através do servidor de forma dinâmica, os retornos que ele te mostrará não são filtrados, sendo assim, nós não temos controle do que ele dirá!\n\nVocê pode limitar esse recurso para funcionar em apenas alguns canais, ou ativar no servidor inteiro!```")
+        .setDescription("```🧻 Como funciona\n\nO Alonsal falador é um recurso que poder ser usado para conversar com o bot através do servidor de forma dinâmica, os retornos que ele te mostrará não são filtrados, sendo assim, nós não temos controle do que ele dirá!\n\nVocê pode limitar esse recurso para funcionar em apenas alguns canais, ou ativar no servidor inteiro!```")
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.conversation)} **${client.tls.phrase(user, "mode.report.status")}**`,

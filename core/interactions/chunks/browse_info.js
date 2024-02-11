@@ -62,8 +62,8 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
         const games_free = await getGames()
 
-        // Estatísticas do Alon
-        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alon!\`\`\``)
+        // Estatísticas do Alonsal
+        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alonsal!\`\`\``)
             .addFields(
                 {
                     name: `${client.defaultEmoji("playing")} **Miscelânea**`,

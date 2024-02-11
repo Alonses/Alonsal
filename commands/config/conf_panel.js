@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_panel")
-        .setDescription("⌠🤖⌡ Painel central do Alon")
+        .setDescription("⌠🤖⌡ Painel central do Alonsal")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 

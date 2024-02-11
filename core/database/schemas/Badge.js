@@ -40,7 +40,7 @@ async function verifyDynamicBadge(client, alvo, badge_id) {
 
     if (alvo !== "hoster")
         top_users = await (alvo === "bufunfas" ? getRankMoney() : getRankGlobal())
-    else // Usuários que mais convidaram o Alon
+    else // Usuários que mais convidaram o Alonsal
         top_users = await getRankHosters(client)
 
     if (top_users.length < 2) return

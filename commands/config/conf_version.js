@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_version")
-        .setDescription("⌠🤖⌡ Altere a versão do Alon")
+        .setDescription("⌠🤖⌡ Altere a versão do Alonsal")
         .addStringOption(option =>
             option.setName("versao")
                 .setDescription("Qual será a versão")

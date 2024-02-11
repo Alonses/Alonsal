@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
+
 const { languagesMap } = require('../../core/formatters/translate')
 
 module.exports = {
@@ -12,13 +13,13 @@ module.exports = {
             "pt-BR": 'idioma',
             "ru": 'язык'
         })
-        .setDescription("⌠👤⌡ Change the language of Alon")
+        .setDescription("⌠👤⌡ Change the language of Alonsal")
         .setDescriptionLocalizations({
-            "de": "⌠👤⌡ Alons Sprache ändern",
-            "es-ES": '⌠👤⌡ Cambiar el idioma de Alon',
-            "fr": '⌠👤⌡ Changer la langue d\'Alon',
-            "it": '⌠👤⌡ Cambia la lingua di Alon',
-            "pt-BR": '⌠👤⌡ Altere o idioma do Alon',
+            "de": "⌠👤⌡ Alonsals Sprache ändern",
+            "es-ES": '⌠👤⌡ Cambiar el idioma de Alonsal',
+            "fr": '⌠👤⌡ Changer la langue d\'Alonsal',
+            "it": '⌠👤⌡ Cambia la lingua di Alonsal',
+            "pt-BR": '⌠👤⌡ Altere o idioma do Alonsal',
             "ru": '⌠👤⌡ Изменить язык Алонсала',
         })
         .addStringOption(option =>

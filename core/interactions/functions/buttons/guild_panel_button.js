@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
-    // 0 -> Alon Falador ( Movido para guild_speaker_button )
+    // 0 -> Alonsal Falador ( Movido para guild_speaker_button )
     // 1 -> Permitir Broadcast
     // 2 -> Anúncio de Games ( Movido para guild_free_games_button )
 
@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 9 -> Convites Rastreados
 
     if (escolha === 0) {
-        // Ativa ou desativa a capacidade do Alon falar no servidor livremente ( através do clever )
+        // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
         if (typeof guild.conf.conversation !== "undefined")
             guild.conf.conversation = !guild.conf.conversation
         else
@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     } else if (escolha === 1) {
 
-        // Ativa ou desativa a possibilidade do Alon realizar Broadcasting nos chats do servidor
+        // Ativa ou desativa a possibilidade do Alonsal realizar Broadcasting nos chats do servidor
         if (typeof guild.conf.broadcast !== "undefined")
             guild.conf.broadcast = !guild.conf.broadcast
         else
