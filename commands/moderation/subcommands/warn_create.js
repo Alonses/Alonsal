@@ -20,9 +20,9 @@ module.exports = async ({ client, user, interaction }) => {
             ephemeral: true
         })
 
-    const guild_member = await client.getMemberPermissions(interaction.guild.id, interaction.options.getUser("user").id)
-    const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
-    const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
+    const guild_member = await client.getMemberGuild(interaction.guild.id, interaction.options.getUser("user").id)
+    const guild_executor = await client.getMemberGuild(interaction.guild.id, interaction.user.id)
+    const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
 
     const guild = await client.getGuild(interaction.guild.id)
 

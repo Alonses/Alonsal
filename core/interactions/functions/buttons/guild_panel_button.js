@@ -50,9 +50,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             guild.conf.public = false
     } else if (escolha === 9) {
 
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuild]))
             return interaction.update({ content: ":passport_control: | Eu não posso ver a lista de convites sem a permissão `Gerenciar servidor` concedida.", ephemeral: true })
 
         // Ativa ou desativa os convites rastreados

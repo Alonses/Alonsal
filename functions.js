@@ -45,11 +45,8 @@ function internal_functions(client) {
     // Apagando os convites criados pelo usuário que foi expulso/banido do servidor
     client.checkUserInvites = async (guild, id_user) => {
 
-        // Permissões do bot no servidor
-        const membro_sv = await client.getMemberGuild(guild.sid, client.id())
-
         // Removendo o cargo ao usuário que recebeu a advertência
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))
+        if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ManageGuild]))
             return client.notify(guild.logger.channel, { content: ":passport_control: | Eu não tenho permissões para `Gerenciar servidor`, não é possível ver a lista de convites sem essa permissão concedida!\nA exclusão automática dos convites de um membro que foi expulso/banido não foi realizada. @here" })
 
         // Excluindo os convites que o membro expulso/banido criou
@@ -257,18 +254,6 @@ function internal_functions(client) {
         return guilds_user.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
-    client.getMemberPermissions = async (id_guild, id_member) => {
-
-        const guild = await client.guilds(id_guild)
-        if (!guild) return null
-
-        // Retorna todas as permissões de um usuário num servidor especifico
-        const membro_guild = await guild.members.fetch(id_member)
-            .catch(() => { return null })
-
-        return membro_guild
-    }
-
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => {
         return client.discord.users.fetch(id_alvo)
@@ -366,23 +351,33 @@ function internal_functions(client) {
         if (!canal) return
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!canal.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages])) return
+        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
 
         canal.send(conteudo)
     }
 
-    client.permissions = async (interaction, id_alvo, permissao) => {
+    client.permissions = async (interaction, id_alvo, permissao, canal) => {
 
-        // Permissões do usuário no servidor
-        const membro_sv = await client.getMemberGuild(interaction, id_alvo)
         let valido = false
 
-        if (!membro_sv) // Membro não localizado
-            return false
+        if (interaction) {
+            // Permissões do usuário no servidor
+            const membro_sv = await client.getMemberGuild(interaction, id_alvo)
 
-        // Verificando se o usuário possui a permissão
-        if (membro_sv.permissions.has(permissao))
-            valido = true
+            if (!membro_sv) // Membro não localizado
+                return false
+
+            // Verificando se o usuário possui a permissão
+            if (membro_sv.permissions.has(permissao))
+                valido = true
+        } else {
+            // Permissões em canais específicos
+            if (canal.channel) {
+                if (canal.channel.permissionsFor(id_alvo).has(permissao))
+                    valido = true
+            } else if (canal.permissionsFor(id_alvo).has(permissao))
+                valido = true
+        }
 
         return valido
     }

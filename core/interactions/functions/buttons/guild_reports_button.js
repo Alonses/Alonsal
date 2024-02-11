@@ -28,9 +28,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 2) {
 
-        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers])
-
-        if (!permissoes)
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 ephemeral: true

@@ -34,8 +34,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Permissão para atualizar os cargos de membros do servidor
-        const permissoes = await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles)
-        if (!permissoes)
+        if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
                 content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
                 ephemeral: true
@@ -76,8 +75,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 3) {
 
         // Permissão para atualizar os cargos de membros do servidor
-        const permissoes = await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles)
-        if (!permissoes)
+        if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
                 content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
                 ephemeral: true

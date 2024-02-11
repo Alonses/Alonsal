@@ -25,11 +25,8 @@ module.exports = {
         if (interaction.guild.ownerId === interaction.user.id)
             return client.tls.reply(interaction, user, "dive.nick.permissao_1", true, client.emoji(0))
 
-        // Permissões do bot no servidor
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-
-        // Libera configuração apenas se puder editar o apelido de outros usuários
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageNicknames) || !membro_sv.permissions.has(PermissionsBitField.Flags.ChangeNickname))
+        // Libera a função apenas se puder editar o apelido de outros usuários
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageNicknames, PermissionsBitField.Flags.ChangeNickname]))
             return client.tls.reply(interaction, user, "dive.nick.permissao_2", true, client.emoji(0))
 
         const user_alvo = await client.getMemberGuild(interaction, interaction.user.id)

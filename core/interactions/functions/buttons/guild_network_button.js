@@ -31,9 +31,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             niveis_permissao.push(PermissionsBitField.Flags.ModerateMembers)
 
         // Verificando se o bot possui permissões requeridas conforme os recursos ativos
-        const permissoes = await client.permissions(interaction, client.id(), niveis_permissao)
-
-        if (!permissoes)
+        if (!await client.permissions(interaction, client.id(), niveis_permissao))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 ephemeral: true

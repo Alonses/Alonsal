@@ -11,8 +11,7 @@ module.exports = async ({ client, message }) => {
     if (!guild.logger.message_delete || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    const permissoes = await client.permissions(message, client.id(), PermissionsBitField.Flags.ViewAuditLog)
-    if (!permissoes) {
+    if (!await client.permissions(message, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.message_delete = false
         await guild.save()

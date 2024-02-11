@@ -8,8 +8,7 @@ module.exports = async ({ client, invite }) => {
     if (!guild.logger.invite_created || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    const permissoes = await client.permissions(invite, client.id(), PermissionsBitField.Flags.ViewAuditLog)
-    if (!permissoes) {
+    if (!await client.permissions(invite, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.invite_created = false
         await guild.save()

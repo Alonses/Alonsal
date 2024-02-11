@@ -45,9 +45,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         guild.conf.tickets = false
 
     // Verificando as permissões do bot
-    const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles])
-
-    if (!permissoes) {
+    if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles])) {
         guild.conf.tickets = false
         await guild.save()
 

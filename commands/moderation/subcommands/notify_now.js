@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
         if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
             // Permissão para enviar mensagens no canal
-            if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
+            if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                 if (guild.conf.games) // Módulo de anúncios de games ativado
                     client.tls.reply(interaction, user, "mode.anuncio.anuncio_enviado_duplicatas", true, 29, `<#${guild.games.channel}>`)

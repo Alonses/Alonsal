@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escoler a penalidade da advertência
         const eventos = []
-        const guild_bot = await client.getMemberPermissions(interaction.guild.id, client.id())
+        const guild_bot = await client.getMemberGuild(interaction.guild.id, client.id())
 
         Object.keys(guildActions).forEach(evento => {
             if (evento !== warn.action) {

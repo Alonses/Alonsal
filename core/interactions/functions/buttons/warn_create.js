@@ -143,9 +143,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild_warns[indice_warn].action) // Usuário recebeu a uma advertência com penalidade
         if (guild_warns[indice_warn].action !== "none") {
 
-            const guild_member = await client.getMemberPermissions(interaction.guild.id, id_alvo)
-            const guild_executor = await client.getMemberPermissions(interaction.guild.id, interaction.user.id)
-            const bot_member = await client.getMemberPermissions(interaction.guild.id, client.id())
+            const guild_member = await client.getMemberGuild(interaction.guild.id, id_alvo)
+            const guild_executor = await client.getMemberGuild(interaction.guild.id, interaction.user.id)
+            const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
 
             // Redirecionando o evento
             require(`../../../events/warn/${guild_warns[indice_warn].action.replace("_2", "")}`)({ client, user, interaction, guild, active_user_warns, user_warn, guild_member, guild_executor, bot_member })
@@ -153,17 +153,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo
 
-        // Permissões do bot no servidor
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-        const membro_guild = await client.getMemberGuild(interaction, id_alvo)
-
-        if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
+        // Verificando permissões do bot no servidor
+        if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
 
             // Atribuindo o cargo ao usuário que recebeu a advertência
             let role = interaction.guild.roles.cache.get(guild_warns[indice_warn].role)
 
-            if (role.editable) // Verificando se o cargo é editável
+            if (role.editable) { // Verificando se o cargo é editável
+                const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+
                 membro_guild.roles.add(role).catch(console.error)
+            }
         } else
             client.notify(guild.warn.channel, { // Sem permissão para gerenciar cargos
                 content: ":passport_control: | Uma advertência com cargos foi criada, porém eu não possuo permissões para `Gerenciar cargos`,\no cargo não foi atribuído ao membro que recebeu a advertência. @here",
