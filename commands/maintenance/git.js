@@ -3,13 +3,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("git")
-        .setDescription("⌠📡⌡ The Alon™️ repository")
+        .setDescription("⌠📡⌡ The Alonsal™️ repository")
         .setDescriptionLocalizations({
-            "de": '⌠📡⌡ Das Alon™️-Repository',
-            "es-ES": '⌠📡⌡ El repositorio de Alon™️',
-            "fr": '⌠📡⌡ Le référentiel Alon™️',
-            "it": '⌠📡⌡ Il repository Alon™️',
-            "pt-BR": '⌠📡⌡ O repositório do Alon™️',
+            "de": '⌠📡⌡ Das Alonsal™️-Repository',
+            "es-ES": '⌠📡⌡ El repositorio de Alonsal™️',
+            "fr": '⌠📡⌡ Le référentiel Alonsal™️',
+            "it": '⌠📡⌡ Il repository Alonsal™️',
+            "pt-BR": '⌠📡⌡ O repositório do Alonsal™️',
             "ru": '⌠📡⌡ Репозиторий Алонсал™'
         }),
     async execute({ client, user, interaction }) {

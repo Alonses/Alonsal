@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.data.ranking"), type: client.execute("functions", "emoji_button.type_button", user?.conf.ranking), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking), data: '2' }
         ])
 
-    // Segunda página de botões de configuração do Alon
+    // Segunda página de botões de configuração do Alonsal
     // Badges visiveis públicamente, clima resumido e tarefas globais
     if (pagina === 1)
         botoes = botoes.concat([

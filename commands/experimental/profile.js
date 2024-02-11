@@ -13,9 +13,9 @@ module.exports = {
                 .setNameLocalizations({
                     "pt-BR": 'sobre'
                 })
-                .setDescription("⌠🎉⌡ Change your description on Alon")
+                .setDescription("⌠🎉⌡ Change your description on Alonsal")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Altere sua descrição no Alon'
+                    "pt-BR": '⌠🎉⌡ Altere sua descrição no Alonsal'
                 })
                 .addStringOption(option =>
                     option.setName("description")
