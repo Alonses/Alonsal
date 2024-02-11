@@ -20,7 +20,7 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
         network_map.set(id_alvo, true)
 
         // Permissão para ver o registro de auditoria, desabilitando o recurso
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog]))
+        if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ViewAuditLog]))
             return client.notify(guild.logger.channel, { content: ":passport_control: | Eu não tenho permissões para ver o `Registro de auditoria` do servidor, não é possível ver as aplicações de penalidades!\nA sincronização do Networking não foi concluída. @here" })
 
         const guilds_network = await getNetworkedGuilds(guild.network.link)
