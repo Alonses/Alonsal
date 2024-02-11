@@ -12,8 +12,7 @@ module.exports = async (client, dados) => {
     if (!guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    const permissoes = await client.permissions(dados[0], client.id(), PermissionsBitField.Flags.ViewAuditLog)
-    if (!permissoes) {
+    if (!await client.permissions(dados[0], client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.member_role = false
         await guild.save()

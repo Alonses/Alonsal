@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         }
 
         // Sem permissão para ver ou escrever no canal mencionado
-        if (!canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages]))
+        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo))
             return client.tls.reply(interaction, user, "mode.logger.falta_escrita_visualizacao", true, 1)
     }
 
@@ -54,9 +54,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         guild.conf.logger = false
 
     // Verificando as permissões do bot
-    const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])
-
-    if (!permissoes) {
+    if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])) {
         guild.conf.logger = false
         await guild.save()
 

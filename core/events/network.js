@@ -20,11 +20,8 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
         network_map.set(id_alvo, true)
 
         // Permissão para ver o registro de auditoria, desabilitando o recurso
-        const bot = await client.getMemberPermissions(guild.sid, client.id())
-        if (!bot || !bot.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
-
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog]))
             return client.notify(guild.logger.channel, { content: ":passport_control: | Eu não tenho permissões para ver o `Registro de auditoria` do servidor, não é possível ver as aplicações de penalidades!\nA sincronização do Networking não foi concluída. @here" })
-        }
 
         const guilds_network = await getNetworkedGuilds(guild.network.link)
         const guild_evento = await client.guilds(guild.sid)
@@ -64,9 +61,9 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
 
                 let cached_guild = await client.guilds(internal_guild.sid)
 
-                const bot_member = await client.getMemberPermissions(internal_guild.sid, client.id())
-                const guild_member = await client.getMemberPermissions(internal_guild.sid, registroAudita.targetId)
-                const guild_executor = await client.getMemberPermissions(internal_guild.sid, registroAudita.executorId)
+                const bot_member = await client.getMemberGuild(internal_guild.sid, client.id())
+                const guild_member = await client.getMemberGuild(internal_guild.sid, registroAudita.targetId)
+                const guild_executor = await client.getMemberGuild(internal_guild.sid, registroAudita.executorId)
 
                 // Redirecionando o evento para o end-point respectivo
                 require(`./network/member_${caso}`)({ client, internal_guild, guild_evento, cached_guild, registroAudita, id_alvo, guild_member, guild_executor, bot_member })

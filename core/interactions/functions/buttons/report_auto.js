@@ -16,9 +16,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Verificando as permissões para ver membros banidos do servidor
-    const bot_member = await client.getMemberGuild(interaction, client.id())
-
-    if (!bot_member.permissions.has([PermissionsBitField.Flags.BanMembers]))
+    if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
         return interaction.update({
             content: ":octagonal_sign: | Eu não possuo a permissão de `Banir membros` para poder ver o histórico de banimentos do servidor!\nSem essa permissão também não posso fazer a migração de membros.",
             ephemeral: true

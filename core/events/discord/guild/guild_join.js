@@ -11,8 +11,7 @@ module.exports = async ({ client, guild }) => {
     let server_info = `\n\n:busts_in_silhouette: **Members** ( \`${guild.memberCount - 1}\` )\n:placard: **Channels** ( \`${canais}\` )`
 
     // Permissão para ver o registro de auditoria, não registra o usuário que adicionou o bot
-    const permissoes = await client.permissions(guild, client.id(), PermissionsBitField.Flags.ViewAuditLog)
-    if (permissoes) {
+    if (await client.permissions(guild, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         // Resgatando informações sobre o usuário que adicionou o bot ao servidor
         guild.fetchAuditLogs({ type: AuditLogEvent.BotAdd, limit: 1 }).then(async log => {

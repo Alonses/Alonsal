@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                 // Permissão para enviar mensagens no canal
-                if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
+                if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     // Enviando os games para anunciar no servidor
                     const guild_channel = guild.games.channel
@@ -73,11 +73,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 3) {
 
-        // Permissões do bot no servidor
-        const membro_sv = await client.getMemberGuild(interaction, client.id())
-
-        // Desabilitando o botão de escolher cargos
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
+        // Desabilitando o botão de escolher cargos se não tiver permissão
+        if (! await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
             return interaction.update({
                 content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
                 ephemeral: true

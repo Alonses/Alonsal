@@ -20,10 +20,8 @@ module.exports = {
         if (!client.decider(guild?.conf.broadcast, 0))
             return client.tls.reply(interaction, user, "mode.broadcast.desligado", true, client.emoji(0))
 
-        const canal_alvo = await client.channels().get(interaction.channel.id)
-
         // Sem permissão para enviar mensagens
-        if (!canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages]))
+        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages], interaction))
             return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, client.emoji(0))
 
         const embed = new EmbedBuilder()

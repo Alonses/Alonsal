@@ -19,7 +19,7 @@ module.exports = async function ({ client, message, user, guild }) {
         user_guild = u_g
 
         // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
-        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers) || user_guild.permissions.has([PermissionsBitField.Flags.BanMembers]))
+        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers))
             return
     } else
         user_guild = await client.getMemberGuild(message, user.uid)
@@ -125,7 +125,7 @@ async function nerfa_spam({ client, user, guild, message }) {
     }
 
     // Redirecionando o evento
-    const guild_bot = await client.getMemberPermissions(guild.sid, client.id())
+    const guild_bot = await client.getMemberGuild(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
     await require(`./spam/${operacao}_user`)({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
@@ -166,7 +166,7 @@ remove_spam = (client, id_user, id_guild, user_message) => {
     // Filtra todas as mensagens no servidor que foram enviadas pelo usuário no último minuto
     guild.channels.cache.forEach(async channel => {
 
-        if (channel.permissionsFor(client.id()).has([PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages]) && channel.type === 0)
+        if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && channel.type === 0)
             await channel.messages.fetch({ limit: 30 })
                 .then(async messages => {
 

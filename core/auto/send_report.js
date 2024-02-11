@@ -20,7 +20,7 @@ module.exports = async ({ client, alvo, id_canal }) => {
 
         if (canal_alvo) // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) // Permissão para enviar mensagens no canal
-                if (canal_alvo.permissionsFor(client.id()).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
+                if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     const embed = new EmbedBuilder()
                         .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)

@@ -21,9 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         // Verificando se o bot possui permissões para ver o registro de auditoria
-        const permissoes = await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])
-
-        if (!permissoes)
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog]))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 ephemeral: true
