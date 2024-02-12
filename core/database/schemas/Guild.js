@@ -37,11 +37,13 @@ const channelTypes = {
 }
 
 const defaultEraser = {
-    1: 172800, // 2 dias
-    2: 345600, // 4 dias
-    3: 236700, // 5 dias
-    4: 604800, // 7 dias
-    5: 1209600 // 14 dias
+    1: 172800,  // 2 dias
+    2: 345600,  // 4 dias
+    3: 432000,  // 5 dias
+    4: 604800,  // 7 dias
+    5: 1209600, // 14 dias
+    6: 1814400, // 21 dias
+    7: 2419200  // 28 dias
 }
 
 const schema = new mongoose.Schema({
