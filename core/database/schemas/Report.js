@@ -61,11 +61,25 @@ async function checkUserGuildReported(sid) {
     }).limit(50)
 }
 
+async function updateGuildReport(sid) {
+
+    // Movendo os reportes para o servidor do Alonsal
+    const reportes = await model.find({
+        sid: sid
+    })
+
+    reportes.forEach(async reporte => {
+        reporte.sid = process.env.guild_id
+        await reporte.save()
+    })
+}
+
 module.exports.Report = model
 module.exports = {
     getReport,
     dropReport,
     getUserReports,
     getReportedUsers,
-    checkUserGuildReported
+    checkUserGuildReported,
+    updateGuildReport
 }

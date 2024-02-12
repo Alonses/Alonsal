@@ -6,6 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
     const guild = await client.getGuild(interaction.guild.id)
+    let pagina_guia = 2
 
     // Tratamento dos cliques
     // 0 -> Alonsal Falador ( Movido para guild_speaker_button )
@@ -17,7 +18,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 5 -> Logger do servidor ( Movido para guild_logger_button )
 
     // 6 -> Módulo anti-spam ( Movido para guild_anti_spam_button )
-    // 7 -> Servidor visível globalmente
     // 8 -> AutoBan ( Movido para guild_reports_button )
 
     // 9 -> Convites Rastreados
@@ -41,13 +41,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (!guild.conf.broadcast)
             verificar_broadcast(client, interaction)
 
-    } else if (escolha === 7) {
+        pagina_guia = 3
 
-        // Ativa ou desativa a exibição pública no ranking global
-        if (typeof guild.conf.public !== "undefined")
-            guild.conf.public = !guild.conf.public
-        else
-            guild.conf.public = false
     } else if (escolha === 9) {
 
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuild]))
@@ -62,6 +57,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     await guild.save()
 
-    const pagina_guia = 2 // Página
     require('../../chunks/panel_guild')({ client, user, interaction, pagina_guia })
 }

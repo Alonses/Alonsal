@@ -30,6 +30,12 @@ async function getRankServer(sid) {
     }).limit(50)
 }
 
+async function listRankGuild(sid) {
+    return model.find({
+        sid: sid
+    })
+}
+
 async function getAllUsers() {
     return model.find()
 }
@@ -68,6 +74,12 @@ async function createRankServer(uid, server_id, experience) {
 async function dropUserRankServer(uid, sid) {
     await model.findOneAndDelete({
         uid: uid,
+        sid: sid
+    })
+}
+
+async function dropAllRankGuild(sid) {
+    await model.deleteMany({
         sid: sid
     })
 }
@@ -121,11 +133,13 @@ module.exports.Rankerver = model
 module.exports = {
     getAllUsers,
     getRankServer,
+    listRankGuild,
     getUserRankServer,
     getUserRankServers,
     createRankServer,
     migrateRankServer,
     updateUserRank,
     dropUserRankServer,
+    dropAllRankGuild,
     dropUnknownRankServers
 }

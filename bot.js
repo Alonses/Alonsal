@@ -24,6 +24,9 @@ client.discord.once("ready", async () => {
 	await require("./core/events/events")({ client })
 	await require("./core/events/status")({ client })
 
+	// Verificando servidores desconhecidos e marcando para exclusão
+	client.verifyUnknowGuilds()
+
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
 	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)
 })

@@ -43,9 +43,17 @@ async function dropGuildWarn(sid, rank) {
     })
 }
 
+// Apaga todas as advertências criadas no servidor
+async function dropAllGuildWarns(sid) {
+    await model.deleteMany({
+        sid: sid
+    })
+}
+
 module.exports.Warns_guild = model
 module.exports = {
     getGuildWarn,
     listAllGuildWarns,
-    dropGuildWarn
+    dropGuildWarn,
+    dropAllGuildWarns
 }

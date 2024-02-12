@@ -90,19 +90,20 @@ module.exports = {
                             "ru": 'Функция для настройки'
                         })
                         .addChoices(
+                            { name: '🧾 Guild data', value: 'data' },
                             { name: '📜 Event log', value: 'logger' },
-                            { name: '📛 Anti-Spam', value: 'anti_spam' },
-                            { name: '📛 Anti-Spam Configs', value: 'anti_spam.1' },
-                            { name: '🎮 Free Games ad', value: 'free_games' },
-                            { name: '📡 Networking', value: 'network' },
-                            { name: '💂 External reports', value: 'external_reports' },
-                            { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🛑 Warns', value: 'warns' },
                             { name: '🛑 Warns Configs', value: 'warns.1' },
+                            { name: '📛 Anti-Spam', value: 'anti_spam' },
+                            { name: '📛 Anti-Spam Configs', value: 'anti_spam.1' },
+                            { name: '📡 Network', value: 'network' },
+                            { name: '📡 Network Configs', value: 'network.1' },
+                            { name: '💂 External reports', value: 'external_reports' },
+                            { name: '🎮 Free Games ad', value: 'free_games' },
+                            { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🗣 Talkative Alonsal', value: 'speaker' },
-                            { name: '📡 Broadcast', value: 'broadcast' },
-                            { name: '🌐 Global visibility', value: 'public_guild' }
+                            { name: '🔊 Talkative Alonsal', value: 'speaker' },
+                            { name: '🌎 Broadcast', value: 'broadcast' }
                         ))),
     async execute({ client, user, interaction }) {
 

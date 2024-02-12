@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { disableGameChannel, disableReportChannel } = require('../../../database/schemas/Guild')
+const { disableGuildFeatures } = require('../../../database/schemas/Guild')
 const { verifyDynamicBadge } = require('../../../database/schemas/Badge')
 const { badges } = require('../../../data/badges')
 
@@ -8,15 +8,8 @@ module.exports = async ({ client, guild }) => {
 
     if (client.id() !== process.env.client_1 || !process.env.channel_server) return
 
-    // Desligando o anúncio de games gratuitos e reports de usuários para o servidor
-    await disableGameChannel(guild.id)
-    await disableReportChannel(guild.id)
-
-    // Removendo o usuário que adicionou o bot ao servidor
-    const internal_guild = await client.getGuild(guild.id)
-    internal_guild.inviter = null
-
-    await internal_guild.save()
+    // Desligando as funções do servidor
+    await disableGuildFeatures(client, guild.id)
 
     const embed = new EmbedBuilder()
         .setTitle("> 🔴 Server update")

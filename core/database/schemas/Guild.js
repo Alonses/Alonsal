@@ -2,6 +2,7 @@ const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const loggerMap = {
+    "none": "📝",
     "message_edit": "📝",
     "message_delete": "🚮",
     "member_nick": "🔖",
@@ -19,7 +20,6 @@ const loggerMap = {
     "member_mute": "🔇",
     "member_ban": "🔨",
     "member_voice_status": "📻",
-    "none": "📝",
     "invite_created": "🔗",
     "invite_deleted": "🔗"
 }
@@ -36,10 +36,23 @@ const channelTypes = {
     15: "📯"
 }
 
+const defaultEraser = {
+    1: 172800, // 2 dias
+    2: 345600, // 4 dias
+    3: 236700, // 5 dias
+    4: 604800, // 7 dias
+    5: 1209600 // 14 dias
+}
+
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
     inviter: { type: String, default: null },
+    erase: {
+        valid: { type: Boolean, default: false },
+        timeout: { type: Number, default: 5 },
+        timestamp: { type: String, default: null }
+    },
     games: {
         channel: { type: String, default: null },
         role: { type: String, default: null }
@@ -92,8 +105,8 @@ const schema = new mongoose.Schema({
         suspicious_links: { type: Boolean, default: false }
     },
     network: {
-        channel: { type: String, default: null },
         link: { type: String, default: null },
+        channel: { type: String, default: null },
         member_punishment: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true }
@@ -102,7 +115,6 @@ const schema = new mongoose.Schema({
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },
         reports: { type: Boolean, default: false },
-        public: { type: Boolean, default: false },
         conversation: { type: Boolean, default: false },
         broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
@@ -155,32 +167,28 @@ async function getReportNetworkChannels(link) {
     })
 }
 
-async function getPublicGuilds() {
-    // Lista todos os servidores com visibilidade ativa globalmente
-    const servidores = await model.find({
-        "conf.public": true
-    }), lista = []
-
-    servidores.forEach(servidor => {
-        lista.push(servidor.sid)
-    })
-
-    return lista
-}
-
-async function disableGameChannel(sid) {
-    // Desliga o anúncio de games para o servidor
+async function disableGuildFeatures(client, sid) {
+    // Desliga os recursos do servidor
     const guild = await getGuild(sid)
+
+    guild.inviter = null
+    guild.network.link = null
 
     guild.conf.games = false
-    await guild.save()
-}
-
-async function disableReportChannel(sid) {
-    // Desliga o anúncio de games para o servidor
-    const guild = await getGuild(sid)
-
     guild.conf.reports = false
+    guild.conf.tickets = false
+    guild.conf.conversation = false
+    guild.conf.broadcast = false
+    guild.conf.logger = false
+    guild.conf.spam = false
+    guild.conf.network = false
+    guild.conf.warn = false
+    guild.conf.nuke_invites = false
+
+    // Registrando a exclusão de dados do servidor
+    guild.erase.timestamp = client.timestamp() + defaultEraser[guild?.erase.timeout || 5]
+    guild.erase.valid = true
+
     await guild.save()
 }
 
@@ -243,26 +251,49 @@ async function getRankHosters(client) {
 }
 
 async function getTimedGuilds() {
-    // Lista todos os advertências que se expirão
+    // Lista todas as advertências que se expirão
     return model.find({
         "warn.timed": true
+    })
+}
+
+// Lista todos os servidores salvos
+async function listAllGuilds() {
+    return model.find()
+}
+
+async function getEraseGuilds() {
+
+    // Lista todos os servidores que estão marcados para exclusão
+    return model.find({
+        "erase.valid": true
+    })
+}
+
+// Exclui o servidor por completo
+async function dropGuild(sid) {
+
+    await model.findOneAndDelete({
+        sid: sid
     })
 }
 
 module.exports.Guild = model
 module.exports = {
     getGuild,
+    listAllGuilds,
     getGameChannels,
-    getPublicGuilds,
-    disableGameChannel,
+    disableGuildFeatures,
     getReportChannels,
     getReportNetworkChannels,
     getGameChannelById,
-    disableReportChannel,
     migrateGameChannels,
     getNetworkedGuilds,
     getRankHosters,
     getTimedGuilds,
+    getEraseGuilds,
+    dropGuild,
     loggerMap,
-    channelTypes
+    channelTypes,
+    defaultEraser
 }

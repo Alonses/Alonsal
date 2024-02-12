@@ -12,7 +12,7 @@ const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
-const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
+const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds, listAllGuilds, disableGuildFeatures } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
@@ -126,8 +126,8 @@ function internal_functions(client) {
         } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
-        if (isNaN(parseInt(id_emoji)))
-            emoji = "🔍"
+        // if (isNaN(parseInt(id_emoji)))
+        //     emoji = "🔍"
 
         return emoji
     }
@@ -347,7 +347,7 @@ function internal_functions(client) {
         let servers_cache = await getNetworkedGuilds(link)
         for (let i = 0; i < servers_cache.length; i++) {
             if (servers_cache[i].sid !== interaction.guild.id) {
-                const nome_servidor = (await client.guilds(servers_cache[i].sid)).name || "Servidor desconhecido"
+                const nome_servidor = (await client.guilds(servers_cache[i].sid))?.name || "Servidor desconhecido"
                 servers_link.push(`\`${nome_servidor}\``)
             }
         }
@@ -654,6 +654,22 @@ function internal_functions(client) {
 
             i++
         })
+    }
+
+    client.verifyUnknowGuilds = async () => {
+
+        // Verifica todos os servidores desconhecidos e envia para exclusão
+        const guilds = await listAllGuilds()
+
+        for (let i = 0; i < guilds.length; i++) {
+
+            const internal_guild = await client.guilds(guilds[i].sid)
+            if (!internal_guild) { // Bot não está no servidor
+
+                client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guilds[i].sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${client.timestamp() + 1209600}:R> ( <t:${client.timestamp() + 1209600}:f> )` })
+                await disableGuildFeatures(client, guilds[i].sid)
+            }
+        }
     }
 
     console.log(`🟢 | Funções internas vinculadas com sucesso.`)

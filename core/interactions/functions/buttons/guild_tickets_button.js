@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Sem categoria definida, solicitando uma categoria
     if (!guild.tickets.category) {
-        reback = "panel_guild.1"
+        reback = "panel_guild.2"
         operacao = 2
     }
 

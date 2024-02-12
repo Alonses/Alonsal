@@ -33,9 +33,18 @@ async function dropUserGuild(uid, sid) {
         })
 }
 
+// Remove todos os registros com o servidor informado
+async function dropAllUserGuilds(sid) {
+
+    await model.deleteMany({
+        sid: sid
+    })
+}
+
 module.exports.User_guild = model
 module.exports = {
     registerUserGuild,
     listAllUserGuilds,
-    dropUserGuild
+    dropUserGuild,
+    dropAllUserGuilds
 }
