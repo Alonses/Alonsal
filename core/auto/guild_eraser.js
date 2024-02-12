@@ -33,8 +33,6 @@ async function verifica_eraser(client) {
 
             const servidor = data[i]
 
-            if (servidor.erase.valid) return
-
             if (client.timestamp() > servidor.erase.timestamp) {
 
                 // Excluindo todos os rankings registrados no servidor
@@ -66,6 +64,8 @@ async function verifica_eraser(client) {
 
                 // Exclui o servidor por completo
                 await dropGuild(servidor.sid)
+
+                client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper")} ${client.emoji(13)} | O Servidor ( \`${servidor.sid}\` ) e todos os dados relacionados foram excluídos com sucesso!` })
             }
         }
 

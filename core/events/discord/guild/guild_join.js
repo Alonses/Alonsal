@@ -10,7 +10,7 @@ module.exports = async ({ client, guild }) => {
     const internal_guild = await client.getGuild(guild.id)
 
     if (internal_guild.erase.valid)// Notificando sobre a exclusão dos dados do servidor
-        client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper"), client.emoji(10)} | Servidor ( \`${internal_guild.sid}\` ) removido da exclusão dos dados.` })
+        client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper")} ${client.emoji(10)} | Servidor ( \`${internal_guild.sid}\` ) removido da exclusão dos dados.` })
 
     internal_guild.erase.valid = false
     await internal_guild.save()
