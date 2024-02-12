@@ -12,7 +12,7 @@ const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
-const { getGuild, getGameChannels, loggerMap } = require('./core/database/schemas/Guild')
+const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
@@ -290,15 +290,18 @@ function internal_functions(client) {
 
         let lista = ""
 
-        for (let i = 0; i < valores.length; i++) {
-            if (typeof valores[i + 1] === "undefined")
-                lista += " & "
+        if (valores.length > 1) {
+            for (let i = 0; i < valores.length; i++) {
+                if (typeof valores[i + 1] === "undefined")
+                    lista += " & "
 
-            lista += `\`${valores[i]}\``
+                lista += `\`${valores[i]}\``
 
-            if (typeof valores[i + 2] !== "undefined")
-                lista += ", "
-        }
+                if (typeof valores[i + 2] !== "undefined")
+                    lista += ", "
+            }
+        } else // Apenas um elemento
+            lista += `\`${valores[0]}\``
 
         if (tamanho_maximo)
             if (lista.length > tamanho_maximo)
@@ -335,6 +338,21 @@ function internal_functions(client) {
     // Sincroniza as ações moderativas em servidores com o network habilitado
     client.network = async (guild, caso, id_alvo) => {
         return network({ client, guild, caso, id_alvo })
+    }
+
+    client.getNetWorkGuildNames = async (link, interaction) => {
+
+        const servers_link = []
+
+        let servers_cache = await getNetworkedGuilds(link)
+        for (let i = 0; i < servers_cache.length; i++) {
+            if (servers_cache[i].sid !== interaction.guild.id) {
+                const nome_servidor = (await client.guilds(servers_cache[i].sid)).name || "Servidor desconhecido"
+                servers_link.push(`\`${nome_servidor}\``)
+            }
+        }
+
+        return client.list(servers_link, 500)
     }
 
     // Remove emojis e caracteres especiais da string

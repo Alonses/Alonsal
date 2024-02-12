@@ -1,10 +1,13 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { getReportChannels } = require("../database/schemas/Guild")
+const { getReportChannels, getReportNetworkChannels } = require("../database/schemas/Guild")
 
-module.exports = async ({ client, alvo, id_canal }) => {
+module.exports = async ({ client, alvo, id_canal, link }) => {
 
-    const canais_reporte = await getReportChannels()
+    let canais_reporte = await getReportChannels()
+
+    if (link) // Listando os canais com base no link do network
+        canais_reporte = await getReportNetworkChannels(link)
 
     if (canais_reporte.length < 1)
         return client.notify(process.env.channel_feeds, { content: ":man_guard: | Reporte de usuários não completado, não há canais clientes registrados para receberem a notificação." })
