@@ -18,8 +18,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 2 -> Confirma silenciosamente
 
     if (!operacao) {
-        // Removendo o usuário da lista de reportados
-
+        // Cancelando a criação do reporte
         await dropReport(alvo.uid, interaction.guild.id)
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     }
@@ -44,6 +43,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         await alvo.save()
 
         texto_retorno = client.tls.phrase(user, "mode.report.adicionado_silenciosamente", client.defaultEmoji("guard"))
+    }
+
+    if (operacao === 3) {
+
+        // Adicionando e reportando para outros servidores que fazem parte do network
+        alvo.archived = false
+        await alvo.save()
+
+        const link = guild.network.link
+        texto_retorno = `${client.defaultEmoji("guard")} | O usuário foi reportado com sucesso e a notificação foi enviada apenas para os servidores que fazem networking com este!`
+        require('../../../auto/send_report')({ client, alvo, link })
     }
 
     // Verificando se o usuário possui a badge de reporter e concedendo caso não possua

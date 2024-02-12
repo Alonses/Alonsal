@@ -5,10 +5,28 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const user_alvo = dados[0].user
     const timeout = registroAudita.changes[0].new ? parseInt(new Date(registroAudita.changes[0].new) - new Date()) : null
     const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
+    let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
+
+    if (registroAudita.reason) { // Castigo com motivo explicado
+        razao = `\n💂‍♂️ Motivo do castigo: ${registroAudita.reason.includes("Network | ") ? registroAudita.reason.split("Network | ")[1] : registroAudita.reason}`
+
+        // Ação realizada através do network
+        if (registroAudita.reason.includes("Network") && registroAudita.executorId === client.id()) {
+            network_descricao = `📡 ${registroAudita.reason.split(" | ")[1]}`
+            razao = ""
+
+            if (guild.network.channel) // Ação realizada pelo network
+                canal_aviso = guild.network.channel
+        }
+    }
+
+    if (network_descricao.length > 1 || razao.length > 1)
+        razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(timeout ? "> Membro castigado 🔇" : "> Remoção de castigo 🔊")
         .setColor(timeout ? 0xED4245 : 0xffffff)
+        .setDescription(`${timeout ? "**Um membro foi castigado**" : "**Um membro foi perdoado**"}${razao}`)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -55,5 +73,5 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (url_avatar)
         embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.notify(canal_aviso, { embeds: [embed] })
 }

@@ -12,10 +12,23 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
     if (!guild.logger.member_kick || !guild.conf.logger)
         return
 
-    let razao = ""
+    let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
-    if (registroAudita2.reason) // Banimento com motivo explicado
-        razao = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_expulsao")}: ${registroAudita2.reason}\`\`\``
+    if (registroAudita2.reason) { // Banimento com motivo explicado
+        razao = `💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_expulsao")}: ${registroAudita2.reason.split("Network | ")[1]}`
+
+        // Ação realizada através do network
+        if (registroAudita2.reason.includes("Network") && registroAudita2.executorId === client.id()) {
+            network_descricao = `📡 ${registroAudita2.reason.split(" | ")[1]}`
+            razao = ""
+
+            if (guild.network.channel) // Ação realizada pelo network
+                canal_aviso = guild.network.channel
+        }
+    }
+
+    if (network_descricao.length > 1 || razao.length > 1)
+        razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_expulso"))
@@ -50,5 +63,5 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
     if (url_avatar)
         embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.notify(canal_aviso, { embeds: [embed] })
 }

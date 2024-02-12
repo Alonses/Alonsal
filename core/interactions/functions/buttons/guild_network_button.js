@@ -1,11 +1,13 @@
-const { PermissionsBitField } = require('discord.js')
+const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
+const { getNetworkedGuilds } = require('../../../database/schemas/Guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
+    let pagina_guia = pagina || 0
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_network"
     const guild = await client.getGuild(interaction.guild.id)
 
-    // Sem canal de avisos definido, solicitando um canal
+    // Sem servidores para o link definidos, criando um grupo
     if (!guild.network.link) {
         reback = "panel_guild.1"
         operacao = 3
@@ -15,6 +17,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 0 -> Entrar no painel de cliques
     // 1 -> Ativar ou desativar o network do servidor
     // 2 -> Escolher os eventos sincronizados no servidor
+    // 4 -> Menu para confirmar quebra de link do network
+
+    // 5 -> Escolher canal de avisos
+
+    // 9 -> Alterar de página dentro do guia
+    // 11 -> Removendo o servidor do link do network
 
     if (operacao === 1) { // Ativa ou desativa o network do servidor
 
@@ -48,7 +56,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const eventos = []
 
         Object.keys(guild.network).forEach(evento => {
-            if (evento !== "link")
+            if (evento !== "link" && evento !== "channel")
                 eventos.push({ type: evento, status: guild.network[evento] })
         })
 
@@ -109,13 +117,79 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
     } else if (operacao === 4) {
+
         // Quebrando o link do servidor
+        const embed = new EmbedBuilder()
+            .setTitle(`> Networking ${client.emoji(36)}`)
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription(":warning: **| Ao confirmar a quebra de link este servidor será removido do grupo do network**.\n\nOs servidores listados abaixo continuarão com o link ativo, porém este servidor não fará mais parte do mesmo.")
+            .setFields({
+                name: `:link: **Outros servidores no link:**`,
+                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : "`Sem servidores`",
+                inline: true
+            })
+            .setFooter({
+                text: client.tls.phrase(user, "manu.painel.rodape"),
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+
+        const botoes = [
+            { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: "11" },
+            { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
+        ]
+
+        return client.reply(interaction, {
+            embeds: [embed],
+            components: [client.create_buttons(botoes, interaction)]
+        })
+
+    } else if (operacao === 5) {
+
+        // Escolhendo o canal de avisos dos eventos do network
+        const data = {
+            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            alvo: "guild_network#channel",
+            reback: "browse_button.guild_network_button",
+            operation: operacao,
+            values: []
+        }
+
+        if (guild.network.channel)
+            data.values.push({ name: "Remover canal", id: "none" })
+
+        // Listando os canais do servidor
+        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel))
+
+        // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
+        if (data.values.length < pagina * 24)
+            pagina--
+
+        let botoes = [
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.1` },
+            { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "5" }
+        ]
+
+        let row = client.menu_navigation(data, pagina || 0)
+
+        if (row.length > 0) // Botões de navegação
+            botoes = botoes.concat(row)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            ephemeral: true
+        })
+    } else if (operacao === 11) {
+
+        // Confirmando a remoção do servidor do link do network
         guild.conf.network = false
         guild.network.link = null
     }
 
     await guild.save()
 
+    if (operacao >= 4)
+        pagina_guia = 1
+
     // Redirecionando a função para o painel do networking
-    require('../../chunks/panel_guild_network')({ client, user, interaction, operacao })
+    require('../../chunks/panel_guild_network')({ client, user, interaction, operacao, pagina_guia })
 }

@@ -75,15 +75,19 @@ module.exports = async ({ client, user, interaction }) => {
     await alvo.save()
 
     // Criando os botões para as funções de reporte
-    const row = client.create_buttons([
-        { id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), type: 2, emoji: '📣', data: `1|${alvo.uid}` },
+    let botoes = [{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), type: 2, emoji: '📣', data: `1|${alvo.uid}` }]
+
+    if (guild.network.link) // Habilitando opção de enviar o aviso apenas aos servidores do network
+        botoes.push({ id: "report_user", name: "Anunciar ao Network", type: 0, emoji: client.emoji(36), data: `3|${alvo.uid}` })
+
+    botoes.push(
         { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), type: 1, emoji: '📫', data: `2|${alvo.uid}` },
         { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${alvo.uid}` }
-    ], interaction)
+    )
 
     return interaction.reply({
         embeds: [embed],
-        components: [row],
+        components: [client.create_buttons(botoes, interaction)],
         ephemeral: true
     })
 }

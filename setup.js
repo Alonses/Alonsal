@@ -7,7 +7,7 @@ let modo_develop = 0, silent = 0
 
 // Ative para limpar os comandos slash locais e globais
 let delete_slash = 0
- 
+
 if (update_commands) // Force update é utilizado para forçar a atualização dos comandos slash
     modo_develop = 0, silent = 1
 

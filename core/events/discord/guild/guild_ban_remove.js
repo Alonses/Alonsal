@@ -27,9 +27,22 @@ module.exports = async ({ client, ban }) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    let razao = ""
-    if (registroAudita.reason) // Desbanimento com motivo explicado
-        razao = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_ban")}: ${registroAudita.reason}\`\`\``
+    let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
+    if (registroAudita.reason) { // Desbanimento com motivo explicado
+        razao = `\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_ban")}: ${registroAudita.reason.split("Network | ")[1]}`
+
+        // Ação realizada através do network
+        if (registroAudita.reason.includes("Network") && registroAudita.executorId === client.id()) {
+            network_descricao = `📡 ${registroAudita.reason.split(" | ")[1]}`
+            razao = ""
+
+            if (guild.network.channel) // Ação realizada pelo network
+                canal_aviso = guild.network.channel
+        }
+    }
+
+    if (network_descricao.length > 1 || razao.length > 1)
+        razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_desbanido"))
@@ -49,5 +62,5 @@ module.exports = async ({ client, ban }) => {
         )
         .setTimestamp()
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.notify(canal_aviso, { embeds: [embed] })
 }

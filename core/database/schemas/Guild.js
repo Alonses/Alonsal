@@ -92,6 +92,7 @@ const schema = new mongoose.Schema({
         suspicious_links: { type: Boolean, default: false }
     },
     network: {
+        channel: { type: String, default: null },
         link: { type: String, default: null },
         member_punishment: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
@@ -141,6 +142,15 @@ async function getGameChannelById(id) {
 async function getReportChannels() {
     // Lista todos os servidores com reports de usuários ativos
     return model.find({
+        "conf.reports": true
+    })
+}
+
+async function getReportNetworkChannels(link) {
+
+    // Lista todos os servidores com reports de usuários ativos que fazem parte de um network específico
+    return model.find({
+        "network.link": link,
         "conf.reports": true
     })
 }
@@ -246,6 +256,7 @@ module.exports = {
     getPublicGuilds,
     disableGameChannel,
     getReportChannels,
+    getReportNetworkChannels,
     getGameChannelById,
     disableReportChannel,
     migrateGameChannels,

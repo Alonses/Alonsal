@@ -232,6 +232,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     } else
                         emoji_label = client.defaultEmoji("channel")
 
+                    if (valor.id === "none") // Usado para remover o canal
+                        emoji_label = client.emoji(13)
+
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
                 }
             }
