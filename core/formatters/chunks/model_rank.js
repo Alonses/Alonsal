@@ -2,11 +2,10 @@ const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges, badgeTypes } = require('../../data/badges')
 
-const { getPublicGuilds } = require('../../database/schemas/Guild')
 const { getRankGlobal } = require('../../database/schemas/Rank_g')
 const { getRankServer } = require('../../database/schemas/Rank_s')
 
-const servidores = {}, medals = {
+const medals = {
     0: ":first_place:",
     1: ":second_place:",
     2: ":third_place:"
@@ -17,8 +16,7 @@ let paginas, pagina, nav_buttons = true
 module.exports = async (client, user, interaction, entrada, caso, defer, autor_original) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
-    const usernames = [], experiencias = [], levels = [], servers = [], ids = []
-    const public_servers = await getPublicGuilds()
+    const usernames = [], experiencias = [], levels = [], ids = []
 
     if (typeof entrada === "undefined")
         escopo = interaction.options.getString("scope")
@@ -102,25 +100,6 @@ module.exports = async (client, user, interaction, entrada, caso, defer, autor_o
 
             if (escopo === "server")
                 levels.push(`\`${client.locale(Math.floor(user_interno.xp / 1000))}\` - \`${((user_interno.xp % 1000) / 1000).toFixed(2)}%\``)
-            else {
-                let nome_server
-
-                if (public_servers.includes(user_interno.sid)) {
-                    // Checando no cache se o nome está salvo
-                    try {
-                        if (!servidores[user_interno.sid]) {
-                            nome_server = client.guilds().get(user_interno.sid || '0')
-                            servidores[nome_server.id] = nome_server.name
-                        } else
-                            nome_server = servidores[user_interno.sid]
-                    } catch {
-                        nome_server = client.tls.phrase(user_i, "util.steam.undefined")
-                    }
-                } else
-                    nome_server = client.tls.phrase(user_i, "util.steam.undefined")
-
-                servers.push(`\`${nome_server}\``)
-            }
 
             if (!user_alvo_data) // Verifica se a entrada é um ID
                 i++
@@ -130,20 +109,20 @@ module.exports = async (client, user, interaction, entrada, caso, defer, autor_o
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo_data) // Sem usuário alvo definido
-            retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original)
+            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original })
         else // Retornando apenas o card do usuário alvo
-            retorna_card_alvo(client, user, interaction, usuario_alvo, user_alvo_data)
+            retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
 
     } else { // Ranking global
 
         if (!user_alvo_data)
-            retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original)
+            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original })
         else // Retornando apenas o card do usuário alvo
-            retorna_card_alvo(client, user, interaction, usuario_alvo, user_alvo_data)
+            retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
     }
 }
 
-async function retorna_ranking(client, user, interaction, ids, usernames, experiencias, levels, servers, rodape, escopo, autor_original) {
+async function retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original }) {
 
     const bot = await client.getBot()
 
@@ -190,14 +169,6 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
             {
                 name: `:beginner: **${client.tls.phrase(user, "dive.rank.nivel")}**`,
                 value: levels.join("\n"),
-                inline: true
-            }
-        )
-    else
-        embed.addFields(
-            {
-                name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.servidor")}**`,
-                value: servers.join("\n"),
                 inline: true
             }
         )
@@ -260,7 +231,7 @@ async function retorna_ranking(client, user, interaction, ids, usernames, experi
     }
 }
 
-async function retorna_card_alvo(client, user, interaction, usuario_alvo, user_alvo_data) {
+async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data }) {
 
     if (usuario_alvo.length === 0)
         usuario_alvo.push(0)

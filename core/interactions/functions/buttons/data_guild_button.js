@@ -1,0 +1,40 @@
+const { defaultEraser } = require('../../../database/schemas/Guild')
+
+module.exports = async ({ client, user, interaction, dados }) => {
+
+    const operacao = parseInt(dados.split(".")[1]) || dados
+    let pagina_guia = 0, reback = "panel_guild_data"
+    // Códigos de operação
+    // 0 -> Redireciona para o painel de dados do servidor
+
+    if (operacao === 1)
+        pagina_guia = 1
+    else if (operacao === 2) {
+
+        // Submenu para escolher o escopo do tempo de exclusão dos dados do servidor
+        const valores = []
+
+        Object.keys(defaultEraser).forEach(key => {
+            valores.push(defaultEraser[key])
+        })
+
+        // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
+        const data = {
+            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            alvo: "data_guild_timeout",
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
+    }
+
+    // Redirecionando o evento
+    require('../../chunks/panel_guild_data')({ client, user, interaction, pagina_guia })
+}

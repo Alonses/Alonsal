@@ -23,6 +23,7 @@ const translate = {
     "guild_spam_timeout": "menu.menus.escolher_timeout",
     "guild_warns_reset": "menu.menus.escolher_timeout",
     "warn_config_timeout": "menu.menus.escolher_timeout",
+    "data_guild_timeout": "menu.menus.escolher_timeout",
     "guild_spam_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
@@ -165,7 +166,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout") {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout" || alvo === "data_guild_timeout") {
                 // Listando as opções de tempo de mute para o anti-spam
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`

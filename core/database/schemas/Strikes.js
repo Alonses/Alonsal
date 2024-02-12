@@ -50,10 +50,18 @@ async function removeStrike(uid, sid) {
     })
 }
 
+// Apagando todos os strikes registrados no servidor
+async function dropAllGuildStrikes(sid) {
+    await model.deleteMany({
+        sid: sid
+    })
+}
+
 module.exports.Strike = model
 module.exports = {
     getUserStrikes,
     removeStrike,
+    dropAllGuildStrikes,
     spamTimeoutMap,
     defaultStrikes
 }

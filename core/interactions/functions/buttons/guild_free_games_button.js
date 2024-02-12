@@ -9,13 +9,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.games.channel) {
-        reback = "panel_guild.0"
+        reback = "panel_guild.1"
         operacao = 4
     }
 
     // Sem cargo de avisos definido, solicitando um cargo
     if (guild.games.channel && !guild.games.role) {
-        reback = "panel_guild.0"
+        reback = "panel_guild.1"
         operacao = 3
     }
 

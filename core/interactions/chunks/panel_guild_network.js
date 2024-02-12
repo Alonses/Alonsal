@@ -7,6 +7,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const pagina = pagina_guia || 0
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
+    let retorno_aviso = ""
 
     if (pagina === 1) // 2° página da guia do networking
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_network.0" }]
@@ -30,6 +31,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (guild.network.member_punishment) // Castigos automaticos
         if (!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))
             guild.conf.network = false
+
+    if (servidores_link === 1) {
+        guild.conf.network = false
+        retorno_aviso = "📡 | O Networking precisa de mais servidores no mesmo link para ser ativo."
+    }
 
     await guild.save()
 
@@ -68,23 +74,28 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             }
         )
-        .addFields(
+
+    if (servidores_link > 1) // Network com mais de um servidor
+        embed.addFields(
             {
                 name: `:link: **Outros servidores no link:**`,
                 value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : "`Sem servidores`",
                 inline: false
-            },
-            {
-                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
-                inline: true
-            },
-            {
-                name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
-                inline: true
             }
         )
+
+    embed.addFields(
+        {
+            name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
+            inline: true
+        },
+        {
+            name: "⠀",
+            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+            inline: true
+        }
+    )
         .setFooter({
             text: client.tls.phrase(user, "manu.painel.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
@@ -97,14 +108,17 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.servidores"), type: 1, emoji: client.emoji(45), data: "3" },
             { id: "guild_network_button", name: "Ajustes", type: 1, emoji: client.emoji(41), data: "9" }
         ])
-    else
+    else {
         botoes = botoes.concat([
             { id: "guild_network_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-            { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.quebrar_vinculo"), type: 1, emoji: client.emoji(44), data: "4" }
         ])
 
+        if (servidores_link > 1) // Network com mais de um servidor
+            botoes = botoes.concat([{ id: "guild_network_button", name: client.tls.phrase(user, "mode.network.quebrar_vinculo"), type: 1, emoji: client.emoji(44), data: "4" }])
+    }
+
     client.reply(interaction, {
-        content: "",
+        content: retorno_aviso,
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],
         ephemeral: true

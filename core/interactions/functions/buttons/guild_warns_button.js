@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.warn.channel || advertencias.length < 1) {
-        reback = "panel_guild.2"
+        reback = "panel_guild.0"
         operacao = 5
     }
 

@@ -79,6 +79,14 @@ async function dropAllUserGuildWarns(uid, sid) {
     })
 }
 
+async function dropAllGuildWarns(sid) {
+
+    // Remove todas as advertências registradas no servidor
+    await model.deleteMany({
+        sid: sid
+    })
+}
+
 module.exports.Warn = model
 module.exports = {
     getUserWarn,
@@ -86,5 +94,6 @@ module.exports = {
     listAllUserWarns,
     removeUserWarn,
     listAllCachedUserWarns,
-    dropAllUserGuildWarns
+    dropAllUserGuildWarns,
+    dropAllGuildWarns
 }

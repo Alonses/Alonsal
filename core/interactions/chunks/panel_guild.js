@@ -8,14 +8,13 @@ const operation_codes = {
     "external_reports": 4,
     "logger": 5,
     "anti_spam": 6,
-    "public_guild": 7,
     "network": 8,
     "warns": 9,
     "tracked_invites": 10
 }
 
 // Funções sem guias de configuração
-const direct_functions = [1, 7, 10]
+const direct_functions = [1, 10]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
@@ -53,13 +52,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_spam")}\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
+                value: `\`${client.tls.phrase(user, "mode.warn.desc_advertencias")}\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_games")}\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_spam")}\``,
                 inline: true
             }
         )
@@ -77,8 +76,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_games")}\``,
                 inline: true
             }
         )
@@ -86,8 +85,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 2)
         embed.addFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `\`${client.tls.phrase(user, "mode.warn.desc_advertencias")}\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
                 inline: true
             },
             {
@@ -105,13 +104,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 3)
         embed.addFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.public)} **${client.tls.phrase(user, "manu.painel.visibilidade_global")}**`,
-                value: `${client.tls.phrase(user, "manu.painel.desc_global")}`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.broadcast)} **${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
+                value: `${client.tls.phrase(user, "manu.painel.desc_broadcast")}`,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.broadcast)} **${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
-                value: `${client.tls.phrase(user, "manu.painel.desc_broadcast")}`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
                 inline: true
             },
             {
@@ -130,6 +129,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_guild`, disabled: c_menu[0] }]
+
+    if (c_menu[0])
+        botoes = [{ id: "data_guild_button", name: client.defaultEmoji("paper"), type: 2, data: "0" }]
 
     // Falta de permissões para gerenciar o sistema de denúncias
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
@@ -158,19 +160,24 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         c_buttons[9] = true
     }
 
+    /* Atalhos para as funções do painel */
+
     if (operador) // Verificando se o usuário possui permissão e ativando a função escolhida
         if (c_buttons[operation_codes[operador]])
             return client.tls.reply(interaction, user, "manu.painel.user_sem_permissao", 7)
         else {
 
+            // Permissão válida
+
             if (direct_functions.includes(operation_codes[operador])) { // Funções sem guia de configuração
                 const dados = `${interaction.user.id}.${operation_codes[operador]}`
                 return require('../functions/buttons/guild_panel_button')({ client, user, interaction, dados })
-            } else { // Acessando diretamente uma guia de função
+            } else {
 
+                // Acessando diretamente uma guia de função
                 let pagina_guia = 0
 
-                if (operador.includes(".")) {
+                if (operador.includes(".")) { // Função com sub-guias
                     pagina_guia = parseInt(operador.split(".")[1])
                     operador = operador.split(".")[0]
                 }
@@ -180,28 +187,28 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         }
 
     // Primeira página de botões de configuração do Alonsal
-    // Log de eventos, Anti-spam e Anúncio de games
+    // Log de eventos, Advertências e Anti-spam
     if (pagina === 0)
         botoes = botoes.concat([
             { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[5] },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[6] },
-            { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[2] }
+            { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[6] }
         ])
 
     // Segunda página de botões de configuração do Alonsal
-    // Denúncias in-server; Reportes externos e AutoBan
+    // Network; Reportes externos e Anúncio de games
     if (pagina === 1)
         botoes = botoes.concat([
             { id: "guild_network_button", name: "Network", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[8] },
             { id: "guild_reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[4] },
-            { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] }
+            { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[2] }
         ])
 
     // Terceira página de botões de configuração do Alonsal
-    // Advertências; Alonsal Falador e Visibilidade Global
+    // Denúncias in-server; Alonsal Falador e Convites rastreados
     if (pagina === 2)
         botoes = botoes.concat([
-            { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
+            { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
             { id: "guild_speaker_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[0] },
             { id: "guild_panel_button", name: "Convites rastreados", type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] }
         ])
@@ -209,8 +216,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // Broadcast
     if (pagina === 3)
         botoes = botoes.concat([
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.visibilidade_global"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.public), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.public), data: '7', disabled: c_buttons[7] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.permitir_broadcast"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.broadcast), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.broadcast), data: '1', disabled: c_buttons[1] },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '7', disabled: true },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '2', disabled: true }
         ])
 

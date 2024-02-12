@@ -41,10 +41,24 @@ async function dropSuspiciousLink(link) {
     })
 }
 
+async function updateGuildSuspectLink(sid) {
+
+    // Movendo os links para o servidor do Alonsal
+    const links = await model.find({
+        sid: sid
+    })
+
+    links.forEach(async link => {
+        link.sid = process.env.guild_id
+        await reporte.save()
+    })
+}
+
 module.exports.Spam_Link = model
 module.exports = {
     getSuspiciousLink,
     dropSuspiciousLink,
     verifySuspiciousLink,
     registerSuspiciousLink,
+    updateGuildSuspectLink
 }
