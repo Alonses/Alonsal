@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
     link: { type: String, default: null },
     preco: { type: Number, default: 0 },
     expira: { type: Number, default: null },
+    descricao: { type: String, default: null },
     thumbnail: { type: String, default: null }
 })
 
@@ -17,6 +18,14 @@ async function getGames() {
     })
 }
 
+// Verifica se um game já foi registrado
+async function verifyGame(game) {
+    if (!await model.exists({ nome: game.nome, expira: game.expira }))
+        return false
+
+    return true
+}
+
 async function createGame(game) {
 
     if (!await model.exists({ nome: game.nome, expira: game.expira }))
@@ -26,6 +35,7 @@ async function createGame(game) {
             link: game.link,
             preco: game.preco,
             expira: game.expira,
+            hora_expira: game.hora_expira,
             thumbnail: game.thumbnail
         })
 
@@ -67,6 +77,7 @@ async function verifyInvalidGames() {
 module.exports.Game = model
 module.exports = {
     getGames,
+    verifyGame,
     createGame,
     dropGame,
     verifyInvalidGames

@@ -22,6 +22,10 @@ module.exports = {
                 .setDescription("A data limite da promoção")
                 .setRequired(true))
         .addStringOption(option =>
+            option.setName("horario")
+                .setDescription("O horário limite da promoção")
+                .setRequired(true))
+        .addStringOption(option =>
             option.setName("link")
                 .setDescription("O link do conteúdo")
                 .setRequired(true))
@@ -50,7 +54,7 @@ module.exports = {
             tipo: interaction.options.getString("tipo"),
             link: interaction.options.getString("link"),
             preco: interaction.options.getNumber("preço"),
-            expira: time_stamped(interaction.options.getString("expiração")),
+            expira: time_stamped(interaction.options.getString("expiração"), interaction.options.getString("horario")),
             thumbnail: interaction.options.getAttachment("imagem")
         }
 

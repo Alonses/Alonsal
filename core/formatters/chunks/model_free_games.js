@@ -4,20 +4,31 @@ const { getGames, verifyInvalidGames } = require("../../database/schemas/Game")
 
 const { redes } = require('../../../files/json/text/anuncio.json')
 
-module.exports = async (client, user, interaction) => {
+module.exports = async (client, user, interaction, pagina_guia) => {
 
     // Verificando pelos games que já expiraram
     await verifyInvalidGames()
 
     // Listando os games que estão gratuitos no momento
-    const games = await getGames()
-    let jogos_disponiveis = [], objeto_jogos = []
+    const games = await getGames(), original_size = games.length
+    let jogos_disponiveis = [], objeto_jogos = [], limitador = 3
+    let pagina = pagina_guia || 0
 
     if (games.length < 1)
         if (interaction) // Sem games para anunciar no momento
             return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
         else
             client.sendDM(user, { data: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
+
+    for (let i = 0; i < pagina; i++)
+        for (let x = 0; x < limitador; x++)
+            games.shift()
+
+    if (interaction)
+        if (games.length > limitador)
+            objeto_jogos.push({ id: "free_games", name: "Próximo", emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
+        else if ((pagina * limitador) < original_size)
+            objeto_jogos.push({ id: "free_games", name: "Início", emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
 
     games.forEach(game => {
         // Jogo com tempo válido para resgate
@@ -29,30 +40,54 @@ module.exports = async (client, user, interaction) => {
             if (game.preco === 0)
                 preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
 
-            jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]`)
-            objeto_jogos.push({
-                name: nome_jogo,
-                type: 4,
-                value: game.link
-            })
+            if (jogos_disponiveis.length < limitador) {
+
+                // Verificando a expiração do game e alterando a exibição
+                const emoji = game.expira - client.timestamp() < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
+                const expiracao = game.expira - client.timestamp() < 172800 ? `\n( ${client.defaultEmoji("running")} Expira <t:${game.expira}:R> )` : ""
+                jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]${expiracao}`)
+
+                objeto_jogos.push({
+                    name: nome_jogo,
+                    emoji: emoji,
+                    type: 4,
+                    value: game.link
+                })
+            }
         }
     })
 
-    // Criando os botões externos para os jogos
-    const row = client.create_buttons(objeto_jogos)
+    let row
+
+    if (interaction) // Criando os botões externos para os jogos
+        row = client.create_buttons(objeto_jogos, interaction)
+    else
+        row = client.create_buttons(objeto_jogos)
 
     const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.emoji("emojis_dancantes")}`)
+        .setTitle(`> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.defaultEmoji("gamer")}`)
         .setColor(client.embed_color(user.misc.color))
-        .setThumbnail(games[0]?.thumbnail || "https://i.imgur.com/AEkiKGU.jpg")
         .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`)
 
+    if (games[0]?.thumbnail)
+        embed.setImage(games[0]?.thumbnail)
+    else
+        embed.setThumbnail("https://i.imgur.com/AEkiKGU.jpg")
+
     if (interaction)
-        interaction.reply({
+        client.reply(interaction, {
             embeds: [embed],
             components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
-    else
+    else {
+
+        if (original_size > limitador) // Botões extrapolam a quantidade do limitador
+            embed.setFooter({
+                text: "Há diversos jogos disponíveis para coletar atualmente, acesse o /games em um servidor para ver todos!",
+                iconURL: client.avatar()
+            })
+
         client.sendDM(user, { embed: embed, components: row }, true)
+    }
 }
