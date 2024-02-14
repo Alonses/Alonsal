@@ -20,10 +20,10 @@ async function getGames() {
 
 // Verifica se um game já foi registrado
 async function verifyGame(game) {
-    if (!await model.exists({ nome: game.nome, expira: game.expira }))
-        return false
+    if (await model.exists({ nome: game.nome }))
+        return true
 
-    return true
+    return false
 }
 
 async function createGame(game) {
