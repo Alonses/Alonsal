@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { createGame, verifyInvalidGames } = require('../../database/schemas/Game')
+const { createGame, verifyInvalidGames, verifyGame } = require('../../database/schemas/Game')
 
 const time_stamped = require('../../functions/time_stamped')
 const dispara_anuncio = require('../../auto/send_announcement')
@@ -21,9 +21,12 @@ module.exports = async ({ client, interaction }) => {
             if (objetos_anunciados.length === 0)
                 return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Não há jogos gratuitos disponíveis na Epic Games atualmente." })
 
+            if (await verifyGame(objetos_anunciados[0])) // Verificando se há jogos repetidos informados
+                return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Envio de anúncio de jogos cancelado, há jogos repetidos sendo enviados." })
+
             // Registrando os games no banco
             objetos_anunciados.forEach(async game => {
-                game.expira = time_stamped(game.expira)
+                game.expira = time_stamped(game.expira, game.hora_expira)
                 await createGame(game)
             })
 
