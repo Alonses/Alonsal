@@ -527,7 +527,24 @@ function internal_functions(client) {
         return arr
     }
 
-    client.timestamp = () => {
+    client.timestamp = (entrada, hora_entrada) => {
+
+        if (entrada || hora_entrada) { // Informou um dia e horário ( utilizado pelos anúncios de games )
+
+            // Invertendo o mês com o dia
+            entrada = `${entrada.split("/")[1]}/${entrada.split("/")[0]}`
+            let hora = hora_entrada || ""
+
+            const ano_atual = new Date().getFullYear()
+            let tempo_timestamped = new Date(`${entrada}/${ano_atual} ${hora}`)
+
+            if (entrada.split("/")[0] < 2 && new Date().getMonth() >= 8)
+                tempo_timestamped = new Date(`${entrada}/${ano_atual + 1}`)
+
+            // Retorna o dia e o horário informado em timestamp
+            return tempo_timestamped.getTime() / 1000
+        }
+
         return Math.floor(new Date().getTime() / 1000)
     }
 
@@ -666,7 +683,7 @@ function internal_functions(client) {
             const internal_guild = await client.guilds(guilds[i].sid)
             if (!internal_guild) { // Bot não está no servidor
 
-                client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guilds[i].sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${client.timestamp() + 1209600}:R> ( <t:${client.timestamp() + 1209600}:f> )` })
+                client.notify(process.env.channel_data, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guilds[i].sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${client.timestamp() + 1209600}:R> ( <t:${client.timestamp() + 1209600}:f> )` })
                 await disableGuildFeatures(client, guilds[i].sid)
             }
         }

@@ -4,7 +4,9 @@ const { internal_functions } = require('./functions')
 
 const idioma = require('./core/data/language')
 const database = require('./core/database/database')
+
 const { nerfa_spam } = require('./core/events/spam')
+const { checkUser } = require('./core/database/schemas/User')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
 
 let client = new CeiraClient()
@@ -33,7 +35,9 @@ client.discord.on("messageCreate", async message => {
 	// Previne que o bot responda a interações enquanto estiver atualizando comandos
 	if (client.x.force_update) return
 
-	const user = await client.getUser(message.author.id)
+	const id_user = message.author.id
+
+	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
 	const text = message.content
 
@@ -45,41 +49,40 @@ client.discord.on("messageCreate", async message => {
 			const registro = await verifySuspiciousLink(link)
 
 			if (registro) // Link suspeito confirmado
-				nerfa_spam({ client, user, guild, message })
+				return nerfa_spam({ client, message, guild })
 		}
 
-	// Ignorando usuários
-	if (user.conf?.banned || false) return
+	if (guild.conf.spam) // Sistema anti-spam do servidor
+		await require("./core/events/spam")({ client, message, guild, id_user })
+
+	// Verificando se o autor é um bot ou um webhook
 	if (message.author.bot || message.webhookId) return
 
-	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	await client.verifyUserLanguage(user, message.guild.id)
+	if (user) { // Só executa caso o membro esteja salvo no banco dados
 
-	// Sincronizando os dados do usuário
-	const user_guild = await client.getMemberGuild(message, user.uid)
-	if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
-		user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
-		await user.save()
-	}
+		// Ignorando usuários
+		if (user.conf?.banned || false) return
 
-	// Recursos de Broadcast
-	if (client.cached.broad_status)
-		await require("./core/events/broadcast")({ client, message })
+		// Sincronizando os dados do usuário
+		const user_guild = await client.getMemberGuild(message, user.uid)
+		if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
+			user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
+			await user.save()
+		}
 
-	// Respostas automatizadas por IA
-	if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
-		return require("./core/events/conversation")({ client, message, text, guild })
+		// Recursos de Broadcast
+		if (client.cached.broad_status)
+			await require("./core/events/broadcast")({ client, message })
 
-	try { // Atualizando o XP dos usuários
-		if (guild.conf.spam) // Sistema anti-spam do servidor
-			await require("./core/events/spam")({ client, message, user, guild })
+		// Respostas automatizadas por IA
+		if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
+			return require("./core/events/conversation")({ client, message, text, guild })
 
+		// Atualizando o XP dos usuários
 		if (message.content.length > 6 && client.x.ranking) // Experiência recebida pelo usuário
 			client.registryExperience(message, "messages")
 
 		await require("./core/events/legacy_commands")({ client, message })
-	} catch (err) { // Erro no comando
-		client.error(err, "Commands")
 	}
 })
 
@@ -93,9 +96,6 @@ client.discord.on("interactionCreate", async interaction => {
 
 	// Verificando se é um comando usado num servidor
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
-
-	// Atualiza o formato de salvamento das tasks
-	// client.update_tasks(interaction)
 
 	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
 		return require("./core/interactions/menus")({ client, user, interaction })

@@ -3,7 +3,6 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { createGame, verifyInvalidGames } = require('../../core/database/schemas/Game')
 
 const dispara_anuncio = require('../../core/auto/send_announcement')
-const time_stamped = require('../../core/functions/time_stamped')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -54,7 +53,7 @@ module.exports = {
             tipo: interaction.options.getString("tipo"),
             link: interaction.options.getString("link"),
             preco: interaction.options.getNumber("preço"),
-            expira: time_stamped(interaction.options.getString("expiração"), interaction.options.getString("horario")),
+            expira: client.timestamp(interaction.options.getString("expiração"), interaction.options.getString("horario")),
             thumbnail: interaction.options.getAttachment("imagem")
         }
 

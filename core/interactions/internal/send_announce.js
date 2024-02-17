@@ -3,7 +3,6 @@ const fetch = (...args) =>
 
 const { createGame, verifyInvalidGames, verifyGame } = require('../../database/schemas/Game')
 
-const time_stamped = require('../../functions/time_stamped')
 const dispara_anuncio = require('../../auto/send_announcement')
 
 module.exports = async ({ client, interaction }) => {
@@ -26,7 +25,7 @@ module.exports = async ({ client, interaction }) => {
 
             // Registrando os games no banco
             objetos_anunciados.forEach(async game => {
-                game.expira = time_stamped(game.expira, game.hora_expira)
+                game.expira = client.timestamp(game.expira, game.hora_expira)
                 await createGame(game)
             })
 

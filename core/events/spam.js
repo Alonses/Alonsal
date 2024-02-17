@@ -9,7 +9,7 @@ const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
 const DIFF = 10000
 
-module.exports = async function ({ client, message, user, guild }) {
+module.exports = async function ({ client, message, guild }) {
 
     let user_guild
 
@@ -22,7 +22,7 @@ module.exports = async function ({ client, message, user, guild }) {
         if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers))
             return
     } else
-        user_guild = await client.getMemberGuild(message, user.uid)
+        user_guild = await client.getMemberGuild(message, message.author.id)
 
     if (usersmap.has(message.author.id)) {
 
@@ -61,7 +61,7 @@ module.exports = async function ({ client, message, user, guild }) {
                     bloqueia_operacao = 1
 
                     // Nerfando o spam do servidor e excluindo as mensagens enviadas
-                    nerfa_spam({ client, user, guild, message })
+                    nerfa_spam({ client, message, guild })
                 }
             } else {
                 userdata.msgcount = msgcount
@@ -88,9 +88,9 @@ module.exports = async function ({ client, message, user, guild }) {
     }
 }
 
-async function nerfa_spam({ client, user, guild, message }) {
+async function nerfa_spam({ client, message, guild }) {
 
-    let user_guild = await client.getMemberGuild(message, user.uid)
+    let user_guild = await client.getMemberGuild(message, message.author.id)
     let tempo_timeout = 7200, operacao = "mute"
 
     if (!user_guild) { // Validando se o usuário saiu do servidor
@@ -103,7 +103,7 @@ async function nerfa_spam({ client, user, guild, message }) {
 
     // Servidor com progressão de strikes ativo
     if (guild?.spam.strikes) {
-        let user_strikes = await getUserStrikes(user.uid)
+        let user_strikes = await getUserStrikes(message.author.id)
         user_strikes.strikes++
 
         tempo_timeout = defaultStrikes[user_strikes.strikes] || null
@@ -127,10 +127,12 @@ async function nerfa_spam({ client, user, guild, message }) {
     // Redirecionando o evento
     const guild_bot = await client.getMemberGuild(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
+    const user = await client.getuser(message.author.id)
+
     await require(`./spam/${operacao}_user`)({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
-        remove_spam(client, user.uid, guild.sid, user_messages[0])
+        remove_spam(client, message.author.id, guild.sid, user_messages[0])
     }, 4000)
 
     // Registrando o spam neutralizado no histórico
@@ -148,8 +150,10 @@ async function nerfa_spam({ client, user, guild, message }) {
             if (!registro) {
                 await registerSuspiciousLink(link, guild.sid, client.timestamp())
 
-                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal
+                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
                 client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${link.split("").join(" ")}\` )` })
+
+                client.notify(guild.logger.channel, { content: `:link: :inbox_tray: | Um novo link suspeito foi detectado neste servidor!\nMensagens que forem enviadas futuramente e contiverem esse link serão apagadas, e seus autores penalizados.\n( \`${link.split("").join(" ")}\` )` })
             }
         }
 

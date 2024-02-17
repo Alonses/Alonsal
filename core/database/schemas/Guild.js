@@ -192,7 +192,7 @@ async function disableGuildFeatures(client, sid) {
     guild.erase.valid = true
 
     // Notificando sobre a exclusão dos dados do servidor
-    client.notify(process.env.channel_feeds, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guild.sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${guild.erase.timestamp}:R> ( <t:${guild.erase.timestamp}:f> )` })
+    client.notify(process.env.channel_data, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guild.sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${guild.erase.timestamp}:R> ( <t:${guild.erase.timestamp}:f> )` })
 
     await guild.save()
 }
