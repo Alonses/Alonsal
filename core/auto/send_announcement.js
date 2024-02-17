@@ -45,7 +45,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     const row = client.create_buttons(lista_links)
 
     // Enviando a notificação para vários os canais clientes
-    canais_clientes.forEach(dados => {
+    canais_clientes.forEach(async dados => {
 
         try {
             let idioma_definido = dados.lang ?? "pt-br"
@@ -65,7 +65,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
                 if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                     // Permissão para enviar mensagens no canal
-                    if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+                    if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                         if (typeof guild_channel === "undefined") // Anúnciando em todos os servidores
                             canal_alvo.send({

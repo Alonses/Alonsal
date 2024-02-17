@@ -15,7 +15,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
     // Coletando os dados em cache do servidor do reporte
     const cached_guild = await client.guilds(alvo.sid)
 
-    canais_reporte.forEach(guild => {
+    canais_reporte.forEach(async guild => {
         const canal_alvo = client.discord.channels.cache.get(guild.reports.channel)
 
         if (!guild.lang)
@@ -23,7 +23,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
 
         if (canal_alvo) // Enviando os anúncios para os canais
             if (canal_alvo.type === 0 || canal_alvo.type === 5) // Permissão para enviar mensagens no canal
-                if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     const embed = new EmbedBuilder()
                         .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)
