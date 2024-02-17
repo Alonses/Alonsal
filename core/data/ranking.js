@@ -28,12 +28,15 @@ module.exports = async ({ client, message, caso }) => {
 
     let user_global = await getUserGlobalRank(id_alvo, user.ixp, user.nickname, message.guild.id)
 
+    const user_data = await client.getUser(user.uid) // Salvando a última interação do usuário
+    user_data.erase.last_interaction = client.timestamp()
+    await user_data.save()
+
     // Validando se o usuário tem o ranking habilitado
     if (!await client.verifyUserRanking(user.uid)) return
 
     //              Comandos                  Mensagens
     user.nickname = message.user?.username || message.author?.username
-    user.erase.last_interaction = client.timestamp() // Salvando a última interação do usuário
 
     if (caso === "messages") {
 
