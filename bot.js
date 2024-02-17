@@ -78,11 +78,15 @@ client.discord.on("messageCreate", async message => {
 		if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
 			return require("./core/events/conversation")({ client, message, text, guild })
 
-		// Atualizando o XP dos usuários
-		if (message.content.length > 6 && client.x.ranking) // Experiência recebida pelo usuário
-			client.registryExperience(message, "messages")
+		try {
+			// Atualizando o XP dos usuários
+			if (message.content.length > 6 && client.x.ranking) // Experiência recebida pelo usuário
+				client.registryExperience(message, "messages")
 
-		await require("./core/events/legacy_commands")({ client, message })
+			await require("./core/events/legacy_commands")({ client, message })
+		} catch (err) { // Erro no comando
+			client.error(err, "Commands")
+		}
 	}
 })
 

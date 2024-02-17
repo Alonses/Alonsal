@@ -27,7 +27,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
     if (interaction)
         if (games.length > limitador)
             objeto_jogos.push({ id: "free_games", name: "Próximo", emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
-        else if ((pagina * limitador) < original_size)
+        else if ((pagina * limitador) < original_size && games.length !== original_size)
             objeto_jogos.push({ id: "free_games", name: "Início", emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
 
     games.forEach(game => {
