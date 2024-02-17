@@ -25,9 +25,22 @@ const colorsPriceMap = {
     4: 50
 }
 
+const defaultUserEraser = {
+    1: 2419200,  // 1 mês
+    2: 7257600,  // 3 meses
+    3: 14515200, // 6 meses
+    4: 29030400  // 1 ano
+}
+
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     lang: { type: String, default: null },
+    erase: {
+        last_interaction: { type: String, default: null },
+        valid: { type: Boolean, default: false },
+        timeout: { type: Number, default: 2 },
+        guild_timeout: { type: Number, default: 2 }
+    },
     social: {
         steam: { type: String, default: null },
         lastfm: { type: String, default: null },
@@ -65,6 +78,17 @@ const schema = new mongoose.Schema({
 })
 
 const model = mongoose.model("User", schema)
+
+async function checkUser(uid) {
+
+    // Verifica se há registros do usuário informado no banco
+    if (await model.exists({ uid: uid }))
+        return model.findOne({
+            uid: uid
+        })
+
+    return false
+}
 
 async function getUser(uid) {
     if (!await model.exists({ uid: uid }))
@@ -126,8 +150,10 @@ async function migrateUsers() {
 module.exports.User = model
 module.exports = {
     getUser,
+    checkUser,
     migrateUsers,
     getRankMoney,
     colorsMap,
-    colorsPriceMap
+    colorsPriceMap,
+    defaultUserEraser
 }

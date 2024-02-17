@@ -33,6 +33,7 @@ module.exports = async ({ client, message, caso }) => {
 
     //              Comandos                  Mensagens
     user.nickname = message.user?.username || message.author?.username
+    user.erase.last_interaction = client.timestamp() // Salvando a última interação do usuário
 
     if (caso === "messages") {
 

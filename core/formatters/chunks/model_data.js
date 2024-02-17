@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction }) => {
     const user_guilds = await listAllUserGuilds(user.uid)
 
     if (user_guilds.length > 0)
-        dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} Servidores em cache:**\n\`${user_guilds.length} servidores conhecidos\``
+        dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} Servidores onde você possui moderação:**\n\`${user_guilds.length} servidores conhecidos\``
 
     const id_badges = await client.getUserBadges(user.uid)
 
