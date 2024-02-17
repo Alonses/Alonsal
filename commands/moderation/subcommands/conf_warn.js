@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         }
 
         // Sem permissão para ver ou escrever no canal mencionado
-        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo))
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo))
             return client.tls.reply(interaction, user, "mode.logger.falta_escrita_visualizacao", true, 1)
     }
 

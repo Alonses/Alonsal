@@ -166,7 +166,7 @@ remove_spam = (client, id_user, id_guild, user_message) => {
     // Filtra todas as mensagens no servidor que foram enviadas pelo usuário no último minuto
     guild.channels.cache.forEach(async channel => {
 
-        if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && channel.type === 0)
+        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && channel.type === 0)
             await channel.messages.fetch({ limit: 30 })
                 .then(async messages => {
 

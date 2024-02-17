@@ -369,7 +369,7 @@ function internal_functions(client) {
         if (!canal) return
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
 
         canal.send(conteudo)
     }

@@ -21,7 +21,7 @@ module.exports = async function ({ client, message, text, guild }) {
             return
 
     // Permissão para enviar mensagens no canal que foi chamado
-    if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], message.channel)) return
+    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], message.channel)) return
 
     // Trava para responder apenas uma mensagem por vez
     if (libera_conversacao) {

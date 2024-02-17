@@ -4,7 +4,7 @@ module.exports = async function ({ client, message }) {
 
     // Permissão para enviar mensagens no canal
     if (message.channel.type === "GUILD_TEXT")
-        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages], message.channel)) return
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages], message.channel)) return
 
     if (message.content.includes(client.id()) || message.content.startsWith(".a")) {
         const { data } = require(`../../files/languages/${client.idioma.getLang(message.author.id)}.json`)

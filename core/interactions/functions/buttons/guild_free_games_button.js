@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
                 // Permissão para enviar mensagens no canal
-                if (client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     // Enviando os games para anunciar no servidor
                     const guild_channel = guild.games.channel

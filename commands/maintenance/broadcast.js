@@ -21,7 +21,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "mode.broadcast.desligado", true, client.emoji(0))
 
         // Sem permissão para enviar mensagens
-        if (!client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages], interaction))
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages], interaction))
             return client.tls.reply(interaction, user, "mode.broadcast.canal_invalido", true, client.emoji(0))
 
         const embed = new EmbedBuilder()
