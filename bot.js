@@ -35,8 +35,6 @@ client.discord.on("messageCreate", async message => {
 	// Previne que o bot responda a interações enquanto estiver atualizando comandos
 	if (client.x.force_update) return
 
-	const id_user = message.author.id
-
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
 	const text = message.content
@@ -53,7 +51,7 @@ client.discord.on("messageCreate", async message => {
 		}
 
 	if (guild.conf.spam) // Sistema anti-spam do servidor
-		await require("./core/events/spam")({ client, message, guild, id_user })
+		await require("./core/events/spam")({ client, message, guild })
 
 	// Verificando se o autor é um bot ou um webhook
 	if (message.author.bot || message.webhookId) return

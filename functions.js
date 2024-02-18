@@ -126,7 +126,7 @@ function internal_functions(client) {
         } else // Emojis por códigos de status
             emoji = translate.get_emoji(dados)
 
-        if (!emoji)
+        if (isNaN(parseInt(emoji)))
             emoji = "🔍"
 
         return emoji
