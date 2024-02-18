@@ -12,7 +12,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
     modo_develop = 0, silent = 1
 
 const client_data = {
-    sharding: 0,
+    sharding: 1,
     debug_mode: 0,
     anuncio_diario: 0,
     modo_develop: modo_develop,
