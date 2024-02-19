@@ -18,9 +18,11 @@ module.exports = async function ({ client, message, guild }) {
         const { u_g } = userdata
         user_guild = u_g
 
+        // usuário não está salvo em cache removendo ele da lista
+        if (!user_guild) return
+
         // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
-        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers))
-            return
+        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers)) return
     } else
         user_guild = await client.getMemberGuild(message, message.author.id)
 
@@ -127,7 +129,7 @@ async function nerfa_spam({ client, message, guild }) {
     // Redirecionando o evento
     const guild_bot = await client.getMemberGuild(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
-    const user = await client.getuser(message.author.id)
+    const user = await client.getUser(message.author.id)
 
     await require(`./spam/${operacao}_user`)({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout })
 

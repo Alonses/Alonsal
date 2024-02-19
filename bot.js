@@ -59,7 +59,7 @@ client.discord.on("messageCreate", async message => {
 	if (user) { // Só executa caso o membro esteja salvo no banco dados
 
 		// Ignorando usuários banidos e que foram movidos para exclusão de dados
-		if (user.conf?.banned || user.erase.valid || false) return
+		if (user.conf?.banned || user.erase.valid) return
 
 		// Sincronizando os dados do usuário
 		const user_guild = await client.getMemberGuild(message, user.uid)
