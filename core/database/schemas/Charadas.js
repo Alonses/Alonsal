@@ -28,20 +28,8 @@ async function getCharada() {
     return model.aggregate([{ $sample: { size: 1 } }])
 }
 
-async function migrateCharadas() {
-
-    return
-
-    const { features } = require('./charadas.json')
-
-    features.forEach(async valor => {
-        await createCharada(valor.properties)
-    })
-}
-
 module.exports.Charada = model
 module.exports = {
     getCharada,
-    createCharada,
-    migrateCharadas
+    createCharada
 }

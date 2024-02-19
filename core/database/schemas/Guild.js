@@ -1,4 +1,3 @@
-const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 const loggerMap = {
@@ -197,21 +196,6 @@ async function disableGuildFeatures(client, sid) {
     await guild.save()
 }
 
-async function migrateGameChannels() {
-
-    for (const file of readdirSync(`./files/data/games/`)) {
-        const { canal, cargo } = require(`../../../files/data/games/${file}`)
-
-        let guild = await getGuild(file.replace(".json", ""))
-
-        guild.games.channel = canal
-        guild.games.role = cargo
-        guild.conf.games = true
-
-        await guild.save()
-    }
-}
-
 async function getNetworkedGuilds(link) {
     // Lista todos os servidores com network ativo
     return model.find({
@@ -292,7 +276,6 @@ module.exports = {
     getReportChannels,
     getReportNetworkChannels,
     getGameChannelById,
-    migrateGameChannels,
     getNetworkedGuilds,
     getRankHosters,
     getTimedGuilds,

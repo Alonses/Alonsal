@@ -1,4 +1,3 @@
-const { readdirSync } = require('fs')
 const mongoose = require("mongoose")
 
 // uid -> User ID
@@ -84,6 +83,12 @@ async function dropAllRankGuild(sid) {
     })
 }
 
+async function dropAllUserGuildRanks(uid) {
+    await model.deleteMany({
+        uid: uid
+    })
+}
+
 async function dropUnknownRankServers(client, uid) {
 
     const guilds_ranking = await getUserRankServers(uid)
@@ -95,27 +100,6 @@ async function dropUnknownRankServers(client, uid) {
         if (!server)
             await dropUserRankServer(uid, valor.sid)
     })
-}
-
-async function migrateRankServer() {
-
-    // Migrando os dados do JSON para o banco externo
-    for (const folder of readdirSync(`./files/data/rank/`)) {
-        for (const file of readdirSync(`./files/data/rank/${folder}`)) {
-
-            const data = require(`../../../files/data/rank/${folder}/${file}`)
-
-            await model.create({
-                uid: data.id,
-                sid: folder,
-                nickname: data.nickname,
-                lastValidMessage: data.lastValidMessage,
-                warns: data.warns,
-                caldeira_de_ceira: data.caldeira_de_ceira,
-                xp: data.xp
-            })
-        }
-    }
 }
 
 async function updateUserRank() {
@@ -137,9 +121,9 @@ module.exports = {
     getUserRankServer,
     getUserRankServers,
     createRankServer,
-    migrateRankServer,
     updateUserRank,
     dropUserRankServer,
     dropAllRankGuild,
+    dropAllUserGuildRanks,
     dropUnknownRankServers
 }

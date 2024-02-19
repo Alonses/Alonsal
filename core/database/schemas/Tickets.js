@@ -40,9 +40,17 @@ async function dropAllGuildTickets(sid) {
     })
 }
 
+// Apaga todos os tickets criados por um usuário
+async function dropAllUSerTickets(uid) {
+    await model.deleteMany({
+        uid: uid
+    })
+}
+
 module.exports.Ticket = model
 module.exports = {
     getTicket,
     dropTicket,
-    dropAllGuildTickets
+    dropAllGuildTickets,
+    dropAllUSerTickets
 }

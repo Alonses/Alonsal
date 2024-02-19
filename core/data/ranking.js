@@ -1,8 +1,10 @@
-const { getUser } = require('../database/schemas/User')
-const { getUserGlobalRank } = require('../database/schemas/Rank_g')
-const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
-const { verifyDynamicBadge } = require('../database/schemas/Badge')
 const { badges } = require('./badges')
+
+const { atualiza_user_eraser } = require('../auto/user_eraser')
+const { getUserGlobalRank } = require('../database/schemas/Rank_g')
+const { verifyDynamicBadge } = require('../database/schemas/Badge')
+const { getUser, defaultUserEraser } = require('../database/schemas/User')
+const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
 
 const CHECKS = {
     LIMIT: 5,
@@ -29,8 +31,26 @@ module.exports = async ({ client, message, caso }) => {
     let user_global = await getUserGlobalRank(id_alvo, user.ixp, user.nickname, message.guild.id)
 
     const user_data = await client.getUser(user.uid) // Salvando a última interação do usuário
-    user_data.erase.last_interaction = client.timestamp()
+
+    if (user_data.erase.forced)
+        return // Usuário forçou a exclusão de dados
+
+    let cached_erase = false
+
+    if (user_data.erase.valid) { // Usuário interagiu com o Alonsal novamente
+        client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${user_data.uid}\` ) removido da lista de exclusão.` })
+
+        client.sendDM(user_data, { data: `${client.defaultEmoji("person")} | Olá! Devido a sua interação comigo, removi você da lista de exclusão dos dados!\n\nCaso isso tenha sido um erro, por gentileza, use o comando </data:1018609879470047260> novamente em um servidor.` })
+
+        user_data.erase.valid = false // Retirando a etiqueta para remoção de dados
+        cached_erase = true
+    }
+
+    user_data.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.timeout]
     await user_data.save()
+
+    if (cached_erase) // Atualizando a lista de usuários que estão marcados para exclusão
+        atualiza_user_eraser(client)
 
     // Validando se o usuário tem o ranking habilitado
     if (!await client.verifyUserRanking(user.uid)) return
