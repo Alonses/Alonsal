@@ -6,6 +6,7 @@ const languagesMap = {
     "en": ["en-us", ":flag_us: | Language switched to `American English`", "American English", "🇺🇸"],
     "es": ["es-es", ":flag_es: | Idioma cambiado a `Español`", "Español", "🇪🇸"],
     "fr": ["fr-fr", ":flag_fr: | Langue changée en `Français`", "Français", "🇫🇷"],
+    "hp": ["pt-hp", ":sunny: | \`Hopês\` agora tá ativo komo segundino idioma!", "Hopês", "🔆"],
     "it": ["it-it", ":flag_it: | Lingua cambiata in `Italiano`", "Italiano", "🇮🇹"],
     "pt": ["pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`", "Português Brasileiro", "🇧🇷"],
     "ru": ["ru-ru", ":flag_ru: | Язык изменен на `русский`", "русский", "🇷🇺"]
@@ -137,9 +138,11 @@ function translate(alvo, target) {
     if (data && !phrase) // Tradução encontrada
         phrase = data
 
-    // Verifica se não há mensagens diferentes para o mesmo retorno
-    if (Array.isArray(data))
+    if (Array.isArray(data)) // Verifica se não há mensagens diferentes para o mesmo retorno
         phrase = data[Math.floor((data.length - 1) * Math.random())]
+
+    if (alvo.misc.second_lang) // Corrigindo a tradução para o idioma secundário ativo
+        phrase = ajusta_traducao(alvo.misc.second_lang, phrase)
 
     return phrase || "<translated_text>"
 }
@@ -179,6 +182,23 @@ lista_emojis = (type) => {
     })
 
     return emojis.join(" ")
+}
+
+
+ajusta_traducao = (idioma, frase) => {
+
+    let blocos = frase.split(" ")
+
+    // Busca as traduções para o item solicitado
+    let { data } = require(`../../files/languages/${idioma}.json`)
+
+    for (let i = 0; i < blocos.length; i++) {
+
+        if (data[blocos[i]]) // Altera o trecho para a tradução
+            blocos[i] = data[blocos[i]]
+    }
+
+    return blocos.join(" ")
 }
 
 module.exports = {

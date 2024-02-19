@@ -42,7 +42,8 @@ module.exports = {
                 .addChoices(
                     { name: '1️⃣ binary', value: 'binary' },
                     { name: '📻 morse', value: 'morse' },
-                    { name: '🐱 hieroglyphics', value: 'hieroglyphics' }
+                    { name: '🐱 hieroglyphics', value: 'hieroglyphics' },
+                    { name: '🔆 hopês', value: 'hopes' }
                 )
                 .setRequired(true))
         .addStringOption(option =>
