@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 3 -> Sincroniza os servidores do usuário
 
     if (operacao === 0)
-        return require('../../../formatters/chunks/model_data')({ client, user, interaction })
+        return require('../../../interactions/chunks/panel_personal_data')({ client, user, interaction })
 
     if (operacao === 1)
         return require("../../../interactions/chunks/data")({ client, user, interaction })

@@ -1,7 +1,5 @@
 const mongoose = require("mongoose")
 
-const { getAllUsers } = require('./Rank_s')
-
 // uid -> User ID
 
 const schema = new mongoose.Schema({
@@ -48,39 +46,10 @@ async function dropUserGlobalRank(uid) {
     })
 }
 
-const users_ranking = []
-const maior_ranking = []
-
-async function migrateRankGlobal() {
-
-    const usuarios = await getAllUsers()
-
-    for (let i = 0; i < usuarios.length; i++) {
-        users_ranking.push(usuarios[i])
-    }
-
-    for (let i = 0; i < users_ranking.length; i++) {
-        for (let x = 0; x < usuarios.length; x++) {
-            if (users_ranking[i].uid === usuarios[x].uid)
-                if (maior_ranking[i]) {
-                    if (maior_ranking[i].xp < usuarios[x].xp)
-                        maior_ranking[i].xp = usuarios[x].xp
-                } else
-                    maior_ranking[i] = users_ranking[x]
-        }
-    }
-
-    // Salvando no banco
-    for (let i = 0; i < maior_ranking.length; i++) {
-        await getUserGlobalRank(maior_ranking[i].uid, maior_ranking[i].xp, maior_ranking[i].nickname, maior_ranking[i].sid)
-    }
-}
-
 module.exports.Rankobal = model
 module.exports = {
     getRankGlobal,
     getUserGlobalRank,
-    migrateRankGlobal,
     dropUserGlobalRank,
     findUserGlobalRankIndex
 }

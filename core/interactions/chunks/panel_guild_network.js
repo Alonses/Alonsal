@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(45)} **${client.tls.phrase(user, "mode.network.servidores")} no link: ${servidores_link}**`,
+                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores")} no link: ${servidores_link}**`,
                 inline: true
             },
             {
@@ -105,7 +105,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_network_button", name: "Network", type: client.execute("functions", "emoji_button.type_button", guild?.conf.network), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.network), data: "1" },
             { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.eventos_sincronizados"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-            { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.servidores"), type: 1, emoji: client.emoji(45), data: "3" },
+            { id: "guild_network_button", name: client.tls.phrase(user, "mode.network.servidores"), type: 1, emoji: client.emoji(32), data: "3" },
             { id: "guild_network_button", name: "Ajustes", type: 1, emoji: client.emoji(41), data: "9" }
         ])
     else {

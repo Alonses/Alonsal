@@ -4,12 +4,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1]) || dados
     let pagina_guia = 0, reback = "panel_guild_data"
+
     // Códigos de operação
     // 0 -> Redireciona para o painel de dados do servidor
 
     if (operacao === 1)
         pagina_guia = 1
-    else if (operacao === 2) {
+
+    if (operacao === 2) {
 
         // Submenu para escolher o escopo do tempo de exclusão dos dados do servidor
         const valores = []

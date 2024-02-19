@@ -33,7 +33,7 @@ module.exports = async function ({ client, message, guild }) {
         let msgcount = userdata.msgcount
 
         // Enviando mensagens com tempo aceitável
-        if (/* difference > DIFF && */lastMessage.content !== message.content) {
+        if (lastMessage.content !== message.content) {
 
             clearTimeout(timer)
 

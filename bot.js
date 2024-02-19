@@ -58,8 +58,8 @@ client.discord.on("messageCreate", async message => {
 
 	if (user) { // Só executa caso o membro esteja salvo no banco dados
 
-		// Ignorando usuários
-		if (user.conf?.banned || false) return
+		// Ignorando usuários banidos e que foram movidos para exclusão de dados
+		if (user.conf?.banned || user.erase.valid || false) return
 
 		// Sincronizando os dados do usuário
 		const user_guild = await client.getMemberGuild(message, user.uid)
@@ -111,6 +111,12 @@ client.discord.on("interactionCreate", async interaction => {
 	await client.verifyUserLanguage(user, interaction.guild.id)
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
+
+	// Removendo marcações para exclusão do usuário
+	if (user.erase.valid) {
+		user.erase.forced = false
+		await user.save()
+	}
 
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute;

@@ -49,6 +49,7 @@ module.exports = {
                             "ru": 'Функция для настройки'
                         })
                         .addChoices(
+                            { name: '🧾 Your data', value: 'data' },
                             { name: '👻 Ghostmode', value: '0' },
                             { name: '🔔 DM notifications', value: '1' },
                             { name: '🏆 Ranking', value: '2' },

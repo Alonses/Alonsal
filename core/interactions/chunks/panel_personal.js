@@ -5,6 +5,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const pagina = pagina_guia || 0
 
     if (operador) { // Função usada com um atalho
+
+        if (operador === "data") // Atalho para a guia de configurações de exclusão de dados
+            return require('./panel_personal_data')({ client, user, interaction })
+
         const dados = `${interaction.user.id}.${operador}`
         return require('../functions/buttons/user_panel_button')({ client, user, interaction, dados })
     }
@@ -83,6 +87,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_personal`, disabled: c_menu[0] }]
+
+    if (pagina === 0)
+        botoes = [{ id: "data_user_button", name: client.defaultEmoji("paper"), type: 2, data: "0" }]
 
     // Primeira página de botões de configuração do usuário
     // Modo fantasma, notificações em DM e Ranking

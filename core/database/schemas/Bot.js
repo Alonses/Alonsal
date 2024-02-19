@@ -82,30 +82,9 @@ async function dropBot(bit) {
     })
 }
 
-async function migrateData(client) {
-
-    // Migrando os dados do json para o banco de dados externo
-    const { comandos_disparados, exp_concedido, msgs_lidas, msgs_validas, epic_embed_fails, bufunfas, movimentado } = require(`../../../files/data/relatorio.json`)
-
-    const bot = await client.getBot()
-
-    bot.cmd.ativacoes = comandos_disparados
-    bot.cmd.erros = epic_embed_fails
-
-    bot.exp.exp_concedido = exp_concedido
-    bot.exp.msgs_validas = msgs_validas
-    bot.exp.msgs_lidas = msgs_lidas
-
-    bot.bfu.gerado = bufunfas
-    bot.bfu.movido = movimentado
-
-    await bot.save()
-}
-
 module.exports.User = model
 module.exports = {
     getBot,
     dropBot,
-    dailyReset,
-    migrateData
+    dailyReset
 }

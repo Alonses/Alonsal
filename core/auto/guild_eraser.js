@@ -16,7 +16,7 @@ async function atualiza_eraser() {
 
     const dados = await getEraseGuilds()
 
-    // Salvando as advertências no cache do bot
+    // Salvando os servidores marcados para exclusão no cache do bot
     writeFileSync("./files/data/erase_guild.txt", JSON.stringify(dados))
 }
 

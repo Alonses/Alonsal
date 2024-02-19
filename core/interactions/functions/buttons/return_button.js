@@ -11,8 +11,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         operador = `${dados.split(".")[1]}|${dados.split(".")[2]}`
     }
 
-    // Utilizado para a paginação do painel guild
-    if (dados.includes("panel_guild")) {
+    // Utilizado para a paginação do painel guild e pessoal
+    if (dados.includes("panel_guild") || dados.includes("panel_personal")) {
         operador = null
         operacao = dados.split(".")[1]
         pagina_guia = parseInt(dados.split(".")[2])
