@@ -47,6 +47,7 @@ module.exports = {
                     { name: '🇺🇸 English', value: 'en' },
                     { name: '🇪🇸 Español', value: 'es' },
                     { name: '🇫🇷 Français', value: 'fr' },
+                    { name: '🔆 Hopês', value: 'hp' },
                     { name: '🇮🇹 Italiano', value: 'it' },
                     { name: '🇧🇷 Português', value: 'pt' },
                     { name: '🇷🇺 Русский', value: 'ru' }
@@ -55,13 +56,25 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         let novo_idioma = interaction.options.getString("language")
+        let frase_idioma
 
-        // Validando e coletando os dados do idioma
-        const matches = novo_idioma.match(/al|de|en|es|fr|it|pt|ru/)
+        if (novo_idioma === "hp") {
 
-        // Resgata os dados do idioma válido
-        user.lang = languagesMap[matches[0]][0]
-        const frase_idioma = languagesMap[matches[0]][1]
+            if (!user.misc.second_lang) { // Definindo um idioma secundário
+                user.misc.second_lang = "pt-hp"
+                frase_idioma = languagesMap["hp"][1]
+            } else { // Removendo o idioma secundário
+                user.misc.second_lang = null
+                frase_idioma = client.tls.phrase(user, "mode.idiomas.idioma_secundario_removido", 11)
+            }
+        } else {
+            // Validando e coletando os dados do idioma
+            const matches = novo_idioma.match(/al|de|en|es|fr|it|pt|ru/)
+
+            // Resgata os dados do idioma válido
+            user.lang = languagesMap[matches[0]][0]
+            frase_idioma = languagesMap[matches[0]][1]
+        }
 
         await user.save()
         interaction.reply({

@@ -11,15 +11,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (user_warns.length < 1)
         return interaction.reply({
-            content: "🔍 | O usuário mencionado não possui nenhuma advertência neste servidor!",
+            content: client.tls.phrase(user, "mode.warn.sem_advertencia", 1),
             ephemeral: true
         })
 
     const embed = new EmbedBuilder()
-        .setTitle(`> Advertências de ${user_warns[0].nick} ${client.defaultEmoji("paper")}`)
+        .setTitle(`${client.tls.phrase(user, "mode.warn.advertencia_titulo")} ${user_warns[0].nick} ${client.defaultEmoji("paper")}`)
         .setColor(client.embed_color(user.misc.color))
         .setFooter({
-            text: "Selecione uma das advertências abaixo para poder gerenciar!",
+            text: client.tls.phrase(user, "mode.warn.gerenciar_advertencia"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
