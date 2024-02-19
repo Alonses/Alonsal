@@ -141,7 +141,7 @@ function translate(alvo, target) {
     if (Array.isArray(data)) // Verifica se não há mensagens diferentes para o mesmo retorno
         phrase = data[Math.floor((data.length - 1) * Math.random())]
 
-    if (alvo?.misc.second_lang) // Corrigindo a tradução para o idioma secundário ativo
+    if (alvo.misc?.second_lang) // Corrigindo a tradução para o idioma secundário ativo
         phrase = ajusta_traducao(alvo.misc.second_lang, phrase)
 
     return phrase || "<translated_text>"
