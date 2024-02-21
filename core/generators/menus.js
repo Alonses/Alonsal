@@ -37,7 +37,8 @@ const translate = {
     "remove_report": "menu.menus.escolher_usuario",
     "remove_warn": "menu.menus.escolher_usuario",
     "report_browse": "menu.menus.escolher_usuario",
-    "warn_browse": "menu.menus.escolher_usuario"
+    "warn_browse": "menu.menus.escolher_usuario",
+    "spam_link_panel": "Escolha um link suspeito!"
 }
 
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
@@ -240,6 +241,14 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
 
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
                 }
+            }
+
+            if (alvo === "spam_link_panel") {
+
+                emoji_label = "🔗"
+                valor_label = `${alvo}|${valor.sid}.${valor.timestamp}`
+                nome_label = valor.link.length > 20 ? `${valor.link.slice(0, 18)}...` : valor.link
+                descricao_label = `Registrado em ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
             }
 
             if (alvo === "static_color") {

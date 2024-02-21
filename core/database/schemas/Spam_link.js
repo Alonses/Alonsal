@@ -5,7 +5,8 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     link: { type: String, default: null },
-    timestamp: { type: String, default: null }
+    timestamp: { type: String, default: null },
+    valid: { type: Boolean, default: false }
 })
 
 const model = mongoose.model("Spam_Link", schema)
@@ -26,12 +27,39 @@ async function getSuspiciousLink(link) {
     })
 }
 
+async function getCachedSuspiciousLink(guild_id, timestamp) {
+    return model.findOne({
+        sid: guild_id,
+        timestamp: timestamp
+    })
+}
+
 async function registerSuspiciousLink(link, guild_id, timestamp) {
+    await model.create({
+        link: link,
+        sid: guild_id,
+        timestamp: timestamp,
+        valid: true
+    })
+}
+
+// Registrando um link suspeito provisório
+async function registerCachedSuspiciousLink(link, guild_id, timestamp) {
     await model.create({
         link: link,
         sid: guild_id,
         timestamp: timestamp
     })
+}
+
+async function getAllGuildSuspiciousLinks(guild_id) {
+    return await model.find({
+        sid: guild_id
+    })
+}
+
+async function listAllSuspiciouLinks() {
+    return await model.find({})
 }
 
 async function dropSuspiciousLink(link) {
@@ -59,6 +87,10 @@ module.exports = {
     getSuspiciousLink,
     dropSuspiciousLink,
     verifySuspiciousLink,
+    listAllSuspiciouLinks,
     registerSuspiciousLink,
+    registerCachedSuspiciousLink,
+    getCachedSuspiciousLink,
+    getAllGuildSuspiciousLinks,
     updateGuildSuspectLink
 }
