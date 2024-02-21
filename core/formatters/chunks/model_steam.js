@@ -265,7 +265,7 @@ module.exports = async ({ client, user, interaction }) => {
 
                 if (res.includes("Member since ")) {
                     anos_servico = res.split("Member since ")[1]
-                    anos_servico = client.execute("formata_data", anos_servico.split(".\">")[0].replace(",", ""))
+                    anos_servico = client.execute("formatters", "formata_data", anos_servico.split(".\">")[0].replace(",", ""))
                 }
 
                 if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")

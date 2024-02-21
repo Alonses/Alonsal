@@ -6,6 +6,14 @@ const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = requir
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("add")
+        .setNameLocalizations({
+            "de": 'hinzufügen',
+            "es-ES": 'agregar',
+            "fr": 'ajouter',
+            "it": 'aggiungere',
+            "pt-BR": 'adicionar',
+            "ru": 'добавить'
+        })
         .setDescription("⌠💂⌡ Add emojis and stickers to the server")
         .addSubcommand(subcommand =>
             subcommand

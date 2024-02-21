@@ -78,7 +78,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (user.misc.daily) {
         const tempo_restante = Math.floor((date1.getTime() + (((23 - date1.getHours()) * 3600000) + ((59 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000))) / 1000)
 
-        daily = `:bank: ${client.tls.phrase(user, "misc.banco.daily")} <t:${tempo_restante}:R>\n[ <t:${tempo_restante}:f> ]`
+        daily = `:bank: ${client.tls.phrase(user, "misc.banco.daily")} <t:${tempo_restante}:R>\n( <t:${tempo_restante}:f> )`
     }
 
     const embed = new EmbedBuilder()

@@ -15,6 +15,14 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("add")
+                .setNameLocalizations({
+                    "de": 'hinzufügen',
+                    "es-ES": 'agregar',
+                    "fr": 'ajouter',
+                    "it": 'aggiungere',
+                    "pt-BR": 'adicionar',
+                    "ru": 'добавить'
+                })
                 .setDescription("⌠🎉⌡ Create a new module with pre-programmed functions")
                 .setDescriptionLocalizations({
                     "de": '⌠🎉⌡ Erstellen Sie ein neues Modul mit vorprogrammierten Funktionen',

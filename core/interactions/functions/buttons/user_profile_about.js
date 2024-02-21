@@ -7,11 +7,26 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirma
 
     if (escolha === 0) {
-        user.profile.about = null
+
+        user.profile.cache.about = null
         await user.save()
 
-        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true)
+        return client.reply(interaction, {
+            content: client.tls.phrase(user, "menu.botoes.operacao_cancelada", client.emoji(0)),
+            embeds: [],
+            components: []
+        })
     }
 
-    client.tls.report(interaction, user, "misc.perfil.perfil_atualizado", true, client.emoji("emojis_dancantes"))
+    // Alterando o sobre do usuário
+    user.profile.about = user.profile.cache.about
+    user.profile.cache.about = null
+
+    await user.save()
+
+    client.reply(interaction, {
+        content: client.tls.phrase(user, "misc.perfil.perfil_atualizado", client.emoji("emojis_dancantes")),
+        embeds: [],
+        components: []
+    })
 }
