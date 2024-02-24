@@ -121,6 +121,20 @@ async function getOutdatedUsers(timestamp) {
     })
 }
 
+// Define um tempo de expiração para todos os usuários sem tempo definido
+async function getUnknowUsers(client) {
+
+    const users = await model.find({ "erase.erase_on": null })
+
+    for (let i = 0; i < users.length; i++) {
+
+        const usuario = users[i]
+        usuario.erase.erase_on = client.timestamp() + 2419200
+
+        await usuario.save()
+    }
+}
+
 // Exclui o usuário por completo
 async function dropUser(uid) {
     await model.findOneAndDelete({
@@ -134,6 +148,7 @@ module.exports = {
     checkUser,
     dropUser,
     getRankMoney,
+    getUnknowUsers,
     getOutdatedUsers,
     colorsMap,
     colorsPriceMap,
