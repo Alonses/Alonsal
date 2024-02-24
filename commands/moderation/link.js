@@ -14,14 +14,14 @@ module.exports = {
                     "pt-BR": 'adicionar',
                     "ru": 'добавить'
                 })
-                .setDescription("⌠💂⌡ Server settings")
+                .setDescription("⌠💂⌡ Add a suspicious link")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Server Einstellungen',
-                    "es-ES": '⌠💂⌡ Configuración del servidor',
-                    "fr": '⌠💂⌡ Paramètres du serveur',
-                    "it": '⌠💂⌡ Impostazioni del server',
+                    "de": '⌠💂⌡ Fügen Sie einen verdächtigen Link hinzu',
+                    "es-ES": '⌠💂⌡ Añadir un enlace sospechoso',
+                    "fr": '⌠💂⌡ Ajouter un lien suspect',
+                    "it": '⌠💂⌡ Aggiungi un collegamento sospetto',
                     "pt-BR": '⌠💂⌡ Adicionar um link suspeito',
-                    "ru": '⌠💂⌡ Настройки сервера'
+                    "ru": '⌠💂⌡ Добавить подозрительную ссылку'
                 })
                 .addStringOption(option =>
                     option.setName("link")
@@ -37,18 +37,23 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand.setName("browse")
                 .setNameLocalizations({
-                    "pt-BR": 'navegar'
+                    "de": 'sehen',
+                    "es-ES": 'navegar',
+                    "fr": 'voir',
+                    "it": 'navigare',
+                    "pt-BR": "navegar",
+                    "ru": 'просматривать'
                 })
-                .setDescription("⌠💂⌡ Configure server language")
+                .setDescription("⌠💂⌡ Browse server links")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Konfigurieren Sie die Serversprache',
-                    "es-ES": '⌠💂⌡ Establecer idioma del servidor',
-                    "fr": '⌠💂⌡ Configurer la langue du serveur',
-                    "it": '⌠💂⌡ Configura la lingua del server',
-                    "pt-BR": '⌠💂⌡ Configure o idioma do servidor',
-                    "ru": '⌠💂⌡ Установите язык сервера'
+                    "de": '⌠💂⌡ Durchsuchen Sie Server-Links',
+                    "es-ES": '⌠💂⌡ Explorar enlaces del servidor',
+                    "fr": '⌠💂⌡ Parcourir les liens du serveur',
+                    "it": '⌠💂⌡ Sfoglia i collegamenti del server',
+                    "pt-BR": '⌠💂⌡ Navegue pelos links do servidor',
+                    "ru": '⌠💂⌡ Просмотр ссылок на серверы'
                 }))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando
