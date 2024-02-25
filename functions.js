@@ -393,7 +393,7 @@ function internal_functions(client) {
             if (canal.channel) {
                 if (canal.channel.permissionsFor(id_alvo).has(permissao))
                     valido = true
-            } else if (canal.permissionsFor(id_alvo).has(permissao))
+            } else if (canal.permissionsFor(id_alvo)?.has(permissao))
                 valido = true
         }
 
