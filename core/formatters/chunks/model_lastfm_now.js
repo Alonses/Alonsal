@@ -43,6 +43,9 @@ module.exports = async ({ client, user, interaction }) => {
             if (res.status === "404") // Usuário não existe
                 return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
+            if (!res.scrobble_atual.faixa) // Usuário não está ouvindo nada
+                return interaction.editReply({ content: ":cd: | No momento não está sendo ouvido nada...", ephemeral: true })
+
             let row = [{ name: "LastFM", value: `https://www.last.fm/pt/user/${texto_entrada}`, type: 4, emoji: "🌐" }]
 
             if (res.scrobble_atual.link) // Música atual possui um link para ouvir
