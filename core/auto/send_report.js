@@ -32,7 +32,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                     }
 
                     const embed = new EmbedBuilder()
-                        .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}${network}`)
+                        .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")} ${escopo_anuncio}`)
                         .setColor(0xED4245)
                         .setDescription(`${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
                         .addFields(
