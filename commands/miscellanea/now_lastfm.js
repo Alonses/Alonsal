@@ -1,8 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("lastfm")
+        .setName("now")
+        .setNameLocalizations({
+            "pt-BR": 'agora'
+        })
         .setDescription("⌠👤⌡ Someone's Profile on LastFM")
         .setDescriptionLocalizations({
             "de": '⌠👤⌡ Jemandes LastFM-Profil',
@@ -34,9 +37,20 @@ module.exports = {
                     "pt-BR": 'Mencione outro usuário',
                     "ru": 'Упомянуть другого пользователя'
                 })),
+    menu_data: new ContextMenuCommandBuilder()
+        .setName("Listening Now")
+        .setNameLocalizations({
+            "pt-BR": "Ouvindo agora"
+        })
+        .setType(ApplicationCommandType.User),
     async execute({ client, user, interaction }) {
 
         // Redirecionando o evento
-        require("../../core/formatters/chunks/model_lastfm")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction })
+    },
+    async menu({ client, user, interaction }) {
+
+        // Redirecionando o evento
+        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction })
     }
 }

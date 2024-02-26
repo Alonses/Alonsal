@@ -5,6 +5,7 @@ const { getReportChannels, getReportNetworkChannels } = require("../database/sch
 module.exports = async ({ client, alvo, id_canal, link }) => {
 
     let canais_reporte = await getReportChannels()
+    let escopo_anuncio = `( ${client.defaultEmoji("earth")} Aviso global )`, network_descricao = ""
 
     if (link) // Listando os canais com base no link do network
         canais_reporte = await getReportNetworkChannels(link)
@@ -25,10 +26,15 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
             if (canal_alvo.type === 0 || canal_alvo.type === 5) // Permissão para enviar mensagens no canal
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
+                    if (link) { // Validando o escopo do reporte
+                        escopo_anuncio = `( 📡 Apenas no network )`
+                        network_descricao = "Este reporte está sendo anunciado apenas nos servidores que fazem parte de um networking, como este!! "
+                    }
+
                     const embed = new EmbedBuilder()
-                        .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}`)
+                        .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")}${network}`)
                         .setColor(0xED4245)
-                        .setDescription(`\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
+                        .setDescription(`${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
                         .addFields(
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
