@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction }) => {
                 descricao_status = `💿 ${client.tls.phrase(user, "util.lastfm.obsessao")}:\n${res.obsessao}\n-----------------------\n`
 
             if (res.scrobble_atual) // Usuário está ouvindo agora atualmente
-                descricao_status += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual}`
+                descricao_status += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}`
 
             if (descricao_status.length > 0)
                 descricao_status = `\`\`\`fix\n${descricao_status}\`\`\``
@@ -63,6 +63,7 @@ module.exports = async ({ client, user, interaction }) => {
                 .setTitle(client.replace(client.tls.phrase(user, "util.lastfm.perfil_musical"), res.nome))
                 .setColor(client.embed_color(user_alvo.misc.color))
                 .setThumbnail(res.avatar)
+                .setDescription(`${descricao}${descricao_status}`)
                 .addFields(
                     {
                         name: `${client.defaultEmoji("instrument")} ${client.tls.phrase(user, "util.lastfm.geral")}`,
@@ -80,9 +81,6 @@ module.exports = async ({ client, user, interaction }) => {
                         inline: true
                     }
                 )
-
-            if (descricao.length > 0)
-                embed.setDescription(`${descricao}${descricao_status}`)
 
             if (res.week_stats)
                 embed.addFields(
