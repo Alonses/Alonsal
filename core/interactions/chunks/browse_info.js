@@ -63,55 +63,55 @@ module.exports = async ({ client, user, interaction, caso }) => {
         const games_free = await getGames()
 
         // Estatísticas do Alonsal
-        embed.setDescription(`${client.defaultEmoji("metrics")} **Algumas estatísticas minhas!**\`\`\`Há estatísticas para o dia de hoje,\ne estatísticas para o histórico do Alonsal!\`\`\``)
+        embed.setDescription(`${client.defaultEmoji("metrics")} ${client.tls.phrase(user, "manu.info.guia_estatisticas")}`)
             .addFields(
                 {
-                    name: `${client.defaultEmoji("playing")} **Miscelânea**`,
-                    value: `:mega: **Status: **\`${activities.length}\`\n:video_game: **Jogos Free: **\`${games_free.length || 0}\``,
+                    name: `${client.defaultEmoji("playing")} **${client.tls.phrase(user, "manu.info.miscelania")}**`,
+                    value: `:mega: **${client.tls.phrase(user, "mode.report.status")}: **\`${activities.length}\`\n:video_game: **${client.tls.phrase(user, "manu.info.jogos_free")}: **\`${games_free.length || 0}\``,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `:trophy: **Ranking: **\`${bot.persis.ranking} EXP\`\n${client.emoji("carregando")} **Módulos ativos: **\`${(await getActiveModules()).length}\``,
+                    value: `:trophy: **Ranking: **\`${bot.persis.ranking} EXP\`\n${client.emoji("carregando")} **${client.tls.phrase(user, "manu.info.modulos_ativos")}: **\`${(await getActiveModules()).length}\``,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `:white_small_square: **Versão ${bot.persis.version}**`,
+                    value: `:white_small_square: **${client.tls.phrase(user, "manu.info.versao")} ${bot.persis.version}**`,
                     inline: true
                 }
             )
             .addFields(
                 {
-                    name: `${client.defaultEmoji("time")} **De hoje**`,
-                    value: `${client.emoji("icon_slash_commands")} **Comandos usados: **\`${client.locale(bot.cmd.ativacoes)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.bfu.gerado)}\``,
+                    name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "manu.info.de_hoje")}**`,
+                    value: `${client.emoji("icon_slash_commands")} **${client.tls.phrase(user, "manu.info.comandos_usados")}: **\`${client.locale(bot.cmd.ativacoes)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.bfu.gerado)}\``,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `:mouse_three_button: **Botões clicados: **\`${client.locale(bot.cmd.botoes)}\`\n${client.emoji("mc_nether_star")} **XP Gerado: **\`${client.locale(bot.exp.exp_concedido)}\``,
+                    value: `:mouse_three_button: **${client.tls.phrase(user, "manu.info.botoes_clicados")}: **\`${client.locale(bot.cmd.botoes)}\`\n${client.emoji("mc_nether_star")} **${client.tls.phrase(user, "manu.info.xp_gerado")}: **\`${client.locale(bot.exp.exp_concedido)}\``,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `:card_box: **Menus abertos: **\`${client.locale(bot.cmd.menus)}\``,
+                    value: `:card_box: **${client.tls.phrase(user, "manu.info.menus_abertos")}: **\`${client.locale(bot.cmd.menus)}\``,
                     inline: true
                 }
             )
             .addFields(
                 {
-                    name: `${client.defaultEmoji("calendar")} **Do histórico**`,
-                    value: `${client.emoji("icon_slash_commands")} **Comandos usados: **\`${client.locale(bot.persis.commands)}\`\n:globe_with_meridians: **Servidores: **\`${client.locale(client.guilds().size)}\`\n:name_badge: **Spams freados: **\`${client.locale(bot.persis.spam)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.persis.bufunfas)}\``,
+                    name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "manu.info.historico")}**`,
+                    value: `${client.emoji("icon_slash_commands")} **${client.tls.phrase(user, "manu.info.comandos_usados")}: **\`${client.locale(bot.persis.commands)}\`\n:globe_with_meridians: **${client.tls.phrase(user, "mode.network.servidores")}: **\`${client.locale(client.guilds().size)}\`\n:name_badge: **${client.tls.phrase(user, "manu.info.spams_freados")}: **\`${client.locale(bot.persis.spam)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.persis.bufunfas)}\``,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `${client.emoji("icon_slash_commands")} **Último comando**\n<t:${client.cached.last_interaction}:f>\n<t:${client.cached.last_interaction}:R>`,
+                    value: `${client.emoji("icon_slash_commands")} **${client.tls.phrase(user, "manu.info.ultimo_comando")}**\n<t:${client.cached.last_interaction}:f>\n<t:${client.cached.last_interaction}:R>`,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `:satellite: **Ativo desde**\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
+                    value: `:satellite: **${client.tls.phrase(user, "manu.info.ativo_desde")}**\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
                     inline: true
                 }
             )
@@ -123,7 +123,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
         if (games_free.length > 0) // Jogos gratuitos disponíveis para coleta
             botoes = botoes.concat([
-                { id: "free_games", name: "Ver jogos Free", type: 1, emoji: client.emoji(29), data: 0 }
+                { id: "free_games", name: client.tls.phrase(user, "menu.botoes.ver_jogos_free"), type: 1, emoji: client.emoji(29), data: 0 }
             ])
     }
 

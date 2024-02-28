@@ -95,8 +95,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **Convites rastreados**`,
-                value: `\`Apaga os convites de membros quando forem banidos e expulsos.\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_convites_rastreados")}\``,
                 inline: true
             }
         )
@@ -210,7 +210,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         botoes = botoes.concat([
             { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
             { id: "guild_speaker_button", name: client.tls.phrase(user, "manu.painel.alonsal_falador"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[0] },
-            { id: "guild_panel_button", name: "Convites rastreados", type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] }
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.convites_rastreados"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] }
         ])
 
     // Broadcast

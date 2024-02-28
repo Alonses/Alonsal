@@ -5,16 +5,16 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const user_alvo = dados[0].user
     const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
 
-    let moderador = false, descricao = "Um membro do servidor atualizou o seu apelido!"
+    let moderador = false, descricao = client.tls.phrase(guild, "mode.logger.apelido_alterado")
 
     // Exibindo o moderador que fez a alteração de nick
     if (registroAudita.executorId !== user_alvo.id && registroAudita.changes[0].key === "nick") {
-        descricao = "Um membro teve o seu apelido atualizado por um moderador!"
+        descricao = client.tls.phrase(guild, "mode.logger.apelido_alterado_moderador")
         moderador = true
     }
 
     const embed = new EmbedBuilder()
-        .setTitle("> Apelido atualizado")
+        .setTitle(client.tls.phrase(guild, "mode.logger.apelido_atualizado"))
         .setColor(0x29BB8E)
         .setDescription(`${client.emoji("mc_name_tag")} | **${descricao}**`)
         .setFields(
@@ -38,8 +38,8 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     embed.addFields(
         {
-            name: `${client.emoji("mc_name_tag")} **O Apelido**`,
-            value: `${client.emoji(43)} **Novo:** \`${registroAudita.changes[0].new || user_alvo.username}\`\n${client.emoji(55)} **Antigo:** \`${registroAudita.changes[0].old}\``,
+            name: `${client.emoji("mc_name_tag")} **${client.tls.phrase(guild, "mode.logger.apelido")}**`,
+            value: `${client.emoji(43)} **${client.tls.phrase(guild, "mode.logger.apelido_novo")}:** \`${registroAudita.changes[0].new || user_alvo.username}\`\n${client.emoji(55)} **${client.tls.phrase(guild, "mode.logger.apelido_antigo")}:** \`${registroAudita.changes[0].old}\``,
             inline: !moderador
         }
     )

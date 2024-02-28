@@ -25,9 +25,9 @@ module.exports = async ({ client, invite }) => {
     const registroAudita = fetchedLogs.entries.first()
 
     const embed = new EmbedBuilder()
-        .setTitle("> Convite criado 🔗")
+        .setTitle(client.tls.phrase(guild, "mode.logger.convite_criado_titulo"))
         .setColor(0x29BB8E)
-        .setDescription("**Um novo convite para o servidor foi criado!**")
+        .setDescription(`**${client.tls.phrase(guild, "mode.logger.convite_criado")}**`)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -35,8 +35,8 @@ module.exports = async ({ client, invite }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(44)} **Convite: ${invite.code}**`,
-                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **Limite de ${registroAudita.target.maxUses} usos**\n` : ""}${client.emoji(31)} **Destino:** <#${registroAudita.target.channel.id}>`,
+                name: `${client.emoji(44)} **${client.tls.phrase(guild, "menu.botoes.convite")}: ${invite.code}**`,
+                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.replace(client.tls.phrase(guild, "mode.logger.limite_usos"), registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:** <#${registroAudita.target.channel.id}>`,
                 inline: true
             }
         )
@@ -45,8 +45,8 @@ module.exports = async ({ client, invite }) => {
     if (invite._expiresTimestamp)
         embed.addFields(
             {
-                name: `${client.defaultEmoji("time")} **Expiração**`,
-                value: `Expira <t:${parseInt(invite._expiresTimestamp / 1000)}:R>\n( <t:${parseInt(invite._expiresTimestamp / 1000)}:f> )`,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "menu.botoes.expiracao")}**`,
+                value: `${client.tls.phrase(guild, "menu.botoes.expirando")} <t:${parseInt(invite._expiresTimestamp / 1000)}:R>\n( <t:${parseInt(invite._expiresTimestamp / 1000)}:f> )`,
                 inline: true
             }
         )

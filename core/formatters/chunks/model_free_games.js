@@ -26,9 +26,9 @@ module.exports = async (client, user, interaction, pagina_guia) => {
 
     if (interaction)
         if (games.length > limitador)
-            objeto_jogos.push({ id: "free_games", name: "Próximo", emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: client.tls.phrase(user, "menu.botoes.proximo"), emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
         else if ((pagina * limitador) < original_size && games.length !== original_size)
-            objeto_jogos.push({ id: "free_games", name: "Início", emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: client.tls.phrase(user, "menu.botoes.inicio"), emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
 
     games.forEach(game => {
         // Jogo com tempo válido para resgate
@@ -44,7 +44,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
 
                 // Verificando a expiração do game e alterando a exibição
                 const emoji = game.expira - client.timestamp() < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
-                const expiracao = game.expira - client.timestamp() < 172800 ? `\n( ${client.defaultEmoji("running")} Expira <t:${game.expira}:R> )` : ""
+                const expiracao = game.expira - client.timestamp() < 172800 ? `\n( ${client.defaultEmoji("running")} ${client.tls.phrase(user, "menu.botoes.expirando")} <t:${game.expira}:R> )` : ""
                 jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]${expiracao}`)
 
                 objeto_jogos.push({
@@ -84,7 +84,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
 
         if (original_size > limitador) // Botões extrapolam a quantidade do limitador
             embed.setFooter({
-                text: "Há diversos jogos disponíveis para coletar atualmente, acesse o /games em um servidor para ver todos!",
+                text: client.tls.phrase(user, "mode.anuncio.jogos_disponiveis_rodape"),
                 iconURL: client.avatar()
             })
 

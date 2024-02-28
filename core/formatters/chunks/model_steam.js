@@ -282,7 +282,7 @@ module.exports = async ({ client, user, interaction }) => {
                 if (capturas_user !== "-")
                     criacoes_user += `:frame_photo: **${client.tls.phrase(user, "util.steam.capturas")}: **\`${capturas_user}\``
                 if (videos_user !== "-")
-                    criacoes_user += `\n:film_frames: **Videos: **\`${videos_user}\``
+                    criacoes_user += `\n:film_frames: **${client.tls.phrase(user, "util.steam.videos")}: **\`${videos_user}\``
                 if (artes_user !== "-")
                     criacoes_user += `\n:paintbrush: **${client.tls.phrase(user, "util.steam.artes")}: **\`${artes_user}\``
 
@@ -340,7 +340,7 @@ module.exports = async ({ client, user, interaction }) => {
                     usuario_steam.addFields(
                         {
                             name: `:trophy: **${client.tls.phrase(user, "util.steam.conquistas")}**`,
-                            value: `**Total: **\`${conquistas_user}\`\n**${client.tls.phrase(user, "util.steam.porcentagem")}:** \`${porcentagem_conquistas}\`\n**${client.tls.phrase(user, "util.steam.jogos_perfeitos")}: **\`${jogos_perfeitos}\``,
+                            value: `**${client.tls.phrase(user, "util.steam.total")}: **\`${conquistas_user}\`\n**${client.tls.phrase(user, "util.steam.porcentagem")}:** \`${porcentagem_conquistas}\`\n**${client.tls.phrase(user, "util.steam.jogos_perfeitos")}: **\`${jogos_perfeitos}\``,
                             inline: true
                         }
                     )

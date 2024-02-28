@@ -7,13 +7,12 @@ const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
-    const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
-    const reportes = await checkUserGuildReported(interaction.guild.id)
-    const warns = await listAllGuildWarns(interaction.guild.id)
     const rank = await listRankGuild(interaction.guild.id)
-    const network = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length - 1 : 0
+    const warns = await listAllGuildWarns(interaction.guild.id)
+    const reportes = await checkUserGuildReported(interaction.guild.id)
 
-    const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
+    const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
+    const network = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length - 1 : 0
 
     let dados = ""
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
@@ -54,12 +53,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **Convites rastreados**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
                 inline: true
             }
         )
         .setFooter({
-            text: "Configure opções de exclusão abaixo",
+            text: client.tls.phrase(user, "manu.guild_data.opcoes_rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
@@ -79,10 +78,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     // Verificando se o membro possui permissões para gerenciar o tempo de exclusão do servidor
     if (await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageGuild]))
-        botoes.push({ id: "data_guild_button", name: "Definir exclusão", type: 3, emoji: client.defaultEmoji("time"), data: "2" })
+        botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_exclusao"), type: 3, emoji: client.defaultEmoji("time"), data: "2" })
 
     if (pagina === 0)
-        botoes.push({ id: "data_guild_button", name: "Mais detalhes", type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
 
     client.reply(interaction, {
         content: "",
