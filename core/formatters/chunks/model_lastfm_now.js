@@ -5,7 +5,7 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    let texto_entrada = "", descricao = "", descricao_status = ""
+    let texto_entrada = ""
 
     const params = {
         url: interaction.options.getString("url"),
@@ -44,27 +44,19 @@ module.exports = async ({ client, user, interaction }) => {
                 return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
             if (!res.scrobble_atual.faixa) // Usuário não está ouvindo nada
-                return interaction.editReply({ content: ":cd: | No momento não está sendo ouvido nada...", ephemeral: true })
+                return client.tls.editReply(interaction, user, "util.lastfm.nao_esta_ouvindo", true, 45)
 
             let row = [{ name: "LastFM", value: `https://www.last.fm/pt/user/${texto_entrada}`, type: 4, emoji: "🌐" }]
 
             if (res.scrobble_atual.link) // Música atual possui um link para ouvir
                 row.push({ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
 
-            if (res.descricao) // Usuário com descrição no perfil
-                descricao = res.descricao
-
-            if (res.scrobble_atual) // Usuário está ouvindo agora atualmente
-                descricao_status += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}`
-
-            if (descricao_status.length > 0)
-                descricao_status = `\`\`\`fix\n${descricao_status}\`\`\``
-
+            // Card do que o usuário está ouvindo atualmente
             const embed = new EmbedBuilder()
-                .setTitle(`${res.nome} está scroblando agora!`)
+                .setTitle(`${res.nome} ${client.tls.phrase(user, "util.lastfm.ouvindo_agora_card")}`)
                 .setColor(client.embed_color(user_alvo.misc.color))
                 .setImage(res.scrobble_atual.cover)
-                .setDescription(`${descricao}${descricao_status}`)
+                .setDescription(`\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}\`\`\``)
 
             interaction.editReply({
                 embeds: [embed],

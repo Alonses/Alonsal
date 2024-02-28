@@ -67,6 +67,9 @@ function listAll() {
 
         let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : ":pirate_flag:"
 
+        if (file.slice(0, 5) === "pt-hp")
+            bandeira = ":sunny:" // hopês
+
         if (!bandeiras.includes(bandeira))
             bandeiras.push(bandeira)
 

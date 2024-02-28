@@ -72,8 +72,6 @@ module.exports = async (client, user, interaction, entrada, caso, defer, autor_o
     if (paginas > 1 && !user_alvo_data)
         rodape = `( ${pagina} | ${paginas} ) - ${paginas}`
 
-    const user_i = user
-
     for (const user_interno of data_usuarios) {
         if (user_alvo_data)
             if (user_interno.uid === user_alvo_data.id) {

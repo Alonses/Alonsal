@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         )
         .addFields(
             {
-                name: `${client.emoji("banidos")} **Penalidade**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "menu.botoes.penalidade")}**`,
                 value: client.verifyWarnAction(guild_warns[indice_warn], user),
                 inline: true
             }
@@ -61,12 +61,12 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     if (guild.warn.timed) { // Advertência com prazo de expiração
         embed.addFields({
-            name: `${client.defaultEmoji("time")} **Expiração**`,
-            value: `**Será removida em \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
+            name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
+            value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
             inline: true
         })
 
-        texto_rodape = "Você pode desligar a expiração de advertências no /painel guild pela guia de \"🛑 Advertências\""
+        texto_rodape = client.tls.phrase(user, "mode.warn.dica_expiracao_rodape")
     } else
         embed.addFields({ name: "⠀", value: "⠀", inline: true })
 

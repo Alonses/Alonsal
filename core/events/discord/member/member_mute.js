@@ -8,7 +8,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
     if (registroAudita.reason) { // Castigo com motivo explicado
-        razao = `\n💂‍♂️ Motivo do castigo: ${registroAudita.reason.includes("Network | ") ? registroAudita.reason.split("Network | ")[1] : registroAudita.reason}`
+        razao = `\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_castigo")}: ${registroAudita.reason.includes("Network | ") ? registroAudita.reason.split("Network | ")[1] : registroAudita.reason}`
 
         // Ação realizada através do network
         if (registroAudita.reason.includes("Network") && registroAudita.executorId === client.id()) {
@@ -24,9 +24,9 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
     const embed = new EmbedBuilder()
-        .setTitle(timeout ? "> Membro castigado 🔇" : "> Remoção de castigo 🔊")
+        .setTitle(timeout ? client.tls.phrase(guild, "mode.logger.membro_castigado_titulo") : client.tls.phrase(guild, "mode.logger.membro_perdoado_titulo"))
         .setColor(timeout ? 0xED4245 : 0xffffff)
-        .setDescription(`${timeout ? "**Um membro foi castigado**" : "**Um membro foi perdoado**"}${razao}`)
+        .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -44,7 +44,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (timeout) // Exibindo o tempo de castigo que o membro recebeu
         embed.addFields(
             {
-                name: `${client.defaultEmoji("time")} **Tempo de castigo**`,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.logger.tempo_castigo")}**`,
                 value: `<t:${parseInt(client.timestamp() + (timeout / 1000))}:F>\n( <t:${parseInt(client.timestamp() + (timeout / 1000))}:R> )`,
                 inline: false
             }

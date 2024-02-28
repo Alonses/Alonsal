@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
                 infos_sv.addFields(
                     {
-                        name: `${client.emoji("aln_hoster")} **Convidado por**`,
+                        name: `${client.emoji("aln_hoster")} **${client.tls.phrase(user, "util.server.convidado")}**`,
                         value: `${inviter}\n( <@${guild.inviter}> )`,
                         inline: true
                     }
@@ -120,12 +120,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 inline: true
             },
             {
-                name: `:passport_control: **Cargos moderativos:**`,
+                name: `:passport_control: **${client.tls.phrase(user, "util.server.cargos_moderativos")}:**`,
                 value: `${cargos.moderativos.join(" ")}`,
                 inline: false
             },
             {
-                name: `${client.defaultEmoji("person")} **Outros cargos:**`,
+                name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.outros_cargos")}:**`,
                 value: `${cargos.normais.join(" ")}`,
                 inline: false
             }
@@ -171,7 +171,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             },
             {
                 name: "⠀",
-                value: `:speaking_head: **${client.tls.phrase(user, "util.server.voz")}:** \`${canais_voz}\`\n:mega: **Fóruns:** \`${canais_foruns}\``,
+                value: `:speaking_head: **${client.tls.phrase(user, "util.server.voz")}:** \`${canais_voz}\`\n:mega: **${client.tls.phrase(user, "util.server.foruns")}:** \`${canais_foruns}\``,
                 inline: true
             }
         )

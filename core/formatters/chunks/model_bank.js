@@ -82,7 +82,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     }
 
     const embed = new EmbedBuilder()
-        .setTitle("> Ranking de Bufunfas")
+        .setTitle(client.tls.phrase(user, "misc.banco.rank_titulo"))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(daily)
         .addFields(

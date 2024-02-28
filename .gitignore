@@ -10,4 +10,3 @@ files/data/*
 files/languages/*
 *.sfk
 compare_messages.js
-!pt-hp.json
