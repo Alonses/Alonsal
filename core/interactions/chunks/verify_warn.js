@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
                 value: `\`${indice_warn} / ${indice_matriz}\``,
                 inline: true
             }
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Próxima penalidade**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.proxima_penalidade")}**`,
                 value: client.verifyWarnAction(guild_warns[indice_warn - 1], user),
                 inline: true
             },
@@ -59,8 +59,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Criando os botões para as funções de advertência
     let botoes = [
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `warn_browse_user|${pagina}` },
-        { id: "warn_remove_user", name: "Remover advertências", type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
-        { id: "panel_guild_browse_warns", name: "Gerenciar advertências", type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+        { id: "warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_advertencias"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
+        { id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.gerenciar_advertencias"), type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
     ]
 
     client.reply(interaction, {

@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
 
     if (warns.length > 0)
-        descricao += `\`\`\`💂‍♂️ | Há advertências criadas para esse membro!\`\`\``
+        descricao += `\`\`\`💂‍♂️ | ${client.tls.phrase(user, "mode.report.com_registro")}\`\`\``
 
     const infos_user = new EmbedBuilder()
         .setTitle(`> ${apelido}`)
@@ -87,8 +87,8 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     if (warns.length > 0) // Botão para resetar os warns do usuário no servidor
         botoes.push(
-            { id: "user_reset_warns", name: "Remover advertências", type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
-            { id: "panel_guild_browse_warns", name: "Gerenciar advertências", type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+            { id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.remover_advertencias"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
+            { id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.gerenciar_advertencias"), type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
         )
 
     if (botoes.length > 0)
