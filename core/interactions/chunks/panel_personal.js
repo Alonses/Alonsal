@@ -63,13 +63,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 2)
         embed.addFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **Modo compacto**`,
-                value: `\`O Modo compacto remove todos os emojis do início das frases.\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_modo_compacto")}\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **Servidores conhecidos**`,
-                value: `\`Sincroniza os servidores conhecidos quando você entra ou sai.\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_servidores_conhecidos")}\``,
                 inline: true
             },
             {
@@ -111,8 +111,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     if (pagina === 2)
         botoes = botoes.concat([
-            { id: "user_panel_button", name: "Modo compacto", type: client.execute("functions", "emoji_button.type_button", user?.conf.resumed), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed), data: '6' },
-            { id: "user_panel_button", name: "Servidores conhecidos", type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.modo_compacto"), type: client.execute("functions", "emoji_button.type_button", user?.conf.resumed), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed), data: '6' },
+            { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.servidores_conhecidos"), type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' },
             { id: "user_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '8', disabled: true }
         ])
 

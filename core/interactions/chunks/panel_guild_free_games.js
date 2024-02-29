@@ -37,8 +37,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     embed.addFields(
         {
-            name: `${client.emoji(7)} **Permissões neste servidor**`,
-            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **Gerenciar cargos**`,
+            name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
             inline: true
         },
         {
@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction }) => {
         b_cargos = true
 
         embed.setFooter({
-            text: `Não é possível definir um cargo para o anúncio sem a permissão de "Gerenciar cargos" concedida.`,
+            text: client.tls.phrase(user, "mode.network.falta_permissao"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
     }

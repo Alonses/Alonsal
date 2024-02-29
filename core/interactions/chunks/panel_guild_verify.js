@@ -29,10 +29,10 @@ module.exports = async ({ client, user, interaction }) => {
                 .setTitle(`> ${interaction.guild.name}`)
                 .setColor(client.embed_color(user.misc.color))
                 .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                .setDescription("Esse é o painel de usuários que possuem advertências ativas no servidor e que receberam denúncias em servidores externos e estão presentes neste servidor.")
+                .setDescription(client.tls.phrase(user, "mode.warn.descricao_painel_visualizacao"))
                 .addFields(
                     {
-                        name: `${client.emoji(0)} **Advertidos: \`${warned_users.length}\`**`,
+                        name: `${client.emoji(0)} **${client.tls.phrase(user, "mode.warn.advertidos")}: \`${warned_users.length}\`**`,
                         value: "⠀",
                         inline: true
                     },
@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction }) => {
                     }
                 )
                 .setFooter({
-                    text: "Selecione qual área deseja visualizar com os botões abaixo.",
+                    text: client.tls.phrase(user, "mode.warn.verificar_warn"),
                     iconURL: interaction.user.avatarURL({ dynamic: true })
                 })
 
@@ -58,9 +58,9 @@ module.exports = async ({ client, user, interaction }) => {
                 b_disabled[1] = true
 
             const botoes = [
-                { id: "guild_verify_button", name: "Atualizar", type: 1, emoji: client.emoji(42), data: "3" },
-                { id: "guild_verify_button", name: "Advertências", type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
-                { id: "guild_verify_button", name: "Reportados", type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
+                { id: "guild_verify_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" },
+                { id: "guild_verify_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
+                { id: "guild_verify_button", name: client.tls.phrase(user, "mode.report.reportados"), type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 
             interaction.editReply({
