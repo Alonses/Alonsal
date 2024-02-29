@@ -18,7 +18,7 @@ module.exports = async ({ client, guild }) => {
     let canais = guild.channels.cache.filter((c) => c.type !== "GUILD_CATEGORY").size
     let server_info = `\n\n:busts_in_silhouette: **Members** ( \`${guild.memberCount - 1}\` )\n:placard: **Channels** ( \`${canais}\` )`
 
-    // Permissão para ver o registro de auditoria, não registra o usuário que adicionou o bot
+    // Verificando permissão para do registro de auditoria, não registra o usuário que adicionou o bot
     if (await client.permissions(guild, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         // Resgatando informações sobre o usuário que adicionou o bot ao servidor

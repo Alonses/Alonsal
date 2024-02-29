@@ -24,21 +24,21 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         dados += `\n${client.emoji("aln_hoster")} **Adicionou-me ao servidor**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
 
     if (reportes.length > 0)
-        dados += `\n${client.emoji(6)} **Reportes criados**\n\`${reportes.length > 1 ? `${reportes.length} reportes` : `1 reporte`}\`\n`
+        dados += `\n${client.emoji(6)} **${client.tls.phrase(user, "manu.guild_data.reportes_criados")}**\n\`${reportes.length > 1 ? `${reportes.length} ${client.tls.phrase(user, "manu.guild_data.reportes")}` : `1 ${client.tls.phrase(user, "manu.guild_data.reporte")}`}\`\n`
 
     if (warns.length > 0)
-        dados += `\n${client.emoji(0)} **Advertências ativas**\n\`${warns.length > 1 ? `${warns.length} advertências` : `1 advertência`}\`\n`
+        dados += `\n${client.emoji(0)} **${client.tls.phrase(user, "manu.guild_data.advertencias_ativas")}**\n\`${warns.length > 1 ? `${warns.length} ${client.tls.phrase(user, "manu.guild_data.advertencias")}` : `1 ${client.tls.phrase(user, "manu.guild_data.advertencia")}`}\`\n`
 
     if (rank.length > 0)
-        dados += `\n${client.emoji(56)} **Ranking do servidor**\n\`${rank.length > 1 ? `${rank.length} membros` : `1 membro`}\`\n`
+        dados += `\n${client.emoji(56)} **${client.tls.phrase(user, "manu.guild_data.ranking_servidor")}**\n\`${rank.length > 1 ? `${rank.length} ${client.tls.phrase(user, "manu.guild_data.membros")}` : `1 ${client.tls.phrase(user, "manu.guild_data.membro")}`}\`\n`
 
     if (network > 1) {
-        dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? `Faz networking com outros ${network} servidores` : `Faz networking com um outro servidor`}\``
-        dados += `\n:link: **Outros servidores no link:**\n${guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : "`Sem servidores`"}\n`
+        dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? client.replace(client.tls.phrase(user, "manu.guild_data.network_servidores"), network) : client.tls.phrase(user, "manu.guild_data.network_unico")}\``
+        dados += `\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**\n${guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
     }
 
     const embed = new EmbedBuilder()
-        .setTitle(`> Dados do servidor :globe_with_meridians:`)
+        .setTitle(client.tls.phrase(user, "manu.guild_data.dados_servidor_titulo", 32))
         .setColor(client.embed_color(user.misc.color))
         .setFields(
             {
@@ -63,15 +63,15 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         })
 
     if (pagina === 0)
-        embed.setDescription(`Este é um resumo dos dados que salvei sobre o servidor e seus membros\n${dados}\n**Recursos do servidor:**`)
+        embed.setDescription(client.replace(client.tls.phrase(user, "manu.guild_data.resumo_dados"), dados))
     else {
 
         let tempo_exclusao = ""
 
         if (guild.erase.timeout)
-            tempo_exclusao = `\n**${client.defaultEmoji("time")} Tempo de exclusão**:\nExcluir dados após \`${defaultEraser[guild.erase.timeout] / 86400} dias\`\n`
+            tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.guild_data.tempo_exclusao")}**:\n${client.replace(client.tls.phrase(user, "manu.guild_data.excluir_apos"), defaultEraser[guild.erase.timeout] / 86400)}`
 
-        embed.setDescription(`\`\`\`fix\nAo ser removido do servidor, o Alonsal irá desativar a maioria dos recursos listados abaixo.\n\nA exclusão dos dados será realizada após um período de forma automática, você pode definir esse tempo através dos botões abaixo.\n\nAo apagar os dados, o Alonsal irá remover completamente os dados salvos do servidor, incluindo o registro de ranking, a redefinição da origem de reportes e links suspeitos e remoção de advertências salvas.\`\`\`${tempo_exclusao}\n**Recursos do servidor:**`)
+        embed.setDescription(client.replace(client.tls.phrase(user, "manu.guild_data.resumo_expandido"), tempo_exclusao))
     }
 
     botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "0" })

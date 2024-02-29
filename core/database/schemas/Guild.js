@@ -112,6 +112,9 @@ const schema = new mongoose.Schema({
         member_ban_add: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true }
     },
+    misc: {
+        second_lang: { type: String, default: null }
+    },
     conf: {
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },

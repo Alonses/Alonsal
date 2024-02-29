@@ -191,7 +191,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 0)
         botoes = botoes.concat([
             { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[5] },
-            { id: "guild_warns_button", name: "Advertências", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[6] }
         ])
 

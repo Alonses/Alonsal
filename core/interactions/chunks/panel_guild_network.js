@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (servidores_link === 1) {
         guild.conf.network = false
-        retorno_aviso = "📡 | O Networking precisa de mais servidores no mesmo link para ser ativo."
+        retorno_aviso = client.tls.phrase(user, "mode.network.falta_servidores", 36)
     }
 
     await guild.save()
@@ -70,7 +70,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`` : `\`Sem canal definido\``}${guild.network.channel ? `\n( <#${guild.network.channel}> )` : `\n:twisted_rightwards_arrows: ( <#${guild.logger.channel}> )`}`,
+                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.network.channel ? `\n( <#${guild.network.channel}> )` : `\n:twisted_rightwards_arrows: ( <#${guild.logger.channel}> )`}`,
                 inline: true
             }
         )
@@ -78,8 +78,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (servidores_link > 1) // Network com mais de um servidor
         embed.addFields(
             {
-                name: `:link: **Outros servidores no link:**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : "`Sem servidores`",
+                name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
+                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: false
             }
         )

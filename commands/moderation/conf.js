@@ -97,6 +97,7 @@ module.exports = {
                             { name: '🇺🇸 English', value: 'en-us' },
                             { name: '🇪🇸 Español', value: 'es-es' },
                             { name: '🇫🇷 Français', value: 'fr-fr' },
+                            { name: '🔆 Hopês', value: 'pt-hp' },
                             { name: '🇮🇹 Italiano', value: 'it-it' },
                             { name: '🇧🇷 Português', value: 'pt-br' },
                             { name: '🇷🇺 Русский', value: 'ru-ru' }

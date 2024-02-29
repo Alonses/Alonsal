@@ -42,7 +42,7 @@ module.exports = {
                     "ru": 'Каким будет новый язык?'
                 })
                 .addChoices(
-                    { name: '🏴‍☠️ Alonsês', value: 'al' },
+                    { name: '🏴 Alonsês', value: 'al' },
                     { name: '🇩🇪 Deutsch', value: 'de' },
                     { name: '🇺🇸 English', value: 'en' },
                     { name: '🇪🇸 Español', value: 'es' },

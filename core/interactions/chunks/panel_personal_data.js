@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const user_guilds = await listAllUserGuilds(user.uid)
 
     if (user_guilds.length > 0)
-        dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} Servidores onde você possui moderação:**\n\`${user_guilds.length} servidores conhecidos\``
+        dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} ${client.tls.phrase(user, "manu.data.servidores_com_moderacao")}:**\n\`${user_guilds.length} ${client.tls.phrase(user, "manu.data.servidores_conhecidos")}\``
 
     const id_badges = await client.getUserBadges(user.uid)
 
@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`
 
     const embed = new EmbedBuilder()
-        .setTitle(`> Dados salvos de você ${client.defaultEmoji("person")}`)
+        .setTitle(`> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`)
         .setColor(client.embed_color(user.misc.color))
         .setFields(
             {
@@ -81,34 +81,34 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             }
         )
         .setFooter({
-            text: "Configure opções de exclusão abaixo",
+            text: client.tls.phrase(user, "manu.data.selecionar_operacoes_exclusao"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
     if (pagina === 0)
-        embed.setDescription(`Este é um resumo dos dados que salvei sobre você\n${dados_conhecidos}\n**Recursos configurados:**`)
+        embed.setDescription(client.replace(client.tls.phrase(user, "manu.data.resumo_dados"), dados_conhecidos))
     else {
 
         let tempo_exclusao = ""
 
         if (user.erase.timeout)
-            tempo_exclusao = `**${client.defaultEmoji("time")} Tempo de exclusão global**:\nExcluir dados após \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.timeout]}`)}\` de inatividade\n\n**${client.defaultEmoji("time")} Tempo de exclusão por servidor**:\nExcluir dados após \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.guild_timeout]}`)}\` de inatividade no servidor.\n( Acrescido de outros \`14 dias\` após confirmação de inatividade )\n`
+            tempo_exclusao = `**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_exclusao_global")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.timeout]}`)}\` ${client.tls.phrase(user, "manu.data.de_inatividade")}\n\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_por_servidor")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.guild_timeout]}`)}\` ${client.tls.phrase(user, "manu.data.inatividade_2")}`
 
-        embed.setDescription(`\`\`\`fix\nAo ser movido para exclusão, o Alonsal irá ignorar todas as mensagens enviadas nos chats por você, o tempo de exclusão após o período de inatividade definida é de 14 dias, dentro dessa janela ainda é possível reverter o processo de exclusão de seus dados caso use algum comando do Alonsal.\n\nA exclusão dos dados será realizada após o periodo de inatividade definido somado a outros 14 dias de forma automática, você pode definir esse tempo de inatividade através dos botões abaixo.\n\nAo apagar os dados, o Alonsal irá remover completamente os dados salvos relacionados a você, incluindo o registro de ranking de todos os servidores ao qual possui registro, todas as tarefas criadas, módulos programados e tickets de denúncia abertos.\`\`\`${tempo_exclusao}\n**Recursos do servidor:**`)
+        embed.setDescription(client.replace(client.tls.phrase(user, "manu.data.resumo_detalhado"), tempo_exclusao))
     }
 
     botoes.push(
         { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.central_exclusao"), type: 3, emoji: client.emoji(13), data: '1' },
-        { id: "data_user_button", name: "Definir inatividade", type: 1, emoji: client.defaultEmoji("time"), data: "5" }
+        { id: "data_user_button", name: client.tls.phrase(user, "menu.botoes.definir_inatividade"), type: 1, emoji: client.defaultEmoji("time"), data: "5" }
     )
 
     if (pagina === 0)
-        botoes.push({ id: "data_user_button", name: "Mais detalhes", type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_user_button", name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
 
     if (pagina === 1)
         botoes.push(
             { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.telemetria"), type: 1, emoji: client.emoji(36), data: '2' },
-            { id: "data_menu_button", name: "Sincronizar servidores", type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
+            { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.sincronizar_servidores"), type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
         )
 
     client.reply(interaction, {
