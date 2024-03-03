@@ -97,7 +97,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         let tempo_exclusao = ""
 
         if (user.erase.timeout)
-            tempo_exclusao = `**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_exclusao_global")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.timeout]}`)}\` ${client.tls.phrase(user, "manu.data.de_inatividade")}\n\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_por_servidor")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.guild_timeout]}`)}\` ${client.tls.phrase(user, "manu.data.inatividade_2")}`
+            tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_exclusao_global")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.timeout]}`)}\` ${client.tls.phrase(user, "manu.data.de_inatividade")}\n\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_por_servidor")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.guild_timeout]}`)}\` ${client.tls.phrase(user, "manu.data.inatividade_2")}`
 
         embed.setDescription(client.tls.phrase(user, "manu.data.resumo_detalhado", null, tempo_exclusao))
     }

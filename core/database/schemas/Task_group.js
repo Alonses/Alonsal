@@ -77,6 +77,13 @@ async function dropAllUserGroups(uid) {
     })
 }
 
+async function dropAllGuildUserGroups(uid, sid) {
+    await model.deleteMany({
+        uid: uid,
+        sid: sid
+    })
+}
+
 module.exports.Task_group = model
 module.exports = {
     createGroup,
@@ -84,5 +91,6 @@ module.exports = {
     checkUserGroup,
     dropAllUserGroups,
     listAllUserGroups,
-    dropGroup
+    dropGroup,
+    dropAllGuildUserGroups
 }

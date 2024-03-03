@@ -7,6 +7,7 @@ const database = require('./core/database/database')
 
 const { nerfa_spam } = require('./core/events/spam')
 const { checkUser } = require('./core/database/schemas/User')
+const { getUserRankServer } = require('./core/database/schemas/Rank_s')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
 
 let client = new CeiraClient()
@@ -58,8 +59,10 @@ client.discord.on("messageCreate", async message => {
 
 	if (user) { // Só executa caso o membro esteja salvo no banco dados
 
+		let user_rank_guild = await getUserRankServer(user.uid, message.guild.id)
+
 		// Ignorando usuários banidos e que foram movidos para exclusão de dados
-		if (user.conf?.banned || user.erase.valid) return
+		if (user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
 
 		// Sincronizando os dados do usuário
 		const user_guild = await client.getMemberGuild(message, user.uid)

@@ -217,7 +217,7 @@ criar_item = (dados, interaction, client, user) => {
             attachment: dados.url,
             name: dados.nome
         })
-            .then(emoji => `${emoji} | ${client.tls.reply(interaction, user, "mode.emojis.emoji_criado", true, null, dados.nome)}`)
+            .then(emoji => interaction.reply({ content: `${emoji} | ${client.tls.phrase(user, "mode.emojis.emoji_criado", null, dados.nome)}`, ephemeral: true }))
             .catch(err => {
 
                 if (err.rawError.code === 50045)

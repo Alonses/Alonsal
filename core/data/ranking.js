@@ -40,9 +40,18 @@ module.exports = async ({ client, message, caso }) => {
     if (user_data.erase.valid) { // Usuário interagiu com o Alonsal novamente
         client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${user_data.uid}\` ) removido da lista de exclusão.` })
 
-        client.sendDM(user_data, { data: client.tls.phrase(user, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
+        client.sendDM(user_data, { data: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
 
         user_data.erase.valid = false // Retirando a etiqueta para remoção de dados
+        cached_erase = true
+    }
+
+    if (user.erase.valid) { // Usuário interagiu com o Alonsal novamente
+        client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${user_data.uid}\` | \`${await (client.guilds(message.guild.id)).name}\` ) removido da lista de exclusão de dados por servidor.` })
+
+        client.sendDM(user_data, { data: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao_servidor", client.defaultEmoji("person"), await (client.guilds(message.guild.id)).name) })
+
+        user.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true
     }
 
@@ -84,12 +93,12 @@ module.exports = async ({ client, message, caso }) => {
 
     // Limitando o ganho de XP por spam no chat
     if (user.caldeira_de_ceira)
-        if (message.createdTimestamp - user.lastValidMessage > CHECKS.HOLD)
+        if (message.createdTimestamp - user.lastInteraction > CHECKS.HOLD)
             user.caldeira_de_ceira = false
         else if (caso === "messages") return
 
     if (user_global.caldeira_de_ceira)
-        if (message.createdTimestamp - user_global.lastValidMessage > CHECKS.HOLD)
+        if (message.createdTimestamp - user_global.lastInteraction > CHECKS.HOLD)
             user_global.caldeira_de_ceira = false
         else if (caso === "messages") return
 
@@ -97,14 +106,14 @@ module.exports = async ({ client, message, caso }) => {
 
         let validador = false
 
-        if (message.createdTimestamp - user.lastValidMessage < CHECKS.DIFF) {
+        if (message.createdTimestamp - user.lastInteraction < CHECKS.DIFF) {
             user.warns++
 
             validador = true
             await user.save()
         }
 
-        if (message.createdTimestamp - user_global.lastValidMessage < CHECKS.DIFF) {
+        if (message.createdTimestamp - user_global.lastInteraction < CHECKS.DIFF) {
             user_global.warns++
 
             validador = true
@@ -118,15 +127,18 @@ module.exports = async ({ client, message, caso }) => {
     const bot = await client.getBot()
     let xp_anterior = user.ixp
 
+    // Recalculando o tempo de inatividade do usuário
+    user.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.guild_timeout]
+
     if (caso === "messages") {
         user.xp += bot.persis.ranking
         user.ixp += bot.persis.ranking
 
-        user.lastValidMessage = message.createdTimestamp
+        user.lastInteraction = message.createdTimestamp
         user.warns = 0
 
         user_global.xp += bot.persis.ranking
-        user_global.lastValidMessage = message.createdTimestamp
+        user_global.lastInteraction = message.createdTimestamp
         user_global.warns = 0
 
     } else if (caso === "comando") { // Experiência obtida executando comandos
