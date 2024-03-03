@@ -27,7 +27,7 @@ async function atualiza_user_eraser(client) {
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${usuario.uid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${usuario.erase.erase_on + 1209600}:R> ( <t:${usuario.erase.erase_on + 1209600}:f> )` })
 
-            client.sendDM(usuario, { data: client.replace(client.tls.phrase(user, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person")), usuario.erase.erase_on + 1209600) })
+            client.sendDM(usuario, { data: client.tls.phrase(user, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person"), usuario.erase.erase_on + 1209600) })
 
             usuario.erase.valid = true
             await usuario.save()

@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction }) => {
             await user.save()
 
             interaction.editReply({
-                content: client.replace(client.tls.phrase(user, "util.tempo.new_link", client.emoji("emojis_dancantes")), user.misc.locale),
+                content: client.tls.phrase(user, "util.tempo.new_link", client.emoji("emojis_dancantes"), user.misc.locale),
                 ephemeral: true
             })
         })

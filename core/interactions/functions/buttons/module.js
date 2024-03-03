@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         ], interaction)
 
         interaction.update({
-            content: client.replace(client.tls.phrase(user, "misc.modulo.modulo_ativado", 6), [client.tls.phrase(user, `misc.modulo.ativacao_min_${modulo.stats.days}`), modulo.stats.hour]),
+            content: client.tls.phrase(user, "misc.modulo.modulo_ativado", 6, [client.tls.phrase(user, `misc.modulo.ativacao_min_${modulo.stats.days}`), modulo.stats.hour]),
             embeds: [],
             components: [row],
             ephemeral: true

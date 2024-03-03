@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Validando se o usuário tem dinheiro suficiente
         if (user.misc.money < preco)
             return interaction.update({
-                content: client.replace(client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos")), client.locale(preco)),
+                content: client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos"), client.locale(preco)),
                 ephemeral: true
             })
 

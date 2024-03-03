@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     free_games({ client, guild_channel })
 
                     return interaction.update({
-                        content: client.replace(client.tls.phrase(user, "mode.anuncio.anuncio_enviado_duplicatas", client.emoji(29)), `<#${guild.games.channel}>`),
+                        content: client.tls.phrase(user, "mode.anuncio.anuncio_enviado_duplicatas", client.emoji(29), `<#${guild.games.channel}>`),
                         ephemeral: true
                     })
                 } else // Sem permissão para enviar mensagens no canal

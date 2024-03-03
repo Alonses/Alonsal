@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     ], interaction)
 
     interaction.update({
-        content: client.replace(client.tls.phrase(user, "manu.data.ultima_confirmacao", 8), opcao),
+        content: client.tls.phrase(user, "manu.data.ultima_confirmacao", 8, opcao),
         embeds: [],
         components: [row],
         ephemeral: true

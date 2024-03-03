@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     ], interaction)
 
     interaction.update({
-        content: client.replace(client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper")), lista.name),
+        content: client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper"), lista.name),
         components: [row],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })

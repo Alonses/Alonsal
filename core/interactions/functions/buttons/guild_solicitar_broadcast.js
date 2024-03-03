@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         await client.notify(process.env.channel_mail, { embeds: [embed], components: [row] })
 
         interaction.update({
-            content: `${client.emoji("emojis_dancantes")} | ${client.tls.phrase(user, "mode.broadcast.pedido_registrado")}`,
+            content: client.tls.phrase(user, "mode.broadcast.pedido_registrado", client.emoji("emojis_dancantes")),
             embeds: [],
             components: [],
             ephemeral: true

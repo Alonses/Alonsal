@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.warn.criando_advertencia")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.replace(client.tls.phrase(user, "mode.warn.descricao_inclusao_warn"), descricao_warn)}`)
+        .setDescription(client.tls.phrase(user, "mode.warn.descricao_inclusao_warn", null, descricao_warn))
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,

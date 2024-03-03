@@ -1,4 +1,5 @@
 const { status } = require('../../files/json/text/emojis.json')
+const replace_string = require('../functions/replace_string')
 
 const languagesMap = {
     "al": ["al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`", "Alonsês", "🏴‍☠️"],
@@ -12,22 +13,12 @@ const languagesMap = {
     "ru": ["ru-ru", ":flag_ru: | Язык изменен на `русский`", "русский", "🇷🇺"]
 }
 
-function reply(interaction, user, target, ephemeral, type, replace) {
+function reply(interaction, user, target, ephemeral, emoji, replace) {
 
-    let phrase = translate(user, target)
+    let phrase = translate(user, target, replace)
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
-        phrase = check_emojis(phrase, type)
-
-    if (replace) { // Substitui partes do texto por outros valores
-        if (typeof replace === "object") { // Array com vários dados para alterar
-            while (replace.length > 0) {
-                phrase = phrase.replace("auto_repl", replace[0])
-                replace.shift()
-            }
-        } else // Apenas um valor para substituição
-            phrase = phrase.replaceAll("auto_repl", replace)
-    }
+        phrase = check_emojis(phrase, emoji)
 
     interaction.reply({
         content: phrase,
@@ -35,12 +26,12 @@ function reply(interaction, user, target, ephemeral, type, replace) {
     })
 }
 
-function editReply(interaction, user, target, ephemeral, type) {
+function editReply(interaction, user, target, ephemeral, emoji) {
 
     let phrase = translate(user, target)
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
-        phrase = check_emojis(phrase, type)
+        phrase = check_emojis(phrase, emoji)
 
     return interaction.editReply({
         content: phrase,
@@ -48,26 +39,27 @@ function editReply(interaction, user, target, ephemeral, type) {
     })
 }
 
-function phrase(user, target, type) {
+function phrase(user, target, emoji, replace) {
 
     // User é utilizado para definir o idioma de retorno
     // Target é a chave de tradução
-    // Type é um valor para emoji, anexado com | no inicio da tradução
+    // Emoji é um valor para emoji, anexado com um | no inicio da frase traduzida
+    // Replace é um valor para ser inserido no meio da frase
 
-    let phrase = translate(user, target)
+    let phrase = translate(user, target, replace)
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
-        phrase = check_emojis(phrase, type)
+        phrase = check_emojis(phrase, emoji)
 
     return phrase
 }
 
-function report(interaction, user, target, ephemeral, type, button, update) {
+function report(interaction, user, target, ephemeral, emoji, button, update) {
 
     let phrase = translate(user, target)
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
-        phrase = check_emojis(phrase, type)
+        phrase = check_emojis(phrase, emoji)
 
     if (button) // Valida se a interação partiu de um botão
         interaction.update({
@@ -88,7 +80,7 @@ function report(interaction, user, target, ephemeral, type, button, update) {
         })
 }
 
-function translate(alvo, target) {
+function translate(alvo, target, replace) {
 
     // Pode ser usado para referenciar usuários ou servidores
     const idioma_alvo = alvo.lang || "pt-br"
@@ -144,6 +136,9 @@ function translate(alvo, target) {
     if (alvo.misc?.second_lang) // Corrigindo a tradução para o idioma secundário ativo
         phrase = ajusta_traducao(alvo.misc.second_lang, phrase)
 
+    if (phrase && phrase.includes("auto_repl")) // Substitui automaticamente os valores caso haja replaces inclusos na string
+        phrase = replace_string(phrase, replace)
+
     return phrase || "<translated_text>"
 }
 
@@ -165,19 +160,19 @@ function get_emoji(valores) {
     return emoji
 }
 
-check_emojis = (phrase, type) => {
+check_emojis = (phrase, emoji) => {
 
-    if (type)
-        phrase = `${get_emoji(type)} | ${phrase}`
+    if (emoji)
+        phrase = `${get_emoji(emoji)} | ${phrase}`
 
     return phrase
 }
 
-lista_emojis = (type) => {
+lista_emojis = (emojis_lista) => {
 
     const emojis = []
 
-    type.forEach(emoji => {
+    emojis_lista.forEach(emoji => {
         emojis.push(status[emoji])
     })
 

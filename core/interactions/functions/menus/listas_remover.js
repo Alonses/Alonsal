@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     ], interaction)
 
     interaction.update({
-        content: client.replace(client.tls.phrase(user, "util.tarefas.lista_confirmar_exclusao", 8), tarefas.length),
+        content: client.tls.phrase(user, "util.tarefas.lista_confirmar_exclusao", 8, tarefas.length),
         components: [row],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })

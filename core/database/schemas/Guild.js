@@ -270,6 +270,13 @@ async function dropGuild(sid) {
     })
 }
 
+async function listAllGuildHoster(user_id) {
+    // Lista todos os servidores onde o Alonsal foi adicionado por um membro
+    return model.find({
+        "inviter": user_id
+    })
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -277,6 +284,7 @@ module.exports = {
     getGameChannels,
     disableGuildFeatures,
     getReportChannels,
+    listAllGuildHoster,
     getReportNetworkChannels,
     getGameChannelById,
     getNetworkedGuilds,

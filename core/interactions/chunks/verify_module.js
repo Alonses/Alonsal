@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "misc.modulo.visualizar_modulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.replace(client.tls.phrase(user, "misc.modulo.descricao"), [modulo.stats.price, montante]))
+        .setDescription(client.tls.phrase(user, "misc.modulo.descricao", null, [modulo.stats.price, montante]))
         .addFields(
             {
                 name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,

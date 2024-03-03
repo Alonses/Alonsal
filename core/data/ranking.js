@@ -40,7 +40,7 @@ module.exports = async ({ client, message, caso }) => {
     if (user_data.erase.valid) { // Usuário interagiu com o Alonsal novamente
         client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${user_data.uid}\` ) removido da lista de exclusão.` })
 
-        client.sendDM(user_data, { data: `${client.defaultEmoji("person")} | Olá! Devido a sua interação comigo, removi você da lista de exclusão dos dados!\n\nCaso isso tenha sido um erro, por gentileza, use o comando </data:1018609879470047260> novamente em um servidor.` })
+        client.sendDM(user_data, { data: client.tls.phrase(user, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
 
         user_data.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true

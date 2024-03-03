@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
 
-            let warns_restantes = client.replace(client.tls.phrase(user, "mode.warn.advertencias_restantes"), user_warns.length - 1)
+            let warns_restantes = client.tls.phrase(user, "mode.warn.advertencias_restantes", null, user_warns.length - 1)
 
             if ((user_warns.length - 1) === 1)
                 warns_restantes = client.tls.phrase(user, "mode.warn.advertencia_restante")
@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
                 .setColor(0xED4245)
-                .setDescription(`${client.replace(client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida"), id_alvo)}${warns_restantes}`)
+                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${warns_restantes}`)
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -99,7 +99,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const embed = new EmbedBuilder()
             .setTitle(`Verificando advertência :inbox_tray:`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`${client.replace(client.tls.phrase(user, "mode.warn.descricao_advertencia"), user_warn.relatory)}${motivo_remocao}`)
+            .setDescription(`${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, user_warn.relatory)}${motivo_remocao}`)
             .addFields(
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,

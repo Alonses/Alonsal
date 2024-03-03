@@ -14,7 +14,7 @@ module.exports = async ({ client, internal_guild, cached_guild, guild_evento, gu
         return
     }
 
-    const descricao_evento = client.replace(client.tls.phrase(internal_guild, "mode.network.ban_removido"), [registroAudita.executor.username, guild_evento.name])
+    const descricao_evento = client.tls.phrase(internal_guild, "mode.network.ban_removido", null, [registroAudita.executor.username, guild_evento.name])
 
     // Removendo o banimento do usuário do servidor
     await cached_guild.members.unban(registroAudita.targetId, { reason: `Network | ${descricao_evento}` })

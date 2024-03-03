@@ -4,6 +4,7 @@ const { defaultUserEraser } = require('../../database/schemas/User')
 const { getUserRankServers } = require('../../database/schemas/Rank_s')
 const { listAllUserGuilds } = require('../../database/schemas/User_guilds')
 const { buildAllBadges } = require('../../data/badges')
+const { listAllGuildHoster } = require('../../database/schemas/Guild')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
@@ -51,9 +52,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     }
 
     const user_guilds = await listAllUserGuilds(user.uid)
+    const guilds_hoster = await listAllGuildHoster(user.uid)
 
     if (user_guilds.length > 0)
         dados_conhecidos += `\n\n**${client.defaultEmoji("earth")} ${client.tls.phrase(user, "manu.data.servidores_com_moderacao")}:**\n\`${user_guilds.length} ${client.tls.phrase(user, "manu.data.servidores_conhecidos")}\``
+
+    if (guilds_hoster.length > 0)
+        dados_conhecidos += `\n\n**${client.emoji("aln_hoster")} ${client.tls.phrase(user, "manu.data.hoster_convites", null, guilds_hoster.length)}**`
 
     const id_badges = await client.getUserBadges(user.uid)
 
@@ -66,12 +71,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **Modo compacto**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **Servidores conhecidos**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
                 inline: true
             },
             {
@@ -86,7 +91,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         })
 
     if (pagina === 0)
-        embed.setDescription(client.replace(client.tls.phrase(user, "manu.data.resumo_dados"), dados_conhecidos))
+        embed.setDescription(client.tls.phrase(user, "manu.data.resumo_dados", null, dados_conhecidos))
     else {
 
         let tempo_exclusao = ""
@@ -94,7 +99,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         if (user.erase.timeout)
             tempo_exclusao = `**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_exclusao_global")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.timeout]}`)}\` ${client.tls.phrase(user, "manu.data.de_inatividade")}\n\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.data.tempo_por_servidor")}**:\n${client.tls.phrase(user, "manu.data.excluir_apos")} \`${client.tls.phrase(user, `menu.times.${defaultUserEraser[user.erase.guild_timeout]}`)}\` ${client.tls.phrase(user, "manu.data.inatividade_2")}`
 
-        embed.setDescription(client.replace(client.tls.phrase(user, "manu.data.resumo_detalhado"), tempo_exclusao))
+        embed.setDescription(client.tls.phrase(user, "manu.data.resumo_detalhado", null, tempo_exclusao))
     }
 
     botoes.push(
@@ -143,7 +148,7 @@ lista_servidores = (servidores, linha_corte, client, user) => {
         servidores_restantes = servidores.length - qtd_servidores
 
         if (servidores_restantes > 1)
-            nome_servidores = `${nome_servidores} ${client.replace(client.tls.phrase(user, "manu.data.outros_servers"), servidores_restantes)}`
+            nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.outros_servers", null, servidores_restantes)}`
         else
             nome_servidores = `${nome_servidores} ${client.tls.phrase(user, "manu.data.um_server")}`
     }

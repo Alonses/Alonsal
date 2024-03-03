@@ -40,14 +40,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (!all_badges.includes(9)) {
 
         const badge = busca_badges(client, badgeTypes.SINGLE, 9)
-        badge_bonus = `\n\n${client.replace(client.tls.phrase(user, "inic.vote.badge_concedida"), [badge.emoji, badge.name])} </badge fix:1018609879512006794>!`
+        badge_bonus = `\n\n${client.tls.phrase(user, "inic.vote.badge_concedida", null, [badge.emoji, badge.name])} </badge fix:1018609879512006794>!`
 
         // Atribuindo a badge ao usuário
         await createBadge(interaction.user.id, 9, client.timestamp())
     }
 
     interaction.reply({
-        content: `${client.replace(client.tls.phrase(user, "inic.vote.voto_registrado", client.emoji("emojis_dancantes")), vote)}${badge_bonus}`,
+        content: `${client.tls.phrase(user, "inic.vote.voto_registrado", client.emoji("emojis_dancantes"), vote)}${badge_bonus}`,
         ephemeral: true
     })
 }

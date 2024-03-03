@@ -101,7 +101,7 @@ module.exports = {
                     )
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    embed.setDescription(`\`\`\`${client.replace(client.tls.phrase(user, "game.pula.recorde"), [client.locale(datas_pula.recorde), (datas_pula.distancia_percorrida / 1000).toFixed(2)])}\`\`\``)
+                    embed.setDescription(`\`\`\`${client.tls.phrase(user, "game.pula.recorde", null, [client.locale(datas_pula.recorde), (datas_pula.distancia_percorrida / 1000).toFixed(2)])}\`\`\``)
 
                 interaction.reply({
                     embeds: [embed],

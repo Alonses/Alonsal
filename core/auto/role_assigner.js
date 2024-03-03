@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
     if (force_stop) {
 
         interaction.update({
-            content: client.replace(client.tls.phrase(user, "mode.roles.operacao_cancelada", 0), [updates[1], updates[2], updates[4], updates[3]]),
+            content: client.tls.phrase(user, "mode.roles.operacao_cancelada", 0, [updates[1], updates[2], updates[4], updates[3]]),
             components: []
         })
 
@@ -107,14 +107,14 @@ async function alterar_users(client, user, interaction, contador) {
 
         if (membros_sv.length > 0) {
             if ((timestamp - client.timestamp()) < 600)
-                interaction.editReply({ content: client.replace(client.tls.phrase(user, "mode.roles.atualizando_usuarios", emoji_dancante), [contador, updates[0], timestamp]) })
+                interaction.editReply({ content: client.tls.phrase(user, "mode.roles.atualizando_usuarios", emoji_dancante, [contador, updates[0], timestamp]) })
             else if (!segundo_plano) {
 
                 // Operação entrando em segundo plano, sem atualização de alterações
                 segundo_plano = true
-                interaction.editReply({ content: client.replace(client.tls.phrase(user, "mode.roles.pin_segundo_plano", emoji_dancante), timestamp) })
+                interaction.editReply({ content: client.tls.phrase(user, "mode.roles.pin_segundo_plano", emoji_dancante, timestamp) })
 
-                client.sendDM(user, { data: client.replace(client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante), timestamp) })
+                client.sendDM(user, { data: client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante, timestamp) })
             }
 
             alterar_users(client, user, interaction, contador)
@@ -123,12 +123,12 @@ async function alterar_users(client, user, interaction, contador) {
 
             if (!segundo_plano)
                 interaction.editReply({
-                    content: client.replace(client.tls.phrase(user, "mode.roles.concluido", 59), [updates[1], updates[2], updates[4], updates[3]]),
+                    content: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]),
                     components: []
                 })
 
             segundo_plano = false
-            client.sendDM(user, { data: client.replace(client.tls.phrase(user, "mode.roles.concluido", 59), [updates[1], updates[2], updates[4], updates[3]]) })
+            client.sendDM(user, { data: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]) })
         }
     }, 1500)
 }

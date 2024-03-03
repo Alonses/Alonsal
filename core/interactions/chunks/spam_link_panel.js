@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.link_suspeito.titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.replace(client.tls.phrase(user, "mode.link_suspeito.descricao_link"), link.link))
+        .setDescription(client.tls.phrase(user, "mode.link_suspeito.descricao_link", null, link.link))
         .setFields(
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.link_suspeito.identificado")} <t:${timestamp}:R>**`,

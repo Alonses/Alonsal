@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas"))
                 .setColor(0xED4245)
-                .setDescription(client.replace(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas_descricao"), id_alvo))
+                .setDescription(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas_descricao", null, id_alvo))
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,

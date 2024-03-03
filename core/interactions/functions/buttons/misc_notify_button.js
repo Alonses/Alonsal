@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     client.notify(process.env.channel_feeds, { content: `:video_game: :mega: | O Servidor ( \`${interaction.guild.name}\` | \`${interaction.guild.id}\` ) agora recebe atts de jogos grátis` })
 
     interaction.update({
-        content: client.replace(client.tls.phrase(user, "mode.anuncio.anuncio_games", client.emoji(29)), `<#${guild.games.channel}>`),
+        content: client.tls.phrase(user, "mode.anuncio.anuncio_games", client.emoji(29), `<#${guild.games.channel}>`),
         embeds: [],
         components: [],
         ephemeral: true
