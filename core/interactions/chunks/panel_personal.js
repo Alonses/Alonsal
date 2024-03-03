@@ -44,7 +44,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 1)
         embed.addFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} ${client.tls.phrase(user, "manu.data.badges_publicas")}**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_badges_publicas")}\``,
                 inline: true
             },
@@ -83,7 +83,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     if (pagina == 0) // Botão de voltar
         c_menu[0] = true
-    if (pagina == 3) // Botão para avançar
+    if (pagina == 2) // Botão para avançar
         c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_personal`, disabled: c_menu[0] }]

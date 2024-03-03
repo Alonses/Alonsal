@@ -9,11 +9,15 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     nickname: { type: String, default: null },
-    lastValidMessage: { type: Number, default: null },
+    lastInteraction: { type: Number, default: null },
     warns: { type: Number, default: 0 },
     caldeira_de_ceira: { type: Boolean, default: false },
     xp: { type: Number, default: 0 },
-    ixp: { type: Number, default: 0 }
+    ixp: { type: Number, default: 0 },
+    erase: {
+        valid: { type: Boolean, default: false },
+        erase_on: { type: Number, default: null }
+    }
 })
 
 const model = mongoose.model("Rankerver", schema)
@@ -59,6 +63,14 @@ async function getUserRankServer(uid, sid) {
     return model.findOne({
         uid: uid,
         sid: sid
+    })
+}
+
+// Buscando os usuários que estão desatualizados no escopo de servidor para exclusão dos dados
+async function getGuildOutdatedUsers(timestamp) {
+
+    return await model.find({
+        "erase.erase_on": { $lte: timestamp }
     })
 }
 
@@ -120,6 +132,7 @@ module.exports = {
     listRankGuild,
     getUserRankServer,
     getUserRankServers,
+    getGuildOutdatedUsers,
     createRankServer,
     updateUserRank,
     dropUserRankServer,
