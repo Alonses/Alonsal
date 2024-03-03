@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.link_suspeito.registrando_link_titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.replace(client.tls.phrase(user, "mode.link_suspeito.registrando_link_descricao"), link))
+        .setDescription(client.tls.phrase(user, "mode.link_suspeito.registrando_link_descricao", null, link))
         .setFooter({
             text: client.tls.phrase(user, "mode.link_suspeito.rodape_opcoes"),
             iconURL: interaction.user.avatarURL({ dynamic: true })

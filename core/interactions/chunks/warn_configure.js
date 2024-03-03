@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const warn = await getGuildWarn(interaction.guild.id, id_warn)
 
     const embed = new EmbedBuilder()
-        .setTitle(client.replace(client.tls.phrase(user, "mode.warn.edicao_warn_titulo"), warn.rank + 1))
+        .setTitle(client.tls.phrase(user, "mode.warn.edicao_warn_titulo", null, warn.rank + 1))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(client.tls.phrase(user, "mode.warn.descricao_edicao_warn"))
         .setFields(

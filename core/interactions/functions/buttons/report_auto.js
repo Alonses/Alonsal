@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     await alvo.save()
                 }
 
-            let msg_feed = client.replace(client.tls.phrase(user, "mode.report.usuarios_reportados", client.defaultEmoji("guard")), adicionados)
+            let msg_feed = client.tls.phrase(user, "mode.report.usuarios_reportados", client.defaultEmoji("guard"), adicionados)
 
             if (adicionados === 1)
                 msg_feed = client.tls.phrase(user, "mode.report.usuario_reportado", client.defaultEmoji("guard"))

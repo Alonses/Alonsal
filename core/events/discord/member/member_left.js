@@ -23,7 +23,7 @@ module.exports = async (client, dados) => {
         guild.logger.member_ban_add = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Verificando se o usuário foi expulso do servidor

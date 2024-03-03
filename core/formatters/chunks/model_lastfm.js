@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction }) => {
                 descricao_status = `\`\`\`fix\n${descricao_status}\`\`\``
 
             const embed = new EmbedBuilder()
-                .setTitle(client.replace(client.tls.phrase(user, "util.lastfm.perfil_musical"), res.nome))
+                .setTitle(client.tls.phrase(user, "util.lastfm.perfil_musical", null, res.nome))
                 .setColor(client.embed_color(user_alvo.misc.color))
                 .setThumbnail(res.avatar)
                 .setDescription(`${descricao}${descricao_status}`)

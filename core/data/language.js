@@ -26,7 +26,7 @@ async function loadAll(client) {
             const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
             if (cod_commit !== bot.persis.alondioma) {
-                console.log("🟠 | Sincronizando com os idiomas mais recentes.")
+                console.log("🟠 | Sincronizando com as traduções mais recentes.")
 
                 // Salvando o commit de traduções mais recente no banco
                 bot.persis.alondioma = cod_commit

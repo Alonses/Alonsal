@@ -29,7 +29,7 @@ module.exports = async (client, message) => {
         // alteracoes.novo = relatorio_alteracoes.novo.join("\n\n")
     }
 
-    let texto = client.replace(client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39)), [message[0].url, message[0].author.id, (alteracoes.antigo).slice(0, 500), alteracoes.novo.slice(0, 500)])
+    let texto = client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39), [message[0].url, message[0].author.id, (alteracoes.antigo).slice(0, 500), alteracoes.novo.slice(0, 500)])
     let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()

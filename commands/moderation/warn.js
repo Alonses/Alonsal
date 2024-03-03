@@ -109,10 +109,9 @@ module.exports = {
         const guild = await client.getGuild(interaction.guild.id)
 
         if (!guild.conf.warn || !guild.warn.channel) // Verificando se o comando está configurado
-            return interaction.reply({ content: ":passport_control: | Você precisa ativar esse recurso e definir um canal de avisos de advertências pelo painel do servidor!", ephemeral: true })
+            return client.tls.reply(interaction, user, "mode.warn.nao_configurado_2", true, 7)
 
         // Redirecionando o evento
-        require(`./subcommands/warn_${interaction.options.getSubcommand()
-            }`)({ client, user, interaction })
+        require(`./subcommands/warn_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }
 }

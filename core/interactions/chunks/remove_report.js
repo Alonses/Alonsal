@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.report.remover_reporte"))
         .setColor(0xED4245)
-        .setDescription(client.replace(client.tls.phrase(user, "mode.report.remover_reporte_desc"), alvo.relatory))
+        .setDescription(client.tls.phrase(user, "mode.report.remover_reporte_desc", null, alvo.relatory))
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,

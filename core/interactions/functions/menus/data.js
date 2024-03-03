@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "manu.data.exclusao_dados"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.replace(client.tls.phrase(user, "manu.data.descricao_embed", 2), [escolha_user, dados_para_exclusao]))
+        .setDescription(client.tls.phrase(user, "manu.data.descricao_embed", 2, [escolha_user, dados_para_exclusao]))
         .setFooter({
             text: client.tls.phrase(user, "manu.data.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })

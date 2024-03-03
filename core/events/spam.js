@@ -155,7 +155,7 @@ async function nerfa_spam({ client, message, guild }) {
                 // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
                 client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${link.split("").join(" ")}\` )` })
 
-                client.notify(guild.logger.channel, { content: `:link: :inbox_tray: | ${client.tls.phrase(guild, "mode.link_suspeito.detectado")}\n( \`${link.split("").join(" ")}\` )` })
+                client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], link.split("").join(" ")) })
             }
         }
 

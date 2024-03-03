@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     atualiza_user_eraser(client)
 
     client.reply(interaction, {
-        content: client.replace(client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7), client.timestamp() + 1209600),
+        content: client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7, client.timestamp() + 1209600),
         components: [],
         ephemeral: true
     })

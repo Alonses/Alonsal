@@ -16,7 +16,7 @@ module.exports = async ({ client, message }) => {
         guild.logger.message_delete = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Coletando dados sobre o evento
@@ -42,12 +42,12 @@ module.exports = async ({ client, message }) => {
     if (attachments.length > 0 && !message.content)
         texto_mensagem = attachments.join("\n\n")
 
-    let texto = client.replace(client.tls.phrase(guild, "mode.logger.auto_exclusao", 13), [message.author.id, message.url])
+    let texto = client.tls.phrase(guild, "mode.logger.auto_exclusao", 13, [message.author.id, message.url])
     let autor = message.author.id, local = message.channelId, row
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
-            texto = client.replace(client.tls.phrase(guild, "mode.logger.mode_exclusao", 13), [message.url, message.author.id])
+            texto = client.tls.phrase(guild, "mode.logger.mode_exclusao", 13, [message.url, message.author.id])
 
     texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
 

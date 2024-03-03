@@ -22,12 +22,8 @@ module.exports = async (client, user, interaction) => {
                 else
                     return client.sendDM(user, { data: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
 
-            // Sem item conhecido
-            if (dados_item.status === 404 && interaction)
-                return interaction.reply({
-                    content: `${client.tls.phrase(user, "util.minecraft.nao_encontrado", client.emoji("emojis_negativos"))} \`${interaction.options.getString("item")}\`, ${client.tls.phrase(user, "util.minecraft.tente_novamente")}`,
-                    ephemeral: true
-                })
+            if (dados_item.status === 404 && interaction) // Sem item conhecido
+                return client.tls.reply(interaction, user, "util.minecraft.nao_encontrado", true, client.emoji("emojis_negativos"), interaction.options.getString("item"))
 
             let nome_item = dados_item.internal_name
             descricao_tipo = nome_item
@@ -143,7 +139,7 @@ module.exports = async (client, user, interaction) => {
 
             // Dados vindos da wiki do minecraft
             if (dados_item.wiki.descricao) {
-                let link_artigo = client.replace(client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki"), dados_item.wiki.link)
+                let link_artigo = client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki", null, dados_item.wiki.link)
 
                 embed.addFields(
                     {

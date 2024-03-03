@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, local }) => {
     let titulo_embed = client.tls.phrase(user, "misc.banco.suas_bufunfas")
 
     if (user_interno.uid !== interaction.user.id)
-        daily = "", titulo_embed = client.replace(client.tls.phrase(user, "misc.banco.bufunfas_outros"), alvo.username)
+        daily = "", titulo_embed = client.tls.phrase(user, "misc.banco.bufunfas_outros", null, alvo.username)
 
     let data_atual = date1.toDateString('pt-BR')
     if (data_atual == user.misc.daily && user_interno.uid === interaction.user.id) {

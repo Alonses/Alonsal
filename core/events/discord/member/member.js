@@ -17,7 +17,7 @@ module.exports = async (client, dados) => {
         guild.logger.member_role = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Verificando qual atributo foi atualizado

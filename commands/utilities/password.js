@@ -53,7 +53,7 @@ module.exports = {
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
             .setFooter({
-                text: client.replace(client.tls.phrase(user, "util.password.rodape"), tamanho)
+                text: client.tls.phrase(user, "util.password.rodape", null, tamanho)
             })
 
         interaction.reply({

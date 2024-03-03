@@ -33,12 +33,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         dados += `\n${client.emoji(56)} **${client.tls.phrase(user, "manu.guild_data.ranking_servidor")}**\n\`${rank.length > 1 ? `${rank.length} ${client.tls.phrase(user, "manu.guild_data.membros")}` : `1 ${client.tls.phrase(user, "manu.guild_data.membro")}`}\`\n`
 
     if (network > 1) {
-        dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? client.replace(client.tls.phrase(user, "manu.guild_data.network_servidores"), network) : client.tls.phrase(user, "manu.guild_data.network_unico")}\``
+        dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? client.tls.phrase(user, "manu.guild_data.network_servidores", null, network) : client.tls.phrase(user, "manu.guild_data.network_unico")}\``
         dados += `\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**\n${guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
     }
 
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.guild_data.dados_servidor_titulo", 32))
+        .setTitle(client.tls.phrase(user, "manu.guild_data.dados_servidor_titulo"))
         .setColor(client.embed_color(user.misc.color))
         .setFields(
             {
@@ -63,15 +63,15 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         })
 
     if (pagina === 0)
-        embed.setDescription(client.replace(client.tls.phrase(user, "manu.guild_data.resumo_dados"), dados))
+        embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_dados", null, dados))
     else {
 
         let tempo_exclusao = ""
 
         if (guild.erase.timeout)
-            tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.guild_data.tempo_exclusao")}**:\n${client.replace(client.tls.phrase(user, "manu.guild_data.excluir_apos"), defaultEraser[guild.erase.timeout] / 86400)}`
+            tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.guild_data.tempo_exclusao")}**:\n${client.tls.phrase(user, "manu.guild_data.excluir_apos", null, defaultEraser[guild.erase.timeout] / 86400)}`
 
-        embed.setDescription(client.replace(client.tls.phrase(user, "manu.guild_data.resumo_expandido"), tempo_exclusao))
+        embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_expandido", null, tempo_exclusao))
     }
 
     botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "0" })

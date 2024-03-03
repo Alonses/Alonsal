@@ -47,7 +47,7 @@ function internal_functions(client) {
 
         // Removendo o cargo ao usuário que recebeu a advertência
         if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ManageGuild]))
-            return client.notify(guild.logger.channel, { content: ":passport_control: | Eu não tenho permissões para `Gerenciar servidor`, não é possível ver a lista de convites sem essa permissão concedida!\nA exclusão automática dos convites de um membro que foi expulso/banido não foi realizada. @here" })
+            return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.sem_permissao_2", 7) })
 
         // Excluindo os convites que o membro expulso/banido criou
         const cached_guild = await client.guilds(guild.sid)
@@ -62,7 +62,10 @@ function internal_functions(client) {
                 }
             })
 
-            client.notify(guild.logger.channel, { content: `:link: | O módulo de convites rastreados excluiu \`${convites} ${convites > 1 ? "convites" : "convite"}\`.` })
+            // Formatando a frase
+            let convites_formatado = `${convites} ${convites > 1 ? client.tls.phrase(guild, "mode.invites.convites") : client.tls.phrase(guild, "mode.invites.convite")}`
+
+            client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
         })
     }
 
@@ -427,7 +430,7 @@ function internal_functions(client) {
             await createBadge(user.uid, id_badge, client.timestamp())
             const badge = busca_badges(client, badgeTypes.SINGLE, id_badge)
 
-            client.sendDM(user, { data: client.replace(client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes")), [badge.name, badge.emoji]) })
+            client.sendDM(user, { data: client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) })
         }
     }
 
@@ -609,7 +612,7 @@ function internal_functions(client) {
 
         if (interaction)
             interaction.editReply({
-                content: `🚀 | Os servidores salvos em cache foram atualizados!\nAtualmente você está em \`${qtd_servidores} servidores\``,
+                content: client.tls.phrase(user, "manu.data.salvos_cache", 61, qtd_servidores),
                 ephemeral: true
             })
     }

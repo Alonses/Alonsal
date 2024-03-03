@@ -80,10 +80,7 @@ module.exports = {
                         await m.delete()
                 })
 
-                interaction.reply({
-                    content: `:recycle: | ${client.replace(client.tls.phrase(user, "mode.clear.purge_user"), id_alvo)}`,
-                    ephemeral: true
-                })
+                client.tls.reply(interaction, user, "mode.clear.purge_user", true, 62, id_alvo)
             })
             .catch(() => client.tls.reply(interaction, user, "mode.clear.purge_error", true, client.emoji(0)))
     }

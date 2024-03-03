@@ -16,7 +16,7 @@ module.exports = async ({ client, ban }) => {
         guild.logger.member_ban_remove = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Coletando dados sobre o evento

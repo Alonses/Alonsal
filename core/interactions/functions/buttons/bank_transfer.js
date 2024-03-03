@@ -29,12 +29,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await client.journal("movido", bufunfas)
 
     interaction.update({
-        content: `${client.replace(client.tls.phrase(user, "misc.pay.sucesso", [9, 10]), client.locale(bufunfas))} <@!${alvo.uid}>`,
+        content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.locale(bufunfas), alvo.uid]),
         embeds: [],
         components: [],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })
 
     // Notificando o usuário que recebeu as Bufunfas
-    client.sendDM(alvo, { data: client.replace(client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes")), [user.uid, client.locale(bufunfas)]) })
+    client.sendDM(alvo, { data: client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes"), [user.uid, client.locale(bufunfas)]) })
 }

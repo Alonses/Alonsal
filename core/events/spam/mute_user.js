@@ -6,7 +6,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
     if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.ModerateMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
-        return client.notify(guild.logger.channel, { content: `${client.defaultEmoji("guard")} | @here ${client.replace(client.tls.phrase(guild, "mode.spam.falta_permissoes_2"), user_guild)}`, embeds: [embed] })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), user_guild), embeds: [embed] })
 
     // Listando as mensagens consideras spam e excluindo elas
     user_messages.forEach(internal_message => {
@@ -17,7 +17,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
         .setColor(0xED4245)
-        .setDescription(`${client.replace(client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard")), [user_guild, client.locale(tempo_timeout / 60)])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild, client.locale(tempo_timeout / 60)])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -39,7 +39,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
         .then(async () => {
 
             const obj = {
-                content: client.replace(client.tls.phrase(guild, "mode.spam.ping_expulsao"), user_guild),
+                content: client.tls.phrase(guild, "mode.spam.ping_expulsao", null, user_guild),
                 embeds: [embed]
             }
 
@@ -48,7 +48,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
             client.notify(guild.logger.channel, obj)
 
-            let msg_user = `${client.replace(client.tls.phrase(user, "mode.spam.silenciado"), await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+            let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
             if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`

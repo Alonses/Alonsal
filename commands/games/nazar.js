@@ -27,7 +27,7 @@ module.exports = {
                     .setTitle(`> ${client.tls.phrase(user, "game.nazar.titulo")}`)
                     .setColor(client.embed_color(user.misc.color))
                     .setImage(dados.location.image)
-                    .setDescription(client.replace(client.tls.phrase(user, "game.nazar.descricao"), [dados.location.region.name, dados.location.region.precise, dados.location.near_by[0], dados.location.near_by[1]]))
+                    .setDescription(client.tls.phrase(user, "game.nazar.descricao", null, [dados.location.region.name, dados.location.region.precise, dados.location.near_by[0], dados.location.near_by[1]]))
 
                 interaction.reply({
                     embeds: [embed],

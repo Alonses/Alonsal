@@ -12,9 +12,9 @@ module.exports = async ({ client, oldState, newState }) => {
 
     let frase
 
-    if (newState.channelId === null) frase = client.replace(client.tls.phrase(guild, "mode.logger.canal_saida", [48, 30]), [oldState.id, oldState.channelId])
-    else if (oldState.channelId === null) frase = client.replace(client.tls.phrase(guild, "mode.logger.canal_entrada", [48, 50]), [oldState.id, newState.channelId])
-    else frase = client.replace(client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49]), [oldState.id, oldState.channelId, newState.channelId])
+    if (newState.channelId === null) frase = client.tls.phrase(guild, "mode.logger.canal_saida", [48, 30], [oldState.id, oldState.channelId])
+    else if (oldState.channelId === null) frase = client.tls.phrase(guild, "mode.logger.canal_entrada", [48, 50], [oldState.id, newState.channelId])
+    else frase = client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49], [oldState.id, oldState.channelId, newState.channelId])
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.canal_voz"))

@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed_user = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user_alvo, "mode.warn.titulo_advertencia")} :inbox_tray:`)
         .setColor(0xED4245)
-        .setDescription(client.replace(client.tls.phrase(user_alvo, "mode.warn.advertencia_recebida"), [interaction.guild.name, user_warn.relatory]))
+        .setDescription(client.tls.phrase(user_alvo, "mode.warn.advertencia_recebida", null, [interaction.guild.name, user_warn.relatory]))
         .addFields(
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user_alvo, "mode.warn.moderador_responsavel")}**`,
@@ -171,7 +171,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     return client.reply(interaction, {
-        content: `:inbox_tray: | ${client.tls.phrase(user, "mode.warn.advertencia_registrada")}`,
+        content: client.tls.phrase(user, "mode.warn.advertencia_registrada", 63),
         embeds: [],
         components: [],
         ephemeral: true

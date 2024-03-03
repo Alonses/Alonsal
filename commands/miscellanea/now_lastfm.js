@@ -4,16 +4,21 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("now")
         .setNameLocalizations({
-            "pt-BR": 'agora'
+            "de": 'jetzt',
+            "es-ES": 'ahora',
+            "fr": 'maintenant',
+            "it": 'ora',
+            "pt-BR": 'agora',
+            "ru": 'сейчас'
         })
-        .setDescription("⌠👤⌡ Someone's Profile on LastFM")
+        .setDescription("⌠👤⌡ See what a user is listening to right now")
         .setDescriptionLocalizations({
-            "de": '⌠👤⌡ Jemandes LastFM-Profil',
-            "es-ES": '⌠👤⌡ Perfil de alguien en LastFM',
-            "fr": '⌠👤⌡ Profil de quelqu\'un sur LastFM',
-            "it": '⌠👤⌡ Profilo di qualcuno su LastFM',
-            "pt-BR": '⌠👤⌡ Perfil de alguém no LastFM',
-            "ru": '⌠👤⌡ Посмотреть чей-то профиль на LastFM'
+            "de": '⌠👤⌡ Sehen Sie, was ein Benutzer gerade hört',
+            "es-ES": '⌠👤⌡ Ver lo que un usuario está escuchando en este momento',
+            "fr": '⌠👤⌡ Découvrez ce qu\'un utilisateur écoute en ce moment',
+            "it": '⌠👤⌡ Scopri cosa sta ascoltando un utente in questo momento',
+            "pt-BR": '⌠👤⌡ Veja o que um usuário está ouvindo agora',
+            "ru": '⌠👤⌡ Узнайте, что сейчас слушает пользователь'
         })
         .addStringOption(option =>
             option.setName("url")
@@ -40,7 +45,12 @@ module.exports = {
     menu_data: new ContextMenuCommandBuilder()
         .setName("Listening Now")
         .setNameLocalizations({
-            "pt-BR": "Ouvindo agora"
+            "de": 'Aktuelle Musik ansehen',
+            "es-ES": 'Escuchando ahora',
+            "fr": 'Écouter maintenant',
+            "it": 'Ascolto adesso',
+            "pt-BR": "Ouvindo agora",
+            "ru": 'Слушаю сейчас'
         })
         .setType(ApplicationCommandType.User),
     async execute({ client, user, interaction }) {

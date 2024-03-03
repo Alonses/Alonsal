@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
         })
 
     if (pagina === 1) // Dados sobre informações de suporte
-        embed.setDescription(client.replace(client.tls.phrase(user, "manu.info.conteudo_2"), [client.emoji("dancando_elizabeth"), client.emoji("mc_bolo")]))
+        embed.setDescription(client.tls.phrase(user, "manu.info.conteudo_2", null, [client.emoji("dancando_elizabeth"), client.emoji("mc_bolo")]))
 
     if (pagina === 2) // Dados sobre fontes externas
         embed.setDescription(client.tls.phrase(user, "manu.info.conteudo_3"))

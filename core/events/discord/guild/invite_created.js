@@ -13,7 +13,7 @@ module.exports = async ({ client, invite }) => {
         guild.logger.invite_created = false
         await guild.save()
 
-        return client.notify(guild.logger.channel, { content: `@here\n${client.tls.phrase(guild, "mode.logger.permissao", 7)}` })
+        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Coletando dados sobre o evento
@@ -36,7 +36,7 @@ module.exports = async ({ client, invite }) => {
             },
             {
                 name: `${client.emoji(44)} **${client.tls.phrase(guild, "menu.botoes.convite")}: ${invite.code}**`,
-                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.replace(client.tls.phrase(guild, "mode.logger.limite_usos"), registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:** <#${registroAudita.target.channel.id}>`,
+                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.tls.phrase(guild, "mode.logger.limite_usos", null, registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:** <#${registroAudita.target.channel.id}>`,
                 inline: true
             }
         )
