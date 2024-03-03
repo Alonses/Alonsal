@@ -4,7 +4,7 @@ const { getUserGroup } = require('../../../database/schemas/Task_group')
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     if (!autor_original)
-        return interaction.reply({ content: "Você deve usar o comando </tasks add:1137792790143696992> para ter acesso a este botão!", ephemeral: true })
+        return interaction.reply({ content: client.tls.phrase(user, "util.tarefas.autor_nao_original"), ephemeral: true })
 
     const timestamp_lista = parseInt(dados.split(".")[1])
     const timestamp_task = parseInt(dados.split(".")[2])

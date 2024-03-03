@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_data.0" }]
 
     if (guild.inviter)
-        dados += `\n${client.emoji("aln_hoster")} **Adicionou-me ao servidor**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
+        dados += `\n${client.emoji("aln_hoster")} **${client.tls.phrase(user, "manu.data.hoster_alonsal")}**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
 
     if (reportes.length > 0)
         dados += `\n${client.emoji(6)} **${client.tls.phrase(user, "manu.guild_data.reportes_criados")}**\n\`${reportes.length > 1 ? `${reportes.length} ${client.tls.phrase(user, "manu.guild_data.reportes")}` : `1 ${client.tls.phrase(user, "manu.guild_data.reporte")}`}\`\n`

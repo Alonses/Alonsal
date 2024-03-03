@@ -122,10 +122,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const embed = new EmbedBuilder()
             .setTitle(`> Networking ${client.emoji(36)}`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(":warning: **| Ao confirmar a quebra de link este servidor será removido do grupo do network**.\n\nOs servidores listados abaixo continuarão com o link ativo, porém este servidor não fará mais parte do mesmo.")
+            .setDescription(client.tls.phrase(user, "manu.guild_data.descricao_quebra_link", 2))
             .setFields({
-                name: `:link: **Outros servidores no link:**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : "`Sem servidores`",
+                name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
+                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: true
             })
             .setFooter({
@@ -155,7 +155,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         if (guild.network.channel)
-            data.values.push({ name: "Remover canal", id: "none" })
+            data.values.push({ name: client.tls.phrase(user, "manu.data_guild.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
         data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel))

@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (advertencias.length < 2)
             return interaction.update({
-                content: `${client.emoji(47)} | É necessário definir pelo menos duas advertências customizadas para poder ativar esse recurso.`,
+                content: client.tls.phrase(user, "mode.warn.bloqueio_minimo", 47),
                 ephemeral: true
             })
 
@@ -92,7 +92,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar uma nova advertência
-            row.push({ id: "warn_configure_button", name: "Nova advertência", type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
+            row.push({ id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.nova_advertencia"), type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
 
         return interaction.update({
             components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
@@ -171,31 +171,31 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const guild = await client.getGuild(interaction.guild.id)
 
         const embed = new EmbedBuilder()
-            .setTitle(`> Advertências :octagonal_sign:`)
+            .setTitle(`> ${client.tls.phrase(user, "mode.warn.advertencias")} :octagonal_sign:`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription("```📣 Notificações em advertências\n\nDefina se eu irei notificar as novas advertências com um ping @here\nE se irei exibir quando as advertências forem apagadas!```")
+            .setDescription(client.tls.phrase(user, "mode.warn.descricao_notificacao_advertencia"))
             .setFields(
                 {
                     name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **Menções**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : "Sem canal definido"}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : client.tls.phrase(user, "mode.network.sem_canal")}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
                     inline: true
                 },
                 {
                     name: "⠀",
-                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion)} **Notificar remoção**`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion)} **${client.tls.phrase(user, "menu.botoes.notificar_remocao")}**`,
                     inline: true
                 },
                 { name: "⠀", value: "⠀", inline: true }
             )
             .setFooter({
-                text: "Defina as notificações para as advertências pelos botões abaixo",
+                text: client.tls.phrase(user, "mode.warn.editar_advertencia"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
 
         let row = client.create_buttons([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" },
-            { id: "guild_warns_button", name: "Menções", type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify), data: "8" },
-            { id: "guild_warns_button", name: "Notificar remoção", type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion), data: "10" }
+            { id: "guild_warns_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify), data: "8" },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.notificar_remocao"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion), data: "10" }
         ], interaction)
 
         return interaction.update({

@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     } else if (escolha === 9) {
 
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuild]))
-            return interaction.update({ content: ":passport_control: | Eu não posso ver a lista de convites sem a permissão `Gerenciar servidor` concedida.", ephemeral: true })
+            return interaction.update({ content: client.tls.phrase(user, "mode.invites.sem_permissao", 7), ephemeral: true })
 
         // Ativa ou desativa os convites rastreados
         if (typeof guild.conf.nuke_invites !== "undefined")

@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         await alvo.save()
 
         const link = guild.network.link
-        texto_retorno = `${client.defaultEmoji("guard")} | O usuário foi reportado com sucesso e a notificação foi enviada apenas para os servidores que fazem networking com este!`
+        texto_retorno = client.tls.phrase(user, "mode.report.anuncio_network", client.defaultEmoji("guard"))
         require('../../../auto/send_report')({ client, alvo, link })
     }
 

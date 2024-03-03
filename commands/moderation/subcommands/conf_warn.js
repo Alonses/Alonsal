@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     await guild.save()
 
     if (guild.conf.warn)
-        interaction.reply({ content: "🛑 | Os Warns estão habilitados nesse servidor! Agora ao usar o comando </warn> mencionando um usuário, ele será penalizado caso a quantidade de warns seja alcançada.\n\nVocê pode alterar a quantidade de warns e a ação que será tomada pelo </panel guild> a qualquer momento!", ephemeral: true })
+        client.tls.reply(interaction, user, "mode.warn.recurso_ativo", true, 10)
     else
-        interaction.reply({ content: "🛑 | Os Warns agora estão desligado nesse servidor!\nUse o comando novamente ou ative através do </panel guild> para poder usar as advertências", ephemeral: true })
+        client.tls.reply(interaction, user, "mode.warn.recurso_desligado", true, 0)
 }

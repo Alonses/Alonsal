@@ -22,10 +22,12 @@ async function atualiza_user_eraser(client) {
 
         const usuario = dados[i]
 
+        usuario.erase.erase_on + 1209600
+
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${usuario.uid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${usuario.erase.erase_on + 1209600}:R> ( <t:${usuario.erase.erase_on + 1209600}:f> )` })
 
-            client.sendDM(usuario, { data: `${client.defaultEmoji("person")} | Olá! Esperamos que essa mensagem alcance você bem\nEste é um aviso prévio que estamos enviando sobre os seus dados que foram salvos no Alonsal!\n\nNotamos que você está sem interagir conosco a bastante tempo já..\nPor isso, estamos movendo todos os dados relacionados a você que coletamos para exclusão!\n\nEstaremos realizando a exclusão de tudo <t:${usuario.erase.erase_on + 1209600}:R> ( <t:${usuario.erase.erase_on + 1209600}:f> ).\nCaso queira interromper essa ação, é necessário usar algum comando conosco antes do tempo terminar!\n\nEsperamos que tenha tido um bom divertimento conosco, obrigado pela confiança, e até uma próxima!! ;D` })
+            client.sendDM(usuario, { data: client.replace(client.tls.phrase(user, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person")), usuario.erase.erase_on + 1209600) })
 
             usuario.erase.valid = true
             await usuario.save()

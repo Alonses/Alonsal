@@ -18,8 +18,8 @@ module.exports = async ({ client, guild, user, dados }) => {
         foto_nova = await Canvas.loadImage(user_alvo.avatarURL({ dynamic: true }))
 
         // Desenhando no canvas
-        context.drawImage(foto_antiga, 0, 0, 500, 500);
-        context.drawImage(foto_nova, 500, 0, 500, 500);
+        context.drawImage(foto_antiga, 0, 0, 500, 500)
+        context.drawImage(foto_nova, 500, 0, 500, 500)
 
         // Gerando a imagem para poder anexar ao canvas
         attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })

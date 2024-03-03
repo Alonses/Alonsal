@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n").slice(0, 1000)}\`\`\``
 
     if (warns.length > 0)
-        descricao += `\`\`\`💂‍♂️ | ${client.tls.phrase(user, "mode.report.com_registro")}\`\`\``
+        descricao += `\`\`\`${client.tls.phrase(user, "mode.report.com_registro", 58)}\`\`\``
 
     const infos_user = new EmbedBuilder()
         .setTitle(`> ${apelido}`)

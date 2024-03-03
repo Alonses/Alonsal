@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
 
         const obj = {
-            content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "🔍 | Não há usuários com advertências no servidor!",
+            content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.warn.sem_usuarios", 1),
             ephemeral: true
         }
 
@@ -30,12 +30,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 pagina--
 
             const embed = new EmbedBuilder()
-                .setTitle("> Usuários com advertências 🛑")
+                .setTitle(`${client.tls.phrase(user, "mode.warn.usuarios_advertidos_titulo")} 🛑`)
                 .setColor(client.embed_color(user.misc.color))
                 .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                .setDescription("Todos os membros com advertências ativas no momento estão listados abaixo\n\nSelecione um para gerenciar as advertências que o membro recebeu.")
+                .setDescription(client.tls.phrase(user, "mode.warn.usuarios_advertidos_descricao"))
                 .setFooter({
-                    text: "Selecione um membro abaixo para gerenciar suas advertências neste servidor.",
+                    text: client.tls.phrase(user, "mode.warn.selecionar_usuario_advertido"),
                     iconURL: interaction.user.avatarURL({ dynamic: true })
                 })
 
@@ -78,7 +78,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     if (id_membros_guild.includes(user.uid)) users_ids.push(user.uid)
 
                 const obj = {
-                    content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "🔍 | Não há usuários reportados presentes no servidor!",
+                    content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.report.sem_usuarios_report", 1),
                     ephemeral: true
                 }
 
@@ -92,12 +92,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                             pagina--
 
                         const embed = new EmbedBuilder()
-                            .setTitle("> Usuários reportados 💂‍♂️")
+                            .setTitle(`${client.tls.phrase(user, "mode.report.usuarios_reportados_titulo")} 💂‍♂️`)
                             .setColor(client.embed_color(user.misc.color))
                             .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                            .setDescription("Todos os membros que receberam reportes externos estão listados abaixo\n\nSelecione um para verificar seus reportes recebidos em outros servidores.")
+                            .setDescription(client.tls.phrase(user, "mode.report.descricao_busca_reporte"))
                             .setFooter({
-                                text: "Selecione um membro abaixo para gerenciar seus reportes de outros servidores.",
+                                text: client.tls.phrase(user, "mode.report.selecionar_membro"),
                                 iconURL: interaction.user.avatarURL({ dynamic: true })
                             })
 

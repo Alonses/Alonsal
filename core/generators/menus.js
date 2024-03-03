@@ -38,7 +38,7 @@ const translate = {
     "remove_warn": "menu.menus.escolher_usuario",
     "report_browse": "menu.menus.escolher_usuario",
     "warn_browse": "menu.menus.escolher_usuario",
-    "spam_link_panel": "Escolha um link suspeito!"
+    "spam_link_panel": "menu.menus.escolher_link"
 }
 
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
@@ -158,7 +158,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 // Listando todas as opções para customização de perfil
                 nome_label = `Customização de perfil ${valor}`
                 emoji_label = client.emoji(faustop)
-                descricao_label = `Ver mais detalhes`
+                descricao_label = client.tls.phrase(user, "menu.botoes.mais_detalhes")
                 valor_label = `${alvo}|${interaction.user.id}.${valor}`
             }
 
@@ -248,7 +248,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 emoji_label = "🔗"
                 valor_label = `${alvo}|${valor.sid}.${valor.timestamp}`
                 nome_label = valor.link.length > 20 ? `${valor.link.slice(0, 18)}...` : valor.link
-                descricao_label = `Registrado em ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
+                descricao_label = `${client.tls.phrase(user, "mode.link_suspeito.registrado_em")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
             }
 
             if (alvo === "static_color") {
@@ -302,7 +302,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
 
     if (data.submenu) // Tempo para remover advertências
         if (data.submenu == 16)
-            titulo_menu = "Defina o tempo para remover a advertência!"
+            titulo_menu = client.tls.phrase(user, "mode.warn.definir_tempo")
 
     let min = 1, max = 1
 

@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         let advertencias_server = await checkUserGuildWarned(id_guild), row
 
         const obj = {
-            content: "✅ | As advertências do usuário neste servidor foram todas removidas.",
+            content: client.tls.phrase(user, "mode.warn.advertencias_removidas", 10),
             embeds: [],
             components: [],
             ephemeral: true
@@ -50,17 +50,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
             const embed = new EmbedBuilder()
-                .setTitle(`> Advertências reiniciadas :inbox_tray:`)
+                .setTitle(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas"))
                 .setColor(0xED4245)
-                .setDescription(`As advertências de <@${id_alvo}> foram reiniciadas!\nO usuário agora não possui mais advertências neste servidor.`)
+                .setDescription(client.replace(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas_descricao"), id_alvo))
                 .addFields(
                     {
-                        name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
+                        name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                         value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                        name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
                         value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }

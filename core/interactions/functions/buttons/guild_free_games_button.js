@@ -76,7 +76,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Desabilitando o botão de escolher cargos se não tiver permissão
         if (! await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
             return interaction.update({
-                content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
+                content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 ephemeral: true
             })
 

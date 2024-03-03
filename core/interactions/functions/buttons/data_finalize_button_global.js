@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     atualiza_user_eraser(client)
 
     client.reply(interaction, {
-        content: `${client.emoji(7)} | Os seus dados foram marcados para exclusão <t:${client.timestamp() + 1209600}:R>\n\nAté lá, você será ignorado no ranking de XP do Alonsal, caso deseje manter os dados, você deverá usar novamente um comando antes do tempo expirar.`,
+        content: client.replace(client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7), client.timestamp() + 1209600),
         components: [],
         ephemeral: true
     })

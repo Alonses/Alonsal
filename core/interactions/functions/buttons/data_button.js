@@ -25,9 +25,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 3) {
 
         const embed = new EmbedBuilder()
-            .setTitle(`> Dados salvos de você ${client.defaultEmoji("person")}`)
+            .setTitle(`> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription("Todos os seus dados serão marcados para exclusão.\n\nApós a confirmação, o Alonsal irá mover seus dados para uma quarentena de 14 dias, e após isso, todos os dados relacionados a você serão removidos de nossa base de dados.\n\nAntes do prazo se expirar, você deverá usar um comando nosso novamente para evitar que seus dados sejam removidos.\n\nPor padrão, todos os usuários possuem um tempo de inatividade que aciona essa funcionalidade de expiração, caso deseje manter seus dados por mais tempo, considere retornar e aumentar o tempo de inatividade.")
+            .setDescription(client.tls.phrase(user, "manu.data.descricao_tempo_inatividade"))
 
         const row = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "data" },

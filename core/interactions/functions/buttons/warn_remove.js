@@ -34,12 +34,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (warns_guild[warns_guild.length - 1].rank !== id_alvo)
             return interaction.update({
-                content: "🧾 | Essa não é a última advertência criada, por gentileza, prossiga até a última e exclua ela antes."
+                content: client.tls.phrase(user, "mode.warn.trava_advertencia_2", client.defaultEmoji("paper"))
             })
 
         if (id_alvo === 0)
             return interaction.update({
-                content: "🧾 | Essa advertência não pode ser excluída! Configure ela ou desative o recurso de advertências."
+                content: client.tls.phrase(user, "mode.warn.trava_advertencia", client.defaultEmoji("paper"))
             })
 
         // Criando os botões para o menu de remoção de strikes

@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction }) => {
     // Aumentando o tempo de duração da resposta
     await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
-    fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}`)
+    fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}&now=true`)
         .then(response => response.json())
         .then(async res => {
 

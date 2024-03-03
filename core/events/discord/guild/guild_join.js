@@ -29,8 +29,12 @@ module.exports = async ({ client, guild }) => {
             // Salvando o ID do usuário que adicionou o bot ao servidor
             if (user) {
 
-                internal_guild.inviter = user.id
-                await internal_guild.save()
+                // Apenas contabiliza o hoster caso o servidor possua muitos membros
+                if ((guild.memberCount - 1) > 20) {
+                    internal_guild.inviter = user.id
+                    await internal_guild.save()
+                }
+
                 const inviter = await client.getUser(user.id)
 
                 // Enviando um Embed ao usuário que adicionou o bot ao servidor
