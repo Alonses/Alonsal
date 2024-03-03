@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Permissão para atualizar os cargos de membros do servidor
         if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
-                content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
+                content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 ephemeral: true
             })
 
@@ -59,7 +59,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         ]
 
         if (cargos.atribute)
-            botoes.push({ id: "role_assigner", name: "Remover todos", type: 3, emoji: client.emoji(13), data: "4" })
+            botoes.push({ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.remover_todos"), type: 3, emoji: client.emoji(13), data: "4" })
 
         const multi_select = true
         let row = client.menu_navigation(data, pagina || 0)
@@ -77,7 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Permissão para atualizar os cargos de membros do servidor
         if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
-                content: `${client.emoji(7)} | Não é possível escolher cargos pelos menus sem a permissão "Gerenciar cargos" concedida.\nPor gentileza, conceda a permissão, ou faça a configuração através do comando </notify config:1018632996787589283>`,
+                content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 ephemeral: true
             })
 
@@ -87,7 +87,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "role_assigner_ignore#role",
             reback: "browse_button.role_assigner",
             operation: operacao,
-            values: [{ name: "Se possuir um cargo", id: "all" }]
+            values: [{ name: client.tls.phrase(user, "mode.roles.se_possuir_cargo"), id: "all" }]
         }
 
         const cargos_server = await client.getGuildRoles(interaction)
@@ -103,7 +103,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         ]
 
         if (cargos.ignore)
-            botoes.push({ id: "role_assigner", name: "Remover todos", type: 3, emoji: client.emoji(13), data: "5" })
+            botoes.push({ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.remover_todos"), type: 3, emoji: client.emoji(13), data: "5" })
 
         const multi_select = true
         let row = client.menu_navigation(data, pagina || 0)

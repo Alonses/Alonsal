@@ -17,8 +17,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         let row = client.create_buttons([
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "data_user_button", name: "Globalmente", type: 1, emoji: client.defaultEmoji("earth"), data: "2" },
-            { id: "data_user_button", name: "Por servidor", type: 1, emoji: client.emoji(5), data: "3" }
+            { id: "data_user_button", name: client.tls.phrase(user, "menu.botoes.globalmente"), type: 1, emoji: client.defaultEmoji("earth"), data: "2" },
+            { id: "data_user_button", name: client.tls.phrase(user, "menu.botoes.por_servidor"), type: 1, emoji: client.emoji(5), data: "3" }
         ], interaction)
 
         return interaction.update({

@@ -25,10 +25,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         client.verifyUserWarnRoles(id_alvo, interaction.guild.id)
 
         if (user_warns.length - 1 > 0)
-            row.push({ id: "panel_guild_browse_warns", name: "Remover outras", type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` },)
+            row.push({ id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.remover_outras"), type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` },)
 
         const obj = {
-            content: "✅ | Advertência removida com sucesso!",
+            content: client.tls.phrase(user, "mode.warn.advertencia_removida", 10),
             embeds: [],
             components: [],
             ephemeral: true
@@ -41,15 +41,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
 
-            let warns_restantes = `\nO usuário agora possui outras \`${user_warns.length - 1} advertências\` ativas neste servidor`
+            let warns_restantes = client.replace(client.tls.phrase(user, "mode.warn.advertencias_restantes"), user_warns.length - 1)
 
             if ((user_warns.length - 1) === 1)
-                warns_restantes = `\nO usuário possui apenas outra \`1 advertência\` ativa neste servidor`
+                warns_restantes = client.tls.phrase(user, "mode.warn.advertencia_restante")
 
             const embed = new EmbedBuilder()
-                .setTitle(`> Uma Advertência foi removida! :inbox_tray:`)
+                .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
                 .setColor(0xED4245)
-                .setDescription(`Uma advertência de <@${id_alvo}> foi removida!${warns_restantes}`)
+                .setDescription(`${client.replace(client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida"), id_alvo)}${warns_restantes}`)
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                        name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
                         value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }
@@ -93,38 +93,38 @@ module.exports = async ({ client, user, interaction, dados }) => {
         let motivo_remocao = ""
 
         if (interaction.options?.getString("reason"))
-            motivo_remocao = `\`\`\`👨‍⚖️ | Motivo para remoção:\n\n${interaction.options?.getString("reason")}\`\`\``
+            motivo_remocao = `\`\`\`👨‍⚖️ | ${client.tls.phrase(user, "mode.warn.motivo_remocao")}:\n\n${interaction.options?.getString("reason")}\`\`\``
 
         // Exibindo os detalhes da advertência escolhida
         const embed = new EmbedBuilder()
             .setTitle(`Verificando advertência :inbox_tray:`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`\`\`\`fix\n📠 | Descrição fornecida:\n\n${user_warn.relatory}\`\`\`\n${motivo_remocao}`)
+            .setDescription(`${client.replace(client.tls.phrase(user, "mode.warn.descricao_advertencia"), user_warn.relatory)}${motivo_remocao}`)
             .addFields(
                 {
-                    name: `${client.defaultEmoji("person")} **Membro**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick || "Sem nome"}\`\n( <@${id_alvo}> )`,
+                    name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {
-                    name: `${client.defaultEmoji("guard")} **Moderador**`,
-                    value: `${client.emoji("icon_id")} \`${user_warn.assigner}\`\n\`${user_warn.assigner_nick || "Sem nome"}\`\n( <@${user_warn.assigner}> )`,
+                    name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.moderador")}**`,
+                    value: `${client.emoji("icon_id")} \`${user_warn.assigner}\`\n\`${user_warn.assigner_nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${user_warn.assigner}> )`,
                     inline: true
                 },
                 {
-                    name: `${client.emoji("time")} **Aplicado <t:${user_warn.timestamp}:R>**`,
+                    name: `${client.emoji("time")} **${client.tls.phrase(user, "mode.warn.aplicado")} <t:${user_warn.timestamp}:R>**`,
                     value: `<t:${user_warn.timestamp}:f>`,
                     inline: true
                 }
             )
             .setFooter({
-                text: "Escolha as opções abaixo para gerenciar essa advertência",
+                text: client.tls.phrase(user, "mode.warn.gerenciar_advertencia_escolha"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
 
         const botoes = [
             { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0|${id_alvo}.${timestamp}` },
-            { id: "warn_user_verify", name: "Remover advertência", type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
+            { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_advertencia"), type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
         ]
 
         return interaction.update({

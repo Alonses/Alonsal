@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Verificando as permissões para ver membros banidos do servidor
     if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
         return interaction.update({
-            content: ":octagonal_sign: | Eu não possuo a permissão de `Banir membros` para poder ver o histórico de banimentos do servidor!\nSem essa permissão também não posso fazer a migração de membros.",
+            content: client.tls.phrase(user, "mode.report.sem_permissao_migrate", 7),
             ephemeral: true
         })
 

@@ -43,11 +43,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const indice_warn = active_user_warns.length > guild_warns.length ? guild_warns.length - 1 : active_user_warns.length - 1
 
     let indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
-    let texto_rodape = "Essa advertência não resultou em uma punição no servidor."
+    let texto_rodape = client.tls.phrase(user_alvo, "mode.warn.punicao_nao_aplicada")
 
     if (guild_warns[indice_warn].action)
         if (guild_warns[indice_warn].action !== "none")
-            texto_rodape = "Essa advertência também concedeu uma punição no servidor."
+            texto_rodape = client.tls.phrase(user_alvo, "mode.warn.punicao_aplicada")
 
     // Embed de aviso para o membro que recebeu a advertência
     const embed_user = new EmbedBuilder()
@@ -56,17 +56,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .setDescription(client.replace(client.tls.phrase(user_alvo, "mode.warn.advertencia_recebida"), [interaction.guild.name, user_warn.relatory]))
         .addFields(
             {
-                name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user_alvo, "mode.warn.moderador_responsavel")}**`,
                 value: `${client.emoji("icon_id")} \`${id_executor}\`\n\`${interaction.user.username}\`\n( <@${id_executor}> )`,
                 inline: true
             },
             {
-                name: `${client.emoji("banidos")} **Punição**`,
+                name: `${client.emoji("banidos")} **${client.tls.phrase(user_alvo, "menu.botoes.penalidade")}**`,
                 value: client.verifyWarnAction(guild_warns[indice_warn], guild),
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${active_user_warns.length} / ${indice_matriz}**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(user_alvo, "mode.warn.advertencias")}: ${active_user_warns.length} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
@@ -86,7 +86,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warn.relatory}\`\`\``)
         .addFields(
             {
-                name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
+                name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
@@ -96,14 +96,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(47)} **Advertências: ${active_user_warns.length} / ${indice_matriz}**`,
+                name: `${client.emoji(47)} **${client.tls.phrase(guild, "mode.warn.advertencias")}: ${active_user_warns.length} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
             }
         )
         .addFields(
             {
-                name: `${client.defaultEmoji("guard")} **Moderador responsável**`,
+                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
                 value: `${client.emoji("icon_id")} \`${id_executor}\`\n\`${interaction.user.username}\`\n( <@${id_executor}> )`,
                 inline: true
             }
@@ -112,12 +112,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (guild.warn.timed) { // Advertência com prazo de expiração
         embed_guild.addFields({
-            name: `${client.defaultEmoji("time")} **Expiração**`,
-            value: `**Será removida em \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
+            name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "menu.botoes.expiracao")}**`,
+            value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${client.tls.phrase(guild, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
             inline: true
         })
             .setFooter({
-                text: "Você pode desligar a expiração de advertências no /painel guild pela guia de \"🛑 Advertências\"",
+                text: client.tls.phrase(guild, "mode.warn.dica_expiracao_rodape"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
     } else
@@ -130,7 +130,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         )
 
     embed_guild.addFields({
-        name: `${client.emoji("banidos")} **Punição**`,
+        name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
         value: client.verifyWarnAction(guild_warns[indice_warn], guild),
         inline: true
     })
@@ -166,7 +166,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }
         } else
             client.notify(guild.warn.channel, { // Sem permissão para gerenciar cargos
-                content: ":passport_control: | Uma advertência com cargos foi criada, porém eu não possuo permissões para `Gerenciar cargos`,\no cargo não foi atribuído ao membro que recebeu a advertência. @here",
+                content: client.tls.phrase(guild, "mode.warn.sem_permissao_cargos", 7),
             })
     }
 

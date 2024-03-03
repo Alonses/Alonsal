@@ -14,7 +14,6 @@ module.exports = async ({ client, user, interaction }) => {
         await guild.save()
     }
 
-
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.denuncias_server")} ${client.defaultEmoji("guard")}`)
         .setColor(client.embed_color(user.misc.color))

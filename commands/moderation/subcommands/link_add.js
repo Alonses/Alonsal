@@ -9,27 +9,21 @@ module.exports = async ({ client, user, interaction }) => {
     try { // Verificando se o link é válido
         let url = new URL(link)
     } catch (err) {
-        return interaction.reply({
-            content: `${client.emoji(0)} | O texto informado não é um link!\nNão é possível salvar esse valor como um link suspeito.`,
-            ephemeral: true
-        })
+        return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, 0)
     }
 
     if (await verifySuspiciousLink(link)) // Link já existe
-        return interaction.reply({
-            content: `${client.emoji(0)} | O link informado já está registrado por aqui!\nNão é possível salvar esse link novamente.`,
-            ephemeral: true
-        })
+        return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, 0)
 
     const timestamp = client.timestamp()
     await registerCachedSuspiciousLink(link, interaction.guild.id, timestamp)
 
     const embed = new EmbedBuilder()
-        .setTitle("> Registrando um novo link suspeito :link:")
+        .setTitle(client.tls.phrase(user, "mode.link_suspeito.registrando_link_titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`Você está informando que o link abaixo é malicioso:\`\`\`fix\n${link}\`\`\`\nAo reportar este link ao Alonsal, todas as mensagens que forem enviadas e contiverem esse link em um servidor com o recurso de \`🔗 Links suspeitos\` habilitado...\n\nImplicará na exclusão imediata da mensagem e penalização do autor com base no tratamento do \`📛 Anti-spam\`.`)
+        .setDescription(client.replace(client.tls.phrase(user, "mode.link_suspeito.registrando_link_descricao"), link))
         .setFooter({
-            text: "Use os botões abaixo para confirmar a intenção",
+            text: client.tls.phrase(user, "mode.link_suspeito.rodape_opcoes"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 

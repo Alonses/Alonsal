@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             ], interaction)
 
         return client.reply(interaction, {
-            content: "🛑 | O Link selecionado não foi excluído, operação cancelada.",
+            content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_exclusao", 0),
             embeds: [],
             components: [row],
             ephemeral: true
@@ -38,7 +38,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
         client.notify(process.env.channel_feeds, { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente!\n( \`${link.link.split("").join(" ")}\` )` })
-        client.notify(guild.logger.channel, { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente neste servidor!\n( \`${link.link.split("").join(" ")}\` )` })
+        client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(guild, "mode.link_suspeito.excluido_manual", [44, 13]), link.link.split("").join(" ")) })
 
         // Excluindo o link suspeito
         await dropSuspiciousLink(link.link)
@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             ], interaction)
 
         return client.reply(interaction, {
-            content: `🔗 | O Link suspeito foi excluído!\n\nUm relatório foi enviado ao <#${guild.logger.channel}> avisando sobre a remoção.`,
+            content: client.replace(client.tls.phrase(user, "mode.link_suspeito.aviso_remocao", 44), guild.logger.channel),
             embeds: [],
             components: [row],
             ephemeral: true

@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         await dropSuspiciousLink(link.link)
 
         return client.reply(interaction, {
-            content: "🛑 | O Link informado não foi registrado, operação cancelada.",
+            content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_adicao", 0),
             embeds: [],
             components: [],
             ephemeral: true
@@ -40,10 +40,10 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
         client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente!\n( \`${link.link.split("").join(" ")}\` )` })
-        client.notify(guild.logger.channel, { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente neste servidor!\n( \`${link.link.split("").join(" ")}\` )` })
+        client.notify(guild.logger.channel, { content: client.replace(client.tls.phrase(user, "mode.link_suspeito.adicionado_manualmente", [44, 10]), link.link.split("").join(" ")) })
 
         return client.reply(interaction, {
-            content: `🔗 | O Link suspeito informado foi registrado!\n\nUm relatório foi enviado ao <#${guild.logger.channel}> avisando sobre a adição.`,
+            content: client.replace(client.tls.phrase(user, "mode.link_suspeito.aviso_adicao", [44, 10]), guild.logger.channel),
             embeds: [],
             components: [],
             ephemeral: true
@@ -55,17 +55,17 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
         if (links.length < 1) // Sem links suspeitos registrados no servidor
             return interaction.reply({
-                content: `${client.emoji(1)} | Não há links suspeitos identificados e reportados neste servidor!\nVocê pode adicionar um link suspeito através do comando </link add:1020561785620803674> caso acredite que ele seja malicioso!`,
+                content: client.tls.phrase(user, "mode.link_suspeito.sem_links", 1),
                 ephemeral: true
             })
 
         // Navegando pelos links suspeitos do servidor
         const embed = new EmbedBuilder()
-            .setTitle("> Navegando por links suspeitos 🔗")
+            .setTitle(client.tls.phrase(user, "mode.link_suspeito.navegando_titulo"))
             .setColor(client.embed_color(user.misc.color))
-            .setDescription("Links suspeitos são links que consideramos maliciosos e que podem trazer problemas para usuários que clicarem.\n\nGeralmente esses links são usados para conceder acesso a sua conta Discord ou de outras redes para pessoas má intencionadas, sem o consentimento do usuário que veio a clicar por engano, acreditando ser um link oficial.")
+            .setDescription(client.tls.phrase(user, "mode.link_suspeito.descricao_links_suspeitos"))
             .setFooter({
-                text: "Use o menu abaixo para navegar pelos links suspeitos do servidor!",
+                text: client.tls.phrase(user, "mode.link_suspeito.navegar_links"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
 

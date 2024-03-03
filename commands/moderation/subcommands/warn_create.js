@@ -14,11 +14,8 @@ module.exports = async ({ client, user, interaction }) => {
     // Verificando a quantidade de advertências customizadas no servidor
     const warns_guild = await listAllGuildWarns(interaction.guild.id)
 
-    if (warns_guild.length < 2)
-        return interaction.reply({
-            content: "🕵️‍♂️ | Antes de executar esse comando, configure as advertências através do </panel guild:1107163338930126869> na guia das `🛑 Advertências`,\npara poder definir penalidades e aplicação de cargos ao usuário.\n\nÉ necessário que pelo menos duas advertências sejam criadas para poder usar esse comando.",
-            ephemeral: true
-        })
+    if (warns_guild.length < 2) // Warns não configuradas no servidor
+        return client.tls.reply(interaction, user, "mode.warn.nao_configurado", true, 60)
 
     const guild_member = await client.getMemberGuild(interaction.guild.id, interaction.options.getUser("user").id)
     const guild_executor = await client.getMemberGuild(interaction.guild.id, interaction.user.id)
@@ -44,7 +41,7 @@ module.exports = async ({ client, user, interaction }) => {
     const membro_guild = await client.getMemberGuild(interaction, id_alvo)
 
     if (!guild_member) // Membro saiu do servidor antes de acionar o comando
-        return interaction.reply({ content: "🔍 | O membro mencionado não faz mais parte desse servidor...\nNão é possível criar uma advertência para ele.", ephemeral: true })
+        return client.tls.reply(interaction, user, "mode.warn.membro_desconhecido", true, 1)
 
     if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
         return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))

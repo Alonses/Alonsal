@@ -3,6 +3,7 @@ const { getRoleAssigner } = require('../database/schemas/Role_assigner')
 let membros_sv = []
 
 let operacao_ativa = false
+let segundo_plano = false
 let updates = [0, 0, 0, 0, 0]
 let emoji_dancante
 let cargos
@@ -16,13 +17,14 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
     if (force_stop) {
 
         interaction.update({
-            content: `:octagonal_sign: | Operação cancelada\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\``,
+            content: client.replace(client.tls.phrase(user, "mode.roles.operacao_cancelada", 0), [updates[1], updates[2], updates[4], updates[3]]),
             components: []
         })
 
         updates = [0, 0, 0, 0, 0]
         membros_sv = []
         operacao_ativa = 0
+        segundo_plano = false
 
         clearTimeout(repeticao)
         return
@@ -41,7 +43,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
         updates[0] = membros_sv.length
 
         await interaction.update({
-            components: [client.create_buttons([{ id: "role_assigner", name: "Interromper operação", type: 3, emoji: client.emoji(13), data: "11" }], interaction)],
+            components: [client.create_buttons([{ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.interromper_operacao"), type: 3, emoji: client.emoji(13), data: "11" }], interaction)],
             ephemeral: true
         })
 
@@ -49,7 +51,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
         alterar_users(client, user, interaction, 0)
     } else
         interaction.update({
-            content: ":hotsprings: | Há uma operação ativa no momento",
+            content: client.tls.phrase(user, "mode.roles.operacao_ativa", 4),
             ephemeral: true
         })
 }
@@ -104,20 +106,29 @@ async function alterar_users(client, user, interaction, contador) {
         membros_sv.shift()
 
         if (membros_sv.length > 0) {
-            if ((timestamp - client.timestamp()) < 850)
-                interaction.editReply({ content: `${emoji_dancante} | Atualizando usuários: \`${contador} de ${updates[0]}\`\n( Término estimado <t:${timestamp}:R> )` })
+            if ((timestamp - client.timestamp()) < 600)
+                interaction.editReply({ content: client.replace(client.tls.phrase(user, "mode.roles.atualizando_usuarios", emoji_dancante), [contador, updates[0], timestamp]) })
+            else if (!segundo_plano) {
+
+                // Operação entrando em segundo plano, sem atualização de alterações
+                segundo_plano = true
+                interaction.editReply({ content: client.replace(client.tls.phrase(user, "mode.roles.pin_segundo_plano", emoji_dancante), timestamp) })
+
+                client.sendDM(user, { data: client.replace(client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante), timestamp) })
+            }
 
             alterar_users(client, user, interaction, contador)
         } else {
             operacao_ativa = 0
 
-            if ((timestamp - client.timestamp()) < 850)
+            if (!segundo_plano)
                 interaction.editReply({
-                    content: `:checkered_flag: | Operação concluída\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\``,
+                    content: client.replace(client.tls.phrase(user, "mode.roles.concluido", 59), [updates[1], updates[2], updates[4], updates[3]]),
                     components: []
                 })
 
-            client.sendDM(user, { data: `:checkered_flag: | Operação concluída!\`\`\`fix\n👤Usuários atualizados: ${updates[1]}\n🚯Usuários ignorados: ${updates[2]} (já possuem o cargo)\n🚯Usuários ignorados: ${updates[4]} (restrições de cargos definidos)\n🤖Bots ignorados: ${updates[3]}\`\`\`` })
+            segundo_plano = false
+            client.sendDM(user, { data: client.replace(client.tls.phrase(user, "mode.roles.concluido", 59), [updates[1], updates[2], updates[4], updates[3]]) })
         }
     }, 1500)
 }
