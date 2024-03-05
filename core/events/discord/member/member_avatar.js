@@ -77,14 +77,15 @@ envia_logger = (client, id_alvo, objeto) => {
 
         guilds.forEach(async guild => {
 
-            // Buscando as guilds com o log ativo
+            // Buscando as guilds com o evento de att de avatar ativo
             const internal_guild = await client.getGuild(guild.id)
 
-            if (internal_guild.conf.logger) {
+            // Notificando a guild sobre a alteração do avatar de um membro
+            if (internal_guild.logger.member_image) {
                 const user = await guild.members.fetch(id_alvo)
                     .catch(() => { return null })
 
-                if (user) // Notificando a guild sobre a alteração da foto de um membro
+                if (user)
                     client.notify(internal_guild.logger.channel, objeto)
             }
         })

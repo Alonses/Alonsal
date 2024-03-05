@@ -125,6 +125,20 @@ async function updateUserRank() {
     }
 }
 
+// Define um tempo de expiração para todos os usuários sem tempo definido no escopo de servidor
+async function getUnknowLastInteraction(client) {
+
+    const users = await model.find({ "erase.erase_on": null })
+
+    for (let i = 0; i < users.length; i++) {
+
+        const usuario = users[i]
+        usuario.erase.erase_on = client.timestamp() + 2419200
+
+        await usuario.save()
+    }
+}
+
 module.exports.Rankerver = model
 module.exports = {
     getAllUsers,
@@ -138,5 +152,6 @@ module.exports = {
     dropUserRankServer,
     dropAllRankGuild,
     dropAllUserGuildRanks,
-    dropUnknownRankServers
+    dropUnknownRankServers,
+    getUnknowLastInteraction
 }
