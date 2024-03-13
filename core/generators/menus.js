@@ -26,6 +26,7 @@ const translate = {
     "data_guild_timeout": "menu.menus.escolher_expiracao",
     "data_user_global_timeout": "menu.menus.escolher_inatividade",
     "data_user_guild_timeout": "menu.menus.escolher_inatividade",
+    "strike_config_timeout": "menu.menus.escolher_timeout",
     "guild_spam_strikes": "menu.menus.escolher_numero",
     "static_color": "menu.menus.escolher_cor",
     "select_channel": "menu.menus.escolher_canal",
@@ -33,6 +34,7 @@ const translate = {
     "select_role": "menu.menus.escolher_cargo",
     "select_language": "menu.menus.escolher_idioma",
     "select_events": "menu.menus.escolher_eventos",
+    "select_action": "menu.menus.escolher_acao",
     "select_link": "menu.menus.escolher_guilds",
     "remove_report": "menu.menus.escolher_usuario",
     "remove_warn": "menu.menus.escolher_usuario",
@@ -169,7 +171,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo === "warn_config_timeout" || alvo === "data_guild_timeout" || alvo.includes("data_user_")) {
+            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo.includes("config_timeout") || alvo === "data_guild_timeout" || alvo.includes("data_user_")) {
                 // Listando as opções de tempo de mute para o anti-spam
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
@@ -198,7 +200,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     if (valor.id === "all")
                         emoji_label = "🃏"
 
-                    if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
+                    if (alvo.includes("warn_config") || alvo.includes("strike_config")) // Definindo uma punição para as advertências e strikes
                         valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu.replace("x/", "")}`
 
                 } else if (alvo.includes("#language")) { // Idioma
@@ -206,16 +208,23 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     emoji_label = languagesMap[valor][3]
                     valor_label = `${alvo.replace("#", "_")}|${valor}`
                 } else if (alvo.includes("#events")) { // Eventos variados
+
                     nome_label = `${loggerMap[valor.type]} ${client.tls.phrase(user, `menu.events.${valor.type}`)}`
                     emoji_label = valor.status ? client.emoji("mc_approve") : client.emoji("mc_oppose")
                     valor_label = `${alvo.replace("#", "_")}|${valor.type}`
                     descricao_label = valor.status ? client.tls.phrase(user, "menu.status.ativado") : client.tls.phrase(user, "menu.status.desativado")
 
-                    if (alvo.includes("warn_config")) // Definindo uma punição para as advertências
-                        valor_label = `${alvo.replace("#", "_")}|${valor.type}.${valor.id_warn}`
-
                     if (data.submenu) // Função com um submenu inclusa
                         valor_label = `${alvo.replace("#", "_")}|${valor.type}.${data.submenu}`
+
+                } else if (alvo.includes("#action")) {
+
+                    nome_label = `${loggerMap[valor.type]} ${client.tls.phrase(user, `menu.events.${valor.type}`)}`
+                    emoji_label = valor.status ? client.emoji("mc_approve") : client.emoji("mc_oppose")
+                    valor_label = `${alvo.replace("#", "_")}|${valor.type}`
+                    descricao_label = client.tls.phrase(user, "menu.menus.escolher_esse")
+
+                    valor_label = `${alvo.replace("#", "_")}|${valor.type}.${valor.id_alvo}`
 
                 } else if (alvo.includes("#link")) { // Linkagem de servidores
                     nome_label = valor.name.length > 20 ? `${valor.name.slice(0, 18)}...` : valor.name

@@ -6,5 +6,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await guild.save()
 
     // Redirecionando o evento
-    require('../../chunks/panel_guild_anti_spam')({ client, user, interaction })
+    const pagina_guia = 1
+    require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, pagina_guia })
 }

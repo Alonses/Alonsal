@@ -103,7 +103,8 @@ const schema = new mongoose.Schema({
         timeout: { type: Number, default: 2 },
         data: { type: String, default: null },
         trigger_amount: { type: Number, default: 5 },
-        suspicious_links: { type: Boolean, default: false }
+        suspicious_links: { type: Boolean, default: false },
+        channel: { type: String, default: null }
     },
     network: {
         link: { type: String, default: null },

@@ -5,7 +5,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
     let entradas_spamadas = ""
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode expulsar membros
-    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.KickMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
+    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.BanMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), user_guild), embeds: [embed] })
 
     // Listando as mensagens consideras spam e excluindo elas
@@ -34,12 +34,12 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
     if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
         embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
 
-    // Expulsando o usuário repetente de spam
-    user_guild.kick(client.tls.phrase(guild, "mode.spam.strikes_kick"))
+    // Banindo o membro capturado pelo spam
+    user_guild.ban(client.tls.phrase(guild, "mode.spam.strikes_ban"))
         .then(async () => {
 
             const obj = {
-                content: client.tls.phrase(guild, "mode.spam.ping_expulsao", null, user_guild),
+                content: client.tls.phrase(guild, "mode.spam.ping_expulsao", null, user_guild.nickname),
                 embeds: [embed]
             }
 
@@ -48,7 +48,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
             client.notify(guild.logger.channel, obj)
 
-            let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_kick", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+            let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_ban", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
             if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`

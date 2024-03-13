@@ -1,6 +1,8 @@
-const { ChannelType, PermissionsBitField } = require('discord.js')
+const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
 
-const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
+const { loggerMap } = require('../../../database/schemas/Guild')
+
+const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Strikes_guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -8,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     // Sem canal de avisos definido, solicitando um canal
-    if (!guild.logger.channel) {
+    if (!guild.spam.channel && !guild.logger.channel) {
         reback = "panel_guild.0"
         operacao = 6
     }
@@ -16,9 +18,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
     // 1 -> Ativar ou desativar o módulo anti-spam
-    // 2 -> Punições por níveis
+
     // 3 -> Links suspeitos
-    // 4 -> Tempo de mute padrão
+    // 4 -> Sub-menu para configurar os Strikes
+
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
     // 7 -> Ativar ou desativar as notificações do anti-spam
@@ -30,6 +33,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 ephemeral: true
             })
+
+        if (!guild.spam.channel && !guild.logger.channel) // Sem canal definido para ativar o anti-spam
+            return interaction.update({ content: ":mag: | Não é possível ativar esse módulo sem um canal de avisos definido.", ephemeral: true })
 
         // Ativa ou desativa o módulo anti-spam do servidor
         if (typeof guild.conf.spam !== "undefined")
@@ -67,25 +73,52 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 4) {
 
-        const valores = []
+        const strikes = await listAllGuildStrikes(interaction.guild.id)
 
-        Object.keys(spamTimeoutMap).forEach(key => {
-            valores.push(spamTimeoutMap[key])
-        })
-
-        // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
-        const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "guild_spam_timeout",
-            values: valores
-        }
-
-        let row = client.create_buttons([{
+        // Submenu para navegar pelas advertências do servidor
+        let botoes = [], row = [{
             id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.1"
-        }], interaction)
+        }], indice_matriz = 5
+
+        if (strikes.length < 1) {
+            await getGuildStrike(interaction.guild.id, 0)
+
+            botoes.push({
+                id: "strike_configure_button", name: "1°", type: 1, emoji: client.emoji(39), data: `9|0`
+            })
+        } else
+            strikes.forEach(strike => {
+
+                let disabled = false
+
+                // Verificando se não há botões com regras que resultam em expulsão ou banimento listados antes
+                if (strike.rank > indice_matriz)
+                    disabled = true
+
+                botoes.push({
+                    id: "strike_configure_button", name: `${strike.rank + 1}°`, type: 1, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}`, disabled: disabled
+                })
+
+                if (strike.action)
+                    if (strike.action === "member_kick_2" || strike.action === "member_ban")
+                        indice_matriz = strike.rank
+            })
+
+        if (botoes.length < 5) // Botão para adicionar uma nova advertência
+            row.push({ id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.novo_strike"), type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
+
+        const embed = new EmbedBuilder()
+            .setTitle(client.tls.phrase(user, "mode.spam.configurando_strikes"))
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription(client.tls.phrase(user, "mode.spam.descricao_configuracao_strike"))
+            .setFooter({
+                text: client.tls.phrase(user, "mode.warn.customizacao_rodape"),
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), row],
+            embeds: [embed],
+            components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
             ephemeral: true
         })
 
@@ -108,14 +141,22 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     } else if (operacao === 6) {
 
+        // Submenu para escolher o cargo que será anexado com a advertência
+
         // Definindo o canal de avisos do anti-spam
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_spam#channel",
             reback: "browse_button.guild_anti_spam_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel)
+            values: []
         }
+
+        if (guild.spam.channel)
+            data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
+
+        // Listando os canais do servidor
+        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.spam.channel))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24)

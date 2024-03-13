@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Tratamento dos cliques
     // 0 -> Cancela
     // 1 -> Confirma
-    // 2 -> Acesso aos botões deste paínel
+    // 2 -> Acesso aos botões deste painel
 
     if (escolha === 1) {
 

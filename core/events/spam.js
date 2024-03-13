@@ -1,7 +1,8 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { getUserStrikes, spamTimeoutMap, defaultStrikes } = require("../database/schemas/Strikes")
+const { getUserStrikes, defaultStrikes, spamTimeoutMap } = require("../database/schemas/Strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_link")
+const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Strikes_guild")
 
 let bloqueia_operacao = 0
 
@@ -93,26 +94,30 @@ module.exports = async function ({ client, message, guild }) {
 async function nerfa_spam({ client, message, guild }) {
 
     let user_guild = await client.getMemberGuild(message, message.author.id)
-    let tempo_timeout = 7200, operacao = "mute"
+    let tempo_timeout = spamTimeoutMap[2]
 
     if (!user_guild) { // Validando se o usuário saiu do servidor
         bloqueia_operacao = 0
         return
     }
 
-    if (guild?.spam.timeout) // Tempo de mute do servidor
-        tempo_timeout = spamTimeoutMap[guild?.spam.timeout]
+    let strikes = await listAllGuildStrikes(message.guild.id)
+    let strike_aplicado = { action: "member_mute", timeout: 2 }
 
-    // Servidor com progressão de strikes ativo
-    if (guild?.spam.strikes) {
+    if (strikes.length < 1) // Criando um novo strike para o servidor
+        await getGuildStrike(message.guild.id, 0)
+    else
+        strike_aplicado = strikes[0]
+
+    if (strikes.length > 0) // Tempo de mute do servidor
+        tempo_timeout = spamTimeoutMap[strike_aplicado.timeout]
+
+    if (guild?.spam.strikes) { // Servidor com progressão de strikes ativo
         let user_strikes = await getUserStrikes(message.author.id)
+
+        strike_aplicado = strikes[user_strikes.strikes] || strikes[strikes.length - 1]
+
         user_strikes.strikes++
-
-        tempo_timeout = defaultStrikes[user_strikes.strikes] || null
-
-        if (!tempo_timeout)
-            operacao = "kick"
-
         await user_strikes.save()
     }
 
@@ -122,16 +127,37 @@ async function nerfa_spam({ client, message, guild }) {
         cached_messages[`${message.author.id}.${guild.sid}`] = []
         cached_messages[`${message.author.id}.${guild.sid}`].push(message)
 
-        operacao = "mute"
-        tempo_timeout = defaultStrikes[2]
+        strike_aplicado = { action: "member_mute", timeout: 2 }
     }
+
+    if (!strike_aplicado.action) // Sem operação definida
+        strike_aplicado.action = "member_warn"
 
     // Redirecionando o evento
     const guild_bot = await client.getMemberGuild(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
     const user = await client.getUser(message.author.id)
 
-    await require(`./spam/${operacao}_user`)({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout })
+    await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, user_messages, user, user_guild, guild_bot, tempo_timeout })
+
+    if (strike_aplicado.role) { // Strike atual acrescenta um cargo
+
+        // Verificando permissões do bot no servidor
+        if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
+
+            // Atribuindo o cargo ao usuário que recebeu o strike
+            let role = interaction.guild.roles.cache.get(strike_aplicado.role)
+
+            if (role.editable) { // Verificando se o cargo é editável
+                const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+
+                membro_guild.roles.add(role).catch(console.error)
+            }
+        } else
+            client.notify(guild.spam.channel || guild.logger.channel, { // Sem permissão para gerenciar cargos
+                content: client.tls.phrase(guild, "mode.spam.sem_permissao_cargos", 7),
+            })
+    }
 
     setTimeout(() => { // Busca as mensagens enviadas para excluir enviadas após a validação de spam
         remove_spam(client, message.author.id, guild.sid, user_messages[0])
@@ -160,9 +186,6 @@ async function nerfa_spam({ client, message, guild }) {
         }
 
     await bot.save()
-
-    // Resetando as mensagens do usuário
-    cached_messages[`${message.author.id}.${guild.sid}`] = []
 }
 
 remove_spam = (client, id_user, id_guild, user_message) => {
@@ -177,8 +200,9 @@ remove_spam = (client, id_user, id_guild, user_message) => {
                 .then(async messages => {
 
                     const userMessages = [] // Listando mensagens enviadas no último minuto
-                    messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 60000) || m.createdTimestamp === user_message.createdTimestamp).forEach(msg => userMessages.push(msg))
+                    messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 60000) || m.createdTimestamp === user_message.createdTimestamp && m.deletable).forEach(msg => userMessages.push(msg))
                     channel.bulkDelete(userMessages)
+                        .catch(() => console.error)
 
                     // Desbloqueando o bot para executar novamente a moderação de spam
                     bloqueia_operacao = 0

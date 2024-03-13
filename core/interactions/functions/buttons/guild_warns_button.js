@@ -94,7 +94,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (botoes.length < 5) // Botão para adicionar uma nova advertência
             row.push({ id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.nova_advertencia"), type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
 
+        const embed = new EmbedBuilder()
+            .setTitle(client.tls.phrase(user, "mode.warn.configurando_warns"))
+            .setColor(client.embed_color(user.misc.color))
+            .setDescription(client.tls.phrase(user, "mode.warn.descricao_configuracao_warn"))
+            .setFooter({
+                text: client.tls.phrase(user, "mode.warn.customizacao_rodape"),
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+
         return interaction.update({
+            embeds: [embed],
             components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
             ephemeral: true
         })

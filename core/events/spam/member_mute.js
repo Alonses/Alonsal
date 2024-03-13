@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-module.exports = async ({ client, message, guild, user_messages, user, user_guild, guild_bot, tempo_timeout }) => {
+module.exports = async ({ client, message, guild, strike_aplicado, user_messages, user, user_guild, guild_bot, tempo_timeout }) => {
 
     let entradas_spamadas = ""
 
@@ -17,7 +17,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
         .setColor(0xED4245)
-        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild, client.locale(tempo_timeout / 60)])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild.nickname, client.locale(tempo_timeout / 60)])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -30,6 +30,14 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
                 inline: true
             }
         )
+
+    // Strike possui um cargo vinculado
+    if (strike_aplicado.role)
+        embed.addFields({
+            name: client.tls.phrase(guild, "mode.spam.cargo_acrescentado"),
+            value: `:label: <@&${strike_aplicado.role}>`,
+            inline: true
+        })
 
     if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
         embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))

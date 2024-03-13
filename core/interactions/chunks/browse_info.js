@@ -4,6 +4,7 @@ const { getGames, verifyInvalidGames } = require('../../database/schemas/Game')
 
 const { activities } = require('../../../files/json/text/activities.json')
 const { getActiveModules } = require('../../database/schemas/Module')
+const { listAllSuspiciouLinks } = require('../../database/schemas/Spam_link')
 
 module.exports = async ({ client, user, interaction, caso }) => {
 
@@ -61,6 +62,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
         await verifyInvalidGames()
 
         const games_free = await getGames()
+        const links_suspeitos = await listAllSuspiciouLinks()
 
         // Estatísticas do Alonsal
         embed.setDescription(`${client.defaultEmoji("metrics")} ${client.tls.phrase(user, "manu.info.guia_estatisticas")}`)
@@ -101,7 +103,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
             .addFields(
                 {
                     name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "manu.info.historico")}**`,
-                    value: `${client.emoji("icon_slash_commands")} **${client.tls.phrase(user, "manu.info.comandos_usados")}: **\`${client.locale(bot.persis.commands)}\`\n:globe_with_meridians: **${client.tls.phrase(user, "mode.network.servidores")}: **\`${client.locale(client.guilds().size)}\`\n:name_badge: **${client.tls.phrase(user, "manu.info.spams_freados")}: **\`${client.locale(bot.persis.spam)}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.persis.bufunfas)}\``,
+                    value: `${client.emoji("icon_slash_commands")} **${client.tls.phrase(user, "manu.info.comandos_usados")}: **\`${client.locale(bot.persis.commands)}\`\n:globe_with_meridians: **${client.tls.phrase(user, "mode.network.servidores")}: **\`${client.locale(client.guilds().size)}\`\n:name_badge: **${client.tls.phrase(user, "manu.info.spams_freados")}: **\`${client.locale(bot.persis.spam)}\`\n:link: **${client.tls.phrase(user, "mode.spam.links_suspeitos")}:** \`${links_suspeitos.length || 0}\`\n${client.emoji("mc_esmeralda")} **Bufunfas: **\`${client.locale(bot.persis.bufunfas)}\``,
                     inline: true
                 },
                 {
