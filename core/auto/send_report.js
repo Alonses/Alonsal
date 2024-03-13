@@ -65,8 +65,12 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                     } else if (id_canal === guild.reports.channel) {
 
                         // Enviando apenas para o servidor com notificações de entrada ativas
-                        embed.setTitle(client.tls.phrase(guild, "mode.report.reporte_registrado"))
+                        embed.setTitle(`${client.tls.phrase(guild, "mode.report.reporte_registrado")} ${client.defaultEmoji("guard")}`)
                             .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
+                            .setFooter({
+                                text: client.tls.phrase(guild, "mode.report.rodape_historico"),
+                                iconURL: client.avatar()
+                            })
 
                         canal_alvo.send({ content: "@here", embeds: [embed] })
                     }

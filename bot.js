@@ -36,6 +36,9 @@ client.discord.on("messageCreate", async message => {
 	// Previne que o bot responda a interações enquanto estiver atualizando comandos
 	if (client.x.force_update) return
 
+	// Impede o bot de interagir com outros membros quando está no modo develop
+	if (!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) return
+
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
 	const text = message.content
@@ -97,6 +100,11 @@ client.discord.on("interactionCreate", async interaction => {
 	if (client.x.force_update) return
 
 	const user = await client.getUser(interaction.user.id)
+
+	// Impede o bot de interagir com outros membros quando está no modo develop
+	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
+		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)
+
 	if (user.conf?.banned || false) return // Ignorando usuários
 
 	// Verificando se é um comando usado num servidor

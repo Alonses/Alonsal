@@ -50,6 +50,16 @@ async function removeStrike(uid, sid) {
     })
 }
 
+async function listAllUserStrikes(uid, sid) {
+
+    // Listando todos os strikes que um usuário recebeu em um servidor
+    return model.find({
+        uid: uid,
+        sid: sid,
+        valid: true
+    })
+}
+
 // Apagando todos os strikes registrados no servidor
 async function dropAllGuildStrikes(sid) {
     await model.deleteMany({
@@ -62,6 +72,7 @@ module.exports = {
     getUserStrikes,
     removeStrike,
     dropAllGuildStrikes,
+    listAllUserStrikes,
     spamTimeoutMap,
     defaultStrikes
 }

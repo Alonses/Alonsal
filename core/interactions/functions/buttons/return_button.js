@@ -43,9 +43,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require('../../chunks/verify_module')({ client, user, interaction, dados })
     }
 
-    if (dados.includes("warn_configure_button")) { // Utilizado para retornar a guia de configuração das advertências
+    if (dados.includes("configure_button")) { // Utilizado para retornar a guia de configuração das advertências e strikes
+
+        const operador = dados.split("_")[0].split(".")[1]
         dados = `x.y.${dados.split(".")[2]}`
-        return require('../../chunks/warn_configure')({ client, user, interaction, dados })
+        return require(`../../chunks/${operador}_configure`)({ client, user, interaction, dados })
     }
 
     require(`../../chunks/${operacao}`)({ client, user, interaction, pagina_guia, operador, autor_original })

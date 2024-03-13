@@ -155,10 +155,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         if (guild.network.channel)
-            data.values.push({ name: client.tls.phrase(user, "manu.data_guild.remover_canal"), id: "none" })
+            data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.logger.channel))
+        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.network.channel))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24)

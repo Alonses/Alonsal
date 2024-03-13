@@ -1,13 +1,14 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
+const { listAllGuildStrikes } = require("../../database/schemas/Strikes_guild")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
 
     const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }], strikes = ""
+    const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
+    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
 
     if (pagina === 1) // 2° página da guia do Anti-spam
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }]
@@ -19,21 +20,22 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))
         guild.conf.spam = false
 
-    // Desabilitando os strickes caso o bot não possa expulsar membros do servidor
+    // Desabilitando os strikes caso o bot não possa expulsar membros do servidor
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))
-        guild.spam.strikes = false
+        guild.conf.spam = false
+
+    // Desabilitando os strikes caso não haja canais de aviso selecionados
+    if (!guild.spam.channel && !guild.logger.channel)
+        guild.conf.spam = false
 
     await guild.save()
 
-    if (guild?.spam.strikes) {
-        strikes = client.tls.phrase(user, "mode.spam.strikes")
+    let descricao = client.tls.phrase(user, "mode.spam.descricao_funcionamento")
 
-        if (!guild.spam.data)
-            strikes += client.tls.phrase(user, "mode.spam.strikes_ativo")
-
-        strikes = `\`\`\`${strikes}\`\`\`\n`
-    } else
-        strikes = client.tls.phrase(user, "mode.spam.strikes_desativado")
+    if (guild?.spam.strikes)
+        descricao += client.tls.phrase(user, "mode.spam.strikes_ativo")
+    else
+        descricao += client.tls.phrase(user, "mode.spam.strikes_desativado")
 
     const embed = new EmbedBuilder()
         .setTitle("> Anti-spam 📛")
@@ -45,13 +47,13 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.spam.tempo")}:** \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.spam.timeout]}`)}\``,
-                value: `${client.emoji(47)} **Repetecos:** \`${guild.spam.trigger_amount}\``,
+                name: `${client.emoji(64)} **Strikes:** \`${strikes_guild.length} / 5\``,
+                value: `${client.emoji(47)} **Repetecos:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${client.emoji("icon_id")} \`${guild.logger.channel}\`\n( <#${guild.logger.channel}> )`,
+                value: `${guild.spam.channel ? `\n${client.emoji("icon_id")} \`${guild.spam.channel}\`\n( <#${guild.spam.channel}> )` : `\n\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel && !guild.spam.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
                 inline: true
             }
         )
@@ -72,8 +74,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (strikes !== "") // Texto dos valores de strikes
-        embed.setDescription(strikes)
+    if (descricao !== "") // Texto dos valores de strikes
+        embed.setDescription(`\`\`\`${descricao}\`\`\``)
 
     if (pagina === 0)
         botoes = botoes.concat([
@@ -84,7 +86,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         ])
     else // 2° página da guia do Anti-spam
         botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.tempo_minimo"), type: 1, emoji: client.defaultEmoji("time"), data: "4" },
+            { id: "guild_anti_spam_button", name: "Strikes", type: 1, emoji: client.defaultEmoji("guard"), data: "4" },
             { id: "guild_anti_spam_button", name: "Repetecos", type: 1, emoji: client.emoji(47), data: "5" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify), data: "7" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "6" }

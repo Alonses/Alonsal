@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Tratamento dos cliques
     // 0 -> Cancela
     // 3 -> Menu com escolha para exclusão ou não
-    // 2 -> Acesso aos botões deste paínel
+    // 2 -> Acesso aos botões deste painel
 
     // 9 -> Sub guia com os detalhes da advertência escolhida
 

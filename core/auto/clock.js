@@ -8,10 +8,7 @@ module.exports = async ({ client }) => {
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
-    if (tempo_restante > 1000)
-        console.log(`📣 | Disparando o relógio em ${tempo_restante} segundos`)
-    else
-        console.log(`📣 | Disparando o relógio agora!`)
+    console.log(`📣 | Disparando o relógio ${tempo_restante > 1000 ? `em ${tempo_restante} segundos` : "agora!"}`)
 
     if (client.x.modules)
         atualiza_modulos(client)

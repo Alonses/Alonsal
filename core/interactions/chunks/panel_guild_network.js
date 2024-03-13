@@ -76,7 +76,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 },
                 {
                     name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                    value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.network.channel ? `\n( <#${guild.network.channel}> )` : `\n:twisted_rightwards_arrows: ( <#${guild.logger.channel}> )`}`,
+                    value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`\n( <#${guild.network.channel}> )` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
                     inline: true
                 }
             )

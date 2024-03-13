@@ -51,12 +51,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.warn.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length}\`**${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_na")} \`${indice_matriz}°\`**` : ""}`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.warn.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length} / 5\`**${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_na")} \`${indice_matriz}°\`**` : ""}`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : client.tls.phrase(user, "mode.network.sem_canal")}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${guild.warn.channel ? `${client.emoji("icon_id")} \`${guild.warn.channel}\`\n( <#${guild.warn.channel}> )` : `\n\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
                 inline: true
             },
             {
