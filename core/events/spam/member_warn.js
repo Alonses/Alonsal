@@ -42,7 +42,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
     if (guild.spam.notify) // Servidor com ping de spam ativado
         obj.content = `@here ${obj.content}`
 
-    client.notify(guild.logger.channel, obj)
+    client.notify(guild.spam.channel || guild.logger.channel, obj)
 
     let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
 
