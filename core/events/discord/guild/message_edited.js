@@ -1,4 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
+
+const { verifySuspiciousLink } = require('../../../database/schemas/Spam_link')
 // const compare_messages = require('../../../auto/compare_messages')
 
 module.exports = async (client, message) => {
@@ -53,9 +55,10 @@ module.exports = async (client, message) => {
     if (message[1].content.includes("https")) {
         const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
 
-        row = client.create_buttons([
-            { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
-        ])
+        if (!await verifySuspiciousLink(link_img)) // Verificando se o link não é suspeito
+            row = client.create_buttons([
+                { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+            ])
     }
 
     if (row)

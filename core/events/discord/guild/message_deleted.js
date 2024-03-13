@@ -1,5 +1,7 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
+const { verifySuspiciousLink } = require('../../../database/schemas/Spam_link')
+
 module.exports = async ({ client, message }) => {
 
     // Verificando se o autor da mensagem excluída é o bot
@@ -82,9 +84,10 @@ module.exports = async ({ client, message }) => {
     if (texto_mensagem.includes("https")) {
         const link_img = `https${texto_mensagem.split("https")[1].split(" ")[0]}`
 
-        row = client.create_buttons([
-            { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
-        ])
+        if (!await verifySuspiciousLink(link_img)) // Verificando se o link não é suspeito
+            row = client.create_buttons([
+                { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+            ])
     }
 
     if (row)
