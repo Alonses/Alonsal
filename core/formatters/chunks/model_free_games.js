@@ -88,6 +88,6 @@ module.exports = async (client, user, interaction, pagina_guia) => {
                 iconURL: client.avatar()
             })
 
-        client.sendDM(user, { embeds: embed, components: row }, true)
+        client.sendDM(user, { embeds: [embed], components: [row] }, true)
     }
 }

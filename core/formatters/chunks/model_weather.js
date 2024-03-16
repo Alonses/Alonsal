@@ -319,7 +319,7 @@ module.exports = async (client, user, interaction) => {
                             ephemeral: client.decider(user?.conf.ghost_mode, 0)
                         })
                     else
-                        return client.sendDM(user, { embeds: embed_clima }, true)
+                        return client.sendDM(user, { embeds: [embed_clima] }, true)
                 })
         }) // Erro com a API de clima
         .catch(() => {

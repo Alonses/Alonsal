@@ -156,6 +156,6 @@ module.exports = async (client, user, interaction) => {
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             else
-                return client.sendDM(user, { embeds: embed }, true)
+                return client.sendDM(user, { embeds: [embed] }, true)
         })
 }

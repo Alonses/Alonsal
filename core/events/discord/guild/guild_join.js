@@ -49,7 +49,7 @@ module.exports = async ({ client, guild }) => {
                     .setImage("https://i.imgur.com/N8AFVTH.png")
                     .setDescription(`${client.tls.phrase(inviter, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(inviter, "inic.ping.idioma_dica_server")}`)
 
-                client.sendDM(inviter, { embeds: embed, components: row }, true)
+                client.sendDM(inviter, { embeds: [embed], components: [row] }, true)
             }
 
             verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
