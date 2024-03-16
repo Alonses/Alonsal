@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     let link = `${interaction.options.getString("link")} `
 
     // Verificando se o link é válido
-    if (!link.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
+    if (!link.match(client.cached.regex))
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, client.emoji(0))
 
     link = link.replace(" ", "")

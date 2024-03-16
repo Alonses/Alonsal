@@ -54,8 +54,8 @@ module.exports = async (client, message) => {
 
     texto_mensagem = `${message[1].content} `
 
-    if (texto_mensagem.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
-        const link = texto_mensagem.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
+    if (texto_mensagem.match(client.cached.regex)) {
+        const link = texto_mensagem.match(client.cached.regex)
 
         if (link)
             if (!await verifySuspiciousLink(link, true)) // Verificando se o link não é malicioso

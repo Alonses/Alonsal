@@ -37,7 +37,7 @@ async function getSuspiciousLink(link, force) {
         link = link.split("/")[0]
 
     return model.findOne({
-        link: { $regex: link, $options: "i" }
+        link: { $regex: link.replace(" ", ""), $options: "i" }
     })
 }
 

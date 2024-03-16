@@ -44,16 +44,13 @@ client.discord.on("messageCreate", async message => {
 	const text = `${message.content} `
 
 	if (guild.spam.suspicious_links) // Verificando se há um link malicioso no texto
-		if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
+		if (text.match(client.cached.regex)) {
 
-			let link = text.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
+			let link = text.match(client.cached.regex)
 
-			if (link) {
-				link = link.map(link => link.replace(" ", ""))
-
+			if (link)
 				if (await verifySuspiciousLink(link))
 					return nerfa_spam({ client, message, guild })
-			}
 		}
 
 	if (guild.conf.spam) // Sistema anti-spam do servidor

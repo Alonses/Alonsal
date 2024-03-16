@@ -52,7 +52,7 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
     let text = `${user_messages[0].content} `
 
     // Verificando se há links anexados ao spam
-    if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
+    if (text.match(client.cached.regex))
         msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
     embed_user.setDescription(msg_user)
