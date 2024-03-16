@@ -58,9 +58,9 @@ module.exports = async (client, message) => {
         const link = texto_mensagem.match(client.cached.regex)
 
         if (link)
-            if (!await verifySuspiciousLink(link, true)) // Verificando se o link não é malicioso
+            if (!await verifySuspiciousLink(link[0], true)) // Verificando se o link não é malicioso
                 row = client.create_buttons([
-                    { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link }
+                    { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link[0] }
                 ])
     }
 
