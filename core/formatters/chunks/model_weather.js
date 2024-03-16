@@ -51,11 +51,11 @@ module.exports = async (client, user, interaction) => {
                     })
             } else {
                 if (res.cod === '404' || res.cod === '400')
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, true)
+                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, true)
                 else if (res.cod === '429') // Erro da API
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
+                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
                 else if (res.id === '1873107')
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")) }, true)
+                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")) }, true)
             }
 
             fetch(`${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`) // Buscando o horário local
@@ -319,7 +319,7 @@ module.exports = async (client, user, interaction) => {
                             ephemeral: client.decider(user?.conf.ghost_mode, 0)
                         })
                     else
-                        return client.sendDM(user, { embed: embed_clima }, true)
+                        return client.sendDM(user, { embeds: embed_clima }, true)
                 })
         }) // Erro com a API de clima
         .catch(() => {
@@ -329,6 +329,6 @@ module.exports = async (client, user, interaction) => {
                     ephemeral: true
                 })
             else
-                return client.sendDM(user, { data: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
+                return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
         })
 }

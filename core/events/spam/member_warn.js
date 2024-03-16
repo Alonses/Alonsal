@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-module.exports = async ({ client, message, guild, strike_aplicado, user_messages, user, user_guild, guild_bot, tempo_timeout }) => {
+module.exports = async ({ client, guild, strike_aplicado, user_messages, user, user_guild }) => {
 
     let entradas_spamadas = ""
 
@@ -13,11 +13,11 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
         .setColor(0xED4245)
-        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_detectado", client.defaultEmoji("guard"), user_guild.nickname)}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_detectado", client.defaultEmoji("guard"), user_guild.user.username)}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
+                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n\`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
             }
         )
@@ -35,7 +35,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
 
     // Notificando o membro capturado pelo spam
     const obj = {
-        content: client.tls.phrase(guild, "mode.spam.ping_capturado", null, user_guild),
+        content: client.tls.phrase(guild, "mode.spam.ping_capturado", null, `<@${user_guild}>`),
         embeds: [embed]
     }
 
@@ -44,10 +44,17 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
 
     client.notify(guild.spam.channel || guild.logger.channel, obj)
 
-    let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+    const embed_user = new EmbedBuilder()
+        .setTitle(client.tls.phrase(guild, "mode.spam.spam_titulo_user"))
+        .setColor(0xED4245)
 
-    if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
+    let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+    let text = `${user_messages[0].content} `
+
+    // Verificando se há links anexados ao spam
+    if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
         msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
-    client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
+    embed_user.setDescription(msg_user)
+    client.sendDM(user, { embeds: embed_user }, true)
 }

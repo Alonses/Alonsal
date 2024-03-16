@@ -430,7 +430,7 @@ function internal_functions(client) {
             await createBadge(user.uid, id_badge, client.timestamp())
             const badge = busca_badges(client, badgeTypes.SINGLE, id_badge)
 
-            client.sendDM(user, { data: client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) })
+            client.sendDM(user, { content: client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) })
         }
     }
 
@@ -488,29 +488,8 @@ function internal_functions(client) {
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
         if (client.decider(user?.conf.notify, 1))
             client.discord.users.fetch(user.uid).then((user_interno) => {
-
-                // Verificando qual é o tipo de conteúdo que será enviado
-                if (dados.embed) {
-                    if (!dados.components)
-                        user_interno.send({
-                            embeds: [dados.embed]
-                        })
-                            .catch(() => notifications = 1)
-                    else
-                        user_interno.send({
-                            embeds: [dados.embed],
-                            components: [dados.components]
-                        })
-                            .catch(() => notifications = 1)
-                } else if (dados.files)
-                    user_interno.send({
-                        content: dados.data,
-                        files: [dados.files]
-                    })
-                        .catch(() => notifications = 1)
-                else
-                    user_interno.send(dados.data)
-                        .catch(() => notifications = 1)
+                user_interno.send(dados) // Enviando conteúdo na DM do usuário
+                    .catch(() => notifications = 1)
             })
 
         // Usuário com DM bloqueada

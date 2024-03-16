@@ -36,5 +36,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 
     // Notificando o usuário que recebeu as Bufunfas
-    client.sendDM(alvo, { data: client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes"), [user.uid, client.locale(bufunfas)]) })
+    client.sendDM(alvo, { content: client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes"), [user.uid, client.locale(bufunfas)]) })
 }

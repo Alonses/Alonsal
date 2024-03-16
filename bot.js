@@ -41,16 +41,15 @@ client.discord.on("messageCreate", async message => {
 
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
-	const text = message.content
+	const text = `${message.content} `
 
-	if (guild.spam.suspicious_links)
-		if (text.includes("http")) {
+	if (guild.spam.suspicious_links) // Verificando se há um link malicioso no texto
+		if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
 
-			// Verificando se é um link suspeito
-			const link = `http${text.split("http")[1].split(" ")[0].split(")")[0].split("\n")[0].trim()}`
-			const registro = await verifySuspiciousLink(link)
+			let link = text.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
+			link = link.map(link => link.replace(" ", ""))
 
-			if (registro) // Link suspeito confirmado
+			if (await verifySuspiciousLink(link))
 				return nerfa_spam({ client, message, guild })
 		}
 

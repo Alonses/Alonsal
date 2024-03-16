@@ -8,10 +8,13 @@ const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/W
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.1", pagina_guia = 0
+    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.2", pagina_guia = 0
 
     const advertencias = await listAllGuildWarns(interaction.guild.id)
     const guild = await client.getGuild(interaction.guild.id)
+
+    if (operacao > 8)
+        pagina_guia = 2
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.warn.channel || advertencias.length < 1) {
@@ -64,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelas advertências do servidor
         let botoes = [], row = [{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.1"
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
         }], indice_matriz = 5
 
         if (advertencias.length < 1) {
@@ -175,46 +178,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         await guild.save()
     }
 
-    // Sub menu com as opções de notificações
-    if (operacao == 15) {
-
-        const guild = await client.getGuild(interaction.guild.id)
-
-        const embed = new EmbedBuilder()
-            .setTitle(`> ${client.tls.phrase(user, "mode.warn.advertencias")} :octagonal_sign:`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.warn.descricao_notificacao_advertencia"))
-            .setFields(
-                {
-                    name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : client.tls.phrase(user, "mode.network.sem_canal")}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
-                    inline: true
-                },
-                {
-                    name: "⠀",
-                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion)} **${client.tls.phrase(user, "menu.botoes.notificar_remocao")}**`,
-                    inline: true
-                },
-                { name: "⠀", value: "⠀", inline: true }
-            )
-            .setFooter({
-                text: client.tls.phrase(user, "mode.warn.editar_advertencia"),
-                iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
-
-        let row = client.create_buttons([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" },
-            { id: "guild_warns_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify), data: "8" },
-            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.notificar_remocao"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion), data: "10" }
-        ], interaction)
-
-        return interaction.update({
-            embeds: [embed],
-            components: [row],
-            ephemeral: true
-        })
-
-    } else if (operacao == 16) {
+    if (operacao == 16) { // Definindo o tempo de expiração das advertênicas no servidor
 
         const valores = []
 
@@ -222,7 +186,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             valores.push(spamTimeoutMap[key])
         })
 
-        // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
             alvo: "guild_warns_reset",
@@ -240,7 +203,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao > 8)
+    if (operacao === 15)
         pagina_guia = 1
 
     await guild.save()

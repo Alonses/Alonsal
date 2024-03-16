@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
     } catch {
         interaction.reply({
-            content: `${client.tls.phrase(user, "util.calc.error", 0)}: \`${expressao}\``,
+            content: `${client.tls.phrase(user, "util.calc.error", client.emoji(0))}: \`${expressao}\``,
             ephemeral: true
         })
     }

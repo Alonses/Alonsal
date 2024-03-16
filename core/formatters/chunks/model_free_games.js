@@ -18,7 +18,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
         if (interaction) // Sem games para anunciar no momento
             return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
         else
-            client.sendDM(user, { data: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
+            client.sendDM(user, { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
 
     for (let i = 0; i < pagina; i++)
         for (let x = 0; x < limitador; x++)
@@ -88,6 +88,6 @@ module.exports = async (client, user, interaction, pagina_guia) => {
                 iconURL: client.avatar()
             })
 
-        client.sendDM(user, { embed: embed, components: row }, true)
+        client.sendDM(user, { embeds: embed, components: row }, true)
     }
 }

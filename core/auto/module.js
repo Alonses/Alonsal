@@ -94,7 +94,7 @@ executa_modulo = async () => {
         if (lista_modulos[0].type === 2) {
 
             if (lista_modulos[0].data === 0) // Sem definição de tipo de envio
-                await global_client.sendDM(user, { data: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
+                await global_client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
 
             // Definindo qual tipo de anúncio do history será
             let dados = {
@@ -174,7 +174,7 @@ async function cobra_modulo(client) {
             shutdownAllUserModules(identificador)
 
             // Avisando o usuário sobre o desligamento dos módulos
-            return client.sendDM(user, { data: client.tls.phrase(user, "misc.modulo.auto_desativado", client.emoji(30)) }, true)
+            return client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.auto_desativado", client.emoji(30)) }, true)
         }
 
         // Registrando as movimentações de bufunfas para o usuário

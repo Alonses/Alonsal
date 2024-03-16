@@ -52,12 +52,14 @@ module.exports = async (client, message) => {
         )
         .setTimestamp()
 
-    if (message[1].content.includes("https")) {
-        const link_img = `https${message[1].content.split("https")[1].split(" ")[0]}`
+    texto_mensagem = `${message[1].content} `
 
-        if (!await verifySuspiciousLink(link_img)) // Verificando se o link não é suspeito
+    if (texto_mensagem.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
+        const link = texto_mensagem.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
+
+        if (!await verifySuspiciousLink(link)) // Verificando se o link não é malicioso
             row = client.create_buttons([
-                { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link_img }
+                { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: link }
             ])
     }
 

@@ -77,7 +77,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
 
     // Avisando o usuário sobre a advertência
-    await client.sendDM(user_alvo, { embed: embed_user }, true)
+    await client.sendDM(user_alvo, { embeds: embed_user }, true)
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = new EmbedBuilder()

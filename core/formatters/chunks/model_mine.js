@@ -20,7 +20,7 @@ module.exports = async (client, user, interaction) => {
                 if (interaction)
                     return client.tls.reply(interaction, user, "util.minecraft.error_1", true, client.emoji(0))
                 else
-                    return client.sendDM(user, { data: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
+                    return client.sendDM(user, { content: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
 
             if (dados_item.status === 404 && interaction) // Sem item conhecido
                 return client.tls.reply(interaction, user, "util.minecraft.nao_encontrado", true, client.emoji("emojis_negativos"), interaction.options.getString("item"))
@@ -156,6 +156,6 @@ module.exports = async (client, user, interaction) => {
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             else
-                return client.sendDM(user, { embed: embed }, true)
+                return client.sendDM(user, { embeds: embed }, true)
         })
 }

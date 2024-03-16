@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
     let texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
 
-    if (pagina === 1) // 2° página da guia das advertências
+    if (pagina > 0) // 2° página da guia das advertências
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" }]
 
     // Permissões do bot no servidor
@@ -83,14 +83,39 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (pagina === 0)
+    if (pagina === 1) // Página de configurações com notificações de advertências
+        embed.setDescription(client.tls.phrase(user, "mode.warn.descricao_notificacao_advertencia"))
+            .setFields(
+                {
+                    name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**\n${client.emoji("icon_id")} \`${guild.warn.channel ? guild.warn.channel : client.tls.phrase(user, "mode.network.sem_canal")}\`${guild.warn.channel ? `\n( <#${guild.warn.channel}> )` : ""}`,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion)} **${client.tls.phrase(user, "menu.botoes.notificar_remocao")}**`,
+                    inline: true
+                },
+                { name: "⠀", value: "⠀", inline: true }
+            )
+            .setFooter({
+                text: client.tls.phrase(user, "mode.warn.editar_advertencia"),
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+
+    if (pagina === 0) // Página inicial da guia de advertências
         botoes = botoes.concat([
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.warn), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn), data: "1" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.com_validade"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.timed), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.timed), data: "6" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.notificacoes"), type: 1, emoji: client.emoji(41), data: "15" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])
-    else
+    else if (pagina === 1) // Página de notificações de advertências
+        botoes = botoes.concat([
+            { id: "guild_warns_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify), data: "8" },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.notificar_remocao"), type: client.execute("functions", "emoji_button.type_button", guild?.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.warn.notify_exclusion), data: "10" }
+        ])
+    else // Página de configurações das advertências
         botoes = botoes.concat([
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.defaultEmoji("guard"), data: "3" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" },

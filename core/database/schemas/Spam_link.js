@@ -11,19 +11,33 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Spam_Link", schema)
 
-async function verifySuspiciousLink(link) {
+async function verifySuspiciousLink(link, force) {
 
-    const verify = await getSuspiciousLink(link)
+    let confirmado = false
 
-    if (!verify)
+    if (typeof link === "object")
+        for (let i = 0; i < link.length; i++) {
+            let verify = await getSuspiciousLink(link[i], force)
+
+            if (verify)
+                confirmado = true
+        }
+    else
+        confirmado = await getSuspiciousLink(link, force)
+
+    if (!confirmado)
         return false
     else
         return true
 }
 
-async function getSuspiciousLink(link) {
+async function getSuspiciousLink(link, force) {
+
+    if (!force && !link.includes(".gg"))
+        link = link.split("/")[0]
+
     return model.findOne({
-        link: link
+        link: { $regex: link, $options: "i" }
     })
 }
 
@@ -35,12 +49,25 @@ async function getCachedSuspiciousLink(guild_id, timestamp) {
 }
 
 async function registerSuspiciousLink(link, guild_id, timestamp) {
-    await model.create({
-        link: link,
-        sid: guild_id,
-        timestamp: timestamp,
-        valid: true
-    })
+
+    if (typeof link !== "object")
+        await model.create({
+            link: link,
+            sid: guild_id,
+            timestamp: timestamp,
+            valid: true
+        })
+    else {
+
+        for (let i = 0; i < link.length; i++) // Registrando uma lista de links maliciosos
+            if (!await verifySuspiciousLink(link[i], true))
+                await model.create({
+                    link: link[i],
+                    sid: guild_id,
+                    timestamp: timestamp,
+                    valid: true
+                })
+    }
 }
 
 // Registrando um link suspeito provisório
