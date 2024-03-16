@@ -53,7 +53,7 @@ module.exports = async (client, user, dados, interaction) => {
                         ephemeral: client.decider(user?.conf.ghost_mode, 0)
                     })
                 else
-                    return client.sendDM(user, { embeds: embed_eventos }, true)
+                    return client.sendDM(user, { embeds: [embed_eventos] }, true)
             })
     } else {
 
@@ -103,7 +103,7 @@ module.exports = async (client, user, dados, interaction) => {
                         ephemeral: client.decider(user?.conf.ghost_mode, 0)
                     })
                 else
-                    client.sendDM(user, { embeds: acontecimento, components: row }, true)
+                    client.sendDM(user, { embeds: [acontecimento], components: [row] }, true)
             })
             .catch(() => {
                 if (interaction)

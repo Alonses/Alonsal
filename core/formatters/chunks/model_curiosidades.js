@@ -25,7 +25,7 @@ module.exports = async (client, user, interaction) => {
                                 ephemeral: client.decider(user?.conf.ghost_mode, 0)
                             })
                         else
-                            client.sendDM(user, { content: `〽️ | ${descricao_curio}`, files: file }, true)
+                            client.sendDM(user, { content: `〽️ | ${descricao_curio}`, files: [file] }, true)
                     } else // Gifs
                         if (interaction)
                             interaction.reply({

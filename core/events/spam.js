@@ -168,17 +168,12 @@ async function nerfa_spam({ client, message, guild }) {
         if (text.match(client.cached.regex)) {
 
             let link = text.match(client.cached.regex)
+            let registrados = await registerSuspiciousLink(link, guild.sid, client.timestamp()) || []
 
-            if (await verifySuspiciousLink(link, true)) { // Verificando se o link já está registrado
-
-                await registerSuspiciousLink(link, guild.sid, client.timestamp())
-
-                let links = link.map(link => link.split("").join(" "))
-
-                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${links.join("\n")}\` )` })
-
-                client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], links.join("\n")) })
+            // Registrando os links suspeitos que não estão salvos ainda e notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
+            if (registrados.length > 0) {
+                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` })
+                client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
             }
         }
     }

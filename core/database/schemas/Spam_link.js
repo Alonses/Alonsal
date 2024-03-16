@@ -50,24 +50,34 @@ async function getCachedSuspiciousLink(guild_id, timestamp) {
 
 async function registerSuspiciousLink(link, guild_id, timestamp) {
 
-    if (typeof link !== "object")
-        await model.create({
-            link: link,
-            sid: guild_id,
-            timestamp: timestamp,
-            valid: true
-        })
-    else {
+    let registrados = []
 
+    if (typeof link !== "object") {
+        if (!await verifySuspiciousLink(link, true)) {
+            await model.create({
+                link: link.replace(" ", ""),
+                sid: guild_id,
+                timestamp: timestamp,
+                valid: true
+            })
+
+            registrados.push(link.replace(" ", ""))
+        }
+    } else {
         for (let i = 0; i < link.length; i++) // Registrando uma lista de links maliciosos
-            if (!await verifySuspiciousLink(link[i], true))
+            if (!await verifySuspiciousLink(link[i], true)) {
                 await model.create({
                     link: link[i],
                     sid: guild_id,
                     timestamp: timestamp,
                     valid: true
                 })
+
+                registrados.push(link[i].replace(" ", ""))
+            }
     }
+
+    return registrados
 }
 
 // Registrando um link suspeito provisório
