@@ -2,6 +2,8 @@ const mongoose = require("mongoose")
 
 // sid -> Server ID
 
+const links_oficiais = ["youtu.be/", "youtube.com/", "google.com/", "tenor.com/"]
+
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     link: { type: String, default: null },
@@ -17,18 +19,15 @@ async function verifySuspiciousLink(link, force) {
 
     if (typeof link === "object")
         for (let i = 0; i < link.length; i++) {
-            let verify = await getSuspiciousLink(link[i], force)
-
-            if (verify)
-                confirmado = true
+            if (!links_oficiais.includes(link[i]))
+                if (await getSuspiciousLink(link[i], force))
+                    confirmado = true
         }
-    else
-        confirmado = await getSuspiciousLink(link, force)
+    else if (!links_oficiais.includes(link))
+        if (await getSuspiciousLink(link, force))
+            confirmado = true
 
-    if (!confirmado)
-        return false
-    else
-        return true
+    return confirmado
 }
 
 async function getSuspiciousLink(link, force) {
@@ -61,7 +60,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
                 valid: true
             })
 
-            registrados.push(link.replace(" ", ""))
+            registrados.push(link.replace(" ", "").split("").join(" "))
         }
     } else {
         for (let i = 0; i < link.length; i++) // Registrando uma lista de links maliciosos
@@ -73,7 +72,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
                     valid: true
                 })
 
-                registrados.push(link[i].replace(" ", ""))
+                registrados.push(link[i].replace(" ", "").split("").join(" "))
             }
     }
 
