@@ -32,9 +32,6 @@ async function verifySuspiciousLink(link, force) {
 
 async function getSuspiciousLink(link, force) {
 
-    if (!force && !link.includes(".gg"))
-        link = link.split("/")[0]
-
     return model.findOne({
         link: { $regex: link.replace(" ", ""), $options: "i" }
     })
