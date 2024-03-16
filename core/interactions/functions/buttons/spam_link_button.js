@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         await dropSuspiciousLink(link.link)
 
         return client.reply(interaction, {
-            content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_adicao", 0),
+            content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_adicao", client.emoji(0)),
             embeds: [],
             components: [],
             ephemeral: true

@@ -4,16 +4,16 @@ const { verifySuspiciousLink, registerCachedSuspiciousLink } = require("../../..
 
 module.exports = async ({ client, user, interaction }) => {
 
-    let link = interaction.options.getString("link")
+    let link = `${interaction.options.getString("link")} `
 
-    try { // Verificando se o link é válido
-        let url = new URL(link)
-    } catch (err) {
-        return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, 0)
-    }
+    // Verificando se o link é válido
+    if (!link.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
+        return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, client.emoji(0))
 
-    if (await verifySuspiciousLink(link)) // Link já existe
-        return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, 0)
+    link = link.replace(" ", "")
+
+    if (await verifySuspiciousLink(link, true)) // Link já existe
+        return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
 
     const timestamp = client.timestamp()
     await registerCachedSuspiciousLink(link, interaction.guild.id, timestamp)

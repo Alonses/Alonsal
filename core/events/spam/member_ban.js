@@ -21,7 +21,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n( ${user_guild} )`,
+                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n\`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
             },
             {
@@ -39,7 +39,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
         .then(async () => {
 
             const obj = {
-                content: client.tls.phrase(guild, "mode.spam.ping_expulsao", null, user_guild.nickname),
+                content: client.tls.phrase(guild, "mode.spam.ping_expulsao", null, `<@${user_guild.id}>`),
                 embeds: [embed]
             }
 
@@ -48,12 +48,18 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
             client.notify(guild.spam.channel || guild.logger.channel, obj)
 
-            let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_ban", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+            const embed_user = new EmbedBuilder()
+                .setTitle(client.tls.phrase(guild, "mode.spam.spam_titulo_user"))
+                .setColor(0xED4245)
 
-            if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www"))
+            let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_ban", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+            let text = `${user_messages[0].content} `
+
+            if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
-            client.sendDM(user, { data: `${client.defaultEmoji("guard")} | ${msg_user}` }, true)
+            embed_user.setDescription(msg_user)
+            client.sendDM(user, { embeds: embed_user }, true)
         })
         .catch(console.error)
 }

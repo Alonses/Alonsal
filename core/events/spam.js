@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { getUserStrikes, defaultStrikes, spamTimeoutMap } = require("../database/schemas/Strikes")
+const { getUserStrikes, spamTimeoutMap } = require("../database/schemas/Strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_link")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Strikes_guild")
 
@@ -22,8 +22,8 @@ module.exports = async function ({ client, message, guild }) {
         // usuário não está salvo em cache removendo ele da lista
         if (!user_guild) return
 
-        // Verificando se é um moderador no servidor, ignora membros com permissões de gerencia sobre usuários
-        if (user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers)) return
+        // Verificando se é um moderador no servidor, ignora membros com permissões de gerenciamento caso o servidor não permita o Alonsal gerenciar moderadores
+        if (!guild?.spam.manage_mods && user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers)) return
     } else
         user_guild = await client.getMemberGuild(message, message.author.id)
 
@@ -96,11 +96,6 @@ async function nerfa_spam({ client, message, guild }) {
     let user_guild = await client.getMemberGuild(message, message.author.id)
     let tempo_timeout = spamTimeoutMap[2]
 
-    if (!user_guild) { // Validando se o usuário saiu do servidor
-        bloqueia_operacao = 0
-        return
-    }
-
     let strikes = await listAllGuildStrikes(message.guild.id)
     let strike_aplicado = { action: "member_mute", timeout: 2 }
 
@@ -167,23 +162,27 @@ async function nerfa_spam({ client, message, guild }) {
     const bot = await client.getBot(client.x.id)
     bot.persis.spam++
 
-    // Verificando se o servidor possui o registro de links suspeitos ativo
-    if (guild.spam.suspicious_links)
-        if (user_messages[0].content.includes("http") || user_messages[0].content.includes("www")) {
+    if (guild.spam.suspicious_links) { // Verificando se o servidor possui o registro de links suspeitos ativo
+        let text = `${user_messages[0].content} `
 
-            // Separando o link e registrando caso não tenha ainda
-            const link = `http${user_messages[0].content.split("http")[1].split(" ")[0].split(")")[0].split("\n")[0].trim()}`
-            const registro = await verifySuspiciousLink(link)
+        if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
 
-            if (!registro) {
+            let link = text.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
+            link = link.map(link => link.replace(" ", ""))
+
+            if (await verifySuspiciousLink(link, true)) { // Verificando se o link já está registrado
+
                 await registerSuspiciousLink(link, guild.sid, client.timestamp())
 
-                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${link.split("").join(" ")}\` )` })
+                let links = link.map(link => link.split("").join(" "))
 
-                client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], link.split("").join(" ")) })
+                // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
+                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${links.join("\n")}\` )` })
+
+                client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], links.join("\n")) })
             }
         }
+    }
 
     await bot.save()
 }

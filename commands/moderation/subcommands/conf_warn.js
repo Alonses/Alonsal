@@ -53,5 +53,5 @@ module.exports = async ({ client, user, interaction, guild }) => {
     if (guild.conf.warn)
         client.tls.reply(interaction, user, "mode.warn.recurso_ativo", true, 10)
     else
-        client.tls.reply(interaction, user, "mode.warn.recurso_desligado", true, 0)
+        client.tls.reply(interaction, user, "mode.warn.recurso_desligado", true, client.emoji(0))
 }

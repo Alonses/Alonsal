@@ -21,7 +21,7 @@ module.exports = async (client, user, dados, interaction) => {
                             ephemeral: true
                         })
                     else
-                        return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
+                        return client.sendDM(user, { content: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
                 let lista_eventos = "", data_eventos = ""
                 const ano_atual = new Date().getFullYear()
@@ -53,7 +53,7 @@ module.exports = async (client, user, dados, interaction) => {
                         ephemeral: client.decider(user?.conf.ghost_mode, 0)
                     })
                 else
-                    return client.sendDM(user, { embed: embed_eventos }, true)
+                    return client.sendDM(user, { embeds: embed_eventos }, true)
             })
     } else {
 
@@ -69,7 +69,7 @@ module.exports = async (client, user, dados, interaction) => {
                             ephemeral: true
                         })
                     else
-                        return client.sendDM(user, { data: client.tls.phrase(user, "util.history.sem_evento") }, true)
+                        return client.sendDM(user, { content: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
                 const row = client.create_buttons([
                     { name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), value: res.fonte, type: 4, emoji: "🌐" }
@@ -103,7 +103,7 @@ module.exports = async (client, user, dados, interaction) => {
                         ephemeral: client.decider(user?.conf.ghost_mode, 0)
                     })
                 else
-                    client.sendDM(user, { embed: acontecimento, components: row }, true)
+                    client.sendDM(user, { embeds: acontecimento, components: row }, true)
             })
             .catch(() => {
                 if (interaction)
@@ -112,7 +112,7 @@ module.exports = async (client, user, dados, interaction) => {
                         ephemeral: true
                     })
                 else
-                    client.sendDM(user, { data: client.tls.phrase(user, "util.history.erro_eventos") }, true)
+                    client.sendDM(user, { content: client.tls.phrase(user, "util.history.erro_eventos") }, true)
             })
     }
 }

@@ -60,7 +60,7 @@ module.exports = async (client, user, interaction, entrada, caso, defer, autor_o
 
     if (!user_alvo_data) {
         if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-            return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), client.emoji(1))
+            return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
         // Removendo os usuários respectivos as primeiras páginas
         remover = pagina === paginas ? (pagina - 1) * 6 : data_usuarios.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6

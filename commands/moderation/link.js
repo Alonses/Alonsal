@@ -33,7 +33,8 @@ module.exports = {
                             "it": 'Il valore di entrata',
                             "pt-BR": 'O valor de entrada',
                             "ru": 'значение входа'
-                        })))
+                        })
+                        .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("browse")
                 .setNameLocalizations({

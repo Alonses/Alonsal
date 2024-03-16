@@ -9,6 +9,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_anti_spam", pagina_guia = 0
     const guild = await client.getGuild(interaction.guild.id)
 
+    if (operacao > 3)
+        pagina_guia = 2
+
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.spam.channel && !guild.logger.channel) {
         reback = "panel_guild.0"
@@ -19,12 +22,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 0 -> Entrar no painel de cliques
     // 1 -> Ativar ou desativar o módulo anti-spam
 
-    // 3 -> Links suspeitos
+    // 3 -> Ativar ou desativar os links suspeitos
     // 4 -> Sub-menu para configurar os Strikes
 
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
     // 7 -> Ativar ou desativar as notificações do anti-spam
+
+    // 8 -> Ativar ou desativar a punição de moderadores no servidor
 
     if (operacao === 1) {
 
@@ -71,11 +76,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         else
             guild.spam.suspicious_links = false
 
+        pagina_guia = 1
+
     } else if (operacao === 4) {
 
         const strikes = await listAllGuildStrikes(interaction.guild.id)
 
-        // Submenu para navegar pelas advertências do servidor
+        // Submenu para navegar pelos strikes do servidor
         let botoes = [], row = [{
             id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.1"
         }], indice_matriz = 5
@@ -104,7 +111,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         indice_matriz = strike.rank
             })
 
-        if (botoes.length < 5) // Botão para adicionar uma nova advertência
+        if (botoes.length < 5) // Botão para adicionar um novo strike
             row.push({ id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.novo_strike"), type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
         const embed = new EmbedBuilder()
@@ -141,8 +148,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     } else if (operacao === 6) {
 
-        // Submenu para escolher o cargo que será anexado com a advertência
-
         // Definindo o canal de avisos do anti-spam
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
@@ -163,7 +168,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.1` },
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2` },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
         ]
 
@@ -183,9 +188,18 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             guild.spam.notify = !guild.spam.notify
         else
             guild.spam.notify = false
+    } else if (operacao === 8) {
+
+        // Ativa ou desativa a gerencia de moderadores no servidor
+        if (typeof guild.spam.manage_mods !== "undefined")
+            guild.spam.manage_mods = !guild.spam.manage_mods
+        else
+            guild.spam.manage_mods = false
+
+        pagina_guia = 1
     }
 
-    if (operacao > 3)
+    if (operacao === 10)
         pagina_guia = 1
 
     await guild.save()

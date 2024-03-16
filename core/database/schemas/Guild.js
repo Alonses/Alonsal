@@ -101,7 +101,7 @@ const schema = new mongoose.Schema({
         notify: { type: Boolean, default: true },
         strikes: { type: Boolean, default: true },
         timeout: { type: Number, default: 2 },
-        data: { type: String, default: null },
+        manage_mods: { type: Boolean, default: false },
         trigger_amount: { type: Number, default: 5 },
         suspicious_links: { type: Boolean, default: false },
         channel: { type: String, default: null }

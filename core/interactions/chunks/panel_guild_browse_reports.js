@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                 rodape = client.tls.phrase(user, "mode.report.uma_pagina")
 
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), client.emoji(1))
+                return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
             const embed = new EmbedBuilder()
                 .setTitle(`> ${interaction.guild.name}`)

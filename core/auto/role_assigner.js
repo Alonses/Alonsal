@@ -114,7 +114,7 @@ async function alterar_users(client, user, interaction, contador) {
                 segundo_plano = true
                 interaction.editReply({ content: client.tls.phrase(user, "mode.roles.pin_segundo_plano", emoji_dancante, timestamp) })
 
-                client.sendDM(user, { data: client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante, timestamp) })
+                client.sendDM(user, { content: client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante, timestamp) })
             }
 
             alterar_users(client, user, interaction, contador)
@@ -128,7 +128,7 @@ async function alterar_users(client, user, interaction, contador) {
                 })
 
             segundo_plano = false
-            client.sendDM(user, { data: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]) })
+            client.sendDM(user, { content: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]) })
         }
     }, 1500)
 }
