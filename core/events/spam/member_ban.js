@@ -55,7 +55,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
             let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_ban", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
             let text = `${user_messages[0].content} `
 
-            if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi))
+            if (text.match(client.cached.regex))
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             embed_user.setDescription(msg_user)

@@ -32,7 +32,8 @@ class CeiraClient {
         this.cached = {
             last_interaction: 0,
             broad_status: false,
-            presence: null
+            presence: null,
+            regex: /[A-Za-z-!-\/:-@[-`{-~]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi
         }
     }
 

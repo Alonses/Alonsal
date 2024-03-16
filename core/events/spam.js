@@ -165,10 +165,9 @@ async function nerfa_spam({ client, message, guild }) {
     if (guild.spam.suspicious_links) { // Verificando se o servidor possui o registro de links suspeitos ativo
         let text = `${user_messages[0].content} `
 
-        if (text.match(/[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)) {
+        if (text.match(client.cached.regex)) {
 
-            let link = text.match(/[A-Za-z0-9]+\-[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi || /[A-Za-z]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi)
-            link = link.map(link => link.replace(" ", ""))
+            let link = text.match(client.cached.regex)
 
             if (await verifySuspiciousLink(link, true)) { // Verificando se o link já está registrado
 
