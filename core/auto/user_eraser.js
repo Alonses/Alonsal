@@ -15,19 +15,22 @@ const { dropAllUserGuilds, dropUserGuild } = require('../database/schemas/User_g
 
 async function atualiza_user_eraser(client) {
 
+    return
+
     let dados = await getOutdatedUsers(client.timestamp())
 
     // Atualizando o status de exclusão do usuário
     for (let i = 0; i < dados.length; i++) {
 
         const usuario = dados[i]
+        const user = await client.getUser(usuario.uid)
 
-        usuario.erase.erase_on + 1209600
+        usuario.erase.erase_on += 1209600
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${usuario.uid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${usuario.erase.erase_on}:R> ( <t:${usuario.erase.erase_on}:f> )` })
 
-            client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person"), usuario.erase.erase_on) })
+            if (user) client.sendDM(user, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person"), usuario.erase.erase_on) })
 
             usuario.erase.valid = true
             await usuario.save()
@@ -43,17 +46,17 @@ async function atualiza_user_eraser(client) {
     for (let i = 0; i < dados.length; i++) {
 
         const usuario = dados[i]
-        const user = await client.getUser(usuario.uid)
+        const user = await client.getUser(usuario.uid) || null
         const guild = await client.guilds(usuario.sid)
 
-        usuario.erase.erase_on + 604800
+        usuario.erase.erase_on += 604800
 
         let nome_servidor = `\`${usuario.sid}\` | \`${guild.name || client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             client.notify(process.env.channel_data, { content: `${client.defaultEmoji("person")} | Usuário ( \`${usuario.uid}\` | ${nome_servidor} ) marcado para exclusão dos dados em um servidor específico.\nExcluindo <t:${usuario.erase.erase_on}:R> ( <t:${usuario.erase.erase_on}:f> )` })
 
-            client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm_servidor", client.defaultEmoji("person"), [nome_servidor, usuario.erase.erase_on, usuario.erase.erase_on]) })
+            if (user) client.sendDM(user, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm_servidor", client.defaultEmoji("person"), [nome_servidor, usuario.erase.erase_on, usuario.erase.erase_on]) })
 
             usuario.erase.valid = true
             await usuario.save()
@@ -65,6 +68,8 @@ async function atualiza_user_eraser(client) {
 }
 
 async function verifica_user_eraser(client) {
+
+    return
 
     fs.readFile('./files/data/erase_user.txt', 'utf8', async (err, data) => {
 
@@ -78,7 +83,7 @@ async function verifica_user_eraser(client) {
             const usuario = data[i]
             const id_user = usuario.uid
 
-            // Apenas realiza a ação após 2 semanas do usuário ser movido para exclusão
+            // Apenas realiza a ação após 2 semanas após usuário ser movido para exclusão
             if (client.timestamp() > (usuario.erase.erase_on + 1209600)) {
 
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário
