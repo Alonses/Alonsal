@@ -658,22 +658,6 @@ function internal_functions(client) {
         })
     }
 
-    client.verifyUnknowGuilds = async () => {
-
-        // Verifica todos os servidores desconhecidos e envia para exclusão
-        const guilds = await listAllGuilds()
-
-        for (let i = 0; i < guilds.length; i++) {
-
-            const internal_guild = await client.guilds(guilds[i].sid)
-            if (!internal_guild) { // Bot não está no servidor
-
-                client.notify(process.env.channel_data, { content: `${client.defaultEmoji("paper")} | Servidor ( \`${guilds[i].sid}\` ) marcado para exclusão dos dados.\nExcluindo <t:${client.timestamp() + 1209600}:R> ( <t:${client.timestamp() + 1209600}:f> )` })
-                await disableGuildFeatures(client, guilds[i].sid)
-            }
-        }
-    }
-
     console.log(`🟢 | Funções internas vinculadas com sucesso.`)
 }
 
