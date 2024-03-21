@@ -475,9 +475,9 @@ function internal_functions(client) {
     }
 
     // Envia uma notificação em DM para o usuário
-    client.sendDM = (user, dados, force) => {
+    client.sendDM = async (user, dados, force) => {
 
-        let notifications
+        let notifications = false
 
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === client.id()) return
@@ -486,11 +486,14 @@ function internal_functions(client) {
             user.conf.notify = 1
 
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
-        if (client.decider(user?.conf.notify, 1))
-            client.discord.users.fetch(user.uid).then((user_interno) => {
+        if (client.decider(user?.conf.notify, 1)) {
+
+            const user_interno = await client.discord.users.fetch(user.uid)
+
+            if (user_interno)
                 user_interno.send(dados) // Enviando conteúdo na DM do usuário
                     .catch(() => notifications = 1)
-            })
+        }
 
         // Usuário com DM bloqueada
         if (notifications) {
