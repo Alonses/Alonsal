@@ -144,6 +144,19 @@ function internal_functions(client) {
             return require(`./core/${folder}/${funcao.split(".")[0]}`)[funcao.split(".")[1]](data)
     }
 
+    // Extrai os links formatados do texto original
+    client.extractSuspiciousLink = (text) => {
+
+        const links = []
+        text = text.split("(")
+        text.shift()
+
+        for (let i = 0; i < text.length; i++)
+            links.push(text[i].split(")")[0])
+
+        return links
+    }
+
     client.getBot = () => {
         return getBot(client.x.id)
     }
@@ -274,7 +287,6 @@ function internal_functions(client) {
             }
 
         return usuarios_validos
-
     }
 
     client.guildAction = (warn, chave_traduz) => {
@@ -334,8 +346,8 @@ function internal_functions(client) {
         return valor.toLocaleString(locale)
     }
 
-    client.menu_navigation = (client, interaction, data, reback, pagina) => {
-        return menu_navigation(client, interaction, data, reback, pagina)
+    client.menu_navigation = (client, user, data, pagina) => {
+        return menu_navigation(client, user, data, pagina)
     }
 
     // Sincroniza as ações moderativas em servidores com o network habilitado

@@ -105,7 +105,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             pagina--
 
         let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
-        let row = client.menu_navigation(data, pagina || 0)
+        let row = client.menu_navigation(client, user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -169,7 +169,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "5" }
         ]
 
-        let row = client.menu_navigation(data, pagina || 0)
+        let row = client.menu_navigation(client, user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)

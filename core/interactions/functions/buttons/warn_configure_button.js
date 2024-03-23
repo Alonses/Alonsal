@@ -92,7 +92,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `2.${id_warn}` }
         ]
 
-        let row = client.menu_navigation(data, pagina || 0)
+        let row = client.menu_navigation(client, user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)

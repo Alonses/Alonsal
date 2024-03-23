@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_speaker_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" }
         ]
 
-        let row = client.menu_navigation(data, pagina || 0)
+        let row = client.menu_navigation(client, user, data, pagina || 0)
         const multi_select = true
 
         if (row.length > 0) // Botões de navegação
