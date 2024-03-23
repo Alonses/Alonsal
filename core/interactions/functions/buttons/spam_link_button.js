@@ -83,7 +83,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             pagina--
 
         let botoes = [{ id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "2" }]
-        let row = client.menu_navigation(data, pagina)
+        let row = client.menu_navigation(client, user, data, pagina)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)

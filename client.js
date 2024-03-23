@@ -33,7 +33,7 @@ class CeiraClient {
             last_interaction: 0,
             broad_status: false,
             presence: null,
-            regex: /[A-Za-z-!-\/:-@[-`{-~]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi
+            regex: /[A-Za-z0-9--]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi
         }
     }
 

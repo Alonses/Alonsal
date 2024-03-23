@@ -83,7 +83,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         }
 
-        let row = client.menu_navigation(data, pagina || 0)
+        let row = client.menu_navigation(client, user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             obj.components.push(client.create_buttons(row, interaction))

@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
             obj.embeds = [embed]
             obj.components = [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19) }], interaction)]
-            let row = client.menu_navigation(data, pagina)
+            let row = client.menu_navigation(client, user, data, pagina)
 
             if (row.length > 0) // Botões de navegação
                 obj.components.push(client.create_buttons(row, interaction))
@@ -111,7 +111,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         obj.embeds = [embed]
                         obj.components = [client.create_menus({ client, interaction, user, data, pagina })]
 
-                        let row = client.menu_navigation(data, pagina)
+                        let row = client.menu_navigation(client, user, data, pagina)
 
                         if (row.length > 0) // Botões de navegação
                             obj.components.push(client.create_buttons(row, interaction))

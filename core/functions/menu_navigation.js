@@ -1,4 +1,4 @@
-module.exports = (dados, pagina) => {
+module.exports = (client, user, dados, pagina) => {
 
     let row = [], b_disabled = [false, false]
     let paginas = Math.ceil(dados.values.length / 25)
@@ -15,7 +15,7 @@ module.exports = (dados, pagina) => {
         row = [
             { id: dados.reback?.split(".")[0] || dados.alvo, name: '◀️', type: 1, data: `0|${pagina}.${dados.operation}.${dados.reback?.split(".")[1] || dados.alvo}${dados.submenu ? dados.submenu : ""}`, disabled: b_disabled[0] },
             { id: dados.reback?.split(".")[0] || dados.alvo, name: '▶️', type: 1, data: `1|${pagina}.${dados.operation}.${dados.reback?.split(".")[1] || dados.alvo}${dados.submenu ? dados.submenu : ""}`, disabled: b_disabled[1] },
-            { id: "indica", name: `Página ${pagina + 1} / ${paginas}`, type: 2, disabled: true }
+            { id: "indica", name: `${client.tls.phrase(user, "menu.botoes.pagina")} ${pagina + 1} / ${paginas}`, type: 2, disabled: true }
         ]
 
     return row

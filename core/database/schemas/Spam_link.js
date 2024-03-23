@@ -13,19 +13,27 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.model("Spam_Link", schema)
 
+// Verificando se os links suspeitos estão registrados
 async function verifySuspiciousLink(link, force) {
 
     let confirmado = false
 
     if (typeof link === "object")
         for (let i = 0; i < link.length; i++) {
+
+            link[i] = link[i].split(")")[0]
+
             if (!links_oficiais.includes(link[i]))
                 if (await getSuspiciousLink(link[i], force))
                     confirmado = true
         }
-    else if (!links_oficiais.includes(link))
+    else if (!links_oficiais.includes(link)) {
+
+        link = link.split(")")[0]
+
         if (await getSuspiciousLink(link, force))
             confirmado = true
+    }
 
     return confirmado
 }
@@ -50,18 +58,24 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
 
     if (typeof link !== "object") {
         if (!await verifySuspiciousLink(link, true)) {
+
+            link = link.split("(")[1].split(")")[0]
+
             await model.create({
-                link: link.replace(" ", ""),
+                link: link,
                 sid: guild_id,
                 timestamp: timestamp,
                 valid: true
             })
 
-            registrados.push(link.replace(" ", "").split("").join(" "))
+            registrados.push(link.split("").join(" "))
         }
     } else {
         for (let i = 0; i < link.length; i++) // Registrando uma lista de links maliciosos
             if (!await verifySuspiciousLink(link[i], true)) {
+
+                link[i] = link[i].split("(")[1].split(")")[0]
+
                 await model.create({
                     link: link[i],
                     sid: guild_id,
@@ -69,7 +83,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
                     valid: true
                 })
 
-                registrados.push(link[i].replace(" ", "").split("").join(" "))
+                registrados.push(link[i].split("").join(" "))
             }
     }
 
