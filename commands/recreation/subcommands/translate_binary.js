@@ -6,7 +6,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const codificar = {
         texto: interaction.options.getString("text"),
-        reverso: interaction.options.getString("reverse"),
+        reverso: interaction.options.getBoolean("reverse"),
         opera: interaction.options.getString("operation")
     }
 

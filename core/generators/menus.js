@@ -82,14 +82,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     emoji_label = client.emoji(galerito)
 
                 // Descrição da opção no menu
-                descricao_label = "Escolher essa do faustop"
-
-                if (alvo === "norbit")
-                    descricao_label = "Escolher essa do filme Norbit"
-
-                if (alvo === "galerito")
-                    descricao_label = "Escolher essa da rogéria"
-
+                descricao_label = translate[alvo]
                 valor_label = `${alvo}|${interaction.user.id}.${i}`
             }
 
