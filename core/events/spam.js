@@ -168,7 +168,7 @@ async function nerfa_spam({ client, message, guild }) {
         if (text.match(client.cached.regex)) {
 
             let link = text.match(client.cached.regex)
-            let registrados = await registerSuspiciousLink(link, guild.sid, client.timestamp()) || []
+            let registrados = await registerSuspiciousLink(link[0], guild.sid, client.timestamp()) || []
 
             // Registrando os links suspeitos que não estão salvos ainda e notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
             if (registrados.length > 0) {

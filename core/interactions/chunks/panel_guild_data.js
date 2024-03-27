@@ -14,6 +14,11 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
     const network = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length - 1 : 0
 
+    if (!interaction.customId)
+        await interaction.deferReply({ ephemeral: true })
+    else
+        await interaction.deferUpdate({ ephemeral: true })
+
     let dados = ""
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
 
@@ -83,7 +88,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 0)
         botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
 
-    client.reply(interaction, {
+    interaction.editReply({
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],
