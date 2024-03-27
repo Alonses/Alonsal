@@ -125,7 +125,7 @@ async function nerfa_spam({ client, message, guild }) {
         strike_aplicado = { action: "member_mute", timeout: 2 }
     }
 
-    if (!strike_aplicado.action) // Sem operação definida
+    if (!strike_aplicado?.action) // Sem operação definida
         strike_aplicado.action = "member_warn"
 
     // Redirecionando o evento

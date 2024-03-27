@@ -59,7 +59,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
     if (typeof link !== "object") {
         if (!await verifySuspiciousLink(link, true)) {
 
-            link = link.split("(")[1].split(")")[0]
+            link = link.split(")")[0].split("(")[1]
 
             await model.create({
                 link: link,
@@ -74,16 +74,18 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
         for (let i = 0; i < link.length; i++) // Registrando uma lista de links maliciosos
             if (!await verifySuspiciousLink(link[i], true)) {
 
-                link[i] = link[i].split("(")[1].split(")")[0]
+                if (link[i]) {
+                    link[i] = link[i].split(")")[0].split("(")[1]
 
-                await model.create({
-                    link: link[i],
-                    sid: guild_id,
-                    timestamp: timestamp,
-                    valid: true
-                })
+                    await model.create({
+                        link: link[i],
+                        sid: guild_id,
+                        timestamp: timestamp,
+                        valid: true
+                    })
 
-                registrados.push(link[i].split("").join(" "))
+                    registrados.push(link[i].split("").join(" "))
+                }
             }
     }
 
