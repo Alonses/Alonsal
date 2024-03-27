@@ -501,7 +501,7 @@ function internal_functions(client) {
         if (client.decider(user?.conf.notify, 1)) {
 
             const user_interno = await client.discord.users.fetch(user.uid)
-                .catch(() => notifications = 1)
+                .catch(() => { return null })
 
             if (user_interno)
                 user_interno.send(dados) // Enviando conteúdo na DM do usuário

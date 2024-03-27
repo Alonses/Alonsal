@@ -62,7 +62,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
             link = link.split(")")[0].split("(")[1]
 
             await model.create({
-                link: link,
+                link: link.replace(" ", ""),
                 sid: guild_id,
                 timestamp: timestamp,
                 valid: true
@@ -78,7 +78,7 @@ async function registerSuspiciousLink(link, guild_id, timestamp) {
                     link[i] = link[i].split(")")[0].split("(")[1]
 
                     await model.create({
-                        link: link[i],
+                        link: link[i].replace(" ", ""),
                         sid: guild_id,
                         timestamp: timestamp,
                         valid: true
