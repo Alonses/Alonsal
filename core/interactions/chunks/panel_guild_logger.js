@@ -2,11 +2,15 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { languagesMap } = require("../../formatters/translate")
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
-    const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+    const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
     const idioma = guild.lang !== "al-br" ? `:flag_${guild.lang.slice(3, 5)}:` : ":pirate_flag:"
+
+    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+
+    if (pagina > 0)
+        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_logger.0" }]
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -22,12 +26,26 @@ module.exports = async ({ client, user, interaction }) => {
         ativos: 0
     }
 
+    const eventos_note = {
+        total: 0,
+        ativos: 0
+    }
+
     Object.keys(guild.logger).forEach(evento => {
         if (evento !== "channel") {
             if (guild.logger[evento])
                 eventos.ativos++ // Apenas eventos ativos
 
             eventos.total++
+        }
+    })
+
+    Object.keys(guild.death_note).forEach(evento => {
+        if (evento.includes("member_")) {
+            if (guild.death_note[evento])
+                eventos_note.ativos++ // Apenas eventos ativos
+
+            eventos_note.total++
         }
     })
 
@@ -38,7 +56,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note)} **Death note**\n${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
                 inline: true
             },
             {
@@ -64,12 +82,46 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    botoes = botoes.concat([
-        { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1" },
-        { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-        { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-        { id: "guild_logger_button", name: client.tls.phrase(user, "mode.anuncio.idioma"), type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
-    ])
+    if (pagina === 2)
+        embed.setTitle(client.tls.phrase(user, "mode.death_note.titulo"))
+            .setDescription(client.tls.phrase(user, "mode.death_note.descricao"))
+            .setFields(
+                {
+                    name: `${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note)} **Death note**`,
+                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.notify)} **${client.tls.phrase(user, "menu.botoes.notificacoes")}**`,
+                    inline: true
+                },
+                {
+                    name: `${client.defaultEmoji("telephone")} **${client.tls.phrase(user, "mode.logger.eventos_ouvidos")}**`,
+                    value: `\`${eventos_note.ativos} / ${eventos_note.total}\``,
+                    inline: true
+                },
+                {
+                    name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
+                    value: `${client.emoji("icon_id")} \`${guild.death_note.channel}\`\n( <#${guild.death_note.channel}> )`,
+                    inline: true
+                }
+            )
+
+    if (pagina === 0)
+        botoes = botoes.concat([
+            { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
+            { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10", disabled: !guild?.conf.logger },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
+        ])
+    else if (pagina === 1)
+        botoes = botoes.concat([
+            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.anuncio.idioma"), type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
+        ])
+    else
+        botoes = botoes.concat([
+            { id: "guild_logger_button", name: "Death note", type: client.execute("functions", "emoji_button.type_button", guild?.death_note.note), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note), data: "5" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.notificacoes"), type: client.execute("functions", "emoji_button.type_button", guild?.death_note.notify), emoji: client.emoji(20), data: "7" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("warn"), data: "6" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "8" },
+        ])
 
     client.reply(interaction, {
         content: "",

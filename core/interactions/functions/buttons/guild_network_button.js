@@ -1,5 +1,4 @@
 const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
-const { getNetworkedGuilds } = require('../../../database/schemas/Guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

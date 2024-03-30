@@ -36,6 +36,7 @@ module.exports = {
                         })
                         .addChoices(
                             { name: '📜 Event log', value: 'log' },
+                            { name: '💀 Death note', value: 'death_note' },
                             { name: '📛 Anti-Spam', value: 'spam' },
                             { name: '🛑 Warn', value: 'warn' },
                             { name: '📻 External reports', value: 'report' },

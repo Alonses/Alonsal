@@ -14,6 +14,10 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
 
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
+    // Alterando o canal alvo conforme o filtro de eventos do death note
+    if (guild.death_note.note && guild.death_note.member_kick && guild.death_note.channel)
+        canal_aviso = guild.death_note.channel
+
     if (registroAudita2.reason) { // Banimento com motivo explicado
         razao = `💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_expulsao")}: ${registroAudita2.reason.split("Network | ")[1]}`
 
@@ -63,5 +67,13 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
     if (url_avatar)
         embed.setThumbnail(url_avatar)
 
-    client.notify(canal_aviso, { embeds: [embed] })
+    const obj = {
+        embeds: [embed]
+    }
+
+    // Notificações do Death note
+    if (guild.death_note.channel === canal_aviso && guild.death_note.notify)
+        obj.content = "@here"
+
+    client.notify(canal_aviso, obj)
 }
