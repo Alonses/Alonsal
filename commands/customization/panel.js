@@ -93,6 +93,8 @@ module.exports = {
                         .addChoices(
                             { name: '🧾 Guild data', value: 'data' },
                             { name: '📜 Event log', value: 'logger' },
+                            { name: '📜 Event log Configs', value: 'logger.1' },
+                            { name: '💀 Death note', value: 'logger.2' },
                             { name: '🛑 Warns', value: 'warns' },
                             { name: '🛑 Warns Pings', value: 'warns.1' },
                             { name: '🛑 Warns Configs', value: 'warns.2' },

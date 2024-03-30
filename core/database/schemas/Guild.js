@@ -97,6 +97,15 @@ const schema = new mongoose.Schema({
         invite_created: { type: Boolean, default: false },
         invite_deleted: { type: Boolean, default: false }
     },
+    death_note: {
+        note: { type: Boolean, default: false },
+        notify: { type: Boolean, default: true },
+        channel: { type: String, default: null },
+        member_punishment: { type: Boolean, default: true },
+        member_kick: { type: Boolean, default: true },
+        member_ban_add: { type: Boolean, default: true },
+        member_ban_remove: { type: Boolean, default: true }
+    },
     spam: {
         notify: { type: Boolean, default: true },
         strikes: { type: Boolean, default: true },
