@@ -19,6 +19,7 @@ module.exports = {
             fetchReply: true,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
+
         const delay = m.createdTimestamp - interaction.createdTimestamp
 
         let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_1")} ${client.emoji("dancando_thanos")}`
