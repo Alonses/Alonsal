@@ -40,8 +40,12 @@ async function atualiza_user_eraser(client) {
 
         const usuario = dados[i]
         const guild = await client.guilds(usuario.sid)
+        let nome_servidor
 
-        let nome_servidor = `\`${usuario.sid}\` | \`${guild.name || client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
+        if (guild)
+            nome_servidor = `\`${usuario.sid}\` | \`${guild.name}\``
+        else
+            nome_servidor = `\`${usuario.sid}\` | \`${client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm_servidor", client.defaultEmoji("person"), [nome_servidor, usuario.erase.erase_on + 604800, usuario.erase.erase_on + 604800]) })
