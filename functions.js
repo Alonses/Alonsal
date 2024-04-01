@@ -498,7 +498,7 @@ function internal_functions(client) {
             user.conf.notify = 1
 
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
-        if (client.decider(user?.conf.notify, 1)) {
+        if (client.decider(user?.conf?.notify, 1)) {
 
             const user_interno = await client.discord.users.fetch(user.uid)
                 .catch(() => { return null })
@@ -588,7 +588,7 @@ function internal_functions(client) {
     }
 
     // Salva todos os servidores que um usuário esta em cache
-    client.verifyUserGuilds = async (id_alvo, interaction) => {
+    client.verifyUserGuilds = async (user, id_alvo, interaction) => {
 
         const servidores = await client.guilds()
         let qtd_servidores = 0
