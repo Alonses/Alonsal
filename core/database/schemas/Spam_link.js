@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 // sid -> Server ID
 
-const links_oficiais = ["youtu.be/", "youtube.com/", "google.com/", "tenor.com/"]
+const links_oficiais = ["youtu.be", "youtube.com", "google.com", "tenor.com", "discordapp.com"]
 
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
@@ -23,11 +23,11 @@ async function verifySuspiciousLink(link, force) {
 
             link[i] = link[i].split(")")[0]
 
-            if (!links_oficiais.includes(link[i]))
+            if (!links_oficiais.includes(link[i].split("/")[0]))
                 if (await getSuspiciousLink(link[i], force))
                     confirmado = true
         }
-    else if (!links_oficiais.includes(link)) {
+    else if (!links_oficiais.includes(link.split("/")[0])) {
 
         link = link.split(")")[0]
 
@@ -39,6 +39,12 @@ async function verifySuspiciousLink(link, force) {
 }
 
 async function getSuspiciousLink(link, force) {
+
+    if (link.includes(")"))
+        link = link.split(")")[0]
+
+    if (link.includes("||"))
+        link = link.split("||")[0]
 
     return model.findOne({
         link: { $regex: link.replace(" ", ""), $options: "i" }
