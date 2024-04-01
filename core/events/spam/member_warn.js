@@ -35,7 +35,7 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
 
     // Notificando o membro capturado pelo spam
     const obj = {
-        content: client.tls.phrase(guild, "mode.spam.ping_capturado", null, `<@${user_guild}>`),
+        content: client.tls.phrase(guild, "mode.spam.ping_capturado", null, `<@${user_guild.id}>`),
         embeds: [embed]
     }
 

@@ -6,7 +6,7 @@ module.exports = async ({ client, message, guild, user_messages, user, user_guil
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode expulsar membros
     if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.KickMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
-        return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), user_guild) })
+        return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Listando as mensagens consideras spam e excluindo elas
     user_messages.forEach(internal_message => {
