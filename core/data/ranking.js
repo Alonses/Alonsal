@@ -38,14 +38,14 @@ module.exports = async ({ client, message, caso }) => {
     let cached_erase = false
 
     if (user_data.erase.valid) { // Usuário interagiu com o Alonsal novamente
-        // client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
+        client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
 
         user_data.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true
     }
 
     if (user.erase.valid) { // Usuário interagiu com o Alonsal novamente
-        // client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao_servidor", client.defaultEmoji("person"), await (client.guilds(message.guild.id)).name) })
+        client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao_servidor", client.defaultEmoji("person"), await (client.guilds(message.guild.id)).name) })
 
         user.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true
