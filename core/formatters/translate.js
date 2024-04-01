@@ -48,7 +48,7 @@ function phrase(user, target, emoji, replace) {
 
     let phrase = translate(user, target, replace)
 
-    if (!user.conf.resumed) // Ignora os emojis do inicio das frases
+    if (!user?.conf?.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
     return phrase

@@ -21,6 +21,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await interaction.deferUpdate({ ephemeral: true })
 
-        client.verifyUserGuilds(interaction.user.id, interaction)
+        client.verifyUserGuilds(user, interaction.user.id, interaction)
     }
 }
