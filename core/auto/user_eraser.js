@@ -126,9 +126,9 @@ async function verifica_user_eraser(client) {
             // Apenas realiza a ação após 1 semana do usuário ser movido para exclusão no servidor
             if (client.timestamp() > (usuario.erase.erase_on + 604800)) {
 
-                const guild = await client.guilds(usuario.sid)
+                // const guild = await client.guilds(usuario.sid)
 
-                let nome_servidor = `\`${usuario.sid}\` | \`${guild.name || client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
+                // let nome_servidor = `\`${usuario.sid}\` | \`${guild.name || client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
 
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário no servidor
                 await dropAllGuildUserGroups(id_user, id_guild)

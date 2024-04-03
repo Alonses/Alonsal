@@ -12,7 +12,7 @@ const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
-const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds, listAllGuilds, disableGuildFeatures } = require('./core/database/schemas/Guild')
+const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
