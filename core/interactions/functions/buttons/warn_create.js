@@ -107,8 +107,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     let canal_envio = guild.warn.channel, texto_embed = guild.warn.notify ? "@here" : ""
 
+    // Envia uma mensagem temporária no canal onde foi gerada a advertência
+    client.timed_message(interaction, { content: `<@${id_alvo}> recebeu uma nova advertência! ( \`${active_user_warns.length} / ${indice_matriz}\` )\n\n${client.verifyWarnAction(guild_warns[indice_warn], guild)}\n\n:hotsprings: Esta mensagem será removida <t:${client.timestamp() + 30}:R>` }, 30)
+
     // Servidor com anúncio de advertências público configurado
-    if (guild.warn?.announce.status && guild.warn?.announce.channel) {
+    if (guild.warn?.announce?.status && guild.warn?.announce?.channel) {
         canal_envio = guild.warn.announce.channel
         texto_embed = `<@${id_alvo}>`
 
