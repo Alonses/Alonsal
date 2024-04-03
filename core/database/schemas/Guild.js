@@ -68,6 +68,10 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null },
         timeout: { type: Number, default: 2 },
         reset: { type: Number, default: 7 },
+        announce: {
+            status: { type: Boolean, default: false },
+            channel: { type: String, default: null }
+        }
     },
     reports: {
         channel: { type: String, default: null },

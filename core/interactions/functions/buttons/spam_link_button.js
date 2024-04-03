@@ -1,11 +1,12 @@
 const { EmbedBuilder } = require("discord.js")
-const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks } = require("../../../database/schemas/Spam_link")
 
-module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
+const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks, listAllSuspiciouLinks } = require("../../../database/schemas/Spam_link")
 
-    const pagina = pagina_guia || 0
+module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    // Gerenciamento de anotações
+    pagina = pagina || 0
+
+    // Gerenciamento de links suspeitos
     const operacao = parseInt(dados.split(".")[1])
     const timestamp = parseInt(dados.split(".")[2])
 
@@ -51,7 +52,12 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
     } else if (operacao === 2) {
 
-        const links = await getAllGuildSuspiciousLinks(interaction.guild.id)
+        let links
+
+        if (interaction.guild.id === process.env.guild_id && process.env.owner_id.includes(interaction.user.id)) // Lista todos os links maliciosos salvos no Alonsal
+            links = await listAllSuspiciouLinks()
+        else
+            links = await getAllGuildSuspiciousLinks(interaction.guild.id)
 
         if (links.length < 1) // Sem links suspeitos registrados no servidor
             return interaction.reply({
@@ -78,9 +84,11 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             values: links
         }
 
+        // Retorna na página aberta anteriormente
+        if (dados.split(".")[2]) pagina = parseInt(dados.split(".")[2])
+
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [{ id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "2" }]
         let row = client.menu_navigation(client, user, data, pagina)

@@ -44,6 +44,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 9 -> Alterar de página dentro do guia
     // 10 -> Ativar ou desativar as notificações de exclusões de advertências
 
+    // 11 -> Ativar ou desativar anúncios públicos
+    // 12 -> Definir canal de anúncios públicos
+
     // 15 -> Sub menu com as opções para gerenciar as notificações
 
     // 16 -> Tempo de expiração das advertências
@@ -112,24 +115,38 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
 
-    } else if (operacao === 5) {
+    } else if (operacao === 5 || operacao === 12) {
 
-        // Definindo o canal de avisos dos warns
+        // Definindo o canal de avisos dos warns ou do canal de avisos públicos
+        let canal = guild.warn.channel, alvo = "guild_warns#channel", digito = 2
+
+        if (operacao === 12) {
+            canal = guild.warn.announce.channel
+            alvo = "guild_warns_announce#channel"
+            digito = 1
+        }
+
         const data = {
             title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
-            alvo: "guild_warns#channel",
+            alvo: alvo,
             reback: "browse_button.guild_warns_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.warn.channel)
+            values: []
         }
+
+        if (canal)
+            data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
+
+        // Listando os canais do servidor
+        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, canal))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24)
             pagina--
 
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "5" }
+            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.${digito}` },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: operacao }
         ]
 
         let row = client.menu_navigation(client, user, data, pagina || 0)
@@ -176,6 +193,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         operacao = 15
 
         await guild.save()
+    } else if (operacao === 11) {
+
+        // Ativa ou desativa as notificações de advertências públicas
+        if (typeof guild.warn.announce.status !== "undefined")
+            guild.warn.announce.status = !guild.warn.announce.status
+        else
+            guild.warn.announce.status = true
+
+        pagina_guia = 1
     }
 
     if (operacao == 16) { // Definindo o tempo de expiração das advertênicas no servidor

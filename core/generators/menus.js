@@ -248,7 +248,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
             if (alvo === "spam_link_panel") {
 
                 emoji_label = "🔗"
-                valor_label = `${alvo}|${valor.sid}.${valor.timestamp}`
+                valor_label = `${alvo}|${valor.sid}.${valor.timestamp}.${pagina}`
                 nome_label = valor.link.length > 20 ? `${valor.link.slice(0, 18)}...` : valor.link
                 descricao_label = `${client.tls.phrase(user, "mode.link_suspeito.registrado_em")} ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")}`
             }

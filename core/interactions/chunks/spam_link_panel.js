@@ -6,6 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild_sid = dados.split(".")[0]
     const timestamp = dados.split(".")[1]
+    const pagina = parseInt(dados.split(".")[2])
 
     const link = await getCachedSuspiciousLink(guild_sid, timestamp)
 
@@ -31,7 +32,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
 
     const row = client.create_buttons([
-        { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "2" },
+        { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `2.${pagina}` },
         { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.remover_link"), type: 3, emoji: client.emoji(13), data: `5|${timestamp}` }
     ], interaction)
 

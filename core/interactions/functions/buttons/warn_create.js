@@ -49,36 +49,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (guild_warns[indice_warn].action !== "none")
             texto_rodape = client.tls.phrase(user_alvo, "mode.warn.punicao_aplicada")
 
-    // Embed de aviso para o membro que recebeu a advertência
-    const embed_user = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user_alvo, "mode.warn.titulo_advertencia")} :inbox_tray:`)
-        .setColor(0xED4245)
-        .setDescription(client.tls.phrase(user_alvo, "mode.warn.advertencia_recebida", null, [interaction.guild.name, user_warn.relatory]))
-        .addFields(
-            {
-                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user_alvo, "mode.warn.moderador_responsavel")}**`,
-                value: `${client.emoji("icon_id")} \`${id_executor}\`\n\`${interaction.user.username}\`\n( <@${id_executor}> )`,
-                inline: true
-            },
-            {
-                name: `${client.emoji("banidos")} **${client.tls.phrase(user_alvo, "menu.botoes.penalidade")}**`,
-                value: client.verifyWarnAction(guild_warns[indice_warn], guild),
-                inline: true
-            },
-            {
-                name: `${client.emoji(47)} **${client.tls.phrase(user_alvo, "mode.warn.advertencias")}: ${active_user_warns.length} / ${indice_matriz}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
-        .setFooter({
-            text: texto_rodape,
-            iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
-
-    // Avisando o usuário sobre a advertência
-    await client.sendDM(user_alvo, { embeds: [embed_user] }, true)
-
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(guild, "mode.warn.titulo_advertencia")} :inbox_tray:`)
@@ -135,8 +105,22 @@ module.exports = async ({ client, user, interaction, dados }) => {
         inline: true
     })
 
-    client.notify(guild.warn.channel, {
-        content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
+    let canal_envio = guild.warn.channel, texto_embed = guild.warn.notify ? "@here" : ""
+
+    // Servidor com anúncio de advertências público configurado
+    if (guild.warn?.announce.status && guild.warn?.announce.channel) {
+        canal_envio = guild.warn.announce.channel
+        texto_embed = `<@${id_alvo}>`
+
+        embed_guild.setDescription(`\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warn.relatory}\`\`\``)
+            .setFooter({
+                text: "⠀",
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
+    }
+
+    client.notify(canal_envio, {
+        content: texto_embed, // Servidor com ping de advertência ativo
         embeds: [embed_guild]
     })
 
