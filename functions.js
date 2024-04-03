@@ -525,6 +525,18 @@ function internal_functions(client) {
         return arr
     }
 
+    client.timed_message = async (interaction, message, time) => {
+
+        const canal = await client.discord.channels.cache.get(interaction.channel.id)
+        if (!canal) return
+
+        // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
+
+        canal.send(message) // Envia a mensagem e apaga a mesma após um tempo
+            .then(m => setTimeout(() => { m.delete().catch(() => console.error) }, (time - 1) * 1000))
+    }
+
     client.timestamp = (entrada, hora_entrada) => {
 
         if (entrada || hora_entrada) { // Informou um dia e horário ( utilizado pelos anúncios de games )
