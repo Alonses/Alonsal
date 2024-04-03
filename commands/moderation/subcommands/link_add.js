@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    // Criando os botões para a cor customizada
+    // Criando os botões para excluir o link suspeito
     const row = client.create_buttons([
         { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1.${timestamp}` },
         { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0.${timestamp}` }

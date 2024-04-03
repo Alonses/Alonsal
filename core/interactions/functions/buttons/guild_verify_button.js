@@ -84,7 +84,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                 if (users_ids.length > 0) {
                     // Menu para navegar entre os usuários reportados
-                    const reportes_guild = await checkUserGuildReported(interaction.guild.id)
+                    let reportes_guild
+
+                    if (interaction.guild.id !== process.env.guild_id)
+                        reportes_guild = await checkUserGuildReported(interaction.guild.id)
+                    else if (process.env.owner_id.includes(interaction.user.id))
+                        reportes_guild = await getReportedUsers() // Lista todos os usuários reportados salvos no Alonsal
 
                     if (reportes_guild.length > 0) {
                         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
@@ -107,6 +112,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                             operation: 0,
                             values: usuarios_reportados
                         }
+
+                        pagina = parseInt(pagina)
 
                         obj.embeds = [embed]
                         obj.components = [client.create_menus({ client, interaction, user, data, pagina })]

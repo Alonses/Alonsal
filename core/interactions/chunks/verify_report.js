@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
-                value: `${client.emoji("icon_id")} \`${alvo.executer}\`\n\`${alvo.issuer_nick ? (alvo.issuer_nick.length > 20 ? `${alvo.issuer_nick.slice(0, 20)}...` : alvo.issuer_nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.executer}> )`,
+                value: `${alvo.executer ? `${client.emoji("icon_id")} \`${alvo.executer}\`` : ""}\n\`${alvo.issuer_nick ? (alvo.issuer_nick.length > 20 ? `${alvo.issuer_nick.slice(0, 20)}...` : alvo.issuer_nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`${alvo.executer ? `\n( <@${alvo.executer}> )` : ""}`,
                 inline: true
             },
             {
@@ -74,8 +74,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Criando os botões para as funções de reporte
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `report_browse_user|${pagina}` }]
 
-    if (alvo.executer) // Botão para remover o reporte do usuário no servidor
-        botoes = botoes.concat([{ id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_reporte"), type: 1, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}` }])
+    if (alvo.executer || process.env.owner_id.includes(interaction.user.id)) // Botão para remover o reporte do usuário no servidor
+        botoes = botoes.concat([{ id: "report_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_reporte"), type: 1, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}.${pagina}` }])
 
     client.reply(interaction, {
         content: "",

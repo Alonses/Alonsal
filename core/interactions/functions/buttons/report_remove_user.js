@@ -7,6 +7,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // Códigos de operação
     // 0 -> Cancelar
     // 1 -> Confirma remoção
+
     // 2 -> Menu para confirmar a escolha de remoção
     // 3 -> Menu para escolher o usuário
 
@@ -58,36 +59,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao === 3) {
-        // Menu para navegar entre os usuários reportados
-        const reportes_guild = await checkUserGuildReported(interaction.guild.id)
-
-        if (reportes_guild.length < 1)
-            return client.tls.reply(interaction, user, "mode.report.usuario_sem_reportes", true, 1)
-
-        // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (reportes_guild.length < pagina * 24)
-            pagina--
-
-        const data = {
-            alvo: "remove_report",
-            reback: "browse_button.report_remove_user",
-            operation: 3,
-            values: reportes_guild
-        }
-
-        const obj = {
-            content: client.tls.phrase(user, "mode.report.escolher_usuario_gerencia"),
-            embeds: [],
-            components: [client.create_menus({ client, interaction, user, data, pagina })],
-            ephemeral: true
-        }
-
-        let row = client.menu_navigation(client, user, data, pagina || 0)
-
-        if (row.length > 0) // Botões de navegação
-            obj.components.push(client.create_buttons(row, interaction))
-
-        client.reply(interaction, obj)
-    }
+    if (operacao === 3) // Redirecionando o evento
+        require('./report_browse_user')({ client, user, interaction, pagina })
 }

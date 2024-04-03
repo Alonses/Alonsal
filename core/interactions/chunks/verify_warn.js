@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "util.user.entrada")}**`,
-                value: `<t:${parseInt(member_guild?.joinedTimestamp || 0 / 1000)}:F> )`,
+                value: member_guild ? `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F>` : `\`${client.tls.phrase(user, "mode.report.entrada_desconhecida")}\``,
                 inline: true
             },
             {
