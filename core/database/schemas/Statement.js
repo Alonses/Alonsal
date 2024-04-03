@@ -6,7 +6,7 @@ const { badges } = require("../../data/badges")
 // uid -> User ID
 
 const schema = new mongoose.Schema({
-    uid: { type: Number, default: 0 },
+    uid: { type: String, default: null },
     operation: { type: String, default: null },
     type: { type: Boolean, default: false }, // false -> saída, true -> entrada
     value: { type: Number, default: 0 },

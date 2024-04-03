@@ -12,10 +12,10 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         canal_aviso = guild.death_note.channel
 
     if (registroAudita.reason) { // Castigo com motivo explicado
-        razao = `\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_castigo")}: ${registroAudita.reason.includes("Network | ") ? registroAudita.reason.split("Network | ")[1] : registroAudita.reason}`
+        razao = `\n💂‍♂️ ${client.tls.phrase(guild, "mode.logger.motivo_castigo")}: ${registroAudita.reason}`
 
         // Ação realizada através do network
-        if (registroAudita.reason.includes("Network") && registroAudita.executorId === client.id()) {
+        if (registroAudita.reason.includes("Network | ") && registroAudita.executorId === client.id()) {
             network_descricao = `📡 ${registroAudita.reason.split(" | ")[1]}`
             razao = ""
 
