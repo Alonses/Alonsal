@@ -35,7 +35,7 @@ module.exports = async ({ client, guild }) => {
 
                 // Enviando um Embed ao usuário que adicionou o bot ao servidor
                 const row = client.create_buttons([
-                    { name: client.tls.phrase(inviter, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.glitch.me/' },
+                    { name: client.tls.phrase(inviter, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.discloud.app/' },
                     { name: client.tls.phrase(inviter, "inic.inicio.suporte"), type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support }
                 ])
 
