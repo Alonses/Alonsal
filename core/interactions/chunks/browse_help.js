@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({ client, user, interaction }) => {
 
     const row = client.create_buttons([
-        { name: client.tls.phrase(user, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.glitch.me/' },
+        { name: client.tls.phrase(user, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.discloud.app/' },
         { name: client.tls.phrase(user, "inic.inicio.suporte"), type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support },
         { id: "language", name: "Change language", type: 0, emoji: client.defaultEmoji("earth") }
     ], interaction)
