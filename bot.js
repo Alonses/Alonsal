@@ -33,17 +33,17 @@ client.discord.once("ready", async () => {
 
 client.discord.on("messageCreate", async message => {
 
-	// Previne que o bot responda a interações enquanto estiver atualizando comandos
+	// Prevents the bot from responding to interactions while updating commands
 	if (client.x.force_update) return
 
-	// Impede o bot de interagir com outros membros quando está no modo develop
+	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) return
 
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
 	const text = `${message.content} `
 
-	if (guild.spam.suspicious_links) // Verificando se há um link malicioso no texto
+	if (guild.spam.suspicious_links) // Checking the text for a malicious link
 		if (text.match(client.cached.regex)) {
 
 			let link = text.match(client.cached.regex)
@@ -53,41 +53,41 @@ client.discord.on("messageCreate", async message => {
 					return nerfa_spam({ client, message, guild })
 		}
 
-	if (guild.conf.spam) // Sistema anti-spam do servidor
+	if (guild.conf.spam) // Server anti-spam system
 		await require("./core/events/spam")({ client, message, guild })
 
-	// Verificando se o autor é um bot ou um webhook
+	// Checking if the author is a bot or a webhook
 	if (message.author.bot || message.webhookId) return
 
-	if (user) { // Só executa caso o membro esteja salvo no banco dados
+	if (user) { // It only runs if the member is saved in the database
 
 		let user_rank_guild = await getUserRankServer(user.uid, message.guild.id)
 
-		// Ignorando usuários banidos e que foram movidos para exclusão de dados
+		// Ignoring banned users and those moved to data deletion
 		if (user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
 
-		// Sincronizando os dados do usuário
+		// Syncing user data
 		const user_guild = await client.getMemberGuild(message, user.uid)
 		if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
 			user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
 			await user.save()
 		}
 
-		// Recursos de Broadcast
+		// Broadcast Resources
 		if (client.cached.broad_status)
 			await require("./core/events/broadcast")({ client, message })
 
-		// Respostas automatizadas por IA
+		// AI-automated responses
 		// if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
 		// return require("./core/events/conversation")({ client, message, text, guild })
 
 		try {
-			// Atualizando o XP dos usuários
-			if (message.content.length > 6 && client.x.ranking) // Experiência recebida pelo usuário
+			// Updating users' XP
+			if (message.content.length > 6 && client.x.ranking) // Experience received by the user
 				client.registryExperience(message, "messages")
 
 			await require("./core/events/legacy_commands")({ client, message })
-		} catch (err) { // Erro no comando
+		} catch (err) { // Command error
 			client.error(err, "Commands")
 		}
 	}
