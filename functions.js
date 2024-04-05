@@ -542,17 +542,22 @@ function internal_functions(client) {
         if (entrada || hora_entrada) { // Informou um dia e horário ( utilizado pelos anúncios de games )
 
             // Invertendo o mês com o dia
-            entrada = `${entrada.split("/")[1]}/${entrada.split("/")[0]}`
-            let hora = hora_entrada || ""
+            if (entrada.includes("/")) {
+                entrada = `${entrada.split("/")[1]}/${entrada.split("/")[0]}`
 
-            const ano_atual = new Date().getFullYear()
-            let tempo_timestamped = new Date(`${entrada}/${ano_atual} ${hora}`)
+                let hora = hora_entrada || ""
+                let tempo_timestamped
 
-            if (entrada.split("/")[0] < 2 && new Date().getMonth() >= 8)
-                tempo_timestamped = new Date(`${entrada}/${ano_atual + 1}`)
+                const ano_atual = new Date().getFullYear()
+                tempo_timestamped = new Date(`${entrada}/${ano_atual} ${hora}`)
+
+                if (entrada.split("/")[0] < 2 && new Date().getMonth() >= 8)
+                    tempo_timestamped = new Date(`${entrada}/${ano_atual + 1}`)
+            } else
+                tempo_timestamped = new Date(entrada) // Entrada de string bruta com padrão utilizado pelo Discord
 
             // Retorna o dia e o horário informado em timestamp
-            return tempo_timestamped.getTime() / 1000
+            return Math.floor(tempo_timestamped.getTime() / 1000)
         }
 
         return Math.floor(new Date().getTime() / 1000)
