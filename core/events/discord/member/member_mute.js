@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     const user_alvo = dados[0].user
-    const timeout = registroAudita.changes[0].new ? parseInt(new Date(registroAudita.changes[0].new) - new Date()) : null
+    const timeout = registroAudita.changes[0] ? parseInt(new Date(registroAudita.changes[0].new) - new Date()) : null
     const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
