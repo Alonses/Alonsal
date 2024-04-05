@@ -81,8 +81,16 @@ client.discord.on("messageCreate", async message => {
 		// if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
 		// return require("./core/events/conversation")({ client, message, text, guild })
 
-		// Checking whether the text starts with a classic prefix
-		require("./core/events/legacy_commands")({ client, message })
+		try {
+			// Updating users' XP
+			if (message.content.length > 6 && client.x.ranking) // Experience received by the user
+				client.registryExperience(message, "messages")
+
+			// Checking whether the text starts with a classic prefix
+			await require("./core/events/legacy_commands")({ client, message })
+		} catch (err) { // Command error
+			client.error(err, "Commands")
+		}
 	}
 })
 

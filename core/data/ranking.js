@@ -127,15 +127,16 @@ module.exports = async ({ client, message, caso }) => {
     user.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.guild_timeout]
 
     if (caso === "messages") {
-        user.xp += bot.persis.ranking
-        user.ixp += bot.persis.ranking
 
-        user.lastInteraction = message.createdTimestamp
-        user.warns = 0
+        // user.xp += bot.persis.ranking
+        // user.ixp += bot.persis.ranking
 
-        user_global.xp += bot.persis.ranking
-        user_global.lastInteraction = message.createdTimestamp
-        user_global.warns = 0
+        // user.lastInteraction = message.createdTimestamp
+        // user.warns = 0
+
+        // user_global.xp += bot.persis.ranking
+        // user_global.lastInteraction = message.createdTimestamp
+        // user_global.warns = 0
 
     } else if (caso === "comando") { // Experiência obtida executando comandos
         user.xp += bot.persis.ranking * 1.5
