@@ -106,9 +106,7 @@ module.exports = {
                             { name: '💂 External reports', value: 'external_reports' },
                             { name: '🎮 Free Games ad', value: 'free_games' },
                             { name: '💂 In-server reports', value: 'tickets' },
-                            { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🔊 Talkative Alonsal', value: 'speaker' },
-                            { name: '🌎 Broadcast', value: 'broadcast' }
+                            { name: '🔗 Tracked Invitations', value: 'tracked_invites' }
                         ))),
     async execute({ client, user, interaction }) {
 

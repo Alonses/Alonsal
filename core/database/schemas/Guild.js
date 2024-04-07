@@ -133,8 +133,6 @@ const schema = new mongoose.Schema({
         games: { type: Boolean, default: false },
         tickets: { type: Boolean, default: false },
         reports: { type: Boolean, default: false },
-        conversation: { type: Boolean, default: false },
-        broadcast: { type: Boolean, default: false },
         logger: { type: Boolean, default: false },
         spam: { type: Boolean, default: false },
         network: { type: Boolean, default: false },
@@ -195,8 +193,6 @@ async function disableGuildFeatures(client, sid) {
     guild.conf.games = false
     guild.conf.reports = false
     guild.conf.tickets = false
-    guild.conf.conversation = false
-    guild.conf.broadcast = false
     guild.conf.logger = false
     guild.conf.spam = false
     guild.conf.network = false

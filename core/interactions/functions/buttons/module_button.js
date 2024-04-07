@@ -101,5 +101,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     }
 
-    atualiza_modulos(client, 0, true)
+    atualiza_modulos(client) // Atualizando a lista de módulos salvos localmente
 }

@@ -48,12 +48,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.broadcast)} **${client.tls.phrase(user, "manu.painel.permitir_broadcast")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.conversation)} **${client.tls.phrase(user, "manu.painel.alonsal_falador")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**`,
                 inline: true
             },
             {
