@@ -10,7 +10,7 @@ module.exports = {
                 .setRequired(true)),
     async execute({ client, user, interaction }) {
 
-        if (interaction.user.id !== client.owners[0] || client.owners.includes(interaction.options.getString("usuario"))) return
+        if (interaction.user.id !== client.x.owners[0] || client.x.owners.includes(interaction.options.getString("usuario"))) return
 
         let user_alvo = await client.getUser(interaction.options.getString("usuario"))
 

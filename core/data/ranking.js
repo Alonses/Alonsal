@@ -1,14 +1,11 @@
-const { badges } = require('./badges')
-
 const { atualiza_user_eraser } = require('../auto/user_eraser')
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
-const { verifyDynamicBadge } = require('../database/schemas/Badge')
 const { getUser, defaultUserEraser } = require('../database/schemas/User')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
 
 const CHECKS = {
     LIMIT: 5,
-    DIFF: 5000,
+    DIFF: 10000,
     HOLD: 60000
 }
 
@@ -128,15 +125,15 @@ module.exports = async ({ client, message, caso }) => {
 
     if (caso === "messages") {
 
-        // user.xp += bot.persis.ranking
-        // user.ixp += bot.persis.ranking
+        user.xp += bot.persis.ranking
+        user.ixp += bot.persis.ranking
 
-        // user.lastInteraction = message.createdTimestamp
-        // user.warns = 0
+        user.lastInteraction = message.createdTimestamp
+        user.warns = 0
 
-        // user_global.xp += bot.persis.ranking
-        // user_global.lastInteraction = message.createdTimestamp
-        // user_global.warns = 0
+        user_global.xp += bot.persis.ranking
+        user_global.lastInteraction = message.createdTimestamp
+        user_global.warns = 0
 
     } else if (caso === "comando") { // Experiência obtida executando comandos
         user.xp += bot.persis.ranking * 1.5
@@ -184,9 +181,6 @@ verifica_servers = async (client, user, user_global) => {
 
     await user.save()
     await user_global.save()
-
-    // Procurando pelo usuário com maior ranking e concedendo uma badge especial
-    verifyDynamicBadge(client, "ranking", badges.CHATTERBOX)
 }
 
 sincroniza_xp = async (user) => {

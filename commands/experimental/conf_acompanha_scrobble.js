@@ -11,7 +11,7 @@ module.exports = {
 
         return
 
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         acompanha_scrobble(client, user.social.lastfm)
 

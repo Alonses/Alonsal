@@ -1,35 +1,31 @@
-const { atualiza_warns, verifica_warns } = require("./warn")
-const { requisita_modulo, atualiza_modulos } = require("./module")
-const { atualiza_eraser, verifica_eraser } = require("./guild_eraser")
-const { atualiza_user_eraser, verifica_user_eraser } = require("./user_eraser")
+const { verifica_warns } = require("./warn")
+const { requisita_modulo } = require("./module")
+const { verifica_eraser } = require("./guild_eraser")
+const { verifica_user_eraser } = require("./user_eraser")
 
-module.exports = async ({ client }) => {
+const dynamic_badges = require("./dynamic_badges")
+
+module.exports = async (client) => {
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
-    console.log(`📣 | Disparando o relógio ${tempo_restante > 1000 ? `em ${tempo_restante} segundos` : "agora!"}`)
-
-    if (client.x.modules)
-        atualiza_modulos(client)
-
-    atualiza_warns(client)
-    atualiza_eraser(client)
-    atualiza_user_eraser(client)
+    console.log("📣 | Disparando o relógio interno")
 
     setTimeout(() => internal_clock(client, tempo_restante), 5000)
 }
 
 internal_clock = (client, tempo_restante) => {
 
-    setTimeout(() => {
-
-        if (client.x.modules) // Sincronizando os módulos ativos
+    setTimeout(() => { // Sincronizando os dados do bot
+        if (client.timestamp() % 600 < 60) {
             requisita_modulo()
+            dynamic_badges(client)
 
-        verifica_warns(client) // Sincronizando as advertências que se expirão
-        verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
-        verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
+            verifica_warns(client) // Sincronizando as advertências que se expirão
+            verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
+            verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
+        }
 
         internal_clock(client, 60000)
     }, tempo_restante)

@@ -48,7 +48,8 @@ module.exports = async ({ client, guild }) => {
                 client.sendDM(inviter, { embeds: [embed], components: [row] }, true)
             }
 
-            verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
+            // Checking which user invited the bot the most
+            if ((guild.memberCount - 1) > 20) verifyDynamicBadge(client, "hoster", badges.HOSTER)
         })
     }
 

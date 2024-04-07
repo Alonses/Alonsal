@@ -12,7 +12,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         let novo_valor = parseInt(interaction.options.getInteger("valor"))
         const valor_ranking = novo_valor === 0 ? 2 : novo_valor

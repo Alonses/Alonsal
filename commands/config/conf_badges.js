@@ -30,7 +30,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         let id_alvo = interaction.options.getUser("usuario").id
         let badge_alvo = parseInt(interaction.options.getString("badge"))
