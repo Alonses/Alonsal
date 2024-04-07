@@ -5,7 +5,7 @@ const { verifica_user_eraser } = require("./user_eraser")
 
 const dynamic_badges = require("./dynamic_badges")
 
-module.exports = async (client) => {
+module.exports = async ({ client }) => {
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
