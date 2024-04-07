@@ -6,6 +6,7 @@ const idioma = require('./core/data/language')
 const database = require('./core/database/database')
 
 const { nerfa_spam } = require('./core/events/spam')
+const { getBot } = require('./core/database/schemas/Bot')
 const { checkUser } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/Rank_s')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
@@ -18,8 +19,9 @@ client.discord.once("ready", async () => {
 
 	console.log("🟠 | Executando etapas finais")
 
-	// Setting the default language
+	// Setting the default language and value for ranking
 	idioma.setDefault("pt-br")
+	client.cached.ranking_value = (await getBot(client.id())).persis.ranking || 5
 
 	// Secondary events
 	await require("./core/auto/clock")({ client })

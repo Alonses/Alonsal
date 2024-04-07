@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { getUser } = require('../database/schemas/User.js')
-
 const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
 
 let default_lang
@@ -83,24 +81,12 @@ function setDefault(lang) {
     default_lang = lang
 }
 
-async function setLang(interaction, lang) {
-
-    const id = interaction.user.id
-    const user = await getUser(id)
-
-    // Salvando os dados do usuário
-    user.updateOne({ uid: id }, {
-        lang: lang
-    })
-}
-
 function getLang() {
     return default_lang
 }
 
 module.exports = {
     setDefault,
-    setLang,
     getLang,
     loadAll,
     listAll

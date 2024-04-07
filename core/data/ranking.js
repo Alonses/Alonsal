@@ -49,7 +49,6 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     user_data.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.timeout]
-    await user_data.save()
 
     if (cached_erase) // Atualizando a lista de usuários que estão marcados para exclusão
         atualiza_user_eraser(client)
@@ -61,18 +60,25 @@ module.exports = async ({ client, message, caso }) => {
     user.nickname = message.user?.username || message.author?.username
 
     if (caso === "messages") {
-
-        let validador = false
-
         if (user.warns >= CHECKS.LIMIT) {
             user.caldeira_de_ceira = true
             user.warns = 0
 
             validador = true
             await user.save()
+            await user_data.save()
+
+            return
         }
 
-        if (validador) return
+        if (message.createdTimestamp - user.lastInteraction < CHECKS.DIFF) {
+            user.warns++
+
+            await user.save()
+            await user_data.save()
+
+            return
+        }
     }
 
     // Limitando o ganho de XP por spam no chat
@@ -81,22 +87,7 @@ module.exports = async ({ client, message, caso }) => {
             user.caldeira_de_ceira = false
         else if (caso === "messages") return
 
-    if (caso === "messages") {
-
-        let validador = false
-
-        if (message.createdTimestamp - user.lastInteraction < CHECKS.DIFF) {
-            user.warns++
-
-            validador = true
-            await user.save()
-        }
-
-        if (validador) return
-    }
-
     // Coletando o XP atual e somando ao total do usuário
-    const bot = await client.getBot()
     let xp_anterior = user.ixp
 
     // Recalculando o tempo de inatividade do usuário
@@ -104,17 +95,17 @@ module.exports = async ({ client, message, caso }) => {
 
     if (caso === "messages") {
 
-        user.xp += bot.persis.ranking
-        user.ixp += bot.persis.ranking
+        user.xp += client.cached.ranking_value
+        user.ixp += client.cached.ranking_value
 
         user.lastInteraction = message.createdTimestamp
         user.warns = 0
     } else if (caso === "comando") { // Experiência obtida executando comandos
-        user.xp += bot.persis.ranking * 1.5
-        user.ixp += bot.persis.ranking * 1.5
+        user.xp += client.cached.ranking_value * 1.5
+        user.ixp += client.cached.ranking_value * 1.5
     } else { // Experiência obtida ao usar botões ou menus
-        user.xp += bot.persis.ranking * 0.5
-        user.ixp += bot.persis.ranking * 0.5
+        user.xp += client.cached.ranking_value * 0.5
+        user.ixp += client.cached.ranking_value * 0.5
     }
 
     // Bônus em Bufunfas por subir de nível
@@ -132,7 +123,7 @@ module.exports = async ({ client, message, caso }) => {
     client.journal(caso)
     await user.save()
 
-    // Adicionando o usuário na fila para a próxima sincronização
+    // Adicionando o usuário na fila de ranking global para a próxima sincronização
     if (!members_xp.includes(user.uid)) members_xp.push(user.uid)
 }
 
