@@ -629,15 +629,12 @@ function internal_functions(client) {
             })
     }
 
-    // Atualiza o idioma padrão do usuário caso não possua um
+    // Updates the user's default language if they do not have one
     client.verifyUserLanguage = async (user, id_guild) => {
 
-        if (!user.lang) { // Validando se o usuário não possui um idioma padrão
-            const guild = await client.getGuild(id_guild)
-
-            user.lang = guild.lang || "pt-br"
-            await user.save()
-        }
+        const guild = await client.getGuild(id_guild)
+        user.lang = guild.lang || "pt-br"
+        await user.save()
     }
 
     // Valida se o usuário possui ranking ativo

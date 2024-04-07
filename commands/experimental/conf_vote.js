@@ -9,7 +9,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         const votos = await getVotes()
 

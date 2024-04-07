@@ -1,8 +1,5 @@
 const mongoose = require("mongoose")
 
-const { verifyDynamicBadge } = require("./Badge")
-const { badges } = require("../../data/badges")
-
 // uid -> User ID
 
 const schema = new mongoose.Schema({
@@ -28,8 +25,6 @@ async function registryStatement(client, uid, operation, type, value) {
         value: value,
         timestamp: client.timestamp()
     })
-
-    verifyDynamicBadge(client, "bufunfas", badges.BOURGEOIS) // Verificando qual usuário possui mais bufunfas
 }
 
 async function getUserStatements(uid) {

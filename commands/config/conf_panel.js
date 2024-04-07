@@ -8,7 +8,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Verificando autoria de quem ativou o comando
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         // Redirecionando para os módulos interativos
         require('../../core/interactions/chunks/panel_geral')({ client, user, interaction })

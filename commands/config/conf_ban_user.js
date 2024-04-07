@@ -12,7 +12,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Verificando autoria de quem ativou o comando
-        if (!client.owners.includes(interaction.user.id)) return
+        if (!client.x.owners.includes(interaction.user.id)) return
 
         const user_alvo = interaction.options.getUser("usuario")
         const data_user = await client.getUser(user_alvo.id)

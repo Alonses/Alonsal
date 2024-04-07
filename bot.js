@@ -11,18 +11,17 @@ const { getUserRankServer } = require('./core/database/schemas/Rank_s')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
 
 let client = new CeiraClient()
-internal_functions(client) // Registra as funções internas do bot
-slash_commands(client) // Atualiza os comandos slash do bot
+internal_functions(client) // Registers the internal functions
+slash_commands(client) // Updates the slash commands
 
 client.discord.once("ready", async () => {
 
 	console.log("🟠 | Executando etapas finais")
 
-	// Definindo o idioma do bot
+	// Setting the default language
 	idioma.setDefault("pt-br")
-	client.owners = process.env.owner_id.split(", ")
 
-	// Eventos secundários
+	// Secondary events
 	await require("./core/auto/clock")({ client })
 	await require("./core/events/events")({ client })
 	await require("./core/events/status")({ client })
@@ -33,25 +32,19 @@ client.discord.once("ready", async () => {
 
 client.discord.on("messageCreate", async message => {
 
-	// Prevents the bot from responding to interactions while updating commands
-	if (client.x.force_update) return
-
-	// Prevents the bot from interacting with other members when in develop mode
-	if (!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) return
+	// Prevents the bot from interacting with other members when in develop mode or updating commands
+	if ((!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) || client.x.force_update) return
 
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
-	const text = `${message.content} `
 
-	if (guild.spam.suspicious_links) // Checking the text for a malicious link
-		if (text.match(client.cached.regex)) {
+	if (guild.spam.suspicious_links) { // Checking the text for a malicious link
 
-			let link = text.match(client.cached.regex)
+		let link = `${message.content} `.match(client.cached.regex)
 
-			if (link)
-				if (await verifySuspiciousLink(link))
-					return nerfa_spam({ client, message, guild })
-		}
+		if (link)
+			if (await verifySuspiciousLink(link)) return nerfa_spam({ client, message, guild })
+	}
 
 	if (guild.conf.spam) // Server anti-spam system
 		await require("./core/events/spam")({ client, message, guild })
@@ -73,57 +66,42 @@ client.discord.on("messageCreate", async message => {
 			await user.save()
 		}
 
-		// Broadcast Resources
-		if (client.cached.broad_status)
-			await require("./core/events/broadcast")({ client, message })
-
-		// AI-automated responses
-		// if ((text.includes(client.id()) || text.toLowerCase().includes("alon")) && client.decider(guild.conf?.conversation, 1))
-		// return require("./core/events/conversation")({ client, message, text, guild })
-
-		try {
-			// Updating users' XP
-			if (message.content.length > 6 && client.x.ranking) // Experience received by the user
-				client.registryExperience(message, "messages")
-
-			// Checking whether the text starts with a classic prefix
-			await require("./core/events/legacy_commands")({ client, message })
-		} catch (err) { // Command error
-			client.error(err, "Commands")
-		}
+		// Updating users' XP
+		if (client.x.ranking) // Experience received by the user
+			client.registryExperience(message, "messages")
 	}
 })
 
 client.discord.on("interactionCreate", async interaction => {
 
-	// Previne que o bot responda a interações enquanto estiver atualizando comandos
+	// Prevents the bot from responding to interactions while updating commands
 	if (client.x.force_update) return
 
 	const user = await client.getUser(interaction.user.id)
 
-	// Impede o bot de interagir com outros membros quando está no modo develop
+	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
 		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)
 
-	if (user.conf?.banned || false) return // Ignorando usuários
+	if (user.conf?.banned || false) return // Ignoring users
 
-	// Verificando se é um comando usado num servidor
+	// Checking if it is a command used on a server
 	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
-	if (interaction.isStringSelectMenu()) // Interações geradas no uso de menus de seleção
+	if (interaction.isStringSelectMenu()) // Interactions generated when using selection menus
 		return require("./core/interactions/menus")({ client, user, interaction })
 
-	if (interaction.isButton()) // Interações geradas no uso de botões
+	if (interaction.isButton()) // Interactions generated when using buttons
 		return require("./core/interactions/buttons")({ client, user, interaction })
 
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 
-	// Define o idioma do usuário automaticamente caso não tenha um idioma padrão
-	await client.verifyUserLanguage(user, interaction.guild.id)
+	// Automatically sets the user's language if they don't have a default language
+	if (!user.lang) await client.verifyUserLanguage(user, interaction.guild.id)
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
-	// Removendo marcações para exclusão do usuário
+	// Removing the user data deletion label
 	if (user.erase.valid) {
 		user.erase.forced = false
 		await user.save()
@@ -133,11 +111,11 @@ client.discord.on("interactionCreate", async interaction => {
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute
 
 	try {
-		// Executando o comando
+		// Executing the command
 		await action({ client, user, interaction })
 		await require("./core/events/log")({ client, interaction, command })
 
-		// Atualizando a ultima interação
+		// Updating the last interaction
 		client.cached.last_interaction = client.timestamp()
 	} catch (err) {
 		await client.error(err, "Slash Command")

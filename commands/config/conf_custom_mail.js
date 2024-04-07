@@ -18,7 +18,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 
-        if (interaction.user.id !== client.owners[0]) return
+        if (interaction.user.id !== client.x.owners[0]) return
 
         const corpo_mail = {
             texto: interaction.options.getString("texto"),
