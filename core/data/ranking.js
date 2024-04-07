@@ -1,13 +1,15 @@
 const { atualiza_user_eraser } = require('../auto/user_eraser')
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
-const { getUser, defaultUserEraser } = require('../database/schemas/User')
+const { defaultUserEraser } = require('../database/schemas/User')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
 
 const CHECKS = {
     LIMIT: 5,
-    DIFF: 10000,
+    DIFF: 7000,
     HOLD: 60000
 }
+
+let members_xp = []
 
 module.exports = async ({ client, message, caso }) => {
 
@@ -24,8 +26,6 @@ module.exports = async ({ client, message, caso }) => {
         user.ixp = user.xp
         await sincroniza_xp(user)
     }
-
-    let user_global = await getUserGlobalRank(id_alvo, user.ixp, user.nickname, message.guild.id)
 
     const user_data = await client.getUser(user.uid) // Salvando a última interação do usuário
 
@@ -72,27 +72,13 @@ module.exports = async ({ client, message, caso }) => {
             await user.save()
         }
 
-        if (user_global.warns > CHECKS.LIMIT) {
-            user_global.caldeira_de_ceira = true
-            user_global.warns = 0
-
-            validador = true
-            await user_global.save()
-        }
-
-        if (validador)
-            return
+        if (validador) return
     }
 
     // Limitando o ganho de XP por spam no chat
     if (user.caldeira_de_ceira)
         if (message.createdTimestamp - user.lastInteraction > CHECKS.HOLD)
             user.caldeira_de_ceira = false
-        else if (caso === "messages") return
-
-    if (user_global.caldeira_de_ceira)
-        if (message.createdTimestamp - user_global.lastInteraction > CHECKS.HOLD)
-            user_global.caldeira_de_ceira = false
         else if (caso === "messages") return
 
     if (caso === "messages") {
@@ -104,13 +90,6 @@ module.exports = async ({ client, message, caso }) => {
 
             validador = true
             await user.save()
-        }
-
-        if (message.createdTimestamp - user_global.lastInteraction < CHECKS.DIFF) {
-            user_global.warns++
-
-            validador = true
-            await user_global.save()
         }
 
         if (validador) return
@@ -130,57 +109,31 @@ module.exports = async ({ client, message, caso }) => {
 
         user.lastInteraction = message.createdTimestamp
         user.warns = 0
-
-        user_global.xp += bot.persis.ranking
-        user_global.lastInteraction = message.createdTimestamp
-        user_global.warns = 0
-
     } else if (caso === "comando") { // Experiência obtida executando comandos
         user.xp += bot.persis.ranking * 1.5
         user.ixp += bot.persis.ranking * 1.5
-
-        user_global.xp += bot.persis.ranking * 1.5
     } else { // Experiência obtida ao usar botões ou menus
         user.xp += bot.persis.ranking * 0.5
         user.ixp += bot.persis.ranking * 0.5
-
-        user_global.xp += bot.persis.ranking * 0.5
     }
 
     // Bônus em Bufunfas por subir de nível
     if (parseInt(user.ixp / 1000) !== parseInt(xp_anterior / 1000)) {
-        const internal_user = await getUser(id_alvo)
 
-        internal_user.misc.money += 250
-        await internal_user.save()
+        user_data.misc.money += 250
+        await user_data.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        client.registryStatement(internal_user.uid, "misc.b_historico.nivel", true, 250)
+        client.registryStatement(user_data.uid, "misc.b_historico.nivel", true, 250)
         client.journal("gerado", 250)
     }
 
     // Registrando no relatório algumas informações
     client.journal(caso)
-    verifica_servers(client, user, user_global)
-}
-
-verifica_servers = async (client, user, user_global) => {
-
-    /* Verifica todos os servidores em busca do servidor com maior XP
-    e salvando o maior servidor válido no ranking global */
-    const servers = await getUserRankServers(user.uid)
-    let maior = 0
-
-    servers.forEach(servidor => {
-        if (servidor.ixp > maior) {
-            maior = servidor.ixp
-            user_global.xp = servidor.ixp
-            user_global.sid = servidor.sid
-        }
-    })
-
     await user.save()
-    await user_global.save()
+
+    // Adicionando o usuário na fila para a próxima sincronização
+    if (!members_xp.includes(user.uid)) members_xp.push(user.uid)
 }
 
 sincroniza_xp = async (user) => {
@@ -193,3 +146,35 @@ sincroniza_xp = async (user) => {
         await servidor.save()
     })
 }
+
+async function verifica_servers() {
+
+    let array_copia = members_xp
+    members_xp = []
+
+    if (array_copia.length > 0) // Sincronizando todos os rankings globais dos usuários que ganharam XP nos últimos 10min
+        for (let i = 0; i < array_copia.length; i++) {
+
+            id_user = array_copia[i]
+
+            /* Verifica todos os servidores em busca do servidor com maior XP
+            e salvando o maior servidor válido no ranking global */
+            const servers = await getUserRankServers(id_user)
+            let user_global = await getUserGlobalRank(id_user), maior = 0
+
+            servers.forEach(async servidor => {
+                if (servidor.ixp > maior) {
+                    maior = servidor.ixp
+
+                    user_global.xp = servidor.ixp
+                    user_global.sid = servidor.sid
+
+                    await user_global.save()
+                }
+            })
+
+            array_copia.shift()
+        }
+}
+
+module.exports.verifica_servers = verifica_servers

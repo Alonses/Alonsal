@@ -6,9 +6,6 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     nickname: { type: String, default: null },
-    lastValidMessage: { type: Number, default: null },
-    warns: { type: Number, default: 0 },
-    caldeira_de_ceira: { type: Boolean, default: false },
     xp: { type: Number, default: 0 }
 })
 
