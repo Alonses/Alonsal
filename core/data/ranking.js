@@ -168,11 +168,10 @@ async function verifica_servers() {
 
                     user_global.xp = servidor.ixp
                     user_global.sid = servidor.sid
-
-                    await user_global.save()
                 }
             })
 
+            await user_global.save()
             array_copia.shift()
         }
 }
