@@ -49,10 +49,9 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
         .setColor(0xED4245)
 
     let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
-    let text = `${user_messages[0].content} `
 
     // Verificando se há links anexados ao spam
-    if (text.match(client.cached.regex))
+    if (`${user_messages[0].content} `.match(client.cached.regex))
         msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
     embed_user.setDescription(msg_user)

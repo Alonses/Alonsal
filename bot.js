@@ -40,7 +40,7 @@ client.discord.on("messageCreate", async message => {
 
 	if (guild.spam.suspicious_links) { // Checking the text for a malicious link
 
-		let link = `${message.content} `.match(client.cached.regex)
+		const link = `${message.content} `.match(client.cached.regex)
 
 		if (link)
 			if (await verifySuspiciousLink(link)) return nerfa_spam({ client, message, guild })
