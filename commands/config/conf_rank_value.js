@@ -17,8 +17,9 @@ module.exports = {
         let novo_valor = parseInt(interaction.options.getInteger("valor"))
         const valor_ranking = novo_valor === 0 ? 2 : novo_valor
 
-        const bot = await client.getBot()
+        client.cached.ranking_value = valor_ranking
 
+        const bot = await client.getBot()
         bot.persis.ranking = valor_ranking
         await bot.save()
 
