@@ -3,7 +3,7 @@ const { requisita_modulo } = require("./module")
 const { verifica_eraser } = require("./guild_eraser")
 const { verifica_user_eraser } = require("./user_eraser")
 
-const dynamic_badges = require("./dynamic_badges")
+const sync_dynamic_badges = require("./dynamic_badges")
 
 module.exports = async ({ client }) => {
 
@@ -18,10 +18,12 @@ module.exports = async ({ client }) => {
 internal_clock = (client, tempo_restante) => {
 
     setTimeout(() => { // Sincronizando os dados do bot
-        if (client.timestamp() % 600 < 60) {
-            requisita_modulo()
-            dynamic_badges(client)
 
+        // Verificando se há modulos para o horário atual
+        requisita_modulo()
+
+        if (client.timestamp() % 600 < 60) {
+            sync_dynamic_badges(client) // Sincronizando as badges que são dinâmicas
             verifica_warns(client) // Sincronizando as advertências que se expirão
             verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
             verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram

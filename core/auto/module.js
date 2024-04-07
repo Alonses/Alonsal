@@ -15,7 +15,7 @@ const week_days = {
     1: [6, 0]
 }
 
-async function atualiza_modulos(client, tempo_restante, auto) {
+async function atualiza_modulos(client) {
 
     const dados = await getActiveModules()
     global_client = client
@@ -57,17 +57,6 @@ async function requisita_modulo() {
                         type: data[i].type
                     })
         }
-
-        // let estagio = 1
-        // let client = global_client
-
-        // if (horario === "13:05")
-        //     require("./close_voting")({ client, estagio })
-
-        // if (horario === "13:30") {
-        //     estagio = 2
-        //     require("./close_voting")({ client, estagio })
-        // }
 
         if (lista_modulos.length > 0)
             executa_modulo()
@@ -136,7 +125,7 @@ executa_modulo = async () => {
 
             if (lista_modulos.length > 0)
                 executa_modulo()
-        }, 1000)
+        }, 5000)
     }
 }
 

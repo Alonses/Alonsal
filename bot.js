@@ -32,6 +32,9 @@ client.discord.once("ready", async () => {
 
 client.discord.on("messageCreate", async message => {
 
+	// Checking if the author is a bot or a webhook
+	if (message.author.bot || message.webhookId) return
+
 	// Prevents the bot from interacting with other members when in develop mode or updating commands
 	if ((!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) || client.x.force_update) return
 
@@ -49,9 +52,6 @@ client.discord.on("messageCreate", async message => {
 	if (guild.conf.spam) // Server anti-spam system
 		await require("./core/events/spam")({ client, message, guild })
 
-	// Checking if the author is a bot or a webhook
-	if (message.author.bot || message.webhookId) return
-
 	if (user) { // It only runs if the member is saved in the database
 
 		let user_rank_guild = await getUserRankServer(user.uid, message.guild.id)
@@ -66,9 +66,13 @@ client.discord.on("messageCreate", async message => {
 			await user.save()
 		}
 
-		// Updating users' XP
-		if (client.x.ranking) // Experience received by the user
-			client.registryExperience(message, "messages")
+		try {
+			// Updating users' XP
+			if (client.x.ranking) // Experience received by the user
+				client.registryExperience(message, "messages")
+		} catch (err) { // Command error
+			client.error(err, "Ranking")
+		}
 	}
 })
 

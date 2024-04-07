@@ -1,7 +1,5 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { verificar_broadcast } = require('../../../events/broadcast')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
@@ -22,28 +20,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // 9 -> Convites Rastreados
 
-    if (escolha === 0) {
-        // Ativa ou desativa a capacidade do Alonsal falar no servidor livremente ( através do clever )
-        if (typeof guild.conf.conversation !== "undefined")
-            guild.conf.conversation = !guild.conf.conversation
-        else
-            guild.conf.conversation = false
-
-    } else if (escolha === 1) {
-
-        // Ativa ou desativa a possibilidade do Alonsal realizar Broadcasting nos chats do servidor
-        if (typeof guild.conf.broadcast !== "undefined")
-            guild.conf.broadcast = !guild.conf.broadcast
-        else
-            guild.conf.broadcast = true
-
-        // Broadcast desligado
-        if (!guild.conf.broadcast)
-            verificar_broadcast(client, interaction)
-
-        pagina_guia = 3
-
-    } else if (escolha === 9) {
+    if (escolha === 9) {
 
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuild]))
             return interaction.update({ content: client.tls.phrase(user, "mode.invites.sem_permissao", 7), ephemeral: true })
