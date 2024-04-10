@@ -8,7 +8,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const timestamp = parseInt(dados.split(".")[2])
 
     // Códigos de operação
-    // 0 -> Apagar
+    // 0 -> Sub menu para confirmar exclusão
+
+    // 5 -> Confirma exclusão
+    // 6 -> Cancela exclusão
+
     // 1 -> Ligar módulo
     // 2 -> Desligar módulo
     // 3 -> Alterar dia
@@ -90,15 +94,34 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 0) {
 
+        const botoes = [
+            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `5|${timestamp}` },
+            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `6|${timestamp}` }
+        ]
+
+        return client.reply(interaction, {
+            content: "Você confirma a exclusão do módulo selecionado?",
+            components: [client.create_buttons(botoes, interaction)]
+        })
+    }
+
+    if (operacao === 5) {
+
         // Excluindo o módulo
         await dropModule(interaction.user.id, modulo.type, timestamp)
 
-        return interaction.update({
+        return client.reply(interaction, {
             content: client.tls.phrase(user, "misc.modulo.excluido", 13),
             embeds: [],
             components: [row],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
+    }
+
+    if (operacao === 6) {
+        // Exclusão de módulo cancelada, redirecionando o evento
+        dados = `0.${timestamp}`
+        return require('../../chunks/verify_module')({ client, user, interaction, dados })
     }
 
     atualiza_modulos(client) // Atualizando a lista de módulos salvos localmente
