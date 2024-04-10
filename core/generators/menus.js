@@ -13,6 +13,7 @@ const translate = {
     "norbit": "Escolha uma frase do filme do Norbit!",
     "galerito": "Escolha uma frase do galerito e cia!",
     "modules_browse": "misc.modulo.selecionar_modulo",
+    "modules_select_day": "misc.menus.escolher_frequencia",
     "listas": "util.tarefas.escolher_lista_vincular",
     "listas_navegar": "util.tarefas.escolher_lista_navegar",
     "dados_navegar": "manu.data.tipo_dado",
@@ -301,6 +302,8 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
             titulo_menu = client.tls.phrase(user, translate[alvo])
         else
             titulo_menu = translate[alvo]
+
+    console.log(translate[alvo], alvo, titulo_menu)
 
     if (data.submenu) // Tempo para remover advertências
         if (data.submenu == 16)

@@ -39,12 +39,9 @@ module.exports = async ({ client, user, interaction, local }) => {
 
             if (traducao) {
                 if (movimentacao.operation.split(".").length > 2) // Modelo com string traduzível
-                    traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0])
+                    traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0], null, movimentacao.operation.includes("|") ? movimentacao.operation.split("|")[1] : null)
 
-                if (movimentacao.operation.includes("|"))
-                    traducao = client.replace(traducao, movimentacao.operation.split("|")[1])
-
-                extrato += `${movimentacao.type == false ? "🔴 -" : "🟢 +"}B$ ${client.locale(movimentacao.value)}, ${traducao}\n`
+                extrato += `${!movimentacao.type ? "🔴 -" : "🟢 +"}B$ ${client.locale(movimentacao.value)}, ${traducao}\n`
             }
         })
 

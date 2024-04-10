@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Criando os botões para as funções de gestão de tarefas
     let botoes = [
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" },
-        { id: "module_button", name: client.tls.phrase(user, "menu.botoes.alterar_dia"), emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.stats.timestamp}` }
+        { id: "module_button", name: client.tls.phrase(user, "menu.botoes.alterar_frequencia"), emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.stats.timestamp}` }
     ]
 
     if (modulo.stats.active) // Módulo ativado

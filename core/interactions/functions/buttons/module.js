@@ -5,7 +5,6 @@ const { atualiza_modulos } = require('../../../auto/module')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    // Atribuindo badges a usuários
     const operacao = parseInt(dados.split(".")[1])
     const timestamp = parseInt(dados.split(".")[2])
 
@@ -23,8 +22,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 0 -> Cancela
     // 1 -> Confirmar
 
-    if (!operacao) {
-        // Excluindo o módulo
+    if (!operacao) { // Excluindo o módulo salvo em cache
         await dropModule(interaction.user.id, modulo.type, timestamp)
 
         client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
