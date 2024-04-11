@@ -6,6 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Gerenciamento de anotações
     const operacao = parseInt(dados.split(".")[1])
     const timestamp = parseInt(dados.split(".")[2])
+    dados = `0.${timestamp}`
 
     // Códigos de operação
     // 0 -> Sub menu para confirmar exclusão
@@ -45,12 +46,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await modulo.save()
 
-        return interaction.update({
-            content: client.tls.phrase(user, "misc.modulo.ativado", 20),
-            embeds: [],
-            components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+        require('../../chunks/verify_module')({ client, user, interaction, dados })
     }
 
     if (operacao === 2) {
@@ -59,12 +55,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         modulo.stats.active = false
         await modulo.save()
 
-        return interaction.update({
-            content: client.tls.phrase(user, "misc.modulo.desativado", 21),
-            embeds: [],
-            components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
+        require('../../chunks/verify_module')({ client, user, interaction, dados })
     }
 
     if (operacao === 3) {
@@ -100,7 +91,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         ]
 
         return client.reply(interaction, {
-            content: "Você confirma a exclusão do módulo selecionado?",
+            content: client.tls.phrase(user, "misc.modulo.confirmar_exclusao"),
             components: [client.create_buttons(botoes, interaction)]
         })
     }
@@ -118,11 +109,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     }
 
-    if (operacao === 6) {
-        // Exclusão de módulo cancelada, redirecionando o evento
-        dados = `0.${timestamp}`
+    if (operacao === 6) // Exclusão de módulo cancelada, redirecionando o evento
         return require('../../chunks/verify_module')({ client, user, interaction, dados })
-    }
 
     atualiza_modulos(client) // Atualizando a lista de módulos salvos localmente
 }

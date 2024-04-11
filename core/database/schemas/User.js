@@ -34,6 +34,7 @@ const defaultUserEraser = {
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     lang: { type: String, default: null },
+    hoster: { type: Boolean, default: false },
     erase: {
         erase_on: { type: Number, default: null },
         valid: { type: Boolean, default: false },

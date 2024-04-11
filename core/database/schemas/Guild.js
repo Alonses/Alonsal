@@ -190,15 +190,6 @@ async function disableGuildFeatures(client, sid) {
     guild.inviter = null
     guild.network.link = null
 
-    guild.conf.games = false
-    guild.conf.reports = false
-    guild.conf.tickets = false
-    guild.conf.logger = false
-    guild.conf.spam = false
-    guild.conf.network = false
-    guild.conf.warn = false
-    guild.conf.nuke_invites = false
-
     // Registrando a exclusão de dados do servidor
     guild.erase.timestamp = client.timestamp() + defaultEraser[guild?.erase.timeout || 5]
     guild.erase.valid = true
