@@ -15,6 +15,8 @@ module.exports = async (client, user, interaction) => {
         .then(response => response.json())
         .then(async dados_item => {
 
+            console.log(dados_item)
+
             // Erro de pesquisa com a API
             if (dados_item.status === 502)
                 if (interaction)
@@ -144,7 +146,7 @@ module.exports = async (client, user, interaction) => {
                 embed.addFields(
                     {
                         name: `${client.emoji("mc_logo_wikipedia")} Wiki sobre ${dados_item.name}`,
-                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
+                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", dados_item.wiki.descricao.length > 500 ? `${dados_item.wiki.descricao.slice(0, 500)}...` : dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
                         inline: false
                     }
                 )
