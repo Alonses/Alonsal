@@ -541,12 +541,13 @@ function internal_functions(client) {
 
         if (entrada || hora_entrada) { // Informou um dia e horário ( utilizado pelos anúncios de games )
 
+            let tempo_timestamped
+
             // Invertendo o mês com o dia
             if (entrada.includes("/")) {
                 entrada = `${entrada.split("/")[1]}/${entrada.split("/")[0]}`
 
                 let hora = hora_entrada || ""
-                let tempo_timestamped
 
                 const ano_atual = new Date().getFullYear()
                 tempo_timestamped = new Date(`${entrada}/${ano_atual} ${hora}`)
