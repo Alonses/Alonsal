@@ -38,7 +38,7 @@
         },
         {
             "type": 0,
-            "text": "ovos"
+            "text": "ovos nas inimiga"
         },
         {
             "type": 0,
@@ -63,6 +63,10 @@
         {
             "type": 0,
             "text": "wardens para cima"
+        },
+        {
+            "type": 0,
+            "text": "javascripto no fogo"
         },
         {
             "type": 0,
@@ -602,7 +606,7 @@
         },
         {
             "type": 0,
-            "text": "mineirinho adventures"
+            "text": "Mineirinho adventures"
         },
         {
             "type": 0,
@@ -619,6 +623,10 @@
         {
             "type": 0,
             "text": "Minecraft Legends"
+        },
+        {
+            "type": 0,
+            "text": "Bobrox"
         },
         {
             "type": 0,
@@ -701,10 +709,6 @@
             "type": 2,
             "text": "🎶 On And On And On - ABBA",
             "link": "https://open.spotify.com/track/2dnR7o8cm9798o6KPsopki?si=50e70e2ff2174045"
-        },
-        {
-            "type": 2,
-            "text": "/bank rank"
         },
         {
             "type": 2,
@@ -814,6 +818,10 @@
         },
         {
             "type": 2,
+            "text": "/now"
+        },
+        {
+            "type": 2,
             "text": "/lastfm"
         },
         {
@@ -920,16 +928,6 @@
         },
         {
             "type": 2,
-            "text": "🎶 Rockin' Around The Christmas Tree - Brenda Lee",
-            "link": "https://open.spotify.com/track/2EjXfH91m7f8HiJN1yQg97?si=cfff381a978a44f6"
-        },
-        {
-            "type": 2,
-            "text": "🎶 Sleigh Ride",
-            "link": "https://open.spotify.com/track/5CaBRn7C7jttA1wWd8eBaH?si=da4d413b9d7c40d7"
-        },
-        {
-            "type": 2,
             "text": "🎶 Green Onions - Booker T. & the M.G.'s",
             "link": "https://open.spotify.com/track/4fQMGlCawbTkH9yPPZ49kP?si=e8145542a9984997"
         },
@@ -967,6 +965,10 @@
             "type": 2,
             "text": "🎶 Go Time - Digitalism",
             "link": "https://open.spotify.com/track/5xkrImAYOKvKHFEugHGKeN?si=d7d8203342f64402"
+        },
+        {
+            "type": 0,
+            "text": "verificações"
         }
     ]
 }

@@ -95,11 +95,15 @@ async function registerCachedSuspiciousLink(link, guild_id, timestamp) {
 async function getAllGuildSuspiciousLinks(guild_id) {
     return await model.find({
         sid: guild_id
+    }).sort({
+        timestamp: -1
     })
 }
 
 async function listAllSuspiciouLinks() {
-    return await model.find({})
+    return await model.find({}).sort({
+        timestamp: -1
+    })
 }
 
 async function dropSuspiciousLink(link) {
