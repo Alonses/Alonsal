@@ -8,14 +8,14 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     // Confirmando se a alteração foi para mutar o membro
     if (registroAudita.changes[0].key === "communication_disabled_until" && registroAudita.targetId === id_alvo) {
         // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode castigar membros
-        if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has([PermissionsBitField.Flags.ModerateMembers]))
+        if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has([PermissionsBitField.Flags.MuteMembers]))
             return
 
         // Verificando se a hierarquia do bot é maior que o do alvo e se pode castigar membros
-        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.ModerateMembers])) {
+        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has([PermissionsBitField.Flags.MuteMembers])) {
 
             // Desativando o recurso no servidor sem a permissão requerida
-            if (!bot_member.permissions.has([PermissionsBitField.Flags.ModerateMembers])) {
+            if (!bot_member.permissions.has([PermissionsBitField.Flags.MuteMembers])) {
                 internal_guild.network.member_punishment = false
                 await internal_guild.save()
             }
