@@ -164,11 +164,11 @@ async function nerfa_spam({ client, message, guild }) {
 
     if (guild.spam.suspicious_links && user_messages.length > 0) { // Checking if the server has the suspicious links registry active
 
-        const link = `${user_messages[0].content} `.match(client.cached.regex)[0]
+        const link = `${user_messages[0].content} `.match(client.cached.regex)
 
-        if (link) {
+        if (link.length > 0) {
 
-            const registrados = await registerSuspiciousLink(link, guild.sid, client.timestamp()) || []
+            const registrados = await registerSuspiciousLink(link[0], guild.sid, client.timestamp()) || []
 
             // Registering suspicious links that are not saved yet and notifying about the addition of a new suspicious link to the Alonsal database and the original server
             if (registrados.length > 0) {
