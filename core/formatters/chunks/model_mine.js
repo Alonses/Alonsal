@@ -15,8 +15,6 @@ module.exports = async (client, user, interaction) => {
         .then(response => response.json())
         .then(async dados_item => {
 
-            console.log(dados_item)
-
             // Erro de pesquisa com a API
             if (dados_item.status === 502)
                 if (interaction)
