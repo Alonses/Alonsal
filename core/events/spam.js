@@ -8,11 +8,13 @@ let bloqueia_operacao = 0
 
 const usersmap = new Map(), usersrole = new Map()
 const cached_messages = {}
-const DIFF = 10000
 
 module.exports = async function ({ client, message, guild }) {
 
     let user_guild
+
+    // Tempo minimo para manter as mensagens salvas em cache no servidor
+    let tempo_spam = guild.spam.trigger_amount < 5 ? 20000 : guild.spam.trigger_amount * 3000
 
     if (usersrole.has(message.author.id)) {
         const userdata = usersrole.get(message.author.id)
@@ -47,7 +49,7 @@ module.exports = async function ({ client, message, guild }) {
                 usersmap.delete(message.author.id)
                 usersrole.delete(message.author.id)
                 cached_messages[`${message.author.id}.${guild.sid}`] = []
-            }, DIFF)
+            }, tempo_spam)
 
             usersmap.set(message.author.id, userdata)
 
@@ -77,7 +79,7 @@ module.exports = async function ({ client, message, guild }) {
             usersmap.delete(message.author.id)
             usersrole.delete(message.author.id)
             cached_messages[`${message.author.id}.${guild.sid}`] = []
-        }, DIFF)
+        }, tempo_spam)
 
         usersmap.set(message.author.id, {
             msgcount: 1,
