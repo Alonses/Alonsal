@@ -81,7 +81,7 @@ envia_logger = (client, id_alvo, objeto) => {
             const internal_guild = await client.getGuild(guild.id)
 
             // Notificando a guild sobre a alteração do avatar de um membro
-            if (internal_guild.logger.member_image) {
+            if (internal_guild.logger.member_image && internal_guild.conf.logger) {
                 const user = await guild.members.fetch(id_alvo)
                     .catch(() => { return null })
 
