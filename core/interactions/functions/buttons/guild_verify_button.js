@@ -55,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 obj.components.push(client.create_buttons(row, interaction))
         }
 
-        interaction.editReply(obj)
+        return interaction.editReply(obj)
 
     } else if (operacao === 2) {
 
@@ -82,8 +82,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     ephemeral: true
                 }
 
-                if (users_ids.length > 0) {
-                    // Menu para navegar entre os usuários reportados
+                if (users_ids.length > 0) { // Menu para navegar entre os usuários reportados
                     let reportes_guild
 
                     if (interaction.guild.id !== process.env.guild_id)
@@ -91,10 +90,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     else if (process.env.owner_id.includes(interaction.user.id))
                         reportes_guild = await getReportedUsers() // Lista todos os usuários reportados salvos no Alonsal
 
-                    if (reportes_guild.length > 0) {
-                        // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
+                    if (reportes_guild.length > 0) { 
+
                         if (reportes_guild.length < pagina * 24)
-                            pagina--
+                            pagina-- // Subtrai uma página do total ( em casos de remoção de usuários e página em cache )
 
                         const embed = new EmbedBuilder()
                             .setTitle(`${client.tls.phrase(user, "mode.report.usuarios_reportados_titulo")} 💂‍♂️`)
@@ -127,6 +126,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                 return interaction.editReply(obj)
             })
-    } else
-        require('../../chunks/panel_guild_verify')({ client, user, interaction })
+    }
+
+    require('../../chunks/panel_guild_verify')({ client, user, interaction })
 }
