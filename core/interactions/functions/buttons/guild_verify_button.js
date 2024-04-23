@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         // Navegando pelos usuários que foram advertidos no servidor
-        await interaction.deferUpdate({ ephemeral: true })
+        await client.deferedResponse({ interaction })
 
         const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
 
@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Navegando pelos usuários que receberam reportes em outros servidores e estão no servidor
-        await interaction.deferUpdate({ ephemeral: true })
+        await client.deferedResponse({ interaction })
 
         const users = [], users_ids = [], id_membros_guild = []
         const usuarios_reportados = await getReportedUsers()
@@ -90,7 +90,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     else if (process.env.owner_id.includes(interaction.user.id))
                         reportes_guild = await getReportedUsers() // Lista todos os usuários reportados salvos no Alonsal
 
-                    if (reportes_guild.length > 0) { 
+                    if (reportes_guild.length > 0) {
 
                         if (reportes_guild.length < pagina * 24)
                             pagina-- // Subtrai uma página do total ( em casos de remoção de usuários e página em cache )
@@ -126,7 +126,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                 return interaction.editReply(obj)
             })
-    }
-
-    require('../../chunks/panel_guild_verify')({ client, user, interaction })
+    } else
+        require('../../chunks/panel_guild_verify')({ client, user, interaction })
 }

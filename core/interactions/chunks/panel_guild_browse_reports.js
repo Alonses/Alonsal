@@ -6,10 +6,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
 
     pagina = pagina || 0
 
-    if (!interaction.customId)
-        await interaction.deferReply({ ephemeral: true })
-    else
-        await interaction.deferUpdate({ ephemeral: true })
+    await client.deferedResponse({ interaction })
 
     const users = [], users_ids = []
     const usuarios_reportados = await getReportedUsers()
