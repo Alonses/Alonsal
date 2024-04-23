@@ -95,6 +95,16 @@ function internal_functions(client) {
         return default_emoji[caso][client.random(default_emoji[caso])]
     }
 
+    client.deferedResponse = async ({ interaction, ephemeral }) => {
+
+        let ephemero = typeof ephemeral !== "undefined" ? ephemeral : true
+
+        if (!interaction.customId)
+            await interaction.deferReply({ ephemeral: ephemero })
+        else
+            await interaction.deferUpdate({ ephemeral: ephemero })
+    }
+
     client.embed_color = (entrada) => {
         if (entrada === "RANDOM")
             return alea_hex()

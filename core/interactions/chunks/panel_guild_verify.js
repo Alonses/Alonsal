@@ -4,10 +4,8 @@ const { getReportedUsers } = require('../../database/schemas/Report')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    if (!interaction.customId)
-        await interaction.deferReply({ ephemeral: true })
-    else
-        await interaction.deferUpdate({ ephemeral: true })
+    // Deferindo a interação
+    await client.deferedResponse({ interaction })
 
     const users = [], users_ids = [], id_membros_guild = []
     const usuarios_reportados = await getReportedUsers()
@@ -63,7 +61,7 @@ module.exports = async ({ client, user, interaction }) => {
                 { id: "guild_verify_button", name: client.tls.phrase(user, "mode.report.reportados"), type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 
-            interaction.editReply({
+            return interaction.editReply({
                 embeds: [embed],
                 components: [client.create_buttons(botoes, interaction)],
                 ephemeral: true

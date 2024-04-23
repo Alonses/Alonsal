@@ -5,10 +5,7 @@ const { getNetworkedGuilds } = require("../../database/schemas/Guild")
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     try {
-        if (interaction.customId)
-            await interaction.deferUpdate({ ephemeral: true })
-        else
-            await interaction.deferReply({ ephemeral: true })
+        await client.deferedResponse({ interaction })
 
         const pagina = pagina_guia || 0
         const guild = await client.getGuild(interaction.guild.id)
