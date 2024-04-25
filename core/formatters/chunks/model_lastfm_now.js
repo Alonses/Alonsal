@@ -60,7 +60,8 @@ module.exports = async ({ client, user, interaction }) => {
 
             interaction.editReply({
                 embeds: [embed],
-                components: [client.create_buttons(row, interaction)]
+                components: [client.create_buttons(row, interaction)],
+                ephemeral: interaction.user.id === alvo.id ? false : true
             })
         })
 }
