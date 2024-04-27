@@ -51,9 +51,8 @@ async function getSuspiciousLink(link, force) {
     })
 }
 
-async function getCachedSuspiciousLink(guild_id, timestamp) {
+async function getCachedSuspiciousLink(timestamp) {
     return model.findOne({
-        sid: guild_id,
         timestamp: timestamp
     })
 }

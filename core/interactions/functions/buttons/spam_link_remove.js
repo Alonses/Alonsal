@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         const timestamp = dados.split(".")[2]
         const guild_id = dados.split(".")[3]
 
-        const link = await getCachedSuspiciousLink(guild_id, timestamp)
+        const link = await getCachedSuspiciousLink(timestamp)
         const guild = await client.getGuild(interaction.guild.id)
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original

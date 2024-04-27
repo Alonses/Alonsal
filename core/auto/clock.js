@@ -1,8 +1,8 @@
-const { verifica_warns } = require("./warn")
-const { verifica_eraser } = require("./guild_eraser")
+const { verifica_warns, atualiza_warns } = require("./warn")
+const { verifica_eraser, atualiza_eraser } = require("./guild_eraser")
 const { requisita_modulo, atualiza_modulos } = require("./module")
 const { verifica_servers } = require("../data/ranking")
-const { verifica_user_eraser } = require("./user_eraser")
+const { verifica_user_eraser, atualiza_user_eraser } = require("./user_eraser")
 
 const sync_dynamic_badges = require("./dynamic_badges")
 
@@ -11,7 +11,12 @@ module.exports = async ({ client }) => {
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
+    atualiza_warns()
     atualiza_modulos(client)
+
+    atualiza_eraser()
+    atualiza_user_eraser(client)
+
     console.log("📣 | Disparando o relógio interno")
 
     setTimeout(() => internal_clock(client, tempo_restante), 5000)

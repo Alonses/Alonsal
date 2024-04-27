@@ -23,8 +23,6 @@ async function atualiza_user_eraser(client) {
         const usuario = dados[i]
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
-            // client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm", client.defaultEmoji("person"), usuario.erase.erase_on + 1209600) })
-
             usuario.erase.valid = true
             await usuario.save()
         }
@@ -48,8 +46,6 @@ async function atualiza_user_eraser(client) {
             nome_servidor = `\`${usuario.sid}\` | \`${client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
-            // client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.aviso_movido_exclusao_dm_servidor", client.defaultEmoji("person"), [nome_servidor, usuario.erase.erase_on + 604800, usuario.erase.erase_on + 604800]) })
-
             usuario.erase.valid = true
             await usuario.save()
         }
@@ -101,8 +97,6 @@ async function verifica_user_eraser(client) {
 
                 // Exclui o usuário por completo
                 await dropUser(id_user)
-
-                // client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.exclusao_dados_completa", [13, 10]) })
             }
         }
 
@@ -126,10 +120,6 @@ async function verifica_user_eraser(client) {
             // Apenas realiza a ação após 1 semana do usuário ser movido para exclusão no servidor
             if (client.timestamp() > (usuario.erase.erase_on + 604800)) {
 
-                // const guild = await client.guilds(usuario.sid)
-
-                // let nome_servidor = `\`${usuario.sid}\` | \`${guild.name || client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
-
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário no servidor
                 await dropAllGuildUserGroups(id_user, id_guild)
                 await dropAllGuildUserTasks(id_user, id_guild)
@@ -142,8 +132,6 @@ async function verifica_user_eraser(client) {
 
                 // Excluindo o servidor salvo em cache do usuário
                 await dropUserGuild(id_user, id_guild)
-
-                // client.sendDM(usuario, { content: client.tls.phrase(usuario, "manu.data.exclusao_dm_servidor", [13, 10], nome_servidor) })
             }
         }
 

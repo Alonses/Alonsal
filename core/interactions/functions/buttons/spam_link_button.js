@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // 2 -> Menu de links suspeitos
 
-    const link = await getCachedSuspiciousLink(interaction.guild.id, timestamp)
+    const link = await getCachedSuspiciousLink(timestamp)
 
     if (!operacao) {
 
@@ -114,7 +114,5 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         return interaction.update({
             components: [row]
         })
-
-
     }
 }
