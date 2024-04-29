@@ -9,6 +9,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         return client.tls.reply(interaction, user, "util.tarefas.sem_lista_r", true, client.emoji(0))
 
     const data = {
+        title: { tls: "util.tarefas.escolher_tarefa_apagar" },
         alvo: "tarefas_remover",
         values: tarefas
     }

@@ -1,4 +1,4 @@
-const { atualiza_modulos } = require('../../../auto/module')
+const { atualiza_modulos } = require('../../../auto/triggers/user_modules')
 const { getModule, dropModule, moduleDays } = require('../../../database/schemas/Module')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -70,7 +70,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Alterando o idioma do servidor
         const data = {
-            title: client.tls.phrase(user, "menu.menus.escolher_dia_modulo"),
+            title: { tls: "menu.menus.escolher_frequencia" },
             alvo: "modules_select_day",
             reback: "verify_module",
             timestamp: timestamp,

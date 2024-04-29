@@ -77,7 +77,7 @@ module.exports = {
                     "ru": '⌠💂⌡ Перевести всех забаненных пользователей с сервера на Alonsal'
                 })
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers || PermissionFlagsBits.KickMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers | PermissionFlagsBits.KickMembers),
     async execute({ client, user, interaction }) {
 
         // Redirecionando o evento

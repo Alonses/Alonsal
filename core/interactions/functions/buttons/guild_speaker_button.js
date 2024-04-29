@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o canal de avisos do log de eventos
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: "guild_speaker#channel",
             reback: "browse_button.guild_speaker_button",
             operation: operacao,

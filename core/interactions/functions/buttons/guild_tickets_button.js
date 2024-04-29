@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo a categoria do sistema de denúncias in-server
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_categoria" },
             alvo: "guild_tickets#category",
             reback: "browse_button.guild_tickets_button",
             operation: operacao,

@@ -1,18 +1,26 @@
-const { verifica_warns, atualiza_warns } = require("./warn")
-const { verifica_eraser, atualiza_eraser } = require("./guild_eraser")
-const { requisita_modulo, atualiza_modulos } = require("./module")
-const { verifica_servers } = require("../data/ranking")
-const { verifica_user_eraser, atualiza_user_eraser } = require("./user_eraser")
+const { mkdirSync, existsSync } = require('fs')
 
-const sync_dynamic_badges = require("./dynamic_badges")
+const sync_dynamic_badges = require("./triggers/user_dynamic_badges")
+const { verifica_warns, atualiza_warns } = require("./triggers/user_warns")
+const { verifica_roles, atualiza_roles } = require("./triggers/user_roles")
+const { requisita_modulo, atualiza_modulos } = require("./triggers/user_modules")
+const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
+
+const { verifica_servers } = require("../data/ranking")
+const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 
 module.exports = async ({ client }) => {
+
+    if (!existsSync(`./files/data/`)) // Criando a pasta de dados para poder salvar em cache
+        mkdirSync(`./files/data/`, { recursive: true })
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
 
     atualiza_warns()
-    atualiza_modulos(client)
+    atualiza_roles()
+
+    atualiza_modulos()
 
     atualiza_eraser()
     atualiza_user_eraser(client)
@@ -26,17 +34,17 @@ internal_clock = (client, tempo_restante) => {
 
     setTimeout(() => { // Sincronizando os dados do bot
 
-        // Verificando se há modulos para o horário atual
-        requisita_modulo()
-        verifica_warns(client) // Sincronizando as advertências que se expirão
+        requisita_modulo(client) // Verificando se há modulos agendados para o horário atual
+        verifica_warns(client) // Sincronizando as advertências temporárias
+        verifica_roles(client) // Sincronizando os cargos temporários
 
-        if (client.timestamp() % 600 < 60) {
+        if (client.timestamp() % 600 < 60) { // 10 Minutos
             sync_dynamic_badges(client) // Sincronizando as badges que são dinâmicas
             verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
             verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
         }
 
-        if (client.timestamp() % 1800 < 60)
+        if (client.timestamp() % 1800 < 60) // 30 Minutos
             verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
 
         internal_clock(client, 60000)

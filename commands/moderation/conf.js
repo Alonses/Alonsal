@@ -40,6 +40,7 @@ module.exports = {
                             { name: '📛 Anti-Spam', value: 'spam' },
                             { name: '🛑 Warn', value: 'warn' },
                             { name: '📻 External reports', value: 'report' },
+                            { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💬 Tickets', value: 'ticket' }
                         )
                         .setRequired(true))
@@ -104,15 +105,6 @@ module.exports = {
                             { name: '🇷🇺 Русский', value: 'ru-ru' }
                         )
                         .setRequired(true)))
-        .addSubcommand(subcommand =>
-            subcommand.setName("roles")
-                .setNameLocalizations({
-                    "pt-BR": 'cargos'
-                })
-                .setDescription("⌠💂⌡ Assign roles to server members")
-                .setDescriptionLocalizations({
-                    "pt-BR": '⌠💂⌡ Atribua cargos para membros do servidor',
-                }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute({ client, user, interaction }) {
 

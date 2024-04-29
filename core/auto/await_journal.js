@@ -1,5 +1,5 @@
 const { dailyReset } = require('../database/schemas/Bot')
-const { cobra_modulo } = require('./module')
+const { cobra_modulo } = require('./triggers/user_modules')
 
 module.exports = async ({ client }) => {
 

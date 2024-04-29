@@ -126,6 +126,10 @@ const schema = new mongoose.Schema({
         member_ban_add: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true }
     },
+    timed_roles: {
+        timeout: { type: Number, default: 5 },
+        channel: { type: String, default: null }
+    },
     misc: {
         second_lang: { type: String, default: null }
     },
@@ -151,6 +155,15 @@ async function getGuild(sid) {
 
     return model.findOne({
         sid: sid
+    })
+}
+
+async function getSpecificGameChannel(sid) {
+
+    // Busca apenas o servidor com o canal ativo
+    return model.find({
+        "conf.games": true,
+        "sid": sid
     })
 }
 
@@ -280,6 +293,7 @@ module.exports = {
     getGuild,
     listAllGuilds,
     getGameChannels,
+    getSpecificGameChannel,
     disableGuildFeatures,
     getReportChannels,
     listAllGuildHoster,

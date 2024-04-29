@@ -41,6 +41,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
             // Menu para navegar entre os usuários com advertências do servidor
             const data = {
+                title: { tls: "menu.menus.escolher_usuario" },
                 alvo: "warn_browse",
                 reback: "browse_button.warn_browse_user",
                 operation: 0,
@@ -106,6 +107,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                             })
 
                         const data = {
+                            title: { tls: "menu.menus.escolher_usuario" },
                             alvo: "report_browse",
                             reback: "browse_button.report_browse_user",
                             operation: 0,

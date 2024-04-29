@@ -3,6 +3,7 @@ const { relation } = require('../../../files/songs/norbit/songs.json')
 module.exports = async ({ client, user, interaction }) => {
 
     const data = {
+        title: { tls: "Escolha uma frase do filme do Norbit!" },
         alvo: "norbit",
         values: relation
     }

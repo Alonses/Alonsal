@@ -82,7 +82,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o cargo que receberá o avisos de games free
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_cargo" },
             alvo: "guild_free_games#role",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
@@ -112,7 +112,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o canal de avisos de anúncio de games free
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: "guild_free_games#channel",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,

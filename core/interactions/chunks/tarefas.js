@@ -32,6 +32,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_a", true, client.emoji(0), interaction.customId)
 
             const data = {
+                title: { tls: "menu.menus.escolher_tarefa" },
                 alvo: "tarefas",
                 values: filtra_tarefas(tarefas, 0),
                 operador: operador
@@ -51,6 +52,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_f", true, client.emoji(0), interaction.customId)
 
             const data = {
+                title: { tls: "menu.menus.escolher_tarefa" },
                 alvo: "tarefas",
                 values: filtra_tarefas(tarefas, 1),
                 operador: "f"
@@ -86,6 +88,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         }
 
         const data = {
+            title: { tls: "menu.menus.escolher_tarefa" },
             alvo: "tarefa_visualizar",
             values: tarefas,
             operador: `k.${lista_timestamp}`
@@ -120,6 +123,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         }
 
         const data = {
+            title: { tls: "menu.menus.escolher_tarefa" },
             alvo: "tarefa_visualizar",
             values: tarefas,
             operador: `x.${lista_timestamp}`

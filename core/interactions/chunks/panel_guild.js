@@ -84,6 +84,11 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 2)
         embed.addFields(
             {
+                name: `${client.defaultEmoji("time")} **Cargos temporários**`,
+                value: `\`Defina cargos temporários aos membros do servidor.\``,
+                inline: true
+            },
+            {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
                 inline: true
@@ -92,15 +97,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
                 value: `\`${client.tls.phrase(user, "manu.painel.desc_convites_rastreados")}\``,
                 inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
-                inline: true
             }
         )
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
@@ -188,9 +188,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // Denúncias in-server e Convites rastreados
     if (pagina === 2)
         botoes = botoes.concat([
+            { id: "guild_timed_roles_button", name: "Cargos temporários", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[11] },
             { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.convites_rastreados"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '2', disabled: true }
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })

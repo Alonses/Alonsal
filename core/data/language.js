@@ -23,7 +23,8 @@ async function loadAll(client) {
             // Buscando o commit mais recente
             const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
-            if (cod_commit !== bot.persis.alondioma) {
+            // Sincroniza com os idiomas mais recentes caso haja atualização ou não haja arquivos
+            if (cod_commit !== bot.persis.alondioma || !existsSync(`./files/languages/pt-br.json`)) {
                 console.log("🟠 | Sincronizando com as traduções mais recentes.")
 
                 // Salvando o commit de traduções mais recente no banco
