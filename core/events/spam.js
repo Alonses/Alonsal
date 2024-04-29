@@ -157,6 +157,7 @@ async function nerfa_spam({ client, message, guild }) {
     }
 
     setTimeout(() => { // Search sent messages to delete sent after spam validation
+        bloqueia_operacao = 0
         remove_spam(client, message.author.id, guild.sid, user_messages[0])
     }, 4000)
 
@@ -199,8 +200,6 @@ remove_spam = (client, id_user, id_guild, user_message) => {
                     channel.bulkDelete(userMessages)
                         .catch(() => console.error)
 
-                    // Unblocking the bot to rerun spam moderation
-                    bloqueia_operacao = 0
                     cached_messages[`${id_user}.${id_guild}`] = []
                 })
     })
