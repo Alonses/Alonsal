@@ -14,7 +14,7 @@ module.exports = async function ({ client, message, guild }) {
     let user_guild
 
     // Tempo minimo para manter as mensagens salvas em cache no servidor
-    let tempo_spam = guild.spam.trigger_amount < 5 ? 20000 : guild.spam.trigger_amount * 3000
+    let tempo_spam = guild.spam.trigger_amount < 5 ? 60000 : guild.spam.trigger_amount * 12000
 
     if (usersrole.has(message.author.id)) {
         const userdata = usersrole.get(message.author.id)

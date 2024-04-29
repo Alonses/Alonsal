@@ -133,8 +133,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo a quantia de ativações que os usuários precisam receber no servidor para serem considerados como spam
         const data = {
-            title: client.tls.phrase(user, "menu.menus.escolher_numero", 1),
+            title: { tls: "menu.menus.escolher_numero" },
             alvo: "guild_spam_strikes",
+            number_values: true,
             values: ["3", "4", "5", "6", "7", "8", "9", "10"]
         }
 
@@ -150,7 +151,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o canal de avisos do anti-spam
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: "guild_spam#channel",
             reback: "browse_button.guild_anti_spam_button",
             operation: operacao,
