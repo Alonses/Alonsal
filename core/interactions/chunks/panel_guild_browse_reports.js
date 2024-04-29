@@ -76,6 +76,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                         pagina--
 
                     const data = {
+                        title: { tls: "menu.menus.escolher_usuario" },
                         alvo: "report_browse",
                         reback: "browse_button.report_browse_user",
                         operation: 0,

@@ -147,12 +147,12 @@ function get_emoji(valores) {
     let emoji = ""
 
     if (typeof valores === "object") { // Array de emojis
-        if (valores[0].length < 8 || typeof valores[0] === "number")
+        if (valores[0].length < 18 || typeof valores[0] === "number")
             emoji = lista_emojis(valores)
         else // Emoji único
-            if (valores.length < 8 && typeof valores === "number")
+            if (valores.length < 18 && typeof valores === "number")
                 emoji = status[valores]
-    } else if (typeof valores === "number")
+    } else if (!isNaN(parseInt(valores)))
         emoji = status[valores] // Emoji por números de identificador
     else
         emoji = valores // Emojis já definidos

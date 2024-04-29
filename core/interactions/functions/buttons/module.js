@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { getModule, dropModule } = require('../../../database/schemas/Module')
-const { atualiza_modulos } = require('../../../auto/module')
+const { atualiza_modulos } = require('../../../auto/triggers/user_modules')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

@@ -38,8 +38,14 @@ module.exports = async (client, dados) => {
         return require('./member_mute')({ client, guild, registroAudita, dados })
 
     // Membro teve os cargos atualizados
-    if (dados[0]._roles !== dados[1]._roles && dados[0]._roles.length > 0 && guild.logger.member_role)
-        return require('./member_role')({ client, guild, dados })
+    if (dados[0]._roles !== dados[1]._roles && dados[0]._roles.length > 0) {
+
+        // Verificando se há cargos temporários no servidor vinculados ao membro
+        require('./member_timed_role')({ client, guild, dados })
+
+        if (guild.logger.member_role) // Log de eventos
+            return require('./member_role')({ client, guild, dados })
+    }
 
     const user = await client.getUser(user_alvo.id)
 

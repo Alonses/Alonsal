@@ -40,9 +40,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 ephemeral: true
             })
 
-        // Definindo o cargo que receberá o avisos de games free
+        // Definindo oo cargos que serão inclusos
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_cargo" },
             alvo: "role_assigner_give#role",
             reback: "browse_button.role_assigner",
             operation: operacao,
@@ -81,9 +81,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 ephemeral: true
             })
 
-        // Definindo o cargo que receberá o avisos de games free
+        // Definindo os cargos de membros que serão ignorados
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_cargo" },
             alvo: "role_assigner_ignore#role",
             reback: "browse_button.role_assigner",
             operation: operacao,

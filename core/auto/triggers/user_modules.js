@@ -2,33 +2,32 @@ const fs = require('fs')
 
 const { writeFileSync } = require('fs')
 
-const { getUser } = require('../database/schemas/User')
-const { getActiveModules, shutdownAllUserModules } = require("../database/schemas/Module")
+const { getUser } = require('../../database/schemas/User.js')
+const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/Module.js")
 
-const formata_horas = require('../formatters/formata_horas')
+const formata_horas = require('../../formatters/formata_horas.js')
 
 const lista_modulos = []
-let trava_modulo = false, global_client
+let trava_modulo = false
 
 const week_days = {
     0: [1, 2, 3, 4, 5],
     1: [6, 0]
 }
 
-async function atualiza_modulos(client) {
+async function atualiza_modulos() {
 
     const dados = await getActiveModules()
-    global_client = client
 
-    writeFileSync("./files/data/modules.txt", JSON.stringify(dados))
+    writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
 }
 
-async function requisita_modulo() {
+async function requisita_modulo(client) {
 
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
 
-    fs.readFile('./files/data/modules.txt', 'utf8', (err, data) => {
+    fs.readFile('./files/data/user_modules.txt', 'utf8', (err, data) => {
 
         data = JSON.parse(data)
 
@@ -59,11 +58,11 @@ async function requisita_modulo() {
         }
 
         if (lista_modulos.length > 0)
-            executa_modulo()
+            executa_modulo(client)
     })
 }
 
-executa_modulo = async () => {
+executa_modulo = async (client) => {
 
     // Retorna caso o array de módulos esteja vazio
     if (lista_modulos.length < 1) return
@@ -72,18 +71,18 @@ executa_modulo = async () => {
     if (!trava_modulo) {
         trava_modulo = true
 
-        const user = await global_client.getUser(lista_modulos[0].uid)
+        const user = await client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await require('../formatters/chunks/model_weather')(global_client, user)
+            await require('../../formatters/chunks/model_weather.js')(client, user)
 
         if (lista_modulos[0].type === 1)
-            await require('../formatters/chunks/model_frase.js')(global_client, user)
+            await require('../../formatters/chunks/model_frase.js')(client, user)
 
         if (lista_modulos[0].type === 2) {
 
             if (lista_modulos[0].data === 0) // Sem definição de tipo de envio
-                await global_client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
+                await client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
 
             // Definindo qual tipo de anúncio do history será
             let dados = {
@@ -99,24 +98,24 @@ executa_modulo = async () => {
                 }
             }
 
-            await require('../formatters/chunks/model_history')(global_client, user, dados)
+            await require('../../formatters/chunks/model_history.js')(client, user, dados)
         }
 
         // Charadas
         if (lista_modulos[0].type === 3)
-            await require('../formatters/chunks/model_charada')(global_client, user)
+            await require('../../formatters/chunks/model_charada.js')(client, user)
 
         // Curiosidades
         if (lista_modulos[0].type === 4)
-            await require('../formatters/chunks/model_curiosidades')(global_client, user)
+            await require('../../formatters/chunks/model_curiosidades.js')(client, user)
 
         // Um item do minecraft
         if (lista_modulos[0].type === 5)
-            await require('../formatters/chunks/model_mine')(global_client, user)
+            await require('../../formatters/chunks/model_mine.js')(client, user)
 
         // Jogos gratuitos do momento
         if (lista_modulos[0].type === 6)
-            await require('../formatters/chunks/model_free_games')(global_client, user)
+            await require('../../formatters/chunks/model_free_games.js')(client, user)
 
         lista_modulos.shift()
 
@@ -124,7 +123,7 @@ executa_modulo = async () => {
             trava_modulo = false
 
             if (lista_modulos.length > 0)
-                executa_modulo()
+                executa_modulo(client)
         }, 5000)
     }
 }

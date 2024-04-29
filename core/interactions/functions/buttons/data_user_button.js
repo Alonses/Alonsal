@@ -41,8 +41,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_inatividade" },
             alvo: `data_user_${escopo}_timeout`,
+            number_values: true,
             values: valores
         }
 

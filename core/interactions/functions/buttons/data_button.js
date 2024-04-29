@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 3 -> Remover todos os dados do usuário
 
     const data = {
-        title: client.tls.phrase(user, "manu.data.escolher_opcoes"),
+        title: { tls: "menu.menus.escolher_tipo_dado" },
         alvo: "dados_navegar",
         values: []
     }
@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     ], interaction)
 
     interaction.update({
-        content: data.title,
+        content: client.tls.phrase(user, "manu.data.tipo_dado"),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data }), row],
         ephemeral: true

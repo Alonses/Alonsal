@@ -8,42 +8,6 @@ const { languagesMap } = require('../formatters/translate')
 const { loggerMap } = require('../database/schemas/Guild')
 const { moduleDays } = require('../database/schemas/Module')
 
-const translate = {
-    "faustop": "Escolha uma frase do faustão!",
-    "norbit": "Escolha uma frase do filme do Norbit!",
-    "galerito": "Escolha uma frase do galerito e cia!",
-    "modules_browse": "misc.modulo.selecionar_modulo",
-    "modules_select_day": "menu.menus.escolher_frequencia",
-    "listas": "util.tarefas.escolher_lista_vincular",
-    "listas_navegar": "util.tarefas.escolher_lista_navegar",
-    "dados_navegar": "manu.data.tipo_dado",
-    "listas_remover": "util.tarefas.escolher_lista_apagar",
-    "tarefas_remover": "util.tarefas.escolher_tarefa_apagar",
-    "profile_custom_navegar": "menu.menus.selecionar_profile",
-    "choose_language": "Choose a language!",
-    "guild_spam_timeout": "menu.menus.escolher_timeout",
-    "guild_warns_reset": "menu.menus.escolher_timeout",
-    "warn_config_timeout": "menu.menus.escolher_timeout",
-    "data_guild_timeout": "menu.menus.escolher_expiracao",
-    "data_user_global_timeout": "menu.menus.escolher_inatividade",
-    "data_user_guild_timeout": "menu.menus.escolher_inatividade",
-    "strike_config_timeout": "menu.menus.escolher_timeout",
-    "guild_spam_strikes": "menu.menus.escolher_numero",
-    "static_color": "menu.menus.escolher_cor",
-    "select_channel": "menu.menus.escolher_canal",
-    "select_category": "menu.menus.escolher_categoria",
-    "select_role": "menu.menus.escolher_cargo",
-    "select_language": "menu.menus.escolher_idioma",
-    "select_events": "menu.menus.escolher_eventos",
-    "select_action": "menu.menus.escolher_acao",
-    "select_link": "menu.menus.escolher_guilds",
-    "remove_report": "menu.menus.escolher_usuario",
-    "remove_warn": "menu.menus.escolher_usuario",
-    "report_browse": "menu.menus.escolher_usuario",
-    "warn_browse": "menu.menus.escolher_usuario",
-    "spam_link_panel": "menu.menus.escolher_link"
-}
-
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
 
     const itens_menu = [], alvo = data.alvo
@@ -82,9 +46,10 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 else
                     emoji_label = client.emoji(galerito)
 
-                // Descrição da opção no menu
-                descricao_label = translate[alvo]
+                emoji_label = "📢"
+
                 valor_label = `${alvo}|${interaction.user.id}.${i}`
+                descricao_label = client.tls.phrase(user, "menu.menus.escolher_esse")
             }
 
             if (alvo.includes("dado")) {
@@ -165,7 +130,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 valor_label = `${alvo}|${valor.split(".")[0]}`
             }
 
-            if (alvo === "guild_spam_timeout" || alvo === "guild_warns_reset" || alvo === "guild_spam_strikes" || alvo.includes("config_timeout") || alvo === "data_guild_timeout" || alvo.includes("data_user_")) {
+            if (data?.number_values) { // Menus com opções de número apenas
                 // Listando as opções de tempo de mute para o anti-spam
                 emoji_label = client.defaultEmoji("time")
                 valor_label = `${alvo}|${i + 1}`
@@ -196,6 +161,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
 
                     if (alvo.includes("warn_config") || alvo.includes("strike_config")) // Definindo uma punição para as advertências e strikes
                         valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu.replace("x/", "")}`
+
+                    if (data.submenu) // Função com um submenu inclusa
+                        valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu}`
 
                 } else if (alvo.includes("#language")) { // Idioma
                     nome_label = languagesMap[valor][2]
@@ -288,20 +256,8 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     }
 
     // Definindo titulos e ID's exclusivos para diferentes comandos
-    let titulo_menu = client.tls.phrase(user, "dive.badges.escolha_uma")
+    let titulo_menu = data.title.tls.split(".").length > 2 ? client.tls.phrase(user, data.title.tls) : data.title.tls
     let id_menu = `select_${alvo}_${interaction.user.id}`
-
-    if (alvo.includes("tarefa"))
-        titulo_menu = client.tls.phrase(user, "util.tarefas.escolher_tarefa_visualizar")
-
-    if (alvo.includes("#"))
-        titulo_menu = client.tls.phrase(user, translate[`select_${alvo.split("#")[1]}`])
-
-    if (translate[alvo]) // Verificando qual será o menu inserido e adicionando uma frase
-        if (translate[alvo].split(".").length > 1)
-            titulo_menu = client.tls.phrase(user, translate[alvo])
-        else
-            titulo_menu = translate[alvo]
 
     if (data.submenu) // Tempo para remover advertências
         if (data.submenu == 16)

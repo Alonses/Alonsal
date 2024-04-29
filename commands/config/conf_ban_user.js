@@ -8,7 +8,7 @@ module.exports = {
             option.setName("usuario")
                 .setDescription("Mencione outro usuário")
                 .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers || PermissionFlagsBits.KickMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers | PermissionFlagsBits.KickMembers),
     async execute({ client, user, interaction }) {
 
         // Verificando autoria de quem ativou o comando

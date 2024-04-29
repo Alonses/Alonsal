@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo a penalidade que será aplicada ao Strike selecionado
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_acao" },
             alvo: "strike_config#action",
             reback: "browse_button.strike_configure_button",
             operation: operacao,
@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         cargos = cargos.concat(await client.getGuildRoles(interaction, strike.role))
 
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_cargo" },
             alvo: "strike_config#role",
             reback: "browse_button.strike_configure_button",
             operation: operacao,
@@ -113,8 +113,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_timeout" },
             alvo: "strike_config_timeout",
+            number_values: true,
             submenu: `${id_strike}.${operacao}`,
             values: valores
         }

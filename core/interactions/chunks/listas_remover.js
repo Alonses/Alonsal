@@ -12,6 +12,7 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
         pagina--
 
     const data = {
+        title: { tls: "util.tarefas.escolher_lista_apagar" },
         alvo: "listas_remover",
         reback: "browse_button",
         values: listas

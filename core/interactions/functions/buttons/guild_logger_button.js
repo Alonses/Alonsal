@@ -77,7 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo os eventos que o log irá relatar no servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_eventos" },
             alvo: alvo,
             reback: "browse_button.guild_logger_button",
             operation: operacao,
@@ -103,7 +103,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o canal de avisos do log de eventos e de avisos separados
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: alvo,
             reback: "browse_button.guild_logger_button",
             operation: operacao,
@@ -132,7 +132,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Alterando o idioma do servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_idioma" },
             alvo: "guild_logger#language",
             reback: "browse_button.guild_logger_button",
             operation: operacao,

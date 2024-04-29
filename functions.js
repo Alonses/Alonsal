@@ -12,7 +12,7 @@ const { listAllUserTasks } = require('./core/database/schemas/Task')
 const { registryStatement } = require('./core/database/schemas/Statement')
 const { listAllUserGroups } = require('./core/database/schemas/Task_group')
 const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
-const { getGuild, getGameChannels, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
+const { getGuild, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
@@ -23,7 +23,7 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
 const { listAllGuildWarns } = require('./core/database/schemas/Warns_guild')
-const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/Warns')
+const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
 function internal_functions(client) {
@@ -114,30 +114,31 @@ function internal_functions(client) {
 
     client.emoji = (dados) => {
 
-        let id_emoji = dados
+        let id_emoji = dados, emoji
 
         if (typeof dados === "object") // Escolhendo um emoji do Array com vários emojis
-            if (dados[0].length > 8)
-                dados = id_emoji[client.random(id_emoji)]
-
-        let emoji
+            if (dados[0].length > 18)
+                dados = id_emoji[client.random(dados)]
 
         // Emojis customizados
-        if (typeof dados === "string") {
+        if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
 
-            if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
-
-                if (dados == "emojis_dancantes")
-                    dados = emojis_dancantes[client.random(emojis_dancantes)]
-                else if (dados == "emojis_negativos")
-                    dados = emojis_negativos[client.random(emojis_negativos)]
-                else
-                    dados = emojis[dados]
-            }
+            if (dados == "emojis_dancantes")
+                dados = emojis_dancantes[client.random(emojis_dancantes)]
+            else if (dados == "emojis_negativos")
+                dados = emojis_negativos[client.random(emojis_negativos)]
+            else
+                dados = emojis[dados]
 
             emoji = client.discord.emojis.cache.get(dados)?.toString()
-        } else // Emojis por códigos de status
-            emoji = translate.get_emoji(dados)
+
+        } else {
+
+            if (dados.length > 18) // Emoji por ID
+                emoji = client.discord.emojis.cache.get(dados)?.toString()
+            else // Emoji padrão por código interno
+                emoji = translate.get_emoji(dados)
+        }
 
         if (isNaN(parseInt(id_emoji)))
             emoji = "🔍"
@@ -169,10 +170,6 @@ function internal_functions(client) {
 
     client.getBot = () => {
         return getBot(client.x.id)
-    }
-
-    client.getGameChannels = () => {
-        return getGameChannels()
     }
 
     client.getGuild = (id_guild) => {
@@ -494,6 +491,30 @@ function internal_functions(client) {
             interaction.update(obj)
         else
             interaction.reply(obj)
+    }
+
+    client.rolePermissions = async (interaction, role_id, permissions) => {
+
+        const cached_role = interaction.guild.roles.cache.find((r) => r.id === role_id)
+
+        // Verificando as permissões do cargo informado
+        for (let i = 0; i < permissions.length; i++)
+            if (cached_role.permissions.has(permissions[i])) return false
+
+        // Cargo everyone ou cargo proprietário do discord selecionado
+        if (cached_role.id === interaction.guild.id || !cached_role.editable) return false
+
+        return true
+    }
+
+    client.hasRole = async (interaction, role_id, user_id) => {
+
+        const user_member = await client.getMemberGuild(interaction.guild.id, user_id)
+
+        if (user_member.roles.cache.has(role_id))
+            return true
+
+        return false
     }
 
     // Envia uma notificação em DM para o usuário

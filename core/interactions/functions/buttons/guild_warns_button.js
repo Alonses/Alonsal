@@ -127,7 +127,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: alvo,
             reback: "browse_button.guild_warns_button",
             operation: operacao,
@@ -213,9 +213,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
 
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_timeout" },
             alvo: "guild_warns_reset",
             submenu: operacao,
+            number_values: true,
             values: valores
         }
 

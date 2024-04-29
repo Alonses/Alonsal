@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo o canal de avisos dos relatórios externos
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: "guild_reports#channel",
             reback: "browse_button.guild_reports_button",
             operation: operacao,

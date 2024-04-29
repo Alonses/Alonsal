@@ -27,6 +27,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
 
         const data = {
+            title: { tls: "util.tarefas.escolher_lista_navegar" },
             alvo: "listas",
             values: listas,
             timestamp: timestamp

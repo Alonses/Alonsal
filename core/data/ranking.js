@@ -1,4 +1,4 @@
-const { atualiza_user_eraser } = require('../auto/user_eraser')
+const { atualiza_user_eraser } = require('../auto/triggers/user_eraser')
 const { getUserGlobalRank } = require('../database/schemas/Rank_g')
 const { defaultUserEraser } = require('../database/schemas/User')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')

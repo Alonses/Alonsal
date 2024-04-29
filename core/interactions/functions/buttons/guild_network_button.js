@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Definindo os eventos que o network irá sincronizar no servidor
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_eventos" },
             alvo: "guild_network#events",
             reback: "browse_button.guild_network_button",
             operation: operacao,
@@ -92,7 +92,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Listando os servidores para o moderador
         const data = {
-            title: client.tls.phrase(user, "mode.network.selecionar_servidores"),
+            title: { tls: "menu.menus.escolher_guilds" },
             alvo: "guild_network#link",
             reback: "browse_button.guild_network_button",
             operation: operacao,
@@ -146,7 +146,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Escolhendo o canal de avisos dos eventos do network
         const data = {
-            title: client.tls.phrase(user, "misc.modulo.modulo_escolher", 1),
+            title: { tls: "menu.menus.escolher_canal" },
             alvo: "guild_network#channel",
             reback: "browse_button.guild_network_button",
             operation: operacao,

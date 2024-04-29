@@ -9,6 +9,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     })
 
     const data = {
+        title: { tls: "Choose a language!" },
         alvo: "choose_language",
         values: idiomas
     }

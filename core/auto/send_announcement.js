@@ -3,10 +3,12 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const { model_games } = require('../formatters/chunks/model_games')
 
 const { redes } = require('../../files/json/text/anuncio.json')
+const { getGameChannels, getSpecificGameChannel } = require('../database/schemas/Guild')
 
 module.exports = async ({ client, interaction, objetos_anunciados, guild_channel }) => {
 
-    const canais_clientes = await client.getGameChannels()
+    // Busca o canal espeficio ou todos os canais clientes para enviar o anúncio de jogo gratuito
+    const canais_clientes = await (typeof guild_channel === "undefined" ? getGameChannels() : getSpecificGameChannel(guild_channel))
 
     if (canais_clientes.length < 1)
         return client.notify(process.env.channel_feeds, { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." })
@@ -20,14 +22,12 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
             ephemeral: true
         })
 
-    const plataforma = redes[matches[0]][1], logo_plat = redes[matches[0]][0]
-    let canais_recebidos = 0, imagem_destaque, valor_anterior = 0, lista_links = []
+    let imagem_destaque, valor_anterior = 0, lista_links = []
 
+    // Formatando o nome do jogo e escolhendo o banner para o anúncio
     objetos_anunciados.forEach(valor => {
-        let nome_jogo = valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome
-
         lista_links.push({
-            name: nome_jogo,
+            name: valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome,
             type: 4,
             value: valor.link
         })
@@ -41,66 +41,25 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
             imagem_destaque = `https://cdn.akamai.steamstatic.com/steam/apps/${valor.link.split("app/")[1].split("/")[0]}/capsule_616x353.jpg`
     })
 
-    // Criando os botões externos para os jogos
-    const row = client.create_buttons(lista_links)
+    // Objeto de anúncio para os jogos gratuitos
+    const obj_anuncio = {
+        guilds: canais_clientes,
+        games: objetos_anunciados,
+        banner: imagem_destaque,
+        logo: redes[matches[0]][0],
+        plataforma: redes[matches[0]][1],
+        row: client.create_buttons(lista_links)
+    }
 
-    // Enviando a notificação para vários os canais clientes
-    canais_clientes.forEach(async dados => {
+    // Enviando a notificação para os canais clientes
+    fragmenta_envio(client, obj_anuncio)
 
-        try {
-            let idioma_definido = dados.lang ?? "pt-br"
-            if (idioma_definido === "al-br") idioma_definido = "pt-br"
+    // Acionado especificamente para um canal
+    if (typeof guild_channel !== "undefined") return
 
-            let texto_anuncio = model_games(client, objetos_anunciados, plataforma, idioma_definido)
+    let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_clientes.length}\` canais clientes`
 
-            const embed = new EmbedBuilder()
-                .setTitle(`${logo_plat} ${plataforma}`)
-                .setColor(0x29BB8E)
-                .setImage(imagem_destaque)
-                .setDescription(texto_anuncio)
-
-            const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
-
-            if (canal_alvo) { // Enviando os anúncios para os canais
-                if (canal_alvo.type === 0 || canal_alvo.type === 5) {
-
-                    // Permissão para enviar mensagens no canal
-                    if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
-
-                        if (typeof guild_channel === "undefined") // Anúnciando em todos os servidores
-                            canal_alvo.send({
-                                content: `<@&${dados.games.role}>`,
-                                embeds: [embed],
-                                components: [row]
-                            })
-                        else if (guild_channel === dados.games.channel) // Anúnciando apenas no servidor alvo
-                            canal_alvo.send({
-                                content: `<@&${dados.games.role}>`,
-                                embeds: [embed],
-                                components: [row]
-                            })
-
-                        canais_recebidos++
-                    }
-                }
-            } else {
-                if (client.id() === process.env.client_1) {
-                    // Canal ou servidor desconhecido ( funciona apenas no bot principal )
-                    dados.conf.games = false
-                    dados.save()
-                }
-            }
-        } catch (err) {
-            client.error(err, "Games")
-        }
-    })
-
-    if (typeof guild_channel !== "undefined")
-        return
-
-    let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_recebidos}\` canais clientes`
-
-    if (canais_recebidos === 1)
+    if (canais_clientes.length === 1)
         aviso = ":white_check_mark: | Aviso de Jogos gratuitos enviado para `1` canal cliente"
 
     client.notify(process.env.channel_feeds, { content: aviso })
@@ -110,4 +69,54 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
             content: ":white_check_mark: | A atualização foi enviada à todos os canais de games",
             ephemeral: true
         })
+}
+
+async function fragmenta_envio(client, obj_anuncio) {
+
+    try {
+        const dados = obj_anuncio.guilds[0]
+
+        let idioma_definido = dados.lang ?? "pt-br"
+        if (idioma_definido === "al-br") idioma_definido = "pt-br"
+
+        const embed = new EmbedBuilder()
+            .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
+            .setColor(0x29BB8E)
+            .setImage(obj_anuncio.banner)
+            .setDescription(model_games(client, obj_anuncio.games, obj_anuncio.plataforma, idioma_definido))
+
+        const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
+
+        if (canal_alvo) { // Enviando os anúncios para os canais
+            if (canal_alvo.type === 0 || canal_alvo.type === 5) {
+
+                // Permissão para enviar mensagens no canal
+                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+
+                    // Enviando o anúncio
+                    canal_alvo.send({
+                        content: `<@&${dados.games.role}>`,
+                        embeds: [embed],
+                        components: [obj_anuncio.row]
+                    })
+                }
+            }
+        } else {
+            if (client.id() === process.env.client_1) {
+                // Canal ou servidor desconhecido ( funciona apenas no bot principal )
+                dados.conf.games = false
+                dados.save()
+            }
+        }
+    } catch (err) {
+        client.error(err, "Games")
+    }
+
+    // Removendo o 1° canal de anúncio
+    obj_anuncio.guilds.shift()
+
+    if (obj_anuncio.guilds.length > 0)
+        setTimeout(() => { // Enviando o aviso de jogos gratuitos para o próximo canal
+            fragmenta_envio(client, obj_anuncio)
+        }, 5000)
 }
