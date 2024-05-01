@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { verifyUserModules, createModule } = require('../../../core/database/schemas/Module')
-const { getModulesPrice } = require('../../../core/database/schemas/Module')
+const { verifyUserModules, createModule } = require('../../../core/database/schemas/User_modules')
+const { getModulesPrice } = require('../../../core/database/schemas/User_modules')
 
 const formata_horas = require('../../../core/formatters/formata_horas')
 

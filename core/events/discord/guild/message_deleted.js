@@ -1,6 +1,6 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
-const { verifySuspiciousLink } = require('../../../database/schemas/Spam_link')
+const { verifySuspiciousLink } = require('../../../database/schemas/Spam_links')
 
 module.exports = async ({ client, message }) => {
 

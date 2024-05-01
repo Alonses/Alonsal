@@ -3,8 +3,8 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 const { emoji_button } = require("../../functions/emoji_button")
 
 const { loggerMap } = require("../../database/schemas/Guild")
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
-const { getGuildStrike } = require("../../database/schemas/Strikes_guild")
+const { spamTimeoutMap } = require("../../database/schemas/User_strikes")
+const { getGuildStrike } = require("../../database/schemas/Guild_strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

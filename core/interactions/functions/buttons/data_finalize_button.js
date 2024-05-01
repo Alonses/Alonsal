@@ -1,4 +1,4 @@
-const { clear_data } = require("../../../data/update_data")
+const { clear_data } = require("../../../data/user_update_data")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

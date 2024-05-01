@@ -1,4 +1,4 @@
-const { getUserStrikes } = require("../../../database/schemas/Strikes")
+const { getUserStrikes } = require("../../../database/schemas/User_strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

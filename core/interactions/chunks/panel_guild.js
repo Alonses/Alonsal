@@ -34,72 +34,6 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // 7 -> Visibilidade global
     // 8 -> Network
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
-            iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
-
-    if (pagina === 0)
-        embed.addFields(
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_logger")}\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `\`${client.tls.phrase(user, "mode.warn.desc_advertencias")}\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_spam")}\``,
-                inline: true
-            }
-        )
-
-    if (pagina == 1)
-        embed.addFields(
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_network")}\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_reports")}\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_games")}\``,
-                inline: true
-            }
-        )
-
-    if (pagina == 2)
-        embed.addFields(
-            {
-                name: `${client.defaultEmoji("time")} **Cargos temporários**`,
-                value: `\`Defina cargos temporários aos membros do servidor.\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
-                inline: true
-            },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_convites_rastreados")}\``,
-                inline: true
-            }
-        )
-
     const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
@@ -165,6 +99,72 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 return require(`./panel_guild_${operador}`)({ client, user, interaction, pagina_guia })
             }
         }
+
+    const embed = new EmbedBuilder()
+        .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)
+        .setColor(client.embed_color(user.misc.color))
+        .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
+        .setFooter({
+            text: client.tls.phrase(user, "manu.painel.rodape"),
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        })
+
+    if (pagina === 0)
+        embed.addFields(
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_logger")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
+                value: `\`${client.tls.phrase(user, "mode.warn.desc_advertencias")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_spam")}\``,
+                inline: true
+            }
+        )
+
+    if (pagina == 1)
+        embed.addFields(
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_network")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_reports")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_games")}\``,
+                inline: true
+            }
+        )
+
+    if (pagina == 2)
+        embed.addFields(
+            {
+                name: `${client.defaultEmoji("time")} **Cargos temporários**`,
+                value: `\`Defina cargos temporários aos membros do servidor.\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_denuncias")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_convites_rastreados")}\``,
+                inline: true
+            }
+        )
 
     // Primeira página de botões de configuração do Alonsal
     // Log de eventos, Advertências e Anti-spam

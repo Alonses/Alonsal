@@ -1,12 +1,12 @@
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../data/badges')
+const { busca_badges, badgeTypes } = require('../data/user_badges')
 
 const { faustop, rasputia, galerito } = require('../../files/json/text/emojis.json')
 const { colorsMap } = require('../database/schemas/User')
 const { languagesMap } = require('../formatters/translate')
 const { loggerMap } = require('../database/schemas/Guild')
-const { moduleDays } = require('../database/schemas/Module')
+const { moduleDays } = require('../database/schemas/User_modules')
 
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
 

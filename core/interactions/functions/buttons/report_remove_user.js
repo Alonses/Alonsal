@@ -1,4 +1,4 @@
-const { dropReport, checkUserGuildReported } = require('../../../database/schemas/Report')
+const { dropReport, checkUserGuildReported } = require('../../../database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

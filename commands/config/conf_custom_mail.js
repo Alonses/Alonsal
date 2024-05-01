@@ -3,7 +3,7 @@ const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionF
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_mail")
-        .setDescription("⌠🤖⌡ Enviar mensagem em canal especifico")
+        .setDescription("⌠🤖⌡ Enviar mensagem em um canal especifico")
         .addStringOption(option =>
             option.setName("texto")
                 .setDescription("O texto a ser enviado")

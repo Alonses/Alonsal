@@ -1,4 +1,4 @@
-const { getGuildWarn } = require('../../../database/schemas/Warns_guild')
+const { getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

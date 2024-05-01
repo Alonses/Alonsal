@@ -1,4 +1,4 @@
-const { getModule } = require("../../../database/schemas/Module")
+const { getModule } = require("../../../database/schemas/User_modules")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

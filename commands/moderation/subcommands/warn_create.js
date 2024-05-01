@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { listAllUserWarns } = require('../../../core/database/schemas/Warns')
-const { listAllGuildWarns } = require('../../../core/database/schemas/Warns_guild')
+const { listAllUserWarns } = require('../../../core/database/schemas/User_warns')
+const { listAllGuildWarns } = require('../../../core/database/schemas/Guild_warns')
 
 const guildActions = {
     "member_mute": [PermissionsBitField.Flags.ModerateMembers],

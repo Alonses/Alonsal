@@ -1,4 +1,4 @@
-const { busca_badges, badgeTypes } = require('../../../data/badges')
+const { busca_badges, badgeTypes } = require('../../../data/user_badges')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

@@ -1,4 +1,4 @@
-const { listAllUserTasks } = require('../../database/schemas/Task')
+const { listAllUserTasks } = require('../../database/schemas/User_tasks')
 
 module.exports = async ({ client, user, interaction, autor_original }) => {
 

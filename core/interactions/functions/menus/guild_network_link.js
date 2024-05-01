@@ -1,4 +1,4 @@
-const { createNetworkLink } = require('../../../database/schemas/Network')
+const { createNetworkLink } = require('../../../database/schemas/Guild_network')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

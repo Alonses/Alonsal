@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { listAllGuildStrikes } = require("../../database/schemas/Strikes_guild")
+const { listAllGuildStrikes } = require("../../database/schemas/Guild_strikes")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 

@@ -3,7 +3,7 @@ const fs = require('fs')
 const { writeFileSync } = require('fs')
 
 const { getUser } = require('../../database/schemas/User.js')
-const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/Module.js")
+const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
 
 const formata_horas = require('../../formatters/formata_horas.js')
 

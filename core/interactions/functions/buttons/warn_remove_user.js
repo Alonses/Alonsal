@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { checkUserGuildWarned, dropAllUserGuildWarns, listAllUserWarns } = require('../../../database/schemas/Warns')
+const { checkUserGuildWarned, dropAllUserGuildWarns, listAllUserWarns } = require('../../../database/schemas/User_warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

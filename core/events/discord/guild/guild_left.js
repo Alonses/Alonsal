@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
 const { disableGuildFeatures } = require('../../../database/schemas/Guild')
-const { verifyDynamicBadge } = require('../../../database/schemas/Badge')
-const { badges } = require('../../../data/badges')
+const { verifyDynamicBadge } = require('../../../database/schemas/User_badges')
+const { badges } = require('../../../data/user_badges')
 
 module.exports = async ({ client, guild }) => {
 

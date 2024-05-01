@@ -1,7 +1,7 @@
 const { atualiza_user_eraser } = require('../auto/triggers/user_eraser')
-const { getUserGlobalRank } = require('../database/schemas/Rank_g')
+const { getUserGlobalRank } = require('../database/schemas/User_rank_global')
 const { defaultUserEraser } = require('../database/schemas/User')
-const { getUserRankServer, getUserRankServers } = require('../database/schemas/Rank_s')
+const { getUserRankServer, getUserRankServers } = require('../database/schemas/User_rank_guild')
 
 const CHECKS = {
     LIMIT: 5,
@@ -12,8 +12,6 @@ const CHECKS = {
 let members_xp = []
 
 module.exports = async ({ client, message, caso }) => {
-
-    if (!client.x.ranking) return
 
     //            Comandos            Mensagens
     let id_alvo = message.user?.id || message.author?.id

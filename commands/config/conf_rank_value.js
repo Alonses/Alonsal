@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ranking")
-        .setDescription("⌠🤖⌡ Altere o valor do ranking")
+        .setDescription("⌠🤖⌡ Alterar o valor do ranking")
         .addIntegerOption(option =>
             option.setName("valor")
                 .setDescription("O novo valor para o ranking")

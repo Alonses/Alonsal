@@ -1,6 +1,6 @@
-const { badges } = require("../../data/badges")
+const { badges } = require("../../data/user_badges")
 
-const { verifyDynamicBadge } = require("../../database/schemas/Badge")
+const { verifyDynamicBadge } = require("../../database/schemas/User_badges")
 
 module.exports = async (client) => {
 

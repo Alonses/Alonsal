@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { combo_relation } = require("../../../data/update_data")
+const { combo_relation } = require("../../../data/user_update_data")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
