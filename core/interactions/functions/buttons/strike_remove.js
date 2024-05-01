@@ -1,4 +1,4 @@
-const { listAllGuildStrikes, dropGuildStrike } = require("../../../database/schemas/Strikes_guild")
+const { listAllGuildStrikes, dropGuildStrike } = require("../../../database/schemas/Guild_strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

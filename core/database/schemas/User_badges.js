@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const { getRankMoney } = require('./User')
-const { getRankGlobal } = require('./Rank_g')
+const { getRankGlobal } = require('./User_rank_global')
 const { getRankHosters } = require('./Guild')
 
 const schema = new mongoose.Schema({

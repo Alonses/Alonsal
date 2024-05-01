@@ -1,9 +1,9 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { listRankGuild } = require('../../database/schemas/Rank_s')
+const { listRankGuild } = require('../../database/schemas/User_rank_guild')
 const { getNetworkedGuilds, defaultEraser } = require('../../database/schemas/Guild')
-const { checkUserGuildReported } = require('../../database/schemas/Report')
-const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
+const { checkUserGuildReported } = require('../../database/schemas/User_reports')
+const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 

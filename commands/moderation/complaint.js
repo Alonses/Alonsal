@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const { getTicket } = require('../../core/database/schemas/Tickets')
+const { getTicket } = require('../../core/database/schemas/User_tickets')
 
 module.exports = {
     data: new SlashCommandBuilder()

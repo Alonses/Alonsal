@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../core/data/badges')
+const { busca_badges, badgeTypes } = require('../../core/data/user_badges')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_badge")
-        .setDescription("⌠🤖⌡ Atribua uma badge a um usuário")
+        .setDescription("⌠🤖⌡ Conceder badge a um usuário")
         .addUserOption(option =>
             option.setName("usuario")
                 .setDescription("O usuário alvo")

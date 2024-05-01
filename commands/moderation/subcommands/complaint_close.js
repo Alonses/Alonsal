@@ -1,4 +1,4 @@
-const { dropTicket } = require('../../../core/database/schemas/Tickets')
+const { dropTicket } = require('../../../core/database/schemas/User_tickets')
 
 module.exports = async ({ client, user, interaction, channel, solicitante, canal_servidor }) => {
 

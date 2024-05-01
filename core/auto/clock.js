@@ -6,7 +6,7 @@ const { verifica_roles, atualiza_roles } = require("./triggers/user_roles")
 const { requisita_modulo, atualiza_modulos } = require("./triggers/user_modules")
 const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
 
-const { verifica_servers } = require("../data/ranking")
+const { verifica_servers } = require("../data/user_ranking")
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 
 module.exports = async ({ client }) => {

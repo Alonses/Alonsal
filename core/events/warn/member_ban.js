@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { dropAllUserGuildWarns } = require("../../database/schemas/Warns")
+const { dropAllUserGuildWarns } = require("../../database/schemas/User_warns")
 
 module.exports = async ({ client, user, interaction, guild, user_warn, guild_member, guild_executor, bot_member }) => {
 

@@ -1,4 +1,4 @@
-const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks } = require("../../../database/schemas/Spam_link")
+const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks } = require("../../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 

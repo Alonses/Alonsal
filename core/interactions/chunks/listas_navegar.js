@@ -1,5 +1,5 @@
-const { listAllUserGroups } = require('../../database/schemas/Task_group')
-const { listAllUserGroupTasks } = require('../../database/schemas/Task')
+const { listAllUserGroups } = require('../../database/schemas/User_tasks_group')
+const { listAllUserGroupTasks } = require('../../database/schemas/User_tasks')
 
 module.exports = async ({ client, user, interaction, autor_original }) => {
 

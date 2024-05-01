@@ -1,7 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
-const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
+const { spamTimeoutMap } = require("../../database/schemas/User_strikes")
+const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
@@ -20,15 +20,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     advertencias.forEach(warn => {
 
-        // Desabilitando o log de eventos caso o bot não possa banir membros e o evento seja para banir membros
+        // Desabilitando as advertências caso o bot não possa banir membros e haja advertêncnias para banir membros
         if ((!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers) && warn.action === "member_mute") || advertencias.length < 1)
             guild.conf.warn = false
 
-        // Desabilitando o log de eventos caso o bot não possa banir membros e o evento seja para banir membros
+        // Desabilitando as advertências caso o bot não possa banir membros e haja advertêncnias para banir membros
         if ((!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers) && warn.action === "member_kick_2") || advertencias.length < 1)
             guild.conf.warn = false
 
-        // Desabilitando o log de eventos caso o bot não possa banir membros e o evento seja para banir membros
+        // Desabilitando as advertências caso o bot não possa banir membros e haja advertêncnias para banir membros
         if ((!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) && warn.action === "member_ban") || advertencias.length < 1)
             guild.conf.warn = false
 

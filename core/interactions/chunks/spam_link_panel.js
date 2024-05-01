@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getCachedSuspiciousLink } = require("../../database/schemas/Spam_link")
+const { getCachedSuspiciousLink } = require("../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

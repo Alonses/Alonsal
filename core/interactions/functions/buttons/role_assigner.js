@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { getRoleAssigner } = require('../../../database/schemas/Role_assigner')
+const { getRoleAssigner } = require('../../../database/schemas/Guild_role_assigner')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

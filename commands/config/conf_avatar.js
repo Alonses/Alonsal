@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_avatar")
-        .setDescription("⌠🤖⌡ Altere o avatar do Alonsal")
+        .setDescription("⌠🤖⌡ Alterar o avatar do Alonsal")
         .addAttachmentOption(option =>
             option.setName("foto")
                 .setDescription("A nova foto de perfil do bot")

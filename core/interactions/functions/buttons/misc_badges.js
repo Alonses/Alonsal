@@ -1,5 +1,5 @@
-const { createBadge } = require('../../../database/schemas/Badge')
-const { busca_badges, badgeTypes } = require('../../../data/badges')
+const { createBadge } = require('../../../database/schemas/User_badges')
+const { busca_badges, badgeTypes } = require('../../../data/user_badges')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

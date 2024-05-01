@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { spamTimeoutMap } = require('../../../database/schemas/Strikes')
-const { getGuildStrike } = require('../../../database/schemas/Strikes_guild')
+const { spamTimeoutMap } = require('../../../database/schemas/User_strikes')
+const { getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
 const guildActions = {
     "member_mute": 0,

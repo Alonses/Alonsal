@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
 
-const { getUserRankServer } = require('../../core/database/schemas/Rank_s')
+const { getUserRankServer } = require('../../core/database/schemas/User_rank_guild')
 
 module.exports = {
     data: new SlashCommandBuilder()

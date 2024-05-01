@@ -1,4 +1,4 @@
-const { listAllUserModules } = require('../../database/schemas/Module')
+const { listAllUserModules } = require('../../database/schemas/User_modules')
 
 module.exports = async ({ client, user, interaction, autor_original }) => {
 

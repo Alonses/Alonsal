@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('discord.js')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("c_ignore_user")
-        .setDescription("⌠🤖⌡ Desliga respostas do bot para determinado usuário")
+        .setDescription("⌠🤖⌡ Desligar respostas do bot para determinado usuário")
         .addStringOption(option =>
             option.setName("usuario")
                 .setDescription("O ID do usuário")

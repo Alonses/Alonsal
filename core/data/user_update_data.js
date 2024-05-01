@@ -1,9 +1,9 @@
-const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/Module")
-const { dropUserGlobalRank } = require("../database/schemas/Rank_g")
-const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/Rank_s")
-const { dropAllUserStatements } = require("../database/schemas/Statement")
-const { dropAllUserTasks } = require("../database/schemas/Task")
-const { dropAllUserGroups } = require("../database/schemas/Task_group")
+const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/User_modules")
+const { dropUserGlobalRank } = require("../database/schemas/User_rank_guild")
+const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/User_rank_guild")
+const { dropAllUserStatements } = require("../database/schemas/User_statements")
+const { dropAllUserTasks } = require("../database/schemas/User_tasks")
+const { dropAllUserGroups } = require("../database/schemas/User_tasks_group")
 
 const combo_relation = {
     "1": [1, 2],

@@ -1,5 +1,5 @@
-const { getRankGlobal } = require('../../../database/schemas/Rank_g')
-const { getRankServer } = require('../../../database/schemas/Rank_s')
+const { getRankGlobal } = require('../../../database/schemas/User_rank_guild')
+const { getRankServer } = require('../../../database/schemas/User_rank_guild')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 

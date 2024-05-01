@@ -2,7 +2,7 @@ const fs = require('fs')
 
 const { writeFileSync } = require('fs')
 
-const { spamTimeoutMap } = require("../../database/schemas/Strikes.js")
+const { spamTimeoutMap } = require("../../database/schemas/User_strikes.js")
 const { getTimedGuilds } = require('../../database/schemas/Guild.js')
 const { checkUserGuildWarned, removeUserWarn } = require('../../database/schemas/User_warns.js')
 

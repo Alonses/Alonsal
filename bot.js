@@ -8,8 +8,8 @@ const database = require('./core/database/database')
 const { nerfa_spam } = require('./core/events/spam')
 const { getBot } = require('./core/database/schemas/Bot')
 const { checkUser } = require('./core/database/schemas/User')
-const { getUserRankServer } = require('./core/database/schemas/Rank_s')
-const { verifySuspiciousLink } = require('./core/database/schemas/Spam_link')
+const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
+const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 
 let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
@@ -68,13 +68,8 @@ client.discord.on("messageCreate", async message => {
 			await user.save()
 		}
 
-		try {
-			// Updating users' XP
-			if (client.x.ranking) // Experience received by the user
-				client.registryExperience(message, "messages")
-		} catch (err) { // Command error
-			client.error(err, "Ranking")
-		}
+		// Updating users' XP, experience received by the user
+		client.registryExperience(message, "messages")
 	}
 })
 

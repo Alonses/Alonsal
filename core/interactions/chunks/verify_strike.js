@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { listAllUserStrikes } = require("../../database/schemas/Strikes")
-const { listAllGuildStrikes } = require("../../database/schemas/Strikes_guild")
+const { listAllUserStrikes } = require("../../database/schemas/User_strikes")
+const { listAllGuildStrikes } = require("../../database/schemas/Guild_strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

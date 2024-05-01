@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserStatements } = require('../../../core/database/schemas/Statement')
+const { getUserStatements } = require('../../../core/database/schemas/User_statements')
 
 module.exports = async ({ client, user, interaction, local }) => {
 

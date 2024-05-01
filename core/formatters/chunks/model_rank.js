@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../data/badges')
+const { busca_badges, badgeTypes } = require('../../data/user_badges')
 
-const { getRankGlobal } = require('../../database/schemas/Rank_g')
-const { getRankServer } = require('../../database/schemas/Rank_s')
+const { getRankGlobal } = require('../../database/schemas/User_rank_guild')
+const { getRankServer } = require('../../database/schemas/User_rank_guild')
 
 const medals = {
     0: ":first_place:",

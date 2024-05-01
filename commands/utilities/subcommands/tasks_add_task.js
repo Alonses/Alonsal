@@ -1,5 +1,5 @@
-const { createTask } = require('../../../core/database/schemas/Task')
-const { listAllUserGroups } = require('../../../core/database/schemas/Task_group')
+const { createTask } = require('../../../core/database/schemas/User_tasks')
+const { listAllUserGroups } = require('../../../core/database/schemas/User_tasks_group')
 
 module.exports = async ({ client, user, interaction }) => {
 

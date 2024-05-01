@@ -1,4 +1,4 @@
-const { dropTask } = require('../../../database/schemas/Task')
+const { dropTask } = require('../../../database/schemas/User_tasks')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 

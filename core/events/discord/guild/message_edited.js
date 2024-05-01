@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { verifySuspiciousLink } = require('../../../database/schemas/Spam_link')
+const { verifySuspiciousLink } = require('../../../database/schemas/Spam_links')
 // const compare_messages = require('../../../auto/compare_messages')
 
 module.exports = async (client, message) => {

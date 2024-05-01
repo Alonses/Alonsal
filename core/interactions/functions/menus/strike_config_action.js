@@ -1,4 +1,4 @@
-const { getGuildStrike } = require('../../../database/schemas/Strikes_guild')
+const { getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

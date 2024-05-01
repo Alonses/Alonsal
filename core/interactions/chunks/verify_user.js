@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserReports } = require('../../database/schemas/Report')
-const { getUserStrikes } = require("../../database/schemas/Strikes")
-const { listAllUserWarns } = require('../../database/schemas/Warns')
-const { listAllGuildWarns } = require('../../database/schemas/Warns_guild')
+const { getUserReports } = require('../../database/schemas/User_reports')
+const { getUserStrikes } = require("../../database/schemas/User_strikes")
+const { listAllUserWarns } = require('../../database/schemas/User_warns')
+const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, id_cache }) => {
 
@@ -12,8 +12,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         .catch(() => { return null })
 
     // Usuário não faz parte do servidor (caso o usuário saia do servidor enquanto o comando é executado)
-    if (!user_alvo)
-        return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
+    if (!user_alvo) return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     // Coletando os dados de histórico do usuário
     const reports = await getUserReports(id_alvo)

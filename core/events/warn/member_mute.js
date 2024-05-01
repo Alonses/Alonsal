@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { spamTimeoutMap } = require("../../database/schemas/Strikes")
-const { listAllGuildWarns } = require("../../database/schemas/Warns_guild")
+const { spamTimeoutMap } = require("../../database/schemas/User_strikes")
+const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
 module.exports = async ({ client, user, interaction, guild, active_user_warns, guild_member, guild_executor, bot_member }) => {
 

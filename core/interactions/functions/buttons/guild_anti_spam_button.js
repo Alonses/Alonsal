@@ -2,7 +2,7 @@ const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
 
 const { loggerMap } = require('../../../database/schemas/Guild')
 
-const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Strikes_guild')
+const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

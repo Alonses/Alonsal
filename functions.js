@@ -2,27 +2,30 @@ const { PermissionsBitField } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
-const { getBot } = require('./core/database/schemas/Bot')
 const { alea_hex } = require('./core/functions/hex_color')
+
+const { getBot } = require('./core/database/schemas/Bot')
 const { getUser } = require('./core/database/schemas/User')
+
 const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
 const { create_buttons } = require('./core/generators/buttons')
-const { listAllUserTasks } = require('./core/database/schemas/Task')
-const { registryStatement } = require('./core/database/schemas/Statement')
-const { listAllUserGroups } = require('./core/database/schemas/Task_group')
-const { createBadge, getUserBadges } = require('./core/database/schemas/Badge')
+
+const { listAllUserTasks } = require('./core/database/schemas/User_tasks')
+const { registryStatement } = require('./core/database/schemas/User_statements')
+const { listAllUserGroups } = require('./core/database/schemas/User_tasks_group')
+const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
 const { getGuild, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
 const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
-const { spamTimeoutMap } = require('./core/database/schemas/Strikes')
-const { busca_badges, badgeTypes } = require('./core/data/badges')
+const { spamTimeoutMap } = require('./core/database/schemas/User_strikes')
+const { busca_badges, badgeTypes } = require('./core/data/user_badges')
 
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
-const { listAllGuildWarns } = require('./core/database/schemas/Warns_guild')
+const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
@@ -455,7 +458,10 @@ function internal_functions(client) {
 
     // Registra a experiência recebida pelo membro
     client.registryExperience = (message, caso) => {
-        require('./core/data/ranking')({ client, message, caso })
+
+        if (!client.x.ranking) return
+
+        require('./core/data/user_ranking')({ client, message, caso })
     }
 
     // Registra uma movimentação bancária do usuário
