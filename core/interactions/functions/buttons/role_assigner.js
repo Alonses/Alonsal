@@ -118,11 +118,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     }
 
     if (operacao === 10) // Atribuindo os cargos selecionados aos usuários do servidor
-        return require('../../../auto/role_assigner')({ client, user, interaction })
+        return require('../../../auto/triggers/guild_role_assigner')({ client, user, interaction })
 
     if (operacao === 11) { // Interrompendo a atribuição de cargos aos usuários do servidor
         const force_stop = true
-        return require('../../../auto/role_assigner')({ client, user, interaction, force_stop })
+        return require('../../../auto/triggers/guild_role_assigner')({ client, user, interaction, force_stop })
     }
 
     // Removendo os cargos salvos em cache

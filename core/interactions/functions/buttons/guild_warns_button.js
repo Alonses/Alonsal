@@ -3,7 +3,7 @@ const { ChannelType, EmbedBuilder } = require('discord.js')
 const { loggerMap } = require('../../../database/schemas/Guild')
 const { spamTimeoutMap } = require('../../../database/schemas/User_strikes')
 
-const { atualiza_warns } = require('../../../auto/warn')
+const { atualiza_warns } = require('../../../auto/triggers/user_warns')
 const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
