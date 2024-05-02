@@ -77,7 +77,7 @@ module.exports = {
             .then(messages => {
                 messages.forEach(async m => {
                     if ((m.createdAt >= messageDate || m.createdAt > timestamp_now - 180) && m.author.id === id_alvo)
-                        await m.delete()
+                        await m.delete().catch(err)
                 })
 
                 client.tls.reply(interaction, user, "mode.clear.purge_user", true, 62, id_alvo)
