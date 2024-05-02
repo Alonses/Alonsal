@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { getNetworkedGuilds } = require("../../database/schemas/Guild")
+const { getNetworkedGuilds, banNetworkEraser } = require("../../database/schemas/Guild")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
@@ -78,6 +78,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 }
             )
 
+        // Campo com dados sobre remoção de mensagens de membros banidos
+        embed.addFields(
+            {
+                name: `:wastebasket: **Excluir mensagens de membros banidos:**`,
+                value: `\`${client.tls.phrase(user, `menu.network.${banNetworkEraser[guild.network.erase_ban_messages]}`)}\` ( :twisted_rightwards_arrows: :globe_with_meridians: )`,
+                inline: false
+            }
+        )
+
         if (servidores_link > 1) // Network com mais de um servidor
             embed.addFields(
                 {
@@ -114,6 +123,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         else {
             botoes = botoes.concat([
                 { id: "guild_network_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
+                { id: "guild_network_button", name: "Exclusão", type: 1, emoji: client.emoji(13), data: "6" }
             ])
 
             if (servidores_link > 1) // Network com mais de um servidor

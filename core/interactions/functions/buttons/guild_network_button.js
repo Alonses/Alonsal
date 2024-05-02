@@ -1,4 +1,5 @@
 const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
+const { banNetworkEraser } = require('../../../database/schemas/Guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -19,6 +20,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Menu para confirmar quebra de link do network
 
     // 5 -> Escolher canal de avisos
+    // 6 -> Definir tempo de exclusão do network para membros banidos
 
     // 9 -> Alterar de página dentro do guia
     // 11 -> Removendo o servidor do link do network
@@ -177,6 +179,34 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+    } else if (operacao === 6) {
+
+        // Escolhendo o tempo de exclusão das mensagens para membros banidos no network
+        const valores = []
+
+        if (guild.network.erase_ban_messages !== 0)
+            valores.push(0) // Servidor com tempo de exclusão definido, opção para remover
+
+        Object.keys(banNetworkEraser).forEach(key => {
+            if (guild.network.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
+        })
+
+        const data = {
+            title: { tls: "menu.menus.escolher_expiracao" },
+            alvo: "guild_network_ban_eraser",
+            number_values: true,
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.1`
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
+
     } else if (operacao === 11) {
 
         // Confirmando a remoção do servidor do link do network
