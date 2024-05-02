@@ -45,6 +45,19 @@ const defaultEraser = {
     7: 2419200  // 28 dias
 }
 
+const banNetworkEraser = {
+    0: 0,      // Sem tempo
+    1: 3600,   // 1 hora
+    2: 7200,   // 2 horas
+    3: 21700,  // 6 horas
+    4: 43200,  // 12 horas
+    5: 86400,  // 1 dia
+    6: 172800, // 2 dias
+    7: 259200, // 3 dias
+    8: 432000, // 5 dias
+    9: 604800  // 7 dias
+}
+
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
     lang: { type: String, default: "pt-br" },
@@ -124,7 +137,8 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null },
         member_punishment: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
-        member_kick: { type: Boolean, default: true }
+        member_kick: { type: Boolean, default: true },
+        erase_ban_messages: { type: Number, default: 0 }
     },
     timed_roles: {
         timeout: { type: Number, default: 5 },
@@ -306,5 +320,6 @@ module.exports = {
     dropGuild,
     loggerMap,
     channelTypes,
-    defaultEraser
+    defaultEraser,
+    banNetworkEraser
 }

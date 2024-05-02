@@ -84,8 +84,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             // Banindo o usuário do servidor automaticamente
             interaction.guild.members.ban(guild_member, {
                 reason: alvo.relatory,
-                deleteMessageSeconds: 3 * 24 * 60 * 60 // 3 dias
-            })
+                deleteMessageSeconds: guild.network.erase_ban_messages
+            }).catch(console.error)
 
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`
         }

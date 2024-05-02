@@ -102,15 +102,13 @@ function internal_functions(client) {
 
         let ephemero = typeof ephemeral !== "undefined" ? ephemeral : true
 
-        if (!interaction.customId)
-            await interaction.deferReply({ ephemeral: ephemero })
-        else
-            await interaction.deferUpdate({ ephemeral: ephemero })
+        if (!interaction.customId) await interaction.deferReply({ ephemeral: ephemero })
+        else await interaction.deferUpdate({ ephemeral: ephemero })
     }
 
     client.embed_color = (entrada) => {
-        if (entrada === "RANDOM")
-            return alea_hex()
+
+        if (entrada === "RANDOM") return alea_hex()
 
         return entrada.slice(-6)
     }
@@ -120,53 +118,40 @@ function internal_functions(client) {
         let id_emoji = dados, emoji
 
         if (typeof dados === "object") // Escolhendo um emoji do Array com vários emojis
-            if (dados[0].length > 18)
-                dados = id_emoji[client.random(dados)]
+            if (dados[0].length > 15) dados = id_emoji[client.random(dados)]
 
         // Emojis customizados
         if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
 
-            if (dados == "emojis_dancantes")
-                dados = emojis_dancantes[client.random(emojis_dancantes)]
-            else if (dados == "emojis_negativos")
-                dados = emojis_negativos[client.random(emojis_negativos)]
-            else
-                dados = emojis[dados]
+            if (dados == "emojis_dancantes") dados = emojis_dancantes[client.random(emojis_dancantes)]
+            else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
+            else dados = emojis[dados]
 
             emoji = client.discord.emojis.cache.get(dados)?.toString()
 
         } else {
-
-            if (dados.length > 18) // Emoji por ID
-                emoji = client.discord.emojis.cache.get(dados)?.toString()
-            else // Emoji padrão por código interno
-                emoji = translate.get_emoji(dados)
+            if (dados.length > 15) emoji = client.discord.emojis.cache.get(dados)?.toString() // Emoji por ID
+            else emoji = translate.get_emoji(dados) // Emoji padrão por código interno
         }
 
-        if (isNaN(parseInt(id_emoji)))
-            emoji = "🔍"
+        if (isNaN(parseInt(id_emoji))) emoji = "🔍"
 
         return emoji
     }
 
-    // Executa funções dinâmicas utilizando os dados fornecidos
-    client.execute = (folder, funcao, data) => {
+    client.execute = (folder, funcao, data) => { // Executa funções dinâmicas utilizando os dados fornecidos
 
-        if (!funcao.includes("."))
-            return require(`./core/${folder}/${funcao}`)(data)
-        else
-            return require(`./core/${folder}/${funcao.split(".")[0]}`)[funcao.split(".")[1]](data)
+        if (!funcao.includes(".")) return require(`./core/${folder}/${funcao}`)(data)
+        else return require(`./core/${folder}/${funcao.split(".")[0]}`)[funcao.split(".")[1]](data)
     }
 
-    // Extrai os links formatados do texto original
-    client.extractSuspiciousLink = (text) => {
+    client.extractSuspiciousLink = (text) => { // Extrai os links formatados do texto original
 
         const links = []
         text = text.split("(")
         text.shift()
 
-        for (let i = 0; i < text.length; i++)
-            links.push(text[i].split(")")[0])
+        for (let i = 0; i < text.length; i++) links.push(text[i].split(")")[0])
 
         return links
     }
@@ -179,14 +164,12 @@ function internal_functions(client) {
         return getGuild(id_guild)
     }
 
-    client.getGuildChannels = async (interaction, tipo, id_configurado) => {
+    client.getGuildChannels = async (interaction, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
 
-        // Lista todos os canais de um tipo especifico no servidor
         const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
         const canais_alvo = []
 
-        if (!id_configurado === "undefined")
-            id_configurado = ""
+        if (!id_configurado === "undefined") id_configurado = ""
 
         canais.map(channel => {
             if (channel.id !== id_configurado)
@@ -317,20 +300,17 @@ function internal_functions(client) {
 
         if (valores.length > 1) {
             for (let i = 0; i < valores.length; i++) {
-                if (typeof valores[i + 1] === "undefined")
-                    lista += " & "
+                if (typeof valores[i + 1] === "undefined") lista += " & "
 
                 lista += `\`${valores[i]}\``
 
-                if (typeof valores[i + 2] !== "undefined")
-                    lista += ", "
+                if (typeof valores[i + 2] !== "undefined") lista += ", "
             }
         } else // Apenas um elemento
             lista += `\`${valores[0]}\``
 
         if (tamanho_maximo)
-            if (lista.length > tamanho_maximo)
-                lista = `${lista.slice(0, tamanho_maximo)}...`
+            if (lista.length > tamanho_maximo) lista = `${lista.slice(0, tamanho_maximo)}...`
 
         return lista
     }
@@ -340,8 +320,7 @@ function internal_functions(client) {
         const idiomas = []
 
         Object.keys(translate.languagesMap).forEach(lang => {
-            if (lang !== language.slice(0, 2))
-                idiomas.push(lang)
+            if (lang !== language.slice(0, 2)) idiomas.push(lang)
         })
 
         return idiomas
@@ -350,8 +329,7 @@ function internal_functions(client) {
     // Converte o valor numério para um formato específico
     client.locale = (valor, locale) => {
 
-        if (typeof locale === "undefined")
-            locale = "pt-br"
+        if (typeof locale === "undefined") locale = "pt-br"
 
         return valor.toLocaleString(locale)
     }
@@ -407,19 +385,15 @@ function internal_functions(client) {
             // Permissões do usuário no servidor
             const membro_sv = await client.getMemberGuild(interaction, id_alvo)
 
-            if (!membro_sv) // Membro não localizado
-                return false
+            if (!membro_sv) return false // Membro não localizado
 
             // Verificando se o usuário possui a permissão
-            if (membro_sv.permissions.has(permissao))
-                valido = true
+            if (membro_sv.permissions.has(permissao)) valido = true
         } else {
             // Permissões em canais específicos
             if (canal.channel) {
-                if (canal.channel.permissionsFor(id_alvo).has(permissao))
-                    valido = true
-            } else if (canal.permissionsFor(id_alvo)?.has(permissao))
-                valido = true
+                if (canal.channel.permissionsFor(id_alvo).has(permissao)) valido = true
+            } else if (canal.permissionsFor(id_alvo)?.has(permissao)) valido = true
         }
 
         return valido
@@ -427,11 +401,9 @@ function internal_functions(client) {
 
     // Retorna um valor aleatório
     client.random = (intervalo, base) => {
-        if (typeof base === "undefined") // Valor minimo aceitável
-            base = 0
+        if (typeof base === "undefined") base = 0 // Valor minimo aceitável
 
-        if (typeof intervalo === "object") // Recebendo um array de dados
-            intervalo = intervalo.length - 1
+        if (typeof intervalo === "object") intervalo = intervalo.length - 1 // Recebendo um array de dados
 
         return base + Math.round(intervalo * Math.random())
     }
@@ -493,10 +465,8 @@ function internal_functions(client) {
     client.reply = (interaction, obj) => {
 
         // Respondendo as interações
-        if (interaction.customId)
-            interaction.update(obj)
-        else
-            interaction.reply(obj)
+        if (interaction.customId) interaction.update(obj)
+        else interaction.reply(obj)
     }
 
     client.rolePermissions = async (interaction, role_id, permissions) => {
@@ -517,8 +487,7 @@ function internal_functions(client) {
 
         const user_member = await client.getMemberGuild(interaction.guild.id, user_id)
 
-        if (user_member.roles.cache.has(role_id))
-            return true
+        if (user_member.roles.cache.has(role_id)) return true
 
         return false
     }
@@ -531,8 +500,7 @@ function internal_functions(client) {
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === client.id()) return
 
-        if (force)
-            user.conf.notify = 1
+        if (force) user.conf.notify = 1
 
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
         if (client.decider(user?.conf?.notify, 1)) {
@@ -681,8 +649,7 @@ function internal_functions(client) {
         let user = await client.getUser(id_user)
         let user_ranking = true
 
-        if (typeof user.conf.ranking !== "undefined")
-            user_ranking = user.conf.ranking
+        if (typeof user.conf.ranking !== "undefined") user_ranking = user.conf.ranking
 
         return user_ranking
     }
@@ -704,8 +671,7 @@ function internal_functions(client) {
                 const membro_sv = await client.getMemberGuild(id_guild, client.id())
                 const membro_guild = await client.getMemberGuild(id_guild, id_user)
 
-                if (!membro_sv || !membro_guild)
-                    return // Sem dados
+                if (!membro_sv || !membro_guild) return // Sem dados
 
                 // Removendo o cargo ao usuário que recebeu a advertência
                 if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {

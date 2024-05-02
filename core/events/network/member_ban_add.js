@@ -30,7 +30,6 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
 
     await guild_member.ban({ // Banindo o usuário do servidor automaticamente
         reason: `Network | ${descricao_evento}`,
-        deleteMessageSeconds: 3 * 24 * 60 * 60 // 3 dias
-    })
-        .catch(console.error)
+        deleteMessageSeconds: internal_guild.network.erase_ban_messages
+    }).catch(console.error)
 }
