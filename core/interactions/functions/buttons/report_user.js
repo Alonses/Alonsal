@@ -1,6 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { getReport, dropReport } = require('../../../database/schemas/User_reports')
+const { banNetworkEraser } = require('../../../database/schemas/Guild')
 const { badges } = require('../../../data/user_badges')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -84,7 +85,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             // Banindo o usuário do servidor automaticamente
             interaction.guild.members.ban(guild_member, {
                 reason: alvo.relatory,
-                deleteMessageSeconds: guild.network.erase_ban_messages
+                deleteMessageSeconds: banNetworkEraser[guild.network.erase_ban_messages]
             }).catch(console.error)
 
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`
