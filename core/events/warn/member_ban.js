@@ -1,6 +1,7 @@
 const { PermissionsBitField } = require("discord.js")
 
 const { dropAllUserGuildWarns } = require("../../database/schemas/User_warns")
+const { banNetworkEraser } = require("../../database/schemas/Guild")
 
 module.exports = async ({ client, user, interaction, guild, user_warn, guild_member, guild_executor, bot_member }) => {
 
@@ -25,7 +26,7 @@ module.exports = async ({ client, user, interaction, guild, user_warn, guild_mem
     // Banindo o membro
     await guild_member.ban({ // Banindo o usuário do servidor automaticamente
         reason: user_warn.relatory,
-        deleteMessageSeconds: guild.network.erase_ban_messages
+        deleteMessageSeconds: banNetworkEraser[guild.network.erase_ban_messages]
     }).then(async () => {
         await dropAllUserGuildWarns(user_warn.uid, guild.sid) // Reiniciando as advertências do usuário no servidor
     }).catch(console.error)

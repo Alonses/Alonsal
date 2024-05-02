@@ -184,9 +184,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Escolhendo o tempo de exclusão das mensagens para membros banidos no network
         const valores = []
 
-        if (guild.network.erase_ban_messages !== 0)
-            valores.push(0) // Servidor com tempo de exclusão definido, opção para remover
-
         Object.keys(banNetworkEraser).forEach(key => {
             if (guild.network.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
         })
