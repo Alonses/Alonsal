@@ -8,10 +8,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
     let texto_formatado, valor_total = 0, link_app = ""
     plataforma = plataforma.split(" ")[0]
 
-    objeto_anunciado.forEach(item => {
-        valor_total += parseFloat(item.preco)
-    })
-
+    objeto_anunciado.forEach(item => { valor_total += parseFloat(item.preco) })
     valor_total = valor_total.toFixed(2)
 
     // Verificando se há menção do tipo de anúncio
@@ -48,8 +45,7 @@ nome_games = (objeto_anunciado) => {
         objeto_anunciado.forEach(valor => str += `_\`${valor.nome}\`_, `)
 
         return str.slice(0, str.length - 2).replaceAll(", ", " & ")
-    } else
-        return `_\`${objeto_anunciado[0].nome}\`_`
+    } else return `_\`${objeto_anunciado[0].nome}\`_`
 }
 
 module.exports = {

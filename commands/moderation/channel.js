@@ -76,7 +76,7 @@ module.exports = {
         interaction.targetMessage.channel.messages.fetch()
             .then(messages => {
                 messages.forEach(async m => {
-                    if ((m.createdAt >= messageDate || m.createdAt > timestamp_now - 180) && m.author.id === id_alvo)
+                    if ((m.createdAt >= messageDate || m.createdAt > timestamp_now - 1200) && m.author.id === id_alvo)
                         await m.delete().catch(err)
                 })
 

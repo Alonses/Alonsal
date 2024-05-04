@@ -32,11 +32,8 @@ async function loadAll(client) {
                 await bot.save()
 
                 if (client.id() === process.env.client_1 && process.env.channel_feeds) // Notifica no canal apenas para o bot principal
-                    client.channels().get(process.env.channel_feeds).send({
-                        content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\``
-                    })
-                else
-                    console.log(`🈂️ | Pacote de traduções do ${client.username()} sincronizado com o commit ${cod_commit}`)
+                    client.channels().get(process.env.channel_feeds).send({ content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` })
+                else console.log(`🈂️ | Pacote de traduções do ${client.username()} sincronizado com o commit ${cod_commit}`)
 
                 fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                     .then(res => res.json())

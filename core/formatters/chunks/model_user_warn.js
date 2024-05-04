@@ -11,10 +11,8 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
     let texto_rodape = "⠀", user_warn
 
-    if (user_warns.length < guild_warns.length)
-        user_warn = await getUserWarn(guild_member.id, interaction.guild.id, client.timestamp())
-    else
-        user_warn = user_warns[user_warns.length - 1]
+    if (user_warns.length < guild_warns.length) user_warn = await getUserWarn(guild_member.id, interaction.guild.id, client.timestamp())
+    else user_warn = user_warns[user_warns.length - 1]
 
     // Atualizando os dados da advertência do usuário
     user_warn.valid = false
