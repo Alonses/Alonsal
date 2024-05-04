@@ -44,8 +44,6 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 else if (alvo === "norbit") emoji_label = client.emoji(rasputia)
                 else emoji_label = client.emoji(galerito)
 
-                emoji_label = "📢"
-
                 valor_label = `${alvo}|${interaction.user.id}.${i}`
                 descricao_label = client.tls.phrase(user, "menu.menus.escolher_esse")
             }

@@ -13,9 +13,8 @@ let paginas, pagina
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
-    const date1 = new Date()
-    const data_usuarios = await getRankMoney()
     const usernames = [], bufunfas = [], ids = []
+    const date1 = new Date(), data_usuarios = await getRankMoney()
     let rodape = interaction.user.username, i = 0, user_alvo_data = interaction.options?.getUser("user") || null
 
     if (user_alvo_data) {
@@ -23,10 +22,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         return require(`../../../commands/miscellanea/subcommands/bank_statement`)({ client, user, interaction, local })
     }
 
-    if (typeof dados !== "undefined") // Enviado pelos botões de interação
-        pagina = dados
-    else
-        pagina = interaction.options.getInteger("page") || 1
+    // Enviado pelos botões de interação
+    if (typeof dados !== "undefined") pagina = dados
+    else pagina = interaction.options.getInteger("page") || 1
 
     // Sem dados salvos no banco de ranking
     if (!data_usuarios)
@@ -55,12 +53,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             let cached_user = await client.getCachedUser(user_int.uid)
 
             if (cached_user) {
-                // Validando se o usuário é um bot
-                if (!cached_user.bot) {
-                    if (parseInt(pagina) !== 1)
-                        usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
-                    else
-                        usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
+
+                if (!cached_user.bot) { // Validando se o usuário é um bot
+                    if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
+                    else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
 
                     ids.push(`\`${user_int.uid}\``)
                     bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)

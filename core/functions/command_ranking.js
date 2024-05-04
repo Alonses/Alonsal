@@ -3,8 +3,7 @@ const { existsSync, writeFileSync } = require('fs')
 
 module.exports = async function ({ client, message, content }) {
 
-    let indice = null
-    let alias = null
+    let indice = null, alias = null
 
     const procura_infos = content.replace(prefix, "").split(" ")[0].replace(/ /g, "")
 
