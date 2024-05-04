@@ -14,11 +14,9 @@ module.exports = async (client, user, interaction, pagina_guia) => {
     let jogos_disponiveis = [], objeto_jogos = [], limitador = 3
     let pagina = pagina_guia || 0
 
-    if (games.length < 1)
-        if (interaction) // Sem games para anunciar no momento
-            return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
-        else
-            client.sendDM(user, { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
+    if (games.length < 1) // Sem games para anunciar no momento
+        if (interaction) return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
+        else client.sendDM(user, { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
 
     for (let i = 0; i < pagina; i++)
         for (let x = 0; x < limitador; x++)
@@ -59,20 +57,18 @@ module.exports = async (client, user, interaction, pagina_guia) => {
 
     let row
 
-    if (interaction) // Criando os botões externos para os jogos
-        row = client.create_buttons(objeto_jogos, interaction)
-    else
-        row = client.create_buttons(objeto_jogos)
+    // Criando os botões externos para os jogos
+    if (interaction) row = client.create_buttons(objeto_jogos, interaction)
+    else row = client.create_buttons(objeto_jogos)
 
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.defaultEmoji("gamer")}`)
         .setColor(client.embed_color(user.misc.color))
         .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`)
 
-    if (games[0]?.thumbnail)
-        embed.setImage(games[0]?.thumbnail)
-    else
-        embed.setThumbnail("https://i.imgur.com/AEkiKGU.jpg")
+    // Imagem de capa para o embed
+    if (games[0]?.thumbnail) embed.setImage(games[0]?.thumbnail)
+    else embed.setThumbnail("https://i.imgur.com/AEkiKGU.jpg")
 
     if (interaction)
         client.reply(interaction, {

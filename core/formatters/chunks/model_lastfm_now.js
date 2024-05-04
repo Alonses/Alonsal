@@ -12,8 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
         user: interaction.options.getUser("user")
     }
 
-    if (params.url)
-        texto_entrada = params.url
+    if (params.url) texto_entrada = params.url
 
     alvo = interaction.options.getUser("user") || interaction.user
     const user_alvo = await client.getUser(alvo.id)

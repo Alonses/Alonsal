@@ -118,38 +118,38 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (autor_original) {
         if (!dados) { // Verifica se não é uma interação recorrente ( criada por botões )
             if (paginas > 1) // Com mais de uma página no ranking
-                await interaction.editReply({
+                interaction.editReply({
                     embeds: [embed],
                     components: [row],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             else // Apenas uma página no ranking
-                await interaction.editReply({
+                interaction.editReply({
                     embeds: [embed],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
         } else { // Interação criada por botões
             if (paginas > 1) // Com mais de uma página no ranking
-                await interaction.update({
+                interaction.update({
                     embeds: [embed],
                     components: [row],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             else // Apenas uma página no ranking
-                await interaction.update({
+                interaction.update({
                     embeds: [embed],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
         }
     } else {
         if (paginas > 1) // Com mais de uma página no ranking
-            await interaction.editReply({
+            interaction.editReply({
                 embeds: [embed],
                 components: [row],
                 ephemeral: true
             })
         else // Apenas uma página no ranking
-            await interaction.editReply({
+            interaction.editReply({
                 embeds: [embed],
                 ephemeral: true
             })
