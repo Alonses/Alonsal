@@ -60,17 +60,11 @@ module.exports = {
                         let nome = emoji.name
 
                         emoji.delete()
-                            .then(() =>
-                                client.tls.reply(interaction, user, "mode.emojis.emoji_removido", true, 13, nome))
-                            .catch(() =>
-                                client.tls.reply(interaction, user, "mode.emojis.emoji_error_remover", true, client.emoji(0))
-                            )
+                            .then(() => client.tls.reply(interaction, user, "mode.emojis.emoji_removido", true, 13, nome))
+                            .catch(() => client.tls.reply(interaction, user, "mode.emojis.emoji_error_remover", true, client.emoji(0)))
                     })
-                    .catch(() => {
-                        return client.tls.reply(interaction, user, "mode.emojis.emoji_estrangeiro", true, 1)
-                    })
-            } else
-                return client.tls.reply(interaction, user, "mode.emojis.emoji_custom_remover", true, 2)
+                    .catch(() => { return client.tls.reply(interaction, user, "mode.emojis.emoji_estrangeiro", true, 1) })
+            } else return client.tls.reply(interaction, user, "mode.emojis.emoji_custom_remover", true, 2)
         } catch {
             return client.tls.reply(interaction, user, "mode.emojis.emoji_custom_remover", true, 2)
         }

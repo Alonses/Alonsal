@@ -68,19 +68,15 @@ module.exports = {
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageMessages]))
             return client.tls.reply(interaction, user, "mode.clear.permissao", true, 3)
 
-        const messageDate = interaction.targetMessage.createdAt
-        const id_alvo = interaction.targetMessage.author.id
-        const timestamp_now = client.timestamp()
-
         // Excluindo as mensagens do usuário alvo
         interaction.targetMessage.channel.messages.fetch()
             .then(messages => {
                 messages.forEach(async m => {
-                    if ((m.createdAt >= messageDate || m.createdAt > timestamp_now - 1200) && m.author.id === id_alvo)
-                        await m.delete().catch(err)
+                    if (((m.createdAt - 12000) <= interaction.targetMessage.createdAt) && m.author.id === interaction.targetMessage.author.id)
+                        await m.delete().catch(() => console.error)
                 })
 
-                client.tls.reply(interaction, user, "mode.clear.purge_user", true, 62, id_alvo)
+                client.tls.reply(interaction, user, "mode.clear.purge_user", true, 62, interaction.targetMessage.author.id)
             })
             .catch(() => client.tls.reply(interaction, user, "mode.clear.purge_error", true, client.emoji(0)))
     }
