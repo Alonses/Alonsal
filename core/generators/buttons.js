@@ -31,10 +31,10 @@ function create_buttons(lista, interaction) {
                 botao.setCustomId(`${dados.id}|${interaction.user.id}`)
         }
 
-        if (typeof dados.emoji !== "undefined" && dados.emoji !== "undefined") // Botão com emoji declarado
+        if (dados.emoji) // Botão com emoji declarado
             botao.setEmoji(dados.emoji || "👻")
 
-        if (typeof dados.disabled !== "undefined") // Botão com click desativado
+        if (dados.disabled) // Botão com click desativado
             botao.setDisabled(dados.disabled)
 
         row_buttons.addComponents(botao)

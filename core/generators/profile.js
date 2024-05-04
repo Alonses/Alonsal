@@ -17,13 +17,6 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         operacao = operador
 
     const user_data = await client.getUser(id_alvo)
-    const avatar_user = user_alvo.avatarURL({ dynamic: true, size: 2048 })
-
-    let data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
-    let diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
-
-    let data_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:f>` // Cadastro do usuário
-    let diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
 
     let apelido = membro_sv.nickname || user_alvo.username, tipo_user = "🤖", nota_rodape = ""
     let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``
@@ -64,8 +57,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         nota_rodape = client.tls.phrase(user, "util.user.alonsal")
 
     if (process.env.ids_enceirados.includes(user_data.uid)) {
-        if (nota_rodape !== "")
-            nota_rodape += ", "
+        if (nota_rodape !== "") nota_rodape += ", "
 
         nota_rodape += client.tls.phrase(user, "util.user.enceirado")
     }
@@ -89,7 +81,14 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
             text: `${tipo_user} ${nota_rodape}`
         })
 
-    if (operacao === 0)
+    if (operacao === 0) {
+
+        const data_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:f>`
+        const diferenca_entrada = `<t:${Math.floor(membro_sv.joinedTimestamp / 1000)}:R>`
+
+        const data_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:f>` // Cadastro do usuário
+        const diferenca_criacao = `<t:${Math.floor(user_alvo.createdAt / 1000)}:R>`
+
         embed.addFields(
             {
                 name: `:birthday: **${client.tls.phrase(user, "util.user.conta_criada")}**`,
@@ -103,11 +102,12 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
             }
         )
 
-    if (user_data.profile.about && operacao === 0)
-        embed.setDescription(user_data.profile.about)
+        if (user_data.profile.about) // Perfil com um "sobre" informado
+            embed.setDescription(user_data.profile.about)
+    }
 
-    if (avatar_user) // Usuário com avatar definido
-        embed.setThumbnail(avatar_user)
+    if (user_alvo.avatarURL({ dynamic: true, size: 2048 })) // Usuário com avatar definido
+        embed.setThumbnail(user_alvo.avatarURL({ dynamic: true, size: 2048 }))
 
     return embed
 }

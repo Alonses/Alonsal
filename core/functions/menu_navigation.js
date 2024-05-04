@@ -4,8 +4,7 @@ module.exports = (client, user, dados, pagina) => {
     let paginas = Math.ceil(dados.values.length / 25)
 
     // Verificando se não há mais dados para uma próxima página
-    if (paginas == (pagina + 1))
-        b_disabled[1] = true
+    if (paginas == (pagina + 1)) b_disabled[1] = true
 
     if (pagina === 0) // Desativa apenas se tiver na 1° página
         b_disabled[0] = true

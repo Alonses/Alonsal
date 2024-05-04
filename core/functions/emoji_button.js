@@ -1,14 +1,10 @@
 function emoji_button(valor) {
 
-    let retorno = "✅"
-
     if (typeof valor !== "undefined" && valor !== null)
-        if (valor)
-            retorno = valor === true ? "✅" : "❔"
-        else
-            retorno = "⛔"
+        if (valor) return valor === true ? "✅" : "❔"
+        else return "⛔"
 
-    return retorno
+    return "✅"
 }
 
 function type_button(dado) {
@@ -17,15 +13,11 @@ function type_button(dado) {
     // true -> Ativado ( verde | 2 )
     // false -> Desativado ( cinza | 0 )
 
-    let retorno = 2
+    if (typeof dado !== "undefined")
+        if (dado) return 2
+        else return 1
 
-    if (typeof dado !== "undefined" && dado !== null)
-        if (dado)
-            retorno = 2
-        else
-            retorno = 1
-
-    return retorno
+    return 2
 }
 
 module.exports = {

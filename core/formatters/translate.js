@@ -147,23 +147,17 @@ function get_emoji(valores) {
     let emoji = ""
 
     if (typeof valores === "object") { // Array de emojis
-        if (valores[0].length < 18 || typeof valores[0] === "number")
-            emoji = lista_emojis(valores)
-        else // Emoji único
-            if (valores.length < 18 && typeof valores === "number")
-                emoji = status[valores]
-    } else if (!isNaN(parseInt(valores)))
-        emoji = status[valores] // Emoji por números de identificador
-    else
-        emoji = valores // Emojis já definidos
+        if (valores[0].length < 18 || typeof valores[0] === "number") emoji = lista_emojis(valores)
+        else if (valores.length < 18 && typeof valores === "number") emoji = status[valores] // Emoji único
+    } else if (!isNaN(parseInt(valores))) emoji = status[valores] // Emoji por números de identificador
+    else emoji = valores // Emojis já definidos
 
     return emoji
 }
 
 check_emojis = (phrase, emoji) => {
 
-    if (emoji)
-        phrase = `${get_emoji(emoji)} | ${phrase}`
+    if (emoji) phrase = `${get_emoji(emoji)} | ${phrase}`
 
     return phrase
 }
@@ -171,10 +165,7 @@ check_emojis = (phrase, emoji) => {
 lista_emojis = (emojis_lista) => {
 
     const emojis = []
-
-    emojis_lista.forEach(emoji => {
-        emojis.push(status[emoji])
-    })
+    emojis_lista.forEach(emoji => { emojis.push(status[emoji]) })
 
     return emojis.join(" ")
 }
@@ -189,8 +180,8 @@ ajusta_traducao = (idioma, frase) => {
 
     for (let i = 0; i < blocos.length; i++) {
 
-        if (data[blocos[i]]) // Altera o trecho para a tradução
-            blocos[i] = data[blocos[i]]
+        // Altera o trecho para a tradução
+        if (data[blocos[i]]) blocos[i] = data[blocos[i]]
     }
 
     return blocos.join(" ")

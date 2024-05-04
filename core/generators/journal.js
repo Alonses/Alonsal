@@ -7,13 +7,9 @@ module.exports = async ({ client }) => {
     // Ficará esperando até meia noite para executar a rotina
     const proxima_att = ((23 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
 
-    let canais_texto = client.channels(0).size
-    let members = 0, processamento = "🎲 Processamento\n"
+    let canais_texto = client.channels(0).size, members = 0, processamento = ""
 
-    client.guilds().forEach(async guild => {
-        members += guild.memberCount - 1
-    })
-
+    client.guilds().forEach(async guild => { members += guild.memberCount - 1 })
     const used = process.memoryUsage()
 
     for (let key in used)
@@ -22,7 +18,7 @@ module.exports = async ({ client }) => {
     const embed = new EmbedBuilder()
         .setTitle("> Resumo diário :mega:")
         .setColor(0x29BB8E)
-        .setDescription(`\`\`\`fix\n${processamento}\`\`\``)
+        .setDescription(`\`\`\`fix\n🎲 Processamento\n${processamento}\`\`\``)
         .addFields(
             {
                 name: ":gear: **Comandos**",

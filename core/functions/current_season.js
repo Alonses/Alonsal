@@ -14,7 +14,7 @@ module.exports = (latitude, client, user) => {
     if (indice_int >= datas_estacao.length) indice_int = 0
 
     // Máximo de informações para o clima
-    if (user.misc?.weather || false)
+    if (user.misc?.weather)
         comeco_termino = `\n${client.tls.phrase(user, "util.tempo.comeco")} ${datas_estacao[indice]}${client.tls.phrase(user, "util.tempo.termino")} ${datas_estacao[indice_int]}`
 
     // Calculando o tempo restante em dias para o fim da estação
@@ -50,11 +50,7 @@ estipula_indice = (dias_passados, latitude) => {
 
     // Estipula um indice para a estação do local
     let indices = [1, 2, 3, 0]
+    if (latitude > 0) indices = [3, 0, 1, 2]
 
-    if (latitude > 0)
-        indices = [3, 0, 1, 2]
-
-    let indice = dias_passados > 79 && dias_passados <= 171 ? indices[0] : dias_passados > 171 && dias_passados <= 264 ? indices[1] : dias_passados > 264 && dias_passados <= 354 ? indices[2] : indices[3]
-
-    return indice
+    return dias_passados > 79 && dias_passados <= 171 ? indices[0] : dias_passados > 171 && dias_passados <= 264 ? indices[1] : dias_passados > 264 && dias_passados <= 354 ? indices[2] : indices[3]
 }

@@ -18,8 +18,7 @@ const cases = {
 
 module.exports = (string) => {
 
-    if (!string)
-        return "`Sem texto`"
+    if (!string) return "`Sem texto`"
 
     // Removendo espaços desnecessários
     string = string.trim().replace(/\s+/g, ' ')
