@@ -26,7 +26,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
 
         objeto_anunciado.forEach(game => {
             const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
-            let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
+            let preco = `R$ ${game.preco}`, logo_plataforma = client.emoji(redes[matches[0]][0])
 
             if (game.preco === 0)
                 preco = mode["anuncio"]["ficara_pago"]

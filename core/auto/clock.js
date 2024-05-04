@@ -1,6 +1,8 @@
 const { mkdirSync, existsSync } = require('fs')
 
 const sync_dynamic_badges = require("./triggers/user_dynamic_badges")
+const sync_emojis = require("./triggers/bot_emojis")
+
 const { verifica_warns, atualiza_warns } = require("./triggers/user_warns")
 const { verifica_roles, atualiza_roles } = require("./triggers/user_roles")
 const { requisita_modulo, atualiza_modulos } = require("./triggers/user_modules")
@@ -16,6 +18,8 @@ module.exports = async ({ client }) => {
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
     const tempo_restante = 10 - date1.getSeconds()
+
+    sync_emojis(client) // Carrega os emojis customizados ao cache do bot
 
     atualiza_warns()
     atualiza_roles()
