@@ -172,12 +172,12 @@ async function getGuild(sid) {
     })
 }
 
-async function getSpecificGameChannel(sid) {
+async function getSpecificGameChannel(gcid) {
 
     // Busca apenas o servidor com o canal ativo
     return model.find({
-        "conf.games": true,
-        "sid": sid
+        "games.channel": gcid,
+        "conf.games": true
     })
 }
 

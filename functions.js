@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, formatEmoji } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
@@ -17,7 +17,8 @@ const { listAllUserGroups } = require('./core/database/schemas/User_tasks_group'
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
 const { getGuild, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
-const { emojis, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
+const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
+
 const { spamTimeoutMap } = require('./core/database/schemas/User_strikes')
 const { busca_badges, badgeTypes } = require('./core/data/user_badges')
 
@@ -125,18 +126,23 @@ function internal_functions(client) {
 
             if (dados == "emojis_dancantes") dados = emojis_dancantes[client.random(emojis_dancantes)]
             else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
-            else dados = emojis[dados]
+            else dados = aliases[dados]
 
-            emoji = client.discord.emojis.cache.get(dados)?.toString()
+            emoji = client.formatEmoji(dados, client.cached.custom_emojis[dados])
 
         } else {
-            if (dados.length > 15) emoji = client.discord.emojis.cache.get(dados)?.toString() // Emoji por ID
+            if (dados.length > 15) emoji = client.formatEmoji(dados, client.cached.custom_emojis[dados]) // Emoji por ID
             else emoji = translate.get_emoji(dados) // Emoji padrão por código interno
         }
 
-        if (isNaN(parseInt(id_emoji))) emoji = "🔍"
-
         return emoji
+    }
+
+    client.formatEmoji = (id, emoji) => {
+
+        const formatado = `<:${emoji.name}:${id}>`
+
+        return emoji.animated ? formatado.replace("<:", "<a:") : formatado
     }
 
     client.execute = (folder, funcao, data) => { // Executa funções dinâmicas utilizando os dados fornecidos

@@ -8,7 +8,7 @@ const { getGameChannels, getSpecificGameChannel } = require('../database/schemas
 module.exports = async ({ client, interaction, objetos_anunciados, guild_channel }) => {
 
     // Busca o canal espeficio ou todos os canais clientes para enviar o anúncio de jogo gratuito
-    const canais_clientes = await (typeof guild_channel === "undefined" ? getGameChannels() : getSpecificGameChannel(guild_channel))
+    const canais_clientes = await (guild_channel ? getSpecificGameChannel(guild_channel) : getGameChannels())
 
     if (canais_clientes.length < 1)
         return client.notify(process.env.channel_feeds, { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." })
@@ -46,7 +46,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         guilds: canais_clientes,
         games: objetos_anunciados,
         banner: imagem_destaque,
-        logo: redes[matches[0]][0],
+        logo: client.emoji(redes[matches[0]][0]),
         plataforma: redes[matches[0]][1],
         row: client.create_buttons(lista_links)
     }

@@ -35,7 +35,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
         if (game.expira > client.timestamp()) {
             const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
             const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
-            let preco = `R$ ${game.preco}`, logo_plataforma = redes[matches[0]][0]
+            let preco = `R$ ${game.preco}`, logo_plataforma = client.emoji(redes[matches[0]][0])
 
             if (game.preco === 0)
                 preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
