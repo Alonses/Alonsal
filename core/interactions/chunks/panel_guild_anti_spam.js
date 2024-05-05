@@ -56,6 +56,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const embed = new EmbedBuilder()
         .setTitle("> Anti-spam 📛")
         .setColor(client.embed_color(user.misc.color))
+        .setDescription(`\`\`\`${descricao}\`\`\``)
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
@@ -63,7 +64,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             },
             {
-                name: `${client.emoji(64)} **Strikes:** \`${strikes_guild.length} / 5\`${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.spam.expulsao_em")} \`${indice_matriz}°\`**` : ""}`,
+                name: `${client.emoji(64)} **Strikes:** \`${strikes_guild.length} / 5\`${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_no")} \`${indice_matriz}°\`**` : ""}`,
                 value: `${client.emoji(47)} **Repetecos:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
                 inline: true
             },
@@ -99,9 +100,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (descricao !== "") // Texto dos valores de strikes
-        embed.setDescription(`\`\`\`${descricao}\`\`\``)
-
     if (pagina === 0)
         botoes = botoes.concat([
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1" },
@@ -111,8 +109,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         ])
     else if (pagina === 1) // Página de recursos do Anti-spam ( Links suspeitos, punição de adms )
         botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.gerenciar_moderadores"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.links_suspeitos"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3" }
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.links_suspeitos"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.gerenciar_moderadores"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" }
         ])
     else // Página de configurações do Anti-spam
         botoes = botoes.concat([

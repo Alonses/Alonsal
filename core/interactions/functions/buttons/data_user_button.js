@@ -1,4 +1,4 @@
-const { defaultUserEraser } = require('../../../database/schemas/User')
+const { defaultUserEraser } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -35,9 +35,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (operacao === 3)
             escopo = "guild"
 
-        Object.keys(defaultUserEraser).forEach(key => {
-            valores.push(defaultUserEraser[key])
-        })
+        Object.keys(defaultUserEraser).forEach(key => { valores.push(defaultUserEraser[key]) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

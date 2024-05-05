@@ -1,5 +1,6 @@
 const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
-const { banNetworkEraser } = require('../../../database/schemas/Guild')
+
+const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -184,7 +185,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Escolhendo o tempo de exclusão das mensagens para membros banidos no network
         const valores = []
 
-        Object.keys(banNetworkEraser).forEach(key => {
+        Object.keys(banMessageEraser).forEach(key => {
             if (guild.network.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
         })
 

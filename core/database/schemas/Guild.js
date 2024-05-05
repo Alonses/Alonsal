@@ -1,62 +1,6 @@
 const mongoose = require("mongoose")
 
-const loggerMap = {
-    "none": "📝",
-    "message_edit": "📝",
-    "message_delete": "🚮",
-    "member_nick": "🔖",
-    "member_image": "👤",
-    "member_role": "🔖",
-    "member_join": "🆕",
-    "member_left": "🛫",
-    "channel_created": "🆕",
-    "channel_delete": "🚮",
-    "member_ban_add": "🔨",
-    "member_ban_remove": "✅",
-    "member_punishment": "🔇",
-    "member_kick": "👟",
-    "member_kick_2": "👟",
-    "member_mute": "🔇",
-    "member_ban": "🔨",
-    "member_voice_status": "📻",
-    "invite_created": "🔗",
-    "invite_deleted": "🔗"
-}
-
-const channelTypes = {
-    0: "💬",
-    2: "🔊",
-    4: "📂",
-    5: "📣",
-    10: "📣",
-    11: "💬",
-    12: "💬",
-    13: "📣",
-    15: "📯"
-}
-
-const defaultEraser = {
-    1: 172800,  // 2 dias
-    2: 345600,  // 4 dias
-    3: 432000,  // 5 dias
-    4: 604800,  // 7 dias
-    5: 1209600, // 14 dias
-    6: 1814400, // 21 dias
-    7: 2419200  // 28 dias
-}
-
-const banNetworkEraser = {
-    0: 0,      // Sem tempo
-    1: 3600,   // 1 hora
-    2: 7200,   // 2 horas
-    3: 21700,  // 6 horas
-    4: 43200,  // 12 horas
-    5: 86400,  // 1 dia
-    6: 172800, // 2 dias
-    7: 259200, // 3 dias
-    8: 432000, // 5 dias
-    9: 604800  // 7 dias
-}
+const { defaultEraser } = require("../../formatters/patterns/timeout")
 
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
@@ -81,6 +25,7 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null },
         timeout: { type: Number, default: 2 },
         reset: { type: Number, default: 7 },
+        erase_ban_messages: { type: Number, default: 0 },
         announce: {
             status: { type: Boolean, default: false },
             channel: { type: String, default: null }
@@ -88,8 +33,10 @@ const schema = new mongoose.Schema({
     },
     reports: {
         channel: { type: String, default: null },
+        auto_ban: { type: Boolean, default: false },
         notify: { type: Boolean, default: false },
-        auto_ban: { type: Boolean, default: false }
+        role: { type: String, default: null },
+        erase_ban_messages: { type: Number, default: 0 }
     },
     speaker: {
         regional_limit: { type: Boolean, default: false },
@@ -317,9 +264,5 @@ module.exports = {
     getRankHosters,
     getTimedGuilds,
     getEraseGuilds,
-    dropGuild,
-    loggerMap,
-    channelTypes,
-    defaultEraser,
-    banNetworkEraser
+    dropGuild
 }

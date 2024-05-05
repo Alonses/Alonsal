@@ -1,19 +1,7 @@
-const { PermissionsBitField } = require('discord.js')
-
-const { spamTimeoutMap } = require('../../../database/schemas/User_strikes')
 const { getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
-const guildActions = {
-    "member_mute": 0,
-    "member_kick_2": 1,
-    "member_ban": 2
-}
-
-const guildPermissions = {
-    "member_mute": [PermissionsBitField.Flags.ModerateMembers],
-    "member_ban": [PermissionsBitField.Flags.BanMembers],
-    "member_kick_2": [PermissionsBitField.Flags.KickMembers]
-}
+const { spamTimeoutMap } = require('../../../formatters/patterns/timeout')
+const { guildActions, guildPermissions } = require('../../../formatters/patterns/guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -43,8 +31,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Verificando se o bot possui as permissões para poder exibir no menu
         Object.keys(guildActions).forEach(evento => {
-            if (evento !== warn.action && guild_bot.permissions.has(guildPermissions[evento]))
-                eventos.push({ type: evento, status: false, id_alvo: id_warn })
+            if (evento !== warn.action && guild_bot.permissions.has(guildPermissions[evento])) {
+
+                if (id_warn >= 1 || evento !== "member_kick_2" && evento !== "member_ban")
+                    eventos.push({ type: evento, status: false, id_alvo: id_warn })
+            }
         })
 
         // Definindo os eventos que o log irá relatar no servidor
@@ -107,9 +98,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Submenu para escolher o escopo do tempo a ser aplicado
         const valores = []
 
-        Object.keys(spamTimeoutMap).forEach(key => {
-            valores.push(spamTimeoutMap[key])
-        })
+        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

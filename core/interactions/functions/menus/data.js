@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { combo_relation } = require("../../../data/user_update_data")
+const { dataComboRelation } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -41,7 +41,7 @@ lista_alteracoes = async (client, user, escolha_user) => {
         let x = parseInt(escolha_user.split(".")[1])
 
         while (x > 0) {
-            const alvos = combo_relation[x]
+            const alvos = dataComboRelation[x]
 
             for (let z = 0; z < alvos.length; z++)
                 phrase += `${await client.tls.phrase(user, `manu.data.causes.${alvos[z]}`)}\n\n`

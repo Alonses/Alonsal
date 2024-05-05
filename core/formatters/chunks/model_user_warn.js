@@ -1,9 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { spamTimeoutMap } = require("../../database/schemas/User_strikes")
-
 const { getUserWarn } = require('../../database/schemas/User_warns')
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
+const { spamTimeoutMap } = require('../patterns/timeout')
 
 module.exports = async ({ client, user, interaction, guild, user_warns, guild_member, guild_executor }) => {
 

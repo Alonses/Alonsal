@@ -1,4 +1,5 @@
-const { defaultEraser } = require('../../../database/schemas/Guild')
+const { defaultEraser } = require('../../../formatters/patterns/timeout')
+
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -8,17 +9,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Códigos de operação
     // 0 -> Redireciona para o painel de dados do servidor
 
-    if (operacao === 1)
-        pagina_guia = 1
+    if (operacao === 1) pagina_guia = 1
 
     if (operacao === 2) {
 
         // Submenu para escolher o escopo do tempo de exclusão dos dados do servidor
         const valores = []
 
-        Object.keys(defaultEraser).forEach(key => {
-            valores.push(defaultEraser[key])
-        })
+        Object.keys(defaultEraser).forEach(key => { valores.push(defaultEraser[key]) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

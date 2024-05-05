@@ -1,12 +1,10 @@
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    const acao = parseInt(dados.split(".")[0])
+    guild.warn.erase_ban_messages = parseInt(dados)
 
-    guild.warn.reset = acao
     await guild.save()
 
-    // Redirecionando o evento
-    const pagina_guia = 2
+    const pagina_guia = 2 // Redirecionando o evento
     require('../../chunks/panel_guild_warns')({ client, user, interaction, pagina_guia })
 }

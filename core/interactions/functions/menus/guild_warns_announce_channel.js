@@ -6,6 +6,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (dados === "none") // Removendo canal selecionado
         guild.warn.announce.channel = null
 
+    // Desativando o recurso de advertências públicas caso não haja um canal definido
+    if (!guild.warn.announce.channel && guild.warn.announce.status)
+        guild.warn.announce.status = false
+
     await guild.save()
 
     // Redirecionando o evento

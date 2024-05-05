@@ -1,6 +1,6 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
-const { channelTypes } = require('../../../database/schemas/Guild')
+const { channelTypes } = require('../../../formatters/patterns/guild')
 
 module.exports = async ({ client, channel }) => {
 
@@ -27,10 +27,8 @@ module.exports = async ({ client, channel }) => {
     const registroAudita = fetchedLogs.entries.first()
     let tipo_canal
 
-    if (channelTypes[registroAudita.target.type])
-        tipo_canal = `${channelTypes[registroAudita.target.type]} ${client.tls.phrase(guild, `menu.channels.${registroAudita.target.type}`)}`
-    else
-        tipo_canal = `❔ ${client.tls.phrase(guild, "mode.logger.canal_tipo_desconhecido")}`
+    if (channelTypes[registroAudita.target.type]) tipo_canal = `${channelTypes[registroAudita.target.type]} ${client.tls.phrase(guild, `menu.channels.${registroAudita.target.type}`)}`
+    else tipo_canal = `❔ ${client.tls.phrase(guild, "mode.logger.canal_tipo_desconhecido")}`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.canal_criado"))

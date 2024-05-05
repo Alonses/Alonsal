@@ -1,6 +1,7 @@
 const { registryVote, verifyUser } = require("../../../database/schemas/Vote")
 const { createBadge } = require("../../../database/schemas/User_badges")
-const { busca_badges, badgeTypes } = require("../../../data/user_badges")
+const { busca_badges } = require("../../../data/user_badges")
+const { badgeTypes } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

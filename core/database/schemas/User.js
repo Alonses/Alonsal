@@ -1,36 +1,5 @@
 const mongoose = require("mongoose")
 
-const colorsMap = {
-    "red": ["D62D20", 1, "🎈"],
-    "brown": ["66401D", 1, "🐶"],
-    "orange": ["F27D0C", 1, "🎃"],
-    "yellow": ["FFD319", 1, "🎁"],
-    "green": ["36802D", 1, "🎄"],
-    "blue": ["7289DA", 1, "💎"],
-    "cyan": ["29BB8E", 1, "🧪"],
-    "purple": ["44008B", 1, "🔮"],
-    "magenta": ["FF2EF1", 1, "🌸"],
-    "white": ["FFFFFF", 2, "🧻"],
-    "gray": ["2D2D31", 2, "🛒"],
-    "black": ["000000", 2, "🎮"],
-    "random": ["random", 3, "💥"]
-}
-
-const colorsPriceMap = {
-    0: 200,
-    1: 300,
-    2: 400,
-    3: 500,
-    4: 50
-}
-
-const defaultUserEraser = {
-    1: 2419200,  // 1 mês
-    2: 7257600,  // 3 meses
-    3: 14515200, // 6 meses
-    4: 29030400  // 1 ano
-}
-
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     lang: { type: String, default: null },
@@ -150,8 +119,5 @@ module.exports = {
     dropUser,
     getRankMoney,
     getUnknowUsers,
-    getOutdatedUsers,
-    colorsMap,
-    colorsPriceMap,
-    defaultUserEraser
+    getOutdatedUsers
 }

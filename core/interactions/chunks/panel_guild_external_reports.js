@@ -1,9 +1,14 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { banMessageEraser } = require('../../formatters/patterns/timeout')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
+    const pagina = pagina_guia || 0
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
+
+    if (pagina !== 0)
+        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_external_reports" }]
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -14,11 +19,9 @@ module.exports = async ({ client, user, interaction }) => {
         await guild.save()
     }
 
-
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.report.reportes_externos")} ${client.defaultEmoji("guard")}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.report.funcionamento_reportes"))
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "mode.report.status")}**`,
@@ -26,16 +29,30 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             },
             {
+                name: `${client.defaultEmoji("role")} **${client.tls.phrase(user, "mode.anuncio.cargo")}**`,
+                value: `${guild.reports.role ? `${client.emoji("icon_id")} \`${guild.reports.role}\`\n( <@&${guild.reports.role}> )` : `\`Sem cargo\``}`,
+                inline: true
+            },
+            {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.reports.channel}\`\n( <#${guild.reports.channel}> )`,
                 inline: true
-            },
-            { name: "⠀", value: "⠀", inline: true }
+            }
         )
         .addFields(
             {
+                name: `:wastebasket: **Excluir mensagens de membros banidos pelo AutoBan:**`,
+                value: `\`${client.tls.phrase(user, `menu.network.${banMessageEraser[guild.reports.erase_ban_messages]}`)}\``,
+                inline: false
+            },
+            {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**`,
+                inline: true
+            },
+            {
+                name: "⠀",
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
         )
@@ -44,12 +61,30 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    botoes = botoes.concat([
-        { id: "guild_reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.reports), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports), data: "1" },
-        { id: "guild_reports_button", name: "AutoBan", type: client.execute("functions", "emoji_button.type_button", guild?.reports.auto_ban), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.auto_ban), data: "2" },
-        { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.aviso_de_entradas"), type: client.execute("functions", "emoji_button.type_button", guild?.reports.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.notify), data: "3" },
-        { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
-    ])
+    if (pagina === 0) {
+
+        embed.setDescription(client.tls.phrase(user, "mode.report.funcionamento_reportes"))
+        botoes = botoes.concat([
+            { id: "guild_reports_button", name: client.tls.phrase(user, "manu.painel.reports_externos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.reports), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports), data: "1" },
+            { id: "guild_reports_button", name: "AutoBan", type: 1, emoji: client.emoji(41), data: "20" },
+            { id: "guild_reports_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "21" }
+        ])
+    } else if (pagina === 1) {
+
+        embed.setDescription(client.tls.phrase(user, "mode.report.funcionamento_autoban"))
+        botoes = botoes.concat([
+            { id: "guild_reports_button", name: "AutoBan", type: client.execute("functions", "emoji_button.type_button", guild?.reports.auto_ban), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.auto_ban), data: "2" },
+            { id: "guild_reports_button", name: client.tls.phrase(user, "menu.botoes.exclusao"), type: 1, emoji: client.emoji(13), data: "6" }
+        ])
+    } else if (pagina === 2) {
+
+        embed.setDescription(client.tls.phrase(user, "mode.report.funcionamento_aviso_entradas"))
+        botoes = botoes.concat([
+            { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.aviso_de_entradas"), type: client.execute("functions", "emoji_button.type_button", guild?.reports.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.notify), data: "3" },
+            { id: "guild_reports_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "5", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles) },
+            { id: "guild_reports_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" },
+        ])
+    }
 
     client.reply(interaction, {
         content: "",

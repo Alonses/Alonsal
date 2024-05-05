@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { defaultRoleTimes, getTimedRoleAssigner } = require('../../database/schemas/User_roles')
+const { getTimedRoleAssigner } = require('../../database/schemas/User_roles')
+const { defaultRoleTimes } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

@@ -1,13 +1,9 @@
 const { atualiza_user_eraser } = require('../auto/triggers/user_eraser')
 const { getUserGlobalRank } = require('../database/schemas/User_rank_global')
-const { defaultUserEraser } = require('../database/schemas/User')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/User_rank_guild')
 
-const CHECKS = {
-    LIMIT: 5,
-    DIFF: 7000,
-    HOLD: 60000
-}
+const { CHECKS } = require('../formatters/patterns/user')
+const { defaultUserEraser } = require('../formatters/patterns/timeout')
 
 let members_xp = []
 

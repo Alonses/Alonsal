@@ -1,4 +1,4 @@
-const { languagesMap } = require("../../../formatters/translate")
+const { languagesMap } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

@@ -1,5 +1,6 @@
 const { atualiza_modulos } = require('../../../auto/triggers/user_modules')
-const { getModule, dropModule, moduleDays } = require('../../../database/schemas/User_modules')
+const { getModule, dropModule } = require('../../../database/schemas/User_modules')
+const { moduleDays } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

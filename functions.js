@@ -1,4 +1,4 @@
-const { PermissionsBitField, formatEmoji } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
@@ -13,12 +13,11 @@ const { create_buttons } = require('./core/generators/buttons')
 
 const { registryStatement } = require('./core/database/schemas/User_statements')
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
-const { getGuild, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
+const { getGuild, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
 const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
-const { spamTimeoutMap } = require('./core/database/schemas/User_strikes')
-const { busca_badges, badgeTypes } = require('./core/data/user_badges')
+const { busca_badges } = require('./core/data/user_badges')
 
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
@@ -27,6 +26,10 @@ const menu_navigation = require('./core/functions/menu_navigation')
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
+
+const { loggerMap } = require('./core/formatters/patterns/guild')
+const { spamTimeoutMap } = require('./core/formatters/patterns/timeout')
+const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
 
 function internal_functions(client) {
 
@@ -165,7 +168,7 @@ function internal_functions(client) {
         return canais_alvo.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
-    client.getGuildRoles = async (interaction, id_atual) => {
+    client.getGuildRoles = async (interaction, id_atual, permitir_mods) => {
         const roles = []
         const id_ignorar = id_atual || null
 
@@ -173,7 +176,7 @@ function internal_functions(client) {
             if (role.id !== interaction.guild.id && role.id !== id_ignorar && role.editable) { // Adiciona apenas cargos customizados
 
                 // Não inclui cargos que possuem permissões moderativas
-                if (!role.permissions.has(PermissionsBitField.Flags.ManageMessages) && !role.permissions.has(PermissionsBitField.Flags.ModerateMembers) && !role.permissions.has(PermissionsBitField.Flags.Administrator))
+                if ((!role.permissions.has(PermissionsBitField.Flags.ManageMessages) && !role.permissions.has(PermissionsBitField.Flags.ModerateMembers) && !role.permissions.has(PermissionsBitField.Flags.Administrator)) || permitir_mods)
                     roles.push({ id: role.id, name: role.name })
             }
         })
@@ -296,7 +299,7 @@ function internal_functions(client) {
 
         const idiomas = []
 
-        Object.keys(translate.languagesMap).forEach(lang => {
+        Object.keys(languagesMap).forEach(lang => {
             if (lang !== language.slice(0, 2)) idiomas.push(lang)
         })
 

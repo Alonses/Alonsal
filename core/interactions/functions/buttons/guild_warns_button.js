@@ -1,10 +1,10 @@
 const { ChannelType, EmbedBuilder } = require('discord.js')
 
-const { loggerMap } = require('../../../database/schemas/Guild')
-const { spamTimeoutMap } = require('../../../database/schemas/User_strikes')
-
 const { atualiza_warns } = require('../../../auto/triggers/user_warns')
 const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Guild_warns')
+
+const { loggerMap } = require('../../../formatters/patterns/guild')
+const { banMessageEraser, spamTimeoutMap } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -40,6 +40,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 5 -> Escolher canal de avisos
     // 6 -> Advertências cronometradas
     // 8 -> Ativar ou desativar as notificações das advertências
+    // 7 -> Definir exclusão de mensagens por banimento
 
     // 9 -> Alterar de página dentro do guia
     // 10 -> Ativar ou desativar as notificações de exclusões de advertências
@@ -123,6 +124,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (operacao === 12) {
             canal = guild.warn.announce.channel
             alvo = "guild_warns_announce#channel"
+            reback = "panel_guild_warns"
             digito = 1
         }
 
@@ -134,7 +136,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             values: []
         }
 
-        if (canal)
+        if (canal && operacao === 12)
             data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
@@ -169,6 +171,31 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Sincronizando a lista de advertências do cache
         atualiza_warns()
+
+    } else if (operacao === 7) {
+
+        // Escolhendo o tempo de exclusão das mensagens para membros banidos por advertências
+        const valores = []
+
+        Object.keys(banMessageEraser).forEach(key => {
+            if (guild.warn.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
+        })
+
+        const data = {
+            title: { tls: "menu.menus.escolher_expiracao" },
+            alvo: "guild_warns_ban_eraser",
+            number_values: true,
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2`
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
 
     } else if (operacao === 8) {
 

@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js')
 
-const { banNetworkEraser } = require('../../database/schemas/Guild')
+const { banMessageEraser } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, internal_guild, guild_evento, registroAudita, guild_member, guild_executor, bot_member }) => {
 
@@ -32,6 +32,6 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
 
     await guild_member.ban({ // Banindo o usuário do servidor automaticamente
         reason: `Network | ${descricao_evento}`,
-        deleteMessageSeconds: banNetworkEraser[internal_guild.network.erase_ban_messages]
+        deleteMessageSeconds: banMessageEraser[internal_guild.network.erase_ban_messages]
     }).catch(console.error)
 }

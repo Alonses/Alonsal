@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { getReport } = require('../../../database/schemas/User_reports')
-const { badges } = require('../../../data/user_badges')
+const { badges } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

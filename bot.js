@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js')
+
 const { CeiraClient } = require('./client')
 const { slash_commands } = require('./commands')
 const { internal_functions } = require('./functions')
@@ -45,10 +47,11 @@ client.discord.on("messageCreate", async message => {
 
 	// Responding to the user who just ping the bot
 	if (message.content.includes(client.id()) && message.content.length === 21)
-		return message.reply({
-			content: client.tls.phrase(user, "inic.inicio.apresentacao", client.emoji("emojis_dancantes")),
-			components: [client.create_buttons([{ name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message)]
-		})
+		if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], message))
+			return message.reply({
+				content: client.tls.phrase(user, "inic.inicio.apresentacao", client.emoji("emojis_dancantes")),
+				components: [client.create_buttons([{ name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message)]
+			}).catch(console.error)
 
 	if (guild.spam.suspicious_links) { // Checking the text for a malicious link
 
