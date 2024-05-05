@@ -43,6 +43,13 @@ client.discord.on("messageCreate", async message => {
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
 
+	// Responding to the user who just ping the bot
+	if (message.content.includes(client.id()) && message.content.length === 21)
+		return message.reply({
+			content: client.tls.phrase(user, "inic.inicio.apresentacao", client.emoji("emojis_dancantes")),
+			components: [client.create_buttons([{ name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message)]
+		})
+
 	if (guild.spam.suspicious_links) { // Checking the text for a malicious link
 
 		const link = `${message.content} `.match(client.cached.regex)

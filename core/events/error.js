@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async (client, err, local) => {
+module.exports = (client, err, local) => {
 
     const embed = new EmbedBuilder({
         title: `> CeiraException | ${local}`,

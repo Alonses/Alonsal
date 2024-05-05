@@ -11,9 +11,7 @@ const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
 const { create_buttons } = require('./core/generators/buttons')
 
-const { listAllUserTasks } = require('./core/database/schemas/User_tasks')
 const { registryStatement } = require('./core/database/schemas/User_statements')
-const { listAllUserGroups } = require('./core/database/schemas/User_tasks_group')
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
 const { getGuild, loggerMap, getNetworkedGuilds } = require('./core/database/schemas/Guild')
 
@@ -35,9 +33,7 @@ function internal_functions(client) {
     console.log("🟠 | Inicializando o bot...")
     console.log("🟠 | Vinculando as funções internas")
 
-    client.error = async (err, local) => {
-        await require("./core/events/error")(client, err, local)
-    }
+    client.error = async (err, local) => { require("./core/events/error")(client, err, local) }
 
     client.atualiza_dados = async (alvo, interaction) => {
         if (!alvo.sid) {
@@ -74,30 +70,20 @@ function internal_functions(client) {
     }
 
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
-    client.countFiles = (caminho, extensao) => {
-        return readdirSync(caminho).filter(file => file.endsWith(extensao)).length
-    }
+    client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
-    client.create_buttons = (data, interaction) => {
-        return create_buttons(data, interaction)
-    }
+    client.create_buttons = (data, interaction) => { return create_buttons(data, interaction) }
 
     client.create_menus = ({ client, interaction, user, data, pagina, multi_select, guild }) => {
         return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
     }
 
-    client.create_profile = (client, interaction, user, id_alvo) => {
-        return create_profile(client, interaction, user, id_alvo)
-    }
+    client.create_profile = (client, interaction, user, id_alvo) => { return create_profile(client, interaction, user, id_alvo) }
 
-    client.decider = (entrada, padrao) => {
-        // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
-        return typeof entrada === "undefined" ? padrao : entrada
-    }
+    // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
+    client.decider = (entrada, padrao) => { return typeof entrada === "undefined" ? padrao : entrada }
 
-    client.defaultEmoji = (caso) => {
-        return default_emoji[caso][client.random(default_emoji[caso])]
-    }
+    client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
 
     client.deferedResponse = async ({ interaction, ephemeral }) => {
 
@@ -116,7 +102,7 @@ function internal_functions(client) {
 
     client.emoji = (dados) => {
 
-        let id_emoji = dados, emoji
+        let id_emoji = dados
 
         if (typeof dados === "object") // Escolhendo um emoji do Array com vários emojis
             if (dados[0].length > 15) dados = id_emoji[client.random(dados)]
@@ -128,14 +114,11 @@ function internal_functions(client) {
             else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
             else dados = aliases[dados]
 
-            emoji = client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
+            return client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
 
-        } else {
-            if (dados.length > 15) emoji = client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
-            else emoji = translate.get_emoji(dados) // Emoji padrão por código interno
-        }
-
-        return emoji
+        } else
+            if (dados.length > 15) return client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
+            else return translate.get_emoji(dados) // Emoji padrão por código interno
     }
 
     client.formatEmoji = (id, emoji) => {
@@ -162,13 +145,9 @@ function internal_functions(client) {
         return links
     }
 
-    client.getBot = () => {
-        return getBot(client.x.id)
-    }
+    client.getBot = () => { return getBot(client.x.id) }
 
-    client.getGuild = (id_guild) => {
-        return getGuild(id_guild)
-    }
+    client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
     client.getGuildChannels = async (interaction, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
 
@@ -203,13 +182,9 @@ function internal_functions(client) {
         return roles.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
-    client.getUser = (id_user) => {
-        return getUser(id_user)
-    }
+    client.getUser = (id_user) => { return getUser(id_user) }
 
-    client.getUserBadges = (id_user) => {
-        return getUserBadges(id_user)
-    }
+    client.getUserBadges = (id_user) => { return getUserBadges(id_user) }
 
     // Retorna o membro do servidor
     client.getMemberGuild = async (interaction, id_alvo) => {
@@ -270,9 +245,7 @@ function internal_functions(client) {
     }
 
     // Busca pelo usuário em cache
-    client.getCachedUser = (id_alvo) => {
-        return client.discord.users.fetch(id_alvo)
-    }
+    client.getCachedUser = (id_alvo) => { return client.discord.users.fetch(id_alvo) }
 
     client.getSingleWarnedGuildUser = async (id_guild) => {
 
@@ -295,9 +268,7 @@ function internal_functions(client) {
     }
 
     // Registra os eventos no diário do bot
-    client.journal = async (caso, quantia) => {
-        require('./core/auto/edit_journal')({ client, caso, quantia })
-    }
+    client.journal = async (caso, quantia) => { require('./core/auto/edit_journal')({ client, caso, quantia }) }
 
     // Cria uma lista com vírgulas e & no último elemento
     client.list = (valores, tamanho_maximo) => {
@@ -345,9 +316,7 @@ function internal_functions(client) {
     }
 
     // Sincroniza as ações moderativas em servidores com o network habilitado
-    client.network = async (guild, caso, id_alvo) => {
-        return network({ client, guild, caso, id_alvo })
-    }
+    client.network = async (guild, caso, id_alvo) => { return network({ client, guild, caso, id_alvo }) }
 
     client.getNetWorkGuildNames = async (link, interaction) => {
 
@@ -385,8 +354,6 @@ function internal_functions(client) {
 
     client.permissions = async (interaction, id_alvo, permissao, canal) => {
 
-        let valido = false
-
         if (interaction) {
             // Permissões do usuário no servidor
             const membro_sv = await client.getMemberGuild(interaction, id_alvo)
@@ -394,15 +361,13 @@ function internal_functions(client) {
             if (!membro_sv) return false // Membro não localizado
 
             // Verificando se o usuário possui a permissão
-            if (membro_sv.permissions.has(permissao)) valido = true
-        } else {
-            // Permissões em canais específicos
+            if (membro_sv.permissions.has(permissao)) return true
+        } else // Permissões em canais específicos
             if (canal.channel) {
-                if (canal.channel.permissionsFor(id_alvo).has(permissao)) valido = true
-            } else if (canal.permissionsFor(id_alvo)?.has(permissao)) valido = true
-        }
+                if (canal.channel.permissionsFor(id_alvo).has(permissao)) return true
+            } else if (canal.permissionsFor(id_alvo)?.has(permissao)) return true
 
-        return valido
+        return false
     }
 
     // Retorna um valor aleatório
@@ -420,9 +385,7 @@ function internal_functions(client) {
 
         // Listando todas as badges que o usuário possui
         if (badges_user.length > 0)
-            badges_user.forEach(valor => {
-                all_badges.push(parseInt(valor.badge))
-            })
+            badges_user.forEach(valor => { all_badges.push(parseInt(valor.badge)) })
 
         if (!all_badges.includes(id_badge)) {
 
@@ -443,9 +406,7 @@ function internal_functions(client) {
     }
 
     // Registra uma movimentação bancária do usuário
-    client.registryStatement = (user, traducao, caso, valor) => {
-        return registryStatement(client, user, traducao, caso, valor)
-    }
+    client.registryStatement = (user, traducao, caso, valor) => { return registryStatement(client, user, traducao, caso, valor) }
 
     // Substitui partes do texto por outros valores
     client.replace = (string, valores, especifico) => {
@@ -505,7 +466,6 @@ function internal_functions(client) {
 
         // Previne que o bot envie DM's para si mesmo
         if (user.uid === client.id()) return
-
         if (force) user.conf.notify = 1
 
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
@@ -573,24 +533,6 @@ function internal_functions(client) {
         }
 
         return Math.floor(new Date().getTime() / 1000)
-    }
-
-    // Atualiza o formato de salvamento das tarefas
-    client.update_tasks = async (interaction) => {
-
-        const tasks = await listAllUserTasks(interaction.user.id)
-        const listas = await listAllUserGroups(interaction.user.id)
-
-        // Vincula a task com a lista usando o timestamp da lista
-        for (let i = 0; i < tasks.length; i++)
-            for (let x = 0; x < listas.length; x++)
-                if (!tasks[i].g_timestamp)
-                    if (tasks[i].group === listas[x].name) {
-
-                        tasks[i].g_timestamp = listas[x].timestamp
-                        tasks[i].group = null
-                        await tasks[i].save()
-                    }
     }
 
     client.verifyWarnAction = (warn, traduz) => {
