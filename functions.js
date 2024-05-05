@@ -128,10 +128,10 @@ function internal_functions(client) {
             else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
             else dados = aliases[dados]
 
-            emoji = client.formatEmoji(dados, client.cached.custom_emojis[dados])
+            emoji = client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
 
         } else {
-            if (dados.length > 15) emoji = client.formatEmoji(dados, client.cached.custom_emojis[dados]) // Emoji por ID
+            if (dados.length > 15) emoji = client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
             else emoji = translate.get_emoji(dados) // Emoji padrão por código interno
         }
 
