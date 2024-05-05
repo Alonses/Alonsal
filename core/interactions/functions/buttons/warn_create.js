@@ -1,9 +1,9 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { spamTimeoutMap } = require("../../../database/schemas/User_strikes")
-
 const { removeUserWarn, listAllCachedUserWarns, listAllUserWarns } = require("../../../database/schemas/User_warns")
 const { listAllGuildWarns } = require('../../../database/schemas/Guild_warns')
+
+const { spamTimeoutMap } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

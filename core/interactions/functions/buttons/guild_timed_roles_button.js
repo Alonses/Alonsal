@@ -1,5 +1,6 @@
 const { ChannelType } = require('discord.js')
-const { defaultRoleTimes } = require('../../../database/schemas/User_roles')
+
+const { defaultRoleTimes } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 

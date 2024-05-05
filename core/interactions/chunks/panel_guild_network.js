@@ -1,6 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { getNetworkedGuilds, banNetworkEraser } = require("../../database/schemas/Guild")
+const { getNetworkedGuilds } = require("../../database/schemas/Guild")
+const { banMessageEraser } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
@@ -82,7 +83,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         embed.addFields(
             {
                 name: `:wastebasket: **Excluir mensagens de membros banidos:**`,
-                value: `\`${client.tls.phrase(user, `menu.network.${banNetworkEraser[guild.network.erase_ban_messages]}`)}\` ( :twisted_rightwards_arrows: :globe_with_meridians: )`,
+                value: `\`${client.tls.phrase(user, `menu.network.${banMessageEraser[guild.network.erase_ban_messages]}`)}\` ( :twisted_rightwards_arrows: :globe_with_meridians: )`,
                 inline: false
             }
         )
@@ -123,7 +124,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         else {
             botoes = botoes.concat([
                 { id: "guild_network_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-                { id: "guild_network_button", name: "Exclusão", type: 1, emoji: client.emoji(13), data: "6" }
+                { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.exclusao"), type: 1, emoji: client.emoji(13), data: "6" }
             ])
 
             if (servidores_link > 1) // Network com mais de um servidor

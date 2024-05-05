@@ -1,13 +1,8 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../data/user_badges')
+const { busca_badges } = require('../../data/user_badges')
 const { getRankMoney } = require('../../database/schemas/User')
-
-const medals = {
-    0: ":first_place:",
-    1: ":second_place:",
-    2: ":third_place:"
-}
+const { badgeTypes, medals } = require('../patterns/user')
 
 let paginas, pagina
 

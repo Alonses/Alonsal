@@ -1,7 +1,8 @@
 const { PermissionsBitField, EmbedBuilder } = require('discord.js')
 
-const { getTimedRoleAssigner, defaultRoleTimes, removeCachedUserRole } = require('../../../database/schemas/User_roles')
+const { getTimedRoleAssigner, removeCachedUserRole } = require('../../../database/schemas/User_roles')
 const { atualiza_roles } = require('../../../auto/triggers/user_roles')
+const { defaultRoleTimes } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -83,9 +84,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Submenu para escolher o tempo de expiração do cargo
         const valores = []
 
-        Object.keys(defaultRoleTimes).forEach(key => {
-            valores.push(defaultRoleTimes[key])
-        })
+        Object.keys(defaultRoleTimes).forEach(key => { valores.push(defaultRoleTimes[key]) })
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },

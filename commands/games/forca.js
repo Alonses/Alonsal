@@ -2,17 +2,9 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { padrao_forca } = require('../../core/formatters/patterns/game')
 
 const games = new Map()
-const padrao = {
-    0: "┌———\n│\n│\n│",
-    1: "┌———\n│  O\n│\n│",
-    2: "┌———\n│  O\n│  |\n│",
-    3: "┌———\n│  O\n│ /|\n│",
-    4: "┌———\n│  O\n│ /|\\\n│",
-    5: "┌———\n│  O\n│ /|\\\n│ /",
-    6: "┌———\n│  O\n│ /|\\\n│ / \\"
-}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -136,7 +128,7 @@ lista_posicoes = (palavra) => {
 }
 
 painel_jogo = (interaction) => {
-    return `\`\`\`${padrao[games[interaction.user.id].erros]}\`\`\``
+    return `\`\`\`${padrao_forca[games[interaction.user.id].erros]}\`\`\``
 }
 
 retorna_jogo = async (client, interaction, user) => {

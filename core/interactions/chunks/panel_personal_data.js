@@ -1,10 +1,11 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { defaultUserEraser } = require('../../database/schemas/User')
 const { getUserRankServers } = require('../../database/schemas/User_rank_guild')
 const { listAllUserGuilds } = require('../../database/schemas/User_guilds')
 const { buildAllBadges } = require('../../data/user_badges')
 const { listAllGuildHoster } = require('../../database/schemas/Guild')
+
+const { defaultUserEraser } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 

@@ -1,12 +1,4 @@
-const months = {
-    Fev: 'feb',
-    Abr: 'apr',
-    Maio: 'may',
-    Ago: 'aug',
-    Set: 'sep',
-    Oct: 'oct',
-    Dez: 'dec',
-}
+const { months } = require("./patterns/general")
 
 module.exports = (data) => {
 

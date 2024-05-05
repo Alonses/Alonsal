@@ -1,19 +1,8 @@
-const { PermissionsBitField } = require('discord.js')
 
-const { spamTimeoutMap } = require('../../../database/schemas/User_strikes')
 const { getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
-const guildActions = {
-    "member_mute": 0,
-    "member_kick_2": 1,
-    "member_ban": 2
-}
-
-const guildPermissions = {
-    "member_mute": [PermissionsBitField.Flags.ModerateMembers],
-    "member_ban": [PermissionsBitField.Flags.BanMembers],
-    "member_kick_2": [PermissionsBitField.Flags.KickMembers]
-}
+const { spamTimeoutMap } = require('../../../formatters/patterns/timeout')
+const { guildPermissions, guildActions } = require('../../../formatters/patterns/guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -21,7 +10,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = `strike_configure_button.${id_strike}`
 
     const strike = await getGuildStrike(interaction.guild.id, id_strike) // Cria um novo strike caso o ID passado não exista
-    const guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
     // 1 -> Escolher penalidade
@@ -107,9 +95,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Submenu para escolher o escopo do tempo a ser aplicado
         const valores = []
 
-        Object.keys(spamTimeoutMap).forEach(key => {
-            valores.push(spamTimeoutMap[key])
-        })
+        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

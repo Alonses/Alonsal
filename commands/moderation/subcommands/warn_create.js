@@ -1,13 +1,7 @@
-const { PermissionsBitField } = require('discord.js')
-
 const { listAllUserWarns } = require('../../../core/database/schemas/User_warns')
 const { listAllGuildWarns } = require('../../../core/database/schemas/Guild_warns')
 
-const guildActions = {
-    "member_mute": [PermissionsBitField.Flags.ModerateMembers],
-    "member_ban": [PermissionsBitField.Flags.BanMembers],
-    "member_kick_2": [PermissionsBitField.Flags.KickMembers]
-}
+const { guildPermissions } = require('../../../core/formatters/patterns/guild')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -56,16 +50,16 @@ module.exports = async ({ client, user, interaction }) => {
     if (warns_guild[indice_warn].action) // Verificando as permissões do moderador que iniciou a advertência
         if (warns_guild[indice_warn].action !== "none") {
 
-            if (!guild_executor.permissions.has(guildActions[warns_guild[indice_warn].action]))
+            if (!guild_executor.permissions.has(guildPermissions[warns_guild[indice_warn].action]))
                 return client.tls.reply(interaction, user, "mode.warn.mod_sem_permissao", true, 7, client.tls.phrase(user, `menu.events.${warns_guild[indice_warn].action}`))
 
             // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-            if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(guildActions[warns_guild[indice_warn].action])) {
+            if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(guildPermissions[warns_guild[indice_warn].action])) {
 
                 let frase_retorno = client.tls.phrase(user, "mode.warn.bot_sem_hierarquia", client.emoji(0))
 
                 // Avisando sobre a falta de permissões do bot
-                if (!bot_member.permissions.has(guildActions[warns_guild[indice_warn].action]))
+                if (!bot_member.permissions.has(guildPermissions[warns_guild[indice_warn].action]))
                     frase_retorno = client.tls.phrase(user, "mode.warn.bot_sem_permissao", 7, client.tls.phrase(user, `menu.events.${warns_guild[indice_warn].action}`))
 
                 return interaction.reply({ content: frase_retorno, ephemeral: true })

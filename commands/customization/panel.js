@@ -104,6 +104,8 @@ module.exports = {
                             { name: '📡 Network', value: 'network' },
                             { name: '📡 Network Configs', value: 'network.1' },
                             { name: '💂 External reports', value: 'external_reports' },
+                            { name: '💂 External reports Configs', value: 'external_reports.2' },
+                            { name: '🔨 AutoBan', value: 'external_reports.1' },
                             { name: '🎮 Free Games ad', value: 'free_games' },
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💂 In-server reports', value: 'tickets' },

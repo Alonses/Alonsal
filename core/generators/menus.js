@@ -1,14 +1,19 @@
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../data/user_badges')
+const { busca_badges } = require('../data/user_badges')
 
 const { faustop, rasputia, galerito } = require('../../files/json/text/emojis.json')
-const { colorsMap } = require('../database/schemas/User')
-const { languagesMap } = require('../formatters/translate')
-const { loggerMap, banNetworkEraser } = require('../database/schemas/Guild')
-const { moduleDays } = require('../database/schemas/User_modules')
+
+const { loggerMap } = require('../formatters/patterns/guild')
+const { banMessageEraser } = require('../formatters/patterns/timeout')
+const { moduleDays, colorsMap, badgeTypes, languagesMap } = require('../formatters/patterns/user')
 
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
+
+    if (data.values.length < 1) // Menu sem dados para listar
+        return interaction.update({
+            content: ":mag: | Não há dados para serem conferidos através no momento...\n\nCaso você esteja selecionado cargos, verifique se o servidor possui cargos customizados criados. Não é possível acessar menus para escolher cargos `@here` ou `@everyone`."
+        })
 
     const itens_menu = [], alvo = data.alvo
     let insersoes = [], i = 0, indice_start = pagina * 24 || 0
@@ -138,9 +143,11 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 // Usado para a quantidade de repetências dos warns
                 if (alvo === "guild_spam_strikes") valor_label = `${alvo}|${valor}`
 
-                if (alvo === "guild_network_ban_eraser") { // Usado para o tempo de exclusão das mensagens no network ao ser banido
-                    nome_label = client.tls.phrase(user, `menu.network.${banNetworkEraser[valor]}`)
+                if (alvo.includes("ban_eraser")) { // Usado para o tempo de exclusão das mensagens ao ser banido
+                    nome_label = client.tls.phrase(user, `menu.network.${banMessageEraser[valor]}`)
                     valor_label = `${alvo}|${valor}`
+
+                    if (valor === 0) emoji_label = client.emoji(0)
                 }
             }
 
@@ -152,6 +159,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
 
                     if (valor.id === "all") emoji_label = "🃏"
+                    if (valor.id === "none") emoji_label = client.emoji(0)
 
                     if (alvo.includes("warn_config") || alvo.includes("strike_config")) // Definindo uma punição para as advertências e strikes
                         valor_label = `${alvo.replace("#", "_")}|${valor.id}.${data.submenu.replace("x/", "")}`
@@ -194,20 +202,10 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
                 } else { // Canais e categorias
 
                     nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
+                    emoji_label = client.defaultEmoji("channel")
 
-                    if (alvo === "guild_speaker#channel") {
-
-                        // Verificando se o canal já está ativo e exibindo o emoji respectivo
-                        emoji_label = client.emoji("mc_oppose")
-
-                        if (guild.speaker.channels)
-                            if (guild.speaker.channels.includes(valor.id))
-                                emoji_label = client.emoji("mc_approve")
-                    } else
-                        emoji_label = client.defaultEmoji("channel")
-
-                    if (valor.id === "none") // Usado para remover o canal
-                        emoji_label = client.emoji(13)
+                    // Usado para remover o canal
+                    if (valor.id === "none") emoji_label = client.emoji(0)
 
                     valor_label = `${alvo.replace("#", "_")}|${valor.id}`
                 }

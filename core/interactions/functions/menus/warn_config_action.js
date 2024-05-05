@@ -7,7 +7,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Atualizando a punição da advertência
     const warn = await getGuildWarn(interaction.guild.id, id_warn)
-    warn.action = acao
+    warn.action = acao === "none" ? null : acao
+
     await warn.save()
 
     // Redirecionando o evento

@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-const { languagesMap } = require("../../formatters/translate")
+const { languagesMap } = require("../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 

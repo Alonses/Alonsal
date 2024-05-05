@@ -1,31 +1,5 @@
 const mongoose = require("mongoose")
 
-// Relação de dias
-// 0 -> Dias úteis
-// 1 -> Finais de semana
-// 2 -> Todo dia
-
-// 4 -> Domingo
-// 5 -> Segunda
-// 6 -> Terça
-// 7 -> Quarta
-// 8 -> Quinta
-// 9 -> Sexta
-// 10 -> Sábado
-
-const moduleDays = {
-    0: "🏭",
-    1: "🛹",
-    2: "📆",
-    4: "🛵",
-    5: "💀",
-    6: "🤡",
-    7: "🐸",
-    8: "🚀",
-    9: "🍺",
-    10: "🕺"
-}
-
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     type: { type: Number, default: null },
@@ -138,6 +112,5 @@ module.exports = {
     listAllUserModules,
     dropAllUserModules,
     verifyUserModules,
-    shutdownAllUserModules,
-    moduleDays
+    shutdownAllUserModules
 }

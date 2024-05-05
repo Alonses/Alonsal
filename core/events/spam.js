@@ -1,8 +1,10 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { getUserStrikes, spamTimeoutMap } = require("../database/schemas/User_strikes")
+const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { registerSuspiciousLink } = require("../database/schemas/Spam_links")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
+
+const { spamTimeoutMap } = require("../formatters/patterns/timeout")
 
 let bloqueia_operacao = 0
 

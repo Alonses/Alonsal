@@ -3,14 +3,9 @@ const { EmbedBuilder } = require('discord.js')
 const { verifyUserModules, createModule } = require('../../../core/database/schemas/User_modules')
 const { getModulesPrice } = require('../../../core/database/schemas/User_modules')
 
-const formata_horas = require('../../../core/formatters/formata_horas')
+const { modulePrices } = require('../../../core/formatters/patterns/user')
 
-const modulePrices = {
-    3: 1,
-    4: 1,
-    5: 5,
-    6: 10
-}
+const formata_horas = require('../../../core/formatters/formata_horas')
 
 module.exports = async ({ client, user, interaction }) => {
 

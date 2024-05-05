@@ -2,14 +2,9 @@ const { PermissionsBitField, AuditLogEvent } = require('discord.js')
 
 const { getNetworkedGuilds } = require('../database/schemas/Guild')
 
-const network_map = new Map()
+const { networkCases } = require('../formatters/patterns/guild')
 
-const cases = {
-    "ban_add": "member_ban_add",
-    "ban_del": "member_ban_add",
-    "kick": "member_kick",
-    "mute": "member_punishment"
-}
+const network_map = new Map()
 
 module.exports = async ({ client, guild, caso, id_alvo }) => {
 
@@ -57,7 +52,7 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
             let internal_guild = guilds_network[i]
 
             // Verificando se o servidor é diferente e o recurso respectivo está sincronizado
-            if (internal_guild.sid !== guild.sid && internal_guild.network[cases[caso]]) {
+            if (internal_guild.sid !== guild.sid && internal_guild.network[networkCases[caso]]) {
 
                 let cached_guild = await client.guilds(internal_guild.sid)
 

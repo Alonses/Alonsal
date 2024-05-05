@@ -2,13 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 const { getVotes } = require("../../core/database/schemas/Vote")
 
-const idiomas = {
-    "de": "alemão",
-    "nl": "holândes",
-    "se": "sueco",
-    "tr": "turco",
-    "jp": "japonês"
-}
+const { idiomas } = require("../../core/formatters/patterns/user")
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
 
-const { busca_badges, badgeTypes } = require('../../core/data/user_badges')
+const { busca_badges } = require('../../core/data/user_badges')
+const { badgeTypes } = require('../../core/formatters/patterns/user')
 
 module.exports = {
     data: new SlashCommandBuilder()

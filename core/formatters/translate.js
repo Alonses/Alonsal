@@ -1,18 +1,6 @@
 const { status } = require('../../files/json/text/emojis.json')
 const replace_string = require('../functions/replace_string')
 
-const languagesMap = {
-    "al": ["al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`", "Alonsês", "🏴‍☠️"],
-    "de": ["de-de", ":flag_de: | Die Sprache wurde auf `Deutsch` geändert", "Deutsch", "🇩🇪"],
-    "en": ["en-us", ":flag_us: | Language switched to `American English`", "American English", "🇺🇸"],
-    "es": ["es-es", ":flag_es: | Idioma cambiado a `Español`", "Español", "🇪🇸"],
-    "fr": ["fr-fr", ":flag_fr: | Langue changée en `Français`", "Français", "🇫🇷"],
-    "hp": ["pt-hp", ":sunny: | \`Hopês\` agora tá ativo komo segundino idioma!", "Hopês", "🔆"],
-    "it": ["it-it", ":flag_it: | Lingua cambiata in `Italiano`", "Italiano", "🇮🇹"],
-    "pt": ["pt-br", ":flag_br: | Idioma alterado para `Português Brasileiro`", "Português Brasileiro", "🇧🇷"],
-    "ru": ["ru-ru", ":flag_ru: | Язык изменен на `русский`", "русский", "🇷🇺"]
-}
-
 function reply(interaction, user, target, ephemeral, emoji, replace) {
 
     let phrase = translate(user, target, replace)
@@ -193,6 +181,5 @@ module.exports = {
     report,
     editReply,
     translate,
-    get_emoji,
-    languagesMap
+    get_emoji
 }

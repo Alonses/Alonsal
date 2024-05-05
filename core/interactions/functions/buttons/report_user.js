@@ -1,8 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { getReport, dropReport } = require('../../../database/schemas/User_reports')
-const { banNetworkEraser } = require('../../../database/schemas/Guild')
-const { badges } = require('../../../data/user_badges')
+const { badges } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -18,8 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirma e notifica
     // 2 -> Confirma silenciosamente
 
-    if (!operacao) {
-        // Cancelando a criação do reporte
+    if (!operacao) { // Cancelando a criação do reporte
         await dropReport(alvo.uid, interaction.guild.id)
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     }
@@ -71,8 +69,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         const guild_member = await client.getMemberGuild(interaction, alvo.uid)
 
-        if (!guild_member)
-            texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
+        if (!guild_member) texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
         else {
             // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo
             if (interaction.member.roles.highest.position < guild_member.roles.highest.position)
@@ -85,7 +82,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             // Banindo o usuário do servidor automaticamente
             interaction.guild.members.ban(guild_member, {
                 reason: alvo.relatory,
-                deleteMessageSeconds: banNetworkEraser[guild.network.erase_ban_messages]
+                deleteMessageSeconds: banMessageEraser[guild.reports.erase_ban_messages]
             }).catch(console.error)
 
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_banido", client.emoji("banidos"))}`

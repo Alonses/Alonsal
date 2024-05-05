@@ -1,18 +1,11 @@
 const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/User_modules")
-const { dropUserGlobalRank } = require("../database/schemas/User_rank_guild")
+const { dropAllUserGuildRanks } = require("../database/schemas/User_rank_guild")
 const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/User_rank_guild")
 const { dropAllUserStatements } = require("../database/schemas/User_statements")
 const { dropAllUserTasks } = require("../database/schemas/User_tasks")
 const { dropAllUserGroups } = require("../database/schemas/User_tasks_group")
 
-const combo_relation = {
-    "1": [1, 2],
-    "2": [3, 4],
-    "3": [5, 6, 7],
-    "4": [8, 9],
-    "5": [10],
-    "6": [11]
-}
+const { dataComboRelation } = require("../formatters/patterns/user")
 
 function update_data(user) {
 
@@ -40,7 +33,7 @@ async function clear_data({ client, user, interaction, operador, caso }) {
         let alvos = [value]
 
         if (operador === "combo")
-            alvos = combo_relation[value]
+            alvos = dataComboRelation[value]
 
         for (let i = 0; i < alvos.length; i++) {
 
@@ -72,7 +65,7 @@ async function clear_data({ client, user, interaction, operador, caso }) {
                 dropUserRankServer(user.uid, interaction.guild.id)
 
             if (alvos[i] === 7) // Excluindo o rank global
-                dropUserGlobalRank(user.uid)
+                dropAllUserGuildRanks(user.uid)
 
             if (alvos[i] === 8) { // Excluindo todas as tarefas e listas de tarefas
                 dropAllUserTasks(user.uid)
@@ -104,6 +97,5 @@ async function clear_data({ client, user, interaction, operador, caso }) {
 
 module.exports = {
     clear_data,
-    update_data,
-    combo_relation
+    update_data
 }

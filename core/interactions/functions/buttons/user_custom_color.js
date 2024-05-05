@@ -1,4 +1,4 @@
-const { colorsMap, colorsPriceMap } = require("../../../database/schemas/User")
+const { colorsMap, colorsPriceMap } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

@@ -1,13 +1,4 @@
-const operations = {
-    0: ["conf", "ghost_mode"],
-    1: ["conf", "notify"],
-    2: ["conf", "ranking"],
-    3: ["conf", "public_badges"],
-    4: ["misc", "weather"],
-    5: ["conf", "global_tasks"],
-    6: ["conf", "resumed"],
-    7: ["conf", "cached_guilds"]
-}
+const { operations } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 

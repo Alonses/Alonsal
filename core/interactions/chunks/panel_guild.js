@@ -1,17 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const operation_codes = {
-    "speaker": 0,
-    "broadcast": 1,
-    "free_games": 2,
-    "tickets": 3,
-    "external_reports": 4,
-    "logger": 5,
-    "anti_spam": 6,
-    "network": 8,
-    "warns": 9,
-    "tracked_invites": 10
-}
+const { operation_codes } = require('../../formatters/patterns/guild')
 
 // Funções sem guias de configuração
 const direct_functions = [1, 10]
@@ -82,7 +71,6 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         else {
 
             // Permissão válida
-
             if (direct_functions.includes(operation_codes[operador])) { // Funções sem guia de configuração
                 const dados = `${interaction.user.id}.${operation_codes[operador]}`
                 return require('../functions/buttons/guild_panel_button')({ client, user, interaction, dados })

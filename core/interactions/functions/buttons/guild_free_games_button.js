@@ -40,28 +40,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
 
         if (canal_alvo) {
-            if (canal_alvo.type === 0 || canal_alvo.type === 5) {
 
-                // Permissão para enviar mensagens no canal
-                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+            // Permissão para enviar mensagens no canal
+            if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
-                    // Enviando os games para anunciar no servidor
-                    const guild_channel = guild.games.channel
-                    free_games({ client, guild_channel })
+                // Enviando os games para anunciar no servidor
+                const guild_channel = guild.games.channel
+                free_games({ client, guild_channel })
 
-                    return interaction.update({
-                        content: client.tls.phrase(user, "mode.anuncio.anuncio_enviado_duplicatas", client.emoji(29), `<#${guild.games.channel}>`),
-                        ephemeral: true
-                    })
-                } else // Sem permissão para enviar mensagens no canal
-                    return interaction.update({
-                        content: client.tls.phrase(user, "mode.anuncio.permissao_envio", client.defaultEmoji("guard")),
-                        ephemeral: true
-                    })
-
-            } else // Tipo de canal inválido
                 return interaction.update({
-                    content: client.tls.phrase(user, "mode.anuncio.tipo_canal", client.defaultEmoji("types")),
+                    content: client.tls.phrase(user, "mode.anuncio.anuncio_enviado_duplicatas", client.emoji(29), `<#${guild.games.channel}>`),
+                    ephemeral: true
+                })
+            } else // Sem permissão para enviar mensagens no canal
+                return interaction.update({
+                    content: client.tls.phrase(user, "mode.anuncio.permissao_envio", client.defaultEmoji("guard")),
                     ephemeral: true
                 })
 
@@ -74,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 3) {
 
         // Desabilitando o botão de escolher cargos se não tiver permissão
-        if (! await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 ephemeral: true
@@ -86,7 +79,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_free_games#role",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
-            values: await client.getGuildRoles(interaction, guild.games.role)
+            values: await client.getGuildRoles(interaction, guild.games.role, true)
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )

@@ -72,7 +72,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                                 iconURL: client.avatar()
                             })
 
-                        canal_alvo.send({ content: "@here", embeds: [embed] })
+                        canal_alvo.send({ content: guild.reports.role ? `<@&${guild.reports.role}>` : "⠀", embeds: [embed] })
                     }
                 }
     })
