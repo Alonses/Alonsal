@@ -77,10 +77,9 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        const defer = true
 
-        if (interaction.options.getString("scope") !== "bank")
-            require('../../core/formatters/chunks/model_rank')(client, user, interaction)
-        else
-            require('../../core/formatters/chunks/model_bank')({ client, user, interaction })
+        if (interaction.options.getString("scope") !== "bank") require('../../core/formatters/chunks/model_rank')({ client, user, interaction, defer })
+        else require('../../core/formatters/chunks/model_bank')({ client, user, interaction })
     }
 }

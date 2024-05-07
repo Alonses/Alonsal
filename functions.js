@@ -432,11 +432,14 @@ function internal_functions(client) {
         return string
     }
 
-    client.reply = (interaction, obj) => {
+    client.reply = (interaction, obj, defered) => {
+
+        // Interação deferida
+        if (defered) return interaction.editReply(obj)
 
         // Respondendo as interações
-        if (interaction.customId) interaction.update(obj)
-        else interaction.reply(obj)
+        if (interaction.customId) return interaction.update(obj)
+        else return interaction.reply(obj)
     }
 
     client.rolePermissions = async (interaction, role_id, permissions) => {

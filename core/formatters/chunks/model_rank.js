@@ -2,48 +2,37 @@ const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges } = require('../../data/user_badges')
 
-const { getRankGlobal } = require('../../database/schemas/User_rank_guild')
+const { getRankGlobal } = require('../../database/schemas/User_rank_global')
 const { getRankServer } = require('../../database/schemas/User_rank_guild')
+
 const { medals, badgeTypes } = require('../patterns/user')
 
-let paginas, pagina, nav_buttons = true
+let paginas, pagina
 
-module.exports = async (client, user, interaction, entrada, caso, defer, autor_original) => {
+module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, autor_original }) => {
 
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
-    const usernames = [], experiencias = [], levels = [], ids = []
+    const usernames = [], experiencias = [], levels = [], ids = [], deferido = defer ? true : false
 
-    if (typeof entrada === "undefined")
-        escopo = interaction.options.getString("scope")
-    else
-        escopo = caso
-
-    // Interações que exigem mais tempo
-    if (typeof defer !== "undefined")
-        nav_buttons = defer
-    else
-        nav_buttons = true
+    if (typeof pagina_guia === "undefined") escopo = interaction.options.getString("scope")
+    else escopo = caso
 
     // Coleta o ID do usuário mencionado
     let rodape = interaction.user.username, user_alvo_data
 
-    if (typeof entrada !== "undefined") {
-        pagina = entrada
+    if (typeof pagina_guia !== "undefined") {
+        pagina = pagina_guia
 
         // Coletando os dados para o servidor ou para o global
-        if (escopo === "server")
-            data_usuarios = await getRankServer(interaction.guild.id)
-        else
-            data_usuarios = await getRankGlobal()
+        if (escopo === "server") data_usuarios = await getRankServer(interaction.guild.id)
+        else data_usuarios = await getRankGlobal()
     } else {
         user_alvo_data = interaction.options.getUser("user")
         pagina = interaction.options.getInteger("page") || 1
 
         // Coletando os dados para o servidor ou para o global
-        if (escopo === "server")
-            data_usuarios = await getRankServer(interaction.guild.id)
-        else
-            data_usuarios = await getRankGlobal()
+        if (escopo === "server") data_usuarios = await getRankServer(interaction.guild.id)
+        else data_usuarios = await getRankGlobal()
     }
 
     // Sem dados salvos no banco de ranking para o servidor especificado
@@ -102,20 +91,20 @@ module.exports = async (client, user, interaction, entrada, caso, defer, autor_o
     if (escopo === "server") { // Exibindo o rank normalmente
 
         if (!user_alvo_data) // Sem usuário alvo definido
-            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original })
+            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido })
         else // Retornando apenas o card do usuário alvo
             retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
 
     } else { // Ranking global
 
         if (!user_alvo_data)
-            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original })
+            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido })
         else // Retornando apenas o card do usuário alvo
             retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
     }
 }
 
-async function retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original }) {
+async function retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido }) {
 
     const bot = await client.getBot()
 
@@ -123,10 +112,8 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
     let descricao_banner = `${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n`
     let nome_embed = `${client.tls.phrase(user, "dive.rank.rank_sv")} ${interaction.guild.name}`
 
-    if (paginas > 1)
-        rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}`
-    else
-        rodape = ""
+    if (paginas > 1) rodape = `${rodape} ${client.tls.phrase(user, "dive.rank.rodape")}`
+    else rodape = null
 
     if (escopo !== "server") {
         descricao_banner = ""
@@ -151,7 +138,7 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
             }
         )
 
-    if (rodape !== "")
+    if (rodape)
         embed.setFooter({
             text: rodape,
             iconURL: interaction.user.avatarURL({ dynamic: true })
@@ -169,7 +156,12 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
     let row = []
     const b_disabled = require("../../functions/rank_navigation")({ pagina, paginas, ids, interaction })
 
-    if (paginas > 1)
+    const obj = {
+        embeds: [embed],
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+    }
+
+    if (paginas > 1) { // Ranking com várias páginas de navegação
         row = client.create_buttons([
             { id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] },
             { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] },
@@ -178,50 +170,10 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
             { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }
         ], interaction)
 
-    try {
-        if (autor_original) {
-            if (nav_buttons) {
-                if (paginas > 1)
-                    await interaction.editReply({
-                        embeds: [embed],
-                        components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                    })
-                else
-                    await interaction.editReply({
-                        embeds: [embed],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                    })
-            } else {
-                if (paginas > 1)
-                    await interaction.update({
-                        embeds: [embed],
-                        components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                    })
-                else
-                    await interaction.update({
-                        embeds: [embed],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                    })
-            }
-        } else {
-            if (paginas > 1)
-                await interaction.editReply({
-                    embeds: [embed],
-                    components: [row],
-                    ephemeral: true
-                })
-            else
-                await interaction.editReply({
-                    embeds: [embed],
-                    ephemeral: true
-                })
-        }
-    } catch (err) {
-        client.error(err, "Rank Model")
-        client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, client.emoji(0))
+        obj.components = [row]
     }
+
+    return client.reply(interaction, obj, deferido)
 }
 
 async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data }) {

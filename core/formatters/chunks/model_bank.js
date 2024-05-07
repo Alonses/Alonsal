@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 
 const { busca_badges } = require('../../data/user_badges')
 const { getRankMoney } = require('../../database/schemas/User')
+
 const { badgeTypes, medals } = require('../patterns/user')
 
 let paginas, pagina
@@ -101,7 +102,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     let row = []
     const b_disabled = require("../../functions/rank_navigation")({ pagina, paginas, ids, interaction })
 
-    if (paginas > 1)
+    const obj = {
+        embeds: [embed],
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+    }
+
+    if (paginas > 1) {
         row = client.create_buttons([
             { id: "rank_bank_button", name: '⏪', type: 1, data: `1|${pagina}.rank_bank_navegar`, disabled: b_disabled[0] },
             { id: "rank_bank_button", name: '◀️', type: 1, data: `2|${pagina}.rank_bank_navegar`, disabled: b_disabled[1] },
@@ -110,43 +116,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             { id: "rank_bank_button", name: '⏩', type: 1, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }
         ], interaction)
 
-    if (autor_original) {
-        if (!dados) { // Verifica se não é uma interação recorrente ( criada por botões )
-            if (paginas > 1) // Com mais de uma página no ranking
-                interaction.editReply({
-                    embeds: [embed],
-                    components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else // Apenas uma página no ranking
-                interaction.editReply({
-                    embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-        } else { // Interação criada por botões
-            if (paginas > 1) // Com mais de uma página no ranking
-                interaction.update({
-                    embeds: [embed],
-                    components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-            else // Apenas uma página no ranking
-                interaction.update({
-                    embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
-                })
-        }
-    } else {
-        if (paginas > 1) // Com mais de uma página no ranking
-            interaction.editReply({
-                embeds: [embed],
-                components: [row],
-                ephemeral: true
-            })
-        else // Apenas uma página no ranking
-            interaction.editReply({
-                embeds: [embed],
-                ephemeral: true
-            })
+        obj.components = [row]
     }
+
+    if (!autor_original) interaction.customId = null
+
+    return client.reply(interaction, obj, !dados)
 }

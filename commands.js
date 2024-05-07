@@ -1,7 +1,7 @@
+const fs = require('fs')
+
 const { REST } = require('@discordjs/rest')
 const { Routes, Collection } = require('discord.js')
-
-const { readdirSync, existsSync } = require('fs')
 
 let commands = [], comandos_privados = []
 
@@ -12,8 +12,8 @@ function slash_commands(client) {
 
     // Linkando os comandos slash disponíveis
     if (!client.x.delete_slash) {
-        for (const folder of readdirSync(`${__dirname}/commands/`)) {
-            for (const file of readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'))) {
+        for (const folder of fs.readdirSync(`${__dirname}/commands/`)) {
+            for (const file of fs.readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'))) {
 
                 if (folder !== "experimental" || client.x.modo_develop) {
                     const command = require(`./commands/${folder}/${file}`)
@@ -33,8 +33,8 @@ function slash_commands(client) {
             }
 
             // Comandos do menu de contexto
-            if (existsSync(`${__dirname}/commands/${folder}/context`)) {
-                for (const file of readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
+            if (fs.existsSync(`${__dirname}/commands/${folder}/context`)) {
+                for (const file of fs.readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
                     if (folder !== "experimental" || client.x.modo_develop) {
                         const command = require(`./commands/${folder}/context/${file}`)
 
@@ -85,8 +85,8 @@ function slash_commands(client) {
     if (!client.x.delete_slash) {
         console.log("🔵 | Ordenando comandos")
 
-        for (const folder of readdirSync(`${__dirname}/commands/`)) {
-            for (const file of readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'))) {
+        for (const folder of fs.readdirSync(`${__dirname}/commands/`)) {
+            for (const file of fs.readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'))) {
                 const command = require(`./commands/${folder}/${file}`)
                 client.discord.commands.set(command.data.name, command)
 
@@ -96,8 +96,8 @@ function slash_commands(client) {
                         client.discord.commands.set(command.menu_data.name.toLowerCase(), command)
 
                 // Comandos do menu de contexto
-                if (existsSync(`${__dirname}/commands/${folder}/context`)) {
-                    for (const file of readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
+                if (fs.existsSync(`${__dirname}/commands/${folder}/context`)) {
+                    for (const file of fs.readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
                         if (folder !== "experimental" || client.x.modo_develop) {
                             const command = require(`./commands/${folder}/context/${file}`)
 

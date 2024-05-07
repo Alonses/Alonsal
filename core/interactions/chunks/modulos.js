@@ -27,13 +27,10 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         content: client.tls.phrase(user, "misc.modulo.modulo_escolher"),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data })],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
     }
 
-    if (!autor_original) {
-        interaction.customId = null
-        obj.ephemeral = true
-    }
+    if (!autor_original) interaction.customId = null
 
     client.reply(interaction, obj)
 }

@@ -189,20 +189,15 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         { id: "server_info_button", name: client.tls.phrase(user, "menu.botoes.estatisticas"), type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] }
     ], interaction)
 
-    const obj = {
-        embeds: [infos_sv],
-        components: [row],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    }
-
-    if (!autor_original) {
-        interaction.customId = null
-        obj.ephemeral = true
-    }
-
     // Servidor com imagem personalizada
     if (interaction.guild.iconURL({ size: 2048 }))
         infos_sv.setThumbnail(interaction.guild.iconURL({ size: 2048 }))
 
-    client.reply(interaction, obj)
+    if (!autor_original) interaction.customId = null
+
+    client.reply(interaction, {
+        embeds: [infos_sv],
+        components: [row],
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+    })
 }

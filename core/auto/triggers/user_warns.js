@@ -1,7 +1,5 @@
 const fs = require('fs')
 
-const { writeFileSync } = require('fs')
-
 const { getTimedGuilds } = require('../../database/schemas/Guild.js')
 const { checkUserGuildWarned, removeUserWarn } = require('../../database/schemas/User_warns.js')
 
@@ -21,7 +19,7 @@ async function atualiza_warns() {
         })
 
         // Salvando as advertências no cache do bot
-        writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))
+        fs.writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))
     })
 }
 

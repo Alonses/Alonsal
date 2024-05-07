@@ -1,7 +1,7 @@
+const fs = require('fs')
+
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
-const { mkdirSync, writeFileSync, existsSync, readdirSync } = require('fs')
 
 let default_lang
 
@@ -11,8 +11,8 @@ async function loadAll(client) {
     // Previne que o bot atualize seus pacotes de idioma caso esteja atualizando seus comandos ( localmente )
     if (client.x.force_update) return
 
-    if (!existsSync(`./files/languages/`))
-        mkdirSync(`./files/languages/`, { recursive: true })
+    if (!fs.existsSync(`./files/languages/`))
+        fs.mkdirSync(`./files/languages/`, { recursive: true })
 
     const bot = await client.getBot()
 
@@ -24,7 +24,7 @@ async function loadAll(client) {
             const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
 
             // Sincroniza com os idiomas mais recentes caso haja atualização ou não haja arquivos
-            if (cod_commit !== bot.persis.alondioma || !existsSync(`./files/languages/pt-br.json`)) {
+            if (cod_commit !== bot.persis.alondioma || !fs.existsSync(`./files/languages/pt-br.json`)) {
                 console.log("🟠 | Sincronizando com as traduções mais recentes.")
 
                 // Salvando o commit de traduções mais recente no banco
@@ -46,7 +46,7 @@ async function loadAll(client) {
                             fetch(idioma.download_url)
                                 .then(res => res.json())
                                 .then(res => {
-                                    writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
+                                    fs.writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
                                 })
                         }
                     })
@@ -59,7 +59,7 @@ function listAll() {
     const bandeiras = []
     let i = 0
 
-    for (const file of readdirSync('./files/languages/')) {
+    for (const file of fs.readdirSync('./files/languages/')) {
 
         let bandeira = file.slice(0, 5) !== "al-br" ? `:flag_${file.slice(3, 5)}:` : ":pirate_flag:"
 

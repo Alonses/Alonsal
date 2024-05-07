@@ -1,25 +1,20 @@
 const fs = require('fs')
 
-const { writeFileSync } = require('fs')
-
 const { getUser } = require('../../database/schemas/User.js')
 const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
+
+const { week_days } = require('../../formatters/patterns/user.js')
 
 const formata_horas = require('../../formatters/formata_horas.js')
 
 const lista_modulos = []
 let trava_modulo = false
 
-const week_days = {
-    0: [1, 2, 3, 4, 5],
-    1: [6, 0]
-}
-
 async function atualiza_modulos() {
 
     const dados = await getActiveModules()
 
-    writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
+    fs.writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
 }
 
 async function requisita_modulo(client) {
@@ -137,7 +132,7 @@ async function cobra_modulo(client) {
     active_modules.forEach(modulo => {
 
         // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário
-        if (modulo.stats.days == 2 || week_days[modulo.stats.days].includes(data1.getDay()) || (modulo.stats.days - 4) === data1.getDay()) {
+        if (modulo.stats.days == 2 || week_days[modulo.stats.days]?.includes(data1.getDay()) || modulo.stats.days - 4 === data1.getDay()) {
             if (users[modulo.uid]) {
                 users[modulo.uid] += modulo.stats.price
                 modules[modulo.uid]++

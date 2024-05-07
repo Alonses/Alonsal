@@ -31,6 +31,11 @@ const modulePrices = {
     6: 10
 }
 
+const week_days = {
+    0: [1, 2, 3, 4, 5],
+    1: [6, 0]
+}
+
 const colorsMap = {
     "red": ["D62D20", 1, "🎈"],
     "brown": ["66401D", 1, "🐶"],
@@ -134,6 +139,7 @@ const dataComboRelation = {
 module.exports = {
     moduleDays,
     modulePrices,
+    week_days,
     colorsMap,
     colorsPriceMap,
     badges,
