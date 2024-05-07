@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { writeFileSync, readFile } = require('fs')
 
 const { getTimedGuilds } = require('../../database/schemas/Guild.js')
 const { checkUserGuildWarned, removeUserWarn } = require('../../database/schemas/User_warns.js')
@@ -19,13 +19,13 @@ async function atualiza_warns() {
         })
 
         // Salvando as advertências no cache do bot
-        fs.writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))
+        writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))
     })
 }
 
 async function verifica_warns(client) {
 
-    fs.readFile('./files/data/user_timed_warns.txt', 'utf8', async (err, data) => {
+    readFile('./files/data/user_timed_warns.txt', 'utf8', async (err, data) => {
 
         data = JSON.parse(data)
 

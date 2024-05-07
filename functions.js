@@ -126,6 +126,8 @@ function internal_functions(client) {
 
     client.formatEmoji = (id, emoji) => {
 
+        if (!id) return
+
         const formatado = `<:${emoji.name}:${id}>`
 
         return emoji.animated ? formatado.replace("<:", "<a:") : formatado

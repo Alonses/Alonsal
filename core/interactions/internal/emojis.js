@@ -1,21 +1,20 @@
 const { EmbedBuilder } = require("@discordjs/builders")
 
-const { emojis } = require('../../../files/json/text/emojis.json')
+const { aliases } = require('../../../files/json/text/emojis.json')
 
 module.exports = async ({ client, user, interaction }) => {
 
     let emojis_registrados = "", cache_emojis = []
 
-    Object.keys(emojis).forEach(emoji => {
-        cache_emojis.push(emojis[emoji])
+    Object.keys(aliases).forEach(emoji => {
+        cache_emojis.push(aliases[emoji])
     })
 
     cache_emojis = client.shuffleArray(cache_emojis)
 
     for (let i = 0; i < cache_emojis.length; i++) {
         if ((emojis_registrados + client.emoji(cache_emojis[i])).length < 2000) {
-            if (i % 9 === 0)
-                emojis_registrados += "\n"
+            if (i % 9 === 0) emojis_registrados += "\n"
 
             emojis_registrados += client.emoji(cache_emojis[i])
         }
@@ -26,7 +25,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setColor(0x29BB8E)
         .setDescription(emojis_registrados)
         .setFooter({
-            text: `Emojis registrados: ${Object.keys(emojis).length}`
+            text: `Emojis registrados: ${Object.keys(aliases).length}`
         })
 
     const row = client.create_buttons([
