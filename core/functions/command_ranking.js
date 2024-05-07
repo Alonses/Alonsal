@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { writeFileSync, existsSync } = require('fs')
 
 const { comandos } = require('../../files/data/comandos.json')
 
@@ -31,7 +31,7 @@ module.exports = async function ({ client, message, content }) {
         activations: 0
     }
 
-    if (fs.existsSync(`./files/data/command_rank/${indice}.json`)) {
+    if (existsSync(`./files/data/command_rank/${indice}.json`)) {
         delete require.cache[require.resolve(`../files/data/command_rank/${indice}.json`)]
         const { activations, aliases } = require(`../files/data/command_rank/${indice}.json`)
         command.activations = activations
@@ -40,6 +40,6 @@ module.exports = async function ({ client, message, content }) {
 
     command.activations++
 
-    fs.writeFileSync(`./files/data/command_rank/${indice}.json`, JSON.stringify(command))
+    writeFileSync(`./files/data/command_rank/${indice}.json`, JSON.stringify(command))
     delete require.cache[require.resolve(`../files/data/command_rank/${indice}.json`)]
 }

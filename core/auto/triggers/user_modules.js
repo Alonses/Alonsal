@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { writeFileSync, readFile } = require('fs')
 
 const { getUser } = require('../../database/schemas/User.js')
 const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
@@ -14,7 +14,7 @@ async function atualiza_modulos() {
 
     const dados = await getActiveModules()
 
-    fs.writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
+    writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
 }
 
 async function requisita_modulo(client) {
@@ -22,7 +22,7 @@ async function requisita_modulo(client) {
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
 
-    fs.readFile('./files/data/user_modules.txt', 'utf8', (err, data) => {
+    readFile('./files/data/user_modules.txt', 'utf8', (err, data) => {
 
         data = JSON.parse(data)
 

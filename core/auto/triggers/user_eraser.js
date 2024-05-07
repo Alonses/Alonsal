@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { writeFileSync, readFile } = require('fs')
 
 const { getOutdatedUsers, dropUser } = require('../../database/schemas/User.js')
 const { dropAllUserTasks, dropAllGuildUserTasks } = require('../../database/schemas/User_tasks.js')
@@ -26,7 +26,7 @@ async function atualiza_user_eraser(client) {
     }
 
     // Salvando os usuários marcados para exclusão no cache do bot
-    fs.writeFileSync("./files/data/erase_user.txt", JSON.stringify(dados))
+    writeFileSync("./files/data/erase_user.txt", JSON.stringify(dados))
 
     dados = await getGuildOutdatedUsers(client.timestamp())
 
@@ -49,12 +49,12 @@ async function atualiza_user_eraser(client) {
     }
 
     // Salvando os usuários marcados para exclusão no cache do bot
-    fs.writeFileSync("./files/data/erase_user_guild.txt", JSON.stringify(dados))
+    writeFileSync("./files/data/erase_user_guild.txt", JSON.stringify(dados))
 }
 
 async function verifica_user_eraser(client) {
 
-    fs.readFile('./files/data/erase_user.txt', 'utf8', async (err, data) => {
+    readFile('./files/data/erase_user.txt', 'utf8', async (err, data) => {
 
         data = JSON.parse(data)
 
@@ -102,7 +102,7 @@ async function verifica_user_eraser(client) {
     })
 
     // Verificando os usuários movidos para exclusão por servidor
-    fs.readFile('./files/data/erase_user_guild.txt', 'utf8', async (err, data) => {
+    readFile('./files/data/erase_user_guild.txt', 'utf8', async (err, data) => {
 
         data = JSON.parse(data)
 
