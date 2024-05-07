@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
     const obj = {
         content: client.tls.phrase(user, "util.tarefas.lista_e", 1),
         components: [client.create_menus({ client, interaction, user, data, pagina })],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
     }
 
     let row = client.menu_navigation(client, user, data, pagina || 0)
@@ -29,10 +29,7 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
     if (row.length > 0) // Botões de navegação
         obj.components.push(client.create_buttons(row, interaction))
 
-    if (!autor_original) {
-        interaction.customId = null
-        obj.ephemeral = true
-    }
+    if (!autor_original) interaction.customId = null
 
     client.reply(interaction, obj)
 }

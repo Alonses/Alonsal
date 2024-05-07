@@ -1,7 +1,5 @@
 const fs = require('fs')
 
-const { writeFileSync } = require('fs')
-
 const { getEraseGuilds, dropGuild } = require('../../database/schemas/Guild.js')
 const { dropAllRankGuild } = require('../../database/schemas/User_rank_guild.js')
 const { updateGuildReport } = require('../../database/schemas/User_reports.js')
@@ -17,7 +15,7 @@ async function atualiza_eraser() {
     const dados = await getEraseGuilds()
 
     // Salvando os servidores marcados para exclusão no cache do bot
-    writeFileSync("./files/data/erase_guild.txt", JSON.stringify(dados))
+    fs.writeFileSync("./files/data/erase_guild.txt", JSON.stringify(dados))
 }
 
 async function verifica_eraser(client) {

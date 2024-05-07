@@ -13,17 +13,11 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // 5 -> Ir para a última página
 
     // Defere a interação para um usuário diferente do autor, e envia um card efemero para o mesmo
-    if (!autor_original)
-        await interaction.deferReply({ ephemeral: true })
+    if (!autor_original) await interaction.deferReply({ ephemeral: true })
 
-    if (operacao === 1)
-        pagina = 1
-
-    if (operacao === 2)
-        pagina--
-
-    if (operacao === 4)
-        pagina++
+    if (operacao === 1) pagina = 1
+    else if (operacao === 2) pagina--
+    else if (operacao === 4) pagina++
 
     if (operacao === 3) {
 

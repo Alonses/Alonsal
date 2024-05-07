@@ -1,12 +1,12 @@
+const fs = require('fs')
+
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { mkdirSync, writeFileSync, existsSync } = require('fs')
-
 module.exports = async ({ client, user, interaction }) => {
 
-    if (!existsSync(`./files/languages/`))
-        mkdirSync(`./files/languages/`, { recursive: true })
+    if (!fs.existsSync(`./files/languages/`))
+        fs.mkdirSync(`./files/languages/`, { recursive: true })
 
     const bot = await client.getBot()
 
@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction }) => {
                         fetch(idioma.download_url)
                             .then(res => res.json())
                             .then(res => {
-                                writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
+                                fs.writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
                             })
                     }
                 })

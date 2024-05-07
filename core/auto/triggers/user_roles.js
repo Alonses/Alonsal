@@ -1,7 +1,5 @@
 const fs = require('fs')
 
-const { writeFileSync } = require('fs')
-
 const { listAllUserValidyRoles, dropUserTimedRole } = require('../../database/schemas/User_roles')
 
 async function atualiza_roles() {
@@ -9,7 +7,7 @@ async function atualiza_roles() {
     const dados = await listAllUserValidyRoles()
 
     // Salvando os cargos temporários no cache do bot
-    writeFileSync("./files/data/user_timed_roles.txt", JSON.stringify(dados))
+    fs.writeFileSync("./files/data/user_timed_roles.txt", JSON.stringify(dados))
 }
 
 async function verifica_roles(client) {

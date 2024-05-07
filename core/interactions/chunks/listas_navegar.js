@@ -24,10 +24,8 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         const tarefas = await listAllUserGroupTasks(interaction.user.id, listas[0].timestamp)
 
         if (tarefas.length < 1)
-            if (autor_original)
-                return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
-            else
-                return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
+            if (autor_original) return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
+            else return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         data.title = { tls: "menu.menus.escolher_tarefa", emoji: [6, 1] }
         data.alvo = "tarefa_visualizar"
@@ -35,16 +33,11 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         data.operador = `k.${listas[0].timestamp}`
     }
 
-    const obj = {
+    if (!autor_original) interaction.customId = null
+
+    client.reply(interaction, {
         content: client.tls.phrase(user, "util.tarefas.tarefa_escolher"),
         components: [client.create_menus({ client, interaction, user, data })],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    }
-
-    if (!autor_original) {
-        interaction.customId = null
-        obj.ephemeral = true
-    }
-
-    client.reply(interaction, obj)
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+    })
 }

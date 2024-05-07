@@ -1,13 +1,10 @@
 const fs = require('fs')
 
-const { writeFileSync } = require('fs')
-
 const { getOutdatedUsers, dropUser } = require('../../database/schemas/User.js')
 const { dropAllUserTasks, dropAllGuildUserTasks } = require('../../database/schemas/User_tasks.js')
 const { dropAllUserGroups, dropAllGuildUserGroups } = require('../../database/schemas/User_tasks_group.js')
 const { dropAllUserBadges } = require('../../database/schemas/User_badges.js')
 const { dropAllUserGuildRanks, getGuildOutdatedUsers, dropUserRankServer } = require('../../database/schemas/User_rank_guild.js')
-const { dropUserGlobalRank } = require('../../database/schemas/User_rank_guild.js')
 const { dropAllUserModules } = require('../../database/schemas/User_modules.js')
 const { dropAllUserStatements } = require('../../database/schemas/User_statements.js')
 const { dropAllUserTickets, dropTicket } = require('../../database/schemas/User_tickets.js')
@@ -29,7 +26,7 @@ async function atualiza_user_eraser(client) {
     }
 
     // Salvando os usuários marcados para exclusão no cache do bot
-    writeFileSync("./files/data/erase_user.txt", JSON.stringify(dados))
+    fs.writeFileSync("./files/data/erase_user.txt", JSON.stringify(dados))
 
     dados = await getGuildOutdatedUsers(client.timestamp())
 
@@ -52,7 +49,7 @@ async function atualiza_user_eraser(client) {
     }
 
     // Salvando os usuários marcados para exclusão no cache do bot
-    writeFileSync("./files/data/erase_user_guild.txt", JSON.stringify(dados))
+    fs.writeFileSync("./files/data/erase_user_guild.txt", JSON.stringify(dados))
 }
 
 async function verifica_user_eraser(client) {
