@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         let cargos = []
 
         if (strike.role) // Opção de remover o cargo
-            cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: 0 })
+            cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: "none" })
 
         // Listando todos os cargos do servidor
         cargos = cargos.concat(await client.getGuildRoles(interaction, strike.role))

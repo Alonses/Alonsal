@@ -3,10 +3,10 @@ const { getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 module.exports = async ({ client, user, interaction, dados }) => {
 
     let cargo = dados.split(".")[0]
-    const id_strike = parseInt(dados.split(".")[1])
+    const id_strike = parseInt(dados.split("/")[1])
 
-    if (cargo == "0") // Removendo o cargo
-        cargo = null
+    // Removendo o cargo
+    if (cargo == "none") cargo = null
 
     // Atualizando o cargo do strike
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
