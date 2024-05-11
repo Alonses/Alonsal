@@ -84,7 +84,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelos strikes do servidor
         let botoes = [], row = [{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.1"
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2"
         }], indice_matriz = 5
 
         if (strikes.length < 1) {
