@@ -9,9 +9,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Listando as mensagens consideras spam e excluindo elas
-    user_messages.forEach(internal_message => {
-        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
-    })
+    user_messages.forEach(internal_message => { entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n` })
 
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()

@@ -5,9 +5,7 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
     let entradas_spamadas = ""
 
     // Listando as mensagens consideras spam e excluindo elas
-    user_messages.forEach(internal_message => {
-        entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n`
-    })
+    user_messages.forEach(internal_message => { entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n` })
 
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()

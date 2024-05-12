@@ -24,11 +24,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             guild.conf.spam = false
 
         // Desabilitando o anti-spam caso o bot não possa banir membros e o strike seja para banir membros
-        if ((!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers) && strike.action === "member_kick_2") || strikes_guild.length < 1)
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers) && strike.action === "member_kick_2")
             guild.conf.spam = false
 
         // Desabilitando o anti-spam caso o bot não possa banir membros e o strike seja para banir membros
-        if ((!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) && strike.action === "member_ban") || strikes_guild.length < 1)
+        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) && strike.action === "member_ban")
             guild.conf.spam = false
 
         if ((strike.action === "member_kick_2" || strike.action === "member_ban") && !indice_matriz)
@@ -43,15 +43,13 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     let descricao = client.tls.phrase(user, "mode.spam.descricao_funcionamento")
 
-    if (guild?.spam.strikes) // Strikes do servidor
-        descricao += client.tls.phrase(user, "mode.spam.strikes_ativo")
-    else
-        descricao += client.tls.phrase(user, "mode.spam.strikes_desativado")
+    // Strikes do servidor
+    if (guild?.spam.strikes) descricao += client.tls.phrase(user, "mode.spam.strikes_ativo")
+    else descricao += client.tls.phrase(user, "mode.spam.strikes_desativado")
 
-    if (guild?.spam.manage_mods) // Gerenciamento de moderadores
-        descricao += client.tls.phrase(user, "mode.spam.moderadores_ativo")
-    else
-        descricao += client.tls.phrase(user, "mode.spam.moderadores_desativado")
+    // Gerenciamento de moderadores
+    if (guild?.spam.manage_mods) descricao += client.tls.phrase(user, "mode.spam.moderadores_ativo")
+    else descricao += client.tls.phrase(user, "mode.spam.moderadores_desativado")
 
     const embed = new EmbedBuilder()
         .setTitle("> Anti-spam 📛")

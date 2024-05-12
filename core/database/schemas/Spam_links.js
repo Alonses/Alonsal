@@ -16,26 +16,18 @@ const model = mongoose.model("Spam_Link", schema)
 // Verificando se os links suspeitos estão registrados
 async function verifySuspiciousLink(link, force) {
 
-    let confirmado = false
-
     if (typeof link === "object")
         for (let i = 0; i < link.length; i++) {
 
             link[i] = link[i].split(")")[0]
 
             if (!links_oficiais.includes(link[i].split("/")[0]))
-                if (await getSuspiciousLink(link[i], force))
-                    confirmado = true
+                if (await getSuspiciousLink(link[i], force)) return true
         }
-    else if (!links_oficiais.includes(link.split("/")[0])) {
+    else if (!links_oficiais.includes(link.split("/")[0]))
+        if (await getSuspiciousLink(link.split(")")[0], force)) return true
 
-        link = link.split(")")[0]
-
-        if (await getSuspiciousLink(link, force))
-            confirmado = true
-    }
-
-    return confirmado
+    return false
 }
 
 async function getSuspiciousLink(link, force) {
@@ -60,6 +52,7 @@ async function getCachedSuspiciousLink(timestamp) {
 async function registerSuspiciousLink(link, guild_id, timestamp) {
 
     let registrados = []
+    link = link.replace(" ", "")
 
     if (!await verifySuspiciousLink(link, true)) {
 
