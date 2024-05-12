@@ -58,7 +58,10 @@ client.discord.on("messageCreate", async message => {
 		const link = `${message.content} `.match(client.cached.regex)
 
 		if (link)
-			if (await verifySuspiciousLink(link)) return nerfa_spam({ client, message, guild })
+			if (await verifySuspiciousLink(link)) {
+				const suspect_link = true
+				return nerfa_spam({ client, message, guild, suspect_link })
+			}
 	}
 
 	if (guild.conf.spam) // Server anti-spam system

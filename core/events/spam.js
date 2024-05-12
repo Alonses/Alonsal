@@ -95,7 +95,11 @@ module.exports = async function ({ client, message, guild }) {
     }
 }
 
-async function nerfa_spam({ client, message, guild }) {
+async function nerfa_spam({ client, message, guild, suspect_link }) {
+
+    if (typeof suspect_link !== "undefined") // Previne que mais acionamentos sejam realizados por link suspeito
+        if (nerf_map.has(`${message.author.id}.${message.guild.id}`)) return
+        else nerf_map.set(`${message.author.id}.${message.guild.id}`, true)
 
     let user_guild = await client.getMemberGuild(message, message.author.id)
     let tempo_timeout = spamTimeoutMap[2]
