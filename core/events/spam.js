@@ -1,14 +1,12 @@
 const { PermissionsBitField } = require("discord.js")
 
 const { getUserStrikes } = require("../database/schemas/User_strikes")
-const { registerSuspiciousLink } = require("../database/schemas/Spam_links")
+const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
 
 const { spamTimeoutMap } = require("../formatters/patterns/timeout")
 
-let bloqueia_operacao = 0
-
-const usersmap = new Map(), usersrole = new Map()
+const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
 const cached_messages = {}
 
 module.exports = async function ({ client, message, guild }) {
@@ -64,8 +62,10 @@ module.exports = async function ({ client, message, guild }) {
             if (msgcount === guild.spam.trigger_amount) {
 
                 // Confirmed spam
-                if (!bloqueia_operacao) {
-                    bloqueia_operacao = 1
+                if (!nerf_map.has(`${message.author.id}.${message.guild.id}`)) {
+
+                    // Registering the spam-causing member for processing
+                    nerf_map.set(`${message.author.id}.${message.guild.id}`, true)
 
                     // Nerfing server spam and deleting sent messages
                     nerfa_spam({ client, message, guild })
@@ -103,10 +103,9 @@ async function nerfa_spam({ client, message, guild }) {
     let strikes = await listAllGuildStrikes(message.guild.id)
     let strike_aplicado = { action: "member_mute", timeout: 2 }
 
-    if (strikes.length < 1) // Creating a new strike for the server
-        await getGuildStrike(message.guild.id, 0)
-    else
-        strike_aplicado = strikes[0]
+    // Creating a new strike for the server
+    if (strikes.length < 1) await getGuildStrike(message.guild.id, 0)
+    else strike_aplicado = strikes[0]
 
     if (strikes.length > 0) // Server mute time
         tempo_timeout = spamTimeoutMap[strike_aplicado.timeout]
@@ -159,7 +158,6 @@ async function nerfa_spam({ client, message, guild }) {
     }
 
     setTimeout(() => { // Search sent messages to delete sent after spam validation
-        bloqueia_operacao = 0
         remove_spam(client, message.author.id, guild.sid, user_messages[0])
     }, 4000)
 
@@ -171,7 +169,7 @@ async function nerfa_spam({ client, message, guild }) {
 
         const link = `${user_messages[0].content} `.match(client.cached.regex)
 
-        if (link?.length > 0) {
+        if (link?.length > 0 && !await verifySuspiciousLink(link)) {
 
             const registrados = await registerSuspiciousLink(link[0], guild.sid, client.timestamp()) || []
 
@@ -203,6 +201,7 @@ remove_spam = (client, id_user, id_guild, user_message) => {
                         .catch(() => console.error)
 
                     cached_messages[`${id_user}.${id_guild}`] = []
+                    nerf_map.delete(`${id_user}.${id_guild}`)
                 })
     })
 }
