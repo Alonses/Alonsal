@@ -114,8 +114,8 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     if (strikes.length > 0) // Server mute time
         tempo_timeout = spamTimeoutMap[strike_aplicado.timeout]
 
-    if (guild?.spam.strikes) { // Server with active strike progression
-        let user_strikes = await getUserStrikes(message.author.id)
+    if (guild.spam.strikes) { // Server with active strike progression
+        let user_strikes = await getUserStrikes(message.author.id, message.guild.id)
 
         strike_aplicado = strikes[user_strikes.strikes] || strikes[strikes.length - 1]
 
