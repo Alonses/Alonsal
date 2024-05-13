@@ -55,7 +55,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     fragmenta_envio(client, obj_anuncio)
 
     // Acionado especificamente para um canal
-    if (typeof guild_channel !== "undefined") return
+    if (guild_channel) return
 
     let aviso = `:white_check_mark: | Aviso de Jogos gratuitos enviado para \`${canais_clientes.length}\` canais clientes`
 

@@ -84,7 +84,7 @@ function internal_functions(client) {
     client.create_profile = (client, interaction, user, id_alvo) => { return create_profile(client, interaction, user, id_alvo) }
 
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
-    client.decider = (entrada, padrao) => { return typeof entrada === "undefined" ? padrao : entrada }
+    client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
 
     client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
 
@@ -159,7 +159,7 @@ function internal_functions(client) {
         const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
         const canais_alvo = []
 
-        if (!id_configurado === "undefined") id_configurado = ""
+        if (!id_configurado) id_configurado = ""
 
         canais.map(channel => {
             if (channel.id !== id_configurado)
@@ -282,11 +282,11 @@ function internal_functions(client) {
 
         if (valores.length > 1) {
             for (let i = 0; i < valores.length; i++) {
-                if (typeof valores[i + 1] === "undefined") lista += " & "
+                if (!valores[i + 1]) lista += " & "
 
                 lista += `\`${valores[i]}\``
 
-                if (typeof valores[i + 2] !== "undefined") lista += ", "
+                if (valores[i + 2]) lista += ", "
             }
         } else // Apenas um elemento
             lista += `\`${valores[0]}\``
@@ -311,7 +311,7 @@ function internal_functions(client) {
     // Converte o valor numério para um formato específico
     client.locale = (valor, locale) => {
 
-        if (typeof locale === "undefined") locale = "pt-br"
+        if (!locale) locale = "pt-br"
 
         return valor.toLocaleString(locale)
     }

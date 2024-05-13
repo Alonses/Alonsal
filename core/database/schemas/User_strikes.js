@@ -38,7 +38,7 @@ async function dropUserGuildStrikes(sid) {
     })
 }
 
-module.exports.Strike = model
+module.exports.User_strike = model
 module.exports = {
     getUserStrikes,
     removeStrike,

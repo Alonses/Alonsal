@@ -97,7 +97,7 @@ module.exports = async function ({ client, message, guild }) {
 
 async function nerfa_spam({ client, message, guild, suspect_link }) {
 
-    if (typeof suspect_link !== "undefined") // Previne que mais acionamentos sejam realizados por link suspeito
+    if (suspect_link) // Previne que mais acionamentos sejam realizados por link suspeito
         if (nerf_map.has(`${message.author.id}.${message.guild.id}`)) return
         else nerf_map.set(`${message.author.id}.${message.guild.id}`, true)
 
@@ -169,7 +169,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     const bot = await client.getBot(client.x.id)
     bot.persis.spam++
 
-    if (guild.spam.suspicious_links && user_messages.length > 0) { // Checking if the server has the suspicious links registry active
+    if (guild.spam.suspicious_links && user_messages.length > 0 && !suspect_link) { // Checking if the server has the suspicious links registry active
 
         const link = `${user_messages[0].content} `.match(client.cached.regex)
 

@@ -1,6 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
+
 const { banMessageEraser, spamTimeoutMap } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
@@ -19,19 +20,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     let indice_matriz
 
     advertencias.forEach(warn => {
-
-        // Desabilitando as advertências caso o bot não possa banir membros e haja advertências para banir membros
-        if ((!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers) && warn.action === "member_mute") || advertencias.length < 2)
-            guild.conf.warn = false
-
-        // Desabilitando as advertências caso o bot não possa banir membros e haja advertências para banir membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers) && warn.action === "member_kick_2")
-            guild.conf.warn = false
-
-        // Desabilitando as advertências caso o bot não possa banir membros e haja advertências para banir membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) && warn.action === "member_ban")
-            guild.conf.warn = false
-
         if ((warn.action === "member_kick_2" || warn.action === "member_ban") && !indice_matriz)
             indice_matriz = warn.rank + 1
     })

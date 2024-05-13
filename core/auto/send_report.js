@@ -46,7 +46,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                         )
 
                     // Enviando para todos os servidores ( invocado com o /report create )
-                    if (typeof id_canal === "undefined") {
+                    if (!id_canal) {
                         embed.addFields(
                             {
                                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.report.reportador")}**`,
