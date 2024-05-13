@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
     strikes: { type: Number, default: 0 }
 })
 
-const model = mongoose.model("Strike", schema)
+const model = mongoose.model("User_strikes", schema)
 
 async function getUserStrikes(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid }))
@@ -31,18 +31,8 @@ async function removeStrike(uid, sid) {
     })
 }
 
-async function listAllUserStrikes(uid, sid) {
-
-    // Listando todos os strikes que um usuário recebeu em um servidor
-    return model.find({
-        uid: uid,
-        sid: sid,
-        valid: true
-    })
-}
-
 // Apagando todos os strikes registrados no servidor sobre um membro
-async function dropAllUserGuildStrikes(sid) {
+async function dropUserGuildStrikes(sid) {
     await model.deleteMany({
         sid: sid
     })
@@ -52,6 +42,5 @@ module.exports.Strike = model
 module.exports = {
     getUserStrikes,
     removeStrike,
-    dropAllUserGuildStrikes,
-    listAllUserStrikes
+    dropUserGuildStrikes
 }
