@@ -26,28 +26,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         ativos: 0
     }
 
-    const eventos_note = {
-        total: 0,
-        ativos: 0
-    }
+    if (pagina !== 2)
+        Object.keys(guild.logger).forEach(evento => {
+            if (evento !== "channel") {
+                if (guild.logger[evento])
+                    eventos.ativos++ // Apenas eventos ativos
 
-    Object.keys(guild.logger).forEach(evento => {
-        if (evento !== "channel") {
-            if (guild.logger[evento])
-                eventos.ativos++ // Apenas eventos ativos
-
-            eventos.total++
-        }
-    })
-
-    Object.keys(guild.death_note).forEach(evento => {
-        if (evento.includes("member_")) {
-            if (guild.death_note[evento])
-                eventos_note.ativos++ // Apenas eventos ativos
-
-            eventos_note.total++
-        }
-    })
+                eventos.total++
+            }
+        })
 
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.log_eventos")} :scroll:`)
@@ -82,7 +69,22 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (pagina === 2)
+    if (pagina === 2) {
+
+        const eventos_note = {
+            total: 0,
+            ativos: 0
+        }
+
+        Object.keys(guild.death_note).forEach(evento => {
+            if (evento.includes("member_")) {
+                if (guild.death_note[evento])
+                    eventos_note.ativos++ // Apenas eventos ativos
+
+                eventos_note.total++
+            }
+        })
+
         embed.setTitle(client.tls.phrase(user, "mode.death_note.titulo"))
             .setDescription(client.tls.phrase(user, "mode.death_note.descricao"))
             .setFields(
@@ -102,6 +104,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                     inline: true
                 }
             )
+    }
 
     if (pagina === 0)
         botoes = botoes.concat([

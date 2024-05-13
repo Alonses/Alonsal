@@ -46,7 +46,7 @@ module.exports = {
 
         let topico = `\`\`\`${canal.topic || client.tls.phrase(user, "util.canal.sem_topico")}\`\`\``
 
-        if (typeof canal.bitrate !== "undefined") {
+        if (canal?.bitrate) {
             topico = `\`\`\`🔊 ${client.tls.phrase(user, "util.canal.canal_voz")}\`\`\``
 
             userlimit = canal.userLimit
@@ -96,7 +96,7 @@ module.exports = {
             }
         )
 
-        if (typeof canal.bitrate !== "undefined")
+        if (canal?.bitrate)
             infos_ch.addFields(
                 {
                     name: `:mega: ${client.tls.phrase(user, "util.canal.transmissao")}`,
@@ -105,7 +105,7 @@ module.exports = {
                 }
             )
 
-        if (typeof canal.rateLimitPerUser !== "undefined")
+        if (canal?.rateLimitPerUser)
             if (canal.rateLimitPerUser > 0)
                 infos_ch.addFields(
                     {

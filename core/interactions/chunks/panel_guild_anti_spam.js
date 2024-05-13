@@ -18,19 +18,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     let indice_matriz
 
     strikes_guild.forEach(strike => {
-
-        // Desabilitando o anti-spam caso o bot não possa banir membros e o strike seja para banir membros
-        if ((!membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers) && strike.action === "member_mute") || strikes_guild.length < 1)
-            guild.conf.spam = false
-
-        // Desabilitando o anti-spam caso o bot não possa banir membros e o strike seja para banir membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers) && strike.action === "member_kick_2")
-            guild.conf.spam = false
-
-        // Desabilitando o anti-spam caso o bot não possa banir membros e o strike seja para banir membros
-        if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) && strike.action === "member_ban")
-            guild.conf.spam = false
-
         if ((strike.action === "member_kick_2" || strike.action === "member_ban") && !indice_matriz)
             indice_matriz = strike.rank + 1
     })

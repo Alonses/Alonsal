@@ -43,8 +43,7 @@ class CeiraClient {
 
     channels(type) {
 
-        if (typeof type !== "undefined")
-            return this.discord.channels.cache.filter((c) => c.type === type)
+        if (type) return this.discord.channels.cache.filter((c) => c.type === type)
 
         return this.discord.channels.cache
     }

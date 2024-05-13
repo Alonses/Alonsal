@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction }) => {
         await task.save()
 
         // Verificando se a lista não possui algum servidor mencionado
-        if (typeof listas[0].sid === "undefined") {
+        if (!listas[0].sid) {
             listas[0].sid = interaction.guid.id
             await listas[0].save()
         }
