@@ -6,6 +6,14 @@ const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/G
 const { loggerMap } = require('../../../formatters/patterns/guild')
 const { banMessageEraser, spamTimeoutMap } = require('../../../formatters/patterns/timeout')
 
+// 8 -> Ativar ou desativar as notificações das advertências
+// 10 -> Ativar ou desativar as notificações de exclusões de advertências
+
+const operations = {
+    8: ["warn", "notify", 1],
+    10: ["warn", "notify_exclusion", 1]
+}
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.2", pagina_guia = 0
@@ -39,11 +47,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // 5 -> Escolher canal de avisos
     // 6 -> Advertências cronometradas
-    // 8 -> Ativar ou desativar as notificações das advertências
     // 7 -> Definir exclusão de mensagens por banimento
 
     // 9 -> Alterar de página dentro do guia
-    // 10 -> Ativar ou desativar as notificações de exclusões de advertências
 
     // 11 -> Ativar ou desativar anúncios públicos
     // 12 -> Definir canal de anúncios públicos
@@ -53,7 +59,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
-    if (operacao === 1) {
+    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    else if (operacao === 1) {
 
         if (advertencias.length < 2)
             return interaction.update({
@@ -62,10 +69,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Ativa ou desativa as advertências do servidor
-        if (typeof guild.conf.warn !== "undefined")
-            guild.conf.warn = !guild.conf.warn
-        else
-            guild.conf.warn = true
+        guild.conf.warn = !guild.conf.warn
 
     } else if (operacao === 3) {
 
@@ -164,10 +168,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 6) {
 
         // Ativa ou desativa as advertências cronometradas no servidor
-        if (typeof guild.warn.timed !== "undefined")
-            guild.warn.timed = !guild.warn.timed
-        else
-            guild.warn.timed = true
+        guild.warn.timed = !guild.warn.timed
 
         // Sincronizando a lista de advertências do cache
         atualiza_warns()
@@ -197,36 +198,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
 
-    } else if (operacao === 8) {
-
-        // Ativa ou desativa as notificações de advertências
-        if (typeof guild.warn.notify !== "undefined")
-            guild.warn.notify = !guild.warn.notify
-        else
-            guild.warn.notify = false
-
-        operacao = 15
-
-        await guild.save()
-
-    } else if (operacao === 10) {
-
-        // Ativa ou desativa as notificações de advertências
-        if (typeof guild.warn.notify_exclusion !== "undefined")
-            guild.warn.notify_exclusion = !guild.warn.notify_exclusion
-        else
-            guild.warn.notify_exclusion = false
-
-        operacao = 15
-
-        await guild.save()
     } else if (operacao === 11) {
 
         // Ativa ou desativa as notificações de advertências públicas
-        if (typeof guild.warn.announce.status !== "undefined")
-            guild.warn.announce.status = !guild.warn.announce.status
-        else
-            guild.warn.announce.status = true
+        guild.warn.announce.status = !guild.warn.announce.status
 
         pagina_guia = 1
     }

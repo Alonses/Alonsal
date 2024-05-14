@@ -2,10 +2,20 @@ const { PermissionsBitField, ChannelType } = require('discord.js')
 
 const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 
+// 1 -> Ativar ou desativar o módulo de reportes externos
+// 2 -> Ativar ou desativar o AutoBan
+// 3 -> Ativar ou desativar o aviso de novos usuários reportados
+
+const operations = {
+    1: ["conf", "reports", 0],
+    2: ["reports", "auto_ban", 1, [PermissionsBitField.Flags.BanMembers], "manu.painel.sem_permissoes"],
+    3: ["reports", "notify", 2]
+}
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_external_reports", pagina_guia = 0
-    const guild = await client.getGuild(interaction.guild.id)
+    let guild = await client.getGuild(interaction.guild.id)
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.reports.channel) {
@@ -15,9 +25,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
-    // 1 -> Ativar ou desativar o módulo de reportes externos
 
-    // 3 -> Ativar ou desativar o aviso de novos usuários reportados
     // 4 -> Escolher canal de avisos
     // 5 -> Escolher cargo para ser mencionado
 
@@ -27,39 +35,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 20 -> Sub-menu dos AutoBan
     // 21 -> Sub-menu com opções extras 
 
-    if (operacao === 1) {
-
-        // Ativa ou desativa o relatório de usuários mau comportados no servidor
-        if (typeof guild.conf.reports !== "undefined")
-            guild.conf.reports = !guild.conf.reports
-        else
-            guild.conf.reports = false
-
-    } else if (operacao === 2) {
-
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
-            return client.reply(interaction, {
-                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
-            })
-
-        // Ativa ou desativa a opção de autoBan do comando /reporte
-        if (typeof guild.reports.auto_ban !== "undefined")
-            guild.reports.auto_ban = !guild.reports.auto_ban
-        else
-            guild.reports.auto_ban = true
-
-        pagina_guia = 1
-    } else if (operacao === 3) {
-
-        // Ativa ou desativa o módulo de reportes externos do servidor
-        if (typeof guild.reports.notify !== "undefined")
-            guild.reports.notify = !guild.reports.notify
-        else
-            guild.reports.notify = true
-
-        pagina_guia = 2
-    } else if (operacao === 4) {
+    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    else if (operacao === 4) {
 
         // Definindo o canal de avisos dos relatórios externos
         const data = {
@@ -123,6 +100,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+
     } else if (operacao === 6) {
 
         // Escolhendo o tempo de exclusão das mensagens para membros banidos pelo AutoBan

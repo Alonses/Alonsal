@@ -1,9 +1,19 @@
 const { ChannelType, PermissionsBitField } = require('discord.js')
 
+// 1 -> Ativar ou desativar o log de eventos
+// 5 -> Ativar ou desativar o registro de punições em canal separado
+// 7 -> Ativar ou desativar as notificações
+
+const operations = {
+    1: ["conf", "logger", 0, [PermissionsBitField.Flags.ViewAuditLog], "manu.painel.sem_permissoes"],
+    5: ["death_note", "note", 2],
+    7: ["death_note", "notify", 2]
+}
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_logger", pagina_guia = 0
-    const guild = await client.getGuild(interaction.guild.id)
+    let guild = await client.getGuild(interaction.guild.id)
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.logger.channel) {
@@ -17,7 +27,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
-    // 1 -> Ativar ou desativar o log de eventos
     // 2 -> Eventos do logger
 
     // Página 1
@@ -25,38 +34,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Alterar o idioma do servidor
 
     // Página 2
-    // 5 -> Ativar registro de punições em canal separado
     // 6 -> Escolher eventos a serem separados
-    // 7 -> Ativar notificações
     // 8 -> Escolher canal de penalidades
 
     // 9 -> Página 1 ( configurações do log de eventos )
     // 10 -> Página 2 ( opções do registrador )
 
-    if (operacao === 1 || operacao === 5) {
-
-        // Verificando se o bot possui permissões para ver o registro de auditoria
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog]))
-            return client.reply(interaction, {
-                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
-            })
-
-        if (operacao === 1) { // Ativa ou desativa o log de eventos do servidor
-            if (typeof guild.conf.logger !== "undefined")
-                guild.conf.logger = !guild.conf.logger
-            else
-                guild.conf.logger = true
-        } else {
-            if (typeof guild.death_note.note !== "undefined")
-                guild.death_note.note = !guild.death_note.note
-            else
-                guild.death_note.note = true
-
-            pagina_guia = 2
-        }
-
-    } else if (operacao === 2 || operacao === 6) {
+    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    else if (operacao === 2 || operacao === 6) {
 
         const eventos = []
         let lista_eventos = guild.logger, alvo = "guild_logger#events", digito = 0
@@ -143,11 +128,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.1` }], interaction)],
             ephemeral: true
         })
-    } else if (operacao === 7) {
-
-        // Alterando as notificações de penalização no servidor
-        guild.death_note.notify = !guild.death_note.notify
-        pagina_guia = 2
     }
 
     if (operacao === 9)

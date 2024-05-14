@@ -4,10 +4,24 @@ const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schem
 
 const { loggerMap } = require('../../../formatters/patterns/guild')
 
+// 1 -> Ativar ou desativar o módulo anti-spam
+// 2 -> Ativar ou desativar os strikes
+// 3 -> Ativar ou desativar os links suspeitos
+// 7 -> Ativar ou desativar as notificações do anti-spam
+// 8 -> Ativar ou desativar a punição de moderadores no servidor
+
+const operations = {
+    1: ["conf", "spam", 0, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages], "manu.painel.sem_permissoes"],
+    2: ["spam", "strikes", 0, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.KickMembers], "manu.painel.sem_permissoes"],
+    3: ["spam", "suspicious_links", 1, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages], "manu.painel.sem_permissoes"],
+    7: ["spam", "notify", 2],
+    8: ["spam", "manage_mods", 1]
+}
+
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_anti_spam", pagina_guia = 0
-    const guild = await client.getGuild(interaction.guild.id)
+    let guild = await client.getGuild(interaction.guild.id)
 
     if (operacao > 3)
         pagina_guia = 2
@@ -20,65 +34,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // Tratamento dos cliques
     // 0 -> Entrar no painel de cliques
-    // 1 -> Ativar ou desativar o módulo anti-spam
-
-    // 3 -> Ativar ou desativar os links suspeitos
     // 4 -> Sub-menu para configurar os Strikes
-
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
-    // 7 -> Ativar ou desativar as notificações do anti-spam
 
-    // 8 -> Ativar ou desativar a punição de moderadores no servidor
-
-    if (operacao === 1) {
-
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages]))
-            return client.reply(interaction, {
-                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
-            })
-
-        if (!guild.spam.channel && !guild.logger.channel) // Sem canal definido para ativar o anti-spam
-            return interaction.update({ content: ":mag: | Não é possível ativar esse módulo sem um canal de avisos definido.", ephemeral: true })
-
-        // Ativa ou desativa o módulo anti-spam do servidor
-        if (typeof guild.conf.spam !== "undefined")
-            guild.conf.spam = !guild.conf.spam
-        else
-            guild.conf.spam = false
-
-    } else if (operacao === 2) {
-
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.KickMembers]))
-            return client.reply(interaction, {
-                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
-            })
-
-        // Ativa ou desativa o sistema de strikes do anti-spam
-        if (typeof guild.spam.strikes !== "undefined")
-            guild.spam.strikes = !guild.spam.strikes
-        else
-            guild.spam.strikes = false
-
-    } else if (operacao === 3) {
-
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages]))
-            return client.reply(interaction, {
-                content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
-            })
-
-        // Ativa ou desativa o sistema de links suspeitos do anti-spam
-        if (typeof guild.spam.suspicious_links !== "undefined")
-            guild.spam.suspicious_links = !guild.spam.suspicious_links
-        else
-            guild.spam.suspicious_links = false
-
-        pagina_guia = 1
-
-    } else if (operacao === 4) {
+    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    else if (operacao === 4) {
 
         const strikes = await listAllGuildStrikes(interaction.guild.id)
 
@@ -182,22 +143,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
-    } else if (operacao === 7) {
-
-        // Ativa ou desativa as notificações do anti-spam do servidor
-        if (typeof guild.spam.notify !== "undefined")
-            guild.spam.notify = !guild.spam.notify
-        else
-            guild.spam.notify = false
-    } else if (operacao === 8) {
-
-        // Ativa ou desativa a gerencia de moderadores no servidor
-        if (typeof guild.spam.manage_mods !== "undefined")
-            guild.spam.manage_mods = !guild.spam.manage_mods
-        else
-            guild.spam.manage_mods = false
-
-        pagina_guia = 1
     }
 
     if (operacao === 10)
