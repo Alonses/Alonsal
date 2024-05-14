@@ -12,12 +12,10 @@ module.exports = {
 
         if (interaction.user.id !== client.x.owners[0] || client.x.owners.includes(interaction.options.getString("usuario"))) return
 
-        let user_alvo = await client.getUser(interaction.options.getString("usuario"))
+        const user_alvo = await client.getUser(interaction.options.getString("usuario"))
 
-        // Ativa ou desativa o modo fantasma e salva
-        if (typeof user_alvo.conf.banned !== "undefined") user_alvo.conf.banned = !user_alvo.conf.banned
-        else user_alvo.conf.banned = true
-
+        // Ativa ou desativa o banimento do membro
+        user_alvo.conf.banned = !user_alvo.conf.banned
         await user_alvo.save()
 
         if (user_alvo.conf.banned)

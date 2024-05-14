@@ -48,8 +48,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Ativa ou desativa o network do servidor
-        if (typeof guild.conf.network !== "undefined") guild.conf.network = !guild.conf.network
-        else guild.conf.network = true
+        guild.conf.network = !guild.conf.network
 
     } else if (operacao === 2) {
 

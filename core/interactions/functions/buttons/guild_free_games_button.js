@@ -24,17 +24,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 1 -> Ativar ou desativar os jogos gratuitos
     // 2 -> Anunciando os jogos gratuitos do momento
     // 3 -> Escolher cargo para notificar
-    // 4 -> Escolher canal para enviar o anuncio
+    // 4 -> Escolher canal para enviar o anúncio
 
-    if (operacao === 1) {
-
-        // Ativa ou desativa o módulo de jogos gratuitos do servidor
-        if (typeof guild.conf.games !== "undefined")
-            guild.conf.games = !guild.conf.games
-        else
-            guild.conf.games = true
-
-    } else if (operacao === 2) {
+    // Ativa ou desativa o módulo de jogos gratuitos do servidor
+    if (operacao === 1) guild.conf.games = !guild.conf.games
+    else if (operacao === 2) {
 
         // Enviando um anúncio com os titulos de graça no momento
         const canal_alvo = client.discord.channels.cache.get(guild.games.channel)

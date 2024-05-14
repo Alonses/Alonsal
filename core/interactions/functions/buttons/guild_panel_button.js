@@ -4,7 +4,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const escolha = parseInt(dados.split(".")[1])
     const guild = await client.getGuild(interaction.guild.id)
-    let pagina_guia = 2
 
     // Tratamento dos cliques
     // 0 -> Alonsal Falador ( Movido para guild_speaker_button )
@@ -26,13 +25,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             return interaction.update({ content: client.tls.phrase(user, "mode.invites.sem_permissao", 7), ephemeral: true })
 
         // Ativa ou desativa os convites rastreados
-        if (typeof guild.conf.nuke_invites !== "undefined")
-            guild.conf.nuke_invites = !guild.conf.nuke_invites
-        else
-            guild.conf.nuke_invites = true
+        guild.conf.nuke_invites = !guild.conf.nuke_invites
     }
 
     await guild.save()
 
+    const pagina_guia = 2
     require('../../chunks/panel_guild')({ client, user, interaction, pagina_guia })
 }

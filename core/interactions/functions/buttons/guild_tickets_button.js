@@ -25,10 +25,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Ativa ou desativa a função de denúncias in-server
-        if (typeof guild.conf.tickets !== "undefined")
-            guild.conf.tickets = !guild.conf.tickets
-        else
-            guild.conf.tickets = false
+        guild.conf.tickets = !guild.conf.tickets
 
     } else if (operacao === 2) {
 
