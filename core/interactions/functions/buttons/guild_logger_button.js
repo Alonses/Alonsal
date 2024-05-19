@@ -1,11 +1,11 @@
-const { ChannelType, PermissionsBitField } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 // 1 -> Ativar ou desativar o log de eventos
 // 5 -> Ativar ou desativar o registro de punições em canal separado
 // 7 -> Ativar ou desativar as notificações
 
 const operations = {
-    1: ["conf", "logger", 0, [PermissionsBitField.Flags.ViewAuditLog], "manu.painel.sem_permissoes"],
+    1: ["conf", "logger", 0],
     5: ["death_note", "note", 2],
     7: ["death_note", "notify", 2]
 }
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 9 -> Página 1 ( configurações do log de eventos )
     // 10 -> Página 2 ( opções do registrador )
 
-    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
     else if (operacao === 2 || operacao === 6) {
 
         const eventos = []
@@ -63,6 +63,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo os eventos que o log irá relatar no servidor
         const data = {
             title: { tls: "menu.menus.escolher_eventos" },
+            pattern: "choose_events",
             alvo: alvo,
             reback: "browse_button.guild_logger_button",
             operation: operacao,
@@ -89,6 +90,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal de avisos do log de eventos e de avisos separados
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: alvo,
             reback: "browse_button.guild_logger_button",
             operation: operacao,
@@ -96,8 +98,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.${digito}` },
@@ -118,6 +119,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Alterando o idioma do servidor
         const data = {
             title: { tls: "menu.menus.escolher_idioma" },
+            pattern: "choose_language",
             alvo: "guild_logger#language",
             reback: "browse_button.guild_logger_button",
             operation: operacao,

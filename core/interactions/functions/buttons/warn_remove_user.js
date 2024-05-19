@@ -98,11 +98,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             return client.tls.reply(interaction, user, "mode.warns.sem_warns", true, 1)
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (advertencias_server.length < pagina * 24)
-            pagina--
+        if (advertencias_server.length < pagina * 24) pagina--
 
         const data = {
             title: { tls: "menu.menus.escolher_usuario" },
+            pattern: "reports",
             alvo: "remove_warn",
             reback: "browse_button.warn_remove_user",
             operation: 3,

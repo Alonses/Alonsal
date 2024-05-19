@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
         embed.setDescription(client.tls.phrase(user, "mode.report.funcionamento_autoban"))
         botoes = botoes.concat([
-            { id: "guild_reports_button", name: "AutoBan", type: client.execute("functions", "emoji_button.type_button", guild?.reports.auto_ban), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.auto_ban), data: "2" },
+            { id: "guild_reports_button", name: "AutoBan", type: client.execute("functions", "emoji_button.type_button", guild?.reports.auto_ban), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.reports.auto_ban), data: "2", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers) },
             { id: "guild_reports_button", name: client.tls.phrase(user, "menu.botoes.exclusao"), type: 1, emoji: client.emoji(13), data: "6" }
         ])
     } else if (pagina === 2) {

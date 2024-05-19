@@ -19,6 +19,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
 
     const data = {
         title: { tls: "misc.modulo.selecionar_modulo", emoji: 1 },
+        pattern: "modules_browse",
         alvo: "modules_browse",
         values: modulos
     }

@@ -504,20 +504,11 @@ function internal_functions(client) {
         return arr
     }
 
-    client.switcher = async ({ interaction, user, guild, operations, operacao }) => {
-
-        let pagina_guia = 0
-
-        if (operations[operacao][3]) // Operação com permissões especiais
-            if (!await client.permissions(interaction, client.id(), operations[operacao][3]))
-                return client.reply(interaction, {
-                    content: client.tls.phrase(user, operations[operacao][4], 7),
-                    ephemeral: true
-                })
+    client.switcher = ({ guild, operations, operacao }) => {
 
         // Inverte o valor de botões liga/desliga
         guild[operations[operacao][0]][operations[operacao][1]] = !guild[operations[operacao][0]][operations[operacao][1]]
-        pagina_guia = operations[operacao][2]
+        const pagina_guia = operations[operacao][2]
 
         return { guild, pagina_guia }
     }

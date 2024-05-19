@@ -43,6 +43,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo oo cargos que serão inclusos
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "role_assigner_give#role",
             reback: "browse_button.role_assigner",
             operation: operacao,
@@ -50,8 +51,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
@@ -84,6 +84,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo os cargos de membros que serão ignorados
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "role_assigner_ignore#role",
             reback: "browse_button.role_assigner",
             operation: operacao,
@@ -94,8 +95,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         data.values = data.values.concat(cargos_server)
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },

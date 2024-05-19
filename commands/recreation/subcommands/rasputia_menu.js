@@ -4,6 +4,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const data = {
         title: { tls: "Escolha uma frase do filme do Norbit!" },
+        pattern: "phrases",
         alvo: "norbit",
         values: relation
     }

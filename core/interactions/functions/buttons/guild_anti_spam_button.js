@@ -1,4 +1,4 @@
-const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
+const { ChannelType, EmbedBuilder } = require('discord.js')
 
 const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
@@ -11,9 +11,9 @@ const { loggerMap } = require('../../../formatters/patterns/guild')
 // 8 -> Ativar ou desativar a punição de moderadores no servidor
 
 const operations = {
-    1: ["conf", "spam", 0, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages], "manu.painel.sem_permissoes"],
-    2: ["spam", "strikes", 0, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.KickMembers], "manu.painel.sem_permissoes"],
-    3: ["spam", "suspicious_links", 1, [PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.ManageMessages], "manu.painel.sem_permissoes"],
+    1: ["conf", "spam", 0],
+    2: ["spam", "strikes", 0],
+    3: ["spam", "suspicious_links", 1],
     7: ["spam", "notify", 2],
     8: ["spam", "manage_mods", 1]
 }
@@ -38,7 +38,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
 
-    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
     else if (operacao === 4) {
 
         const strikes = await listAllGuildStrikes(interaction.guild.id)
@@ -95,8 +95,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo a quantia de ativações que os usuários precisam receber no servidor para serem considerados como spam
         const data = {
             title: { tls: "menu.menus.escolher_numero" },
+            pattern: "numbers",
             alvo: "guild_spam_strikes",
-            number_values: true,
             values: ["3", "4", "5", "6", "7", "8", "9", "10"]
         }
 
@@ -113,6 +113,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal de avisos do anti-spam
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: "guild_spam#channel",
             reback: "browse_button.guild_anti_spam_button",
             operation: operacao,
@@ -126,8 +127,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.spam.channel))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2` },

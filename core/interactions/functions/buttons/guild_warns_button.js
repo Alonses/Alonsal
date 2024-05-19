@@ -59,7 +59,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
-    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
     else if (operacao === 1) {
 
         if (advertencias.length < 2)
@@ -134,6 +134,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: alvo,
             reback: "browse_button.guild_warns_button",
             operation: operacao,
@@ -147,8 +148,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, canal))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.${digito}` },
@@ -184,8 +184,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },
+            pattern: "numbers",
             alvo: "guild_warns_ban_eraser",
-            number_values: true,
             values: valores
         }
 
@@ -206,19 +206,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         pagina_guia = 1
     }
 
-    if (operacao == 16) { // Definindo o tempo de expiração das advertênicas no servidor
+    if (operacao == 16) { // Definindo o tempo de expiração das advertências no servidor
 
         const valores = []
-
-        Object.keys(spamTimeoutMap).forEach(key => {
-            valores.push(spamTimeoutMap[key])
-        })
+        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
 
         const data = {
-            title: { tls: "menu.menus.escolher_timeout" },
+            title: { tls: "mode.warn.definir_tempo" },
+            pattern: "numbers",
             alvo: "guild_warns_reset",
             submenu: operacao,
-            number_values: true,
             values: valores
         }
 

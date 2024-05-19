@@ -38,6 +38,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo a penalidade que será aplicada ao Strike selecionado
         const data = {
             title: { tls: "menu.menus.escolher_acao" },
+            pattern: "choose_action",
             alvo: "strike_config#action",
             reback: "browse_button.strike_configure_button",
             operation: operacao,
@@ -64,6 +65,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "strike_config#role",
             reback: "browse_button.strike_configure_button",
             operation: operacao,
@@ -72,8 +74,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
@@ -100,8 +101,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: { tls: "menu.menus.escolher_timeout" },
+            pattern: "numbers",
             alvo: "strike_config_timeout",
-            number_values: true,
             submenu: `${id_strike}.${operacao}`,
             values: valores
         }

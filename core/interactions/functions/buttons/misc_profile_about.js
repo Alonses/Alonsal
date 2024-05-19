@@ -17,6 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const data = {
         title: { tls: "Navegando entre customizações" },
+        pattern: "profile_custom_navegar",
         alvo: "profile_custom_navegar",
         values: ["1", "2", "3", "4", "5", "6"]
     }
