@@ -53,6 +53,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Menu para escolher o cargo que será concedido ao membro
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "role_timed_assigner_give#role",
             reback: "browse_button.role_timed_assigner",
             operation: operacao,
@@ -61,8 +62,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
@@ -88,9 +88,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },
+            pattern: "numbers",
             alvo: "role_timed_assigner_timeout",
             submenu: `${user_alvo}.${operacao}`,
-            number_values: true,
             values: valores
         }
 

@@ -13,6 +13,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
 
     const data = {
         title: { tls: "util.tarefas.escolher_lista_navegar", emoji: 1 },
+        pattern: "lists",
         alvo: "listas_navegar",
         values: listas
     }
@@ -28,6 +29,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
             else return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
 
         data.title = { tls: "menu.menus.escolher_tarefa", emoji: [6, 1] }
+        data.pattern = "tasks"
         data.alvo = "tarefa_visualizar"
         data.values = tarefas
         data.operador = `k.${listas[0].timestamp}`

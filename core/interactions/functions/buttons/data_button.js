@@ -11,6 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const data = {
         title: { tls: "menu.menus.escolher_tipo_dado" },
+        pattern: "data_browse",
         alvo: "dados_navegar",
         values: []
     }

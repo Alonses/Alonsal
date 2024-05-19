@@ -37,6 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
         // Exibindo todas as listas para o usuário vincular a tarefa a uma lista
         const data = {
             title: { tls: "util.tarefas.escolher_lista_vincular" },
+            pattern: "lists",
             alvo: "listas",
             values: listas,
             timestamp: timestamp

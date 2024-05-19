@@ -70,6 +70,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o cargo que receberá o avisos de games free
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "guild_free_games#role",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
@@ -77,8 +78,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
@@ -100,6 +100,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal de avisos de anúncio de games free
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: "guild_free_games#channel",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
@@ -107,8 +108,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },

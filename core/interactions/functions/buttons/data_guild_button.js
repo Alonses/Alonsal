@@ -21,8 +21,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },
+            pattern: "numbers",
             alvo: "data_guild_timeout",
-            number_values: true,
             values: valores
         }
 

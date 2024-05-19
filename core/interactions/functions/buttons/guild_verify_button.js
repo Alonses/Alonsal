@@ -26,8 +26,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (warned_users.length > 0) {
 
             // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-            if (warned_users.length < pagina * 24)
-                pagina--
+            if (warned_users.length < pagina * 24) pagina--
 
             const embed = new EmbedBuilder()
                 .setTitle(`${client.tls.phrase(user, "mode.warn.usuarios_advertidos_titulo")} 🛑`)
@@ -42,6 +41,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             // Menu para navegar entre os usuários com advertências do servidor
             const data = {
                 title: { tls: "menu.menus.escolher_usuario" },
+                pattern: "reports",
                 alvo: "warn_browse",
                 reback: "browse_button.warn_browse_user",
                 operation: 0,
@@ -93,8 +93,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                     if (reportes_guild.length > 0) {
 
-                        if (reportes_guild.length < pagina * 24)
-                            pagina-- // Subtrai uma página do total ( em casos de remoção de usuários e página em cache )
+                        // Subtrai uma página do total ( em casos de remoção de usuários e página em cache )
+                        if (reportes_guild.length < pagina * 24) pagina--
 
                         const embed = new EmbedBuilder()
                             .setTitle(`${client.tls.phrase(user, "mode.report.usuarios_reportados_titulo")} 💂‍♂️`)
@@ -108,6 +108,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                         const data = {
                             title: { tls: "menu.menus.escolher_usuario" },
+                            pattern: "reports",
                             alvo: "report_browse",
                             reback: "browse_button.report_browse_user",
                             operation: 0,

@@ -62,6 +62,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo os eventos que o network irá sincronizar no servidor
         const data = {
             title: { tls: "menu.menus.escolher_eventos" },
+            pattern: "choose_events",
             alvo: "guild_network#events",
             reback: "browse_button.guild_network_button",
             operation: operacao,
@@ -93,6 +94,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Listando os servidores para o moderador
         const data = {
             title: { tls: "menu.menus.escolher_guilds" },
+            pattern: "choose_link",
             alvo: "guild_network#link",
             reback: "browse_button.guild_network_button",
             operation: operacao,
@@ -100,8 +102,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de saída de um servidor em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
         let row = client.menu_navigation(client, user, data, pagina || 0)
@@ -147,6 +148,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Escolhendo o canal de avisos dos eventos do network
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: "guild_network#channel",
             reback: "browse_button.guild_network_button",
             operation: operacao,
@@ -160,8 +162,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, guild.network.channel))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.1` },
@@ -188,8 +189,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },
+            pattern: "numbers",
             alvo: "guild_network_ban_eraser",
-            number_values: true,
             values: valores
         }
 

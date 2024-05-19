@@ -58,6 +58,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_cor" },
+            pattern: "static_color",
             alvo: "static_color",
             values: cores
         }

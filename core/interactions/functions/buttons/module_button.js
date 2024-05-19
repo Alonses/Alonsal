@@ -72,6 +72,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Alterando o idioma do servidor
         const data = {
             title: { tls: "menu.menus.escolher_frequencia" },
+            pattern: "modules_select_day",
             alvo: "modules_select_day",
             reback: "verify_module",
             timestamp: timestamp,

@@ -8,6 +8,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const idioma = guild.lang !== "al-br" ? `:flag_${guild.lang.slice(3, 5)}:` : ":pirate_flag:"
 
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+    let descr_rodape
 
     if (pagina > 0)
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_logger.0" }]
@@ -18,6 +19,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Desabilitando o log de eventos caso o bot não possa ver o registro de auditoria do servidor
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
         guild.conf.logger = false
+        descr_rodape = "🛂 | Para utilizar o Log de eventos, o Alonsal deve ser capaz de Ver o registro de auditoria do servidor."
+
         await guild.save()
     }
 
@@ -65,7 +68,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             }
         )
         .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+            text: descr_rodape || client.tls.phrase(user, "manu.painel.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
@@ -108,7 +111,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (pagina === 0)
         botoes = botoes.concat([
-            { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1" },
+            { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
             { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
             { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10", disabled: !guild?.conf.logger },
             { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }

@@ -10,6 +10,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
 
     const data = {
         title: { tls: "util.tarefas.escolher_tarefa_apagar" },
+        pattern: "tasks_remove",
         alvo: "tarefas_remover",
         values: tarefas
     }

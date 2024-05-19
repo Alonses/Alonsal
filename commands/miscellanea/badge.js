@@ -52,6 +52,7 @@ module.exports = {
 
         const data = {
             title: { tls: "dive.badges.escolha_uma" },
+            pattern: "badges",
             alvo: "badges",
             values: all_badges
         }

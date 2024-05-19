@@ -33,6 +33,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
             const data = {
                 title: { tls: "menu.menus.escolher_tarefa" },
+                pattern: "tasks",
                 alvo: "tarefas",
                 values: filtra_tarefas(tarefas, 0),
                 operador: operador
@@ -53,6 +54,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
             const data = {
                 title: { tls: "menu.menus.escolher_tarefa" },
+                pattern: "tasks",
                 alvo: "tarefas",
                 values: filtra_tarefas(tarefas, 1),
                 operador: "f"
@@ -89,6 +91,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
         const data = {
             title: { tls: "menu.menus.escolher_tarefa" },
+            pattern: "tasks",
             alvo: "tarefa_visualizar",
             values: tarefas,
             operador: `k.${lista_timestamp}`
@@ -124,6 +127,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
 
         const data = {
             title: { tls: "menu.menus.escolher_tarefa" },
+            pattern: "tasks",
             alvo: "tarefa_visualizar",
             values: tarefas,
             operador: `x.${lista_timestamp}`

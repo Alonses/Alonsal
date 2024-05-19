@@ -31,8 +31,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },
+            pattern: "numbers",
             alvo: "guild_timed_roles_timeout",
-            number_values: true,
             values: valores
         }
 
@@ -50,6 +50,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal para os avisos dos cargos temporários
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: "guild_timed_roles#channel",
             reback: "browse_button.guild_timed_roles_button",
             operation: operacao,
@@ -57,8 +58,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },

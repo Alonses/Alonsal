@@ -78,6 +78,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o canal de avisos do log de eventos
         const data = {
             title: { tls: "menu.menus.escolher_link" },
+            pattern: "spam_link_panel",
             alvo: "spam_link_panel",
             reback: "browse_button.spam_link_button",
             operation: operacao,

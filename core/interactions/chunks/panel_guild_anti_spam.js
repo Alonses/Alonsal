@@ -9,6 +9,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const guild = await client.getGuild(interaction.guild.id)
     const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+    let descr_rodape
 
     if (pagina > 0) // 2° página da guia do Anti-spam
         botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }]
@@ -22,9 +23,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             indice_matriz = strike.rank + 1
     })
 
-    // Desabilitando os strikes caso não haja canais de aviso selecionados
-    if (!guild.spam.channel && !guild.logger.channel)
+    // Desabilitando o anti-spam caso não haja canais de aviso selecionados, sem permissão para gerenciar mensagens e castigar membros
+    if (!guild.spam.channel && !guild.logger.channel || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers)) {
         guild.conf.spam = false
+        descr_rodape = "🛂 | Para utilizar o Anti-spam, o Alonsal deve ser capaz de Castigar membros e Gerenciar mensagens."
+    }
 
     await guild.save()
 
@@ -81,20 +84,20 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         }
     )
         .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+            text: descr_rodape || client.tls.phrase(user, "manu.painel.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
     if (pagina === 0)
         botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
             { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.recursos"), type: 1, emoji: client.emoji(41), data: "10" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])
     else if (pagina === 1) // Página de recursos do Anti-spam ( Links suspeitos, punição de adms )
         botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.links_suspeitos"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.links_suspeitos"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.gerenciar_moderadores"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" }
         ])
     else // Página de configurações do Anti-spam

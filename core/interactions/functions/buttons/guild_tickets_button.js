@@ -32,6 +32,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo a categoria do sistema de denúncias in-server
         const data = {
             title: { tls: "menu.menus.escolher_categoria" },
+            pattern: "choose_channel",
             alvo: "guild_tickets#category",
             reback: "browse_button.guild_tickets_button",
             operation: operacao,
@@ -39,8 +40,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },

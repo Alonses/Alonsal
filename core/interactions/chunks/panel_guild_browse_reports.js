@@ -72,11 +72,11 @@ module.exports = async ({ client, user, interaction, pagina }) => {
 
                 if (reportes_guild.length > 0) {
                     // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-                    if (reportes_guild.length < pagina * 24)
-                        pagina--
+                    if (reportes_guild.length < pagina * 24) pagina--
 
                     const data = {
                         title: { tls: "menu.menus.escolher_usuario" },
+                        pattern: "reports",
                         alvo: "report_browse",
                         reback: "browse_button.report_browse_user",
                         operation: 0,

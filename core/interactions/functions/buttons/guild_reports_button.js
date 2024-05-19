@@ -1,4 +1,4 @@
-const { PermissionsBitField, ChannelType } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 
@@ -8,7 +8,7 @@ const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 
 const operations = {
     1: ["conf", "reports", 0],
-    2: ["reports", "auto_ban", 1, [PermissionsBitField.Flags.BanMembers], "manu.painel.sem_permissoes"],
+    2: ["reports", "auto_ban", 1],
     3: ["reports", "notify", 2]
 }
 
@@ -35,12 +35,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 20 -> Sub-menu dos AutoBan
     // 21 -> Sub-menu com opções extras 
 
-    if (operations[operacao]) ({ guild, pagina_guia } = await client.switcher({ interaction, user, guild, operations, operacao }))
+    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
     else if (operacao === 4) {
 
         // Definindo o canal de avisos dos relatórios externos
         const data = {
             title: { tls: "menu.menus.escolher_canal" },
+            pattern: "choose_channel",
             alvo: "guild_reports#channel",
             reback: "browse_button.guild_reports_button",
             operation: operacao,
@@ -48,8 +49,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2` },
@@ -71,6 +71,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Definindo o cargo que receberá o avisos de entradas do reporte
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
+            pattern: "choose_role",
             alvo: "guild_reports_button#role",
             reback: "browse_button.guild_reports_button",
             operation: operacao,
@@ -83,8 +84,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         data.values = data.values.concat(await client.getGuildRoles(interaction, guild.reports.role, true))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-        if (data.values.length < pagina * 24)
-            pagina--
+        if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2` },
@@ -112,8 +112,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },
+            pattern: "numbers",
             alvo: "guild_reports_ban_eraser",
-            number_values: true,
             values: valores
         }
 
