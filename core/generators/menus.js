@@ -21,7 +21,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
         // Montando a lista de valores para escolher conforme o alvo de entrada
         if (!insersoes.includes(valor)) {
 
-            let { nome_label, emoji_label, descricao_label, valor_label } = require(`../formatters/menus/${data.pattern}`)({ client, user, alvo, valor })
+            let { nome_label, emoji_label, descricao_label, valor_label } = require(`../formatters/menus/${data.pattern}`)({ client, user, alvo, valor, data, pagina })
 
             itens_menu.push({
                 label: nome_label,

@@ -1,4 +1,4 @@
-module.exports = ({ client, user, alvo, valor }) => {
+module.exports = ({ client, user, alvo, valor, data }) => {
 
     const nome_label = valor.text.length > 15 ? `${valor.text.slice(0, 25)}...` : valor.text
     const valor_label = `${alvo}|${valor.uid}.${valor.timestamp}.${data.operador}`
