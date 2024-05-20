@@ -1,4 +1,4 @@
-module.exports = ({ client, user, alvo, valor }) => {
+module.exports = ({ client, user, alvo, valor, data }) => {
 
     const nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
     let emoji_label = client.defaultEmoji("role")

@@ -1,6 +1,6 @@
 const { banMessageEraser } = require("../patterns/timeout")
 
-module.exports = ({ client, user, alvo, valor }) => {
+module.exports = ({ client, user, alvo, valor, data }) => {
 
     let nome_label, descricao_label
     let emoji_label = client.defaultEmoji("time")

@@ -1,4 +1,4 @@
-module.exports = ({ client, user, alvo, valor }) => {
+module.exports = ({ client, user, alvo, valor, pagina }) => {
 
     const nome_label = valor.nick ? (valor.nick.length > 20 ? `${valor.nick.slice(0, 20)}...` : valor.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")
     const descricao_label = `${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory.length < 10 ? valor.relatory : `${valor.relatory.slice(0, 10)}...`}`
