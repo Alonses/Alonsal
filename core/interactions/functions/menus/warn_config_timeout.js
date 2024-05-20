@@ -2,7 +2,6 @@ const { getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const guild = await client.getGuild(interaction.guild.id)
     const tempo_mute = parseInt(dados.split(".")[0])
     const id_warn = parseInt(dados.split(".")[1])
 

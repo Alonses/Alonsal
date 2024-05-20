@@ -9,7 +9,7 @@ const { spamTimeoutMap } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const id_warn = dados.split(".")[2]
+    const id_warn = parseInt(dados.split(".")[2])
     const guild = await client.getGuild(interaction.guild.id)
     const warn = await getGuildWarn(interaction.guild.id, id_warn)
 
