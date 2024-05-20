@@ -9,7 +9,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = `warn_configure_button.${id_warn}`
 
     const warn = await getGuildWarn(interaction.guild.id, id_warn) // Cria uma nova advertência caso o ID passado não exista
-    const guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
     // 1 -> Escolher penalidade
