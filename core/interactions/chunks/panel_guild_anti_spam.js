@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const guild = await client.getGuild(interaction.guild.id)
     const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
 
-    let botoes = [], retorno = pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0", descr_rodape, indice_matriz
+    let botoes = [], descr_rodape, indice_matriz
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -104,10 +104,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "6" }
         ])
 
-    client.reply(interaction, {
+    return client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: retorno }], interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" }], interaction)],
         ephemeral: true
     })
 }
