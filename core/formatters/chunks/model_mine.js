@@ -5,6 +5,8 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, user, interaction) => {
 
+    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+
     let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
 
     // Entrada customizada, ativa caso o usuário tenha pesquisado por algo
@@ -17,13 +19,11 @@ module.exports = async (client, user, interaction) => {
 
             // Erro de pesquisa com a API
             if (dados_item.status === 502)
-                if (interaction)
-                    return client.tls.reply(interaction, user, "util.minecraft.error_1", true, client.emoji(0))
-                else
-                    return client.sendDM(user, { content: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
+                if (interaction) return client.tls.editReply(interaction, user, "util.minecraft.error_1", true, client.emoji(0))
+                else return client.sendDM(user, { content: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
 
             if (dados_item.status === 404 && interaction) // Sem item conhecido
-                return client.tls.reply(interaction, user, "util.minecraft.nao_encontrado", true, client.emoji("emojis_negativos"), interaction.options.getString("item"))
+                return client.tls.editReply(interaction, user, "util.minecraft.nao_encontrado", true, client.emoji("emojis_negativos"), interaction.options.getString("item"))
 
             let nome_item = dados_item.internal_name
             descricao_tipo = nome_item
@@ -139,19 +139,19 @@ module.exports = async (client, user, interaction) => {
 
             // Dados vindos da wiki do minecraft
             if (dados_item.wiki.descricao) {
-                let link_artigo = client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki", null, dados_item.wiki.link)
+                const link_artigo = client.tls.phrase(user, "util.minecraft.mais_detalhes_wiki", null, dados_item.wiki.link)
 
                 embed.addFields(
                     {
                         name: `${client.emoji("mc_logo_wikipedia")} Wiki sobre ${dados_item.name}`,
-                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", dados_item.wiki.descricao.length > 500 ? `${dados_item.wiki.descricao.slice(0, 500)}...` : dados_item.wiki.descricao)}\`\`\`\n${link_artigo}`,
+                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", (dados_item.wiki.descricao.split("\">")[0]).length > 500 ? `${(dados_item.wiki.descricao.split("\">")[0]).slice(0, 500)}...` : dados_item.wiki.descricao.split("\">")[0])}\`\`\`\n${link_artigo}`,
                         inline: false
                     }
                 )
             }
 
             if (interaction)
-                interaction.reply({
+                return interaction.editReply({
                     embeds: [embed],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
