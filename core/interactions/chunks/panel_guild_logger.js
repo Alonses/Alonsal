@@ -7,11 +7,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
     const idioma = guild.lang !== "al-br" ? `:flag_${guild.lang.slice(3, 5)}:` : ":pirate_flag:"
 
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
-    let descr_rodape
-
-    if (pagina > 0)
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_logger.0" }]
+    let botoes = [], descr_rodape
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -113,7 +109,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
             { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-            { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10", disabled: !guild?.conf.logger },
+            { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10" },
             { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])
     else if (pagina === 1)
@@ -132,7 +128,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_logger.0" }], interaction)],
         ephemeral: true
     })
 }

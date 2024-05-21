@@ -8,11 +8,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
     const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
-    let texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
 
-    if (pagina > 0) // 2° página da guia das advertências
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" }]
+    let botoes = [], texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -133,7 +130,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_warns.0" }], interaction)],
         ephemeral: true
     })
 }

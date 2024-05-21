@@ -1,14 +1,12 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+
 const { banMessageEraser } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     const pagina = pagina_guia || 0
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
-
-    if (pagina !== 0)
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_external_reports" }]
+    let botoes = []
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
@@ -89,7 +87,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_external_reports" }], interaction)],
         ephemeral: true
     })
 }
