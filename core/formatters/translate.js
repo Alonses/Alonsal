@@ -1,5 +1,8 @@
 const { status } = require('../../files/json/text/emojis.json')
+
 const replace_string = require('../functions/replace_string')
+
+let traducoes, idioma_ativo
 
 function reply(interaction, user, target, ephemeral, emoji, replace) {
 
@@ -71,55 +74,36 @@ function report(interaction, user, target, ephemeral, emoji, button, update) {
 function translate(alvo, target, replace) {
 
     // Pode ser usado para referenciar usuários ou servidores
-    const idioma_alvo = alvo.lang || "pt-br"
-    let phrase
+    let idioma_alvo = alvo.lang || "pt-br", data
 
-    // Busca as traduções para o item solicitado
-    let { data } = require(`../../files/languages/${idioma_alvo}.json`)
+    if (!traducoes || idioma_alvo !== idioma_ativo) { // Busca as traduções para o idioma solicitado
+        ({ data } = require(`../../files/languages/${idioma_alvo}.json`))
 
-    try { // Buscando o item no idioma padrão (pt-br)
-        if (!data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]])
-            data = { data } = require(`../../files/languages/pt-br.json`)
-    } catch {
-        data = { data } = require(`../../files/languages/pt-br.json`)
+        traducoes = data
+        idioma_ativo = idioma_alvo
     }
 
-    try {
-        if (!target.includes("manu.data.selects")) {
-            // Compactando a tradução alvo em um único valor
-            if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes") && !target.includes("mode.idiomas.siglas"))
-                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
-            else
-                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
-        } else
-            data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
+    let phrase = traducoes
+    const caminho = target.split(".")
 
-    } catch { // Tradução não existente no idioma selecionado
+    do {
+        if (!phrase) { // Tradução não existe no idioma escolhido, usando idioma padrão
+            ({ data } = require(`../../files/languages/pt-br.json`))
 
-        try {
-            data = { data } = require(`../../files/languages/pt-br.json`)
-            data = data.data
-
-            if (!target.includes("manu.data.selects")) {
-                // Retornando a tradução em PT-BR (idioma padrão)
-                if (!target.includes("minecraft.detalhes") && !target.includes("manu.data.causes") && !target.includes("mode.idiomas.siglas"))
-                    data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]]
-                else
-                    data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]]
-            } else
-                data = data[target.split(".")[0]][target.split(".")[1]][target.split(".")[2]][target.split(".")[3]][target.split(".")[4]]
-        } catch {
-
-            // Utilizado apenas caso a tradução não exista no idioma padrão
-            phrase = "<unknow_key>"
+            phrase = data
+            idioma_alvo = "pt-br"
         }
-    }
 
-    if (data && !phrase) // Tradução encontrada
-        phrase = data
+        for (let i = 0; i < caminho.length; i++)
+            phrase = phrase[caminho[i]]
 
-    if (Array.isArray(data)) // Verifica se não há mensagens diferentes para o mesmo retorno
-        phrase = data[Math.floor((data.length - 1) * Math.random())]
+        if (idioma_alvo === "pt-br" && !phrase)
+            phrase = "<unknow_key>"
+
+    } while (!phrase)
+
+    if (Array.isArray(phrase)) // Verifica se não há mensagens diferentes para o mesmo retorno
+        phrase = phrase[Math.floor((phrase.length - 1) * Math.random())]
 
     if (alvo.misc?.second_lang) // Corrigindo a tradução para o idioma secundário ativo
         phrase = ajusta_traducao(alvo.misc.second_lang, phrase)
