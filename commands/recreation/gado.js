@@ -47,29 +47,30 @@ module.exports = {
 
         // Lista de frases de gado
         const { gadisissimo } = require(`../../files/json/text/${idioma_definido}/gado.json`)
+        const efemero = alvo.id !== interaction.user.id ? user?.conf.ghost_mode : false
         const num = client.random(gadisissimo)
 
         if (alvo.id !== interaction.user.id)
             if (idioma_definido === "pt-br")
                 interaction.reply({
                     content: `O <@${alvo.id}> ${gadisissimo[num]}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: efemero
                 })
             else
                 interaction.reply({
                     content: `The <@${alvo.id}> ${gadisissimo[num]}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: efemero
                 })
         else
             if (idioma_definido === "pt-br")
                 interaction.reply({
                     content: `Você ${interaction.user} ${gadisissimo[num]}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: efemero
                 })
             else
                 interaction.reply({
                     content: `You ${interaction.user} ${gadisissimo[num]}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: efemero
                 })
     }
 }
