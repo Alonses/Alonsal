@@ -8,15 +8,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
-    let descr_rodape
 
-    if (pagina > 0) // 2° página da guia do Anti-spam
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }]
+    let botoes = [], retorno = pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0", descr_rodape, indice_matriz
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
-    let indice_matriz
 
     strikes_guild.forEach(strike => {
         if ((strike.action === "member_kick_2" || strike.action === "member_ban") && !indice_matriz)
@@ -91,7 +87,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (pagina === 0)
         botoes = botoes.concat([
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
-            { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2" },
+            { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.recursos"), type: 1, emoji: client.emoji(41), data: "10" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])
@@ -111,7 +107,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: retorno }], interaction)],
         ephemeral: true
     })
 }

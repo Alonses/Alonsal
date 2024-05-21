@@ -21,23 +21,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     const advertencias = await listAllGuildWarns(interaction.guild.id)
     const guild = await client.getGuild(interaction.guild.id)
 
-    if (operacao > 8)
-        pagina_guia = 2
+    if (operacao > 8) pagina_guia = 2
 
     // Sem canal de avisos definido, solicitando um canal
-    if (!guild.warn.channel || advertencias.length < 1) {
+    if (!guild.warn.channel) {
         reback = "panel_guild.0"
         operacao = 5
-    }
-
-    if (advertencias.length < 1) {
-        operacao = 3
-
-        // Desligando as advertências caso não haja suficientes criadas
-        if (advertencias.length < 2) {
-            guild.conf.warn = false
-            await guild.save()
-        }
     }
 
     // Tratamento dos cliques

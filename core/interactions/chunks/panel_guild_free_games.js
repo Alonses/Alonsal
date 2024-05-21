@@ -3,7 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
+    let botoes = []
 
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.anuncio_games")} :video_game:`)
@@ -69,16 +69,13 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
     ])
 
-    // Mostrado apenas quando um canal e um cargo está definido para o anúncio de games do servidor
-    if (guild.games.channel && guild.games.role)
-        botoes = botoes.concat([
-            { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.anunciar_agora"), type: 1, emoji: client.emoji(6), data: "2" }
-        ])
+    if (guild.games.channel && guild.games.role) // Mostrado apenas quando um canal e um cargo está definido para o anúncio de games no servidor
+        botoes = botoes.concat([{ id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.anunciar_agora"), type: 1, emoji: client.emoji(6), data: "2" }])
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }], interaction)],
         ephemeral: true
     })
 }

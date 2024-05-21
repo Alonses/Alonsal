@@ -10,11 +10,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
         const pagina = pagina_guia || 0
         const guild = await client.getGuild(interaction.guild.id)
-        let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }]
-        let retorno_aviso = ""
-
-        if (pagina === 1) // 2° página da guia do networking
-            botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_network.0" }]
+        let botoes = [], retorno_aviso = ""
 
         // Permissões do bot no servidor
         const servidores_link = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length : 0
@@ -134,7 +130,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         interaction.editReply({
             content: retorno_aviso,
             embeds: [embed],
-            components: [client.create_buttons(botoes, interaction)],
+            components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_network.0" }], interaction)],
             ephemeral: true
         })
 

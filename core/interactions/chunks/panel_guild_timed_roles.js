@@ -4,7 +4,6 @@ const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.2" }]
 
     // Permissões do bot no servidor
     const bot_member = await client.getMemberGuild(interaction, client.id())
@@ -49,15 +48,15 @@ module.exports = async ({ client, user, interaction }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    botoes = botoes.concat([
+    const botoes = [
         { id: "guild_timed_roles_button", name: "Expiração", type: 1, emoji: client.defaultEmoji("time"), data: "1" },
         { id: "guild_timed_roles_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
-    ])
+    ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction)],
         ephemeral: true
     })
 }
