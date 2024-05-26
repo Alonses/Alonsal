@@ -5,6 +5,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     const expressao = interaction.options.getString("equation")
 
+    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+
     if (expressao.length < 2)
         return client.tls.reply(interaction, user, "util.calc.aviso_1")
 
@@ -18,12 +20,12 @@ module.exports = async ({ client, user, interaction }) => {
         if (!isInteger(resultado))
             resultado = resultado.toFixed(6)
 
-        return interaction.reply({
+        return interaction.editReply({
             content: `${client.tls.phrase(user, "util.calc.resultado", emoji_res)}: \`${client.locale(resultado)}\``,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     } catch {
-        return interaction.reply({
+        return interaction.editReply({
             content: `${client.tls.phrase(user, "util.calc.error", client.emoji(0))}: \`${expressao}\``,
             ephemeral: true
         })
