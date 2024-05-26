@@ -46,11 +46,6 @@ module.exports = {
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction))
             return client.tls.reply(interaction, user, "dive.gado.permissao", true, 7)
 
-        await interaction.reply({
-            content: client.tls.phrase(user, "dive.gado.teste_revela", [66, 67]),
-            ephemeral: true
-        })
-
-        interaction.channel.send(client.tls.phrase(user, "dive.gado.frases", null, `<@${alvo.id}>`))
+        interaction.reply({ content: client.tls.phrase(user, "dive.gado.frases", null, `<@${alvo.id}>`) })
     }
 }
