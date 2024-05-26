@@ -6,12 +6,18 @@ const { getGuildWarn } = require("../../database/schemas/Guild_warns")
 
 const { loggerMap } = require("../../formatters/patterns/guild")
 const { spamTimeoutMap } = require("../../formatters/patterns/timeout")
+const { default_emoji } = require('../../../files/json/text/emojis.json')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const id_warn = parseInt(dados.split(".")[2])
     const guild = await client.getGuild(interaction.guild.id)
     const warn = await getGuildWarn(interaction.guild.id, id_warn)
+
+    if (!warn.strikes) { // Concede os strikes minimos para cada advertência conforme a configuração do servidor
+        warn.strikes = guild.warn.hierarchy.strikes
+        warn.save()
+    }
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.warn.edicao_warn_titulo", null, warn.rank + 1))
@@ -38,8 +44,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.reset)
         embed.addFields(
             {
-                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
-                value: `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**`,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")} ( 🔀 )**`,
+                value: guild.warn.timed ? `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**` : "`🛑 Sem expiração automática`",
                 inline: false
             }
         )
@@ -50,6 +56,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     embed.addFields(
         {
+            name: "👑 **Advertências com hierarquia**",
+            value: `${guild.warn.hierarchy.status ? "`✅ Ativas`" : "`🛑 Desativadas`"} \`${client.defaultEmoji("paper")} ${warn.strikes || guild.warn.hierarchy.strikes} anotações para acionar\``,
+            inline: false
+        },
+        {
             name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
             value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
             inline: true
@@ -57,11 +68,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         {
             name: "⠀",
             value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
-            inline: true
-        },
-        {
-            name: "⠀",
-            value: "⠀",
             inline: true
         }
     )
@@ -88,15 +94,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const botoes = [
-        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `4.${id_warn}` },
         { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.penalidade"), type: 1, emoji: loggerMap[warn.action] || loggerMap["none"], data: `1.${id_warn}` },
         { id: "warn_configure_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_warn}`, disabled: b_cargos },
-        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.tempo_mute"), type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_warn}` }
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.tempo_mute"), type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_warn}` },
+        { id: "warn_configure_button", name: "Anotações", type: 1, emoji: default_emoji["numbers"][warn.strikes || guild.warn.hierarchy.strikes], data: `12.${id_warn}` }
     ]
 
     const row = [
         { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "3" },
-        { id: "warn_remove", name: client.tls.phrase(user, "menu.botoes.excluir_advertencia"), type: 3, emoji: client.emoji(13), data: `2|${id_warn}` }
+        { id: "warn_remove", name: client.tls.phrase(user, "menu.botoes.excluir_advertencia"), type: 3, emoji: client.emoji(13), data: `2|${id_warn}` },
+        { id: "warn_configure_button", name: "Expirar", type: client.execute("functions", "emoji_button.type_button", guild.warn.timed), emoji: client.defaultEmoji("time"), data: `11.${id_warn}` },
+        { id: "warn_configure_button", name: "Usar hierarquia", type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.status), emoji: client.emoji(65), data: `10.${id_warn}`, disabled: !interaction.member.permissions.has(PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.KickMembers) }
     ]
 
     const obj = {

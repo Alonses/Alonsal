@@ -3,12 +3,11 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const { operation_codes } = require('../../formatters/patterns/guild')
 
 // Funções sem guias de configuração
-const direct_functions = [1, 10]
+const direct_functions = [10]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
-    const membro_sv = await client.getMemberGuild(interaction, interaction.user.id)
 
     // Códigos de funções
     // 0 -> Alonsal falador
@@ -23,7 +22,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // 7 -> Visibilidade global
     // 8 -> Network
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
@@ -37,12 +36,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         botoes = [{ id: "data_guild_button", name: client.defaultEmoji("paper"), type: 2, data: "0" }]
 
     // Falta de permissões para gerenciar o sistema de denúncias
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels) && !membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))
+    if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels) && !interaction.member.permissions.has(PermissionsBitField.Flags.ManageRoles))
         c_buttons[3] = true
 
     // Falta de permissões para gerenciar o sistema de reportes, o alonsal falador, o broadcast entre servidores
     // o Log de eventos e o módulo anti-spam
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
+    if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
         c_buttons[0] = true
         c_buttons[1] = true
         c_buttons[4] = true
@@ -51,17 +50,21 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     }
 
     // Falta de permissões para gerenciar o servidor no ranking global e o anúncios de games
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
+    if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
         c_buttons[2] = true
         c_buttons[7] = true
         c_buttons[10] = true
     }
 
     // Falta de permissões para banir membros
-    if (!membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers || PermissionsBitField.Flags.KickMembers)) {
+    if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers || PermissionsBitField.Flags.KickMembers)) {
         c_buttons[8] = true
         c_buttons[9] = true
     }
+
+    // Falta de permissões para gerenciar advertências hierarquicas
+    if (!interaction.member.permissions.has(PermissionsBitField.Flags.ModerateMembers))
+        c_buttons[11] = true
 
     /* Atalhos para as funções do painel */
 
@@ -83,6 +86,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                     pagina_guia = parseInt(operador.split(".")[1])
                     operador = operador.split(".")[0]
                 }
+
+                if (c_buttons[operation_codes[operador]])
+                    return client.tls.reply(interaction, user, "manu.painel.user_sem_permissao", client.emoji(7))
 
                 return require(`./panel_guild_${operador}`)({ client, user, interaction, pagina_guia })
             }

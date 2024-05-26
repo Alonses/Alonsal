@@ -8,6 +8,7 @@ module.exports = ({ client, user, alvo, valor }) => {
 
     // Usado para remover o canal
     if (valor.id === "none") emoji_label = client.emoji(0)
+    if (valor.emoji) emoji_label = valor.emoji
 
     return { nome_label, emoji_label, descricao_label, valor_label }
 }

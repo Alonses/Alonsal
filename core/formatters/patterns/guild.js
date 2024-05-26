@@ -48,8 +48,6 @@ const guildActions = {
 }
 
 const operation_codes = {
-    "speaker": 0,
-    "broadcast": 1,
     "free_games": 2,
     "tickets": 3,
     "external_reports": 4,
@@ -57,7 +55,8 @@ const operation_codes = {
     "anti_spam": 6,
     "network": 8,
     "warns": 9,
-    "tracked_invites": 10
+    "tracked_invites": 10,
+    "hierarchy_warns": 11
 }
 
 const networkCases = {
@@ -67,11 +66,20 @@ const networkCases = {
     "mute": "member_punishment"
 }
 
+const invalidMenus = {
+    "role": "Não há cargos para selecionar no momento...",
+    "channel": "Não há canais para selecionar no momento...",
+    "category": "Não há canais para selecionar no momento...",
+    "events": "Não há eventos para selecionar no momento...",
+    "action": "Não há ações para selecionar no momento..."
+}
+
 module.exports = {
     loggerMap,
     channelTypes,
     guildPermissions,
     guildActions,
     operation_codes,
-    networkCases
+    networkCases,
+    invalidMenus
 }

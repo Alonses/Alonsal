@@ -7,9 +7,9 @@ const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 // 3 -> Ativar ou desativar o aviso de novos usuários reportados
 
 const operations = {
-    1: ["conf", "reports", 0],
-    2: ["reports", "auto_ban", 1],
-    3: ["reports", "notify", 2]
+    1: { action: "conf.reports", page: 0 },
+    2: { action: "reports.auto_ban", page: 1 },
+    3: { action: "reports.notify", page: 2 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {

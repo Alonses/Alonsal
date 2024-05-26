@@ -58,7 +58,7 @@ const defaultStrikes = {
     1: 7200,   // 2 horas
     2: 21700,  // 6 horas
     3: 172800, // 2 dias
-    4: 604800 // 7 dias
+    4: 604800  // 7 dias
 }
 
 const defaultUserEraser = {
@@ -68,11 +68,14 @@ const defaultUserEraser = {
     4: 29030400  // 1 ano
 }
 
+const defaultWarnStrikes = [3, 4, 5, 6, 7]
+
 module.exports = {
     defaultEraser,
     banMessageEraser,
     defaultRoleTimes,
     spamTimeoutMap,
     defaultStrikes,
-    defaultUserEraser
+    defaultUserEraser,
+    defaultWarnStrikes
 }

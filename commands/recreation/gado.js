@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,40 +37,20 @@ module.exports = {
                 .setRequired(true)),
     async execute({ client, user, interaction }) {
 
-        let idioma_definido = client.idioma.getLang(interaction)
-        if (idioma_definido === "al-br") idioma_definido = "pt-br"
-
         const alvo = interaction.options.getUser("user")
 
-        if (client.id() === alvo.id)
-            return client.tls.reply(interaction, user, "dive.gado.error_2", true, 2)
+        if (client.id() === alvo.id) // Usuário marcou o bot
+            return client.tls.reply(interaction, user, "dive.gado.error_2", true, 67)
 
-        // Lista de frases de gado
-        const { gadisissimo } = require(`../../files/json/text/${idioma_definido}/gado.json`)
-        const efemero = alvo.id !== interaction.user.id ? user?.conf.ghost_mode : false
-        const num = client.random(gadisissimo)
+        // Permissões do Alonso para enviar mensagem e ver o canal onde o comando foi usado
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction))
+            return client.tls.reply(interaction, user, "dive.gado.permissao", true, 7)
 
-        if (alvo.id !== interaction.user.id)
-            if (idioma_definido === "pt-br")
-                interaction.reply({
-                    content: `O <@${alvo.id}> ${gadisissimo[num]}`,
-                    ephemeral: efemero
-                })
-            else
-                interaction.reply({
-                    content: `The <@${alvo.id}> ${gadisissimo[num]}`,
-                    ephemeral: efemero
-                })
-        else
-            if (idioma_definido === "pt-br")
-                interaction.reply({
-                    content: `Você ${interaction.user} ${gadisissimo[num]}`,
-                    ephemeral: efemero
-                })
-            else
-                interaction.reply({
-                    content: `You ${interaction.user} ${gadisissimo[num]}`,
-                    ephemeral: efemero
-                })
+        await interaction.reply({
+            content: client.tls.phrase(user, "dive.gado.teste_revela", [66, 67]),
+            ephemeral: true
+        })
+
+        interaction.channel.send(client.tls.phrase(user, "dive.gado.frases", null, `<@${alvo.id}>`))
     }
 }

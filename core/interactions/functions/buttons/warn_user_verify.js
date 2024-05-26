@@ -112,7 +112,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     inline: true
                 },
                 {
-                    name: `${client.emoji("time")} **${client.tls.phrase(user, "mode.warn.aplicado")} <t:${user_warn.timestamp}:R>**`,
+                    name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.warn.aplicado")} <t:${user_warn.timestamp}:R>**`,
                     value: `<t:${user_warn.timestamp}:f>`,
                     inline: true
                 }

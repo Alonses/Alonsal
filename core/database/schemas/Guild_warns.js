@@ -7,7 +7,8 @@ const schema = new mongoose.Schema({
     rank: { type: Number, default: 0 },
     action: { type: String, default: null },
     role: { type: String, default: null },
-    timeout: { type: Number, default: 2 }
+    timeout: { type: Number, default: 2 },
+    strikes: { type: Number, default: 0 }
 })
 
 const model = mongoose.model("Warn_guild", schema)

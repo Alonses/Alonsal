@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction }) => {
     await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
     if (expressao.length < 2)
-        return client.tls.reply(interaction, user, "util.calc.aviso_1")
+        return client.tls.editReply(interaction, user, "util.calc.aviso_1")
 
     try {
         let resultado = math.evaluate(expressao)

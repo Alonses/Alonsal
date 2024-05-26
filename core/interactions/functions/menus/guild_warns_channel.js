@@ -1,11 +1,8 @@
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    guild.warn.channel = dados
 
-    if (dados === "none") // Removendo canal selecionado
-        guild.warn.channel = null
-
+    guild.warn.channel = dados === "none" ? null : dados
     await guild.save()
 
     // Redirecionando o evento

@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 const { readdirSync } = require('fs')
 
@@ -30,6 +30,7 @@ const { registerUserGuild, listAllUserGuilds } = require('./core/database/schema
 const { loggerMap } = require('./core/formatters/patterns/guild')
 const { spamTimeoutMap } = require('./core/formatters/patterns/timeout')
 const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
+const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
 
 function internal_functions(client) {
 
@@ -162,12 +163,22 @@ function internal_functions(client) {
         if (!id_configurado) id_configurado = ""
 
         canais.map(channel => {
-            if (channel.id !== id_configurado)
+            if (channel.id !== id_configurado && channel.id !== interaction.channel.id && channel.id !== interaction.channel.parentId)
                 canais_alvo.push({ id: channel.id, name: channel.name })
         })
 
         // Ordenando alfabeticamente os canais
-        return canais_alvo.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
+        const ordenado = canais_alvo.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
+
+        if (id_configurado !== interaction.channel.id && id_configurado !== interaction.channel.parentId) { // Adicionando o local atual do comando no inicio do array
+
+            if (tipo === ChannelType.GuildText) // Usado por canais
+                ordenado.unshift({ id: interaction.channel.id, name: "Usar local atual", emoji: "🎯" })
+            else if (interaction.channel.parentId) // Usado por categorias
+                ordenado.unshift({ id: interaction.channel.parentId, name: "Usar local atual", emoji: "🎯" })
+        }
+
+        return ordenado
     }
 
     client.getGuildRoles = async (interaction, id_atual, permitir_mods) => {
@@ -252,9 +263,9 @@ function internal_functions(client) {
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => { return client.discord.users.fetch(id_alvo) }
 
-    client.getSingleWarnedGuildUser = async (id_guild) => {
+    client.getSingleWarnedGuildUser = async (id_guild, escopo) => {
 
-        const warned_users = await checkUserGuildWarned(id_guild), usuarios_validos = []
+        const warned_users = await (escopo === "warn" ? checkUserGuildWarned(id_guild) : checkUserGuildPreWarned(id_guild)), usuarios_validos = []
         let warned_cache = []
 
         for (let i = 0; i < warned_users.length; i++)
@@ -507,8 +518,17 @@ function internal_functions(client) {
     client.switcher = ({ guild, operations, operacao }) => {
 
         // Inverte o valor de botões liga/desliga
-        guild[operations[operacao][0]][operations[operacao][1]] = !guild[operations[operacao][0]][operations[operacao][1]]
-        const pagina_guia = operations[operacao][2]
+        const local = (operations[operacao].action).split(".")
+
+        // Vasculha o objeto do servidor a procura do valor para alterar
+        local.reduce((acc, key, index) => {
+            if (index === local.length - 1)
+                acc[key] = !acc[key]
+
+            return acc[key]
+        }, guild)
+
+        const pagina_guia = operations[operacao].page
 
         return { guild, pagina_guia }
     }

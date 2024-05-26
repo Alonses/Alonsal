@@ -7,6 +7,7 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     nick: { type: String, default: null },
+    hierarchy: { type: Boolean, default: false },
     valid: { type: Boolean, default: false },
     timeout: { type: Boolean, default: true },
     assigner: { type: String, default: null },
@@ -52,6 +53,17 @@ async function listAllUserWarns(uid, sid) {
     })
 }
 
+async function listAllUserCachedHierarchyWarns(uid, sid) {
+
+    // Listando todas as advertências que um usuário recebeu em um servidor
+    return model.find({
+        uid: uid,
+        sid: sid,
+        hierarchy: true,
+        valid: false
+    })
+}
+
 async function listAllCachedUserWarns(uid, sid) {
 
     // Listando as advertências em cache do usuário
@@ -92,6 +104,7 @@ module.exports = {
     getUserWarn,
     checkUserGuildWarned,
     listAllUserWarns,
+    listAllUserCachedHierarchyWarns,
     removeUserWarn,
     listAllCachedUserWarns,
     dropAllUserGuildWarns,
