@@ -48,7 +48,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 
-        if (!await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageGuild]) && interaction.user.id !== client.x.owners[0])
+        if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.x.owners[0])
             return client.tls.reply(interaction, user, "mode.xp.permissao", true, 3)
 
         // Coletando os dados do usuário informado no servidor

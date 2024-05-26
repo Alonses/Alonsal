@@ -1,14 +1,26 @@
 const { getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
-const { spamTimeoutMap } = require('../../../formatters/patterns/timeout')
+const { spamTimeoutMap, defaultWarnStrikes } = require('../../../formatters/patterns/timeout')
 const { guildActions, guildPermissions } = require('../../../formatters/patterns/guild')
+
+// 10 -> Ativa ou desativa a hierarquia de advertências
+// 11 -> Ativa ou deastiva a expiração de advertências
+
+const operations = {
+    10: { action: "warn.hierarchy.status", page: 0 },
+    11: { action: "warn.timed", page: 0 }
+}
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     const id_warn = parseInt(dados.split(".")[2])
     let operacao = parseInt(dados.split(".")[1]), reback = `warn_configure_button.${id_warn}`
 
+    // Redirecionando para nova advertência
+    if (operacao === 9) return require('../../chunks/warn_configure')({ client, user, interaction, dados })
+
     const warn = await getGuildWarn(interaction.guild.id, id_warn) // Cria uma nova advertência caso o ID passado não exista
+    let guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
     // 1 -> Escolher penalidade
@@ -19,7 +31,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // 9 -> Guia de customização das advertências
 
-    if (operacao === 1) {
+    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
+    else if (operacao === 1) {
 
         // Submenu para escoler a penalidade da advertência
         const eventos = []
@@ -60,7 +73,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         let cargos = []
 
         if (warn.role) // Opção de remover o cargo
-            cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: 0 })
+            cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: "none" })
 
         // Listando todos os cargos do servidor
         cargos = cargos.concat(await client.getGuildRoles(interaction, warn.role))
@@ -117,7 +130,35 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
+
+    } else if (operacao === 12) {
+
+        // Escolher o número de avisos prévios da advertência customizada
+        const valores = []
+
+        for (const num of defaultWarnStrikes)
+            if (warn.strikes !== num && !valores.includes(num)) valores.push(num)
+
+        const data = {
+            title: { tls: "menu.menus.escolher_numero" },
+            pattern: "numbers",
+            alvo: "warn_hierarchy_strikes",
+            submenu: `${id_warn}.${operacao}`,
+            raw: true,
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
     }
+
+    await guild.save()
 
     require('../../chunks/warn_configure')({ client, user, interaction, dados })
 }

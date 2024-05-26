@@ -9,7 +9,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     const users = [], users_ids = [], id_membros_guild = []
     const usuarios_reportados = await getReportedUsers()
-    const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
+    const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id, "warn")
+    const user_notes = await client.getSingleWarnedGuildUser(interaction.guild.id, "pre_warn")
 
     interaction.guild.members.fetch()
         .then(async membros => {
@@ -35,6 +36,11 @@ module.exports = async ({ client, user, interaction }) => {
                         inline: true
                     },
                     {
+                        name: `${client.defaultEmoji("pen")} **Anotações: \`${user_notes.length}\`**`,
+                        value: "⠀",
+                        inline: true
+                    },
+                    {
                         name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}: \`${users_ids.length}\`**`,
                         value: "⠀",
                         inline: true
@@ -45,7 +51,7 @@ module.exports = async ({ client, user, interaction }) => {
                     iconURL: interaction.user.avatarURL({ dynamic: true })
                 })
 
-            const b_disabled = [false, false]
+            const b_disabled = [false, false, false]
 
             // Sem membros que receberam advertências no servidor
             if (warned_users.length < 1)
@@ -55,9 +61,14 @@ module.exports = async ({ client, user, interaction }) => {
             if (users_ids.length < 1)
                 b_disabled[1] = true
 
+            // Sem membros com anotações ativas no servidor
+            if (user_notes.length < 1)
+                b_disabled[3] = true
+
             const botoes = [
                 { id: "guild_verify_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" },
                 { id: "guild_verify_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
+                { id: "guild_verify_button", name: "Anotações", type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
                 { id: "guild_verify_button", name: client.tls.phrase(user, "mode.report.reportados"), type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 

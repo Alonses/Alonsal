@@ -14,9 +14,7 @@ async function atualiza_warns() {
         const guild_warns = await checkUserGuildWarned(guild.sid)
 
         // Listando todas as advertências do servidor
-        guild_warns.forEach(warn => {
-            warns.push(warn)
-        })
+        guild_warns.forEach(warn => { warns.push(warn) })
 
         // Salvando as advertências no cache do bot
         writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))

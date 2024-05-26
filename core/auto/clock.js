@@ -9,6 +9,7 @@ const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_
 
 const { verifica_servers } = require("../data/user_ranking")
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
+const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 
 module.exports = async ({ client }) => {
 
@@ -19,8 +20,9 @@ module.exports = async ({ client }) => {
     const tempo_restante = 10 - date1.getSeconds()
 
     atualiza_warns()
-    atualiza_roles()
+    atualiza_pre_warns()
 
+    atualiza_roles()
     atualiza_modulos()
 
     atualiza_eraser()
@@ -37,6 +39,7 @@ internal_clock = (client, tempo_restante) => {
 
         requisita_modulo(client) // Verificando se há modulos agendados para o horário atual
         verifica_warns(client) // Sincronizando as advertências temporárias
+        verifica_pre_warns(client) // Sincronizando as anotações de advertências temporárias
         verifica_roles(client) // Sincronizando os cargos temporários
 
         if (client.timestamp() % 600 < 60) { // 10 Minutos

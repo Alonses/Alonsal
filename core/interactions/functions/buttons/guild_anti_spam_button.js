@@ -11,11 +11,11 @@ const { loggerMap } = require('../../../formatters/patterns/guild')
 // 8 -> Ativar ou desativar a punição de moderadores no servidor
 
 const operations = {
-    1: ["conf", "spam", 0],
-    2: ["spam", "strikes", 0],
-    3: ["spam", "suspicious_links", 1],
-    7: ["spam", "notify", 2],
-    8: ["spam", "manage_mods", 1]
+    1: { action: "conf.spam", page: 0 },
+    2: { action: "spam.strikes", page: 0 },
+    3: { action: "spam.suspicious_links", page: 1 },
+    7: { action: "spam.notify", page: 2 },
+    8: { action: "spam.manage_mods", page: 1 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -97,6 +97,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             title: { tls: "menu.menus.escolher_numero" },
             pattern: "numbers",
             alvo: "guild_spam_strikes",
+            raw: true,
             values: ["3", "4", "5", "6", "7", "8", "9", "10"]
         }
 

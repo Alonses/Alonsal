@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.aplicador_ultima_advertencia")}**`,
-                value: `${client.emoji("icon_id")} \`${user_warns[user_warns.length - 1].assigner}\`\n( <@${user_warns[user_warns.length - 1].assigner}> )`,
+                value: `${client.emoji("icon_id")} \`${user_warns[user_warns.length - 1].assigner}\`\n\`${user_warns[user_warns.length - 1].assigner_nick}\`\n( <@${user_warns[user_warns.length - 1].assigner}> )`,
                 inline: true
             },
             {

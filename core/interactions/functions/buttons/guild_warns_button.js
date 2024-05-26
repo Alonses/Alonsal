@@ -6,12 +6,16 @@ const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/G
 const { loggerMap } = require('../../../formatters/patterns/guild')
 const { banMessageEraser, spamTimeoutMap } = require('../../../formatters/patterns/timeout')
 
+// 6 -> Advertências cronometradas
 // 8 -> Ativar ou desativar as notificações das advertências
 // 10 -> Ativar ou desativar as notificações de exclusões de advertências
+// 11 -> Ativar ou desativar anúncios públicos
 
 const operations = {
-    8: ["warn", "notify", 1],
-    10: ["warn", "notify_exclusion", 1]
+    6: { action: "warn.timed", page: 0 },
+    8: { action: "warn.notify", page: 1 },
+    10: { action: "warn.notify_exclusion", page: 1 },
+    11: { action: "guild.warn.announce.status", page: 1 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -19,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.2", pagina_guia = 0
 
     const advertencias = await listAllGuildWarns(interaction.guild.id)
-    const guild = await client.getGuild(interaction.guild.id)
+    let guild = await client.getGuild(interaction.guild.id)
 
     if (operacao > 8) pagina_guia = 2
 
@@ -35,15 +39,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 3 -> Configurar advertências
 
     // 5 -> Escolher canal de avisos
-    // 6 -> Advertências cronometradas
     // 7 -> Definir exclusão de mensagens por banimento
 
     // 9 -> Alterar de página dentro do guia
-
-    // 11 -> Ativar ou desativar anúncios públicos
     // 12 -> Definir canal de anúncios públicos
-
     // 15 -> Sub menu com as opções para gerenciar as notificações
+
+    // 17 -> Definir canal temporário de avisos das advertências
 
     // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
@@ -64,7 +66,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelas advertências do servidor
         let botoes = [], row = [{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0"
         }], indice_matriz = 5
 
         if (advertencias.length < 1) {
@@ -109,9 +111,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
 
-    } else if (operacao === 5 || operacao === 12) {
+    } else if (operacao === 5 || operacao === 12 || operacao === 17) {
 
-        // Definindo o canal de avisos dos warns ou do canal de avisos públicos
+        // Definindo o canal de avisos dos warns, canal de avisos públicos ou de avisos temporários
         let canal = guild.warn.channel, alvo = "guild_warns#channel", digito = 2
 
         if (operacao === 12) {
@@ -119,6 +121,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo = "guild_warns_announce#channel"
             reback = "panel_guild_warns"
             digito = 1
+        }
+
+        if (operacao === 17) {
+            canal = guild.warn.timed_channel
+            alvo = "guild_warns_timed_channel#channel"
+            reback = "panel_guild_warns"
+            digito = 2
         }
 
         const data = {
@@ -130,7 +139,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             values: []
         }
 
-        if (canal && operacao === 12)
+        if (canal && (operacao === 12 || operacao === 17))
             data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
@@ -153,14 +162,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
-
-    } else if (operacao === 6) {
-
-        // Ativa ou desativa as advertências cronometradas no servidor
-        guild.warn.timed = !guild.warn.timed
-
-        // Sincronizando a lista de advertências do cache
-        atualiza_warns()
 
     } else if (operacao === 7) {
 
@@ -186,13 +187,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
-
-    } else if (operacao === 11) {
-
-        // Ativa ou desativa as notificações de advertências públicas
-        guild.warn.announce.status = !guild.warn.announce.status
-
-        pagina_guia = 1
     }
 
     if (operacao == 16) { // Definindo o tempo de expiração das advertências no servidor
@@ -217,6 +211,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
     }
+
+    if (operacao === 6) // Sincroniza as advertências criadas
+        atualiza_warns()
 
     if (operacao === 15)
         pagina_guia = 1

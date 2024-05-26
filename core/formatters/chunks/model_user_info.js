@@ -99,7 +99,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         reports.forEach(valor => {
             avisos_reportes++
 
-            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
+            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
         })
 
         if (avisos_reportes > 0)

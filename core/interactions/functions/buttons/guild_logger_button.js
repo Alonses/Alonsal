@@ -5,9 +5,9 @@ const { ChannelType } = require('discord.js')
 // 7 -> Ativar ou desativar as notificações
 
 const operations = {
-    1: ["conf", "logger", 0],
-    5: ["death_note", "note", 2],
-    7: ["death_note", "notify", 2]
+    1: { action: "conf.logger", page: 0 },
+    5: { action: "death_note.note", page: 2 },
+    7: { action: "death_note.notify", page: 2 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {

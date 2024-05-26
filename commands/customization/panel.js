@@ -98,6 +98,7 @@ module.exports = {
                             { name: '🛑 Warns', value: 'warns' },
                             { name: '🛑 Warns Pings', value: 'warns.1' },
                             { name: '🛑 Warns Configs', value: 'warns.2' },
+                            { name: '👑 Hierarchy Warns', value: 'hierarchy_warns.0' },
                             { name: '📛 Anti-Spam', value: 'anti_spam' },
                             { name: '📛 Anti-Spam Resources', value: 'anti_spam.1' },
                             { name: '📛 Anti-Spam Configs', value: 'anti_spam.2' },

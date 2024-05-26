@@ -26,8 +26,16 @@ const schema = new mongoose.Schema({
         timeout: { type: Number, default: 2 },
         reset: { type: Number, default: 7 },
         erase_ban_messages: { type: Number, default: 0 },
+        timed_channel: { type: String, default: null },
         announce: {
             status: { type: Boolean, default: false },
+            channel: { type: String, default: null }
+        },
+        hierarchy: {
+            status: { type: Boolean, default: false },
+            strikes: { type: Number, default: 3 },
+            timed: { type: Boolean, default: false },
+            reset: { type: Number, default: 4 },
             channel: { type: String, default: null }
         }
     },
@@ -221,6 +229,13 @@ async function getTimedGuilds() {
     })
 }
 
+async function getTimedPreGuilds() {
+    // Lista todas as anotações de advertências que se expirão
+    return model.find({
+        "warn.hierarchy.timed": true
+    })
+}
+
 // Lista todos os servidores salvos
 async function listAllGuilds() {
     return model.find()
@@ -263,6 +278,7 @@ module.exports = {
     getNetworkedGuilds,
     getRankHosters,
     getTimedGuilds,
+    getTimedPreGuilds,
     getEraseGuilds,
     dropGuild
 }

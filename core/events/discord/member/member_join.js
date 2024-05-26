@@ -18,7 +18,7 @@ module.exports = async (client, dados) => {
         reports.forEach(valor => {
             avisos++
 
-            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
+            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
         })
 
         const alvo = {

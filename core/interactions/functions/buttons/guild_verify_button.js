@@ -8,15 +8,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     pagina = pagina || 0
 
     // Tratamento dos cliques
-    // 1 -> Lista de usuários com advertência do servidor
+    // 1 -> Lista de usuários com advertência no servidor
     // 2 -> Lista de usuários reportados presentes no servidor
+    // 3 -> Atualiza o card principal
+    // 4 -> Lista de usuários com anotações de advertência no servidor
 
-    if (operacao === 1) {
+    // Navegando pelos usuários que foram advertidos no servidor
+    if (operacao !== 3) await client.deferedResponse({ interaction })
 
-        // Navegando pelos usuários que foram advertidos no servidor
-        await client.deferedResponse({ interaction })
+    if (operacao === 1 || operacao === 4) {
 
-        const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id)
+        const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id, operacao === 4 ? "pre_warn" : "warn")
 
         const obj = {
             content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.warn.sem_usuarios", 1),
@@ -38,12 +40,26 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     iconURL: interaction.user.avatarURL({ dynamic: true })
                 })
 
+            let alvo = "warn_browse", reback = "warn_browse_user"
+
+            if (operacao === 4) {
+                alvo = "pre_warn_browse"
+                reback = "pre_warn_browse_user"
+
+                embed.setTitle(`> Usuários com anotações de advertências ${client.defaultEmoji("pen")}`)
+                    .setDescription(`Todos os membros com anotações advertências ativas no momento estão listados abaixo\n\nSelecione um para gerenciar as advertências que o membro recebeu.`)
+                    .setFooter({
+                        text: "Selecione um membro abaixo para gerenciar suas anotações de advertências neste servidor.",
+                        iconURL: interaction.user.avatarURL({ dynamic: true })
+                    })
+            }
+
             // Menu para navegar entre os usuários com advertências do servidor
             const data = {
                 title: { tls: "menu.menus.escolher_usuario" },
                 pattern: "reports",
-                alvo: "warn_browse",
-                reback: "browse_button.warn_browse_user",
+                alvo: alvo,
+                reback: `browse_button.${reback}`,
                 operation: 0,
                 values: warned_users
             }
@@ -59,9 +75,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         return interaction.editReply(obj)
 
     } else if (operacao === 2) {
-
-        // Navegando pelos usuários que receberam reportes em outros servidores e estão no servidor
-        await client.deferedResponse({ interaction })
 
         const users = [], users_ids = [], id_membros_guild = []
         const usuarios_reportados = await getReportedUsers()

@@ -6,15 +6,18 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
     let emoji_label = client.defaultEmoji("time")
     let valor_label = `${alvo}|${i + 1}`
 
+    // Usado para a quantidade de repetências dos warns
+    if (data.raw) valor_label = `${alvo}|${valor}`
+
     if (data.submenu) // Função com um submenu inclusa
         valor_label = `${alvo}|${i + 1}.${data.submenu}`
 
-    // Exibindo apenas o número
-    if (alvo === "guild_spam_strikes") nome_label = valor
-    else nome_label = client.tls.phrase(user, `menu.times.${valor}`)
+    if (data.submenu && data.raw)
+        valor_label = `${alvo}|${valor}.${data.submenu}`
 
-    // Usado para a quantidade de repetências dos warns
-    if (alvo === "guild_spam_strikes") valor_label = `${alvo}|${valor}`
+    // Exibindo apenas o número
+    if (data.raw) nome_label = `${valor}`
+    else nome_label = client.tls.phrase(user, `menu.times.${valor}`)
 
     if (alvo.includes("ban_eraser")) { // Usado para o tempo de exclusão das mensagens ao ser banido
         nome_label = client.tls.phrase(user, `menu.network.${banMessageEraser[valor]}`)

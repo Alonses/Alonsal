@@ -24,10 +24,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (valor.nick)
             alvo.nick = valor.nick
 
-        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}`)
+        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
 
         if (valor.sid === interaction.guild.id) {
-            report_servidor = `\n:globe_with_meridians: **${client.tls.phrase(user, "mode.report.reporte_neste_servidor")}**\n\`\`\`-> ${new Date(valor.timestamp * 1000).toLocaleDateString("pt-BR")} | ${valor.relatory}\`\`\``
+            report_servidor = `\n:globe_with_meridians: **${client.tls.phrase(user, "mode.report.reporte_neste_servidor")}**\n\`\`\`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}\`\`\``
             alvo.executer = valor.issuer
         }
     })

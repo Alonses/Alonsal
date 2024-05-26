@@ -1,5 +1,7 @@
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 
+const { invalidMenus } = require('../formatters/patterns/guild')
+
 function create_menus({ client, interaction, user, data, pagina, multi_select, guild }) {
 
     // Menu sem dados para listar
@@ -48,7 +50,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     let id_menu = `select_${alvo}_${interaction.user.id}`
     let min = 1, max = 1
 
-    if (disabled) titulo_menu = `${client.emoji(1)} Um menu inválido! Eita bixo 👀`
+    if (disabled) titulo_menu = `${client.emoji(1)} ${invalidMenus[alvo.split("#")[1]]} 👀`
 
     // Menu com multi-seleção
     if (multi_select) max = data.values.length - indice_start > 25 ? 25 : data.values.length - indice_start
