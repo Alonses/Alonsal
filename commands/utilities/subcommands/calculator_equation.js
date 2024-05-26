@@ -18,12 +18,12 @@ module.exports = async ({ client, user, interaction }) => {
         if (!isInteger(resultado))
             resultado = resultado.toFixed(6)
 
-        interaction.reply({
+        return interaction.reply({
             content: `${client.tls.phrase(user, "util.calc.resultado", emoji_res)}: \`${client.locale(resultado)}\``,
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     } catch {
-        interaction.reply({
+        return interaction.reply({
             content: `${client.tls.phrase(user, "util.calc.error", client.emoji(0))}: \`${expressao}\``,
             ephemeral: true
         })
