@@ -9,6 +9,7 @@ const { dropAllUserModules } = require('../../database/schemas/User_modules.js')
 const { dropAllUserStatements } = require('../../database/schemas/User_statements.js')
 const { dropAllUserTickets, dropTicket } = require('../../database/schemas/User_tickets.js')
 const { dropAllUserGuilds, dropUserGuild } = require('../../database/schemas/User_guilds.js')
+const { dropUserGlobalRank } = require('../../database/schemas/User_rank_global.js')
 
 async function atualiza_user_eraser(client) {
 
