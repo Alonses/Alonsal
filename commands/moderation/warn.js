@@ -103,7 +103,7 @@ module.exports = {
                             "pt-BR": 'Relate o que aconteceu com este usuário',
                             "ru": 'Сообщить о случившемся с этим пользователем'
                         })))
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers | PermissionFlagsBits.KickMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
     async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)
