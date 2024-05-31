@@ -4,8 +4,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
 
-    if (!guild.network.link) // Criando um link de network para o servidor
+    if (!guild.network.link) { // Criando um link de network para o servidor
         guild.network.link = await createNetworkLink(client)
+        await guild.save()
+    }
 
     // Atualizando o link dos servidores
     for (let i = 0; i < interaction.values.length; i++) {
@@ -23,8 +25,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await internal_guild.save()
     }
-
-    await guild.save()
 
     // Redirecionando o evento
     require('../../chunks/panel_guild_network')({ client, user, interaction })

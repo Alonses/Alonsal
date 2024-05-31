@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 0) { // Operação cancelada
 
         // Excluindo a advertência registrada em cache
-        await removeUserWarn(id_alvo, interaction.guild.id, user_warns[user_warns.length - 1].timestamp)
+        removeUserWarn(id_alvo, interaction.guild.id, user_warns[user_warns.length - 1].timestamp)
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),

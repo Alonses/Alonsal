@@ -39,8 +39,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     }
 
     // Ativa ou desativa o logger no servidor
-    if (!guild.conf.logger)
-        guild.conf.logger = true
+    if (!guild.conf.logger) guild.conf.logger = true
     else {
         // Inverte o status de funcionamento apenas se executar o comando sem informar um canal
         if (!interaction.options.getChannel("value"))
@@ -50,8 +49,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
     }
 
     // Se usado sem mencionar um canal, desliga o logger
-    if (!canal_alvo)
-        guild.conf.logger = false
+    if (!canal_alvo) guild.conf.logger = false
 
     // Verificando as permissões do bot
     if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ViewAuditLog])) {

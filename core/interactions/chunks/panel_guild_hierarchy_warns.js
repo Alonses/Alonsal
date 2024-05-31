@@ -7,9 +7,7 @@ const { default_emoji } = require('../../../files/json/text/emojis.json')
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
-    const pagina = pagina_guia || 0
     const guild = await client.getGuild(interaction.guild.id)
-
     let botoes = [], texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
 
     // Permissões do bot no servidor

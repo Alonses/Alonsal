@@ -23,8 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_anti_spam", pagina_guia = 0
     let guild = await client.getGuild(interaction.guild.id)
 
-    if (operacao > 3)
-        pagina_guia = 2
+    if (operacao > 3) pagina_guia = 2
 
     // Sem canal de avisos definido, solicitando um canal
     if (!guild.spam.channel && !guild.logger.channel) {
@@ -109,6 +108,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
+
     } else if (operacao === 6) {
 
         // Definindo o canal de avisos do anti-spam
@@ -146,10 +146,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao === 10)
-        pagina_guia = 1
+    if (operacao === 10) pagina_guia = 1
 
-    await guild.save()
+    // Salvando os dados atualizados
+    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel de anti-spam
     require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, pagina_guia })

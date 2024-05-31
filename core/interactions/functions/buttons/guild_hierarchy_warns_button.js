@@ -111,7 +111,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    await guild.save()
+    // Salvando os dados atualizados
+    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel das advertências com hierarquia
     require('../../chunks/panel_guild_hierarchy_warns')({ client, user, interaction, pagina_guia })

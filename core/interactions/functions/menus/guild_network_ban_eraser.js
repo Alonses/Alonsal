@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Sincronizando os servidores com o novo tempo de exclusão para banimentos
     for (let i = 0; i < network_guilds.length; i++) {
         network_guilds[i].network.erase_ban_messages = parseInt(dados)
-        await network_guilds[i].save()
+        network_guilds[i].save()
     }
 
     const pagina_guia = 1 // Redirecionando o evento

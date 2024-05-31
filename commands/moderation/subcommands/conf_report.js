@@ -45,8 +45,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         guild.conf.reports = true
 
     // Se usado sem mencionar o canal, desliga os reportes no servidor
-    if (!canal_alvo)
-        guild.conf.reports = false
+    if (!canal_alvo) guild.conf.reports = false
 
     await guild.save()
 

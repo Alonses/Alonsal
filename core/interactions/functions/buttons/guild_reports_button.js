@@ -127,7 +127,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    await guild.save()
+    // Salvando os dados atualizados
+    if (operations[operacao]) await guild.save()
 
     if (operacao === 20) pagina_guia = 1
     else if (operacao === 21) pagina_guia = 2

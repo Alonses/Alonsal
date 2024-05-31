@@ -80,11 +80,11 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         )
 
     const c_menu = [false, false]
+    // Botão de voltar
+    if (pagina == 0) c_menu[0] = true
 
-    if (pagina == 0) // Botão de voltar
-        c_menu[0] = true
-    if (pagina == 2) // Botão para avançar
-        c_menu[1] = true
+    // Botão para avançar
+    if (pagina == 2) c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_personal`, disabled: c_menu[0] }]
 

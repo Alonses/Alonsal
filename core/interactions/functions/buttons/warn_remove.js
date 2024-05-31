@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (escolha === 1) {
 
         // Removendo a advertência
-        await dropGuildWarn(interaction.guild.id, id_alvo)
+        dropGuildWarn(interaction.guild.id, id_alvo)
 
         // Menos que o limite necessário para o recurso ser ativo
         if ((warns_guild.length - 1) < 2) {

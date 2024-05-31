@@ -7,7 +7,7 @@ const direct_functions = [10]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
-    const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
+    const pagina = pagina_guia || 0
 
     // Códigos de funções
     // 0 -> Alonsal falador
@@ -93,6 +93,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 return require(`./panel_guild_${operador}`)({ client, user, interaction, pagina_guia })
             }
         }
+
+    const guild = await client.getGuild(interaction.guild.id)
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)

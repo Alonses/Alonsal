@@ -26,9 +26,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Ativa ou desativa os convites rastreados
         guild.conf.nuke_invites = !guild.conf.nuke_invites
+        await guild.save()
     }
-
-    await guild.save()
 
     const pagina_guia = 2
     require('../../chunks/panel_guild')({ client, user, interaction, pagina_guia })

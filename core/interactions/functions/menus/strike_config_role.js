@@ -11,6 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Atualizando o cargo do strike
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
     strike.role = cargo
+
     await strike.save()
 
     // Redirecionando o evento

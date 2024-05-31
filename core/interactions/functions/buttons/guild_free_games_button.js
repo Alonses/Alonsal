@@ -27,8 +27,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Escolher canal para enviar o anúncio
 
     // Ativa ou desativa o módulo de jogos gratuitos do servidor
-    if (operacao === 1) guild.conf.games = !guild.conf.games
-    else if (operacao === 2) {
+    if (operacao === 1) {
+
+        guild.conf.games = !guild.conf.games
+        await guild.save()
+
+    } else if (operacao === 2) {
 
         // Enviando um anúncio com os titulos de graça no momento
         const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
@@ -125,8 +129,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
     }
-
-    await guild.save()
 
     // Redirecionando a função para o painel de jogos gratuitos
     require('../../chunks/panel_guild_free_games')({ client, user, interaction, operacao })

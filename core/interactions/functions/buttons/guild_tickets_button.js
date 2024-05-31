@@ -26,6 +26,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Ativa ou desativa a função de denúncias in-server
         guild.conf.tickets = !guild.conf.tickets
+        await guild.save()
 
     } else if (operacao === 2) {
 
@@ -57,8 +58,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
     }
-
-    await guild.save()
 
     // Redirecionando a função para o painel de denúncias in-server
     require('../../chunks/panel_guild_tickets')({ client, user, interaction, operacao })

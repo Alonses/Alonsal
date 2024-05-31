@@ -10,15 +10,10 @@ const { defaultUserEraser } = require('../../formatters/patterns/timeout')
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
-
-    let dados_conhecidos = ""
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_personal.0" }]
-
-    if (pagina === 1)
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_personal_data.0" }]
-
     const ranking = [], guilds_ranking = await getUserRankServers(interaction.user.id)
-    let nota_servidores = ""
+
+    let dados_conhecidos = "", nota_servidores = "", reback = pagina === 1 ? "panel_personal_data.0" : "panel_personal.0"
+    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
 
     // Listando os servidores que o usuário possui ranking
     guilds_ranking.forEach(valor => {

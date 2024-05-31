@@ -7,11 +7,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Atualizando a punição do strike
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
+    strike.action = acao === "none" ? null : acao
 
-    if (acao === "none")
-        acao = null
-
-    strike.action = acao
     await strike.save()
 
     // Redirecionando o evento

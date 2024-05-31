@@ -20,8 +20,6 @@ const operations = {
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
-    const now = performance.now()
-
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.2", pagina_guia = 0
 
     const advertencias = await listAllGuildWarns(interaction.guild.id)
@@ -215,16 +213,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao === 6) // Sincroniza as advertências criadas
-        atualiza_warns()
+    // Sincroniza as advertências criadas
+    if (operacao === 6) atualiza_warns()
 
     // Alterando a página 
     if (operacao === 15) pagina_guia = 1
 
-    // Salvando dado atualizado
+    // Salvando os dados atualizados
     if (operations[operacao]) await guild.save()
-
-    console.log("aqui", performance.now() - now)
 
     // Redirecionando a função para o painel das advertências
     require('../../chunks/panel_guild_warns')({ client, user, interaction, pagina_guia })

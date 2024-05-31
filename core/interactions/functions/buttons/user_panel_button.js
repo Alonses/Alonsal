@@ -21,11 +21,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     user[operations[escolha][0]][operations[escolha][1]] = !user[operations[escolha][0]][operations[escolha][1]]
     await user.save()
 
-    if (escolha > 2)
-        pagina_guia = 1
-
-    if (escolha > 5)
-        pagina_guia = 2
+    if (escolha > 2) pagina_guia = 1
+    if (escolha > 5) pagina_guia = 2
 
     require('../../chunks/panel_personal')({ client, user, interaction, pagina_guia })
 }

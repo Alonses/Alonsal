@@ -45,8 +45,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         guild.conf.spam = true
 
     // Se usado sem mencionar categoria, desliga o sistema antispam
-    if (!canal_alvo)
-        guild.conf.spam = false
+    if (!canal_alvo) guild.conf.spam = false
 
     await guild.save()
 
