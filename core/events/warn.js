@@ -24,7 +24,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
@@ -41,7 +41,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
         .addFields(
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
-                value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                 inline: true
             }
         )

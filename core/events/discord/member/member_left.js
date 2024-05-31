@@ -9,8 +9,8 @@ module.exports = async (client, dados) => {
 
     const user_alvo = dados.user
 
-    if (user.conf?.cached_guilds) // Removendo o servidor salvo em cache do usuário
-        await dropUserGuild(user.uid, dados.guild.id)
+    // Removendo o servidor salvo em cache do usuário
+    if (user.conf?.cached_guilds) dropUserGuild(user.uid, dados.guild.id)
 
     // Verificando se a guild habilitou o logger
     if (!guild.conf.logger) return
@@ -21,7 +21,7 @@ module.exports = async (client, dados) => {
         guild.logger.member_left = false
         guild.logger.member_kick = false
         guild.logger.member_ban_add = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
@@ -55,7 +55,7 @@ module.exports = async (client, dados) => {
         .setColor(0xED4245)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                name: client.user_title(user_alvo, guild),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
@@ -67,20 +67,8 @@ module.exports = async (client, dados) => {
         )
         .setTimestamp()
 
-    // Usuário é um BOT
-    if (user_alvo.bot)
-        embed.addFields(
-            {
-                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
-
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
-
-    if (url_avatar)
-        embed.setThumbnail(url_avatar)
+    if (url_avatar) embed.setThumbnail(url_avatar)
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

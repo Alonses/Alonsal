@@ -11,7 +11,7 @@ module.exports = async ({ client, invite }) => {
     if (!await client.permissions(invite, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.invite_deleted = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }

@@ -22,9 +22,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (typeof dados !== "undefined") pagina = dados
     else pagina = interaction.options.getInteger("page") || 1
 
-    // Sem dados salvos no banco de ranking
-    if (!data_usuarios)
-        return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
+    // Sem dados no ranking do banco
+    if (!data_usuarios) return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
     paginas = Math.ceil(data_usuarios.length / 6)
@@ -43,23 +42,17 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     for (const user_int of data_usuarios) {
         if (i < 6) {
+
             let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_int) || ""
             if (fixed_badge) fixed_badge = fixed_badge.emoji
 
-            let cached_user = await client.getCachedUser(user_int.uid)
+            if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${((user_int.nick)?.replace(/ /g, "") || "Desconhecido")}\` ${fixed_badge}`)
+            else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((user_int.nick)?.replace(/ /g, "") || "Desconhecido")}\` ${fixed_badge}`)
 
-            if (cached_user) {
+            ids.push(`\`${user_int.uid}\``)
+            bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)
 
-                if (!cached_user.bot) { // Validando se o usuário é um bot
-                    if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
-                    else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(cached_user.username).replace(/ /g, "")}\` ${fixed_badge}`)
-
-                    ids.push(`\`${user_int.uid}\``)
-                    bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)
-
-                    i++
-                }
-            }
+            i++
         }
     }
 

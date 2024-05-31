@@ -13,7 +13,7 @@ module.exports = async ({ client, channel }) => {
     if (!await client.permissions(channel, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.channel_created = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
@@ -41,17 +41,22 @@ module.exports = async ({ client, channel }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "mode.canal.canal")}**`,
-                value: `${client.emoji("icon_id")} \`${channel.id}\`\n( <#${channel.id}> )`,
+                name: `${client.defaultEmoji("paper")} **${registroAudita.target.type === 4 ? "Categoria" : client.tls.phrase(guild, "mode.canal.canal")}**`,
+                value: `${client.emoji("icon_id")} \`${channel.id}\`\n${registroAudita.target.type !== 4 ? `:placard: \`${channel.name}\`\n( <#${channel.id}> )` : `\`${channel.name}\``}`,
                 inline: true
-            },
+            }
+        )
+        .setTimestamp()
+
+    // Canais que não são categorias
+    if (registroAudita.target.type !== 4)
+        embed.addFields(
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(guild, "util.server.categoria")}**`,
                 value: `${client.emoji("icon_id")} \`${channel.parentId || client.tls.phrase(guild, "mode.logger.sem_categoria")}\`\n( ${channel.parentId ? `<#${channel.parentId}>` : client.tls.phrase(guild, "mode.logger.sem_categoria")} )`,
                 inline: true
             }
         )
-        .setTimestamp()
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

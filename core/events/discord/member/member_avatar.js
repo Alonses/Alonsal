@@ -34,22 +34,12 @@ module.exports = async ({ client, guild, user, dados }) => {
         .setDescription(client.tls.phrase(guild, "mode.logger.novo_avatar", 35))
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                name: client.user_title(user_alvo, guild),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
         )
         .setTimestamp()
-
-    // Usuário é um BOT
-    if (user_alvo.bot)
-        embed.addFields(
-            {
-                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
 
     if (attachment) {
         // Enviando o embed com a comparação entre imagens

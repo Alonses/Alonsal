@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     user_warn.assigner_nick = interaction.user.username
     user_warn.timestamp = client.timestamp()
 
-    await user_warn.save()
+    user_warn.save()
 
     const embed = new EmbedBuilder()
         .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : "> Registrando uma anotação"} :inbox_tray:`)
@@ -42,12 +42,12 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n\`${user_warn.nick}\`\n( <@${guild_member.id}> )`,
+                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${guild_member.id}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
-                value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                 inline: true
             }
         )

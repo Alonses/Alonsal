@@ -14,26 +14,20 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
     let usuario_alvo = [], i = 0, data_usuarios, remover = 0
     const usernames = [], experiencias = [], levels = [], ids = [], deferido = defer ? true : false
 
-    if (typeof pagina_guia === "undefined") escopo = interaction.options.getString("scope")
-    else escopo = caso
+    if (typeof pagina_guia === "undefined") {
+        escopo = interaction.options.getString("scope")
+        pagina = interaction.options.getInteger("page") || 1
+    } else {
+        escopo = caso
+        pagina = pagina_guia
+    }
 
     // Coleta o ID do usuário mencionado
+    data_usuarios = await (escopo === "server" ? getRankServer(interaction.guild.id) : getRankGlobal())
     let rodape = interaction.user.username, user_alvo_data
 
-    if (typeof pagina_guia !== "undefined") {
-        pagina = pagina_guia
-
-        // Coletando os dados para o servidor ou para o global
-        if (escopo === "server") data_usuarios = await getRankServer(interaction.guild.id)
-        else data_usuarios = await getRankGlobal()
-    } else {
-        user_alvo_data = interaction.options.getUser("user")
-        pagina = interaction.options.getInteger("page") || 1
-
-        // Coletando os dados para o servidor ou para o global
-        if (escopo === "server") data_usuarios = await getRankServer(interaction.guild.id)
-        else data_usuarios = await getRankGlobal()
-    }
+    if (interaction.options?.getUser("user")) // Usuário alvo definido
+        user_alvo_data = interaction.options?.getUser("user")
 
     // Sem dados salvos no banco de ranking para o servidor especificado
     if (!data_usuarios)
@@ -64,11 +58,11 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
             }
 
         if (i < 6) {
-            // Procurando a Badge fixada do usuário
-            const user_a = await client.getUser(user_interno.uid)
 
-            let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_a) || ""
-            if (fixed_badge) fixed_badge = fixed_badge.emoji
+            let fixed_badge = ""
+
+            if (client.cached.fixed_badges[user_interno.uid]) // Procurando a Badge fixada do usuário
+                fixed_badge = busca_badges(client, badgeTypes.SINGLE, client.cached.fixed_badges[user_interno.uid]).emoji
 
             const nome_usuario = user_interno.nickname ? user_interno.nickname : client.tls.phrase(user, "util.steam.undefined")
 
@@ -83,30 +77,19 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
             if (escopo === "server")
                 levels.push(`\`${client.locale(Math.floor(user_interno.xp / 1000))}\` - \`${((user_interno.xp % 1000) / 1000).toFixed(2)}%\``)
 
-            if (!user_alvo_data) // Verifica se a entrada é um ID
-                i++
+            // Verifica se a entrada é um ID
+            if (!user_alvo_data) i++
         }
     }
 
-    if (escopo === "server") { // Exibindo o rank normalmente
+    if (user_alvo_data)
+        return retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
 
-        if (!user_alvo_data) // Sem usuário alvo definido
-            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido })
-        else // Retornando apenas o card do usuário alvo
-            retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
-
-    } else { // Ranking global
-
-        if (!user_alvo_data)
-            retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido })
-        else // Retornando apenas o card do usuário alvo
-            retorna_card_alvo({ client, user, interaction, usuario_alvo, user_alvo_data })
-    }
+    // Exibindo o rank do servidor ou global
+    retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido })
 }
 
 async function retorna_ranking({ client, user, interaction, ids, usernames, experiencias, levels, rodape, escopo, autor_original, deferido }) {
-
-    const bot = await client.getBot()
 
     // Apenas é mostrado caso seja verificação por servidor
     let descricao_banner = `${client.tls.phrase(user, "dive.rank.nivel_descricao")} 🎉\n-----------------------\n`
@@ -124,7 +107,7 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
         .setTitle(nome_embed)
         .setColor(client.embed_color(user.misc.color))
         .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-        .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, bot.persis.ranking))
+        .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, client.cached.ranking_value))
         .addFields(
             {
                 name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
@@ -198,15 +181,14 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
     embed.addFields(
         {
             name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
-            value: `\`${usuario_alvo[0].toFixed(2)} EXP\``,
+            value: `\`${client.locale(parseInt(usuario_alvo[0]))} EXP\``,
             inline: true
         },
         {
             name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
             value: `\`${client.locale(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
             inline: true
-        },
-        { name: "⠀", value: "⠀", inline: true }
+        }
     )
 
     interaction.editReply({

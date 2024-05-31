@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const row = [], user_warns = await listAllUserPreWarns(id_alvo, interaction.guild.id)
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
-        await removeUserPreWarn(id_alvo, interaction.guild.id, timestamp)
+        removeUserPreWarn(id_alvo, interaction.guild.id, timestamp)
 
         if (user_warns.length - 1 > 0)
             row.push({ id: "pre_warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_outras"), type: 0, emoji: client.emoji(41), data: `11|${id_alvo}` })

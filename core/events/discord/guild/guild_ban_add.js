@@ -14,7 +14,7 @@ module.exports = async ({ client, ban }) => {
     if (!await client.permissions(ban, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.member_ban_add = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
