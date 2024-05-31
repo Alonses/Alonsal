@@ -49,6 +49,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Ativa ou desativa o network do servidor
         guild.conf.network = !guild.conf.network
+        await guild.save()
 
     } else if (operacao === 2) {
 
@@ -76,6 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), botoes],
             ephemeral: true
         })
+
     } else if (operacao === 3) { // Servidor sem um link de network
 
         await interaction.deferUpdate({ ephemeral: true })
@@ -116,6 +118,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+
     } else if (operacao === 4) {
 
         // Quebrando o link do servidor
@@ -178,6 +181,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+
     } else if (operacao === 6) {
 
         // Escolhendo o tempo de exclusão das mensagens para membros banidos no network
@@ -208,12 +212,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Confirmando a remoção do servidor do link do network
         guild.conf.network = false
         guild.network.link = null
+
+        await guild.save()
     }
 
-    await guild.save()
-
-    if (operacao >= 4)
-        pagina_guia = 1
+    if (operacao >= 4) pagina_guia = 1
 
     // Redirecionando a função para o painel do networking
     require('../../chunks/panel_guild_network')({ client, user, interaction, operacao, pagina_guia })

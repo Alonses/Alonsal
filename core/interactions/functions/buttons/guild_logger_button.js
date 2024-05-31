@@ -77,6 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), botoes],
             ephemeral: true
         })
+
     } else if (operacao === 3 || operacao === 8) {
 
         let canal = guild.logger.channel, alvo = "guild_logger#channel", digito = 1
@@ -114,6 +115,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             ephemeral: true
         })
+
     } else if (operacao === 4) {
 
         // Alterando o idioma do servidor
@@ -132,13 +134,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    if (operacao === 9)
-        pagina_guia = 1
+    if (operacao === 9) pagina_guia = 1
+    if (operacao === 10) pagina_guia = 2
 
-    if (operacao === 10)
-        pagina_guia = 2
-
-    await guild.save()
+    // Salvando os dados atualizados
+    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel do log de eventos
     require('../../chunks/panel_guild_logger')({ client, user, interaction, operacao, pagina_guia })

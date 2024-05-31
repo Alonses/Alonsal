@@ -8,6 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Atualizando o tempo de mute da advertência
     const warn = await getGuildWarn(interaction.guild.id, id_warn)
     warn.timeout = tempo_mute
+
     await warn.save()
 
     // Redirecionando o evento

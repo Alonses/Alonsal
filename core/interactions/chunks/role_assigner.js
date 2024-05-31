@@ -63,11 +63,8 @@ function listar_cargos(client, user, cargos) {
     const lista = []
 
     cargos.split(".").forEach(cargo => {
-
-        if (cargo === "all")
-            lista.push(client.tls.phrase(user, "mode.roles.ignorar_membros_com_cargos"))
-        else
-            lista.push(`<@&${cargo}>`)
+        if (cargo === "all") lista.push(client.tls.phrase(user, "mode.roles.ignorar_membros_com_cargos"))
+        else lista.push(`<@&${cargo}>`)
     })
 
     return lista.join(", ")

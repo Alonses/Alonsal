@@ -9,8 +9,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar
     // 2 -> Escolher outra cor
 
-    if (!operacao)
-        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
+    if (!operacao) return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     if (operacao === 1) {
 
@@ -36,8 +35,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
-        await client.registryStatement(user.uid, "misc.b_historico.cor_perfil", false, preco)
-        await client.journal("reback", preco)
+        client.registryStatement(user.uid, "misc.b_historico.cor_perfil", false, preco)
+        client.journal("reback", preco)
 
         interaction.update({
             content: client.tls.phrase(user, "misc.color.cor_att", client.emoji("emojis_dancantes")),

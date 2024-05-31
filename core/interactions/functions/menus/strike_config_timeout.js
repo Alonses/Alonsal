@@ -8,6 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Atualizando o tempo de mute do strike
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
     strike.timeout = tempo_mute
+
     await strike.save()
 
     // Redirecionando o evento

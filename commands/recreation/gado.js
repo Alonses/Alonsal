@@ -64,8 +64,6 @@ module.exports = {
 
         // let avatar_user = alvo.avatar ? `https://cdn.discordapp.com/avatars/${alvo.id}/${alvo.avatar}.png` : "https://archive.org/download/discordprofilepictures/discordred.png"
 
-        // console.log(avatar_user)
-
         // Carregando as imagens de perfil do usuário
         // loadImage(avatar_user).then((image) => {
         //     context.drawImage(image, 0, 0, 270, 270)

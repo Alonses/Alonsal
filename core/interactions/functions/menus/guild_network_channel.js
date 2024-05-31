@@ -1,10 +1,7 @@
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    guild.network.channel = dados
-
-    if (dados === "none")
-        guild.network.channel = null
+    guild.network.channel = dados === "none" ? null : dados
 
     await guild.save()
 

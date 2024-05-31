@@ -76,8 +76,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    await guild.save()
-
     // Redirecionando a função para o painel dos cargos temporários
     require('../../chunks/panel_guild_timed_roles')({ client, user, interaction, operacao })
 }

@@ -41,7 +41,6 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         if (x == (indice_start + 3)) break
     }
 
-
     client.reply(interaction, {
         content: "",
         embeds: [embed],

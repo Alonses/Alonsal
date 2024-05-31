@@ -77,6 +77,7 @@ module.exports = {
         }
 
         await user.save()
+
         interaction.reply({
             content: frase_idioma,
             ephemeral: true

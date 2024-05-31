@@ -22,10 +22,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Desabilitando o anti-spam caso não haja canais de aviso selecionados, sem permissão para gerenciar mensagens e castigar membros
     if (!guild.spam.channel && !guild.logger.channel || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers)) {
         guild.conf.spam = false
+        await guild.save()
+
         descr_rodape = "🛂 | Para utilizar o Anti-spam, o Alonsal deve ser capaz de Castigar membros e Gerenciar mensagens."
     }
-
-    await guild.save()
 
     let descricao = client.tls.phrase(user, "mode.spam.descricao_funcionamento")
 

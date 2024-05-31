@@ -15,9 +15,9 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Desabilitando o log de eventos caso o bot não possa ver o registro de auditoria do servidor
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
         guild.conf.logger = false
-        descr_rodape = "🛂 | Para utilizar o Log de eventos, o Alonsal deve ser capaz de Ver o registro de auditoria do servidor."
-
         await guild.save()
+
+        descr_rodape = "🛂 | Para utilizar o Log de eventos, o Alonsal deve ser capaz de Ver o registro de auditoria do servidor."
     }
 
     const eventos = {
