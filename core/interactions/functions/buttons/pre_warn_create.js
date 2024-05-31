@@ -60,12 +60,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_note.nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
-                value: `${client.emoji("icon_id")} \`${id_executor}\`\n\`${interaction.user.username}\`\n( <@${id_executor}> )`,
+                value: `${client.emoji("icon_id")} \`${id_executor}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${id_executor}> )`,
                 inline: true
             },
             {
@@ -112,7 +112,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const hierarchy_warn = await getUserWarn(id_alvo, interaction.guild.id, client.timestamp())
 
         hierarchy_warn.hierarchy = true
-        await hierarchy_warn.save()
+        hierarchy_warn.save()
 
         const embed = new EmbedBuilder()
             .setTitle("> Aplicar advertência 👑")
@@ -121,7 +121,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setFields(
                 {
                     name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_note.nick}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {

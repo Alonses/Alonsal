@@ -53,12 +53,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warns[0].nick}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warns[0].nick}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
                         name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
-                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }
                 )
@@ -71,9 +71,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         return client.reply(interaction, obj)
-    }
 
-    if (escolha === 3) {
+    } else if (escolha === 3) {
 
         // Criando os botões para o menu de remoção de strikes
         const row = client.create_buttons([
@@ -85,9 +84,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             components: [row]
         })
-    }
 
-    if (escolha === 9) {
+    } else if (escolha === 9) {
 
         const user_warn = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
         let motivo_remocao = ""

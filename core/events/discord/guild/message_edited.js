@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { verifySuspiciousLink } = require('../../../database/schemas/Spam_links')
 // const compare_messages = require('../../../auto/compare_messages')
 
 module.exports = async (client, message) => {
@@ -22,6 +21,9 @@ module.exports = async (client, message) => {
         novo: client.replace(message[1].content, null, ["`", "'"])
     }
 
+    // Sem texto incluso na mensagem antiga
+    if (alteracoes.antigo.length < 1) alteracoes.antigo = "❌ Sem texto incluso anteriormente"
+
     // Relatório resumido das alterações entre as mensagens
     if (alteracoes.antigo.length > 50 || alteracoes.novo.length > 50) {
 
@@ -37,7 +39,6 @@ module.exports = async (client, message) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_editada"))
         .setColor(0xffffff)
-        .setDescription(texto)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -52,26 +53,17 @@ module.exports = async (client, message) => {
         )
         .setTimestamp()
 
-    texto_mensagem = `${message[1].content} `
+    const attachments = []
 
-    if (texto_mensagem.match(client.cached.regex)) {
-        const link = texto_mensagem.match(client.cached.regex)
+    if (message[1].attachments)
+        message[1].attachments.forEach(attach => {
+            attachments.push(attach.attachment)
+        })
 
-        if (link)
-            if (!await verifySuspiciousLink(link[0], true)) { // Verificando se o link não é malicioso
-                try { // Verificando se o link é válido
-                    let url = new URL(link[0].replace(" ", ""))
+    if (attachments.length > 0) // Arquivos anexados
+        texto = `${texto}\n**Anexos:**\n${attachments.join("\n\n")}`
 
-                    row = client.create_buttons([
-                        { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url }
-                    ])
+    embed.setDescription(texto)
 
-                } catch (err) { }
-            }
-    }
-
-    if (row)
-        client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
-    else
-        client.notify(guild.logger.channel, { embeds: [embed] })
+    client.notify(guild.logger.channel, { embeds: [embed] })
 }

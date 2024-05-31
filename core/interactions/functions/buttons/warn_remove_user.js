@@ -16,11 +16,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     const id_guild = dados.split(".")[3]
 
     if (operacao === 0) { // Operação cancelada ( retorna ao embed do usuário )
+
         dados = `${id_alvo}.${id_guild}.${pagina}`
         return require('../../chunks/verify_warn')({ client, user, interaction, dados })
-    }
 
-    if (operacao === 1) {
+    } else if (operacao === 1) {
 
         const user_warn = await listAllUserWarns(id_alvo, interaction.guild.id)
 
@@ -56,12 +56,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
                         name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
-                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n\`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
+                        value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }
                 )
@@ -74,9 +74,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         return interaction.update(obj)
-    }
 
-    if (operacao === 2) {
+    } else if (operacao === 2) {
 
         // Criando os botões para o menu de remoção de advertências do servidor
         const row = client.create_buttons([
@@ -88,9 +87,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         return interaction.update({
             components: [row]
         })
-    }
 
-    if (operacao === 3) {
+    } else if (operacao === 3) {
         // Menu para navegar entre os usuários advertidos
         const advertencias_server = await checkUserGuildWarned(interaction.guild.id)
 

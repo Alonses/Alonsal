@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const { atualiza_fixed_badges } = require('../../core/auto/triggers/user_fixed_badges')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("badge")
@@ -67,6 +69,9 @@ module.exports = {
         // Removendo a badge fixada
         user.misc.fixed_badge = null
         await user.save()
+
+        // Atualizando a lista de badges fixas em cache
+        atualiza_fixed_badges(client)
 
         interaction.reply({
             content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`,

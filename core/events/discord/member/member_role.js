@@ -41,27 +41,17 @@ module.exports = async ({ client, guild, dados }) => {
         .setDescription(texto)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                name: client.user_title(user_alvo, guild),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.alterador")}**`,
+                name: client.user_title(registroAudita.executor, guild),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
         )
         .setTimestamp()
-
-    // Usuário é um BOT
-    if (user_alvo.bot)
-        embed.addFields(
-            {
-                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
 
     // Listando as permissões do usuário
     embed.addFields(
@@ -78,9 +68,7 @@ module.exports = async ({ client, guild, dados }) => {
     )
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
-
-    if (url_avatar)
-        embed.setThumbnail(url_avatar)
+    if (url_avatar) embed.setThumbnail(url_avatar)
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 0) {
 
         // Excluindo o cargo salvo em cache para configuração
-        await removeCachedUserRole(user_alvo, interaction.guild.id)
+        removeCachedUserRole(user_alvo, interaction.guild.id)
 
         return client.reply(interaction, {
             content: ":no_entry_sign: | Operação cancelada.",
@@ -144,7 +144,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
 
             const embed = new EmbedBuilder()
-                .setTitle("> Um novo cargo temporário!")
+                .setTitle("> Um novo cargo temporário! :military_medal:")
                 .setColor(0x29BB8E)
                 .setDescription(`:new: | ${membro_guild} ganhou um cargo temporário neste servidor!${motivo}`)
                 .addFields(
@@ -160,7 +160,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     },
                     {
                         name: `${client.defaultEmoji("person")} **Moderador**`,
-                        value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n\`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
+                        value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
                         inline: true
                     }
                 )

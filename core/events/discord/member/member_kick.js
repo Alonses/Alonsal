@@ -9,8 +9,7 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
         client.checkUserInvites(guild, user_alvo.id)
 
     // Verificando se o recurso está ativo
-    if (!guild.logger.member_kick || !guild.conf.logger)
-        return
+    if (!guild.logger.member_kick || !guild.conf.logger) return
 
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
@@ -40,32 +39,20 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
         .setDescription(`${client.tls.phrase(guild, "mode.logger.membro_expulso_desc", client.emoji("mc_writable_book"))}${razao}`)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                name: client.user_title(user_alvo, guild),
                 value: `${client.emoji("icon_id")} \`${registroAudita2.targetId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.target.username}\`\n( <@${registroAudita2.targetId}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                name: client.user_title(registroAudita2.executor, guild),
                 value: `${client.emoji("icon_id")} \`${registroAudita2.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.executor.username}\`\n( <@${registroAudita2.executorId}> )`,
                 inline: true
             }
         )
         .setTimestamp()
 
-    // Usuário é um BOT
-    if (user_alvo.bot)
-        embed.addFields(
-            {
-                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
-
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
-
-    if (url_avatar)
-        embed.setThumbnail(url_avatar)
+    if (url_avatar) embed.setThumbnail(url_avatar)
 
     const obj = {
         embeds: [embed]

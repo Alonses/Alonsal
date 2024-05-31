@@ -15,7 +15,7 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
-                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n\`${user_guild.user.username}\`\n( ${user_guild} )`,
+                value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n${client.emoji("mc_name_tag")} \`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
             }
         )
@@ -37,8 +37,8 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, user, u
         embeds: [embed]
     }
 
-    if (guild.spam.notify) // Servidor com ping de spam ativado
-        obj.content = `@here ${obj.content}`
+    // Servidor com ping de spam ativado
+    if (guild.spam.notify) obj.content = `@here ${obj.content}`
 
     client.notify(guild.spam.channel || guild.logger.channel, obj)
 

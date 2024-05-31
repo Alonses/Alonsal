@@ -2,9 +2,10 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
-    const user_alvo = dados[0].user
-    const timeout = registroAudita?.changes[0] ? parseInt(new Date(registroAudita?.changes[0].new) - new Date()) : null
-    const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
+    // Atualização por membro verificado, interrompendo
+    if (registroAudita?.changes[0].key === "bypasses_verification") return
+
+    const user_alvo = dados[0].user, timeout = registroAudita?.changes[0] ? parseInt(new Date(registroAudita?.changes[0].new) - new Date()) : null
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
     // Alterando o canal alvo conforme o filtro de eventos do death note
@@ -33,27 +34,41 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
+                name: client.user_title(user_alvo, guild),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                name: client.user_title(registroAudita.executor, guild),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
         )
         .setTimestamp()
 
-    if (timeout) // Exibindo o tempo de castigo que o membro recebeu
+    if (timeout) { // Exibindo o tempo de castigo que o membro recebeu
+
+        let tempo_timeout = parseInt(timeout / 1000) + 1
+
+        if (tempo_timeout > 86400)
+            formatado = `${parseInt((((tempo_timeout / 24) / 60) / 60))} dias`
+        else if (tempo_timeout > 3600)
+            formatado = `${parseInt((tempo_timeout / 60) / 60)} horas`
+        else if (tempo_timeout > 60)
+            formatado = `${parseInt(tempo_timeout / 60)} minutos`
+        else formatado = `${tempo_timeout} segundos`
+
         embed.addFields(
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.logger.tempo_castigo")}**`,
-                value: `<t:${parseInt(client.timestamp() + (timeout / 1000))}:F>\n( <t:${parseInt(client.timestamp() + (timeout / 1000))}:R> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${formatado}\`**\n( <t:${parseInt(client.timestamp() + (timeout / 1000))}:f> )`,
                 inline: false
             }
         )
-    else
+    } else {
+
+        const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
+
         embed.addFields(
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
@@ -61,21 +76,10 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
                 inline: false
             }
         )
-
-    // Usuário é um BOT
-    if (user_alvo.bot)
-        embed.addFields(
-            {
-                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "util.user.bot")}**`,
-                value: "⠀",
-                inline: true
-            }
-        )
+    }
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
-
-    if (url_avatar)
-        embed.setThumbnail(url_avatar)
+    if (url_avatar) embed.setThumbnail(url_avatar)
 
     const obj = {
         embeds: [embed]

@@ -45,7 +45,6 @@ async function verifica_pre_warns(client) {
 
                 // Excluindo o registro da anotação de advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserPreWarn(warn.uid, warn.sid, warn.timestamp)
-                client.verifyUserWarnRoles(warn.uid, warn.sid)
             }
         }
 

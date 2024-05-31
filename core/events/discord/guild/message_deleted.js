@@ -1,13 +1,11 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
-const { verifySuspiciousLink } = require('../../../database/schemas/Spam_links')
-
 module.exports = async ({ client, message }) => {
 
     // Verificando se o autor da mensagem excluída é o bot
     if (message.partial || message.author.bot) return
 
-    const guild = await client.getGuild(message.guildId), attachments = []
+    const guild = await client.getGuild(message.guildId)
 
     // Verificando se a guild habilitou o logger
     if (!guild.logger.message_delete || !guild.conf.logger) return
@@ -16,7 +14,7 @@ module.exports = async ({ client, message }) => {
     if (!await client.permissions(message, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.message_delete = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
@@ -27,7 +25,7 @@ module.exports = async ({ client, message }) => {
         limit: 1
     })
 
-    const registroAudita = fetchedLogs.entries.first()
+    const registroAudita = fetchedLogs.entries.first(), attachments = []
 
     if (message.attachments)
         message.attachments.forEach(attach => {
@@ -36,27 +34,19 @@ module.exports = async ({ client, message }) => {
 
     let texto_mensagem = message.content
 
-    // Mensagem sem texto enviado
-    if (!message.content)
-        texto_mensagem = client.tls.phrase(guild, "mode.logger.sem_texto")
-
-    // Apenas arquivos enviados
-    if (attachments.length > 0 && !message.content)
-        texto_mensagem = attachments.join("\n\n")
-
-    let texto = client.tls.phrase(guild, "mode.logger.auto_exclusao", 13, [message.author.id, message.url])
+    let texto = `${client.tls.phrase(guild, "mode.logger.auto_exclusao", 13, [message.author.id, message.url])}\n`
     let autor = message.author.id, local = message.channelId, row
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             texto = client.tls.phrase(guild, "mode.logger.mode_exclusao", 13, [message.url, message.author.id])
 
-    texto += `\n\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
+    if (message.content) // Mensagem com texto escrito
+        texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
         .setColor(0xED4245)
-        .setDescription(texto.slice(0, 4095))
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -81,26 +71,11 @@ module.exports = async ({ client, message }) => {
                 }
             )
 
-    texto_mensagem = `${texto_mensagem} `
+    if (attachments.length > 0) // Arquivos anexados
+        texto = `${texto}\n**Anexos:**\n${attachments.join("\n\n")}`
 
-    if (texto_mensagem.match(client.cached.regex)) {
-        const link = texto_mensagem.match(client.cached.regex)
+    embed.setDescription(texto)
 
-        if (link)
-            if (!await verifySuspiciousLink(link[0], true)) { // Verificando se o link não é malicioso
-                try { // Verificando se o link é válido
-                    let url = new URL(link[0].replace(" ", ""))
-
-                    row = client.create_buttons([
-                        { name: client.tls.phrase(guild, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url }
-                    ])
-
-                } catch (err) { }
-            }
-    }
-
-    if (row)
-        client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
-    else
-        client.notify(guild.logger.channel, { embeds: [embed] })
+    if (row) client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
+    else client.notify(guild.logger.channel, { embeds: [embed] })
 }

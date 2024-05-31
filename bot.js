@@ -75,10 +75,17 @@ client.discord.on("messageCreate", async message => {
 		if (user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
 
 		// Syncing user data
-		const user_guild = await client.getMemberGuild(message, user.uid)
-		if (!user.profile.avatar || user.profile.avatar !== user_guild.user.avatarURL({ dynamic: true })) {
+		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
+
+			const user_guild = await client.getMemberGuild(message, user.uid)
 			user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
-			await user.save()
+
+			user.save()
+		}
+
+		if (!user.nick) {
+			user.nick = message.author.username
+			user.save()
 		}
 
 		// Updating users' XP, experience received by the user

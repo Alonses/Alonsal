@@ -4,6 +4,7 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     lang: { type: String, default: null },
     hoster: { type: Boolean, default: false },
+    nick: { type: String, default: null },
     erase: {
         erase_on: { type: Number, default: null },
         valid: { type: Boolean, default: false },
@@ -112,6 +113,14 @@ async function dropUser(uid) {
     })
 }
 
+// Lista todos os usuários com badges fixadas
+async function getUserWithFixedBadges() {
+
+    return await model.find({
+        "misc.fixed_badge": { $ne: null }
+    })
+}
+
 module.exports.User = model
 module.exports = {
     getUser,
@@ -119,5 +128,6 @@ module.exports = {
     dropUser,
     getRankMoney,
     getUnknowUsers,
-    getOutdatedUsers
+    getOutdatedUsers,
+    getUserWithFixedBadges
 }
