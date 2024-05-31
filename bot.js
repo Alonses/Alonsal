@@ -80,12 +80,12 @@ client.discord.on("messageCreate", async message => {
 			const user_guild = await client.getMemberGuild(message, user.uid)
 			user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
 
-			user.save()
+			await user.save()
 		}
 
 		if (!user.nick) {
 			user.nick = message.author.username
-			user.save()
+			await user.save()
 		}
 
 		// Updating users' XP, experience received by the user
