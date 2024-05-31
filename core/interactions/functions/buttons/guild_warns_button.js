@@ -20,6 +20,8 @@ const operations = {
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
+    const now = performance.now()
+
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_warns.2", pagina_guia = 0
 
     const advertencias = await listAllGuildWarns(interaction.guild.id)
@@ -61,6 +63,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Ativa ou desativa as advertências do servidor
         guild.conf.warn = !guild.conf.warn
+
+        await guild.save()
 
     } else if (operacao === 3) {
 
@@ -187,9 +191,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ client, interaction, user, data }), row],
             ephemeral: true
         })
-    }
 
-    if (operacao == 16) { // Definindo o tempo de expiração das advertências no servidor
+    } else if (operacao == 16) { // Definindo o tempo de expiração das advertências no servidor
 
         const valores = []
         Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
@@ -215,10 +218,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 6) // Sincroniza as advertências criadas
         atualiza_warns()
 
-    if (operacao === 15)
-        pagina_guia = 1
+    // Alterando a página 
+    if (operacao === 15) pagina_guia = 1
 
-    await guild.save()
+    // Salvando dado atualizado
+    if (operations[operacao]) await guild.save()
+
+    console.log("aqui", performance.now() - now)
 
     // Redirecionando a função para o painel das advertências
     require('../../chunks/panel_guild_warns')({ client, user, interaction, pagina_guia })
