@@ -1,9 +1,6 @@
-const { EmbedBuilder, time } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, guild, registroAudita, dados }) => {
-
-    // Atualização por membro verificado, interrompendo
-    if (registroAudita?.changes[0].key === "bypasses_verification") return
 
     const user_alvo = dados[0].user, timeout = registroAudita?.changes[0] ? parseInt(new Date(registroAudita?.changes[0].new) - new Date()) : null
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel

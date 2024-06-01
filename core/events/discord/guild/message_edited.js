@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-// const compare_messages = require('../../../auto/compare_messages')
+const compare_messages = require('../../../functions/compare_messages')
 
 module.exports = async (client, message) => {
 
@@ -27,13 +27,13 @@ module.exports = async (client, message) => {
     // Relatório resumido das alterações entre as mensagens
     if (alteracoes.antigo.length > 50 || alteracoes.novo.length > 50) {
 
-        // const relatorio_alteracoes = compare_messages(alteracoes.antigo, alteracoes.novo)
+        const relatorio_alteracoes = compare_messages(alteracoes.antigo, alteracoes.novo)
 
-        // alteracoes.antigo = relatorio_alteracoes.antigo.join("\n\n")
-        // alteracoes.novo = relatorio_alteracoes.novo.join("\n\n")
+        alteracoes.antigo = relatorio_alteracoes.antigo.join("\n\n")
+        alteracoes.novo = relatorio_alteracoes.novo.join("\n\n")
     }
 
-    let texto = client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39), [message[0].url, message[0].author.id, (alteracoes.antigo).slice(0, 500), alteracoes.novo.slice(0, 500)])
+    let texto = client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39), [message[0].url, message[0].author.id, alteracoes.antigo, alteracoes.novo])
     let autor = message[0].author.id, local = message[0].channelId, row
 
     const embed = new EmbedBuilder()

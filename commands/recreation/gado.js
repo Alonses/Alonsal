@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, AttachmentBuilder } = require('discord.js')
 
-// const { createCanvas, loadImage } = require('canvas')
+const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -48,34 +48,39 @@ module.exports = {
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction))
             return client.tls.reply(interaction, user, "dive.gado.permissao", true, 7)
 
-        // await interaction.deferReply({ ephemeral: true })
-
         let frase_gado = client.tls.phrase(user, "dive.gado.frases", null, `\`${alvo.username}\``)
-        // const { gado } = require('./../../files/json/text/gado.json')
+        const { gado } = require('./../../files/json/text/gado.json')
 
-        // const operador = frase_gado.split("|")[0] || "0"
-        // let url_img = `./../../files/img/gado/gado_${gado[operador][client.random(gado[operador])]}.png`
-        frase_gado = frase_gado.split("|")[1]
+        try {
 
-        // if (process.env.id_bool.includes(alvo.id)) url_img = "./../../files/img/gado/bool_1.png"
+            // Gerando o canvas do gado
+            const operador = frase_gado.split("|")[0] || "0"
+            let url_img = `./files/img/gado/gado_${gado[operador][client.random(gado[operador])]}.png`
+            frase_gado = frase_gado.split("|")[1]
 
-        // const canvas = createCanvas(300, 300)
-        // const context = canvas.getContext('2d')
+            if (process.env.id_bool.includes(alvo.id)) url_img = "./files/img/gado/bool_1.png"
 
-        // let avatar_user = alvo.avatar ? `https://cdn.discordapp.com/avatars/${alvo.id}/${alvo.avatar}.png` : "https://archive.org/download/discordprofilepictures/discordred.png"
+            let canvas = Canvas.createCanvas(300, 300)
+            const context = canvas.getContext('2d')
 
-        // Carregando as imagens de perfil do usuário
-        // loadImage(avatar_user).then((image) => {
-        //     context.drawImage(image, 0, 0, 270, 270)
+            let avatar_user = alvo.avatar ? `https://cdn.discordapp.com/avatars/${alvo.id}/${alvo.avatar}.png` : "https://archive.org/download/discordprofilepictures/discordred.png"
 
-        //     loadImage(url_img).then((image) => {
-        //         context.drawImage(image, 0, 0, 300, 300)
+            // Carregando o perfil e 
+            const user = await Canvas.loadImage(avatar_user)
+            const moldura = await Canvas.loadImage(url_img)
 
-                // Gerando a imagem para poder anexar ao canvas
-                // attachment = new AttachmentBuilder(canvas.toBuffer('image/png', { compressionLevel: 3, filters: canvas.PNG_FILTER_NONE }), { name: 'gado.png' })
+            context.drawImage(user, 0, 0, 270, 270)
+            context.drawImage(moldura, 0, 0, 300, 300)
 
-                interaction.reply({ content: frase_gado })
-            // })
-        // })
+            // Gerando a imagem para poder anexar ao canvas
+            attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'gado.png' })
+            interaction.reply({ content: frase_gado, files: [attachment] })
+
+        } catch {
+            interaction.reply({
+                content: `${client.emoji("emojis_negativos")} | Houve um erro neste comando! Por gentileza, tente novamente...`,
+                ephemeral: true
+            })
+        }
     }
 }
