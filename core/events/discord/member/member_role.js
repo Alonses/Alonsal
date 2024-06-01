@@ -1,28 +1,18 @@
-const { EmbedBuilder, AuditLogEvent } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, guild, dados }) => {
+module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     const user_alvo = dados[0].user
     let texto = "", removidos = [], adicionados = []
     let old_member = dados[0], new_member = dados[1]
 
-    // Coletando dados sobre o evento
-    const fetchedLogs = await dados[0].guild.fetchAuditLogs({
-        type: AuditLogEvent.MemberRoleUpdate,
-        limit: 1
-    })
-
-    const registroAudita = fetchedLogs.entries.first()
-
-    if (old_member.roles.cache.size > new_member.roles.cache.size)
-        old_member.roles.cache.forEach(role => {
-            if (!new_member.roles.cache.has(role.id))
-                removidos.push(`<@&${role.id}>`)
+    if (registroAudita.changes[0].key === "$add")
+        registroAudita.changes[0].new.forEach(role => {
+            adicionados.push(`<@&${role.id}>`)
         })
     else
-        new_member.roles.cache.forEach(role => {
-            if (!old_member.roles.cache.has(role.id))
-                adicionados.push(`<@&${role.id}>`)
+        registroAudita.changes[0].new.forEach(role => {
+            removidos.push(`<@&${role.id}>`)
         })
 
     if (adicionados.length > 0)
@@ -53,6 +43,9 @@ module.exports = async ({ client, guild, dados }) => {
         )
         .setTimestamp()
 
+    // Comparando as permissões adicionadas e removidas
+    const alteracoes = comparar_diferencas(old_member.permissions.toArray(), new_member.permissions.toArray())
+
     // Listando as permissões do usuário
     embed.addFields(
         {
@@ -62,7 +55,7 @@ module.exports = async ({ client, guild, dados }) => {
         },
         {
             name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
-            value: client.list(new_member.permissions.toArray(), 2000),
+            value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 Adicionado:**\n${client.list(alteracoes.adicoes, 2000)}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ Removido:**\n${client.list(alteracoes.remocoes, 2000)}` : ""}` : "`❌ Não há permissões diferentes vinculados neste cargo`",
             inline: false
         }
     )
@@ -71,4 +64,24 @@ module.exports = async ({ client, guild, dados }) => {
     if (url_avatar) embed.setThumbnail(url_avatar)
 
     client.notify(guild.logger.channel, { embeds: [embed] })
+}
+
+function comparar_diferencas(antigo, novo) {
+
+    const obj = {
+        adicoes: [],
+        remocoes: []
+    }
+
+    // Comparando as adições e remoções ao atribuir/remover cargos
+    for (let i = 0; i < antigo.length; i++)
+        for (let x = 0; x < novo.length; x++) {
+
+            if (!antigo.includes(novo[x]) && !obj.adicoes.includes(novo[x]) && novo[x])
+                obj.adicoes.push(novo[x])
+            else if (!novo.includes(antigo[x]) && !obj.remocoes.includes(antigo[x]) && antigo[x])
+                obj.remocoes.push(antigo[x])
+        }
+
+    return obj
 }

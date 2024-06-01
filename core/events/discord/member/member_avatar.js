@@ -15,7 +15,10 @@ module.exports = async ({ client, guild, user, dados }) => {
 
         // Carregando as imagens de perfil do usuário
         foto_antiga = await Canvas.loadImage(user.profile.avatar)
-        foto_nova = await Canvas.loadImage(user_alvo.avatarURL({ dynamic: true }))
+        foto_nova = await Canvas.loadImage(user_alvo.displayAvatarURL())
+
+        context.strokeStyle = '#29BB8E';
+        context.strokeRect(0, 0, canvas.width, canvas.height);
 
         // Desenhando no canvas
         context.drawImage(foto_antiga, 0, 0, 340, 340)

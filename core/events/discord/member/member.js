@@ -1,4 +1,4 @@
-const { PermissionsBitField, AuditLogEvent } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 module.exports = async (client, dados) => {
 
@@ -15,36 +15,33 @@ module.exports = async (client, dados) => {
     if (!await client.permissions(dados[0], client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
 
         guild.logger.member_role = false
-        await guild.save()
+        guild.save()
 
         return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
     }
 
     // Verificando qual atributo foi atualizado
     const guild_evento = await client.guilds(guild.sid)
-    const fetchedLogs = await guild_evento.fetchAuditLogs({
-        type: AuditLogEvent.MemberUpdate,
-        limit: 1
-    })
 
+    const fetchedLogs = await guild_evento.fetchAuditLogs({ limit: 1 })
     const registroAudita = fetchedLogs.entries.first()
 
     // Apelido alterado
-    if (dados[0].nickname !== dados[1].nickname && dados[0].nickname && guild.logger.member_nick)
+    if (registroAudita.changes[0]?.key === "nick" && guild.logger.member_nick)
         return require('./member_nick')({ client, guild, registroAudita, dados })
 
     // Membro foi mutado
-    if (dados[0].communicationDisabledUntilTimestamp !== dados[1].communicationDisabledUntilTimestamp && guild.logger.member_punishment)
+    if (registroAudita.changes[0]?.key === "communication_disabled_until" && guild.logger.member_punishment)
         return require('./member_mute')({ client, guild, registroAudita, dados })
 
     // Membro teve os cargos atualizados
-    if (dados[0]._roles !== dados[1]._roles && dados[0]._roles.length > 0) {
+    if (registroAudita.changes[0]?.key === "$add" || registroAudita.changes[0]?.key === "$remove") {
 
         // Verificando se há cargos temporários no servidor vinculados ao membro
         require('./member_timed_role')({ client, guild, dados })
 
         if (guild.logger.member_role) // Log de eventos
-            return require('./member_role')({ client, guild, dados })
+            return require('./member_role')({ client, guild, registroAudita, dados })
     }
 
     const user = await client.getUser(user_alvo.id)
