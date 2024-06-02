@@ -5,8 +5,8 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const user_alvo = dados[0].user, timeout = registroAudita?.changes[0] ? parseInt(new Date(registroAudita?.changes[0].new) - new Date()) : null
     let razao = "", network_descricao = "", canal_aviso = guild.logger.channel
 
-    // Timeout inválido
-    if (timeout < 0) return
+    // Timeout ou usuário inválido
+    if (timeout < 0 || user_alvo.id !== registroAudita.targetId) return
 
     // Alterando o canal alvo conforme o filtro de eventos do death note
     if (guild.death_note.note && guild.death_note.member_punishment && guild.death_note.channel)
