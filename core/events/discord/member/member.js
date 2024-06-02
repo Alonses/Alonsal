@@ -27,15 +27,15 @@ module.exports = async (client, dados) => {
     const registroAudita = fetchedLogs.entries.first()
 
     // Apelido alterado
-    if (registroAudita.changes[0]?.key === "nick" && guild.logger.member_nick)
+    if (registroAudita?.changes[0]?.key === "nick" && guild.logger.member_nick)
         return require('./member_nick')({ client, guild, registroAudita, dados })
 
     // Membro foi mutado
-    if (registroAudita.changes[0]?.key === "communication_disabled_until" && guild.logger.member_punishment)
+    if (registroAudita?.changes[0]?.key === "communication_disabled_until" && guild.logger.member_punishment)
         return require('./member_mute')({ client, guild, registroAudita, dados })
 
     // Membro teve os cargos atualizados
-    if (registroAudita.changes[0]?.key === "$add" || registroAudita.changes[0]?.key === "$remove") {
+    if (registroAudita?.changes[0]?.key === "$add" || registroAudita?.changes[0]?.key === "$remove") {
 
         // Verificando se há cargos temporários no servidor vinculados ao membro
         require('./member_timed_role')({ client, guild, dados })
