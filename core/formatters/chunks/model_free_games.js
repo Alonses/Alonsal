@@ -77,7 +77,6 @@ module.exports = async (client, user, interaction, pagina_guia) => {
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })
     else {
-
         if (original_size > limitador) // Botões extrapolam a quantidade do limitador
             embed.setFooter({
                 text: client.tls.phrase(user, "mode.anuncio.jogos_disponiveis_rodape"),

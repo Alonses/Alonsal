@@ -36,7 +36,7 @@ module.exports = async ({ client, channel }) => {
         .setDescription(`${client.tls.phrase(guild, "mode.logger.canal_criado_desc", 43)}\n\`\`\`${tipo_canal}\`\`\``)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             },

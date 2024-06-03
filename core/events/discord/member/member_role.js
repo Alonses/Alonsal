@@ -36,7 +36,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
                 inline: true
             },
             {
-                name: client.user_title(registroAudita.executor, guild),
+                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
