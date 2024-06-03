@@ -35,7 +35,7 @@ module.exports = async ({ client, message }) => {
     let texto_mensagem = message.content
 
     let texto = `${client.tls.phrase(guild, "mode.logger.auto_exclusao", 13, [message.author.id, message.url])}\n`
-    let autor = message.author.id, local = message.channelId, row
+    let autor = message.author.id, local = message.channelId
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
@@ -55,7 +55,7 @@ module.exports = async ({ client, message }) => {
             },
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "util.rastreio.local")}**`,
-                value: `${client.emoji("icon_id")} \`${local}\`\n( <#${local}> )`,
+                value: `${client.emoji("icon_id")} \`${local}\`\n:placard: \`${message.channel.name}\`\n( <#${local}> )`,
                 inline: true
             }
         )
@@ -76,6 +76,5 @@ module.exports = async ({ client, message }) => {
 
     embed.setDescription(texto)
 
-    if (row) client.notify(guild.logger.channel, { embeds: [embed], components: [row] })
-    else client.notify(guild.logger.channel, { embeds: [embed] })
+    client.notify(guild.logger.channel, { embeds: [embed] })
 }

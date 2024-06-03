@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
     // }
 
     let texto = client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39), [message[0].url, message[0].author.id, alteracoes.antigo.slice(0, 500), alteracoes.novo.slice(0, 500)])
-    let autor = message[0].author.id, local = message[0].channelId, row
+    let autor = message[0].author.id, local = message[0].channelId
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_editada"))
@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
             },
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "util.rastreio.local")}**`,
-                value: `${client.emoji("icon_id")} \`${local}\`\n( <#${local}> )`,
+                value: `${client.emoji("icon_id")} \`${local}\`\n:placard: \`${message[0].channel.name}\`\n( <#${local}> )`,
                 inline: true
             }
         )

@@ -139,8 +139,13 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     const guild_bot = await client.getMemberGuild(guild.sid, client.id())
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
     const user = await client.getUser(message.author.id)
+    let mensagens_spam = []
 
-    await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, user_messages, user, user_guild, guild_bot, tempo_timeout })
+    // Listando as mensagens que foram consideradas como spam
+    user_messages.forEach(internal_message => { mensagens_spam.push(`-> ${internal_message.content}\n[ ${client.defaultEmoji("time")} ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ] - ${client.defaultEmoji("place")} ${internal_message.channel.name}`) })
+    mensagens_spam = mensagens_spam.join("\n\n").slice(0, 1000)
+
+    await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     if (strike_aplicado.role) { // Current Strike adds a role
 
