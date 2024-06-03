@@ -17,7 +17,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         .setDescription(`${client.emoji("mc_name_tag")} | **${descricao}**`)
         .setFields(
             {
-                name: client.user_title(user_alvo, guild),
+                name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
@@ -28,7 +28,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (registroAudita.executorId !== user_alvo.id && registroAudita.changes[0].key === "nick")
         embed.addFields(
             {
-                name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.logger.alterador")}**`,
+                name: client.user_title(registroAudita.executor, guild, "mode.logger.alterador", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }

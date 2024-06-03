@@ -572,10 +572,10 @@ function internal_functions(client) {
         return Math.floor(new Date().getTime() / 1000)
     }
 
-    client.user_title = (user, escopo) => {
+    client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {
 
         // Retorna o texto formatado para membros e bots (usado em cards do log de eventos)
-        return `${user.bot ? client.emoji("icon_integration") : client.defaultEmoji("person")} **${client.tls.phrase(escopo, "util.server.membro")}${user.bot ? ` ( ${client.tls.phrase(escopo, "util.user.bot")} )` : ""}**`
+        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${client.tls.phrase(escopo, "util.user.bot")} )` : ""}**`
     }
 
     client.verifyWarnAction = (warn, traduz) => {

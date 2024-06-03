@@ -41,7 +41,7 @@ module.exports = async (client, message) => {
         .setColor(0xffffff)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                name: client.user_title(message[0].author, guild, "mode.logger.autor"),
                 value: `${client.emoji("icon_id")} \`${autor}\`\n${client.emoji("mc_name_tag")} \`${message[0].author.username}\`\n( <@${autor}> )`,
                 inline: true
             },

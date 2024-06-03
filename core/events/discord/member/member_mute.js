@@ -34,12 +34,12 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
         .setFields(
             {
-                name: client.user_title(user_alvo, guild),
+                name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
             {
-                name: client.user_title(registroAudita.executor, guild),
+                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }

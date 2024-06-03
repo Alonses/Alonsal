@@ -30,7 +30,7 @@ module.exports = async ({ client, invite }) => {
         .setDescription(`**${client.tls.phrase(guild, "mode.logger.convite_criado", 43)}**`)
         .setFields(
             {
-                name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
+                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor"),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             },
