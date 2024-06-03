@@ -59,7 +59,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             embed_user.setDescription(msg_user)
-            embed.addFields(
+            embed_user.addFields(
                 {
                     name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.spam.vigencia")}**`,
                     value: `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${tempo_timeout}`)}\`**`,
