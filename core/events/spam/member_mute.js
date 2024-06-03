@@ -1,21 +1,16 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-module.exports = async ({ client, message, guild, strike_aplicado, user_messages, user, user_guild, guild_bot, tempo_timeout }) => {
-
-    let entradas_spamadas = ""
+module.exports = async ({ client, message, guild, strike_aplicado, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
     if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.ModerateMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
-    // Listando as mensagens consideras spam e excluindo elas
-    user_messages.forEach(internal_message => { entradas_spamadas += `-> ${internal_message.content}\n[ ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]\n\n` })
-
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
         .setColor(0xED4245)
-        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild.user.username, client.tls.phrase(guild, `menu.times.${tempo_timeout}`)])}\n\`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild.user.username, client.tls.phrase(guild, `menu.times.${tempo_timeout}`)])}\n\`\`\`${mensagens_spam}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
@@ -24,7 +19,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                value: `<t:${client.timestamp() + tempo_timeout}:f>\n( <t:${client.timestamp() + tempo_timeout}:R> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.expira_em")} \n${client.tls.phrase(guild, `menu.times.${tempo_timeout}`)}\`**\n( <t:${client.timestamp() + tempo_timeout}:f> )`,
                 inline: true
             }
         )
@@ -58,7 +53,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
                 .setTitle(client.tls.phrase(guild, "mode.spam.spam_titulo_user"))
                 .setColor(0xED4245)
 
-            let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${entradas_spamadas.slice(0, 999)}\`\`\``
+            let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
 
             if (`${user_messages[0].content} `.match(client.cached.regex))
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`

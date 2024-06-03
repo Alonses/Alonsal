@@ -42,7 +42,7 @@ module.exports = async ({ client, channel }) => {
             },
             {
                 name: `${client.defaultEmoji("paper")} **${registroAudita.target.type === 4 ? "Categoria" : client.tls.phrase(guild, "mode.canal.canal")}**`,
-                value: `${client.emoji("icon_id")} \`${channel.id}\`\n :placard: \`${channel.name}\``,
+                value: `${client.emoji("icon_id")} \`${channel.id}\`\n:placard: \`${channel.name}\``,
                 inline: true
             }
         )

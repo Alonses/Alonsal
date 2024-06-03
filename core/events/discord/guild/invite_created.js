@@ -27,7 +27,7 @@ module.exports = async ({ client, invite }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.convite_criado_titulo"))
         .setColor(0x29BB8E)
-        .setDescription(`**${client.tls.phrase(guild, "mode.logger.convite_criado")}**`)
+        .setDescription(`**${client.tls.phrase(guild, "mode.logger.convite_criado", 43)}**`)
         .setFields(
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.logger.autor")}**`,
@@ -36,7 +36,7 @@ module.exports = async ({ client, invite }) => {
             },
             {
                 name: `${client.emoji(44)} **${client.tls.phrase(guild, "menu.botoes.convite")}: ${invite.code}**`,
-                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.tls.phrase(guild, "mode.logger.limite_usos", null, registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:** <#${registroAudita.target.channel.id}>`,
+                value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.tls.phrase(guild, "mode.logger.limite_usos", null, registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:**\n:placard: \`${registroAudita.target.channel.name}\`\n( <#${registroAudita.target.channel.id}> )`,
                 inline: true
             }
         )
