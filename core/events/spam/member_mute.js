@@ -19,7 +19,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                value: `**${client.tls.phrase(guild, "mode.warn.expira_em")} \n${client.tls.phrase(guild, `menu.times.${tempo_timeout}`)}\`**\n( <t:${client.timestamp() + tempo_timeout}:f> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.expira_em")} \`${client.tls.phrase(guild, `menu.times.${tempo_timeout}`)}\`**\n( <t:${client.timestamp() + tempo_timeout}:f> )`,
                 inline: true
             }
         )
@@ -59,6 +59,19 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
                 msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
             embed_user.setDescription(msg_user)
+            embed.addFields(
+                {
+                    name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(user, "mode.spam.vigencia")}**`,
+                    value: `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${tempo_timeout}`)}\`**`,
+                    inline: true
+                },
+                {
+                    name: "⠀",
+                    value: `( <t:${client.timestamp() + tempo_timeout}:f> )`,
+                    inline: true
+                }
+            )
+
             client.sendDM(user, { embeds: [embed_user] }, true)
         })
         .catch(console.error)
