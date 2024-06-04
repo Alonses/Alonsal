@@ -55,7 +55,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     if (!guild.warn.hierarchy.status) {
 
         // Verificando se existem advertências para as próximas punições do usuário
-        const indice_matriz = client.verifyGuildWarns(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+        const indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
         embed.addFields(
             {

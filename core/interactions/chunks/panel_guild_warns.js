@@ -14,12 +14,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
     const advertencias = await listAllGuildWarns(interaction.guild.id), status = guild.conf.warn
-    let indice_matriz
-
-    advertencias.forEach(warn => {
-        if ((warn.action === "member_kick_2" || warn.action === "member_ban") && !indice_matriz)
-            indice_matriz = warn.rank + 1
-    })
+    const indice_matriz = client.verifyMatrixIndex(advertencias)
 
     if (guild.conf.warn !== status) await guild.save()
 

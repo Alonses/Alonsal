@@ -12,13 +12,11 @@ module.exports = async (client, dados) => {
         await registerUserGuild(user.uid, dados.guild.id)
 
     if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
-        let avisos = 0, historico = []
+        let historico = []
 
         const reports = await getUserReports(dados.user.id)
         reports.forEach(valor => {
-            avisos++
-
-            historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
+            historico.push(`${client.defaultEmoji("time")} ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.issuer_nick || "Desconhecido"}: ${valor.relatory}`)
         })
 
         const alvo = {
@@ -26,7 +24,7 @@ module.exports = async (client, dados) => {
             relatory: historico.join("\n\n")
         }
 
-        if (avisos > 0) {
+        if (alvo.relatory.length > 5) {
             const id_canal = guild.reports.channel
             require('../../../auto/send_report')({ client, alvo, id_canal })
         }
