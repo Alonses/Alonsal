@@ -34,11 +34,10 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         let canal = interaction.options.getChannel("channel") || interaction.channel
-        // Coletando os dados do canal informado
 
+        // Coletando os dados do canal informado
         let nsfw = client.tls.phrase(user, "util.minecraft.nao")
-        if (canal.nsfw)
-            nsfw = client.tls.phrase(user, "util.minecraft.sim")
+        if (canal.nsfw) nsfw = client.tls.phrase(user, "util.minecraft.sim")
 
         const data_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:f>` // Criação do canal
         const diferenca_criacao = `<t:${Math.floor(canal.createdAt / 1000)}:R>`
@@ -74,7 +73,7 @@ module.exports = {
                     name: `:label: **${client.tls.phrase(user, "util.canal.mencao")}**`,
                     value: `\`<#${canal.id}>\``,
                     inline: true
-                },
+                }
             )
 
         if (bitrate === "")

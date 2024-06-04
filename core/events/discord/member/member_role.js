@@ -2,28 +2,16 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
-    const user_alvo = dados[0].user
-    let texto = "", removidos = [], adicionados = []
-    let old_member = dados[0], new_member = dados[1]
+    let texto, cargos = []
+    const user_alvo = dados[0].user, old_member = dados[0], new_member = dados[1]
+
+    // Listando a alteração de cargo
+    registroAudita.changes[0].new.forEach(role => { cargos.push(`<@&${role.id}>`) })
 
     if (registroAudita.changes[0].key === "$add")
-        registroAudita.changes[0].new.forEach(role => {
-            adicionados.push(`<@&${role.id}>`)
-        })
+        texto = `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${cargos.join(", ")}`
     else
-        registroAudita.changes[0].new.forEach(role => {
-            removidos.push(`<@&${role.id}>`)
-        })
-
-    if (adicionados.length > 0)
-        texto += `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${adicionados.join(", ")}`
-
-    if (removidos.length > 0)
-        texto += `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${removidos.join(", ")}`
-
-    // Membros não salvos no cache
-    if (adicionados.length > 1 || removidos.length > 1 || old_member.roles.cache.size == 0 || texto.length < 1)
-        return
+        texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${cargos.join(", ")}`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))

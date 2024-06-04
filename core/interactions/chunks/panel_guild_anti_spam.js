@@ -8,16 +8,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
+    const indice_matriz = client.verifyMatrixIndex(strikes_guild)
 
-    let botoes = [], descr_rodape, indice_matriz
+    let botoes = [], descr_rodape
 
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
-
-    strikes_guild.forEach(strike => {
-        if ((strike.action === "member_kick_2" || strike.action === "member_ban") && !indice_matriz)
-            indice_matriz = strike.rank + 1
-    })
 
     // Desabilitando o anti-spam caso não haja canais de aviso selecionados, sem permissão para gerenciar mensagens e castigar membros
     if (!guild.spam.channel && !guild.logger.channel || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers)) {

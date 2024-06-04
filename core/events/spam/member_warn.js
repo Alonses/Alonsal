@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require("discord.js")
 
-module.exports = async ({ client, guild, strike_aplicado, user_messages, mensagens_spam, user, user_guild }) => {
+module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild }) => {
 
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
+        .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
         .setColor(0xED4245)
         .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_detectado", client.defaultEmoji("guard"), user_guild.user.username)}\n\`\`\`${mensagens_spam}\`\`\``)
         .addFields(
@@ -38,10 +38,17 @@ module.exports = async ({ client, guild, strike_aplicado, user_messages, mensage
     client.notify(guild.spam.channel || guild.logger.channel, obj)
 
     const embed_user = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.spam.spam_titulo_user"))
+        .setTitle(`${client.tls.phrase(guild, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
         .setColor(0xED4245)
 
     let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
+
+    if (strike_aplicado.role) // Strike possui um cargo vinculado
+        embed_user.addFields({
+            name: client.tls.phrase(guild, "mode.spam.cargo_acrescentado"),
+            value: `:label: <@&${strike_aplicado.role}>`,
+            inline: true
+        })
 
     // Verificando se há links anexados ao spam
     if (`${user_messages[0].content} `.match(client.cached.regex))

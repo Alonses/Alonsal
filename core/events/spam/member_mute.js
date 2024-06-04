@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-module.exports = async ({ client, message, guild, strike_aplicado, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
+module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
     if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.ModerateMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
@@ -8,7 +8,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
 
     // Criando o embed de aviso para os moderadores
     const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.spam.titulo"))
+        .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
         .setColor(0xED4245)
         .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_aplicado", client.defaultEmoji("guard"), [user_guild.user.username, client.tls.phrase(guild, `menu.times.${tempo_timeout}`)])}\n\`\`\`${mensagens_spam}\`\`\``)
         .addFields(
@@ -50,7 +50,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
             client.notify(guild.spam.channel || guild.logger.channel, obj)
 
             const embed_user = new EmbedBuilder()
-                .setTitle(client.tls.phrase(guild, "mode.spam.spam_titulo_user"))
+                .setTitle(`${client.tls.phrase(guild, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
                 .setColor(0xED4245)
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
@@ -71,6 +71,13 @@ module.exports = async ({ client, message, guild, strike_aplicado, user_messages
                     inline: true
                 }
             )
+
+            if (strike_aplicado.role) // Strike possui um cargo vinculado
+                embed_user.addFields({
+                    name: client.tls.phrase(guild, "mode.spam.cargo_acrescentado"),
+                    value: `:label: <@&${strike_aplicado.role}>`,
+                    inline: true
+                })
 
             client.sendDM(user, { embeds: [embed_user] }, true)
         })
