@@ -31,7 +31,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         .setDescription(texto)
         .setFields(
             {
-                name: client.user_title(user_alvo, guild),
+                name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             },
