@@ -29,13 +29,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Submenu para escolher o escopo do tempo de exclusão dos dados do usuário
         const valores = []
-        let escopo = "global"
+        let escopo = "global", indice_erase = user.erase.timeout
         reback = "panel_personal_data.1"
 
-        if (operacao === 3)
+        if (operacao === 3) {
             escopo = "guild"
+            indice_erase = user.erase.guild_timeout
+        }
 
-        Object.keys(defaultUserEraser).forEach(key => { valores.push(defaultUserEraser[key]) })
+        Object.keys(defaultUserEraser).forEach(key => { if (parseInt(key) !== indice_erase) valores.push(`${key}.${defaultUserEraser[key]}`) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

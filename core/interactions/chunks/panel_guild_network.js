@@ -1,6 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { getNetworkedGuilds } = require("../../database/schemas/Guild")
+
 const { banMessageEraser } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
@@ -9,7 +10,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
     const guild = await client.getGuild(interaction.guild.id)
-    let botoes = [], retorno_aviso = "", ant_network = guild.cont.network
+    let botoes = [], retorno_aviso = "", ant_network = guild.conf.network
 
     // Permissões do bot no servidor
     const servidores_link = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length : 0

@@ -83,8 +83,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escolher o tempo de expiração do cargo
         const valores = []
-
-        Object.keys(defaultRoleTimes).forEach(key => { valores.push(defaultRoleTimes[key]) })
+        Object.keys(defaultRoleTimes).forEach(key => { if (parseInt(key) !== cargo.timeout) valores.push(`${key}.${defaultRoleTimes[key]}`) })
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },
@@ -144,7 +143,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
 
             const embed = new EmbedBuilder()
-                .setTitle("> Um novo cargo temporário! :military_medal:")
+                .setTitle("> Um cargo temporário! :military_medal:")
                 .setColor(0x29BB8E)
                 .setDescription(`:new: | ${membro_guild} ganhou um cargo temporário neste servidor!${motivo}`)
                 .addFields(

@@ -105,10 +105,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Escolhendo o tempo de exclusão das mensagens para membros banidos pelo AutoBan
         const valores = []
-
-        Object.keys(banMessageEraser).forEach(key => {
-            if (guild.reports.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
-        })
+        Object.keys(banMessageEraser).forEach(key => { if (parseInt(key) !== guild.reports.erase_ban_messages) valores.push(key) })
 
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },

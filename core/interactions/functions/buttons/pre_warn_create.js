@@ -131,7 +131,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 },
                 {
                     name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
-                    value: client.verifyWarnAction(guild_warns[indice_warn], guild),
+                    value: client.verifyAction(client, guild_warns[indice_warn], guild),
                     inline: true
                 }
             )

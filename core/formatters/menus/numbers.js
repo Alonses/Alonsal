@@ -17,7 +17,13 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
 
     // Exibindo apenas o número
     if (data.raw) nome_label = `${valor}`
-    else nome_label = client.tls.phrase(user, `menu.times.${valor}`)
+    else {
+        valor_label = `${alvo}|${valor.split(".")[0]}`
+        nome_label = client.tls.phrase(user, `menu.times.${valor.split(".")[1]}`)
+
+        if (data.submenu)
+            valor_label = `${alvo}|${valor.split(".")[0]}.${data.submenu}`
+    }
 
     if (alvo.includes("ban_eraser")) { // Usado para o tempo de exclusão das mensagens ao ser banido
         nome_label = client.tls.phrase(user, `menu.network.${banMessageEraser[valor]}`)

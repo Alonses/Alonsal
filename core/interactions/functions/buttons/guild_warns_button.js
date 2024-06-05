@@ -169,10 +169,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Escolhendo o tempo de exclusão das mensagens para membros banidos por advertências
         const valores = []
-
-        Object.keys(banMessageEraser).forEach(key => {
-            if (guild.warn.erase_ban_messages !== parseInt(key) && !valores.includes(parseInt(key))) valores.push(parseInt(key))
-        })
+        Object.keys(banMessageEraser).forEach(key => { if (parseInt(key) !== guild.warn.erase_ban_messages) valores.push(key) })
 
         const data = {
             title: { tls: "menu.menus.escolher_expiracao" },
@@ -190,10 +187,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
 
-    } else if (operacao == 16) { // Definindo o tempo de expiração das advertências no servidor
+    } else if (operacao == 16) {
 
+        // Definindo o tempo de expiração das advertências no servidor
         const valores = []
-        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
+        Object.keys(spamTimeoutMap).forEach(key => { if (parseInt(key) !== guild.warn.reset) valores.push(`${key}.${spamTimeoutMap[key]}`) })
 
         const data = {
             title: { tls: "mode.warn.definir_tempo" },

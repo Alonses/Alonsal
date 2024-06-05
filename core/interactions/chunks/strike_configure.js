@@ -5,7 +5,7 @@ const { emoji_button } = require("../../functions/emoji_button")
 const { getGuildStrike } = require("../../database/schemas/Guild_strikes")
 
 const { loggerMap } = require("../../formatters/patterns/guild")
-const { spamTimeoutMap } = require("../../formatters/patterns/timeout")
+const { spamTimeoutMap, defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -29,9 +29,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
+                name: `${client.defaultEmoji("time")} **Cargo temporário**`,
+                value: `**${strike.timed_role.status ? `\`✅ Ativo\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[strike.timed_role.timeout]}`)}\`` : `\`❌ Desativado\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[strike.timed_role.timeout]}`)}\``}**`,
+                inline: true
+            }
+        )
+        .addFields(
+            {
                 name: `${client.emoji(53)} **${client.tls.phrase(user, "menu.botoes.tempo_mute")}**`,
                 value: `**${strike.timeout != null ? `${client.defaultEmoji("time")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[strike.timeout]}`)}\`` : client.tls.phrase(user, "mode.spam.sem_tempo_definido")}**`,
-                inline: true
+                inline: false
             }
         )
 
@@ -79,15 +86,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const botoes = [
-        { id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `4.${id_strike}` },
+        // { id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `4.${id_strike}` },
         { id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.penalidade"), type: 1, emoji: loggerMap[strike.action] || loggerMap["none"], data: `1.${id_strike}` },
+        { id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.tempo_mute"), type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` },
         { id: "strike_configure_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_strike}`, disabled: b_cargos },
-        { id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.tempo_mute"), type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` }
+        { id: "strike_configure_button", name: "Cargo temporário", type: client.execute("functions", "emoji_button.type_button", strike.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", strike.timed_role.status), data: `20|${id_strike}`, disabled: !strike.role }
     ]
 
     const row = [
         { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "4" },
-        { id: "strike_remove", name: client.tls.phrase(user, "menu.botoes.excluir_strike"), type: 3, emoji: client.emoji(13), data: `2|${id_strike}` }
+        { id: "strike_remove", name: client.tls.phrase(user, "menu.botoes.excluir_strike"), type: 3, emoji: client.emoji(13), data: `2|${id_strike}` },
+        { id: "strike_configure_button", name: "Expiração do cargo", type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_strike}` }
     ]
 
     const obj = {

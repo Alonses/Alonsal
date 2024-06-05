@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.warn.proxima_penalidade")}**`,
-                value: client.verifyWarnAction(guild_warns[indice_warn - 1], user),
+                value: client.verifyAction(client, guild_warns[indice_warn - 1], user),
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }
