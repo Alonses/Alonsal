@@ -9,13 +9,15 @@ const { loggerMap } = require('../../../formatters/patterns/guild')
 // 3 -> Ativar ou desativar os links suspeitos
 // 7 -> Ativar ou desativar as notificações do anti-spam
 // 8 -> Ativar ou desativar a punição de moderadores no servidor
+// 25 -> Altera o tipo de varredura do anti-spam
 
 const operations = {
     1: { action: "conf.spam", page: 0 },
     2: { action: "spam.strikes", page: 0 },
     3: { action: "spam.suspicious_links", page: 1 },
     7: { action: "spam.notify", page: 2 },
-    8: { action: "spam.manage_mods", page: 1 }
+    8: { action: "spam.manage_mods", page: 1 },
+    25: { action: "spam.scanner.links", page: 0 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {

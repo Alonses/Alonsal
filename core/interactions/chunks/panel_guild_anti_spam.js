@@ -55,6 +55,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             }
         )
 
+    // Estilo de filtro adotado para o Anti-spam no servidor
+    embed.addFields(
+        {
+            name: `${client.emoji(60)} **Estilo de varredura**`,
+            value: guild.spam.scanner.links ? "`🔗 Considerar apenas mensagens com links`" : "`🌟 Considerar todas as mensagens`",
+            inline: false
+        }
+    )
+
     if (guild?.spam.manage_mods) // Recurso para gerenciar moderadores habilitado
         embed.addFields(
             {
@@ -84,6 +93,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
             { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
+            { id: "guild_anti_spam_button", name: "Varredura", type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.recursos"), type: 1, emoji: client.emoji(41), data: "10" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])

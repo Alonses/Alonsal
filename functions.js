@@ -575,7 +575,7 @@ function internal_functions(client) {
     client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {
 
         // Retorna o texto formatado para membros e bots (usado em cards do log de eventos)
-        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${client.tls.phrase(escopo, "util.user.bot")} )` : ""}**`
+        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${user.id !== client.id() ? client.tls.phrase(escopo, "util.user.bot") : "Ó eu ai!"} )` : ""}**`
     }
 
     client.verifyAction = (client, obj, traduz) => {

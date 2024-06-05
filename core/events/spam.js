@@ -15,6 +15,12 @@ module.exports = async function ({ client, message, guild }) {
 
     let user_guild
 
+    if (guild.spam.scanner.links) { // Verificando se a mensagem não contém link (apenas links ativos para filtrar)
+        const link = `${message.content} `.match(client.cached.regex)
+
+        if (!link) return
+    }
+
     // Tempo minimo para manter as mensagens salvas em cache no servidor
     let tempo_spam = guild.spam.trigger_amount < 5 ? 60000 : guild.spam.trigger_amount * 12000
 
