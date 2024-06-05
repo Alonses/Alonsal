@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js")
+const { PermissionsBitField, EmbedBuilder } = require("discord.js")
 
 const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
