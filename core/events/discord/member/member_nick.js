@@ -3,6 +3,10 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     const user_alvo = dados[0].user
+
+    // Usuário inválido
+    if (user_alvo.id !== registroAudita.targetId) return
+
     let moderador = false, descricao = client.tls.phrase(guild, "mode.logger.apelido_alterado")
 
     // Exibindo o moderador que fez a alteração de nick

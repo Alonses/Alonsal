@@ -85,7 +85,10 @@ const schema = new mongoose.Schema({
         manage_mods: { type: Boolean, default: false },
         trigger_amount: { type: Number, default: 5 },
         suspicious_links: { type: Boolean, default: false },
-        channel: { type: String, default: null }
+        channel: { type: String, default: null },
+        scanner: {
+            links: { type: Boolean, default: false }
+        }
     },
     network: {
         link: { type: String, default: null },
