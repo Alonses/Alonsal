@@ -1,8 +1,9 @@
 const mongoose = require("mongoose")
 
-function setup(uri) {
+async function setup(uri) {
     mongoose.set('strictQuery', true)
-    mongoose.connect(uri)
+    await mongoose.connect(uri)
+
     var database = mongoose.connection
 }
 
