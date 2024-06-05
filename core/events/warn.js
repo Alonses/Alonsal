@@ -153,7 +153,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                             },
                             {
                                 name: `${client.defaultEmoji("time")} **Validade**`,
-                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]}`)}\`\n( <t:${cargo.timestamp}:R> )`,
+                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
                                 inline: true
                             },
                             {
@@ -164,7 +164,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                         )
 
                     // Enviando o aviso ao canal do servidor
-                    client.notify(guild.warn.channel, { content: `${membro_guild}`, embeds: [embed_timed_role] })
+                    client.notify(guild.warn.channel, { embeds: [embed_timed_role] })
                     atualiza_roles()
                 }
             }
