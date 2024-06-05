@@ -194,7 +194,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
                             },
                             {
                                 name: `${client.defaultEmoji("time")} **Validade**`,
-                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`\n( <t:${cargo.timestamp}:R> )`,
+                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
                                 inline: true
                             },
                             {
@@ -205,7 +205,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
                         )
 
                     // Enviando o aviso ao canal do servidor
-                    client.notify(guild.spam.channel, { content: `${membro_guild}`, embeds: [embed_timed_role] })
+                    client.notify(guild.spam.channel, { embeds: [embed_timed_role] })
                     atualiza_roles()
                 }
             }

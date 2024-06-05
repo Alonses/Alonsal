@@ -27,13 +27,13 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
     // Strike possui um cargo vinculado
     if (strike_aplicado.role)
         embed.addFields({
-            name: client.tls.phrase(guild, "mode.spam.cargo_acrescentado"),
+            name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.spam.cargo_acrescentado")}**`,
             value: `:label: <@&${strike_aplicado.role}>`,
             inline: true
         })
 
-    if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
-        embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
+    if (user_guild.avatarURL({ dynamic: true }))
+        embed.setThumbnail(user_guild.avatarURL({ dynamic: true }))
 
     // Mutando o usuário causador do spam
     user_guild.timeout(tempo_timeout * 1000, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
