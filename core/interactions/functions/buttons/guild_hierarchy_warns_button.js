@@ -32,9 +32,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Escolher o número de avisos prévios
         const valores = []
-
-        for (const num of defaultWarnStrikes)
-            if (guild.warn.hierarchy.strikes !== num && !valores.includes(num)) valores.push(num)
+        defaultWarnStrikes.forEach(key => { if (parseInt(key) !== guild.warn.hierarchy.strikes) valores.push(key) })
 
         const data = {
             title: { tls: "menu.menus.escolher_numero" },
@@ -90,8 +88,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 6) {
 
+        // Escolhendo o tempo de expiração dos avisos de advertência
         const valores = []
-        Object.keys(defaultEraser).forEach(key => { valores.push(defaultEraser[key]) })
+        Object.keys(defaultEraser).forEach(key => { if (parseInt(key) !== guild.warn.hierarchy.reset) valores.push(`${key}.${defaultEraser[key]}`) })
 
         const data = {
             title: { tls: "mode.warn.definir_tempo" },

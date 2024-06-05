@@ -28,7 +28,7 @@ const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/sche
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
 const { loggerMap } = require('./core/formatters/patterns/guild')
-const { spamTimeoutMap } = require('./core/formatters/patterns/timeout')
+const { spamTimeoutMap, defaultRoleTimes } = require('./core/formatters/patterns/timeout')
 const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
 const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
 
@@ -578,13 +578,19 @@ function internal_functions(client) {
         return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${client.tls.phrase(escopo, "util.user.bot")} )` : ""}**`
     }
 
-    client.verifyWarnAction = (warn, traduz) => {
+    client.verifyAction = (client, obj, traduz) => {
 
         // Listando as penalidades que o usuário receberá com a advertência
-        let acao_advertencia = `${loggerMap[warn.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${warn.action || "none"}`)}\`${client.guildAction(warn, traduz)}`
+        let acao_advertencia = `${loggerMap[obj.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${obj.action || "none"}`)}\`${client.guildAction(obj, traduz)}`
 
-        if (warn.role) // Advertência com cargo aplicado
-            acao_advertencia += `\n:label: <@&${warn.role}>`
+        if (obj.role) { // Advertência com cargo aplicado
+
+            if (obj.timed_role.status) // Com cargo temporário incluso
+                acao_advertencia += `\n:label: <@&${obj.role}> ( \`${client.defaultEmoji("time")} ${client.tls.phrase(traduz, `menu.times.${defaultRoleTimes[obj.timed_role.timeout]}`)}\` )`
+            else
+                acao_advertencia += `\n:label: <@&${obj.role}>`
+        }
+
 
         return acao_advertencia
     }

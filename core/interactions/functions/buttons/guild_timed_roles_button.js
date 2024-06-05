@@ -23,11 +23,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escolher o tempo de expiração dos cargos
         const valores = []
-
-        Object.keys(defaultRoleTimes).forEach(key => {
-            if (parseInt(key) !== guild.timed_roles.timeout)
-                valores.push(defaultRoleTimes[key])
-        })
+        Object.keys(defaultRoleTimes).forEach(key => { if (parseInt(key) !== guild.timed_roles.timeout) valores.push(`${key}.${defaultRoleTimes[key]}`) })
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },

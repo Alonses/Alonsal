@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         .addFields(
             {
                 name: `${client.emoji("banidos")} **Próxima advertência concede**`,
-                value: client.verifyWarnAction(guild_warns[indice_warn - 1], user),
+                value: client.verifyAction(client, guild_warns[indice_warn - 1], user),
                 inline: false
             }
         )

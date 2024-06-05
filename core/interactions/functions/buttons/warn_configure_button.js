@@ -1,6 +1,6 @@
 const { getGuildWarn } = require('../../../database/schemas/Guild_warns')
 
-const { spamTimeoutMap, defaultWarnStrikes } = require('../../../formatters/patterns/timeout')
+const { spamTimeoutMap, defaultWarnStrikes, defaultRoleTimes } = require('../../../formatters/patterns/timeout')
 const { guildActions, guildPermissions } = require('../../../formatters/patterns/guild')
 
 // 10 -> Ativa ou desativa a hierarquia de advertências
@@ -28,6 +28,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 3 -> Escolher tempo de mute
     // 4 -> Atualizar advertência
     // 5 -> Criar uma nova advertência
+
+    // 20 -> Ativa ou desativa os cargos temporários na advertência
+    // 21 -> Escolher o tempo de vinculo do cargo temporário
 
     // 9 -> Guia de customização das advertências
 
@@ -110,8 +113,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escolher o escopo do tempo a ser aplicado
         const valores = []
-
-        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
+        Object.keys(spamTimeoutMap).forEach(key => { if (parseInt(key) !== warn.timeout) valores.push(`${key}.${spamTimeoutMap[key]}`) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
@@ -135,9 +137,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Escolher o número de avisos prévios da advertência customizada
         const valores = []
-
-        for (const num of defaultWarnStrikes)
-            if (warn.strikes !== num && !valores.includes(num)) valores.push(num)
+        defaultWarnStrikes.forEach(key => { if (parseInt(key) !== warn.strikes) valores.push(key) })
 
         const data = {
             title: { tls: "menu.menus.escolher_numero" },
@@ -145,6 +145,36 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "warn_hierarchy_strikes",
             submenu: `${id_warn}.${operacao}`,
             raw: true,
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
+
+    } else if (operacao === 20) {
+
+        // Inverte o status de ativação dos cargos temporários na advertência selecionada
+        warn.timed_role.status = !warn.timed_role.status
+        await warn.save()
+
+    } else if (operacao === 21) {
+
+        // Submenu para escolher o tempo de duração do cargo temporário da advertência
+        const valores = []
+        Object.keys(defaultRoleTimes).forEach(key => { if (parseInt(key) >= 5 && parseInt(key) !== warn.timed_role.timeout) valores.push(`${key}.${defaultRoleTimes[key]}`) })
+
+        // Definindo o tempo que o cargo ficará com o membro que receber a advertência
+        const data = {
+            title: { tls: "menu.menus.escolher_tempo_remocao" },
+            pattern: "numbers",
+            alvo: "warn_config_role_timeout",
+            submenu: `${id_warn}.${operacao}`,
             values: valores
         }
 

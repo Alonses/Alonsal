@@ -3,8 +3,10 @@ const { PermissionsBitField } = require("discord.js")
 const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
+const { getTimedRoleAssigner } = require("../database/schemas/User_roles")
+const { atualiza_roles } = require("../auto/triggers/user_roles")
 
-const { spamTimeoutMap } = require("../formatters/patterns/timeout")
+const { spamTimeoutMap, defaultRoleTimes } = require("../formatters/patterns/timeout")
 
 const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
 const cached_messages = {}
@@ -125,15 +127,14 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
 
     // Requests coming from suspicious links
     if (!cached_messages[`${message.author.id}.${guild.sid}`] || cached_messages[`${message.author.id}.${guild.sid}`].length < 1) {
-
         cached_messages[`${message.author.id}.${guild.sid}`] = []
         cached_messages[`${message.author.id}.${guild.sid}`].push(message)
-
-        strike_aplicado = { action: "member_mute", timeout: 2 }
     }
 
-    if (!strike_aplicado?.action) // No defined operation
-        strike_aplicado = { action: "member_mute", timeout: 2 }
+    if (!strike_aplicado?.action && !guild.spam.strikes) { // No defined operation
+        strike_aplicado.action = "member_mute"
+        strike_aplicado.timeout = 2
+    }
 
     // Redirecting the event
     const guild_bot = await client.getMemberGuild(guild.sid, client.id())
@@ -153,15 +154,60 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     if (strike_aplicado.role) { // Current Strike adds a role
 
         // Checking bot permissions on the server
-        if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
+        if (await client.permissions(message, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
 
             // Assigning the role to the user who received the strike
-            let role = interaction.guild.roles.cache.get(strike_aplicado.role)
+            let role = message.guild.roles.cache.get(strike_aplicado.role)
 
             if (role.editable) { // Checking if the role is editable
-                const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+                const membro_guild = await client.getMemberGuild(message, id_alvo)
 
                 membro_guild.roles.add(role).catch(console.error)
+
+                // Strike com um cargo temporário vinculado
+                if (strike_aplicado.timed_role.status) {
+
+                    const cargo = await getTimedRoleAssigner(id_alvo, guild.sid)
+
+                    cargo.nick = membro_guild.user.username
+                    cargo.rid = strike_aplicado.role
+                    cargo.valid = true
+
+                    cargo.assigner = client.id()
+                    cargo.assigner_nick = client.username()
+
+                    cargo.relatory = `Cargo temporário atribuído por meio do sistema Anti-Spam no ${strike_aplicado.rank + 1}° Strike`
+                    cargo.timestamp = client.timestamp() + defaultRoleTimes[strike_aplicado.timed_role.timeout]
+                    cargo.save()
+
+                    const motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
+
+                    const embed_timed_role = new EmbedBuilder()
+                        .setTitle("> Um cargo temporário! :military_medal:")
+                        .setColor(0x29BB8E)
+                        .setDescription(`:new: ${client.defaultEmoji("guard")} | ${membro_guild} recebeu um cargo temporário neste servidor devido a spam.${motivo}`)
+                        .addFields(
+                            {
+                                name: `${client.defaultEmoji("playing")} **Cargo**`,
+                                value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
+                                inline: true
+                            },
+                            {
+                                name: `${client.defaultEmoji("time")} **Validade**`,
+                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`\n( <t:${cargo.timestamp}:R> )`,
+                                inline: true
+                            },
+                            {
+                                name: `${client.emoji("icon_integration")} **Moderador ( Ó eu ai! )**`,
+                                value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
+                                inline: true
+                            }
+                        )
+
+                    // Enviando o aviso ao canal do servidor
+                    client.notify(guild.spam.channel, { content: `${membro_guild}`, embeds: [embed_timed_role] })
+                    atualiza_roles()
+                }
             }
         } else
             client.notify(guild.spam.channel || guild.logger.channel, { // No permission to manage roles

@@ -15,8 +15,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Submenu para escolher o escopo do tempo de exclusão dos dados do servidor
         const valores = []
+        const guild = await client.getGuild(interaction.guild.id)
 
-        Object.keys(defaultEraser).forEach(key => { valores.push(defaultEraser[key]) })
+        Object.keys(defaultEraser).forEach(key => { if (parseInt(key) !== guild.erase.timeout) valores.push(`${key}.${defaultEraser[key]}`) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {

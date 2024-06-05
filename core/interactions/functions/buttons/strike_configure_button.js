@@ -1,7 +1,7 @@
 
 const { getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
-const { spamTimeoutMap } = require('../../../formatters/patterns/timeout')
+const { spamTimeoutMap, defaultRoleTimes } = require('../../../formatters/patterns/timeout')
 const { guildPermissions, guildActions } = require('../../../formatters/patterns/guild')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -17,6 +17,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 3 -> Escolher tempo de mute
     // 4 -> Atualizar strike
     // 5 -> Criar um novo strike
+
+    // 20 -> Ativa ou desativa os cargos temporários no strike
+    // 21 -> Escolher o tempo de vinculo do cargo temporário
 
     // 9 -> Guia de customização dos strikes
 
@@ -96,13 +99,43 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Submenu para escolher o escopo do tempo a ser aplicado
         const valores = []
 
-        Object.keys(spamTimeoutMap).forEach(key => { valores.push(spamTimeoutMap[key]) })
+        Object.keys(spamTimeoutMap).forEach(key => { if (parseInt(key) !== strike.timeout) valores.push(`${key}.${spamTimeoutMap[key]}`) })
 
         // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
         const data = {
             title: { tls: "menu.menus.escolher_timeout" },
             pattern: "numbers",
             alvo: "strike_config_timeout",
+            submenu: `${id_strike}.${operacao}`,
+            values: valores
+        }
+
+        let row = client.create_buttons([{
+            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback
+        }], interaction)
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row],
+            ephemeral: true
+        })
+
+    } else if (operacao === 20) {
+
+        // Inverte o status de ativação dos cargos temporários no strike selecionado
+        strike.timed_role.status = !strike.timed_role.status
+        await strike.save()
+
+    } else if (operacao === 21) {
+
+        // Submenu para escolher o tempo de duração do cargo temporário do strike
+        const valores = []
+        Object.keys(defaultRoleTimes).forEach(key => { if (parseInt(key) >= 5 && parseInt(key) !== strike.timed_role.timeout) valores.push(`${key}.${defaultRoleTimes[key]}`) })
+
+        // Definindo o tempo que o cargo ficará com o membro que receber o strike
+        const data = {
+            title: { tls: "menu.menus.escolher_tempo_remocao" },
+            pattern: "numbers",
+            alvo: "strike_config_role_timeout",
             submenu: `${id_strike}.${operacao}`,
             values: valores
         }
