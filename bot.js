@@ -7,9 +7,6 @@ const { internal_functions } = require('./functions')
 const idioma = require('./core/data/language')
 const database = require('./core/database/database')
 
-// Conectando ao banco de dados
-database.setup(process.env.url_dburi)
-
 const { nerfa_spam } = require('./core/events/spam')
 const { getBot } = require('./core/database/schemas/Bot')
 const { checkUser } = require('./core/database/schemas/User')
@@ -147,4 +144,6 @@ client.discord.on("interactionCreate", async interaction => {
 	}
 })
 
+// Conectando ao banco de dados
+database.setup(process.env.url_dburi)
 client.login(client.x.token)
