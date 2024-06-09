@@ -9,11 +9,11 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
 
     // <!> Temporário //
     if (guild_member) { // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
-        if (guild_executor.roles.highest.position < guild_member.roles.highest.position || !guild_executor.permissions.has(PermissionsBitField.Flags.BanMembers))
+        if (guild_executor.roles.highest.position <= guild_member.roles.highest.position || !guild_executor.permissions.has(PermissionsBitField.Flags.BanMembers))
             return
 
         // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-        if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+        if (bot_member.roles.highest.position <= guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
 
             // Desativando o recurso no servidor sem a permissão requerida
             if (!bot_member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
