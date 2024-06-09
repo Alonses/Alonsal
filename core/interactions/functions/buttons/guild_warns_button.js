@@ -15,7 +15,7 @@ const operations = {
     6: { action: "warn.timed", page: 0 },
     8: { action: "warn.notify", page: 1 },
     10: { action: "warn.notify_exclusion", page: 1 },
-    11: { action: "guild.warn.announce.status", page: 1 }
+    11: { action: "warn.announce.status", page: 1 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {

@@ -3,7 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 module.exports = async ({ client, message, guild, user_messages, strike_aplicado, indice_matriz, mensagens_spam, user, user_guild, guild_bot }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode expulsar membros
-    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.BanMembers]) || guild_bot.roles.highest.position < user_guild.roles.highest.position)
+    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.BanMembers]) || guild_bot.roles.highest.position <= user_guild.roles.highest.position)
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Criando o embed de aviso para os moderadores

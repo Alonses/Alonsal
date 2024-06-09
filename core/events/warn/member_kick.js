@@ -8,11 +8,11 @@ module.exports = async ({ client, user, interaction, guild, user_warn, guild_mem
     if (!guild_member) return
 
     // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
-    if (interaction.member.roles.highest.position < guild_member.roles.highest.position || !interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers))
+    if (interaction.member.roles.highest.position <= guild_member.roles.highest.position || !interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers))
         return client.notify(guild.warn.channel, { content: client.tls.phrase(guild, "events.kick.falta_permissao", [7, 0], user_warn.uid) })
 
     // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
-    if (bot_member.roles.highest.position < guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+    if (bot_member.roles.highest.position <= guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
 
         // Bot não possui permissões para moderar membros
         if (!bot_member.permissions.has(PermissionsBitField.Flags.KickMembers))
