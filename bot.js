@@ -131,9 +131,6 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute
 
-	// Temporário
-	console.log(interaction.commandName)
-
 	try {
 		// Executing the command
 		await action({ client, user, interaction })

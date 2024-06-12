@@ -94,14 +94,14 @@ module.exports = {
                             "pt-BR": 'motivo',
                             "ru": 'причина'
                         })
-                        .setDescription("Report what happened to this user")
+                        .setDescription("A reason for removing the warning")
                         .setDescriptionLocalizations({
-                            "de": 'Melden Sie, was mit diesem Benutzer passiert ist',
-                            "es-ES": 'Reportar lo que le pasó a este usuario',
-                            "fr": 'Signaler ce qui est arrivé à cet utilisateur',
-                            "it": 'Segnala cosa è successo a questo utente',
-                            "pt-BR": 'Relate o que aconteceu com este usuário',
-                            "ru": 'Сообщить о случившемся с этим пользователем'
+                            "de": 'Ein Grund, die Warnung zu entfernen',
+                            "es-ES": 'Una razón para eliminar la advertencia',
+                            "fr": 'Une raison pour retirer l\'avertissement',
+                            "it": 'Un motivo per rimuovere l\'avvertimento',
+                            "pt-BR": 'Um motivo para remover a advertência',
+                            "ru": 'Причина удаления предупреждения'
                         })))
         .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
     async execute({ client, user, interaction }) {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getUserWarn, removeUserWarn, listAllUserWarns } = require("../../../database/schemas/User_warns")
+const { getUserWarn, listAllUserWarns } = require("../../../database/schemas/User_warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -14,14 +14,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 3 -> Menu com escolha para exclusão ou não
     // 2 -> Acesso aos botões deste painel
 
+    // 4 -> Mantêm ou remove o motivo informado para usar em outras advertências
+
     // 9 -> Sub guia com os detalhes da advertência escolhida
 
     if (escolha === 1) {
 
-        const row = [], user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+        const row = [], user_warn = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
+        const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
-        await removeUserWarn(id_alvo, interaction.guild.id, timestamp)
+        user_warn.delete()
         client.verifyUserWarnRoles(id_alvo, interaction.guild.id)
 
         if (user_warns.length - 1 > 0)
@@ -41,15 +44,21 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
 
-            let warns_restantes = client.tls.phrase(user, "mode.warn.advertencias_restantes", null, user_warns.length - 1)
+            let warns_restantes = client.tls.phrase(user, "mode.warn.advertencias_restantes", null, user_warns.length - 1), motivo_remocao = ""
 
             if ((user_warns.length - 1) === 1)
                 warns_restantes = client.tls.phrase(user, "mode.warn.advertencia_restante")
 
+            if (client.cached.warns.has(interaction.user.id))
+                motivo_remocao = `\`\`\`fix\n👨‍⚖️ | ${client.tls.phrase(user, "mode.warn.motivo_remocao")}:\n\n${client.cached.warns.get(interaction.user.id).relatory}\`\`\`\n`
+
+            if (!client.cached.warns.get(interaction.user.id).keep || user_warns.length === 1) // Removendo o motivo para a remoção da advertência
+                client.cached.warns.delete(interaction.user.id)
+
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
                 .setColor(0xED4245)
-                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${warns_restantes}`)
+                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, user_warn.relatory)}${motivo_remocao}${warns_restantes}`)
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -85,17 +94,20 @@ module.exports = async ({ client, user, interaction, dados }) => {
             components: [row]
         })
 
-    } else if (escolha === 9) {
+    } else if (escolha === 9 || escolha === 4) {
+
+        if (escolha === 4) // Inverte o valor para manter ou não o motivo para uso em outras advertências
+            client.cached.warns.get(interaction.user.id).keep = !client.cached.warns.get(interaction.user.id).keep
 
         const user_warn = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
         let motivo_remocao = ""
 
-        if (interaction.options?.getString("reason"))
-            motivo_remocao = `\`\`\`👨‍⚖️ | ${client.tls.phrase(user, "mode.warn.motivo_remocao")}:\n\n${interaction.options?.getString("reason")}\`\`\``
+        if (client.cached.warns.has(interaction.user.id))
+            motivo_remocao = `\`\`\`fix\n👨‍⚖️ | ${client.tls.phrase(user, "mode.warn.motivo_remocao")}:\n\n${client.cached.warns.get(interaction.user.id).relatory}\`\`\``
 
         // Exibindo os detalhes da advertência escolhida
         const embed = new EmbedBuilder()
-            .setTitle(`Verificando advertência :inbox_tray:`)
+            .setTitle(`> Verificando advertência :inbox_tray:`)
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, user_warn.relatory)}${motivo_remocao}`)
             .addFields(
@@ -124,6 +136,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
             { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0|${id_alvo}.${timestamp}` },
             { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_advertencia"), type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
         ]
+
+        if (client.cached.warns.get(interaction.user.id)) // Motivo salvo em cache para remover a advertência
+            botoes.push({ id: "warn_user_verify", name: "Manter motivo", type: client.execute("functions", "emoji_button.type_button", client.cached.warns.get(interaction.user.id).keep), emoji: client.defaultEmoji("pen"), data: `4.${id_alvo}.${timestamp}` })
 
         return interaction.update({
             embeds: [embed],
