@@ -94,8 +94,13 @@ function translate(alvo, target, replace) {
             idioma_alvo = "pt-br"
         }
 
-        for (let i = 0; i < caminho.length; i++)
-            phrase = phrase[caminho[i]]
+        try {
+            for (let i = 0; i < caminho.length; i++)
+                phrase = phrase[caminho[i]]
+        } catch {
+            // Chave desconhecida no idioma
+            phrase = null
+        }
 
         if (idioma_alvo === "pt-br" && !phrase)
             phrase = "<unknow_key>"
