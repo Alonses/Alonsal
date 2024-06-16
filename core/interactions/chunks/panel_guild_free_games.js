@@ -41,16 +41,8 @@ module.exports = async ({ client, user, interaction }) => {
             value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
             inline: true
         },
-        {
-            name: "⠀",
-            value: "⠀",
-            inline: true
-        },
-        {
-            name: "⠀",
-            value: "⠀",
-            inline: true
-        }
+        { name: "⠀", value: "⠀", inline: true },
+        { name: "⠀", value: "⠀", inline: true }
     )
 
     // Desabilitando o botão de escolher cargos

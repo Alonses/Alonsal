@@ -11,10 +11,7 @@ function reply(interaction, user, target, ephemeral, emoji, replace) {
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
-    interaction.reply({
-        content: phrase,
-        ephemeral: ephemeral
-    })
+    interaction.reply({ content: phrase, ephemeral: ephemeral })
 }
 
 function editReply(interaction, user, target, ephemeral, emoji) {
@@ -24,10 +21,7 @@ function editReply(interaction, user, target, ephemeral, emoji) {
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
-    return interaction.editReply({
-        content: phrase,
-        ephemeral: ephemeral
-    })
+    return interaction.editReply({ content: phrase, ephemeral: ephemeral })
 }
 
 function phrase(user, target, emoji, replace) {

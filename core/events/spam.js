@@ -182,29 +182,29 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
                     cargo.assigner = client.id()
                     cargo.assigner_nick = client.username()
 
-                    cargo.relatory = `Cargo temporário atribuído por meio do sistema Anti-Spam no ${strike_aplicado.rank + 1}° Strike`
+                    cargo.relatory = client.tls.phrase(guild, "mode.timed_roles.rodape_spam", null, strike_aplicado.rank + 1)
                     cargo.timestamp = client.timestamp() + defaultRoleTimes[strike_aplicado.timed_role.timeout]
                     cargo.save()
 
-                    const motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
+                    const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
 
                     const embed_timed_role = new EmbedBuilder()
-                        .setTitle("> Um cargo temporário! :military_medal:")
+                        .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
                         .setColor(0x29BB8E)
-                        .setDescription(`:new: ${client.defaultEmoji("guard")} | ${membro_guild} recebeu um cargo temporário neste servidor devido a spam.${motivo}`)
+                        .setDescription(client.tls.phrase(guild, "mode.timed_roles.aplicado_spam", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
                         .addFields(
                             {
-                                name: `${client.defaultEmoji("playing")} **Cargo**`,
+                                name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
                                 value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
                                 inline: true
                             },
                             {
-                                name: `${client.defaultEmoji("time")} **Validade**`,
-                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
+                                name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.warn.validade")}**`,
+                                value: `**${client.tls.phrase(guild, "mode.timed_roles.valida_por")} \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
                                 inline: true
                             },
                             {
-                                name: `${client.emoji("icon_integration")} **Moderador ( Ó eu ai! )**`,
+                                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "mode.warn.moderador")} ( ${client.tls.phrase(guild, "util.user.alonsal")} )**`,
                                 value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
                                 inline: true
                             }

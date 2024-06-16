@@ -72,7 +72,7 @@ module.exports = async ({ client, message }) => {
             )
 
     if (attachments.length > 0) // Arquivos anexados
-        texto = `${texto}\n**Anexos:**\n${attachments.join("\n\n")}`
+        texto = `${texto}\n**${client.tls.phrase(guild, "mode.logger.anexos")}:**\n${attachments.join("\n\n")}`
 
     embed.setDescription(texto)
 

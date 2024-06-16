@@ -71,7 +71,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
 
     embed_guild.addFields({
         name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
-        value: client.verifyAction(client, guild_warns[indice_warn], guild),
+        value: client.verifyAction(guild_warns[indice_warn], guild),
         inline: true
     })
 
@@ -81,7 +81,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
     if (guild.warn.timed_channel) interaction.channel.id = guild.warn.timed_channel
 
     // Envia uma mensagem temporária no canal onde foi gerada a advertência
-    client.timed_message(interaction, { content: client.tls.phrase(guild, "mode.warn.anuncio_temporario", null, [id_alvo, `${active_user_warns.length} / ${indice_matriz}`, client.verifyAction(client, guild_warns[indice_warn], guild), client.timestamp() + 60]) }, 60)
+    client.timed_message(interaction, { content: client.tls.phrase(guild, "mode.warn.anuncio_temporario", null, [id_alvo, `${active_user_warns.length} / ${indice_matriz}`, client.verifyAction(guild_warns[indice_warn], guild), client.timestamp() + 60]) }, 60)
 
     // Servidor com anúncio de advertências público configurado
     if (guild.warn?.announce?.status && guild.warn?.announce?.channel) {
@@ -135,29 +135,29 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                     cargo.assigner = client.id()
                     cargo.assigner_nick = client.username()
 
-                    cargo.relatory = `Cargo temporário atribuído por meio das advertências na ${indice_warn + 1}° Advertência`
+                    cargo.relatory = client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1)
                     cargo.timestamp = client.timestamp() + defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]
                     cargo.save()
 
-                    const motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
+                    const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
 
                     const embed_timed_role = new EmbedBuilder()
-                        .setTitle("> Um cargo temporário! :military_medal:")
+                        .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
                         .setColor(0x29BB8E)
-                        .setDescription(`:new: ${client.defaultEmoji("guard")} | ${membro_guild} recebeu um cargo temporário neste servidor através das advertências.${motivo}`)
+                        .setDescription(client.tls.phrase(guild, "mode.timed_roles.aplicado_warn", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
                         .addFields(
                             {
-                                name: `${client.defaultEmoji("playing")} **Cargo**`,
+                                name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
                                 value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
                                 inline: true
                             },
                             {
-                                name: `${client.defaultEmoji("time")} **Validade**`,
-                                value: `**Válida por \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
+                                name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.warn.validade")}**`,
+                                value: `**${client.tls.phrase(guild, "mode.timed_roles.valida_por")} \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
                                 inline: true
                             },
                             {
-                                name: `${client.emoji("icon_integration")} **Moderador ( Ó eu ai! )**`,
+                                name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "mode.warn.moderador")} ( ${client.tls.phrase(guild, "util.user.alonsal")} )**`,
                                 value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
                                 inline: true
                             }

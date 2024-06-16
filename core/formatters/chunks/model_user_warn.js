@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "menu.botoes.penalidade")}**`,
-                value: client.verifyAction(client, guild_warns[indice_warn], user),
+                value: client.verifyAction(guild_warns[indice_warn], user),
                 inline: true
             }
         )
@@ -84,7 +84,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${warns_recebidos.length + 1}° Advertência a ser concedida`,
-                value: `${client.defaultEmoji("guard")} **Penalidades:**\n${client.verifyAction(client, guild_warns[indice_warn], user)}`,
+                value: `${client.defaultEmoji("guard")} **Penalidades:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
                 inline: false
             }
         )

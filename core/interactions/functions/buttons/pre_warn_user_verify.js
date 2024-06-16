@@ -58,13 +58,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
         let motivo_remocao = ""
 
         if (interaction.options?.getString("reason"))
-            motivo_remocao = `\`\`\`👨‍⚖️ | ${client.tls.phrase(user, "mode.warn.motivo_remocao")}:\n\n${interaction.options?.getString("reason")}\`\`\``
+            motivo_remocao = `\`\`\`${client.tls.phrase(user, "mode.warn.motivo_remocao", client.defaultEmoji("judge"))}:\n\n${interaction.options?.getString("reason")}\`\`\``
 
         // Exibindo os detalhes da advertência escolhida
         const embed = new EmbedBuilder()
-            .setTitle(`> Verificando anotação :inbox_tray:`)
+            .setTitle(client.tls.phrase(user, "mode.anotacoes.verificando"))
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(`${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, user_note.relatory)}${motivo_remocao}`)
+            .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [user_note.relatory, motivo_remocao]))
             .addFields(
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
@@ -83,13 +83,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 }
             )
             .setFooter({
-                text: "Escolha as opções abaixo para gerenciar essa anotação.",
+                text: client.tls.phrase(user, "mode.anotacoes.gerenciar_rodape"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
 
         const botoes = [
             { id: "pre_warn_user_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `11|${id_alvo}.${timestamp}` },
-            { id: "pre_warn_user_verify", name: "Remover anotação", type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
+            { id: "pre_warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_anotacao"), type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
         ]
 
         return interaction.update({

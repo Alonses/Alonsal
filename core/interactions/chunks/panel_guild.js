@@ -146,8 +146,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 2)
         embed.addFields(
             {
-                name: `${client.defaultEmoji("time")} **Cargos temporários**`,
-                value: `\`Defina cargos temporários aos membros do servidor.\``,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "manu.painel.cargos_temporarios")}**`,
+                value: `\`${client.tls.phrase(user, "manu.painel.desc_cargos_temporarios")}\``,
                 inline: true
             },
             {
@@ -172,7 +172,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         ])
 
     // Segunda página de botões de configuração do Alonsal
-    // Network; Reportes externos e Anúncio de games
+    // Network, Reportes externos e Anúncio de games
     if (pagina === 1)
         botoes = botoes.concat([
             { id: "guild_network_button", name: "Network", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[8] },
@@ -181,10 +181,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         ])
 
     // Terceira página de botões de configuração do Alonsal
-    // Denúncias in-server e Convites rastreados
+    // Cargos temporários, Denúncias in-server e Convites rastreados
     if (pagina === 2)
         botoes = botoes.concat([
-            { id: "guild_timed_roles_button", name: "Cargos temporários", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[11] },
+            { id: "guild_timed_roles_button", name: client.tls.phrase(user, "manu.painel.cargos_temporarios"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[11] },
             { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.convites_rastreados"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: '9', disabled: c_buttons[10] },
         ])

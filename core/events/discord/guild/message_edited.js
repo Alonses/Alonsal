@@ -22,7 +22,7 @@ module.exports = async (client, message) => {
     }
 
     // Sem texto incluso na mensagem antiga
-    if (alteracoes.antigo.length < 1) alteracoes.antigo = "❌ Sem texto incluso anteriormente"
+    if (alteracoes.antigo.length < 1) alteracoes.antigo = client.tls.phrase(guild, "mode.logger.sem_texto")
 
     // Relatório resumido das alterações entre as mensagens
     // if (alteracoes.antigo.length > 50 || alteracoes.novo.length > 50) {
@@ -61,7 +61,7 @@ module.exports = async (client, message) => {
         })
 
     if (attachments.length > 0) // Arquivos anexados
-        texto = `${texto}\n**Anexos:**\n${attachments.join("\n\n")}`
+        texto = `${texto}\n**${client.tls.phrase(guild, "mode.logger.anexos")}:**\n${attachments.join("\n\n")}`
 
     embed.setDescription(texto)
 

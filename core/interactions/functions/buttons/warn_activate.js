@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild_warns[indice_warn].action !== "none") // Verificando permissões do membro que usou o comando para poder continuar
         if (!interaction.member.permissions.has(guildPermissions[guild_warns[indice_warn].action]))
             return interaction.reply({
-                content: ":passport_control: | Você não pode utilizar esses botões pois não tem as permissões listadas na penalidade da advertência.",
+                content: client.tls.phrase(user, "mode.anotacoes.permissao_moderador", 7),
                 ephemeral: true
             })
 
@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const user_notes = await listAllUserPreWarns(id_alvo, interaction.guild.id)
         user_notes.forEach(note => note.delete())
 
-        return interaction.update({ content: ":wastebasket: | A aplicação da advertência foi cancelada.", components: [] })
+        return interaction.update({ content: client.tls.phrase(user, "mode.anotacoes.advertencia_cancelada", 13), components: [] })
 
     } else if (operacao === 1 || operacao === 2) {
 
@@ -59,8 +59,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         const rows = [
-            { id: "warn_activate", name: "Confirmar", type: 2, emoji: client.emoji(10), data: `${alvo_confirma}|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: "Cancelar", type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `${alvo_confirma}|${id_alvo}.${id_warn}` },
+            { id: "warn_activate", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_alvo}.${id_warn}` }
         ]
 
         return interaction.update({
@@ -93,15 +93,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const hierarquia = true
         const member_guild = await client.getMemberGuild(interaction, id_alvo)
 
-        interaction.update({ content: "✅ | A advertência foi aplicada ao membro!", components: [] })
+        interaction.update({ content: client.tls.phrase(user, "mode.anotacoes.advertencia_aplicada", 10), components: [] })
         return require('../../../events/warn')({ client, interaction, user, member_guild, user_warn, hierarquia })
 
     } else if (operacao === 5 || operacao === 8) {
 
         // Botões de cancelamento para retorno aos botões principais
         const rows = [
-            { id: "warn_activate", name: "Conceder advertência", type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: "Cancelar advertência", type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: client.tls.phrase(user, "menu.botoes.conceder_advertencia"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_warn}` },
+            { id: "warn_activate", name: client.tls.phrase(user, "menu.botoes.cancelar_advertencia"), type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${id_warn}` }
         ]
 
         return interaction.update({ components: [client.create_buttons(rows, interaction)] })

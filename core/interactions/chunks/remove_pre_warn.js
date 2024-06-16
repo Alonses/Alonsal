@@ -25,11 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 value: `${client.emoji("icon_id")} \`${alvo.assigner}\`\n( <@${alvo.assigner}> )`,
                 inline: true
             },
-            {
-                name: "⠀",
-                value: "⠀",
-                inline: true
-            }
+            { name: "⠀", value: "⠀", inline: true }
         )
         .setFooter({
             text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),

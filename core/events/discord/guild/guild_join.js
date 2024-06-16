@@ -1,6 +1,7 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { verifyDynamicBadge } = require('../../../database/schemas/User_badges')
+
 const { badges } = require('../../../formatters/patterns/user')
 
 module.exports = async ({ client, guild }) => {

@@ -7,8 +7,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operador = dados.split(".")[5]
 
     // Botão de cancelar
-    if (parseInt(dados.split(".")[1]) === 0)
-        operacao = 0
+    if (parseInt(dados.split(".")[1]) === 0) operacao = 0
 
     // Códigos de operação
     // 0 -> Botão cancelar / Botão errado

@@ -49,9 +49,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
             const embed = new EmbedBuilder()
-                .setTitle("> Anotações reiniciadas :inbox_tray:")
+                .setTitle(client.tls.phrase(guild, "mode.anotacoes.reiniciadas"))
                 .setColor(0xED4245)
-                .setDescription(`As advertências de <@${id_alvo}> foram reiniciadas!\nO usuário agora não possui mais advertências neste servidor.`)
+                .setDescription(client.tls.phrase(guild, "mode.anotacoes.reinciadas_descricao", null, id_alvo))
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
@@ -114,7 +114,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         }
 
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             obj.components.push(client.create_buttons(row, interaction))

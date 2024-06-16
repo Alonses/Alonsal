@@ -79,7 +79,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Campo com dados sobre remoção de mensagens de membros banidos
     embed.addFields(
         {
-            name: `:wastebasket: **Excluir mensagens de membros banidos:**`,
+            name: `:wastebasket: **${client.tls.phrase(user, "mode.network.excluir_banidos")}**`,
             value: `\`${client.tls.phrase(user, `menu.network.${banMessageEraser[guild.network.erase_ban_messages]}`)}\` ( :twisted_rightwards_arrows: :globe_with_meridians: )`,
             inline: false
         }
@@ -89,7 +89,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         embed.addFields(
             {
                 name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: false
             }
         )

@@ -46,10 +46,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 alvo = "pre_warn_browse"
                 reback = "pre_warn_browse_user"
 
-                embed.setTitle(`> Usuários com anotações de advertências ${client.defaultEmoji("pen")}`)
-                    .setDescription(`Todos os membros com anotações advertências ativas no momento estão listados abaixo\n\nSelecione um para gerenciar as advertências que o membro recebeu.`)
+                embed.setTitle(`${client.tls.phrase(user, "mode.anotacoes.titulo_selecao")} ${client.defaultEmoji("pen")}`)
+                    .setDescription(client.tls.phrase(user, "mode.anotacoes.descricao_selecionar_membro"))
                     .setFooter({
-                        text: "Selecione um membro abaixo para gerenciar suas anotações de advertências neste servidor.",
+                        text: client.tls.phrase(user, "mode.anotacoes.selecionar_usuario"),
                         iconURL: interaction.user.avatarURL({ dynamic: true })
                     })
             }
@@ -66,7 +66,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
             obj.embeds = [embed]
             obj.components = [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19) }], interaction)]
-            let row = client.menu_navigation(client, user, data, pagina)
+            let row = client.menu_navigation(user, data, pagina)
 
             if (row.length > 0) // Botões de navegação
                 obj.components.push(client.create_buttons(row, interaction))
@@ -133,7 +133,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         obj.embeds = [embed]
                         obj.components = [client.create_menus({ client, interaction, user, data, pagina })]
 
-                        let row = client.menu_navigation(client, user, data, pagina)
+                        let row = client.menu_navigation(user, data, pagina)
 
                         if (row.length > 0) // Botões de navegação
                             obj.components.push(client.create_buttons(row, interaction))

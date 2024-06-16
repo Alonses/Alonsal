@@ -16,7 +16,7 @@ module.exports = async (client, dados) => {
 
         const reports = await getUserReports(dados.user.id)
         reports.forEach(valor => {
-            historico.push(`${client.defaultEmoji("time")} ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.issuer_nick || "Desconhecido"}: ${valor.relatory}`)
+            historico.push(`${client.defaultEmoji("time")} ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.issuer_nick || client.tls.phrase(guild, "util.steam.undefined")}: ${valor.relatory}`)
         })
 
         const alvo = {

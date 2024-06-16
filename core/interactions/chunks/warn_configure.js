@@ -35,8 +35,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("time")} **Cargo temporário**`,
-                value: `**${warn.timed_role.status ? `\`✅ Ativo\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\`` : `\`❌ Desativado\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\``}**`,
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.cargo_temporario")}**`,
+                value: `**${warn.timed_role.status ? `\`${client.tls.phrase(user, "status.ativo")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\`` : `\`${client.tls.phrase(user, "status.desativado")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\``}**`,
                 inline: true
             }
         )
@@ -51,8 +51,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.reset)
         embed.addFields(
             {
-                name: `${client.defaultEmoji("time")} **Advertências com expiração ( 🔀 )**`,
-                value: guild.warn.timed ? `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**` : "`🛑 Sem expiração automática`",
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.warn.expiracao_status")} ( 🔀 )**`,
+                value: guild.warn.timed ? `**${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**` : `\`${client.tls.phrase(user, "mode.warn.expiracao_desligada")}\``,
                 inline: false
             }
         )
@@ -63,8 +63,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     embed.addFields(
         {
-            name: "👑 **Advertências com hierarquia**",
-            value: `${guild.warn.hierarchy.status ? "`✅ Ativas`" : "`🛑 Desativadas`"} \`${client.defaultEmoji("paper")} ${warn.strikes || guild.warn.hierarchy.strikes} anotações para acionar\``,
+            name: `👑 **${client.tls.phrase(user, "mode.hierarquia.status_ativacao")}**`,
+            value: `\`${guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.hierarquia.ativo") : client.tls.phrase(user, "mode.hierarquia.desativado")}\` \`${client.defaultEmoji("paper")} ${warn.strikes || guild.warn.hierarchy.strikes} ${client.tls.phrase(user, "mode.hierarquia.anotacoes_ativacao")}\``,
             inline: false
         },
         {
@@ -104,16 +104,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.penalidade"), type: 1, emoji: loggerMap[warn.action] || loggerMap["none"], data: `1.${id_warn}` },
         { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.tempo_mute"), type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_warn}` },
         { id: "warn_configure_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_warn}`, disabled: b_cargos },
-        { id: "warn_configure_button", name: "Cargo temporário", type: client.execute("functions", "emoji_button.type_button", warn.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", warn.timed_role.status), data: `20.${id_warn}`, disabled: !warn.role },
-        { id: "warn_configure_button", name: "Expiração do cargo", type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_warn}` }
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.cargo_temporario"), type: client.execute("functions", "emoji_button.type_button", warn.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", warn.timed_role.status), data: `20.${id_warn}`, disabled: !warn.role },
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.expiracao_cargo"), type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_warn}` }
     ]
 
     const row = [
         { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "3" },
         { id: "warn_remove", name: client.tls.phrase(user, "menu.botoes.excluir_advertencia"), type: 3, emoji: client.emoji(13), data: `2|${id_warn}` },
-        { id: "warn_configure_button", name: "Expirar", type: client.execute("functions", "emoji_button.type_button", guild.warn.timed), emoji: client.defaultEmoji("time"), data: `11.${id_warn}` },
-        { id: "warn_configure_button", name: "Usar hierarquia", type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.status), emoji: client.emoji(65), data: `10.${id_warn}`, disabled: !interaction.member.permissions.has(PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.KickMembers) },
-        { id: "warn_configure_button", name: "Anotações", type: 1, emoji: default_emoji["numbers"][warn.strikes || guild.warn.hierarchy.strikes], data: `12.${id_warn}` }
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.expirar"), type: client.execute("functions", "emoji_button.type_button", guild.warn.timed), emoji: client.defaultEmoji("time"), data: `11.${id_warn}` },
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.usar_hierarquia"), type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.status), emoji: client.emoji(65), data: `10.${id_warn}`, disabled: !interaction.member.permissions.has(PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.KickMembers) },
+        { id: "warn_configure_button", name: client.tls.phrase(user, "menu.botoes.anotacoes"), type: 1, emoji: default_emoji["numbers"][warn.strikes || guild.warn.hierarchy.strikes], data: `12.${id_warn}` }
     ]
 
     const obj = {

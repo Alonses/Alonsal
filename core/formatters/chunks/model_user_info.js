@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (!membro_sv) // Usuário fora do servidor (pode ser gerado por menus de contexto)
         return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
-    const infos_user = await client.create_profile({ client, interaction, user, id_alvo, operador })
+    const infos_user = await client.create_profile({ interaction, user, id_alvo, operador })
 
     if (!membro_sv) { // Usuário foi removido do cache do bot
         interaction.update({

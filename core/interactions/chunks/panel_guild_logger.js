@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         guild.conf.logger = false
         await guild.save()
 
-        descr_rodape = "🛂 | Para utilizar o Log de eventos, o Alonsal deve ser capaz de Ver o registro de auditoria do servidor."
+        descr_rodape = client.tls.phrase(user, "mode.logger.falta_registro_auditoria", 7)
     }
 
     const eventos = {
