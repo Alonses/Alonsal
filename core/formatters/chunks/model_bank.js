@@ -126,5 +126,5 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     if (!autor_original) interaction.customId = null
 
-    return client.reply(interaction, obj, !dados)
+    return client.reply(interaction, obj)
 }
