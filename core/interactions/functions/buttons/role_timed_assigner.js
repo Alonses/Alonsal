@@ -2,6 +2,7 @@ const { PermissionsBitField, EmbedBuilder } = require('discord.js')
 
 const { getTimedRoleAssigner, removeCachedUserRole } = require('../../../database/schemas/User_roles')
 const { atualiza_roles } = require('../../../auto/triggers/user_roles')
+
 const { defaultRoleTimes } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -26,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         removeCachedUserRole(user_alvo, interaction.guild.id)
 
         return client.reply(interaction, {
-            content: ":no_entry_sign: | Operação cancelada.",
+            content: client.tls.phrase(user, "menu.botoes.operacao_cancelada", 11),
             components: []
         })
 
@@ -34,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         let botoes = [
             { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
-            { id: "role_timed_assigner", name: "Confirmar", type: 2, emoji: client.emoji(10), data: `10.${user_alvo}` }
+            { id: "role_timed_assigner", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `10.${user_alvo}` }
         ]
 
         return client.reply(interaction, {
@@ -69,7 +70,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "role_timed_assigner", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: `2.${user_alvo}` }
         ]
 
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -108,14 +109,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Cargo informado possui permissões moderativas
         if (!await client.rolePermissions(interaction, cargo.rid, [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator]))
             return interaction.update({
-                content: ":passport_control: | Selecione um cargo que não contenha permissões de moderação para poder atribuir ao membro.",
+                content: client.tls.phrase(user, "mode.timed_roles.cargo_moderativo", 7),
                 ephemeral: true
             })
 
         // Membro já possui o cargo mencionado
         if (await client.hasRole(interaction, cargo.rid, cargo.uid))
             return interaction.update({
-                content: ":passport_control: | Este membro já possui o cargo informado, tente novamente com um cargo que ele ainda não possua.",
+                content: client.tls.phrase(user, "mode.timed_roles.cargo_ja_concedido", 7),
                 ephemeral: true
             })
 
@@ -124,7 +125,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (role.position > bot_member.roles.highest.position)
             return interaction.update({
-                content: ":passport_control: | O cargo mencionado é maior que o meu! Não posso atribuir este cargo ao membro.",
+                content: client.tls.phrase(user, "mode.timed_roles.cargo_superior", 7),
                 ephemeral: true
             })
 
@@ -140,25 +141,25 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             let motivo = ""
 
             if (cargo.relatory)
-                motivo = `\n\`\`\`fix\n💂‍♂️ Nota do moderador:\n\n${cargo.relatory}\`\`\``
+                motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
 
             const embed = new EmbedBuilder()
-                .setTitle("> Um cargo temporário! :military_medal:")
+                .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
                 .setColor(0x29BB8E)
-                .setDescription(`:new: | ${membro_guild} ganhou um cargo temporário neste servidor!${motivo}`)
+                .setDescription(client.tls.phrase(guild, "mode.timed_roles.descricao_cargo_concedido", 43, [membro_guild, motivo]))
                 .addFields(
                     {
-                        name: `${client.defaultEmoji("playing")} **Cargo**`,
+                        name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
                         value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("time")} **Validade**`,
+                        name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.warn.validade")}**`,
                         value: `<t:${cargo.timestamp}:f>\n( <t:${cargo.timestamp}:R> )`,
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("person")} **Moderador**`,
+                        name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.warn.moderador")}**`,
                         value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
                         inline: true
                     }
@@ -171,7 +172,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             atualiza_roles()
 
             return interaction.update({
-                content: `:white_check_mark: | O Cargo temporário ( <@&${cargo.rid}> ) foi adicionado ao <@${cargo.uid}>!\n\nEste cargo ficará vinculado ao membro até <t:${cargo.timestamp}:f>, ou até que um moderador remova manualmente.`,
+                content: client.tls.phrase(user, "mode.timed_role.cargo_concedido", 10, [cargo.rid, cargo.uid, cargo.timestamp]),
                 embeds: [],
                 components: [],
                 ephemeral: true

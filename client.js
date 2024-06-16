@@ -35,7 +35,10 @@ class CeiraClient {
             ranking_value: 0,
             regex: /[A-Za-z0-9--]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi,
             fixed_badges: {},
-            warns: new Map()
+            warns: new Map(),
+            rank: {
+                bank: []
+            }
         }
     }
 

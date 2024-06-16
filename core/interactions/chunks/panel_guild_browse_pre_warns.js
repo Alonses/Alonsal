@@ -16,10 +16,10 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         })
 
     const embed = new EmbedBuilder()
-        .setTitle(`> Anotações de ${user_notes[0].nick} ${client.defaultEmoji("pen")}`)
+        .setTitle(`${client.tls.phrase(user, "mode.anotacoes.titulo", null, user_notes[0].nick)} ${client.defaultEmoji("pen")}`)
         .setColor(client.embed_color(user.misc.color))
         .setFooter({
-            text: "Selecione umas das anotações de advertência abaixo para poder gerenciar!",
+            text: client.tls.phrase(user, "mode.anotacoes.descricao_rodape_selecao"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
@@ -30,9 +30,9 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     if (pagina_guia > 0) indice_start++
 
     if (user_notes[indice_start + 6])
-        botoes = botoes.concat({ id: "pre_warn_user_verify", name: `Próxima`, emoji: client.emoji(41), type: 0, data: `10|${user_notes[0].uid}.${pagina_guia}` })
+        botoes = botoes.concat({ id: "pre_warn_user_verify", name: client.tls.phrase(user, "status.proxima"), emoji: client.emoji(41), type: 0, data: `10|${user_notes[0].uid}.${pagina_guia}` })
     else if (user_notes.length > 5)
-        botoes = botoes.concat({ id: "pre_warn_user_verify", name: `Retornar`, emoji: client.emoji(57), type: 0, data: `11|${user_notes[0].uid}` })
+        botoes = botoes.concat({ id: "pre_warn_user_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), emoji: client.emoji(57), type: 0, data: `11|${user_notes[0].uid}` })
 
     for (let x = indice_start; x < user_notes.length; x++) {
 

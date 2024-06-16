@@ -11,20 +11,36 @@ module.exports = {
             subcommand
                 .setName("about")
                 .setNameLocalizations({
+                    "es-ES": 'acerca',
+                    "fr": 'propos',
                     "pt-BR": 'sobre'
                 })
                 .setDescription("⌠🎉⌡ Change your description on Alonsal")
                 .setDescriptionLocalizations({
-                    "pt-BR": '⌠🎉⌡ Altere sua descrição no Alonsal'
+                    "de": '⌠🎉⌡Ändern Sie Ihre Beschreibung auf Alonsal',
+                    "es-ES": '⌠🎉⌡ Cambia tu descripción en Alonsal',
+                    "fr": '⌠🎉⌡ Modifiez votre description sur Alonsal',
+                    "it": '⌠🎉⌡ Cambia la tua descrizione su Alonsal',
+                    "pt-BR": '⌠🎉⌡ Altere sua descrição no Alonsal',
+                    "ru": '⌠🎉⌡ Измените описание на Алонсале'
                 })
                 .addStringOption(option =>
                     option.setName("description")
                         .setNameLocalizations({
-                            "pt-BR": 'descrição'
+                            "de": 'beschreibung',
+                            "es-ES": 'descripcion',
+                            "it": 'descrizione',
+                            "pt-BR": 'descricao',
+                            "ru": 'описание'
                         })
                         .setDescription("What do you want to tell others?")
                         .setDescriptionLocalizations({
-                            "pt-BR": 'O que deseja contar aos outros?'
+                            "de": 'Was möchtest du anderen mitteilen?',
+                            "es-ES": '¿Qué quieres decirles a los demás?',
+                            "fr": 'Que veux-tu dire aux autres?',
+                            "it": 'Cosa vuoi dire agli altri?',
+                            "pt-BR": 'O que deseja contar aos outros?',
+                            "ru": 'Что вы хотите сказать другим?'
                         })
                         .setMaxLength(150)
                         .setRequired(true)))
@@ -84,7 +100,7 @@ module.exports = {
                             "pt-BR": 'O valor de entrada',
                             "ru": 'значение входа'
                         })
-                        .setRequired(true)))
+                        .setRequired(true))),
     // .addSubcommand(subcommand =>
     //     subcommand
     //         .setName("panel")
@@ -95,7 +111,6 @@ module.exports = {
     //         .setDescriptionLocalizations({
     //             "pt-BR": '⌠👤⌡ Configure seu perfil'
     //         }))
-    ,
     async execute({ client, user, interaction }) {
 
         // Navegando pelos módulos

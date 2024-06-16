@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         guild.conf.spam = false
         await guild.save()
 
-        descr_rodape = "🛂 | Para utilizar o Anti-spam, o Alonsal deve ser capaz de Castigar membros e Gerenciar mensagens."
+        descr_rodape = client.tls.phrase(user, "mode.spam.permissoes_anti_spam", null, 7)
     }
 
     let descricao = client.tls.phrase(user, "mode.spam.descricao_funcionamento")
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.emoji(64)} **Strikes:** \`${strikes_guild.length} / 5\`${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_no")} \`${indice_matriz}°\`**` : ""}`,
-                value: `${client.emoji(47)} **Repetecos:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
+                value: `${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.repeticoes")}:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
                 inline: true
             },
             {
@@ -58,8 +58,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     // Estilo de filtro adotado para o Anti-spam no servidor
     embed.addFields(
         {
-            name: `${client.emoji(60)} **Estilo de varredura**`,
-            value: guild.spam.scanner.links ? "`🔗 Considerar apenas mensagens com links`" : "`🌟 Considerar todas as mensagens`",
+            name: `${client.emoji(60)} **${client.tls.phrase(user, "mode.spam.tipo_varredura")}**`,
+            value: guild.spam.scanner.links ? `\`${client.tls.phrase(user, "mode.spam.apenas_links")}\`` : `\`${client.tls.phrase(user, "mode.spam.qualquer_entrada")}\``,
             inline: false
         }
     )
@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         botoes = botoes.concat([
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
             { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
-            { id: "guild_anti_spam_button", name: "Varredura", type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.varredura"), type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.recursos"), type: 1, emoji: client.emoji(41), data: "10" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
         ])
@@ -104,7 +104,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         ])
     else // Página de configurações do Anti-spam
         botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: "Repetecos", type: 1, emoji: client.emoji(47), data: "5" },
+            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.repeticoes"), type: 1, emoji: client.emoji(47), data: "5" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify), data: "7" },
             { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "6" }
         ])

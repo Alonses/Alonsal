@@ -82,7 +82,7 @@ function internal_functions(client) {
         return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
     }
 
-    client.create_profile = (client, interaction, user, id_alvo) => { return create_profile(client, interaction, user, id_alvo) }
+    client.create_profile = ({ interaction, user, id_alvo }) => { return create_profile(client, interaction, user, id_alvo) }
 
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
     client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
@@ -327,21 +327,21 @@ function internal_functions(client) {
         return valor.toLocaleString(locale)
     }
 
-    client.menu_navigation = (client, user, data, pagina) => {
+    client.menu_navigation = (user, data, pagina) => {
         return menu_navigation(client, user, data, pagina)
     }
 
     // Sincroniza as ações moderativas em servidores com o network habilitado
     client.network = async (guild, caso, id_alvo) => { return network({ client, guild, caso, id_alvo }) }
 
-    client.getNetWorkGuildNames = async (link, interaction) => {
+    client.getNetWorkGuildNames = async (user, link, interaction) => {
 
         const servers_link = []
 
         let servers_cache = await getNetworkedGuilds(link)
         for (let i = 0; i < servers_cache.length; i++) {
             if (servers_cache[i].sid !== interaction.guild.id) {
-                const nome_servidor = (await client.guilds(servers_cache[i].sid))?.name || "Servidor desconhecido"
+                const nome_servidor = (await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")
                 servers_link.push(`\`${nome_servidor}\``)
             }
         }
@@ -575,10 +575,10 @@ function internal_functions(client) {
     client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {
 
         // Retorna o texto formatado para membros e bots (usado em cards do log de eventos)
-        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${user.id !== client.id() ? client.tls.phrase(escopo, "util.user.bot") : "Ó eu ai!"} )` : ""}**`
+        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${user.id !== client.id() ? client.tls.phrase(escopo, "util.user.bot") : client.tls.phrase(escopo, "util.user.alonsal")} )` : ""}**`
     }
 
-    client.verifyAction = (client, obj, traduz) => {
+    client.verifyAction = (obj, traduz) => {
 
         // Listando as penalidades que o usuário receberá com a advertência
         let acao_advertencia = `${loggerMap[obj.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${obj.action || "none"}`)}\`${client.guildAction(obj, traduz)}`

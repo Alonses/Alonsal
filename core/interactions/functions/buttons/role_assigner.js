@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         let botoes = [
             { id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "role_assigner", name: "Confirmar", type: 2, emoji: client.emoji(10), data: "10" }
+            { id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: "10" }
         ]
 
         return client.reply(interaction, {
@@ -62,7 +62,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             botoes.push({ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.remover_todos"), type: 3, emoji: client.emoji(13), data: "4" })
 
         const multi_select = true
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -106,7 +106,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             botoes.push({ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.remover_todos"), type: 3, emoji: client.emoji(13), data: "5" })
 
         const multi_select = true
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)

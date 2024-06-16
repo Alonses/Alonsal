@@ -5,7 +5,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Enviando o embed para validação
     const id_alvo = interaction.user.id, operador = 0
-    const embed = await client.create_profile({ client, interaction, user, id_alvo, operador })
+    const embed = await client.create_profile({ interaction, user, id_alvo, operador })
 
     // Exibindo a descrição temporária enviada pelo usuário
     embed.setDescription(user.profile.cache.about)

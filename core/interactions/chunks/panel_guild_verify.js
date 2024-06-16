@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction }) => {
                         inline: true
                     },
                     {
-                        name: `${client.defaultEmoji("pen")} **Anotações: \`${user_notes.length}\`**`,
+                        name: `${client.defaultEmoji("pen")} **${client.tls.phrase(user, "menu.botoes.anotacoes")}: \`${user_notes.length}\`**`,
                         value: "⠀",
                         inline: true
                     },
@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction }) => {
             const botoes = [
                 { id: "guild_verify_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" },
                 { id: "guild_verify_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
-                { id: "guild_verify_button", name: "Anotações", type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
+                { id: "guild_verify_button", name: client.tls.phrase(user, "menu.botoes.anotacoes"), type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
                 { id: "guild_verify_button", name: client.tls.phrase(user, "mode.report.reportados"), type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 

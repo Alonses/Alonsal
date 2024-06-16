@@ -5,31 +5,43 @@ const { getRankMoney } = require('../../database/schemas/User')
 
 const { badgeTypes, medals } = require('../patterns/user')
 
-let paginas, pagina
+let paginas, pagina, last_update
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     const usernames = [], bufunfas = [], ids = []
-    const date1 = new Date(), data_usuarios = await getRankMoney()
+    const date1 = new Date()
     let rodape = interaction.user.username, i = 0, user_alvo_data = interaction.options?.getUser("user") || null
 
-    if (user_alvo_data) {
-        const local = "rank" // Redirecionando o usuário para o banco padrão
-        return require(`../../../commands/miscellanea/subcommands/bank_statement`)({ client, user, interaction, local })
+    if (user_alvo_data) // Redirecionando o usuário para o banco padrão
+        return require(`../../../commands/miscellanea/subcommands/bank_statement`)({ client, user, interaction })
+
+    if (!last_update) { // Utiliza os dados do cache
+        client.cached.rank.bank = await getRankMoney()
+        last_update = client.timestamp()
     }
 
+    // Atualiza os dados do cache para o ranking do banco
+    if (last_update && client.timestamp() > last_update + 10000) {
+        client.cached.rank.bank = await getRankMoney()
+        last_update = client.timestamp()
+    }
+
+    // Trazendo os dados do cache para o bot
+    const data_usuarios = [].concat(client.cached.rank.bank)
+
     // Enviado pelos botões de interação
-    if (typeof dados !== "undefined") pagina = dados
+    if (typeof dados !== "undefined") pagina = parseInt(dados)
     else pagina = interaction.options.getInteger("page") || 1
 
     // Sem dados no ranking do banco
-    if (!data_usuarios) return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
+    if (!data_usuarios) return client.tls.reply(interaction, user, "dive.rank.error_2", true, 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
     paginas = Math.ceil(data_usuarios.length / 6)
 
     if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-        return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
+        return client.tls.reply(interaction, user, "dive.rank.error_1", true, 1)
 
     // Removendo os usuários respectivos as primeiras páginas
     remover = pagina === paginas ? (pagina - 1) * 6 : data_usuarios.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6
@@ -46,8 +58,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_int) || ""
             if (fixed_badge) fixed_badge = fixed_badge.emoji
 
-            if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${((user_int.nick)?.replace(/ /g, "") || "Desconhecido")}\` ${fixed_badge}`)
-            else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((user_int.nick)?.replace(/ /g, "") || "Desconhecido")}\` ${fixed_badge}`)
+            if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${((user_int.nick)?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
+            else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((user_int.nick)?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
 
             ids.push(`\`${user_int.uid}\``)
             bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)

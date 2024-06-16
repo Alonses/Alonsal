@@ -1,5 +1,3 @@
-const { getRankMoney } = require('../../../database/schemas/User')
-
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     let pagina = parseInt(dados.split(".")[2])
@@ -12,9 +10,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // 4 -> Próxima página
     // 5 -> Ir para a última página
 
-    // Defere a interação para um usuário diferente do autor, e envia um card efemero para o mesmo
-    if (!autor_original) await interaction.deferReply({ ephemeral: true })
-
     if (operacao === 1) pagina = 1
     else if (operacao === 2) pagina--
     else if (operacao === 4) pagina++
@@ -22,27 +17,22 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operacao === 3) {
 
         // Coletando os dados para localizar o usuário
-        let data_usuarios = await getRankMoney()
         let posicao = 1
 
-        for (let i = 0; i < data_usuarios.length; i++) {
-            if (interaction.user.id !== data_usuarios[i].uid)
+        for (let i = 0; i < client.cached.rank.bank.length; i++) {
+            if (interaction.user.id !== client.cached.rank.bank[i].uid)
                 posicao++
-            else
-                break
+            else break
         }
 
-        if (posicao > data_usuarios.length)
+        if (posicao > client.cached.rank.bank.length)
             posicao = 1
 
         // Arredonda para cima a página com o usuário
         pagina = Math.ceil(posicao / 6)
     }
 
-    if (operacao === 5) {
-        let data_usuarios = await getRankMoney()
-        pagina = Math.ceil(data_usuarios.length / 6)
-    }
+    if (operacao === 5) pagina = Math.ceil(client.cached.rank.bank.length / 6)
 
     dados = pagina
 

@@ -4,10 +4,8 @@ const { getCachedSuspiciousLink } = require("../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const guild_sid = dados.split(".")[0]
     const timestamp = dados.split(".")[1]
     const pagina = parseInt(dados.split(".")[2])
-
     const link = await getCachedSuspiciousLink(timestamp)
 
     if (!link) // Link não encontrado

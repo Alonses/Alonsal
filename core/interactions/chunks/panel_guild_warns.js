@@ -37,17 +37,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.warn.validade")}**`,
                 value: `:wastebasket: **${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**${guild.warn.timed ? "" : `\n( **⛔ ${client.tls.phrase(user, "mode.warn.no_momento")}** )`}`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
-                name: `:wastebasket: **Excluir mensagens de membros banidos pelas Advertências:**`,
+                name: `:wastebasket: **${client.tls.phrase(user, "mode.warn.excluir_banidos")}**`,
                 value: `\`${client.tls.phrase(user, `menu.network.${banMessageEraser[guild.warn.erase_ban_messages]}`)}\``,
                 inline: false
             },
             {
-                name: `${client.defaultEmoji("channel")} **Canal de avisos temporários:**`,
-                value: guild.warn.timed_channel ? `:incoming_envelope: _Enviando ao_ <#${guild.warn.timed_channel}>` : "`Sem canal definido`",
+                name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.timed_roles.canal_avisos_temporario")}**`,
+                value: guild.warn.timed_channel ? client.tls.phrase(user, "mode.timed_roles.enviando", null, guild.warn.timed_channel) : `\`${client.tls.phrase(user, "mode.timed_roles.sem_canal_temporario")}\``,
                 inline: false
             },
             {
@@ -122,14 +120,14 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     else // Página de configurações das advertências
         botoes = botoes.concat([
             { id: "guild_warns_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-            { id: "guild_warns_button", name: "Canal temporário", type: 1, emoji: client.defaultEmoji("channel"), data: "17" },
+            { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.canal_temporario"), type: 1, emoji: client.defaultEmoji("channel"), data: "17" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.expiracao"), type: 1, emoji: client.defaultEmoji("time"), data: "16" },
             { id: "guild_warns_button", name: client.tls.phrase(user, "menu.botoes.exclusao"), type: 1, emoji: client.emoji(13), data: "7" }
         ])
 
     const row = [
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_warns.0" },
-        { id: "guild_hierarchy_warns_button", name: "Hierarquia", type: 1, emoji: client.emoji(65), data: "30" },
+        { id: "guild_hierarchy_warns_button", name: client.tls.phrase(user, "mode.hierarquia.hierarquia"), type: 1, emoji: client.emoji(65), data: "30" },
         { id: "guild_warns_button", name: client.tls.phrase(user, "mode.warn.advertencias"), type: 1, emoji: client.defaultEmoji("guard"), data: "3" }
     ]
 

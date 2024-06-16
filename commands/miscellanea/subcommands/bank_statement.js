@@ -60,14 +60,8 @@ module.exports = async ({ client, user, interaction, local }) => {
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (!local)
-        interaction.reply({
-            embeds: [embed],
-            ephemeral: true
-        })
-    else
-        interaction.editReply({
-            embeds: [embed],
-            ephemeral: true
-        })
+    interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+    })
 }

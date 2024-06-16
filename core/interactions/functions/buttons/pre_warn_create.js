@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = new EmbedBuilder()
-        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : "> Uma nova anotação de advertência!"} :inbox_tray:`)
+        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`)
         .setColor(0xED4245)
         .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_note.relatory}\`\`\``)
         .addFields(
@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("pen")} **${notas_recebidas.length > 0 ? `${notas_recebidas.length} / ${notas_requeridas} Anotações` : "Sem anotações"}**`,
+                name: `${client.defaultEmoji("pen")} **${notas_recebidas.length > 0 ? `${notas_recebidas.length} / ${notas_requeridas} ${client.tls.phrase(guild, "menu.botoes.anotacoes")}` : client.tls.phrase(guild, "mode.anotacoes.sem_anotacoes")}**`,
                 value: "⠀",
                 inline: true
             }
@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.timed_channel) interaction.channel.id = guild.warn.timed_channel
 
     // Envia uma mensagem temporária no canal onde foi gerada a anotação de advertência
-    client.timed_message(interaction, { content: `<@${id_alvo}> Recebeu uma nova anotação de advertência!\n\nNo momento ele possui \`${notas_recebidas.length} de ${notas_requeridas}\` anotações neste servidor.\n\n:hotsprings: Essa mensagem será removida <t:${client.timestamp() + 60}:R>` }, 60)
+    client.timed_message(interaction, { content: client.tls.phrase(guild, "mode.anotacoes.ping_anotacao", [id_alvo, notas_recebidas.length, notas_recebidas, client.timestamp() + 60]) }, 60)
     client.notify(guild.warn.hierarchy.channel, { embeds: [embed_guild] })
 
     client.reply(interaction, {
@@ -115,9 +115,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
         hierarchy_warn.save()
 
         const embed = new EmbedBuilder()
-            .setTitle("> Aplicar advertência 👑")
+            .setTitle(client.tls.phrase(guild, "mode.anotacoes.aplicar_advertencia"))
             .setColor(0xED4245)
-            .setDescription(`${client.defaultEmoji("guard")} | Um membro do servidor atingiu o limite de anotações ( \`${notas_requeridas}\` ) para a ${user_warns.length + 1}° advertência!`)
+            .setDescription(client.tls.phrase(guild, "mode.anotacoes.descricao_advertencia", client.defaultEmoji("guard"), [notas_requeridas, user_warns.length + 1]))
             .setFields(
                 {
                     name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
@@ -131,15 +131,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 },
                 {
                     name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
-                    value: client.verifyAction(client, guild_warns[indice_warn], guild),
+                    value: client.verifyAction(guild_warns[indice_warn], guild),
                     inline: true
                 }
             )
             .setTimestamp()
 
         const rows = [
-            { id: "warn_activate", name: "Conceder advertência", type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
-            { id: "warn_activate", name: "Cancelar advertência", type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
+            { id: "warn_activate", name: client.tls.phrase(guild, "menu.botoes.conceder_advertencia"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
+            { id: "warn_activate", name: client.tls.phrase(guild, "menu.botoes.cancelar_advertencia"), type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
         ]
 
         // Enviando o card para os moderadores poderem autorizar a aplicação da advertência

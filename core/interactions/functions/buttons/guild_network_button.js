@@ -107,7 +107,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (data.values.length < pagina * 24) pagina--
 
         let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -128,7 +128,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             .setDescription(client.tls.phrase(user, "manu.guild_data.descricao_quebra_link", 2))
             .setFields({
                 name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: true
             })
             .setFooter({
@@ -172,7 +172,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             { id: "guild_network_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "5" }
         ]
 
-        let row = client.menu_navigation(client, user, data, pagina || 0)
+        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)

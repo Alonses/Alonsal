@@ -35,11 +35,9 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.reports.channel}\`\n( <#${guild.reports.channel}> )`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
-                name: `:wastebasket: **Excluir mensagens de membros banidos pelo AutoBan:**`,
+                name: `:wastebasket: **${client.tls.phrase(user, "manu.painel.excluir_banidos")}**`,
                 value: `\`${client.tls.phrase(user, `menu.network.${banMessageEraser[guild.reports.erase_ban_messages]}`)}\``,
                 inline: false
             },
