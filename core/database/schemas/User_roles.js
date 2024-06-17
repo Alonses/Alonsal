@@ -48,6 +48,7 @@ async function getTimedRoleAssigner(uid, sid) {
 
 async function createTimedRole(uid, sid) {
 
+    // Registra um novo cargo temporário automático sem verificações
     await model.create({
         uid: uid,
         sid: sid
