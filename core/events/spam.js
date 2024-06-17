@@ -3,7 +3,7 @@ const { PermissionsBitField, EmbedBuilder } = require("discord.js")
 const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
-const { getTimedRoleAssigner } = require("../database/schemas/User_roles")
+const { createTimedRole } = require("../database/schemas/User_roles")
 const { atualiza_roles } = require("../auto/triggers/user_roles")
 
 const { spamTimeoutMap, defaultRoleTimes } = require("../formatters/patterns/timeout")
@@ -173,7 +173,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
                 // Strike com um cargo temporário vinculado
                 if (strike_aplicado.timed_role.status) {
 
-                    const cargo = await getTimedRoleAssigner(message.author.id, guild.sid)
+                    const cargo = await createTimedRole(message.author.id, guild.sid)
 
                     cargo.nick = membro_guild.user.username
                     cargo.rid = strike_aplicado.role

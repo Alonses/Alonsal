@@ -2,7 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { listAllGuildWarns } = require("../database/schemas/Guild_warns")
 const { listAllUserWarns } = require("../database/schemas/User_warns")
-const { getTimedRoleAssigner } = require('../database/schemas/User_roles')
+const { createTimedRole } = require('../database/schemas/User_roles')
 const { atualiza_roles } = require('../auto/triggers/user_roles')
 
 const { spamTimeoutMap, defaultRoleTimes } = require('../formatters/patterns/timeout')
@@ -126,7 +126,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                 // Advertência com um cargo temporário vinculado
                 if (guild_warns[indice_warn].timed_role.status) {
 
-                    const cargo = await getTimedRoleAssigner(id_alvo, guild.sid)
+                    const cargo = await createTimedRole(id_alvo, guild.sid)
 
                     cargo.nick = membro_guild.user.username
                     cargo.rid = strike_aplicado.role
