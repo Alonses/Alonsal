@@ -46,6 +46,15 @@ async function getTimedRoleAssigner(uid, sid) {
     }).limit(1)
 }
 
+async function createTimedRole(uid, sid) {
+
+    await model.create({
+        uid: uid,
+        sid: sid,
+        timestamp: timestamp
+    })
+}
+
 async function checkUserGuildRoles(sid) {
 
     // Listando apenas os usuários que possuem cargos concedidos no servidor
@@ -132,6 +141,7 @@ async function dropAllGuildRoles(sid) {
 module.exports.User_role = model
 module.exports = {
     getUserRole,
+    createTimedRole,
     getTimedRoleAssigner,
     checkUserGuildRoles,
     listAllUserGuildRoles,
