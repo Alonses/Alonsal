@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     link = link.replace(" ", "")
 
-    if (await verifySuspiciousLink(link, true)) // Link já existe
+    if (await verifySuspiciousLink(link)) // Link já existe
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
 
     const timestamp = client.timestamp()
