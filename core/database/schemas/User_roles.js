@@ -50,8 +50,7 @@ async function createTimedRole(uid, sid) {
 
     await model.create({
         uid: uid,
-        sid: sid,
-        timestamp: timestamp
+        sid: sid
     })
 }
 
