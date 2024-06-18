@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.timed_roles.titulo_painel")} :passport_control: ${client.defaultEmoji("time")}`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.timed_roled.descricao_painel"))
+        .setDescription(client.tls.phrase(user, "mode.timed_roles.descricao_painel"))
         .setFields(
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,

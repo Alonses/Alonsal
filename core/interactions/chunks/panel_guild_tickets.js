@@ -28,9 +28,7 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.emoji("icon_id")} \`${guild.tickets.category}\`\n( <#${guild.tickets.category}> )`,
                 inline: true
             },
-            { name: "⠀", value: "⠀", inline: true }
-        )
-        .addFields(
+            { name: "⠀", value: "⠀", inline: true },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**`,

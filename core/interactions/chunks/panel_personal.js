@@ -26,17 +26,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         embed.addFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_ghostmode")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_ghostmode")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_notificacoes")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_notificacoes")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking)} **${client.tls.phrase(user, "manu.data.ranking")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_ranking")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_ranking")}\`\`\``,
                 inline: true
             }
         )
@@ -45,17 +45,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         embed.addFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_badges_publicas")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_badges_publicas")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
-                value: client.tls.phrase(user, "manu.painel.desc_clima_resumido"),
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_clima_resumido")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks)} **${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_tarefas_globais")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_tarefas_globais")}\`\`\``,
                 inline: true
             }
         )
@@ -64,17 +64,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         embed.addFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_modo_compacto")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_modo_compacto")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_servidores_conhecidos")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_servidores_conhecidos")}\`\`\``,
                 inline: true
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\``,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\`\`\``,
                 inline: true
             }
         )
