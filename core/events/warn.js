@@ -2,7 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { listAllGuildWarns } = require("../database/schemas/Guild_warns")
 const { listAllUserWarns } = require("../database/schemas/User_warns")
-const { createTimedRole } = require('../database/schemas/User_roles')
+const { getUserRole } = require('../database/schemas/User_roles')
 const { atualiza_roles } = require('../auto/triggers/user_roles')
 
 const { spamTimeoutMap, defaultRoleTimes } = require('../formatters/patterns/timeout')
@@ -126,7 +126,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                 // Advertência com um cargo temporário vinculado
                 if (guild_warns[indice_warn].timed_role.status) {
 
-                    const cargo = await createTimedRole(id_alvo, guild.sid)
+                    const cargo = await getUserRole(id_alvo, guild.sid, client.timestamp() + defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout])
 
                     cargo.nick = membro_guild.user.username
                     cargo.rid = strike_aplicado.role
@@ -136,7 +136,6 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                     cargo.assigner_nick = client.username()
 
                     cargo.relatory = client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1)
-                    cargo.timestamp = client.timestamp() + defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]
                     cargo.save()
 
                     const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``

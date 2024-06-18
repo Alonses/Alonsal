@@ -46,15 +46,6 @@ async function getTimedRoleAssigner(uid, sid) {
     }).limit(1)
 }
 
-async function createTimedRole(uid, sid) {
-
-    // Registra um novo cargo temporário automático sem verificações
-    await model.create({
-        uid: uid,
-        sid: sid
-    })
-}
-
 async function checkUserGuildRoles(sid) {
 
     // Listando apenas os usuários que possuem cargos concedidos no servidor
@@ -141,7 +132,6 @@ async function dropAllGuildRoles(sid) {
 module.exports.User_role = model
 module.exports = {
     getUserRole,
-    createTimedRole,
     getTimedRoleAssigner,
     checkUserGuildRoles,
     listAllUserGuildRoles,

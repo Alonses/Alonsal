@@ -52,17 +52,13 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${guild.spam.channel ? `\n${client.emoji("icon_id")} \`${guild.spam.channel}\`\n( <#${guild.spam.channel}> )` : `\n\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel && !guild.spam.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
                 inline: true
+            },
+            {
+                name: `${client.emoji(60)} **${client.tls.phrase(user, "mode.spam.tipo_varredura")}**`,
+                value: guild.spam.scanner.links ? `\`${client.tls.phrase(user, "mode.spam.apenas_links")}\`` : `\`${client.tls.phrase(user, "mode.spam.qualquer_entrada")}\``,
+                inline: false
             }
         )
-
-    // Estilo de filtro adotado para o Anti-spam no servidor
-    embed.addFields(
-        {
-            name: `${client.emoji(60)} **${client.tls.phrase(user, "mode.spam.tipo_varredura")}**`,
-            value: guild.spam.scanner.links ? `\`${client.tls.phrase(user, "mode.spam.apenas_links")}\`` : `\`${client.tls.phrase(user, "mode.spam.qualquer_entrada")}\``,
-            inline: false
-        }
-    )
 
     if (guild?.spam.manage_mods) // Recurso para gerenciar moderadores habilitado
         embed.addFields(
