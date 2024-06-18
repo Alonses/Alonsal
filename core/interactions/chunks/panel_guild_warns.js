@@ -83,9 +83,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                     value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild.warn.notify_exclusion)} **${client.tls.phrase(user, "menu.botoes.notificar_remocao")}**`,
                     inline: true
                 },
-                { name: "⠀", value: "⠀", inline: false }
-            )
-            .addFields(
+                { name: "⠀", value: "⠀", inline: false },
                 {
                     name: `📢 **${client.tls.phrase(user, "mode.warn.advertencias_publicas")}**\n${client.execute("functions", "emoji_button.emoji_button", guild.warn?.announce?.status)} **${client.tls.phrase(user, "mode.warn.anunciar_publicamente")}**`,
                     value: "⠀",

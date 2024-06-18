@@ -48,11 +48,13 @@ module.exports = async ({ client, user, interaction, pagina }) => {
 
             if (users_ids.length > 0)
                 embed.setDescription(`\`\`\`${client.tls.phrase(user, "mode.report.com_reportes_guild", 48)}\`\`\``)
-                    .addFields({
-                        name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}: ${users_ids.length}**`,
-                        value: "⠀",
-                        inline: true
-                    })
+                    .addFields(
+                        {
+                            name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportados")}: ${users_ids.length}**`,
+                            value: "⠀",
+                            inline: true
+                        }
+                    )
                     .setFooter({
                         text: rodape,
                         iconURL: interaction.user.avatarURL({ dynamic: true })

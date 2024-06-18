@@ -5,6 +5,10 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
     let botoes = []
 
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    let b_cargos = false
+
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.anuncio_games")} :video_game:`)
         .setColor(client.embed_color(user.misc.color))
@@ -24,26 +28,17 @@ module.exports = async ({ client, user, interaction }) => {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.games.channel}\`\n( <#${guild.games.channel}> )`,
                 inline: true
+            },
+            {
+                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                inline: false
             }
         )
         .setFooter({
             text: client.tls.phrase(user, "manu.painel.rodape"),
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
-
-    // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
-    let b_cargos = false
-
-    embed.addFields(
-        {
-            name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
-            inline: true
-        },
-        { name: "⠀", value: "⠀", inline: true },
-        { name: "⠀", value: "⠀", inline: true }
-    )
 
     // Desabilitando o botão de escolher cargos
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles)) {

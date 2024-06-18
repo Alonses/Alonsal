@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const advertencias = await listAllGuildWarns(interaction.guild.id)
 
     const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.hierarquia.titulo_painel_config")} :crown: :octagonal_sign:`)
+        .setTitle(`> ${client.tls.phrase(user, "mode.hierarquia.status_ativacao")} :crown: :octagonal_sign:`)
         .setColor(client.embed_color(user.misc.color))
         .setDescription(client.tls.phrase(user, "mode.hierarquia.descricao_painel_config"))
         .setFields(
@@ -33,9 +33,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.warn.validade")}**`,
                 value: `:wastebasket: **${client.tls.phrase(user, "mode.warn.expira_em")} \`${client.tls.phrase(user, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**${guild.warn.hierarchy.timed ? "" : `\n( **⛔ ${client.tls.phrase(user, "mode.warn.no_momento")}** )`}`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,

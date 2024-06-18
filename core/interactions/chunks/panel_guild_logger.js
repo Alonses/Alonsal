@@ -54,13 +54,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
                 value: `${client.emoji("icon_id")} \`${guild.logger.channel}\`\n( <#${guild.logger.channel}> )`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
-                inline: true
+                inline: false
             }
         )
         .setFooter({

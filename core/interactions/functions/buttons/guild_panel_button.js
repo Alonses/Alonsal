@@ -6,8 +6,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
-    // 0 -> Alonsal Falador ( Movido para guild_speaker_button )
-    // 1 -> Permitir Broadcast
     // 2 -> Anúncio de Games ( Movido para guild_free_games_button )
 
     // 3 -> Denúncias in-server ( Movido para guild_tickets_button )

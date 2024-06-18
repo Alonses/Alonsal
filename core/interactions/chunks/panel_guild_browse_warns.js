@@ -5,8 +5,6 @@ const { listAllUserWarns } = require('../../database/schemas/User_warns')
 module.exports = async ({ client, user, interaction, dados }) => {
 
     let member = interaction.options?.getUser("user") || dados
-    const descricao = interaction.options?.getString("reason")
-
     const user_warns = await listAllUserWarns(member.id, interaction.guild.id)
 
     if (user_warns.length < 1)
