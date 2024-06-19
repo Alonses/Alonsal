@@ -1,5 +1,7 @@
 const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
 
+const { getNetworkedGuilds } = require('../../../database/schemas/Guild')
+
 const { banMessageEraser } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -24,7 +26,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 6 -> Definir tempo de exclusão do network para membros banidos
 
     // 9 -> Alterar de página dentro do guia
+    // 10 -> Altera o tipo de filtro das ações moderativas e sincroniza com o network
     // 11 -> Removendo o servidor do link do network
+
+    // 12 -> Altera para a guia dos servidores que compõe o network
 
     if (operacao === 1) { // Ativa ou desativa o network do servidor
 
@@ -204,6 +209,23 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             ephemeral: true
         })
 
+    } else if (operacao === 10) {
+
+        // Alterando o estilo de filtragem por ações moderativas geradas por bots ou apenas moderadores humanos
+        guild.network.scanner.type = !guild.network.scanner.type
+        await guild.save()
+
+        const network_guilds = await getNetworkedGuilds(guild.network.link)
+
+        // Sincronizando os servidores com a nova configuração de filtragem
+        for (let i = 0; i < network_guilds.length; i++) {
+
+            if (network_guilds[i].sid !== guild.sid) {
+                network_guilds[i].network.scanner.type = guild.network.scanner.type
+                network_guilds[i].save()
+            }
+        }
+
     } else if (operacao === 11) {
 
         // Confirmando a remoção do servidor do link do network
@@ -214,6 +236,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     }
 
     if (operacao >= 4) pagina_guia = 1
+    if (operacao === 12) pagina_guia = 2
 
     // Redirecionando a função para o painel do networking
     require('../../chunks/panel_guild_network')({ client, user, interaction, operacao, pagina_guia })

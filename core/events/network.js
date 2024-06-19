@@ -8,8 +8,7 @@ const network_map = new Map()
 
 module.exports = async ({ client, guild, caso, id_alvo }) => {
 
-    if (client.x.debug_mode && registroAudita.executorId === "665002572926681128")
-        return
+    if (client.x.debug_mode && registroAudita.executorId === "665002572926681128") return
 
     if (!network_map.has(id_alvo)) {
         network_map.set(id_alvo, true)
@@ -50,6 +49,9 @@ module.exports = async ({ client, guild, caso, id_alvo }) => {
         for (let i = 0; i < guilds_network.length; i++) {
 
             let internal_guild = guilds_network[i]
+
+            if (registroAudita.executorId !== client.id()) // Previne que outros bots acionem ações moderativas nos servidores do network
+                if (!internal_guild.network.scanner.type && registroAudita.executor.bot) break
 
             // Verificando se o servidor é diferente e o recurso respectivo está sincronizado
             if (internal_guild.sid !== guild.sid && internal_guild.network[networkCases[caso]]) {

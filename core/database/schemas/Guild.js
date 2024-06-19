@@ -96,7 +96,10 @@ const schema = new mongoose.Schema({
         member_punishment: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true },
-        erase_ban_messages: { type: Number, default: 0 }
+        erase_ban_messages: { type: Number, default: 0 },
+        scanner: {
+            type: { type: Boolean, default: true }
+        }
     },
     timed_roles: {
         timeout: { type: Number, default: 5 },
