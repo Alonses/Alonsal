@@ -181,6 +181,12 @@ function internal_functions(client) {
         return ordenado
     }
 
+    client.getGuildRole = (interaction, id_cargo) => {
+
+        // Retorna o cargo solicitado
+        return interaction.guild.roles.cache.find((r) => r.id === id_cargo)
+    }
+
     client.getGuildRoles = async (interaction, id_atual, permitir_mods) => {
         const roles = []
         const id_ignorar = id_atual || null
@@ -457,7 +463,7 @@ function internal_functions(client) {
 
     client.rolePermissions = async (interaction, role_id, permissions) => {
 
-        const cached_role = interaction.guild.roles.cache.find((r) => r.id === role_id)
+        const cached_role = client.getGuildRole(interaction, role_id)
 
         // Verificando as permissões do cargo informado
         for (let i = 0; i < permissions.length; i++)

@@ -112,11 +112,14 @@ module.exports = async function ({ client, interaction, user, member_guild, user
 
     if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo
 
+        // Verificando se o membro já possui o cargo
+        if (await client.hasRole(interaction, guild_warns[indice_warn].role, id_alvo)) return
+
         // Verificando permissões do bot no servidor
         if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
 
             // Atribuindo o cargo ao usuário que recebeu a advertência
-            const role = interaction.guild.roles.cache.find((r) => r.id === guild_warns[indice_warn].role)
+            const role = client.getGuildRole(interaction, guild_warns[indice_warn].role)
 
             if (role.editable) { // Verificando se o cargo é editável
 
