@@ -116,11 +116,11 @@ module.exports = async function ({ client, interaction, user, member_guild, user
         if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
 
             // Atribuindo o cargo ao usuário que recebeu a advertência
-            let role = interaction.guild.roles.cache.get(guild_warns[indice_warn].role)
+            const role = interaction.guild.roles.cache.find((r) => r.id === guild_warns[indice_warn].role)
 
             if (role.editable) { // Verificando se o cargo é editável
-                const membro_guild = await client.getMemberGuild(interaction, id_alvo)
 
+                const membro_guild = await client.getMemberGuild(interaction, id_alvo)
                 membro_guild.roles.add(role).catch(console.error)
 
                 // Advertência com um cargo temporário vinculado

@@ -163,11 +163,11 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
         if (await client.permissions(message, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
 
             // Assigning the role to the user who received the strike
-            let role = message.guild.roles.cache.get(strike_aplicado.role)
+            const role = message.guild.roles.cache.find((r) => r.id === strike_aplicado.role)
 
             if (role.editable) { // Checking if the role is editable
-                const membro_guild = await client.getMemberGuild(message, message.author.id)
 
+                const membro_guild = await client.getMemberGuild(message, message.author.id)
                 membro_guild.roles.add(role).catch(console.error)
 
                 // Strike com um cargo temporário vinculado
