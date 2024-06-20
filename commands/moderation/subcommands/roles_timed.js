@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
             ephemeral: true
         })
 
-    const cached_role = interaction.guild.roles.cache.find((r) => r.id === interaction.options.getRole("role").id)
+    const cached_role = client.getGuildRole(interaction, interaction.options.getRole("role").id)
     const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
 
     if (cached_role.position > bot_member.roles.highest.position)
