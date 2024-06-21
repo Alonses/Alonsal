@@ -1,9 +1,9 @@
-const { existsSync, mkdirSync, writeFileSync, readFile } = require('fs')
+const { existsSync, mkdirSync, writeFileSync } = require('fs')
 
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, interaction }) => {
 
     if (!existsSync(`./files/languages/`))
         mkdirSync(`./files/languages/`, { recursive: true })

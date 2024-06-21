@@ -53,7 +53,7 @@ module.exports = async ({ client, channel }) => {
         embed.addFields(
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(guild, "util.server.categoria")}**`,
-                value: `${client.emoji("icon_id")} \`${channel.parentId || client.tls.phrase(guild, "mode.logger.sem_categoria")}\`\n( ${channel.parentId ? `<#${channel.parentId}>` : client.tls.phrase(guild, "mode.logger.sem_categoria")} )`,
+                value: `${client.emoji("icon_id")} \`${channel.parentId || client.tls.phrase(guild, "mode.logger.sem_categoria")}\`\n( ${channel.parentId ? `<#${channel.parentId}>` : `\`❌ ${client.tls.phrase(guild, "mode.logger.sem_categoria")}\``} )`,
                 inline: true
             }
         )

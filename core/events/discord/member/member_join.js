@@ -33,21 +33,19 @@ module.exports = async (client, dados) => {
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_join || !guild.conf.logger) return
 
-    const user_alvo = dados.user
-
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.novo_membro"))
         .setColor(0x29BB8E)
         .setFields(
             {
-                name: client.user_title(user_alvo, guild, "util.server.membro"),
-                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
+                name: client.user_title(dados.user, guild, "util.server.membro"),
+                value: `${client.emoji("icon_id")} \`${dados.user.id}\`\n${client.emoji("mc_name_tag")} \`${dados.user.username}\`\n( <@${dados.user.id}> )`,
                 inline: true
             }
         )
         .setTimestamp()
 
-    const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
+    const url_avatar = dados.user.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
     client.notify(guild.logger.channel, { embeds: [embed] })

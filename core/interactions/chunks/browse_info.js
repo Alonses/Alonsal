@@ -2,9 +2,10 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getGames, verifyInvalidGames } = require('../../database/schemas/Game')
 
-const { activities } = require('../../../files/json/text/activities.json')
 const { getActiveModules } = require('../../database/schemas/User_modules')
 const { listAllSuspiciouLinks } = require('../../database/schemas/Spam_links')
+
+const { activities } = require('../../../files/json/text/activities.json')
 
 module.exports = async ({ client, user, interaction, caso }) => {
 

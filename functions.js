@@ -155,7 +155,7 @@ function internal_functions(client) {
 
     client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
-    client.getGuildChannels = async (interaction, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
+    client.getGuildChannels = async (interaction, user, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
 
         const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
         const canais_alvo = []
@@ -173,9 +173,9 @@ function internal_functions(client) {
         if (id_configurado !== interaction.channel.id && id_configurado !== interaction.channel.parentId) { // Adicionando o local atual do comando no inicio do array
 
             if (tipo === ChannelType.GuildText) // Usado por canais
-                ordenado.unshift({ id: interaction.channel.id, name: "Usar local atual", emoji: "🎯" })
+                ordenado.unshift({ id: interaction.channel.id, name: client.tls.phrase(user, "menu.botoes.local_atual"), emoji: "🎯" })
             else if (interaction.channel.parentId) // Usado por categorias
-                ordenado.unshift({ id: interaction.channel.parentId, name: "Usar local atual", emoji: "🎯" })
+                ordenado.unshift({ id: interaction.channel.parentId, name: client.tls.phrase(user, "menu.botoes.local_atual"), emoji: "🎯" })
         }
 
         return ordenado

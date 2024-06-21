@@ -7,6 +7,7 @@ module.exports = {
 		.setName("nikocado")
 		.setDescription("⌠😂⌡ It's your fault"),
 	async execute({ client, user, interaction }) {
+
 		interaction.reply({
 			content: gifs[client.random(gifs)],
 			ephemeral: client.decider(user?.conf.ghost_mode, 0)

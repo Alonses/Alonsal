@@ -70,9 +70,7 @@ deleteMessages = async (client, user, interaction, qtd_msg) => {
     if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageMessages]))
         return client.tls.reply(interaction, user, "mode.clear.permissao", true, 3)
 
-    const channel = interaction.channel
-
-    channel.bulkDelete(qtd_msg, true)
+    interaction.channel.bulkDelete(qtd_msg, true)
         .then(messages => {
             const count = messages.size
             const texto = count > 1 ? `\`${count} ${client.tls.phrase(user, "mode.clear.apagado_1")}` : `\`1 ${client.tls.phrase(user, "mode.clear.apagado_2")}`

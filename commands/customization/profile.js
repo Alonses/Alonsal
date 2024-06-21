@@ -4,7 +4,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("profile")
         .setNameLocalizations({
-            "pt-BR": 'perfil'
+            "de": 'profil',
+            "es-ES": 'perfil',
+            "fr": 'profil',
+            "it": 'profilo',
+            "pt-BR": 'perfil',
+            "ru": 'профиль',
         })
         .setDescription("⌠🎉⌡ Customize seu perfil!")
         .addSubcommand(subcommand =>

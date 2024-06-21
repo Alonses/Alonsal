@@ -36,9 +36,9 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     user_warn.save()
 
     const embed = new EmbedBuilder()
-        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : "> Registrando uma anotação"} :inbox_tray:`)
+        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : client.tls.phrase(user, "mode.anotacoes.nova_anotacao")} :inbox_tray:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.descricao_inclusao_warn", null, descricao_warn) : `Ao prosseguir com essa inclusão, o usuário receberá uma nova anotação neste servidor.\`\`\`fix\n📃 Descrição fornecida:\n\n${descricao_warn}\`\`\`${client.emoji("banidos")} | Após diversas anotações, um card para aplicar as penalidades da ${warns_recebidos.length + 1}° advertência será disponibilizado.`)
+        .setDescription(!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.descricao_inclusao_warn", null, descricao_warn) : client.tls.phrase(user, "mode.anotacoes.descricao_nova_anotacao", null, [descricao_warn, client.emoji("banidos"), warns_recebidos.length + 1]))
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
@@ -78,13 +78,13 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
         embed.addFields(
             {
-                name: `${client.defaultEmoji("pen")} **${user_notes.length > 0 ? `${user_notes.length} / ${notas_requeridas} Anotações` : "Sem anotações"}**`,
-                value: user_notes.length < 1 ? `**${default_emoji["numbers"][notas_requeridas]} Anotações requeridas**` : "⠀",
+                name: `${client.defaultEmoji("pen")} **${user_notes.length > 0 ? `${user_notes.length} / ${notas_requeridas} ${client.tls.phrase(user, "menu.botoes.anotacoes")}` : client.tls.phrase(user, "mode.anotacoes.sem_anotacoes")}**`,
+                value: user_notes.length < 1 ? `**${default_emoji["numbers"][notas_requeridas]} ${client.tls.phrase(user, "mode.anotacoes.anotacoes_requeridas")}**` : "⠀",
                 inline: true
             },
             {
-                name: `${warns_recebidos.length + 1}° Advertência a ser concedida`,
-                value: `${client.defaultEmoji("guard")} **Penalidades:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
+                name: `${warns_recebidos.length + 1}° ${client.tls.phrase(user, "mode.anotacoes.adv_concessao")}`,
+                value: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.anotacoes.anotacoes")}:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
                 inline: false
             }
         )
@@ -111,7 +111,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             inline: true
         })
 
-        texto_rodape = "Essa anotação de advertência possui expiração, você pode configurar prazos através do /panel guild, em advertências -> hierarquia."
+        texto_rodape = client.tls.phrase(user, "mode.anotacoes.dica_rodape")
     }
 
     embed.setFooter({

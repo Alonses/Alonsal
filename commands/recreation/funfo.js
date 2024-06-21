@@ -5,6 +5,7 @@ module.exports = {
         .setName("alaa")
         .setDescription("⌠😂|🇧🇷⌡ Funfo?"),
     async execute({ client, user, interaction }) {
+
         const file = new AttachmentBuilder("./files/songs/alaa.ogg")
         interaction.reply({
             files: [file],

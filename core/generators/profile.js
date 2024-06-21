@@ -13,9 +13,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
 
     user_alvo = user_alvo.user
 
-    if (typeof operador !== "undefined")
-        operacao = operador
-
+    if (typeof operador !== "undefined") operacao = operador
     const user_data = await client.getUser(id_alvo)
 
     let apelido = membro_sv.nickname || user_alvo.username, tipo_user = "🤖", nota_rodape = ""

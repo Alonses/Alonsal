@@ -72,7 +72,7 @@ module.exports = {
         interaction.targetMessage.channel.messages.fetch()
             .then(messages => {
                 messages.forEach(async m => {
-                    if (((m.createdAt - 12000) <= interaction.targetMessage.createdAt) && m.author.id === interaction.targetMessage.author.id)
+                    if (((m.createdAt - 1200) <= interaction.targetMessage.createdAt) && m.author.id === interaction.targetMessage.author.id)
                         await m.delete().catch(() => console.error)
                 })
 

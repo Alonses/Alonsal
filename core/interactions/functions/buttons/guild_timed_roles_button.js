@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_timed_roles#channel",
             reback: "browse_button.guild_timed_roles_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.timed_roles.channel)
+            values: await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.timed_roles.channel)
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )

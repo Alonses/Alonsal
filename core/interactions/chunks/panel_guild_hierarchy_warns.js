@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("telephone")} **${client.tls.phrase(user, "menu.botoes.painel_de_controle")}**`,
-                value: `${guild.warn.hierarchy.channel ? `${client.emoji("icon_id")} \`${guild.warn.hierarchy.channel}\`\n( <#${guild.warn.hierarchy.channel}> )` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
+                value: `${guild.warn.hierarchy.channel ? `${client.emoji("icon_id")} \`${guild.warn.hierarchy.channel}\`\n( <#${guild.warn.hierarchy.channel}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
                 inline: true
             },
             {
