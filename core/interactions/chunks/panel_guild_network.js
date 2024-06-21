@@ -62,7 +62,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores")} no link: ${servidores_link}**`,
+                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores_link")}: ${servidores_link}**`,
                 inline: true
             },
             {
@@ -72,7 +72,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`\n( <#${guild.network.channel}> )` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
+                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`\n( <#${guild.network.channel}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
                 inline: true
             },
             {
@@ -91,7 +91,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         embed.setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores")} no link: ${servidores_link}**`,
+                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores_link")}: ${servidores_link}**`,
                 inline: true
             },
             {
@@ -101,7 +101,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`\n( <#${guild.network.channel}> )` : `\`${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
+                value: `${guild.network.channel ? `${client.emoji("icon_id")} \`${guild.network.channel}\`\n( <#${guild.network.channel}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}${guild.logger.channel ? `\n${client.emoji(49)} ( <#${guild.logger.channel}> )` : ""}`,
                 inline: true
             },
             {

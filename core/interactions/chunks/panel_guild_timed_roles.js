@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.report.canal_de_avisos")}**`,
-                value: `${client.emoji("icon_id")} ${guild.timed_roles.channel ? `\`${guild.timed_roles.channel}\`\n( <#${guild.timed_roles.channel}> )` : "`Sem canal definido`"}`,
+                value: `${client.emoji("icon_id")} ${guild.timed_roles.channel ? `\`${guild.timed_roles.channel}\`\n( <#${guild.timed_roles.channel}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: false },
@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     const botoes = [
-        { id: "guild_timed_roles_button", name: "Expiração", type: 1, emoji: client.defaultEmoji("time"), data: "1" },
+        { id: "guild_timed_roles_button", name: client.tls.phrase(user, "menu.botoes.expiracao"), type: 1, emoji: client.defaultEmoji("time"), data: "1" },
         { id: "guild_timed_roles_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ]
 

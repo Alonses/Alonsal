@@ -43,7 +43,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         },
         {
             name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
-            value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 Adicionado:**\n${client.list(alteracoes.adicoes, 2000)}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ Removido:**\n${client.list(alteracoes.remocoes, 2000)}` : ""}` : "`❌ Não há permissões diferentes vinculados neste cargo`",
+            value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:**\n${client.list(alteracoes.adicoes, 2000)}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:**\n${client.list(alteracoes.remocoes, 2000)}` : ""}` : `\`❌ ${client.tls.phrase(guild, "mode.logger.sem_permissoes_vinculadas")}\``,
             inline: false
         }
     )

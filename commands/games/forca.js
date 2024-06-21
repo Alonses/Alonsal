@@ -2,6 +2,7 @@ const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
 const { padrao_forca } = require('../../core/formatters/patterns/game')
 
 const games = new Map()

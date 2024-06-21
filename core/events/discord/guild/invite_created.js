@@ -27,7 +27,7 @@ module.exports = async ({ client, invite }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.convite_criado_titulo"))
         .setColor(0x29BB8E)
-        .setDescription(`**${client.tls.phrase(guild, "mode.logger.convite_criado", 43)}**`)
+        .setDescription(client.tls.phrase(guild, "mode.logger.convite_criado", 43))
         .setFields(
             {
                 name: client.user_title(registroAudita.executor, guild, "mode.logger.autor"),

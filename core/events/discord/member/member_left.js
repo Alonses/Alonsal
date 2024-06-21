@@ -7,8 +7,6 @@ module.exports = async (client, dados) => {
     const guild = await client.getGuild(dados.guild.id)
     const user = await client.getUser(dados.user.id)
 
-    const user_alvo = dados.user
-
     // Removendo o servidor salvo em cache do usuário
     if (user.conf?.cached_guilds) dropUserGuild(user.uid, dados.guild.id)
 
@@ -33,6 +31,7 @@ module.exports = async (client, dados) => {
     })
 
     const registroAudita2 = fetchedLogs2.entries.first()
+    const user_alvo = dados.user
 
     if (registroAudita2)
         if (registroAudita2.targetId === user_alvo.id) // Membro foi expulso do servidor

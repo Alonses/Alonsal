@@ -32,17 +32,14 @@ module.exports = async ({ client, message }) => {
             attachments.push(attach.attachment)
         })
 
-    let texto_mensagem = message.content
-
     let texto = `${client.tls.phrase(guild, "mode.logger.auto_exclusao", 13, [message.author.id, message.url])}\n`
-    let autor = message.author.id, local = message.channelId
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             texto = client.tls.phrase(guild, "mode.logger.mode_exclusao", 13, [message.url, message.author.id])
 
     if (message.content) // Mensagem com texto escrito
-        texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(texto_mensagem, null, ["`", "'"])}\`\`\``
+        texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(message.content, null, ["`", "'"])}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
@@ -50,12 +47,12 @@ module.exports = async ({ client, message }) => {
         .setFields(
             {
                 name: client.user_title(message.author, guild, "mode.logger.autor"),
-                value: `${client.emoji("icon_id")} \`${autor}\`\n${client.emoji("mc_name_tag")} \`${message.author.username}\`\n( <@${autor}> )`,
+                value: `${client.emoji("icon_id")} \`${message.author.id}\`\n${client.emoji("mc_name_tag")} \`${message.author.username}\`\n( <@${message.author.id}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(guild, "util.rastreio.local")}**`,
-                value: `${client.emoji("icon_id")} \`${local}\`\n:placard: \`${message.channel.name}\`\n( <#${local}> )`,
+                value: `${client.emoji("icon_id")} \`${message.channelId}\`\n:placard: \`${message.channel.name}\`\n( <#${message.channelId}> )`,
                 inline: true
             }
         )

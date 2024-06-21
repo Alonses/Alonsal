@@ -66,7 +66,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, ChannelType.GuildText, canal))
+        data.values = data.values.concat(await client.getGuildChannels(interaction, user, ChannelType.GuildText, canal))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--

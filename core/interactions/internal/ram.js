@@ -1,4 +1,4 @@
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, interaction }) => {
 
     const used = process.memoryUsage()
     let text = "Uso de RAM:\n"

@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, interaction }) => {
 
     fetch(`${process.env.url_apisal}/status`)
         .then(res => res.json())

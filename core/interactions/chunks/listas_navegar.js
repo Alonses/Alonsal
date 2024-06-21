@@ -7,8 +7,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     // Verificando se o usuário desabilitou as tasks globais
     let listas = await (user?.conf.global_tasks ? listAllUserGroups(interaction.user.id) : listAllUserGroups(interaction.user.id, interaction.guild.id))
 
-    // Listando listas
-    if (listas.length < 1)
+    if (listas.length < 1) // Listando listas
         return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, client.emoji(0))
 
     const data = {

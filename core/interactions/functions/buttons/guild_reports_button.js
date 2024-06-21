@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_reports#channel",
             reback: "browse_button.guild_reports_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, ChannelType.GuildText, guild.reports.channel)
+            values: await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.reports.channel)
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
