@@ -18,7 +18,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.apelido_atualizado_titulo"))
         .setColor(0x29BB8E)
-        .setDescription(`${client.emoji("mc_name_tag")} | **${descricao}**`)
+        .setDescription(`${client.emoji("mc_name_tag")} | ${descricao}`)
         .setFields(
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),

@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 ephemeral: true
             })
 
-        // Definindo oo cargos que serão inclusos
+        // Definindo os cargos que serão inclusos
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
             pattern: "choose_role",
@@ -88,11 +88,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "role_assigner_ignore#role",
             reback: "browse_button.role_assigner",
             operation: operacao,
-            values: [{ name: client.tls.phrase(user, "mode.roles.se_possuir_cargo"), id: "all" }]
+            values: []
         }
 
+        if (cargos.ignore && cargos?.ignore !== "all") // Opção coringa para ignorar membros que já possuírem algum cargo
+            data.values.push({ name: client.tls.phrase(user, "mode.roles.se_possuir_cargo"), id: "all" })
+
         const cargos_server = await client.getGuildRoles(interaction)
-        data.values = data.values.concat(cargos_server)
+
+        cargos_server.forEach(cargo => {
+            if (!cargos.atribute.includes(cargo.id)) data.values.push(cargo)
+        })
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--

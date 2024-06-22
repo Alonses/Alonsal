@@ -39,7 +39,7 @@ module.exports = {
 	async execute({ client, user, interaction }) {
 
 		if (!interaction.channel.nsfw)
-			return client.tls.reply(interaction, user, "dive.jaja.nsfw_jaja", true, 33)
+			return client.tls.reply(interaction, user, "dive.jaja", true, 33)
 
 		// Redirecionando o evento
 		require(`./subcommands/jailson_${interaction.options.getString("operation")}`)({ client, user, interaction })

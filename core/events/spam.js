@@ -1,12 +1,10 @@
-const { PermissionsBitField, EmbedBuilder } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { getUserStrikes } = require("../database/schemas/User_strikes")
-const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
-const { getUserRole } = require("../database/schemas/User_roles")
-const { atualiza_roles } = require("../auto/triggers/user_roles")
+const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 
-const { spamTimeoutMap, defaultRoleTimes } = require("../formatters/patterns/timeout")
+const { spamTimeoutMap } = require("../formatters/patterns/timeout")
 
 const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
 const cached_messages = {}
@@ -158,70 +156,8 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, indice_matriz, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     if (strike_aplicado.role) { // Current Strike adds a role
-
-        // Verificando se o membro ainda não possui o cargo
-        if (!await client.hasRole(message, strike_aplicado.role, message.author.id)) {
-
-            // Checking bot permissions on the server
-            if (await client.permissions(message, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
-
-                // Assigning the role to the user who received the strike
-                const role = client.getGuildRole(message, strike_aplicado.role)
-
-                if (role.editable) { // Checking if the role is editable
-
-                    const membro_guild = await client.getMemberGuild(message, message.author.id)
-                    membro_guild.roles.add(role).catch(console.error)
-
-                    // Strike com um cargo temporário vinculado
-                    if (strike_aplicado.timed_role.status) {
-
-                        const cargo = await getUserRole(message.author.id, guild.sid, client.timestamp() + defaultRoleTimes[strike_aplicado.timed_role.timeout])
-
-                        cargo.nick = membro_guild.user.username
-                        cargo.rid = strike_aplicado.role
-                        cargo.valid = true
-
-                        cargo.assigner = client.id()
-                        cargo.assigner_nick = client.username()
-
-                        cargo.relatory = client.tls.phrase(guild, "mode.timed_roles.rodape_spam", null, strike_aplicado.rank + 1)
-                        cargo.save()
-
-                        const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
-
-                        const embed_timed_role = new EmbedBuilder()
-                            .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                            .setColor(0x29BB8E)
-                            .setDescription(client.tls.phrase(guild, "mode.timed_roles.aplicado_spam", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
-                            .addFields(
-                                {
-                                    name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
-                                    value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
-                                    inline: true
-                                },
-                                {
-                                    name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.warn.validade")}**`,
-                                    value: `**${client.tls.phrase(guild, "mode.timed_roles.valida_por")} \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
-                                    inline: true
-                                },
-                                {
-                                    name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "mode.warn.moderador")} ( ${client.tls.phrase(guild, "util.user.alonsal")} )**`,
-                                    value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
-                                    inline: true
-                                }
-                            )
-
-                        // Enviando o aviso ao canal do servidor
-                        client.notify(guild.spam.channel, { embeds: [embed_timed_role] })
-                        atualiza_roles()
-                    }
-                }
-            } else
-                client.notify(guild.spam.channel || guild.logger.channel, { // No permission to manage roles
-                    content: client.tls.phrase(guild, "mode.spam.sem_permissao_cargos", 7),
-                })
-        }
+        const interaction = message, dados = strike_aplicado, acionador = "spam"
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, dados, acionador })
     }
 
     setTimeout(() => { // Search sent messages to delete sent after spam validation
