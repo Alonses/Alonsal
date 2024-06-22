@@ -1,6 +1,6 @@
 const { faustop, rasputia, galerito } = require('../../../files/json/text/emojis.json')
 
-module.exports = ({ client, user, alvo, valor }) => {
+module.exports = ({ client, user, alvo, valor, i }) => {
 
     const nome_label = valor
     let emoji_label
