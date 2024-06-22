@@ -84,7 +84,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${warns_recebidos.length + 1}° ${client.tls.phrase(user, "mode.anotacoes.adv_concessao")}`,
-                value: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.anotacoes.anotacoes")}:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
+                value: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.anotacoes.penalidades")}:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
                 inline: false
             }
         )
