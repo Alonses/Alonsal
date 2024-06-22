@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
 }
 
 // updates[0] -> Quantidade de membros no servidor
-// updates[1] -> Membro atualizado
+// updates[1] -> Membros atualizados
 // updates[2] -> Membros ignorados
 // updates[3] -> Membros bots ignorados
 // updates[4] -> Membros ignorados por cargos definidos
@@ -83,15 +83,12 @@ async function alterar_users(client, user, interaction, contador) {
                 if (cargos.ignore) {
                     if (!user_ignorado) // Membro não possui um cargo ignorado
                         await member.roles.add(cargo_interno).then(updates[1]++).catch(console.error)
-                    else
-                        updates[4]++
+                    else updates[4]++
                 } else // Adicionando
                     await member.roles.add(cargo_interno).then(updates[1]++).catch(console.error)
-            else
-                updates[2]++
+            else updates[2]++
         })
-    } else
-        updates[3]++
+    } else updates[3]++
 
     contador++
 

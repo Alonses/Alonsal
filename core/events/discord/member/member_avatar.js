@@ -31,58 +31,61 @@ module.exports = async ({ client, guild, user, dados }) => {
     user.profile.avatar = user_alvo.avatarURL({ dynamic: true })
     await user.save() // Atualizando a foto de perfil do usuário
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.titulo_avatar"))
-        .setColor(0x29BB8E)
-        .setDescription(client.tls.phrase(guild, "mode.logger.novo_avatar", 35))
-        .setFields(
-            {
-                name: client.user_title(user_alvo, guild, "util.server.membro"),
-                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
-                inline: true
-            }
-        )
-        .setTimestamp()
-
-    if (attachment) {
-        // Enviando o embed com a comparação entre imagens
-        embed.setImage("attachment://new_avatar.png")
-
-        envia_logger(client, user.uid, { embeds: [embed], files: [attachment] })
-    } else {
-
-        // Enviando apenas a nova foto de perfil do usuário
-        if (user_alvo.avatarURL({ dynamic: true }))
-            embed.setImage(user_alvo.avatarURL({ dynamic: true }))
-
-        envia_logger(client, user.uid, { embeds: [embed] })
-    }
+    envia_logger(client, user_alvo, attachment)
 }
 
-envia_logger = (client, id_alvo, objeto) => {
+envia_logger = (client, user_alvo, attachment) => {
 
-    if (!usersmap.has(id_alvo)) {
+    if (!usersmap.has(user_alvo.id)) {
 
-        usersmap.set(id_alvo, { cached: true })
+        usersmap.set(user_alvo.id, { cached: true })
         const guilds = client.guilds()
 
         guilds.forEach(async guild => {
 
-            // Buscando as guilds com o evento de att de avatar ativo
+            // Buscando as guilds com o evento do logger de avatar alterado
             const internal_guild = await client.getGuild(guild.id)
 
             // Notificando a guild sobre a alteração do avatar de um membro
             if (internal_guild.logger.member_image && internal_guild.conf.logger) {
-                const user = await guild.members.fetch(id_alvo)
+                const user = await guild.members.fetch(user_alvo.id)
                     .catch(() => { return null })
 
-                if (user)
+                if (user) {
+
+                    const embed = new EmbedBuilder()
+                        .setTitle(client.tls.phrase(internal_guild, "mode.logger.titulo_avatar"))
+                        .setColor(0x29BB8E)
+                        .setDescription(client.tls.phrase(internal_guild, "mode.logger.novo_avatar", 35))
+                        .setFields(
+                            {
+                                name: client.user_title(user_alvo, internal_guild, "util.server.membro"),
+                                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
+                                inline: true
+                            }
+                        )
+                        .setTimestamp()
+
+                    const objeto = {
+                        embeds: [embed]
+                    }
+
+                    if (attachment) { // Enviando o embed com a comparação entre imagens
+
+                        embed.setImage("attachment://new_avatar.png")
+                        objeto.files = [attachment]
+
+                    } else // Enviando apenas a nova foto de perfil do usuário
+                        if (user_alvo.avatarURL({ dynamic: true }))
+                            embed.setImage(user_alvo.avatarURL({ dynamic: true }))
+
                     client.notify(internal_guild.logger.channel, objeto)
+                }
             }
         })
 
         setTimeout(() => {
-            usersmap.delete(id_alvo)
-        }, 5000)
+            usersmap.delete(user_alvo.id)
+        }, 10000)
     }
 }

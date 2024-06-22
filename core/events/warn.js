@@ -1,11 +1,9 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 
-const { listAllGuildWarns } = require("../database/schemas/Guild_warns")
 const { listAllUserWarns } = require("../database/schemas/User_warns")
-const { getUserRole } = require('../database/schemas/User_roles')
-const { atualiza_roles } = require('../auto/triggers/user_roles')
+const { listAllGuildWarns } = require("../database/schemas/Guild_warns")
 
-const { spamTimeoutMap, defaultRoleTimes } = require('../formatters/patterns/timeout')
+const { spamTimeoutMap } = require('../formatters/patterns/timeout')
 
 module.exports = async function ({ client, interaction, user, member_guild, user_warn, hierarquia }) {
 
@@ -110,71 +108,9 @@ module.exports = async function ({ client, interaction, user, member_guild, user
             require(`./warn/${guild_warns[indice_warn].action.replace("_2", "")}`)({ client, user, interaction, guild, active_user_warns, user_warn, guild_member, bot_member })
         }
 
-    if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo
-
-        // Verificando se o membro ainda não possui o cargo
-        if (!await client.hasRole(interaction, guild_warns[indice_warn].role, id_alvo)) {
-
-            // Verificando permissões do bot no servidor
-            if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
-
-                // Atribuindo o cargo ao usuário que recebeu a advertência
-                const role = client.getGuildRole(interaction, guild_warns[indice_warn].role)
-
-                if (role.editable) { // Verificando se o cargo é editável
-
-                    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
-                    membro_guild.roles.add(role).catch(console.error)
-
-                    // Advertência com um cargo temporário vinculado
-                    if (guild_warns[indice_warn].timed_role.status) {
-
-                        const cargo = await getUserRole(id_alvo, guild.sid, client.timestamp() + defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout])
-
-                        cargo.nick = membro_guild.user.username
-                        cargo.rid = strike_aplicado.role
-                        cargo.valid = true
-
-                        cargo.assigner = client.id()
-                        cargo.assigner_nick = client.username()
-
-                        cargo.relatory = client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1)
-                        cargo.save()
-
-                        const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
-
-                        const embed_timed_role = new EmbedBuilder()
-                            .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                            .setColor(0x29BB8E)
-                            .setDescription(client.tls.phrase(guild, "mode.timed_roles.aplicado_warn", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
-                            .addFields(
-                                {
-                                    name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
-                                    value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
-                                    inline: true
-                                },
-                                {
-                                    name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.warn.validade")}**`,
-                                    value: `**${client.tls.phrase(guild, "mode.timed_roles.valida_por")} \`${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[guild_warns[indice_warn].timed_role.timeout]}`)}\`**\n( <t:${cargo.timestamp}:f> )`,
-                                    inline: true
-                                },
-                                {
-                                    name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "mode.warn.moderador")} ( ${client.tls.phrase(guild, "util.user.alonsal")} )**`,
-                                    value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
-                                    inline: true
-                                }
-                            )
-
-                        // Enviando o aviso ao canal do servidor
-                        client.notify(guild.warn.channel, { embeds: [embed_timed_role] })
-                        atualiza_roles()
-                    }
-                }
-            } else
-                client.notify(guild.warn.channel, { // Sem permissão para gerenciar cargos
-                    content: client.tls.phrase(guild, "mode.warn.sem_permissao_cargos", 7),
-                })
-        }
+    if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo ao membro
+        const dados = guild_warns[indice_warn], acionador = "warn"
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, dados, acionador, indice_warn })
     }
 
     if (!hierarquia)

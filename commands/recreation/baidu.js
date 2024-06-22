@@ -16,7 +16,7 @@ module.exports = {
 
         const baidu = new AttachmentBuilder("./files/img/baidu.png")
         interaction.reply({
-            content: client.tls.phrase(user, "dive.baidu.baidu"),
+            content: client.tls.phrase(user, "dive.baidu"),
             files: [baidu],
             ephemeral: client.decider(user?.conf.ghost_mode, 0)
         })

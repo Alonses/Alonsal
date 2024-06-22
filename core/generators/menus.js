@@ -53,6 +53,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     // Menu com multi-seleção
     if (multi_select) max = data.values.length - indice_start > 25 ? 25 : data.values.length - indice_start
 
+    // Limitando a quantidade de cargos a serem concedidos/ignorados de forma automática
+    if (alvo.includes("role_assigner_")) max = 3
+
     const row = new ActionRowBuilder()
         .addComponents(
             new StringSelectMenuBuilder()
