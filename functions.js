@@ -478,9 +478,7 @@ function internal_functions(client) {
     client.hasRole = async (interaction, role_id, user_id) => {
 
         const user_member = await client.getMemberGuild(interaction.guild.id, user_id)
-
         if (user_member.roles.cache.has(role_id)) return true
-
         return false
     }
 
@@ -589,14 +587,8 @@ function internal_functions(client) {
         // Listando as penalidades que o usuário receberá com a advertência
         let acao_advertencia = `${loggerMap[obj.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${obj.action || "none"}`)}\`${client.guildAction(obj, traduz)}`
 
-        if (obj.role) { // Advertência com cargo aplicado
-
-            if (obj.timed_role.status) // Com cargo temporário incluso
-                acao_advertencia += `\n:label: <@&${obj.role}> ( \`${client.defaultEmoji("time")} ${client.tls.phrase(traduz, `menu.times.${defaultRoleTimes[obj.timed_role.timeout]}`)}\` )`
-            else
-                acao_advertencia += `\n:label: <@&${obj.role}>`
-        }
-
+        if (obj.role) // Advertência com cargo aplicado
+            acao_advertencia += `\n:label: <@&${obj.role}>${obj.timed_role.status ? ` ( \`${client.defaultEmoji("time")} ${client.tls.phrase(traduz, `menu.times.${defaultRoleTimes[obj.timed_role.timeout]}`)}\` )` : ""}`
 
         return acao_advertencia
     }
