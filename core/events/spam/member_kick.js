@@ -42,7 +42,7 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
             client.notify(guild.spam.channel || guild.logger.channel, obj)
 
             const embed_user = new EmbedBuilder()
-                .setTitle(`${client.tls.phrase(guild, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
+                .setTitle(`${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
                 .setColor(0xED4245)
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_kick", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``

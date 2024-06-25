@@ -1,5 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
+const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
+
 module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
@@ -28,7 +30,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
     if (strike_aplicado.role)
         embed.addFields({
             name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.spam.cargo_acrescentado")}**`,
-            value: `:label: <@&${strike_aplicado.role}>`,
+            value: `:label: <@&${strike_aplicado.role}>${strike_aplicado.timed_role.status ? `\n( \`${client.defaultEmoji("time")} ${client.tls.phrase(guild, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\` )` : ""}`,
             inline: true
         })
 
@@ -50,7 +52,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
             client.notify(guild.spam.channel || guild.logger.channel, obj)
 
             const embed_user = new EmbedBuilder()
-                .setTitle(`${client.tls.phrase(guild, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
+                .setTitle(`${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
                 .setColor(0xED4245)
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
@@ -74,8 +76,8 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
 
             if (strike_aplicado.role) // Strike possui um cargo vinculado
                 embed_user.addFields({
-                    name: client.tls.phrase(guild, "mode.spam.cargo_acrescentado"),
-                    value: `:label: <@&${strike_aplicado.role}>`,
+                    name: client.tls.phrase(user, "mode.spam.cargo_acrescentado"),
+                    value: `:label: <@&${strike_aplicado.role}>${strike_aplicado.timed_role.status ? `\n( \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[strike_aplicado.timed_role.timeout]}`)}\` )` : ""}`,
                     inline: true
                 })
 
