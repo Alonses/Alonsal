@@ -6,8 +6,7 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     if (!guild_member || !guild_executor) return
 
     // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode expulsar membros
-    if (guild_executor.roles.highest.position <= guild_member.roles.highest.position || !guild_executor.permissions.has(PermissionsBitField.Flags.KickMembers))
-        return
+    if (guild_executor.roles.highest.position <= guild_member.roles.highest.position || !guild_executor.permissions.has(PermissionsBitField.Flags.KickMembers)) return
 
     // Verificando se a hierarquia do bot é maior que o do alvo e se pode expulsar membros
     if (bot_member.roles.highest.position <= guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
@@ -26,6 +25,6 @@ module.exports = async ({ client, internal_guild, guild_evento, registroAudita, 
     if (registroAudita.reason) // Razão do banimento especificada
         descricao_evento = `${descricao_evento}${client.tls.phrase(internal_guild, "mode.network.motivo")} ${registroAudita.reason}`
 
-    await guild_member.kick(`Network | ${descricao_evento}`)
+    await guild_member.kick(`📡 Network | ${descricao_evento}`)
         .catch(console.error)
 }

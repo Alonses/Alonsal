@@ -25,8 +25,8 @@ module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_me
             inline: true
         })
 
-    if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
-        embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
+    if (user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
+        embed.setThumbnail(user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
 
     // Notificando o membro capturado pelo spam
     const obj = {

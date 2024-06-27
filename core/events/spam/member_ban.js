@@ -24,8 +24,8 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
             }
         )
 
-    if (user_guild.avatarURL({ dynamic: true, size: 2048 }))
-        embed.setThumbnail(user_guild.avatarURL({ dynamic: true, size: 2048 }))
+    if (user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
+        embed.setThumbnail(user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
 
     // Banindo o membro capturado pelo spam
     user_guild.ban(client.tls.phrase(guild, "mode.spam.strikes_ban"))
