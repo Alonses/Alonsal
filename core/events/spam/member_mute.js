@@ -34,8 +34,8 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
             inline: true
         })
 
-    if (user_guild.avatarURL({ dynamic: true }))
-        embed.setThumbnail(user_guild.avatarURL({ dynamic: true }))
+    if (user_guild.user.avatarURL({ dynamic: true }))
+        embed.setThumbnail(user_guild.user.avatarURL({ dynamic: true }))
 
     // Mutando o usuário causador do spam
     user_guild.timeout(tempo_timeout * 1000, client.tls.phrase(guild, "mode.spam.justificativa_mute"))
