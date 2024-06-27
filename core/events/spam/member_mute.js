@@ -5,7 +5,7 @@ const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
-    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.ModerateMembers]) || guild_bot.roles.highest.position <= user_guild.roles.highest.position)
+    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.MuteMembers]) || guild_bot.roles.highest.position <= user_guild.roles.highest.position)
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Criando o embed de aviso para os moderadores
