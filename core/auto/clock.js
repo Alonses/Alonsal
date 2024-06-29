@@ -11,6 +11,7 @@ const { verifica_servers } = require("../data/user_ranking")
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
+const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
 
 module.exports = async ({ client }) => {
 
@@ -24,6 +25,8 @@ module.exports = async ({ client }) => {
     atualiza_pre_warns()
 
     atualiza_roles()
+    atualiza_join_guilds(client)
+
     atualiza_modulos()
     atualiza_fixed_badges(client)
 

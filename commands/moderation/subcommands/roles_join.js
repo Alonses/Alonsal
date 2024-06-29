@@ -6,6 +6,6 @@ module.exports = async ({ client, user, interaction }) => {
     if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
         return client.tls.reply(interaction, user, "mode.roles.sem_permissao", true, 7)
 
-    const caso = "global"
+    const caso = "join"
     return require('../../../core/interactions/chunks/role_assigner.js')({ client, user, interaction, caso })
 }

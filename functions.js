@@ -66,10 +66,10 @@ function internal_functions(client) {
                 }
             })
 
-            // Formatando a frase
-            let convites_formatado = `${convites} ${convites > 1 ? client.tls.phrase(guild, "mode.invites.convites") : client.tls.phrase(guild, "mode.invites.convite")}`
-
-            client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
+            if (convites > 0) { // Enviando a notificação de convites rastreados excluídos
+                const convites_formatado = `${convites} ${convites > 1 ? client.tls.phrase(guild, "mode.invites.convites") : client.tls.phrase(guild, "mode.invites.convite")}`
+                client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
+            }
         })
     }
 

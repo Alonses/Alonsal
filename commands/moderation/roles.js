@@ -15,6 +15,12 @@ module.exports = {
             subcommand.setName("global")
                 .setDescription("⌠💂⌡ Conceda cargos para membros do servidor"))
         .addSubcommand(subcommand =>
+            subcommand.setName("join")
+                .setNameLocalizations({
+                    "pt-BR": 'entrada'
+                })
+                .setDescription("⌠💂⌡ Conceda cargos para membros que entrarem no servidor"))
+        .addSubcommand(subcommand =>
             subcommand.setName("timed")
                 .setNameLocalizations({
                     "pt-BR": 'temporario'
