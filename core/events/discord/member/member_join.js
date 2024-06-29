@@ -11,6 +11,12 @@ module.exports = async (client, dados) => {
     if (user.conf?.cached_guilds) // Salvando o novo servidor ao usuário
         await registerUserGuild(user.uid, dados.guild.id)
 
+    if (client.cached.join_guilds.has(dados.guild.id)) { // Servidores com cargos na entrada
+
+        const acionador = "join", interaction = dados
+        require('../../../auto/triggers/user_assign_role')({ client, guild, interaction, acionador })
+    }
+
     if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
         let historico = []
 

@@ -2,10 +2,36 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { atualiza_roles } = require("./user_roles")
 const { getUserRole } = require("../../database/schemas/User_roles")
+const { getRoleAssigner } = require("../../database/schemas/Guild_role_assigner")
 
 const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, interaction, dados, acionador, indice_warn }) => {
+
+    if (acionador === "join") {
+
+        // Concedendo cargos para novos membros que entram no servidor
+        const cargos = await getRoleAssigner(interaction.guild.id, "join")
+        const membro_guild = await client.getMemberGuild(interaction, interaction.user.id)
+
+        // Checking bot permissions on the server
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers])) return
+
+        cargos.atribute.split(".").forEach(async cargo => {
+
+            // Verificando se o membro ainda não possui o cargo
+            if (!await client.hasRole(interaction, cargo, interaction.user.id)) {
+
+                // Assigning the role to the user who received the strike
+                const role = client.getGuildRole(interaction, cargo)
+
+                if (role.editable) // Checking if the role is editable
+                    await membro_guild.roles.add(role).catch(console.error)
+            }
+        })
+
+        return
+    }
 
     // Verificando se o membro ainda não possui o cargo
     if (!await client.hasRole(interaction, dados.role, interaction.author.id)) {

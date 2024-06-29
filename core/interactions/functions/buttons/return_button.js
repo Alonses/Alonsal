@@ -59,5 +59,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require('../../chunks/role_timed_assigner')({ client, user, interaction, dados })
     }
 
+    if (dados.includes("role_assigner")) {
+
+        const caso = dados.split(".")[2]
+        return require('../../chunks/role_assigner')({ client, user, interaction, caso })
+    }
+
     require(`../../chunks/${operacao}`)({ client, user, interaction, pagina_guia, operador, autor_original })
 }
