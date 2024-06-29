@@ -86,7 +86,7 @@ Para uma melhor visualização dos códigos Alonsais, usamos padrões ao criar e
 
 O Alonsal faz uso direto da [APISAL](https://github.com/odnols/APISAL), uma API planejada do zero para fornecer diversas soluções de forma prática
 
-Ele também executa o Web Scraping de vários sites públicos, como o site do [History e seus acontecimentos do dia](https://history.uol.com.br/hoje-na-historia), o [LastFM](https://www.last.fm/pt/home), a [Steam](https://store.steampowered.com/?l=portuguese) e a [Wikipédia do Minecraft](https://minecraft.fandom.com/wiki/Minecraft_Wiki).
+Ele também executa o Web Scraping de vários sites públicos, como o site do [History e seus acontecimentos do dia](https://history.uol.com.br/hoje-na-historia), o [LastFM](https://www.last.fm/pt/home), a [Steam](https://store.steampowered.com/?l=portuguese) e a [Wikipédia do Minecraft](https://minecraft.wiki/w/Minecraft_Wiki).
 
 Aqui vão nossos agradecimentos pelas pessoas por trás das funções utilizadas pelo Alonsal até o momento:
 - [lllggghhhaaa](https://github.com/lllggghhhaaa) Pelas ajudas com os códigos e melhorias em várias partes, incluindo o banco de dados externo e funções de prefixo customizáveis, idiomas e a criação da [WCH](https://github.com/lllggghhhaaa/WaxCommandHandler) usada amplamente em versões anteriores do Alonsal.
