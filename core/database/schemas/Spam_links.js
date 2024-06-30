@@ -39,7 +39,7 @@ async function getSuspiciousLink(link) {
         link = link.split("||")[0]
 
     return model.findOne({
-        link: link.replace(" ", "")
+        link: link.trim()
     })
 }
 

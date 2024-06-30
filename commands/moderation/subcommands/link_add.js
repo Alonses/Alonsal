@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (!link.match(client.cached.regex))
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, client.emoji(0))
 
-    link = link.replace(" ", "")
+    link = link.trim()
 
     if (await verifySuspiciousLink(link)) // Link já existe
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
