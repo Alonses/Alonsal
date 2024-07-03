@@ -154,7 +154,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     const indice_matriz = client.verifyMatrixIndex(strikes)
 
     // Strike não possui penalidade, definindo para apenas notificar
-    if (!strike_aplicado.action) strike_aplicado.action = "member_warn"
+    if (!strike_aplicado?.action) strike_aplicado = { action: "member_warn" }
 
     // Redirecionando o evento para as penalidades e avisos aos moderadores
     await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, indice_matriz, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })
