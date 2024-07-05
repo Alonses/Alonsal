@@ -4,7 +4,7 @@ const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
 const { spamTimeoutMap } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, user, interaction, guild, active_user_warns, guild_member, bot_member }) => {
+module.exports = async ({ client, user, interaction, guild, active_user_warns, user_warn, guild_member, bot_member }) => {
 
     // Verificando se o membro e o executor estão no servidor
     if (!guild_member) return
