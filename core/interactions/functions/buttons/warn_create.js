@@ -23,6 +23,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Advertência confirmada
     const user_warn = user_warns[user_warns.length - 1]
+
+    if (!user_warn) // Advertência salva em cache não existe mais
+        return interaction.update({
+            content: "❌ Eita bixo! Parece que os dados dessa advertência sumiram, por gentileza, use o comando novamente",
+            components: [],
+            ephemeral: true
+        })
+
     user_warn.timestamp = client.timestamp()
     user_warn.valid = true
 

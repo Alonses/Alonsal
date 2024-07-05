@@ -110,7 +110,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
 
     if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo ao membro
         const dados = guild_warns[indice_warn], acionador = "warn"
-        require('../auto/triggers/user_assign_role')({ client, guild, interaction, dados, acionador, indice_warn })
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, dados, acionador, indice_warn })
     }
 
     if (!hierarquia)

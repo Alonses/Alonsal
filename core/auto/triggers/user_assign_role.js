@@ -6,13 +6,14 @@ const { getRoleAssigner } = require("../../database/schemas/Guild_role_assigner"
 
 const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, guild, interaction, dados, acionador, indice_warn }) => {
+module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador, indice_warn }) => {
+
+    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
 
     if (acionador === "join") {
 
         // Concedendo cargos para novos membros que entram no servidor
         const cargos = await getRoleAssigner(interaction.guild.id, "join")
-        const membro_guild = await client.getMemberGuild(interaction, interaction.user.id)
 
         // Checking bot permissions on the server
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers])) return
@@ -20,7 +21,7 @@ module.exports = async ({ client, guild, interaction, dados, acionador, indice_w
         cargos.atribute.split(".").forEach(async cargo => {
 
             // Verificando se o membro ainda não possui o cargo
-            if (!await client.hasRole(interaction, cargo, interaction.user.id)) {
+            if (!await client.hasRole(interaction, cargo, id_alvo)) {
 
                 // Assigning the role to the user who received the strike
                 const role = client.getGuildRole(interaction, cargo)
@@ -34,7 +35,7 @@ module.exports = async ({ client, guild, interaction, dados, acionador, indice_w
     }
 
     // Verificando se o membro ainda não possui o cargo
-    if (!await client.hasRole(interaction, dados.role, interaction.author.id)) {
+    if (!await client.hasRole(interaction, dados.role, id_alvo)) {
 
         // Checking bot permissions on the server
         if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
@@ -43,14 +44,12 @@ module.exports = async ({ client, guild, interaction, dados, acionador, indice_w
             const role = client.getGuildRole(interaction, dados.role)
 
             if (role.editable) { // Checking if the role is editable
-
-                const membro_guild = await client.getMemberGuild(interaction, interaction.author.id)
                 membro_guild.roles.add(role).catch(console.error)
 
                 // Strike com um cargo temporário vinculado
                 if (dados.timed_role.status) {
 
-                    const cargo = await getUserRole(interaction.author.id, guild.sid, client.timestamp() + defaultRoleTimes[dados.timed_role.timeout])
+                    const cargo = await getUserRole(id_alvo, guild.sid, client.timestamp() + defaultRoleTimes[dados.timed_role.timeout])
 
                     cargo.nick = membro_guild.user.username
                     cargo.rid = dados.role

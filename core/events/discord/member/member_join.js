@@ -13,8 +13,8 @@ module.exports = async (client, dados) => {
 
     if (client.cached.join_guilds.has(dados.guild.id)) { // Servidores com cargos na entrada
 
-        const acionador = "join", interaction = dados
-        require('../../../auto/triggers/user_assign_role')({ client, guild, interaction, acionador })
+        const acionador = "join", interaction = dados, id_alvo = dados.user.id
+        require('../../../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, acionador })
     }
 
     if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
