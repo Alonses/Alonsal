@@ -34,6 +34,7 @@ class CeiraClient {
             presence: null,
             ranking_value: 0,
             regex: /[A-Za-z0-9--]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi,
+            game_stores: /epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/,
             fixed_badges: {},
             warns: new Map(),
             join_guilds: new Map(),

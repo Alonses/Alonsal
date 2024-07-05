@@ -5,7 +5,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
     const { data } = require(`../../../files/languages/${idioma_definido}.json`)
     const game = data.game, mode = data.mode
 
-    let texto_formatado, valor_total = 0, link_app = ""
+    let texto_formatado, valor_total = 0
     plataforma = plataforma.split(" ")[0]
 
     objeto_anunciado.forEach(item => { valor_total += parseFloat(item.preco) })
@@ -22,7 +22,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
         const jogos_disponiveis = []
 
         objeto_anunciado.forEach(game => {
-            const matches = game.link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
+            const matches = game.link.match(client.cached.game_stores)
             let preco = `R$ ${game.preco}`, logo_plataforma = client.emoji(redes[matches[0]][0])
 
             if (game.preco === 0)

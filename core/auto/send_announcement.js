@@ -14,7 +14,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         return client.notify(process.env.channel_feeds, { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." })
 
     // Verificando se a plataforma informada é válida
-    const matches = objetos_anunciados[0].link.match(/epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/)
+    const matches = objetos_anunciados[0].link.match(client.cached.game_stores)
 
     if (!matches && interaction)
         return interaction.editReply({
@@ -49,11 +49,11 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         banner: imagem_destaque,
         logo: client.emoji(redes[matches[0]][0]),
         plataforma: redes[matches[0]][1],
-        row: client.create_buttons(lista_links)
+        row: lista_links
     }
 
     // Enviando a notificação para os canais clientes
-    fragmenta_envio(client, obj_anuncio)
+    fragmenta_envio(client, obj_anuncio, parseInt(obj_anuncio.games.length / 3) - 1)
 
     // Acionado especificamente para um canal
     if (guild_channel) return
@@ -67,12 +67,12 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 
     if (interaction)
         interaction.editReply({
-            content: ":white_check_mark: | A atualização foi enviada à todos os canais de games",
+            content: ":white_check_mark: | O anúncio foi enviado à todos os canais de games",
             ephemeral: true
         })
 }
 
-async function fragmenta_envio(client, obj_anuncio) {
+async function fragmenta_envio(client, obj_anuncio, indice) {
 
     try {
         const dados = obj_anuncio.guilds[0]
@@ -89,12 +89,10 @@ async function fragmenta_envio(client, obj_anuncio) {
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     // Enviando o anúncio
-                    let indices = parseInt(obj_anuncio / 3)
-
-                    for (let i = 0; i < indices; i++) {
+                    for (let i = 0; i <= indice; i++) {
 
                         // Formatando para enviar vários embeds caso necessário
-                        const corpo_anuncio = formatar_modelo(obj_anuncio, client, i, idioma_definido)
+                        const corpo_anuncio = formatar_modelo(client, obj_anuncio, client, dados, i, idioma_definido)
                         canal_alvo.send(corpo_anuncio)
                     }
                 }
@@ -119,7 +117,10 @@ async function fragmenta_envio(client, obj_anuncio) {
         }, 5000)
 }
 
-function formatar_modelo(obj_anuncio, client, indice, idioma_definido) {
+function formatar_modelo(client, obj_anuncio, client, dados, indice, idioma_definido) {
+
+    if (obj_anuncio.games.length > 3) // Buscando o novo destaque
+        obj_anuncio = busca_destaque(client, obj_anuncio, indice)
 
     const embed = new EmbedBuilder()
         .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
@@ -128,10 +129,40 @@ function formatar_modelo(obj_anuncio, client, indice, idioma_definido) {
         .setDescription(model_games(client, obj_anuncio.games.slice(indice * 3, (indice * 3) + 3), obj_anuncio.plataforma, idioma_definido))
 
     const obj_formatado = {
-        content: `<@&${dados.games.role}>`,
+        content: indice === 0 ? `<@&${dados.games.role}>` : "",
         embeds: [embed],
-        components: [obj_anuncio.row.slice(indice * 3, (indice * 3) + 3)]
+        components: [client.create_buttons(obj_anuncio.row.slice(indice * 3, (indice * 3) + 3))]
     }
 
     return obj_formatado
+}
+
+function busca_destaque(client, obj_anuncio, indice) {
+
+    const jogos_destaque = obj_anuncio.games.slice(indice * 3, (indice * 3) + 3)
+    let imagem_destaque, valor_anterior = 0
+
+    // Formatando o nome do jogo e escolhendo o banner para o anúncio
+    jogos_destaque.forEach(game => {
+
+        if (parseFloat(game.preco) > valor_anterior || (parseInt(game.preco) === 0 && jogos_destaque.length === 1)) {
+            valor_anterior = parseFloat(game.preco)
+            imagem_destaque = game.thumbnail
+        }
+
+        if (game.link.includes("store.steam") && !imagem_destaque)
+            imagem_destaque = `https://cdn.akamai.steamstatic.com/steam/apps/${game.link.split("app/")[1].split("/")[0]}/capsule_616x353.jpg`
+    })
+
+    // Sem nenhum jogo qualificado, utilizando a capa do primeiro
+    if (!imagem_destaque && jogos_destaque[0].preco === 0)
+        imagem_destaque = jogos_destaque[0].thumbnail
+
+    const matches = jogos_destaque[0].link.match(client.cached.game_stores)
+
+    obj_anuncio.banner = imagem_destaque
+    obj_anuncio.plataforma = redes[matches[0]][1]
+    obj_anuncio.logo = client.emoji(redes[matches[0]][0])
+
+    return obj_anuncio
 }
