@@ -160,8 +160,8 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, indice_matriz, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     if (strike_aplicado.role) { // Current Strike adds a role
-        const interaction = message, dados = strike_aplicado, acionador = "spam"
-        require('../auto/triggers/user_assign_role')({ client, guild, interaction, dados, acionador })
+        const interaction = message, dados = strike_aplicado, acionador = "spam", id_alvo = message.author.id
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, dados, acionador })
     }
 
     setTimeout(() => { // Search sent messages to delete sent after spam validation
