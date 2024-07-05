@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     user_warn.assigner_nick = interaction.user.username
     user_warn.timestamp = client.timestamp()
 
-    user_warn.save()
+    await user_warn.save()
 
     const embed = new EmbedBuilder()
         .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : client.tls.phrase(user, "mode.anotacoes.nova_anotacao")} :inbox_tray:`)

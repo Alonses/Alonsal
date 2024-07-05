@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             if (client.cached.warns.has(interaction.user.id))
                 motivo_remocao = `\`\`\`fix\n${client.tls.phrase(user, "mode.warn.motivo_remocao", client.defaultEmoji("judge"))}:\n\n${client.cached.warns.get(interaction.user.id).relatory}\`\`\`\n`
 
-            if (!client.cached.warns.get(interaction.user.id).keep || user_warns.length === 1) // Removendo o motivo para a remoção da advertência
+            if (!client.cached.warns.get(interaction.user.id)?.keep || user_warns.length === 1) // Removendo o motivo para a remoção da advertência
                 client.cached.warns.delete(interaction.user.id)
 
             const embed = new EmbedBuilder()
@@ -138,7 +138,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         ]
 
         if (client.cached.warns.get(interaction.user.id)) // Motivo salvo em cache para remover a advertência
-            botoes.push({ id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.manter_motivo"), type: client.execute("functions", "emoji_button.type_button", client.cached.warns.get(interaction.user.id).keep), emoji: client.defaultEmoji("pen"), data: `4.${id_alvo}.${timestamp}` })
+            botoes.push({ id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.manter_motivo"), type: client.execute("functions", "emoji_button.type_button", client.cached.warns.get(interaction.user.id)?.keep), emoji: client.defaultEmoji("pen"), data: `4.${id_alvo}.${timestamp}` })
 
         return interaction.update({
             embeds: [embed],
