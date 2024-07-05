@@ -26,6 +26,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 
     // Formatando o nome do jogo e escolhendo o banner para o anúncio
     objetos_anunciados.forEach(valor => {
+
         lista_links.push({
             name: valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome,
             type: 4,
@@ -79,12 +80,6 @@ async function fragmenta_envio(client, obj_anuncio) {
         let idioma_definido = dados.lang ?? "pt-br"
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
-        const embed = new EmbedBuilder()
-            .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
-            .setColor(0x29BB8E)
-            .setImage(obj_anuncio.banner)
-            .setDescription(model_games(client, obj_anuncio.games, obj_anuncio.plataforma, idioma_definido))
-
         const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
 
         if (canal_alvo) { // Enviando os anúncios para os canais
@@ -94,11 +89,14 @@ async function fragmenta_envio(client, obj_anuncio) {
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     // Enviando o anúncio
-                    canal_alvo.send({
-                        content: `<@&${dados.games.role}>`,
-                        embeds: [embed],
-                        components: [obj_anuncio.row]
-                    })
+                    let indices = parseInt(obj_anuncio / 3)
+
+                    for (let i = 0; i < indices; i++) {
+
+                        // Formatando para enviar vários embeds caso necessário
+                        const corpo_anuncio = formatar_modelo(obj_anuncio, client, i, idioma_definido)
+                        canal_alvo.send(corpo_anuncio)
+                    }
                 }
             }
         } else {
@@ -119,4 +117,21 @@ async function fragmenta_envio(client, obj_anuncio) {
         setTimeout(() => { // Enviando o aviso de jogos gratuitos para o próximo canal
             fragmenta_envio(client, obj_anuncio)
         }, 5000)
+}
+
+function formatar_modelo(obj_anuncio, client, indice, idioma_definido) {
+
+    const embed = new EmbedBuilder()
+        .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
+        .setColor(0x29BB8E)
+        .setImage(obj_anuncio.banner)
+        .setDescription(model_games(client, obj_anuncio.games.slice(indice * 3, (indice * 3) + 3), obj_anuncio.plataforma, idioma_definido))
+
+    const obj_formatado = {
+        content: `<@&${dados.games.role}>`,
+        embeds: [embed],
+        components: [obj_anuncio.row.slice(indice * 3, (indice * 3) + 3)]
+    }
+
+    return obj_formatado
 }
