@@ -82,7 +82,7 @@ function internal_functions(client) {
         return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
     }
 
-    client.create_profile = ({ interaction, user, id_alvo }) => { return create_profile(client, interaction, user, id_alvo) }
+    client.create_profile = ({ interaction, user, id_alvo, operador }) => { return create_profile({ client, interaction, user, id_alvo, operador }) }
 
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
     client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
