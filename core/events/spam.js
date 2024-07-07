@@ -5,6 +5,7 @@ const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Gui
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 
 const { spamTimeoutMap } = require("../formatters/patterns/timeout")
+const { links_oficiais } = require("../formatters/patterns/guild")
 
 const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
 const cached_messages = {}
@@ -176,14 +177,16 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
 
         const link = `${user_messages[0].content} `.match(client.cached.regex)
 
-        if (link?.length > 0 && !await verifySuspiciousLink(link)) {
+        if (!links_oficiais.includes(link.split("/")[0])) {
+            if (link?.length > 0 && !await verifySuspiciousLink(link)) {
 
-            const registrados = await registerSuspiciousLink(link[0], guild.sid, client.timestamp()) || []
+                const registrados = await registerSuspiciousLink(link[0], guild.sid, client.timestamp()) || []
 
-            // Registering suspicious links that are not saved yet and notifying about the addition of a new suspicious link to the Alonsal database and the original server
-            if (registrados.length > 0) {
-                client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` })
-                client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
+                // Registering suspicious links that are not saved yet and notifying about the addition of a new suspicious link to the Alonsal database and the original server
+                if (registrados.length > 0) {
+                    client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` })
+                    client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
+                }
             }
         }
     }

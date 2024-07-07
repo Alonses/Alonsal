@@ -2,6 +2,8 @@ const { EmbedBuilder } = require("discord.js")
 
 const { verifySuspiciousLink, registerCachedSuspiciousLink } = require("../../../core/database/schemas/Spam_links")
 
+const { links_oficiais } = require("../../../core/formatters/patterns/guild")
+
 module.exports = async ({ client, user, interaction }) => {
 
     let link = `${interaction.options.getString("link")} `
@@ -11,6 +13,9 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_invalido", true, client.emoji(0))
 
     link = link.trim()
+
+    if (links_oficiais.includes(link.split("/")[0]))
+        return interaction.reply({ content: "🕵️‍♂️ | Você não pode adicionar este link! Ele é oficial e não representa risco.", ephemeral: true })
 
     if (await verifySuspiciousLink(link)) // Link já existe
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
