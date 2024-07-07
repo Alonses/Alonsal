@@ -67,11 +67,20 @@ const networkCases = {
     "mute": "member_punishment"
 }
 
+const links_oficiais = [
+    "youtu.be",
+    "youtube.com",
+    "google.com",
+    "tenor.com",
+    "discordapp.com"
+]
+
 module.exports = {
     loggerMap,
     channelTypes,
     guildPermissions,
     guildActions,
     operation_codes,
-    networkCases
+    networkCases,
+    links_oficiais
 }

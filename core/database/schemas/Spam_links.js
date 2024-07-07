@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 
-// sid -> Server ID
+const { links_oficiais } = require("../../formatters/patterns/guild")
 
-const links_oficiais = ["youtu.be", "youtube.com", "google.com", "tenor.com", "discordapp.com"]
+// sid -> Server ID
 
 const schema = new mongoose.Schema({
     sid: { type: String, default: null },
