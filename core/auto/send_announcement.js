@@ -116,7 +116,7 @@ async function fragmenta_envio(client, obj_anuncio, indice) {
 
     if (obj_anuncio.guilds.length > 0)
         setTimeout(() => { // Enviando o aviso de jogos gratuitos para o próximo canal
-            fragmenta_envio(client, obj_anuncio)
+            fragmenta_envio(client, obj_anuncio, indice)
         }, 5000)
 }
 
