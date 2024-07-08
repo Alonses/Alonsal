@@ -28,7 +28,7 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
         embed.setThumbnail(user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
 
     // Banindo o membro capturado pelo spam
-    user_guild.ban(client.tls.phrase(guild, "mode.spam.strikes_ban"))
+    user_guild.ban({ reason: client.tls.phrase(guild, "mode.spam.strikes_ban") })
         .then(async () => {
 
             const obj = {
