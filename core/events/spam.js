@@ -124,7 +124,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     if (guild.spam.strikes) { // Server with active strike progression
         let user_strikes = await getUserStrikes(message.author.id, message.guild.id)
 
-        strike_aplicado = strikes[user_strikes.strikes] || strikes[strikes.length - 1]
+        strike_aplicado = user_strikes.strikes < strikes.length ? strikes[user_strikes.strikes] : strikes[strikes.length - 1]
 
         user_strikes.strikes++
         user_strikes.save()
