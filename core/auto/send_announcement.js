@@ -1,9 +1,9 @@
 const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
-const { model_games } = require('../formatters/chunks/model_games')
-
-const { redes } = require('../../files/json/text/anuncio.json')
 const { getGameChannels, getSpecificGameChannel } = require('../database/schemas/Guild')
+
+const { model_games } = require('../formatters/chunks/model_games')
+const { redes } = require('../../files/json/text/anuncio.json')
 
 module.exports = async ({ client, interaction, objetos_anunciados, guild_channel }) => {
 
@@ -73,6 +73,9 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
 }
 
 async function fragmenta_envio(client, obj_anuncio, indice) {
+
+    // Previne que o indice seja negativo e pule o envio de games caso seja enviado menos que 3 titulos para anúncio
+    indice = indice < 1 ? 0 : indice
 
     try {
         const dados = obj_anuncio.guilds[0]
