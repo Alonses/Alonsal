@@ -56,6 +56,9 @@ function verifica_chute(client, message, entrada, id_jogo, user) {
         return
     }
 
+    // Ignora mensagens enviadas em outros canais
+    if (!client.cached.forca.has(id_jogo).channel !== message.channel.id) return
+
     const split = client.cached.forca.get(id_jogo).word.split("")
 
     let acerto = false
