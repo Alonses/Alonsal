@@ -49,9 +49,17 @@ function internal_functions(client) {
     // Apagando os convites criados pelo usuário que foi expulso/banido do servidor
     client.checkUserInvites = async (guild, id_user) => {
 
-        // Removendo o cargo ao usuário que recebeu a advertência
-        if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ManageGuild]))
-            return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.sem_permissao_2", 7) })
+        // Canal para envio da notificação dos convites rastreados
+        const canal_notifica = guild.nuke_invites.channel ? guild.nuke_invites.channel : guild.logger.channel
+
+        // Notificando sobre a falta de permissões e desligando o recurso no servidor
+        if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ManageGuild])) {
+
+            guild.conf.nuke_invites = false
+            guild.save()
+
+            return client.notify(canal_notifica, { content: client.tls.phrase(guild, "mode.invites.sem_permissao_2", 7) })
+        }
 
         // Excluindo os convites que o membro expulso/banido criou
         const cached_guild = await client.guilds(guild.sid)
@@ -68,7 +76,7 @@ function internal_functions(client) {
 
             if (convites > 0) { // Enviando a notificação de convites rastreados excluídos
                 const convites_formatado = `${convites} ${convites > 1 ? client.tls.phrase(guild, "mode.invites.convites") : client.tls.phrase(guild, "mode.invites.convite")}`
-                client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
+                client.notify(canal_notifica, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
             }
         })
     }

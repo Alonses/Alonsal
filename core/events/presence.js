@@ -46,22 +46,22 @@ async function requisita_status(client) {
     let texto_status = activities[num].text
 
     if (texto_status.includes("server_repl"))
-        texto_status = texto_status.replace("server_repl", client.guilds().size)
+        texto_status = texto_status.replace("server_repl", client.locale(client.guilds().size))
 
     if (texto_status.includes("canais_repl"))
-        texto_status = texto_status.replace("canais_repl", client.channels(0).size)
+        texto_status = texto_status.replace("canais_repl", client.locale(client.channels(0).size))
 
     if (texto_status.includes("activities_repl"))
-        texto_status = texto_status.replace("activities_repl", activities.length)
+        texto_status = texto_status.replace("activities_repl", client.locale(activities.length))
 
     if (texto_status.includes("version_repl")) {
         const bot = await client.getBot()
-        texto_status = texto_status.replace("version_repl", bot.persis.version)
+        texto_status = texto_status.replace("version_repl", client.locale(bot.persis.version))
     }
 
     if (texto_status.includes("commands_repl")) {
         const bot = await client.getBot()
-        texto_status = texto_status.replace("commands_repl", bot.persis.commands)
+        texto_status = texto_status.replace("commands_repl", client.locale(bot.persis.commands))
     }
 
     // Exibindo o status personalizado de forma aleatória por um tempo

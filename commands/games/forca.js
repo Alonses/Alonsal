@@ -3,63 +3,73 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
-const { padrao_forca } = require('../../core/formatters/patterns/game')
+const { randomString } = require('../../core/functions/random_string')
 
-const games = new Map()
+const { padrao_forca } = require('../../core/formatters/patterns/game')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("forca")
-        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!")
-        .addStringOption(option =>
-            option.setName("entrada")
-                .setDescription("Uma letra ou a palavra inteira!")),
+        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!"),
     async execute({ client, user, interaction }) {
 
-        if (!games[interaction.user.id]) {
+        if (!client.cached.forca_sessao.has(interaction.user.id)) {
             fetch('https://api.dicionario-aberto.net/random')
                 .then(res => res.json())
                 .then(dados => {
 
                     const palavra_escolhida = dados.word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+                    const id_sessao = randomString(20, client).replaceAll(".", "")
 
-                    games[interaction.user.id] = {
+                    client.cached.forca.set(id_sessao, {
                         word: palavra_escolhida,
                         descobertas: lista_posicoes(dados.word),
+                        embed: null,
+                        channel: interaction.channel.id,
                         erros: 0,
                         entradas: [],
                         finalizado: false
-                    }
+                    })
 
-                    retorna_jogo(client, interaction, user)
+                    client.cached.forca_sessao.set(interaction.user.id, { uid: interaction.user.id, id_game: id_sessao })
+
+                    retorna_jogo(client, interaction, id_sessao, user)
                 })
         } else {
 
-            // Acionado caso seja escrito algo para o chute da palavra
-            if (interaction.options.data.length === 1) {
-                const entrada = interaction.options.getString("entrada").toLowerCase()
-
-                verifica_chute(client, entrada, interaction, user)
-            }
-
             // Verifica se o jogo ainda existe
-            if (games[interaction.user.id])
-                retorna_jogo(client, interaction, user)
+            if (client.cached.forca_sessao.get(interaction.user.id)) {
+
+                const id_jogo = client.cached.forca_sessao.get(interaction.user.id).id_game
+                retorna_jogo(client, interaction, id_jogo, user)
+            }
         }
     }
 }
 
-verifica_chute = (client, entrada, interaction, user) => {
+function verifica_chute(client, message, entrada, id_jogo, user) {
 
-    const split = games[interaction.user.id].word.split("")
+    // Jogo expirado, removendo o usuário da sessão
+    if (!client.cached.forca.has(id_jogo)) {
+        message.channel.send({ content: "Ixi, essa sessão não existe mais... Mas você pode iniciar uma nova com o </forca:1069762590294687905>!" })
+        client.cached.forca_sessao.delete(user.uid)
+        return
+    }
+
+    const split = client.cached.forca.get(id_jogo).word.split("")
 
     let acerto = false
-    let descobertas = games[interaction.user.id].descobertas.split(" ")
+    let descobertas = client.cached.forca.get(id_jogo).descobertas.split(" ")
+
+    // Removendo as mensagens enviadas no chat
+    setTimeout(() => {
+        message.delete().catch(() => console.error)
+    }, 4000)
 
     if (entrada.length === 1) { // Chutando por letras
 
         // Barra caso a letra já tenha sido informada
-        if (!games[interaction.user.id].entradas.includes(entrada)) {
+        if (!client.cached.forca.get(id_jogo).entradas.includes(entrada)) {
             for (let i = 0; i < split.length; i++) {
                 if (entrada === split[i]) {
                     descobertas[i] = `\`${entrada}\``
@@ -68,57 +78,71 @@ verifica_chute = (client, entrada, interaction, user) => {
                 }
             }
 
-            games[interaction.user.id].entradas.push(entrada)
-            games[interaction.user.id].descobertas = descobertas.join(" ")
+            client.cached.forca.get(id_jogo).entradas.push(entrada)
+            client.cached.forca.get(id_jogo).descobertas = descobertas.join(" ")
 
-            if (!acerto)
-                games[interaction.user.id].erros++
+            // Erro no chute por letra
+            if (!acerto) client.cached.forca.get(id_jogo).erros++
 
-            verifica_palavra(client, interaction, user, entrada)
+            verifica_palavra(client, message, id_jogo, user, entrada)
 
-            if (games[interaction.user.id].finalizado) {
-                delete games[interaction.user.id]
+            if (client.cached.forca.get(id_jogo).finalizado) {
+                client.cached.forca.delete(id_jogo)
+
+                // Removendo os membros da sessão finalizada
+                client.cached.forca_sessao.forEach(user => {
+                    if (user.id_game === id_jogo) client.cached.forca_sessao.delete(user.uid)
+                })
+
                 return
             }
         }
     } else { // Chute pela palavra inteira
-        verifica_palavra(client, interaction, user, entrada)
+        verifica_palavra(client, message, id_jogo, user, entrada)
 
-        if (games[interaction.user.id].finalizado) {
-            delete games[interaction.user.id]
+        if (client.cached.forca.get(id_jogo).finalizado) {
+            client.cached.forca.delete(id_jogo)
+
+            // Removendo os membros da sessão finalizada
+            client.cached.forca_sessao.forEach(user => {
+                if (user.id_game === id_jogo) client.cached.forca_sessao.delete(user.uid)
+            })
+
             return
         }
     }
 }
 
-verifica_palavra = async (client, interaction, user, entrada) => {
+async function verifica_palavra(client, interaction, id_jogo, user, entrada) {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
-    if (entrada === games[interaction.user.id].word || client.replace(games[interaction.user.id].descobertas, null, ["`", "'"]).replaceAll(" ", "") === games[interaction.user.id].word) {
-        interaction.reply({
-            content: `${client.emoji("emojis_negativos")} ${client.tls.phrase(user, "game.forca.acertou")} \`${games[interaction.user.id].word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}`,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+    if (entrada === client.cached.forca.get(id_jogo).word || client.replace(client.cached.forca.get(id_jogo).descobertas, null, ["`", ""]).replaceAll(" ", "") === client.cached.forca.get(id_jogo).word) {
+        interaction.channel.send({ content: `${client.emoji("emojis_negativos")} ${client.tls.phrase(user, "game.forca.acertou")} \`${client.cached.forca.get(id_jogo).word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}` })
+
+        client.cached.forca.get(id_jogo).finalizado = true
+
+        client.cached.forca_sessao.forEach(async user_interno => {
+
+            if (user_interno.id_game === id_jogo) { // Distribuindo as recompensas aos membros da partida
+                const user_data = await client.getUser(user_interno.uid)
+
+                user_data.misc.money += 50
+                await user_data.save()
+
+                client.registryStatement(user_interno.uid, "misc.b_historico.jogos_forca", true, 50)
+                client.journal("gerado", 50)
+            }
         })
 
-        games[interaction.user.id].finalizado = true
+    } else if (entrada.length > 1 || client.cached.forca.get(id_jogo).erros >= 7) {
+        interaction.channel.send({ content: `${client.emoji("emojis_dancantes")} ${client.tls.phrase(user, "game.forca.errou")} \`${client.cached.forca.get(id_jogo).word}\`` })
 
-        user.misc.money += 50
-        await user.save()
-
-        client.registryStatement(user.uid, "misc.b_historico.jogos_forca", true, 150)
-        client.journal("gerado", 150)
-
-    } else if (entrada.length > 1 || games[interaction.user.id].erros >= 7) {
-        interaction.reply({
-            content: `${client.emoji("emojis_dancantes")} ${client.tls.phrase(user, "game.forca.errou")} \`${games[interaction.user.id].word}\``,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
-        })
-
-        games[interaction.user.id].finalizado = true
-    }
+        client.cached.forca.get(id_jogo).finalizado = true
+    } else
+        retorna_jogo(client, interaction, id_jogo, user)
 }
 
-lista_posicoes = (palavra) => {
+function lista_posicoes(palavra) {
 
     let array = []
 
@@ -128,29 +152,51 @@ lista_posicoes = (palavra) => {
     return array.join(" ")
 }
 
-painel_jogo = (interaction) => {
-    return `\`\`\`${padrao_forca[games[interaction.user.id].erros]}\`\`\``
+function painel_jogo(client, id_jogo) {
+    return `\`\`\`${padrao_forca[client.cached.forca.get(id_jogo).erros]}\`\`\``
 }
 
-retorna_jogo = async (client, interaction, user) => {
+async function retorna_jogo(client, interaction, id_jogo, user) {
 
-    const painel = painel_jogo(interaction)
+    const painel = painel_jogo(client, id_jogo)
     let entradas = ""
 
     // Entradas que o usuário tentou
-    if (games[interaction.user.id].entradas.length > 0)
-        entradas = `\n${client.tls.phrase(user, "game.forca.usado")}\`\`\`${games[interaction.user.id].entradas.join(", ")}\`\`\``
+    if (client.cached.forca.get(id_jogo).entradas.length > 0)
+        entradas = `\n${client.tls.phrase(user, "game.forca.usado")}\`\`\`${client.cached.forca.get(id_jogo).entradas.join(", ")}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "game.forca.titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${games[interaction.user.id].descobertas} ${painel} ${entradas}\n${client.tls.phrase(user, "game.forca.comando")}`)
+        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ${painel} ${entradas}`)
         .setFooter({
-            text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - games[interaction.user.id].erros)}`
+            text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}`
         })
 
-    interaction.reply({
-        embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
-    })
+    if (!client.cached.forca.get(id_jogo).embed) {
+
+        const row = [
+            { id: "forca_button", name: "Juntar-se", type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
+            { id: "forca_button", name: "Sair da sessão", type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
+        ]
+
+        const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
+        client.cached.forca.get(id_jogo).embed = message
+
+        interaction.reply({
+            content: "🎆 | Um jogo novo foi iniciado! Escreva seus chutes no chat para tentar acertar a palavra!",
+            ephemeral: true
+        })
+
+    } else {
+        client.cached.forca.get(id_jogo).embed.edit({ embeds: [embed] })
+
+        if (interaction?.user?.id)
+            interaction.reply({
+                content: "🎆 | Já existe um jogo em andamento!",
+                ephemeral: true
+            })
+    }
 }
+
+module.exports.verifica_chute = verifica_chute
