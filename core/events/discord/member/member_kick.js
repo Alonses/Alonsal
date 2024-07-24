@@ -5,7 +5,7 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
     if (guild.network.member_kick && guild.conf.network) // Network de servidores
         client.network(guild, "kick", user_alvo.id)
 
-    if (guild.conf.nuke_invites) // Buscando pelos convites do usuário removido
+    if (guild.conf.nuke_invites && !guild.nuke_invites.type) // Buscando pelos convites do usuário expulso
         client.checkUserInvites(guild, user_alvo.id)
 
     // Verificando se o recurso está ativo

@@ -46,9 +46,9 @@ const schema = new mongoose.Schema({
         role: { type: String, default: null },
         erase_ban_messages: { type: Number, default: 0 }
     },
-    speaker: {
-        regional_limit: { type: Boolean, default: false },
-        channels: { type: String, default: null }
+    nuke_invites: {
+        type: { type: Boolean, default: false },
+        channel: { type: String, default: null }
     },
     logger: {
         channel: { type: String, default: null },

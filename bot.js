@@ -12,6 +12,7 @@ const { getBot } = require('./core/database/schemas/Bot')
 const { checkUser } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
+const { verifica_chute } = require('./commands/games/forca')
 
 let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
@@ -44,6 +45,13 @@ client.discord.on("messageCreate", async message => {
 
 	const user = await checkUser(message.author.id)
 	const guild = await client.getGuild(message.guild.id)
+
+	// Jogo da forca com letras/palavras enviadas no chat
+	if (client.cached.forca_sessao.has(message.author.id)) {
+		const jogo = client.cached.forca_sessao.get(message.author.id).id_game
+
+		verifica_chute(client, message, message.content, jogo, user)
+	}
 
 	// Responding to the user who just ping the bot
 	if (message.content.includes(client.id()) && message.content.length === 21)

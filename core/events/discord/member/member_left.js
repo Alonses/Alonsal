@@ -10,6 +10,9 @@ module.exports = async (client, dados) => {
     // Removendo o servidor salvo em cache do usuário
     if (user.conf?.cached_guilds) dropUserGuild(user.uid, dados.guild.id)
 
+    if (guild.conf.nuke_invites && guild.nuke_invites.type) // Buscando pelos convites do usuário que saiu do servidor
+        client.checkUserInvites(guild, dados.user.id)
+
     // Verificando se a guild habilitou o logger
     if (!guild.conf.logger) return
 

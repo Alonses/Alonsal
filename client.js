@@ -38,6 +38,8 @@ class CeiraClient {
             fixed_badges: {},
             warns: new Map(),
             join_guilds: new Map(),
+            forca: new Map(),
+            forca_sessao: new Map(),
             rank: {
                 bank: []
             }

@@ -63,7 +63,7 @@ module.exports = async ({ client, interaction, command }) => {
         const embed = new EmbedBuilder()
             .setTitle("> ✨ New interaction")
             .setColor(0x29BB8E)
-            .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n${client.defaultEmoji("person")} ( \`${interaction.user.id}\` | \`${interaction.user.username}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
+            .setDescription(`:globe_with_meridians: ( \`${interaction.guild.id}\` | \`${interaction.guild.name}\` )\n\`\`\`fix\n📝 /${comando_inserido}\`\`\`\n:notepad_spiral: Command N° ( \`${client.locale(qtd_comandos)}\` )`)
             .setFooter({
                 text: `⏰ Time/date: ${hr}:${min}${ampm} | ${day} - ${date} ${month} ${year}`
             })

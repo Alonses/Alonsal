@@ -1,9 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
-
-module.exports = async ({ client, user, interaction, dados }) => {
-
-    const escolha = parseInt(dados.split(".")[1])
-    const guild = await client.getGuild(interaction.guild.id)
+module.exports = async ({ client, user, interaction }) => {
 
     // Tratamento dos cliques
     // 2 -> Anúncio de Games ( Movido para guild_free_games_button )
@@ -15,17 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 6 -> Módulo anti-spam ( Movido para guild_anti_spam_button )
     // 8 -> AutoBan ( Movido para guild_reports_button )
 
-    // 9 -> Convites Rastreados
-
-    if (escolha === 9) {
-
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuild]))
-            return interaction.update({ content: client.tls.phrase(user, "mode.invites.sem_permissao", 7), ephemeral: true })
-
-        // Ativa ou desativa os convites rastreados
-        guild.conf.nuke_invites = !guild.conf.nuke_invites
-        await guild.save()
-    }
+    // 9 -> Convites Rastreados ( Movido para guild_tracked_invites_button )
 
     const pagina_guia = 2
     require('../../chunks/panel_guild')({ client, user, interaction, pagina_guia })
