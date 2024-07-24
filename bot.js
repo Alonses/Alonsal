@@ -50,7 +50,7 @@ client.discord.on("messageCreate", async message => {
 	if (client.cached.forca_sessao.has(message.author.id)) {
 		const jogo = client.cached.forca_sessao.get(message.author.id).id_game
 
-		verifica_chute(client, message, message.content, jogo, user)
+		verifica_chute(client, message, (message.content).toLowerCase(), jogo, user)
 	}
 
 	// Responding to the user who just ping the bot
