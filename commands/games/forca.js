@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { randomString } = require('../../core/functions/random_string')
 
@@ -161,6 +161,8 @@ function painel_jogo(client, id_jogo) {
 
 async function retorna_jogo(client, interaction, id_jogo, user) {
 
+    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) return
+
     const painel = painel_jogo(client, id_jogo)
     let entradas = ""
 
@@ -171,7 +173,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "game.forca.titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ${painel} ${entradas}`)
+        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} letras\` )${painel} ${entradas}`)
         .setFooter({
             text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}`
         })
