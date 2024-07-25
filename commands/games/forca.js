@@ -13,6 +13,9 @@ module.exports = {
         .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!"),
     async execute({ client, user, interaction }) {
 
+        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
+            return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", ephemeral: true })
+
         if (!client.cached.forca_sessao.has(interaction.user.id)) {
             fetch('https://api.dicionario-aberto.net/random')
                 .then(res => res.json())
@@ -161,7 +164,18 @@ function painel_jogo(client, id_jogo) {
 
 async function retorna_jogo(client, interaction, id_jogo, user) {
 
-    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) return
+    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) {
+
+        // Exclui a sessão e encerra o jogo
+        client.cached.forca.delete(id_jogo)
+
+        // Removendo os membros da sessão finalizada
+        client.cached.forca_sessao.forEach(user => {
+            if (user.id_game === id_jogo) client.cached.forca_sessao.delete(user.uid)
+        })
+
+        return
+    }
 
     const painel = painel_jogo(client, id_jogo)
     let entradas = ""
