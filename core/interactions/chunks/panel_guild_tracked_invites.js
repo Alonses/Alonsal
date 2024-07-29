@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
-module.exports = async ({ client, user, interaction, pagina_guia }) => {
+module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
 
@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.painel.convites_rastreados")} :link: :busts_in_silhouette:`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription("```🧻 Funcionamento dos convites rastreados\n\nOs convites rastreados podem ser utilizados para excluir convites criados por membros que forem expulsos ou saírem do servidor de forma automática.\n\nVocê pode alterar o funcionamento dele para remover todos os convites criados por membros quando sairem, ou quando forem expulsos/banidos.```")
+        .setDescription(client.tls.phrase(user, "mode.invites.descricao_funcionamento"))
         .setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.nuke_invites)} **${client.tls.phrase(user, "mode.report.status")}**`,
@@ -23,8 +23,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             },
             {
-                name: `:wastebasket: **Remover convites**`,
-                value: `\`${!guild.nuke_invites.type ? "👟 Apenas de membros que forem banidos ou expulsos" : "🌟 De qualquer membro que sair do servidor"}\``,
+                name: `:wastebasket: **${client.tls.phrase(user, "mode.invites.remover_convites")}**`,
+                value: `\`${!guild.nuke_invites.type ? client.tls.phrase(user, "mode.invites.apenas_banidos") : client.tls.phrase(user, "mode.invites.todas_saidas")}\``,
                 inline: false
             },
             {
