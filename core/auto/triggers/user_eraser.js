@@ -35,13 +35,6 @@ async function atualiza_user_eraser(client) {
     for (let i = 0; i < dados.length; i++) {
 
         const usuario = dados[i]
-        const guild = await client.guilds(usuario.sid)
-        let nome_servidor
-
-        if (guild)
-            nome_servidor = `\`${usuario.sid}\` | \`${guild.name}\``
-        else
-            nome_servidor = `\`${usuario.sid}\` | \`${client.tls.phrase(usuario, "manu.data.server_desconhecido")}\``
 
         if (!usuario.erase.valid) { // Avisando sobre a atualização de status para exclusão dos dados do usuário
             usuario.erase.valid = true
