@@ -7,18 +7,17 @@ const { checkUserGuildPreWarned, removeUserPreWarn } = require('../../database/s
 
 async function atualiza_pre_warns() {
 
-    const dados = await getTimedPreGuilds()
-    const warns = []
+    const dados = await getTimedPreGuilds(), warns = []
 
     dados.forEach(async guild => {
         const guild_warns = await checkUserGuildPreWarned(guild.sid)
 
         // Listando todas as anotações de advertências do servidor
         guild_warns.forEach(warn => { warns.push(warn) })
-
-        // Salvando as anotações de advertências no cache do bot
-        writeFileSync("./files/data/user_timed_pre_warns.txt", JSON.stringify(warns))
     })
+
+    // Salvando as anotações de advertências no cache do bot
+    writeFileSync("./files/data/user_timed_pre_warns.txt", JSON.stringify(warns))
 }
 
 async function verifica_pre_warns(client) {
