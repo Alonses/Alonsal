@@ -1,4 +1,4 @@
-const { writeFileSync, readFile, existsSync } = require('fs')
+const { writeFileSync, readFile } = require('fs')
 
 const { getTimedGuilds } = require('../../database/schemas/Guild.js')
 const { checkUserGuildWarned, removeUserWarn } = require('../../database/schemas/User_warns.js')
@@ -21,9 +21,6 @@ async function atualiza_warns() {
 }
 
 async function verifica_warns(client) {
-
-    // if (!existsSync("./files/data/user_timed_warns.txt"))
-    //     writeFileSync("./files/data/user_timed_warns.txt", JSON.stringify(warns))
 
     readFile('./files/data/user_timed_warns.txt', 'utf8', async (err, data) => {
 

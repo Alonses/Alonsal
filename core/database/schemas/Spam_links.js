@@ -114,7 +114,7 @@ async function updateGuildSuspectLink(sid) {
 
     links.forEach(async link => {
         link.sid = process.env.guild_id
-        await reporte.save()
+        await link.save()
     })
 }
 
