@@ -30,8 +30,6 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                     await membro_guild.roles.add(role).catch(console.error)
             }
         })
-
-        return
     }
 
     // Verificando se o membro ainda não possui o cargo
