@@ -1,7 +1,9 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
+
+const Canvas = require('@napi-rs/canvas')
 
 module.exports = async (client, user, interaction) => {
 
@@ -77,10 +79,20 @@ module.exports = async (client, user, interaction) => {
                 fields = { name: descricao_tipo, value: `\`${valores_item}\``, inline: true }
             }
 
+            const canvas = Canvas.createCanvas(500, 150)
+            const context = canvas.getContext('2d')
+            const imagem = await Canvas.loadImage(dados_item.icon)
+
+            // Removendo a suavização da imagem ao redimensionar
+            context.imageSmoothingEnabled = false
+
+            context.drawImage(imagem, 175, 0, 150, 150)
+            const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: `${dados_item.internal_name}.png` })
+
             const embed = new EmbedBuilder()
                 .setTitle(dados_item.name)
                 .setColor(client.embed_color(user.misc.color))
-                .setImage(dados_item.icon)
+                .setImage(`attachment://${dados_item.internal_name}.png`)
                 .addFields(
                     {
                         name: `${client.emoji("mc_coracao")}** ${client.tls.phrase(user, "util.minecraft.coletavel")}**`,
@@ -153,9 +165,10 @@ module.exports = async (client, user, interaction) => {
             if (interaction)
                 return interaction.editReply({
                     embeds: [embed],
+                    files: [attachment],
                     ephemeral: client.decider(user?.conf.ghost_mode, 0)
                 })
             else
-                return client.sendDM(user, { embeds: [embed] }, true)
+                return client.sendDM(user, { embeds: [embed], files: [attachment], }, true)
         })
-}
+} 
