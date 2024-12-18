@@ -5,7 +5,7 @@ const { readdirSync } = require('fs')
 const { alea_hex } = require('./core/functions/hex_color')
 
 const { getBot } = require('./core/database/schemas/Bot')
-const { getUser } = require('./core/database/schemas/User')
+const { getUser, getEncryptedUser } = require('./core/database/schemas/User')
 
 const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
@@ -17,6 +17,7 @@ const { getGuild, getNetworkedGuilds } = require('./core/database/schemas/Guild'
 
 const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
+// const { data_encrypt, data_decipher } = require('./core/data/cripto')
 const { busca_badges } = require('./core/data/user_badges')
 
 const network = require('./core/events/network')
@@ -24,11 +25,12 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
+// const { atualiza_user_encrypt } = require('./core/auto/triggers/user_encrypt')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
 const { loggerMap } = require('./core/formatters/patterns/guild')
-const { spamTimeoutMap, defaultRoleTimes } = require('./core/formatters/patterns/timeout')
+const { spamTimeoutMap, defaultRoleTimes, defaultUserEraser } = require('./core/formatters/patterns/timeout')
 const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
 const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
 
@@ -95,6 +97,12 @@ function internal_functions(client) {
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
     client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
 
+    // client.decifer = (entrada) => {
+
+    //     if (!entrada) return null
+    //     return data_decipher(entrada)
+    // }
+
     client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
 
     client.deferedResponse = async ({ interaction, ephemeral }) => {
@@ -132,6 +140,12 @@ function internal_functions(client) {
             if (dados.length > 15) return client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
             else return translate.get_emoji(dados) // Emoji padrão por código interno
     }
+
+    // client.encrypt = (valor) => {
+    //     if (!valor) return null
+
+    //     return data_encrypt(valor)
+    // }
 
     client.formatEmoji = (id, emoji) => {
 
@@ -212,7 +226,51 @@ function internal_functions(client) {
         return roles.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
     }
 
-    client.getUser = (id_user) => { return getUser(id_user) }
+    client.getUser = async (id_user) => {
+
+        return await getUser(id_user)
+
+        const cript_user_id = client.encrypt(id_user)
+
+        // Verificando se o usuário não está salvo em cache
+        if (client.cached.users.has(cript_user_id))
+            return client.cached.users.get(cript_user_id)
+
+        let user = await getUser(id_user)
+
+        if (user || parseInt(user.uid)) {
+
+            // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
+            atualiza_user_encrypt(id_user, cript_user_id)
+
+            // Criptografando outros dados sensíveis do usuário
+            user.uid = cript_user_id
+            user.nick = client.encrypt(user.nick)
+            user.profile.avatar = client.encrypt(user.profile.avatar)
+
+            if (user.misc.locale.length > 0)
+                user.misc.locale = client.encrypt(user.misc.locale)
+
+            if (user.social.steam.length > 0)
+                user.social.steam = client.encrypt(user.social.steam)
+
+            if (user.social.lastfm.length > 0)
+                user.social.lastfm = client.encrypt(user.social.lastfm)
+
+            if (user.profile.about.length > 0)
+                user.profile.about = client.encrypt(user.profile.about)
+
+        } else
+            user = await getEncryptedUser(cript_user_id)
+
+        if ((user.profile.avatar)?.includes("cdn.discordapp"))
+            user.profile.avatar = client.encrypt(user.profile.avatar)
+
+        user.save() // Salvando o usuário no cache do bot temporariamente
+        client.cached.users.set(cript_user_id, user)
+
+        return user
+    }
 
     client.getUserBadges = (id_user) => { return getUserBadges(id_user) }
 
@@ -582,6 +640,20 @@ function internal_functions(client) {
         }
 
         return Math.floor(new Date().getTime() / 1000)
+    }
+
+    client.updateGuildIddleTimestamp = async (id_guild) => {
+
+        if (!client.cached.iddleGuilds.has(id_guild)) {
+
+            const guild = await client.getGuild(id_guild)
+
+            // Atualizando o tempo de inatividade do servidor
+            guild.iddle.timestamp = client.timestamp() + defaultUserEraser[guild.iddle.timeout]
+            guild.save()
+
+            client.cached.iddleGuilds.set(id_guild, true)
+        }
     }
 
     client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {

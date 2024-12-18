@@ -1,4 +1,4 @@
-const { defaultEraser } = require('../../../formatters/patterns/timeout')
+const { defaultEraser, defaultUserEraser } = require('../../../formatters/patterns/timeout')
 
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -11,19 +11,22 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 1) pagina_guia = 1
 
-    if (operacao === 2) {
+    if (operacao === 2 || operacao === 3) {
 
         // Submenu para escolher o escopo do tempo de exclusão dos dados do servidor
         const valores = []
         const guild = await client.getGuild(interaction.guild.id)
 
-        Object.keys(defaultEraser).forEach(key => { if (parseInt(key) !== guild.erase.timeout) valores.push(`${key}.${defaultEraser[key]}`) })
+        const lista_valores = operacao == 2 ? defaultEraser : defaultUserEraser
+        const selecao_atual = operacao == 2 ? guild.erase.timeout : guild.iddle.timeout
 
-        // Definindo o tempo mínimo que um usuário deverá ficar mutado no servidor
+        Object.keys(lista_valores).forEach(key => { if (parseInt(key) !== selecao_atual) valores.push(`${key}.${lista_valores[key]}`) })
+
+        // Definindo o tempo mínimo para a exclusão de dados do servidor após saída, ou expulsão automática do bot por inatividade
         const data = {
-            title: { tls: "menu.menus.escolher_expiracao" },
+            title: { tls: operacao == 2 ? "menu.menus.escolher_expiracao" : "menu.menus.escolher_inatividade" },
             pattern: "numbers",
-            alvo: "data_guild_timeout",
+            alvo: operacao == 2 ? "data_guild_timeout" : "data_guild_iddle",
             values: valores
         }
 

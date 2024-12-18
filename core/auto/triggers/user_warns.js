@@ -42,6 +42,9 @@ async function verifica_warns(client) {
             // Verificando se a advertência ultrapassou o tempo de exclusão
             if (client.timestamp() > (warn.timestamp + spamTimeoutMap[guild.warn.reset])) {
 
+                // Atualiza o tempo de inatividade do servidor
+                client.updateGuildIddleTimestamp(warn.sid)
+
                 // Excluindo o registro da advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserWarn(warn.uid, warn.sid, warn.timestamp)
                 client.verifyUserWarnRoles(warn.uid, warn.sid)

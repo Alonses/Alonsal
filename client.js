@@ -36,10 +36,12 @@ class CeiraClient {
             regex: /[A-Za-z0-9--]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi,
             game_stores: /epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/,
             fixed_badges: {},
+            users: new Map(),
             warns: new Map(),
             join_guilds: new Map(),
             forca: new Map(),
             forca_sessao: new Map(),
+            iddleGuilds: new Map(),
             rank: {
                 bank: []
             }

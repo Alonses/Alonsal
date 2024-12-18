@@ -42,6 +42,9 @@ async function verifica_pre_warns(client) {
             // Verificando se a anotação de advertência ultrapassou o tempo de exclusão
             if (client.timestamp() > (warn.timestamp + defaultEraser[guild.warn.hierarchy.reset])) {
 
+                // Atualiza o tempo de inatividade do servidor
+                client.updateGuildIddleTimestamp(warn.sid)
+
                 // Excluindo o registro da anotação de advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserPreWarn(warn.uid, warn.sid, warn.timestamp)
             }

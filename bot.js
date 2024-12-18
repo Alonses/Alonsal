@@ -108,6 +108,9 @@ client.discord.on("interactionCreate", async interaction => {
 
 	const user = await client.getUser(interaction.user.id)
 
+	// Atualiza o tempo de inatividade do servidor
+	client.updateGuildIddleTimestamp(interaction.guild.id)
+
 	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
 		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)

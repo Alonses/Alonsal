@@ -62,10 +62,12 @@ const defaultStrikes = {
 }
 
 const defaultUserEraser = {
-    1: 2419200,  // 1 mês
-    2: 7257600,  // 3 meses
-    3: 14515200, // 6 meses
-    4: 29030400  // 1 ano
+    1: 2419200,   // 1 mês
+    2: 7257600,   // 3 meses
+    3: 14515200,  // 6 meses
+    4: 29030400,  // 1 ano
+    5: 58060800,  // 2 anos
+    6: 87091200   // 3 anos
 }
 
 const defaultWarnStrikes = [3, 4, 5, 6, 7]

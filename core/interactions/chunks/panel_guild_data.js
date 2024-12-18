@@ -4,7 +4,7 @@ const { listRankGuild } = require('../../database/schemas/User_rank_guild')
 const { getNetworkedGuilds } = require('../../database/schemas/Guild')
 const { checkUserGuildReported } = require('../../database/schemas/User_reports')
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
-const { defaultEraser } = require('../../formatters/patterns/timeout')
+const { defaultEraser, defaultUserEraser } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
@@ -65,14 +65,16 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             iconURL: interaction.user.avatarURL({ dynamic: true })
         })
 
-    if (pagina === 0)
-        embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_dados", null, dados))
+    if (pagina === 0) embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_dados", null, dados))
     else {
 
         let tempo_exclusao = ""
 
         if (guild.erase.timeout)
             tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.guild_data.tempo_exclusao")}**:\n${client.tls.phrase(user, "manu.guild_data.excluir_apos", null, defaultEraser[guild.erase.timeout] / 86400)}`
+
+        if (guild.iddle.timeout) // Saída automática após X tempo de inatividade do bot no servidor
+            tempo_exclusao += `\n**${client.defaultEmoji("running")} Sair automaticamente do servidor após**:\n\`${client.tls.phrase(user, `menu.times.${defaultUserEraser[guild.iddle.timeout]}`)}\` de inatividade do bot no servidor\n`
 
         embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_expandido", null, tempo_exclusao))
     }
@@ -81,7 +83,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     // Verificando se o membro possui permissões para gerenciar o tempo de exclusão do servidor
     if (await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageGuild]))
-        botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_exclusao"), type: 3, emoji: client.defaultEmoji("time"), data: "2" })
+        botoes = botoes.concat([
+            { id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_exclusao"), type: 3, emoji: client.defaultEmoji("time"), data: "2" },
+            { id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_inatividade"), type: 3, emoji: client.defaultEmoji("running"), data: "3" }
+        ])
 
     if (pagina === 0)
         botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), type: 1, emoji: client.defaultEmoji("paper"), data: "1" })

@@ -1,5 +1,7 @@
 const { dailyReset } = require('../database/schemas/Bot')
+
 const { cobra_modulo } = require('./triggers/user_modules')
+const { servidores_inativos } = require('./triggers/guild_iddle')
 
 module.exports = async ({ client }) => {
 
@@ -11,6 +13,10 @@ module.exports = async ({ client }) => {
     setTimeout(() => {
         gera_relatorio(client)
         requisita_relatorio(client, 86400000) // Altera o valor para sempre executar à meia-noite
+        servidores_inativos(client) // Verifica os servidores inativos para remover o bot automaticamente
+
+        // Limpando os servidores com tempos de inatividade atualizados salvos em cache
+        client.cached.iddleGuilds.clear()
     }, tempo_restante) // Executa de 1 em 1 dia
 }
 

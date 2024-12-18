@@ -11,6 +11,10 @@ const schema = new mongoose.Schema({
         timeout: { type: Number, default: 5 },
         timestamp: { type: String, default: null }
     },
+    iddle: {
+        timeout: { type: Number, default: 3 },
+        timestamp: { type: String, default: null }
+    },
     games: {
         channel: { type: String, default: null },
         role: { type: String, default: null }
