@@ -108,6 +108,9 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
         if (nerf_map.has(`${message.author.id}.${message.guild.id}`)) return
         else nerf_map.set(`${message.author.id}.${message.guild.id}`, true)
 
+    // Atualiza o tempo de inatividade do servidor
+    client.updateGuildIddleTimestamp(message.guild.id)
+
     let user_guild = await client.getMemberGuild(message, message.author.id)
     let tempo_timeout = spamTimeoutMap[2]
 

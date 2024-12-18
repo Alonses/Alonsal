@@ -26,6 +26,9 @@ async function verifica_roles(client) {
             // Verificando se o cargo ultrapassou o tempo de exclusão
             if (client.timestamp() > role.timestamp) {
 
+                // Atualiza o tempo de inatividade do servidor
+                client.updateGuildIddleTimestamp(role.sid)
+
                 // Excluindo o vinculo do cargo com o membro
                 await dropUserTimedRole(role.uid, role.sid, role.rid)
 
