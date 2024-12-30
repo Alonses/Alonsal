@@ -136,9 +136,13 @@ function internal_functions(client) {
 
             return client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
 
-        } else
+        } else {
+
+            return "🔎"
+
             if (dados.length > 15) return client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
             else return translate.get_emoji(dados) // Emoji padrão por código interno
+        }
     }
 
     // client.encrypt = (valor) => {
