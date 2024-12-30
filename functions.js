@@ -134,6 +134,8 @@ function internal_functions(client) {
             else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
             else dados = aliases[dados]
 
+            return "🔎"
+
             return client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
 
         } else {
