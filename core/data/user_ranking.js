@@ -87,19 +87,22 @@ module.exports = async ({ client, message, caso }) => {
     // Recalculando o tempo de inatividade do usuário
     user.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.guild_timeout]
 
-    if (caso === "messages") {
+    // Verificando se o servidor da interação está com o ranking habilitado
+    if (client.cached.ranked_guilds.has(message.guild.id)) {
+        if (caso === "messages") {
 
-        user.xp += client.cached.ranking_value
-        user.ixp += client.cached.ranking_value
+            user.xp += client.cached.ranking_value
+            user.ixp += client.cached.ranking_value
 
-        user.lastInteraction = message.createdTimestamp
-        user.warns = 0
-    } else if (caso === "comando") { // Experiência obtida executando comandos
-        user.xp += client.cached.ranking_value * 1.5
-        user.ixp += client.cached.ranking_value * 1.5
-    } else { // Experiência obtida ao usar botões ou menus
-        user.xp += client.cached.ranking_value * 0.5
-        user.ixp += client.cached.ranking_value * 0.5
+            user.lastInteraction = message.createdTimestamp
+            user.warns = 0
+        } else if (caso === "comando") { // Experiência obtida executando comandos
+            user.xp += client.cached.ranking_value * 1.5
+            user.ixp += client.cached.ranking_value * 1.5
+        } else { // Experiência obtida ao usar botões ou menus
+            user.xp += client.cached.ranking_value * 0.5
+            user.ixp += client.cached.ranking_value * 0.5
+        }
     }
 
     // Bônus em Bufunfas por subir de nível

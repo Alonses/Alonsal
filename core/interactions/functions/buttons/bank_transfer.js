@@ -21,15 +21,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     await user.save()
     await alvo.save()
 
-    const user_i = await client.getCachedUser(alvo.uid)
+    setTimeout(async () => { // Registrando as movimentações de bufunfas para os usuários
 
-    // Registrando as movimentações de bufunfas para os usuários
-    await client.registryStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas)
-    await client.registryStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas)
-    await client.journal("movido", bufunfas)
+        const user_i = await client.getCachedUser(id_alvo)
+
+        await client.registryStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas)
+        await client.registryStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas)
+        await client.journal("movido", bufunfas)
+    }, 2000)
 
     interaction.update({
-        content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.locale(bufunfas), alvo.uid]),
+        content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.locale(bufunfas), id_alvo]),
         embeds: [],
         components: [],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)

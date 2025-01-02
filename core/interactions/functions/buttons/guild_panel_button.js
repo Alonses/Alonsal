@@ -1,4 +1,7 @@
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, dados, interaction }) => {
+
+    const operacao = parseInt(dados.split(".")[1])
+    let pagina_guia = 2
 
     // Tratamento dos cliques
     // 2 -> Anúncio de Games ( Movido para guild_free_games_button )
@@ -12,6 +15,24 @@ module.exports = async ({ client, user, interaction }) => {
 
     // 9 -> Convites Rastreados ( Movido para guild_tracked_invites_button )
 
-    const pagina_guia = 2
+    if (operacao === 13) {
+
+        const guild = await client.getGuild(interaction.guild.id)
+
+        // Invertendo o status do servidor rankeado
+        guild.conf.ranking = !guild.conf.ranking
+        await guild.save()
+
+        // Sincronizando os servidores rankeados salvos em cache
+        if (guild.conf.ranking)
+            client.cached.ranked_guilds.set(guild.sid, true)
+        else
+            client.cached.ranked_guilds.delete(guild.sid)
+
+        console.log("atualizado")
+
+        pagina_guia = 3
+    }
+
     require('../../chunks/panel_guild')({ client, user, interaction, pagina_guia })
 }

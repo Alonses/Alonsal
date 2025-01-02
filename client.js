@@ -42,6 +42,7 @@ class CeiraClient {
             forca: new Map(),
             forca_sessao: new Map(),
             iddleGuilds: new Map(),
+            ranked_guilds: new Map(),
             rank: {
                 bank: []
             }

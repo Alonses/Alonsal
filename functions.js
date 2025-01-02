@@ -13,7 +13,7 @@ const { create_buttons } = require('./core/generators/buttons')
 
 const { registryStatement } = require('./core/database/schemas/User_statements')
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
-const { getGuild, getNetworkedGuilds } = require('./core/database/schemas/Guild')
+const { getGuild, getNetworkedGuilds, listAllRankedGuilds } = require('./core/database/schemas/Guild')
 
 const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
@@ -660,6 +660,18 @@ function internal_functions(client) {
 
             client.cached.iddleGuilds.set(id_guild, true)
         }
+    }
+
+    client.updateRankedGuilds = async () => {
+
+        client.cached.ranked_guilds.clear()
+
+        // Salva em cache todos os servidores que possuem rankeamento ativo
+        const guilds = await listAllRankedGuilds()
+
+        guilds.forEach(guild => {
+            client.cached.ranked_guilds.set(guild.sid, true)
+        })
     }
 
     client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {

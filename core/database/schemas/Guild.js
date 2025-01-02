@@ -120,6 +120,7 @@ const schema = new mongoose.Schema({
         spam: { type: Boolean, default: false },
         network: { type: Boolean, default: false },
         warn: { type: Boolean, default: false },
+        ranking: { type: Boolean, default: false },
         nuke_invites: { type: Boolean, default: false }
     }
 })
@@ -274,6 +275,13 @@ async function listAllGuildHoster(user_id) {
     })
 }
 
+async function listAllRankedGuilds() {
+    // Lista todos os servidores que possuem o rankeamento de membros ativo
+    return model.find({
+        "conf.ranking": true
+    })
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -283,6 +291,7 @@ module.exports = {
     disableGuildFeatures,
     getReportChannels,
     listAllGuildHoster,
+    listAllRankedGuilds,
     getReportNetworkChannels,
     getGameChannelById,
     getNetworkedGuilds,
