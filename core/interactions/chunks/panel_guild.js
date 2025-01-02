@@ -2,8 +2,8 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { operation_codes } = require('../../formatters/patterns/guild')
 
-// Funções sem guias de configuração
-const direct_functions = []
+// Funções sem guias de configuração ( inserir código da função )
+const direct_functions = [13]
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
@@ -21,13 +21,14 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // 8 -> Network
 
     // 12 -> Cargos temporários
+    // 13 -> Ranking no servidor
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
         c_menu[0] = true
-    if (pagina == 2) // Botão para avançar
+    if (pagina == 3) // Botão para avançar
         c_menu[1] = true
 
     let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_guild`, disabled: c_menu[0] }]
@@ -53,6 +54,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         c_buttons[2] = true
         c_buttons[7] = true
         c_buttons[10] = true
+        c_buttons[13] = true
     }
 
     // Falta de permissões para banir membros
@@ -165,6 +167,25 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             }
         )
 
+    if (pagina == 3)
+        embed.addFields(
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking)} **Rankeamento**`,
+                value: `\`\`\`Membros do servidor podem ganhar XP ao interagir com o bot e enviar mensagens.\`\`\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\`\`\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\`\`\``,
+                inline: true
+            }
+        )
+
     // Primeira página de botões de configuração do Alonsal
     // Log de eventos, Advertências e Anti-spam
     if (pagina === 0)
@@ -190,6 +211,15 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "guild_timed_roles_button", name: client.tls.phrase(user, "manu.painel.cargos_temporarios"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[12] },
             { id: "guild_tickets_button", name: client.tls.phrase(user, "manu.painel.denuncias_server"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
             { id: "guild_tracked_invites_button", name: client.tls.phrase(user, "manu.painel.convites_rastreados"), type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[10] },
+        ])
+
+    // Quarta página de botões de configuração do Alonsal
+    // Rankeamento no servidor
+    if (pagina === 3)
+        botoes = botoes.concat([
+            { id: "guild_panel_button", name: "Rankeamento", type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '14', disabled: true },
+            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
         ])
 
     botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })

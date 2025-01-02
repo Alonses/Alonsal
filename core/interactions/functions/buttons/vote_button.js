@@ -1,6 +1,8 @@
 const { registryVote, verifyUser } = require("../../../database/schemas/Vote")
 const { createBadge } = require("../../../database/schemas/User_badges")
 const { busca_badges } = require("../../../data/user_badges")
+const { data_encrypt } = require("../../../data/cripto")
+
 const { badgeTypes } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -28,7 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     await dados_voto.save()
 
-    const all_badges = [], badges_user = await client.getUserBadges(interaction.user.id)
+    const all_badges = [], badges_user = await client.getUserBadges(data_encrypt(interaction.user.id))
     let badge_bonus = ""
 
     // Listando todas as badges que o usuário possui
