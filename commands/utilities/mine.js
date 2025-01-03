@@ -123,7 +123,7 @@ module.exports = {
 
         // Redirecionando o evento
         if (interaction.options.getSubcommand() === "item")
-            return require('../../core/formatters/chunks/model_mine')(client, user, interaction)
+            return require('../../core/formatters/chunks/model_mine')({ client, user, interaction })
 
         require(`./subcommands/mine_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }

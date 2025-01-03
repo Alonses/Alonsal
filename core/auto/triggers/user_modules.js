@@ -106,7 +106,7 @@ executa_modulo = async (client) => {
 
         // Um item do minecraft
         if (lista_modulos[0].type === 5)
-            await require('../../formatters/chunks/model_mine.js')(client, user)
+            await require('../../formatters/chunks/model_mine.js')({ client, user })
 
         // Jogos gratuitos do momento
         if (lista_modulos[0].type === 6)
