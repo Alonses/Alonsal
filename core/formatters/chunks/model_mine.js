@@ -5,9 +5,10 @@ const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
 const Canvas = require('@napi-rs/canvas')
 
-module.exports = async (client, user, interaction) => {
+module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    if (interaction) // Defere a interação para aumentar o tempo de resposta após
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
 
     let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
 
@@ -19,8 +20,7 @@ module.exports = async (client, user, interaction) => {
         .then(response => response.json())
         .then(async dados_item => {
 
-            // Erro de pesquisa com a API
-            if (dados_item.status === 502)
+            if (dados_item.status === 502) // Erro de pesquisa com a API
                 if (interaction) return client.tls.editReply(interaction, user, "util.minecraft.error_1", true, client.emoji(0))
                 else return client.sendDM(user, { content: client.tls.phrase(user, "util.minecraft.error_1", client.emoji(0)) }, true)
 
