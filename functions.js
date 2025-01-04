@@ -231,7 +231,7 @@ function internal_functions(client) {
         const cript_user_id = client.encrypt(id_user)
         let user = await getUser(id_user)
 
-        if (user || parseInt(user.uid)) {
+        if (user) {
 
             // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
             atualiza_user_encrypt(client, id_user, cript_user_id)
