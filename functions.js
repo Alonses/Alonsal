@@ -105,12 +105,22 @@ function internal_functions(client) {
 
     client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
 
+    client.deferedReply = async (interaction, data) => {
+
+        // Estende o tempo de resposta da interação
+        let response = {}
+        if (data) response.flags = data
+
+        await interaction.deferReply(response)
+    }
+
     client.deferedResponse = async ({ interaction, ephemeral }) => {
 
-        let ephemero = typeof ephemeral !== "undefined" ? ephemeral : "Ephemeral"
+        let response = {}
+        if (ephemeral) response.flags = ephemeral
 
-        if (!interaction.customId) await interaction.deferReply({ flags: ephemero })
-        else await interaction.deferUpdate({ flags: ephemero })
+        if (!interaction.customId) await interaction.deferReply(response)
+        else await interaction.deferUpdate(response)
     }
 
     client.embed_color = (entrada) => {
@@ -231,7 +241,7 @@ function internal_functions(client) {
         const cript_user_id = client.encrypt(id_user)
         let user = await getUser(id_user)
 
-        if (user) {
+        if (user || parseInt(user?.uid)) {
 
             // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
             atualiza_user_encrypt(client, id_user, cript_user_id)
@@ -253,12 +263,12 @@ function internal_functions(client) {
             if (user?.profile.about > 0)
                 user.profile.about = client.encrypt(user.profile.about)
 
-            if ((user.profile.avatar)?.includes("cdn.discordapp"))
-                user.profile.avatar = client.encrypt(user.profile.avatar)
+            // if ((user.profile.avatar)?.includes("cdn.discordapp"))
+            //     user.profile.avatar = client.encrypt(user.profile.avatar)
 
             user.save()
         } else
-            return await getEncryptedUser(cript_user_id)
+            user = await getEncryptedUser(cript_user_id)
 
         return user
     }
@@ -510,6 +520,9 @@ function internal_functions(client) {
 
     client.reply = (interaction, obj, defered) => {
 
+        // Interação não efemera
+        if (!obj.flags) delete obj.flags
+
         // Interação deferida
         if (defered) return interaction.editReply(obj)
 
@@ -717,7 +730,7 @@ function internal_functions(client) {
     client.verifyUserLanguage = async (user, id_guild) => {
 
         const guild = await client.getGuild(id_guild)
-        user.lang = guild.lang || "pt-br"
+        user.lang = guild.lang ?? "pt-br"
         await user.save()
     }
 
