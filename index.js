@@ -11,5 +11,5 @@ if (client_data.sharding) {
     manager.on('shardCreate', shard => console.log(`💠 | Shard ${shard_names[shard.id]} ativado`))
 
     manager.spawn()
-} else // Iniciando sem passar pelo sharding
+} else // Iniciando sem ativando o sharding
     require('./bot')
