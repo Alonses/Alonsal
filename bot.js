@@ -46,12 +46,12 @@ client.discord.on("messageCreate", async message => {
 	// Prevents the bot from interacting with other members when in develop mode or updating commands
 	if ((!process.env.owner_id.includes(message.author.id) && client.x.modo_develop) || client.x.force_update) return
 
-	const user = await checkUser(message.author.id)
+	const user = await checkUser(client.encrypt(message.author.id))
 	const guild = await client.getGuild(message.guild.id)
 
 	// Jogo da forca com letras/palavras enviadas no chat
-	if (client.cached.forca_sessao.has(message.author.id)) {
-		const jogo = client.cached.forca_sessao.get(message.author.id).id_game
+	if (client.cached.forca_sessao.has(client.encrypt(message.author.id))) {
+		const jogo = client.cached.forca_sessao.get(client.encrypt(message.author.id)).id_game
 
 		verifica_chute(client, message, (message.content).toLowerCase(), jogo, user)
 	}
@@ -80,7 +80,7 @@ client.discord.on("messageCreate", async message => {
 
 	if (user) { // It only runs if the member is saved in the database
 
-		let user_rank_guild = await getUserRankServer(user.uid, message.guild.id)
+		let user_rank_guild = await getUserRankServer(user.uid, client.encrypt(message.guild.id))
 
 		// Ignoring banned users and those moved to data deletion
 		if (user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
@@ -88,14 +88,14 @@ client.discord.on("messageCreate", async message => {
 		// Syncing user data
 		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
 
-			const user_guild = await client.getMemberGuild(message, user.uid)
+			const user_guild = await client.getMemberGuild(message, message.author.id)
 			user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
 
 			await user.save()
 		}
 
 		if (!user.nick) {
-			user.nick = message.author.username
+			user.nick = client.encrypt(message.author.username)
 			await user.save()
 		}
 

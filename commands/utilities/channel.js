@@ -115,7 +115,7 @@ module.exports = {
                     }
                 )
 
-        interaction.reply({
+        client.reply(interaction, {
             embeds: [infos_ch],
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })

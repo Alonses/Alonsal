@@ -16,17 +16,18 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
 
     // Listando os servidores que o usuário possui ranking
-    guilds_ranking.forEach(valor => {
-        let server = client.guilds().get(valor.sid)
+    if (guilds_ranking)
+        guilds_ranking.forEach(valor => {
+            let server = client.guilds().get(client.decifer(valor.sid))
 
-        if (!server) {
-            nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
-            nota_servidores = `\n\n${client.tls.phrase(user, "manu.data.nota_servidores", 1)}`
-        } else
-            nome_server = server.name
+            if (!server) {
+                nome_server = client.tls.phrase(user, "manu.data.server_desconhecido")
+                nota_servidores = `\n\n${client.tls.phrase(user, "manu.data.nota_servidores", 1)}`
+            } else
+                nome_server = server.name
 
-        ranking.push(nome_server)
-    })
+            ranking.push(nome_server)
+        })
 
     if (ranking.length < 1)
         return client.tls.reply(interaction, user, "manu.data.sem_dados", true, 1)
@@ -56,7 +57,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (guilds_hoster.length > 0)
         dados_conhecidos += `\n\n**${client.emoji("aln_hoster")} ${client.tls.phrase(user, "manu.data.hoster_convites", null, guilds_hoster.length)}**`
 
-    const id_badges = await client.getUserBadges(client.encrypt(user.uid))
+    const id_badges = await client.getUserBadges(user.uid)
 
     if (id_badges.length > 0)
         dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`

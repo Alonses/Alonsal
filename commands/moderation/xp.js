@@ -54,13 +54,13 @@ module.exports = {
 
         // Coletando os dados do usuário informado no servidor
         const alvo = interaction.options.getUser("user")
-        const user_c = await getUserRankServer(alvo.id, interaction.guild.id)
+        const user_c = await getUserRankServer(client.encrypt(alvo.id), client.encrypt(interaction.guild.id))
 
         // Validando se o usuário tem o ranking habilitado
-        if (!await client.verifyUserRanking(user_c.uid))
+        if (!await client.verifyUserRanking(alvo.id))
             return client.tls.reply(interaction, user, "mode.ranking.error", true, 5)
 
-        user_c.nickname = alvo.username
+        user_c.nickname = client.encrypt(alvo.username)
         let novo_exp = parseFloat(interaction.options.get('xp').value)
 
         user_c.xp = parseFloat(novo_exp)

@@ -108,7 +108,7 @@ module.exports = {
             client.journal("reback", profit * -1)
         }
 
-        interaction.reply({
+        client.reply(interaction, {
             content: mensagem,
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })

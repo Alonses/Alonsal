@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Exibindo os dados de alguma tarefa selecionada
     const timestamp = parseInt(dados.split(".")[1])
-    const modulo = await getModule(interaction.user.id, timestamp)
+    const modulo = await getModule(user.uid, timestamp)
 
     if (!modulo)
         return interaction.update({
@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
-    const montante = await getModulesPrice(interaction.user.id)
+    const montante = await getModulesPrice(user.uid)
     const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${modulo.stats.days}`)} ${formata_horas(modulo.stats.hour.split(":")[0], modulo.stats.hour.split(":")[1])}`
 
     const embed = new EmbedBuilder()

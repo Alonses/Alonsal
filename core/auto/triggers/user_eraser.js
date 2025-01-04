@@ -60,7 +60,7 @@ async function verifica_user_eraser(client) {
             const usuario = data[i]
             const id_user = usuario.uid
 
-            // Apenas realiza a ação após 2 semanas após usuário ser movido para exclusão
+            // Apenas realiza a ação 2 semanas após usuário ser movido para exclusão
             if (client.timestamp() > (usuario.erase.erase_on + 1209600)) {
 
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário

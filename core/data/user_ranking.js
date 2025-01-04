@@ -54,7 +54,7 @@ module.exports = async ({ client, message, caso }) => {
         atualiza_user_eraser(client)
 
     // Validando se o usuário tem o ranking habilitado
-    if (!await client.verifyUserRanking(guild_user.uid)) return
+    if (!await client.verifyUserRanking(id_alvo)) return
 
     //              Comandos                  Mensagens
     guild_user.nickname = message.user?.username || message.author?.username

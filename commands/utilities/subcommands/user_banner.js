@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction }) => {
                     .setImage(url_banner)
                     .setDescription(client.tls.phrase(user, "util.avatar.download_banner"))
 
-                interaction.reply({
+                client.reply(interaction, {
                     embeds: [embed],
                     components: [row],
                     flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null

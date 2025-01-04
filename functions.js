@@ -238,6 +238,8 @@ function internal_functions(client) {
 
     client.getUser = async (id_user) => {
 
+        if (!id_user) return
+
         const cript_user_id = client.encrypt(id_user)
         let user = await getUser(id_user)
 

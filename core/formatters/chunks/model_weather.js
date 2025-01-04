@@ -314,10 +314,10 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     }
 
                     if (interaction)
-                        return interaction.editReply({
+                        return client.reply(interaction, {
                             embeds: [embed_clima],
                             flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-                        })
+                        }, true)
                     else
                         return client.sendDM(user, { embeds: [embed_clima] }, true)
                 })

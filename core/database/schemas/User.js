@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
         pula_predios: { type: String, default: null }
     },
     profile: {
-        avatar: { type: String, default: null },
+        // avatar: { type: String, default: null },
         about: { type: String, default: null },
         join: { type: Boolean, default: true },
         creation: { type: Boolean, default: true },
@@ -76,6 +76,7 @@ async function getUser(uid) {
 }
 
 async function getEncryptedUser(uid) {
+
     if (!await model.exists({ uid: uid }))
         await model.create({
             uid: uid
