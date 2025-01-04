@@ -63,7 +63,7 @@ module.exports = {
                     { name: '🇧🇷 Português', value: 'pt-br' },
                     { name: '🇷🇺 Русский', value: 'ru-ru' }
                 )),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang
         const content = interaction.options.getString("search")
@@ -72,7 +72,7 @@ module.exports = {
             idioma_definido = interaction.options.getString("language")
 
         if (content.includes("slondo")) // Pesquisando por "slondo"
-            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo", client.decider(user?.conf.ghost_mode, 0), 5)
+            return client.tls.reply(interaction, user, "util.wiki.wiki_slondo", client.decider(user?.conf.ghost_mode || user_command, 0), 5)
 
         const url = `https://api.duckduckgo.com/?q=${encodeURI(content)}&format=json&pretty=0&skip_disambig=1&no_html=1`
 
@@ -128,16 +128,16 @@ module.exports = {
                     interaction.reply({
                         embeds: [Embed],
                         components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                     })
                 } else {
 
                     const username = interaction.user.username, termo_pesquisado_cc = content.slice(1)
 
                     if (username.includes(termo_pesquisado_cc))
-                        client.tls.reply(interaction, user, "util.wiki.auto_pesquisa", client.decider(user?.conf.ghost_mode, 0), client.emoji("emojis_negativos"))
+                        client.tls.reply(interaction, user, "util.wiki.auto_pesquisa", client.decider(user?.conf.ghost_mode || user_command, 0), client.emoji("emojis_negativos"))
                     else
-                        client.tls.reply(interaction, user, "util.wiki.sem_dados", client.decider(user?.conf.ghost_mode, 0), client.emoji("emojis_negativos"), content)
+                        client.tls.reply(interaction, user, "util.wiki.sem_dados", client.decider(user?.conf.ghost_mode || user_command, 0), client.emoji("emojis_negativos"), content)
                 }
             })
             .catch(() => client.tls.reply(interaction, user, "util.wiki.sem_dados", true, client.emoji("emojis_negativos"), content))

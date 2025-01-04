@@ -35,6 +35,18 @@ async function getUserStatements(uid) {
     })
 }
 
+async function encryptUserStatements(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function dropUserStatement(uid, timestamp) {
     await model.findOneAndDelete({
         uid: uid,
@@ -53,5 +65,6 @@ module.exports = {
     registryStatement,
     getUserStatements,
     dropUserStatement,
-    dropAllUserStatements
+    dropAllUserStatements,
+    encryptUserStatements
 }

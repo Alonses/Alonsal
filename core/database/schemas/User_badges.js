@@ -18,6 +18,18 @@ async function getUserBadges(uid) {
     })
 }
 
+async function encryptUserBadges(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function createBadge(uid, badge_id, timestamp) {
     await model.create({
         uid: uid,
@@ -99,5 +111,6 @@ module.exports = {
     removeBadge,
     getUserBadges,
     dropAllUserBadges,
-    verifyDynamicBadge
+    verifyDynamicBadge,
+    encryptUserBadges
 }

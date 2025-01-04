@@ -2,15 +2,15 @@ const { EmbedBuilder } = require('discord.js')
 
 const { getUserRankServers } = require('../../database/schemas/User_rank_guild')
 const { listAllUserGuilds } = require('../../database/schemas/User_guilds')
-const { buildAllBadges } = require('../../data/user_badges')
 const { listAllGuildHoster } = require('../../database/schemas/Guild')
+const { buildAllBadges } = require('../../data/user_badges')
 
 const { defaultUserEraser } = require('../../formatters/patterns/timeout')
 
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
-    const ranking = [], guilds_ranking = await getUserRankServers(interaction.user.id)
+    const ranking = [], guilds_ranking = await getUserRankServers(user.uid)
 
     let dados_conhecidos = "", nota_servidores = "", reback = pagina === 1 ? "panel_personal_data.0" : "panel_personal.0"
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback }]
@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (guilds_hoster.length > 0)
         dados_conhecidos += `\n\n**${client.emoji("aln_hoster")} ${client.tls.phrase(user, "manu.data.hoster_convites", null, guilds_hoster.length)}**`
 
-    const id_badges = await client.getUserBadges(user.uid)
+    const id_badges = await client.getUserBadges(client.encrypt(user.uid))
 
     if (id_badges.length > 0)
         dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`

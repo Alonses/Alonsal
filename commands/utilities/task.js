@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -153,7 +153,8 @@ module.exports = {
                             { name: '🔖 Task', value: 'task' },
                             { name: '📝 List', value: 'list' }
                         )
-                        .setRequired(true))),
+                        .setRequired(true)))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         let autor_original = true

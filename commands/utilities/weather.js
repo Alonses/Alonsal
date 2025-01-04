@@ -39,10 +39,10 @@ module.exports = {
                     "pt-BR": 'Insira um local',
                     "ru": 'введите местоположение'
                 })),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
-        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0) })
 
-        require('../../core/formatters/chunks/model_weather')(client, user, interaction)
+        require('../../core/formatters/chunks/model_weather')({ client, user, interaction, user_command })
     }
 }

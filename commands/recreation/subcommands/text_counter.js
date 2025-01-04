@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, texto_entrada }) => {
+module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
     // Contador de caracteres e palavras
     const palavras = texto_entrada.split(" ").length
@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, texto_entrada }) => {
 
     interaction.reply({
         embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
 }
 

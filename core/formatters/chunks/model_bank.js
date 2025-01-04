@@ -58,10 +58,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_int) || ""
             if (fixed_badge) fixed_badge = fixed_badge.emoji
 
-            if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${((user_int.nick)?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
-            else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((user_int.nick)?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
+            if (parseInt(pagina) !== 1) usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${((client.decifer(user_int.nick))?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
+            else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((client.decifer(user_int.nick))?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
 
-            ids.push(`\`${user_int.uid}\``)
+            ids.push(`\`${client.decifer(user_int.uid)}\``)
             bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)
 
             i++

@@ -6,11 +6,11 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("nikocado")
 		.setDescription("⌠😂⌡ It's your fault"),
-	async execute({ client, user, interaction }) {
+	async execute({ client, user, interaction, user_command }) {
 
 		interaction.reply({
 			content: gifs[client.random(gifs)],
-			ephemeral: client.decider(user?.conf.ghost_mode, 0)
+			ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
 		})
 	}
 }

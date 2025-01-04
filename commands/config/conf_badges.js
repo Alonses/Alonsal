@@ -36,7 +36,7 @@ module.exports = {
         let id_alvo = interaction.options.getUser("usuario").id
         let badge_alvo = parseInt(interaction.options.getString("badge"))
 
-        const all_badges = [], badges_user = await client.getUserBadges(id_alvo)
+        const all_badges = [], badges_user = await client.getUserBadges(client.encrypt(id_alvo))
 
         // Listando todas as badges que o usuário possui
         if (badges_user.length > 0)

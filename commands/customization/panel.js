@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -112,7 +112,8 @@ module.exports = {
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🔗 Tracked Invitations', value: 'tracked_invites' }
-                        ))),
+                        )))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         const operador = interaction.options.getString("function")

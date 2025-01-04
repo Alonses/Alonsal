@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,7 +30,8 @@ module.exports = {
                     "it": 'Menzionare un canale',
                     "pt-BR": 'Mencione um canal',
                     "ru": 'упомянуть канал'
-                })),
+                }))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         let canal = interaction.options.getChannel("channel") || interaction.channel

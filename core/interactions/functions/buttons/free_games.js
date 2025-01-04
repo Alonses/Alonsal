@@ -6,5 +6,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
     operador === 1 ? pagina_guia++ : pagina_guia = 0
 
     // Redirecionando o evento
-    require('../../../formatters/chunks/model_free_games')(client, user, interaction, pagina_guia)
+    require('../../../formatters/chunks/model_free_games')({ client, user, interaction, pagina_guia })
 }

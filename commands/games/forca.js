@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, InteractionContextType } = require('discord.js')
 
 const { randomString } = require('../../core/functions/random_string')
 
@@ -10,7 +10,8 @@ const { padrao_forca } = require('../../core/formatters/patterns/game')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("forca")
-        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!"),
+        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!")
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))

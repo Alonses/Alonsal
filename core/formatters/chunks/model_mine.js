@@ -5,10 +5,10 @@ const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
 
 const Canvas = require('@napi-rs/canvas')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     if (interaction) // Defere a interação para aumentar o tempo de resposta após
-        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+        await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0) })
 
     let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
 
@@ -166,7 +166,7 @@ module.exports = async ({ client, user, interaction }) => {
                 return interaction.editReply({
                     embeds: [embed],
                     files: [attachment],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                 })
             else
                 return client.sendDM(user, { embeds: [embed], files: [attachment], }, true)

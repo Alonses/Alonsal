@@ -8,7 +8,7 @@ const direcao_cardial = require("../../functions/cardinal_direction")
 const getCountryISO3 = require("country-iso-2-to-3")
 const formata_horas = require('../formata_horas')
 
-module.exports = async (client, user, interaction) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang || "pt-br", pesquisa, pesquisa_bruta, url_completa
     let lang_min = idioma_definido.slice(0, 2) === "ru" ? "en" : idioma_definido.slice(0, 2)
@@ -22,12 +22,12 @@ module.exports = async (client, user, interaction) => {
             return client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
 
         // Usa o local padrão caso não tenha entrada definida
-        pesquisa = interaction.options.getString("place") || user.misc.locale
+        pesquisa = interaction.options.getString("place") || client.decifer(user.misc.locale)
         pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
 
         url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=${lang_min}`
     } else
-        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${user.misc.locale}&units=metric&lang=${lang_min}`
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${client.decifer(user.misc.locale)}&units=metric&lang=${lang_min}`
 
     fetch(url_completa)
         .then(response => response.json())
@@ -316,7 +316,7 @@ module.exports = async (client, user, interaction) => {
                     if (interaction)
                         return interaction.editReply({
                             embeds: [embed_clima],
-                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                         })
                     else
                         return client.sendDM(user, { embeds: [embed_clima] }, true)

@@ -969,6 +969,15 @@
         {
             "type": 0,
             "text": "verificações"
+        },
+        {
+            "type": 2,
+            "text": "comandos em DM"
+        },
+        {
+            "type": 2,
+            "text": "🎶 Walkin' On The Sun - Smash Mouth",
+            "link": "https://open.spotify.com/track/4TQeNHx85xcP9YRkvJC6K1?si=5e6a5370c3444d2c"
         }
     ]
 }

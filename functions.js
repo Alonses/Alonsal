@@ -17,7 +17,7 @@ const { getGuild, getNetworkedGuilds, listAllRankedGuilds } = require('./core/da
 
 const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
-// const { data_encrypt, data_decipher } = require('./core/data/cripto')
+const { data_encrypt, data_decipher } = require('./core/data/crypto')
 const { busca_badges } = require('./core/data/user_badges')
 
 const network = require('./core/events/network')
@@ -25,7 +25,7 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
-// const { atualiza_user_encrypt } = require('./core/auto/triggers/user_encrypt')
+const { atualiza_user_encrypt } = require('./core/auto/triggers/user_encrypt')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
@@ -97,11 +97,11 @@ function internal_functions(client) {
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
     client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
 
-    // client.decifer = (entrada) => {
+    client.decifer = (entrada) => {
 
-    //     if (!entrada) return null
-    //     return data_decipher(entrada)
-    // }
+        if (!entrada) return null
+        return data_decipher(entrada)
+    }
 
     client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
 
@@ -134,28 +134,22 @@ function internal_functions(client) {
             else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
             else dados = aliases[dados]
 
-            return "🔎"
-
             return client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
-
         } else {
-
-            return "🔎"
-
             if (dados.length > 15) return client.formatEmoji(dados, client.discord.emojis.cache.get(dados)) // Emoji por ID
             else return translate.get_emoji(dados) // Emoji padrão por código interno
         }
     }
 
-    // client.encrypt = (valor) => {
-    //     if (!valor) return null
+    client.encrypt = (valor) => {
+        if (!valor) return null
 
-    //     return data_encrypt(valor)
-    // }
+        return data_encrypt(valor)
+    }
 
     client.formatEmoji = (id, emoji) => {
 
-        if (!id) return
+        if (!id || !emoji) return "🔎"
 
         const formatado = `<:${emoji.name}:${id}>`
 
@@ -234,46 +228,37 @@ function internal_functions(client) {
 
     client.getUser = async (id_user) => {
 
-        return await getUser(id_user)
-
         const cript_user_id = client.encrypt(id_user)
-
-        // Verificando se o usuário não está salvo em cache
-        if (client.cached.users.has(cript_user_id))
-            return client.cached.users.get(cript_user_id)
-
         let user = await getUser(id_user)
 
         if (user || parseInt(user.uid)) {
 
             // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
-            atualiza_user_encrypt(id_user, cript_user_id)
+            atualiza_user_encrypt(client, id_user, cript_user_id)
 
             // Criptografando outros dados sensíveis do usuário
             user.uid = cript_user_id
             user.nick = client.encrypt(user.nick)
             user.profile.avatar = client.encrypt(user.profile.avatar)
 
-            if (user.misc.locale.length > 0)
+            if (user?.misc.locale > 0)
                 user.misc.locale = client.encrypt(user.misc.locale)
 
-            if (user.social.steam.length > 0)
+            if (user?.social.steam > 0)
                 user.social.steam = client.encrypt(user.social.steam)
 
-            if (user.social.lastfm.length > 0)
+            if (user?.social.lastfm > 0)
                 user.social.lastfm = client.encrypt(user.social.lastfm)
 
-            if (user.profile.about.length > 0)
+            if (user?.profile.about > 0)
                 user.profile.about = client.encrypt(user.profile.about)
 
+            if ((user.profile.avatar)?.includes("cdn.discordapp"))
+                user.profile.avatar = client.encrypt(user.profile.avatar)
+
+            user.save()
         } else
-            user = await getEncryptedUser(cript_user_id)
-
-        if ((user.profile.avatar)?.includes("cdn.discordapp"))
-            user.profile.avatar = client.encrypt(user.profile.avatar)
-
-        user.save() // Salvando o usuário no cache do bot temporariamente
-        client.cached.users.set(cript_user_id, user)
+            return await getEncryptedUser(cript_user_id)
 
         return user
     }

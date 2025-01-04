@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, texto_entrada }) => {
+module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
     let cor_embed = client.embed_color(user.misc.color)
 
@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, texto_entrada }) => {
 
     interaction.reply({
         embeds: [anagrama],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
 }
 

@@ -8,14 +8,14 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Verificando se o usuário desabilitou as tasks globais
     if (client.decider(user?.conf.global_tasks, 1))
-        listas = await listAllUserGroups(interaction.user.id)
+        listas = await listAllUserGroups(user.uid)
     else
-        listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+        listas = await listAllUserGroups(user.uid, client.encrypt(interaction.guild.id))
 
     if (listas.length < 1)
         return client.tls.reply(interaction, user, "util.tarefas.sem_lista", true, client.emoji(0))
 
-    const task = await createTask(interaction.user.id, interaction.guild.id, interaction.options.getString("description"), timestamp)
+    const task = await createTask(user.uid, client.encrypt(interaction.guild.id), client.encrypt(interaction.options.getString("description")), timestamp)
 
     // Adicionando a tarefa a uma lista automaticamente caso só exista uma lista
     if (listas.length == 1) {
@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction }) => {
 
         // Verificando se a lista não possui algum servidor mencionado
         if (!listas[0].sid) {
-            listas[0].sid = interaction.guid.id
+            listas[0].sid = client.encrypt(interaction.guild.id)
             await listas[0].save()
         }
 

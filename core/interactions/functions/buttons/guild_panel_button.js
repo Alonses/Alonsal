@@ -29,8 +29,6 @@ module.exports = async ({ client, user, dados, interaction }) => {
         else
             client.cached.ranked_guilds.delete(guild.sid)
 
-        console.log("atualizado")
-
         pagina_guia = 3
     }
 

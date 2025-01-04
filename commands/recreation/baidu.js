@@ -12,13 +12,13 @@ module.exports = {
             "pt-BR": '⌠😂⌡ Louvado seja!',
             "ru": '⌠😂⌡ Слава!'
         }),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         const baidu = new AttachmentBuilder("./files/img/baidu.png")
         interaction.reply({
             content: client.tls.phrase(user, "dive.baidu"),
             files: [baidu],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
     }
 }

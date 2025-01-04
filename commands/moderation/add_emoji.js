@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -155,11 +155,12 @@ module.exports = {
                             "ru": 'Прикрепить изображение'
                         })
                         .setRequired(true)))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageEmojisAndStickers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuildExpressions)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Verificando se o bot pode gerenciar emojis e stickers
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageEmojisAndStickers]))
+        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuildExpressions]))
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         // Coletando todas as entradas

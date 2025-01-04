@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -45,7 +45,8 @@ module.exports = {
                     "pt-BR": '⌠💂⌡ Ver usuários advertidos no servidor',
                     "ru": '⌠💂⌡ Просмотр предупрежденных пользователей на сервере'
                 }))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando

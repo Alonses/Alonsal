@@ -66,6 +66,16 @@ async function checkUser(uid) {
 }
 
 async function getUser(uid) {
+
+    if (!await model.exists({ uid: uid }))
+        return false
+
+    return model.findOne({
+        uid: uid
+    })
+}
+
+async function getEncryptedUser(uid) {
     if (!await model.exists({ uid: uid }))
         await model.create({
             uid: uid
@@ -129,5 +139,6 @@ module.exports = {
     getRankMoney,
     getUnknowUsers,
     getOutdatedUsers,
-    getUserWithFixedBadges
+    getUserWithFixedBadges,
+    getEncryptedUser
 }

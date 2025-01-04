@@ -27,7 +27,7 @@ module.exports = {
                     "ru": ':название смайлика:'
                 })
                 .setRequired(true)),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         const dados = interaction.options.getString("emoji")
 
@@ -43,7 +43,7 @@ module.exports = {
 
                         interaction.reply({
                             content: url_emoji,
-                            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                         })
                     })
             } else

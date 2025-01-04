@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ContextMenuCommandBuilder, ApplicationCommandType, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, ContextMenuCommandBuilder, ApplicationCommandType, PermissionFlagsBits, PermissionsBitField, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -43,14 +43,16 @@ module.exports = {
                     "pt-BR": '⌠💂⌡ Desbloqueie o canal atual',
                     "ru": '⌠💂⌡ разблокировать текущий канал'
                 }))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+        .setContexts(InteractionContextType.Guild),
     menu_data: new ContextMenuCommandBuilder()
         .setName("Purge user")
         .setNameLocalizations({
             "pt-BR": 'Purgar usuario'
         })
         .setType(ApplicationCommandType.Message)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Permissões para gerenciar canais e cargos necessária para a função de bloqueio do chat do servidor

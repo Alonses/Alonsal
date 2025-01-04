@@ -25,6 +25,18 @@ async function getTicket(sid, uid) {
     })
 }
 
+async function encryptUserTicket(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 // Apaga o ticket de denúncia do servidor
 async function dropTicket(sid, uid) {
     await model.findOneAndDelete({
@@ -52,5 +64,6 @@ module.exports = {
     getTicket,
     dropTicket,
     dropAllGuildTickets,
-    dropAllUserTickets
+    dropAllUserTickets,
+    encryptUserTicket
 }

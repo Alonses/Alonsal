@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -105,7 +105,8 @@ module.exports = {
                             "pt-BR": 'O valor de entrada',
                             "ru": 'значение входа'
                         })
-                        .setRequired(true))),
+                        .setRequired(true)))
+        .setContexts(InteractionContextType.Guild),
     // .addSubcommand(subcommand =>
     //     subcommand
     //         .setName("panel")

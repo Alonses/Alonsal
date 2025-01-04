@@ -2,10 +2,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     await interaction.deferReply({ ephemeral: true })
 
-    user.social.steam = interaction.options.getString("value")
-
     // Verificando se o local existe antes de salvar
-    await fetch(`https://steamcommunity.com/id/${user.social.steam}`)
+    await fetch(`https://steamcommunity.com/id/${interaction.options.getString("value")}`)
         .then(response => response.text())
         .then(async res => {
 
@@ -15,6 +13,7 @@ module.exports = async ({ client, user, interaction }) => {
                     ephemeral: true
                 })
 
+            user.social.steam = client.encrypt(interaction.options.getString("value"))
             await user.save()
 
             interaction.editReply({

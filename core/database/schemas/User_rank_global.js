@@ -31,8 +31,20 @@ async function getUserGlobalRank(uid, xp, nickname, sid) {
     })
 }
 
+async function encryptUserRankGlobal(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function findUserGlobalRankIndex(uid) {
-    return model.find({
+    return model.findOne({
         uid: uid
     })
 }
@@ -48,5 +60,6 @@ module.exports = {
     getRankGlobal,
     getUserGlobalRank,
     dropUserGlobalRank,
-    findUserGlobalRankIndex
+    findUserGlobalRankIndex,
+    encryptUserRankGlobal
 }

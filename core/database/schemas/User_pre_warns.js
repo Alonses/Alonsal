@@ -33,6 +33,18 @@ async function getUserPreWarn(uid, sid, timestamp) {
     })
 }
 
+async function encryptUserPreWarn(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function checkUserGuildPreWarned(sid) {
 
     // Listando apenas os usuários que possuem anotações de advertência registradas no servidor
@@ -105,5 +117,6 @@ module.exports = {
     removeUserPreWarn,
     listAllCachedUserPreWarns,
     dropAllUserGuildPreWarns,
-    dropAllGuildPreWarns
+    dropAllGuildPreWarns,
+    encryptUserPreWarn
 }

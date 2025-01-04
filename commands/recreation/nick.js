@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +19,8 @@ module.exports = {
             "it": '⌠😂⌡ Mescola il tuo soprannome!',
             "pt-BR": '⌠😂⌡ Embaralha seu apelido!',
             "ru": '⌠😂⌡ Перемешайте свой никнейм!'
-        }),
+        })
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         if (interaction.guild.ownerId === interaction.user.id)

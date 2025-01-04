@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -105,7 +105,8 @@ module.exports = {
                             { name: '🇷🇺 Русский', value: 'ru-ru' }
                         )
                         .setRequired(true)))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)

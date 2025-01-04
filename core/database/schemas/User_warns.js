@@ -34,6 +34,18 @@ async function getUserWarn(uid, sid, timestamp) {
     })
 }
 
+async function encryptUserWarns(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function checkUserGuildWarned(sid) {
 
     // Listando apenas os usuários que possuem advertências registradas no servidor
@@ -108,5 +120,6 @@ module.exports = {
     removeUserWarn,
     listAllCachedUserWarns,
     dropAllUserGuildWarns,
-    dropAllGuildWarns
+    dropAllGuildWarns,
+    encryptUserWarns
 }

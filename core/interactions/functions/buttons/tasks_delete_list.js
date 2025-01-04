@@ -26,13 +26,18 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // Apagando a lista especificada e as tarefas vinculadas a ela
     const lista_timestamp = parseInt(dados.split(".")[2])
 
-    await dropTaskByGroup(interaction.user.id, lista_timestamp)
-    await dropGroup(interaction.user.id, lista_timestamp)
+    await dropTaskByGroup(user.uid, lista_timestamp)
+    await dropGroup(user.uid, lista_timestamp)
+
+    // Botão para retornar até as listas do usuário
+    let row = client.create_buttons([
+        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_remover" }
+    ], interaction)
 
     interaction.update({
         content: client.tls.phrase(user, "util.tarefas.exclusao_lista", 13),
         embeds: [],
-        components: [],
+        components: [row],
         ephemeral: client.decider(user?.conf.ghost_mode, 0)
     })
 }

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, AttachmentBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField, AttachmentBuilder, InteractionContextType } = require('discord.js')
 
 const Canvas = require('@napi-rs/canvas')
 
@@ -36,7 +36,8 @@ module.exports = {
                     "pt-BR": 'Mencione outro usuário',
                     "ru": 'Упомянуть другого пользователя'
                 })
-                .setRequired(true)),
+                .setRequired(true))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         const alvo = interaction.options.getUser("user")

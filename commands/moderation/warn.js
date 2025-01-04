@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -103,7 +103,8 @@ module.exports = {
                             "pt-BR": 'Um motivo para remover a advertência',
                             "ru": 'Причина удаления предупреждения'
                         })))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)

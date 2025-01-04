@@ -36,12 +36,12 @@ module.exports = {
 					{ name: '👾 Gif', value: 'gif' }
 				)
 				.setRequired(true)),
-	async execute({ client, user, interaction }) {
+	async execute({ client, user, interaction, user_command }) {
 
 		if (!interaction.channel.nsfw)
 			return client.tls.reply(interaction, user, "dive.jaja", true, 33)
 
 		// Redirecionando o evento
-		require(`./subcommands/jailson_${interaction.options.getString("operation")}`)({ client, user, interaction })
+		require(`./subcommands/jailson_${interaction.options.getString("operation")}`)({ client, user, interaction, user_command })
 	}
 }

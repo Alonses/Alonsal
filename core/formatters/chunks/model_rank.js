@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
     }
 
     // Coleta o ID do usuário mencionado
-    data_usuarios = await (escopo === "server" ? getRankServer(interaction.guild.id) : getRankGlobal())
+    data_usuarios = await (escopo === "server" ? getRankServer(client.encrypt(interaction.guild.id)) : getRankGlobal())
     let rodape = interaction.user.username, user_alvo_data
 
     if (interaction.options?.getUser("user")) // Usuário alvo definido
@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
             if (client.cached.fixed_badges[user_interno.uid]) // Procurando a Badge fixada do usuário
                 fixed_badge = busca_badges(client, badgeTypes.SINGLE, client.cached.fixed_badges[user_interno.uid]).emoji
 
-            const nome_usuario = user_interno.nickname ? user_interno.nickname : client.tls.phrase(user, "util.steam.undefined")
+            const nome_usuario = user_interno.nickname ? client.decifer(user_interno.nickname) : client.tls.phrase(user, "util.steam.undefined")
 
             if (parseInt(pagina) !== 1)
                 usernames.push(`${client.defaultEmoji("person")} #${remover + i + 1} \`${(nome_usuario).replace(/ /g, "")}\` ${fixed_badge}`)

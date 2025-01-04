@@ -5,7 +5,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
 
     // Navegando por listas de tarefas
     // Verificando se o usuário desabilitou as tasks globais
-    let listas = await (user?.conf.global_tasks ? listAllUserGroups(interaction.user.id) : listAllUserGroups(interaction.user.id, interaction.guild.id))
+    let listas = await (user?.conf.global_tasks ? listAllUserGroups(user.uid) : listAllUserGroups(user.uid, interaction.guild.id))
 
     if (listas.length < 1) // Listando listas
         return client.tls.reply(interaction, user, "util.tarefas.sem_lista_n", true, client.emoji(0))
@@ -21,11 +21,15 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     if (listas.length === 1) {
 
         // Listando todas as tarefas vinculadas a lista criada
-        const tarefas = await listAllUserGroupTasks(interaction.user.id, listas[0].timestamp)
+        const tarefas = await listAllUserGroupTasks(user.uid, listas[0].timestamp)
 
         if (tarefas.length < 1)
             if (autor_original) return client.tls.report(interaction, user, "util.tarefas.sem_tarefa_l", client.decider(user?.conf.ghost_mode, 0), 1, interaction.customId)
             else return client.tls.reply(interaction, user, "util.tarefas.sem_tarefa_l", true, 1)
+
+        tarefas.forEach(tarefa => { // Descriptografando o ID momentaneamente
+            tarefa.uid = client.decifer(tarefa.uid)
+        })
 
         data.title = { tls: "menu.menus.escolher_tarefa", emoji: [6, 1] }
         data.pattern = "tasks"

@@ -4,7 +4,7 @@ const { getGames, verifyInvalidGames } = require("../../database/schemas/Game")
 
 const { redes } = require('../../../files/json/text/anuncio.json')
 
-module.exports = async (client, user, interaction, pagina_guia) => {
+module.exports = async ({ client, user, interaction, pagina_guia, user_command }) => {
 
     // Verificando pelos games que já expiraram
     await verifyInvalidGames()
@@ -74,7 +74,7 @@ module.exports = async (client, user, interaction, pagina_guia) => {
         client.reply(interaction, {
             embeds: [embed],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
     else {
         if (original_size > limitador) // Botões extrapolam a quantidade do limitador

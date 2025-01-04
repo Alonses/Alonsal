@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 const { getUserRankServer } = require('../../core/database/schemas/User_rank_guild')
 
@@ -45,7 +45,8 @@ module.exports = {
                     "ru": 'Что такое новый XP?'
                 })
                 .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageGuild) && interaction.user.id !== client.x.owners[0])

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -111,7 +111,8 @@ module.exports = {
                     "pt-BR": '⌠💂⌡ Anunciar promoções ativas no momento',
                     "ru": '⌠💂⌡ Объявить об активных акциях'
                 }))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando

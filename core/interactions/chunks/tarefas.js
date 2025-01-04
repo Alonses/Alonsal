@@ -13,18 +13,22 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         }
 
         // Verificando se o usuário desabilitou as tasks globais
-        const tarefas = await (user?.conf.global_tasks ? listAllUserTasks(interaction.user.id) : listAllUserTasks(interaction.user.id, interaction.guild.id))
+        const tarefas = await (user?.conf.global_tasks ? listAllUserTasks(user.uid) : listAllUserTasks(user.uid, client.encrypt(interaction.guild.id)))
 
         // Validando se há tasks registradas para o usuário
         if (tarefas.length < 1)
             return client.tls.report(interaction, user, "util.tarefas.sem_tarefa", true, client.emoji(0), interaction.customId)
 
-        for (let i = 0; i < tarefas.length; i++) {
-            if (tarefas[i].concluded)
+        tarefas.forEach(tarefa => {
+
+            if (tarefa.concluded)
                 casos.finalizado++
             else
                 casos.aberto++
-        }
+
+            // Descriptografando o ID momentaneamente
+            tarefa.uid = client.decifer(tarefa.uid)
+        })
 
         if (operador === "a|tarefas") {
             // Tarefas abertas
@@ -73,7 +77,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         const lista_timestamp = parseInt(operador.split("|")[1])
 
         // Retornando o usuário para a lista escolhida anteriormente
-        const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
+        const tarefas = await listAllUserGroupTasks(user.uid, lista_timestamp)
 
         if (tarefas.length < 1) {
 
@@ -88,6 +92,10 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 ephemeral: client.decider(user?.conf.ghost_mode, 0)
             })
         }
+
+        tarefas.forEach(tarefa => { // Descriptografando o ID momentaneamente
+            tarefa.uid = client.decifer(tarefa.uid)
+        })
 
         const data = {
             title: { tls: "menu.menus.escolher_tarefa" },
@@ -109,7 +117,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
         const lista_timestamp = parseInt(operador.split("|")[1])
 
         // Retornando o usuário para a lista escolhida anteriormente
-        const tarefas = await listAllUserGroupTasks(interaction.user.id, lista_timestamp)
+        const tarefas = await listAllUserGroupTasks(user.uid, lista_timestamp)
 
         if (tarefas.length < 1) {
 
@@ -124,6 +132,10 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 ephemeral: client.decider(user?.conf.ghost_mode, 0)
             })
         }
+
+        tarefas.forEach(tarefa => { // Descriptografando o ID momentaneamente
+            tarefa.uid = client.decifer(tarefa.uid)
+        })
 
         const data = {
             title: { tls: "menu.menus.escolher_tarefa" },

@@ -2,16 +2,15 @@ module.exports = async ({ client, user, interaction }) => {
 
     await interaction.deferReply({ ephemeral: true })
 
-    user.social.lastfm = interaction.options.getString("value")
-
     // Verificando se o local existe antes de salvar
-    await fetch(`https://www.last.fm/pt/user/${user.social.lastfm}`)
+    await fetch(`https://www.last.fm/pt/user/${interaction.options.getString("value")}`)
         .then(response => response.text())
         .then(async res => {
 
             if (res.includes("Página não encontrada"))
                 return client.tls.editReply(interaction, user, "util.lastfm.error_1", true, 1)
 
+            user.social.lastfm = client.encrypt(interaction.options.getString("value"))
             await user.save()
 
             interaction.editReply({

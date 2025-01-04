@@ -40,7 +40,7 @@ module.exports = {
                 .setRequired(true)),
     async execute({ client, user, interaction }) {
 
-        const badges = await client.getUserBadges(interaction.user.id)
+        const badges = await client.getUserBadges(user.uid)
 
         // Validando se o usuário possui badges
         if (badges.length < 1)

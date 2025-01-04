@@ -12,12 +12,12 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "ru": '⌠💡⌡ Проверьте свой пинг'
         }),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         const m = await interaction.reply({
             content: "Ping?",
             fetchReply: true,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
 
         const delay = m.createdTimestamp - interaction.createdTimestamp
@@ -40,7 +40,7 @@ module.exports = {
 
         await interaction.editReply({
             content: mensagem,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
     }
 }
