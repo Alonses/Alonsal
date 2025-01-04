@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     if (operacao === 1) {
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (modulo.type === 0 && !user.misc.locale)
             return interaction.update({
                 content: client.tls.phrase(user, "util.tempo.modulo_sem_locale", client.emoji(0)),
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
 
         modulo.stats.active = true
@@ -81,7 +81,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `verify_module.${timestamp}` }], interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -107,7 +107,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.excluido", 13),
             embeds: [],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 

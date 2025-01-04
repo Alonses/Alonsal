@@ -14,6 +14,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original, user
         content: "",
         files: [file],
         components: [],
-        ephemeral: user_command ? true : autor_original ? client.decider(user?.conf.ghost_mode, 0) : false
+        flags: user_command ? "Ephemeral" : autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : null
     })
 }

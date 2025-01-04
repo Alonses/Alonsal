@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         return interaction.reply({
             content: texto,
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -50,6 +50,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     interaction.reply({
         content: `${client.tls.phrase(user, "inic.vote.voto_registrado", client.emoji("emojis_dancantes"), vote)}${badge_bonus}`,
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

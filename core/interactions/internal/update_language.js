@@ -22,7 +22,7 @@ module.exports = async ({ client, interaction }) => {
 
             interaction.reply({
                 content: `:sa: | Pacote de traduções do Alonsal sincronizado com o commit \`${cod_commit}\``,
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
             if (client.id() === process.env.client_1) // Notifica apenas caso seja o bot principal

@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (user.misc.money < preco)
             return interaction.update({
                 content: client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos"), client.locale(preco)),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         user.misc.money -= preco
@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.color.cor_att", client.emoji("emojis_dancantes")),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 2) {
@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

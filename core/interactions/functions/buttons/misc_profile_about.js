@@ -27,6 +27,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     return interaction.update({
         content: client.tls.phrase(user, "misc.perfil.escolha_abaixo_customizar_perfil", 1),
         components: [menu],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

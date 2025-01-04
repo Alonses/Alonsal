@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     if (interaction)
         interaction.reply({
             content: texto,
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
     else client.sendDM(user, { content: texto }, true)
 }

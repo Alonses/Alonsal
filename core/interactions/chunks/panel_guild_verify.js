@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction }) => {
             return interaction.editReply({
                 embeds: [embed],
                 components: [client.create_buttons(botoes, interaction)],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
 }

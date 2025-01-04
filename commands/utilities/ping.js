@@ -16,8 +16,7 @@ module.exports = {
 
         const m = await interaction.reply({
             content: "Ping?",
-            withResponse: true,
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
 
         const delay = m.createdTimestamp - interaction.createdTimestamp
@@ -40,7 +39,7 @@ module.exports = {
 
         await interaction.editReply({
             content: mensagem,
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
     }
 }

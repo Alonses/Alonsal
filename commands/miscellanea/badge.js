@@ -63,7 +63,7 @@ module.exports = {
             return interaction.reply({
                 content: client.tls.phrase(user, "dive.badges.cabecalho_menu"),
                 components: [client.create_menus({ client, interaction, user, data })],
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Removendo a badge fixada
@@ -75,7 +75,7 @@ module.exports = {
 
         interaction.reply({
             content: `:medal: | Badge ${client.tls.phrase(user, "dive.badges.badge_removida")}`,
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

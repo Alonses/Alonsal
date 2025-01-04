@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", client.defaultEmoji("paper")),
             embeds: [],
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 
@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_excluida", 10),
             embeds: [],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 
@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_inexistente", 1),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Verificando se a task não possui algum servidor mencionado
@@ -84,7 +84,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_movida_1", 10),
             embeds: [],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 
@@ -97,7 +97,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_movida_2", 10),
             embeds: [],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 }

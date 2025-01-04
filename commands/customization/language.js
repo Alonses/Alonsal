@@ -80,7 +80,7 @@ module.exports = {
 
         interaction.reply({
             content: frase_idioma,
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

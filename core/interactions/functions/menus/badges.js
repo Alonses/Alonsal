@@ -19,6 +19,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     interaction.update({
         content: `${new_badge.emoji} | Badge \`${new_badge.name}\` ${client.tls.phrase(user, "dive.badges.badge_fixada")}`,
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

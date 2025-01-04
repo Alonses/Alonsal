@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Menu para escolher o cargo que será concedido ao membro
@@ -77,7 +77,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 3) {
@@ -100,7 +100,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -110,14 +110,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.rolePermissions(interaction, cargo.rid, [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator]))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_moderativo", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Membro já possui o cargo mencionado
         if (await client.hasRole(interaction, cargo.rid, cargo.uid))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_ja_concedido", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         const role = client.getGuildRole(interaction, cargo.rid)
@@ -126,7 +126,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (role.position > bot_member.roles.highest.position)
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_superior", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Adicionado o cargo temporário ao membro
@@ -175,7 +175,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 content: client.tls.phrase(user, "mode.timed_role.cargo_concedido", 10, [cargo.rid, cargo.uid, cargo.timestamp]),
                 embeds: [],
                 components: [],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         }).catch(console.error)
 

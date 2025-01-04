@@ -21,9 +21,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operacao === 3 || operacao === 5 || !autor_original) {
         defer = true
 
-        let ephemeral = true
+        let ephemeral = ""
 
         if (autor_original) ephemeral = client.decider(user?.conf.ghost_mode, 0)
+        if (ephemeral) ephemeral = "Ephemeral"
 
         await client.deferedResponse({ interaction, ephemeral })
     }

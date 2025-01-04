@@ -22,6 +22,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     interaction.update({
         components: [client.create_menus({ client, interaction, user, data }), row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

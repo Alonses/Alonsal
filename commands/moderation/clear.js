@@ -78,14 +78,14 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
 
                 interaction.reply({
                     content: `:recycle: | ${texto}`,
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
             })
             .catch(() => client.tls.reply(interaction, user, "mode.clear.error", true, client.emoji(0)))
     } else {
 
         // Excluindo as mensagens enviadas pelo bot da DM do usuário
-        await interaction.deferReply({ ephemeral: true })
+        await interaction.deferReply({ flags: "Ephemeral" })
 
         client.discord.users.fetch(interaction.user.id)
             .then(u => {
@@ -103,20 +103,20 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
                                         c--
 
                                         if (c === 0)
-                                            interaction.editReply({ content: `:recycle: | \`${qtd_msg} mensagens\` foram removidas com sucesso!`, ephemeral: true })
+                                            interaction.editReply({ content: `:recycle: | \`${qtd_msg} mensagens\` foram removidas com sucesso!`, flags: "Ephemeral" })
 
                                     }).catch(err => {
-                                        interaction.editReply({ content: `:fire: | Houve um erro ao tentar excluir as mensagens.`, ephemeral: true })
+                                        interaction.editReply({ content: `:fire: | Houve um erro ao tentar excluir as mensagens.`, flags: "Ephemeral" })
                                     })
                                 })
                             }).catch(err => {
-                                interaction.editReply({ content: `:fire: | Houve um erro ao procurar mensagens para deletar.`, ephemeral: true })
+                                interaction.editReply({ content: `:fire: | Houve um erro ao procurar mensagens para deletar.`, flags: "Ephemeral" })
                             })
                     }).catch(err => {
-                        interaction.editReply({ content: `:fire: | Houve um erro ao procurar esse canal de mensagens diretas.`, ephemeral: true })
+                        interaction.editReply({ content: `:fire: | Houve um erro ao procurar esse canal de mensagens diretas.`, flags: "Ephemeral" })
                     })
             }).catch(err => {
-                interaction.editReply({ content: `:fire: | Houve um erro ao procurar você pelo meu cache de mensagens diretas.`, ephemeral: true })
+                interaction.editReply({ content: `:fire: | Houve um erro ao procurar você pelo meu cache de mensagens diretas.`, flags: "Ephemeral" })
             })
     }
 }

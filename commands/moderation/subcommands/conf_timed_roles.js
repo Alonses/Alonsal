@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction }) => {
 
         interaction.reply({
             content: `:passport_control: :white_check_mark: | O canal para os avisos dos \`⌚ Cargos temporários\` foi alterado com sucesso!\nNovos cargos que forem concedidos serão notificados em ${canal_alvo}`,
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

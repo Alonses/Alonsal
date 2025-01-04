@@ -43,6 +43,6 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     client.reply(interaction, {
         content: client.tls.phrase(user, "util.tarefas.tarefa_escolher"),
         components: [client.create_menus({ client, interaction, user, data })],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
     })
 }

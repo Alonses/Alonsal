@@ -20,7 +20,7 @@ module.exports = {
 
         interaction.reply({
             content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\``,
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
         client.notify(process.env.channel_feeds, { content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\`` })

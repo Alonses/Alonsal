@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), niveis_permissao))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Ativa ou desativa o network do servidor
@@ -80,12 +80,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), botoes],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 3) { // Servidor sem um link de network
 
-        await interaction.deferUpdate({ ephemeral: true })
+        await interaction.deferUpdate({ flags: "Ephemeral" })
 
         // Listando todos os servidores que o usuário é moderador
         // Selecionando os servidores para vincular ao network
@@ -95,7 +95,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (guilds.length < 1)
             return interaction.editReply({
                 content: client.tls.phrase(user, "mode.network.sem_servidores"),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Listando os servidores para o moderador
@@ -121,7 +121,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.editReply({
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 4) {
@@ -184,7 +184,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 6) {
@@ -206,7 +206,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 10) {

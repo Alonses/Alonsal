@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_adicao", client.emoji(0)),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: client.tls.phrase(user, "mode.link_suspeito.aviso_adicao", [44, 10], guild.spam.channel || guild.logger.channel),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 2) {
@@ -62,7 +62,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (links.length < 1) // Sem links suspeitos registrados no servidor
             return interaction.reply({
                 content: client.tls.phrase(user, "mode.link_suspeito.sem_links", 1),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Navegando pelos links suspeitos do servidor
@@ -101,7 +101,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: "",
             embeds: [embed],
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     } else if (operacao === 5) {
 

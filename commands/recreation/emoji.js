@@ -43,7 +43,7 @@ module.exports = {
 
                         interaction.reply({
                             content: url_emoji,
-                            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                         })
                     })
             } else

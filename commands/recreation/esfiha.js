@@ -16,7 +16,7 @@ module.exports = {
 
 		interaction.reply({
 			content: `${client.tls.phrase(user, "dive.esfiha")} :yum: :yum: :yum:\nhttps://tenor.com/view/gil-das-esfihas-galerito-esfiha-meme-brasil-gif-21194713`,
-			ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+			flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
 		})
 	}
 }

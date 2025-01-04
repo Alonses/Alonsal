@@ -4,7 +4,7 @@ const { getUserGroup } = require('../../../database/schemas/User_tasks_group')
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     if (!autor_original)
-        return interaction.reply({ content: client.tls.phrase(user, "util.tarefas.autor_nao_original"), ephemeral: true })
+        return interaction.reply({ content: client.tls.phrase(user, "util.tarefas.autor_nao_original"), flags: "Ephemeral" })
 
     const timestamp_lista = parseInt(dados.split(".")[1])
     const timestamp_task = parseInt(dados.split(".")[2])
@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_inexistente", 1),
             embeds: [],
             components: [row_2],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Atualizando os dados da lista
@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
             embeds: [],
             components: [row_2],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     client.atualiza_dados(task, interaction)
@@ -50,6 +50,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     interaction.update({
         content: client.tls.phrase(user, "util.tarefas.tarefa_adicionada_2", client.defaultEmoji("paper"), lista.name),
         components: [row],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

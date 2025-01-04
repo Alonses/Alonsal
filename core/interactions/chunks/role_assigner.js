@@ -4,7 +4,7 @@ const { getRoleAssigner } = require('../../database/schemas/Guild_role_assigner'
 
 module.exports = async ({ client, user, interaction, caso }) => {
 
-    if (!caso) return interaction.reply({ content: "Ixi! Os dados dessa interação sumiram! Por gentileza, use o comando novamente", ephemeral: true })
+    if (!caso) return interaction.reply({ content: "Ixi! Os dados dessa interação sumiram! Por gentileza, use o comando novamente", flags: "Ephemeral" })
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.roles.titulo_atribuidor")} :passport_control:`)
@@ -74,7 +74,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
     client.reply(interaction, {
         embeds: [embed],
         components: [client.create_buttons(row, interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }
 

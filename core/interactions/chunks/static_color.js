@@ -41,6 +41,6 @@ module.exports = async ({ client, user, interaction, valor }) => {
     client.reply(interaction, {
         embeds: [embed],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

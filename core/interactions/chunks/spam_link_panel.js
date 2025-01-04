@@ -38,6 +38,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: "",
         embeds: [embed],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

@@ -35,6 +35,6 @@ module.exports = async ({ client, interaction }) => {
     interaction.update({
         embeds: [emojis_global],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

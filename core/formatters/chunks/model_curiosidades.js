@@ -22,14 +22,14 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}`,
                                 files: [file],
-                                ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                                flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
                         else client.sendDM(user, { content: `〽️ | ${descricao_curio}`, files: [file] }, true)
                     } else // Gifs
                         if (interaction)
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}\n${res.data_curio}`,
-                                ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                                flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
                         else client.sendDM(user, { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, true)
 
@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             if (interaction) // Enviando um texto normal sem arquivos anexados
                 interaction.reply({
                     content: `〽️ | ${descricao_curio}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                    flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                 })
             else client.sendDM(user, { content: `〽️ | ${descricao_curio}` }, true)
         })

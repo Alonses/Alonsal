@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             texto_entrada = client.decifer(user_alvo.social.lastfm)
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ ephemeral: interaction.user.id === alvo.id ? user_command || 0 : 1 })
+    await interaction.deferReply({ flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral" })
 
     fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}&now=true`)
         .then(response => response.json())
@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             interaction.editReply({
                 embeds: [embed],
                 components: [client.create_buttons(row, interaction)],
-                ephemeral: interaction.user.id === alvo.id ? user_command || 0 : 1
+                flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral"
             })
         })
         .catch(() => {

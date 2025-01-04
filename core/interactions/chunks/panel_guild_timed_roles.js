@@ -55,6 +55,6 @@ module.exports = async ({ client, user, interaction }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

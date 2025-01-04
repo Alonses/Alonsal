@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
 
         await interaction.update({
             components: [client.create_buttons([{ id: "role_assigner", name: client.tls.phrase(user, "menu.botoes.interromper_operacao"), type: 3, emoji: client.emoji(13), data: "11" }], interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
         timestamp = parseInt(client.timestamp() + (updates[0] * 1.5) + 1)
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
     } else
         interaction.update({
             content: client.tls.phrase(user, "mode.roles.operacao_ativa", 4),
-            ephemeral: true
+            flags: "Ephemeral"
         })
 }
 

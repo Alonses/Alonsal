@@ -142,7 +142,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     const obj = {
         embeds: [infos_user],
         components: [row],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
     }
 
     if (!autor_original) interaction.customId = null

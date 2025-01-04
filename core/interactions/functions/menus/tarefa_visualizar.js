@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.tarefa_inexistente", 1),
             embeds: [],
             components: [row_2],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const lista = await getUserGroup(user.uid, task.g_timestamp)
@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
             embeds: [],
             components: [row_2],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     if (dados.includes("x"))
@@ -89,7 +89,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 
     client.reply(interaction, obj)

@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -100,7 +100,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: client.tls.phrase(user, "mode.warn.advertencia_registrada", 63),
         embeds: [],
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 
     // Verificando se há cards aguardando aprovação já enviados

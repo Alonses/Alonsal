@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: "",
             embeds: [embed],
             components: [client.create_buttons(row, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -52,6 +52,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: client.tls.phrase(user, "manu.data.tipo_dado"),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data }), row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

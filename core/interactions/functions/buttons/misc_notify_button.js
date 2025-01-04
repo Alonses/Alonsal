@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "menu.botoes.operacao_cancelada", client.emoji(0)),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Ativando o anúncio de games do servidor
@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: client.tls.phrase(user, "mode.anuncio.anuncio_games", client.emoji(29), `<#${guild.games.channel}>`),
         embeds: [],
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 
     if (operacao === 2) {

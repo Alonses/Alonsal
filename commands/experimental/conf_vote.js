@@ -16,12 +16,12 @@ module.exports = {
         if (client.timestamp() < 1692460800)
             interaction.reply({
                 content: `${client.emoji("emojis_dancantes")} | Votos computados até o momento: \`${votos?.qtd || 0}\`\n${client.defaultEmoji("calendar")} | Contabilizando até <t:1692460800:f>`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
         else
             interaction.reply({
                 content: `${client.emoji("emojis_dancantes")} | Resultados da votação de Idiomas!\nTotal de votos: \`${votos?.qtd || 0}\`\n\n:flag_de: ||\`${votos?.de || 0}\`||, :flag_nl: ||\`${votos?.nl || 0}\`||, :flag_se: ||\`${votos?.se || 0}\`||\n:flag_tr: ||\`${votos?.tr || 0}\`||, :flag_jp: ||\`${votos?.jp || 0}\`||`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }

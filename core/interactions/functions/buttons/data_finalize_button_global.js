@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "manu.data.operacao_cancelada", 11),
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Movendo o usuário para exclusão automática
@@ -31,6 +31,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     client.reply(interaction, {
         content: client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7, client.timestamp() + 1209600),
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

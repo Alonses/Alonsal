@@ -7,21 +7,23 @@ let traducoes, idioma_ativo
 function reply(interaction, user, target, ephemeral, emoji, replace) {
 
     let phrase = translate(user, target, replace)
+    if (ephemeral) ephemeral = "Ephemeral"
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
-    interaction.reply({ content: phrase, ephemeral: ephemeral })
+    interaction.reply({ content: phrase, flags: ephemeral })
 }
 
 function editReply(interaction, user, target, ephemeral, emoji) {
 
     let phrase = translate(user, target)
+    if (ephemeral) ephemeral = "Ephemeral"
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
-    return interaction.editReply({ content: phrase, ephemeral: ephemeral })
+    return interaction.editReply({ content: phrase, flags: ephemeral })
 }
 
 function phrase(user, target, emoji, replace) {
@@ -42,6 +44,7 @@ function phrase(user, target, emoji, replace) {
 function report(interaction, user, target, ephemeral, emoji, button, update) {
 
     let phrase = translate(user, target)
+    if (ephemeral) ephemeral = "Ephemeral"
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
@@ -51,17 +54,17 @@ function report(interaction, user, target, ephemeral, emoji, button, update) {
             content: phrase,
             embeds: [],
             components: [],
-            ephemeral: ephemeral
+            flags: ephemeral
         })
     else if (update)
         interaction.update({
             content: phrase,
-            ephemeral: ephemeral
+            flags: ephemeral
         })
     else
         interaction.reply({
             content: phrase,
-            ephemeral: ephemeral
+            flags: ephemeral
         })
 }
 

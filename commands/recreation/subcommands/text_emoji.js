@@ -14,13 +14,13 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
 
         return interaction.reply({
             content: texto_entrada.replaceAll(" ", emoji),
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
     }
 
     // Emoji padrão do discord
     interaction.reply({
         content: texto_entrada.replaceAll(" ", emoji),
-        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
     })
 }

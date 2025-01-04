@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const montante = await getModulesPrice(interaction.user.id)
@@ -67,6 +67,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

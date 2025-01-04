@@ -48,18 +48,18 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                 return interaction.update({
                     content: client.tls.phrase(user, "mode.anuncio.anuncio_enviado_duplicatas", client.emoji(29), `<#${guild.games.channel}>`),
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
             } else // Sem permissão para enviar mensagens no canal
                 return interaction.update({
                     content: client.tls.phrase(user, "mode.anuncio.permissao_envio", client.defaultEmoji("guard")),
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
 
         } else // Sem canal configurado
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.configuracao", client.defaultEmoji("guard")),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
     } else if (operacao === 3) {
@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Definindo o cargo que receberá o avisos de games free
@@ -96,7 +96,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 4) {
@@ -126,7 +126,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

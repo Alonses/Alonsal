@@ -63,7 +63,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
     interaction.reply({
         embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
     })
         .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, client.emoji(0)))
 }

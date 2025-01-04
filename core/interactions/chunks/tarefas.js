@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                 embeds: [],
                 components: [client.create_menus({ client, interaction, user, data })],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
         }
 
@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
                 content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
                 embeds: [],
                 components: [client.create_menus({ client, interaction, user, data })],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
         }
     } else if (operador.includes("k")) {
@@ -89,7 +89,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             return interaction.update({
                 content: client.tls.phrase(user, "util.tarefas.sem_tarefa_l", 1),
                 components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
         }
 
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
             components: [client.create_menus({ client, interaction, user, data })],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
 
     } else {
@@ -129,7 +129,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             return interaction.update({
                 content: client.tls.phrase(user, "util.tarefas.sem_tarefa_l", 1),
                 components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
         }
 
@@ -153,7 +153,7 @@ module.exports = async ({ client, user, interaction, operador, autor_original })
             content: client.tls.phrase(user, "util.tarefas.tarefa_escolher", 1),
             embeds: [],
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 }

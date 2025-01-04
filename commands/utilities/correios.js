@@ -62,7 +62,7 @@ module.exports = {
 
                     return interaction.reply({
                         embeds: [embed],
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
                 } else
                     return client.tls.reply(interaction, user, "util.rastreio.codigo_invalido", true, 1)

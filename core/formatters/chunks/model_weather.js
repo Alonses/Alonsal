@@ -37,17 +37,17 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 if (res.cod === '404' || res.cod === '400')
                     return interaction.editReply({
                         content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa)}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
                 else if (res.cod === '429')// Erro da API
                     return interaction.editReply({
                         content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
                 else if (res.id === '1873107')
                     return interaction.editReply({
                         content: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")),
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
             } else {
                 if (res.cod === '404' || res.cod === '400')
@@ -316,7 +316,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     if (interaction)
                         return interaction.editReply({
                             embeds: [embed_clima],
-                            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                         })
                     else
                         return client.sendDM(user, { embeds: [embed_clima] }, true)
@@ -326,7 +326,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             if (interaction)
                 return interaction.editReply({
                     content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
             else
                 return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)

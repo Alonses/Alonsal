@@ -168,6 +168,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         content: retorno_aviso,
         embeds: [embed],
         components: componentes,
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

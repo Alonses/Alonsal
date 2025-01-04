@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     }
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0) })
+    await interaction.deferReply({ flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null })
 
     fetch(usuario_alvo)
         .then(response => response.text())
@@ -395,7 +395,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 interaction.editReply({
                     embeds: [usuario_steam],
                     components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                    flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                 })
 
             } catch (err) {

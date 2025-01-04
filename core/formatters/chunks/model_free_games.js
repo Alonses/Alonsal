@@ -74,7 +74,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
         client.reply(interaction, {
             embeds: [embed],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
     else {
         if (original_size > limitador) // Botões extrapolam a quantidade do limitador

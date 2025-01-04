@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction }) => {
 
         return interaction.reply({
             content: `${client.tls.phrase(user, "util.tarefas.tarefa_adicionada", client.defaultEmoji("paper"))} \`${listas[0].name}\`!`,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     } else {
 
@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction }) => {
         interaction.reply({
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 1),
             components: [client.create_menus({ client, interaction, user, data })],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 }

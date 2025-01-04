@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const obj = {
             content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.warn.sem_usuarios", 1),
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         if (warned_users.length > 0) {
@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
                 const obj = {
                     content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.report.sem_usuarios_report", 1),
-                    ephemeral: true
+                    flags: "Ephemeral"
                 }
 
                 if (users_ids.length > 0) { // Menu para navegar entre os usuários reportados

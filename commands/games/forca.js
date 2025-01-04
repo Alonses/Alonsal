@@ -18,7 +18,7 @@ module.exports = {
         if (!interaction.guild) return
 
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
-            return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", ephemeral: true })
+            return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", flags: "Ephemeral" })
 
         if (!client.cached.forca_sessao.has(interaction.user.id)) {
             fetch('https://api.dicionario-aberto.net/random')
@@ -208,7 +208,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
 
         interaction.reply({
             content: "🎆 | Um jogo novo foi iniciado! Escreva seus chutes no chat para tentar acertar a palavra!",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else {
@@ -217,7 +217,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
         if (interaction?.user?.id)
             interaction.reply({
                 content: "🎆 | Já existe um jogo em andamento!",
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }

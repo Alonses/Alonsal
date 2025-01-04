@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), botoes],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 2) {
@@ -106,7 +106,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 3) {
@@ -130,7 +130,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 12) {
@@ -154,7 +154,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 20) {
@@ -184,7 +184,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

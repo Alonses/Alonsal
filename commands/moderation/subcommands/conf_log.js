@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "manu.painel.salvo_sem_permissao", [10, 7]),
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

@@ -128,6 +128,6 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     client.reply(interaction, {
         embeds: [embed],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

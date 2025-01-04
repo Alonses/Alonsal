@@ -11,14 +11,14 @@ module.exports = async ({ client, user, interaction }) => {
     if (!await client.rolePermissions(interaction, interaction.options.getRole("role").id, [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator])) // Cargo informado não é válido
         return interaction.reply({
             content: ":passport_control: | Selecione um cargo que não contenha permissões de moderação e não seja gerenciado pelo discord (como por impulsos).",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Membro já possui o cargo mencionado
     if (await client.hasRole(interaction, interaction.options.getRole("role").id, interaction.options.getUser("user").id))
         return interaction.reply({
             content: ":passport_control: | Este membro já possui o cargo informado, tente novamente com um cargo que ele ainda não possua.",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const cached_role = client.getGuildRole(interaction, interaction.options.getRole("role").id)
@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (cached_role.position > bot_member.roles.highest.position)
         return interaction.reply({
             content: ":passport_control: | O cargo mencionado é maior que o meu! Não posso atribuir este cargo ao membro.",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const guild = await client.getGuild(interaction.guild.id)
@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (!guild.timed_roles.channel)
         return interaction.reply({
             content: ":radio: | Antes de utilizar este comando você deve configurar um canal de avisos para notificarmos os membros sobre a atribuição!!\n\nVocê pode configurar o canal através do </panel guild:1107163338930126869> ou através do </conf guild:1094346210636214304>, ambos em `⌚ Timed roles`",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const user_alvo = interaction.options.getUser("user")

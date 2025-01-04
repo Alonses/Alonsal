@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: client.tls.phrase(user, "mode.warn.advertencias_removidas", 10),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         if (anotacoes_server.length > 0) {
@@ -111,7 +111,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: client.tls.phrase(user, "mode.report.escolher_usuario_gerencia"),
             embeds: [],
             components: [client.create_menus({ client, interaction, user, data, pagina })],
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         let row = client.menu_navigation(user, data, pagina || 0)

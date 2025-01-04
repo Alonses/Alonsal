@@ -19,10 +19,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
         return interaction.update({
             content: client.tls.phrase(user, "mode.report.sem_permissao_migrate", 7),
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
-    await interaction.deferUpdate({ ephemeral: true })
+    await interaction.deferUpdate({ flags: "Ephemeral" })
 
     // Reportando os usuários banidos do servidor de forma automática
     let list = [], adicionados = 0
@@ -62,7 +62,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 content: msg_feed,
                 embeds: [],
                 components: [],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
 }

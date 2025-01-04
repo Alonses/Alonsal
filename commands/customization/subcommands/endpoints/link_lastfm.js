@@ -1,6 +1,6 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: "Ephemeral" })
 
     // Verificando se o local existe antes de salvar
     await fetch(`https://www.last.fm/pt/user/${interaction.options.getString("value")}`)
@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
 
             interaction.editReply({
                 content: client.tls.phrase(user, "util.lastfm.new_link", client.emoji("emojis_dancantes"), ["lastfm", "</lastfm:1018609879512006796>"]),
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
 }

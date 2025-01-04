@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     if (user_notes.length < 1)
         return interaction.reply({
             content: client.tls.phrase(user, "mode.warn.sem_advertencia", 1),
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     const embed = new EmbedBuilder()
@@ -45,6 +45,6 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

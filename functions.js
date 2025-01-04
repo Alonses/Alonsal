@@ -107,10 +107,10 @@ function internal_functions(client) {
 
     client.deferedResponse = async ({ interaction, ephemeral }) => {
 
-        let ephemero = typeof ephemeral !== "undefined" ? ephemeral : true
+        let ephemero = typeof ephemeral !== "undefined" ? ephemeral : "Ephemeral"
 
-        if (!interaction.customId) await interaction.deferReply({ ephemeral: ephemero })
-        else await interaction.deferUpdate({ ephemeral: ephemero })
+        if (!interaction.customId) await interaction.deferReply({ flags: ephemero })
+        else await interaction.deferUpdate({ flags: ephemero })
     }
 
     client.embed_color = (entrada) => {
@@ -709,7 +709,7 @@ function internal_functions(client) {
         if (interaction)
             interaction.editReply({
                 content: client.tls.phrase(user, "manu.data.salvos_cache", 61, qtd_servidores),
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 

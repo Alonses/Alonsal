@@ -31,7 +31,7 @@ module.exports = {
 
                 interaction.reply({
                     embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
                 })
             })
             .catch(() => client.tls.reply(interaction, user, "game.nazar.error_1", true, 1))
