@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: client.tls.phrase(user, "manu.data.ultima_confirmacao", 8, opcao),
         embeds: [],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }
 

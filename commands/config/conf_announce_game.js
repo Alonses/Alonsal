@@ -46,7 +46,7 @@ module.exports = {
 
         // Verificando pelos games que já expiraram
         await verifyInvalidGames()
-        await interaction.deferReply({ ephemeral: true })
+        await interaction.deferReply({ flags: "Ephemeral" })
 
         const item = {
             nome: interaction.options.getString("nome"),

@@ -19,7 +19,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     if (!matches && interaction)
         return interaction.editReply({
             content: ":octagonal_sign: | Plataforma inválida, tente novamente.",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     let imagem_destaque, valor_anterior = 0, lista_links = []
@@ -68,7 +68,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     if (interaction)
         interaction.editReply({
             content: ":white_check_mark: | O anúncio foi enviado à todos os canais de games",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 }
 

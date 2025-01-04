@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_exclusao", 0),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             content: client.tls.phrase(user, "mode.link_suspeito.aviso_remocao", 44, guild.spam.channel || guild.logger.channel),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

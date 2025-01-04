@@ -25,7 +25,7 @@ module.exports = {
 
         interaction.reply({
             content: `:tropical_drink: | Agora o ranking dará \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando`,
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
         client.notify(process.env.channel_feeds, { content: `:medal: | Ranking do Alonsal ajustado para \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando` })

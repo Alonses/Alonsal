@@ -10,7 +10,7 @@ module.exports = {
 
 		interaction.reply({
 			content: gifs[client.random(gifs)],
-			ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+			flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
 		})
 	}
 }

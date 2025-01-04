@@ -47,6 +47,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     interaction.update({
         embeds: [embed],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

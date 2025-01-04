@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
             const obj = {
                 content: users_ids.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : "",
                 embeds: [embed],
-                ephemeral: true
+                flags: "Ephemeral"
             }
 
             if (users_ids.length > 0) {

@@ -17,6 +17,6 @@ module.exports = async ({ client, user, interaction }) => {
         content: client.tls.phrase(user, "menu.botoes.selecionar_operacao", client.defaultEmoji("paper")),
         embeds: [],
         components: [client.create_buttons(row, interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

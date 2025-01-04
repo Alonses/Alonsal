@@ -114,7 +114,7 @@ module.exports = {
         return interaction.reply({
             embeds: [embed],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

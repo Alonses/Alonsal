@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.exclusao_tarefa_cancelada", client.defaultEmoji("paper")),
             embeds: [],
             components: [row],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 
@@ -40,6 +40,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         content: client.tls.phrase(user, "util.tarefas.exclusao_tarefa", 13),
         embeds: [],
         components: [row],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

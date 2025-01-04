@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Definindo os cargos que serão inclusos
@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const obj = {
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         if (row.length > 0) // Botões de navegação
@@ -83,7 +83,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Definindo os cargos de membros que serão ignorados
@@ -127,7 +127,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 20) { // Inverte o funcionamento do atribuidor de cargos ao entrar no servidor

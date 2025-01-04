@@ -34,14 +34,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 content: `${client.emoji("emojis_dancantes")} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`,
                 embeds: [],
                 components: [],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         } else // Atribuindo silenciosamente
             interaction.update({
                 content: `${client.emoji("emojis_dancantes")} | Badge \`${badge.name}\` ${badge.emoji} atribuída silenciosamente ao usuário ${user_interno}!`,
                 embeds: [],
                 components: [],
-                ephemeral: true
+                flags: "Ephemeral"
             })
     })
 }

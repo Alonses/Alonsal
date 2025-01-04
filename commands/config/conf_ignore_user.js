@@ -21,12 +21,12 @@ module.exports = {
         if (user_alvo.conf.banned)
             interaction.reply({
                 content: `${client.emoji("pare_agr")} | O usuário <@${interaction.options.getString("usuario")}> será ignorado pelo bot a partir de agora!`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
         else
             interaction.reply({
                 content: `${client.emoji("dog_panelaco")} | O usuário <@${interaction.options.getString("usuario")}> não será mais ignorado pelo bot`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }

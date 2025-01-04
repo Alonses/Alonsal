@@ -17,7 +17,7 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     if (interaction)
                         return interaction.editReply({
                             content: client.tls.phrase(user, "util.history.sem_entradas_valor"),
-                            ephemeral: true
+                            flags: "Ephemeral"
                         })
                     else
                         return client.sendDM(user, { content: client.tls.phrase(user, "util.history.sem_evento") }, true)
@@ -49,7 +49,7 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                 if (interaction)
                     return interaction.editReply({
                         embeds: [embed_eventos],
-                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     })
                 else return client.sendDM(user, { embeds: [embed_eventos] }, true)
             })
@@ -64,7 +64,7 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     if (interaction)
                         return interaction.editReply({
                             content: client.tls.phrase(user, "util.history.sem_entradas_valor"),
-                            ephemeral: true
+                            flags: "Ephemeral"
                         })
                     else return client.sendDM(user, { content: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
@@ -97,7 +97,7 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     interaction.editReply({
                         embeds: [acontecimento],
                         components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     })
                 else client.sendDM(user, { embeds: [acontecimento], components: [row] }, true)
             })
@@ -105,7 +105,7 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                 if (interaction)
                     interaction.editReply({
                         content: client.tls.phrase(user, "util.history.erro_eventos"),
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
                 else client.sendDM(user, { content: client.tls.phrase(user, "util.history.erro_eventos") }, true)
             })

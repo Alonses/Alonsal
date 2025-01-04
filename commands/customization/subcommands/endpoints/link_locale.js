@@ -1,6 +1,6 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: "Ephemeral" })
 
     // Verificando se o local existe antes de salvar
     await fetch(`${process.env.url_weather}appid=${process.env.key_weather}&q=${interaction.options.getString("value")}&units=metric&lang=pt`)
@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
             if (res.cod === '404')
                 return interaction.editReply({
                     content: client.tls.phrase(user, "util.tempo.sem_local", 1),
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
 
             user.misc.locale = client.encrypt(interaction.options.getString("value"))
@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction }) => {
 
             interaction.editReply({
                 content: client.tls.phrase(user, "util.tempo.new_link", client.emoji("emojis_dancantes"), interaction.options.getString("value")),
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
 }

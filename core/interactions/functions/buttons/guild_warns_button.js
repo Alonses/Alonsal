@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (advertencias.length < 2)
             return interaction.update({
                 content: client.tls.phrase(user, "mode.warn.bloqueio_minimo", 47),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Ativa ou desativa as advertências do servidor
@@ -110,7 +110,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         return interaction.update({
             embeds: [embed],
             components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 5 || operacao === 12 || operacao === 17) {
@@ -162,7 +162,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao === 7) {
@@ -184,7 +184,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     } else if (operacao == 16) {
@@ -207,7 +207,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

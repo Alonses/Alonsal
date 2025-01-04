@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             content: client.tls.phrase(user, "mode.report.usuario_removido", 10),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         if (reportes_server.length > 0) {

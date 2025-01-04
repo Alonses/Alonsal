@@ -141,7 +141,7 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
 
     const obj = {
         embeds: [embed],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
     }
 
     if (paginas > 1) { // Ranking com várias páginas de navegação
@@ -193,6 +193,6 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
 
     interaction.editReply({
         embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

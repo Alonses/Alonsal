@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction }) => {
                 interaction.reply({
                     embeds: [embed],
                     components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
                 })
             })
         }

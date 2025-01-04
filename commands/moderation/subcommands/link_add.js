@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
     link = link.trim()
 
     if (links_oficiais.includes(link.split("/")[0]))
-        return interaction.reply({ content: "🕵️‍♂️ | Você não pode adicionar este link! Ele é oficial e não representa risco.", ephemeral: true })
+        return interaction.reply({ content: "🕵️‍♂️ | Você não pode adicionar este link! Ele é oficial e não representa risco.", flags: "Ephemeral" })
 
     if (await verifySuspiciousLink(link)) // Link já existe
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
@@ -41,6 +41,6 @@ module.exports = async ({ client, user, interaction }) => {
     interaction.reply({
         embeds: [embed],
         components: [row],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

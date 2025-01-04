@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles]))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         // Ativa ou desativa a função de denúncias in-server
@@ -55,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
 
     interaction.reply({
         embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
     })
 }
 

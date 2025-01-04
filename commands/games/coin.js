@@ -94,7 +94,7 @@ module.exports = {
 
         interaction.reply({
             content: resultado,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 }

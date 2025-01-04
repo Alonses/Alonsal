@@ -20,15 +20,15 @@ module.exports = async ({ client, user, interaction }) => {
         .setImage(url_avatar)
         .setDescription(client.tls.phrase(user, "util.avatar.download_avatar"))
 
-    let ephemeral = true
+    let ephemeral = "Ephemeral"
 
     // Caso seja o próprio usuário que esteja querendo ver sua foto de perfil
-    if (user.uid === user_alvo.id)
-        ephemeral = client.decider(user?.conf.ghost_mode, 0)
+    if (user.uid === client.encrypt(user_alvo.id))
+        ephemeral = client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
 
     interaction.reply({
         embeds: [embed],
         components: [row],
-        ephemeral: ephemeral
+        flags: ephemeral
     })
 }

@@ -86,6 +86,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_external_reports" }], interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

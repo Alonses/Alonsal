@@ -35,7 +35,7 @@ module.exports = async ({ client, interaction }) => {
 
             interaction.reply({
                 content: ":video_game: | Anúncio de jogos gratuitos enviado para os canais clientes!",
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
         .catch(err => {

@@ -49,7 +49,7 @@ module.exports = {
             return client.reply(interaction, {
                 content: alvo.id !== interaction.user.id ? client.tls.phrase(user, "game.pula.vinculo", 1) : client.tls.phrase(user, "game.pula.sem_vinculo", 1),
                 components: [row],
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
         fetch(`${process.env.url_apisal}/pula?token=placholder&sync=1&token_user=${user_pula.social.pula_predios}`)
@@ -106,7 +106,7 @@ module.exports = {
                 interaction.reply({
                     embeds: [embed],
                     components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
                 })
             })
             .catch(() => client.tls.reply(interaction, user, "game.pula.error_2", true, client.emoji(0)))

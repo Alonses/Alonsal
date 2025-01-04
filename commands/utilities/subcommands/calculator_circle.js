@@ -4,7 +4,7 @@ const math = require('mathjs')
 
 module.exports = async ({ client, user, interaction }) => {
 
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: "Ephemeral" })
 
     const operacao = interaction.options.getString("input")
     let raio = interaction.options.getNumber("value"), descricao = ''
@@ -50,6 +50,6 @@ module.exports = async ({ client, user, interaction }) => {
 
     interaction.editReply({
         embeds: [embed],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

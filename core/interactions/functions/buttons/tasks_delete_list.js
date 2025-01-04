@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.exclusao_lista_cancelada", client.defaultEmoji("paper")),
             embeds: [],
             components: [],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
 
     // Apagando a lista especificada e as tarefas vinculadas a ela
@@ -38,6 +38,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         content: client.tls.phrase(user, "util.tarefas.exclusao_lista", 13),
         embeds: [],
         components: [row],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

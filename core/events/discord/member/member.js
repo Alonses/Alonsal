@@ -47,6 +47,6 @@ module.exports = async (client, dados) => {
     const user = await client.getUser(user_alvo.id)
 
     // Membro atualizou a foto de perfil
-    if (user.profile.avatar !== dados[1].user.avatarURL({ dynamic: true }) && guild.logger.member_image)
+    if (client.encrypt(user.profile.avatar) !== client.encrypt(dados[1].user.avatarURL({ dynamic: true })) && guild.logger.member_image)
         return require('./member_avatar')({ client, guild, user, dados })
 }

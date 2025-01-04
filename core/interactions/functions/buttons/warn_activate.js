@@ -31,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (!interaction.member.permissions.has(guildPermissions[guild_warns[indice_warn].action]))
             return interaction.reply({
                 content: client.tls.phrase(user, "mode.anotacoes.permissao_moderador", 7),
-                ephemeral: true
+                flags: "Ephemeral"
             })
 
     // Rascunhos de advertências salvas em cache

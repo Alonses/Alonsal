@@ -80,7 +80,7 @@ module.exports = {
         } catch {
             interaction.reply({
                 content: `${client.emoji("emojis_negativos")} | Houve um erro neste comando! Por gentileza, tente novamente...`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
         }
     }

@@ -11,6 +11,6 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
 
     interaction.reply({
         content: texto_entrada.join(""),
-        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
     })
 }

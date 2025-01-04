@@ -66,6 +66,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

@@ -76,7 +76,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     const obj = {
         embeds: [infos_user],
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     }
 
     const botoes = []

@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 3) {
 
-        await interaction.deferUpdate({ ephemeral: true })
+        await interaction.deferUpdate({ flags: "Ephemeral" })
 
         client.verifyUserGuilds(user, interaction.user.id, interaction)
     }

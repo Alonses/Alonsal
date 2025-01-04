@@ -18,7 +18,7 @@ module.exports = {
         interaction.reply({
             content: client.tls.phrase(user, "dive.baidu"),
             files: [baidu],
-            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
     }
 }

@@ -89,7 +89,7 @@ client.discord.on("messageCreate", async message => {
 		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
 
 			const user_guild = await client.getMemberGuild(message, user.uid)
-			user.profile.avatar = user_guild.user.avatarURL({ dynamic: true })
+			user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
 
 			await user.save()
 		}

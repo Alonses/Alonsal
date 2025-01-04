@@ -35,7 +35,7 @@ module.exports = {
 
         interaction.reply({
             content: `${client.tls.phrase(user, "misc.daily.daily", 14, client.locale(bufunfa))} ${client.emoji("emojis_dancantes")}`,
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 }

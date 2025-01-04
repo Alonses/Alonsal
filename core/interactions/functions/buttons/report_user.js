@@ -93,6 +93,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: texto_retorno,
         embeds: [],
         components: [],
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

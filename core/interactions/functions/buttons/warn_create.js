@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 
@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: "❌ Eita bixo! Parece que os dados dessa advertência sumiram, por gentileza, use o comando novamente",
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     user_warn.timestamp = client.timestamp()

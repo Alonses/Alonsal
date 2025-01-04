@@ -18,7 +18,7 @@ module.exports = {
 		interaction.reply({
 			content: "Press :regional_indicator_f: :pensive: :fist:",
 			files: [ceira],
-			ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+			flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
 		})
 	}
 }

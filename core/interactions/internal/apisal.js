@@ -24,7 +24,7 @@ module.exports = async ({ client, interaction }) => {
                 content: `\`\`\`${texto_apisal}\n\n${text}\`\`\``,
                 embeds: [],
                 components: [row],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         })
 }

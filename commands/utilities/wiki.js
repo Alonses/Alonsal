@@ -128,7 +128,7 @@ module.exports = {
                     interaction.reply({
                         embeds: [Embed],
                         components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
+                        flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     })
                 } else {
 

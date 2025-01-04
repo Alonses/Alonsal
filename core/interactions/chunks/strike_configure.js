@@ -101,7 +101,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
-        ephemeral: true
+        flags: "Ephemeral"
     }
 
     client.reply(interaction, obj)

@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction }) => {
                     if (!bot_member.permissions.has(guildPermissions[warns_guild[indice_warn].action]))
                         frase_retorno = client.tls.phrase(user, "mode.warn.bot_sem_permissao", 7, client.tls.phrase(user, `menu.events.${warns_guild[indice_warn].action}`))
 
-                    return interaction.reply({ content: frase_retorno, ephemeral: true })
+                    return interaction.reply({ content: frase_retorno, flags: "Ephemeral" })
                 }
             }
     } else // Advertências com hierarquia

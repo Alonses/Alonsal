@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Códigos de operação
@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 content: "",
                 embeds: [embed],
                 components: [row],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
         }
 
@@ -66,7 +66,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.modulo_ativado", 6, [client.tls.phrase(user, `misc.modulo.ativacao_min_${modulo.stats.days}`), modulo.stats.hour]),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

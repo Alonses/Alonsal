@@ -23,6 +23,6 @@ module.exports = async ({ client, user, interaction, guild }) => {
 
     interaction.reply({
         content: frase_retorno,
-        ephemeral: true
+        flags: "Ephemeral"
     })
 }

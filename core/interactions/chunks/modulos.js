@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, autor_original, user_comman
                 content: client.tls.phrase(user, "misc.modulo.sem_modulo", client.emoji(0)),
                 embeds: [],
                 components: [],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         else return client.tls.report(interaction, user, "misc.modulo.sem_modulo", true, client.emoji(0), null, true)
 
@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, autor_original, user_comman
         content: client.tls.phrase(user, "misc.modulo.modulo_escolher"),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data })],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode || user_command, 0) : true
+        flags: autor_original ? client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null : "Ephemeral"
     }
 
     if (!autor_original) interaction.customId = null

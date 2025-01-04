@@ -28,7 +28,7 @@ module.exports = async ({ client, guild, user, dados }) => {
         attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
     } catch { }
 
-    user.profile.avatar = user_alvo.avatarURL({ dynamic: true })
+    user.profile.avatar = client.encrypt(user_alvo.avatarURL({ dynamic: true }))
     await user.save() // Atualizando a foto de perfil do usuário
 
     envia_logger(client, user_alvo, attachment)

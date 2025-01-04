@@ -28,7 +28,7 @@ module.exports = {
 
         interaction.reply({
             content: ":bust_in_silhouette: | Avatar do bot atualizado",
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
         client.notify(process.env.channel_feeds, { embeds: [embed] })

@@ -1,40 +1,40 @@
 {
     "redes": {
         "epicgames.com": [
-            "1323095328555143208",
+            "logo_epic_games",
             "Epic Games"
         ],
         "store.steam": [
-            "1323095398646026342",
+            "logo_steam",
             "Steam"
         ],
         "gog.com": [
-            "1323095191078572134",
+            "logo_gog",
             "GOG"
         ],
         "humblebundle.com": [
-            "1323095357277732905",
+            "logo_humble_bundle",
             "Humble Bundle"
         ],
         "store.ubi.com": [
-            "1323095427695906927",
+            "logo_ubisoft",
             "Ubisoft"
         ],
         "ubisoft.com": [
-            "1323095427695906927",
+            "logo_ubisoft",
             "Ubisoft"
         ],
         "xbox.com": [
-            "1323095439599341631",
+            "logo_xbox",
+            "Xbox"
+        ],
+        "microsoft.com": [
+            "logo_xbox",
             "Xbox"
         ],
         "play.google": [
-            "973395673489756220",
+            "logo_pst",
             "Google Play"
-        ],
-        "microsoft.com": [
-            "1323095439599341631",
-            "Xbox"
         ]
     }
 }

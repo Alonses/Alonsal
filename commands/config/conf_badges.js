@@ -84,12 +84,12 @@ module.exports = {
             return interaction.reply({
                 embeds: [embed],
                 components: [row],
-                ephemeral: true
+                flags: "Ephemeral"
             })
         } else
             interaction.reply({
                 content: `:octagonal_sign: | O usuário <@!${id_alvo}> já possui a Badge mencionada!`,
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }

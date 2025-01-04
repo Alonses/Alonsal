@@ -118,7 +118,7 @@ module.exports = {
 
         interaction.reply({
             content: `${client.emoji("dice")} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``,
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : 0
         })
     }
 }

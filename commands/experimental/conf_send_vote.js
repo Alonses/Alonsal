@@ -40,24 +40,24 @@ module.exports = {
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
                     interaction.reply({
                         content: `:mailbox: | O embed de votação foi enviado ao canal <#${id_alvo}> com sucesso!`,
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
 
                     client.notify(id_alvo, { embeds: [embed], components: [row] })
                 } else
                     interaction.reply({
                         content: `${client.defaultEmoji("guard")} | Eu não posso enviar mensagens nesse canal ( <#${id_alvo}> ) por falta de permissões.`,
-                        ephemeral: true
+                        flags: "Ephemeral"
                     })
             } else
                 interaction.reply({
                     content: ":o: | O tipo do canal definido não é de texto, por favor tente novamente",
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
         } else
             interaction.reply({
                 content: ":mag: | O canal mencionado não existe.",
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }

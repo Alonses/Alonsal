@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
             embeds: [],
             components: [row_2],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     // Atualiza os dados das tarefas e listas
@@ -64,6 +64,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         content: "",
         embeds: [embed],
         components: [row],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

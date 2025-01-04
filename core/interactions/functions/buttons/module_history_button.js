@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
             components: [row],
-            ephemeral: true
+            flags: "Ephemeral"
         })
 
     modulo.data = data

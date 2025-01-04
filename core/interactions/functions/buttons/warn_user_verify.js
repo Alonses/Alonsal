@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "mode.warn.advertencia_removida", 10),
             embeds: [],
             components: [],
-            ephemeral: true
+            flags: "Ephemeral"
         }
 
         if (row.length > 0) // Botão para ver outras advertências
@@ -143,7 +143,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             embeds: [embed],
             components: [client.create_buttons(botoes, interaction)],
-            ephemeral: true
+            flags: "Ephemeral"
         })
     }
 

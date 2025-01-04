@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.locale(bufunfas), id_alvo]),
         embeds: [],
         components: [],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 
     // Notificando o usuário que recebeu as Bufunfas

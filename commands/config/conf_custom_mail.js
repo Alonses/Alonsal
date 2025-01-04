@@ -44,17 +44,17 @@ module.exports = {
 
                 interaction.reply({
                     content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`,
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
             } else
                 interaction.reply({
                     content: ":octagonal_sign: | Canal desconhecido",
-                    ephemeral: true
+                    flags: "Ephemeral"
                 })
         } else
             interaction.reply({
                 content: ":octagonal_sign: | O canal mencionado não é de texto, tente novamente",
-                ephemeral: true
+                flags: "Ephemeral"
             })
     }
 }
