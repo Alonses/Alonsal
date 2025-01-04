@@ -24,6 +24,18 @@ async function getUserStrikes(uid, sid) {
     })
 }
 
+async function encryptUserStrikes(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function removeStrike(uid, sid) {
     await model.findOneAndDelete({
         uid: uid,
@@ -42,5 +54,6 @@ module.exports.User_strike = model
 module.exports = {
     getUserStrikes,
     removeStrike,
-    dropUserGuildStrikes
+    dropUserGuildStrikes,
+    encryptUserStrikes
 }

@@ -37,14 +37,14 @@ module.exports = {
     menu_data: new ContextMenuCommandBuilder()
         .setName("Steam")
         .setType(ApplicationCommandType.User),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento
-        require("../../core/formatters/chunks/model_steam")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_steam")({ client, user, interaction, user_command })
     },
-    async menu({ client, user, interaction }) {
+    async menu({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento
-        require("../../core/formatters/chunks/model_steam")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_steam")({ client, user, interaction, user_command })
     }
 }

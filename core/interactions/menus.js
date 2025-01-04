@@ -24,6 +24,9 @@ module.exports = async ({ client, user, interaction }) => {
         funcao = "frases"
     }
 
+    // Acionado ao utilizar comando em DM
+    const user_command = interaction.guild ? 0 : 1
+
     // Solicitando a função e executando
-    require(`./functions/menus/${funcao}`)({ client, user, interaction, dados, autor_original })
+    require(`./functions/menus/${funcao}`)({ client, user, interaction, dados, autor_original, user_command })
 }

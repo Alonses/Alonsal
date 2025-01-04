@@ -1,4 +1,4 @@
-module.exports = async ({ client, user, interaction, texto_entrada }) => {
+module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
     // Torna o texto nesse formato "teste😂testado😂testadamente"
     let emoji = interaction.options.getString("emoji")
@@ -14,13 +14,13 @@ module.exports = async ({ client, user, interaction, texto_entrada }) => {
 
         return interaction.reply({
             content: texto_entrada.replaceAll(" ", emoji),
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
     }
 
     // Emoji padrão do discord
     interaction.reply({
         content: texto_entrada.replaceAll(" ", emoji),
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
 }

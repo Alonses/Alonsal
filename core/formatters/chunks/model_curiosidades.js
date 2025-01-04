@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { AttachmentBuilder } = require('discord.js')
 
-module.exports = async (client, user, interaction) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     fetch(`${process.env.url_apisal}/curiosidades`)
         .then(response => response.json())
@@ -22,14 +22,14 @@ module.exports = async (client, user, interaction) => {
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}`,
                                 files: [file],
-                                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                                ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                             })
                         else client.sendDM(user, { content: `〽️ | ${descricao_curio}`, files: [file] }, true)
                     } else // Gifs
                         if (interaction)
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}\n${res.data_curio}`,
-                                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                                ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                             })
                         else client.sendDM(user, { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, true)
 
@@ -39,7 +39,7 @@ module.exports = async (client, user, interaction) => {
             if (interaction) // Enviando um texto normal sem arquivos anexados
                 interaction.reply({
                     content: `〽️ | ${descricao_curio}`,
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                 })
             else client.sendDM(user, { content: `〽️ | ${descricao_curio}` }, true)
         })

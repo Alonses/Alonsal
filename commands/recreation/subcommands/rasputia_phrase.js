@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     fetch(`${process.env.url_apisal}/random?rasputia`)
         .then(response => response.json())
@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction }) => {
 
             interaction.reply({
                 embeds: [embed],
-                ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
             })
         })
 }

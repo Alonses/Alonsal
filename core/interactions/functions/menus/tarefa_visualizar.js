@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "util.tarefas.sua_tarefa"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${task.text}\`\`\``)
+        .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${client.decifer(task.text)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(user, "util.tarefas.lista")}**`,
@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Criando os botões para as funções de gestão de tarefas
     let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }]
-    const listas = await (user?.conf.global_tasks ? listAllUserGroups(user.uid) : listAllUserGroups(user.uid, interaction.guild.id))
+    const listas = await (user?.conf.global_tasks ? listAllUserGroups(user.uid) : listAllUserGroups(user.uid, client.encrypt(interaction.guild.id)))
 
     if (!task.concluded) // Tarefas em aberto
         botoes = botoes.concat([{ id: "tasks_button", name: client.tls.phrase(user, "menu.botoes.marcar_concluida"), type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` }])

@@ -1,6 +1,6 @@
 const { AttachmentBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, dados, autor_original }) => {
+module.exports = async ({ client, user, interaction, dados, autor_original, user_command }) => {
 
     const nome = dados.split("|")[0]
     const escolha = dados.split(".")[1]
@@ -14,6 +14,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         content: "",
         files: [file],
         components: [],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : false
+        ephemeral: user_command ? true : autor_original ? client.decider(user?.conf.ghost_mode, 0) : false
     })
 }

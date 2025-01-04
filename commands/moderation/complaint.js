@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 const { getTicket } = require('../../core/database/schemas/User_tickets')
 
@@ -51,7 +51,8 @@ module.exports = {
                     "it": '⌠💂⌡ Termina la chat di segnalazione',
                     "pt-BR": '⌠💂⌡ Encerre seu chat de denúncia',
                     "ru": '⌠💂⌡ Закрыть чат жалоб'
-                })),
+                }))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         const guild = await client.getGuild(interaction.guild.id)

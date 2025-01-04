@@ -76,7 +76,7 @@ module.exports = {
                     "pt-BR": '⌠💡⌡ Timestamp atual',
                     "ru": '⌠💡⌡ Текущая метка времени'
                 })),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         let titulo = client.tls.phrase(user, "util.timestamp.timestamp_1")
         let timestamp, aviso = "", conversao_invalida = false, conversao_valida = "", retorno
@@ -144,7 +144,7 @@ module.exports = {
 
         interaction.reply({
             embeds: [embed],
-            ephemeral: client.decider(user?.conf.ghost_mode, 0)
+            ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
     }
 }

@@ -112,16 +112,13 @@ client.discord.on("interactionCreate", async interaction => {
 	const user = await client.getUser(interaction.user.id)
 
 	// Atualiza o tempo de inatividade do servidor
-	client.updateGuildIddleTimestamp(interaction.guild.id)
+	if (interaction.guild) client.updateGuildIddleTimestamp(interaction.guild.id)
 
 	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
 		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)
 
 	if (user.conf?.banned || false) return // Ignoring users
-
-	// Checking if it is a command used on a server
-	if (!interaction.guild) return client.tls.reply(interaction, user, "inic.error.comando_dm")
 
 	if (interaction.isStringSelectMenu()) // Interactions generated when using selection menus
 		return require("./core/interactions/menus")({ client, user, interaction })
@@ -132,7 +129,7 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 
 	// Automatically sets the user's language if they don't have a default language
-	if (!user.lang) await client.verifyUserLanguage(user, interaction.guild.id)
+	if (!user.lang && interaction.guild) await client.verifyUserLanguage(user, interaction.guild.id)
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
@@ -146,9 +143,13 @@ client.discord.on("interactionCreate", async interaction => {
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute
 
 	try {
+
+		// Verificando se o comando é originado de um servidor ou DM
+		const user_command = interaction.guild ? false : true
+
 		// Executing the command
-		await action({ client, user, interaction })
-		await require("./core/events/log")({ client, interaction, command })
+		await action({ client, user, interaction, user_command })
+		await require("./core/events/log")({ client, interaction })
 
 		// Updating the last interaction
 		client.cached.last_interaction = client.timestamp()

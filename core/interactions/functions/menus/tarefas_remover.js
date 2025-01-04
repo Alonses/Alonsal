@@ -11,8 +11,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (!autor_original) // Redirecionando o usuário secundário
         return require("../../chunks/tarefas_remover")({ client, user, interaction })
 
-    const task = await getTask(interaction.user.id, parseInt(dados.split(".")[1]))
-    const lista = await getUserGroup(interaction.user.id, task.g_timestamp)
+    const task = await getTask(user.uid, parseInt(dados.split(".")[1]))
+    const lista = await getUserGroup(user.uid, task.g_timestamp)
 
     // Botão para retornar até as listas do usuário
     let row_2 = client.create_buttons([
@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "util.tarefas.sua_tarefa"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${task.text}\`\`\``)
+        .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${client.decifer(task.text)}\`\`\``)
         .addFields(
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(user, "util.tarefas.lista")}**`,

@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     const idioma_definido = client.idioma.getLang(interaction)
     let texto_entrada = ''
@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction }) => {
         if (!user_alvo.social.steam)
             return client.tls.reply(interaction, user, "util.steam.sem_link", true, 1)
         else
-            texto_entrada = user_alvo.social.steam
+            texto_entrada = client.decifer(user_alvo.social.steam)
     }
 
     // Perfis com links customizados
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode, 0) })
+    await interaction.deferReply({ ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0) })
 
     fetch(usuario_alvo)
         .then(response => response.text())
@@ -395,7 +395,7 @@ module.exports = async ({ client, user, interaction }) => {
                 interaction.editReply({
                     embeds: [usuario_steam],
                     components: [row],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                 })
 
             } catch (err) {

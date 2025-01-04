@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async (client, user, dados, interaction) => {
+module.exports = async ({ client, user, dados, interaction, user_command }) => {
 
     if (!dados) dados = ""
 
@@ -49,7 +49,7 @@ module.exports = async (client, user, dados, interaction) => {
                 if (interaction)
                     return interaction.editReply({
                         embeds: [embed_eventos],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                     })
                 else return client.sendDM(user, { embeds: [embed_eventos] }, true)
             })
@@ -97,7 +97,7 @@ module.exports = async (client, user, dados, interaction) => {
                     interaction.editReply({
                         embeds: [acontecimento],
                         components: [row],
-                        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                     })
                 else client.sendDM(user, { embeds: [acontecimento], components: [row] }, true)
             })

@@ -7,7 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("cantada")
         .setDescription("⌠😂|🇧🇷⌡ Uma cantada aleatória do Vai dar namoro™️"),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         fetch(`${process.env.url_apisal}/random?cantadas`)
             .then(response => response.json())
@@ -21,7 +21,7 @@ module.exports = {
 
                 interaction.reply({
                     embeds: [embed],
-                    ephemeral: client.decider(user?.conf.ghost_mode, 0)
+                    ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
                 })
             })
     }

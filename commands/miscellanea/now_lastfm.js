@@ -53,14 +53,14 @@ module.exports = {
             "ru": 'Слушаю сейчас'
         })
         .setType(ApplicationCommandType.User),
-    async execute({ client, user, interaction }) {
+    async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento
-        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction, user_command })
     },
-    async menu({ client, user, interaction }) {
+    async menu({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento
-        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction })
+        require("../../core/formatters/chunks/model_lastfm_now")({ client, user, interaction, user_command })
     }
 }

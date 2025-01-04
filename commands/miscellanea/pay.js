@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -58,7 +58,8 @@ module.exports = {
                     "pt-BR": 'A quantidade que será transferida',
                     "ru": 'Сумма к переводу'
                 })
-                .setRequired(true)),
+                .setRequired(true))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         let user_alvo = interaction.options.getUser("user")
@@ -73,12 +74,12 @@ module.exports = {
             return client.tls.reply(interaction, user, "misc.pay.error_3", true, [9, 0])
 
         // Validando se o usuário marcado não é um bot
-        const membro_sv = await client.getMemberGuild(interaction, alvo.uid)
+        const membro_sv = await client.getMemberGuild(interaction, user_alvo.id)
 
         if (!membro_sv) // Validando se o usuário marcado saiu do servidor
             return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
-        if (membro_sv.user.bot && alvo.uid !== client.id())
+        if (membro_sv.user.bot && user_alvo.id !== client.id())
             return client.tls.reply(interaction, user, "misc.pay.user_bot", true, [9, 0])
 
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
@@ -95,7 +96,7 @@ module.exports = {
                 },
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "misc.pay.destinatario")}**`,
-                    value: `<@${alvo.uid}>`,
+                    value: `<@${user_alvo.id}>`,
                     inline: true
                 }
             )
@@ -106,7 +107,7 @@ module.exports = {
 
         // Criando os botões para o menu de transferências
         const row = client.create_buttons([
-            { id: "bank_transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${alvo.uid}[${bufunfas}` },
+            { id: "bank_transfer", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${user_alvo.id}[${bufunfas}` },
             { id: "bank_transfer", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
         ], interaction)
 

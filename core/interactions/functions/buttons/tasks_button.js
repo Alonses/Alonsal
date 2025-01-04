@@ -22,9 +22,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
         // Verificando se o usuário desabilitou as tasks globais
         if (client.decider(user?.conf.global_tasks, 1))
-            listas = await listAllUserGroups(interaction.user.id)
+            listas = await listAllUserGroups(user.uid)
         else
-            listas = await listAllUserGroups(interaction.user.id, interaction.guild.id)
+            listas = await listAllUserGroups(user.uid, client.decifer(interaction.guild.id))
 
         const data = {
             title: { tls: "util.tarefas.escolher_lista_navegar" },
@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     ], interaction)
 
     if (operacao === 0) {
-        await dropTask(interaction.user.id, timestamp)
+        await dropTask(user.uid, timestamp)
 
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_excluida", 10),
@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         })
     }
 
-    const task = await getTask(interaction.user.id, timestamp)
+    const task = await getTask(user.uid, timestamp)
 
     if (!task)
         return interaction.update({
@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Verificando se a task não possui algum servidor mencionado
     if (!task.sid)
-        task.sid = interaction.guild.id
+        task.sid = client.encrypt(interaction.guild.id)
 
     if (operacao === 1) {
 

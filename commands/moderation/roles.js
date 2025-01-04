@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -69,7 +69,8 @@ module.exports = {
                         .setDescriptionLocalizations({
                             "pt-BR": 'Motivo pela concessão deste cargo'
                         })))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers | PermissionFlagsBits.ManageRoles),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers | PermissionFlagsBits.ManageRoles)
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Redirecionando o evento

@@ -66,12 +66,12 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         .addFields(
             {
                 name: `${client.emoji("icon_mention")} ${nome_usuario}`,
-                value: `( <@${user_data.uid}> )`,
+                value: `( <@${client.decifer(user_data.uid)}> )`,
                 inline: true
             },
             {
                 name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
-                value: `\`${user_data.uid}\``,
+                value: `\`${client.decifer(user_data.uid)}\``,
                 inline: true
             }
         )
@@ -101,7 +101,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         )
 
         if (user_data.profile.about) // Perfil com um "sobre" informado
-            embed.setDescription(user_data.profile.about)
+            embed.setDescription(client.decifer(user_data.profile.about))
     }
 
     if (user_alvo.avatarURL({ dynamic: true, size: 2048 })) // Usuário com avatar definido

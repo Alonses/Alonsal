@@ -35,6 +35,18 @@ async function getUserRole(uid, sid, timestamp) {
     })
 }
 
+async function encryptUserRoles(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function getTimedRoleAssigner(uid, sid) {
 
     return model.findOne({
@@ -141,5 +153,6 @@ module.exports = {
     dropAllGuildRoles,
     dropUserTimedRole,
     listAllUserValidyRoles,
-    filterRemovedTimedRole
+    filterRemovedTimedRole,
+    encryptUserRoles
 }

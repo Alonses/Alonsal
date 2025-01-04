@@ -30,6 +30,18 @@ async function getReport(uid, sid) {
     })
 }
 
+async function encryptUserReport(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function dropReport(uid, sid) {
     await model.findOneAndDelete({
         uid: uid,
@@ -81,5 +93,6 @@ module.exports = {
     getUserReports,
     getReportedUsers,
     checkUserGuildReported,
-    updateGuildReport
+    updateGuildReport,
+    encryptUserReport
 }

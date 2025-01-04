@@ -1,6 +1,6 @@
 const { listAllUserModules } = require('../../database/schemas/User_modules')
 
-module.exports = async ({ client, user, interaction, autor_original }) => {
+module.exports = async ({ client, user, interaction, autor_original, user_command }) => {
 
     // Listando todos os módulos do usuário
     let modulos = await listAllUserModules(interaction.user.id)
@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         content: client.tls.phrase(user, "misc.modulo.modulo_escolher"),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data })],
-        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode, 0) : true
+        ephemeral: autor_original ? client.decider(user?.conf.ghost_mode || user_command, 0) : true
     }
 
     if (!autor_original) interaction.customId = null

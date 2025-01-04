@@ -33,9 +33,27 @@ async function getRankServer(sid) {
     }).limit(50)
 }
 
+async function encryptUserRankServers(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function listRankGuild(sid) {
     return model.find({
         sid: sid
+    })
+}
+
+async function listAllUserRankGuild(uid) {
+    return model.find({
+        uid: uid
     })
 }
 
@@ -153,5 +171,7 @@ module.exports = {
     dropAllRankGuild,
     dropAllUserGuildRanks,
     dropUnknownRankServers,
-    getUnknowLastInteraction
+    getUnknowLastInteraction,
+    encryptUserRankServers,
+    listAllUserRankGuild
 }

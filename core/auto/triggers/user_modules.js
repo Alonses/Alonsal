@@ -69,10 +69,10 @@ executa_modulo = async (client) => {
         const user = await client.getUser(lista_modulos[0].uid)
 
         if (lista_modulos[0].type === 0)
-            await require('../../formatters/chunks/model_weather.js')(client, user)
+            await require('../../formatters/chunks/model_weather')({ client, user })
 
         if (lista_modulos[0].type === 1)
-            await require('../../formatters/chunks/model_frase.js')(client, user)
+            await require('../../formatters/chunks/model_frase')(client, user)
 
         if (lista_modulos[0].type === 2) {
 
@@ -93,24 +93,24 @@ executa_modulo = async (client) => {
                 }
             }
 
-            await require('../../formatters/chunks/model_history.js')(client, user, dados)
+            await require('../../formatters/chunks/model_history')({ client, user, dados })
         }
 
         // Charadas
         if (lista_modulos[0].type === 3)
-            await require('../../formatters/chunks/model_charada.js')(client, user)
+            await require('../../formatters/chunks/model_charada')({ client, user })
 
         // Curiosidades
         if (lista_modulos[0].type === 4)
-            await require('../../formatters/chunks/model_curiosidades.js')(client, user)
+            await require('../../formatters/chunks/model_curiosidades')({ client, user })
 
         // Um item do minecraft
         if (lista_modulos[0].type === 5)
-            await require('../../formatters/chunks/model_mine.js')({ client, user })
+            await require('../../formatters/chunks/model_mine')({ client, user })
 
         // Jogos gratuitos do momento
         if (lista_modulos[0].type === 6)
-            await require('../../formatters/chunks/model_free_games.js')(client, user)
+            await require('../../formatters/chunks/model_free_games')({ client, user })
 
         lista_modulos.shift()
 

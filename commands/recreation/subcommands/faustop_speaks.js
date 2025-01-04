@@ -1,6 +1,6 @@
 const { AttachmentBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     const data = new Date()
     let num = client.random(client.countFiles("./files/songs/faustop", "ogg") - 1)
@@ -12,6 +12,6 @@ module.exports = async ({ client, user, interaction }) => {
 
     interaction.reply({
         files: [file],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
 }

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -89,7 +89,8 @@ module.exports = {
                             "it": 'Menziona un altro utente',
                             "pt-BR": 'Mencione outro usuário',
                             "ru": 'Упомянуть другого пользователя'
-                        }))),
+                        })))
+        .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 
         // Solicitando a função e executando

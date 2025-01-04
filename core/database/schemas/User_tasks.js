@@ -32,6 +32,18 @@ async function createTask(uid, sid, text, timestamp) {
     })
 }
 
+async function encryptUserTasks(uid, new_user_id) {
+
+    await model.updateMany(
+        { uid: uid },
+        {
+            $set: {
+                uid: new_user_id
+            }
+        }
+    )
+}
+
 async function getTask(uid, timestamp) {
     return model.findOne({
         uid: uid,
@@ -100,5 +112,6 @@ module.exports = {
     dropAllUserTasks,
     listAllUserTasks,
     listAllUserGroupTasks,
-    dropAllGuildUserTasks
+    dropAllGuildUserTasks,
+    encryptUserTasks
 }

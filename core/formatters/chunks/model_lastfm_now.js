@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { EmbedBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     let texto_entrada = ""
 
@@ -24,23 +24,23 @@ module.exports = async ({ client, user, interaction }) => {
         if (!user_alvo.social || !user_alvo.social.lastfm)
             return client.tls.reply(interaction, user, "util.lastfm.sem_link", true, 1)
         else
-            texto_entrada = user_alvo.social.lastfm
+            texto_entrada = client.decifer(user_alvo.social.lastfm)
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ ephemeral: interaction.user.id === alvo.id ? false : true })
+    await interaction.deferReply({ ephemeral: interaction.user.id === alvo.id ? user_command || 0 : 1 })
 
     fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}&now=true`)
         .then(response => response.json())
         .then(async res => {
 
             if (res.status === "401") // Usuário existe mas não possui scrobbles
-                return client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode, 0), 1)
+                return client.tls.editReply(interaction, user, "util.lastfm.sem_scrobbles", client.decider(user?.conf.ghost_mode || user_command, 0), 1)
 
             if (res.status === "402") // Erro na busca pela lastfm
                 return client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
 
             if (res.status === "404") // Usuário não existe
-                return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
+                return client.tls.editReply(interaction, user, "util.lastfm.error_1", client.decider(user?.conf.ghost_mode || user_command, 0), 1)
 
             if (!res.scrobble_atual.faixa) // Usuário não está ouvindo nada
                 return client.tls.editReply(interaction, user, "util.lastfm.nao_esta_ouvindo", true, 45)
@@ -60,7 +60,10 @@ module.exports = async ({ client, user, interaction }) => {
             interaction.editReply({
                 embeds: [embed],
                 components: [client.create_buttons(row, interaction)],
-                ephemeral: interaction.user.id === alvo.id ? false : true
+                ephemeral: interaction.user.id === alvo.id ? user_command || 0 : 1
             })
+        })
+        .catch(() => {
+            return client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)
         })
 }

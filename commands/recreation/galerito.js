@@ -30,9 +30,9 @@ module.exports = {
 					{ name: '🧾 Menu', value: 'menu' }
 				)
 				.setRequired(true)),
-	async execute({ client, user, interaction }) {
+	async execute({ client, user, interaction, user_command }) {
 
 		// Redirecionando o evento
-		require(`./subcommands/galerito_${interaction.options.getString("operation")}`)({ client, user, interaction })
+		require(`./subcommands/galerito_${interaction.options.getString("operation")}`)({ client, user, interaction, user_command })
 	}
 }

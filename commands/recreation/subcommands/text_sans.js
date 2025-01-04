@@ -1,4 +1,4 @@
-module.exports = async ({ client, user, interaction, texto_entrada }) => {
+module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
     // Torna o texto nesse formato "AaAaAaAaAaA"
     texto_entrada = texto_entrada.split("")
@@ -11,6 +11,6 @@ module.exports = async ({ client, user, interaction, texto_entrada }) => {
 
     interaction.reply({
         content: texto_entrada.join(""),
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
 }

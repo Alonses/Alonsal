@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js")
 
 const { data } = require('../../../files/languages/pt-hp.json')
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, user_command }) => {
 
     let aviso = ""
 
@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     interaction.reply({
         embeds: [embed],
-        ephemeral: client.decider(user?.conf.ghost_mode, 0)
+        ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
     })
         .catch(() => client.tls.reply(interaction, user, "util.binario.error_1", true, client.emoji(0)))
 }
