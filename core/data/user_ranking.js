@@ -19,7 +19,7 @@ module.exports = async ({ client, message, caso }) => {
         return // Usuário forçou a exclusão de dados
 
     if (user_data.erase.valid) { // Usuário interagiu com o Alonsal novamente
-        client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
+        // client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao", client.defaultEmoji("person")) })
 
         user_data.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true
@@ -38,7 +38,7 @@ module.exports = async ({ client, message, caso }) => {
     let guild_user = await getUserRankServer(client.encrypt(id_alvo), client.encrypt(message.guild.id))
 
     if (guild_user.erase.valid) { // Usuário interagiu com o Alonsal novamente
-        client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao_servidor", client.defaultEmoji("person"), await (client.guilds(message.guild.id)).name) })
+        // client.sendDM(user_data, { content: client.tls.phrase(user_data, "manu.data.aviso_remocao_exclusao_servidor", client.defaultEmoji("person"), await (client.guilds(message.guild.id)).name) })
 
         guild_user.erase.valid = false // Retirando a etiqueta para remoção de dados
         cached_erase = true
