@@ -655,7 +655,7 @@ function internal_functions(client) {
         const guilds = await listAllRankedGuilds()
 
         guilds.forEach(guild => {
-            client.cached.ranked_guilds.set(guild.sid, true)
+            client.cached.ranked_guilds.set(client.encrypt(guild.sid), true)
         })
     }
 

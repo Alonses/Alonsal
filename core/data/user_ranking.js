@@ -13,7 +13,7 @@ module.exports = async ({ client, message, caso }) => {
     let id_alvo = message.user?.id || message.author?.id
 
     // Coletando os dados do usuário alvo
-    let user = await getUserRankServer(id_alvo, message.guild.id)
+    let user = await getUserRankServer(client.encrypt(id_alvo), client.encrypt(message.guild.id))
 
     // Sincronizando o XP interno de todos os servidores que o usuário faz parte
     if (!user.ixp) {
@@ -88,7 +88,7 @@ module.exports = async ({ client, message, caso }) => {
     user.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.guild_timeout]
 
     // Verificando se o servidor da interação está com o ranking habilitado
-    if (client.cached.ranked_guilds.has(message.guild.id)) {
+    if (client.cached.ranked_guilds.has(client.encrypt(message.guild.id))) {
         if (caso === "messages") {
 
             user.xp += client.cached.ranking_value
