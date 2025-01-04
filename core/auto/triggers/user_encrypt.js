@@ -74,7 +74,7 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
     const user_global_rank = await findUserGlobalRankIndex(new_user_id)
 
     // Criptografando o ID do servidor com maior XP do usuário
-    if (user_global_rank.sid) user_global_rank.sid = client.encrypt(user_global_rank.sid)
+    // if (user_global_rank.sid) user_global_rank.sid = client.encrypt(user_global_rank.sid)
 
     user_global_rank.nickname = client.encrypt(user_global_rank.nickname)
     await user_global_rank.save()
