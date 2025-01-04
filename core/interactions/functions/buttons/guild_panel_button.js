@@ -25,9 +25,9 @@ module.exports = async ({ client, user, dados, interaction }) => {
 
         // Sincronizando os servidores rankeados salvos em cache
         if (guild.conf.ranking)
-            client.cached.ranked_guilds.set(guild.sid, true)
+            client.cached.ranked_guilds.set(client.encrypt(guild.sid), true)
         else
-            client.cached.ranked_guilds.delete(guild.sid)
+            client.cached.ranked_guilds.delete(client.encrypt(guild.sid))
 
         pagina_guia = 3
     }
