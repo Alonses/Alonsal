@@ -16,7 +16,7 @@ module.exports = {
 
         const m = await interaction.reply({
             content: "Ping?",
-            fetchReply: true,
+            withResponse: true,
             ephemeral: client.decider(user?.conf.ghost_mode || user_command, 0)
         })
 
