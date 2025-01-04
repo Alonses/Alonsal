@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             texto_entrada = client.decifer(user_alvo.social.lastfm)
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null })
+    await client.deferedReply(interaction, client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null)
 
     fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}`)
         .then(response => response.json())
@@ -91,11 +91,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     }
                 )
 
-            interaction.editReply({
+            client.reply(interaction, {
                 embeds: [embed],
                 components: [row],
                 flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-            })
+            }, true)
         })
         .catch(() => {
             return client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)

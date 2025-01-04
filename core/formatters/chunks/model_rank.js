@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
 
     for (const user_interno of data_usuarios) {
         if (user_alvo_data)
-            if (user_interno.uid === user_alvo_data.id) {
+            if (client.decifer(user_interno.uid) === user_alvo_data.id) {
                 usuario_alvo.push(user_interno.xp)
                 break
             }
@@ -191,8 +191,8 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
         }
     )
 
-    interaction.editReply({
+    client.reply(interaction, {
         embeds: [embed],
         flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
-    })
+    }, true)
 }

@@ -114,7 +114,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
     }
 
     if (!hierarquia)
-        return client.reply(interaction, {
+        client.reply(interaction, {
             content: client.tls.phrase(user, "mode.warn.advertencia_registrada", 63),
             embeds: [],
             components: [],

@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" }
     ], interaction)
 
-    const modulo = await getModule(interaction.user.id, timestamp)
+    const modulo = await getModule(user.uid, timestamp)
 
     if (!modulo) // Verificando se o módulo ainda existe
         return interaction.update({
@@ -101,14 +101,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 5) {
 
         // Excluindo o módulo
-        await dropModule(interaction.user.id, modulo.type, timestamp)
+        await dropModule(user.uid, modulo.type, timestamp)
 
-        return client.reply(interaction, {
+        const obj = {
             content: client.tls.phrase(user, "misc.modulo.excluido", 13),
             embeds: [],
             components: [row],
-            flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
-        })
+        }
+
+        if (client.decider(user?.conf.ghost_mode, 0))
+            obj.flags = "Ephemeral"
+
+        return client.reply(interaction, obj)
     }
 
     if (operacao === 6) // Exclusão de módulo cancelada, redirecionando o evento

@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction }) => {
             await listas[0].save()
         }
 
-        return interaction.reply({
+        return client.reply(interaction, {
             content: `${client.tls.phrase(user, "util.tarefas.tarefa_adicionada", client.defaultEmoji("paper"))} \`${listas[0].name}\`!`,
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction }) => {
             timestamp: timestamp
         }
 
-        interaction.reply({
+        client.reply(interaction, {
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", 1),
             components: [client.create_menus({ client, interaction, user, data })],
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null

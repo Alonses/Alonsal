@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             texto_entrada = client.decifer(user_alvo.social.lastfm)
 
     // Aumentando o tempo de duração da resposta
-    await interaction.deferReply({ flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral" })
+    await client.deferedReply(interaction, interaction.user.id === alvo.id ? user_command || null : "Ephemeral")
 
     fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}&now=true`)
         .then(response => response.json())
@@ -57,11 +57,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 .setImage(res.scrobble_atual.cover)
                 .setDescription(`\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}\`\`\``)
 
-            interaction.editReply({
+            client.reply(interaction, {
                 embeds: [embed],
                 components: [client.create_buttons(row, interaction)],
                 flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral"
-            })
+            }, true)
         })
         .catch(() => {
             return client.tls.editReply(interaction, user, "util.lastfm.error_2", true, 4)

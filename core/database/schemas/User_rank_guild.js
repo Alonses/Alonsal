@@ -62,9 +62,8 @@ async function getAllUsers() {
 }
 
 async function getUserRankServers(uid) {
-    if (!await model.exists({
-        uid: uid
-    })) return
+    if (!await model.exists({ uid: uid }))
+        return
 
     return model.find({
         uid: uid
@@ -73,7 +72,7 @@ async function getUserRankServers(uid) {
 
 async function getUserRankServer(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid }))
-        await model.create({
+        return await model.create({
             uid: uid,
             sid: sid
         })

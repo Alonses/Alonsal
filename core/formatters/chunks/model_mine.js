@@ -8,9 +8,9 @@ const Canvas = require('@napi-rs/canvas')
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     if (interaction) // Defere a interação para aumentar o tempo de resposta após
-        await interaction.deferReply({ flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null })
+        await client.deferedReply(interaction, client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null)
 
-    let url_pesquisa = `?idioma=${user.lang}`, nota_rodape
+    let url_pesquisa = `?idioma=${user.lang ?? "pt-br"}`, nota_rodape
 
     // Entrada customizada, ativa caso o usuário tenha pesquisado por algo
     if (interaction && interaction.options.getString("item"))
@@ -163,11 +163,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             }
 
             if (interaction)
-                return interaction.editReply({
+                return client.reply(interaction, {
                     embeds: [embed],
                     files: [attachment],
                     flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-                })
+                }, true)
             else
                 return client.sendDM(user, { embeds: [embed], files: [attachment], }, true)
         })

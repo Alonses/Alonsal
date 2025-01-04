@@ -15,16 +15,16 @@ module.exports = async ({ client, user, interaction }) => {
     const type = parseInt(interaction.options.getString("choice"))
 
     // Verificando quantos módulos de um tipo existem para o usuário
-    const modulos_semelhantes = await verifyUserModules(interaction.user.id, type)
+    const modulos_semelhantes = await verifyUserModules(user.uid, type)
 
     if (modulos_semelhantes.length > 2)
         return client.tls.reply(interaction, user, "misc.modulo.limite_modulos", true, 4)
 
-    // Prevenção de erros
+    // Prevenção de erros por falta de local padrão para o módulo de clima
     if (type == 0 && !user.misc.locale)
         return client.tls.reply(interaction, user, "misc.modulo.sem_locale", true, client.emoji(0))
 
-    const corpo_modulo = await createModule(interaction.user.id, type)
+    const corpo_modulo = await createModule(user.uid, type)
     const timestamp = client.timestamp()
 
     if (modulePrices[type]) // Módulos com preços diferentes
@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
     await corpo_modulo.save()
 
     const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${corpo_modulo.stats.days}`)} ${corpo_modulo.stats.hour}`
-    const montante = await getModulesPrice(interaction.user.id)
+    const montante = await getModulesPrice(user.uid)
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "misc.modulo.cabecalho_menu"))

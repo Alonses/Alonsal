@@ -47,10 +47,10 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
 
                 if (interaction)
-                    return interaction.editReply({
+                    return client.reply(interaction, {
                         embeds: [embed_eventos],
                         flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-                    })
+                    }, true)
                 else return client.sendDM(user, { embeds: [embed_eventos] }, true)
             })
     } else {
@@ -94,11 +94,11 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     })
 
                 if (interaction)
-                    interaction.editReply({
+                    client.reply(interaction, {
                         embeds: [acontecimento],
                         components: [row],
                         flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-                    })
+                    }, true)
                 else client.sendDM(user, { embeds: [acontecimento], components: [row] }, true)
             })
             .catch(() => {

@@ -37,9 +37,9 @@ module.exports = {
 
         mensagem += `\n${client.tls.phrase(user, "util.ping.latencia")} [ **\`${Math.round(client.discord.ws.ping)}ms\`** ]`
 
-        await interaction.editReply({
+        client.reply(interaction, {
             content: mensagem,
             flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-        })
+        }, true)
     }
 }

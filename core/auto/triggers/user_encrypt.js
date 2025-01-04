@@ -98,6 +98,4 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
     })
 }
 
-module.exports = {
-    atualiza_user_encrypt
-}
+module.exports.atualiza_user_encrypt = atualiza_user_encrypt

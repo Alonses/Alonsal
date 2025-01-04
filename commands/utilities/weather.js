@@ -41,7 +41,7 @@ module.exports = {
                 })),
     async execute({ client, user, interaction, user_command }) {
 
-        await interaction.deferReply({ flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null })
+        await client.deferedReply(interaction, client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null)
 
         require('../../core/formatters/chunks/model_weather')({ client, user, interaction, user_command })
     }
