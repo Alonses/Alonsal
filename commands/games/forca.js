@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, InteractionContextType } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 const { randomString } = require('../../core/functions/random_string')
 
@@ -10,9 +10,11 @@ const { padrao_forca } = require('../../core/formatters/patterns/game')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("forca")
-        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!")
-        .setContexts(InteractionContextType.Guild),
+        .setDescription("⌠🎲|🇧🇷⌡ O jogo da forca!"),
     async execute({ client, user, interaction }) {
+
+        // Ignorando acionamento do jogo da forca em DM
+        if (!interaction.guild) return
 
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
             return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", ephemeral: true })
