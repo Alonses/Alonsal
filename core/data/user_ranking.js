@@ -12,6 +12,9 @@ module.exports = async ({ client, message, caso }) => {
     //            Comandos            Mensagens
     let id_alvo = message.user?.id || message.author?.id
 
+    // Ignora a interação caso não tenha sido acionado em um servidor
+    if (!message.guild) return
+
     // Coletando os dados do usuário alvo
     let user = await getUserRankServer(client.encrypt(id_alvo), client.encrypt(message.guild.id))
 
