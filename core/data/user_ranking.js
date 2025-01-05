@@ -60,6 +60,12 @@ module.exports = async ({ client, message, caso }) => {
     guild_user.nickname = message.user?.username || message.author?.username
     guild_user.nickname = client.encrypt(guild_user.nickname)
 
+    // Limitando o ganho de XP por spam no chat
+    if (guild_user.caldeira_de_ceira)
+        if (message.createdTimestamp - guild_user.lastInteraction > CHECKS.HOLD)
+            guild_user.caldeira_de_ceira = false
+        else if (caso === "messages") return
+
     if (caso === "messages") {
         if (guild_user.warns >= CHECKS.LIMIT) {
             guild_user.caldeira_de_ceira = true
@@ -81,12 +87,6 @@ module.exports = async ({ client, message, caso }) => {
             return
         }
     }
-
-    // Limitando o ganho de XP por spam no chat
-    if (guild_user.caldeira_de_ceira)
-        if (message.createdTimestamp - guild_user.lastInteraction > CHECKS.HOLD)
-            guild_user.caldeira_de_ceira = false
-        else if (caso === "messages") return
 
     // Coletando o XP atual e somando ao total do usuário
     let xp_anterior = guild_user.ixp
