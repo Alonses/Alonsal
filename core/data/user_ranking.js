@@ -58,6 +58,7 @@ module.exports = async ({ client, message, caso }) => {
 
     //              Comandos                  Mensagens
     guild_user.nickname = message.user?.username || message.author?.username
+    guild_user.nickname = client.encrypt(guild_user.nickname)
 
     if (caso === "messages") {
         if (guild_user.warns >= CHECKS.LIMIT) {
