@@ -20,7 +20,7 @@ const client_data = {
     force_update: update_commands ? 1 : 0,
     status: silent || modo_develop ? 0 : 1,
     logger: silent || modo_develop ? 0 : 1,
-    ranking: limited || silent ? 0 : 1,
+    ranking: limited || silent || modo_develop ? 0 : 1,
     modules: limited || update_commands || silent || modo_develop ? 0 : 1,
     relatorio: update_commands || silent || modo_develop ? 0 : 1,
 
