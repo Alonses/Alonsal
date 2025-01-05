@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operacao === 3 || operacao == 5) {
 
         // Coletando os dados para o servidor ou para o global
-        const data_usuarios = await (caso === "server" ? getRankServer(interaction.guild.id) : getRankGlobal())
+        const data_usuarios = await (caso === "server" ? getRankServer(client.encrypt(interaction.guild.id)) : getRankGlobal())
         let posicao = 1
 
         if (operacao === 3) {

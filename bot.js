@@ -9,7 +9,7 @@ const database = require('./core/database/database')
 
 const { nerfa_spam } = require('./core/events/spam')
 const { getBot } = require('./core/database/schemas/Bot')
-const { checkUser } = require('./core/database/schemas/User')
+const { checkUser, } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 const { verifica_chute } = require('./commands/games/forca')
