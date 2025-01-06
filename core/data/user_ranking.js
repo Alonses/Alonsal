@@ -72,7 +72,7 @@ module.exports = async ({ client, message, caso }) => {
             return
         }
 
-        if (message.createdTimestamp - guild_user.lastInteraction < CHECKS.DIFF) {
+        if ((message.createdTimestamp - guild_user.lastInteraction) < CHECKS.DIFF) {
             guild_user.warns++
 
             await guild_user.save()
@@ -167,7 +167,9 @@ async function verifica_servers() {
                     }
                 })
 
-                await user_global.save()
+                // Exclui o usuário caso o XP global esteja zerado
+                if (user_global.xp == 0) await user_global.delete()
+                else await user_global.save()
             }
 
             array_copia.shift()
