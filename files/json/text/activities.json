@@ -38,7 +38,7 @@
         },
         {
             "type": 0,
-            "text": "ovos nas inimiga"
+            "text": "ovo nas inimigas"
         },
         {
             "type": 0,
@@ -269,11 +269,6 @@
         {
             "type": 1,
             "text": "Piscinas Incríveis"
-        },
-        {
-            "type": 2,
-            "text": "🎶 Nerdcast",
-            "link": "https://open.spotify.com/show/22Wgt4ASeaw8mmoqAWNUn1?si=41d64c61840848fc"
         },
         {
             "type": 2,

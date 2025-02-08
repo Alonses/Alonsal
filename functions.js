@@ -214,7 +214,6 @@ function internal_functions(client) {
     }
 
     client.getGuildRole = (interaction, id_cargo) => {
-
         // Retorna o cargo solicitado
         return interaction.guild.roles.cache.find((r) => r.id === id_cargo)
     }
@@ -559,14 +558,17 @@ function internal_functions(client) {
 
         let notifications = false
 
+        // Descriptografando o ID do usuário para envio em DM
+        const id_user = parseInt(user.uid) ? user.uid : client.decifer(user.uid)
+
         // Previne que o bot envie DM's para si mesmo
-        if (user.uid === client.id()) return
+        if (id_user === client.id()) return
         if (force) user.conf.notify = 1
 
         // Notificando o usuário alvo caso ele receba notificações em DM do bot
         if (client.decider(user?.conf?.notify, 1)) {
 
-            const user_interno = await client.discord.users.fetch(user.uid)
+            const user_interno = await client.discord.users.fetch(id_user)
                 .catch(() => { return null })
 
             if (user_interno)
