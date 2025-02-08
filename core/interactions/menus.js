@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction }) => {
     client.registryExperience(interaction, "menu")
 
     // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
-    if (criador !== interaction.user.id)
+    if (client.decifer(criador) !== interaction.user.id)
         autor_original = false
 
     if (funcao === "modules_browse" && !autor_original) // Funções de módulos

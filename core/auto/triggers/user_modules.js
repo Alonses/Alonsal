@@ -1,10 +1,8 @@
 const { writeFileSync, readFile } = require('fs')
 
-const { getUser } = require('../../database/schemas/User.js')
 const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
 
 const { week_days } = require('../../formatters/patterns/user.js')
-
 const formata_horas = require('../../formatters/formata_horas.js')
 
 const lista_modulos = []
@@ -146,7 +144,7 @@ async function cobra_modulo(client) {
     const ids = Object.keys(users)
     ids.forEach(async identificador => {
 
-        const user = await getUser(identificador)
+        const user = await client.getUser(identificador)
         user.misc.money -= users[identificador]
         let total = users[identificador]
 
