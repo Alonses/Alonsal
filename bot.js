@@ -9,7 +9,7 @@ const database = require('./core/database/database')
 
 const { nerfa_spam } = require('./core/events/spam')
 const { getBot } = require('./core/database/schemas/Bot')
-const { checkUser, } = require('./core/database/schemas/User')
+const { checkUser } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 const { verifica_chute } = require('./commands/games/forca')
@@ -83,7 +83,7 @@ client.discord.on("messageCreate", async message => {
 		let user_rank_guild = await getUserRankServer(user.uid, client.encrypt(message.guild.id))
 
 		// Ignoring banned users and those moved to data deletion
-		if (user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
+		if (!user_rank_guild || user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
 
 		// Syncing user data
 		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
