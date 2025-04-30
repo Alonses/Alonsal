@@ -6,7 +6,8 @@ const { banMessageEraser } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
-    await client.deferedResponse({ interaction })
+    const ephemeral = "Ephemeral"
+    await client.deferedResponse({ interaction, ephemeral })
 
     const pagina = pagina_guia || 0
     const emoji_pessoa = client.defaultEmoji("person")

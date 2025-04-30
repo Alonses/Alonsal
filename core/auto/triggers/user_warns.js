@@ -34,7 +34,7 @@ async function verifica_warns(client) {
         for (let i = 0; i < data.length; i++) {
 
             const warn = data[i]
-            const guild = guilds_map[warn.sid] ? guilds_map[warn.sid] : await client.getGuild(warn.sid)
+            const guild = guilds_map[warn.sid] ? guilds_map[warn.sid] : await client.getGuild(client.decifer(warn.sid))
 
             if (!guilds_map[warn.sid]) // Salvando a guild em cache
                 guilds_map[warn.sid] = guild

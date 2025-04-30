@@ -139,6 +139,11 @@ client.discord.on("interactionCreate", async interaction => {
 		await user.save()
 	}
 
+	if (!user.nick) {
+		user.nick = client.encrypt(interaction.user.username)
+		await user.save()
+	}
+
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute
 

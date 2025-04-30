@@ -6,12 +6,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operacao = parseInt(dados.split(".")[1])
 
     // Rascunhos de advertências salvas em cache
-    const user_warns = await listAllCachedUserWarns(id_alvo, interaction.guild.id)
+    const user_warns = await listAllCachedUserWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
     if (operacao === 0) { // Operação cancelada
 
         // Excluindo a advertência registrada em cache
-        removeUserWarn(id_alvo, interaction.guild.id, user_warns[user_warns.length - 1].timestamp)
+        removeUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), user_warns[user_warns.length - 1].timestamp)
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),

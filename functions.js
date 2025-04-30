@@ -242,15 +242,19 @@ function internal_functions(client) {
         const cript_user_id = client.encrypt(id_user)
         let user = await getUser(id_user)
 
-        if (user || parseInt(user?.uid)) {
+        if (user && id_user.length < 20) {
 
             // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
             atualiza_user_encrypt(client, id_user, cript_user_id)
 
             // Criptografando outros dados sensíveis do usuário
             user.uid = cript_user_id
-            user.nick = client.encrypt(user.nick)
-            user.profile.avatar = client.encrypt(user.profile.avatar)
+
+            if (user.nick)
+                user.nick = client.encrypt(user.nick)
+
+            if (user.profile.avatar)
+                user.profile.avatar = client.encrypt(user.profile.avatar)
 
             if (user?.misc.locale > 0)
                 user.misc.locale = client.encrypt(user.misc.locale)
@@ -268,8 +272,13 @@ function internal_functions(client) {
             //     user.profile.avatar = client.encrypt(user.profile.avatar)
 
             user.save()
-        } else
-            user = await getEncryptedUser(cript_user_id)
+        } else { // ID já criptografado
+
+            if (id_user.length < 20)
+                id_user = cript_user_id
+
+            user = await getEncryptedUser(id_user)
+        }
 
         return user
     }
@@ -752,7 +761,7 @@ function internal_functions(client) {
     // Verificando as advertências do usuário e os cargos 
     client.verifyUserWarnRoles = async (id_user, id_guild) => {
 
-        const guild = await client.guilds(id_guild)
+        const guild = await client.guilds(client.decifer(id_guild))
         const guild_warns = await listAllGuildWarns(id_guild)
         const user_warns = await listAllUserWarns(id_user, id_guild)
 
@@ -763,16 +772,16 @@ function internal_functions(client) {
             if (guild_warn.role) {
 
                 // Permissões do bot no servidor
-                const membro_sv = await client.getMemberGuild(id_guild, client.id())
-                const membro_guild = await client.getMemberGuild(id_guild, id_user)
+                const membro_sv = await client.getMemberGuild(client.decifer(id_guild), client.id())
+                const membro_guild = await client.getMemberGuild(client.decifer(id_guild), client.decifer(id_user))
 
                 if (!membro_sv || !membro_guild) return // Sem dados
 
-                // Removendo o cargo ao usuário que recebeu a advertência
+                // Removendo o cargo do usuário que recebeu a advertência
                 if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
                     if (i >= user_warns.length || user_warns.length === 0) {
 
-                        let role = guild.roles.cache.get(guild_warn.role)
+                        let role = guild.roles.cache.get(client.decifer(guild_warn.role))
 
                         if (role.editable) // Verificando se o cargo é editável
                             membro_guild.roles.remove(role).catch(console.error)

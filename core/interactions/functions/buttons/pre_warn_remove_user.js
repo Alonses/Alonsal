@@ -22,13 +22,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     } else if (operacao === 1) {
 
-        const user_warn = await listAllUserPreWarns(id_alvo, interaction.guild.id)
+        const user_warn = await listAllUserPreWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         // Removendo as anotações do membro no servidor
-        dropAllUserGuildPreWarns(id_alvo, interaction.guild.id)
+        dropAllUserGuildPreWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         // Verificando se há outros usuários com advertência no servidor para poder continuar editando
-        let anotacoes_server = await checkUserGuildPreWarned(id_guild), row
+        let anotacoes_server = await checkUserGuildPreWarned(client.encrypt(id_guild)), row
 
         const obj = {
             content: client.tls.phrase(user, "mode.warn.advertencias_removidas", 10),
@@ -55,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warn[0].nick)}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
@@ -90,7 +90,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 3) {
 
         // Menu para navegar entre os usuários com anotações com anotações
-        const anotacoes_server = await checkUserGuildPreWarned(interaction.guild.id)
+        const anotacoes_server = await checkUserGuildPreWarned(client.encrypt(interaction.guild.id))
 
         if (anotacoes_server.length < 1)
             return client.tls.reply(interaction, user, "mode.warns.sem_warns", true, 1)

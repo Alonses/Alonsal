@@ -21,10 +21,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
-        const row = [], user_warns = await listAllUserPreWarns(id_alvo, interaction.guild.id)
+        const row = [], user_warns = await listAllUserPreWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
-        removeUserPreWarn(id_alvo, interaction.guild.id, timestamp)
+        removeUserPreWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp)
 
         if (user_warns.length - 1 > 0)
             row.push({ id: "pre_warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_outras"), type: 0, emoji: client.emoji(41), data: `11|${id_alvo}` })
@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     } else if (escolha === 9) {
 
-        const user_note = await getUserPreWarn(id_alvo, interaction.guild.id, timestamp)
+        const user_note = await getUserPreWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp)
         let motivo_remocao = ""
 
         if (interaction.options?.getString("reason"))
@@ -68,12 +68,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .addFields(
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick ? client.decifer(user.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.moderador")}**`,
-                    value: `${client.emoji("icon_id")} \`${user_note.assigner}\`\n\`${user_note.assigner_nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${user_note.assigner}> )`,
+                    value: `${client.emoji("icon_id")} \`${client.decifer(user_note.assigner)}\`\n\`${user_note.assigner_nick ? client.decifer(user_note.assigner_nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${client.decifer(user_note.assigner)}> )`,
                     inline: true
                 },
                 {

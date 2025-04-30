@@ -31,6 +31,16 @@ const modulePrices = {
     6: 10
 }
 
+const moduleTypes = {
+    0: "weather",
+    1: "frase",
+    2: "history",
+    3: "charada",
+    4: "curiosidades",
+    5: "mine",
+    6: "free_games"
+}
+
 const week_days = {
     0: [1, 2, 3, 4, 5],
     1: [6, 0]
@@ -139,6 +149,7 @@ const dataComboRelation = {
 module.exports = {
     moduleDays,
     modulePrices,
+    moduleTypes,
     week_days,
     colorsMap,
     colorsPriceMap,
