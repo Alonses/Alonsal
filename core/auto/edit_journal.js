@@ -1,44 +1,59 @@
 module.exports = async ({ client, caso, quantia }) => {
-
-    if (!client.x.relatorio) return
-
-    const bot = await client.getBot()
+    if (!client.x?.relatorio) return
 
     // Movimentações de bufunfas
     if (caso === "gerado" || caso === "movido" || caso === "reback") {
-        bot.bfu[caso] += quantia
+        const updateData = {
+            currentDaily: {
+                update: {
+                    [`${caso === "gerado" ? "created" : caso === "movido" ? "transfered" : "reback"}Bufunfas`]: {increment: quantia}
+                }
+            }
+        }
 
-        if (caso === "gerado") // Salvando as Bufunfas geradas no histórico global
-            bot.persis.bufunfas += quantia
+        if (caso === "gerado") {
+            updateData.bufunfas = {increment: quantia}
+        }
+
+        await client.updateBot(updateData)
     } else {
+        const updateData = {
+            currentDaily: {
+                update: {}
+            }
+        }
+
+        const bot = await client.getBot()
 
         if (caso === "messages") {
-            bot.exp.exp_concedido += bot.persis.ranking
-            bot.exp.msgs_validas += 1
-            bot.exp.msgs_lidas += 1
+            updateData.currentDaily.update.experience = {increment: Math.round(bot.ranking)}
+            updateData.currentDaily.update.messages = {increment: 1}
+            updateData.currentDaily.update.readMessages = {increment: 1}
         }
 
         if (caso === "comando") {
-            bot.exp.exp_concedido += bot.persis.ranking * 1.5
-            bot.cmd.ativacoes += 1
+            updateData.currentDaily.update.experience = {increment: Math.round(bot.ranking * 1.5)}
+            updateData.currentDaily.update.activations = {increment: 1}
         }
 
         if (caso === "botao") {
-            bot.exp.exp_concedido += bot.persis.ranking * 0.5
-            bot.cmd.botoes += 1
+            updateData.currentDaily.update.experience = {increment: Math.round(bot.ranking * 0.5)}
+            updateData.currentDaily.update.buttons = {increment: 1}
         }
 
         if (caso === "menu") {
-            bot.exp.exp_concedido += bot.persis.ranking * 0.5
-            bot.cmd.menus += 1
+            updateData.currentDaily.update.experience = {increment: Math.round(bot.ranking * 0.5)}
+            updateData.currentDaily.update.menus = {increment: 1}
         }
 
         if (caso === "msg_enviada")
-            bot.exp.msgs_lidas += 1
+            updateData.currentDaily.update.readMessages = {increment: 1}
 
         if (caso === "epic_embed")
-            bot.cmd.erros += 1
-    }
+            updateData.currentDaily.update.errors = {increment: 1}
 
-    await bot.save()
+
+        if (Object.keys(updateData.currentDaily.update).length > 0)
+            await client.updateBot(updateData)
+    }
 }

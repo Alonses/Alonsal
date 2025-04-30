@@ -10,3 +10,4 @@ files/data/*
 files/languages/*
 *.sfk
 compare_messages.js
+generated/prisma/

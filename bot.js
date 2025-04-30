@@ -24,7 +24,7 @@ client.discord.once("ready", async () => {
 
 	// Setting the default language and value for ranking
 	idioma.setDefault("pt-br")
-	client.cached.ranking_value = (await getBot(client.id())).persis.ranking || 5
+	client.cached.ranking_value = (await getBot(client.id())).ranking || 5
 
 	// Secondary events
 	await require("./core/auto/clock")({ client })

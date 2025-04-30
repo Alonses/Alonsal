@@ -173,8 +173,12 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     }, 4000)
 
     // Registering neutralized spam in history
-    const bot = await client.getBot(client.x.id)
-    bot.persis.spam++
+
+    await client.updateBot({
+        spam: {
+            increment: 1
+        }
+    })
 
     if (guild.spam.suspicious_links && user_messages.length > 0 && !suspect_link) { // Checking if the server has the suspicious links registry active
 
@@ -193,8 +197,6 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
             }
         }
     }
-
-    await bot.save()
 }
 
 remove_spam = (client, id_user, id_guild, user_message) => {
@@ -204,7 +206,7 @@ remove_spam = (client, id_user, id_guild, user_message) => {
     // Filters all messages on the server that were sent by the user in the last minute
     guild.channels.cache.forEach(async channel => {
 
-        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && (channel.type === 0 || channel.type == 2))
+        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && (channel.type === 0 || channel.type === 2))
             await channel.messages.fetch({ limit: 15 })
                 .then(async messages => {
 

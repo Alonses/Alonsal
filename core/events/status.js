@@ -43,7 +43,7 @@ dispara_status = (client, status_apisal) => {
 
             const bot = await client.getBot()
 
-            const commit_language = bot.persis.alondioma
+            const commit_language = bot.alondioma
             const canais_texto = client.channels(0).size
             let members = 0
 
@@ -83,7 +83,7 @@ dispara_status = (client, status_apisal) => {
                     },
                     { name: "⠀", value: "⠀", inline: true },
                     {
-                        name: `:white_small_square: **Versão ${bot.persis.version}**`,
+                        name: `:white_small_square: **Versão ${bot.version}**`,
                         value: "⠀",
                         inline: true
                     },

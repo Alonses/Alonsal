@@ -24,12 +24,11 @@ async function loadAll(client) {
                 const cod_commit = res.split("\"currentOid\":\"")[1].split("\"},")[0].slice(0, 7)
 
                 // Sincroniza com os idiomas mais recentes caso haja atualização ou não haja arquivos
-                if (cod_commit !== bot.persis.alondioma || !existsSync(`./files/languages/pt-br.json`)) {
+                if (cod_commit !== bot.alondioma || !existsSync(`./files/languages/pt-br.json`)) {
                     console.log("🟠 | Sincronizando com as traduções mais recentes.")
 
                     // Salvando o commit de traduções mais recente no banco
-                    bot.persis.alondioma = cod_commit
-                    await bot.save()
+                    await client.updateBot({ alondioma: cod_commit })
 
                     if (client.id() === process.env.client_1 && process.env.channel_feeds) // Notifica no canal apenas para o bot principal
                         client.channels().get(process.env.channel_feeds).send({ content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` })

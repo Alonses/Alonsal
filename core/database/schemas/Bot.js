@@ -1,79 +1,66 @@
-const mongoose = require("mongoose")
+const { prisma } = require("../../../lib/prisma")
 
-// bit -> Bot ID
+async function getBot(id) {
+    let bot = await prisma.bot.findUnique({
+        where: { id },
+        include: {
+            currentDaily: true
+        }
+    })
 
-const schema = new mongoose.Schema({
-    bit: { type: String, default: null },
-    persis: {
-        version: { type: String, default: "1.0" },
-        commands: { type: Number, default: 0 },
-        ranking: { type: Number, default: 5 },
-        alondioma: { type: String, default: null },
-        last_interaction: { type: Number, default: null },
-        spam: { type: Number, default: 0 },
-        bufunfas: { type: Number, default: 0 }
-    },
-    cmd: {
-        ativacoes: { type: Number, default: 0 },
-        botoes: { type: Number, default: 0 },
-        menus: { type: Number, default: 0 },
-        erros: { type: Number, default: 0 }
-    },
-    exp: {
-        exp_concedido: { type: Number, default: 0 },
-        msgs_lidas: { type: Number, default: 0 },
-        msgs_validas: { type: Number, default: 0 }
-    },
-    bfu: {
-        gerado: { type: Number, default: 0 },
-        movido: { type: Number, default: 0 },
-        reback: { type: Number, default: 0 }
-    }
-})
-
-const model = mongoose.model("Bot", schema)
-
-async function getBot(bit) {
-    if (!await model.exists({ bit: bit }))
-        await model.create({
-            bit: bit
+    if (!bot) {
+        bot = await prisma.bot.create({
+            data: { id }
         })
+        dailyReset(id)
+    }
 
-    return model.findOne({
-        bit: bit
+    if (!bot.currentDaily) {
+        dailyReset(id)
+    }
+
+    return bot;
+}
+
+async function updateBot(id, data) {
+    const bot = await prisma.bot.findUnique({
+        where: { id }
+    });
+    if (!bot) return;
+
+    await prisma.bot.update({
+        where: { id },
+        data
+    });
+}
+
+async function dailyReset(id) {
+    const bot = await prisma.bot.findUnique({
+        where: { id }
+    });
+    if (!bot) return;
+
+    const newDaily = await prisma.daily.create({ data: {} });
+
+    await prisma.bot.update({
+        where: { id },
+        data: {
+            currentDaily: {
+                connect: { id: newDaily.id }
+            }
+        }
+    });
+}
+
+async function dropBot(id) {
+    await prisma.bot.delete({
+        where: { id }
     })
 }
 
-async function dailyReset(bit) {
-
-    // Reseta os dados diários do bot
-    const bot = await getBot(bit)
-
-    bot.cmd.ativacoes = 0
-    bot.cmd.botoes = 0
-    bot.cmd.menus = 0
-    bot.cmd.erros = 0
-
-    bot.exp.exp_concedido = 0
-    bot.exp.msgs_validas = 0
-    bot.exp.msgs_lidas = 0
-
-    bot.bfu.gerado = 0
-    bot.bfu.movido = 0
-    bot.bfu.reback = 0
-
-    await bot.save()
-}
-
-async function dropBot(bit) {
-    await model.findOneAndDelete({
-        bit: bit
-    })
-}
-
-module.exports.User = model
 module.exports = {
     getBot,
+    updateBot,
     dropBot,
     dailyReset
 }

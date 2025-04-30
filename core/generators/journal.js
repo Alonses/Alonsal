@@ -22,24 +22,24 @@ module.exports = async ({ client }) => {
         .addFields(
             {
                 name: ":gear: **Comandos**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.cmd.ativacoes)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.cmd.erros)}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.currentDaily.activations)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.currentDaily.errors)}\``,
                 inline: true
             },
             {
                 name: ":medal: **Experiência**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.exp.exp_concedido)}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.currentDaily.experience)}\``,
                 inline: true
             },
             {
                 name: ":e_mail: **Mensagens**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.exp.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.exp.msgs_validas)}\``,
+                value: `:dart: **Hoje:** \`${client.locale(bot.currentDaily.readMessages)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.currentDaily.messages)}\``,
                 inline: true
             }
         )
         .addFields(
             {
                 name: `${client.emoji("icon_slash_commands")} **Interações**`,
-                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\``,
+                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.currentDaily.menus)}\``,
                 inline: true
             },
             {
@@ -49,7 +49,7 @@ module.exports = async ({ client }) => {
             },
             {
                 name: ":bank: Bufunfas",
-                value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
+                value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.currentDaily.createdBufunfas)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.currentDaily.transferedBufunfas)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.currentDaily.rebackBufunfas)}\``,
                 inline: true
             }
         )

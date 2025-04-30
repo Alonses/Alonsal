@@ -56,12 +56,12 @@ async function requisita_status(client) {
 
     if (texto_status.includes("version_repl")) {
         const bot = await client.getBot()
-        texto_status = texto_status.replace("version_repl", client.locale(bot.persis.version))
+        texto_status = texto_status.replace("version_repl", client.locale(bot.version))
     }
 
     if (texto_status.includes("commands_repl")) {
         const bot = await client.getBot()
-        texto_status = texto_status.replace("commands_repl", client.locale(bot.persis.commands))
+        texto_status = texto_status.replace("commands_repl", client.locale(bot.commands))
     }
 
     // Exibindo o status personalizado de forma aleatória por um tempo

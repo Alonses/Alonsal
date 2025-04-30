@@ -19,9 +19,9 @@ module.exports = {
 
         client.cached.ranking_value = valor_ranking
 
-        const bot = await client.getBot()
-        bot.persis.ranking = valor_ranking
-        await bot.save()
+        await client.updateBot({
+            ranking: valor_ranking
+        })
 
         interaction.reply({
             content: `:tropical_drink: | Agora o ranking dará \`${valor_ranking} EXP\` p/ mensagem e \`${valor_ranking * 1.5} EXP\` p/ comando`,

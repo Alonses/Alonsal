@@ -1,0 +1,42 @@
+model Bot {
+  id String @id
+
+  version         String    @default("1.0")
+  commands        Int       @default(0)
+  ranking         Float     @default(5)
+  alondioma       String?
+  lastInteraction DateTime? @default(now())
+  spam            Int       @default(0)
+  bufunfas        Float     @default(0)
+
+  currentDaily   Daily?  @relation("CurrentDaily", fields: [currentDailyId], references: [id])
+  currentDailyId String? @unique
+
+  dailyHistory Daily[] @relation("DailyHistory")
+
+  createdAt DateTime @default(now())
+}
+
+model Daily {
+  id String @id @default(uuid())
+
+  activations Int @default(0)
+  buttons     Int @default(0)
+  menus       Int @default(0)
+  errors      Int @default(0)
+
+  experience   Int @default(0)
+  messages     Int @default(0)
+  readMessages Int @default(0)
+
+  createdBufunfas    Int @default(0)
+  transferedBufunfas Int @default(0)
+  rebackBufunfas     Int @default(0)
+
+  bot   Bot?    @relation("DailyHistory", fields: [botId], references: [id])
+  botId String?
+
+  currentForBot Bot? @relation("CurrentDaily")
+
+  createdAt DateTime @default(now())
+}

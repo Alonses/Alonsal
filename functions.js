@@ -4,7 +4,7 @@ const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./core/functions/hex_color')
 
-const { getBot } = require('./core/database/schemas/Bot')
+const { getBot, updateBot} = require('./core/database/schemas/Bot')
 const { getUser, getEncryptedUser } = require('./core/database/schemas/User')
 
 const { create_menus } = require('./core/generators/menus')
@@ -183,7 +183,9 @@ function internal_functions(client) {
         return links
     }
 
-    client.getBot = () => { return getBot(client.x.id) }
+    client.getBot = async () => getBot(client.x.id)
+
+    client.updateBot = async data => updateBot(client.x.id, data)
 
     client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
