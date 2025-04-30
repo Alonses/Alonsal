@@ -10,27 +10,27 @@ const { default_emoji } = require('../../../files/json/text/emojis.json')
 module.exports = async ({ client, user, interaction, guild, user_warns, guild_member }) => {
 
     const descricao_warn = interaction.options.getString("reason")
-    const guild_warns = await listAllGuildWarns(interaction.guild.id)
+    const guild_warns = await listAllGuildWarns(client.encrypt(interaction.guild.id))
 
     let texto_rodape = "⠀", user_warn, id_warn = "warn_create"
 
     if (!guild.warn.hierarchy.status) {
-        if (user_warns.length < guild_warns.length) user_warn = await getUserWarn(guild_member.id, interaction.guild.id, client.timestamp())
+        if (user_warns.length < guild_warns.length) user_warn = await getUserWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), client.timestamp())
         else user_warn = user_warns[user_warns.length - 1]
     } else {
-        user_warn = await getUserPreWarn(guild_member.id, interaction.guild.id, client.timestamp())
+        user_warn = await getUserPreWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), client.timestamp())
         id_warn = "pre_warn_create"
     }
 
-    const warns_recebidos = await listAllUserWarns(guild_member.id, interaction.guild.id)
+    const warns_recebidos = await listAllUserWarns(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id))
     const indice_warn = warns_recebidos.length >= guild_warns.length ? guild_warns.length - 1 : warns_recebidos.length
 
     // Atualizando os dados da advertência do usuário
     user_warn.valid = false
-    user_warn.relatory = descricao_warn
-    user_warn.nick = guild_member.user.username
-    user_warn.assigner = interaction.user.id
-    user_warn.assigner_nick = interaction.user.username
+    user_warn.relatory = client.encrypt(descricao_warn)
+    user_warn.nick = client.encrypt(guild_member.user.username)
+    user_warn.assigner = client.encrypt(interaction.user.id)
+    user_warn.assigner_nick = client.encrypt(interaction.user.username)
     user_warn.timestamp = client.timestamp()
 
     await user_warn.save()
@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${guild_member.id}> )`,
+                value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n${client.emoji("mc_name_tag")} \`${guild_member.user.username}\`\n( <@${guild_member.id}> )`,
                 inline: true
             },
             {
@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     } else {
 
         // Coletando todas as anotações de advertência criadas para o membro no servidor
-        const user_notes = await listAllUserPreWarns(guild_member.id, interaction.guild.id)
+        const user_notes = await listAllUserPreWarns(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id))
         const notas_requeridas = guild_warns[indice_warn].strikes !== 0 ? guild_warns[indice_warn].strikes : guild.warn.hierarchy.strikes
 
         embed.addFields(

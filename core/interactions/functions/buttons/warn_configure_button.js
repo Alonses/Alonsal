@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // Redirecionando para nova advertência
     if (operacao === 9) return require('../../chunks/warn_configure')({ client, user, interaction, dados })
 
-    const warn = await getGuildWarn(interaction.guild.id, id_warn) // Cria uma nova advertência caso o ID passado não exista
+    const warn = await getGuildWarn(client.encrypt(interaction.guild.id), id_warn) // Cria uma nova advertência caso o ID passado não exista
     let guild = await client.getGuild(interaction.guild.id)
 
     // Tratamento dos cliques
@@ -79,7 +79,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: "none" })
 
         // Listando todos os cargos do servidor
-        cargos = cargos.concat(await client.getGuildRoles(interaction, warn.role))
+        cargos = cargos.concat(await client.getGuildRoles(interaction, client.decifer(warn.role)))
 
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },

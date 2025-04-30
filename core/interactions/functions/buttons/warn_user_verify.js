@@ -20,12 +20,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (escolha === 1) {
 
-        const row = [], user_warn = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
-        const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+        const row = [], user_warn = await getUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp)
+        const user_warns = await listAllUserWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
         user_warn.delete()
-        client.verifyUserWarnRoles(id_alvo, interaction.guild.id)
+        client.verifyUserWarnRoles(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         if (user_warns.length - 1 > 0)
             row.push({ id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.remover_outras"), type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` })
@@ -58,11 +58,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
                 .setColor(0xED4245)
-                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [user_warn.relatory, motivo_remocao])}${warns_restantes}`)
+                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao])}${warns_restantes}`)
                 .addFields(
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warns[0].nick}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warns[0].nick)}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
@@ -99,7 +99,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         if (escolha === 4) // Inverte o valor para manter ou não o motivo para uso em outras advertências
             client.cached.warns.get(interaction.user.id).keep = !client.cached.warns.get(interaction.user.id).keep
 
-        const user_warn = await getUserWarn(id_alvo, interaction.guild.id, timestamp)
+        const user_warn = await getUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp)
         let motivo_remocao = ""
 
         if (client.cached.warns.has(interaction.user.id))
@@ -109,16 +109,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "mode.warn.titulo_verificando_advertencia"))
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [user_warn.relatory, motivo_remocao]))
+            .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao]))
             .addFields(
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick ? client.decifer(user_warn.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.moderador")}**`,
-                    value: `${client.emoji("icon_id")} \`${user_warn.assigner}\`\n\`${user_warn.assigner_nick || client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${user_warn.assigner}> )`,
+                    value: `${client.emoji("icon_id")} \`${client.decifer(user_warn.assigner)}\`\n\`${user_warn.assigner_nick ? client.decifer(user_warn.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${client.decifer(user_warn.assigner)}> )`,
                     inline: true
                 },
                 {

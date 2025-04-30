@@ -32,6 +32,13 @@ async function verifica_roles(client) {
                 // Excluindo o vinculo do cargo com o membro
                 await dropUserTimedRole(role.uid, role.sid, role.rid)
 
+                // Descriptografando os dados para desvinculo com o membro do servidor
+                if ((role.rid).length > 20) {
+                    role.rid = client.decifer(role.rid)
+                    role.uid = client.decifer(role.uid)
+                    role.sid = client.decifer(role.sid)
+                }
+
                 // Removendo o cargo temporário do membro no servidor
                 const guild = await client.guilds(role.sid)
                 if (!guild) return

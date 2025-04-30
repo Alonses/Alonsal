@@ -1,4 +1,4 @@
-module.exports = async (client, user) => {
+module.exports = async ({ client, user }) => {
 
     let idioma_definido = user.lang ?? "pt-br"
     if (idioma_definido === "al-br") idioma_definido = "pt-br"
