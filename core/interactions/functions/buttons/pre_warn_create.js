@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operacao = parseInt(dados.split(".")[1])
 
     // Rascunhos de anotações de advertência salvas em cache
-    let user_notes = await listAllCachedUserPreWarns(id_alvo, interaction.guild.id)
+    let user_notes = await listAllCachedUserPreWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
     if (operacao === 0) { // Operação cancelada
 
@@ -41,11 +41,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Atualizando a lista de anotações criadas
     if (guild.warn.hierarchy.timed) atualiza_pre_warns()
 
-    const notas_recebidas = await listAllUserPreWarns(id_alvo, interaction.guild.id)
+    const notas_recebidas = await listAllUserPreWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
     // Verificando se o membro já ultrapassou o número de anotações necessárias para cada advertência 
-    const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+    const guild_warns = await listAllGuildWarns(client.encrypt(interaction.guild.id))
+    const user_warns = await listAllUserWarns(client.encrypt(id_alvo, interaction.guild.id))
 
     let indice_warn = user_warns.length > guild_warns.length ? user_warns.length - 1 : user_warns.length
     if (indice_warn < 1) indice_warn = 0
@@ -56,11 +56,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed_guild = new EmbedBuilder()
         .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`)
         .setColor(0xED4245)
-        .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_note.relatory}\`\`\``)
+        .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${client.decifer(user_note.relatory)}\`\`\``)
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_note.nick}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (notas_recebidas.length >= notas_requeridas) {
 
         // Criando um card de advertência hierárquica ao membro
-        const hierarchy_warn = await getUserWarn(id_alvo, interaction.guild.id, client.timestamp())
+        const hierarchy_warn = await getUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), client.timestamp())
 
         hierarchy_warn.hierarchy = true
         hierarchy_warn.save()
@@ -121,7 +121,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setFields(
                 {
                     name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_note.nick}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {

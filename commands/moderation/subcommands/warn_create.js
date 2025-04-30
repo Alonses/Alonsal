@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction }) => {
         if (interaction.member.roles.highest.position < guild_member.roles.highest.position)
             return client.tls.reply(interaction, user, "mode.warn.mod_sem_hierarquia", true, client.emoji(0))
 
-        user_warns = await listAllUserWarns(guild_member.id, interaction.guild.id)
+        user_warns = await listAllUserWarns(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id))
         const indice_warn = user_warns.length >= warns_guild.length ? warns_guild.length - 1 : user_warns.length
 
         if (warns_guild[indice_warn].action) // Verificando as permissões do moderador que iniciou a advertência
@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction }) => {
                 }
             }
     } else // Advertências com hierarquia
-        user_warns = await listAllUserPreWarns(guild_member.id, interaction.guild.id)
+        user_warns = await listAllUserPreWarns(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id))
 
     // Redirecionando o evento
     require('../../../core/formatters/chunks/model_user_warn')({ client, user, interaction, guild, user_warns, guild_member, bot_member })

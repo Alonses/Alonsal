@@ -5,7 +5,8 @@ const { getReportedUsers } = require('../../database/schemas/User_reports')
 module.exports = async ({ client, user, interaction }) => {
 
     // Deferindo a interação
-    await client.deferedResponse({ interaction })
+    const ephemeral = "Ephemeral"
+    await client.deferedResponse({ interaction, ephemeral })
 
     const users = [], users_ids = [], id_membros_guild = []
     const usuarios_reportados = await getReportedUsers()

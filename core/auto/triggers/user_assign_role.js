@@ -48,14 +48,14 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                     // Strike com um cargo temporário vinculado
                     if (dados.timed_role.status) {
 
-                        const cargo = await getUserRole(id_alvo, guild.sid, client.timestamp() + defaultRoleTimes[dados.timed_role.timeout])
+                        const cargo = await getUserRole(client.encrypt(id_alvo), client.encrypt(guild.sid), client.timestamp() + defaultRoleTimes[dados.timed_role.timeout])
 
-                        cargo.nick = membro_guild.user.username
-                        cargo.rid = dados.role
+                        cargo.nick = client.encrypt(membro_guild.user.username)
+                        cargo.rid = client.encrypt(dados.role)
                         cargo.valid = true
 
-                        cargo.assigner = client.id()
-                        cargo.assigner_nick = client.username()
+                        cargo.assigner = client.encrypt(client.id())
+                        cargo.assigner_nick = client.encrypt(client.username())
 
                         cargo.relatory = acionador === "spam" ? client.tls.phrase(guild, "mode.timed_roles.rodape_spam", null, dados.rank + 1) : client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1)
                         cargo.save()
@@ -69,7 +69,7 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                             .addFields(
                                 {
                                     name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
-                                    value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
+                                    value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${role.id}>`,
                                     inline: true
                                 },
                                 {
@@ -79,7 +79,7 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                                 },
                                 {
                                     name: `${client.emoji("icon_integration")} **${client.tls.phrase(guild, "mode.warn.moderador")} ( ${client.tls.phrase(guild, "util.user.alonsal")} )**`,
-                                    value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
+                                    value: `${client.emoji("icon_id")} \`${client.id()}\`\n${client.emoji("mc_name_tag")} \`${client.username()}\`\n( <@${client.id()}> )`,
                                     inline: true
                                 }
                             )

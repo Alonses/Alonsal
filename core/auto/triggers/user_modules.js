@@ -2,7 +2,7 @@ const { writeFileSync, readFile } = require('fs')
 
 const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
 
-const { week_days } = require('../../formatters/patterns/user.js')
+const { week_days, moduleTypes } = require('../../formatters/patterns/user.js')
 const formata_horas = require('../../formatters/formata_horas.js')
 
 const lista_modulos = []
@@ -66,15 +66,9 @@ executa_modulo = async (client) => {
 
         const user = await client.getUser(lista_modulos[0].uid)
 
-        if (lista_modulos[0].type === 0)
-            await require('../../formatters/chunks/model_weather')({ client, user })
-
-        if (lista_modulos[0].type === 1)
-            await require('../../formatters/chunks/model_frase')(client, user)
-
         if (lista_modulos[0].type === 2) {
 
-            if (lista_modulos[0].data === 0) // Sem definição de tipo de envio
+            if (lista_modulos[0].data === 0) // Sem definição do tipo de envio
                 await client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
 
             // Definindo qual tipo de anúncio do history será
@@ -83,7 +77,7 @@ executa_modulo = async (client) => {
                 especifico: "acon=1"
             }
 
-            // History resumido
+            // History no modo resumido
             if (lista_modulos[0].data === 2 || !lista_modulos[0].data) {
                 dados = {
                     data: "",
@@ -92,23 +86,8 @@ executa_modulo = async (client) => {
             }
 
             await require('../../formatters/chunks/model_history')({ client, user, dados })
-        }
-
-        // Charadas
-        if (lista_modulos[0].type === 3)
-            await require('../../formatters/chunks/model_charada')({ client, user })
-
-        // Curiosidades
-        if (lista_modulos[0].type === 4)
-            await require('../../formatters/chunks/model_curiosidades')({ client, user })
-
-        // Um item do minecraft
-        if (lista_modulos[0].type === 5)
-            await require('../../formatters/chunks/model_mine')({ client, user })
-
-        // Jogos gratuitos do momento
-        if (lista_modulos[0].type === 6)
-            await require('../../formatters/chunks/model_free_games')({ client, user })
+        } else if (moduleTypes[lista_modulos[0].type]) // Executando o módulo selecionado
+            await require(`../../formatters/chunks/model_${moduleTypes[lista_modulos[0].type]}`)({ client, user })
 
         lista_modulos.shift()
 
