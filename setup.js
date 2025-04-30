@@ -9,7 +9,7 @@ let modo_develop = 0, silent = 0, limited = 0
 let delete_slash = 0
 
 if (update_commands) // Force update é utilizado para forçar a atualização dos comandos slash
-    modo_develop = 0, silent = 0
+    modo_develop = 0, silent = 1
 
 const client_data = {
     sharding: 1,
