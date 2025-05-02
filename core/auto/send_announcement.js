@@ -14,7 +14,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
         return client.notify(process.env.channel_feeds, { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." })
 
     // Verificando se a plataforma informada é válida
-    const matches = objetos_anunciados[0].link.match(client.cached.game_stores)
+    const matches = objetos_anunciados[0].url.match(client.cached.game_stores)
 
     if (!matches && interaction)
         return interaction.editReply({
@@ -28,18 +28,18 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     objetos_anunciados.forEach(valor => {
 
         lista_links.push({
-            name: valor.nome.length > 20 ? `${valor.nome.slice(0, 20)}...` : valor.nome,
+            name: valor.name.length > 20 ? `${valor.name.slice(0, 20)}...` : valor.name,
             type: 4,
-            value: valor.link
+            value: valor.url
         })
 
-        if (parseFloat(valor.preco) > valor_anterior || (parseInt(valor.preco) === 0 && objetos_anunciados.length === 1)) {
-            valor_anterior = parseFloat(valor.preco)
-            imagem_destaque = valor.thumbnail
+        if (parseFloat(valor.price) > valor_anterior || (parseInt(valor.price) === 0 && objetos_anunciados.length === 1)) {
+            valor_anterior = parseFloat(valor.price)
+            imagem_destaque = valor.thumbnailUrl
         }
 
-        if (valor.link.includes("store.steam") && !imagem_destaque)
-            imagem_destaque = `https://cdn.akamai.steamstatic.com/steam/apps/${valor.link.split("app/")[1].split("/")[0]}/capsule_616x353.jpg`
+        if (valor.url.includes("store.steam") && !imagem_destaque)
+            imagem_destaque = `https://cdn.akamai.steamstatic.com/steam/apps/${valor.url.split("app/")[1].split("/")[0]}/capsule_616x353.jpg`
     })
 
     // Objeto de anúncio para os jogos gratuitos
@@ -148,8 +148,8 @@ function busca_destaque(client, obj_anuncio, indice) {
     // Formatando o nome do jogo e escolhendo o banner para o anúncio
     jogos_destaque.forEach(game => {
 
-        if (parseFloat(game.preco) > valor_anterior || (parseInt(game.preco) === 0 && jogos_destaque.length === 1)) {
-            valor_anterior = parseFloat(game.preco)
+        if (parseFloat(game.price) > valor_anterior || (parseInt(game.price) === 0 && jogos_destaque.length === 1)) {
+            valor_anterior = parseFloat(game.price)
             imagem_destaque = game.thumbnail
         }
 
@@ -158,7 +158,7 @@ function busca_destaque(client, obj_anuncio, indice) {
     })
 
     // Sem nenhum jogo qualificado, utilizando a capa do primeiro
-    if (!imagem_destaque && jogos_destaque[0].preco === 0)
+    if (!imagem_destaque && jogos_destaque[0].price === 0)
         imagem_destaque = jogos_destaque[0].thumbnail
 
     const matches = jogos_destaque[0].link.match(client.cached.game_stores)

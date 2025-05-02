@@ -3,6 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { createGame, verifyInvalidGames } = require('../../core/database/schemas/Game')
 
 const dispara_anuncio = require('../../core/auto/send_announcement')
+const { GameType } = require("../../generated/prisma");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -49,19 +50,19 @@ module.exports = {
         await interaction.deferReply({ flags: "Ephemeral" })
 
         const item = {
-            nome: interaction.options.getString("nome"),
-            tipo: interaction.options.getString("tipo"),
-            link: interaction.options.getString("link"),
-            preco: interaction.options.getNumber("preço"),
-            expira: client.timestamp(interaction.options.getString("expiração"), interaction.options.getString("horario")),
-            thumbnail: interaction.options.getAttachment("imagem")
+            name: interaction.options.getString("nome"),
+            type: interaction.options.getString("tipo"),
+            url: interaction.options.getString("link"),
+            price: interaction.options.getNumber("preço"),
+            expirationDate: new Date(client.timestamp(interaction.options.getString("expiração"), interaction.options.getString("horario")) * 1000),
+            thumbnailUrl: interaction.options.getAttachment("imagem")
         }
 
-        if (item.thumbnail)
-            item.thumbnail = item.thumbnail.attachment
+        if (item.thumbnailUrl)
+            item.thumbnailUrl = item.thumbnail.attachment
 
-        if (!item.tipo)
-            item.tipo = "game"
+        if (!item.type)
+            item.type = "game"
 
         const objetos_anunciados = [item]
         await createGame(item)

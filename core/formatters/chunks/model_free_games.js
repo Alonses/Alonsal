@@ -29,29 +29,27 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
             objeto_jogos.push({ id: "free_games", name: client.tls.phrase(user, "menu.botoes.inicio"), emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
 
     games.forEach(game => {
-        // Jogo com tempo válido para resgate
-        if (game.expira > client.timestamp()) {
-            const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
-            const matches = game.link.match(client.cached.game_stores)
-            let preco = `R$ ${game.preco}`, logo_plataforma = client.emoji(redes[matches[0]][0])
+        const nome_jogo = game.name.length <= 20 ? game.name : `${game.name.slice(0, 20)}...`
+        const matches = game.url.match(client.cached.game_stores)
+        let preco = `R$ ${game.price}`, logo_plataforma = client.emoji(redes[matches[0]][0])
 
-            if (game.preco === 0)
-                preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
+        if (game.price === 0)
+            preco = client.tls.phrase(user, "mode.anuncio.ficara_pago")
 
-            if (jogos_disponiveis.length < limitador) {
+        if (jogos_disponiveis.length < limitador) {
+            const expiration = game.expirationDate.getTime() / 1000
+            const timeDiff = expiration - client.timestamp()
+            // Verificando a expiração do game e alterando a exibição
+            const emoji = timeDiff < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
+            const expiracao = timeDiff < 172800 ? `\n( ${client.defaultEmoji("running")} ${client.tls.phrase(user, "menu.botoes.expirando")} <t:${expiration}:R> )` : ""
+            jogos_disponiveis.push(`- \`${game.name}\`\n[ ${logo_plataforma} \`${game.price}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${expiration}:D> ]${expiracao}`)
 
-                // Verificando a expiração do game e alterando a exibição
-                const emoji = game.expira - client.timestamp() < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
-                const expiracao = game.expira - client.timestamp() < 172800 ? `\n( ${client.defaultEmoji("running")} ${client.tls.phrase(user, "menu.botoes.expirando")} <t:${game.expira}:R> )` : ""
-                jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]${expiracao}`)
-
-                objeto_jogos.push({
-                    name: nome_jogo,
-                    emoji: emoji,
-                    type: 4,
-                    value: game.link
-                })
-            }
+            objeto_jogos.push({
+                name: nome_jogo,
+                emoji: emoji,
+                type: 4,
+                value: game.url
+            })
         }
     })
 
@@ -67,7 +65,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
         .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`)
 
     // Imagem de capa para o embed
-    if (games[0]?.thumbnail) embed.setImage(games[0]?.thumbnail)
+    if (games[0]?.thumbnailUrl) embed.setImage(games[0]?.thumbnailUrl)
     else embed.setThumbnail("https://i.imgur.com/AEkiKGU.jpg")
 
     if (interaction)

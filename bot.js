@@ -118,7 +118,7 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
 		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)
 
-	if (user.conf?.banned || false) return // Ignoring users
+	if (user.conf?.banned) return // Ignoring users
 
 	if (interaction.isStringSelectMenu()) // Interactions generated when using selection menus
 		return require("./core/interactions/menus")({ client, user, interaction })
@@ -150,7 +150,7 @@ client.discord.on("interactionCreate", async interaction => {
 	try {
 
 		// Verificando se o comando é originado de um servidor ou DM
-		const user_command = interaction.guild ? false : true
+		const user_command = !interaction.guild
 
 		// Executing the command
 		await action({ client, user, interaction, user_command })

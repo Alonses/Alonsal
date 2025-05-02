@@ -65,7 +65,7 @@ gera_anuncio = async (client, proxima_att) => {
 
             // Registrando os games no banco
             objetos_anunciados.forEach(async game => {
-                game.expira = client.timestamp(game.expira, game.hora_expira)
+                game.expirationDate = new Date(client.timestamp(game.expira, game.hora_expira) * 1000)
 
                 await createGame(game)
             })

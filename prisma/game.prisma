@@ -1,0 +1,13 @@
+model Game {
+  name           String
+  description    String?
+  price          Float
+  type           String
+  url            String
+  expirationDate DateTime
+  thumbnailUrl   String?
+
+  createdAt DateTime @default(now())
+
+  @@id(name: "key", [name, expirationDate])
+}

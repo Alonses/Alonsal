@@ -3,7 +3,7 @@ require('dotenv').config()
 /* --------------------------------------------------------------- */
 // Alterna entre o modo normal e modo de testes, limited limita processos secundários de funcionarem
 const update_commands = 0
-let modo_develop = 0, silent = 0, limited = 0
+let modo_develop = 0, silent = 1, limited = 0
 
 // Ative para limpar os comandos slash locais e globais
 let delete_slash = 0

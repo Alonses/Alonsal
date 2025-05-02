@@ -25,7 +25,6 @@ module.exports = async ({ client, interaction }) => {
 
             // Registrando os games no banco
             objetos_anunciados.forEach(async game => {
-                game.expira = client.timestamp(game.expira, game.hora_expira)
                 await createGame(game)
             })
 
