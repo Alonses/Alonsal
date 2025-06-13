@@ -13,6 +13,8 @@ const { checkUser } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 const { verifica_chute } = require('./commands/games/forca')
+const { updateUserModules } = require('./core/database/schemas/User_modules')
+const { updateUserBadges } = require('./core/database/schemas/User_badges')
 
 let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
@@ -33,6 +35,8 @@ client.discord.once("ready", async () => {
 
 	// Pre-saving ranked guilds on cache
 	client.updateRankedGuilds()
+
+	updateUserBadges(client)
 
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
 	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)

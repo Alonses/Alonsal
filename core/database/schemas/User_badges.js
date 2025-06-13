@@ -105,6 +105,44 @@ async function verifyDynamicBadge(client, alvo, badge_id) {
     }
 }
 
+async function updateUserBadges(client) {
+
+    const badges = await model.find()
+    timedUpdate(client, badges)
+}
+
+async function timedUpdate(client, badges) {
+
+    if (badges.length > 0) {
+
+        const badge = badges[0]
+        let atualizado = false
+
+        if (badge.uid.length < 20) {
+            badge.uid = client.encrypt(badge.uid)
+            atualizado = true
+        }
+
+        if (badge.uid.length > 80) {
+            badge.uid = client.decifer(badge.uid)
+            atualizado = true
+        }
+
+        if (atualizado) {
+            console.log("atualizado", badge)
+            await badge.save()
+        }
+
+        if (badges.length % 50 == 0) console.log("Restam:", badges.length)
+        badges.shift()
+
+        setTimeout(() => {
+            timedUpdate(client, badges)
+        }, 10)
+    } else
+        console.log("Finalizado")
+}
+
 module.exports.Badge = model
 module.exports = {
     createBadge,
@@ -112,5 +150,6 @@ module.exports = {
     getUserBadges,
     dropAllUserBadges,
     verifyDynamicBadge,
-    encryptUserBadges
+    encryptUserBadges,
+    updateUserBadges
 }
