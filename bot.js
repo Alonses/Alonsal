@@ -36,7 +36,7 @@ client.discord.once("ready", async () => {
 	// Pre-saving ranked guilds on cache
 	client.updateRankedGuilds()
 
-	updateUserBadges(client)
+	// updateUserBadges(client)
 
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
 	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)

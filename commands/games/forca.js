@@ -38,7 +38,7 @@ module.exports = {
                         finalizado: false
                     })
 
-                    client.cached.forca_sessao.set(interaction.user.id, { uid: interaction.user.id, id_game: id_sessao })
+                    client.cached.forca_sessao.set(client.encrypt(interaction.user.id), { uid: client.encrypt(interaction.user.id), id_game: id_sessao })
 
                     retorna_jogo(client, interaction, id_sessao, user)
                 })
@@ -134,7 +134,7 @@ async function verifica_palavra(client, interaction, id_jogo, user, entrada) {
         client.cached.forca_sessao.forEach(async user_interno => {
 
             if (user_interno.id_game === id_jogo) { // Distribuindo as recompensas aos membros da partida
-                const user_data = await client.getUser(client.decifer(user_interno.uid))
+                const user_data = await client.getUser(user_interno.uid)
 
                 user_data.misc.money += 50
                 await user_data.save()

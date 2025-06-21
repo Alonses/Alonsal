@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 flags: "Ephemeral"
             })
 
-        client.cached.forca_sessao.set(interaction.user.id, { uid: interaction.user.id, id_game: id_sessao })
+        client.cached.forca_sessao.set(client.encrypt(interaction.user.id), { uid: client.encrypt(interaction.user.id), id_game: id_sessao })
 
         interaction.reply({
             content: "🎆 | Você ingressou na sessão! Envie uma letra ou a palavra inteira para tentar acertar.",
