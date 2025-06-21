@@ -124,7 +124,7 @@ async function dropUser(uid) {
     })
 }
 
-// Lista todos os usuários com users fixadas
+// Lista todos os usuários com badges fixadas
 async function getUserWithFixedBadges() {
 
     return await model.find({

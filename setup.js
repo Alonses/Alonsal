@@ -21,7 +21,7 @@ const client_data = {
     status: silent || modo_develop ? 0 : 1,
     logger: silent || modo_develop ? 0 : 1,
     ranking: limited || silent || modo_develop ? 0 : 1,
-    modules: 0,
+    modules: modo_develop ? 0 : 1,
     relatorio: update_commands || silent || modo_develop ? 0 : 1,
 
     owners: process.env.owner_id.split(", "),
