@@ -124,12 +124,50 @@ async function dropUser(uid) {
     })
 }
 
-// Lista todos os usuários com badges fixadas
+// Lista todos os usuários com users fixadas
 async function getUserWithFixedBadges() {
 
     return await model.find({
         "misc.fixed_badge": { $ne: null }
     })
+}
+
+async function updateUsers(client) {
+
+    const users = await model.find()
+    timedUpdate(client, users)
+}
+
+async function timedUpdate(client, users) {
+
+    if (users.length > 0) {
+
+        const user = users[0]
+        let atualizado = false
+
+        if (user.uid.length < 20) {
+            user.uid = client.encrypt(user.uid)
+            atualizado = true
+        }
+
+        if (user.uid.length > 80) {
+            user.uid = client.decifer(user.uid)
+            atualizado = true
+        }
+
+        if (atualizado) {
+            console.log("atualizado", user)
+            await user.save()
+        }
+
+        if (users.length % 50 == 0) console.log("Restam:", users.length)
+        users.shift()
+
+        setTimeout(() => {
+            timedUpdate(client, users)
+        }, 10)
+    } else
+        console.log("Finalizado")
 }
 
 module.exports.User = model
@@ -141,5 +179,6 @@ module.exports = {
     getUnknowUsers,
     getOutdatedUsers,
     getUserWithFixedBadges,
-    getEncryptedUser
+    getEncryptedUser,
+    updateUsers
 }

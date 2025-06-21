@@ -82,10 +82,10 @@ const badges = {
     PIONNER: 8,
     VOTER: 9,
     REPORTER: 10,
-    BOURGEOIS: 11,
-    CHATTERBOX: 12,
+    BOURGEOIS: 11,  // Única globalmente
+    CHATTERBOX: 12, // Única globalmente
     SUGESTOR: 13,
-    HOSTER: 14
+    HOSTER: 14      // Única globalmente
 }
 
 const badgeTypes = {
