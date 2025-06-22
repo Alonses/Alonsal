@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
 
     const timestamp = client.timestamp()
-    await registerCachedSuspiciousLink(link, interaction.guild.id, timestamp)
+    await registerCachedSuspiciousLink(link, client.encrypt(interaction.guild.id), timestamp)
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.link_suspeito.registrando_link_titulo"))

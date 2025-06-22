@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (!operacao) {
 
-        // Removendo o link suspeito em cache
+        // Excluindo o link suspeito em cache
         await dropSuspiciousLink(link.link)
 
         return client.reply(interaction, {
@@ -54,10 +54,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         let links
 
-        if (interaction.guild.id === process.env.guild_id && process.env.owner_id.includes(interaction.user.id)) // Lista todos os links maliciosos salvos no Alonsal
+        // Lista todos os links maliciosos salvos no Alonsal
+        if (interaction.guild.id === process.env.guild_id && process.env.owner_id.includes(interaction.user.id))
             links = await listAllSuspiciouLinks()
-        else
-            links = await getAllGuildSuspiciousLinks(interaction.guild.id)
+        else links = await getAllGuildSuspiciousLinks(client.encrypt(interaction.guild.id))
 
         if (links.length < 1) // Sem links suspeitos registrados no servidor
             return interaction.reply({
@@ -107,7 +107,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Sub menu para gerenciar se o link suspeito será excluído ou não
         const row = client.create_buttons([
-            { id: "spam_link_remove", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${timestamp}.${link.sid}` },
+            { id: "spam_link_remove", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${timestamp}.${client.decifer(link.sid)}` },
             { id: "spam_link_remove", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
         ], interaction)
 

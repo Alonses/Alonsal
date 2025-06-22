@@ -1,11 +1,8 @@
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args))
-
 const { ActivityType } = require('discord.js')
 
 const { activities } = require('../../files/json/text/activities.json')
 
-let selected = [], timeout_presence, status_atual
+let selected = []
 
 const actionTypes = [ActivityType.Playing, ActivityType.Watching, ActivityType.Listening]
 

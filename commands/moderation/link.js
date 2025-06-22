@@ -45,14 +45,14 @@ module.exports = {
                     "pt-BR": "navegar",
                     "ru": 'просматривать'
                 })
-                .setDescription("⌠💂⌡ Browse server links")
+                .setDescription("⌠💂⌡ Browse suspicious links saved on the server")
                 .setDescriptionLocalizations({
-                    "de": '⌠💂⌡ Durchsuchen Sie Server-Links',
-                    "es-ES": '⌠💂⌡ Explorar enlaces del servidor',
-                    "fr": '⌠💂⌡ Parcourir les liens du serveur',
-                    "it": '⌠💂⌡ Sfoglia i collegamenti del server',
-                    "pt-BR": '⌠💂⌡ Navegue pelos links do servidor',
-                    "ru": '⌠💂⌡ Просмотр ссылок на серверы'
+                    "de": '⌠💂⌡ Durchsuchen Sie verdächtige Links, die auf dem Server gespeichert sind',
+                    "es-ES": '⌠💂⌡ Explorar enlaces sospechosos guardados en el servidor',
+                    "fr": '⌠💂⌡ Parcourir les liens suspects enregistrés sur le serveur',
+                    "it": '⌠💂⌡ Esplora i link sospetti salvati sul server',
+                    "pt-BR": '⌠💂⌡ Navegue pelos links suspeitos salvos no servidor',
+                    "ru": '⌠💂⌡ Просмотрите подозрительные ссылки, сохраненные на сервере.'
                 }))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
         .setContexts(InteractionContextType.Guild),

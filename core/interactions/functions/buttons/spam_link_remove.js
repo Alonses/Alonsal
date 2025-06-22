@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
     if (!operacao) {
 
-        const links = await getAllGuildSuspiciousLinks(interaction.guild.id)
+        const links = await getAllGuildSuspiciousLinks(client.encrypt(interaction.guild.id))
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
@@ -42,8 +42,12 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
         // Excluindo o link suspeito
         await dropSuspiciousLink(link.link)
+        let links
 
-        const links = await getAllGuildSuspiciousLinks(interaction.guild.id)
+        // Lista todos os links maliciosos salvos no Alonsal
+        if (interaction.guild.id === process.env.guild_id && process.env.owner_id.includes(interaction.user.id))
+            links = await listAllSuspiciouLinks()
+        else links = await getAllGuildSuspiciousLinks(client.encrypt(interaction.guild.id))
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
