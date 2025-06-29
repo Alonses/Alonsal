@@ -92,7 +92,7 @@ async function getAllGuildSuspiciousLinks(guild_id) {
     })
 }
 
-async function listAllSuspiciouLinks() {
+async function listAllSuspiciousLinks() {
     return await model.find({}).sort({
         timestamp: -1
     })
@@ -123,7 +123,7 @@ module.exports = {
     getSuspiciousLink,
     dropSuspiciousLink,
     verifySuspiciousLink,
-    listAllSuspiciouLinks,
+    listAllSuspiciousLinks,
     registerSuspiciousLink,
     registerCachedSuspiciousLink,
     getCachedSuspiciousLink,

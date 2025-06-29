@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
-const model = mongoose.model("Statement", schema)
+const model = mongoose.model("User_statements", schema)
 
 async function registryStatement(client, uid, operation, type, value) {
 
@@ -60,7 +60,7 @@ async function dropAllUserStatements(uid) {
     })
 }
 
-module.exports.Statement = model
+module.exports.User_statements = model
 module.exports = {
     registryStatement,
     getUserStatements,

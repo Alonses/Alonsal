@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
     }
 })
 
-const model = mongoose.model("Module", schema)
+const model = mongoose.model("User_modules", schema)
 
 async function getActiveModules() {
     return model.find({
@@ -152,7 +152,7 @@ async function timedUpdate(client, modules) {
         console.log("Finalizado")
 }
 
-module.exports.Badge = model
+module.exports.User_modules = model
 module.exports = {
     createModule,
     getModule,

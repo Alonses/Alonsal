@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks, listAllSuspiciouLinks } = require("../../../database/schemas/Spam_links")
+const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks, listAllSuspiciousLinks } = require("../../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Lista todos os links maliciosos salvos no Alonsal
         if (interaction.guild.id === process.env.guild_id && process.env.owner_id.includes(interaction.user.id))
-            links = await listAllSuspiciouLinks()
+            links = await listAllSuspiciousLinks()
         else links = await getAllGuildSuspiciousLinks(client.encrypt(interaction.guild.id))
 
         if (links.length < 1) // Sem links suspeitos registrados no servidor
