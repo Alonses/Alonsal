@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
     }
 })
 
-const model = mongoose.model("Warn_guild", schema)
+const model = mongoose.model("Guild_warns", schema)
 
 // Procurando por uma advertência
 async function getGuildWarn(sid, rank) {
@@ -55,7 +55,7 @@ async function dropAllGuildWarns(sid) {
     })
 }
 
-module.exports.Warns_guild = model
+module.exports.Guild_warns = model
 module.exports = {
     getGuildWarn,
     listAllGuildWarns,

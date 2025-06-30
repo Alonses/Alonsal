@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     }
 })
 
-const model = mongoose.model("Strike_guild", schema)
+const model = mongoose.model("Guild_strikes", schema)
 
 // Procurando por um strike
 async function getGuildStrike(sid, rank) {
@@ -53,7 +53,7 @@ async function dropAllGuildStrikes(sid) {
     })
 }
 
-module.exports.Strike_guild = model
+module.exports.Guild_strikes = model
 module.exports = {
     getGuildStrike,
     listAllGuildStrikes,

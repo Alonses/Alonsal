@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     status: { type: Boolean, default: false }
 })
 
-const model = mongoose.model("Role_Assigner", schema)
+const model = mongoose.model("Guild_role_assigner", schema)
 
 async function getRoleAssigner(sid, type) {
 
@@ -43,7 +43,7 @@ async function dropRoleAssigner(sid, type) {
     })
 }
 
-module.exports.Role_Assigner = model
+module.exports.Guild_role_assigner = model
 module.exports = {
     getRoleAssigner,
     getActiveRoleAssigner,
