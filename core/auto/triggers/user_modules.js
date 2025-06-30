@@ -11,11 +11,13 @@ let trava_modulo = false
 async function atualiza_modulos() {
 
     const dados = await getActiveModules()
-
     writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
 }
 
 async function requisita_modulo(client) {
+
+    // Impede que os bots de teste ativem os módulos
+    if (!client.x.modules) return
 
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
@@ -101,6 +103,9 @@ executa_modulo = async (client) => {
 }
 
 async function cobra_modulo(client) {
+
+    // Impede que os bots de teste cobrem módulos
+    if (!client.x.modules) return
 
     const users = {}, modules = {}, data1 = new Date()
     const active_modules = await getActiveModules()

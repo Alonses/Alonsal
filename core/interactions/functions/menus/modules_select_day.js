@@ -6,7 +6,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const dia = parseInt(dados.split(".")[2])
 
     // Alterando o dia do módulo
-    const modulo = await getModule(interaction.user.id, timestamp)
+    const modulo = await getModule(user.uid, timestamp)
     modulo.stats.days = dia
 
     await modulo.save()

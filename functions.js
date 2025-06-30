@@ -568,7 +568,7 @@ function internal_functions(client) {
         let notifications = false
 
         // Descriptografando o ID do usuário para envio em DM
-        const id_user = parseInt(user.uid) ? user.uid : client.decifer(user.uid)
+        const id_user = (user.uid).length > 20 ? client.decifer(user.uid) : user.uid
 
         // Previne que o bot envie DM's para si mesmo
         if (id_user === client.id()) return
