@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
-const model = mongoose.model("Vote", schema)
+const model = mongoose.model("User_vote", schema)
 
 async function registryVote(uid) {
     if (!await model.exists({ uid: uid }))
@@ -44,8 +44,7 @@ async function verifyUser(uid) {
     })
 }
 
-
-module.exports.Vote = model
+module.exports.User_vote = model
 module.exports = {
     getVotes,
     verifyUser,

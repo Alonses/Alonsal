@@ -4,11 +4,10 @@ const { getNetworkedGuilds } = require("./Guild")
 const { randomString } = require("../../functions/random_string")
 
 const schema = new mongoose.Schema({
-    name: { type: String, default: null },
     link: { type: String, default: null }
 })
 
-const model = mongoose.model("Network", schema)
+const model = mongoose.model("Guild_networks", schema)
 
 async function createNetworkLink(client) {
 
@@ -43,7 +42,7 @@ async function getLink(link) {
     return valid_guilds
 }
 
-module.exports.Network = model
+module.exports.Guild_networks = model
 module.exports = {
     createNetworkLink,
     dropNetwork,
