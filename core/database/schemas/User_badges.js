@@ -10,24 +10,12 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
-const model = mongoose.model("Badge", schema)
+const model = mongoose.model("User_badges", schema)
 
 async function getUserBadges(uid) {
     return model.find({
         uid: uid
     })
-}
-
-async function encryptUserBadges(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function createBadge(uid, badge_id, timestamp) {
@@ -105,51 +93,11 @@ async function verifyDynamicBadge(client, alvo, badge_id) {
     }
 }
 
-async function updateUserBadges(client) {
-
-    const badges = await model.find()
-    timedUpdate(client, badges)
-}
-
-async function timedUpdate(client, badges) {
-
-    if (badges.length > 0) {
-
-        const badge = badges[0]
-        let atualizado = false
-
-        if (badge.uid.length < 20) {
-            badge.uid = client.encrypt(badge.uid)
-            atualizado = true
-        }
-
-        if (badge.uid.length > 80) {
-            badge.uid = client.decifer(badge.uid)
-            atualizado = true
-        }
-
-        if (atualizado) {
-            console.log("atualizado", badge)
-            await badge.save()
-        }
-
-        if (badges.length % 50 == 0) console.log("Restam:", badges.length)
-        badges.shift()
-
-        setTimeout(() => {
-            timedUpdate(client, badges)
-        }, 10)
-    } else
-        console.log("Finalizado")
-}
-
-module.exports.Badge = model
+module.exports.User_badges = model
 module.exports = {
     createBadge,
     removeBadge,
     getUserBadges,
     dropAllUserBadges,
-    verifyDynamicBadge,
-    encryptUserBadges,
-    updateUserBadges
+    verifyDynamicBadge
 }

@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     concluded: { type: Boolean, default: false }
 })
 
-const model = mongoose.model("Task", schema)
+const model = mongoose.model("User_tasks", schema)
 
 async function createTask(uid, sid, text, timestamp) {
 
@@ -30,18 +30,6 @@ async function createTask(uid, sid, text, timestamp) {
         text: text,
         timestamp: timestamp
     })
-}
-
-async function encryptUserTasks(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function getTask(uid, timestamp) {
@@ -103,7 +91,7 @@ async function dropAllGuildUserTasks(uid, sid) {
     })
 }
 
-module.exports.Task = model
+module.exports.User_tasks = model
 module.exports = {
     createTask,
     getTask,
@@ -112,6 +100,5 @@ module.exports = {
     dropAllUserTasks,
     listAllUserTasks,
     listAllUserGroupTasks,
-    dropAllGuildUserTasks,
-    encryptUserTasks
+    dropAllGuildUserTasks
 }

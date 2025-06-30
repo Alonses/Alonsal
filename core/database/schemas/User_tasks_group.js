@@ -28,18 +28,6 @@ async function createGroup(uid, name, sid, timestamp) {
     })
 }
 
-async function encryptUserGroups(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
-}
-
 async function getUserGroup(uid, timestamp) {
     return model.findOne({
         uid: uid,
@@ -96,7 +84,7 @@ async function dropAllGuildUserGroups(uid, sid) {
     })
 }
 
-module.exports.Task_group = model
+module.exports.User_tasks_groups = model
 module.exports = {
     createGroup,
     getUserGroup,
@@ -104,6 +92,5 @@ module.exports = {
     dropAllUserGroups,
     listAllUserGroups,
     dropGroup,
-    dropAllGuildUserGroups,
-    encryptUserGroups
+    dropAllGuildUserGroups
 }

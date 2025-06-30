@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     cid: { type: String, default: null }
 })
 
-const model = mongoose.model("Ticket", schema)
+const model = mongoose.model("User_tickets", schema)
 
 async function getTicket(sid, uid) {
     if (!await model.exists({ sid: sid, uid: uid }))
@@ -23,18 +23,6 @@ async function getTicket(sid, uid) {
         sid: sid,
         uid: uid
     })
-}
-
-async function encryptUserTicket(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 // Apaga o ticket de denúncia do servidor
@@ -59,11 +47,10 @@ async function dropAllUserTickets(uid) {
     })
 }
 
-module.exports.Ticket = model
+module.exports.User_tickets = model
 module.exports = {
     getTicket,
     dropTicket,
     dropAllGuildTickets,
-    dropAllUserTickets,
-    encryptUserTicket
+    dropAllUserTickets
 }

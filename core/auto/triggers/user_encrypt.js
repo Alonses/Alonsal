@@ -1,11 +1,5 @@
-const { encryptUserTasks, listAllUserTasks } = require('../../database/schemas/User_tasks.js')
-const { encryptUserGroups, listAllUserGroups } = require('../../database/schemas/User_tasks_group.js')
-const { encryptUserBadges } = require('../../database/schemas/User_badges.js')
 const { encryptUserRankServers, listAllUserRankGuild } = require('../../database/schemas/User_rank_guild.js')
-const { encryptUserStatements } = require('../../database/schemas/User_statements.js')
-const { encryptUserTicket } = require('../../database/schemas/User_tickets.js')
 const { encryptUserGuild } = require('../../database/schemas/User_guilds.js')
-const { encryptUserRankGlobal } = require('../../database/schemas/User_rank_global.js')
 const { encryptUserWarns } = require('../../database/schemas/User_warns.js')
 const { encryptUserStrikes } = require('../../database/schemas/User_strikes.js')
 const { encryptUserRoles } = require('../../database/schemas/User_roles.js')
@@ -19,26 +13,8 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
     // Atualizando os servidores vinculados ao usuário
     encryptUserGuild(user_id, new_user_id)
 
-    // Atualizando o rank global do usuário
-    encryptUserRankGlobal(user_id, new_user_id)
-
     // Atualizando os ranks de servidores do usuário
     encryptUserRankServers(user_id, new_user_id)
-
-    // Atualizando os tickets criados pelo usuário
-    encryptUserTicket(user_id, new_user_id)
-
-    // Atualizando as movimentações de bufunfas do usuário
-    encryptUserStatements(user_id, new_user_id)
-
-    // Atualizando as badges do usuário
-    encryptUserBadges(user_id, new_user_id)
-
-    // Atualizando as listas de tarefas do usuário
-    encryptUserGroups(user_id, new_user_id)
-
-    // Atualizando as tarefas do usuário
-    encryptUserTasks(user_id, new_user_id)
 
     // Atualizando todas as advertências do usuário
     encryptUserWarns(user_id, new_user_id)
@@ -54,7 +30,6 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
 
     // Atualizando todos as pre advertências do usuário
     encryptUserPreWarn(user_id, new_user_id)
-
 
     // Atualizações secundárias
     // Atualizando todos os dados restantes relacionados ao ranking por servidor do usuário
@@ -74,24 +49,6 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
 
     // user_global_rank.nickname = client.encrypt(user_global_rank.nickname)
     // await user_global_rank.save()
-
-    // Atualizando todos os dados relacionados as tarefas criadas pelo usuário
-    const user_tasks = await listAllUserTasks(new_user_id)
-    user_tasks.forEach(async task => {
-        task.sid = client.encrypt(task.sid)
-        task.text = client.encrypt(task.text)
-
-        await task.save()
-    })
-
-    // Atualizando todos os dados relacionados as listas de tarefas criadas pelo usuário
-    const user_tasks_lists = await listAllUserGroups(new_user_id)
-    user_tasks_lists.forEach(async task_list => {
-        task_list.sid = client.encrypt(task_list.sid)
-        task_list.name = client.encrypt(task_list.name)
-
-        await task_list.save()
-    })
 }
 
 module.exports.atualiza_user_encrypt = atualiza_user_encrypt

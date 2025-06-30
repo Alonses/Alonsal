@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
     xp: { type: Number, default: 0 }
 })
 
-const model = mongoose.model("Rankobal", schema)
+const model = mongoose.model("User_rank_global", schema)
 
 async function getRankGlobal() {
     return model.find().sort({
@@ -31,18 +31,6 @@ async function getUserGlobalRank(uid, xp, nickname, sid) {
     })
 }
 
-async function encryptUserRankGlobal(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
-}
-
 async function findUserGlobalRankIndex(uid) {
     return model.findOne({
         uid: uid
@@ -55,11 +43,10 @@ async function dropUserGlobalRank(uid) {
     })
 }
 
-module.exports.Rankobal = model
+module.exports.User_rank_global = model
 module.exports = {
     getRankGlobal,
     getUserGlobalRank,
     dropUserGlobalRank,
-    findUserGlobalRankIndex,
-    encryptUserRankGlobal
+    findUserGlobalRankIndex
 }
