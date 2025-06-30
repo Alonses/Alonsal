@@ -21,18 +21,6 @@ async function getActiveModules() {
     })
 }
 
-async function encryptUserModules(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
-}
-
 async function createModule(uid, type, timestamp) {
     await model.create({
         uid: uid,
@@ -163,6 +151,5 @@ module.exports = {
     dropAllUserModules,
     verifyUserModules,
     shutdownAllUserModules,
-    encryptUserModules,
     updateUserModules
 }

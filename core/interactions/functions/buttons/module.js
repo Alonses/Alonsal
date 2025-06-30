@@ -8,13 +8,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operacao = parseInt(dados.split(".")[1])
     const timestamp = parseInt(dados.split(".")[2])
 
-    const modulo = await getModule(interaction.user.id, timestamp)
+    const modulo = await getModule(user.uid, timestamp)
 
     if (!modulo)
         return interaction.update({
             content: client.tls.phrase(user, "misc.modulo.modulo_inexistente", 1),
             embeds: [],
-            components: [row],
+            components: [],
             flags: "Ephemeral"
         })
 
@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar
 
     if (!operacao) { // Excluindo o módulo salvo em cache
-        await dropModule(interaction.user.id, modulo.type, timestamp)
+        await dropModule(user.uid, modulo.type, timestamp)
 
         client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     } else {

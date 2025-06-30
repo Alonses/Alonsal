@@ -100,7 +100,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 5) {
 
-        // Excluindo o módulo
+        // Excluindo o módulo do usuário
         await dropModule(user.uid, modulo.type, timestamp)
 
         const obj = {

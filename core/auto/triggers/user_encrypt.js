@@ -2,11 +2,10 @@ const { encryptUserTasks, listAllUserTasks } = require('../../database/schemas/U
 const { encryptUserGroups, listAllUserGroups } = require('../../database/schemas/User_tasks_group.js')
 const { encryptUserBadges } = require('../../database/schemas/User_badges.js')
 const { encryptUserRankServers, listAllUserRankGuild } = require('../../database/schemas/User_rank_guild.js')
-const { encryptUserModules } = require('../../database/schemas/User_modules.js')
 const { encryptUserStatements } = require('../../database/schemas/User_statements.js')
 const { encryptUserTicket } = require('../../database/schemas/User_tickets.js')
 const { encryptUserGuild } = require('../../database/schemas/User_guilds.js')
-const { encryptUserRankGlobal, findUserGlobalRankIndex } = require('../../database/schemas/User_rank_global.js')
+const { encryptUserRankGlobal } = require('../../database/schemas/User_rank_global.js')
 const { encryptUserWarns } = require('../../database/schemas/User_warns.js')
 const { encryptUserStrikes } = require('../../database/schemas/User_strikes.js')
 const { encryptUserRoles } = require('../../database/schemas/User_roles.js')
@@ -31,9 +30,6 @@ async function atualiza_user_encrypt(client, user_id, new_user_id) {
 
     // Atualizando as movimentações de bufunfas do usuário
     encryptUserStatements(user_id, new_user_id)
-
-    // Atualizando os módulos do usuário
-    encryptUserModules(user_id, new_user_id)
 
     // Atualizando as badges do usuário
     encryptUserBadges(user_id, new_user_id)
