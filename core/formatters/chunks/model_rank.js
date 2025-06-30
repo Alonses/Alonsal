@@ -30,15 +30,15 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
         user_alvo_data = interaction.options?.getUser("user")
 
     // Sem dados salvos no banco de ranking para o servidor especificado
-    if (!data_usuarios)
-        return client.tls.editReply(interaction, user, "dive.rank.error_2", client.decider(user?.conf.ghost_mode, 0), 1)
+    if (!data_usuarios || data_usuarios.length < 1)
+        return client.tls.editReply(interaction, user, "dive.rank.error_2", true, 1)
 
     // Verificando a quantidade de entradas e estimando o número de páginas
     paginas = Math.ceil(data_usuarios.length / 6)
 
     if (!user_alvo_data) {
         if (pagina > paginas) // Número de página escolhida maior que as disponíveis
-            return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
+            return client.tls.editReply(interaction, user, "dive.rank.error_1", true, 1)
 
         // Removendo os usuários respectivos as primeiras páginas
         remover = pagina === paginas ? (pagina - 1) * 6 : data_usuarios.length % 6 !== 0 ? pagina !== 2 ? (pagina - 1) * 6 : (pagina - 1) * 6 : (pagina - 1) * 6

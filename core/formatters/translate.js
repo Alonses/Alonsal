@@ -22,13 +22,11 @@ function editReply(interaction, user, target, ephemeral, emoji) {
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)
 
-    let obj = {
-        content: phrase
-    }
+    let obj = { content: phrase }
 
     if (ephemeral) obj.flags = "Ephemeral"
 
-    return interaction.reply(obj)
+    return interaction.editReply(obj)
 }
 
 function phrase(user, target, emoji, replace) {
