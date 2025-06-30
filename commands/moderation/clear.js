@@ -94,23 +94,24 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
                         dmchannel.messages.fetch({ limit: qtd_msg })
                             .then(messages => {
 
-                                let c = messages.size
                                 messages = messages.filter(m => { return m.author.id === client.id() })
+                                let bot_messages = messages.size
 
-                                messages.forEach(msg => {
-                                    msg.delete().then(() => {
+                                if (bot_messages > 0) {
+                                    messages.forEach(msg => {
+                                        msg.delete().then(() => {
 
-                                        c--
+                                            bot_messages--
 
-                                        if (c === 0)
-                                            interaction.editReply({ content: `:recycle: | \`${qtd_msg} mensagens\` foram removidas com sucesso!`, flags: "Ephemeral" })
+                                            if (bot_messages === 0)
+                                                interaction.editReply({ content: `:recycle: | \`${qtd_msg} mensagens\` foram removidas com sucesso!`, flags: "Ephemeral" })
 
-                                    }).catch(err => {
-                                        interaction.editReply({ content: `:fire: | Houve um erro ao tentar excluir as mensagens.`, flags: "Ephemeral" })
+                                        }).catch(err => {
+                                            interaction.editReply({ content: `:fire: | Houve um erro ao tentar excluir as mensagens.`, flags: "Ephemeral" })
+                                        })
                                     })
-                                })
-                            }).catch(err => {
-                                interaction.editReply({ content: `:fire: | Houve um erro ao procurar mensagens para deletar.`, flags: "Ephemeral" })
+                                } else
+                                    interaction.editReply({ content: `:recycle: | Esse chat já está vazio!`, flags: "Ephemeral" })
                             })
                     }).catch(err => {
                         interaction.editReply({ content: `:fire: | Houve um erro ao procurar esse canal de mensagens diretas.`, flags: "Ephemeral" })
