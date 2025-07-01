@@ -105,6 +105,5 @@ module.exports = {
     removeUserPreWarn,
     listAllCachedUserPreWarns,
     dropAllUserGuildPreWarns,
-    dropAllGuildPreWarns,
-    encryptUserPreWarn
+    dropAllGuildPreWarns
 }
