@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
-const model = mongoose.model("Task_group", schema)
+const model = mongoose.model("User_tasks_groups", schema)
 
 async function createGroup(uid, name, sid, timestamp) {
     if (!await model.exists({ uid: uid, sid: sid, name: name }))

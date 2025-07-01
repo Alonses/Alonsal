@@ -13,10 +13,10 @@ const schema = new mongoose.Schema({
     assigner: { type: String, default: null },
     assigner_nick: { type: String, default: null },
     relatory: { type: String, default: null },
-    timestamp: { type: Number, default: null },
+    timestamp: { type: Number, default: null }
 })
 
-const model = mongoose.model("Warn", schema)
+const model = mongoose.model("User_warns", schema)
 
 async function getUserWarn(uid, sid, timestamp) {
 
@@ -32,18 +32,6 @@ async function getUserWarn(uid, sid, timestamp) {
         sid: sid,
         timestamp: timestamp
     })
-}
-
-async function encryptUserWarns(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function checkUserGuildWarned(sid) {
@@ -111,7 +99,7 @@ async function dropAllGuildWarns(sid) {
     })
 }
 
-module.exports.Warn = model
+module.exports.User_warns = model
 module.exports = {
     getUserWarn,
     checkUserGuildWarned,
@@ -120,6 +108,5 @@ module.exports = {
     removeUserWarn,
     listAllCachedUserWarns,
     dropAllUserGuildWarns,
-    dropAllGuildWarns,
-    encryptUserWarns
+    dropAllGuildWarns
 }

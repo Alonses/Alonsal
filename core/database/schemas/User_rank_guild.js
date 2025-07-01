@@ -20,7 +20,7 @@ const schema = new mongoose.Schema({
     }
 })
 
-const model = mongoose.model("Rankerver", schema)
+const model = mongoose.model("User_rank_guild", schema)
 
 async function getRankServer(sid) {
     if (!await model.exists({ sid: sid }))
@@ -31,18 +31,6 @@ async function getRankServer(sid) {
     }).sort({
         xp: -1
     }).limit(50)
-}
-
-async function encryptUserRankServers(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function listRankGuild(sid) {
@@ -156,7 +144,7 @@ async function getUnknowLastInteraction(client) {
     }
 }
 
-module.exports.Rankerver = model
+module.exports.User_rank_guild = model
 module.exports = {
     getAllUsers,
     getRankServer,
@@ -171,6 +159,5 @@ module.exports = {
     dropAllUserGuildRanks,
     dropUnknownRankServers,
     getUnknowLastInteraction,
-    encryptUserRankServers,
     listAllUserRankGuild
 }

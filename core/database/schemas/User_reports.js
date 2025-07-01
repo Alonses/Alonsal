@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
     auto: { type: Boolean, default: false }
 })
 
-const model = mongoose.model("Report", schema)
+const model = mongoose.model("User_reports", schema)
 
 async function getReport(uid, sid) {
     if (!await model.exists({ uid: uid, sid: sid }))
@@ -28,18 +28,6 @@ async function getReport(uid, sid) {
         uid: uid,
         sid: sid
     })
-}
-
-async function encryptUserReport(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function dropReport(uid, sid) {
@@ -86,13 +74,12 @@ async function updateGuildReport(sid) {
     })
 }
 
-module.exports.Report = model
+module.exports.User_reports = model
 module.exports = {
     getReport,
     dropReport,
     getUserReports,
     getReportedUsers,
     checkUserGuildReported,
-    updateGuildReport,
-    encryptUserReport
+    updateGuildReport
 }

@@ -25,7 +25,6 @@ const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
-const { atualiza_user_encrypt } = require('./core/auto/triggers/user_encrypt')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 
@@ -243,9 +242,6 @@ function internal_functions(client) {
         let user = await getUser(id_user)
 
         if (user && id_user.length < 20) {
-
-            // Atualizando todas as tabelas que referenciam o usuário com o ID explicito
-            atualiza_user_encrypt(client, id_user, cript_user_id)
 
             // Criptografando outros dados sensíveis do usuário
             user.uid = cript_user_id

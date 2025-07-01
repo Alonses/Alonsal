@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     assigner: { type: String, default: null },
     assigner_nick: { type: String, default: null },
     relatory: { type: String, default: null },
-    timestamp: { type: Number, default: null },
+    timestamp: { type: Number, default: null }
 })
 
 const model = mongoose.model("User_role", schema)
@@ -33,18 +33,6 @@ async function getUserRole(uid, sid, timestamp) {
         sid: sid,
         timestamp: timestamp
     })
-}
-
-async function encryptUserRoles(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
 }
 
 async function getTimedRoleAssigner(uid, sid) {
@@ -153,6 +141,5 @@ module.exports = {
     dropAllGuildRoles,
     dropUserTimedRole,
     listAllUserValidyRoles,
-    filterRemovedTimedRole,
-    encryptUserRoles
+    filterRemovedTimedRole
 }

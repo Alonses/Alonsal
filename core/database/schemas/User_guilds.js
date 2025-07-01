@@ -18,18 +18,6 @@ async function registerUserGuild(uid, sid) {
         })
 }
 
-async function encryptUserGuild(uid, new_user_id) {
-
-    await model.updateMany(
-        { uid: uid },
-        {
-            $set: {
-                uid: new_user_id
-            }
-        }
-    )
-}
-
 async function listAllUserGuilds(uid) {
     return model.find({
         uid: uid
@@ -107,6 +95,5 @@ module.exports = {
     listAllUserGuilds,
     dropUserGuild,
     dropAllUserGuilds,
-    encryptUserGuild,
     updateUserGuilds
 }
