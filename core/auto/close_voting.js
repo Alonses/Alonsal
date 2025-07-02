@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getVotes } = require("../database/schemas/Vote")
+const { getVotes } = require("../database/schemas/User_votes")
 
 const msgs = {
     "828706023430160384": "1140839551330439258",

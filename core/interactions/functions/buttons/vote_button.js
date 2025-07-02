@@ -1,4 +1,4 @@
-const { registryVote, verifyUser } = require("../../../database/schemas/Vote")
+const { registryVote, verifyUser } = require("../../../database/schemas/User_votes")
 const { createBadge } = require("../../../database/schemas/User_badges")
 const { busca_badges } = require("../../../data/user_badges")
 

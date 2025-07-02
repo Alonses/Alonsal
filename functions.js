@@ -124,7 +124,7 @@ function internal_functions(client) {
 
     client.embed_color = (entrada) => {
 
-        if (entrada === "RANDOM") return alea_hex()
+        if (entrada.toLowerCase() === "random") return alea_hex()
 
         return entrada.slice(-6)
     }

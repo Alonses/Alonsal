@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
-const { getVotes } = require("../../core/database/schemas/Vote")
+const { getVotes } = require("../../core/database/schemas/User_votes")
 
 const { idiomas } = require("../../core/formatters/patterns/user")
 

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-// uid -> userID
+// uid -> User ID
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },

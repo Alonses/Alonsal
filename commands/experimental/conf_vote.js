@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
-const { getVotes } = require('../../core/database/schemas/Vote')
+const { getVotes } = require('../../core/database/schemas/User_votes')
 
 module.exports = {
     data: new SlashCommandBuilder()
