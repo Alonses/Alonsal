@@ -1,5 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
-const { voiceChannelsTimes } = require("../../formatters/patterns/timeout")
+const { voiceChannelTimeouts } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -18,10 +18,10 @@ module.exports = async ({ client, user, interaction }) => {
     const embed = new EmbedBuilder()
         .setTitle(`> Faladeros dinâmicos 🔊`)
         .setColor(client.embed_color(user.misc.color))
-        .setDescription('```Este módulo habilita a possibilidade dos membros do servidor criarem canais de voz dinâmicos ao ingressarem em um canal especifico.\n\nDefina um canal de voz padrão e uma categoria, após isso, todos os membros que conectarem a este canal serão transferidos para um novo canal criado no mesmo instante na categoria selecionada.\n\nQuando todos os membros sairem do canal criado, o mesmo será excluído após o tempo definido abaixo.```')
+        .setDescription('```Este módulo concede a possibilidade dos membros do servidor criarem canais de voz dinâmicos ao ingressarem em um canal especifico.\n\nDefina um canal de voz padrão e uma categoria fixa, após isso, todos os membros que conectarem a este canal serão transferidos para um novo canal criado no mesmo instante na categoria selecionada, cada membro diferente que conectar no canal ativador gerará um canal separado.\n\nQuando todos os membros saírem de seus canais, os mesmos serão excluído após o tempo de expiração definido abaixo.```')
         .setFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelsTimes[guild.voice_channels.timeout]} ${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeouts[guild.voice_channels.timeout]} ${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
                 value: "⠀",
                 inline: true
             },

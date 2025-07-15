@@ -16,7 +16,7 @@ async function verifyUserVoiceChannel(uid, sid) {
     return model.findOne({ uid: uid, sid: sid })
 }
 
-async function verifyChannelVoice(cid, sid) {
+async function verifyVoiceChannel(cid, sid) {
     return model.findOne({ cid: cid, sid: sid })
 }
 
@@ -43,7 +43,7 @@ async function listAllVoiceChannels() {
 module.exports.User_voice_channel = model
 module.exports = {
     verifyUserVoiceChannel,
-    verifyChannelVoice,
+    verifyVoiceChannel,
     registryVoiceChannel,
     dropVoiceChannel,
     listAllVoiceChannels

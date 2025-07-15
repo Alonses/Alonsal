@@ -1,7 +1,7 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { channelTypes } = require('../../../formatters/patterns/guild')
-const { voiceChannelsTimes } = require('../../../formatters/patterns/timeout')
+const { voiceChannelTimeouts } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, channel }) => {
 
@@ -33,7 +33,7 @@ module.exports = async ({ client, channel }) => {
 
     // Canal excluído a partir do módulo de canais de voz dinâmicos
     if (guild.conf.voice_channels && registroAudita.executorId === client.id())
-        tipo_canal += `\n\n⚡ Excluído dinamicamente.\n${client.defaultEmoji("time")} Expiração ao sair: ${voiceChannelsTimes[guild.voice_channels.timeout]}${client.tls.phrase(guild, "util.unidades.segundos")}`
+        tipo_canal += `\n\n⚡ Exclusão dinâmica.\n${client.defaultEmoji("time")} Foi excluído após ${voiceChannelTimeouts[guild.voice_channels.timeout]}${client.tls.phrase(guild, "util.unidades.segundos")} ao ficar vazio.`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.titulo_canal_excluido"))

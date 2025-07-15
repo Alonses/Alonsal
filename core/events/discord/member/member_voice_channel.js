@@ -1,8 +1,8 @@
 const { ChannelType, PermissionsBitField, EmbedBuilder } = require("discord.js")
 
-const { verifyUserVoiceChannel, registryVoiceChannel, verifyChannelVoice } = require("../../../database/schemas/User_voice_channel")
+const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
-const { voiceChannelsTimes } = require("../../../formatters/patterns/timeout")
+const { voiceChannelTimeouts } = require("../../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, oldState, newState }) => {
 
@@ -26,7 +26,6 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                     const guild_member = await client.getMemberGuild(guild.sid, id_user)
                     const cached_guild = await client.guilds(guild.sid)
-                    const everyone = cached_guild.roles.cache.find(r => r.name === '@everyone')
 
                     // Criando o canal dinâmico na categoria definida no servidor
                     await cached_guild.channels.create({
@@ -35,11 +34,11 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                         parent: client.decifer(guild.voice_channels.category),
                         permissionOverwrites: [
                             {
-                                id: everyone.id,
+                                id: guild.sid,
                                 allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.Connect],
                             },
                             {
-                                id: everyone.id,
+                                id: guild.sid,
                                 deny: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
                             },
                             {
@@ -73,7 +72,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                             //     .setColor(client.embed_color(user.misc.color))
 
                             // const row = client.create_buttons([
-                                // { id: "user_voice_channel", name: "Limitar canal", type: 2, emoji: client.defaultEmoji("metrics"), data: "1" }
+                            // { id: "user_voice_channel", name: "Limitar canal", type: 2, emoji: client.defaultEmoji("metrics"), data: "1" }
                             // ], id_user)
 
                             // client.notify(new_voice_channel.id, { content: `<@${id_user}>`, embeds: [embed], components: [row] })
@@ -93,7 +92,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 async function verificar_ausencia_canal(client, channel_id, guild) {
 
     // Dono original saiu do canal dinâmico
-    const voice_channel = await verifyChannelVoice(client.encrypt(channel_id), client.encrypt(guild.sid))
+    const voice_channel = await verifyVoiceChannel(client.encrypt(channel_id), client.encrypt(guild.sid))
 
     if (voice_channel) {
 
@@ -110,11 +109,11 @@ async function verificar_ausencia_canal(client, channel_id, guild) {
             })
 
             // Notificando sobre a exclusão do canal no chat de mensagens
-            client.notify(guild_channel.id, { content: `${client.emoji(13)} | Este canal será excluído <t:${client.timestamp() + voiceChannelsTimes[guild.voice_channels.timeout]}:R>` })
+            client.notify(guild_channel.id, { content: `${client.emoji(13)} | Este canal será excluído <t:${client.timestamp() + voiceChannelTimeouts[guild.voice_channels.timeout]}:R>` })
 
             setTimeout(() => {
                 guild_channel.delete()
-            }, voiceChannelsTimes[guild.voice_channels.timeout] * 1000)
+            }, voiceChannelTimeouts[guild.voice_channels.timeout] * 1000)
         }
     }
 }

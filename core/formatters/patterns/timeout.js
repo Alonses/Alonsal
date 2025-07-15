@@ -8,7 +8,7 @@ const defaultEraser = {
     7: 2419200  // 28 dias
 }
 
-const voiceChannelsTimes = {
+const voiceChannelTimeouts = {
     0: 5,  // Em segundos
     1: 10,
     2: 15,
@@ -83,7 +83,7 @@ const defaultWarnStrikes = [3, 4, 5, 6, 7]
 
 module.exports = {
     defaultEraser,
-    voiceChannelsTimes,
+    voiceChannelTimeouts,
     banMessageEraser,
     defaultRoleTimes,
     spamTimeoutMap,
