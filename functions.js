@@ -186,6 +186,10 @@ function internal_functions(client) {
 
     client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
+    client.getGuildChannel = async (id_alvo) => {
+        return await client.discord.channels.cache.get(id_alvo)
+    }
+
     client.getGuildChannels = async (interaction, user, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
 
         const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
@@ -263,9 +267,6 @@ function internal_functions(client) {
 
             if (user?.profile.about > 0)
                 user.profile.about = client.encrypt(user.profile.about)
-
-            // if ((user.profile.avatar)?.includes("cdn.discordapp"))
-            //     user.profile.avatar = client.encrypt(user.profile.avatar)
 
             user.save()
         } else { // ID já criptografado
@@ -438,7 +439,7 @@ function internal_functions(client) {
 
         if (!id_alvo) return
 
-        const canal = await client.discord.channels.cache.get(id_alvo)
+        const canal = await client.getGuildChannel(id_alvo)
         if (!canal) return
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
@@ -618,7 +619,7 @@ function internal_functions(client) {
 
     client.timed_message = async (interaction, message, time) => {
 
-        const canal = await client.discord.channels.cache.get(interaction.channel.id)
+        const canal = await client.getGuildChannel(interaction.channel.id)
         if (!canal) return
 
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal

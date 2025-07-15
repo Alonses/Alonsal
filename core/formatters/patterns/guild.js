@@ -58,7 +58,8 @@ const operation_codes = {
     "tracked_invites": 10,
     "hierarchy_warns": 11,
     "timed_roles": 12,
-    "ranking": 13
+    "ranking": 13,
+    "voice_channels": 14
 }
 
 const networkCases = {

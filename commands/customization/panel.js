@@ -111,7 +111,8 @@ module.exports = {
                             { name: '🎮 Free Games ad', value: 'free_games' },
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💂 In-server reports', value: 'tickets' },
-                            { name: '🔗 Tracked Invitations', value: 'tracked_invites' }
+                            { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
+                            { name: '🔊 Voice channels', value: 'voice_channels' }
                         )))
         .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {

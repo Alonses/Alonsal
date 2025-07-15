@@ -12,6 +12,7 @@ const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
 const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
+const { verifica_canais_dinamicos } = require('./triggers/guild_voice_channels')
 
 module.exports = async ({ client }) => {
 
@@ -32,6 +33,9 @@ module.exports = async ({ client }) => {
 
     atualiza_eraser()
     atualiza_user_eraser(client)
+
+    // Verifica todos os canais dinâmicos salvos ao ligar o bot
+    verifica_canais_dinamicos(client)
 
     console.log("📣 | Disparando o relógio interno")
 

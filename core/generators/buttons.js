@@ -26,9 +26,9 @@ function create_buttons(lista, interaction) {
             botao.setURL(dados.value)
         else {
             if (dados.data) // Botão normal com dados anexados
-                botao.setCustomId(`${dados.id}|${interaction.user.id}.${dados.data}`)
+                botao.setCustomId(`${dados.id}|${interaction?.user?.id || interaction}.${dados.data}`)
             else // Botão normal sem dados anexados
-                botao.setCustomId(`${dados.id}|${interaction.user.id}`)
+                botao.setCustomId(`${dados.id}|${interaction?.user?.id || interaction}`)
         }
 
         if (dados.emoji) // Botão com emoji declarado

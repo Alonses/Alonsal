@@ -102,44 +102,6 @@ async function getModulesPrice(uid) {
     return total
 }
 
-async function updateUserModules(client) {
-
-    const modules = await model.find()
-    timedUpdate(client, modules)
-}
-
-async function timedUpdate(client, modules) {
-
-    if (modules.length > 0) {
-
-        const module = modules[0]
-        let atualizado = false
-
-        if (module.uid.length < 20) {
-            module.uid = client.encrypt(module.uid)
-            atualizado = true
-        }
-
-        if (module.uid.length > 80) {
-            module.uid = client.decifer(module.uid)
-            atualizado = true
-        }
-
-        if (atualizado) {
-            console.log("atualizado", module)
-            await module.save()
-        }
-
-        if (modules.length % 50 == 0) console.log("Restam:", modules.length)
-        modules.shift()
-
-        setTimeout(() => {
-            timedUpdate(client, modules)
-        }, 10)
-    } else
-        console.log("Finalizado")
-}
-
 module.exports.User_modules = model
 module.exports = {
     createModule,
@@ -150,6 +112,5 @@ module.exports = {
     listAllUserModules,
     dropAllUserModules,
     verifyUserModules,
-    shutdownAllUserModules,
-    updateUserModules
+    shutdownAllUserModules
 }

@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "util.server.categoria")}**`,
-                value: `${client.emoji("icon_id")} \`${guild.tickets.category}\`\n( <#${guild.tickets.category}> )`,
+                value: `${client.emoji("icon_id")} \`${client.decifer(guild.tickets.category)}\`\n( <#${client.decifer(guild.tickets.category)}> )`,
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true },

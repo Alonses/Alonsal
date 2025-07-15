@@ -22,8 +22,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     // 12 -> Cargos temporários
     // 13 -> Ranking no servidor
+    // 14 -> Faladeros dinâmicos
 
-    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    const c_buttons = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
     const c_menu = [false, false]
 
     if (pagina == 0) // Botão de voltar
@@ -47,6 +48,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         c_buttons[4] = true
         c_buttons[5] = true
         c_buttons[6] = true
+        c_buttons[14] = true
     }
 
     // Falta de permissões para gerenciar o servidor no ranking global e o anúncios de games
@@ -175,8 +177,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\`\`\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels)} **Faladeros dinâmicos**`,
+                value: `\`\`\`Membros podem criar canais de voz dinâmicos ao se conectarem em um específico.\`\`\``,
                 inline: true
             },
             {
@@ -214,11 +216,11 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         ])
 
     // Quarta página de botões de configuração do Alonsal
-    // Rankeamento no servidor
+    // Rankeamento no servidor, faladeros dinâmicos
     if (pagina === 3)
         botoes = botoes.concat([
             { id: "guild_panel_button", name: "Rankeamento", type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },
-            { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '14', disabled: true },
+            { id: "guild_voice_channels_button", name: "Faladores", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[10] },
             { id: "guild_panel_button", name: client.tls.phrase(user, "manu.painel.misterioso"), type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
         ])
 

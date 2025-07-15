@@ -22,6 +22,11 @@ const schema = new mongoose.Schema({
     tickets: {
         category: { type: String, default: null }
     },
+    voice_channels: {
+        channel: { type: String, default: null },
+        category: { type: String, default: null },
+        timeout: { type: String, default: 0 }
+    },
     warn: {
         notify: { type: Boolean, default: true },
         notify_exclusion: { type: Boolean, default: true },
@@ -121,6 +126,7 @@ const schema = new mongoose.Schema({
         network: { type: Boolean, default: false },
         warn: { type: Boolean, default: false },
         ranking: { type: Boolean, default: false },
+        voice_channels: { type: Boolean, default: false },
         nuke_invites: { type: Boolean, default: false }
     }
 })

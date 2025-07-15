@@ -1,6 +1,7 @@
 const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { channelTypes } = require('../../../formatters/patterns/guild')
+const { voiceChannelsTimes } = require('../../../formatters/patterns/timeout')
 
 module.exports = async ({ client, channel }) => {
 
@@ -29,6 +30,10 @@ module.exports = async ({ client, channel }) => {
 
     if (channelTypes[registroAudita.target.type]) tipo_canal = `${channelTypes[registroAudita.target.type]} ${client.tls.phrase(guild, `menu.channels.${registroAudita.target.type}`)}`
     else tipo_canal = `❔ ${client.tls.phrase(guild, "mode.logger.canal_tipo_desconhecido")}`
+
+    // Canal criado a partir do módulo de canais de voz dinâmicos
+    if (guild.conf.voice_channels && registroAudita.executorId === client.id())
+        tipo_canal += `\n\n⚡ Criado dinamicamente.\n${client.defaultEmoji("time")} Expiração ao sair: ${voiceChannelsTimes[guild.voice_channels.timeout]}${client.tls.phrase(guild, "util.unidades.segundos")}`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.canal_criado"))

@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = req
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("conf")
-        .setDescription("⌠💂⌡ Manage server roles")
+        .setDescription("⌠💂⌡ Manage server settings")
         .addSubcommand(subcommand =>
             subcommand.setName("guild")
                 .setDescription("⌠💂⌡ Server settings")
@@ -41,7 +41,8 @@ module.exports = {
                             { name: '🛑 Warn', value: 'warn' },
                             { name: '📻 External reports', value: 'report' },
                             { name: '⌚ Timed roles', value: 'timed_roles' },
-                            { name: '💬 Tickets', value: 'ticket' }
+                            { name: '💬 Tickets', value: 'ticket' },
+                            { name: '🔊 Voice channels', value: 'voice_channels'}
                         )
                         .setRequired(true))
                 .addChannelOption(option =>

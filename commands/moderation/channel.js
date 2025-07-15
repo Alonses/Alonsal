@@ -59,7 +59,7 @@ module.exports = {
         if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles]))
             return client.tls.reply(interaction, user, "mode.ticket.permissao", true, 3)
 
-        const channel = await client.discord.channels.cache.get(interaction.channel.id)
+        const channel = await client.getGuildChannel(interaction.channel.id)
 
         // Solicitando a função e executando
         require(`./subcommands/channel_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel })
