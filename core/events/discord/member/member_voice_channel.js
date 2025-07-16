@@ -104,9 +104,8 @@ async function verificar_ausencia_canal(client, channel_id, guild) {
             voice_channel.delete()
 
             // Alterando o nome do canal para informar a exclusão
-            const guild_member = await client.getMemberGuild(guild.sid, client.decifer(voice_channel.uid))
             await guild_channel.edit({
-                name: `${client.emoji(13)} ${guild_member.user.username}`
+                name: `${client.emoji(13)} ${guild_channel.name.split(" ")[1]}`
             })
 
             // Notificando sobre a exclusão do canal no chat de mensagens
