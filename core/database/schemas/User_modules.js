@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
     type: { type: Number, default: null },
     data: { type: Number, default: null },
     stats: {
-        price: { type: Number, default: 20 },
+        price: { type: Number, default: 10 },
         days: { type: Number, default: null },
         hour: { type: String, default: null },
         active: { type: Boolean, default: false },

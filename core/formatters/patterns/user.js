@@ -25,10 +25,11 @@ const moduleDays = {
 }
 
 const modulePrices = {
-    3: 1,
-    4: 1,
-    5: 5,
-    6: 10
+    1: 1, // Phrases
+    3: 2, // Jokes
+    4: 2, // Curiosidades
+    5: 3, // Mine Itens
+    6: 5  // Free games
 }
 
 const moduleTypes = {

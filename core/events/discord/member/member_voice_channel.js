@@ -60,8 +60,9 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                         const membro_sv = await client.getMemberGuild(guild.sid, client.id())
                         if (membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers)) {
 
-                            // Movendo o membro para o novo canal
-                            guild_member.voice.setChannel(new_voice_channel.id)
+                            setTimeout(() => { // Movendo o membro para o novo canal
+                                guild_member.voice.setChannel(new_voice_channel.id)
+                            }, 1500)
 
                             // Atualizandos os dados do canal no banco de dados
                             user_voice_channel.cid = client.encrypt(new_voice_channel.id)
@@ -71,12 +72,13 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                             // Criando o embed de botões para configuração do canal pelo membro
                             // const embed = new EmbedBuilder()
-                            //     .setTitle("> Controles do canal de voz")
-                            //     .setDescription("Utilize os botões abaixo para definir o funcionamento deste canal dinâmico.")
+                            //     .setTitle("> Seu canal de voz 🔊")
+                            //     .setDescription("Utilize os controles abaixo para definir o funcionamento deste canal!")
                             //     .setColor(client.embed_color(user.misc.color))
 
                             // const row = client.create_buttons([
-                            // { id: "user_voice_channel", name: "Limitar canal", type: 2, emoji: client.defaultEmoji("metrics"), data: "1" }
+                            //     { id: "user_voice_channel", name: "Limitar canal", type: 2, emoji: client.defaultEmoji("metrics"), data: "1" },
+                            //     { id: "user_voice_channel", name: "Privar canal", type: 2, emoji: "🔒", data: "2" }
                             // ], id_user)
 
                             // client.notify(new_voice_channel.id, { content: `<@${id_user}>`, embeds: [embed], components: [row] })
@@ -88,17 +90,17 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 guild_member.voice.setChannel(client.decifer(user_voice.cid))
             }
         }
-
-    } else // Verifica se o canal possui ausencia de membros
-        verificar_ausencia_canal(client, oldState.channel.id, guild)
+    } else  // Verifica se o canal possui ausencia de membros
+        verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild)
 }
 
-async function verificar_ausencia_canal(client, channel_id, guild) {
+async function verificar_ausencia_canal(client, channel_id, new_channel, guild) {
 
     // Dono original saiu do canal dinâmico
     const voice_channel = await verifyVoiceChannel(client.encrypt(channel_id), client.encrypt(guild.sid))
 
-    if (voice_channel) {
+    // Verificando se o canal dinâmico existe e se o novo canal de entrada é diferente do canal ativador no servidor
+    if (voice_channel && new_channel !== client.decifer(guild.voice_channels.channel)) {
 
         const guild_channel = await client.getGuildChannel(channel_id)
 
@@ -119,4 +121,17 @@ async function verificar_ausencia_canal(client, channel_id, guild) {
             }, voiceChannelTimeout[guild.voice_channels.timeout] * 1000)
         }
     }
+
+    // Verificando se já existe algum canal criado e o membro
+    if (voice_channel && new_channel === client.decifer(guild.voice_channels.channel)) return mover_membro(client, voice_channel)
+}
+
+async function mover_membro(client, voice_channel) {
+
+    // Movendo o membro de volta ao canal que ele havia criado
+    const guild_member = await client.getMemberGuild(client.decifer(voice_channel.sid), client.decifer(voice_channel.uid))
+
+    setTimeout(() => {
+        guild_member.voice.setChannel(client.decifer(voice_channel.cid))
+    }, 1500)
 }

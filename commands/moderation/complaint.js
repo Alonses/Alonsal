@@ -61,13 +61,12 @@ module.exports = {
         if (!guild.conf.tickets)
             return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
-        const channel = await getTicket(interaction.guild.id, interaction.user.id)
-        const solicitante = await client.getMemberGuild(interaction, interaction.user.id)
+        const channel = await getTicket(client.encrypt(interaction.guild.id), client.encrypt(interaction.user.id))
 
         // Buscando os dados do canal no servidor
-        const canal_servidor = interaction.guild.channels.cache.find(c => c.id === channel.cid)
+        const canal_servidor = interaction.guild.channels.cache.find(c => c.id === client.decifer(channel.cid))
 
         // Solicitando a função e executando
-        require(`./subcommands/complaint_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel, solicitante, canal_servidor })
+        require(`./subcommands/complaint_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel, canal_servidor })
     }
 }
