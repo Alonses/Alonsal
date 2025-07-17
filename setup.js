@@ -17,7 +17,7 @@ const client_data = {
     daily_announce: 0,
     modo_develop: modo_develop,
     delete_slash: delete_slash,
-    force_update: update_commands ? 1 : 0,
+    force_update: update_commands,
     status: silent || modo_develop ? 0 : 1,
     logger: silent || modo_develop ? 0 : 1,
     ranking: limited || silent || modo_develop ? 0 : 1,

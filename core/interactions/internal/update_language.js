@@ -15,7 +15,7 @@ module.exports = async ({ client, interaction }) => {
         .then(async res => {
 
             // Salvando o commit de traduções mais recente no banco 
-            const cod_commit = res.split("<include-fragment src=\"/Alonses/Alondioma/spoofed_commit_check/")[1].split("\"")[0].slice(0, 7)
+            const cod_commit = res.split("currentOid\":\"")[1].slice(0, 7)
 
             bot.persis.alondioma = cod_commit
             await bot.save()

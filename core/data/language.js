@@ -21,7 +21,7 @@ async function loadAll(client) {
         .then(async res => {
 
             try { // Buscando o commit mais recente
-                const cod_commit = res.split("\"currentOid\":\"")[1].split("\"},")[0].slice(0, 7)
+                const cod_commit = res.split("currentOid\":\"")[1].slice(0, 7)
 
                 // Sincroniza com os idiomas mais recentes caso haja atualização ou não haja arquivos
                 if (cod_commit !== bot.persis.alondioma || !existsSync(`./files/languages/pt-br.json`)) {

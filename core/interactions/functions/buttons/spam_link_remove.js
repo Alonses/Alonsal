@@ -1,6 +1,6 @@
-const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks } = require("../../../database/schemas/Spam_links")
+const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks, listAllSuspiciousLinks } = require("../../../database/schemas/Spam_links")
 
-module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
+module.exports = async ({ client, user, interaction, dados }) => {
 
     // Gerenciamento de anotações
     const operacao = parseInt(dados.split(".")[1])
