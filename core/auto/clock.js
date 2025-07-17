@@ -16,6 +16,13 @@ const { verifica_canais_dinamicos } = require('./triggers/guild_voice_channels')
 
 module.exports = async ({ client }) => {
 
+    // Sincronizando as configurações de recursos
+    const bot = await client.getBot()
+
+    Object.keys(bot.conf).forEach(valor => {
+        client.x[valor] = bot.conf[valor]
+    })
+
     if (!existsSync(`./files/data/`)) // Criando a pasta de dados para poder salvar em cache
         mkdirSync(`./files/data/`, { recursive: true })
 
@@ -28,14 +35,14 @@ module.exports = async ({ client }) => {
     atualiza_roles()
     atualiza_join_guilds(client)
 
-    atualiza_modulos()
+    if (client.x.modules) atualiza_modulos()
     atualiza_fixed_badges(client)
 
     atualiza_eraser()
     atualiza_user_eraser(client)
 
     // Verifica todos os canais dinâmicos salvos ao ligar o bot
-    verifica_canais_dinamicos(client)
+    if (client.x.voice_channels) verifica_canais_dinamicos(client)
 
     console.log("📣 | Disparando o relógio interno")
 
@@ -46,7 +53,7 @@ internal_clock = (client, tempo_restante) => {
 
     setTimeout(() => { // Sincronizando os dados do bot
 
-        requisita_modulo(client) // Verificando se há modulos agendados para o horário atual
+        if (client.x.modules) requisita_modulo(client) // Verificando se há modulos agendados para o horário atual
         verifica_warns(client) // Sincronizando as advertências temporárias
         verifica_pre_warns(client) // Sincronizando as anotações de advertências temporárias
         verifica_roles(client) // Sincronizando os cargos temporários
@@ -57,7 +64,7 @@ internal_clock = (client, tempo_restante) => {
             verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
         }
 
-        if (client.timestamp() % 1800 < 60) // 30 Minutos
+        if (client.timestamp() % 1800 < 60 && client.x.ranking) // 30 Minutos
             verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
 
         internal_clock(client, 60000)

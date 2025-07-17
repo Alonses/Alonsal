@@ -14,7 +14,7 @@ if (update_commands) // Force update é utilizado para forçar a atualização d
 const client_data = {
     sharding: 1,
     debug_mode: 0,
-    anuncio_diario: 0,
+    daily_announce: 0,
     modo_develop: modo_develop,
     delete_slash: delete_slash,
     force_update: update_commands ? 1 : 0,
@@ -23,6 +23,7 @@ const client_data = {
     ranking: limited || silent || modo_develop ? 0 : 1,
     modules: !modo_develop,
     relatorio: update_commands || silent || modo_develop ? 0 : 1,
+    voice_channels: !modo_develop,
 
     owners: process.env.owner_id.split(", "),
     id: modo_develop ? process.env.client_2 : process.env.client_1,

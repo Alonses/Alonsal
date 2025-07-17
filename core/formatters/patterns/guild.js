@@ -74,7 +74,8 @@ const links_oficiais = [
     "youtube.com",
     "google.com",
     "tenor.com",
-    "discordapp.com"
+    "discordapp.com",
+    "discordapp.net"
 ]
 
 module.exports = {

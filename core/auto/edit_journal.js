@@ -38,6 +38,9 @@ module.exports = async ({ client, caso, quantia }) => {
 
         if (caso === "epic_embed")
             bot.cmd.erros += 1
+
+        if (caso === "voice_channel")
+            bot.cmd.voice_channels += 1
     }
 
     await bot.save()

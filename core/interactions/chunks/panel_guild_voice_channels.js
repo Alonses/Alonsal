@@ -1,5 +1,5 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
-const { voiceChannelTimeouts } = require("../../formatters/patterns/timeout")
+const { voiceChannelTimeout } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription('```Este módulo concede a possibilidade dos membros do servidor criarem canais de voz dinâmicos ao ingressarem em um canal especifico.\n\nDefina um canal de voz padrão e uma categoria fixa, após isso, todos os membros que conectarem a este canal serão transferidos para um novo canal criado no mesmo instante na categoria selecionada, cada membro diferente que conectar no canal ativador gerará um canal separado.\n\nQuando todos os membros saírem de seus canais, os mesmos serão excluído após o tempo de expiração definido abaixo.```')
         .setFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeouts[guild.voice_channels.timeout]} ${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]} ${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
                 value: "⠀",
                 inline: true
             },

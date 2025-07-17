@@ -39,12 +39,12 @@ module.exports = async ({ client }) => {
         .addFields(
             {
                 name: `${client.emoji("icon_slash_commands")} **Interações**`,
-                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\``,
+                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Dinâmicos:** \`${client.locale(bot.cmd.voice_channels)}\``,
                 inline: true
             },
             {
                 name: ":globe_with_meridians: **Servidores**",
-                value: `:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\`\n:diamond_shape_with_a_dot_inside: **Ativo em:** \`${client.locale(client.guilds().size)}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.locale(canais_texto)}\``,
+                value: `:diamond_shape_with_a_dot_inside: **Ativo em:** \`${client.locale(client.guilds().size)}\`\n:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.locale(canais_texto)}\``,
                 inline: true
             },
             {

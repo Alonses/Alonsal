@@ -17,7 +17,8 @@ const schema = new mongoose.Schema({
         ativacoes: { type: Number, default: 0 },
         botoes: { type: Number, default: 0 },
         menus: { type: Number, default: 0 },
-        erros: { type: Number, default: 0 }
+        erros: { type: Number, default: 0 },
+        voice_channels: { type: Number, default: 0 }
     },
     exp: {
         exp_concedido: { type: Number, default: 0 },
@@ -28,6 +29,13 @@ const schema = new mongoose.Schema({
         gerado: { type: Number, default: 0 },
         movido: { type: Number, default: 0 },
         reback: { type: Number, default: 0 }
+    },
+    conf: {
+        voice_channels: { type: Boolean, default: true },
+        modules: { type: Boolean, default: true },
+        ranking: { type: Boolean, default: true },
+        daily_announce: { type: Boolean, default: false },
+        logger: { type: Boolean, default: true }
     }
 })
 
@@ -53,6 +61,7 @@ async function dailyReset(bit) {
     bot.cmd.botoes = 0
     bot.cmd.menus = 0
     bot.cmd.erros = 0
+    bot.cmd.voice_channels = 0
 
     bot.exp.exp_concedido = 0
     bot.exp.msgs_validas = 0

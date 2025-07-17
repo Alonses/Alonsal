@@ -2,7 +2,7 @@ const { ChannelType, PermissionsBitField, EmbedBuilder } = require("discord.js")
 
 const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
-const { voiceChannelTimeouts } = require("../../../formatters/patterns/timeout")
+const { voiceChannelTimeout } = require("../../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, oldState, newState }) => {
 
@@ -52,6 +52,9 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                             }
                         ]
                     }).then(async new_voice_channel => {
+
+                        // Atualizando as estatísticas de canais dinâmicos criados no dia
+                        client.journal("voice_channel")
 
                         // Permissões do bot no servidor
                         const membro_sv = await client.getMemberGuild(guild.sid, client.id())
@@ -109,11 +112,11 @@ async function verificar_ausencia_canal(client, channel_id, guild) {
             })
 
             // Notificando sobre a exclusão do canal no chat de mensagens
-            client.notify(guild_channel.id, { content: `${client.emoji(13)} | Este canal será excluído <t:${client.timestamp() + voiceChannelTimeouts[guild.voice_channels.timeout]}:R>` })
+            client.notify(guild_channel.id, { content: `${client.emoji(13)} | Este canal será excluído <t:${client.timestamp() + voiceChannelTimeout[guild.voice_channels.timeout]}:R>` })
 
             setTimeout(() => {
                 guild_channel.delete()
-            }, voiceChannelTimeouts[guild.voice_channels.timeout] * 1000)
+            }, voiceChannelTimeout[guild.voice_channels.timeout] * 1000)
         }
     }
 }

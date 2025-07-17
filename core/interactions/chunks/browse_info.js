@@ -10,7 +10,8 @@ const { activities } = require('../../../files/json/text/activities.json')
 module.exports = async ({ client, user, interaction, caso }) => {
 
     const bot = await client.getBot()
-    let botoes = [], ouvindo_agora = "", pagina = parseInt(caso) || 0
+    let botoes = [], ouvindo_agora = "", info_restricoes = "", pagina = parseInt(caso) || 0
+    let restricoes = []
 
     if (pagina === 0)
         if (activities[client.cached.presence]?.link) {
@@ -21,11 +22,18 @@ module.exports = async ({ client, user, interaction, caso }) => {
             ], interaction)
         }
 
+    Object.keys(bot.conf).forEach(status => {
+        if (!bot.conf[status] && status !== "daily_announce") restricoes.push(status)
+    })
+
+    if (restricoes.length > 0) // Listando os recursos com restrições de funcionamento em andamento
+        info_restricoes = `\`\`\`⚠️ Há restrições de funcionamento para alguns recursos ocorrendo atualmente, pode ser que funções relacionadas a eles não sincronizem como deveriam no momento.\n\nOs recursos afetados são os seguintes:\n${restricoes.join("\n")}\`\`\``
+
     const embed = new EmbedBuilder()
         .setTitle(`> ${client.tls.phrase(user, "manu.info.infos")}`)
         .setColor(client.embed_color(user.misc.color))
         .setThumbnail("https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/271761723_4781205238660427_2679923254801920704_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeEaDbTjIrwdCOtcagWWhVkesSC9z2rDnVexIL3PasOdV5UecFHHTVPIWqV19Eq3VfRZCnHRKRq1cLToTkrsKEim&_nc_ohc=0RgcC3ujltUAX97XDKA&_nc_oc=AQmx0z2kxoAK_y5WsuATe7C9j_M2uor_EZ2DjNPqmJD0olXXScM70c5xlhDQvVV3qVg&_nc_ht=scontent-gru1-1.xx&oh=00_AfDAgo9E37s4Nc_t_6Njz2Q3Ko5-A9be58np1JZJ0nNEOQ&oe=652140A5")
-        .setDescription(`${ouvindo_agora}\n${client.tls.phrase(user, "manu.info.conteudo_1")}\n\n${client.tls.phrase(user, "manu.info.invocado_1")} \`${client.locale(bot.persis.commands + 1)}\` ${client.tls.phrase(user, "manu.info.invocado_2")} ${client.emoji("emojis_dancantes")}\n[ _${client.tls.phrase(user, "manu.info.versao")} ${bot.persis.version}_ ]\n\n${client.tls.phrase(user, "manu.info.spawn_alonsal")} <t:1618756500>`)
+        .setDescription(`${ouvindo_agora}${info_restricoes}\n${client.tls.phrase(user, "manu.info.conteudo_1")}\n\n${client.tls.phrase(user, "manu.info.invocado_1")} \`${client.locale(bot.persis.commands + 1)}\` ${client.tls.phrase(user, "manu.info.invocado_2")} ${client.emoji("emojis_dancantes")}\n[ _${client.tls.phrase(user, "manu.info.versao")} ${bot.persis.version}_ ]\n\n${client.tls.phrase(user, "manu.info.spawn_alonsal")} <t:1618756500>`)
         .setFooter({
             text: client.username(),
             iconURL: client.user().avatarURL({ dynamic: true })
@@ -97,7 +105,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
                 },
                 {
                     name: "⠀",
-                    value: `:card_box: **${client.tls.phrase(user, "manu.info.menus_abertos")}: **\`${client.locale(bot.cmd.menus)}\``,
+                    value: `:card_box: **${client.tls.phrase(user, "manu.info.menus_abertos")}: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Canais gerados:** \`${client.locale(bot.cmd.voice_channels)}\``,
                     inline: true
                 }
             )

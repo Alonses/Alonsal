@@ -7,8 +7,8 @@ module.exports = async ({ client, oldState, newState }) => {
 
     const guild = await client.getGuild(oldState.guild.id)
 
-    // Canais de voz dinâmicos ativos no servidor
-    if (guild.conf.voice_channels) require("../member/member_voice_channel")({ client, guild, oldState, newState })
+    // Canais de voz dinâmicos ativos no servidor e ligados no bot
+    if (guild.conf.voice_channels && client.x.voice_channels) require("../member/member_voice_channel")({ client, guild, oldState, newState })
 
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_voice_status || !guild.conf.logger) return

@@ -55,7 +55,7 @@ async function checkUserGuildRoles(sid) {
     }).limit(50)
 }
 
-async function listAllUserValidyRoles() {
+async function listAllUserValidRoles() {
 
     // Listando todos os membrosque possuem cargos temporários ativos
     return model.find({
@@ -140,6 +140,6 @@ module.exports = {
     dropAllUserGuildRoles,
     dropAllGuildRoles,
     dropUserTimedRole,
-    listAllUserValidyRoles,
+    listAllUserValidRoles,
     filterRemovedTimedRole
 }

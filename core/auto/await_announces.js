@@ -23,7 +23,7 @@ module.exports = async ({ client }) => {
     let frequencia = 604800000
 
     // Atualização diária
-    if (client.x.anuncio_diario) {
+    if (client.x.daily_announce) {
         tempo_restante = ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
         frequencia = 86400000
 

@@ -3,7 +3,7 @@
 // 3 -> Altera a categoria dos canais de voz dinâmicos
 
 const { ChannelType } = require('discord.js')
-const { voiceChannelTimeouts } = require('../../../formatters/patterns/timeout')
+const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
 
 const operations = {
     1: { action: "conf.voice_channels", page: 0 }
@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escolher o tempo de expiração dos canais de voz dinâmicos
         const valores = []
-        Object.keys(voiceChannelTimeouts).forEach(key => { if (parseInt(key) !== guild.voice_channels.timeout) valores.push(`${key}.${voiceChannelTimeouts[key]}`) })
+        Object.keys(voiceChannelTimeout).forEach(key => { if (parseInt(key) !== guild.voice_channels.timeout) valores.push(`${key}.${voiceChannelTimeout[key]}`) })
 
         const data = {
             title: { tls: "menu.menus.escolher_tempo_remocao" },
