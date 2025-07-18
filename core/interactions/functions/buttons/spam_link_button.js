@@ -34,14 +34,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         // Atualizando o status de validade do link suspeito
+        let novo_link = link.link
+
+        link.link = client.encrypt(link.link)
         link.valid = true
         await link.save()
 
         const guild = await client.getGuild(interaction.guild.id)
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-        client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente!\n( \`${link.link.split("").join(" ")}\` )` })
-        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(user, "mode.link_suspeito.adicionado_manualmente", [44, 10], link.link.split("").join(" ")) })
+        client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente!\n( \`${novo_link.split("").join(" ")}\` )` })
+        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(user, "mode.link_suspeito.adicionado_manualmente", [44, 10], novo_link.split("").join(" ")) })
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.link_suspeito.aviso_adicao", [44, 10], guild.spam.channel || guild.logger.channel),

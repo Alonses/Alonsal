@@ -37,8 +37,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const guild = await client.getGuild(interaction.guild.id)
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-        client.notify(process.env.channel_feeds, { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente!\n( \`${link.link.split("").join(" ")}\` )` })
-        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.excluido_manual", [44, 13], link.link.split("").join(" ")) })
+        client.notify(process.env.channel_feeds, { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente!\n( \`${client.decifer(link.link).split("").join(" ")}\` )` })
+        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.excluido_manual", [44, 13], client.decifer(link.link).split("").join(" ")) })
 
         // Excluindo o link suspeito
         await dropSuspiciousLink(link.link)

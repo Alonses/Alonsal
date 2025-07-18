@@ -6,7 +6,6 @@ const schema = new mongoose.Schema({
     link: { type: String, default: null },
     preco: { type: Number, default: 0 },
     expira: { type: Number, default: null },
-    descricao: { type: String, default: null },
     thumbnail: { type: String, default: null }
 })
 
