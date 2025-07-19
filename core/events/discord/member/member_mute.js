@@ -28,7 +28,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (network_descricao.length > 1 || razao.length > 1)
         razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle(timeout ? client.tls.phrase(guild, "mode.logger.membro_castigado_titulo") : client.tls.phrase(guild, "mode.logger.membro_perdoado_titulo"))
         .setColor(timeout ? 0xED4245 : 0xffffff)
         .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
@@ -67,15 +67,10 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         )
     } else {
 
-        const member_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
+        const user_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
 
-        embed.addFields(
-            {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-                value: `<t:${parseInt(member_guild.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(member_guild.joinedTimestamp / 1000)}:R> )`,
-                inline: false
-            }
-        )
+        // Data de entrada do membro no servidor
+        embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
     }
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })

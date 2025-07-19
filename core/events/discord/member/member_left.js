@@ -52,7 +52,7 @@ module.exports = async (client, dados) => {
         if (registroAudita.targetId === user_alvo.id || !guild.logger.member_left)
             return // Usuário foi banido ou recurso desativado
 
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
         .setColor(0xED4245)
         .setFields(
@@ -60,14 +60,13 @@ module.exports = async (client, dados) => {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
-            },
-            {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-                value: `<t:${parseInt(dados.joinedTimestamp / 1000)}:F> )`,
-                inline: true
             }
         )
         .setTimestamp()
+
+    // Data de entrada do membro no servidor
+    const user_guild = dados
+    embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)

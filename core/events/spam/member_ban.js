@@ -7,7 +7,7 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Criando o embed de aviso para os moderadores
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
         .setColor(0xED4245)
         .setDescription(`${client.tls.phrase(guild, "mode.spam.strikes_desc", 46)}\n\`\`\`${mensagens_spam}\`\`\``)
@@ -16,13 +16,11 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n${client.emoji("mc_name_tag")} \`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
-            },
-            {
-                name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-                value: `<t:${parseInt(user_guild.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(user_guild.joinedTimestamp / 1000)}:R> )`,
-                inline: false
             }
         )
+
+    // Data de entrada do membro no servidor
+    embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
 
     if (user_guild.user.avatarURL({ dynamic: true, size: 2048 }))
         embed.setThumbnail(user_guild.user.avatarURL({ dynamic: true, size: 2048 }))

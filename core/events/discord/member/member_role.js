@@ -13,7 +13,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     else
         texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${cargos.join(", ")}`
 
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))
         .setColor(0x29BB8E)
         .setDescription(texto)
@@ -34,13 +34,12 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     // Comparando as permissões adicionadas e removidas
     const alteracoes = comparar_diferencas(old_member.permissions.toArray(), new_member.permissions.toArray())
 
+    // Data de entrada do membro no servidor
+    const user_guild = new_member
+    embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
+
     // Listando as permissões do usuário
     embed.addFields(
-        {
-            name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
-            value: `<t:${parseInt(new_member.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(new_member.joinedTimestamp / 1000)}:R> )`,
-            inline: false
-        },
         {
             name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
             value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:**\n${client.list(alteracoes.adicoes, 2000)}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:**\n${client.list(alteracoes.remocoes, 2000)}` : ""}` : `\`❌ ${client.tls.phrase(guild, "mode.logger.sem_permissoes_vinculadas")}\``,
