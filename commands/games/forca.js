@@ -21,6 +21,9 @@ module.exports = {
             return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", flags: "Ephemeral" })
 
         if (!client.cached.forca_sessao.has(interaction.user.id)) {
+
+            await interaction.deferReply({ flags: "Ephemeral" })
+
             fetch('https://api.dicionario-aberto.net/random')
                 .then(res => res.json())
                 .then(dados => {

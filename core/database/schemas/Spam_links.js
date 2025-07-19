@@ -49,32 +49,28 @@ async function getCachedSuspiciousLink(timestamp) {
     })
 }
 
-async function registerSuspiciousLink(client, links, guild_id, timestamp) {
+async function registerSuspiciousLink(client, link, guild_id, timestamp) {
 
     let registrados = []
+    link = link.replaceAll(" ", "")
 
-    links.forEach(async link => {
+    if (!await verifySuspiciousLink(client.encrypt(link))) {
 
-        link = link.replaceAll(" ", "")
+        if (link.includes(")"))
+            link = link.split(")")[0]
 
-        if (!await verifySuspiciousLink(client.encrypt(link))) {
+        if (link.includes("("))
+            link = link.split("(")[1]
 
-            if (link.includes(")"))
-                link = link.split(")")[0]
+        await model.create({
+            link: client.encrypt(link),
+            sid: guild_id,
+            timestamp: timestamp,
+            valid: true
+        })
 
-            if (link.includes("("))
-                link = link.split("(")[1]
-
-            await model.create({
-                link: client.encrypt(link),
-                sid: guild_id,
-                timestamp: timestamp,
-                valid: true
-            })
-
-            registrados.push(link.split("").join(" "))
-        }
-    })
+        registrados.push(link.split("").join(" "))
+    }
 
     return registrados
 }
