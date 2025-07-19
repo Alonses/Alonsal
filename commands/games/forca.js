@@ -209,7 +209,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
         const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
         client.cached.forca.get(id_jogo).embed = message
 
-        interaction.reply({
+        interaction.editReply({
             content: "🎆 | Um jogo novo foi iniciado! Escreva seus chutes no chat para tentar acertar a palavra!",
             flags: "Ephemeral"
         })
