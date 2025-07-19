@@ -20,7 +20,7 @@ module.exports = {
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
             return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", flags: "Ephemeral" })
 
-        if (!client.cached.forca_sessao.has(interaction.user.id)) {
+        if (!client.cached.forca_sessao.has(client.encrypt(interaction.user.id))) {
 
             await interaction.deferReply({ flags: "Ephemeral" })
 
@@ -48,9 +48,9 @@ module.exports = {
         } else {
 
             // Verifica se o jogo ainda existe
-            if (client.cached.forca_sessao.get(interaction.user.id)) {
+            if (client.cached.forca_sessao.get(client.encrypt(interaction.user.id))) {
 
-                const id_jogo = client.cached.forca_sessao.get(interaction.user.id).id_game
+                const id_jogo = client.cached.forca_sessao.get(client.encrypt(interaction.user.id)).id_game
                 retorna_jogo(client, interaction, id_jogo, user)
             }
         }
@@ -171,6 +171,15 @@ function painel_jogo(client, id_jogo) {
 
 async function retorna_jogo(client, interaction, id_jogo, user) {
 
+    let jogadores_sessao = 0
+
+    client.cached.forca_sessao.forEach(user => {
+        if (user.id_game === id_jogo) jogadores_sessao++
+    })
+
+    if (jogadores_sessao > 1) jogadores_sessao = `${jogadores_sessao} jogadores na sessão atual`
+    else jogadores_sessao = "1 jogador na sessão atual"
+
     if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) {
 
         // Exclui a sessão e encerra o jogo
@@ -187,16 +196,16 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     const painel = painel_jogo(client, id_jogo)
     let entradas = ""
 
-    // Entradas que o usuário tentou
+    // Entradas que o foram enviadas no jogo
     if (client.cached.forca.get(id_jogo).entradas.length > 0)
-        entradas = `\n${client.tls.phrase(user, "game.forca.usado")}\`\`\`${client.cached.forca.get(id_jogo).entradas.join(", ")}\`\`\``
+        entradas = `\n${client.defaultEmoji("types")} ${client.tls.phrase(user, "game.forca.usado")}\`\`\`${client.cached.forca.get(id_jogo).entradas.join(", ")}\`\`\``
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "game.forca.titulo"))
         .setColor(client.embed_color(user.misc.color))
         .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} letras\` )${painel} ${entradas}`)
         .setFooter({
-            text: `${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}`
+            text: `💠 ${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}\n${client.defaultEmoji("person")} ${jogadores_sessao}`
         })
 
     if (!client.cached.forca.get(id_jogo).embed) {
@@ -209,10 +218,10 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
         const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
         client.cached.forca.get(id_jogo).embed = message
 
-        interaction.editReply({
+        client.reply(interaction, {
             content: "🎆 | Um jogo novo foi iniciado! Escreva seus chutes no chat para tentar acertar a palavra!",
             flags: "Ephemeral"
-        })
+        }, true)
 
     } else {
         client.cached.forca.get(id_jogo).embed.edit({ embeds: [embed] })
