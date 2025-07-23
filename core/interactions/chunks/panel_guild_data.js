@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     const rank = await listRankGuild(interaction.guild.id)
     const warns = await listAllGuildWarns(interaction.guild.id)
-    const reportes = await checkUserGuildReported(interaction.guild.id)
+    const reportes = await checkUserGuildReported(client.encrypt(interaction.guild.id))
 
     const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
     const network = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length - 1 : 0

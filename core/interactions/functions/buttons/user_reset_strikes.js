@@ -1,4 +1,4 @@
-const { getUserStrikes } = require("../../../database/schemas/User_strikes")
+const { dropUserGuildStrikes } = require("../../../database/schemas/User_strikes")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -13,10 +13,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (escolha === 1) {
 
         // Removendo os strikes do usuário no servidor
-        const user_strikes = await getUserStrikes(id_alvo, interaction.guild.id)
-        user_strikes.strikes = 0
-
-        await user_strikes.save()
+        await dropUserGuildStrikes(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
     }
 
     if (escolha === 2) {

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserReports } = require('../../../database/schemas/User_reports')
+const { verifyUserReports } = require('../../../database/schemas/User_reports')
 const { registerUserGuild } = require('../../../database/schemas/User_guilds')
 
 module.exports = async (client, dados) => {
@@ -20,7 +20,7 @@ module.exports = async (client, dados) => {
     if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
         let historico = []
 
-        const reports = await getUserReports(dados.user.id)
+        const reports = await verifyUserReports(client.encrypt(dados.user.id))
         reports.forEach(valor => {
             historico.push(`${client.defaultEmoji("time")} ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.issuer_nick || client.tls.phrase(guild, "util.steam.undefined")}: ${valor.relatory}`)
         })

@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 
-const { getUserReports, getReport } = require("../../database/schemas/User_reports")
+const { verifyUserReports, getReport } = require("../../database/schemas/User_reports")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         issuer_nick: null
     }
 
-    const reports = await getUserReports(id_alvo)
+    const reports = await verifyUserReports(client.encrypt(id_alvo))
 
     // Navegando por todos os reportes que o usuário recebeu e listando eles
     reports.forEach(valor => {

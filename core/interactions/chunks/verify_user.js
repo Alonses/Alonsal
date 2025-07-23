@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { getUserReports } = require('../../database/schemas/User_reports')
-const { getUserStrikes } = require("../../database/schemas/User_strikes")
+const { verifyUserReports } = require('../../database/schemas/User_reports')
+const { verifyUserStrikes } = require("../../database/schemas/User_strikes")
 const { listAllUserWarns } = require('../../database/schemas/User_warns')
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 
@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     if (!user_alvo) return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     // Coletando os dados de histórico do usuário
-    const reports = await getUserReports(id_alvo)
+    const reports = await verifyUserReports(client.encrypt(id_alvo))
     const user_c = await client.getUser(id_alvo)
 
     let apelido = user_alvo.nickname !== null ? user_alvo.nickname : user_alvo.user.username
@@ -28,10 +28,10 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     // Avatar do usuário
     const avatar_user = user_alvo.user.avatarURL({ dynamic: true, size: 2048 }), historico = []
-    const strikes = await getUserStrikes(id_alvo, interaction.guild.id)
+    const strikes = await verifyUserStrikes(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    const warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+    const warns = await listAllUserWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
     let indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     reports.forEach(valor => {
         avisos++
 
-        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
+        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${client.decifer(valor.relatory)}`)
     })
 
     if (avisos > 0)
@@ -55,12 +55,12 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         .addFields(
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${user_name}`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} ${user_name}`,
                 inline: true
             },
             {
                 name: `**:mega: Warns: ${warns.length} / ${indice_matriz}**`,
-                value: `:name_badge: **Strikes: ${strikes.strikes}**\n:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
+                value: `:name_badge: **Strikes: ${strikes?.strikes || 0}**\n:man_guard: **${client.tls.phrase(user, "mode.report.reporte")}: ${avisos}**`,
                 inline: true
             },
             {
@@ -81,7 +81,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     const botoes = []
 
-    if (strikes.strikes > 0) // Botão para resetar os strikes do usuário no servidor
+    if (strikes?.strikes > 0) // Botão para resetar os strikes do usuário no servidor
         botoes.push({ id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.remover_strikes"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
 
     if (warns.length > 0) // Botão para resetar os warns do usuário no servidor

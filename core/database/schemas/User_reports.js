@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     relatory: { type: String, default: null },
     timestamp: { type: Number, default: null },
     archived: { type: Boolean, default: false },
-    auto: { type: Boolean, default: false }
+    auto: { type: Boolean, default: true }
 })
 
 const model = mongoose.model("User_reports", schema)
@@ -37,7 +37,7 @@ async function dropReport(uid, sid) {
     })
 }
 
-async function getUserReports(uid) {
+async function verifyUserReports(uid) {
     return model.find({
         uid: uid,
         archived: false
@@ -78,7 +78,7 @@ module.exports.User_reports = model
 module.exports = {
     getReport,
     dropReport,
-    getUserReports,
+    verifyUserReports,
     getReportedUsers,
     checkUserGuildReported,
     updateGuildReport

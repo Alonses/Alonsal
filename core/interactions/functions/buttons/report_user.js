@@ -9,7 +9,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const operacao = parseInt(dados.split(".")[1])
     const id_alvo = dados.split(".")[2]
 
-    const alvo = await getReport(id_alvo, interaction.guild.id)
+    const alvo = await getReport(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
     const guild = await client.getGuild(interaction.guild.id)
 
     // Códigos de operação
@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 2 -> Confirma silenciosamente
 
     if (!operacao) { // Cancelando a criação do reporte
-        await dropReport(alvo.uid, interaction.guild.id)
+        await dropReport(alvo.uid, alvo.sid)
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     }
 
@@ -29,6 +29,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Adicionando e reportando para outros servidores
         alvo.archived = false
+        alvo.auto = false
+
         await alvo.save()
 
         texto_retorno = client.tls.phrase(user, "mode.report.usuario_add", client.defaultEmoji("guard"))

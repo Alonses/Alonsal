@@ -14,7 +14,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Lista de usuários com anotações de advertência no servidor
 
     // Navegando pelos usuários que foram advertidos no servidor
-    if (operacao !== 3) await client.deferedResponse({ interaction })
+    let ephemeral = "Ephemeral"
+    if (operacao !== 3) await client.deferedResponse({ interaction, ephemeral })
 
     if (operacao === 1 || operacao === 4) {
 
@@ -100,7 +101,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     let reportes_guild
 
                     if (interaction.guild.id !== process.env.guild_id)
-                        reportes_guild = await checkUserGuildReported(interaction.guild.id)
+                        reportes_guild = await checkUserGuildReported(client.encrypt(interaction.guild.id))
                     else if (process.env.owner_id.includes(interaction.user.id))
                         reportes_guild = await getReportedUsers() // Lista todos os usuários reportados salvos no Alonsal
 

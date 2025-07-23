@@ -37,14 +37,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
             for (let i = 0; i < list.length; i++)
                 if (list[i].reason) {
-                    let alvo = await getReport(list[i].user.id, interaction.guild.id)
+                    let alvo = await getReport(client.encrypt(list[i].user.id), client.encrypt(interaction.guild.id))
 
                     // Adicionando o usuário caso
-                    alvo.relatory = list[i].reason
-                    alvo.nick = list[i].user.username
+                    alvo.relatory = client.encrypt(list[i].reason)
+                    alvo.nick = client.encrypt(list[i].user.username)
                     alvo.timestamp = client.timestamp()
-                    alvo.issuer = interaction.user.id
-                    alvo.auto = true
+                    alvo.issuer = client.encrypt(interaction.user.id)
 
                     adicionados++
                     await alvo.save()

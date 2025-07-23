@@ -70,8 +70,8 @@ module.exports = async ({ client, user, interaction, pagina }) => {
             }
 
             if (users_ids.length > 0) {
-                // Menu para navegar entre os usuários reportados
-                const reportes_guild = await checkUserGuildReported(interaction.guild.id)
+                // Menu para navegar entre os usuários reportados no servidor
+                const reportes_guild = await checkUserGuildReported(client.encrypt(interaction.guild.id))
 
                 if (reportes_guild.length > 0) {
                     // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )

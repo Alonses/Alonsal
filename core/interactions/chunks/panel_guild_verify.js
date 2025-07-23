@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction }) => {
             membros.forEach(membro => { id_membros_guild.push(membro.user.id) })
 
             for (const user of usuarios_reportados) // Listando os usuários que possuem denúncias e estão no servidor
-                if (id_membros_guild.includes(user.uid)) users_ids.push(user.uid)
+                if (id_membros_guild.includes(client.decifer(user.uid))) users_ids.push(client.decifer(user.uid))
 
             const embed = new EmbedBuilder()
                 .setTitle(`> ${interaction.guild.name}`)

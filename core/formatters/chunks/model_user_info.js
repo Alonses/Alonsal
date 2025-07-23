@@ -1,5 +1,5 @@
 const { buildAllBadges, busca_badges } = require('../../data/user_badges')
-const { getUserReports } = require('../../database/schemas/User_reports')
+const { verifyUserReports } = require('../../database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
@@ -92,7 +92,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operador === 3) {
 
         // Coletando os dados de histórico do usuário
-        const reports = await getUserReports(id_alvo)
+        const reports = await verifyUserReports(client.encrypt(id_alvo))
         let avisos_reportes = 0, descricao_reportes, historico = []
 
         // Quantificando os relatórios sobre o usuário
