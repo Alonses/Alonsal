@@ -1,4 +1,4 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, InteractionContextType } = require('discord.js')
+const { ContextMenuCommandBuilder, ApplicationCommandType, SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -46,8 +46,7 @@ module.exports = {
             "ru": 'удалить ниже'
         })
         .setType(ApplicationCommandType.Message)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-        .setContexts(InteractionContextType.Guild),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     async execute({ client, user, interaction }) {
         const qtd_msg = interaction.options.getInteger("amount")
         deleteMessages({ client, user, interaction, qtd_msg })
@@ -86,6 +85,13 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
 
         // Excluindo as mensagens enviadas pelo bot da DM do usuário
         await interaction.deferReply({ flags: "Ephemeral" })
+
+        if (interaction.targetMessage?.author.id) { // Interação gerada em DM e mencionando uma mensagem do usuário ao invés do bot
+            if (!interaction.guild && interaction.targetMessage?.author.id != client.id())
+                return interaction.editReply({ content: `:fire: | Use este comando através de uma mensagem que eu enviei!`, flags: "Ephemeral" })
+
+            qtd_msg = 100
+        }
 
         client.discord.users.fetch(interaction.user.id)
             .then(u => {

@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             },
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels)} **Faladeiros dinâmicos**`,
                 inline: true
             },
             {
