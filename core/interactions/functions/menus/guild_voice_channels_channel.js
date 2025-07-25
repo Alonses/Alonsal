@@ -7,8 +7,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Verificando se o tipo do canal mencionado é válido
     const canal = await client.getGuildChannel(dados)
     if (canal.type !== ChannelType.GuildVoice)
-        return interaction.reply({
-            content: `${client.defaultEmoji("types")} | O canal definido precisa ser do tipo voz, tente novamente`,
+        return client.reply(interaction, {
+            content: client.tls.phrase(user, "mode.voice_channels.canal_errado_voz", client.defaultEmoji("types")),
             flags: "Ephemeral"
         })
 

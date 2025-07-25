@@ -172,13 +172,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 3)
         embed.addFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking)} **Rankeamento**`,
-                value: `\`\`\`Membros do servidor podem ganhar XP ao interagir com o bot e enviar mensagens.\`\`\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking)} **${client.tls.phrase(user, "manu.painel.rankeamento")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_guild_ranking")}\`\`\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels)} **Faladeros dinâmicos**`,
-                value: `\`\`\`Membros podem criar canais de voz dinâmicos ao se conectarem em um canal específico.\`\`\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels)} **${client.tls.phrase(user, "mode.voice_channels.title_voice")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_voice_channels")}\`\`\``,
                 inline: true
             },
             {

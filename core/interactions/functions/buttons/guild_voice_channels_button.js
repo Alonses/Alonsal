@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (operacao > 1) { // Definindo o canal ativador ou categoria para os canais de voz dinâmicos
             const data = {
-                title: { tls: "menu.menus.escolher_canal" },
+                title: { tls: "menu.menus.escolher_canal_voz" },
                 pattern: "choose_channel",
                 alvo: alvo,
                 reback: "browse_button.guild_voice_channel_button",

@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
         content: client.tls.phrase(user, "util.tarefas.selecionar_remover", 1),
         embeds: [],
         components: [client.create_menus({ client, interaction, user, data })],
-        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
+        flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 
     if (!autor_original) interaction.customId = null

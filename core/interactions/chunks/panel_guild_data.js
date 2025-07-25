@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             tempo_exclusao = `\n**${client.defaultEmoji("time")} ${client.tls.phrase(user, "manu.guild_data.tempo_exclusao")}**:\n${client.tls.phrase(user, "manu.guild_data.excluir_apos", null, defaultEraser[guild.erase.timeout] / 86400)}`
 
         if (guild.iddle.timeout) // Saída automática após X tempo de inatividade do bot no servidor
-            tempo_exclusao += `\n**${client.defaultEmoji("running")} Sair automaticamente do servidor após**:\n\`${client.tls.phrase(user, `menu.times.${defaultUserEraser[guild.iddle.timeout]}`)}\` de inatividade do bot no servidor\n`
+            tempo_exclusao += `\n**${client.defaultEmoji("running")} ${client.tls.phrase(user, "manu.guild_data.saida_automatica", null, client.tls.phrase(user, `menu.times.${defaultUserEraser[guild.iddle.timeout]}`))}\n`
 
         embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_expandido", null, tempo_exclusao))
     }

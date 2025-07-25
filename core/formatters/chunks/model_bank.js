@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     const obj = {
         embeds: [embed],
-        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
+        flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 
     if (paginas > 1) {

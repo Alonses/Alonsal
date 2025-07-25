@@ -141,7 +141,7 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
 
     const obj = {
         embeds: [embed],
-        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
+        flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 
     if (paginas > 1) { // Ranking com várias páginas de navegação

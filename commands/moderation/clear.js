@@ -85,12 +85,13 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
 
         // Excluindo as mensagens enviadas pelo bot da DM do usuário
         await interaction.deferReply({ flags: "Ephemeral" })
+        const messageDate = interaction.targetMessage?.createdAt
 
         if (interaction.targetMessage?.author.id) { // Interação gerada em DM e mencionando uma mensagem do usuário ao invés do bot
             if (!interaction.guild && interaction.targetMessage?.author.id != client.id())
-                return interaction.editReply({ content: `:fire: | Use este comando através de uma mensagem que eu enviei!`, flags: "Ephemeral" })
+                return client.tls.editReply(interaction, user, "mode.clear.marcacao_bot", true, 69)
 
-            qtd_msg = 100
+            qtd_msg = 50
         }
 
         client.discord.users.fetch(interaction.user.id)
@@ -100,7 +101,9 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
                         dmchannel.messages.fetch({ limit: qtd_msg })
                             .then(messages => {
 
-                                messages = messages.filter(m => { return m.author.id === client.id() })
+                                if (!messageDate) messages = messages.filter(m => m.author.id === client.id())
+                                else messages = messages.filter(m => m.createdAt >= messageDate) // Coletando apenas as mensagens enviadas após a mensagem mencionada ao acionar o comando em DM
+
                                 let bot_messages = messages.size
 
                                 if (bot_messages > 0) {
@@ -110,20 +113,23 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
                                             bot_messages--
 
                                             if (bot_messages === 0)
-                                                interaction.editReply({ content: `:recycle: | \`${qtd_msg} mensagens\` foram removidas com sucesso!`, flags: "Ephemeral" })
+                                                interaction.editReply({
+                                                    content: client.tls.phrase(user, "mode.clear.mensagens_deletadas", client.emoji(13), qtd_msg),
+                                                    flags: "Ephemeral"
+                                                })
 
-                                        }).catch(err => {
-                                            interaction.editReply({ content: `:fire: | Houve um erro ao tentar excluir as mensagens.`, flags: "Ephemeral" })
+                                        }).catch(() => {
+                                            client.tls.editReply(interaction, user, "mode.clear.error_1", true, 69)
                                         })
                                     })
                                 } else
-                                    interaction.editReply({ content: `:recycle: | Esse chat já está vazio!`, flags: "Ephemeral" })
+                                    client.tls.editReply(interaction, user, "mode.clear.chat_vazio", true, 13)
                             })
-                    }).catch(err => {
-                        interaction.editReply({ content: `:fire: | Houve um erro ao procurar esse canal de mensagens diretas.`, flags: "Ephemeral" })
+                    }).catch(() => {
+                        client.tls.editReply(interaction, user, "mode.clear.erro_msgs_diretas", true, 69)
                     })
-            }).catch(err => {
-                interaction.editReply({ content: `:fire: | Houve um erro ao procurar você pelo meu cache de mensagens diretas.`, flags: "Ephemeral" })
+            }).catch(() => {
+                client.tls.editReply(interaction, user, "mode.clear.erro_cache_msgs", true, 69)
             })
     }
 }

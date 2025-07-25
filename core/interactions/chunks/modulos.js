@@ -3,7 +3,7 @@ const { listAllUserModules } = require('../../database/schemas/User_modules')
 module.exports = async ({ client, user, interaction }) => {
 
     // Listando todos os módulos do usuário
-    let modulos = await listAllUserModules(user.uid)
+    const modulos = await listAllUserModules(user.uid)
 
     // Verificando se há modulos configurados
     if (modulos.length < 1)

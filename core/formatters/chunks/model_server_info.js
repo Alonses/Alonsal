@@ -198,6 +198,6 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     client.reply(interaction, {
         embeds: [infos_sv],
         components: [row],
-        flags: autor_original ? client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null : "Ephemeral"
+        flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }
