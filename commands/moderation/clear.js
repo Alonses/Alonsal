@@ -101,8 +101,8 @@ deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
                         dmchannel.messages.fetch({ limit: qtd_msg })
                             .then(messages => {
 
-                                if (!messageDate) messages = messages.filter(m => m.author.id === client.id())
-                                else messages = messages.filter(m => m.createdAt >= messageDate) // Coletando apenas as mensagens enviadas após a mensagem mencionada ao acionar o comando em DM
+                                if (!messageDate) messages = messages.filter(m => { return m.author.id === client.id() })
+                                else messages = messages.filter(m => { return m.createdAt >= messageDate }) // Coletando apenas as mensagens enviadas após a mensagem mencionada ao acionar o comando em DM
 
                                 let bot_messages = messages.size
 

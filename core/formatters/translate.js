@@ -147,7 +147,6 @@ lista_emojis = (emojis_lista) => {
     return emojis.join(" ")
 }
 
-
 ajusta_traducao = (idioma, frase) => {
 
     let blocos = frase.split(" ")

@@ -47,9 +47,7 @@ dispara_status = (client, status_apisal) => {
             const canais_texto = client.channels(0).size
             let members = 0
 
-            client.guilds().forEach(async guild => {
-                members += guild.memberCount - 1
-            })
+            client.guilds().forEach(async guild => { members += guild.memberCount - 1 })
 
             let bandeira_idiomas = client.idioma.listAll().split(" ")
             let counter = 0, bandeirolas_1 = [], bandeirolas_2 = []

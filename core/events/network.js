@@ -8,7 +8,7 @@ const network_map = new Map()
 
 module.exports = async ({ client, guild, caso, id_alvo }) => {
 
-    if (client.x.debug_mode && registroAudita.executorId === "665002572926681128") return
+    if (client.x.debug_mode && registroAudita.executorId === client.x.owners[0]) return
 
     if (!network_map.has(id_alvo)) {
         network_map.set(id_alvo, true)
