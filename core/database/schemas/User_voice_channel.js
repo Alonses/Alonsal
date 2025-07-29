@@ -3,11 +3,13 @@ const mongoose = require("mongoose")
 // uid -> User ID
 // sid -> Server ID
 // cid -> Channel ID
+// mid -> Message ID
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
-    cid: { type: String, default: null }
+    cid: { type: String, default: null },
+    mid: { type: String, default: null }
 })
 
 const model = mongoose.model("User_voice_channel", schema)

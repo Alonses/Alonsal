@@ -105,7 +105,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
                 },
                 {
                     name: "⠀",
-                    value: `:card_box: **${client.tls.phrase(user, "manu.info.menus_abertos")}: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Canais gerados:** \`${client.locale(bot.cmd.voice_channels)}\``,
+                    value: `:card_box: **${client.tls.phrase(user, "manu.info.menus_abertos")}: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **${client.tls.phrase(user, "manu.info.canais_gerados")}:** \`${client.locale(bot.cmd.voice_channels)}\``,
                     inline: true
                 }
             )

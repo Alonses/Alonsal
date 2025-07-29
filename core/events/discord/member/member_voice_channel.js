@@ -1,4 +1,4 @@
-const { ChannelType, PermissionsBitField, EmbedBuilder } = require("discord.js")
+const { ChannelType, PermissionsBitField } = require("discord.js")
 
 const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
@@ -59,32 +59,22 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                         setTimeout(() => { // Movendo o membro para o novo canal
                             guild_member.voice.setChannel(new_voice_channel.id)
+                                .catch(() => verificar_ausencia_canal(client, new_voice_channel.id, new_voice_channel.id, guild))
                         }, 500)
 
                         // Atualizandos os dados do canal no banco de dados
                         user_voice_channel.cid = client.encrypt(new_voice_channel.id)
                         await user_voice_channel.save()
 
-                        // const user = await client.getUser(id_user)
-
-                        // Criando o embed de botões para configuração do canal pelo membro
-                        // const embed = new EmbedBuilder()
-                        //     .setTitle("> Seu canal de voz 🔊")
-                        //     .setDescription("Utilize os controles abaixo para definir o funcionamento deste canal!")
-                        //     .setColor(client.embed_color(user.misc.color))
-
-                        // const row = client.create_buttons([
-                        //     { id: "user_voice_channel", name: "Limitar canal", type: 2, emoji: client.defaultEmoji("metrics"), data: "1" },
-                        //     { id: "user_voice_channel", name: "Privar canal", type: 2, emoji: "🔒", data: "2" }
-                        // ], id_user)
-
-                        // client.notify(new_voice_channel.id, { content: `<@${id_user}>`, embeds: [embed], components: [row] })
+                        const dados = `${new_voice_channel.id}.${guild.sid}`
+                        require("../../../interactions/chunks/voice_channel_config")({ client, user, dados })
                     }
                 })
             }
         } else { // Membro já criou um canal, movendo ele para o canal criado se entrar no canal ativador novamente
             const guild_member = await client.getMemberGuild(guild.sid, id_user)
             guild_member.voice.setChannel(client.decifer(user_voice.cid))
+                .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild))
         }
     } else  // Verifica se o canal possui ausencia de membros
         verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild)
@@ -129,5 +119,9 @@ async function mover_membro(client, voice_channel) {
 
     setTimeout(() => {
         guild_member.voice.setChannel(client.decifer(voice_channel.cid))
+            .catch(async () => {
+                const guild = await client.getGuild(client.decifer(voice_channel.sid))
+                verificar_ausencia_canal(client, client.decifer(voice_channel.cid), client.decifer(voice_channel.cid), guild)
+            })
     }, 500)
 }

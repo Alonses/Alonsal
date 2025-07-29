@@ -33,7 +33,7 @@ module.exports = async ({ client, channel }) => {
 
     // Canal excluído a partir do módulo de canais de voz dinâmicos
     if (guild.conf.voice_channels && registroAudita.executorId === client.id())
-        tipo_canal += `\n\n⚡ Exclusão dinâmica.\n${client.defaultEmoji("time")} Foi excluído após ${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(guild, "util.unidades.segundos")} ao ficar vazio.`
+        tipo_canal += `\n\n⚡ ${client.tls.phrase(guild, "util.logger.canal_dinamico")}\n${client.defaultEmoji("time")} ${client.tls.phrase(guild, "mode.logger.canal_dinamico_excluido", null, voiceChannelTimeout[guild.voice_channels.timeout])}`
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.titulo_canal_excluido"))
