@@ -9,21 +9,18 @@ module.exports = async ({ client, interaction }) => {
         mkdirSync(`./files/languages/`, { recursive: true })
 
     const bot = await client.getBot()
+    await interaction.deferReply({ flags: "Ephemeral" })
+    let cod_commit
 
     fetch("https://github.com/Alonses/Alondioma")
         .then(response => response.text())
         .then(async res => {
 
             // Salvando o commit de traduções mais recente no banco 
-            const cod_commit = res.split("currentOid\":\"")[1].slice(0, 7)
+            cod_commit = res.split("currentOid\":\"")[1].slice(0, 7)
 
             bot.persis.alondioma = cod_commit
             await bot.save()
-
-            interaction.reply({
-                content: `:sa: | Pacote de traduções do Alonsal sincronizado com o commit \`${cod_commit}\``,
-                flags: "Ephemeral"
-            })
 
             if (client.id() === process.env.client_1) // Notifica apenas caso seja o bot principal
                 client.notify(process.env.channel_feeds, { content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` })
@@ -38,8 +35,22 @@ module.exports = async ({ client, interaction }) => {
 
                         fetch(idioma.download_url)
                             .then(res => res.json())
-                            .then(res => { writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res)) })
+                            .then(res => {
+                                writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
+                            })
+                            .catch(() => {
+                                return interaction.editReply({
+                                    content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\``,
+                                    flags: "Ephemeral"
+                                })
+                            })
                     }
                 })
+        })
+        .then(() => {
+            return interaction.editReply({
+                content: `:sa: | Pacote de traduções do Alonsal sincronizado com o commit \`${cod_commit}\``,
+                flags: "Ephemeral"
+            })
         })
 }

@@ -6,8 +6,8 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
 
     const id_canal = dados.split(".")[0]
     const id_guild = dados.split(".")[1]
-    const canal_guild = await client.getGuildChannel(id_canal)
-    const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction?.guild.id || id_guild))
+    const canal_guild = await client.getGuildChannel(interaction?.channel.id || id_canal)
+    const voice_channel = await verifyVoiceChannel(client.encrypt(interaction?.channel.id || id_canal), client.encrypt(interaction?.guild.id || id_guild))
 
     if (!update) {
 
@@ -37,7 +37,7 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
 
     // Criando o embed de botões para configuração do canal pelo membro
     const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.voice_channels.titulo_controle_canal", null, null, canal_guild.name.split(" ")[1])} 🔊`)
+        .setTitle(`${client.tls.phrase(user, "mode.voice_channels.titulo_controle_canal", null, canal_guild.name.split(" ")[1])} 🔊`)
         .setDescription(client.tls.phrase(user, "mode.voice_channels.painel_configuracao_canal"))
         .setColor(client.embed_color(user.misc.color))
         .setFields(

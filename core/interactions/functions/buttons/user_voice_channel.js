@@ -2,7 +2,6 @@ const { verifyUserVoiceChannel, verifyVoiceChannel } = require("../../../databas
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const id_dono = dados.split(".")[3]
     const id_canal = dados.split(".")[2]
     const escolha = parseInt(dados.split(".")[1])
 
@@ -23,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const guild_channel = await client.getGuildChannel(id_canal)
         let limite_canal = []
 
-        for (let i = 2; i <= 15; i++) {
+        for (let i = 2; i <= 20; i++) {
             if (i !== guild_channel.userLimit)
                 limite_canal.push({ name: i, value: `${i}.${id_canal}` })
         }
