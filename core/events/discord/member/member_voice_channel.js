@@ -66,6 +66,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                         user_voice_channel.cid = client.encrypt(new_voice_channel.id)
                         await user_voice_channel.save()
 
+                        const user = await client.getUser(id_user)
                         const dados = `${new_voice_channel.id}.${guild.sid}`
                         require("../../../interactions/chunks/voice_channel_config")({ client, user, dados })
                     }
