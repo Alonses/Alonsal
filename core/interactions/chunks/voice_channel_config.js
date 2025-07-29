@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
     const id_canal = dados.split(".")[0]
     const id_guild = dados.split(".")[1]
     const canal_guild = await client.getGuildChannel(id_canal)
-    const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id || id_guild))
+    const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction?.guild.id || id_guild))
 
     if (!update) {
 
