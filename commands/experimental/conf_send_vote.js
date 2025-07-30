@@ -18,7 +18,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")}`)
-            .setColor(0x29BB8E)
+            .setColor(client.embed_color("turquesa"))
             .setDescription(`${client.tls.phrase(user, "inic.vote.descricao", [client.emoji("emojis_dancantes"), client.emoji("emojis_dancantes")])} <t:1692460800:f>!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl:`)
             .setFooter({
                 text: client.tls.phrase(user, "inic.vote.rodape")

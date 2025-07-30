@@ -127,7 +127,7 @@ function formatar_modelo(client, obj_anuncio, client, dados, indice, idioma_defi
 
     const embed = new EmbedBuilder()
         .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setImage(obj_anuncio.banner)
         .setDescription(model_games(client, obj_anuncio.games.slice(indice * 3, (indice * 3) + 3), obj_anuncio.plataforma, idioma_definido))
 

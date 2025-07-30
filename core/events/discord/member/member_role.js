@@ -15,7 +15,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     let embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setDescription(texto)
         .setFields(
             {

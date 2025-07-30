@@ -55,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = new EmbedBuilder()
         .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`)
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${client.decifer(user_note.relatory)}\`\`\``)
         .addFields(
             {
@@ -116,7 +116,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(guild, "mode.anotacoes.aplicar_advertencia"))
-            .setColor(0xED4245)
+            .setColor(client.embed_color("salmao"))
             .setDescription(client.tls.phrase(guild, "mode.anotacoes.descricao_advertencia", client.defaultEmoji("guard"), [notas_requeridas, user_warns.length + 1]))
             .setFields(
                 {

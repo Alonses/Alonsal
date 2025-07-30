@@ -8,7 +8,7 @@ module.exports = async ({ client, interaction }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(`> Reportes gerados ${client.defaultEmoji("guard")}`)
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setFields({
             name: `${client.defaultEmoji("person")} **Reportados: ${reports.length}**`,
             value: "⠀",

@@ -55,7 +55,7 @@ envia_logger = (client, user_alvo, attachment) => {
 
                     const embed = new EmbedBuilder()
                         .setTitle(client.tls.phrase(internal_guild, "mode.logger.titulo_avatar"))
-                        .setColor(0x29BB8E)
+                        .setColor(client.embed_color("turquesa"))
                         .setDescription(client.tls.phrase(internal_guild, "mode.logger.novo_avatar", 35))
                         .setFields(
                             {

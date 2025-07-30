@@ -384,10 +384,6 @@
             "text": "A Maldição de Globglogabgalab"
         },
         {
-            "type": 1,
-            "text": "Sonystas sendo sonystas"
-        },
-        {
             "type": 0,
             "text": "comandos moderativos enceirados"
         },
@@ -893,11 +889,6 @@
         },
         {
             "type": 2,
-            "text": "🎶 Mothers Talk - Tears For Fears",
-            "link": "https://open.spotify.com/track/4rkULQzE34sej4SWX21QTg?si=c05a627a2b914723"
-        },
-        {
-            "type": 2,
             "text": "🎶 White Wedding - Billy Idol",
             "link": "https://open.spotify.com/track/6GfecUoyhgrCjVv17teSfB?si=56ab0299b6e54567"
         },
@@ -915,11 +906,6 @@
             "type": 2,
             "text": "🎶 Now And Then - The Beatles",
             "link": "https://open.spotify.com/track/4vziJcnB2Qyi9o4nIRUeN7?si=3ff39bf695ab4287"
-        },
-        {
-            "type": 2,
-            "text": "🎶 Feel Alright - Poolside",
-            "link": "https://open.spotify.com/track/1kZklN5swy3NGwOf5NTICP?si=64a23965265a4575"
         },
         {
             "type": 2,
@@ -973,6 +959,14 @@
             "type": 2,
             "text": "🎶 Walkin' On The Sun - Smash Mouth",
             "link": "https://open.spotify.com/track/4TQeNHx85xcP9YRkvJC6K1?si=5e6a5370c3444d2c"
+        },
+        {
+            "type": 2,
+            "text": "🔊 Canais de voz dinâmicos"
+        },
+        {
+            "type": 2,
+            "text": "golens de cobre nos canhões de TNT"
         }
     ]
 }

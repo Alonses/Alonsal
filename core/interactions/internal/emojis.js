@@ -22,7 +22,7 @@ module.exports = async ({ client, interaction }) => {
 
     const emojis_global = new EmbedBuilder()
         .setTitle("> Alguns emojis salvos")
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setDescription(emojis_registrados)
         .setFooter({
             text: `Emojis registrados: ${Object.keys(aliases).length}`

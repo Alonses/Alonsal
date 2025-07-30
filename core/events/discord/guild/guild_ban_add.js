@@ -50,7 +50,7 @@ module.exports = async ({ client, ban }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_banido"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(`${client.tls.phrase(guild, "mode.logger.membro_banido_desc", client.emoji("banidos"))}${razao}`)
         .setFields(
             {

@@ -43,7 +43,7 @@ module.exports = async ({ client, message }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setFields(
             {
                 name: client.user_title(message.author, guild, "mode.logger.autor"),

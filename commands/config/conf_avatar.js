@@ -20,7 +20,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`:bust_in_silhouette: O Avatar do ${client.username()} foi alterado`)
-            .setColor(0x29BB8E)
+            .setColor(client.embed_color("turquesa"))
             .setImage(arquivo.attachment)
             .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
 

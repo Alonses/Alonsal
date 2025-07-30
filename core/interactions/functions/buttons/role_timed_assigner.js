@@ -145,7 +145,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                .setColor(0x29BB8E)
+                .setColor(client.embed_color("turquesa"))
                 .setDescription(client.tls.phrase(guild, "mode.timed_roles.descricao_cargo_concedido", 43, [membro_guild, motivo]))
                 .addFields(
                     {

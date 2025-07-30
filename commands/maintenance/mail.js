@@ -70,7 +70,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle("> Nova mensagem! :mailbox_with_mail:")
-            .setColor(0xffffff)
+            .setColor(client.embed_color("branco"))
             .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`)
             .setTimestamp()
             .setFooter({

@@ -21,7 +21,7 @@ module.exports = async ({ client, oldState, newState }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.canal_voz"))
-        .setColor(0xFFCD33)
+        .setColor(client.embed_color("pastel"))
         .setDescription(frase)
         .setTimestamp()
         .setFooter({

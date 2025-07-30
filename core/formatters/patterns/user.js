@@ -55,6 +55,7 @@ const colorsMap = {
     "green": ["36802D", 1, "🎄"],
     "blue": ["7289DA", 1, "💎"],
     "cyan": ["29BB8E", 1, "🧪"],
+    "turquoise": ["1D9B97", 1, "👽"],
     "purple": ["44008B", 1, "🔮"],
     "magenta": ["FF2EF1", 1, "🌸"],
     "white": ["FFFFFF", 2, "🧻"],

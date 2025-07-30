@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let row, botoes
     const embed = new EmbedBuilder()
         .setTitle("> Selecione uma operação")
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setFooter({
             text: "Selecione uma das opções abaixo para navegar",
             iconURL: interaction.user.avatarURL({ dynamic: true })

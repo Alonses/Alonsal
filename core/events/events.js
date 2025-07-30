@@ -74,7 +74,7 @@ module.exports = async function ({ client }) {
 
         const embed = new EmbedBuilder()
             .setTitle("> RateLimit :name_badge:")
-            .setColor(0xff0000)
+            .setColor(client.embed_color("vermelho"))
             .setDescription(`Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``)
 
         client.notify(process.env.channel_error, { embeds: [embed] })

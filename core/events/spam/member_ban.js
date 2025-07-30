@@ -9,7 +9,7 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
     // Criando o embed de aviso para os moderadores
     let embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-        .setColor(0xED4245)
+        .setColor(client.embed_color("ciara"))
         .setDescription(`${client.tls.phrase(guild, "mode.spam.strikes_desc", 46)}\n\`\`\`${mensagens_spam}\`\`\``)
         .addFields(
             {
@@ -41,7 +41,7 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
 
             const embed_user = new EmbedBuilder()
                 .setTitle(`${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-                .setColor(0xED4245)
+                .setColor(client.embed_color("ciara"))
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_ban", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
 

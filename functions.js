@@ -15,23 +15,23 @@ const { registryStatement } = require('./core/database/schemas/User_statements')
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
 const { getGuild, getNetworkedGuilds, listAllRankedGuilds } = require('./core/database/schemas/Guild')
 
-const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
-
-const { data_encrypt, data_decipher } = require('./core/data/crypto')
 const { busca_badges } = require('./core/data/user_badges')
+const { data_encrypt, data_decipher } = require('./core/data/crypto')
 
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
-const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
-const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
-
-const { loggerMap } = require('./core/formatters/patterns/guild')
-const { spamTimeoutMap, defaultRoleTimes, defaultUserEraser } = require('./core/formatters/patterns/timeout')
-const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
 const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
+const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
+const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
+
+const { pallete } = require('./core/formatters/patterns/color')
+const { loggerMap } = require('./core/formatters/patterns/guild')
+const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
+const { spamTimeoutMap, defaultRoleTimes, defaultUserEraser } = require('./core/formatters/patterns/timeout')
+const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
 function internal_functions(client) {
 
@@ -125,6 +125,9 @@ function internal_functions(client) {
     client.embed_color = (entrada) => {
 
         if (entrada.toLowerCase() === "random") return alea_hex()
+
+        // Verificando se o nome da cor solicitada existe
+        if (pallete[entrada]) return pallete[entrada]
 
         return entrada.slice(-6)
     }

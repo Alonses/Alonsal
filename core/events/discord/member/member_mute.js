@@ -30,7 +30,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     let embed = new EmbedBuilder()
         .setTitle(timeout ? client.tls.phrase(guild, "mode.logger.membro_castigado_titulo") : client.tls.phrase(guild, "mode.logger.membro_perdoado_titulo"))
-        .setColor(timeout ? 0xED4245 : 0xffffff)
+        .setColor(timeout ? client.embed_color("salmao") : client.embed_color("branco"))
         .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
         .setFields(
             {

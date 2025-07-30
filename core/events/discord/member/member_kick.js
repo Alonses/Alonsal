@@ -35,7 +35,7 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_expulso"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(`${client.tls.phrase(guild, "mode.logger.membro_expulso_desc", client.emoji("mc_writable_book"))}${razao}`)
         .setFields(
             {

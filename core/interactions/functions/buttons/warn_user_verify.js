@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
-                .setColor(0xED4245)
+                .setColor(client.embed_color("salmao"))
                 .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao])}${warns_restantes}`)
                 .addFields(
                     {

@@ -27,7 +27,7 @@ module.exports = async ({ client, estagio }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")}`)
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setFooter({
             text: client.tls.phrase(user, "inic.vote.rodape_encerrado")
         })

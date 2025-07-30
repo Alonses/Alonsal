@@ -64,7 +64,7 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
 
                         const embed_timed_role = new EmbedBuilder()
                             .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                            .setColor(0x29BB8E)
+                            .setColor(client.embed_color("turquesa"))
                             .setDescription(client.tls.phrase(guild, acionador === "spam" ? "mode.timed_roles.aplicado_spam" : "mode.timed_roles.aplicado_warn", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
                             .addFields(
                                 {

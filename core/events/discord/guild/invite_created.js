@@ -26,7 +26,7 @@ module.exports = async ({ client, invite }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.convite_criado_titulo"))
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setDescription(client.tls.phrase(guild, "mode.logger.convite_criado", 43))
         .setFields(
             {

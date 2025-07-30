@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.report.remover_reporte"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(client.tls.phrase(user, "mode.report.remover_reporte_desc", null, client.decifer(alvo.relatory)))
         .addFields(
             {

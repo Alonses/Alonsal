@@ -54,7 +54,7 @@ module.exports = async (client, dados) => {
 
     let embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setFields(
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),

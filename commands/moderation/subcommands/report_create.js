@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction }) => {
     // Enviando o embed para validação
     const embed = new EmbedBuilder()
         .setTitle(`${client.tls.phrase(user, "mode.report.reportado")} 🛂`)
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(`\`\`\`📃 | ${client.tls.phrase(user, "mode.warn.descricao_fornecida")}\n\n${interaction.options.getString("reason")}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}${auto_ban}`)
         .addFields(
             {

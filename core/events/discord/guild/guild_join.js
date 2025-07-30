@@ -61,7 +61,7 @@ module.exports = async ({ client, guild }) => {
 
     const embed = new EmbedBuilder()
         .setTitle("> 🟢 Server update")
-        .setColor(0x29BB8E)
+        .setColor(client.embed_color("turquesa"))
         .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
         .setTimestamp()
 

@@ -72,7 +72,7 @@ dispara_status = (client, status_apisal) => {
 
             const embed = new EmbedBuilder()
                 .setTitle(":steam_locomotive: Caldeiras aquecidas")
-                .setColor(0x29BB8E)
+                .setColor(client.embed_color("turquesa"))
                 .addFields(
                     {
                         name: ":globe_with_meridians: **Servidores**",

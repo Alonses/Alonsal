@@ -5,7 +5,7 @@ module.exports = async ({ client, user, interaction }) => {
     // Enviando o embed para validação
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "mode.report.automatizado"))
-        .setColor(0xED4245)
+        .setColor(client.embed_color("salmao"))
         .setDescription(client.tls.phrase(user, "mode.report.descricao_automatizado"))
         .setFooter({
             text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),

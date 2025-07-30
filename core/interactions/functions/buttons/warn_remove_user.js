@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
             const embed = new EmbedBuilder()
                 .setTitle(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas"))
-                .setColor(0xED4245)
+                .setColor(client.embed_color("salmao"))
                 .setDescription(client.tls.phrase(guild, "mode.warn.advertencias_reiniciadas_descricao", null, id_alvo))
                 .addFields(
                     {
