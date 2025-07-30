@@ -1,4 +1,4 @@
-const pallete = {
+const palette = {
     "ciano": 0x29BB8E,
     "turquesa": 0x1D9B97,
     "branco": 0xFFFFFF,
@@ -10,5 +10,5 @@ const pallete = {
 }
 
 module.exports = {
-    pallete
+    palette
 }

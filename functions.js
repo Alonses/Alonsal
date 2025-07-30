@@ -27,7 +27,7 @@ const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_wa
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
 const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 
-const { pallete } = require('./core/formatters/patterns/color')
+const { palette } = require('./core/formatters/patterns/color')
 const { loggerMap } = require('./core/formatters/patterns/guild')
 const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
 const { spamTimeoutMap, defaultRoleTimes, defaultUserEraser } = require('./core/formatters/patterns/timeout')
@@ -127,7 +127,7 @@ function internal_functions(client) {
         if (entrada.toLowerCase() === "random") return alea_hex()
 
         // Verificando se o nome da cor solicitada existe
-        if (pallete[entrada]) return pallete[entrada]
+        if (palette[entrada]) return palette[entrada]
 
         return entrada.slice(-6)
     }

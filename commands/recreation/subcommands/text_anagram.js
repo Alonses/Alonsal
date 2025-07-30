@@ -40,10 +40,10 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
         qtd_quebras = exib_formatado.split(anagrama_formado[i])
 
         if (qtd_quebras.length > 2 && fatori_fix.length > 4)
-            cor_embed = "client.embed_color("amarelo")"
+            cor_embed = client.embed_color("amarelo")
     }
 
-    if (cor_embed === "client.embed_color("amarelo")")
+    if (cor_embed === client.embed_color("amarelo"))
         exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(user, "dive.anagrama.sorte")}_`
 
     const anagrama = new EmbedBuilder()
