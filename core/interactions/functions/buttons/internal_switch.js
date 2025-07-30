@@ -1,3 +1,5 @@
+const { verifica_canais_dinamicos } = require("../../../auto/triggers/guild_voice_channels")
+
 module.exports = async ({ client, user, interaction, dados }) => {
 
     let operacao = dados.split(".")[1]
@@ -6,6 +8,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Invertendo o status de ativação da função
     bot.conf[operacao] = !bot.conf[operacao]
     client.x[operacao] = bot.conf[operacao]
+
+    // Verificando se há canais vazios dinâmicos vazios para poder excluir
+    if (operacao === "voice_channels" && bot.conf[operacao])
+        verifica_canais_dinamicos(client)
 
     await bot.save()
 

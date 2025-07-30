@@ -20,11 +20,7 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
         canal_guild.messages.fetch(client.decifer(voice_channel.mid))
-            .then(async (m) => {
-                m.edit(await gera_painel(client, user, id_canal, canal_guild, voice_channel))
-
-                client.tls.reply(interaction, user, "mode.voice_channels.limite_usuario_atualizado", true, 43)
-            })
+            .then(async (m) => { m.edit(await gera_painel(client, user, id_canal, canal_guild, voice_channel)) })
             .catch(async () => {
                 const obj = await gera_painel(client, user, id_canal, canal_guild, voice_channel)
                 envia_painel(client, user, interaction, voice_channel, canal_guild, obj)

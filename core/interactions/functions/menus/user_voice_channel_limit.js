@@ -2,8 +2,8 @@ const { verifyVoiceChannel } = require("../../../database/schemas/User_voice_cha
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const novo_limite = parseInt(dados.split(".")[0])
     const id_canal = dados.split(".")[1]
+    const novo_limite = parseInt(dados.split(".")[0])
 
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id))
     if (interaction.user.id !== client.decifer(voice_channel.uid))
@@ -14,6 +14,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (canal_server)
         canal_server.setUserLimit(novo_limite)
             .then(() => {
+
+                // Informando ao usuário sobre a alteração do limite de membros do canal concluída
+                client.tls.reply(interaction, user, "mode.voice_channels.limite_usuario_atualizado", true, 43)
 
                 dados = id_canal
                 const update = true

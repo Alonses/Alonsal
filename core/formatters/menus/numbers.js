@@ -22,7 +22,9 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
         // Opções de limitação para o canal de voz
         if (alvo.includes("voice_channel_limit")) {
             valor_label = `${alvo}|${valor.value}`
-            nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
+
+            if (valor.value.split(".")[0] !== "0") nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
+            else nome_label = valor.name
         } else {
             valor_label = `${alvo}|${valor.split(".")[0]}`
             nome_label = client.tls.phrase(user, `menu.times.${valor.split(".")[1]}`)

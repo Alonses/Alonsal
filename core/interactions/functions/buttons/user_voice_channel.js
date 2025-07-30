@@ -8,6 +8,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Tratamento dos cliques
     // 1 -> Definir limite para o canal
     // 2 -> Tornar canal privado
+
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id))
 
     if (!await verifyUserVoiceChannel(client.encrypt(interaction.user.id), client.encrypt(interaction.guild.id)))
@@ -46,6 +47,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             components: [client.create_menus({ client, interaction, user, data }), row]
         })
     }
+
+    client.tls.reply(interaction, user, "menu.botoes.operacao_cancelada", true, 4)
 
     dados = id_canal
     const update = true

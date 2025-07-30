@@ -11,11 +11,15 @@ async function verifica_canais_dinamicos(client) {
         // Excluindo o canal se estiver vazio
         if (guild_channel && guild_channel?.members?.size < 1) {
 
-            canal.delete()
+            // Alterando o nome do canal para informar a exclusão
+            await guild_channel.edit({
+                name: `${client.emoji(13)} ${guild_channel.name.split(" ")[1]}`
+            })
 
             setTimeout(() => {
+                canal.delete()
                 guild_channel.delete()
-            }, 1000)
+            }, 5000)
         }
     })
 }
