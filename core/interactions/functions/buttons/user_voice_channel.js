@@ -1,4 +1,4 @@
-const { verifyUserVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
+const { verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id))
 
-    if (!await verifyUserVoiceChannel(client.encrypt(interaction.user.id), client.encrypt(interaction.guild.id)))
+    if (!voice_channel)
         return client.tls.reply(interaction, user, "mode.voice_channels.canal_desconhecido", true, 1)
 
     if (interaction.user.id !== client.decifer(voice_channel.uid))
