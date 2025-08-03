@@ -9,7 +9,10 @@ const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     cid: { type: String, default: null },
-    mid: { type: String, default: null }
+    mid: { type: String, default: null },
+    conf: {
+        mute: { type: Boolean, default: false }
+    }
 })
 
 const model = mongoose.model("User_voice_channel", schema)

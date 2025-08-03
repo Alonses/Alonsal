@@ -22,5 +22,5 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 const update = true
                 return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
             })
-            .catch(() => interaction.update({ content: client.tls.phrase(user, "mode.voice_channels.erro_alterar_limite"), flags: "Ephemeral", components: [] }))
+            .catch(() => interaction.reply({ content: client.tls.phrase(user, "mode.voice_channels.erro_alterar_limite") }))
 }

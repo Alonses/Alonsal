@@ -116,11 +116,11 @@ client.discord.on("interactionCreate", async interaction => {
 
 	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
-		return client.tls.reply(interaction, user, "inic.inicio.testes", true, 60)
+		return client.tls.reply(interaction, user, "inic.error.testes", true, 60)
 
 	if (user.conf?.banned || false) return // Ignoring users
 
-	if (interaction.isStringSelectMenu()) // Interactions generated when using selection menus
+	if (interaction.isStringSelectMenu() || interaction.isUserSelectMenu()) // Interactions generated when using selection menus
 		return require("./core/interactions/menus")({ client, user, interaction })
 
 	if (interaction.isButton()) // Interactions generated when using buttons

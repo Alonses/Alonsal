@@ -2,6 +2,8 @@ const { ChannelType, PermissionsBitField } = require("discord.js")
 
 const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
+const voice_channel_config = require("../../../interactions/chunks/voice_channel_config")
+
 const { voiceChannelTimeout } = require("../../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, oldState, newState }) => {
@@ -75,13 +77,13 @@ module.exports = async ({ client, guild, oldState, newState }) => {
         } else { // Membro já criou um canal, movendo ele para o canal criado se entrar no canal ativador novamente
             const guild_member = await client.getMemberGuild(guild.sid, id_user)
             guild_member.voice.setChannel(client.decifer(user_voice.cid))
-                .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild))
+                .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild, id_user))
         }
     } else  // Verifica se o canal possui ausencia de membros
-        verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild)
+        verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild, id_user)
 }
 
-async function verificar_ausencia_canal(client, channel_id, new_channel, guild) {
+async function verificar_ausencia_canal(client, channel_id, new_channel, guild, id_user) {
 
     // Dono original saiu do canal dinâmico
     const voice_channel = await verifyVoiceChannel(client.encrypt(channel_id), client.encrypt(guild.sid))
@@ -106,6 +108,10 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild) 
             setTimeout(() => {
                 guild_channel.delete()
             }, voiceChannelTimeout[guild.voice_channels.timeout] * 1000)
+        } else if (client.decifer(voice_channel.uid) === id_user) {
+
+            // Ativa apenas quando o dono do canal desconecta e transfere os controles para outro membro conectado
+            transferir_controles(client, guild_channel, voice_channel)
         }
     }
 
@@ -125,4 +131,19 @@ async function mover_membro(client, voice_channel) {
                 verificar_ausencia_canal(client, client.decifer(voice_channel.cid), client.decifer(voice_channel.cid), guild)
             })
     }, 500)
+}
+
+async function transferir_controles(client, guild_channel, voice_channel) {
+
+    const new_channel_owner = [...guild_channel.members.keys()][0]
+    const user = await client.getUser(new_channel_owner)
+
+    voice_channel.uid = client.encrypt(new_channel_owner)
+    await voice_channel.save()
+
+    setTimeout(() => {
+        // Atualizando o card de mensagem para o novo dono do canal
+        const dados = `${client.decifer(voice_channel.cid)}.${client.decifer(voice_channel.sid)}`, update = true, new_owner = new_channel_owner
+        voice_channel_config({ client, user, dados, update, new_owner })
+    }, 1000)
 }

@@ -1,8 +1,21 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    let funcao = interaction.values[0].split("|")[0] // Nome da função que será importada
-    let dados = interaction.values[0].split("|")[1] // Dados para a função
-    const criador = dados.split(".")[0] // ID do criador do menu
+    let funcao, dados, criador
+
+    if (interaction.isStringSelectMenu()) {
+
+        // Menus de seleção baseados em textos
+        funcao = interaction.values[0].split("|")[0] // Nome da função que será importada
+        dados = interaction.values[0].split("|")[1] // Dados para a função
+        criador = dados.split(".")[0] // ID do criador do menu
+    } else {
+
+        // Menus de seleção baseados em usuários
+        funcao = interaction.customId.split("|")[0]
+        dados = interaction.values
+        criador = interaction.customId.split("|")[1]
+    }
+
     let autor_original = true
 
     // Experiência recebida pelo usuário

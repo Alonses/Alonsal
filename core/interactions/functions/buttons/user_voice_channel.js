@@ -1,4 +1,7 @@
+const { PermissionsBitField } = require("discord.js")
+
 const { verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
+const { muta_membros_som } = require("../../../auto/triggers/voice_channels_mute")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -16,6 +19,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (interaction.user.id !== client.decifer(voice_channel.uid))
         return client.tls.reply(interaction, user, "mode.voice_channels.usuario_proibido", true, 7)
+
+    // Botão para retornar ao painel de configuração do canal de voz
+    const row = client.create_buttons([
+        { id: "user_voice_channel", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
+    ], interaction)
 
     if (escolha === 1) {
 
@@ -38,14 +46,74 @@ module.exports = async ({ client, user, interaction, dados }) => {
             values: limite_canal
         }
 
-        const row = client.create_buttons([
-            { id: "user_voice_channel", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
-        ], interaction)
-
         // Atualizando a mensagem original com o painel de controle do canal de voz
         return interaction.update({
             components: [client.create_menus({ client, interaction, user, data }), row]
         })
+
+    } else if (escolha === 2) {
+
+        // Limitando os membros que podem acessar o canal
+        const data = {
+            title: { tls: "menu.menus.escolher_usuario" },
+            pattern: "users",
+            alvo: "user_voice_channel_private"
+        }
+
+        return interaction.update({
+            components: [client.create_menus({ client, interaction, user, data }), row]
+        })
+    } else if (escolha === 3) {
+
+        // Liberando o canal para todos os membros poderem ver novamente
+        const guild_channel = await client.getGuildChannel(id_canal)
+
+        if (guild_channel)
+            guild_channel.permissionOverwrites.set([
+                {
+                    id: interaction.guild.id,
+                    allow: [PermissionsBitField.Flags.ViewChannel]
+                }])
+                .then(() => {
+
+                    // Informando ao usuário sobre a alteração do limite de membros do canal concluída
+                    interaction.reply({ content: `${client.emoji("dancando_polishcow")} | O canal foi desprivado.\nTodos os usuários podem ver ele novamente.`, flags: "Ephemeral" })
+
+                    dados = id_canal
+                    const update = true
+                    return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
+                })
+                .catch()
+
+        return
+    } else if (escolha === 5 || escolha === 6) {
+
+        // (Des)mutando os membros do canal
+        const guild_channel = await client.getGuildChannel(id_canal)
+
+        if (escolha === 5) // Enviando um som no canal mutado
+            muta_membros_som(guild_channel)
+
+        if (guild_channel)
+            guild_channel.members.forEach(membro => {
+
+                if (membro.user.id !== client.decifer(voice_channel.uid) && membro.user.id !== client.id())
+                    membro.voice.setMute(escolha === 5 ? true : false)
+                        .catch()
+            })
+
+        // Salvando o status de mute do canal
+        voice_channel.conf.mute = escolha === 5 ? true : false
+        await voice_channel.save()
+
+        const frase_retorno = escolha === 5 ? "Todos os membros do canal foram mutados." : "Restrições de fala removidas do canal."
+
+        // Informando ao usuário sobre a restrição de fala alterada
+        interaction.reply({ content: `${client.emoji("jacquin2")} | ${frase_retorno}`, flags: "Ephemeral" })
+
+        dados = id_canal
+        const update = true
+        return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
     }
 
     client.tls.reply(interaction, user, "menu.botoes.operacao_cancelada", true, 4)

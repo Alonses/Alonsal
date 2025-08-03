@@ -24,6 +24,7 @@ const client_data = {
     modules: !modo_develop,
     relatorio: update_commands || silent || modo_develop ? 0 : 1,
     voice_channels: !modo_develop,
+    guild_timeout: 0,
 
     owners: process.env.owner_id.split(", "),
     id: modo_develop ? process.env.client_2 : process.env.client_1,
