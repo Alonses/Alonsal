@@ -2,8 +2,8 @@ const { EmbedBuilder } = require('discord.js')
 
 module.exports = async ({ client, oldState, newState }) => {
 
-    // Verificando se o autor da mensagem editada é o bot
-    if (oldState.member.user.bot || newState.member.user.bot) return
+    // Verificando se o autor da mensagem editada é o bot ou se o bot está ignorando a guild principal
+    if ((oldState.member.user.bot || newState.member.user.bot) || (oldState.guild.id === process.env.guild_id && client.x.guild_timeout)) return
 
     const guild = await client.getGuild(oldState.guild.id)
 

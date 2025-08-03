@@ -35,7 +35,8 @@ const schema = new mongoose.Schema({
         modules: { type: Boolean, default: true },
         ranking: { type: Boolean, default: true },
         daily_announce: { type: Boolean, default: false },
-        logger: { type: Boolean, default: true }
+        logger: { type: Boolean, default: true },
+        guild_timeout: { type: Boolean, default: false }
     }
 })
 

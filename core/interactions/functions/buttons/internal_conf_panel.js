@@ -55,6 +55,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.execute("functions", "emoji_button.emoji_button", bot.conf.logger)} **Log de eventos**`,
                 value: `\`\`\`Operações do log de eventos dos servidores.\`\`\``,
                 inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", bot.conf.guild_timeout)} **Ignorar guild**`,
+                value: `\`\`\`Ouvir eventos vindos da guild principal.\`\`\``,
+                inline: true
             }
         )
 
@@ -62,7 +67,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             { id: "internal_switch", name: "Rankeamento", type: bot.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.ranking), data: "ranking" },
             { id: "internal_switch", name: "Faladeros", type: bot.conf.voice_channels ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.voice_channels), data: "voice_channels" },
             { id: "internal_switch", name: "Módulos", type: bot.conf.modules ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.modules), data: "modules" },
-            { id: "internal_switch", name: "Log de eventos", type: bot.conf.logger ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.logger), data: "logger" }
+            { id: "internal_switch", name: "Log de eventos", type: bot.conf.logger ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.logger), data: "logger" },
+            { id: "internal_switch", name: "Ignorar guild", type: bot.conf.guild_timeout ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.guild_timeout), data: "guild_timeout" }
         ])
 
         row = client.create_buttons([

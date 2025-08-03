@@ -9,8 +9,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     bot.conf[operacao] = !bot.conf[operacao]
     client.x[operacao] = bot.conf[operacao]
 
-    // Verificando se há canais vazios dinâmicos vazios para poder excluir
-    if (operacao === "voice_channels" && bot.conf[operacao])
+    // Verificando se há canais dinâmicos sem membros conectados para poder excluir
+    if (operacao === "voice_channels" && bot.conf[operacao] && !client.x.guild_timeout)
         verifica_canais_dinamicos(client)
 
     await bot.save()

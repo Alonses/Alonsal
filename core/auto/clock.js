@@ -42,7 +42,7 @@ module.exports = async ({ client }) => {
     atualiza_user_eraser(client)
 
     // Verifica todos os canais dinâmicos salvos ao ligar o bot
-    if (client.x.voice_channels) verifica_canais_dinamicos(client)
+    if (client.x.voice_channels && !client.x.guild_timeout) verifica_canais_dinamicos(client)
 
     console.log("📣 | Disparando o relógio interno")
 
