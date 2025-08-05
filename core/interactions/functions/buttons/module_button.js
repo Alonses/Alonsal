@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 3 -> Alterar dia
 
     let row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "modulos" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "modulos" }
     ], interaction)
 
     const modulo = await getModule(user.uid, timestamp)
@@ -80,7 +80,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `verify_module.${timestamp}` }], interaction)],
+            components: [client.create_menus({ interaction, user, data }), client.create_buttons([
+                { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `verify_module.${timestamp}` }
+            ], interaction)],
             flags: "Ephemeral"
         })
     }
@@ -88,8 +90,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 0) {
 
         const botoes = [
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `5|${timestamp}` },
-            { id: "module_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `6|${timestamp}` }
+            { id: "module_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `5|${timestamp}` },
+            { id: "module_button", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `6|${timestamp}` }
         ]
 
         return client.reply(interaction, {

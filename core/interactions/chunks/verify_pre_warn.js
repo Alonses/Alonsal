@@ -57,9 +57,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de anotações
     let botoes = [
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `pre_warn_browse_user|${pagina}` },
-        { id: "pre_warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_anotacoes"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
-        { id: "panel_guild_browse_pre_warns", name: client.tls.phrase(user, "menu.botoes.gerenciar_anotacoes"), type: 1, emoji: client.emoji(41), data: `11|${id_alvo}` }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `pre_warn_browse_user|${pagina}` },
+        { id: "pre_warn_remove_user", name: { tls: "menu.botoes.remover_anotacoes", alvo: user }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
+        { id: "panel_guild_browse_pre_warns", name: { tls: "menu.botoes.gerenciar_anotacoes", alvo: user }, type: 1, emoji: client.emoji(41), data: `11|${id_alvo}` }
     ]
 
     client.reply(interaction, {

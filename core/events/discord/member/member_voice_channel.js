@@ -68,6 +68,9 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                         user_voice_channel.cid = client.encrypt(new_voice_channel.id)
                         await user_voice_channel.save()
 
+                        // Salvando o canal de voz dinâmico em cache
+                        client.cached.voice_channels.set(`${client.encrypt(new_voice_channel.id)}.${client.encrypt(new_voice_channel.guild.id)}`, true)
+
                         const user = await client.getUser(id_user)
                         const dados = `${new_voice_channel.id}.${guild.sid}`
                         require("../../../interactions/chunks/voice_channel_config")({ client, user, dados })
@@ -95,6 +98,9 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
 
         // Excluindo o canal se estiver vazio
         if (guild_channel && guild_channel?.members?.size < 1) {
+
+            // Removendo o canal do cache e do banco de dados
+            client.cached.voice_channels.delete(`${voice_channel.cid}.${voice_channel.sid}`)
             voice_channel.delete()
 
             // Alterando o nome do canal para informar a exclusão
@@ -143,7 +149,7 @@ async function transferir_controles(client, guild_channel, voice_channel) {
 
     setTimeout(() => {
         // Atualizando o card de mensagem para o novo dono do canal
-        const dados = `${client.decifer(voice_channel.cid)}.${client.decifer(voice_channel.sid)}`, update = true, new_owner = new_channel_owner
+        const dados = `${guild_channel.guild.id}.${guild_channel.id}`, update = true, new_owner = new_channel_owner
         voice_channel_config({ client, user, dados, update, new_owner })
     }, 1000)
 }

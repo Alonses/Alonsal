@@ -82,12 +82,12 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     const botoes = []
 
     if (strikes?.strikes > 0) // Botão para resetar os strikes do usuário no servidor
-        botoes.push({ id: "user_reset_strikes", name: client.tls.phrase(user, "menu.botoes.remover_strikes"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
+        botoes.push({ id: "user_reset_strikes", name: { tls: "menu.botoes.remover_strikes", alvo: user }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
 
     if (warns.length > 0) // Botão para resetar os warns do usuário no servidor
         botoes.push(
-            { id: "user_reset_warns", name: client.tls.phrase(user, "menu.botoes.remover_advertencias"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
-            { id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.gerenciar_advertencias"), type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+            { id: "user_reset_warns", name: { tls: "menu.botoes.remover_advertencias", alvo: user }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
+            { id: "panel_guild_browse_warns", name: { tls: "menu.botoes.gerenciar_advertencias", alvo: user }, type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
         )
 
     if (botoes.length > 0)

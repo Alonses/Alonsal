@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (anotacoes_server.length > 0) {
             row = client.create_buttons([
-                { id: "return_button", name: client.tls.phrase(user, "menu.botoes.ver_usuarios"), type: 0, emoji: client.emoji(19), data: "remove_pre_warn" }
+                { id: "return_button", name: { tls: "menu.botoes.ver_usuarios", alvo: user }, type: 0, emoji: client.emoji(19), data: "remove_pre_warn" }
             ], interaction)
 
             obj.components.push(row)
@@ -78,8 +78,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Criando os botões para o menu de remoção de anotações de advertências do servidor
         const row = client.create_buttons([
-            { id: "pre_warn_remove_user", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
-            { id: "pre_warn_remove_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
+            { id: "pre_warn_remove_user", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
+            { id: "pre_warn_remove_user", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
         ], interaction)
 
         // Listando os botões para confirmar e cancelar a operação
@@ -110,7 +110,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const obj = {
             content: client.tls.phrase(user, "mode.report.escolher_usuario_gerencia"),
             embeds: [],
-            components: [client.create_menus({ client, interaction, user, data, pagina })],
+            components: [client.create_menus({ interaction, user, data, pagina })],
             flags: "Ephemeral"
         }
 

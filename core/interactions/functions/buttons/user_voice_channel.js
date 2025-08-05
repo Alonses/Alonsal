@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require("discord.js")
 
 const { verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
-const { muta_membros_som } = require("../../../auto/triggers/voice_channels_mute")
+const { conecta_canal_voz } = require("../../../auto/voice_connect")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Botão para retornar ao painel de configuração do canal de voz
     const row = client.create_buttons([
-        { id: "user_voice_channel", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
+        { id: "user_voice_channel", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
     ], interaction)
 
     if (escolha === 1) {
@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), row]
+            components: [client.create_menus({ interaction, user, data }), row]
         })
 
     } else if (escolha === 2) {
@@ -61,8 +61,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), row]
+            components: [client.create_menus({ interaction, user, data }), row]
         })
+
     } else if (escolha === 3) {
 
         // Liberando o canal para todos os membros poderem ver novamente
@@ -86,13 +87,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 .catch()
 
         return
+
     } else if (escolha === 5 || escolha === 6) {
 
         // (Des)mutando os membros do canal
         const guild_channel = await client.getGuildChannel(id_canal)
+        const guild = await client.getGuild(interaction.guild.id)
 
-        if (escolha === 5) // Enviando um som no canal mutado
-            muta_membros_som(guild_channel)
+        if (escolha === 5 && guild.voice_channels.mute_popup) // Enviando um som no canal mutado
+            conecta_canal_voz(guild_channel, "./files/songs/jacquin.ogg")
 
         if (guild_channel)
             guild_channel.members.forEach(membro => {

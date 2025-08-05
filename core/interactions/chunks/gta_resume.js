@@ -30,7 +30,7 @@ module.exports = async ({ client, user, interaction }) => {
                 )
 
             const row = client.create_buttons([
-                { id: "gta_resume", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "0" }
+                { id: "gta_resume", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "0" }
             ], interaction)
 
             client.reply(interaction, {

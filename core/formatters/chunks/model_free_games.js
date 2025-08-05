@@ -24,9 +24,9 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
 
     if (interaction)
         if (games.length > limitador)
-            objeto_jogos.push({ id: "free_games", name: client.tls.phrase(user, "menu.botoes.proximo"), emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.proximo", alvo: user }, emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
         else if ((pagina * limitador) < original_size && games.length !== original_size)
-            objeto_jogos.push({ id: "free_games", name: client.tls.phrase(user, "menu.botoes.inicio"), emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.inicio", alvo: user }, emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
 
     games.forEach(game => {
         // Jogo com tempo válido para resgate

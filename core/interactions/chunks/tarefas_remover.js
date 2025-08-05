@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, autor_original }) => {
     const obj = {
         content: client.tls.phrase(user, "util.tarefas.selecionar_remover", 1),
         embeds: [],
-        components: [client.create_menus({ client, interaction, user, data })],
+        components: [client.create_menus({ interaction, user, data })],
         flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 

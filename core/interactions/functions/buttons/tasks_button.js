@@ -34,20 +34,20 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "a|tarefas" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "a|tarefas" }
         ], interaction)
 
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", client.defaultEmoji("paper")),
             embeds: [],
-            components: [client.create_menus({ client, interaction, user, data }), row],
+            components: [client.create_menus({ interaction, user, data }), row],
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         })
     }
 
     // Botão para retornar até as listas do usuário
     let row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
     ], interaction)
 
     if (operacao === 0) {

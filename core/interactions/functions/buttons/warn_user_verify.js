@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         client.verifyUserWarnRoles(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         if (user_warns.length - 1 > 0)
-            row.push({ id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.remover_outras"), type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` })
+            row.push({ id: "panel_guild_browse_warns", name: { tls: "menu.botoes.remover_outras", alvo: user }, type: 0, emoji: client.emoji(41), data: `0|${id_alvo}` })
 
         const obj = {
             content: client.tls.phrase(user, "mode.warn.advertencia_removida", 10),
@@ -85,8 +85,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Criando os botões para o menu de remoção de advertências
         const row = client.create_buttons([
-            { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${timestamp}` },
-            { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `9|${id_alvo}.${timestamp}` }
+            { id: "warn_user_verify", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${timestamp}` },
+            { id: "warn_user_verify", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `9|${id_alvo}.${timestamp}` }
         ], interaction)
 
         // Listando os botões para confirmar e cancelar a operação
@@ -133,12 +133,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
             })
 
         const botoes = [
-            { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `0|${id_alvo}.${timestamp}` },
-            { id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.remover_advertencia"), type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
+            { id: "warn_user_verify", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `0|${id_alvo}.${timestamp}` },
+            { id: "warn_user_verify", name: { tls: "menu.botoes.remover_advertencia", alvo: user }, type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
         ]
 
         if (client.cached.warns.get(interaction.user.id)) // Motivo salvo em cache para remover a advertência
-            botoes.push({ id: "warn_user_verify", name: client.tls.phrase(user, "menu.botoes.manter_motivo"), type: client.execute("functions", "emoji_button.type_button", client.cached.warns.get(interaction.user.id)?.keep), emoji: client.defaultEmoji("pen"), data: `4.${id_alvo}.${timestamp}` })
+            botoes.push({
+                id: "warn_user_verify", name: { tls: "menu.botoes.manter_motivo", alvo: user }, type: client.execute("functions", "emoji_button.type_button", client.cached.warns.get(interaction.user.id)?.keep), emoji: client.defaultEmoji("pen"), data: `4.${id_alvo}.${timestamp}`
+            })
 
         return interaction.update({
             embeds: [embed],

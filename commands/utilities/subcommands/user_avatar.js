@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "util.avatar.sem_avatar", true, 1)
 
     const row = client.create_buttons([
-        { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_avatar }
+        { name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: url_avatar }
     ])
 
     const embed = new EmbedBuilder()

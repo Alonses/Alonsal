@@ -1,6 +1,11 @@
 module.exports = ({ client, user, alvo, valor }) => {
 
-    const nome_label = valor.name.length < 20 ? valor.name : `${valor.name.slice(0, 15)}...`
+    let nome_label
+
+    if (valor.name?.tls) nome_label = client.tls.phrase(valor.name.alvo, valor.name.tls)
+    else nome_label = valor.name
+
+    nome_label = nome_label.length < 20 ? nome_label : `${nome_label.slice(0, 15)}...`
     const valor_label = `${alvo.replace("#", "_")}|${valor.id}`
 
     let emoji_label = client.defaultEmoji("channel")

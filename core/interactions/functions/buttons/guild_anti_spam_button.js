@@ -45,9 +45,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const strikes = await listAllGuildStrikes(interaction.guild.id)
 
         // Submenu para navegar pelos strikes do servidor
-        let botoes = [], row = [{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0"
-        }], indice_matriz = 5
+        let botoes = [], row = [
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }
+        ], indice_matriz = 5
 
         if (strikes.length < 1) {
             await getGuildStrike(interaction.guild.id, 0)
@@ -74,7 +74,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
-            row.push({ id: "strike_configure_button", name: client.tls.phrase(user, "menu.botoes.novo_strike"), type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
+            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike", alvo: user }, type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
         const embed = new EmbedBuilder()
             .setTitle(client.tls.phrase(user, "mode.spam.configurando_strikes"))
@@ -102,12 +102,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             values: ["3", "4", "5", "6", "7", "8", "9", "10"]
         }
 
-        let row = client.create_buttons([{
-            id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2"
-        }], interaction)
+        let row = client.create_buttons([
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2" }
+        ], interaction)
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data }), row],
+            components: [client.create_menus({ interaction, user, data }), row],
             flags: "Ephemeral"
         })
 
@@ -132,18 +132,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
+        const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `${reback}.2` },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "4" }
         ]
-
-        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             flags: "Ephemeral"
         })
     }

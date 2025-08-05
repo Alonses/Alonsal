@@ -19,10 +19,10 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     await client.deferedResponse({ interaction, ephemeral })
 
     let dados = ""
-    let botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
 
     if (pagina === 1)
-        botoes = [{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild_data.0" }]
+        botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_data.0" }]
 
     if (guild.inviter)
         dados += `\n${client.emoji("aln_hoster")} **${client.tls.phrase(user, "manu.data.hoster_alonsal")}**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
@@ -80,17 +80,17 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_expandido", null, tempo_exclusao))
     }
 
-    botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "0" })
+    botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "0" })
 
     // Verificando se o membro possui permissões para gerenciar o tempo de exclusão do servidor
     if (await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageGuild]))
-        botoes = botoes.concat([
-            { id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_exclusao"), type: 3, emoji: client.defaultEmoji("time"), data: "2" },
-            { id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.definir_inatividade"), type: 3, emoji: client.defaultEmoji("running"), data: "3" }
-        ])
+        botoes.push(
+            { id: "data_guild_button", name: { tls: "menu.botoes.definir_exclusao", alvo: user }, type: 3, emoji: client.defaultEmoji("time"), data: "2" },
+            { id: "data_guild_button", name: { tls: "menu.botoes.definir_inatividade", alvo: user }, type: 3, emoji: client.defaultEmoji("running"), data: "3" }
+        )
 
     if (pagina === 0)
-        botoes.push({ id: "data_guild_button", name: client.tls.phrase(user, "menu.botoes.mais_detalhes"), type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.mais_detalhes", alvo: user }, type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
 
     interaction.editReply({
         content: "",

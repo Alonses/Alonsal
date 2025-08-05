@@ -50,19 +50,19 @@ module.exports = async ({ client, user, interaction }) => {
         })
     }
 
-    botoes = botoes.concat([
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "manu.painel.anuncio_games"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.games), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.games), data: "1" },
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.anuncio.cargo"), type: 1, emoji: client.defaultEmoji("role"), data: "3", disabled: b_cargos },
-        { id: "guild_free_games_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
-    ])
+    botoes.push(
+        { id: "guild_free_games_button", name: { tls: "manu.painel.anuncio_games", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.games), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.games), data: "1" },
+        { id: "guild_free_games_button", name: { tls: "mode.anuncio.cargo", alvo: user }, type: 1, emoji: client.defaultEmoji("role"), data: "3", disabled: b_cargos },
+        { id: "guild_free_games_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "4" }
+    )
 
     if (guild.games.channel && guild.games.role) // Mostrado apenas quando um canal e um cargo está definido para o anúncio de games no servidor
-        botoes = botoes.concat([{ id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.anunciar_agora"), type: 1, emoji: client.emoji(6), data: "2" }])
+        botoes.push({ id: "guild_free_games_button", name: { tls: "menu.botoes.anunciar_agora", alvo: user }, type: 1, emoji: client.emoji(6), data: "2" })
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.1" }], interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.1" }], interaction)],
         flags: "Ephemeral"
     })
 }

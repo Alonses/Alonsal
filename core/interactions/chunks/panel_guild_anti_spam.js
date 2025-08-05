@@ -86,28 +86,28 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         })
 
     if (pagina === 0)
-        botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "manu.painel.anti_spam"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
+        botoes.push(
+            { id: "guild_anti_spam_button", name: { tls: "manu.painel.anti_spam", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
             { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.recursos"), type: 1, emoji: client.emoji(41), data: "10" },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
-        ])
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.recursos", alvo: user }, type: 1, emoji: client.emoji(41), data: "10" },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.ajustes", alvo: user }, type: 1, emoji: client.emoji(41), data: "9" }
+        )
     else if (pagina === 1) // Página de recursos do Anti-spam ( Links suspeitos, punição de adms )
-        botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.links_suspeitos"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.gerenciar_moderadores"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" }
-        ])
+        botoes.push(
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.links_suspeitos", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.gerenciar_moderadores", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" }
+        )
     else // Página de configurações do Anti-spam
-        botoes = botoes.concat([
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.repeticoes"), type: 1, emoji: client.emoji(47), data: "5" },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.spam.mencoes"), type: client.execute("functions", "emoji_button.type_button", guild?.spam.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify), data: "7" },
-            { id: "guild_anti_spam_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "6" }
-        ])
+        botoes.push(
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.repeticoes", alvo: user }, type: 1, emoji: client.emoji(47), data: "5" },
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.mencoes", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify), data: "7" },
+            { id: "guild_anti_spam_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "6" }
+        )
 
     const row = [
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" },
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" },
         { id: "guild_anti_spam_button", name: "Strikes", type: 1, emoji: client.defaultEmoji("guard"), data: "4" },
-        { id: "guild_anti_spam_button", name: client.tls.phrase(user, "menu.botoes.varredura"), type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" }
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.varredura", alvo: user }, type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" }
     ]
 
     return client.reply(interaction, {

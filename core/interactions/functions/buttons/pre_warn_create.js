@@ -138,8 +138,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setTimestamp()
 
         const rows = [
-            { id: "warn_activate", name: client.tls.phrase(guild, "menu.botoes.conceder_advertencia"), type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
-            { id: "warn_activate", name: client.tls.phrase(guild, "menu.botoes.cancelar_advertencia"), type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia", alvo: guild }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia", alvo: guild }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
         ]
 
         // Enviando o card para os moderadores poderem autorizar a aplicação da advertência

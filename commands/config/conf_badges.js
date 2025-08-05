@@ -76,9 +76,9 @@ module.exports = {
 
             // Criando os botões para o menu de badges
             const row = client.create_buttons([
-                { id: "misc_badges", name: client.tls.phrase(user, "menu.botoes.confirmar_notificando"), type: 2, emoji: client.emoji(6), data: `1|${id_alvo}.${badge_alvo}` },
-                { id: "misc_badges", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), type: 1, emoji: client.emoji(31), data: `2|${id_alvo}.${badge_alvo}` },
-                { id: "misc_badges", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: 0 }
+                { id: "misc_badges", name: { tls: "menu.botoes.confirmar_notificando", alvo: user }, type: 2, emoji: client.emoji(6), data: `1|${id_alvo}.${badge_alvo}` },
+                { id: "misc_badges", name: { tls: "menu.botoes.apenas_confirmar", alvo: user }, type: 1, emoji: client.emoji(31), data: `2|${id_alvo}.${badge_alvo}` },
+                { id: "misc_badges", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: 0 }
             ], interaction)
 
             return interaction.reply({

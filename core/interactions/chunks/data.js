@@ -1,10 +1,10 @@
 module.exports = async ({ client, user, interaction }) => {
 
     const row = [
-        { id: "data_menu_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: '0' },
-        { id: "data_button", name: client.tls.phrase(user, "manu.data.exclusao_personalizada"), type: 1, emoji: client.emoji(1), data: '1' },
-        { id: "data_button", name: client.tls.phrase(user, "manu.data.exclusao_niveis"), type: 1, emoji: client.defaultEmoji("paper"), data: '2' },
-        { id: "data_button", name: client.tls.phrase(user, "menu.botoes.excluir_tudo"), type: 1, emoji: client.emoji(13), data: '3' }
+        { id: "data_menu_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: '0' },
+        { id: "data_button", name: { tls: "manu.data.exclusao_personalizada", alvo: user }, type: 1, emoji: client.emoji(1), data: '1' },
+        { id: "data_button", name: { tls: "manu.data.exclusao_niveis", alvo: user }, type: 1, emoji: client.defaultEmoji("paper"), data: '2' },
+        { id: "data_button", name: { tls: "menu.botoes.excluir_tudo", alvo: user }, type: 1, emoji: client.emoji(13), data: '3' }
     ]
 
     if (interaction.customId.includes("uni") || interaction.customId.includes("combo")) {

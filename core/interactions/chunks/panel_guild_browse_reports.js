@@ -86,7 +86,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
                         values: reportes_guild
                     }
 
-                    obj.components = [client.create_menus({ client, interaction, user, data, pagina })]
+                    obj.components = [client.create_menus({ interaction, user, data, pagina })]
 
                     let row = client.menu_navigation(user, data, pagina)
 

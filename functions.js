@@ -85,9 +85,9 @@ function internal_functions(client) {
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
     client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
-    client.create_buttons = (data, interaction) => { return create_buttons(data, interaction) }
+    client.create_buttons = (data, interaction) => { return create_buttons(client, data, interaction) }
 
-    client.create_menus = ({ client, interaction, user, data, pagina, multi_select, guild }) => {
+    client.create_menus = ({ interaction, user, data, pagina, multi_select, guild }) => {
         return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
     }
 
@@ -211,9 +211,9 @@ function internal_functions(client) {
         if (id_configurado !== interaction.channel.id && id_configurado !== interaction.channel.parentId) { // Adicionando o local atual do comando no inicio do array
 
             if (tipo === ChannelType.GuildText) // Usado por canais
-                ordenado.unshift({ id: interaction.channel.id, name: client.tls.phrase(user, "menu.botoes.local_atual"), emoji: "🎯" })
+                ordenado.unshift({ id: interaction.channel.id, name: { tls: "menu.botoes.local_atual", alvo: user }, emoji: "🎯" })
             else if (interaction.channel.parentId) // Usado por categorias
-                ordenado.unshift({ id: interaction.channel.parentId, name: client.tls.phrase(user, "menu.botoes.local_atual"), emoji: "🎯" })
+                ordenado.unshift({ id: interaction.channel.parentId, name: { tls: "menu.botoes.local_atual", alvo: user }, emoji: "🎯" })
         }
 
         return ordenado

@@ -62,7 +62,7 @@ module.exports = {
         if (interaction.options.getString("operation") === "fix") // Menu seletor de Badges
             return interaction.reply({
                 content: client.tls.phrase(user, "dive.badges.cabecalho_menu"),
-                components: [client.create_menus({ client, interaction, user, data })],
+                components: [client.create_menus({ interaction, user, data })],
                 flags: "Ephemeral"
             })
 

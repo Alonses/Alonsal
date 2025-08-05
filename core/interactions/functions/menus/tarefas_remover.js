@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row_2 = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
     ], interaction)
 
     if (lista)
@@ -55,9 +55,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Criando os botões para as funções de gestão de tarefas
     let row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "tarefas_remover" },
-        { id: "tasks_delete_task", name: client.tls.phrase(user, "menu.botoes.apagar"), type: 3, emoji: client.emoji(13), data: `1|${task.timestamp}` },
-        { id: "tasks_delete_task", name: client.tls.phrase(user, "menu.botoes.cancelar"), emoji: client.emoji(0), type: 1, data: 0 }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "tarefas_remover" },
+        { id: "tasks_delete_task", name: { tls: "menu.botoes.apagar", alvo: user }, type: 3, emoji: client.emoji(13), data: `1|${task.timestamp}` },
+        { id: "tasks_delete_task", name: { tls: "menu.botoes.cancelar", alvo: user }, emoji: client.emoji(0), type: 1, data: 0 }
     ], interaction)
 
     interaction.update({

@@ -211,26 +211,20 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     if (!client.cached.forca.get(id_jogo).embed) {
 
         const row = [
-            { id: "forca_button", name: "Juntar-se", type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
-            { id: "forca_button", name: "Sair da sessão", type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
+            { id: "forca_button", name: { tls: "menu.botoes.juntar_se", alvo: user }, type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
+            { id: "forca_button", name: { tls: "menu.botoes.sair_da_sessao", alvo: user }, type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
         ]
 
         const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
         client.cached.forca.get(id_jogo).embed = message
 
-        client.reply(interaction, {
-            content: "🎆 | Um jogo novo foi iniciado! Escreva seus chutes no chat para tentar acertar a palavra!",
-            flags: "Ephemeral"
-        }, true)
+        client.tls.reply(interaction, user, "game.forca.jogo_iniciado", true, 71)
 
     } else {
         client.cached.forca.get(id_jogo).embed.edit({ embeds: [embed] })
 
         if (interaction?.user?.id)
-            interaction.reply({
-                content: "🎆 | Já existe um jogo em andamento!",
-                flags: "Ephemeral"
-            })
+            client.tls.reply(interaction, user, "game.forca.sessao_andamento", true, 71)
     }
 }
 

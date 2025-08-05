@@ -150,9 +150,10 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     const user = await client.getUser(message.author.id)
     let mensagens_spam = []
 
-    // Listando as mensagens que foram consideradas como spam
-    user_messages.forEach(internal_message => { mensagens_spam.push(`-> ${internal_message.content}\n[ ${client.defaultEmoji("time")} ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ] - ${client.defaultEmoji("place")} ${internal_message.channel.name}`) })
-    mensagens_spam = mensagens_spam.join("\n\n").slice(0, 1000)
+    // Listando as mensagens que foram consideradas como spam e formatando a visualização
+    user_messages.forEach(internal_message => { mensagens_spam.push(`[ ${client.defaultEmoji("time")} ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]; ${client.defaultEmoji("place")} : ${internal_message.channel.name}\n-> ${internal_message.content?.length > 180 ? `${internal_message.content.slice(0, 180)}...` : internal_message.content}`) })
+    mensagens_spam = mensagens_spam.join("\n\n")
+    mensagens_spam = mensagens_spam.length > 1000 ? `${mensagens_spam.slice(0, 1000)}\n.\n.\n.` : mensagens_spam
 
     // Coletando o indice que expulsa ou bane o membro do servidor através dos Strikes
     const indice_matriz = client.verifyMatrixIndex(strikes)

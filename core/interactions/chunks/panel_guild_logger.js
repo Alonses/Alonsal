@@ -104,29 +104,29 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     }
 
     if (pagina === 0)
-        botoes = botoes.concat([
-            { id: "guild_logger_button", name: client.tls.phrase(user, "manu.painel.log_eventos"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
+        botoes.push(
+            { id: "guild_logger_button", name: { tls: "manu.painel.log_eventos", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
+            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos", alvo: user }, type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
             { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10" },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.ajustes"), type: 1, emoji: client.emoji(41), data: "9" }
-        ])
+            { id: "guild_logger_button", name: { tls: "menu.botoes.ajustes", alvo: user }, type: 1, emoji: client.emoji(41), data: "9" }
+        )
     else if (pagina === 1)
-        botoes = botoes.concat([
-            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.anuncio.idioma"), type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
-        ])
+        botoes.push(
+            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
+            { id: "guild_logger_button", name: { tls: "mode.anuncio.idioma", alvo: user }, type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
+        )
     else
-        botoes = botoes.concat([
+        botoes.push(
             { id: "guild_logger_button", name: "Death note", type: client.execute("functions", "emoji_button.type_button", guild?.death_note.note), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note), data: "5" },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "menu.botoes.notificacoes"), type: client.execute("functions", "emoji_button.type_button", guild?.death_note.notify), emoji: client.emoji(20), data: "7" },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.logger.eventos_ouvidos"), type: 1, emoji: client.defaultEmoji("warn"), data: "6" },
-            { id: "guild_logger_button", name: client.tls.phrase(user, "mode.report.canal_de_avisos"), type: 1, emoji: client.defaultEmoji("channel"), data: "8" },
-        ])
+            { id: "guild_logger_button", name: { tls: "menu.botoes.notificacoes", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.death_note.notify), emoji: client.emoji(20), data: "7" },
+            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos", alvo: user }, type: 1, emoji: client.defaultEmoji("warn"), data: "6" },
+            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "8" },
+        )
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_logger.0" }], interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_logger.0" }], interaction)],
         flags: "Ephemeral"
     })
 }

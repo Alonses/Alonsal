@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
-function create_buttons(lista, interaction) {
+function create_buttons(client, lista, interaction) {
 
     const row_buttons = new ActionRowBuilder()
     const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
@@ -15,8 +15,12 @@ function create_buttons(lista, interaction) {
     // Passando pelo array de botões e criando novos
     lista.forEach(dados => {
 
-        if (dados.id && !dados.id.includes("report_user"))
-            dados.name = dados.name.length > 25 ? `${dados.name.slice(0, 25)}...` : dados.name
+        let texto
+
+        if (dados.name?.tls) texto = client.tls.phrase(dados.name.alvo, dados.name.tls) // Traduzindo o texto do botão
+        else texto = dados.name // Utilizando os nome sem tradução
+
+        dados.name = texto.length > 25 ? `${texto.slice(0, 25)}...` : texto
 
         const botao = new ButtonBuilder()
             .setLabel(dados.name)

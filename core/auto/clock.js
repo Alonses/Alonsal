@@ -12,7 +12,7 @@ const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
 const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
-const { verifica_canais_dinamicos } = require('./triggers/guild_voice_channels')
+const { verifica_canais_dinamicos, atualiza_voice_channels } = require('./triggers/guild_voice_channels')
 
 module.exports = async ({ client }) => {
 
@@ -34,6 +34,7 @@ module.exports = async ({ client }) => {
 
     atualiza_roles()
     atualiza_join_guilds(client)
+    atualiza_voice_channels(client)
 
     if (client.x.modules) atualiza_modulos()
     atualiza_fixed_badges(client)

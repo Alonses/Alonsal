@@ -84,18 +84,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
+        const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "3" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },
+            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "3" }
         ]
-
-        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             flags: "Ephemeral"
         })
 
@@ -114,18 +113,17 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
+        const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_free_games_button", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },
+            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "4" }
         ]
-
-        let row = client.menu_navigation(user, data, pagina || 0)
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ client, interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
             flags: "Ephemeral"
         })
     }

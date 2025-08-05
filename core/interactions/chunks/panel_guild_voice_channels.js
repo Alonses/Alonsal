@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.voice_channels.descricao_modulo"))
         .setFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(user, "util.unidades.segundos")}\` )**\n${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -37,12 +37,12 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.Connect))} **${client.tls.phrase(user, "mode.voice_channel.conectar_canal")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers))} **${client.tls.phrase(user, "mode.voice_channels.mover_membros")}**`,
+                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers))} **${client.tls.phrase(user, "mode.voice_channels.mover_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.Speak))} **${client.tls.phrase(user, "mode.voice_channel.falar_canal")}**`,
                 inline: true
             }
         )
@@ -58,17 +58,29 @@ module.exports = async ({ client, user, interaction }) => {
         falta_permissoes = true
 
     const botoes = [
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "panel_guild.3" },
-        { id: "guild_voice_channels_button", name: client.tls.phrase(user, "mode.voice_channels.faladeros"), type: client.execute("functions", "emoji_button.type_button", guild?.conf.voice_channels), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
-        { id: "guild_voice_channels_button", name: client.tls.phrase(user, "mode.voice_channels.canal_ativador"), type: 1, emoji: client.defaultEmoji("channel"), data: "2" },
-        { id: "guild_voice_channels_button", name: client.tls.phrase(user, "util.server.categoria"), type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-        { id: "guild_voice_channels_button", name: client.tls.phrase(user, "menu.botoes.expiracao"), type: 1, emoji: client.defaultEmoji("time"), data: "4" }
+        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.voice_channels), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
+        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.canal_ativador", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" },
+        { id: "guild_voice_channels_button", name: { tls: "util.server.categoria", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
+        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "4" }
     ]
+
+    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.3" }]
+    let mute_disabled = true
+
+    // Permissões para conectar e falar em canais de voz
+    if (membro_sv.permissions.has(PermissionsBitField.Flags.Connect) && membro_sv.permissions.has(PermissionsBitField.Flags.Speak)) {
+        mute_disabled = false
+        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.mute_popup", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.voice_channels.mute_popup), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.voice_channels.mute_popup), data: "5", disabled: mute_disabled })
+    }
+
+    // Verificando se o usuário está conectado em um canal de voz
+    if (interaction.member.voice.channel && !client.cached.voice_channels.has(`${client.encrypt(interaction.member.voice.channel.id)}.${client.encrypt(interaction.guild.id)}`, true))
+        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.converter_canal", alvo: user }, type: 1, emoji: "👾", data: "6" })
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
         flags: "Ephemeral"
     })
 }

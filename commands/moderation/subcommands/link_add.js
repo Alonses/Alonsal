@@ -34,8 +34,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Criando os botões para excluir o link suspeito
     const row = client.create_buttons([
-        { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1.${timestamp}` },
-        { id: "spam_link_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0.${timestamp}` }
+        { id: "spam_link_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1.${timestamp}` },
+        { id: "spam_link_button", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0.${timestamp}` }
     ], interaction)
 
     interaction.reply({

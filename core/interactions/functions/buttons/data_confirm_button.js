@@ -23,8 +23,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         { id: `data_finalize_button${escopo}`, name: botoes[0], type: 1, data: `1.${define_button(opcao, botoes[0])}.${dados}` },
         { id: `data_finalize_button${escopo}`, name: botoes[1], type: 1, data: `2.${define_button(opcao, botoes[1])}.${dados}` },
         { id: `data_finalize_button${escopo}`, name: botoes[2], type: 1, data: `3.${define_button(opcao, botoes[2])}.${dados}` },
-        { id: `data_finalize_button${escopo}`, name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: '0' },
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "data" }
+        { id: `data_finalize_button${escopo}`, name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: '0' },
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "data" }
     ], interaction)
 
     interaction.update({

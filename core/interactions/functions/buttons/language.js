@@ -17,11 +17,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Botão para retornar até a tela principal do help
     let row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_help" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_help" }
     ], interaction)
 
     interaction.update({
-        components: [client.create_menus({ client, interaction, user, data }), row],
+        components: [client.create_menus({ interaction, user, data }), row],
         flags: "Ephemeral"
     })
 }

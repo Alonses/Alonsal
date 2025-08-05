@@ -38,6 +38,7 @@ class CeiraClient {
             fixed_badges: {},
             warns: new Map(),
             join_guilds: new Map(),
+            voice_channels: new Map(),
             forca: new Map(),
             forca_sessao: new Map(),
             iddleGuilds: new Map(),

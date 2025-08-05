@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             let row = [{ name: "LastFM", value: `https://www.last.fm/pt/user/${texto_entrada}`, type: 4, emoji: "🌐" }]
 
             if (res.scrobble_atual.link) // Música atual possui um link para ouvir
-                row.push({ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
+                row.push({ name: { tls: "menu.botoes.ouvir_tambem", alvo: user }, emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
 
             // Card do que o usuário está ouvindo atualmente
             const embed = new EmbedBuilder()

@@ -31,9 +31,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .setDescription(client.tls.phrase(user, "manu.data.descricao_tempo_inatividade"))
 
         const row = [
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "data" },
-            { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: "3" },
-            { id: "data_confirm_button", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: "0" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "data" },
+            { id: "data_confirm_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: "3" },
+            { id: "data_confirm_button", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: "0" }
         ]
 
         return client.reply(interaction, {
@@ -45,13 +45,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const row = client.create_buttons([
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "dados_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "dados_navegar" }
     ], interaction)
 
     interaction.update({
         content: client.tls.phrase(user, "manu.data.tipo_dado"),
         embeds: [],
-        components: [client.create_menus({ client, interaction, user, data }), row],
+        components: [client.create_menus({ interaction, user, data }), row],
         flags: "Ephemeral"
     })
 }

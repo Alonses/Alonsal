@@ -75,15 +75,15 @@ module.exports = async ({ client, user, interaction }) => {
     await alvo.save()
 
     // Criando os botões para as funções de reporte
-    // let botoes = [{ id: "report_user", name: client.tls.phrase(user, "menu.botoes.confirmar_anunciando"), type: 2, emoji: '📣', data: `1|${alvo.uid}` }]
+    // let botoes = [{ id: "report_user", name: { tls: "menu.botoes.confirmar_anunciando"), type: 2, emoji: '📣', data: `1|${alvo.uid}` }]
     let botoes = []
 
     if (guild.network.link) // Habilitando opção de enviar o aviso apenas aos servidores do network
-        botoes.push({ id: "report_user", name: client.tls.phrase(user, "menu.botoes.anunciar_ao_network"), type: 0, emoji: client.emoji(36), data: `3|${id_alvo}` })
+        botoes.push({ id: "report_user", name: { tls: "menu.botoes.anunciar_ao_network", alvo: user }, type: 0, emoji: client.emoji(36), data: `3|${id_alvo}` })
 
     botoes.push(
-        { id: "report_user", name: client.tls.phrase(user, "menu.botoes.apenas_confirmar"), type: 1, emoji: '📫', data: `2|${id_alvo}` },
-        { id: "report_user", name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
+        { id: "report_user", name: { tls: "menu.botoes.apenas_confirmar", alvo: user }, type: 1, emoji: '📫', data: `2|${id_alvo}` },
+        { id: "report_user", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
     )
 
     return interaction.reply({

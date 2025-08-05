@@ -1,6 +1,6 @@
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior, entersState, VoiceConnectionStatus } = require('@discordjs/voice');
 
-async function muta_membros_som(voice_channel) {
+async function conecta_canal_voz(voice_channel, som) {
 
     const connection = joinVoiceChannel({
         channelId: voice_channel.id,
@@ -24,11 +24,11 @@ async function muta_membros_som(voice_channel) {
     })
 
     // Cria o recurso de áudio local
-    const resource = createAudioResource("./files/songs/jacquin.ogg", {
+    const resource = createAudioResource(som, {
         inlineVolume: true, // opcional: permite ajustar volume
     })
 
-    resource.volume.setVolume(0.5) // 50% do volume
+    resource.volume.setVolume(0.7) // 50% do volume
 
     // Tocando o som
     player.play(resource)
@@ -48,4 +48,4 @@ async function muta_membros_som(voice_channel) {
     })
 }
 
-module.exports = { muta_membros_som }
+module.exports.conecta_canal_voz = conecta_canal_voz

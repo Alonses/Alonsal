@@ -1,5 +1,13 @@
 const { listAllVoiceChannels } = require("../../database/schemas/User_voice_channel")
 
+async function atualiza_voice_channels(client) {
+
+    const dados = await listAllVoiceChannels()
+
+    // Salvando os canais de voz dinâmicos no cache do bot
+    dados.forEach(voice_channel => { client.cached.voice_channels.set(`${voice_channel.cid}.${voice_channel.sid}`, true) })
+}
+
 async function verifica_canais_dinamicos(client) {
 
     // Verifica todos os canais de voz dinâmicos registrados se estão vazios ao ligar o bot
@@ -24,4 +32,5 @@ async function verifica_canais_dinamicos(client) {
     })
 }
 
+module.exports.atualiza_voice_channels = atualiza_voice_channels
 module.exports.verifica_canais_dinamicos = verifica_canais_dinamicos

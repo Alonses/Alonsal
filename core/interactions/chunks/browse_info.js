@@ -46,25 +46,25 @@ module.exports = async ({ client, user, interaction, caso }) => {
         embed.setDescription(client.tls.phrase(user, "manu.info.conteudo_3"))
 
     if (pagina === 0) // Página inicial
-        botoes = botoes.concat([
-            { id: "browse_info", name: client.tls.phrase(user, "menu.botoes.estatisticas"), type: 1, emoji: client.defaultEmoji("metrics"), data: 3 },
-            { id: "browse_info", name: client.tls.phrase(user, "inic.inicio.suporte"), type: 1, emoji: client.emoji(25), data: 1 },
-            { id: "browse_info", name: client.tls.phrase(user, "manu.data.links_externos"), type: 1, emoji: client.emoji(32), data: 2 },
-        ])
+        botoes.push(
+            { id: "browse_info", name: { tls: "menu.botoes.estatisticas", alvo: user }, type: 1, emoji: client.defaultEmoji("metrics"), data: 3 },
+            { id: "browse_info", name: { tls: "inic.inicio.suporte", alvo: user }, type: 1, emoji: client.emoji(25), data: 1 },
+            { id: "browse_info", name: { tls: "manu.data.links_externos", alvo: user }, type: 1, emoji: client.emoji(32), data: 2 },
+        )
     else if (pagina === 1)
-        botoes = botoes.concat([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
-            { name: client.tls.phrase(user, "inic.inicio.convidar"), type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` },
-            { name: client.tls.phrase(user, "manu.avalie.avaliar"), type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
-            { name: client.tls.phrase(user, "manu.apoio.contribua"), type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
+        botoes.push(
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { name: { tls: "inic.inicio.convidar", alvo: user }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` },
+            { name: { tls: "manu.avalie.avaliar", alvo: user }, type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
+            { name: { tls: "manu.apoio.contribua", alvo: user }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
             { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
-        ])
+        )
     else if (pagina === 2)
-        botoes = botoes.concat([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
+        botoes.push(
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
             { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },
             { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
-        ])
+        )
     else if (pagina === 3) {
 
         // Verificando pelos games que já expiraram
@@ -127,20 +127,18 @@ module.exports = async ({ client, user, interaction, caso }) => {
                 }
             )
 
-        botoes = botoes.concat([
-            { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: "browse_info" },
-            { id: "browse_info", name: client.tls.phrase(user, "menu.botoes.atualizar"), type: 1, emoji: client.emoji(42), data: 3 },
-        ])
+        botoes.push(
+            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { id: "browse_info", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: 3 },
+        )
 
         if (games_free.length > 0) // Jogos gratuitos disponíveis para coleta
-            botoes = botoes.concat([
-                { id: "free_games", name: client.tls.phrase(user, "menu.botoes.ver_jogos_free"), type: 1, emoji: client.emoji(29), data: 0 }
-            ])
+            botoes.push({ id: "free_games", name: { tls: "menu.botoes.ver_jogos_free", alvo: user }, type: 1, emoji: client.emoji(29), data: 0 })
     }
 
     // Botão ouvindo agora
     if (ouvindo_agora !== "")
-        botoes = botoes.concat([{ name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }])
+        botoes.push({ name: { tls: "menu.botoes.ouvir_tambem", alvo: user }, emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 })
 
     client.reply(interaction, {
         embeds: [embed],

@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction }) => {
     const obj = {
         content: client.tls.phrase(user, "misc.modulo.modulo_escolher"),
         embeds: [],
-        components: [client.create_menus({ client, interaction, user, data })],
+        components: [client.create_menus({ interaction, user, data })],
         flags: "Ephemeral"
     }
 

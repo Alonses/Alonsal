@@ -58,9 +58,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de advertência
     let botoes = [
-        { id: "return_button", name: client.tls.phrase(user, "menu.botoes.retornar"), type: 0, emoji: client.emoji(19), data: `warn_browse_user|${pagina}` },
-        { id: "warn_remove_user", name: client.tls.phrase(user, "menu.botoes.remover_advertencias"), type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
-        { id: "panel_guild_browse_warns", name: client.tls.phrase(user, "menu.botoes.gerenciar_advertencias"), type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `warn_browse_user|${pagina}` },
+        { id: "warn_remove_user", name: { tls: "menu.botoes.remover_advertencias", alvo: user }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
+        { id: "panel_guild_browse_warns", name: { tls: "menu.botoes.gerenciar_advertencias", alvo: user }, type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
     ]
 
     client.reply(interaction, {

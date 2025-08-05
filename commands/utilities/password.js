@@ -45,7 +45,7 @@ module.exports = {
             bonus += `${randomString(tamanho, client)}\n\n`
 
         const row = client.create_buttons([
-            { name: client.tls.phrase(user, "util.password.testar_senha"), value: "https://password.kaspersky.com/", type: 4, emoji: "🌐" }
+            { name: { tls: "util.password.testar_senha", alvo: user }, value: "https://password.kaspersky.com/", type: 4, emoji: "🌐" }
         ], interaction)
 
         const embed = new EmbedBuilder()

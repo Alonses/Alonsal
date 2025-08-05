@@ -36,8 +36,8 @@ module.exports = async ({ client, guild }) => {
 
                 if (!inviter.hoster) { // Envia um Embed ao usuário que adicionou o bot ao servidor
                     const row = client.create_buttons([
-                        { name: client.tls.phrase(inviter, "inic.ping.site"), type: 4, emoji: "🌐", value: 'http://alonsal.discloud.app/' },
-                        { name: client.tls.phrase(inviter, "inic.inicio.suporte"), type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support }
+                        { name: { tls: "inic.ping.site", alvo: inviter }, type: 4, emoji: "🌐", value: 'http://alonsal.discloud.app/' },
+                        { name: { tls: "inic.inicio.suporte", alvo: inviter }, type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support }
                     ])
 
                     const embed = new EmbedBuilder()

@@ -109,7 +109,7 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const row = client.create_buttons([
-                        { name: client.tls.phrase(user, "util.wiki.artigo_completo"), value: res.AbstractURL, type: 4, emoji: "🌐" }
+                        { name: { tls: "util.wiki.artigo_completo", alvo: user }, value: res.AbstractURL, type: 4, emoji: "🌐" }
                     ], interaction)
 
                     const Embed = new EmbedBuilder()

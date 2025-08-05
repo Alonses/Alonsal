@@ -184,9 +184,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     c_buttons[operador] = 2
 
     const row = client.create_buttons([
-        { id: "server_info_button", name: client.tls.phrase(user, "util.lastfm.geral"), type: c_buttons[0], emoji: '🌐', data: "0", disabled: b_disabled[0] },
-        { id: "server_info_button", name: client.tls.phrase(user, "menu.botoes.moderacao"), type: c_buttons[1], emoji: client.emoji("aln_reporter"), data: "1", disabled: b_disabled[1] },
-        { id: "server_info_button", name: client.tls.phrase(user, "menu.botoes.estatisticas"), type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] }
+        { id: "server_info_button", name: { tls: "util.lastfm.geral", alvo: user }, type: c_buttons[0], emoji: '🌐', data: "0", disabled: b_disabled[0] },
+        { id: "server_info_button", name: { tls: "menu.botoes.moderacao", alvo: user }, type: c_buttons[1], emoji: client.emoji("aln_reporter"), data: "1", disabled: b_disabled[1] },
+        { id: "server_info_button", name: { tls: "menu.botoes.estatisticas", alvo: user }, type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] }
     ], interaction)
 
     // Servidor com imagem personalizada

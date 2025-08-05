@@ -123,8 +123,8 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     // Criando os botões para o menu de advertências
     const row = client.create_buttons([
-        { id: id_warn, name: client.tls.phrase(user, "menu.botoes.confirmar"), type: 2, emoji: client.emoji(10), data: `1|${guild_member.id}` },
-        { id: id_warn, name: client.tls.phrase(user, "menu.botoes.cancelar"), type: 3, emoji: client.emoji(0), data: `0|${guild_member.id}` }
+        { id: id_warn, name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${guild_member.id}` },
+        { id: id_warn, name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${guild_member.id}` }
     ], interaction)
 
     client.reply(interaction, {

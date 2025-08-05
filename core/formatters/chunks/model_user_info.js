@@ -133,10 +133,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     }
 
     const row = client.create_buttons([
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.perfil"), type: c_buttons[0], emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.permissoes"), type: c_buttons[1], emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
+        { id: "user_info_button", name: { tls: "menu.botoes.perfil", alvo: user }, type: c_buttons[0], emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
+        { id: "user_info_button", name: { tls: "menu.botoes.permissoes", alvo: user }, type: c_buttons[1], emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
         { id: "user_info_button", name: "Badges", type: c_buttons[2], emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] },
-        { id: "user_info_button", name: client.tls.phrase(user, "menu.botoes.historico"), type: c_buttons[3], emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
+        { id: "user_info_button", name: { tls: "menu.botoes.historico", alvo: user }, type: c_buttons[3], emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
     ], interaction)
 
     const obj = {

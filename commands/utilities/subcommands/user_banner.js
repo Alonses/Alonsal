@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
                     return client.tls.reply(interaction, user, "util.avatar.sem_banner", true, client.emoji(0))
 
                 const row = client.create_buttons([
-                    { name: client.tls.phrase(user, "menu.botoes.navegador"), type: 4, emoji: "🌐", value: url_banner }
+                    { name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: url_banner }
                 ])
 
                 // Exibindo o banner do usuário

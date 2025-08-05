@@ -25,7 +25,8 @@ const schema = new mongoose.Schema({
     voice_channels: {
         channel: { type: String, default: null },
         category: { type: String, default: null },
-        timeout: { type: String, default: 0 }
+        timeout: { type: String, default: 0 },
+        mute_popup: { type: Boolean, default: true }
     },
     warn: {
         notify: { type: Boolean, default: true },
