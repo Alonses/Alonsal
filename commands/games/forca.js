@@ -18,7 +18,7 @@ module.exports = {
         if (!interaction.guild) return
 
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
-            return interaction.reply({ content: ":passport_control: | Não podemos iniciar esse jogo nesse canal! Para isso, preciso de permissões para Anexar arquivos, ver o canal e enviar mensagens.", flags: "Ephemeral" })
+            return client.tls.reply(interaction, user, "game.forca.sem_permissao", true, 7)
 
         if (!client.cached.forca_sessao.has(client.encrypt(interaction.user.id))) {
 
@@ -61,7 +61,7 @@ function verifica_chute(client, message, entrada, id_jogo, user) {
 
     // Jogo expirado, removendo o usuário da sessão
     if (!client.cached.forca.has(id_jogo)) {
-        message.channel.send({ content: "Ixi, essa sessão não existe mais... Mas você pode iniciar uma nova com o </forca:1069762590294687905>!" })
+        message.channel.send({ content: client.tls.phrase(user, "game.forca.sessao_desconhecida") })
         client.cached.forca_sessao.delete(user.uid)
         return
     }
@@ -177,8 +177,8 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
         if (user.id_game === id_jogo) jogadores_sessao++
     })
 
-    if (jogadores_sessao > 1) jogadores_sessao = `${jogadores_sessao} jogadores na sessão atual`
-    else jogadores_sessao = "1 jogador na sessão atual"
+    if (jogadores_sessao > 1) jogadores_sessao = client.tls.phrase(user, "game.forca.jogadores_sessao", null, jogadores_sessao)
+    else jogadores_sessao = client.tls.phrase(user, "game.forca.jogador_sessao")
 
     if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) {
 
@@ -203,7 +203,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     const embed = new EmbedBuilder()
         .setTitle(client.tls.phrase(user, "game.forca.titulo"))
         .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} letras\` )${painel} ${entradas}`)
+        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} ${client.tls.phrase(user, "game.forca.letras")}\` )${painel} ${entradas}`)
         .setFooter({
             text: `💠 ${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}\n${client.defaultEmoji("person")} ${jogadores_sessao}`
         })
@@ -218,13 +218,14 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
         const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
         client.cached.forca.get(id_jogo).embed = message
 
-        client.tls.reply(interaction, user, "game.forca.jogo_iniciado", true, 71)
+        client.tls.editReply(interaction, user, "game.forca.jogo_iniciado", true, 71)
 
     } else {
+
         client.cached.forca.get(id_jogo).embed.edit({ embeds: [embed] })
 
         if (interaction?.user?.id)
-            client.tls.reply(interaction, user, "game.forca.sessao_andamento", true, 71)
+            client.tls.editReply(interaction, user, "game.forca.sessao_andamento", true, 71)
     }
 }
 
