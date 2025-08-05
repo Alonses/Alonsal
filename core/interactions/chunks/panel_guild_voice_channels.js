@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
         .setDescription(client.tls.phrase(user, "mode.voice_channels.descricao_modulo"))
         .setFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(user, "util.unidades.segundos")}\` )**\n${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**`,
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
                 value: "⠀",
                 inline: true
             },
