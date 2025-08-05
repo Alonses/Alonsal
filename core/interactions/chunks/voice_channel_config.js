@@ -60,9 +60,9 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
 
         aviso_card += `\`\`\`${client.tls.phrase(user, "mode.voice_channels.restricao_voz_ativa")}\`\`\`\n`
 
-        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.mutar", alvo: user }, type: 3, emoji: client.emoji("jacquin2"), data: `6.${id_canal}` })
+        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.desmutar", alvo: user }, type: 3, emoji: client.emoji("fabio"), data: `6.${id_canal}` })
     } else
-        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.desmutar", alvo: user }, type: 0, emoji: client.emoji("fabio"), data: `5.${id_canal}` })
+        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.mutar", alvo: user }, type: 0, emoji: client.emoji("jacquin2"), data: `5.${id_canal}` })
 
     // Criando o embed de botões para configuração do canal pelo membro
     const embed = new EmbedBuilder()
