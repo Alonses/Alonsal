@@ -46,10 +46,10 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
     // Botões para (des)privar o canal de voz
     if (!canal_guild.permissionsFor(canal_guild.guild.id).has(PermissionsBitField.Flags.ViewChannel)) {
 
-        botoes.push({ id: "user_voice_channel", name: { tls: "util.botoes.tornar_publico", alvo: user }, type: 2, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
+        botoes.push({ id: "user_voice_channel", name: { tls: "menu.botoes.tornar_publico", alvo: user }, type: 2, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
 
         canal_guild.permissionOverwrites.cache.forEach(permissao => {
-            if (permissao != canal_guild.guild.id)
+            if (permissao != canal_guild.guild.id && permissao !== client.id())
                 users_liberados.push(`<@${permissao.id}>`)
         })
 
