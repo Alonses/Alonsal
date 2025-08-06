@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction, dados, update, new_owner })
 
 async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
 
-    let aviso_card = "", users_liberados = []
+    let aviso_card = "", users_liberados = [`<@${client.decifer(user.uid)}>`]
     const botoes = [
         { id: "user_voice_channel", name: { tls: "menu.botoes.limitar_canal", alvo: user }, type: 1, emoji: client.defaultEmoji("metrics"), data: `1.${id_canal}.${client.decifer(voice_channel.uid)}` },
         { id: "user_voice_channel", name: { tls: "menu.botoes.privar_canal", alvo: user }, type: 1, emoji: "🔒", data: `2.${id_canal}.${client.decifer(voice_channel.uid)}` }
@@ -49,7 +49,7 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
         botoes.push({ id: "user_voice_channel", name: { tls: "util.botoes.tornar_publico", alvo: user }, type: 2, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
 
         canal_guild.permissionOverwrites.cache.forEach(permissao => {
-            if (permissao != canal_guild.guild.id && permissao != client.id())
+            if (permissao != canal_guild.guild.id)
                 users_liberados.push(`<@${permissao.id}>`)
         })
 
