@@ -49,7 +49,7 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
         botoes.push({ id: "user_voice_channel", name: { tls: "menu.botoes.tornar_publico", alvo: user }, type: 2, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
 
         canal_guild.permissionOverwrites.cache.forEach(permissao => {
-            if (permissao != canal_guild.guild.id && permissao !== client.id())
+            if (permissao.id != canal_guild.guild.id && permissao.id !== client.id() && permissao.id !== client.decifer(user.uid))
                 users_liberados.push(`<@${permissao.id}>`)
         })
 

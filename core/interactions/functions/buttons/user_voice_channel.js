@@ -78,7 +78,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 .then(() => {
 
                     // Informando ao usuário sobre a alteração do limite de membros do canal concluída
-                    interaction.reply({ content: `${client.emoji("dancando_polishcow")} | O canal foi desprivado.\nTodos os usuários podem ver ele novamente.`, flags: "Ephemeral" })
+                    client.tls.reply(interaction, user, "mode.voice_channels.canal_publico", true, client.emoji("dancando_polishcow"))
 
                     dados = id_canal
                     const update = true
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         voice_channel.conf.mute = escolha === 5 ? true : false
         await voice_channel.save()
 
-        const frase_retorno = escolha === 5 ? "Todos os membros do canal foram mutados." : "Restrições de fala removidas do canal."
+        const frase_retorno = escolha === 5 ? client.tls.phrase(user, "mode.voice_channels.canal_mutado") : client.tls.phrase(user, "mode.voice_channels.canal_desmutado")
 
         // Informando ao usuário sobre a restrição de fala alterada
         interaction.reply({ content: `${client.emoji("jacquin2")} | ${frase_retorno}`, flags: "Ephemeral" })
