@@ -2,18 +2,15 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 const { verifyVoiceChannel } = require("../../database/schemas/User_voice_channel")
 
-module.exports = async ({ client, user, interaction, dados, update, new_owner }) => {
+module.exports = async ({ client, user, interaction, dados, update }) => {
 
-    const id_canal = dados.split(".")[0]
-    const id_guild = dados.split(".")[1]
-    const canal_guild = await client.getGuildChannel(interaction?.channel.id || id_canal)
-    const voice_channel = await verifyVoiceChannel(client.encrypt(interaction?.channel.id || id_canal), client.encrypt(interaction?.guild.id || id_guild))
+    const id_canal = interaction?.channel.id || dados.split(".")[0]
+    const id_guild = interaction?.guild.id || dados.split(".")[1]
+    const canal_guild = await client.getGuildChannel(id_canal)
+    const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(id_guild))
 
     // Verificando se o canal de voz existe no banco ainda
     if (!voice_channel) return
-
-    // Alterando o dono do canal de voz
-    if (new_owner) voice_channel.uid = client.encrypt(new_owner)
 
     if (!update) {
 

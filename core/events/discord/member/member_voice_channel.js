@@ -35,19 +35,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                     permissionOverwrites: [
                         {
                             id: guild.sid,
-                            allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.Connect],
-                        },
-                        {
-                            id: guild.sid,
-                            deny: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
-                        },
-                        {
-                            id: id_user,
-                            allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
-                        },
-                        {
-                            id: client.id(),
-                            allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory],
+                            allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.Connect, PermissionsBitField.Flags.ReadMessageHistory]
                         }
                     ]
                 }).then(async new_voice_channel => {
@@ -82,7 +70,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
             guild_member.voice.setChannel(client.decifer(user_voice.cid))
                 .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild, id_user))
         }
-    } else  // Verifica se o canal possui ausencia de membros
+    } else if (oldState.channelId !== newState.channelId) // Verifica se o canal possui ausencia de membros
         verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild, id_user)
 }
 
@@ -114,10 +102,11 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
             setTimeout(() => {
                 guild_channel.delete()
             }, voiceChannelTimeout[guild.voice_channels.timeout] * 1000)
+
         } else if (client.decifer(voice_channel.uid) === id_user) {
 
             // Ativa apenas quando o dono do canal desconecta e transfere os controles para outro membro conectado
-            transferir_controles(client, guild_channel, voice_channel)
+            transferir_controles({ client, guild_channel, voice_channel })
         }
     }
 
@@ -139,7 +128,7 @@ async function mover_membro(client, voice_channel) {
     }, 500)
 }
 
-async function transferir_controles(client, guild_channel, voice_channel) {
+async function transferir_controles({ client, guild_channel, voice_channel }) {
 
     const new_channel_owner = [...guild_channel.members.keys()][0]
     const user = await client.getUser(new_channel_owner)
@@ -149,7 +138,7 @@ async function transferir_controles(client, guild_channel, voice_channel) {
 
     setTimeout(() => {
         // Atualizando o card de mensagem para o novo dono do canal
-        const dados = `${guild_channel.guild.id}.${guild_channel.id}`, update = true, new_owner = new_channel_owner
-        voice_channel_config({ client, user, dados, update, new_owner })
+        const dados = `${guild_channel.id}.${guild_channel.guild.id}`, update = true
+        voice_channel_config({ client, user, dados, update })
     }, 1000)
 }
