@@ -19,16 +19,16 @@ async function conecta_canal_voz(voice_channel, som) {
     // Criando o player
     const player = createAudioPlayer({
         behaviors: {
-            noSubscriber: NoSubscriberBehavior.Pause, // pausa se ninguém estiver ouvindo
+            noSubscriber: NoSubscriberBehavior.Pause // pausa se ninguém estiver ouvindo
         }
     })
 
     // Cria o recurso de áudio local
     const resource = createAudioResource(som, {
-        inlineVolume: true, // opcional: permite ajustar volume
+        inlineVolume: true // opcional: permite ajustar volume
     })
 
-    resource.volume.setVolume(0.7) // 50% do volume
+    resource.volume.setVolume(0.7) // 70% do volume
 
     // Tocando o som
     player.play(resource)

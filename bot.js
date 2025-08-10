@@ -90,11 +90,11 @@ client.discord.on("messageCreate", async message => {
 
 			const user_guild = await client.getMemberGuild(message, message.author.id)
 
-   if(user_guild?.user) {
-			user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
+			if (user_guild?.user) {
+				user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
 
-			await user.save()
-   }
+				await user.save()
+			}
 		}
 
 		if (!user.nick) {
