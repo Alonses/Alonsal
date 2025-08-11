@@ -58,11 +58,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         } else
             strikes.forEach(strike => {
 
-                botoes.push({ id: "strike_configure_button", name: `${strike.rank + 1}°`, type: 1, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}` })
+                const cor_botao = strike.rank > indice_matriz ? 3 : 1
 
-                if (strike.action)
-                    if (strike.action === "member_ban" && indice_matriz == 5)
-                        indice_matriz = strike.rank
+                botoes.push({ id: "strike_configure_button", name: `${strike.rank + 1}°`, type: cor_botao, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}` })
+
+                if (strike?.action === "member_ban" && indice_matriz == 5)
+                    indice_matriz = strike.rank
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
@@ -70,11 +71,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         let texto_aviso_indice = ""
 
-        if (indice_matriz !== 5 && strikes.length < 5)
-            texto_aviso_indice = "\n```🐱‍👤 Há um strike configurado para banir membros antes do 5° strike, strikes posteriores podem ser editados, porém não terão efeito prático caso um membro ultrapasse o strike do Ban e retorne caso venha a ser desbanido no futuro.```"
+        if (indice_matriz !== 5 && (strikes.length - 1) !== indice_matriz)
+            texto_aviso_indice = client.tls.phrase(user, "mode.spam.indice_matriz")
 
         const embed = new EmbedBuilder()
-            .setTitle(`> ${client.emoji("3")} ${client.tls.phrase(user, "mode.spam.configurando_strikes")}`)
+            .setTitle(client.tls.phrase(user, "mode.spam.configurando_strikes"))
             .setColor(client.embed_color(user.misc.color))
             .setDescription(`${client.tls.phrase(user, "mode.spam.descricao_configuracao_strike")}${texto_aviso_indice}`)
             .setFooter({

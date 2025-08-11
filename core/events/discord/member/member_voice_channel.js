@@ -96,8 +96,10 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
                 name: `${client.emoji(13)} ${guild_channel.name.split(" ")[1]}`
             })
 
+            const user = await client.getUser(id_user)
+
             // Notificando sobre a exclusão do canal no chat de mensagens
-            client.notify(guild_channel.id, { content: `${client.emoji(13)} | Este canal será excluído <t:${(client.timestamp() + voiceChannelTimeout[guild.voice_channels.timeout])}:R>` })
+            client.notify(guild_channel.id, { content: client.tls.phrase(user, "mode.voice_channels.aviso_exclusao", 13, client.timestamp() + voiceChannelTimeout[guild.voice_channels.timeout]) })
 
             setTimeout(() => {
                 guild_channel.delete()
