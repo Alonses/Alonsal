@@ -58,28 +58,25 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         } else
             strikes.forEach(strike => {
 
-                let disabled = false
-
-                // Verificando se não há botões com regras que resultam em expulsão ou banimento listados antes
-                if (strike.rank > indice_matriz)
-                    disabled = true
-
-                botoes.push({
-                    id: "strike_configure_button", name: `${strike.rank + 1}°`, type: 1, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}`, disabled: disabled
-                })
+                botoes.push({ id: "strike_configure_button", name: `${strike.rank + 1}°`, type: 1, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}` })
 
                 if (strike.action)
-                    if (strike.action === "member_kick_2" || strike.action === "member_ban")
+                    if (strike.action === "member_ban" && indice_matriz == 5)
                         indice_matriz = strike.rank
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
             row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike", alvo: user }, type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
+        let texto_aviso_indice = ""
+
+        if (indice_matriz !== 5 && strikes.length < 5)
+            texto_aviso_indice = "\n```🐱‍👤 Há um strike configurado para banir membros antes do 5° strike, strikes posteriores podem ser editados, porém não terão efeito prático caso um membro ultrapasse o strike do Ban e retorne caso venha a ser desbanido no futuro.```"
+
         const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.spam.configurando_strikes"))
+            .setTitle(`> ${client.emoji("3")} ${client.tls.phrase(user, "mode.spam.configurando_strikes")}`)
             .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.spam.descricao_configuracao_strike"))
+            .setDescription(`${client.tls.phrase(user, "mode.spam.descricao_configuracao_strike")}${texto_aviso_indice}`)
             .setFooter({
                 text: client.tls.phrase(user, "mode.warn.customizacao_rodape"),
                 iconURL: interaction.user.avatarURL({ dynamic: true })
