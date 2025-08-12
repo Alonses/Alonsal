@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { verifyUserReports } = require('../../../database/schemas/User_reports')
 const { registerUserGuild } = require('../../../database/schemas/User_guilds')
 
@@ -39,17 +37,18 @@ module.exports = async (client, dados) => {
     // Verificando se a guild habilitou o logger
     if (!guild.logger.member_join || !guild.conf.logger) return
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.novo_membro"))
-        .setColor(client.embed_color("turquesa"))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.novo_membro" },
+        color: "turquesa",
+        fields: [
             {
                 name: client.user_title(dados.user, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${dados.user.id}\`\n${client.emoji("mc_name_tag")} \`${dados.user.username}\`\n( <@${dados.user.id}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     const url_avatar = dados.user.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)

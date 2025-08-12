@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
@@ -14,11 +14,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const membro_sv = await client.getMemberGuild(interaction, client.id())
     const advertencias = await listAllGuildWarns(interaction.guild.id)
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.hierarquia.status_ativacao")} :crown: :octagonal_sign:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.hierarquia.descricao_painel_config"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "mode.hierarquia.status_ativacao")} :crown: :octagonal_sign:`,
+        description: { tls: "mode.hierarquia.descricao_painel_config" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.status)} **${client.tls.phrase(user, "menu.botoes.usar_hierarquia")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.anotacoes")}: \`${guild.warn.hierarchy.strikes}\`**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length} / 5\`**`,
@@ -44,11 +43,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             }
-        )
-        .setFooter({
+        ],
+        footer: {
             text: texto_rodape,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const botoes = [
         { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.usar_hierarquia", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.status), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.status), data: "1", disabled: !guild.warn.hierarchy.channel },

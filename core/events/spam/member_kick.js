@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 module.exports = async ({ client, message, guild, user_messages, strike_aplicado, indice_matriz, mensagens_spam, user, user_guild, guild_bot }) => {
 
@@ -7,17 +7,18 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
         return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_3", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
 
     // Criando o embed de aviso para os moderadores
-    let embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-        .setColor(client.embed_color("ciara"))
-        .setDescription(`${client.tls.phrase(guild, "mode.spam.strikes_desc", 46)}\n\`\`\`${mensagens_spam}\`\`\``)
-        .addFields(
+    let embed = client.create_embed({
+        title: `${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`,
+        color: "ciara",
+        description: `${client.tls.phrase(guild, "mode.spam.strikes_desc", 46)}\n\`\`\`${mensagens_spam}\`\`\``,
+        fields: [
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n${client.emoji("mc_name_tag")} \`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
             }
-        )
+        ]
+    })
 
     // Data de entrada do membro no servidor
     embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
@@ -39,9 +40,10 @@ module.exports = async ({ client, message, guild, user_messages, strike_aplicado
 
             client.notify(guild.spam.channel || guild.logger.channel, obj)
 
-            const embed_user = new EmbedBuilder()
-                .setTitle(`${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-                .setColor(client.embed_color("ciara"))
+            const embed_user = client.create_embed({
+                title: `${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`,
+                color: "ciara"
+            })
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.justificativa_kick", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
 

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { listAllUserWarns } = require("../database/schemas/User_warns")
 const { listAllGuildWarns } = require("../database/schemas/Guild_warns")
 
@@ -17,11 +15,11 @@ module.exports = async function ({ client, interaction, user, member_guild, user
     let indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
-    const embed_guild = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(guild, "mode.warn.titulo_advertencia")} :inbox_tray:`)
-        .setColor(client.embed_color("salmao"))
-        .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warn.relatory}\`\`\``)
-        .addFields(
+    const embed_guild = client.create_embed({
+        title: `${client.tls.phrase(guild, "mode.warn.titulo_advertencia")} :inbox_tray:`,
+        color: "salmao",
+        description: `${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warn.relatory}\`\`\``,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${id_alvo}> )`,
@@ -36,16 +34,15 @@ module.exports = async function ({ client, interaction, user, member_guild, user
                 name: `${client.emoji(47)} **${client.tls.phrase(guild, "mode.warn.advertencias")}: ${active_user_warns.length} / ${indice_matriz}**`,
                 value: "⠀",
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.warn.moderador_responsavel")}**`,
                 value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    })
 
     if (guild.warn.timed) { // Advertência com prazo de expiração
         embed_guild

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getReport } = require('../../../core/database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -45,11 +43,11 @@ module.exports = async ({ client, user, interaction }) => {
         auto_ban = `\n\n\`\`\`${client.tls.phrase(user, "mode.report.auto_ban_descricao", 34)}\`\`\``
 
     // Enviando o embed para validação
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.report.reportado")} 🛂`)
-        .setColor(client.embed_color("salmao"))
-        .setDescription(`\`\`\`📃 | ${client.tls.phrase(user, "mode.warn.descricao_fornecida")}\n\n${interaction.options.getString("reason")}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}${auto_ban}`)
-        .addFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.report.reportado")} 🛂`,
+        color: "salmao",
+        description: `\`\`\`📃 | ${client.tls.phrase(user, "mode.warn.descricao_fornecida")}\n\n${interaction.options.getString("reason")}\`\`\`\n${client.tls.phrase(user, "mode.report.descricao_report")}${auto_ban}`,
+        fields: [
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${id_alvo}> )`,
@@ -65,11 +63,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.emoji("icon_id")} \`${interaction.guild.id}\`\n${client.defaultEmoji("earth")} \`${interaction.guild.name}\`\n<t:${alvo.timestamp}:R>`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Salvando o alvo para editar posteriormente
     await alvo.save()

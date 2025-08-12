@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { listAllGuildWarns } = require('../../../database/schemas/Guild_warns')
 const { listAllUserPreWarns, listAllCachedUserPreWarns } = require('../../../database/schemas/User_pre_warns')
 const { listAllUserWarns, getUserWarn, listAllUserCachedHierarchyWarns } = require('../../../database/schemas/User_warns')
@@ -53,11 +51,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const notas_requeridas = guild_warns[indice_warn].strikes !== 0 ? guild_warns[indice_warn].strikes : guild.warn.hierarchy.strikes
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
-    const embed_guild = new EmbedBuilder()
-        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`)
-        .setColor(client.embed_color("salmao"))
-        .setDescription(`${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${client.decifer(user_note.relatory)}\`\`\``)
-        .addFields(
+    const embed_guild = client.create_embed({
+        title: `${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`,
+        color: "salmao",
+        description: `${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${client.decifer(user_note.relatory)}\`\`\``,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
@@ -73,8 +71,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 value: "⠀",
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    })
 
     // Anotação de advertência com prazo de expiração
     if (guild.warn.hierarchy.timed)
@@ -114,11 +113,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         hierarchy_warn.hierarchy = true
         hierarchy_warn.save()
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(guild, "mode.anotacoes.aplicar_advertencia"))
-            .setColor(client.embed_color("salmao"))
-            .setDescription(client.tls.phrase(guild, "mode.anotacoes.descricao_advertencia", client.defaultEmoji("guard"), [notas_requeridas, user_warns.length + 1]))
-            .setFields(
+        const embed = client.create_embed({
+            title: { tls: "mode.anotacoes.aplicar_advertencia" },
+            color: "salmao",
+            description: { tls: "mode.anotacoes.descricao_advertencia", emoji: client.defaultEmoji("guard"), replace: [notas_requeridas, user_warns.length + 1] },
+            fields: [
                 {
                     name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                     value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
@@ -134,8 +133,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     value: client.verifyAction(guild_warns[indice_warn], guild),
                     inline: true
                 }
-            )
-            .setTimestamp()
+            ],
+            timestamp: true
+        }, guild)
 
         const rows = [
             { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia", alvo: guild }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },

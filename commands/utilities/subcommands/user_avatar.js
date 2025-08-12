@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
     let user_alvo = interaction.options.getUser("user") || interaction.user
@@ -14,11 +12,12 @@ module.exports = async ({ client, user, interaction }) => {
         { name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: url_avatar }
     ])
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${user_alvo.username}`)
-        .setColor(client.embed_color(user_c.misc.embed))
-        .setImage(url_avatar)
-        .setDescription(client.tls.phrase(user, "util.avatar.download_avatar"))
+    const embed = client.create_embed({
+        title: `> ${user_alvo.username}`,
+        color: user_c.misc.color,
+        image: url_avatar,
+        description: { tls: "util.avatar.download_avatar" }
+    }, user)
 
     let ephemeral = "Ephemeral"
 

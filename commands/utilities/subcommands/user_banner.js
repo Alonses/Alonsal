@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
     let user_alvo = interaction.options.getUser("user") || interaction.user
@@ -41,11 +39,12 @@ module.exports = async ({ client, user, interaction }) => {
                 ])
 
                 // Exibindo o banner do usuário
-                const embed = new EmbedBuilder()
-                    .setTitle(`> ${user_alvo.username}`)
-                    .setColor(client.embed_color(user_c.misc.embed))
-                    .setImage(url_banner)
-                    .setDescription(client.tls.phrase(user, "util.avatar.download_banner"))
+                const embed = client.create_embed({
+                    title: `> ${user_alvo.username}`,
+                    color: user_c.misc.embed,
+                    image: url_banner,
+                    description: { tls: "util.avatar.download_banner" }
+                }, user)
 
                 client.reply(interaction, {
                     embeds: [embed],

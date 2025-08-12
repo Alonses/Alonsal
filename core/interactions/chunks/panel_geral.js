@@ -1,14 +1,13 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
-    const embed = new EmbedBuilder()
-        .setTitle("> Painel de controle do Alonsal")
-        .setColor(client.embed_color("turquesa"))
-        .setFooter({
+    const embed = client.create_embed({
+        title: "> Painel de controle do Alonsal",
+        color: "turquesa",
+        footer: {
             text: "Selecione uma das opções abaixo para navegar",
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    })
 
     const row = client.create_buttons([
         { id: "internal_conf_panel", name: "Informações", type: 1, emoji: client.defaultEmoji("paper"), data: "0" },

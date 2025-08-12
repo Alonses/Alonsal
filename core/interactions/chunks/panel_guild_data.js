@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { listRankGuild } = require('../../database/schemas/User_rank_guild')
 const { getNetworkedGuilds } = require('../../database/schemas/Guild')
@@ -41,10 +41,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         dados += `\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**\n${guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.guild_data.dados_servidor_titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "manu.guild_data.dados_servidor_titulo" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
@@ -60,11 +59,12 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.guild_data.opcoes_rodape"),
+        ],
+        footer: {
+            text: { tls: "manu.guild_data.opcoes_rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 0) embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_dados", null, dados))
     else {

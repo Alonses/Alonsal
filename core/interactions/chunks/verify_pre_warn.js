@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { listAllUserWarns } = require("../../database/schemas/User_warns")
 
 const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
@@ -22,11 +20,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let indice_warn = user_warns.length > guild_warns.length ? guild_warns.length - 1 : user_warns.length
     const notas_requeridas = guild_warns[indice_warn - 1].strikes || guild.warn.hierarchy.strikes
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.hierarquia.verificando_anotacao_titulo")} ${client.defaultEmoji("pen")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.hierarquia.descricao_anotacao")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_notes[user_notes.length - 1].relatory}\`\`\``)
-        .addFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.hierarquia.verificando_anotacao_titulo")} ${client.defaultEmoji("pen")}`,
+        description: `${client.tls.phrase(user, "mode.hierarquia.descricao_anotacao")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_notes[user_notes.length - 1].relatory}\`\`\``,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warns[user_warns.length - 1].nick}\`\n( <@${id_alvo}> )`,
@@ -41,19 +38,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.emoji(47)} **${indice_warn} / ${indice_matriz} ${client.tls.phrase(user, "mode.warn.advertencias")}**`,
                 value: `${client.defaultEmoji("pen")} **${user_notes.length} / ${notas_requeridas} ${client.tls.phrase(user, "menu.botoes.anotacoes")}**`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.hierarquia.proxima_warn")}**`,
                 value: client.verifyAction(guild_warns[indice_warn - 1], user),
                 inline: false
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de anotações
     let botoes = [

@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, message }) => {
 
@@ -41,10 +41,10 @@ module.exports = async ({ client, message }) => {
     if (message.content) // Mensagem com texto escrito
         texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(message.content, null, ["`", "'"])}\`\`\``
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_excluida"))
-        .setColor(client.embed_color("salmao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.mensagem_excluida" },
+        color: "salmao",
+        fields: [
             {
                 name: client.user_title(message.author, guild, "mode.logger.autor"),
                 value: `${client.emoji("icon_id")} \`${message.author.id}\`\n${client.emoji("mc_name_tag")} \`${message.author.username}\`\n( <@${message.author.id}> )`,
@@ -55,8 +55,9 @@ module.exports = async ({ client, message }) => {
                 value: `${client.emoji("icon_id")} \`${message.channelId}\`\n:placard: \`${message.channel.name}\`\n( <#${message.channelId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     if (registroAudita) // Verificando se foi excluída por outro usuário
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)

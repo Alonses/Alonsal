@@ -1,4 +1,4 @@
-const { EmbedBuilder, Events } = require('discord.js')
+const { Events } = require('discord.js')
 
 module.exports = async function ({ client }) {
 
@@ -72,10 +72,11 @@ module.exports = async function ({ client }) {
     client.discord.on("rateLimit", limit => {
         if (!process.env.channel_error) return
 
-        const embed = new EmbedBuilder()
-            .setTitle("> RateLimit :name_badge:")
-            .setColor(client.embed_color("vermelho"))
-            .setDescription(`Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``)
+        const embed = client.create_embed({
+            title: "> RateLimit :name_badge:",
+            color: "vermelho",
+            description: `Command: \`${ult_comando}\`\nTimeout: \`${limit.timeout}\`\nLimit: \`${limit.limit}\`\nMethod: \`${limit.method}\`\n\nPath: \`${limit.path}\`\nRoute: \`${limit.route}\``
+        })
 
         client.notify(process.env.channel_error, { embeds: [embed] })
     })

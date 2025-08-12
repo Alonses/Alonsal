@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getGames, verifyInvalidGames } = require("../../database/schemas/Game")
 
 const { redes } = require('../../../files/json/text/anuncio.json')
@@ -61,10 +59,10 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
     if (interaction) row = client.create_buttons(objeto_jogos, interaction)
     else row = client.create_buttons(objeto_jogos)
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.defaultEmoji("gamer")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`)
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "mode.anuncio.ativos")} ${client.defaultEmoji("gamer")}`,
+        description: `${client.tls.phrase(user, "mode.anuncio.resgate_dica")}\n\n${jogos_disponiveis.join("\n\n")}`,
+    }, user)
 
     // Imagem de capa para o embed
     if (games[0]?.thumbnail) embed.setImage(games[0]?.thumbnail)

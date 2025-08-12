@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
     const icone_server = interaction.guild.iconURL({ size: 2048 })
@@ -11,11 +9,11 @@ module.exports = async ({ client, user, interaction }) => {
         { name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: icone_server }
     ])
 
-    const embed = new EmbedBuilder()
-        .setTitle(interaction.guild.name)
-        .setColor(client.embed_color(user.misc.color))
-        .setImage(icone_server)
-        .setDescription(client.tls.phrase(user, "util.avatar.download_icon"))
+    const embed = client.create_embed({
+        title: interaction.guild.name,
+        image: icone_server,
+        description: { tls: "util.avatar.download_icon" }
+    }, user)
 
     client.reply(interaction, {
         embeds: [embed],

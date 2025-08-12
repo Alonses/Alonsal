@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { channelTypes } = require('../../../formatters/patterns/guild')
 const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
@@ -35,11 +35,11 @@ module.exports = async ({ client, channel }) => {
     if (guild.conf.voice_channels && registroAudita.executorId === client.id())
         tipo_canal += `\n\n⚡ ${client.tls.phrase(guild, "mode.logger.canal_dinamico")}\n${client.defaultEmoji("time")} ${client.tls.phrase(guild, "mode.logger.canal_dinamico_remocao", null, voiceChannelTimeout[guild.voice_channels.timeout])}`
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.canal_criado"))
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(`${client.tls.phrase(guild, "mode.logger.canal_criado_desc", 43)}\n\`\`\`${tipo_canal}\`\`\``)
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.canal_criado" },
+        color: "turquesa",
+        description: `${client.tls.phrase(guild, "mode.logger.canal_criado_desc", 43)}\n\`\`\`${tipo_canal}\`\`\``,
+        fields: [
             {
                 name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
@@ -50,8 +50,9 @@ module.exports = async ({ client, channel }) => {
                 value: `${client.emoji("icon_id")} \`${channel.id}\`\n${registroAudita.target.type !== 4 ? `:placard: \`${channel.name}\`\n( <#${channel.id}> )` : `\`${channel.name}\``}`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true,
+    }, guild)
 
     // Canais que não são categorias
     if (registroAudita.target.type !== 4)

@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { listAllGuildStrikes } = require("../../database/schemas/Guild_strikes")
 
@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         guild.conf.spam = false
         await guild.save()
 
-        descr_rodape = client.tls.phrase(user, "mode.spam.permissoes_anti_spam", null, 7)
+        descr_rodape = { tls: "mode.spam.permissoes_anti_spam", emoji: 7 }
     }
 
     let descricao = client.tls.phrase(user, "mode.spam.descricao_funcionamento")
@@ -33,11 +33,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (guild?.spam.manage_mods) descricao += client.tls.phrase(user, "mode.spam.moderadores_ativo")
     else descricao += client.tls.phrase(user, "mode.spam.moderadores_desativado")
 
-    const embed = new EmbedBuilder()
-        .setTitle("> Anti-spam 📛")
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`\`\`\`${descricao}\`\`\``)
-        .setFields(
+    const embed = client.create_embed({
+        title: "> Anti-spam 📛",
+        description: `\`\`\`${descricao}\`\`\``,
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes)} **Strikes**\n${client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links)} **${client.tls.phrase(user, "mode.spam.links_suspeitos")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods)} **${client.tls.phrase(user, "mode.spam.gerenciar_moderadores")}**`,
@@ -58,7 +57,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: guild.spam.scanner.links ? `\`${client.tls.phrase(user, "mode.spam.apenas_links")}\`` : `\`${client.tls.phrase(user, "mode.spam.qualquer_entrada")}\``,
                 inline: false
             }
-        )
+        ],
+        footer: {
+            text: descr_rodape || { tls: "manu.painel.rodape" },
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        }
+    }, user)
 
     if (guild?.spam.manage_mods) // Recurso para gerenciar moderadores habilitado
         embed.addFields(
@@ -80,10 +84,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             inline: true
         }
     )
-        .setFooter({
-            text: descr_rodape || client.tls.phrase(user, "manu.painel.rodape"),
-            iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
 
     if (pagina === 0)
         botoes.push(

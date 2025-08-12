@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { getRoleAssigner } = require('../../database/schemas/Guild_role_assigner')
 
@@ -6,10 +6,10 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
     if (!caso) return interaction.reply({ content: "Ixi! Os dados dessa interação sumiram! Por gentileza, use o comando novamente", flags: "Ephemeral" })
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.roles.titulo_atribuidor")} :passport_control:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, caso === "global" ? "mode.roles.descricao_atribuidor" : "mode.roles.descricao_atribuidor_join"))
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.roles.titulo_atribuidor")} :passport_control:`,
+        description: { tls: caso === "global" ? "mode.roles.descricao_atribuidor" : "mode.roles.descricao_atribuidor_join" }
+    }, user)
 
     const cargos = await getRoleAssigner(interaction.guild.id, caso)
 

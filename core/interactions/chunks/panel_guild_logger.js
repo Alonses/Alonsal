@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { languagesMap } = require("../../formatters/patterns/user")
 
@@ -35,11 +35,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             }
         })
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "manu.painel.log_eventos")} :scroll:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.logger.descricao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "manu.painel.log_eventos")} :scroll:`,
+        description: { tls: "mode.logger.descricao" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note)} **Death note**\n${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
@@ -60,11 +59,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
                 inline: false
             }
-        )
-        .setFooter({
-            text: descr_rodape || client.tls.phrase(user, "manu.painel.rodape"),
+        ],
+        footer: {
+            text: descr_rodape || { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 2) {
 

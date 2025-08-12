@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { checkUserGuildPreWarned, dropAllUserGuildPreWarns, listAllUserPreWarns } = require('../../../database/schemas/User_pre_warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -48,11 +46,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const guild = await client.getGuild(interaction.guild.id)
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
-            const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(guild, "mode.anotacoes.reiniciadas"))
-                .setColor(client.embed_color("salmao"))
-                .setDescription(client.tls.phrase(guild, "mode.anotacoes.reinciadas_descricao", null, id_alvo))
-                .addFields(
+            const embed = client.create_embed({
+                title: "mode.anotacoes.reiniciadas",
+                color: "salmao",
+                description: { tls: "mode.anotacoes.reinciadas_descricao", replace: id_alvo },
+                fields: [
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                         value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warn[0].nick)}\`\n( <@${id_alvo}> )`,
@@ -63,8 +61,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }
-                )
-                .setTimestamp()
+                ],
+                timestamp: true
+            }, guild)
 
             client.notify(guild.warn.channel, {
                 content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo

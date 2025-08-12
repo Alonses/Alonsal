@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { disableGuildFeatures } = require('../../../database/schemas/Guild')
 const { verifyDynamicBadge } = require('../../../database/schemas/User_badges')
 
@@ -12,11 +10,12 @@ module.exports = async ({ client, guild }) => {
     // Desligando as funções do servidor
     await disableGuildFeatures(client, guild.id)
 
-    const embed = new EmbedBuilder()
-        .setTitle("> 🔴 Server update")
-        .setColor(client.embed_color("vermelho"))
-        .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )`)
-        .setTimestamp()
+    const embed = client.create_embed({
+        title: "> 🔴 Server update",
+        color: "vermelho",
+        description: `:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )`,
+        timestamp: true
+    })
 
     client.notify(process.env.channel_server, { embeds: [embed] })
 

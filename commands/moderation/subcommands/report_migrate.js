@@ -1,16 +1,15 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
     // Enviando o embed para validação
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.report.automatizado"))
-        .setColor(client.embed_color("salmao"))
-        .setDescription(client.tls.phrase(user, "mode.report.descricao_automatizado"))
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+    const embed = client.create_embed({
+        title: { tls: "mode.report.automatizado" },
+        color: "salmao",
+        description: { tls: "mode.report.descricao_automatizado" },
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para a cor customizada
     const row = client.create_buttons([

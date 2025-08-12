@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { verifyVoiceChannel } = require("../../database/schemas/User_voice_channel")
 
@@ -65,11 +65,10 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
         botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.mutar", alvo: user }, type: 0, emoji: client.emoji("jacquin2"), data: `5.${id_canal}` })
 
     // Criando o embed de botões para configuração do canal pelo membro
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.voice_channels.titulo_controle_canal", null, canal_guild.name.split(" ")[1])} 🔊`)
-        .setDescription(`\`\`\`${client.tls.phrase(user, "mode.voice_channels.painel_configuracao_canal")}\`\`\`${aviso_card}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.voice_channels.titulo_controle_canal", null, canal_guild.name.split(" ")[1])} 🔊`,
+        description: `\`\`\`${client.tls.phrase(user, "mode.voice_channels.painel_configuracao_canal")}\`\`\`${aviso_card}`,
+        fields: [
             {
                 name: `${canal_guild.userLimit < 1 ? "🗽" : "🚧"} **${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")}**`,
                 value: canal_guild.userLimit < 1 ? `\`${client.tls.phrase(user, "util.canal.sem_limite")}\`` : `\`${canal_guild.userLimit} ${client.tls.phrase(user, "mode.voice_channels.usuarios")}\``,
@@ -80,7 +79,8 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
                 value: `<@${client.decifer(voice_channel.uid)}>`,
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     const row = client.create_buttons(botoes, client.decifer(voice_channel.uid))
 

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, InteractionContextType } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -85,10 +85,9 @@ module.exports = {
         if (user.misc.money < bufunfas) // Conferindo a quantidade de Bufunfas do pagador
             return client.tls.reply(interaction, user, "misc.pay.error", true, [9, 0], client.locale(bufunfas))
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "misc.pay.nova_transferencia"))
-            .setColor(client.embed_color(user.misc.color))
-            .addFields(
+        const embed = client.create_embed({
+            title: { tls: "misc.pay.nova_transferencia" },
+            fields: [
                 {
                     name: `${client.defaultEmoji("money")} **${client.tls.phrase(user, "misc.pay.transferindo")}**`,
                     value: `\`B$ ${client.locale(bufunfas)}\``,
@@ -99,11 +98,9 @@ module.exports = {
                     value: `<@${user_alvo.id}>`,
                     inline: true
                 }
-            )
-            .setFooter({
-                text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
-                iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            ],
+            footer: { text: { tls: "menu.botoes.selecionar_operacao" }, iconURL: interaction.user.avatarURL({ dynamic: true }) }
+        }, user)
 
         // Criando os botões para o menu de transferências
         const row = client.create_buttons([

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 // const compare_messages = require('../../../functions/compare_messages')
 
 module.exports = async (client, message) => {
@@ -35,10 +33,10 @@ module.exports = async (client, message) => {
 
     let texto = client.tls.phrase(guild, "mode.logger.resumo_atualizado", client.emoji(39), [message[0].author.id, message[0].url, alteracoes.antigo.slice(0, 500), alteracoes.novo.slice(0, 500)])
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.mensagem_editada"))
-        .setColor(client.embed_color("branco"))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.mensagem_editada" },
+        color: "branco",
+        fields: [
             {
                 name: client.user_title(message[0].author, guild, "mode.logger.autor"),
                 value: `${client.emoji("icon_id")} \`${message[0].author.id}\`\n${client.emoji("mc_name_tag")} \`${message[0].author.username}\`\n( <@${message[0].author.id}> )`,
@@ -49,8 +47,9 @@ module.exports = async (client, message) => {
                 value: `${client.emoji("icon_id")} \`${message[0].channelId}\`\n:placard: \`${message[0].channel.name}\`\n( <#${message[0].channelId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     const attachments = []
 

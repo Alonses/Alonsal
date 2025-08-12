@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client }) => {
 
     client.idioma.loadAll(client)
@@ -70,10 +68,10 @@ dispara_status = (client, status_apisal) => {
                 counter++
             }
 
-            const embed = new EmbedBuilder()
-                .setTitle(":steam_locomotive: Caldeiras aquecidas")
-                .setColor(client.embed_color("turquesa"))
-                .addFields(
+            const embed = client.create_embed({
+                title: ":steam_locomotive: Caldeiras aquecidas",
+                color: "turquesa",
+                fields: [
                     {
                         name: ":globe_with_meridians: **Servidores**",
                         value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.locale(members)}\``,
@@ -85,8 +83,6 @@ dispara_status = (client, status_apisal) => {
                         value: "⠀",
                         inline: true
                     },
-                )
-                .addFields(
                     {
                         name: ":moyai: **APISAL**",
                         value: `\`${status_apisal}\``,
@@ -102,8 +98,9 @@ dispara_status = (client, status_apisal) => {
                         value: bandeirolas_2.join(" "),
                         inline: true
                     }
-                )
-                .setTimestamp()
+                ],
+                timestamp: true
+            })
 
             console.log("🟢 | Status enviado")
 

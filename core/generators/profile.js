@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 async function create_profile({ client, interaction, user, id_alvo, operador }) {
 
@@ -60,10 +60,9 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
         nota_rodape += client.tls.phrase(user, "util.user.enceirado")
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${apelido} ${emoji_hypesquad} ${discord_premium}`)
-        .setColor(client.embed_color(user_data.misc.color))
-        .addFields(
+    const embed = client.create_embed({
+        title: `> ${apelido} ${emoji_hypesquad} ${discord_premium}`,
+        fields: [
             {
                 name: `${client.emoji("icon_mention")} ${nome_usuario}`,
                 value: `( <@${client.decifer(user_data.uid)}> )`,
@@ -74,10 +73,11 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
                 value: `\`${client.decifer(user_data.uid)}\``,
                 inline: true
             }
-        )
-        .setFooter({
+        ],
+        footer: {
             text: `${tipo_user} ${nota_rodape}`
-        })
+        }
+    }, user_data)
 
     if (operacao === 0) {
 

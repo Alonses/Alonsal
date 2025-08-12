@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { verifyUserReports, getReport } = require("../../database/schemas/User_reports")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -45,11 +43,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (avisos > 0)
         descricao = `\`\`\`${client.tls.phrase(user, "mode.report.com_report", 4)}\n\n${historico.join("\n---------\n").slice(0, 1000)}\`\`\``
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.report.historico_usuario"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${descricao}${report_servidor}`)
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.report.historico_usuario" },
+        description: `${descricao}${report_servidor}`,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n\`${alvo.nick ? (alvo.nick.length > 20 ? `${alvo.nick.slice(0, 20)}...` : alvo.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.uid}> )`,
@@ -65,11 +62,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 value: "⠀",
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de reporte
     let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `report_browse_user|${pagina}` }]

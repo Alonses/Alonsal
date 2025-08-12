@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
@@ -9,8 +9,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const pagina = pagina_guia || 0
     const guild = await client.getGuild(interaction.guild.id), botoes = []
 
-    let texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
-
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
     const advertencias = await listAllGuildWarns(interaction.guild.id), status = guild.conf.warn
@@ -18,11 +16,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (guild.conf.warn !== status) await guild.save()
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.warn.advertencias")} :octagonal_sign:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencias"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "mode.warn.advertencias")} :octagonal_sign:`,
+        description: { tls: "mode.warn.descricao_advertencias" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.warn)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild.warn.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.execute("functions", "emoji_button.emoji_button", guild.warn.announce.status)} **${client.tls.phrase(user, "mode.warn.anuncio_publico")}**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length} / 5\`**${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_na")} \`${indice_matriz}°\`**` : ""}`,
@@ -58,11 +55,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: texto_rodape,
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 1) { // Página de configurações com notificações de advertências
 

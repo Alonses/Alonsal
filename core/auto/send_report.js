@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { getReportChannels, getReportNetworkChannels } = require("../database/schemas/Guild")
 
@@ -33,17 +33,18 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                         network_descricao = client.tls.phrase(guild, "mode.report.descricao_network")
                     }
 
-                    const embed = new EmbedBuilder()
-                        .setTitle(`> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")} ${escopo_anuncio}`)
-                        .setColor(client.embed_color("salmao"))
-                        .setDescription(`${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${client.decifer(alvo.relatory)}\`\`\``)
-                        .addFields(
+                    const embed = client.create_embed({
+                        title: `> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")} ${escopo_anuncio}`,
+                        color: "salmao",
+                        description: `${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${client.decifer(alvo.relatory)}\`\`\``,
+                        fields: [
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
                                 value: `${client.emoji("icon_id")} \`${client.decifer(alvo.uid)}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(alvo.nick)}\`\n( <@${client.decifer(alvo.uid)}> )`,
                                 inline: true
                             }
-                        )
+                        ]
+                    })
 
                     // Enviando para todos os servidores ( invocado com o /report create )
                     if (!id_canal) {

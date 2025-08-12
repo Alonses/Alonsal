@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { listAllUserPreWarns, removeUserPreWarn, getUserPreWarn } = require("../../../database/schemas/User_pre_warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -61,11 +59,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             motivo_remocao = `\`\`\`${client.tls.phrase(user, "mode.warn.motivo_remocao", client.defaultEmoji("judge"))}:\n\n${interaction.options?.getString("reason")}\`\`\``
 
         // Exibindo os detalhes da advertência escolhida
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.anotacoes.verificando"))
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [user_note.relatory, motivo_remocao]))
-            .addFields(
+        const embed = client.create_embed({
+            title: { tls: "mode.anotacoes.verificando" },
+            color: user.misc.color,
+            description: { tls: "mode.warn.descricao_advertencia", replace: [user_note.relatory, motivo_remocao] },
+            fields: [
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
                     value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick ? client.decifer(user.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
@@ -81,11 +79,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     value: `<t:${user_note.timestamp}:f>`,
                     inline: true
                 }
-            )
-            .setFooter({
-                text: client.tls.phrase(user, "mode.anotacoes.gerenciar_rodape"),
+            ],
+            footer: {
+                text: { tls: "mode.anotacoes.gerenciar_rodape" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         const botoes = [
             { id: "pre_warn_user_verify", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `11|${id_alvo}.${timestamp}` },

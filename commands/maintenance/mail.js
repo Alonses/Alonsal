@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -68,15 +68,16 @@ module.exports = {
                 conteudo_texto += `\`\`\`${client.defaultEmoji("paper")} Arquivo anexado:\n${await formataArquivo(corpo_mensagem.file)}\`\`\``
         }
 
-        const embed = new EmbedBuilder()
-            .setTitle("> Nova mensagem! :mailbox_with_mail:")
-            .setColor(client.embed_color("branco"))
-            .setDescription(`-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`)
-            .setTimestamp()
-            .setFooter({
+        const embed = client.create_embed({
+            title: "> Nova mensagem! :mailbox_with_mail:",
+            color: "branco",
+            description: `-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`,
+            timestamp: true,
+            footer: {
                 text: `Autor: ${interaction.user.username}`,
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        })
 
         // Inserindo uma imagem no embed
         if (corpo_mensagem.file)

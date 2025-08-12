@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const math = require('mathjs')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -39,14 +37,14 @@ module.exports = async ({ client, user, interaction }) => {
     if (descricao !== "")
         descricao = `\`\`\`${descricao}\n\n${client.tls.phrase(user, "util.calc.formulas_abaixo")}\`\`\`\n`
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "util.calc.resultados"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${descricao}🕛 **${client.tls.phrase(user, "util.calc.raio")}:** \`${client.locale(raio)}\`\n\n🚫 **${client.tls.phrase(user, "util.calc.diametro")}:** \`${client.locale(raio * 2)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`d = r * 2\`\n\n⭕ **${client.tls.phrase(user, "util.calc.perimetro")}:** \`${client.locale(raio * math.pi * 2)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`p = r * π * 2\`\n\n⚪ **${client.tls.phrase(user, "util.calc.area")}:** \`${client.locale(math.pi * raio * raio)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`a = π * r²\``)
-        .setFooter({
+    const embed = client.create_embed({
+        title: { tls: "util.calc.resultados" },
+        description: `${descricao}🕛 **${client.tls.phrase(user, "util.calc.raio")}:** \`${client.locale(raio)}\`\n\n🚫 **${client.tls.phrase(user, "util.calc.diametro")}:** \`${client.locale(raio * 2)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`d = r * 2\`\n\n⭕ **${client.tls.phrase(user, "util.calc.perimetro")}:** \`${client.locale(raio * math.pi * 2)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`p = r * π * 2\`\n\n⚪ **${client.tls.phrase(user, "util.calc.area")}:** \`${client.locale(math.pi * raio * raio)}\`\n${client.tls.phrase(user, "util.calc.formula")}: \`a = π * r²\``,
+        footer: {
             text: (`π = 3,1415...; r = ${client.tls.phrase(user, "util.calc.raio")}; d = ${client.tls.phrase(user, "util.calc.diametro")}; p = ${client.tls.phrase(user, "util.calc.perimetro")}; a = ${client.tls.phrase(user, "util.calc.area")}`).toLowerCase(),
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     interaction.editReply({
         embeds: [embed],

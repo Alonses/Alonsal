@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     let texto_entrada = "", descricao = "", descricao_status = ""
@@ -59,12 +57,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             if (descricao_status.length > 0)
                 descricao_status = `\`\`\`fix\n${descricao_status}\`\`\``
 
-            const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(user, "util.lastfm.perfil_musical", null, res.nome))
-                .setColor(client.embed_color(user_alvo.misc.color))
-                .setThumbnail(res.avatar)
-                .setDescription(`${descricao}${descricao_status}`)
-                .addFields(
+            const embed = client.create_embed({
+                title: { tls: "util.lastfm.perfil_musical", replace: res.nome },
+                thumbnail: res.avatar,
+                description: `${descricao}${descricao_status}`,
+                fields: [
                     {
                         name: `${client.defaultEmoji("instrument")} ${client.tls.phrase(user, "util.lastfm.geral")}`,
                         value: `${client.defaultEmoji("music")} **Scrobbles: **\`${res.stats.musicas_ouvidas}\`\n:radio: **${client.tls.phrase(user, "util.lastfm.media_dia")}: **\`${res.stats.media_scrobbles}\``,
@@ -80,7 +77,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                         value: `<t:${res.timestamp_entrada}:D>\n ( <t:${res.timestamp_entrada}:R> )`,
                         inline: true
                     }
-                )
+                ]
+            }, user)
 
             if (res.week_stats)
                 embed.addFields(

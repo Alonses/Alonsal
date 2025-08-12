@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { verifyUserReports } = require('../../database/schemas/User_reports')
 const { verifyUserStrikes } = require("../../database/schemas/User_strikes")
 const { listAllUserWarns } = require('../../database/schemas/User_warns')
@@ -48,11 +46,10 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     if (warns.length > 0)
         descricao += `\`\`\`${client.tls.phrase(user, "mode.report.com_registro", 58)}\`\`\``
 
-    const infos_user = new EmbedBuilder()
-        .setTitle(`> ${apelido}`)
-        .setColor(client.embed_color(user_c.misc.color))
-        .setDescription(descricao)
-        .addFields(
+    const infos_user = client.create_embed({
+        title: `> ${apelido}`,
+        description: descricao,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} ${user_name}`,
@@ -68,7 +65,8 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
                 value: `<t:${parseInt(user_alvo.joinedTimestamp / 1000)}:F>\n( <t:${Math.floor(user_alvo.joinedTimestamp / 1000)}:R> )`,
                 inline: false
             }
-        )
+        ]
+    }, user_c)
 
     if (avatar_user)
         infos_user.setThumbnail(avatar_user)

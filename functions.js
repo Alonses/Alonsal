@@ -7,9 +7,10 @@ const { alea_hex } = require('./core/functions/hex_color')
 const { getBot } = require('./core/database/schemas/Bot')
 const { getUser, getEncryptedUser } = require('./core/database/schemas/User')
 
+const { create_buttons } = require('./core/generators/buttons')
+const { create_embed } = require('./core/generators/embed')
 const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
-const { create_buttons } = require('./core/generators/buttons')
 
 const { registryStatement } = require('./core/database/schemas/User_statements')
 const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
@@ -86,6 +87,8 @@ function internal_functions(client) {
     client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
     client.create_buttons = (data, interaction) => { return create_buttons(client, data, interaction) }
+
+    client.create_embed = (data, alvo) => { return create_embed({ client, alvo, data }) }
 
     client.create_menus = ({ interaction, user, data, pagina, multi_select, guild }) => {
         return create_menus({ client, interaction, user, data, pagina, multi_select, guild })

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
     let cor_embed = client.embed_color(user.misc.color)
@@ -46,17 +44,18 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
     if (cor_embed === client.embed_color("amarelo"))
         exib_formatado += `\n:four_leaf_clover: | _${client.tls.phrase(user, "dive.anagrama.sorte")}_`
 
-    const anagrama = new EmbedBuilder()
-        .setTitle(`:abc: ${client.tls.phrase(user, "dive.anagrama.anagrama")}`)
-        .setColor(cor_embed)
-        .setAuthor({
+    const anagrama = client.create_embed({
+        title: `:abc: ${client.tls.phrase(user, "dive.anagrama.anagrama")}`,
+        color: cor_embed,
+        description: `${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`,
+        author: {
             name: interaction.user.username,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
-        .setDescription(`${client.tls.phrase(user, "dive.anagrama.entrada")}: \`${texto_entrada}\`\n${client.tls.phrase(user, "dive.anagrama.lista_combinacoes")}:\n${exib_formatado}`)
-        .setFooter({
+        },
+        footer: {
             text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}`
-        })
+        }
+    }, user)
 
     interaction.reply({
         embeds: [anagrama],

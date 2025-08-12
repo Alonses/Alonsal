@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { banMessageEraser } = require('../../formatters/patterns/timeout')
 
@@ -17,10 +17,9 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         await guild.save()
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.report.reportes_externos")} ${client.defaultEmoji("guard")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.report.reportes_externos")} ${client.defaultEmoji("guard")}`,
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", guild?.reports.auto_ban)} **AutoBan**\n${client.execute("functions", "emoji_button.emoji_button", guild?.reports.notify)} **${client.tls.phrase(user, "mode.report.aviso_de_entradas")}**`,
@@ -51,11 +50,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 0) {
 

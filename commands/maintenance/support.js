@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -27,11 +27,11 @@ module.exports = {
             { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
         ], interaction)
 
-        const embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setImage("https://i.imgur.com/VCneT1l.png")
-            .setDescription(client.tls.phrase(user, "manu.apoio.escaneie"))
+        const embed = client.create_embed({
+            title: `${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`,
+            image: "https://i.imgur.com/VCneT1l.png",
+            description: { tls: "manu.apoio.escaneie" },
+        }, user)
 
         interaction.reply({
             embeds: [embed],

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, InteractionContextType } = require('discord.js')
+const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -57,14 +57,13 @@ module.exports = {
             bitrate = `${canal.bitrate / 1000}kbps`
         }
 
-        const infos_ch = new EmbedBuilder()
-            .setColor(client.embed_color(user.misc.color))
-            .setAuthor({
+        const infos_ch = client.create_embed({
+            description: topico,
+            author: {
                 name: canal.name,
                 iconURL: canal.guild.iconURL({ size: 2048 })
-            })
-            .setDescription(topico)
-            .addFields(
+            },
+            fields: [
                 {
                     name: `:globe_with_meridians: **${client.tls.phrase(user, "util.canal.id_canal")}**`,
                     value: `\`${canal.id}\``,
@@ -75,7 +74,8 @@ module.exports = {
                     value: `\`<#${canal.id}>\``,
                     inline: true
                 }
-            )
+            ]
+        }, user)
 
         if (bitrate === "")
             infos_ch.addFields(

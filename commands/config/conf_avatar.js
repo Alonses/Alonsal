@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,11 +18,12 @@ module.exports = {
         if (!arquivo.contentType.includes("image/"))
             return interaction.reply(":octagonal_sign: | Envie um arquivo de imagem!")
 
-        const embed = new EmbedBuilder()
-            .setTitle(`:bust_in_silhouette: O Avatar do ${client.username()} foi alterado`)
-            .setColor(client.embed_color("turquesa"))
-            .setImage(arquivo.attachment)
-            .setDescription(`**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`)
+        const embed = client.create_embed({
+            title: `:bust_in_silhouette: O Avatar do ${client.username()} foi alterado`,
+            color: "turquesa",
+            image: arquivo.attachment,
+            description: `**Alterado por** ( \`${interaction.user.username}\` | \`${interaction.user.id}\` )`
+        })
 
         await client.user().setAvatar(arquivo.attachment)
 

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { getReport } = require("../../database/schemas/User_reports")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -18,11 +16,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         await alvo.save()
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.report.remover_reporte"))
-        .setColor(client.embed_color("salmao"))
-        .setDescription(client.tls.phrase(user, "mode.report.remover_reporte_desc", null, client.decifer(alvo.relatory)))
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.report.remover_reporte" },
+        color: "salmao",
+        description: { tls: "mode.report.remover_reporte_desc", replace: client.decifer(alvo.relatory) },
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${alvo.nick ? (client.decifer(alvo.nick).length > 20 ? `${client.decifer(alvo.nick).slice(0, 20)}...` : client.decifer(alvo.nick)) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${id_alvo}> )`,
@@ -38,11 +36,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 value: `${client.emoji("icon_id")} \`${client.decifer(alvo.sid)}\`\n<t:${alvo.timestamp}:R>`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de reporte
     const row = client.create_buttons([

@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { emoji_button } = require("../../functions/emoji_button")
 
@@ -12,11 +12,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const id_strike = dados.split(".")[2]
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> Strike N° ${strike.rank + 1} 📛`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.spam.descricao_edicao_strike"))
-        .setFields(
+    // Permissões do bot no servidor
+    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    let b_cargos = false
+
+    const embed = client.create_embed({
+        title: `> Strike N° ${strike.rank + 1} 📛`,
+        description: { tls: "mode.spam.descricao_edicao_strike" },
+        fields: [
             {
                 name: `${client.defaultEmoji("warn")} **${client.tls.phrase(user, "menu.botoes.penalidade")}**`,
                 value: `**${strike.action ? `${loggerMap[strike.action]} \`${client.tls.phrase(user, `menu.events.${strike.action}`)}\`` : `📝 ${client.tls.phrase(user, "mode.warn.sem_penalidade")}`}**`,
@@ -31,37 +34,25 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.cargo_temporario")}**`,
                 value: `**${strike.timed_role.status ? `\`${client.tls.phrase(user, "status.ativo")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[strike.timed_role.timeout]}`)}\`` : `\`${client.tls.phrase(user, "status.desativado")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[strike.timed_role.timeout]}`)}\``}**`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji(53)} **${client.tls.phrase(user, "menu.botoes.tempo_mute")}**`,
                 value: `**${strike.timeout != null ? `${client.defaultEmoji("time")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[strike.timeout]}`)}\`` : client.tls.phrase(user, "mode.spam.sem_tempo_definido")}**`,
                 inline: false
-            }
-        )
-
-    // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
-    let b_cargos = false
-
-    embed.addFields(
-        {
-            name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
-            inline: true
-        },
-        {
-            name: "⠀",
-            value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
-            inline: true
-        },
-        {
-            name: "⠀",
-            value: "⠀",
-            inline: true
-        }
-    )
+            },
+            {
+                name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                inline: true
+            },
+            {
+                name: "⠀",
+                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+                inline: true
+            },
+            { name: "⠀", value: "⠀", inline: true }
+        ]
+    }, user)
 
     if (strike.role)
         embed.setFooter({

@@ -1,4 +1,4 @@
-const { ChannelType, PermissionsBitField, EmbedBuilder } = require('discord.js')
+const { ChannelType, PermissionsBitField } = require('discord.js')
 
 const { getNetworkedGuilds } = require('../../../database/schemas/Guild')
 
@@ -126,19 +126,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 4) {
 
         // Quebrando o link do servidor
-        const embed = new EmbedBuilder()
-            .setTitle(`> Networking ${client.emoji(36)}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "manu.guild_data.descricao_quebra_link", 2))
-            .setFields({
-                name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
-                inline: true
-            })
-            .setFooter({
-                text: client.tls.phrase(user, "manu.painel.rodape"),
+        const embed = client.create_embed({
+            title: `> Networking ${client.emoji(36)}`,
+            description: { tls: "manu.guild_data.descricao_quebra_link", emoji: 2 },
+            fields: [
+                {
+                    name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
+                    value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                    inline: true
+                }
+            ],
+            footer: {
+                text: { tls: "manu.painel.rodape" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         const botoes = [
             { id: "guild_network_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: "11" },

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getUserStatements } = require('../../../core/database/schemas/User_statements')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -29,9 +27,10 @@ module.exports = async ({ client, user, interaction }) => {
     if (user_interno.misc.money < 0)
         lang = "diff"
 
-    const embed = new EmbedBuilder()
-        .setTitle(titulo_embed)
-        .setColor(client.embed_color(user_interno.misc.color))
+    const embed = client.create_embed({
+        title: titulo_embed,
+        color: user_interno.misc.color
+    })
 
     if (interaction.user.id === alvo.id) {
 

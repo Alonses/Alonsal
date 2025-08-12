@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { dataComboRelation } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -7,14 +5,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const escolha = `${dados.split(".")[1]}.${dados.split(".")[2]}`
     const escolha_user = client.tls.phrase(user, `manu.data.selects.${escolha}`), dados_para_exclusao = await lista_alteracoes(client, user, escolha)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.data.exclusao_dados"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "manu.data.descricao_embed", 2, [escolha_user, dados_para_exclusao]))
-        .setFooter({
-            text: client.tls.phrase(user, "manu.data.rodape"),
+    const embed = client.create_embed({
+        title: { tls: "manu.data.exclusao_dados" },
+        description: { tls: "manu.data.descricao_embed", emoji: 2, replace: [escolha_user, dados_para_exclusao] },
+        footer: {
+            text: { tls: "manu.data.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const row = client.create_buttons([
         { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `data.${escolha}` },

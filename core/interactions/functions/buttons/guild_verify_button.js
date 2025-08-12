@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getReportedUsers, checkUserGuildReported } = require('../../../database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -31,15 +29,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
             if (warned_users.length < pagina * 24) pagina--
 
-            const embed = new EmbedBuilder()
-                .setTitle(`${client.tls.phrase(user, "mode.warn.usuarios_advertidos_titulo")} 🛑`)
-                .setColor(client.embed_color(user.misc.color))
-                .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                .setDescription(client.tls.phrase(user, "mode.warn.usuarios_advertidos_descricao"))
-                .setFooter({
-                    text: client.tls.phrase(user, "mode.warn.selecionar_usuario_advertido"),
+            const embed = client.create_embed({
+                title: `${client.tls.phrase(user, "mode.warn.usuarios_advertidos_titulo")} 🛑`,
+                thumbnail: interaction.guild.iconURL({ size: 2048 }),
+                description: { tls: "mode.warn.usuarios_advertidos_descricao" },
+                footer: {
+                    text: { tls: "mode.warn.selecionar_usuario_advertido" },
                     iconURL: interaction.user.avatarURL({ dynamic: true })
-                })
+                }
+            }, user)
 
             let alvo = "warn_browse", reback = "warn_browse_user"
 
@@ -110,15 +108,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         // Subtrai uma página do total ( em casos de remoção de usuários e página em cache )
                         if (reportes_guild.length < pagina * 24) pagina--
 
-                        const embed = new EmbedBuilder()
-                            .setTitle(`${client.tls.phrase(user, "mode.report.usuarios_reportados_titulo")} 💂‍♂️`)
-                            .setColor(client.embed_color(user.misc.color))
-                            .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                            .setDescription(client.tls.phrase(user, "mode.report.descricao_busca_reporte"))
-                            .setFooter({
-                                text: client.tls.phrase(user, "mode.report.selecionar_membro"),
+                        const embed = client.create_embed({
+                            title: `${client.tls.phrase(user, "mode.report.usuarios_reportados_titulo")} 💂‍♂️`,
+                            thumbnail: interaction.guild.iconURL({ size: 2048 }),
+                            description: { tls: "mode.report.descricao_busca_reporte" },
+                            footer: {
+                                text: { tls: "mode.report.selecionar_membro" },
                                 iconURL: interaction.user.avatarURL({ dynamic: true })
-                            })
+                            }
+                        }, user)
 
                         const data = {
                             title: { tls: "menu.menus.escolher_usuario" },

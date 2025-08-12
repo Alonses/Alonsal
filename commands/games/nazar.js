@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,11 +23,14 @@ module.exports = {
 
                 dados = dados.data
 
-                const embed = new EmbedBuilder()
-                    .setTitle(`> ${client.tls.phrase(user, "game.nazar.titulo")}`)
-                    .setColor(client.embed_color(user.misc.color))
-                    .setImage(dados.location.image)
-                    .setDescription(client.tls.phrase(user, "game.nazar.descricao", null, [dados.location.region.name, dados.location.region.precise, dados.location.near_by[0], dados.location.near_by[1]]))
+                const embed = client.create_embed({
+                    title: `> ${client.tls.phrase(user, "game.nazar.titulo")}`,
+                    image: dados.location.image,
+                    description: {
+                        tls: "game.nazar.descricao",
+                        replace: [dados.location.region.name, dados.location.region.precise, dados.location.near_by[0], dados.location.near_by[1]]
+                    }
+                }, user)
 
                 client.reply(interaction, {
                     embeds: [embed],

@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js')
+const { ChannelType, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
@@ -10,16 +10,16 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     let operador = dados ? parseInt(dados.split(".")[1]) : 0
     const guild = await client.getGuild(interaction.guild.id)
 
-    const infos_sv = new EmbedBuilder()
-        .setTitle(interaction.guild.name)
-        .setColor(client.embed_color(user.misc.color))
-        .addFields(
+    const infos_sv = client.create_embed({
+        title: interaction.guild.name,
+        fields: [
             {
                 name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
                 value: `\`${interaction.guild.id}\``,
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     // Dados gerais do servidor
     if (operador === 0) {
@@ -48,8 +48,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 name: "⠀",
                 value: `( ${dono_membro} )`,
                 inline: true
-            }
-        ).addFields(
+            },
             {
                 name: `:birthday: **${client.tls.phrase(user, "util.server.criacao")}**`,
                 value: `${data_criacao}\n[ ${diferenca_criacao} ]`,
@@ -157,8 +156,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 name: `${client.emoji("gigachad")} **${client.tls.phrase(user, "util.server.figurinhas")} ( ${interaction.guild.stickers.cache.size} )**`,
                 value: interaction.guild.premiumSubscriptionCount > 0 ? `${client.emoji("boost")} **Boosts ( ${interaction.guild.premiumSubscriptionCount} )**` : "⠀",
                 inline: true // Servidor sendo impulsionado /\
-            }
-        ).addFields(
+            },
             {
                 name: `:busts_in_silhouette: **${client.tls.phrase(user, "util.server.membros")}**`,
                 value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${client.locale(qtd_membros)}\`\n:arrow_up: **Max: **\`${client.locale(interaction.guild.maximumMembers)}\``,

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client }) => {
 
     const date1 = new Date(), bot = await client.getBot()
@@ -15,11 +13,11 @@ module.exports = async ({ client }) => {
     for (let key in used)
         processamento += `${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`
 
-    const embed = new EmbedBuilder()
-        .setTitle("> Resumo diário :mega:")
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(`\`\`\`fix\n🎲 Processamento\n${processamento}\`\`\``)
-        .addFields(
+    const embed = client.create_embed({
+        title: "> Resumo diário :mega:",
+        color: "turquesa",
+        description: `\`\`\`fix\n🎲 Processamento\n${processamento}\`\`\``,
+        fields: [
             {
                 name: ":gear: **Comandos**",
                 value: `:dart: **Hoje:** \`${client.locale(bot.cmd.ativacoes)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.cmd.erros)}\``,
@@ -34,9 +32,7 @@ module.exports = async ({ client }) => {
                 name: ":e_mail: **Mensagens**",
                 value: `:dart: **Hoje:** \`${client.locale(bot.exp.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.exp.msgs_validas)}\``,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji("icon_slash_commands")} **Interações**`,
                 value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Dinâmicos:** \`${client.locale(bot.cmd.voice_channels)}\``,
@@ -51,18 +47,19 @@ module.exports = async ({ client }) => {
                 name: ":bank: Bufunfas",
                 value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
                 inline: true
+            },
+            {
+                name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`,
+                value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`,
+                inline: false
+            },
+            {
+                name: ":satellite: Ativo desde",
+                value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
+                inline: false
             }
-        )
-        .addFields({
-            name: `:sparkles: Próximo update <t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:R>`,
-            value: `<t:${Math.floor((date1.getTime() + proxima_att) / 1000)}:f>`,
-            inline: false
-        })
-        .addFields({
-            name: ":satellite: Ativo desde",
-            value: `<t:${Math.floor(client.discord.readyTimestamp / 1000)}:f>\n<t:${Math.floor(client.discord.readyTimestamp / 1000)}:R>`,
-            inline: false
-        })
+        ]
+    })
 
     return embed
 }

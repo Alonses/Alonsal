@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 const formata_horas = require('../../core/formatters/formata_horas')
 
@@ -130,14 +130,14 @@ module.exports = {
             dica_conversao = ""
         }
 
-        const embed = new EmbedBuilder()
-            .setTitle(titulo)
-            .setColor(client.embed_color(user.misc.color))
-            .setAuthor({
+        const embed = client.create_embed({
+            title: titulo,
+            description: `${conversao_valida}${dica_conversao}`,
+            author: {
                 name: interaction.user.username,
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
-            .setDescription(`${conversao_valida}${dica_conversao}`)
+            }
+        }, user)
 
         if (aviso.length > 0)
             embed.setFooter(aviso)

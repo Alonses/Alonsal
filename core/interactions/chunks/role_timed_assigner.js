@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getTimedRoleAssigner } = require('../../database/schemas/User_roles')
 
 const { defaultRoleTimes } = require('../../formatters/patterns/timeout')
@@ -11,11 +9,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const razao = role.relatory ? `\n\`\`\`fix\n${role.relatory}\`\`\`` : "\n```fix\nSem motivo informado```"
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.timed_roles.titulo")} :passport_control:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.timed_roles.descricao")}${razao}`)
-        .addFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.timed_roles.titulo")} :passport_control:`,
+        description: `${client.tls.phrase(user, "mode.timed_roles.descricao")}${razao}`,
+        fields: [
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${role.uid}\`\n( <@${role.uid}> )`,
@@ -31,7 +28,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 value: role.timeout ? `\`${client.tls.phrase(user, `menu.times.${defaultRoleTimes[role.timeout]}`)}\`` : `\`❌ ${client.tls.phrase(user, "mode.timed_roles.sem_expiracao")}\``,
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     const row = [
         { id: "role_timed_assigner", name: { tls: "mode.anuncio.cargo", alvo: user }, type: 1, emoji: client.emoji("mc_name_tag"), data: `2.${role.uid}` },

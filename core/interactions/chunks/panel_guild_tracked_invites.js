@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -7,11 +7,10 @@ module.exports = async ({ client, user, interaction }) => {
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "manu.painel.convites_rastreados")} :link: :busts_in_silhouette:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.invites.descricao_funcionamento"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "manu.painel.convites_rastreados")} :link: :busts_in_silhouette:`,
+        description: { tls: "mode.invites.descricao_funcionamento" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.nuke_invites)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
@@ -32,11 +31,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))} **${client.tls.phrase(user, "mode.network.gerenciar_servidor")}**`,
                 inline: true
             }
-        )
-        .setFooter({
+        ],
+        footer: {
             text: "⠀",
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const botoes = [
         { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" },

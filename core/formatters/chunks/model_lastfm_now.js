@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     let texto_entrada = ""
@@ -51,11 +49,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 row.push({ name: { tls: "menu.botoes.ouvir_tambem", alvo: user }, emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
 
             // Card do que o usuário está ouvindo atualmente
-            const embed = new EmbedBuilder()
-                .setTitle(`${res.nome} ${client.tls.phrase(user, "util.lastfm.ouvindo_agora_card")}`)
-                .setColor(client.embed_color(user_alvo.misc.color))
-                .setImage(res.scrobble_atual.cover)
-                .setDescription(`\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}\`\`\``)
+            const embed = client.create_embed({
+                title: `${res.nome} ${client.tls.phrase(user, "util.lastfm.ouvindo_agora_card")}`,
+                image: res.scrobble_atual.cover,
+                description: `\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}\`\`\``
+            }, user_alvo)
 
             client.reply(interaction, {
                 embeds: [embed],

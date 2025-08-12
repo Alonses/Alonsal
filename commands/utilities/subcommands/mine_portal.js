@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     let x = interaction.options.getInteger("x")
@@ -23,14 +21,14 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     x = interaction.options.getInteger("x")
     z = interaction.options.getInteger("z")
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "game.portal.titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "game.portal.descricao", null, [client.emoji("mc_portal"), dimension, x_i, z_i, client.emoji("mc_portal_frame"), to_dimension, x, z]))
-        .setFooter({
+    const embed = client.create_embed({
+        title: { tls: "game.portal.titulo" },
+        description: { tls: "game.portal.descricao", replace: [client.emoji("mc_portal"), dimension, x_i, z_i, client.emoji("mc_portal_frame"), to_dimension, x, z] },
+        footer: {
             text: caso,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     interaction.reply({
         embeds: [embed],

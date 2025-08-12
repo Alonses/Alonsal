@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, invite }) => {
 
@@ -24,11 +24,11 @@ module.exports = async ({ client, invite }) => {
 
     const registroAudita = fetchedLogs.entries.first()
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.convite_excluido_titulo"))
-        .setColor(client.embed_color("salmao"))
-        .setDescription(client.tls.phrase(guild, "mode.logger.convite_excluido", 68))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.convite_excluido_titulo" },
+        color: "salmao",
+        description: { tls: "mode.logger.convite_excluido", emoji: 68 },
+        fields: [
             {
                 name: client.user_title(registroAudita.executor, guild, "mode.logger.autor"),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
@@ -39,8 +39,9 @@ module.exports = async ({ client, invite }) => {
                 value: `${registroAudita.target.maxUses > 0 ? `\n${client.emoji(8)} **${client.tls.phrase(guild, "mode.logger.limite_usos", registroAudita.target.maxUses)}**\n` : ""}${client.emoji(31)} **${client.tls.phrase(guild, "menu.botoes.destino")}:**\n:placard: \`${registroAudita.target?.channel?.name || client.tls.phrase(guild, "util.steam.undefined")}\`\n( <#${registroAudita.target.channelId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

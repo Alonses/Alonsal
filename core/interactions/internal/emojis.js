@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("@discordjs/builders")
-
 const { aliases } = require('../../../files/json/text/emojis.json')
 
 module.exports = async ({ client, interaction }) => {
@@ -20,13 +18,12 @@ module.exports = async ({ client, interaction }) => {
         }
     }
 
-    const emojis_global = new EmbedBuilder()
-        .setTitle("> Alguns emojis salvos")
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(emojis_registrados)
-        .setFooter({
-            text: `Emojis registrados: ${Object.keys(aliases).length}`
-        })
+    const emojis_global = client.create_embed({
+        title: "> Alguns emojis salvos",
+        color: "turquesa",
+        description: emojis_registrados,
+        footer: `Emojis registrados: ${Object.keys(aliases).length}`
+    })
 
     const row = client.create_buttons([
         { id: "return_button", name: "Retornar", type: 0, emoji: client.emoji(19), data: "panel_geral" }

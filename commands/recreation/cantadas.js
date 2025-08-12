@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,11 +13,11 @@ module.exports = {
             .then(response => response.json())
             .then(async res => {
 
-                const embed = new EmbedBuilder()
-                    .setTitle(res.nome)
-                    .setColor(client.embed_color(user.misc.color))
-                    .setThumbnail(res.foto)
-                    .setDescription(`> "${res.texto}"`)
+                const embed = client.create_embed({
+                    title: res.nome,
+                    thumbnail: res.foto,
+                    description: `> "${res.texto}"`
+                })
 
                 interaction.reply({
                     embeds: [embed],

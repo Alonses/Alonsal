@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     const idioma_definido = client.idioma.getLang(interaction)
@@ -293,20 +291,21 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     { name: "Steam", value: usuario_alvo, type: 4, emoji: "🌐" }
                 ], interaction)
 
-                const usuario_steam = new EmbedBuilder()
-                    .setTitle(`${nome_user.replace(/ /g, "")}${bandeira_user}`)
-                    .setColor(client.embed_color(user_alvo.misc.color))
-                    .setAuthor({
+                const usuario_steam = client.create_embed({
+                    title: `${nome_user.replace(/ /g, "")}${bandeira_user}`,
+                    author: {
                         name: "Steam",
                         iconURL: "https://th.bing.com/th/id/R.dc9023a21d267f5a69f80d73f6e89dc2?rik=3XtZuRHyuD3yhQ&riu=http%3a%2f%2ficons.iconarchive.com%2ficons%2ffroyoshark%2fenkel%2f512%2fSteam-icon.png&ehk=Q%2bLzz3YeY7Z8gPsTI2r1YF4KgfPnV%2bHMJkEoSx%2bKPy0%3d&risl=&pid=ImgRaw&r=0"
-                    })
-                    .setThumbnail(avatar_user)
-                    .addFields(
+                    },
+                    thumbnail: avatar_user,
+                    fields: [
                         {
                             name: `${client.defaultEmoji("gamer")} **${client.tls.phrase(user, "util.steam.nivel")} ${nivel_user}**`,
                             value: `:red_envelope: **${insignias_user} ${client.tls.phrase(user, "util.steam.insignias")}**`,
                             inline: true
-                        })
+                        }
+                    ]
+                }, user_alvo)
 
                 // Adicionando uma nota no rodape do perfil
                 if (nota_rodape !== "")

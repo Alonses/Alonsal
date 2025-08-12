@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getReportedUsers, checkUserGuildReported } = require('../../database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction, pagina }) => {
@@ -42,10 +40,10 @@ module.exports = async ({ client, user, interaction, pagina }) => {
             if (pagina > paginas) // Número de página escolhida maior que as disponíveis
                 return client.tls.editReply(interaction, user, "dive.rank.error_1", client.decider(user?.conf.ghost_mode, 0), 1)
 
-            const embed = new EmbedBuilder()
-                .setTitle(`> ${interaction.guild.name}`)
-                .setColor(client.embed_color(user.misc.color))
-                .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
+            const embed = client.create_embed({
+                title: `> ${interaction.guild.name}`,
+                thumbnail: interaction.guild.iconURL({ size: 2048 })
+            }, user)
 
             if (users_ids.length > 0)
                 embed.setDescription(`\`\`\`${client.tls.phrase(user, "mode.report.com_reportes_guild", 48)}\`\`\``)

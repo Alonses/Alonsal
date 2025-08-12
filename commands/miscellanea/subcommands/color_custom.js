@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { rgbToHex } = require('../../../core/functions/hex_color')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -18,15 +16,16 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "misc.color.cor_ativa", true, 7)
 
     // Enviando o embed para validação
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "misc.color.titulo"))
-        .setColor(new_color)
-        .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
-        .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\``)
-        .setFooter({
-            text: client.tls.phrase(user, "misc.color.footer"),
+    const embed = client.create_embed({
+        title: { tls: "misc.color.titulo" },
+        color: new_color,
+        thumbnail: interaction.user.avatarURL({ dynamic: true }),
+        description: { tls: "misc.color.descricao" },
+        footer: {
+            text: { tls: "misc.color.footer" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para a cor customizada
     const row = client.create_buttons([

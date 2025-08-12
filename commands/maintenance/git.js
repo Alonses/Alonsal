@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,15 +19,15 @@ module.exports = {
             { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
         ])
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "manu.git.repositorio"))
-            .setColor(client.embed_color(user.misc.color))
-            .setImage("https://i.imgur.com/0tV3IQr.png")
-            .setDescription(client.tls.phrase(user, "manu.git.link"))
-            .setAuthor({
+        const embed = client.create_embed({
+            title: { tls: "manu.git.repositorio" },
+            image: "https://opengraph.githubassets.com/fdf519dd27d0e74ea9d8bbe7fa3f5d6389608a04fd484dd3fbca5ebe737d72e5/Alonses/Alonsal",
+            description: { tls: "manu.git.link" },
+            author: {
                 name: "GitHub",
                 iconURL: "https://cdn-icons-png.flaticon.com/512/25/25231.png"
-            })
+            }
+        }, user)
 
         interaction.reply({
             embeds: [embed],

@@ -1,21 +1,20 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild }) => {
 
     // Criando o embed de aviso para os moderadores
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-        .setColor(client.embed_color("ciara"))
-        .setDescription(`${client.tls.phrase(guild, "mode.spam.spam_detectado", client.defaultEmoji("guard"), user_guild.user.username)}\n\`\`\`${mensagens_spam}\`\`\``)
-        .addFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(guild, "mode.spam.titulo")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`,
+        color: "ciara",
+        description: `${client.tls.phrase(guild, "mode.spam.spam_detectado", client.defaultEmoji("guard"), user_guild.user.username)}\n\`\`\`${mensagens_spam}\`\`\``,
+        fields: [
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "util.server.membro")}**`,
                 value: `${client.emoji("icon_id")} \`${user_guild.id}\`\n${client.emoji("mc_name_tag")} \`${user_guild.user.username}\`\n( ${user_guild} )`,
                 inline: true
             }
-        )
+        ]
+    })
 
     // Strike possui um cargo vinculado
     if (strike_aplicado.role)
@@ -39,9 +38,10 @@ module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_me
 
     client.notify(guild.spam.channel || guild.logger.channel, obj)
 
-    const embed_user = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`)
-        .setColor(client.embed_color("ciara"))
+    const embed_user = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`,
+        color: "ciara"
+    })
 
     let msg_user = `${client.tls.phrase(user, "mode.spam.capturado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
 

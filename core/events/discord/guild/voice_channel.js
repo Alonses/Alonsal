@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, oldState, newState }) => {
 
     // Verificando se o autor da mensagem editada é o bot ou se o bot está ignorando a guild principal
@@ -19,14 +17,15 @@ module.exports = async ({ client, oldState, newState }) => {
     else if (oldState.channelId === null) frase = client.tls.phrase(guild, "mode.logger.canal_entrada", [48, 50], [oldState.id, newState.channelId])
     else frase = client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49], [oldState.id, oldState.channelId, newState.channelId])
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.canal_voz"))
-        .setColor(client.embed_color("pastel"))
-        .setDescription(frase)
-        .setTimestamp()
-        .setFooter({
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.canal_voz" },
+        color: "pastel",
+        description: frase,
+        timestamp: true,
+        footer: {
             text: `${client.tls.phrase(guild, "mode.logger.id_membro")} ${oldState.id}`
-        })
+        }
+    }, guild)
 
     client.notify(guild.logger.channel, { embeds: [embed] })
 }

@@ -1,4 +1,4 @@
-const { PermissionsBitField, EmbedBuilder } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { getTimedRoleAssigner, removeCachedUserRole } = require('../../../database/schemas/User_roles')
 const { atualiza_roles } = require('../../../auto/triggers/user_roles')
@@ -138,15 +138,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             await cargo.save()
 
             let motivo = ""
+            const guild = await client.getGuild(interaction.guild.id)
 
             if (cargo.relatory)
                 motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
 
-            const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                .setColor(client.embed_color("turquesa"))
-                .setDescription(client.tls.phrase(guild, "mode.timed_roles.descricao_cargo_concedido", 43, [membro_guild, motivo]))
-                .addFields(
+            const embed = client.create_embed({
+                title: { tls: "mode.timed_roles.titulo_cargo_concedido" },
+                color: "turquesa",
+                description: { tls: "mode.timed_roles.descricao_cargo_concedido", emoji: 43, replace: [membro_guild, motivo] },
+                fields: [
                     {
                         name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
                         value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
@@ -162,9 +163,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
                         inline: true
                     }
-                )
-
-            const guild = await client.getGuild(interaction.guild.id)
+                ]
+            }, guild)
 
             // Enviando o aviso ao canal do servidor
             client.notify(guild.timed_roles.channel, { content: `${membro_guild}`, embeds: [embed] })

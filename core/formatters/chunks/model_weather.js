@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 const direcao_cardial = require("../../functions/cardinal_direction")
 
 const getCountryISO3 = require("country-iso-2-to-3")
@@ -223,9 +221,12 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     if (res.coord.lat > -20 && res.coord.lat < 20)
                         rodape_cabecalho = `:ringed_planet: ${client.tls.phrase(user, "util.tempo.equador")}\n${rodape_cabecalho}`
 
-                    let embed_clima = new EmbedBuilder()
-                        .setTitle(`:boom: ${client.tls.phrase(user, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`)
-                        .setColor(client.embed_color(user.misc.color))
+                    let embed_clima = client.create_embed({
+                        title: `:boom: ${client.tls.phrase(user, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`,
+                        footer: {
+                            text: nota_rodape
+                        }
+                    }, user)
 
                     // Máximos de informações para o clima
                     if (user.misc?.weather || false) {
@@ -247,9 +248,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                                     name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}**`,
                                     value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(user, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg)}\`\n:eye: **${client.tls.phrase(user, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
                                     inline: true
-                                }
-                            )
-                            .addFields(
+                                },
                                 {
                                     name: `${emoji_sensacao_termica} **${client.tls.phrase(user, "util.tempo.sensacao_termica")}.**`,
                                     value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
@@ -266,9 +265,6 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                                     inline: true
                                 }
                             )
-                            .setFooter({
-                                text: nota_rodape
-                            })
                     } else { // Minímo de informações para o clima
                         embed_clima
                             .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
@@ -289,9 +285,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                                     name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}: ${res.wind.speed} km/h**`,
                                     value: "⠀",
                                     inline: true
-                                }
-                            )
-                            .addFields(
+                                },
                                 {
                                     name: `${emoji_sensacao_termica} **${client.tls.phrase(user, "util.tempo.sensacao_termica")}.**`,
                                     value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
@@ -308,9 +302,6 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                                     inline: true
                                 }
                             )
-                            .setFooter({
-                                text: nota_rodape
-                            })
                     }
 
                     if (interaction)

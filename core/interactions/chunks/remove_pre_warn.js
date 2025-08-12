@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { getUserPreWarn } = require("../../database/schemas/User_pre_warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -10,11 +8,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     let alvo = await getUserPreWarn(id_alvo, interaction.guild.id, timestamp)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.warn.remover_advertencia"))
-        .setColor(client.embed_color("salmao"))
-        .setDescription(client.tls.phrase(user, "mode.report.remover_reporte_desc", null, alvo.relatory))
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.warn.remover_advertencia" },
+        color: "salmao",
+        description: { tls: "mode.report.remover_reporte_desc", replace: alvo.relatory },
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n( <@${alvo.uid}> )`,
@@ -26,11 +24,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de advertências
     const row = client.create_buttons([

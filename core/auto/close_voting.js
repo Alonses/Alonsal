@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { getVotes } = require("../database/schemas/User_votes")
 
 const msgs = {
@@ -25,12 +23,13 @@ module.exports = async ({ client, estagio }) => {
         lang: "pt-br"
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")}`)
-        .setColor(client.embed_color("turquesa"))
-        .setFooter({
-            text: client.tls.phrase(user, "inic.vote.rodape_encerrado")
-        })
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")} ${client.emoji("emojis_dancantes")}`,
+        color: "turquesa",
+        footer: {
+            text: { tls: "inic.vote.rodape_encerrado" }
+        }
+    }, user)
 
     const votos = await getVotes()
 

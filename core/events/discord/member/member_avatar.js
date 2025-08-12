@@ -1,4 +1,4 @@
-const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
+const { AttachmentBuilder } = require('discord.js')
 
 const Canvas = require('@napi-rs/canvas')
 
@@ -53,18 +53,19 @@ envia_logger = (client, user_alvo, attachment) => {
 
                 if (user) {
 
-                    const embed = new EmbedBuilder()
-                        .setTitle(client.tls.phrase(internal_guild, "mode.logger.titulo_avatar"))
-                        .setColor(client.embed_color("turquesa"))
-                        .setDescription(client.tls.phrase(internal_guild, "mode.logger.novo_avatar", 35))
-                        .setFields(
+                    const embed = client.create_embed({
+                        title: { tls: "mode.logger.titulo_avatar" },
+                        color: "turquesa",
+                        description: { tls: "mode.logger.novo_avatar", emoji: 35 },
+                        fields: [
                             {
                                 name: client.user_title(user_alvo, internal_guild, "util.server.membro"),
                                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                                 inline: true
                             }
-                        )
-                        .setTimestamp()
+                        ],
+                        timestamp: true
+                    }, internal_guild)
 
                     const objeto = {
                         embeds: [embed]

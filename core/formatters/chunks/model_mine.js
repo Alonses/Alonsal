@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
+const { AttachmentBuilder } = require('discord.js')
 
 const Canvas = require('@napi-rs/canvas')
 
@@ -89,11 +89,10 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             context.drawImage(imagem, 175, 0, 150, 150)
             const attachment = new AttachmentBuilder(canvas.toBuffer('image/png'), { name: `${dados_item.internal_name}.png` })
 
-            const embed = new EmbedBuilder()
-                .setTitle(dados_item.name)
-                .setColor(client.embed_color(user.misc.color))
-                .setImage(`attachment://${dados_item.internal_name}.png`)
-                .addFields(
+            const embed = client.create_embed({
+                title: dados_item.name,
+                image: `attachment://${dados_item.internal_name}.png`,
+                fields: [
                     {
                         name: `${client.emoji("mc_coracao")}** ${client.tls.phrase(user, "util.minecraft.coletavel")}**`,
                         value: `\`${colet_suv}\``,
@@ -108,9 +107,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                         name: `${client.emoji("mc_cyan_goat_horn")} **${client.tls.phrase(user, "util.minecraft.versao_add")}**`,
                         value: `\`${dados_item.stats.version}\``,
                         inline: true
-                    }
-                )
-                .addFields(
+                    },
                     {
                         name: `${client.emoji("mc_chest")} **${client.tls.phrase(user, "util.minecraft.empilhavel")}**`,
                         value: `\`${empilhavel}\``,
@@ -126,7 +123,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                         value: `**\`minecraft:${dados_item.internal_name}\`**`,
                         inline: true
                     }, fields
-                )
+                ]
+            }, user)
 
             if (!dados_item.stats.released) {
                 nota_rodape = client.tls.phrase(user, "util.minecraft.nota_rodape")

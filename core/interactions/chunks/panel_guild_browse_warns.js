@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { listAllUserWarns } = require('../../database/schemas/User_warns')
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -13,13 +11,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.warn.advertencia_titulo")} ${user_warns[0].nick} ${client.defaultEmoji("paper")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setFooter({
-            text: client.tls.phrase(user, "mode.warn.gerenciar_advertencia"),
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.warn.advertencia_titulo")} ${user_warns[0].nick} ${client.defaultEmoji("paper")}`,
+        footer: {
+            text: { tls: "mode.warn.gerenciar_advertencia" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const botoes = []
     let counter = 0

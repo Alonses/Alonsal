@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getUserRankServers } = require('../../database/schemas/User_rank_guild')
 const { listAllUserGuilds } = require('../../database/schemas/User_guilds')
 const { listAllGuildHoster } = require('../../database/schemas/Guild')
@@ -62,10 +60,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (id_badges.length > 0)
         dados_conhecidos += `\n\n**Badges:**\n${await buildAllBadges(client, user, id_badges)}`
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`,
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
@@ -81,14 +78,14 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks)} **${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.data.selecionar_operacoes_exclusao"),
+        ],
+        footer: {
+            text: { tls: "manu.data.selecionar_operacoes_exclusao" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
-    if (pagina === 0)
-        embed.setDescription(client.tls.phrase(user, "manu.data.resumo_dados", null, dados_conhecidos))
+    if (pagina === 0) embed.setDescription(client.tls.phrase(user, "manu.data.resumo_dados", null, dados_conhecidos))
     else {
 
         let tempo_exclusao = ""

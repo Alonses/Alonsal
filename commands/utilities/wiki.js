@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -112,21 +112,21 @@ module.exports = {
                         { name: { tls: "util.wiki.artigo_completo", alvo: user }, value: res.AbstractURL, type: 4, emoji: "🌐" }
                     ], interaction)
 
-                    const Embed = new EmbedBuilder()
-                        .setTitle(res.Heading)
-                        .setColor(client.embed_color(user.misc.color))
-                        .setAuthor({ name: res.AbstractSource })
-                        .setThumbnail(res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png')
-                        .addFields(fields)
-                        .setDescription(res.AbstractText)
-                        .setTimestamp()
-                        .setFooter({
+                    const embed = client.create_embed({
+                        title: res.Heading,
+                        author: { name: res.AbstractSource },
+                        thumbnail: res.Image !== '' ? `https://api.duckduckgo.com${res.Image}` : 'https://cdn.iconscout.com/icon/free/png-256/duckduckgo-3-569238.png',
+                        description: res.AbstractText,
+                        fields: fields,
+                        timestamp: true,
+                        footer: {
                             text: 'DuckDuckGo API',
                             iconURL: interaction.user.avatarURL({ dynamic: true })
-                        })
+                        }
+                    }, user)
 
                     interaction.reply({
-                        embeds: [Embed],
+                        embeds: [embed],
                         components: [row],
                         flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     })

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { listAllUserWarns } = require("../../database/schemas/User_warns")
 const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 
@@ -17,11 +15,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Verificando se existem advertências para as próximas punições do usuário
     let indice_warn = user_warns.length > guild_warns.length ? guild_warns.length - 1 : user_warns.length
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_warns[user_warns.length - 1].relatory}\`\`\``)
-        .addFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.warn.verificando_advertencia")} :inbox_tray:`,
+        description: `${client.tls.phrase(user, "mode.warn.advertencias_registradas")}\n\`\`\`fix\n${client.tls.phrase(user, "mode.warn.ultima_descricao", 51)}\n\n${user_warns[user_warns.length - 1].relatory}\`\`\``,
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warns[user_warns.length - 1].nick}\`\n( <@${id_alvo}> )`,
@@ -36,9 +33,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
                 value: `\`${indice_warn} / ${indice_matriz}\``,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.aplicador_ultima_advertencia")}**`,
                 value: `${client.emoji("icon_id")} \`${user_warns[user_warns.length - 1].assigner}\`\n${client.emoji("mc_name_tag")} \`${user_warns[user_warns.length - 1].assigner_nick}\`\n( <@${user_warns[user_warns.length - 1].assigner}> )`,
@@ -50,11 +45,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de advertência
     let botoes = [

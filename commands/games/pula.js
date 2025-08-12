@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -60,51 +60,50 @@ module.exports = {
                     return client.tls.reply(interaction, user, "game.pula.error_1", true, client.emoji(0))
 
                 const datas_pula = retorno.data
-
-                const embed = new EmbedBuilder()
-                    .setTitle(client.tls.phrase(user, "game.pula.estatisticas_pula"))
-                    .setColor(client.embed_color(user_pula.misc.color))
-                    .setImage("https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp")
-                    .addFields(
-                        {
-                            name: `${client.emoji("pula_2")} **${client.tls.phrase(user, "game.pula.gerais")}**`,
-                            value: `:part_alternation_mark: **${client.tls.phrase(user, "game.pula.pulos")}:** \`${client.locale(datas_pula.pulos)}\`\n:rocket: **${client.tls.phrase(user, "game.pula.mods_ativos")}:** \`${client.locale(datas_pula.mods)}\`\n:skull_crossbones: **${client.tls.phrase(user, "game.pula.mortes")}:** \`${client.locale(datas_pula.mortes)}\``,
-                            inline: true,
-                        },
-                        {
-                            name: `${client.defaultEmoji("time")} ${client.tls.phrase(user, "game.pula.tempos")}`,
-                            value: `:joystick: **${client.tls.phrase(user, "game.pula.jogado")}:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **${client.tls.phrase(user, "game.pula.voando")}:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **${client.tls.phrase(user, "game.pula.em_eventos")}:** \`${datas_pula.tempo_eventos}s\``,
-                            inline: true
-                        },
-                        {
-                            name: `${client.emoji("mc_esmeralda")} **${client.tls.phrase(user, "game.pula.moedas")}**`,
-                            value: `:bank: **${client.tls.phrase(user, "game.pula.coletadas")}:** \`${client.locale(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **${client.tls.phrase(user, "game.pula.gastas")}:** \`${client.locale(datas_pula.moedas_gastas)}\`\n:moneybag: **${client.tls.phrase(user, "game.pula.guardadas")}:** \`${client.locale(datas_pula.moedas)}\``,
-                            inline: true
-                        },
-                    )
-                    .addFields(
-                        {
-                            name: `:carousel_horse: **${client.tls.phrase(user, "game.pula.eventos")}**`,
-                            value: `:man_playing_water_polo: **${client.tls.phrase(user, "game.pula.aquatico")}:** \`${client.locale(datas_pula.eventos[0])}\`\n:hotsprings: **${client.tls.phrase(user, "game.pula.lava")}:** \`${client.locale(datas_pula.eventos[1])}\`\n:checkered_flag: **${client.tls.phrase(user, "game.pula.concluidos")}:** \`${client.locale(datas_pula.eventos_concluidos)}\``,
-                            inline: true
-                        },
-                        {
-                            name: "⠀",
-                            value: `:city_dusk: **${client.tls.phrase(user, "game.pula.zona_densa")}:** \`${client.locale(datas_pula.eventos[2])}\`\n:park: **${client.tls.phrase(user, "game.pula.parque")}:** \`${client.locale(datas_pula.eventos[3])}\`\n:house_abandoned: **${client.tls.phrase(user, "game.pula.pisoes")}:** \`${client.locale(datas_pula.pisoes)}\``,
-                            inline: true
-                        },
-                        {
-                            name: "⠀",
-                            value: `:gem: **${client.tls.phrase(user, "util.steam.conquistas")}**\n:tropical_drink: **${client.tls.phrase(user, "game.pula.progresso")} ${datas_pula.conquistas} / ${datas_pula.consquistas_total}**`,
-                            inline: true
-                        }
-                    )
+                const pula_obj = {
+                    title: "game.pula.estatisticas_pula",
+                    color: user_pula.misc.color,
+                    image: "https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp"
+                }
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    embed.setDescription(`\`\`\`${client.tls.phrase(user, "game.pula.recorde", null, [client.locale(datas_pula.recorde), (datas_pula.distancia_percorrida / 1000).toFixed(2)])}\`\`\``)
+                    pula_obj.description = { tls: "game.pula.recorde", replace: [client.locale(datas_pula.recorde), (datas_pula.distancia_percorrida / 1000).toFixed(2)] }
+
+                pula_obj.fields = [
+                    {
+                        name: `${client.emoji("pula_2")} **${client.tls.phrase(user, "game.pula.gerais")}**`,
+                        value: `:part_alternation_mark: **${client.tls.phrase(user, "game.pula.pulos")}:** \`${client.locale(datas_pula.pulos)}\`\n:rocket: **${client.tls.phrase(user, "game.pula.mods_ativos")}:** \`${client.locale(datas_pula.mods)}\`\n:skull_crossbones: **${client.tls.phrase(user, "game.pula.mortes")}:** \`${client.locale(datas_pula.mortes)}\``,
+                        inline: true,
+                    },
+                    {
+                        name: `${client.defaultEmoji("time")} ${client.tls.phrase(user, "game.pula.tempos")}`,
+                        value: `:joystick: **${client.tls.phrase(user, "game.pula.jogado")}:** \`${datas_pula.tempo_jogado}s\`\n:flying_disc: **${client.tls.phrase(user, "game.pula.voando")}:** \`${datas_pula.tempo_voando}s\`\n:carousel_horse: **${client.tls.phrase(user, "game.pula.em_eventos")}:** \`${datas_pula.tempo_eventos}s\``,
+                        inline: true
+                    },
+                    {
+                        name: `${client.emoji("mc_esmeralda")} **${client.tls.phrase(user, "game.pula.moedas")}**`,
+                        value: `:bank: **${client.tls.phrase(user, "game.pula.coletadas")}:** \`${client.locale(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **${client.tls.phrase(user, "game.pula.gastas")}:** \`${client.locale(datas_pula.moedas_gastas)}\`\n:moneybag: **${client.tls.phrase(user, "game.pula.guardadas")}:** \`${client.locale(datas_pula.moedas)}\``,
+                        inline: true
+                    },
+                    {
+                        name: `:carousel_horse: **${client.tls.phrase(user, "game.pula.eventos")}**`,
+                        value: `:man_playing_water_polo: **${client.tls.phrase(user, "game.pula.aquatico")}:** \`${client.locale(datas_pula.eventos[0])}\`\n:hotsprings: **${client.tls.phrase(user, "game.pula.lava")}:** \`${client.locale(datas_pula.eventos[1])}\`\n:checkered_flag: **${client.tls.phrase(user, "game.pula.concluidos")}:** \`${client.locale(datas_pula.eventos_concluidos)}\``,
+                        inline: true
+                    },
+                    {
+                        name: "⠀",
+                        value: `:city_dusk: **${client.tls.phrase(user, "game.pula.zona_densa")}:** \`${client.locale(datas_pula.eventos[2])}\`\n:park: **${client.tls.phrase(user, "game.pula.parque")}:** \`${client.locale(datas_pula.eventos[3])}\`\n:house_abandoned: **${client.tls.phrase(user, "game.pula.pisoes")}:** \`${client.locale(datas_pula.pisoes)}\``,
+                        inline: true
+                    },
+                    {
+                        name: "⠀",
+                        value: `:gem: **${client.tls.phrase(user, "util.steam.conquistas")}**\n:tropical_drink: **${client.tls.phrase(user, "game.pula.progresso")} ${datas_pula.conquistas} / ${datas_pula.consquistas_total}**`,
+                        inline: true
+                    }
+                ]
 
                 client.reply(interaction, {
-                    embeds: [embed],
+                    embeds: [client.create_embed(pula_obj, user)],
                     components: [row],
                     flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
                 })

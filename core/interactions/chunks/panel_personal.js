@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
@@ -13,14 +11,14 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         return require('../functions/buttons/user_panel_button')({ client, user, interaction, dados })
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "manu.painel.cabecalho_menu_pessoal"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+    const embed = client.create_embed({
+        title: { tls: "manu.painel.cabecalho_menu_pessoal" },
+        description: { tls: "manu.painel.descricao" },
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 0)
         embed.addFields(

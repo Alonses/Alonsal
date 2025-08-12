@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -46,11 +46,10 @@ module.exports = async ({ client, user, interaction }) => {
         { id: "misc_notify_button", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
     ], interaction)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.anuncio.config_titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.anuncio.config_descricao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.anuncio.config_titulo" },
+        description: { tls: "mode.anuncio.config_descricao" },
+        fields: [
             {
                 name: `:label: **${client.tls.phrase(user, "mode.anuncio.cargo")}**`,
                 value: `( <@&${dados.role}> )`,
@@ -66,7 +65,8 @@ module.exports = async ({ client, user, interaction }) => {
                 value: "⠀",
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     await guild.save()
 

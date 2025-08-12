@@ -71,19 +71,23 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         if (internal_user.misc.fixed_badge) {
             const fixed_badge = busca_badges(client, 1, internal_user)
 
-            infos_user.addFields({
-                name: `:pushpin: **${client.tls.phrase(user, "manu.data.selects.uni.4")}**`,
-                value: `${fixed_badge.emoji} \`${fixed_badge.name}\``,
-                inline: false
-            })
+            infos_user.addFields(
+                {
+                    name: `:pushpin: **${client.tls.phrase(user, "manu.data.selects.uni.4")}**`,
+                    value: `${fixed_badge.emoji} \`${fixed_badge.name}\``,
+                    inline: false
+                }
+            )
         }
 
         if (badges.length > 0)
-            infos_user.addFields({
-                name: ":trophy: **Badges**",
-                value: badges,
-                inline: false
-            })
+            infos_user.addFields(
+                {
+                    name: ":trophy: **Badges**",
+                    value: badges,
+                    inline: false
+                }
+            )
         else
             infos_user.setDescription(`\`\`\`🏆 | ${client.tls.phrase(user, "dive.badges.sem_badge")}\`\`\``)
     }

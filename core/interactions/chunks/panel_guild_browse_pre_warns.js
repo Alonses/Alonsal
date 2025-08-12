@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { listAllUserPreWarns } = require('../../database/schemas/User_pre_warns')
 
 module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
@@ -15,13 +13,13 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
             flags: "Ephemeral"
         })
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.anotacoes.titulo", null, user_notes[0].nick)} ${client.defaultEmoji("pen")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setFooter({
-            text: client.tls.phrase(user, "mode.anotacoes.descricao_rodape_selecao"),
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.anotacoes.titulo", null, user_notes[0].nick)} ${client.defaultEmoji("pen")}`,
+        footer: {
+            text: { tls: "mode.anotacoes.descricao_rodape_selecao" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     let botoes = []
     let indice_start = pagina_guia * 4 || 0

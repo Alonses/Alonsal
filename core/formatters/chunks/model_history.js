@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, dados, interaction, user_command }) => {
 
     if (!dados) dados = ""
@@ -37,14 +35,14 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
 
                 data_eventos = ` ${dados}`
 
-                const embed_eventos = new EmbedBuilder()
-                    .setTitle(client.tls.phrase(user, "util.history.acontecimentos_1"))
-                    .setColor(client.embed_color(user.misc.color))
-                    .setAuthor({
+                const embed_eventos = client.create_embed({
+                    title: { tls: "util.history.acontecimentos_1" },
+                    author: {
                         name: "History",
                         iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png"
-                    })
-                    .setDescription(`${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`)
+                    },
+                    description: `${client.tls.phrase(user, "util.history.acontecimentos_2")} ${data_eventos.replace("?data=", "")}\n${lista_eventos}`
+                }, user)
 
                 if (interaction)
                     return client.reply(interaction, {
@@ -72,15 +70,15 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     { name: { tls: "menu.botoes.mais_detalhes", alvo: user }, value: res.fonte, type: 4, emoji: "🌐" }
                 ], interaction ?? "")
 
-                const acontecimento = new EmbedBuilder()
-                    .setTitle(client.execute("formatters", "formata_texto", res.acontecimento))
-                    .setColor(client.embed_color(user.misc.color))
-                    .setAuthor({
+                const acontecimento = client.create_embed({
+                    title: client.execute("formatters", "formata_texto", res.acontecimento),
+                    author: {
                         name: "History",
                         iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png"
-                    })
-                    .setImage(res.imagem)
-                    .setDescription(client.execute("formatters", "formata_texto", res.descricao))
+                    },
+                    image: res.imagem,
+                    description: client.execute("formatters", "formata_texto", res.descricao)
+                }, user)
 
                 if (interaction)
                     acontecimento.setFooter({

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getReportedUsers } = require('../../database/schemas/User_reports')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -25,12 +23,11 @@ module.exports = async ({ client, user, interaction }) => {
             for (const user of usuarios_reportados) // Listando os usuários que possuem denúncias e estão no servidor
                 if (id_membros_guild.includes(client.decifer(user.uid))) users_ids.push(client.decifer(user.uid))
 
-            const embed = new EmbedBuilder()
-                .setTitle(`> ${interaction.guild.name}`)
-                .setColor(client.embed_color(user.misc.color))
-                .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-                .setDescription(client.tls.phrase(user, "mode.warn.descricao_painel_visualizacao"))
-                .addFields(
+            const embed = client.create_embed({
+                title: `> ${interaction.guild.name}`,
+                thumbnail: interaction.guild.iconURL({ size: 2048 }),
+                description: { tls: "mode.warn.descricao_painel_visualizacao" },
+                fields: [
                     {
                         name: `${client.emoji(0)} **${client.tls.phrase(user, "mode.warn.advertidos")}: \`${warned_users.length}\`**`,
                         value: "⠀",
@@ -46,11 +43,12 @@ module.exports = async ({ client, user, interaction }) => {
                         value: "⠀",
                         inline: true
                     }
-                )
-                .setFooter({
-                    text: client.tls.phrase(user, "mode.warn.verificar_warn"),
+                ],
+                footer: {
+                    text: { tls: "mode.warn.verificar_warn" },
                     iconURL: interaction.user.avatarURL({ dynamic: true })
-                })
+                }
+            }, user)
 
             const b_disabled = [false, false, false]
 

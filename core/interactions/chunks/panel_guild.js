@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { operation_codes } = require('../../formatters/patterns/guild')
 
@@ -103,14 +103,14 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     const guild = await client.getGuild(interaction.guild.id)
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "manu.painel.descricao"))
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`,
+        description: { tls: "manu.painel.descricao" },
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     if (pagina === 0)
         embed.addFields(

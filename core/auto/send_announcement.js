@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { PermissionsBitField } = require('discord.js')
 
 const { getGameChannels, getSpecificGameChannel } = require('../database/schemas/Guild')
 
@@ -125,11 +125,12 @@ function formatar_modelo(client, obj_anuncio, client, dados, indice, idioma_defi
     if (obj_anuncio.games.length > 3) // Buscando o novo destaque
         obj_anuncio = busca_destaque(client, obj_anuncio, indice)
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${obj_anuncio.logo} ${obj_anuncio.plataforma}`)
-        .setColor(client.embed_color("turquesa"))
-        .setImage(obj_anuncio.banner)
-        .setDescription(model_games(client, obj_anuncio.games.slice(indice * 3, (indice * 3) + 3), obj_anuncio.plataforma, idioma_definido))
+    const embed = client.create_embed({
+        title: `${obj_anuncio.logo} ${obj_anuncio.plataforma}`,
+        color: "turquesa",
+        image: obj_anuncio.banner,
+        description: model_games(client, obj_anuncio.games.slice(indice * 3, (indice * 3) + 3), obj_anuncio.plataforma, idioma_definido)
+    })
 
     const obj_formatado = {
         content: indice === 0 ? `<@&${dados.games.role}>` : "",

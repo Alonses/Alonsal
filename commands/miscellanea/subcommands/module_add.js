@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { verifyUserModules, createModule } = require('../../../core/database/schemas/User_modules')
 const { getModulesPrice } = require('../../../core/database/schemas/User_modules')
 
@@ -39,11 +37,10 @@ module.exports = async ({ client, user, interaction }) => {
     const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${corpo_modulo.stats.days}`)} ${corpo_modulo.stats.hour}`
     const montante = await getModulesPrice(user.uid)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "misc.modulo.cabecalho_menu"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "misc.modulo.descricao", null, [corpo_modulo.stats.price, montante]))
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "misc.modulo.cabecalho_menu" },
+        description: { tls: "misc.modulo.descricao", replace: [corpo_modulo.stats.price, montante] },
+        fields: [
             {
                 name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,
                 value: `\`${client.tls.phrase(user, `misc.modulo.modulo_${corpo_modulo.type}`)}\``,
@@ -59,11 +56,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `\`B$ ${corpo_modulo.stats.price}\``,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
+        ],
+        footer: {
+            text: { tls: "menu.botoes.selecionar_operacao" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     // Criando os botões para o menu de badges
     const row = client.create_buttons([

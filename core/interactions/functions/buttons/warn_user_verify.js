@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { getUserWarn, listAllUserWarns } = require("../../../database/schemas/User_warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -55,11 +53,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             if (!client.cached.warns.get(interaction.user.id)?.keep || user_warns.length === 1) // Removendo o motivo para a remoção da advertência
                 client.cached.warns.delete(interaction.user.id)
 
-            const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(guild, "mode.warn.advertencia_removida_titulo"))
-                .setColor(client.embed_color("salmao"))
-                .setDescription(`${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao])}${warns_restantes}`)
-                .addFields(
+            const embed = client.create_embed({
+                title: { tls: "mode.warn.advertencia_removida_titulo" },
+                color: "salmao",
+                description: `${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao])}${warns_restantes}`,
+                fields: [
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                         value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warns[0].nick)}\`\n( <@${id_alvo}> )`,
@@ -70,8 +68,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
                         value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                         inline: true
                     }
-                )
-                .setTimestamp()
+                ],
+                timestamp: true
+            }, guild)
 
             client.notify(guild.warn.channel, {
                 content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
@@ -106,11 +105,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
             motivo_remocao = `\`\`\`fix\n${client.tls.phrase(user, "mode.warn.motivo_remocao", client.defaultEmoji("judge"))}:\n\n${client.cached.warns.get(interaction.user.id).relatory}\`\`\``
 
         // Exibindo os detalhes da advertência escolhida
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.warn.titulo_verificando_advertencia"))
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao]))
-            .addFields(
+        const embed = client.create_embed({
+            title: { tls: "mode.warn.titulo_verificando_advertencia" },
+            description: { tls: "mode.warn.descricao_advertencia", replace: [client.decifer(user_warn.relatory), motivo_remocao] },
+            fields: [
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
                     value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick ? client.decifer(user_warn.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
@@ -126,11 +124,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     value: `<t:${user_warn.timestamp}:f>`,
                     inline: true
                 }
-            )
-            .setFooter({
-                text: client.tls.phrase(user, "mode.warn.gerenciar_advertencia_escolha"),
+            ],
+            footer: {
+                text: { tls: "mode.warn.gerenciar_advertencia_escolha" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         const botoes = [
             { id: "warn_user_verify", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `0|${id_alvo}.${timestamp}` },

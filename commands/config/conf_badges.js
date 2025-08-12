@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 
 const { busca_badges } = require('../../core/data/user_badges')
 const { badgeTypes } = require('../../core/formatters/patterns/user')
@@ -49,10 +49,9 @@ module.exports = {
 
             const badge = busca_badges(client, badgeTypes.SINGLE, parseInt(badge_alvo))
 
-            const embed = new EmbedBuilder()
-                .setTitle("> Conceder Badge")
-                .setColor(client.embed_color(user.misc.color))
-                .addFields(
+            const embed = client.create_embed({
+                title: "> Conceder Badge",
+                fields: [
                     {
                         name: `${client.defaultEmoji("person")} **Destinatário**`,
                         value: `<@${id_alvo}>`,
@@ -68,11 +67,9 @@ module.exports = {
                         value: `<t:${client.timestamp()}:f>`,
                         inline: true
                     }
-                )
-                .setFooter({
-                    text: client.tls.phrase(user, "menu.botoes.selecionar_operacao"),
-                    iconURL: interaction.user.avatarURL({ dynamic: true })
-                })
+                ],
+                footer: { text: { tls: "menu.botoes.selecionar_operacao" }, iconURL: interaction.user.avatarURL({ dynamic: true }) }
+            }, user)
 
             // Criando os botões para o menu de badges
             const row = client.create_buttons([

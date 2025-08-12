@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField, InteractionContextType } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField, InteractionContextType } = require('discord.js')
 
 const { randomString } = require('../../core/functions/random_string')
 
@@ -200,13 +200,11 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     if (client.cached.forca.get(id_jogo).entradas.length > 0)
         entradas = `\n${client.defaultEmoji("types")} ${client.tls.phrase(user, "game.forca.usado")}\`\`\`${client.cached.forca.get(id_jogo).entradas.join(", ")}\`\`\``
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "game.forca.titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} ${client.tls.phrase(user, "game.forca.letras")}\` )${painel} ${entradas}`)
-        .setFooter({
-            text: `💠 ${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}\n${client.defaultEmoji("person")} ${jogadores_sessao}`
-        })
+    const embed = client.create_embed({
+        title: { tls: "game.forca.titulo" },
+        description: `${client.cached.forca.get(id_jogo).descobertas} ( \`${(client.cached.forca.get(id_jogo).word).length} ${client.tls.phrase(user, "game.forca.letras")}\` )${painel} ${entradas}`,
+        footer: `💠 ${client.tls.phrase(user, "game.forca.tentativas")} ${(7 - client.cached.forca.get(id_jogo).erros)}\n${client.defaultEmoji("person")} ${jogadores_sessao}`
+    }, user)
 
     if (!client.cached.forca.get(id_jogo).embed) {
 

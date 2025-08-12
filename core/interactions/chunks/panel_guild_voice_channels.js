@@ -1,4 +1,5 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
+
 const { voiceChannelTimeout } = require("../../formatters/patterns/timeout")
 
 module.exports = async ({ client, user, interaction }) => {
@@ -15,11 +16,10 @@ module.exports = async ({ client, user, interaction }) => {
     // Permissões do bot no servidor
     const membro_sv = await client.getMemberGuild(interaction, client.id())
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "mode.voice_channels.title_voice")} 🔊`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.voice_channels.descricao_modulo"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "mode.voice_channels.title_voice")} 🔊`,
+        description: { tls: "mode.voice_channels.descricao_modulo" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**\n${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}\n( \`${voiceChannelTimeout[guild.voice_channels.timeout]}${client.tls.phrase(user, "util.unidades.segundos")}\` )**`,
                 value: "⠀",
@@ -45,11 +45,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers))} **${client.tls.phrase(user, "mode.voice_channels.mover_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.Speak))} **${client.tls.phrase(user, "mode.voice_channels.falar_canal")}**`,
                 inline: true
             }
-        )
-        .setFooter({
+        ],
+        footer: {
             text: "⠀",
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     let falta_permissoes = false
 

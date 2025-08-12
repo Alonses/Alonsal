@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -13,11 +13,10 @@ module.exports = async ({ client, user, interaction }) => {
         await guild.save()
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "manu.painel.denuncias_server")} ${client.defaultEmoji("guard")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.ticket.descricao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "manu.painel.denuncias_server")} ${client.defaultEmoji("guard")}`,
+        description: { tls: "mode.ticket.descricao" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
@@ -39,11 +38,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const botoes = [
         { id: "guild_tickets_button", name: { tls: "manu.painel.denuncias_server", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.tickets), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets), data: "1" },

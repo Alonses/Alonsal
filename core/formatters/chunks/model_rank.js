@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { busca_badges } = require('../../data/user_badges')
 
 const { getRankGlobal } = require('../../database/schemas/User_rank_global')
@@ -103,12 +101,11 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
         nome_embed = client.tls.phrase(user, "dive.rank.rank_global")
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(nome_embed)
-        .setColor(client.embed_color(user.misc.color))
-        .setThumbnail(interaction.guild.iconURL({ size: 2048 }))
-        .setDescription(client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, client.cached.ranking_value))
-        .addFields(
+    const embed = client.create_embed({
+        title: nome_embed,
+        thumbnail: interaction.guild.iconURL({ size: 2048 }),
+        description: client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, client.cached.ranking_value),
+        fields: [
             {
                 name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                 value: usernames.join("\n"),
@@ -119,7 +116,8 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
                 value: experiencias.join("\n"),
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     if (rodape)
         embed.setFooter({
@@ -169,27 +167,26 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
 
     if (fixed_badge) fixed_badge = fixed_badge.emoji
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${user_alvo_data.username} ${fixed_badge}`)
-        .setColor(client.embed_color(user_a.misc.color))
-        .setThumbnail(user_alvo_data.avatarURL({ dynamic: true, size: 2048 }))
-        .setFooter({
+    const embed = client.create_embed({
+        title: `${user_alvo_data.username} ${fixed_badge}`,
+        thumbnail: user_alvo_data.avatarURL({ dynamic: true, size: 2048 }),
+        fields: [
+            {
+                name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
+                value: `\`${client.locale(parseInt(usuario_alvo[0]))} EXP\``,
+                inline: true
+            },
+            {
+                name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
+                value: `\`${client.locale(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
+                inline: true
+            }
+        ],
+        footer: {
             text: interaction.user.username,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
-
-    embed.addFields(
-        {
-            name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
-            value: `\`${client.locale(parseInt(usuario_alvo[0]))} EXP\``,
-            inline: true
-        },
-        {
-            name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
-            value: `\`${client.locale(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
-            inline: true
         }
-    )
+    }, user_a)
 
     client.reply(interaction, {
         embeds: [embed],

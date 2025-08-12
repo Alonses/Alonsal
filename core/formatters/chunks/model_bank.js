@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { busca_badges } = require('../../data/user_badges')
 const { getRankMoney } = require('../../database/schemas/User')
 
@@ -78,11 +76,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         daily = `:bank: ${client.tls.phrase(user, "misc.banco.daily")} <t:${tempo_restante}:R>\n( <t:${tempo_restante}:f> )`
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "misc.banco.rank_titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(daily)
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "misc.banco.rank_titulo" },
+        description: daily,
+        fields: [
             {
                 name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
                 value: usernames.join("\n"),
@@ -98,11 +95,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 value: ids.join("\n"),
                 inline: true
             }
-        )
-        .setFooter({
+        ],
+        footer: {
             text: rodape,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     let row = []
     const b_disabled = require("../../functions/rank_navigation")({ pagina, paginas, ids, interaction })

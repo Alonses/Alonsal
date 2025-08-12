@@ -1,8 +1,6 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction }) => {
 
     fetch(`${process.env.url_apisal}/gta?idioma=${user.lang}`)
@@ -17,17 +15,17 @@ module.exports = async ({ client, user, interaction }) => {
             if (data.gameTimeStr.split(":")[1] >= 30)
                 hours += "30"
 
-            const embed = new EmbedBuilder()
-                .setTitle("> This is Weazel News")
-                .setColor(client.embed_color(user.misc.color))
-                .setDescription(`\`\`\`${data.currentWeatherEmoji} - ${data.currentWeatherDescription}\`\`\``)
-                .addFields(
+            const embed = client.create_embed({
+                title: "> This is Weazel News",
+                description: `\`\`\`${data.currentWeatherEmoji} - ${data.currentWeatherDescription}\`\`\``,
+                fields: [
                     {
-                        name: client.tls.phrase(user, "game.gta.horario_atual"),
+                        name: { tls: "game.gta.horario_atual" },
                         value: `:clock${hours}: \`${data.gameTimeStr}\`${emoji_horario}\` \``,
                         inline: true
                     }
-                )
+                ]
+            }, user)
 
             const row = client.create_buttons([
                 { id: "gta_resume", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "0" }

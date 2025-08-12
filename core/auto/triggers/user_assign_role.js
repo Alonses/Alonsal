@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { atualiza_roles } = require("./user_roles")
 const { getUserRole } = require("../../database/schemas/User_roles")
@@ -62,11 +62,11 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
 
                         const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
 
-                        const embed_timed_role = new EmbedBuilder()
-                            .setTitle(client.tls.phrase(guild, "mode.timed_roles.titulo_cargo_concedido"))
-                            .setColor(client.embed_color("turquesa"))
-                            .setDescription(client.tls.phrase(guild, acionador === "spam" ? "mode.timed_roles.aplicado_spam" : "mode.timed_roles.aplicado_warn", [43, client.defaultEmoji("guard")], [membro_guild, motivo]))
-                            .addFields(
+                        const embed_timed_role = client.create_embed({
+                            title: { tls: "mode.timed_roles.titulo_cargo_concedido" },
+                            color: "turquesa",
+                            description: client.tls.phrase(guild, acionador === "spam" ? "mode.timed_roles.aplicado_spam" : "mode.timed_roles.aplicado_warn", [43, client.defaultEmoji("guard")], [membro_guild, motivo]),
+                            fields: [
                                 {
                                     name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
                                     value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${role.id}>`,
@@ -82,7 +82,8 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                                     value: `${client.emoji("icon_id")} \`${client.id()}\`\n${client.emoji("mc_name_tag")} \`${client.username()}\`\n( <@${client.id()}> )`,
                                     inline: true
                                 }
-                            )
+                            ]
+                        }, guild)
 
                         // Enviando o aviso ao canal do servidor
                         client.notify(acionador === "spam" ? guild.spam.channel : guild.warn.channel, { embeds: [embed_timed_role] })

@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, ban }) => {
 
@@ -49,11 +49,11 @@ module.exports = async ({ client, ban }) => {
     if (network_descricao.length > 1 || razao.length > 1)
         razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.membro_desbanido"))
-        .setColor(client.embed_color("vermelho"))
-        .setDescription(`${client.tls.phrase(guild, "mode.logger.membro_desbanido_desc", client.emoji("emojis_dancantes"))}${razao}`)
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.membro_desbanido" },
+        color: "vermelho",
+        description: `${client.tls.phrase(guild, "mode.logger.membro_desbanido_desc", client.emoji("emojis_dancantes"))}${razao}`,
+        fields: [
             {
                 name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
@@ -64,8 +64,9 @@ module.exports = async ({ client, ban }) => {
                 value: `${client.emoji("icon_id")} \`${registroAudita.targetId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.target.username}\`\n( <@${registroAudita.targetId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     const obj = {
         embeds: [embed]

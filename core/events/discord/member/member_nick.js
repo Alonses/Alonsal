@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     const user_alvo = dados[0].user
@@ -15,18 +13,19 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         moderador = true
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.apelido_atualizado_titulo"))
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(`${client.emoji("mc_name_tag")} | ${descricao}`)
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.logger.apelido_atualizado_titulo" },
+        color: "turquesa",
+        description: `${client.emoji("mc_name_tag")} | ${descricao}`,
+        fields: [
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     // Exibindo o moderador que fez a alteração de nick
     if (registroAudita.executorId !== user_alvo.id && registroAudita.changes[0].key === "nick")

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { colorsMap, colorsPriceMap } = require('../../formatters/patterns/user')
 
 module.exports = async ({ client, user, interaction, valor }) => {
@@ -16,20 +14,23 @@ module.exports = async ({ client, user, interaction, valor }) => {
         nota_cor_aleatoria = `\n:rainbow: ${client.tls.phrase(user, "misc.color.rand_color")}`
 
     // Enviando o embed para validação
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "misc.color.titulo"))
-        .setColor(cor_demonstracao)
-        .setThumbnail(interaction.user.avatarURL({ dynamic: true }))
-        .setDescription(`\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`)
-        .setFields({
-            name: `:money_with_wings: **${client.tls.phrase(user, "misc.color.preco")}**`,
-            value: `\`B$ ${colorsPriceMap[colorsMap[entrada][1]]}\``,
-            inline: false
-        })
-        .setFooter({
-            text: client.tls.phrase(user, "misc.color.footer"),
+    const embed = client.create_embed({
+        title: { tls: "misc.color.titulo" },
+        color: cor_demonstracao,
+        thumbnail: interaction.user.avatarURL({ dynamic: true }),
+        description: `\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`,
+        fields: [
+            {
+                name: `:money_with_wings: **${client.tls.phrase(user, "misc.color.preco")}**`,
+                value: `\`B$ ${colorsPriceMap[colorsMap[entrada][1]]}\``,
+                inline: false
+            }
+        ],
+        footer: {
+            text: { tls: "misc.color.footer" },
             iconURL: client.avatar()
-        })
+        }
+    }, user)
 
     // Criando os botões para a cor customizada
     const row = client.create_buttons([

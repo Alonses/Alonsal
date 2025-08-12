@@ -1,19 +1,17 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     fetch(`${process.env.url_apisal}/random?rasputia`)
         .then(response => response.json())
         .then(async res => {
 
-            const embed = new EmbedBuilder()
-                .setTitle(res.nome)
-                .setColor(client.embed_color(user.misc.color))
-                .setThumbnail(res.foto)
-                .setDescription(`- "${res.texto}"`)
+            const embed = client.create_embed({
+                title: res.nome,
+                thumbnail: res.foto,
+                description: `- "${res.texto}"`
+            })
 
             interaction.reply({
                 embeds: [embed],

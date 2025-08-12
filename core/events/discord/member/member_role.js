@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     let texto, cargos = []
@@ -13,11 +11,11 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     else
         texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${cargos.join(", ")}`
 
-    let embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.cargo_atualizado"))
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(texto)
-        .setFields(
+    let embed = client.create_embed({
+        title: { tls: "mode.logger.cargo_atualizado" },
+        color: "turquesa",
+        description: texto,
+        fields: [
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
@@ -28,8 +26,9 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     // Comparando as permissões adicionadas e removidas
     const alteracoes = comparar_diferencas(old_member.permissions.toArray(), new_member.permissions.toArray())

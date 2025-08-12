@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 const { randomString } = require('../../core/functions/random_string')
 
@@ -48,13 +48,13 @@ module.exports = {
             { name: { tls: "util.password.testar_senha", alvo: user }, value: "https://password.kaspersky.com/", type: 4, emoji: "🌐" }
         ], interaction)
 
-        const embed = new EmbedBuilder()
-            .setTitle(`> :lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(`:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``)
-            .setFooter({
+        const embed = client.create_embed({
+            titl: `> :lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`,
+            description: `:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``,
+            footer: {
                 text: client.tls.phrase(user, "util.password.rodape", null, tamanho)
-            })
+            }
+        }, user)
 
         interaction.reply({
             embeds: [embed],

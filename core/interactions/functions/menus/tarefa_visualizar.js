@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getTask } = require('../../../database/schemas/User_tasks')
 const { listAllUserGroups, getUserGroup } = require('../../../database/schemas/User_tasks_group')
 
@@ -50,11 +48,10 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // Atualiza os dados das tarefas e listas
     client.atualiza_dados(task, interaction)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "util.tarefas.sua_tarefa"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`\`\`\`${client.defaultEmoji("paper")} | ${client.decifer(task.text)}\`\`\``)
-        .addFields(
+    const embed = client.create_embed({
+        title: { tls: "util.tarefas.sua_tarefa" },
+        description: `\`\`\`${client.defaultEmoji("paper")} | ${client.decifer(task.text)}\`\`\``,
+        fields: [
             {
                 name: `${client.defaultEmoji("paper")} **${client.tls.phrase(user, "util.tarefas.lista")}**`,
                 value: `\`${nome_lista}\``,
@@ -65,11 +62,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
                 value: `<t:${task.timestamp}:f>`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "util.tarefas.selecionar_botoes"),
+        ],
+        footer: {
+            text: { tls: "util.tarefas.selecionar_botoes" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     // Criando os botões para as funções de gestão de tarefas
     const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }]

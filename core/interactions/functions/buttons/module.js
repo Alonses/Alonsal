@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getModule, dropModule } = require('../../../database/schemas/User_modules')
 const { atualiza_modulos } = require('../../../auto/triggers/user_modules')
 
@@ -31,14 +29,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Módulo do history
         if (modulo.type === 2 && modulo.data === null) {
 
-            const embed = new EmbedBuilder()
-                .setTitle(client.tls.phrase(user, "misc.modulo.definir_tipo"))
-                .setColor(client.embed_color(user.misc.color))
-                .setDescription(client.tls.phrase(user, "misc.modulo.descricao_tipo_history"))
-                .setFooter({
+            const embed = client.create_embed({
+                title: { tls: "misc.modulo.definir_tipo" },
+                description: { tls: "misc.modulo.descricao_tipo_history" },
+                footer: {
                     text: client.tls.phrase(user, "misc.modulo.rodape_tipo_modulo"),
                     iconURL: interaction.user.avatarURL({ dynamic: true })
-                })
+                }
+            }, user)
 
             const row = client.create_buttons([
                 { id: "module_history_button", name: { tls: "menu.botoes.completo", alvo: user }, emoji: '📰', type: 2, data: `1|${timestamp}` },

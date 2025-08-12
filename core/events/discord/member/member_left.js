@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { dropUserGuild } = require('../../../database/schemas/User_guilds.js')
 
@@ -52,17 +52,18 @@ module.exports = async (client, dados) => {
         if (registroAudita.targetId === user_alvo.id || !guild.logger.member_left)
             return // Usuário foi banido ou recurso desativado
 
-    let embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(guild, "mode.logger.membro_saiu"))
-        .setColor(client.embed_color("salmao"))
-        .setFields(
+    let embed = client.create_embed({
+        title: { tls: "mode.logger.membro_saiu" },
+        color: "salmao",
+        fields: [
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     // Data de entrada do membro no servidor
     const user_guild = dados

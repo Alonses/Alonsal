@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { getNetworkedGuilds } = require("../../database/schemas/Guild")
 
@@ -56,11 +56,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         }
     })
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> Networking ${client.emoji(36)}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.network.descricao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> Networking ${client.emoji(36)}`,
+        description: { tls: "mode.network.descricao" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores_link")}: ${servidores_link}**`,
@@ -86,7 +85,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `\`${guild.network.scanner.type ? `${emoji_pessoa} ${client.tls.phrase(user, "mode.network.filtro_apenas_humanos")}` : `${client.emoji(5)} ${client.tls.phrase(user, "mode.network.filtro_todas_fontes")}`}\` ( :twisted_rightwards_arrows: :globe_with_meridians: )`,
                 inline: false
             }
-        )
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
+            iconURL: interaction.user.avatarURL({ dynamic: true })
+        }
+    }, user)
 
     if (pagina === 2) // Página com a lista de servidores do network
         embed.setFields(
@@ -112,7 +116,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             }
         )
     else {
-        embed.addFields(
+        embed.setFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
@@ -125,11 +129,6 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             }
         )
     }
-
-    embed.setFooter({
-        text: client.tls.phrase(user, "manu.painel.rodape"),
-        iconURL: interaction.user.avatarURL({ dynamic: true })
-    })
 
     if (pagina === 0)
         botoes.push(

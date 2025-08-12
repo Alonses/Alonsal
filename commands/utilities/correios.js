@@ -1,7 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -49,10 +49,10 @@ module.exports = {
                         nota_rodape = client.tls.phrase(user, "util.rastreio.codigo_invalido")
                     }
 
-                    const embed = new EmbedBuilder()
-                        .setTitle(titulo)
-                        .setColor(client.embed_color(user.misc.color))
-                        .setDescription(`${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(user, "util.rastreio.codigo")}:** \`${texto_entrada}\``)
+                    const embed = client.create_embed({
+                        title: titulo,
+                        description: `${objeto_nao_encontrado}${eventos_transp.join("\n")}\n:label: **${client.tls.phrase(user, "util.rastreio.codigo")}:** \`${texto_entrada}\``
+                    }, user)
 
                     if (nota_rodape.length > 1)
                         embed.setFooter({

@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -9,11 +9,10 @@ module.exports = async ({ client, user, interaction }) => {
     const membro_sv = await client.getMemberGuild(interaction, client.id())
     let b_cargos = false
 
-    const embed = new EmbedBuilder()
-        .setTitle(`> ${client.tls.phrase(user, "manu.painel.anuncio_games")} :video_game:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.anuncio.descricao"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `> ${client.tls.phrase(user, "manu.painel.anuncio_games")} :video_game:`,
+        description: { tls: "mode.anuncio.descricao" },
+        fields: [
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
@@ -34,11 +33,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: false
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     // Desabilitando o botão de escolher cargos
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles)) {

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { dropSuspiciousLink, getCachedSuspiciousLink, getAllGuildSuspiciousLinks, listAllSuspiciousLinks } = require("../../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
@@ -69,14 +67,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Navegando pelos links suspeitos do servidor
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.link_suspeito.navegando_titulo"))
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.link_suspeito.descricao_links_suspeitos"))
-            .setFooter({
-                text: client.tls.phrase(user, "mode.link_suspeito.navegar_links"),
+        const embed = client.create_embed({
+            title: { tls: "mode.link_suspeito.navegando_titulo" },
+            description: { tls: "mode.link_suspeito.descricao_links_suspeitos" },
+            footer: {
+                text: { tls: "mode.link_suspeito.navegar_links" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         // Definindo o canal de avisos do log de eventos
         const data = {

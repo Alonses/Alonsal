@@ -1,4 +1,4 @@
-const { EmbedBuilder, AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
 
 const { verifyDynamicBadge } = require('../../../database/schemas/User_badges')
 
@@ -40,11 +40,11 @@ module.exports = async ({ client, guild }) => {
                         { name: { tls: "inic.inicio.suporte", alvo: inviter }, type: 4, emoji: client.emoji("icon_rules_channel"), value: process.env.url_support }
                     ])
 
-                    const embed = new EmbedBuilder()
-                        .setTitle(client.tls.phrase(inviter, "inic.ping.titulo"))
-                        .setColor(client.embed_color(inviter.misc.color))
-                        .setImage("https://i.imgur.com/N8AFVTH.png")
-                        .setDescription(`${client.tls.phrase(inviter, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(inviter, "inic.ping.idioma_dica_server")}`)
+                    const embed = client.create_embed({
+                        title: { tls: "inic.ping.titulo" },
+                        image: "https://i.imgur.com/N8AFVTH.png",
+                        description: `${client.tls.phrase(inviter, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(inviter, "inic.ping.idioma_dica_server")}`
+                    }, inviter)
 
                     client.sendDM(inviter, { embeds: [embed], components: [row] }, true)
                 }
@@ -59,11 +59,12 @@ module.exports = async ({ client, guild }) => {
         })
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle("> 🟢 Server update")
-        .setColor(client.embed_color("turquesa"))
-        .setDescription(`:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`)
-        .setTimestamp()
+    const embed = client.create_embed({
+        title: "> 🟢 Server update",
+        color: "turquesa",
+        description: `:globe_with_meridians: ( \`${guild.id}\` | \`${guild.name}\` )${server_info}`,
+        timestamp: true
+    })
 
     client.notify(process.env.channel_server, { embeds: [embed] })
 }

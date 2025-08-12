@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -26,11 +26,11 @@ module.exports = {
             { name: { tls: "inic.inicio.convidar", alvo: user }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }
         ], interaction)
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "manu.convite.titulo"))
-            .setColor(client.embed_color(user.misc.color))
-            .setImage("https://i.imgur.com/N8AFVTH.png")
-            .setDescription(client.tls.phrase(user, "manu.convite.convite"))
+        const embed = client.create_embed({
+            title: { tls: "manu.convite.titulo" },
+            image: "https://i.imgur.com/N8AFVTH.png",
+            description: { tls: "manu.convite.convite" }
+        }, user)
 
         interaction.reply({
             embeds: [embed],

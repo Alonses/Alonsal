@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { getCachedSuspiciousLink } = require("../../database/schemas/Spam_links")
 
 module.exports = async ({ client, user, interaction, dados }) => {
@@ -13,21 +11,21 @@ module.exports = async ({ client, user, interaction, dados }) => {
             content: client.tls.phrase(user, "mode.link_suspeito.link_nao_encontrado", 1)
         })
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.link_suspeito.titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.link_suspeito.descricao_link", null, client.decifer(link.link)))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.link_suspeito.titulo" },
+        description: { tls: "mode.link_suspeito.descricao_link", replace: client.decifer(link.link) },
+        fields: [
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "mode.link_suspeito.identificado")} <t:${timestamp}:R>**`,
                 value: `( <t:${timestamp}:f> )`,
                 inline: false
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "mode.link_suspeito.rodape_dica"),
+        ],
+        footer: {
+            text: { tls: "mode.link_suspeito.rodape_dica" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const row = client.create_buttons([
         { id: "spam_link_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `2.${pagina}` },

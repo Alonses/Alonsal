@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
@@ -15,11 +15,10 @@ module.exports = async ({ client, user, interaction }) => {
         await guild.save()
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${client.tls.phrase(user, "mode.timed_roles.titulo_painel")} :passport_control: ${client.defaultEmoji("time")}`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.timed_roles.descricao_painel"))
-        .setFields(
+    const embed = client.create_embed({
+        title: `${client.tls.phrase(user, "mode.timed_roles.titulo_painel")} :passport_control: ${client.defaultEmoji("time")}`,
+        description: { tls: "mode.timed_roles.descricao_painel" },
+        fields: [
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
                 value: guild.timed_roles.timeout ? `\`${client.tls.phrase(user, `menu.times.${defaultRoleTimes[guild.timed_roles.timeout]}`)}\`` : `\`❌ ${client.tls.phrase(user, "mode.timed_roles.sem_expiracao")}\``,
@@ -41,11 +40,12 @@ module.exports = async ({ client, user, interaction }) => {
                 value: `${client.execute("functions", "emoji_button.emoji_button", bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
-        )
-        .setFooter({
-            text: client.tls.phrase(user, "manu.painel.rodape"),
+        ],
+        footer: {
+            text: { tls: "manu.painel.rodape" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     const botoes = [
         { id: "guild_timed_roles_button", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "1" },

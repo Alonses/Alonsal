@@ -1,4 +1,4 @@
-const { ChannelType, EmbedBuilder } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
 
@@ -96,14 +96,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Converte o canal onde o membro está conectado atualmente em um canal de voz dinâmico
         if (operacao == 6) {
 
-            const embed = new EmbedBuilder()
-                .setTitle(`> ${client.tls.phrase(user, "mode.voice_channels.title_voice")} 🔊`)
-                .setColor(client.embed_color(user.misc.color))
-                .setDescription(client.tls.phrase(user, "mode.voice_channels.converter_canal"))
-                .setFooter({
+            const embed = client.create_embed({
+                title: `> ${client.tls.phrase(user, "mode.voice_channels.title_voice")} 🔊`,
+                description: { tls: "mode.voice_channels.converter_canal" },
+                footer: {
                     text: "⠀",
                     iconURL: interaction.user.avatarURL({ dynamic: true })
-                })
+                }
+            }, user)
 
             const botoes = [
                 { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },

@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1])
@@ -9,13 +7,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Funções
 
     let row, botoes
-    const embed = new EmbedBuilder()
-        .setTitle("> Selecione uma operação")
-        .setColor(client.embed_color("turquesa"))
-        .setFooter({
+    const embed = client.create_embed({
+        title: "> Selecione uma operação",
+        color: "turquesa",
+        footer: {
             text: "Selecione uma das opções abaixo para navegar",
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    })
 
     // Interação gerada por um botão de endpoint
     if (dados.includes("z")) {

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,13 +16,14 @@ module.exports = {
         const id_alvo = interaction.options.getString("canal")
         const canal_alvo = client.discord.channels.cache.get(id_alvo)
 
-        const embed = new EmbedBuilder()
-            .setTitle(`${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")}`)
-            .setColor(client.embed_color("turquesa"))
-            .setDescription(`${client.tls.phrase(user, "inic.vote.descricao", [client.emoji("emojis_dancantes"), client.emoji("emojis_dancantes")])} <t:1692460800:f>!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl:`)
-            .setFooter({
-                text: client.tls.phrase(user, "inic.vote.rodape")
-            })
+        const embed = client.create_embed({
+            title: `${client.tls.phrase(user, "inic.vote.titulo")} ${client.emoji("emojis_dancantes")}`,
+            color: "turquesa",
+            description: `${client.tls.phrase(user, "inic.vote.descricao", [client.emoji("emojis_dancantes"), client.emoji("emojis_dancantes")])} <t:1692460800:f>!\n\n:flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp:\n:flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de:\n:flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl: :flag_se: :flag_tr: :flag_jp: :flag_de: :flag_nl:`,
+            footer: {
+                text: { tls: "inic.vote.rodape" }
+            }
+        }, user)
 
         const row = client.create_buttons([
             { id: "vote_button", name: 'Deutsch', emoji: "🇩🇪", type: 1, data: "de" },

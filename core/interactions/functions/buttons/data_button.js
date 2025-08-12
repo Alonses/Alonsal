@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1]) || dados
@@ -25,10 +23,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (operacao === 3) {
 
-        const embed = new EmbedBuilder()
-            .setTitle(`> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`)
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "manu.data.descricao_tempo_inatividade"))
+        const embed = client.create_embed({
+            title: `> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`,
+            description: { tls: "manu.data.descricao_tempo_inatividade" }
+        }, user)
 
         const row = [
             { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "data" },

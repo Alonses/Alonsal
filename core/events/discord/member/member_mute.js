@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     const user_alvo = dados[0].user, timeout = registroAudita?.changes[0] ? parseInt(new Date(registroAudita?.changes[0].new) - new Date()) : null
@@ -28,11 +26,11 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (network_descricao.length > 1 || razao.length > 1)
         razao = `\n\`\`\`fix\n${network_descricao}${razao}\`\`\``
 
-    let embed = new EmbedBuilder()
-        .setTitle(timeout ? client.tls.phrase(guild, "mode.logger.membro_castigado_titulo") : client.tls.phrase(guild, "mode.logger.membro_perdoado_titulo"))
-        .setColor(timeout ? client.embed_color("salmao") : client.embed_color("branco"))
-        .setDescription(`${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`)
-        .setFields(
+    let embed = client.create_embed({
+        title: { tls: timeout ? "mode.logger.membro_castigado_titulo" : "mode.logger.membro_perdoado_titulo" },
+        color: timeout ? "salmao" : "branco",
+        description: `${timeout ? `**${client.tls.phrase(guild, "mode.logger.membro_castigado")}**` : `**${client.tls.phrase(guild, "mode.logger.membro_perdoado")}**`}${razao}`,
+        fields: [
             {
                 name: client.user_title(user_alvo, guild, "util.server.membro"),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
@@ -43,8 +41,9 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
-        )
-        .setTimestamp()
+        ],
+        timestamp: true
+    }, guild)
 
     if (timeout) { // Exibindo o tempo de castigo que o membro recebeu
 

@@ -1,4 +1,4 @@
-const { ChannelType, EmbedBuilder } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
@@ -74,14 +74,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (indice_matriz !== 5 && (strikes.length - 1) !== indice_matriz)
             texto_aviso_indice = client.tls.phrase(user, "mode.spam.indice_matriz")
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.spam.configurando_strikes"))
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(`${client.tls.phrase(user, "mode.spam.descricao_configuracao_strike")}${texto_aviso_indice}`)
-            .setFooter({
-                text: client.tls.phrase(user, "mode.warn.customizacao_rodape"),
+        const embed = client.create_embed({
+            title: { tls: "mode.spam.configurando_strikes" },
+            description: `${client.tls.phrase(user, "mode.spam.descricao_configuracao_strike")}${texto_aviso_indice}`,
+            footer: {
+                text: { tls: "mode.warn.customizacao_rodape" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         return interaction.update({
             embeds: [embed],

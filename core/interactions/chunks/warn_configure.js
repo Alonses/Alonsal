@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require("discord.js")
 
 const { emoji_button } = require("../../functions/emoji_button")
 
@@ -19,11 +19,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         warn.save()
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.warn.edicao_warn_titulo", null, warn.rank + 1))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.warn.descricao_edicao_warn"))
-        .setFields(
+    const embed = client.create_embed({
+        title: { tls: "mode.warn.edicao_warn_titulo", replace: warn.rank + 1 },
+        description: { tls: "mode.warn.descricao_edicao_warn" },
+        fields: [
             {
                 name: `${client.defaultEmoji("warn")} **${client.tls.phrase(user, "menu.botoes.penalidade")}**`,
                 value: `**${warn.action ? `${loggerMap[warn.action]} \`${client.tls.phrase(user, `menu.events.${warn.action}`)}\`` : `📝 ${client.tls.phrase(user, "mode.warn.sem_penalidade")}`}**`,
@@ -38,15 +37,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.cargo_temporario")}**`,
                 value: `**${warn.timed_role.status ? `\`${client.tls.phrase(user, "status.ativo")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\`` : `\`${client.tls.phrase(user, "status.desativado")}\` \`${client.defaultEmoji("time")} ${client.tls.phrase(user, `menu.times.${defaultRoleTimes[warn.timed_role.timeout]}`)}\``}**`,
                 inline: true
-            }
-        )
-        .addFields(
+            },
             {
                 name: `${client.emoji(53)} **${client.tls.phrase(user, "menu.botoes.tempo_mute")}**`,
                 value: `**${warn.timeout != null ? `${client.defaultEmoji("time")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[warn.timeout]}`)}\`` : client.tls.phrase(user, "mode.spam.sem_tempo_definido")}**`,
                 inline: false
             }
-        )
+        ]
+    }, user)
 
     if (guild.warn.reset)
         embed.addFields(

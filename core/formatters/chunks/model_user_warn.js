@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 const { getUserWarn, listAllUserWarns } = require('../../database/schemas/User_warns')
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 const { getUserPreWarn, listAllUserPreWarns } = require('../../database/schemas/User_pre_warns')
@@ -37,11 +35,10 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     await user_warn.save()
 
-    const embed = new EmbedBuilder()
-        .setTitle(`${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : client.tls.phrase(user, "mode.anotacoes.nova_anotacao")} :inbox_tray:`)
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.descricao_inclusao_warn", null, descricao_warn) : client.tls.phrase(user, "mode.anotacoes.descricao_nova_anotacao", null, [descricao_warn, client.emoji("banidos"), warns_recebidos.length + 1]))
-        .addFields(
+    const embed = client.create_embed({
+        title: `${!guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.criando_advertencia") : client.tls.phrase(user, "mode.anotacoes.nova_anotacao")} :inbox_tray:`,
+        description: !guild.warn.hierarchy.status ? client.tls.phrase(user, "mode.warn.descricao_inclusao_warn", null, descricao_warn) : client.tls.phrase(user, "mode.anotacoes.descricao_nova_anotacao", null, [descricao_warn, client.emoji("banidos"), warns_recebidos.length + 1]),
+        fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
                 value: `${client.emoji("icon_id")} \`${guild_member.id}\`\n${client.emoji("mc_name_tag")} \`${guild_member.user.username}\`\n( <@${guild_member.id}> )`,
@@ -52,7 +49,8 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
                 value: `${client.emoji("icon_id")} \`${interaction.user.id}\`\n${client.emoji("mc_name_tag")} \`${interaction.user.username}\`\n( <@${interaction.user.id}> )`,
                 inline: true
             }
-        )
+        ]
+    }, user)
 
     if (!guild.warn.hierarchy.status) {
 
@@ -95,11 +93,13 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     // Advertência com prazo de expiração
     if (id_warn === "create_warn")
         if (guild.warn.timed) {
-            embed.addFields({
-                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
-                value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
-                inline: true
-            })
+            embed.addFields(
+                {
+                    name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
+                    value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
+                    inline: true
+                }
+            )
 
             texto_rodape = client.tls.phrase(user, "mode.warn.dica_expiracao_rodape")
         } else
@@ -107,11 +107,13 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     // Anotações de advertência com prazo de expiração
     if (id_warn === "pre_warn_create" && guild.warn.hierarchy.timed) {
-        embed.addFields({
-            name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
-            value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${client.timestamp() + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
-            inline: true
-        })
+        embed.addFields(
+            {
+                name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
+                value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${client.timestamp() + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
+                inline: true
+            }
+        )
 
         texto_rodape = client.tls.phrase(user, "mode.anotacoes.dica_rodape")
     }

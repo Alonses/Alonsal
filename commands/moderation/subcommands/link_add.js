@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const { verifySuspiciousLink, registerCachedSuspiciousLink } = require("../../../core/database/schemas/Spam_links")
 
 const { links_oficiais } = require("../../../core/formatters/patterns/guild")
@@ -23,14 +21,14 @@ module.exports = async ({ client, user, interaction }) => {
     const timestamp = client.timestamp()
     await registerCachedSuspiciousLink(link, client.encrypt(interaction.guild.id), timestamp)
 
-    const embed = new EmbedBuilder()
-        .setTitle(client.tls.phrase(user, "mode.link_suspeito.registrando_link_titulo"))
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(client.tls.phrase(user, "mode.link_suspeito.registrando_link_descricao", null, link))
-        .setFooter({
-            text: client.tls.phrase(user, "mode.link_suspeito.rodape_opcoes"),
+    const embed = client.create_embed({
+        title: { tls: "mode.link_suspeito.registrando_link_titulo" },
+        description: { tls: "mode.link_suspeito.registrando_link_descricao", replace: link },
+        footer: {
+            text: { tls: "mode.link_suspeito.rodape_opcoes" },
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
+        }
+    }, user)
 
     // Criando os botões para excluir o link suspeito
     const row = client.create_buttons([

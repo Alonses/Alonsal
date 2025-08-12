@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = async ({ client, user, interaction, user_command }) => {
 
     const x = interaction.options.getInteger("x")
@@ -31,10 +29,10 @@ module.exports = async ({ client, user, interaction, user_command }) => {
         i++
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle("> Sua posição na chunk")
-        .setColor(client.embed_color(user.misc.color))
-        .setDescription(`${client.defaultEmoji("earth")} **Coordenadas:** X: \`${x}\`, Z: \`${z}\`\n\n**Dentro da chunk:** X: \`${x_chunk}\`, Z: \`${z_chunk}\`\n\`\`\`${chunk.join("\n")}\`\`\``)
+    const embed = client.create_embed({
+        title: "> Sua posição na chunk",
+        description: `${client.defaultEmoji("earth")} **Coordenadas:** X: \`${x}\`, Z: \`${z}\`\n\n**Dentro da chunk:** X: \`${x_chunk}\`, Z: \`${z_chunk}\`\n\`\`\`${chunk.join("\n")}\`\`\``
+    }, user)
 
     interaction.reply({
         embeds: [embed],

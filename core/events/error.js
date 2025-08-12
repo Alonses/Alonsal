@@ -1,11 +1,9 @@
-const { EmbedBuilder } = require('discord.js')
-
 module.exports = (client, err, local) => {
 
-    const embed = new EmbedBuilder({
+    const embed = client.create_embed({
         title: `> CeiraException | ${local}`,
-        description: `\`\`\`🛑 ${err.name} - ${err.message}\n\n📑 Local: ${err.stack}\`\`\``,
-        color: client.embed_color("vermelho")
+        color: "vermelho",
+        description: `\`\`\`🛑 ${err.name} - ${err.message}\n\n📑 Local: ${err.stack}\`\`\``
     })
 
     console.log(err)

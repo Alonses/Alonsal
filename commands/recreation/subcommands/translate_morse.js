@@ -1,5 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
-
 const morse = require('../../../files/json/text/morse.json')
 
 module.exports = async ({ client, user, interaction, user_command }) => {
@@ -47,14 +45,14 @@ module.exports = async ({ client, user, interaction, user_command }) => {
         titulo = client.tls.phrase(user, "util.morse.error")
     }
 
-    const embed = new EmbedBuilder()
-        .setTitle(titulo)
-        .setColor(client.embed_color(user.misc.color))
-        .setAuthor({
+    const embed = client.create_embed({
+        title: titulo,
+        description: `\`\`\`${texto_ordenado}\`\`\``,
+        author: {
             name: interaction.user.username,
             iconURL: interaction.user.avatarURL({ dynamic: true })
-        })
-        .setDescription(`\`\`\`${texto_ordenado}\`\`\``)
+        }
+    }, user)
 
     if (aviso.length > 0)
         embed.setFooter({

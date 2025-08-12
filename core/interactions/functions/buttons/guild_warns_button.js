@@ -1,4 +1,4 @@
-const { ChannelType, EmbedBuilder } = require('discord.js')
+const { ChannelType } = require('discord.js')
 
 const { atualiza_warns } = require('../../../auto/triggers/user_warns')
 const { listAllGuildWarns, getGuildWarn } = require('../../../database/schemas/Guild_warns')
@@ -98,14 +98,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (botoes.length < 5) // Botão para adicionar uma nova advertência
             row.push({ id: "warn_configure_button", name: { tls: "menu.botoes.nova_advertencia", alvo: user }, type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
 
-        const embed = new EmbedBuilder()
-            .setTitle(client.tls.phrase(user, "mode.warn.configurando_warns"))
-            .setColor(client.embed_color(user.misc.color))
-            .setDescription(client.tls.phrase(user, "mode.warn.descricao_configuracao_warn"))
-            .setFooter({
-                text: client.tls.phrase(user, "mode.warn.customizacao_rodape"),
+        const embed = client.create_embed({
+            title: { tls: "mode.warn.configurando_warns" },
+            description: { tls: "mode.warn.descricao_configuracao_warn" },
+            footer: {
+                text: { tls: "mode.warn.customizacao_rodape" },
                 iconURL: interaction.user.avatarURL({ dynamic: true })
-            })
+            }
+        }, user)
 
         return interaction.update({
             embeds: [embed],
