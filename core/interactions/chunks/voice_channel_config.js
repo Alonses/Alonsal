@@ -21,6 +21,9 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
 
     } else {
 
+        // Validando se o autor da mensagem com o card do canal é o mesmo bot
+        if (client.decifer(voice_channel.bit) !== client.id()) return
+
         // Atualizando a mensagem original com o painel de controle do canal de voz
         canal_guild.messages.fetch(client.decifer(voice_channel.mid))
             .then(async (m) => { m.edit(await gera_painel(client, user, id_canal, canal_guild, voice_channel)) })
@@ -94,7 +97,9 @@ async function envia_painel(client, user, interaction, voice_channel, canal_guil
 
     canal_guild.send(obj)
         .then(async (message) => {
+
             voice_channel.mid = client.encrypt(message.id)
+            voice_channel.bit = client.encrypt(client.id())
             await voice_channel.save()
 
             if (interaction)

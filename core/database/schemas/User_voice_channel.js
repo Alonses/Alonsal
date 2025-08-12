@@ -4,12 +4,14 @@ const mongoose = require("mongoose")
 // sid -> Server ID
 // cid -> Channel ID
 // mid -> Message ID
+// bit -> Bot ID
 
 const schema = new mongoose.Schema({
     uid: { type: String, default: null },
     sid: { type: String, default: null },
     cid: { type: String, default: null },
     mid: { type: String, default: null },
+    bit: { type: String, default: null },
     conf: {
         mute: { type: Boolean, default: false }
     }
