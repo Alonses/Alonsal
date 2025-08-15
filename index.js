@@ -5,7 +5,7 @@ const { client_data } = require('./setup')
 
 if (client_data.sharding) {
 
-    const nicknames = require('./files/json/text/nicknames.json')
+    const { nicknames } = require('./files/json/text/nicknames.json')
 
     const manager = new ShardingManager('./bot.js', { token: client_data.token })
     manager.on('shardCreate', shard => console.log(`💠 | Shard ${nicknames[shard.id]} ativado`))

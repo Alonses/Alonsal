@@ -10,7 +10,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Tratamento dos cliques
     // 1 -> Definir limite para o canal
-    // 2 -> Tornar canal privado
+    // 2 -> Tornar o canal privado
+    // 3 -> Tornar o canal público
+
+    // 5 & 6 -> Mutar e desmutar o canal
 
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id))
 

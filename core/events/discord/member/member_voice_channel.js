@@ -25,11 +25,11 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                 const guild_member = await client.getMemberGuild(guild.sid, id_user)
                 const cached_guild = await client.guilds(guild.sid)
-                const nicknames = require('../../../../files/json/text/nicknames.json')
+                const { nicknames } = require('../../../../files/json/text/nicknames.json')
 
                 // Criando o canal dinâmico na categoria definida no servidor
                 await cached_guild.channels.create({
-                    name: `${client.defaultEmoji("person")} ${nicknames[client.random(27)]}`,
+                    name: `${client.defaultEmoji("person")} ${nicknames[client.random(nicknames)]}`,
                     type: ChannelType.GuildVoice,
                     parent: client.decifer(guild.voice_channels.category),
                     permissionOverwrites: [
