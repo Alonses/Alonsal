@@ -117,7 +117,16 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         { id: "guild_anti_spam_channels", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: `1.${id_categoria}.${pagina}` }
     ]
 
+    const obj = {
+        embeds: [embed],
+        components: [client.create_buttons(row, interaction)],
+        flags: "Ephemeral"
+    }
+
+    if (botao_categorias.length > 0)
+        obj.components.unshift(client.create_buttons(botao_categorias, interaction))
+
     // Atualizando a interação para o usuário
-    if (!operacao) interaction.reply({ embeds: [embed], components: [client.create_buttons(botao_categorias, interaction), client.create_buttons(row, interaction)], flags: "Ephemeral" })
-    else interaction.update({ embeds: [embed], components: [client.create_buttons(botao_categorias, interaction), client.create_buttons(row, interaction)], flags: "Ephemeral" })
+    if (!operacao) interaction.reply(obj)
+    else interaction.update(obj)
 }
