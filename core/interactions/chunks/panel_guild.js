@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina == 3) // Botão para avançar
         c_menu[1] = true
 
-    let botoes = [{ id: "navigation_button_panel", name: '◀️', type: 0, data: `${pagina}.0.panel_guild`, disabled: c_menu[0] }]
+    let botoes = [{ id: "navigation_button_panel", name: '◀', type: 0, data: `${pagina}.0.panel_guild`, disabled: c_menu[0] }]
 
     if (c_menu[0])
         botoes = [{ id: "data_guild_button", name: client.defaultEmoji("paper"), type: 2, data: "0" }]
@@ -224,7 +224,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "guild_panel_button", name: { tls: "manu.painel.misterioso", alvo: user }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
         )
 
-    botoes.push({ id: "navigation_button_panel", name: '▶️', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })
+    botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })
 
     client.reply(interaction, {
         content: "",

@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 const { getGameChannels, getSpecificGameChannel } = require('../database/schemas/Guild')
 
@@ -86,7 +86,7 @@ async function fragmenta_envio(client, obj_anuncio, indice) {
         const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
 
         if (canal_alvo) { // Enviando os anúncios para os canais
-            if (canal_alvo.type === 0 || canal_alvo.type === 5) {
+            if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
 
                 // Permissão para enviar mensagens no canal
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {

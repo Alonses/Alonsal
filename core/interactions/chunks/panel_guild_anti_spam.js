@@ -107,7 +107,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const row = [
         { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" },
         { id: "guild_anti_spam_button", name: "Strikes", type: 1, emoji: client.defaultEmoji("guard"), data: "4" },
-        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.varredura", alvo: user }, type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" }
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.varredura", alvo: user }, type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
+        { id: "guild_anti_spam_channels", name: { tls: "menu.botoes.verificar_servidor", alvo: user }, type: 3, emoji: client.defaultEmoji("judge"), data: 0 }
     ]
 
     return client.reply(interaction, {

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, AttachmentBuilder, PermissionsBitField, PermissionFlagsBits, ChannelType } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ module.exports = {
 
         const canal_alvo = await client.channels().get(corpo_mail.canal)
 
-        if (canal_alvo.type === 0 || canal_alvo.type === 5) {
+        if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
             if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo)) {
                 if (corpo_mail.anexo) {
                     const img_anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)

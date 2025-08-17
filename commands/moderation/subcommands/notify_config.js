@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
@@ -16,10 +16,9 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     if (dados.channel) {
-        // Tipo 0 -> Canal de texto tipo normal
-        // Tipo 5 -> Canal de texto tipo anúncios
 
-        if (dados.channel.type !== 0 && dados.channel.type !== 5) // Verificando se o canal mencionado é inválido
+        // Verificando se o canal mencionado é inválido
+        if (dados.channel.type !== ChannelType.GuildText && dados.channel.type !== ChannelType.GuildAnnouncement)
             return client.tls.reply(interaction, user, "mode.anuncio.tipo_canal", true, client.defaultEmoji("types"))
 
         dados.channel = dados.channel.id

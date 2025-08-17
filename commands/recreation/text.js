@@ -40,7 +40,7 @@ module.exports = {
                 })
                 .addChoices(
                     { name: '📠 Anagram', value: 'anagram' },
-                    { name: '◀ Reverse', value: 'reverse' },
+                    { name: '◀️ Reverse', value: 'reverse' },
                     { name: '⏫ Upper', value: 'upper' },
                     { name: '🔠 Sans', value: 'sans' },
                     { name: '😁 Emoji', value: 'emoji' },

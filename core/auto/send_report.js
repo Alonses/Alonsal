@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 const { getReportChannels, getReportNetworkChannels } = require("../database/schemas/Guild")
 
@@ -23,7 +23,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
             guild.lang = "pt-br"
 
         if (canal_alvo) // Enviando os anúncios para os canais
-            if (canal_alvo.type === 0 || canal_alvo.type === 5) // Permissão para enviar mensagens no canal
+            if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) // Permissão para enviar mensagens no canal
                 if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
 
                     let escopo_anuncio = `( ${client.defaultEmoji("earth")} ${client.tls.phrase(guild, "mode.report.aviso_global")} )`

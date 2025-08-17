@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js')
+const { PermissionsBitField, ChannelType } = require('discord.js')
 
 const { free_games } = require('../../../core/functions/free_games.js')
 
@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
     const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
 
     if (canal_alvo) {
-        if (canal_alvo.type === 0 || canal_alvo.type === 5) {
+        if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
 
             // Permissão para enviar mensagens no canal
             if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {

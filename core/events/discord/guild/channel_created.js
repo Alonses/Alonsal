@@ -1,4 +1,4 @@
-const { AuditLogEvent, PermissionsBitField } = require('discord.js')
+const { AuditLogEvent, PermissionsBitField, ChannelType } = require('discord.js')
 
 const { channelTypes } = require('../../../formatters/patterns/guild')
 const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
@@ -46,7 +46,7 @@ module.exports = async ({ client, channel }) => {
                 inline: true
             },
             {
-                name: `${client.defaultEmoji("paper")} **${registroAudita.target.type === 4 ? client.tls.phrase(guild, "util.server.categoria") : client.tls.phrase(guild, "mode.canal.canal")}**`,
+                name: `${client.defaultEmoji("paper")} **${registroAudita.target.type === ChannelType.GuildCategory ? client.tls.phrase(guild, "util.server.categoria") : client.tls.phrase(guild, "mode.canal.canal")}**`,
                 value: `${client.emoji("icon_id")} \`${channel.id}\`\n${registroAudita.target.type !== 4 ? `:placard: \`${channel.name}\`\n( <#${channel.id}> )` : `\`${channel.name}\``}`,
                 inline: true
             }

@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js")
+const { PermissionsBitField, ChannelType } = require("discord.js")
 
 const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
@@ -206,7 +206,7 @@ remove_spam = (client, id_user, id_guild, user_message) => {
     // Filters all messages on the server that were sent by the user in the last minute
     guild.channels.cache.forEach(async channel => {
 
-        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], channel) && (channel.type === 0 || channel.type == 2))
+        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.SendMessages], channel) && (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.PublicThread))
             await channel.messages.fetch({ limit: 15 })
                 .then(async messages => {
 
