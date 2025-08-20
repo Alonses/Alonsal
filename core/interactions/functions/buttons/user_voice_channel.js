@@ -25,8 +25,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Botão para retornar ao painel de configuração do canal de voz
     const row = client.create_buttons([
-        { id: "user_voice_channel", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
-    ], interaction)
+        { id: "user_voice_channel", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
+    ], interaction, user)
 
     if (escolha === 1) {
 

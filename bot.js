@@ -61,7 +61,7 @@ client.discord.on("messageCreate", async message => {
 		if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], message))
 			return message.reply({
 				content: client.tls.phrase(user, "inic.inicio.apresentacao", client.emoji("emojis_dancantes")),
-				components: [client.create_buttons([{ name: { tls: "inic.inicio.convidar", alvo: user }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message)]
+				components: [client.create_buttons([{ name: { tls: "inic.inicio.convidar" }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message, user)]
 			}).catch(console.error)
 
 	if (guild.spam.suspicious_links) { // Checking the text for a malicious link

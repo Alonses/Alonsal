@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             }
 
             obj.embeds = [embed]
-            obj.components = [client.create_menus({ interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19) }], interaction)]
+            obj.components = [client.create_menus({ interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19) }], interaction, user)]
             let row = client.menu_navigation(user, data, pagina)
 
             if (row.length > 0) // Botões de navegação

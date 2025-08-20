@@ -20,9 +20,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Criando os botões para o menu de remoção de warns
         const row = client.create_buttons([
-            { id: "user_reset_warns", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}` },
-            { id: "user_reset_warns", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
-        ], interaction)
+            { id: "user_reset_warns", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}` },
+            { id: "user_reset_warns", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
+        ], interaction, user)
 
         // Listando os botões para confirmar e cancelar a operação
         return interaction.update({

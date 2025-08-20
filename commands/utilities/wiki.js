@@ -109,8 +109,8 @@ module.exports = {
                     fields.length = fields.length > 5 ? 5 : fields.length
 
                     const row = client.create_buttons([
-                        { name: { tls: "util.wiki.artigo_completo", alvo: user }, value: res.AbstractURL, type: 4, emoji: "🌐" }
-                    ], interaction)
+                        { name: { tls: "util.wiki.artigo_completo" }, value: res.AbstractURL, type: 4, emoji: "🌐" }
+                    ], interaction, user)
 
                     const embed = client.create_embed({
                         title: res.Heading,

@@ -65,15 +65,15 @@ module.exports = async ({ client, user, interaction }) => {
                 b_disabled[3] = true
 
             const botoes = [
-                { id: "guild_verify_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "3" },
-                { id: "guild_verify_button", name: { tls: "mode.warn.advertencias", alvo: user }, type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
-                { id: "guild_verify_button", name: { tls: "menu.botoes.anotacoes", alvo: user }, type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
-                { id: "guild_verify_button", name: { tls: "mode.report.reportados", alvo: user }, type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
+                { id: "guild_verify_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "3" },
+                { id: "guild_verify_button", name: { tls: "mode.warn.advertencias" }, type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
+                { id: "guild_verify_button", name: { tls: "menu.botoes.anotacoes" }, type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
+                { id: "guild_verify_button", name: { tls: "mode.report.reportados" }, type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 
             return interaction.editReply({
                 embeds: [embed],
-                components: [client.create_buttons(botoes, interaction)],
+                components: [client.create_buttons(botoes, interaction, user)],
                 flags: "Ephemeral"
             })
         })

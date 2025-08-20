@@ -48,14 +48,14 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const botoes = [
-        { id: "guild_timed_roles_button", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "1" },
-        { id: "guild_timed_roles_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
+        { id: "guild_timed_roles_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "1" },
+        { id: "guild_timed_roles_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction, user)],
         flags: "Ephemeral"
     })
 }

@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             values: eventos
         }
 
-        const botoes = client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_network" }], interaction)
+        const botoes = client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_network" }], interaction, user)
         const multi_select = true
 
         return interaction.update({
@@ -113,13 +113,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const multi_select = true
         const row = client.menu_navigation(user, data, pagina || 0)
-        let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback }]
+        let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.editReply({
-            components: [client.create_menus({ interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -143,13 +143,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }, user)
 
         const botoes = [
-            { id: "guild_network_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: "11" },
-            { id: "guild_network_button", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: "0" }
+            { id: "guild_network_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: "11" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
         ]
 
         return client.reply(interaction, {
             embeds: [embed],
-            components: [client.create_buttons(botoes, interaction)]
+            components: [client.create_buttons(botoes, interaction, user)]
         })
 
     } else if (operacao === 5) {
@@ -175,15 +175,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.1` },
-            { id: "guild_network_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "5" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.1` },
+            { id: "guild_network_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "5" }
         ]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -201,8 +201,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.1` }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.1` }
+        ], interaction, user)
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), row],

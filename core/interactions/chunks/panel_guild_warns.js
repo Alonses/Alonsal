@@ -101,36 +101,36 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (pagina === 0) // Página inicial da guia de advertências
         botoes.push(
-            { id: "guild_warns_button", name: { tls: "mode.warn.advertencias", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.conf.warn), emoji: client.execute("functions", "emoji_button.emoji_button", guild.conf.warn), data: "1" },
-            { id: "guild_warns_button", name: { tls: "mode.warn.com_validade", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.warn.timed), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.timed), data: "6" },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.notificacoes", alvo: user }, type: 1, emoji: client.emoji(41), data: "15" },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.ajustes", alvo: user }, type: 1, emoji: client.emoji(41), data: "9" }
+            { id: "guild_warns_button", name: { tls: "mode.warn.advertencias" }, type: client.execute("functions", "emoji_button.type_button", guild.conf.warn), emoji: client.execute("functions", "emoji_button.emoji_button", guild.conf.warn), data: "1" },
+            { id: "guild_warns_button", name: { tls: "mode.warn.com_validade" }, type: client.execute("functions", "emoji_button.type_button", guild.warn.timed), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.timed), data: "6" },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.notificacoes" }, type: 1, emoji: client.emoji(41), data: "15" },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.ajustes" }, type: 1, emoji: client.emoji(41), data: "9" }
         )
     else if (pagina === 1) // Página de notificações de advertências
         botoes.push(
-            { id: "guild_warns_button", name: { tls: "mode.spam.mencoes", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.notify), data: "8", disabled: guild.warn?.announce?.status },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.notificar_remocao", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.notify_exclusion), data: "10" },
-            { id: "guild_warns_button", name: { tls: "mode.warn.anunciar_publicamente", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild.warn?.announce?.status), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn?.announce?.status), data: "11", disabled: guild.warn?.announce?.channel ? false : true },
-            { id: "guild_warns_button", name: { tls: "mode.warn.canal_publico", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "12" },
+            { id: "guild_warns_button", name: { tls: "mode.spam.mencoes" }, type: client.execute("functions", "emoji_button.type_button", guild.warn.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.notify), data: "8", disabled: guild.warn?.announce?.status },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.notificar_remocao" }, type: client.execute("functions", "emoji_button.type_button", guild.warn.notify_exclusion), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.notify_exclusion), data: "10" },
+            { id: "guild_warns_button", name: { tls: "mode.warn.anunciar_publicamente" }, type: client.execute("functions", "emoji_button.type_button", guild.warn?.announce?.status), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn?.announce?.status), data: "11", disabled: guild.warn?.announce?.channel ? false : true },
+            { id: "guild_warns_button", name: { tls: "mode.warn.canal_publico" }, type: 1, emoji: client.defaultEmoji("channel"), data: "12" },
         )
     else // Página de configurações das advertências
         botoes.push(
-            { id: "guild_warns_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.canal_temporario", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "17" },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "16" },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.exclusao", alvo: user }, type: 1, emoji: client.emoji(13), data: "7" }
+            { id: "guild_warns_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.canal_temporario" }, type: 1, emoji: client.defaultEmoji("channel"), data: "17" },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "16" },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.exclusao" }, type: 1, emoji: client.emoji(13), data: "7" }
         )
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_warns.0" },
-        { id: "guild_hierarchy_warns_button", name: { tls: "mode.hierarquia.hierarquia", alvo: user }, type: 1, emoji: client.emoji(65), data: "30" },
-        { id: "guild_warns_button", name: { tls: "mode.warn.advertencias", alvo: user }, type: 1, emoji: client.defaultEmoji("guard"), data: "3" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_warns.0" },
+        { id: "guild_hierarchy_warns_button", name: { tls: "mode.hierarquia.hierarquia" }, type: 1, emoji: client.emoji(65), data: "30" },
+        { id: "guild_warns_button", name: { tls: "mode.warn.advertencias" }, type: 1, emoji: client.defaultEmoji("guard"), data: "3" }
     ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     })
 }

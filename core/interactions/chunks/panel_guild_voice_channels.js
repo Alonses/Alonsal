@@ -59,29 +59,29 @@ module.exports = async ({ client, user, interaction }) => {
         falta_permissoes = true
 
     const botoes = [
-        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.voice_channels), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
-        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.canal_ativador", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" },
-        { id: "guild_voice_channels_button", name: { tls: "util.server.categoria", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "4" }
+        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.voice_channels), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
+        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.canal_ativador" }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" },
+        { id: "guild_voice_channels_button", name: { tls: "util.server.categoria" }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
+        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "4" }
     ]
 
-    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.3" }]
+    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.3" }]
     let mute_disabled = true
 
     // Permissões para conectar e falar em canais de voz
     if (membro_sv.permissions.has(PermissionsBitField.Flags.Connect) && membro_sv.permissions.has(PermissionsBitField.Flags.Speak)) {
         mute_disabled = false
-        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.mute_popup", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.voice_channels.mute_popup), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.voice_channels.mute_popup), data: "5", disabled: mute_disabled })
+        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.mute_popup" }, type: client.execute("functions", "emoji_button.type_button", guild?.voice_channels.mute_popup), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.voice_channels.mute_popup), data: "5", disabled: mute_disabled })
     }
 
     // Verificando se o usuário está conectado em um canal de voz
     if (interaction.member.voice.channel && !client.cached.voice_channels.has(`${client.encrypt(interaction.member.voice.channel.id)}.${client.encrypt(interaction.guild.id)}`, true))
-        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.converter_canal", alvo: user }, type: 1, emoji: "👾", data: "6" })
+        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.converter_canal" }, type: 1, emoji: "👾", data: "6" })
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     })
 }

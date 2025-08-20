@@ -36,8 +36,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (reportes_server.length > 0) {
             row = client.create_buttons([
-                { id: "return_button", name: { tls: "menu.botoes.ver_usuarios", alvo: user }, type: 0, emoji: client.emoji(19), data: "remove_report" }
-            ], interaction)
+                { id: "return_button", name: { tls: "menu.botoes.ver_usuarios" }, type: 0, emoji: client.emoji(19), data: "remove_report" }
+            ], interaction, user)
 
             obj.components.push(row)
         }
@@ -49,9 +49,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Criando os botões para o menu de remoção de reportes do servidor
         const row = client.create_buttons([
-            { id: "report_remove_user", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
-            { id: "report_remove_user", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
-        ], interaction)
+            { id: "report_remove_user", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
+            { id: "report_remove_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
+        ], interaction, user)
 
         // Listando os botões para confirmar e cancelar a operação
         return interaction.update({

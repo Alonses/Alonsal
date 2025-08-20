@@ -133,36 +133,36 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     if (pagina === 0)
         botoes.push(
             { id: "guild_network_button", name: "Network", type: client.execute("functions", "emoji_button.type_button", guild?.conf.network), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.network), data: "1" },
-            { id: "guild_network_button", name: { tls: "mode.network.eventos_sincronizados", alvo: user }, type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-            { id: "guild_network_button", name: { tls: "mode.network.servidores", alvo: user }, type: 1, emoji: client.emoji(32), data: "3" },
-            { id: "guild_network_button", name: { tls: "menu.botoes.ajustes", alvo: user }, type: 1, emoji: client.emoji(41), data: "9" }
+            { id: "guild_network_button", name: { tls: "mode.network.eventos_sincronizados" }, type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
+            { id: "guild_network_button", name: { tls: "mode.network.servidores" }, type: 1, emoji: client.emoji(32), data: "3" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.ajustes" }, type: 1, emoji: client.emoji(41), data: "9" }
         )
     else if (pagina === 1) {
         botoes.push(
-            { id: "guild_network_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-            { id: "guild_network_button", name: { tls: "menu.botoes.exclusao", alvo: user }, type: 1, emoji: client.emoji(13), data: "6" }
+            { id: "guild_network_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.exclusao" }, type: 1, emoji: client.emoji(13), data: "6" }
         )
 
         if (servidores_link > 1) // Network com mais de um servidor
-            botoes.push({ id: "guild_network_button", name: { tls: "mode.network.quebrar_vinculo", alvo: user }, type: 1, emoji: client.emoji(44), data: "4" })
+            botoes.push({ id: "guild_network_button", name: { tls: "mode.network.quebrar_vinculo" }, type: 1, emoji: client.emoji(44), data: "4" })
     }
 
     // Botões de retorno e estilo de sincronização permitida
-    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_network.0" }]
+    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_network.0" }]
 
     if (pagina !== 2)
         row.push(
-            { id: "guild_network_button", name: { tls: "menu.botoes.ver_network", alvo: user }, type: 1, emoji: client.emoji(36), data: "12", disabled: servidores_link > 1 ? false : true },
-            { id: "guild_network_button", name: { tls: "menu.botoes.filtro_acoes", alvo: user }, type: 1, emoji: guild.network.scanner.type ? emoji_pessoa : client.emoji("icon_integration"), data: "10" }
+            { id: "guild_network_button", name: { tls: "menu.botoes.ver_network" }, type: 1, emoji: client.emoji(36), data: "12", disabled: servidores_link > 1 ? false : true },
+            { id: "guild_network_button", name: { tls: "menu.botoes.filtro_acoes" }, type: 1, emoji: guild.network.scanner.type ? emoji_pessoa : client.emoji("icon_integration"), data: "10" }
         )
 
     const componentes = []
 
     if (botoes.length > 0)
-        componentes.push(client.create_buttons(botoes, interaction))
+        componentes.push(client.create_buttons(botoes, interaction, user))
 
     if (row.length > 0)
-        componentes.push(client.create_buttons(row, interaction))
+        componentes.push(client.create_buttons(row, interaction, user))
 
     interaction.editReply({
         content: retorno_aviso,

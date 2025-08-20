@@ -59,12 +59,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `${alvo_confirma}|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `${alvo_confirma}|${id_alvo}.${id_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_alvo}.${id_warn}` }
         ]
 
         return interaction.update({
-            components: [client.create_buttons(rows, interaction)]
+            components: [client.create_buttons(rows, interaction, user)]
         })
 
     } else if (operacao === 4) {
@@ -100,10 +100,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Botões de cancelamento para retorno aos botões principais
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia", alvo: user }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia" }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${id_warn}` }
         ]
 
-        return interaction.update({ components: [client.create_buttons(rows, interaction)] })
+        return interaction.update({ components: [client.create_buttons(rows, interaction, user)] })
     }
 }

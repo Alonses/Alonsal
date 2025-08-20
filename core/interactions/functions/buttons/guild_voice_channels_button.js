@@ -40,8 +40,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+        ], interaction, user)
 
         return client.reply(interaction, {
             components: [client.create_menus({ interaction, user, data }), row],
@@ -78,15 +78,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
             const row = client.menu_navigation(user, data, pagina || 0)
             let botoes = [
-                { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },
-                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: operacao }
+                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
+                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: operacao }
             ]
 
             if (row.length > 0) // Botões de navegação
                 botoes = botoes.concat(row)
 
             return client.reply(interaction, {
-                components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+                components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
                 flags: "Ephemeral"
             })
         }
@@ -106,13 +106,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             }, user)
 
             const botoes = [
-                { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },
-                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 1, emoji: client.emoji(10), data: "7" }
+                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
+                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "7" }
             ]
 
             return client.reply(interaction, {
                 embeds: [embed],
-                components: [client.create_buttons(botoes, interaction)],
+                components: [client.create_buttons(botoes, interaction, user)],
                 flags: "Ephemeral"
             })
 

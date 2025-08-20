@@ -23,9 +23,9 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         const row = client.create_buttons([
-            { name: { tls: "manu.apoio.contribua", alvo: user }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
+            { name: { tls: "manu.apoio.contribua" }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
             { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
-        ], interaction)
+        ], interaction, user)
 
         const embed = client.create_embed({
             title: `${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`,

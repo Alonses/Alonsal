@@ -78,16 +78,16 @@ module.exports = async ({ client, user, interaction }) => {
     let botoes = []
 
     if (guild.network.link) // Habilitando opção de enviar o aviso apenas aos servidores do network
-        botoes.push({ id: "report_user", name: { tls: "menu.botoes.anunciar_ao_network", alvo: user }, type: 0, emoji: client.emoji(36), data: `3|${id_alvo}` })
+        botoes.push({ id: "report_user", name: { tls: "menu.botoes.anunciar_ao_network" }, type: 0, emoji: client.emoji(36), data: `3|${id_alvo}` })
 
     botoes.push(
-        { id: "report_user", name: { tls: "menu.botoes.apenas_confirmar", alvo: user }, type: 1, emoji: '📫', data: `2|${id_alvo}` },
-        { id: "report_user", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
+        { id: "report_user", name: { tls: "menu.botoes.apenas_confirmar" }, type: 1, emoji: '📫', data: `2|${id_alvo}` },
+        { id: "report_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
     )
 
     return interaction.reply({
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

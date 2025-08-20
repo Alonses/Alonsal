@@ -138,11 +138,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }, guild)
 
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia", alvo: guild }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
-            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia", alvo: guild }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia" }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
         ]
 
         // Enviando o card para os moderadores poderem autorizar a aplicação da advertência
-        client.notify(guild.warn.hierarchy.channel, { embeds: [embed], components: [client.create_buttons(rows, interaction)] })
+        client.notify(guild.warn.hierarchy.channel, { embeds: [embed], components: [client.create_buttons(rows, interaction, guild)] })
     }
 }

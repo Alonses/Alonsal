@@ -12,34 +12,28 @@ module.exports = {
             "pt-BR": '⌠💡⌡ Veja seu ping',
             "ru": '⌠💡⌡ Проверьте свой пинг'
         }),
-    async execute({ client, user, interaction, user_command }) {
+    async execute({ client, user, interaction }) {
 
-        const m = await interaction.reply({
-            content: "Ping?",
-            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-        })
+        await interaction.reply('Ping?')
 
-        const delay = m.createdTimestamp - interaction.createdTimestamp
+        const reply = await interaction.fetchReply()
+        const clientPing = reply.createdTimestamp - interaction.createdTimestamp
+        const websocketPing = client.discord.ws.ping
 
-        let mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_1")} ${client.emoji("dancando_thanos")}`
+        let mensagem = `:ping_pong: Pong! [ **\`Client: ${clientPing}ms\`** | **\`Websocket: ${websocketPing}ms\`**] ${client.tls.phrase(user, "util.ping.ping_1")} ${client.emoji("dancando_thanos")}`
 
-        if (delay < 200)
-            mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_2")}`
+        if (clientPing < 200)
+            mensagem = `:ping_pong: Pong! [ **\`Client: ${clientPing}ms\`** | **\`Websocket: ${websocketPing}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_2")}`
 
-        if (delay < 100)
-            mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_3")} ${client.emoji("dancando_steve")}`
+        if (clientPing < 100)
+            mensagem = `:ping_pong: Pong! [ **\`Client: ${clientPing}ms\`** | **\`Websocket: ${websocketPing}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_3")} ${client.emoji("dancando_steve")}`
 
-        if (delay > 600)
-            mensagem = `:ping_pong: Pong! [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_4")} ${client.emoji("pare_agr")}`
+        if (clientPing > 600)
+            mensagem = `:ping_pong: Pong! [ **\`Client: ${clientPing}ms\`** | **\`Websocket: ${websocketPing}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_4")} ${client.emoji("pare_agr")}`
 
-        if (delay <= 0)
-            mensagem = `:ping_pong: Pong!? [ **\`${delay}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_5")} ${client.emoji("susto2")}`
+        if (clientPing <= 0)
+            mensagem = `:ping_pong: Pong!? [ **\`Client: ${clientPing}ms\`** | **\`Websocket: ${websocketPing}ms\`** ] ${client.tls.phrase(user, "util.ping.ping_5")} ${client.emoji("susto2")}`
 
-        mensagem += `\n${client.tls.phrase(user, "util.ping.latencia")} [ **\`${Math.round(client.discord.ws.ping)}ms\`** ]`
-
-        client.reply(interaction, {
-            content: mensagem,
-            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
-        }, true)
+        interaction.editReply({ content: mensagem, flags: "Ephemeral" })
     }
 }

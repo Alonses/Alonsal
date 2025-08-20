@@ -62,18 +62,18 @@ module.exports = async ({ client, user, interaction, caso }) => {
         }
     )
 
-    const row = [{ id: "role_assigner", name: { tls: "menu.botoes.cargos_atribuidos", alvo: user }, type: 1, emoji: client.emoji("mc_name_tag"), data: `2.${caso}` }]
+    const row = [{ id: "role_assigner", name: { tls: "menu.botoes.cargos_atribuidos" }, type: 1, emoji: client.emoji("mc_name_tag"), data: `2.${caso}` }]
 
     if (caso === "global") {
-        row.push({ id: "role_assigner", name: { tls: "menu.botoes.ignorar_cargos", alvo: user }, type: 1, emoji: client.emoji(4), data: "3.global" })
+        row.push({ id: "role_assigner", name: { tls: "menu.botoes.ignorar_cargos" }, type: 1, emoji: client.emoji(4), data: "3.global" })
 
-        row.push({ id: "role_assigner", name: { tls: "menu.botoes.iniciar_atribuicao", alvo: user }, type: 2, emoji: client.emoji(10), data: `1.${caso}`, disabled: !cargos.atribute || !bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles) })
+        row.push({ id: "role_assigner", name: { tls: "menu.botoes.iniciar_atribuicao" }, type: 2, emoji: client.emoji(10), data: `1.${caso}`, disabled: !cargos.atribute || !bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles) })
     } else // Botão para ativar ou desativar a atribuição de cargos na entrada de novos membros
-        row.push({ id: "role_assigner", name: { tls: "menu.botoes.atribuir", alvo: user }, type: client.execute("functions", "emoji_button.type_button", cargos.status), emoji: client.execute("functions", "emoji_button.emoji_button", cargos.status), data: "20.join", disabled: !cargos.atribute || !bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles) })
+        row.push({ id: "role_assigner", name: { tls: "menu.botoes.atribuir" }, type: client.execute("functions", "emoji_button.type_button", cargos.status), emoji: client.execute("functions", "emoji_button.emoji_button", cargos.status), data: "20.join", disabled: !cargos.atribute || !bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles) })
 
     client.reply(interaction, {
         embeds: [embed],
-        components: [client.create_buttons(row, interaction)],
+        components: [client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     })
 }

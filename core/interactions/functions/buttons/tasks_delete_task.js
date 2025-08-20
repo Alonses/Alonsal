@@ -15,8 +15,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (!operacao) {
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "tarefas_remover" }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "tarefas_remover" }
+        ], interaction, user)
 
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.exclusao_tarefa_cancelada", client.defaultEmoji("paper")),
@@ -33,8 +33,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
-    ], interaction)
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+    ], interaction, user)
 
     interaction.update({
         content: client.tls.phrase(user, "util.tarefas.exclusao_tarefa", 13),

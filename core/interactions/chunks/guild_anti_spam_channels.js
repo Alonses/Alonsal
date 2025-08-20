@@ -90,7 +90,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     if (pagina !== 0) // Botão de voltar
         botao_categorias.unshift({ id: "navigation_button_panel", name: '◀', type: 0, data: `${pagina}.0.guild_anti_spam_channels` })
     else if (id_categoria)
-        botao_categorias.unshift({ id: "guild_anti_spam_channels", name: { tls: "menu.botoes.sem_categoria", alvo: user }, type: 1, emoji: client.emoji(72), data: '1.null' })
+        botao_categorias.unshift({ id: "guild_anti_spam_channels", name: { tls: "menu.botoes.sem_categoria" }, type: 1, emoji: client.emoji(72), data: '1.null' })
 
     if (pagina > 0) {
 
@@ -113,8 +113,8 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
         botao_categorias.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.guild_anti_spam_channels` })
 
     const row = [
-        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: '0' },
-        { id: "guild_anti_spam_channels", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: `1.${id_categoria}.${pagina}` }
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: '0' },
+        { id: "guild_anti_spam_channels", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `1.${id_categoria}.${pagina}` }
     ]
 
     const obj = {
@@ -124,7 +124,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     }
 
     if (botao_categorias.length > 0)
-        obj.components.unshift(client.create_buttons(botao_categorias, interaction))
+        obj.components.unshift(client.create_buttons(botao_categorias, interaction, user))
 
     // Atualizando a interação para o usuário
     if (!operacao) interaction.reply(obj)

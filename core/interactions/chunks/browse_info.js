@@ -12,16 +12,11 @@ module.exports = async ({ client, user, interaction, caso }) => {
     let restricoes = []
 
     if (pagina === 0)
-        if (activities[client.cached.presence]?.link) {
+        if (activities[client.cached.presence]?.link)
             ouvindo_agora = `\`\`\`fix\n🎶 ${client.tls.phrase(user, "manu.info.ouvindo_agora")}\n${client.defaultEmoji("instrument")} ${activities[client.cached.presence].text.replace("🎶 ", "")}\`\`\`\n`
 
-            row = client.create_buttons([
-                { name: client.tls.phrase(user, "menu.botoes.ouvir_tambem"), emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 }
-            ], interaction)
-        }
-
     Object.keys(bot.conf).forEach(status => {
-        if (!bot.conf[status] && status !== "daily_announce") restricoes.push(status)
+        if (!bot.conf[status] && status !== "daily_announce" && status !== "guild_timeout") restricoes.push(status)
     })
 
     if (restricoes.length > 0) // Listando os recursos com restrições de funcionamento em andamento
@@ -45,21 +40,21 @@ module.exports = async ({ client, user, interaction, caso }) => {
 
     if (pagina === 0) // Página inicial
         botoes.push(
-            { id: "browse_info", name: { tls: "menu.botoes.estatisticas", alvo: user }, type: 1, emoji: client.defaultEmoji("metrics"), data: 3 },
-            { id: "browse_info", name: { tls: "inic.inicio.suporte", alvo: user }, type: 1, emoji: client.emoji(25), data: 1 },
-            { id: "browse_info", name: { tls: "manu.data.links_externos", alvo: user }, type: 1, emoji: client.emoji(32), data: 2 },
+            { id: "browse_info", name: { tls: "menu.botoes.estatisticas" }, type: 1, emoji: client.defaultEmoji("metrics"), data: 3 },
+            { id: "browse_info", name: { tls: "inic.inicio.suporte" }, type: 1, emoji: client.emoji(25), data: 1 },
+            { id: "browse_info", name: { tls: "manu.data.links_externos" }, type: 1, emoji: client.emoji(32), data: 2 },
         )
     else if (pagina === 1)
         botoes.push(
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
-            { name: { tls: "inic.inicio.convidar", alvo: user }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` },
-            { name: { tls: "manu.avalie.avaliar", alvo: user }, type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
-            { name: { tls: "manu.apoio.contribua", alvo: user }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { name: { tls: "inic.inicio.convidar" }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` },
+            { name: { tls: "manu.avalie.avaliar" }, type: 4, emoji: client.emoji("emojis_dancantes"), value: "https://top.gg/bot/833349943539531806" },
+            { name: { tls: "manu.apoio.contribua" }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
             { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
         )
     else if (pagina === 2)
         botoes.push(
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "browse_info" },
             { name: "GitHub", type: 4, emoji: "🌐", value: "https://github.com/Alonses/Alonsal" },
             { name: "Alondioma", type: 4, emoji: "🏴‍☠️", value: "https://github.com/Alonses/Alondioma" }
         )
@@ -122,21 +117,21 @@ module.exports = async ({ client, user, interaction, caso }) => {
             )
 
         botoes.push(
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "browse_info" },
-            { id: "browse_info", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: 3 },
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "browse_info" },
+            { id: "browse_info", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: 3 },
         )
 
         if (games_free.length > 0) // Jogos gratuitos disponíveis para coleta
-            botoes.push({ id: "free_games", name: { tls: "menu.botoes.ver_jogos_free", alvo: user }, type: 1, emoji: client.emoji(29), data: 0 })
+            botoes.push({ id: "free_games", name: { tls: "menu.botoes.ver_jogos_free" }, type: 1, emoji: client.emoji(29), data: 0 })
     }
 
     // Botão ouvindo agora
     if (ouvindo_agora !== "")
-        botoes.push({ name: { tls: "menu.botoes.ouvir_tambem", alvo: user }, emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 })
+        botoes.push({ name: { tls: "menu.botoes.ouvir_tambem" }, emoji: client.defaultEmoji("music"), value: activities[client.cached.presence].link, type: 4 })
 
     client.reply(interaction, {
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

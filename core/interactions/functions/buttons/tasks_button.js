@@ -34,8 +34,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "a|tarefas" }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "a|tarefas" }
+        ], interaction, user)
 
         return interaction.update({
             content: client.tls.phrase(user, "util.tarefas.tarefa_lista", client.defaultEmoji("paper")),
@@ -47,8 +47,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
-    ], interaction)
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+    ], interaction, user)
 
     if (operacao === 0) {
         await dropTask(user.uid, timestamp)

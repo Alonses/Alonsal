@@ -47,24 +47,24 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de gestão de tarefas
     let botoes = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "modulos" },
-        { id: "module_button", name: { tls: "menu.botoes.alterar_frequencia", alvo: user }, emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.stats.timestamp}` }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "modulos" },
+        { id: "module_button", name: { tls: "menu.botoes.alterar_frequencia" }, emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.stats.timestamp}` }
     ]
 
     if (modulo.stats.active) // Módulo ativado
-        botoes.push({ id: "module_button", name: { tls: "menu.botoes.desativar", alvo: user }, emoji: client.emoji(21), type: 1, data: `2|${modulo.stats.timestamp}` })
+        botoes.push({ id: "module_button", name: { tls: "menu.botoes.desativar" }, emoji: client.emoji(21), type: 1, data: `2|${modulo.stats.timestamp}` })
     else // Módulo desativado
-        botoes.push({ id: "module_button", name: { tls: "menu.botoes.ativar", alvo: user }, type: 2, emoji: client.emoji(20), data: `1|${modulo.stats.timestamp}` })
+        botoes.push({ id: "module_button", name: { tls: "menu.botoes.ativar" }, type: 2, emoji: client.emoji(20), data: `1|${modulo.stats.timestamp}` })
 
-    botoes.push({ id: "module_button", name: { tls: "menu.botoes.apagar", alvo: user }, type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` })
+    botoes.push({ id: "module_button", name: { tls: "menu.botoes.apagar" }, type: 3, emoji: client.emoji(13), data: `0|${modulo.stats.timestamp}` })
 
     if (modulo.type === 2 && modulo.data === null) // Módulo do History sem tipo de retorno definido
-        botoes.push({ id: "module", name: { tls: "menu.botoes.definir_retorno", alvo: user }, type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` })
+        botoes.push({ id: "module", name: { tls: "menu.botoes.definir_retorno" }, type: 2, emoji: client.defaultEmoji('paper'), data: `1|${modulo.stats.timestamp}` })
 
     interaction.update({
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

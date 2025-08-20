@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
         updates[0] = membros_sv.length
 
         await interaction.update({
-            components: [client.create_buttons([{ id: "role_assigner", name: { tls: "menu.botoes.interromper_operacao", alvo: user }, type: 3, emoji: client.emoji(13), data: "11" }], interaction)],
+            components: [client.create_buttons([{ id: "role_assigner", name: { tls: "menu.botoes.interromper_operacao" }, type: 3, emoji: client.emoji(13), data: "11" }], interaction, user)],
             flags: "Ephemeral"
         })
 

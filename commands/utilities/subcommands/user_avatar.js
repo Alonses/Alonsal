@@ -8,9 +8,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (!url_avatar)
         return client.tls.reply(interaction, user, "util.avatar.sem_avatar", true, 1)
 
-    const row = client.create_buttons([
-        { name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: url_avatar }
-    ])
+    const row = client.create_buttons([{ name: { tls: "menu.botoes.navegador", alvo: user }, type: 4, emoji: "🌐", value: url_avatar }])
 
     const embed = client.create_embed({
         title: `> ${user_alvo.username}`,

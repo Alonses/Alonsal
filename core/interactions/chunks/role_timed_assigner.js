@@ -32,18 +32,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, user)
 
     const row = [
-        { id: "role_timed_assigner", name: { tls: "mode.anuncio.cargo", alvo: user }, type: 1, emoji: client.emoji("mc_name_tag"), data: `2.${role.uid}` },
-        { id: "role_timed_assigner", name: { tls: "menu.botoes.expiracao", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: `3.${role.uid}` }
+        { id: "role_timed_assigner", name: { tls: "mode.anuncio.cargo" }, type: 1, emoji: client.emoji("mc_name_tag"), data: `2.${role.uid}` },
+        { id: "role_timed_assigner", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: `3.${role.uid}` }
     ]
 
     if (role.timeout !== null) // Só libera a função caso um tempo seja selecionado
-        row.push({ id: "role_timed_assigner", name: { tls: "menu.botoes.conceder", alvo: user }, type: 2, emoji: client.emoji(10), data: `1.${role.uid}` })
+        row.push({ id: "role_timed_assigner", name: { tls: "menu.botoes.conceder" }, type: 2, emoji: client.emoji(10), data: `1.${role.uid}` })
 
-    row.push({ id: "role_timed_assigner", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0.${role.uid}` })
+    row.push({ id: "role_timed_assigner", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0.${role.uid}` })
 
     client.reply(interaction, {
         embeds: [embed],
-        components: [client.create_buttons(row, interaction)],
+        components: [client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     })
 }

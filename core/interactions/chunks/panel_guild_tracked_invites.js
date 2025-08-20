@@ -39,16 +39,16 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const botoes = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" },
-        { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: "1" },
-        { id: "guild_tracked_invites_button", name: { tls: "menu.botoes.varredura", alvo: user }, type: 1, emoji: guild.nuke_invites.type ? "🌟" : "👟", data: "2" },
-        { id: "guild_tracked_invites_button", name: { tls: "mode.report.canal_de_avisos", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" },
+        { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: "1" },
+        { id: "guild_tracked_invites_button", name: { tls: "menu.botoes.varredura" }, type: 1, emoji: guild.nuke_invites.type ? "🌟" : "👟", data: "2" },
+        { id: "guild_tracked_invites_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" }
     ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

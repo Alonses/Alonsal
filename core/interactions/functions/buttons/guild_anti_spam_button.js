@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelos strikes do servidor
         let botoes = [], row = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }
         ], indice_matriz = 5
 
         if (strikes.length < 1) {
@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
-            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike", alvo: user }, type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
+            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike" }, type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
         let texto_aviso_indice = ""
 
@@ -85,7 +85,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             embeds: [embed],
-            components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
+            components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -101,8 +101,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2" }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2" }
+        ], interaction, user)
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), row],
@@ -132,15 +132,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
-            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "4" }
         ]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
         })
     }

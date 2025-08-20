@@ -16,10 +16,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
         reback = "panel_personal_data.1"
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback },
-            { id: "data_user_button", name: { tls: "menu.botoes.globalmente", alvo: user }, type: 1, emoji: client.defaultEmoji("earth"), data: "2" },
-            { id: "data_user_button", name: { tls: "menu.botoes.por_servidor", alvo: user }, type: 1, emoji: client.emoji(5), data: "3" }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
+            { id: "data_user_button", name: { tls: "menu.botoes.globalmente" }, type: 1, emoji: client.defaultEmoji("earth"), data: "2" },
+            { id: "data_user_button", name: { tls: "menu.botoes.por_servidor" }, type: 1, emoji: client.emoji(5), data: "3" }
+        ], interaction, user)
 
         return interaction.update({
             components: [row],
@@ -48,8 +48,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+        ], interaction, user)
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), row],

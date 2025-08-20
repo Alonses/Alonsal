@@ -46,14 +46,14 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const botoes = [
-        { id: "guild_tickets_button", name: { tls: "manu.painel.denuncias_server", alvo: user }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.tickets), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets), data: "1" },
-        { id: "guild_tickets_button", name: { tls: "util.server.categoria", alvo: user }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
+        { id: "guild_tickets_button", name: { tls: "manu.painel.denuncias_server" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.tickets), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets), data: "1" },
+        { id: "guild_tickets_button", name: { tls: "util.server.categoria" }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
     ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction, user)],
         flags: "Ephemeral"
     })
 }

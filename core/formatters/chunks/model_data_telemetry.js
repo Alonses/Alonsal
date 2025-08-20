@@ -10,8 +10,8 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const row = client.create_buttons([
-        { id: "data_menu_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: '0' }
-    ], interaction)
+        { id: "data_menu_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: '0' }
+    ], interaction, user)
 
     interaction.update({
         content: "",

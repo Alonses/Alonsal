@@ -68,7 +68,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelas advertências do servidor
         let botoes = [], row = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" }
         ], indice_matriz = 5
 
         if (advertencias.length < 1) {
@@ -96,7 +96,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar uma nova advertência
-            row.push({ id: "warn_configure_button", name: { tls: "menu.botoes.nova_advertencia", alvo: user }, type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
+            row.push({ id: "warn_configure_button", name: { tls: "menu.botoes.nova_advertencia" }, type: 2, emoji: client.emoji(43), data: `9|${advertencias.length < 1 ? 1 : advertencias.length}` })
 
         const embed = client.create_embed({
             title: { tls: "mode.warn.configurando_warns" },
@@ -109,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             embeds: [embed],
-            components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
+            components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -152,15 +152,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         const row = client.menu_navigation(user, data, pagina || 0)
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.${digito}` },
-            { id: "guild_warns_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: operacao }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.${digito}` },
+            { id: "guild_warns_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: operacao }
         ]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
 
         return interaction.update({
-            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -178,8 +178,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${reback}.2` }
-        ], interaction)
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.2` }
+        ], interaction, user)
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), row],
@@ -201,8 +201,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([{
-            id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback
-        }], interaction)
+            id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback
+        }], interaction, user)
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), row],

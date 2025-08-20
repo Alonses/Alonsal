@@ -15,8 +15,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row_2 = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
-    ], interaction)
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+    ], interaction, user)
 
     if (!task)
         return interaction.update({
@@ -70,23 +70,23 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     }, user)
 
     // Criando os botões para as funções de gestão de tarefas
-    const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }]
+    const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${operador}|tarefas` }]
     const listas = await (user?.conf.global_tasks ? listAllUserGroups(user.uid) : listAllUserGroups(user.uid, client.encrypt(interaction.guild.id)))
 
     if (!task.concluded) // Tarefas em aberto
-        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.marcar_concluida", alvo: user }, type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` })
+        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.marcar_concluida" }, type: 2, emoji: client.emoji("mc_approve"), data: `1|${task.timestamp}` })
     else // Tarefas finalizadas
-        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.abrir_novamente", alvo: user }, type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` })
+        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.abrir_novamente" }, type: 2, emoji: client.emoji(31), data: `3|${task.timestamp}` })
 
     if (listas.length > 1) // Mais de uma lista criada
-        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.alterar_de_lista", alvo: user }, emoji: client.defaultEmoji("paper"), type: 1, data: `2|${task.timestamp}` })
+        botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.alterar_de_lista" }, emoji: client.defaultEmoji("paper"), type: 1, data: `2|${task.timestamp}` })
 
-    botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.apagar", alvo: user }, type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` })
+    botoes.push({ id: "tasks_button", name: { tls: "menu.botoes.apagar" }, type: 3, emoji: client.emoji(13), data: `0|${task.timestamp}` })
 
     const obj = {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 

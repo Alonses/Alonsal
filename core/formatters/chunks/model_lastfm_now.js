@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             let row = [{ name: "LastFM", value: `https://www.last.fm/pt/user/${texto_entrada}`, type: 4, emoji: "🌐" }]
 
             if (res.scrobble_atual.link) // Música atual possui um link para ouvir
-                row.push({ name: { tls: "menu.botoes.ouvir_tambem", alvo: user }, emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
+                row.push({ name: { tls: "menu.botoes.ouvir_tambem" }, emoji: client.defaultEmoji("music"), value: res.scrobble_atual.link, type: 4 })
 
             // Card do que o usuário está ouvindo atualmente
             const embed = client.create_embed({
@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
             client.reply(interaction, {
                 embeds: [embed],
-                components: [client.create_buttons(row, interaction)],
+                components: [client.create_buttons(row, interaction, user)],
                 flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral"
             }, true)
         })

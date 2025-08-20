@@ -42,8 +42,8 @@ module.exports = {
         // user -> Dados do usuário que disparou o comando
 
         const row = client.create_buttons([
-            { name: { tls: "game.pula.jogar_agora", alvo: user }, type: 4, emoji: client.emoji("pula_2"), value: "https://gamejolt.com/games/pula-predios/613946" }
-        ], interaction)
+            { name: { tls: "game.pula.jogar_agora" }, type: 4, emoji: client.emoji("pula_2"), value: "https://gamejolt.com/games/pula-predios/613946" }
+        ], interaction, user)
 
         if (!user_pula.social.pula_predios)
             return client.reply(interaction, {

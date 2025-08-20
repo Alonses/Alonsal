@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
-function create_buttons(client, lista, interaction) {
+function create_buttons(client, lista, interaction, alvo_traducao) {
 
     const row_buttons = new ActionRowBuilder()
     const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
@@ -17,7 +17,7 @@ function create_buttons(client, lista, interaction) {
 
         let texto
 
-        if (dados.name?.tls) texto = client.tls.phrase(dados.name.alvo, dados.name.tls) // Traduzindo o texto do botão
+        if (dados.name?.tls) texto = client.tls.phrase(dados?.name?.alvo || alvo_traducao, dados.name.tls) // Traduzindo o texto do botão
         else texto = dados.name // Utilizando os nome sem tradução
 
         dados.name = texto.length > 25 ? `${texto.slice(0, 25)}...` : texto

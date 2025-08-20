@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (data.values.length < pagina * 24) pagina--
 
         const row = client.menu_navigation(user, data, pagina)
-        let botoes = [{ id: "spam_link_button", name: { tls: "menu.botoes.atualizar", alvo: user }, type: 1, emoji: client.emoji(42), data: "2" }]
+        let botoes = [{ id: "spam_link_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "2" }]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -101,7 +101,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         return client.reply(interaction, {
             content: "",
             embeds: [embed],
-            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction)],
+            components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -109,9 +109,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Sub menu para gerenciar se o link suspeito será excluído ou não
         const row = client.create_buttons([
-            { id: "spam_link_remove", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${timestamp}.${client.decifer(link.sid)}` },
-            { id: "spam_link_remove", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: "0" }
-        ], interaction)
+            { id: "spam_link_remove", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${timestamp}.${client.decifer(link.sid)}` },
+            { id: "spam_link_remove", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
+        ], interaction, user)
 
         // Listando os botões para confirmar e cancelar a operação
         return interaction.update({

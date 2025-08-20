@@ -192,9 +192,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // Log de eventos, Advertências e Anti-spam
     if (pagina === 0)
         botoes.push(
-            { id: "guild_logger_button", name: { tls: "manu.painel.log_eventos", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[5] },
-            { id: "guild_warns_button", name: { tls: "mode.warn.advertencias", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
-            { id: "guild_anti_spam_button", name: { tls: "manu.painel.anti_spam", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[6] }
+            { id: "guild_logger_button", name: { tls: "manu.painel.log_eventos" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[5] },
+            { id: "guild_warns_button", name: { tls: "mode.warn.advertencias" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[9] },
+            { id: "guild_anti_spam_button", name: { tls: "manu.painel.anti_spam" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[6] }
         )
 
     // Segunda página de botões de configuração do Alonsal
@@ -202,26 +202,26 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (pagina === 1)
         botoes.push(
             { id: "guild_network_button", name: "Network", type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[8] },
-            { id: "guild_reports_button", name: { tls: "manu.painel.reports_externos", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[4] },
-            { id: "guild_free_games_button", name: { tls: "manu.painel.anuncio_games", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[2] }
+            { id: "guild_reports_button", name: { tls: "manu.painel.reports_externos" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[4] },
+            { id: "guild_free_games_button", name: { tls: "manu.painel.anuncio_games" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[2] }
         )
 
     // Terceira página de botões de configuração do Alonsal
     // Cargos temporários, Denúncias in-server e Convites rastreados
     if (pagina === 2)
         botoes.push(
-            { id: "guild_timed_roles_button", name: { tls: "manu.painel.cargos_temporarios", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[12] },
-            { id: "guild_tickets_button", name: { tls: "manu.painel.denuncias_server", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
-            { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[10] },
+            { id: "guild_timed_roles_button", name: { tls: "manu.painel.cargos_temporarios" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[12] },
+            { id: "guild_tickets_button", name: { tls: "manu.painel.denuncias_server" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[3] },
+            { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[10] },
         )
 
     // Quarta página de botões de configuração do Alonsal
     // Rankeamento no servidor, faladeros dinâmicos
     if (pagina === 3)
         botoes.push(
-            { id: "guild_panel_button", name: { tls: "manu.painel.rankeamento", alvo: user }, type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },
-            { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros", alvo: user }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[14] },
-            { id: "guild_panel_button", name: { tls: "manu.painel.misterioso", alvo: user }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
+            { id: "guild_panel_button", name: { tls: "manu.painel.rankeamento" }, type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },
+            { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[14] },
+            { id: "guild_panel_button", name: { tls: "manu.painel.misterioso" }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
         )
 
     botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })
@@ -229,7 +229,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

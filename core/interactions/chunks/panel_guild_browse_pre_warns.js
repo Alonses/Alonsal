@@ -28,9 +28,9 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     if (pagina_guia > 0) indice_start++
 
     if (user_notes[indice_start + 6])
-        botoes.push({ id: "pre_warn_user_verify", name: { tls: "status.proxima", alvo: user }, emoji: client.emoji(41), type: 0, data: `10|${user_notes[0].uid}.${pagina_guia}` })
+        botoes.push({ id: "pre_warn_user_verify", name: { tls: "status.proxima" }, emoji: client.emoji(41), type: 0, data: `10|${user_notes[0].uid}.${pagina_guia}` })
     else if (user_notes.length > 5)
-        botoes.push({ id: "pre_warn_user_verify", name: { tls: "menu.botoes.retornar", alvo: user }, emoji: client.emoji(57), type: 0, data: `11|${user_notes[0].uid}` })
+        botoes.push({ id: "pre_warn_user_verify", name: { tls: "menu.botoes.retornar" }, emoji: client.emoji(57), type: 0, data: `11|${user_notes[0].uid}` })
 
     for (let x = indice_start; x < user_notes.length; x++) {
 
@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

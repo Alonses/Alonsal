@@ -93,32 +93,32 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     // Modo fantasma, notificações em DM e Ranking
     if (pagina === 0)
         botoes.push(
-            { id: "user_panel_button", name: { tls: "manu.data.ghostmode", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.ghost_mode), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode), data: '0' },
-            { id: "user_panel_button", name: { tls: "manu.data.notificacoes", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.notify), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.notify), data: '1' },
-            { id: "user_panel_button", name: { tls: "manu.data.ranking", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.ranking), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking), data: '2' }
+            { id: "user_panel_button", name: { tls: "manu.data.ghostmode" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.ghost_mode), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode), data: '0' },
+            { id: "user_panel_button", name: { tls: "manu.data.notificacoes" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.notify), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.notify), data: '1' },
+            { id: "user_panel_button", name: { tls: "manu.data.ranking" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.ranking), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking), data: '2' }
         )
 
     // Segunda página de botões de configuração do Alonsal
     // Badges visiveis públicamente, clima resumido e tarefas globais
     if (pagina === 1)
         botoes.push(
-            { id: "user_panel_button", name: { tls: "manu.data.badges_publicas", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.public_badges), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges), data: '3' },
-            { id: "user_panel_button", name: { tls: "manu.data.clima_resumido", alvo: user }, type: client.execute("functions", "emoji_button.type_button", !user?.misc.weather), emoji: client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather), data: '4' },
-            { id: "user_panel_button", name: { tls: "manu.data.tarefas_globais", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.global_tasks), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks), data: '5' }
+            { id: "user_panel_button", name: { tls: "manu.data.badges_publicas" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.public_badges), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges), data: '3' },
+            { id: "user_panel_button", name: { tls: "manu.data.clima_resumido" }, type: client.execute("functions", "emoji_button.type_button", !user?.misc.weather), emoji: client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather), data: '4' },
+            { id: "user_panel_button", name: { tls: "manu.data.tarefas_globais" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.global_tasks), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks), data: '5' }
         )
 
     if (pagina === 2)
         botoes.push(
-            { id: "user_panel_button", name: { tls: "manu.painel.modo_compacto", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.resumed), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed), data: '6' },
-            { id: "user_panel_button", name: { tls: "manu.painel.servidores_conhecidos", alvo: user }, type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' },
-            { id: "user_panel_button", name: { tls: "manu.painel.misterioso", alvo: user }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '8', disabled: true }
+            { id: "user_panel_button", name: { tls: "manu.painel.modo_compacto" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.resumed), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed), data: '6' },
+            { id: "user_panel_button", name: { tls: "manu.painel.servidores_conhecidos" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' },
+            { id: "user_panel_button", name: { tls: "manu.painel.misterioso" }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '8', disabled: true }
         )
 
     botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })
 
     client.reply(interaction, {
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

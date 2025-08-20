@@ -67,8 +67,8 @@ module.exports = async ({ client, user, dados, interaction, user_command }) => {
                     else return client.sendDM(user, { content: client.tls.phrase(user, "util.history.sem_evento") }, true)
 
                 const row = client.create_buttons([
-                    { name: { tls: "menu.botoes.mais_detalhes", alvo: user }, value: res.fonte, type: 4, emoji: "🌐" }
-                ], interaction ?? "")
+                    { name: { tls: "menu.botoes.mais_detalhes" }, value: res.fonte, type: 4, emoji: "🌐" }
+                ], interaction, user)
 
                 const acontecimento = client.create_embed({
                     title: client.execute("formatters", "formata_texto", res.acontecimento),

@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const ranking = [], guilds_ranking = await getUserRankServers(user.uid)
 
     let dados_conhecidos = "", nota_servidores = "", reback = pagina === 1 ? "panel_personal_data.0" : "panel_personal.0"
-    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: reback }]
+    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
 
     // Listando os servidores que o usuário possui ranking
     if (guilds_ranking)
@@ -97,23 +97,23 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     }
 
     botoes.push(
-        { id: "data_menu_button", name: { tls: "menu.botoes.central_exclusao", alvo: user }, type: 3, emoji: client.emoji(13), data: '1' },
-        { id: "data_user_button", name: { tls: "menu.botoes.definir_inatividade", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: "5" }
+        { id: "data_menu_button", name: { tls: "menu.botoes.central_exclusao" }, type: 3, emoji: client.emoji(13), data: '1' },
+        { id: "data_user_button", name: { tls: "menu.botoes.definir_inatividade" }, type: 1, emoji: client.defaultEmoji("time"), data: "5" }
     )
 
     if (pagina === 0)
-        botoes.push({ id: "data_user_button", name: { tls: "menu.botoes.mais_detalhes", alvo: user }, type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_user_button", name: { tls: "menu.botoes.mais_detalhes" }, type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
 
     if (pagina === 1)
         botoes.push(
-            { id: "data_menu_button", name: { tls: "menu.botoes.telemetria", alvo: user }, type: 1, emoji: client.emoji(36), data: '2' },
-            { id: "data_menu_button", name: { tls: "menu.botoes.sincronizar_servidores", alvo: user }, type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
+            { id: "data_menu_button", name: { tls: "menu.botoes.telemetria" }, type: 1, emoji: client.emoji(36), data: '2' },
+            { id: "data_menu_button", name: { tls: "menu.botoes.sincronizar_servidores" }, type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
         )
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction)],
+        components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"
     })
 }

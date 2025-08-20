@@ -17,8 +17,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
-                { id: "spam_link_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "2" }
-            ], interaction)
+                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "2" }
+            ], interaction, user)
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.link_suspeito.operacao_cancelada_exclusao", 0),
@@ -49,8 +49,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
-                { id: "spam_link_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "2" }
-            ], interaction)
+                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "2" }
+            ], interaction, user)
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.link_suspeito.aviso_remocao", 44, guild.spam.channel || guild.logger.channel),

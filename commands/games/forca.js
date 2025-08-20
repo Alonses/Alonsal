@@ -209,11 +209,11 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     if (!client.cached.forca.get(id_jogo).embed) {
 
         const row = [
-            { id: "forca_button", name: { tls: "menu.botoes.juntar_se", alvo: user }, type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
-            { id: "forca_button", name: { tls: "menu.botoes.sair_da_sessao", alvo: user }, type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
+            { id: "forca_button", name: { tls: "menu.botoes.juntar_se" }, type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
+            { id: "forca_button", name: { tls: "menu.botoes.sair_da_sessao" }, type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
         ]
 
-        const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction)] })
+        const message = await interaction.channel.send({ embeds: [embed], components: [client.create_buttons(row, interaction, user)] })
         client.cached.forca.get(id_jogo).embed = message
 
         client.tls.editReply(interaction, user, "game.forca.jogo_iniciado", true, 71)

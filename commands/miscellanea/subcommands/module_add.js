@@ -65,9 +65,9 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Criando os botões para o menu de badges
     const row = client.create_buttons([
-        { id: "module", name: { tls: "menu.botoes.confirmar", alvo: user }, type: 2, emoji: client.emoji(10), data: `1|${timestamp}` },
-        { id: "module", name: { tls: "menu.botoes.cancelar", alvo: user }, type: 3, emoji: client.emoji(0), data: `0|${timestamp}` }
-    ], interaction)
+        { id: "module", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${timestamp}` },
+        { id: "module", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${timestamp}` }
+    ], interaction, user)
 
     return interaction.reply({
         embeds: [embed],

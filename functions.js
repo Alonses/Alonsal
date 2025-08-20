@@ -86,7 +86,7 @@ function internal_functions(client) {
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
     client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
-    client.create_buttons = (data, interaction) => { return create_buttons(client, data, interaction) }
+    client.create_buttons = (data, interaction, alvo_traducao) => { return create_buttons(client, data, interaction, alvo_traducao) }
 
     client.create_embed = (data, alvo) => { return create_embed({ client, alvo, data }) }
 

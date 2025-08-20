@@ -76,22 +76,22 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const botoes = [
-        { id: "strike_configure_button", name: { tls: "menu.botoes.penalidade", alvo: user }, type: 1, emoji: loggerMap[strike.action] || loggerMap["none"], data: `1.${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.tempo_mute", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "mode.anuncio.cargo", alvo: user }, type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_strike}`, disabled: b_cargos },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.cargo_temporario", alvo: user }, type: client.execute("functions", "emoji_button.type_button", strike.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", strike.timed_role.status), data: `20|${id_strike}`, disabled: !strike.role }
+        { id: "strike_configure_button", name: { tls: "menu.botoes.penalidade" }, type: 1, emoji: loggerMap[strike.action] || loggerMap["none"], data: `1.${id_strike}` },
+        { id: "strike_configure_button", name: { tls: "menu.botoes.tempo_mute" }, type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` },
+        { id: "strike_configure_button", name: { tls: "mode.anuncio.cargo" }, type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_strike}`, disabled: b_cargos },
+        { id: "strike_configure_button", name: { tls: "menu.botoes.cargo_temporario" }, type: client.execute("functions", "emoji_button.type_button", strike.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", strike.timed_role.status), data: `20|${id_strike}`, disabled: !strike.role }
     ]
 
     const row = [
-        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar", alvo: user }, type: 0, emoji: client.emoji(19), data: "4" },
-        { id: "strike_remove", name: { tls: "menu.botoes.excluir_strike", alvo: user }, type: 3, emoji: client.emoji(13), data: `2|${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.expiracao_cargo", alvo: user }, type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_strike}` }
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "4" },
+        { id: "strike_remove", name: { tls: "menu.botoes.excluir_strike" }, type: 3, emoji: client.emoji(13), data: `2|${id_strike}` },
+        { id: "strike_configure_button", name: { tls: "menu.botoes.expiracao_cargo" }, type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_strike}` }
     ]
 
     const obj = {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction), client.create_buttons(row, interaction)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     }
 
