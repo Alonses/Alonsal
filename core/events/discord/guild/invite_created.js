@@ -23,7 +23,7 @@ module.exports = async ({ client, invite }) => {
     })
 
     const registroAudita = fetchedLogs.entries.first()
-    if (!registroAudita.executor) return // Sem executor
+    if (!registroAudita?.executor) return // Sem executor
 
     const embed = client.create_embed({
         title: { tls: "mode.logger.convite_criado_titulo" },
