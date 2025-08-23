@@ -119,7 +119,7 @@ module.exports = async ({ client, user, interaction, dados, pagina_guia }) => {
 
     const obj = {
         embeds: [embed],
-        components: [client.create_buttons(row, interaction)],
+        components: [client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"
     }
 
