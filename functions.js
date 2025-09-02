@@ -473,10 +473,25 @@ function internal_functions(client) {
     }
 
     // Retorna um valor aleatório
-    client.random = (intervalo, base) => {
+    client.random = (intervalo, base, raw, ignore) => {
         if (typeof base === "undefined") base = 0 // Valor minimo aceitável
 
-        if (typeof intervalo === "object") intervalo = intervalo.length - 1 // Recebendo um array de dados
+        if (typeof intervalo === "object") {
+
+            // Retorna a chave do intervalo passado ao invés do indice no array
+            if (raw) {
+
+                let resultado
+
+                do { // Entra em loop enquanto o valor for igual ao ignorado
+                    resultado = Object.keys(intervalo)[(base + Math.round(Object.keys(intervalo).length * Math.random())) - 1]
+                } while (resultado === ignore)
+
+                return resultado
+            }
+
+            intervalo = intervalo.length - 1 // Recebendo um array de dados
+        }
 
         return base + Math.round(intervalo * Math.random())
     }

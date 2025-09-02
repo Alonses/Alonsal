@@ -5,6 +5,7 @@ const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = req
 const voice_channel_config = require("../../../interactions/chunks/voice_channel_config")
 
 const { voiceChannelTimeout } = require("../../../formatters/patterns/timeout")
+const { voice_names } = require("../../../formatters/patterns/guild")
 
 module.exports = async ({ client, guild, oldState, newState }) => {
 
@@ -23,22 +24,45 @@ module.exports = async ({ client, guild, oldState, newState }) => {
             // Verificando se a categoria informada existe
             if (await client.getGuildChannel(client.decifer(guild.voice_channels.category))) {
 
-                const guild_member = await client.getMemberGuild(guild.sid, id_user)
                 const cached_guild = await client.guilds(guild.sid)
-                const { nicknames } = require('../../../../files/json/text/nicknames.json')
 
-                // Criando o canal dinâmico na categoria definida no servidor
-                await cached_guild.channels.create({
-                    name: `${client.defaultEmoji("person")} ${nicknames[client.random(nicknames)]}`,
+                const guild_member = await client.getMemberGuild(guild.sid, id_user)
+                const user = await client.getUser(id_user)
+
+                // Escolhendo um nome aleatório conforme o tema definido no servidor
+                const chave_nome = guild.voice_channels.preferences.voice_names === "all" ? client.random(voice_names, null, true) : guild.voice_channels.preferences.voice_names
+                const nome_canal = client.tls.phrase(user, `voice_channels.${chave_nome}`)
+
+                const obj = {
+                    name: `${client.defaultEmoji("person")} ${nome_canal}`,
                     type: ChannelType.GuildVoice,
                     parent: client.decifer(guild.voice_channels.category),
+                    userLimit: guild?.voice_channels.preferences.user_limit || 0,
                     permissionOverwrites: [
                         {
                             id: guild.sid,
                             allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.Connect, PermissionsBitField.Flags.ReadMessageHistory]
                         }
                     ]
-                }).then(async new_voice_channel => {
+                }
+
+                if (!guild.voice_channels.preferences.allow_text) // Desautorizando os membros a enviarem mensagens no canal de voz
+                    obj.permissionOverwrites.push({ id: guild.sid, deny: [PermissionsBitField.Flags.SendMessages] })
+
+                if (guild.voice_channels.preferences.always_private)
+                    obj.permissionOverwrites.push(
+                        {
+                            id: guild.sid,
+                            deny: [PermissionsBitField.Flags.ViewChannel]
+                        },
+                        {
+                            id: id_user,
+                            allow: [PermissionsBitField.Flags.ViewChannel]
+                        }
+                    )
+
+                // Criando o canal dinâmico na categoria definida no servidor
+                await cached_guild.channels.create(obj).then(async new_voice_channel => {
 
                     // Atualizando as estatísticas de canais dinâmicos criados no dia
                     client.journal("voice_channel")

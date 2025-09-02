@@ -26,7 +26,14 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null },
         category: { type: String, default: null },
         timeout: { type: String, default: 0 },
-        mute_popup: { type: Boolean, default: true }
+        preferences: {
+            user_limit: { type: String, default: 0 },
+            mute_popup: { type: Boolean, default: true },
+            allow_text: { type: Boolean, default: false },
+            always_private: { type: Boolean, default: false },
+            voice_names: { type: String, default: "nicknames" },
+            allow_preferences: { type: Boolean, default: false }
+        }
     },
     warn: {
         notify: { type: Boolean, default: true },

@@ -78,6 +78,16 @@ const links_oficiais = [
     "discordapp.net"
 ]
 
+const voice_names = {
+    "all": "🎰",
+    "nicknames": "🔖",
+    "precious_gems": "💎",
+    "phonetic": "📞",
+    "cities": "🏫",
+    "aliens": "👽",
+    "villains": "🧛‍♀️"
+}
+
 module.exports = {
     loggerMap,
     channelTypes,
@@ -85,5 +95,6 @@ module.exports = {
     guildActions,
     operation_codes,
     networkCases,
-    links_oficiais
+    links_oficiais,
+    voice_names
 }

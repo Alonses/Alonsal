@@ -1,5 +1,6 @@
 const { ChannelType } = require('discord.js')
 
+const { voice_names } = require('../../../formatters/patterns/guild')
 const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
 
 const { registryVoiceChannel } = require('../../../database/schemas/User_voice_channel')
@@ -13,15 +14,21 @@ const { registryVoiceChannel } = require('../../../database/schemas/User_voice_c
 // 6 -> Converte o canal de voz atual do membro em um canal dinâmico
 // 7 -> Confirma a alteração do canal atual para canal de voz dinâmico
 
+// 20 -> Sub menu para editar preferências dos canais no servidor
+
 const operations = {
     1: { action: "conf.voice_channels", page: 0 },
-    5: { action: "voice_channels.mute_popup", page: 0 }
+    5: { action: "voice_channels.preferences.mute_popup", page: 0 },
+    22: { action: "voice_channels.preferences.always_private", page: 1 },
+    24: { action: "voice_channels.preferences.allow_text", page: 1 },
+    25: { action: "voice_channels.preferences.allow_preferences", page: 1 }
 }
 
 module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_voice_channels"
     let guild = await client.getGuild(interaction.guild.id)
+    let pagina_guia = 0
 
     if (operations[operacao]) {
         ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
@@ -145,8 +152,64 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 }
             }
         }
+    } else if (operacao === 21) {
+
+        // Define preferências do tamanho dos canais dinâmicos do servidor
+        const guild = await client.getGuild(interaction.guild.id)
+        let limite_canal = [], reback = "panel_guild_voice_channels.1"
+
+        for (let i = 2; i <= 20; i++) {
+            if (i !== parseInt(guild.voice_channels.preferences.user_limit))
+                limite_canal.push({ name: i, value: i })
+        }
+
+        if (guild?.voice_channels.preferences.user_limit !== "0")
+            limite_canal.unshift({ name: client.tls.phrase(user, "menu.botoes.remover_limite"), value: 0 })
+
+        const data = {
+            title: { tls: "menu.menus.escolher_limite_usuarios" },
+            pattern: "numbers",
+            alvo: "guild_voice_channel_limit",
+            values: limite_canal
+        }
+
+        // Atualizando a mensagem original com o painel de controle do canal de voz
+        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+
+        return client.reply(interaction, {
+            components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
+            flags: "Ephemeral"
+        })
+
+    } else if (operacao === 23) {
+
+        // Define quais nomes serão utilizados para gerar os canais de voz
+        const guild = await client.getGuild(interaction.guild.id)
+        let nomes_canal = [], reback = "panel_guild_voice_channels.1"
+
+        Object.keys(voice_names).forEach(key => {
+            if (guild.voice_channels.preferences.voice_names !== key)
+                nomes_canal.push({ name: key, value: key, emoji: voice_names[key] })
+        })
+
+        const data = {
+            title: { tls: "menu.menus.escolher_nome_canais" },
+            pattern: "channel_names",
+            alvo: "guild_voice_channel_names",
+            values: nomes_canal
+        }
+
+        // Atualizando a mensagem original com o painel de controle do canal de voz
+        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+
+        return client.reply(interaction, {
+            components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
+            flags: "Ephemeral"
+        })
     }
 
+    if (operacao >= 20) pagina_guia = 1
+
     // Redirecionando a função para o painel dos canais de voz dinâmicos
-    require('../../chunks/panel_guild_voice_channels')({ client, user, interaction })
+    require('../../chunks/panel_guild_voice_channels')({ client, user, interaction, pagina_guia })
 }

@@ -97,7 +97,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const guild_channel = await client.getGuildChannel(id_canal)
         const guild = await client.getGuild(interaction.guild.id)
 
-        if (escolha === 5 && guild.voice_channels.mute_popup) { // Enviando um som no canal mutado
+        if (escolha === 5 && guild?.voice_channels.preferences.mute_popup) { // Enviando um som no canal mutado
 
             const num = client.random(client.countFiles("./files/songs/voice_channel", "ogg") - 1)
             conecta_canal_voz(guild_channel, `./files/songs/voice_channel/mute_${num}.ogg`)
