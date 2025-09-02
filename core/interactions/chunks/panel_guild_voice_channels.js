@@ -66,11 +66,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 value: `\`${voice_names[guild.voice_channels.preferences.voice_names]} ${client.tls.phrase(user, `mode.voice_channels.nicknames.${guild.voice_channels.preferences.voice_names}`)}\``,
                 inline: true
             },
-            {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.allow_preferences)} **${client.tls.phrase(user, "menu.botoes.preferencias")}**`,
-                value: "⠀",
-                inline: true
-            }
+            // {
+            //     name: `${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.allow_preferences)} **${client.tls.phrase(user, "menu.botoes.preferencias")}**`,
+            //     value: "⠀",
+            //     inline: true
+            // }
         )
     }
 
