@@ -20,7 +20,7 @@ module.exports = async ({ client, user, interaction, caso }) => {
     })
 
     if (restricoes.length > 0) // Listando os recursos com restrições de funcionamento em andamento
-        info_restricoes = `\`\`\`⚠️ Há restrições de funcionamento para alguns recursos ocorrendo atualmente, pode ser que funções relacionadas a eles não sincronizem como deveriam no momento.\n\nOs recursos afetados são os seguintes:\n${restricoes.join("\n")}\`\`\``
+        info_restricoes = client.tls.phrase(user, "manu.info.restricoes_ativas", null, restricoes.join("\n"))
 
     const embed = client.create_embed({
         title: `> ${client.tls.phrase(user, "manu.info.infos")}`,

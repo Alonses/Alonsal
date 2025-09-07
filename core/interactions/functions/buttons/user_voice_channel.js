@@ -78,7 +78,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         ]
 
         return client.reply(interaction, {
-            content: client.tls.phrase(user, "mode.voice_channels.confirmar_canal_publico"),
+            content: client.tls.phrase(user, "mode.voice_channels.confirmar_canal_publico", client.emoji(8)),
             components: [client.create_buttons(botoes, interaction, user)]
         })
 

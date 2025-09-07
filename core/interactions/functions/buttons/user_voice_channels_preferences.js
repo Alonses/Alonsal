@@ -1,15 +1,18 @@
 // 1 -> Define os membros para os canais privados
-// 2 -> Ativar ou desativar a permissão de texto nos canais
+// 2 -> Ativar ou desativar a configuração para canais privados
 // 3 -> Altera o tamanho dos canais de voz dinâmicos
 // 4 -> Submenu para confirmar remoção de membros do canal
+
+// 5 -> Confirma a remoção dos membros autorizados
 
 const { dropVoiceChannelParty } = require('../../../database/schemas/User_voice_channel_party')
 
 const operations = {
+    2: { action: "misc.voice_channels.always_private", page: 0 },
     8: { action: "misc.voice_channels.global_config", page: 0 }
 }
 
-module.exports = async ({ client, user, interaction, dados, pagina }) => {
+module.exports = async ({ client, user, interaction, dados }) => {
 
     let operacao = parseInt(dados.split(".")[1])
 
@@ -39,10 +42,9 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Define preferências do tamanho dos canais dinâmicos do usuário
         let limite_canal = [], reback = "panel_personal_voice_channels"
 
-        for (let i = 2; i <= 20; i++) {
+        for (let i = 2; i <= 20; i++)
             if (i !== parseInt(user.misc.voice_channels.user_limit))
                 limite_canal.push({ name: i, value: i })
-        }
 
         if (user.misc?.voice_channels.user_limit !== "0")
             limite_canal.unshift({ name: client.tls.phrase(user, "menu.botoes.remover_limite"), value: 0 })
@@ -71,16 +73,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         ]
 
         return client.reply(interaction, {
-            content: client.tls.phrase(user, user.misc.voice_channels.global_config ? "mode.voice_channels.confirmar_reset_global" : "mode.voice_channels.confirmar_reset_users_server"),
+            content: client.tls.phrase(user, user.misc.voice_channels.global_config ? "mode.voice_channels.confirmar_reset_users_global" : "mode.voice_channels.confirmar_reset_users_server", client.emoji(8)),
             components: [client.create_buttons(botoes, interaction, user)]
         })
     }
 
-    if (operacao === 5) {
-
-        // Confirmando a remoção dos membros do grupo por servidor ou globalmente
+    if (operacao === 5) // Confirmando a remoção dos membros do grupo por servidor ou globalmente
         await dropVoiceChannelParty(user.uid, client.encrypt(interaction.guild.id), user.misc.voice_channels.global_config)
-    }
 
     // Redirecionando a função para o painel dos canais de voz dinâmicos
     require('../../chunks/panel_personal_voice_channels')({ client, user, interaction })

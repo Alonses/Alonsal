@@ -50,10 +50,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 if (!guild.voice_channels.preferences.allow_text) // Desautorizando os membros a enviarem mensagens no canal de voz
                     obj.permissionOverwrites.push({ id: guild.sid, deny: [PermissionsBitField.Flags.SendMessages] })
 
-                // Coletando dados sobre membros autorizados a conectarem no canal de voz dinâmico
-                const userParty = await verifyUserParty(user.uid, client.encrypt(guild.sid), user?.misc.voice_channels.global_config)
-
-                if (guild.voice_channels.preferences.always_private || (userParty?.length > 0 && guild.voice_channels.preferences.allow_preferences)) {
+                if (guild.voice_channels.preferences.always_private || (user?.misc.voice_channels.always_private && guild.voice_channels.preferences.allow_preferences)) {
                     obj.permissionOverwrites.push(
                         {
                             id: guild.sid,
@@ -64,6 +61,9 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                             allow: [PermissionsBitField.Flags.ViewChannel]
                         }
                     )
+
+                    // Coletando dados sobre membros autorizados a conectarem no canal de voz dinâmico
+                    const userParty = await verifyUserParty(user.uid, client.encrypt(guild.sid), user?.misc.voice_channels.global_config)
 
                     // Listando todos os membros autorizados a verem o novo canal
                     userParty.forEach(membro => {

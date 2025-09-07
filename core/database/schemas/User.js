@@ -40,6 +40,7 @@ const schema = new mongoose.Schema({
         fixed_badge: { type: Number, default: null },
         second_lang: { type: String, default: null },
         voice_channels: {
+            always_private: { type: Boolean, default: false },
             user_limit: { type: String, default: 0 },
             global_config: { type: Boolean, default: false }
         }
