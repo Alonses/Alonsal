@@ -486,7 +486,7 @@ function internal_functions(client) {
 
                 do { // Entra em loop enquanto o valor for igual ao ignorado
                     resultado = Object.keys(intervalo)[(base + Math.round(Object.keys(intervalo).length * Math.random())) - 1]
-                } while (resultado === ignore)
+                } while (resultado === ignore || !resultado) // Prevenindo resultado nulo
 
                 return resultado
             }
