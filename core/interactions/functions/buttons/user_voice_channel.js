@@ -11,9 +11,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // Tratamento dos cliques
     // 1 -> Definir limite para o canal
     // 2 -> Tornar o canal privado
-    // 3 -> Tornar o canal público
+    // 3 -> Submenu para confirmar o canal público
 
     // 5 & 6 -> Mutar e desmutar o canal
+
+    // 8 -> Confirmar o evento para tornar o canal público
 
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(interaction.guild.id))
 
@@ -69,27 +71,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     } else if (escolha === 3) {
 
-        // Liberando o canal para todos os membros poderem ver novamente
-        const guild_channel = await client.getGuildChannel(id_canal)
+        // Submenu para confirmar a visilibidade do canal para todos os membros poderem ver novamente
+        const botoes = [
+            { id: "user_voice_channel", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `8.${id_canal}` },
+            { id: "user_voice_channel", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0.${id_canal}` }
+        ]
 
-        if (guild_channel)
-            guild_channel.permissionOverwrites.set([
-                {
-                    id: interaction.guild.id,
-                    allow: [PermissionsBitField.Flags.ViewChannel]
-                }])
-                .then(() => {
-
-                    // Informando ao usuário sobre a alteração do limite de membros do canal concluída
-                    client.tls.reply(interaction, user, "mode.voice_channels.canal_publico", true, client.emoji("dancando_polishcow"))
-
-                    dados = id_canal
-                    const update = true
-                    return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
-                })
-                .catch()
-
-        return
+        return client.reply(interaction, {
+            content: client.tls.phrase(user, "mode.voice_channels.confirmar_canal_publico"),
+            components: [client.create_buttons(botoes, interaction, user)]
+        })
 
     } else if (escolha === 5 || escolha === 6) {
 
@@ -123,6 +114,30 @@ module.exports = async ({ client, user, interaction, dados }) => {
         dados = id_canal
         const update = true
         return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
+
+    } else if (escolha === 8) {
+
+        // Liberando o canal para todos os membros poderem ver novamente
+        const guild_channel = await client.getGuildChannel(id_canal)
+
+        if (guild_channel)
+            guild_channel.permissionOverwrites.set([
+                {
+                    id: interaction.guild.id,
+                    allow: [PermissionsBitField.Flags.ViewChannel]
+                }])
+                .then(() => {
+
+                    // Informando ao usuário sobre a alteração do limite de membros do canal concluída
+                    client.tls.reply(interaction, user, "mode.voice_channels.canal_publico", true, client.emoji("dancando_polishcow"))
+
+                    dados = id_canal
+                    const update = true
+                    return require("../../chunks/voice_channel_config")({ client, user, interaction, dados, update })
+                })
+                .catch()
+
+        return
     }
 
     client.tls.reply(interaction, user, "menu.botoes.operacao_cancelada", true, 4)

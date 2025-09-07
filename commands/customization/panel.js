@@ -53,6 +53,7 @@ module.exports = {
                             { name: '👻 Ghostmode', value: '0' },
                             { name: '🔔 DM notifications', value: '1' },
                             { name: '🏆 Ranking', value: '2' },
+                            { name: '🔊 Voice channels', value: 'voice_channels' },
                             { name: '🕶 Public badges', value: '3' },
                             { name: '🌩 Weather summary', value: '4' },
                             { name: '🌐 Global tasks', value: '5' },
@@ -112,7 +113,8 @@ module.exports = {
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🔊 Voice channels', value: 'voice_channels' }
+                            { name: '🔊 Voice channels', value: 'voice_channels' },
+                            { name: '🔊 Voice channel preferences', value: 'voice_channels.1' }
                         )))
         .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {

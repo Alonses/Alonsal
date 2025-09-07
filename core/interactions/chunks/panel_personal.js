@@ -7,6 +7,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         if (operador === "data") // Atalho para a guia de configurações de exclusão de dados
             return require('./panel_personal_data')({ client, user, interaction })
 
+        if (operador === "voice_channels") // Atalho para a guia de configurações dos canais de voz dinâmicos
+            return require('./panel_personal_voice_channels')({ client, user, interaction })
+
         const dados = `${interaction.user.id}.${operador}`
         return require('../functions/buttons/user_panel_button')({ client, user, interaction, dados })
     }
@@ -47,8 +50,8 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
-                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_clima_resumido")}\`\`\``,
+                name: `${client.emoji(52)} **${client.tls.phrase(user, "mode.voice_channels.title_voice")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_user_faladeros")}\`\`\``,
                 inline: true
             },
             {
@@ -66,13 +69,13 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
-                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_servidores_conhecidos")}\`\`\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_clima_resumido")}\`\`\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", 0)} **${client.tls.phrase(user, "manu.painel.misterioso")}**`,
-                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_misterioso")}\`\`\``,
+                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
+                value: `\`\`\`${client.tls.phrase(user, "manu.painel.desc_servidores_conhecidos")}\`\`\``,
                 inline: true
             }
         )
@@ -98,20 +101,22 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             { id: "user_panel_button", name: { tls: "manu.data.ranking" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.ranking), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking), data: '2' }
         )
 
-    // Segunda página de botões de configuração do Alonsal
-    // Badges visiveis públicamente, clima resumido e tarefas globais
+    // Segunda página de botões
+    // Badges visiveis públicamente, faladeiros dinâmicos e tarefas globais
     if (pagina === 1)
         botoes.push(
             { id: "user_panel_button", name: { tls: "manu.data.badges_publicas" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.public_badges), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges), data: '3' },
-            { id: "user_panel_button", name: { tls: "manu.data.clima_resumido" }, type: client.execute("functions", "emoji_button.type_button", !user?.misc.weather), emoji: client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather), data: '4' },
+            { id: "user_voice_channels_preferences", name: { tls: "mode.voice_channels.faladeros" }, type: 1, emoji: client.emoji(41), data: '0' },
             { id: "user_panel_button", name: { tls: "manu.data.tarefas_globais" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.global_tasks), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks), data: '5' }
         )
 
+    // Terceira página de botões
+    // Modo compacto, clima resumido e servidores conhecidos
     if (pagina === 2)
         botoes.push(
             { id: "user_panel_button", name: { tls: "manu.painel.modo_compacto" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.resumed), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed), data: '6' },
-            { id: "user_panel_button", name: { tls: "manu.painel.servidores_conhecidos" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' },
-            { id: "user_panel_button", name: { tls: "manu.painel.misterioso" }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '8', disabled: true }
+            { id: "user_panel_button", name: { tls: "manu.data.clima_resumido" }, type: client.execute("functions", "emoji_button.type_button", !user?.misc.weather), emoji: client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather), data: '4' },
+            { id: "user_panel_button", name: { tls: "manu.painel.servidores_conhecidos" }, type: client.execute("functions", "emoji_button.type_button", user?.conf.cached_guilds), emoji: client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds), data: '7' }
         )
 
     botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })

@@ -38,7 +38,11 @@ const schema = new mongoose.Schema({
         locale: { type: String, default: null },
         weather: { type: Boolean, default: true },
         fixed_badge: { type: Number, default: null },
-        second_lang: { type: String, default: null }
+        second_lang: { type: String, default: null },
+        voice_channels: {
+            user_limit: { type: String, default: 0 },
+            global_config: { type: Boolean, default: false }
+        }
     },
     conf: {
         banned: { type: Boolean, default: false },

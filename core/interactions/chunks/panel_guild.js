@@ -216,7 +216,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         )
 
     // Quarta página de botões de configuração do Alonsal
-    // Rankeamento no servidor, faladeros dinâmicos
+    // Rankeamento no servidor e Faladeros dinâmicos
     if (pagina === 3)
         botoes.push(
             { id: "guild_panel_button", name: { tls: "manu.painel.rankeamento" }, type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },

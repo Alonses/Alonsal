@@ -87,5 +87,5 @@ function listar_cargos(client, user, cargos) {
         else lista.push(`<@&${cargo}>`)
     })
 
-    return lista.join(", ")
+    return client.list(lista, null, true)
 }

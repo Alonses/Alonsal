@@ -32,7 +32,7 @@ const schema = new mongoose.Schema({
             allow_text: { type: Boolean, default: false },
             always_private: { type: Boolean, default: false },
             voice_names: { type: String, default: "nicknames" },
-            allow_preferences: { type: Boolean, default: false }
+            allow_preferences: { type: Boolean, default: true }
         }
     },
     warn: {

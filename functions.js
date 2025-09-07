@@ -373,7 +373,7 @@ function internal_functions(client) {
     client.journal = async (caso, quantia) => { require('./core/auto/edit_journal')({ client, caso, quantia }) }
 
     // Cria uma lista com vírgulas e & no último elemento
-    client.list = (valores, tamanho_maximo) => {
+    client.list = (valores, tamanho_maximo, raw) => {
 
         let lista = ""
 
@@ -381,12 +381,13 @@ function internal_functions(client) {
             for (let i = 0; i < valores.length; i++) {
                 if (!valores[i + 1]) lista += " & "
 
-                lista += `\`${valores[i]}\``
+                if (!raw) lista += `\`${valores[i]}\``
+                else lista += valores[i]
 
                 if (valores[i + 2]) lista += ", "
             }
         } else // Apenas um elemento
-            lista += `\`${valores[0]}\``
+            lista += raw ? valores[0] : `\`${valores[0]}\``
 
         if (tamanho_maximo)
             if (lista.length > tamanho_maximo) lista = `${lista.slice(0, tamanho_maximo)}...`
@@ -620,7 +621,7 @@ function internal_functions(client) {
         return arr
     }
 
-    client.switcher = ({ guild, operations, operacao }) => {
+    client.switcher = ({ guild, user, operations, operacao }) => {
 
         // Inverte o valor de botões liga/desliga
         const local = (operations[operacao].action).split(".")
@@ -631,11 +632,11 @@ function internal_functions(client) {
                 acc[key] = !acc[key]
 
             return acc[key]
-        }, guild)
+        }, guild ? guild : user)
 
         const pagina_guia = operations[operacao].page
 
-        return { guild, pagina_guia }
+        return { guild, user, pagina_guia }
     }
 
     client.timed_message = async (interaction, message, time) => {

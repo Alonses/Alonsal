@@ -7,9 +7,9 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     registroAudita.changes[0].new.forEach(role => { cargos.push(`<@&${role.id}>`) })
 
     if (registroAudita.changes[0].key === "$add")
-        texto = `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${cargos.join(", ")}`
+        texto = `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${client.list(cargos, null, true)}`
     else
-        texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${cargos.join(", ")}`
+        texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${client.list(cargos, null, true)}`
 
     let embed = client.create_embed({
         title: { tls: "mode.logger.cargo_atualizado" },

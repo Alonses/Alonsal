@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js")
+const { PermissionsBitField, OverwriteType } = require("discord.js")
 
 const { verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
@@ -15,7 +15,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (canal_server) {
 
-        const alteracoes = []
+        const alteracoes = [], alteracoes_cache = {}
+        const permissoes = canal_server.permissionOverwrites.cache // Coletando overwrites do canal
 
         if (users.length > 0) // Removendo a permissão de everyone poder conectar ao canal
             alteracoes.push(
@@ -29,18 +30,41 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 }
             )
 
+        alteracoes_cache[interaction.guild.id] = true
+        alteracoes_cache[client.id()] = true
+
         users.forEach(async user => {
-            alteracoes.push({
-                id: user,
-                allow: [PermissionsBitField.Flags.ViewChannel]
-            })
+
+            // Verificando se há um overwrite já configurado no canal e removendo o mesmo
+            if (canal_server.permissionOverwrites.cache.has(user))
+                canal_server.permissionOverwrites.delete(user)
+            else {
+                alteracoes.push({
+                    id: user,
+                    allow: [PermissionsBitField.Flags.ViewChannel]
+                })
+            }
+
+            alteracoes_cache[user] = true
+        })
+
+        permissoes.forEach(overwrite => {
+
+            // Incluindo overwrites prévios que não foram alterados no canal
+            if (!alteracoes_cache[overwrite.id])
+                alteracoes.push({
+                    id: overwrite.id,
+                    allow: overwrite.allow.toArray(),
+                    deny: overwrite.deny.toArray(),
+                    type: OverwriteType.Member
+                })
         })
 
         canal_server.permissionOverwrites.set(alteracoes)
             .then(() => {
 
                 // Informando ao usuário sobre a alteração do limite de membros do canal concluída
-                interaction.reply({ content: `:passport_control: | O canal foi privado para apenas alguns usuários poderem acessar.\n\n:white_check_mark: Os usuários liberados para acesso são: ${(users.map(id => `<@${id}>`)).join(", ")}`, flags: "Ephemeral" })
+                client.tls.reply(interaction, user, "mode.voice_channels.aviso_canal_privado", true, 7, client.list(users.map(id => `<@${id}>`), null, true))
 
                 dados = id_canal
                 const update = true

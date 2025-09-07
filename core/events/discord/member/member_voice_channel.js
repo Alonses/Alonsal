@@ -1,6 +1,7 @@
-const { ChannelType, PermissionsBitField } = require("discord.js")
+const { ChannelType, PermissionsBitField, OverwriteType } = require("discord.js")
 
 const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
+const { verifyUserParty } = require("../../../database/schemas/User_voice_channel_party")
 
 const voice_channel_config = require("../../../interactions/chunks/voice_channel_config")
 
@@ -30,14 +31,14 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 const user = await client.getUser(id_user)
 
                 // Escolhendo um nome aleatório conforme o tema definido no servidor
-                const chave_nome = guild.voice_channels.preferences.voice_names === "all" ? client.random(voice_names, null, true) : guild.voice_channels.preferences.voice_names
+                const chave_nome = guild.voice_channels.preferences.voice_names === "all" ? client.random(voice_names, null, true, "all") : guild.voice_channels.preferences.voice_names
                 const nome_canal = client.tls.phrase(user, `voice_channels.${chave_nome}`)
 
                 const obj = {
                     name: `${client.defaultEmoji("person")} ${nome_canal}`,
                     type: ChannelType.GuildVoice,
                     parent: client.decifer(guild.voice_channels.category),
-                    userLimit: guild?.voice_channels.preferences.user_limit || 0,
+                    userLimit: guild?.voice_channels.preferences.allow_preferences ? user?.misc.voice_channels.user_limit : guild?.voice_channels.preferences.user_limit || 0,
                     permissionOverwrites: [
                         {
                             id: guild.sid,
@@ -49,7 +50,10 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 if (!guild.voice_channels.preferences.allow_text) // Desautorizando os membros a enviarem mensagens no canal de voz
                     obj.permissionOverwrites.push({ id: guild.sid, deny: [PermissionsBitField.Flags.SendMessages] })
 
-                if (guild.voice_channels.preferences.always_private)
+                // Coletando dados sobre membros autorizados a conectarem no canal de voz dinâmico
+                const userParty = await verifyUserParty(user.uid, client.encrypt(guild.sid), user?.misc.voice_channels.global_config)
+
+                if (guild.voice_channels.preferences.always_private || (userParty?.length > 0 && guild.voice_channels.preferences.allow_preferences)) {
                     obj.permissionOverwrites.push(
                         {
                             id: guild.sid,
@@ -60,6 +64,19 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                             allow: [PermissionsBitField.Flags.ViewChannel]
                         }
                     )
+
+                    // Listando todos os membros autorizados a verem o novo canal
+                    userParty.forEach(membro => {
+
+                        obj.permissionOverwrites.push(
+                            {
+                                id: client.decifer(membro.mid),
+                                allow: [PermissionsBitField.Flags.ViewChannel],
+                                type: OverwriteType.Member
+                            }
+                        )
+                    })
+                }
 
                 // Criando o canal dinâmico na categoria definida no servidor
                 await cached_guild.channels.create(obj).then(async new_voice_channel => {

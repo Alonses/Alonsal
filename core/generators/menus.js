@@ -78,7 +78,7 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
     } else {
 
         // Atualizando o máximo de membros para privar canal de voz
-        if (data.alvo === "user_voice_channel_private") max = 10
+        if (data.alvo.includes("user_voice_channel")) max = 10
 
         id_menu = `${alvo}|${interaction.user.id}`
 

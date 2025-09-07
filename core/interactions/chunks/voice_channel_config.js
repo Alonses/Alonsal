@@ -8,6 +8,7 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
     const id_guild = interaction?.guild.id || dados.split(".")[1]
     const canal_guild = await client.getGuildChannel(id_canal)
     const voice_channel = await verifyVoiceChannel(client.encrypt(id_canal), client.encrypt(id_guild))
+    const guild = await client.getGuild(id_guild)
 
     // Verificando se o canal de voz existe no banco ainda
     if (!voice_channel) return
@@ -15,7 +16,7 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
     if (!update) {
 
         // Enviando a mensagem e salvando o ID dela para atualizações futuras
-        const obj = await gera_painel(client, user, id_canal, canal_guild, voice_channel)
+        const obj = await gera_painel(client, user, guild, id_canal, canal_guild, voice_channel)
         envia_painel(client, user, interaction, voice_channel, canal_guild, obj)
             .catch({})
 
@@ -26,16 +27,16 @@ module.exports = async ({ client, user, interaction, dados, update }) => {
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
         canal_guild.messages.fetch(client.decifer(voice_channel.mid))
-            .then(async (m) => { m.edit(await gera_painel(client, user, id_canal, canal_guild, voice_channel)) })
+            .then(async (m) => { m.edit(await gera_painel(client, user, guild, id_canal, canal_guild, voice_channel)) })
             .catch(async () => {
-                const obj = await gera_painel(client, user, id_canal, canal_guild, voice_channel)
+                const obj = await gera_painel(client, user, guild, id_canal, canal_guild, voice_channel)
                 envia_painel(client, user, interaction, voice_channel, canal_guild, obj)
                     .catch({})
             })
     }
 }
 
-async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
+async function gera_painel(client, user, guild, id_canal, canal_guild, voice_channel) {
 
     let aviso_card = "", users_liberados = [`<@${client.decifer(user.uid)}>`]
     const botoes = [
@@ -53,7 +54,7 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
                 users_liberados.push(`<@${permissao.id}>`)
         })
 
-        aviso_card = client.tls.phrase(user, "mode.voice_channels.canal_privado", null, users_liberados.join(", "))
+        aviso_card = client.tls.phrase(user, "mode.voice_channels.canal_privado", null, [users_liberados.length, client.list(users_liberados, null, true)])
     }
 
     if (voice_channel.conf.mute) {
@@ -72,6 +73,11 @@ async function gera_painel(client, user, id_canal, canal_guild, voice_channel) {
             {
                 name: `${canal_guild.userLimit < 1 ? "🗽" : "🚧"} **${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")}**`,
                 value: canal_guild.userLimit < 1 ? `\`${client.tls.phrase(user, "util.canal.sem_limite")}\`` : `\`${canal_guild.userLimit} ${client.tls.phrase(user, "mode.voice_channels.usuarios")}\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.allow_text)} ${client.tls.phrase(user, "menu.botoes.permitir_texto")}`,
+                value: "⠀",
                 inline: true
             },
             {
