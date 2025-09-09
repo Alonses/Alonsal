@@ -154,11 +154,8 @@ ajusta_traducao = (idioma, frase) => {
     // Busca as traduções para o item solicitado
     let { data } = require(`../../files/languages/${idioma}.json`)
 
-    for (let i = 0; i < blocos.length; i++) {
-
-        // Altera o trecho para a tradução
+    for (let i = 0; i < blocos.length; i++) // Altera o trecho para a tradução
         if (data[blocos[i]]) blocos[i] = data[blocos[i]]
-    }
 
     return blocos.join(" ")
 }

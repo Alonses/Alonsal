@@ -117,7 +117,7 @@ const idiomas = {
 }
 
 const languagesMap = {
-    "al": ["al-br", ":pirate_flag: | Meu idioma agora é o `Alonsês`", "Alonsês", "🏴‍☠️"],
+    "al": ["pt-al", ":pirate_flag: | `Alonsês` agora sta ligado como lingua secundária", "Alonsês", "🏴‍☠️"],
     "de": ["de-de", ":flag_de: | Die Sprache wurde auf `Deutsch` geändert", "Deutsch", "🇩🇪"],
     "en": ["en-us", ":flag_us: | Language switched to `American English`", "American English", "🇺🇸"],
     "es": ["es-es", ":flag_es: | Idioma cambiado a `Español`", "Español", "🇪🇸"],

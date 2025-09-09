@@ -1,4 +1,4 @@
-const { data } = require('../../../files/languages/pt-hp.json')
+const { languagesMap } = require("../../../core/formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, user_command }) => {
 
@@ -6,9 +6,12 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
     const codificar = {
         texto: interaction.options.getString("text"),
+        lang: interaction.options.getString("key").split(".")[1],
         reverso: interaction.options.getBoolean("reverse"),
         opera: interaction.options.getString("operation")
     }
+
+    const { data } = require(`../../../files/languages/pt-${codificar.lang}.json`)
 
     if (!codificar.opera) { // Codificando
         texto = codificar.texto.split(' ')
@@ -29,11 +32,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
         texto = texto.reverse()
 
     // Montando 
-    let texto_ordenado = texto.join("")
-    let titulo = "Sua mensagem codificada em hopês"
+    let texto_ordenado = texto.join(" ").replaceAll("  ", " ")
+    let titulo = client.tls.phrase(user, "util.idioma_secundario.code", null, languagesMap[codificar.lang][2].toLowerCase())
 
     if (codificar.opera)
-        titulo = "Sua mensagem decodificada do hopês"
+        titulo = client.tls.phrase(user, "util.idioma_secundario.deco", null, languagesMap[codificar.lang][2].toLowerCase())
 
     if (texto_ordenado.length === 0) {
         texto_ordenado = client.tls.phrase(user, "util.morse.carac_invalidos")

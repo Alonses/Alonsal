@@ -5,11 +5,11 @@ module.exports = async ({ client, user, interaction, guild }) => {
     let novo_idioma = interaction.options.getString("language")
     let frase_retorno
 
-    if (novo_idioma === "pt-hp") { // Hopês
+    if (novo_idioma === "pt-hp" || novo_idioma === "pt-al") { // Hopês ou Alonsês
 
         if (!guild.misc.second_lang) { // Definindo um idioma secundário
-            guild.misc.second_lang = "pt-hp"
-            frase_retorno = languagesMap["hp"][1]
+            guild.misc.second_lang = novo_idioma
+            frase_retorno = languagesMap[novo_idioma.slice(3, 5)][1]
         } else { // Removendo o idioma secundário
             guild.misc.second_lang = null
             frase_retorno = client.tls.phrase(user, "mode.idiomas.idioma_secundario_removido", 11)

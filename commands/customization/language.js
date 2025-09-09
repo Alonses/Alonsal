@@ -58,18 +58,18 @@ module.exports = {
         let novo_idioma = interaction.options.getString("language")
         let frase_idioma
 
-        if (novo_idioma === "hp") {
+        if (novo_idioma === "hp" || novo_idioma === "al") {
 
             if (!user.misc.second_lang) { // Definindo um idioma secundário
-                user.misc.second_lang = "pt-hp"
-                frase_idioma = languagesMap["hp"][1]
+                user.misc.second_lang = `pt-${novo_idioma}`
+                frase_idioma = languagesMap[novo_idioma][1]
             } else { // Removendo o idioma secundário
                 user.misc.second_lang = null
                 frase_idioma = client.tls.phrase(user, "mode.idiomas.idioma_secundario_removido", 11)
             }
         } else {
             // Validando e coletando os dados do idioma
-            const matches = novo_idioma.match(/al|de|en|es|fr|it|pt|ru/)
+            const matches = novo_idioma.match(/de|en|es|fr|it|pt|ru/)
 
             // Resgata os dados do idioma válido
             user.lang = languagesMap[matches[0]][0]

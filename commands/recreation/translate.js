@@ -43,7 +43,8 @@ module.exports = {
                     { name: '1️⃣ binary', value: 'binary' },
                     { name: '📻 morse', value: 'morse' },
                     { name: '🐱 hieroglyphics', value: 'hieroglyphics' },
-                    { name: '🔆 hopês', value: 'hopes' }
+                    { name: '🔆 hopês', value: 'generic.hp' },
+                    { name: '🏴‍☠️ alonsês', value: 'generic.al' }
                 )
                 .setRequired(true))
         .addStringOption(option =>
@@ -109,6 +110,8 @@ module.exports = {
     async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando para a opção respectiva
-        require(`./subcommands/translate_${interaction.options.getString("key")}`)({ client, user, interaction, user_command })
+        let subcommand = interaction.options.getString("key").split(".")[0] || interaction.options.getString("key")
+
+        require(`./subcommands/translate_${subcommand}`)({ client, user, interaction, user_command })
     }
 }

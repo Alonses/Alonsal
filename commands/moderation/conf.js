@@ -42,7 +42,7 @@ module.exports = {
                             { name: '📻 External reports', value: 'report' },
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💬 Tickets', value: 'ticket' },
-                            { name: '🔊 Voice channels', value: 'voice_channels'}
+                            { name: '🔊 Voice channels', value: 'voice_channels' }
                         )
                         .setRequired(true))
                 .addChannelOption(option =>
@@ -95,7 +95,7 @@ module.exports = {
                             "ru": 'Язык, который будет использоваться'
                         })
                         .addChoices(
-                            { name: '🏴 Alonsês', value: 'al-br' },
+                            { name: '🏴 Alonsês', value: 'pt-al' },
                             { name: '🇩🇪 Deutsch', value: 'de-de' },
                             { name: '🇺🇸 English', value: 'en-us' },
                             { name: '🇪🇸 Español', value: 'es-es' },
