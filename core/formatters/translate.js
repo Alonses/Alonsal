@@ -74,7 +74,7 @@ function report(interaction, user, target, ephemeral, emoji, button, update) {
 function translate(alvo, target, replace) {
 
     // Pode ser usado para referenciar usuários ou servidores
-    let idioma_alvo = alvo.lang || "pt-br", data
+    let idioma_alvo = alvo?.lang || "pt-br", data
 
     if (!traducoes || idioma_alvo !== idioma_ativo) { // Busca as traduções para o idioma solicitado
         ({ data } = require(`../../files/languages/${idioma_alvo}.json`))

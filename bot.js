@@ -64,19 +64,18 @@ client.discord.on("messageCreate", async message => {
 				components: [client.create_buttons([{ name: { tls: "inic.inicio.convidar" }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message, user)]
 			}).catch(console.error)
 
-	if (guild.spam.suspicious_links) { // Checking the text for a malicious link
+	if (guild.conf.spam) { // Server anti-spam system
 
 		const link = `${message.content} `.match(client.cached.regex)
 
-		if (link)
+		if (link) // Checking the text for a malicious link
 			if (await verifySuspiciousLink(link)) {
 				const suspect_link = true
 				return nerfa_spam({ client, message, guild, suspect_link })
 			}
-	}
 
-	if (guild.conf.spam) // Server anti-spam system
 		await require("./core/events/spam")({ client, message, guild })
+	}
 
 	if (user) { // It only runs if the member is saved in the database
 

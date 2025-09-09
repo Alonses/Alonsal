@@ -177,9 +177,9 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     const bot = await client.getBot(client.x.id)
     bot.persis.spam++
 
-    // Checking if the server has the suspicious links registry active
-    if (guild.spam.suspicious_links && user_messages.length > 0 && !suspect_link) {
+    if (user_messages.length > 0 && !suspect_link) {
 
+        // Checking the text for a malicious link
         const link = `${user_messages[0].content} `.match(client.cached.regex)
 
         if (link?.length > 0 && !await verifySuspiciousLink(link)) {
@@ -190,7 +190,9 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
                 // Registering suspicious links that are not saved yet and notifying about the addition of a new suspicious link to the Alonsal database and the original server
                 if (registrados.length > 0) {
                     client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` })
-                    client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
+
+                    if (guild.spam.suspicious_links) // Checking if the server has the suspicious links registry active
+                        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
                 }
             }
         }
