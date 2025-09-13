@@ -9,7 +9,7 @@ async function servidores_inativos(client) {
     guilds.forEach(guild => {
 
         if (guild.iddle.timestamp)
-            if (client.timestamp() > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link) {
+            if (client.timestamp() > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
 
                 // Saindo do servidor com inatividade confirmada
                 const cached_guild = client.discord.guilds.cache.get(guild.sid)
@@ -38,9 +38,9 @@ async function disconnect_iddle_guilds(servers) {
 
     // Desconectando da guild inativa
     await guild.leave()
-        .catch(async (err) => {
+        .catch(async () => {
 
-            // Excluir a guild desconhecida do banco de dados
+            // Excluindo a guild desconhecida do banco de dados
             await dropGuild(guild.sid)
         })
 

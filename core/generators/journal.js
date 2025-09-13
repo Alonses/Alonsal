@@ -35,7 +35,7 @@ module.exports = async ({ client }) => {
             },
             {
                 name: `${client.emoji("icon_slash_commands")} **Interações**`,
-                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Dinâmicos:** \`${client.locale(bot.cmd.voice_channels)}\``,
+                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Faladeros:** \`${client.locale(bot.cmd.voice_channels)}\``,
                 inline: true
             },
             {
