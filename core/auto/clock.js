@@ -8,10 +8,10 @@ const { requisita_modulo, atualiza_modulos } = require("./triggers/user_modules"
 const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
 
 const { verifica_servers } = require("../data/user_ranking")
+const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
+const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
-const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
-const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
 const { verifica_canais_dinamicos, atualiza_voice_channels } = require('./triggers/guild_voice_channels')
 
 module.exports = async ({ client }) => {
