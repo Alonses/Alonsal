@@ -1,10 +1,21 @@
+/**
+ * Retorna o emoji de direção cardinal baseado em graus
+ * @param {number} degrees - Ângulo em graus
+ * @returns {string} Emoji da direção
+ */
 module.exports = (degrees) => {
 
     const cards = ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"]
-    degrees += 22.5
 
-    if (degrees < 0) degrees = 360 - Math.abs(degrees) % 360
-    else degrees = degrees % 360
+    // Validação do parâmetro
+    let deg = Number(degrees)
+    if (isNaN(deg)) return "❓" // Retorna interrogação se o valor não for numérico
 
-    return cards[parseInt(degrees / 45)]
+    // Ajustando os graus para a faixa correta
+    deg = ((deg % 360) + 360) % 360
+    deg += 22.5
+    deg = deg % 360
+
+    const idx = Math.floor(deg / 45)
+    return cards[idx]
 }

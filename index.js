@@ -1,15 +1,33 @@
 const { ShardingManager } = require('discord.js')
 const { client_data } = require('./setup')
 
-// console.clear() // Limpando o console e inicializando o bot
+// Limpa o console ao iniciar
+// console.clear()
 
 if (client_data.sharding) {
 
-    const { nicknames } = require('./files/json/text/nicknames.json')
+    // Carregando os dados de tradução
+    const ptBr = require('./files/languages/pt-br.json')
+    const data = ptBr.data
 
+    // Inicializando o ShardingManager
     const manager = new ShardingManager('./bot.js', { token: client_data.token })
-    manager.on('shardCreate', shard => console.log(`💠 | Shard ${nicknames[shard.id]} ativado`))
 
-    manager.spawn()
-} else // Iniciando sem ativar o sharding
-    require('./bot')
+    manager.on('shardCreate', shard => {
+        const nickname = data?.voice_channels?.nicknames?.[shard.id] || 'Kovarex'
+        console.log(`💠 | Shard ${nickname} ativado`)
+    })
+
+    manager.spawn().catch(error => {
+        console.error('Erro ao iniciar o shard:', error)
+        process.exit(1)
+    })
+} else {
+    // Inicia o bot sem sharding
+    try {
+        require('./bot')
+    } catch (error) {
+        console.error('Erro ao iniciar o bot:', error)
+        process.exit(1)
+    }
+}

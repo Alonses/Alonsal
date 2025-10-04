@@ -113,8 +113,7 @@ module.exports = {
                             { name: '⌚ Timed roles', value: 'timed_roles' },
                             { name: '💂 In-server reports', value: 'tickets' },
                             { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🔊 Voice channels', value: 'voice_channels' },
-                            { name: '🔊 Voice channel preferences', value: 'voice_channels.1' }
+                            { name: '🔊 Voice channels', value: 'voice_channels' }
                         )))
         .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
