@@ -3,7 +3,7 @@ require('dotenv').config()
 // ---------------------------------------------------------------
 // Alterna entre modo normal e modo de testes
 const update_commands = 0 // Força atualização dos comandos slash
-let modo_develop = 1
+let modo_develop = 0
 let silent = 0
 let limited = 0
 let delete_slash = 0 // Limpa comandos slash locais e globais
