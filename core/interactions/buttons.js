@@ -1,26 +1,42 @@
 module.exports = async ({ client, user, interaction }) => {
 
-    let funcao = interaction.customId.split("|")[0] // Nome da função que será importada
-    let dados = interaction.customId.split("|")[1] // Dados para a função
-    const criador = dados.split(".")[0] // ID do criador do menu
-    let autor_original = true
+    // Extraindo dados do customId
+    const [funcao, dadosRaw, extra] = interaction.customId.split("|")
+    let dados = dadosRaw
 
-    // Experiência recebida pelo usuário
+    const criador = dadosRaw?.split(".")[0] || ''
+    const autor_original = criador === interaction.user.id
+
+    // Registrando experiência recebida pelo usuário
     client.registryExperience(interaction, "botao")
 
-    // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
-    if (criador !== interaction.user.id)
-        autor_original = false
+    // Funções de módulos
+    if (funcao.includes("module") && funcao !== "module_button" && funcao !== "module_config" && funcao !== "module_history_button") {
+        try {
+            return require('./chunks/modulos')({ client, user, interaction })
+        } catch (error) {
+            console.error('Erro ao importar módulo:', error)
+            return
+        }
+    }
 
-    if (funcao.includes("module") && !autor_original && funcao !== "module") // Funções de módulos
-        return require('./chunks/modulos')({ client, user, interaction, autor_original })
+    // Dados extras
+    if (extra) dados = `${dados}.${extra}`
 
-    if (interaction.customId.split("|")[2]) // Dados extras
-        dados = `${dados}.${interaction.customId.split("|")[2]}`
+    // Botões que retornam para paineis principais
+    if (funcao.includes("chunks_")) {
+        try {
+            return require(`./chunks/${funcao.replace("chunks_", "")}`)({ client, user, interaction })
+        } catch (error) {
+            console.error('Erro ao executar o chunk:', error)
+            return
+        }
+    }
 
-    if (funcao.includes("chunks_")) // Botões que retornam para paineis principais
-        return require(`./chunks/${funcao.replace("chunks_", "")}`)({ client, user, interaction })
-
-    // Solicitando a função e executando
-    require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados, autor_original })
+    // Redirecionando a função e executando
+    try {
+        require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados, autor_original })
+    } catch (error) {
+        console.error(`Erro ao importar função de botão '${funcao}':`, error)
+    }
 }

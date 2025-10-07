@@ -4,7 +4,7 @@ function create_embed({ client, alvo, data }) {
 
     const embed = new EmbedBuilder()
         .setTitle(data.title?.tls ? client.tls.phrase(alvo, data.title.tls, data.title?.emoji, data.title?.replace) : data.title)
-        .setColor(client.embed_color(data?.color || alvo.misc.color))
+        .setColor(client.embed_color(data?.color || alvo?.misc?.embed_color || "turquesa"))
 
     if (data?.description)
         embed.setDescription(data.description?.tls ? client.tls.phrase(alvo, data.description.tls, data.description?.emoji, data.description?.replace) : data.description)

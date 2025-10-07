@@ -1,20 +1,30 @@
+/**
+ * Calcula a diferença de tempo entre dois horários (HH:mm)
+ * @param {string} entrada - Horário inicial no formato HH:mm
+ * @param {string} saida - Horário final no formato HH:mm
+ * @returns {number} Diferença em milissegundos
+ */
 module.exports = (entrada, saida) => {
 
-    if (entrada === null || saida === null) return 0
+    if (!entrada || !saida) return 0
 
-    let data = new Date()
-    let dia = String(data.getDate()).padStart(2, '0')
-    let mes = String(data.getMonth() + 1).padStart(2, '0')
-    let ano = data.getFullYear()
+    // Validação simples do formato HH:mm
+    const regex = /^\d{2}:\d{2}$/
+    if (!regex.test(entrada) || !regex.test(saida)) return 0
 
-    const inicio = new Date(ano, mes - 1, dia, entrada.substr(0, 2), entrada.substr(3, 2))
-    let fim = new Date(ano, mes - 1, dia, saida.substr(0, 2), saida.substr(3, 2)), diff
+    const now = new Date()
+    const ano = now.getFullYear()
+    const mes = now.getMonth()
+    const dia = now.getDate()
 
-    if (entrada < saida) diff = Math.abs(inicio.getTime() - fim.getTime())
-    else {
-        fim.setDate(fim.getDate() + 1)
-        diff = Math.abs(inicio.getTime() - fim.getTime())
-    }
+    // Cria datas para os horários
+    const [h1, m1] = entrada.split(':').map(Number)
+    const [h2, m2] = saida.split(':').map(Number)
+    const inicio = new Date(ano, mes, dia, h1, m1)
+    let fim = new Date(ano, mes, dia, h2, m2)
 
-    return diff
+    // Se entrada é maior que saída, considera o próximo dia
+    if (inicio > fim) fim.setDate(fim.getDate() + 1)
+
+    return Math.abs(fim - inicio)
 }

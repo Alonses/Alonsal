@@ -54,7 +54,7 @@ module.exports = {
                         .addChoices(
                             { name: '🌩️ Weather', value: '0' },
                             { name: '🖊️ Phrase', value: '1' },
-                            { name: '🏯 Historical events', value: '2' },
+                            // { name: '🏯 Historical events', value: '2' },
                             { name: '🃏 Jokes', value: '3' },
                             { name: '〽️ Curiosities', value: '4' },
                             { name: '💎 Minecraft Item', value: '5' },
@@ -133,9 +133,51 @@ module.exports = {
                             { name: '🐸 Wednesday', value: '7' },
                             { name: '🚀 Thursday', value: '8' },
                             { name: '🍺 Friday', value: '9' },
-                            { name: '🕺 Saturday', value: '10' },
+                            { name: '🕺 Saturday', value: '10' }
                         )
-                        .setRequired(true)))
+                        .setRequired(true))
+                .addStringOption(option =>
+                    option.setName("place")
+                        .setNameLocalizations({
+                            "de": 'lokal',
+                            "es-ES": 'lugar',
+                            "fr": 'place',
+                            "it": 'posto',
+                            "pt-BR": 'local',
+                            "ru": 'место'
+                        })
+                        .setDescription("Enter a location for the weather module")
+                        .setDescriptionLocalizations({
+                            "de": 'Geben Sie einen Standort für das Wettermodul ein',
+                            "es-ES": 'Introduzca una ubicación para el módulo meteorológico',
+                            "fr": 'Entrez un emplacement pour le module météo',
+                            "it": 'Inserisci una posizione per il modulo meteo',
+                            "pt-BR": 'Insira um local para o módulo de clima',
+                            "ru": 'Введите местоположение для погодного модуля.'
+                        }))
+                .addStringOption(option =>
+                    option.setName("type")
+                        .setNameLocalizations({
+                            "de": 'typ',
+                            "es-ES": 'tipo',
+                            "fr": 'taper',
+                            "it": 'tipo',
+                            "pt-BR": 'tipo',
+                            "ru": 'тип'
+                        })
+                        .setDescription("For server or personal use?")
+                        .setDescriptionLocalizations({
+                            "de": 'Für den Server oder den persönlichen Gebrauch?',
+                            "es-ES": '¿Para servidor o uso personal?',
+                            "fr": 'Pour un serveur ou un usage personnel?',
+                            "it": 'Per uso server o personale?',
+                            "pt-BR": 'Para o servidor ou para uso pessoal?',
+                            "ru": 'Для сервера или личного пользования?'
+                        })
+                        .addChoices(
+                            { name: '👤 Personal', value: 'user' },
+                            { name: '🌐 Server', value: 'guild' }
+                        )))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("list")
@@ -156,14 +198,11 @@ module.exports = {
                     "pt-BR": '⌠🎉⌡ Navegue por seus módulos',
                     "ru": '⌠🎉⌡ Смотрите свои модули'
                 })),
-    async execute({ client, user, interaction, user_command }) {
+    async execute({ client, user, interaction }) {
 
         if (interaction.options.getSubcommand() === "add") // Criando um módulo novo
             require('./subcommands/module_add')({ client, user, interaction })
-        else { // Navegando pelos módulos
-
-            let autor_original = true
-            require('../../core/interactions/chunks/modulos')({ client, user, interaction, autor_original, user_command })
-        }
+        else // Navegando pelos módulos
+            require('../../core/interactions/chunks/modulos')({ client, user, interaction })
     }
 }

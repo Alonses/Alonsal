@@ -1,38 +1,42 @@
 module.exports = async ({ client, user, interaction }) => {
-
+    // Extrai dados do menu
     let funcao, dados, criador
 
     if (interaction.isStringSelectMenu()) {
-
         // Menus de seleção baseados em textos
-        funcao = interaction.values[0].split("|")[0] // Nome da função que será importada
-        dados = interaction.values[0].split("|")[1] // Dados para a função
-        criador = dados.split(".")[0] // ID do criador do menu
+        const [fn, dt] = interaction.values[0].split("|")
+        funcao = fn
+        dados = dt
+        criador = dt?.split(".")[0] || ''
     } else {
-
         // Menus de seleção baseados em usuários
-        funcao = interaction.customId.split("|")[0]
+        const [fn, cr] = interaction.customId.split("|")
+        funcao = fn
         dados = interaction.values
-        criador = interaction.customId.split("|")[1]
+        criador = cr
     }
 
-    let autor_original = true
-
-    // Experiência recebida pelo usuário
+    // Registrando experiência recebida pelo usuário
     client.registryExperience(interaction, "menu")
 
-    // Validando se o criador do menu é o mesmo usuário que interagiu com o menu
-    if (client.decifer(criador) !== interaction.user.id)
-        autor_original = false
+    // Verifica se o criador do menu é o mesmo usuário que ativou a interação
+    const autor_original = client.decifer(criador) === interaction.user.id
 
-    if (funcao === "modules_browse" && !autor_original) // Funções de módulos
-        return require('./chunks/modulos')({ client, user, interaction, autor_original })
+    // Funções de módulos
+    if (funcao === "modules_browse" && !autor_original) {
+        try {
+            return require('./chunks/modulos')({ client, user, interaction, autor_original })
+        } catch (error) {
+            console.error('Erro ao importar módulo:', error)
+            return
+        }
+    }
 
-    if (funcao === "tarefas") // Reutilizando a função de exibir tarefas
-        funcao = "tarefa_visualizar"
+    // Reutilizando a função de exibir tarefas
+    if (funcao === "tarefas") funcao = "tarefa_visualizar"
 
     // Enviando todas as funções de menus de sons para um único arquivo
-    if (funcao === "norbit" || funcao === "faustop" || funcao === "galerito") {
+    if (["norbit", "faustop", "galerito"].includes(funcao)) {
         dados = `${funcao}|${dados}`
         funcao = "frases"
     }
@@ -41,5 +45,9 @@ module.exports = async ({ client, user, interaction }) => {
     const user_command = interaction.guild ? 0 : 1
 
     // Solicitando a função e executando
-    require(`./functions/menus/${funcao}`)({ client, user, interaction, dados, autor_original, user_command })
+    try {
+        require(`./functions/menus/${funcao}`)({ client, user, interaction, dados, autor_original, user_command })
+    } catch (error) {
+        console.error(`Erro ao importar função de menu '${funcao}':`, error)
+    }
 }

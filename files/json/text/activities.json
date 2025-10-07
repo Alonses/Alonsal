@@ -42,6 +42,10 @@
         },
         {
             "type": 0,
+            "text": "esfiha nas inimigas"
+        },
+        {
+            "type": 0,
             "text": "Minecraft"
         },
         {
@@ -805,10 +809,6 @@
         },
         {
             "type": 2,
-            "text": "/link"
-        },
-        {
-            "type": 2,
             "text": "/now"
         },
         {
@@ -967,6 +967,16 @@
         {
             "type": 2,
             "text": "golens de cobre nos canhões de TNT"
+        },
+        {
+            "type": 2,
+            "text": "🎶 Blind Spots - C418",
+            "link": "https://open.spotify.com/track/6K8HUxHtrxGKUJxY6lEQy0?si=ba45e23d91a64634"
+        },
+        {
+            "type": 2,
+            "text": "🎶 Electric Guest - Awake",
+            "link": "https://open.spotify.com/track/0gnG4oD2rOoPWTSzZnnX4A?si=3b890671dd20451f"
         }
     ]
 }
