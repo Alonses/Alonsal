@@ -18,13 +18,14 @@ let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
 slash_commands(client) // Updates the slash commands
 
-client.discord.once("ready", async () => {
+client.discord.once("clientReady", async () => {
 
 	console.log("🟠 | Executando etapas finais")
 
 	// Setting the default language and value for ranking
 	idioma.setDefault("pt-br")
 	client.cached.ranking_value = (await getBot(client.id())).persis.ranking || 5
+	client.cached.subscriber_discount = (await getBot(client.id())).persis.subscriber_discount || 0.2
 
 	// Secondary events
 	await require("./core/auto/clock")({ client })
