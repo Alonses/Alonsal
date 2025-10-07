@@ -18,7 +18,7 @@ let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
 slash_commands(client) // Updates the slash commands
 
-client.discord.once("ready", async () => {
+client.discord.once("clientReady", async () => {
 
 	console.log("🟠 | Executando etapas finais")
 
