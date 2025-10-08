@@ -5,8 +5,6 @@ async function setup(uri) {
     mongoose.set('strictQuery', false)
 
     const options = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         maxPoolSize: 10, // Define o tamanho do pool de conexões
         socketTimeoutMS: 45000, // Tempo limite da conexão de 45 segundos
         connectTimeoutMS: 30000, // Tempo limite para conectar de 30 segundos

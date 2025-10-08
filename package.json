@@ -20,7 +20,7 @@
     "ffmpeg-static": "^5.2.0",
     "i18n-country-code": "^1.0.1",
     "mathjs": "^11.5.0",
-    "mongoose": "^6.9.0",
+    "mongoose": "^8.19.1",
     "node-fetch": "^3.3.0",
     "nodemon": "^3.0.1",
     "opusscript": "^0.0.8"
