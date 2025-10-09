@@ -31,10 +31,9 @@ module.exports = {
             return client.tls.reply(interaction, user, "dive.nick.permissao_2", true, client.emoji(0))
 
         const user_alvo = await client.getMemberGuild(interaction, interaction.user.id)
+        const apelido = user_alvo.nickname || user_alvo.user.username
 
-        let apelido = user_alvo.nickname || user_alvo.user.username
-
-        user_alvo.setNickname(client.shuffleArray(apelido.split("").join("").trim()))
+        user_alvo.setNickname(client.shuffleArray(apelido.split("")).join("").trim())
             .then(() => client.tls.reply(interaction, user, "dive.nick.apelido", client.decider(user?.conf.ghost_mode, 0), null, apelido))
             .catch(() => client.tls.reply(interaction, user, "dive.nick.error_1", true, client.emoji(0)))
     }

@@ -20,7 +20,7 @@ async function free_games({ client, guild_channel }) {
         // Dispara o anúncio dos jogos gratuitos
         dispara_anuncio({ client, objetos_anunciados, guild_channel })
     } catch (error) {
-        console.error('Erro ao buscar ou anunciar jogos gratuitos:', error)
+        console.error('🛑 | Erro ao buscar ou anunciar jogos gratuitos:', error)
     }
 }
 

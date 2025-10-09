@@ -43,7 +43,7 @@ async function conecta_canal_voz(voice_channel, som) {
     })
 
     player.on('error', (error) => {
-        console.error('Erro no player:', error)
+        console.error('🛑 | Erro no player:', error)
         connection.destroy()
     })
 }

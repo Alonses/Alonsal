@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
         try {
             return require('./chunks/modulos')({ client, user, interaction })
         } catch (error) {
-            console.error('Erro ao importar módulo:', error)
+            console.error('🛑 |Erro ao importar módulo:', error)
             return
         }
     }
@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction }) => {
         try {
             return require(`./chunks/${funcao.replace("chunks_", "")}`)({ client, user, interaction })
         } catch (error) {
-            console.error('Erro ao executar o chunk:', error)
+            console.error('🛑 |Erro ao executar o chunk:', error)
             return
         }
     }
@@ -37,6 +37,6 @@ module.exports = async ({ client, user, interaction }) => {
     try {
         require(`./functions/buttons/${funcao}`)({ client, user, interaction, dados, autor_original })
     } catch (error) {
-        console.error(`Erro ao importar função de botão '${funcao}':`, error)
+        console.error(`🛑 | Erro ao importar função de botão '${funcao}':`, error)
     }
 }

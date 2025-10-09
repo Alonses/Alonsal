@@ -19,7 +19,7 @@ if (client_data.sharding) {
     })
 
     manager.spawn().catch(error => {
-        console.error('Erro ao iniciar o shard:', error)
+        console.error('🛑 | Erro ao iniciar o shard:', error)
         process.exit(1)
     })
 } else {
@@ -27,7 +27,7 @@ if (client_data.sharding) {
     try {
         require('./bot')
     } catch (error) {
-        console.error('Erro ao iniciar o bot:', error)
+        console.error('🛑 | Erro ao iniciar o bot:', error)
         process.exit(1)
     }
 }

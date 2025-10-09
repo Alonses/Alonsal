@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction }) => {
         try {
             return require('./chunks/modulos')({ client, user, interaction, autor_original })
         } catch (error) {
-            console.error('Erro ao importar módulo:', error)
+            console.error('🛑 | Erro ao importar módulo:', error)
             return
         }
     }
@@ -48,6 +48,6 @@ module.exports = async ({ client, user, interaction }) => {
     try {
         require(`./functions/menus/${funcao}`)({ client, user, interaction, dados, autor_original, user_command })
     } catch (error) {
-        console.error(`Erro ao importar função de menu '${funcao}':`, error)
+        console.error(`🛑 | Erro ao importar função de menu '${funcao}':`, error)
     }
 }

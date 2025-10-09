@@ -38,7 +38,7 @@ function randomString(len, client, hash_case) {
 function shuffle(str) {
 
     if (typeof str !== 'string') {
-        console.error('shuffle: parâmetro não é uma string:', str)
+        console.error('🛑 | Shuffle: parâmetro não é uma string:', str)
         return ''
     }
 
