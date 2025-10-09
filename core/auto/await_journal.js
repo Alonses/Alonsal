@@ -2,6 +2,7 @@ const { dailyReset } = require('../database/schemas/Bot')
 
 const { cobra_modulo } = require('./triggers/modules')
 const { servidores_inativos } = require('./triggers/guild_iddle')
+const { verifica_renda_passiva } = require('./triggers/user_passive_income')
 
 module.exports = async ({ client }) => {
 
@@ -34,4 +35,5 @@ gera_relatorio = async (client) => {
     await client.notify(process.env.channel_stats, { embeds: [embed] })
     await dailyReset(client.id()) // Reseta o relatório
     await cobra_modulo(client) // Cobra pelos módulos ativos pelos usuários
+    await verifica_renda_passiva(client) // Verifica a renda passiva dos impulsionadores
 }

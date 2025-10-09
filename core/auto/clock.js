@@ -14,7 +14,6 @@ const { atualiza_user_subscription, verifica_subscribers } = require('./triggers
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 const { verifica_canais_dinamicos, atualiza_voice_channels } = require('./triggers/guild_voice_channels')
-const { verifica_renda_passiva } = require('./triggers/user_passive_income')
 
 module.exports = async ({ client }) => {
 
@@ -43,7 +42,6 @@ module.exports = async ({ client }) => {
 
     // Funções relacionadas a assinantes do Alonsal
     await atualiza_user_subscription(client)
-    verifica_renda_passiva(client)
 
     atualiza_eraser()
     atualiza_user_eraser(client)
