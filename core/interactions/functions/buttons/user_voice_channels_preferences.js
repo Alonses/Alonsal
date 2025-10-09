@@ -17,8 +17,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let operacao = parseInt(dados.split(".")[1])
 
     if (operations[operacao]) {
-        ({ user, pagina_guia } = client.switcher({ user, operations, operacao }))
-        await user.save()
+
+        let dado = user;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
     } else if (operacao == 1) {
 
         // Define os membros que poderão terão acesso ao canal dinâmico do membro
@@ -78,8 +81,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     }
 
-    if (operacao === 5) // Confirmando a remoção dos membros do grupo por servidor ou globalmente
-        await dropVoiceChannelParty(user.uid, client.encrypt(interaction.guild.id), user.misc.voice_channels.global_config)
+    // Confirmando a remoção dos membros do grupo por servidor ou globalmente
+    if (operacao === 5) await dropVoiceChannelParty(user.uid, client.encrypt(interaction.guild.id), user.misc.voice_channels.global_config)
 
     // Redirecionando a função para o painel dos canais de voz dinâmicos
     require('../../chunks/panel_personal_voice_channels')({ client, user, interaction })

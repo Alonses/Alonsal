@@ -1,6 +1,6 @@
 module.exports = async ({ client, user, interaction, texto_entrada, user_command }) => {
 
-    let cor_embed = client.embed_color(user.misc.color)
+    let cor_embed = client.embed_color(user.misc.embed_color)
 
     const caracteres = duplicateCount(texto_entrada)
     const fatori = texto_entrada.split('')

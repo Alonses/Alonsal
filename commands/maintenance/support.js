@@ -22,21 +22,7 @@ module.exports = {
         }),
     async execute({ client, user, interaction }) {
 
-        const row = client.create_buttons([
-            { name: { tls: "manu.apoio.contribua" }, type: 4, emoji: client.emoji("mc_bolo"), value: "https://picpay.me/slondo" },
-            { name: "Buy a Coffee!", type: 4, emoji: "☕", value: "https://www.buymeacoffee.com/slondo" }
-        ], interaction, user)
-
-        const embed = client.create_embed({
-            title: `${client.tls.phrase(user, "manu.apoio.apoie")} ${client.emoji("mc_bolo")}`,
-            image: "https://i.imgur.com/VCneT1l.png",
-            description: { tls: "manu.apoio.escaneie" },
-        }, user)
-
-        interaction.reply({
-            embeds: [embed],
-            components: [row],
-            flags: "Ephemeral"
-        })
+        // Redirecionando o evento
+        require("../../core/formatters/chunks/model_support")({ client, user, interaction })
     }
 }

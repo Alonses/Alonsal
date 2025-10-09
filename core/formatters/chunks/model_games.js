@@ -48,6 +48,4 @@ nome_games = (objeto_anunciado) => {
     } else return `_\`${objeto_anunciado[0].nome}\`_`
 }
 
-module.exports = {
-    model_games
-}
+module.exports.model_games = model_games

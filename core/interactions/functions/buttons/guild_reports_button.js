@@ -35,8 +35,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 20 -> Sub-menu dos AutoBan
     // 21 -> Sub-menu com opções extras 
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 4) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 4) {
 
         // Definindo o canal de avisos dos relatórios externos
         const data = {
@@ -121,9 +126,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             flags: "Ephemeral"
         })
     }
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     if (operacao === 20) pagina_guia = 1
     else if (operacao === 21) pagina_guia = 2

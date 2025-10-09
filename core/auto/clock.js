@@ -4,15 +4,17 @@ const sync_dynamic_badges = require("./triggers/user_dynamic_badges")
 
 const { verifica_warns, atualiza_warns } = require("./triggers/user_warns")
 const { verifica_roles, atualiza_roles } = require("./triggers/user_roles")
-const { requisita_modulo, atualiza_modulos } = require("./triggers/user_modules")
+const { requisita_modulo, atualiza_modulos } = require("./triggers/modules")
 const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
 
 const { verifica_servers } = require("../data/user_ranking")
 const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
 const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
+const { atualiza_user_subscription, verifica_subscribers } = require('./triggers/user_subscription')
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
 const { verifica_canais_dinamicos, atualiza_voice_channels } = require('./triggers/guild_voice_channels')
+const { verifica_renda_passiva } = require('./triggers/user_passive_income')
 
 module.exports = async ({ client }) => {
 
@@ -39,6 +41,10 @@ module.exports = async ({ client }) => {
     if (client.x.modules) atualiza_modulos()
     atualiza_fixed_badges(client)
 
+    // Funções relacionadas a assinantes do Alonsal
+    await atualiza_user_subscription(client)
+    verifica_renda_passiva(client)
+
     atualiza_eraser()
     atualiza_user_eraser(client)
 
@@ -63,10 +69,13 @@ internal_clock = (client, tempo_restante) => {
             sync_dynamic_badges(client) // Sincronizando as badges que são dinâmicas
             verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
             verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
+            verifica_subscribers(client) // Verificando os usuários que possuem assinatura ativa
         }
 
-        if (client.timestamp() % 1800 < 60 && client.x.ranking) // 30 Minutos
-            verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
+        if (client.timestamp() % 1800 < 60) { // 30 Minutos
+            if (client.x.ranking) verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
+            if (client.x.modules) atualiza_modulos()
+        }
 
         internal_clock(client, 60000)
     }, tempo_restante)

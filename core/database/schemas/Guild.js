@@ -23,15 +23,10 @@ const schema = new mongoose.Schema({
         category: { type: String, default: null }
     },
     voice_channels: {
-        channel: { type: String, default: null },
-        category: { type: String, default: null },
         timeout: { type: String, default: 0 },
         preferences: {
-            user_limit: { type: String, default: 0 },
             mute_popup: { type: Boolean, default: true },
             allow_text: { type: Boolean, default: false },
-            always_private: { type: Boolean, default: false },
-            voice_names: { type: String, default: "nicknames" },
             allow_preferences: { type: Boolean, default: true }
         }
     },
@@ -123,7 +118,12 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null }
     },
     misc: {
-        second_lang: { type: String, default: null }
+        second_lang: { type: String, default: null },
+        subscription: {
+            id_owner: { type: String, default: null },
+            active: { type: Boolean, default: false },
+            expires: { type: Number, default: null }
+        }
     },
     conf: {
         games: { type: Boolean, default: false },
@@ -296,6 +296,13 @@ async function listAllRankedGuilds() {
     })
 }
 
+async function listAllVoicedGuilds() {
+
+    return model.find({
+        "conf.voice_channels": true
+    })
+}
+
 module.exports.Guild = model
 module.exports = {
     getGuild,
@@ -306,6 +313,7 @@ module.exports = {
     getReportChannels,
     listAllGuildHoster,
     listAllRankedGuilds,
+    listAllVoicedGuilds,
     getReportNetworkChannels,
     getGameChannelById,
     getNetworkedGuilds,

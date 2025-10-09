@@ -41,59 +41,10 @@ async function dropAllUserGuilds(sid) {
     })
 }
 
-async function updateUserGuilds(client) {
-
-    const guilds = await model.find()
-    timedUpdate(client, guilds)
-}
-
-async function timedUpdate(client, guilds) {
-
-    if (guilds.length > 0) {
-
-        const guild = guilds[0]
-        let atualizado = false
-
-        if (guild.uid.length < 20) {
-            guild.uid = client.encrypt(guild.uid)
-            atualizado = true
-        }
-
-        if (guild.sid.length < 20) {
-            guild.sid = client.encrypt(guild.sid)
-            atualizado = true
-        }
-
-        if (guild.uid.length > 80) {
-            guild.uid = client.decifer(guild.uid)
-            atualizado = true
-        }
-
-        if (guild.sid.length > 80) {
-            guild.sid = client.decifer(guild.sid)
-            atualizado = true
-        }
-
-        if (atualizado) {
-            console.log("atualizado", guild)
-            await guild.save()
-        }
-
-        if (guilds.length % 50 == 0) console.log("Restam:", guilds.length)
-        guilds.shift()
-
-        setTimeout(() => {
-            timedUpdate(client, guilds)
-        }, 10)
-    } else
-        console.log("Finalizado")
-}
-
 module.exports.User_guild = model
 module.exports = {
     registerUserGuild,
     listAllUserGuilds,
     dropUserGuild,
-    dropAllUserGuilds,
-    updateUserGuilds
+    dropAllUserGuilds
 }

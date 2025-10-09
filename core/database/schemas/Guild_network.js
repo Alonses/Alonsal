@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 
-const { getNetworkedGuilds } = require("./Guild")
 const { randomString } = require("../../functions/random_string")
 
 const schema = new mongoose.Schema({
@@ -30,21 +29,8 @@ async function dropNetwork(link) {
     })
 }
 
-async function getLink(link) {
-    const guilds = await getNetworkedGuilds()
-    let valid_guilds = []
-
-    guilds.forEach(guild => {
-        if (guild.network.link === link)
-            valid_guilds.push(guild)
-    })
-
-    return valid_guilds
-}
-
 module.exports.Guild_networks = model
 module.exports = {
     createNetworkLink,
-    dropNetwork,
-    getLink
+    dropNetwork
 }

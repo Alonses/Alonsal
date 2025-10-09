@@ -39,8 +39,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 5 -> Quantidade de ativações para considerar spam
     // 6 -> Escolher canal de avisos
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 4) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 4) {
 
         const strikes = await listAllGuildStrikes(interaction.guild.id)
 
@@ -146,9 +151,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     }
 
     if (operacao === 10) pagina_guia = 1
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel de anti-spam
     require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, pagina_guia })

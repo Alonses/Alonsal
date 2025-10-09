@@ -13,14 +13,19 @@ const schema = new mongoose.Schema({
     mid: { type: String, default: null },
     bit: { type: String, default: null },
     conf: {
-        mute: { type: Boolean, default: false }
+        mute: { type: Boolean, default: false },
+        trigger: { type: String, default: null }
     }
 })
 
 const model = mongoose.model("User_voice_channel", schema)
 
-async function verifyUserVoiceChannel(uid, sid) {
-    return model.findOne({ uid: uid, sid: sid })
+async function verifyUserVoiceChannel(uid, sid, trigger) {
+    return model.findOne({
+        uid: uid,
+        sid: sid,
+        "conf.trigger": trigger
+    })
 }
 
 async function verifyVoiceChannel(cid, sid) {

@@ -1,6 +1,6 @@
 const { listAllGuildWarns } = require("../../../database/schemas/Guild_warns")
-const { listAllUserPreWarns } = require("../../../database/schemas/User_pre_warns")
-const { listAllUserCachedHierarchyWarns, listAllUserWarns } = require("../../../database/schemas/User_warns")
+const { listAllUserPreWarns, dropUserNote, removeUserPreWarn } = require("../../../database/schemas/User_pre_warns")
+const { listAllUserCachedHierarchyWarns, listAllUserWarns, removeUserWarn } = require("../../../database/schemas/User_warns")
 
 const { guildPermissions } = require("../../../formatters/patterns/guild")
 
@@ -42,10 +42,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 7) {
 
         // Excluindo a advertência registrada em cache
-        user_warns[user_warns.length - 1].delete()
+        const ultimo_warn = user_warns[user_warns.length - 1]
+        await removeUserWarn(ultimo_warn.uid, ultimo_warn.sid, ultimo_warn.timestamp)
 
         const user_notes = await listAllUserPreWarns(id_alvo, interaction.guild.id)
-        user_notes.forEach(note => note.delete())
+        user_notes.forEach(async note => {
+
+            // Removendo a anotação do membroa       
+            await removeUserPreWarn(note.uid, note.sid, note.timestamp)
+        })
 
         return interaction.update({ content: client.tls.phrase(user, "mode.anotacoes.advertencia_cancelada", 13), components: [] })
 
@@ -75,11 +80,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         let registro_notas = []
 
-        user_notes.forEach(nota => {
+        user_notes.forEach(async nota => {
             registro_notas.push(`${nota.assigner_nick} -> ${nota.relatory}\n${new Date(nota.timestamp * 1000).toLocaleString("pt-BR", { hour12: false })}`)
 
             // Removendo a anotação do membro
-            nota.delete()
+            await dropUserNote(nota.uid, nota.sid, nota.timestamp)
         })
 
         user_warn.valid = true

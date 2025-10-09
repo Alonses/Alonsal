@@ -1,6 +1,6 @@
 const { getGames, verifyInvalidGames } = require('../../database/schemas/Game')
 
-const { getActiveModules } = require('../../database/schemas/User_modules')
+const { getActiveModules } = require('../../database/schemas/Module')
 const { listAllSuspiciousLinks } = require('../../database/schemas/Spam_links')
 
 const { activities } = require('../../../files/json/text/activities.json')

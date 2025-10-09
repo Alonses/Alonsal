@@ -1,4 +1,4 @@
-const { listAllVoiceChannels } = require("../../database/schemas/User_voice_channel")
+const { listAllVoiceChannels, dropVoiceChannel } = require("../../database/schemas/User_voice_channel")
 
 async function atualiza_voice_channels(client) {
 
@@ -25,7 +25,7 @@ async function verifica_canais_dinamicos(client) {
             })
 
             setTimeout(() => {
-                canal.delete()
+                dropVoiceChannel(canal.uid, canal.sid)
                 guild_channel.delete()
             }, 5000)
         }

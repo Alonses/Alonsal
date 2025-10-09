@@ -34,8 +34,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // 9 -> Guia de customização das advertências
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 1) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 1) {
 
         // Submenu para escoler a penalidade da advertência
         const eventos = []
@@ -188,9 +193,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             flags: "Ephemeral"
         })
     }
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     require('../../chunks/warn_configure')({ client, user, interaction, dados })
 }

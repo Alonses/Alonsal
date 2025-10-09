@@ -132,7 +132,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             fields: [
                 {
                     name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
-                    value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                    value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction, true) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                     inline: true
                 }
             ],

@@ -43,6 +43,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require('../../chunks/verify_module')({ client, user, interaction, dados })
     }
 
+    if (dados.includes("guild_voice_channels_button")) {
+
+        dados = "0.30" // Retorna ao sub menu com a lista de triggers do servidor
+        return require('./guild_voice_channels_button')({ client, user, interaction, dados })
+    }
+
+    if (dados.includes("voice_trigger_configure")) { // Utilizado para retornar a guia de configuração dos triggers de canais dinâmicos
+
+        dados = `0.0.${dados.split(".")[2]}`
+        return require('./voice_trigger_configure_button')({ client, user, interaction, dados })
+    }
+
     if (dados.includes("configure_button")) { // Utilizado para retornar a guia de configuração das advertências e strikes
 
         const operador = dados.split("_")[0].split(".")[1]

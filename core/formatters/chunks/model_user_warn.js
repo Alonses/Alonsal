@@ -20,8 +20,6 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         id_warn = "pre_warn_create"
     }
 
-    // console.log(!guild.warn.hierarchy.status, user_warn, guild_member.id, user_warns.length < guild_warns.length, user_warns.length, guild_warns.length)
-
     const warns_recebidos = await listAllUserWarns(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id))
     const indice_warn = warns_recebidos.length >= guild_warns.length ? guild_warns.length - 1 : warns_recebidos.length
 

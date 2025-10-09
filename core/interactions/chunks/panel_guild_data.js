@@ -6,7 +6,7 @@ const { checkUserGuildReported } = require('../../database/schemas/User_reports'
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 const { defaultEraser, defaultUserEraser } = require('../../formatters/patterns/timeout')
 
-module.exports = async ({ client, user, interaction, operador, pagina_guia }) => {
+module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const rank = await listRankGuild(interaction.guild.id)
     const warns = await listAllGuildWarns(interaction.guild.id)
@@ -27,6 +27,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (guild.inviter)
         dados += `\n${client.emoji("aln_hoster")} **${client.tls.phrase(user, "manu.data.hoster_alonsal")}**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
 
+    if (guild.misc.subscription.active) // Data de expiração do impulso
+        dados += `\n${client.tls.phrase(user, "misc.assinante.validade_impulso_servidor")} ${guild.misc.subscription.expires ? `<t:${guild.misc.subscription.expires}:f>` : client.tls.phrase(user, "misc.assinante.assinatura_infinita")}\n`
+
     if (reportes.length > 0)
         dados += `\n${client.emoji(6)} **${client.tls.phrase(user, "manu.guild_data.reportes_criados")}**\n\`${reportes.length > 1 ? `${reportes.length} ${client.tls.phrase(user, "manu.guild_data.reportes")}` : `1 ${client.tls.phrase(user, "manu.guild_data.reporte")}`}\`\n`
 
@@ -36,9 +39,9 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     if (rank.length > 0)
         dados += `\n${client.emoji(56)} **${client.tls.phrase(user, "manu.guild_data.ranking_servidor")}**\n\`${rank.length > 1 ? `${rank.length} ${client.tls.phrase(user, "manu.guild_data.membros")}` : `1 ${client.tls.phrase(user, "manu.guild_data.membro")}`}\`\n`
 
-    if (network > 1) {
+    if (network > 0) {
         dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? client.tls.phrase(user, "manu.guild_data.network_servidores", null, network) : client.tls.phrase(user, "manu.guild_data.network_unico")}\``
-        dados += `\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**\n${guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
+        dados += `\n\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")} ( \`${network} / ${guild.misc?.subscription.active ? "29" : "9"}\`)**\n${guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction, true) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
     }
 
     const embed = client.create_embed({

@@ -1,4 +1,4 @@
-const { getUserWarn, listAllUserWarns } = require("../../../database/schemas/User_warns")
+const { getUserWarn, listAllUserWarns, removeUserWarn } = require("../../../database/schemas/User_warns")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const user_warns = await listAllUserWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
-        user_warn.delete()
+        await removeUserWarn(user_warn.uid, user_warn.sid, user_warn.timestamp)
         client.verifyUserWarnRoles(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
 
         if (user_warns.length - 1 > 0)

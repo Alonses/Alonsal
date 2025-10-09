@@ -1,11 +1,9 @@
-const { getModule } = require('../../../database/schemas/User_modules')
+const { getModule } = require('../../../database/schemas/Module')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const timestamp = parseInt(dados.split(".")[2])
-    const data = parseInt(dados.split(".")[1])
-
-    const modulo = await getModule(interaction.user.id, timestamp)
+    const hash = dados.split(".")[2]
+    const modulo = await getModule(hash)
 
     if (!modulo)
         return interaction.update({
@@ -15,8 +13,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
-    modulo.data = data
+    modulo.data = parseInt(dados.split(".")[1])
     await modulo.save()
 
-    require('./modules')({ client, user, interaction, dados })
+    dados = `${interaction.user.id}.${hash}`
+    require('../../chunks/verify_module')({ client, user, interaction, dados })
 }

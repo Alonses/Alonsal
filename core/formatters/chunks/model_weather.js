@@ -6,9 +6,9 @@ const direcao_cardial = require("../../functions/cardinal_direction")
 const getCountryISO3 = require("country-iso-2-to-3")
 const formata_horas = require('../formata_horas')
 
-module.exports = async ({ client, user, interaction, user_command }) => {
+module.exports = async ({ client, alvo, interaction, user_command, internal_module }) => {
 
-    let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang || "pt-br", pesquisa, pesquisa_bruta, url_completa
+    let idioma_definido = alvo.lang, pesquisa, pesquisa_bruta, url_completa
     let lang_min = idioma_definido.slice(0, 2) === "ru" ? "en" : idioma_definido.slice(0, 2)
 
     const translations = require(`i18n-country-code/locales/${lang_min}.json`)
@@ -16,8 +16,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     // Requisições manuais
     if (interaction) {
         // Verifica se não há entrada customizada e se o usuário não possui um local padrão
-        if (interaction.options.data.length < 1 && !user.misc.locale)
-            return client.tls.editReply(interaction, user, "util.tempo.error_locale", true, 2)
+        if (interaction.options.data.length < 1 && !internal_module.misc.locale)
+            return client.tls.editReply(interaction, alvo, "util.tempo.error_locale", true, 2)
 
         // Usa o local padrão caso não tenha entrada definida
         pesquisa = interaction.options.getString("place") || client.decifer(user.misc.locale)
@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
         url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=${lang_min}`
     } else
-        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${client.decifer(user.misc.locale)}&units=metric&lang=${lang_min}`
+        url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${client.decifer(internal_module.misc.locale)}&units=metric&lang=${lang_min}`
 
     fetch(url_completa)
         .then(response => response.json())
@@ -34,26 +34,26 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             if (interaction) {
                 if (res.cod === '404' || res.cod === '400')
                     return interaction.editReply({
-                        content: `${client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa)}\n${client.tls.phrase(user, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
+                        content: `${client.tls.phrase(alvo, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa)}\n${client.tls.phrase(alvo, "util.tempo.sugestao")} \`/${interaction.commandName} ${pesquisa_bruta}\``,
                         flags: "Ephemeral"
                     })
                 else if (res.cod === '429')// Erro da API
                     return interaction.editReply({
-                        content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
+                        content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
                         flags: "Ephemeral"
                     })
                 else if (res.id === '1873107')
                     return interaction.editReply({
-                        content: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")),
+                        content: client.tls.phrase(alvo, "util.tempo.error_2", client.emoji("emojis_negativos")),
                         flags: "Ephemeral"
                     })
             } else {
                 if (res.cod === '404' || res.cod === '400')
-                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, true)
+                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, internal_module)
                 else if (res.cod === '429') // Erro da API
-                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
+                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module)
                 else if (res.id === '1873107')
-                    return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.error_2", client.emoji("emojis_negativos")) }, true)
+                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.error_2", client.emoji("emojis_negativos")) }, internal_module)
             }
 
             fetch(`${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`) // Buscando o horário local
@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)} (*)`
 
                     let bandeira_pais = "", nome_pais = "", horario_local
-                    let nota_rodape = `${client.tls.phrase(user, "util.tempo.dados_atts")} ${dados_att}`
+                    let nota_rodape = `${client.tls.phrase(alvo, "util.tempo.dados_atts")} ${dados_att}`
 
                     const indicaTemp = require('../../functions/temperature')
                     const estacao_atual = require('../../functions/current_season')
@@ -76,11 +76,11 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                         nome_pais = ` - ${translations[cod_pais]}`
 
                         if (res.sys.country === "AQ")
-                            nome_pais = ` - ${client.tls.phrase(user, "util.tempo.antartida")}`
+                            nome_pais = ` - ${client.tls.phrase(alvo, "util.tempo.antartida")}`
 
                         if (nome_pais.includes(res.name)) {
                             nome_pais = ""
-                            nota_rodape += ` | ${client.tls.phrase(user, "util.tempo.aviso_pais")}`
+                            nota_rodape += ` | ${client.tls.phrase(alvo, "util.tempo.aviso_pais")}`
                         }
 
                         horario_local = res_hora.formatted
@@ -89,9 +89,9 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                         horario_local = new Date(res.dt * 1000)
 
                         if (res.name !== "Globe" && (res.coord.lon !== 0 && res.coord.lat !== 0))
-                            nota_rodape += ` | ${client.tls.phrase(user, "util.tempo.aviso_continente")}`
+                            nota_rodape += ` | ${client.tls.phrase(alvo, "util.tempo.aviso_continente")}`
                         else if (res.coord.lon === 0 && res.coord.lat === 0)
-                            nota_rodape += ` | ${client.tls.phrase(user, "util.tempo.aviso_planeta")}`
+                            nota_rodape += ` | ${client.tls.phrase(alvo, "util.tempo.aviso_planeta")}`
                     }
 
                     // 10800 (timezone brasilia)
@@ -162,105 +162,103 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     if (res.main.feels_like >= 35)
                         emoji_sensacao_termica = ":fire:"
 
-                    horario_local = `:clock${hours}: **${client.tls.phrase(user, "util.tempo.hora_local")}:** \`${hora}:${minutos} | ${dia} ${client.tls.phrase(user, "util.tempo.de")} ${mes}\``
+                    horario_local = `:clock${hours}: **${client.tls.phrase(alvo, "util.tempo.hora_local")}:** \`${hora}:${minutos} | ${dia} ${client.tls.phrase(alvo, "util.tempo.de")} ${mes}\``
 
-                    let nome_local = `${client.tls.phrase(user, "util.tempo.na")} ${res.name}`, rodape_cabecalho = ""
-                    let cabecalho_fix = estacao_atual(res.coord.lat, client, user)
+                    let nome_local = `${client.tls.phrase(alvo, "util.tempo.na")} ${res.name}`, rodape_cabecalho = ""
+                    let cabecalho_fix = estacao_atual(res.coord.lat, client, alvo)
 
                     if (res.sys.country)
                         if (lang_min === "pt")
                             nome_local = nome_local.replace("na", "em")
 
                     if (res.name === "Globe")
-                        nome_local = `${client.tls.phrase(user, "util.tempo.terra")} ${client.defaultEmoji("earth")}`
+                        nome_local = `${client.tls.phrase(alvo, "util.tempo.terra")} ${client.defaultEmoji("earth")}`
 
                     // Dados para chuva
                     if (res.rain) {
                         cabecalho_fix += "\n------------------------------"
 
-                        cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chovendo")}\n${client.tls.phrase(user, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
+                        cabecalho_fix += `\n${client.tls.phrase(alvo, "util.tempo.chovendo")}\n${client.tls.phrase(alvo, "util.tempo.chuva")} 1H: ${res.rain["1h"]}mm`
 
                         if (res.rain["3h"]) // Dados de chuva para 3 horas
-                            cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
+                            cabecalho_fix += `\n${client.tls.phrase(alvo, "util.tempo.chuva")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_humidade = " 🔼", emoji_indica_visibilidade = " 🔽"
-                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(user, "util.tempo.chuva_troll")}_`
+                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(alvo, "util.tempo.chuva_troll")}_`
                     }
 
                     // Dados para neve
                     if (res.snow) {
-                        cabecalho_fix = `${client.tls.phrase(user, "util.tempo.nevando")}\n${client.tls.phrase(user, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
+                        cabecalho_fix = `${client.tls.phrase(alvo, "util.tempo.nevando")}\n${client.tls.phrase(alvo, "util.tempo.neve")} 1H: ${res.rain["1h"]}mm`
 
                         if (res.rain["3h"]) // Dadps de nevasca para 3 horas
-                            cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.neve")} 3H: ${res.rain["3h"]}mm`
+                            cabecalho_fix += `\n${client.tls.phrase(alvo, "util.tempo.neve")} 3H: ${res.rain["3h"]}mm`
 
                         emoji_indica_visibilidade = " 🔽"
 
-                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(user, "util.tempo.neve_troll")}_`
+                        rodape_cabecalho = `${client.emoji("trollface")} _${client.tls.phrase(alvo, "util.tempo.neve_troll")}_`
                     }
 
                     // Dados para rajadas de vento
-                    if (res.wind.gust && user.misc?.weather) {
+                    if (res.wind.gust && !internal_module.misc.resumed) {
                         if (cabecalho_fix !== "")
                             cabecalho_fix += "\n------------------------------"
 
-                        cabecalho_fix += `\n${client.tls.phrase(user, "util.tempo.rajadas_vento")}\n${client.tls.phrase(user, "util.tempo.velocidade")}: ${res.wind.gust} km/h`
+                        cabecalho_fix += `\n${client.tls.phrase(alvo, "util.tempo.rajadas_vento")}\n${client.tls.phrase(alvo, "util.tempo.velocidade")}: ${res.wind.gust} km/h`
                     }
 
                     if (cabecalho_fix !== "")
                         cabecalho_fix = `\`\`\`fix\n${cabecalho_fix}\`\`\``
 
-                    let pressao_local = `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.pressure} kPA\``
+                    let pressao_local = `**${client.tls.phrase(alvo, "util.server.atual")}: **\`${res.main.pressure} kPA\``
 
                     // Dados de pressão atmosférica
                     if (res.main.grnd_level)
-                        pressao_local = `:camping: **${client.tls.phrase(user, "util.tempo.nivel_chao")}: ** \`${res.main.grnd_level} kPA\`\n:island: **${client.tls.phrase(user, "util.tempo.nivel_mar")}: ** \`${res.main.sea_level} kPA\``
+                        pressao_local = `:camping: **${client.tls.phrase(alvo, "util.tempo.nivel_chao")}: ** \`${res.main.grnd_level} kPA\`\n:island: **${client.tls.phrase(alvo, "util.tempo.nivel_mar")}: ** \`${res.main.sea_level} kPA\``
 
                     let emoji_indica_temp = indicaTemp(res.sys.sunrise + res.timezone, res.sys.sunset + res.timezone, res.dt + res.timezone, res.main.temp_max, res.main.temp_min, res.main.temp, rodape_cabecalho)
 
                     if (res.coord.lat > -20 && res.coord.lat < 20)
-                        rodape_cabecalho = `:ringed_planet: ${client.tls.phrase(user, "util.tempo.equador")}\n${rodape_cabecalho}`
+                        rodape_cabecalho = `:ringed_planet: ${client.tls.phrase(alvo, "util.tempo.equador")}\n${rodape_cabecalho}`
 
                     let embed_clima = client.create_embed({
-                        title: `:boom: ${client.tls.phrase(user, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`,
-                        footer: {
-                            text: nota_rodape
-                        }
-                    }, user)
+                        title: `:boom: ${client.tls.phrase(alvo, "util.tempo.tempo_agora")} ${nome_local}${nome_pais} ${bandeira_pais}`,
+                        footer: { text: nota_rodape }
+                    }, alvo)
 
                     // Máximos de informações para o clima
-                    if (user.misc?.weather || false) {
+                    if (!internal_module.misc.resumed) {
                         embed_clima
                             .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                             .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .addFields(
                                 {
-                                    name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
-                                    value: `${emoji_indica_temp} **${client.tls.phrase(user, "util.server.atual")}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``,
+                                    name: `:thermometer: **${client.tls.phrase(alvo, "util.tempo.temperatura")}**`,
+                                    value: `${emoji_indica_temp} **${client.tls.phrase(alvo, "util.server.atual")}**: \`${res.main.temp}°C\`\n:small_red_triangle: **Max:** \`${res.main.temp_max}°C\`\n:small_red_triangle_down: **Min:** \`${res.main.temp_min}°C\``,
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_ceu_atual} **${client.tls.phrase(user, "util.tempo.ceu_momento")}**`,
-                                    value: `${emoji_nuvens} **${client.tls.phrase(user, "util.tempo.nuvens")}: **\`${res.clouds.all}%\`\n:sunrise: **${client.tls.phrase(user, "util.tempo.nas_sol")}: **\`${nascer_sol}\`\n:city_sunset: **${client.tls.phrase(user, "util.tempo.por_sol")}: **\`${por_sol}\``,
+                                    name: `${emoji_ceu_atual} **${client.tls.phrase(alvo, "util.tempo.ceu_momento")}**`,
+                                    value: `${emoji_nuvens} **${client.tls.phrase(alvo, "util.tempo.nuvens")}: **\`${res.clouds.all}%\`\n:sunrise: **${client.tls.phrase(alvo, "util.tempo.nas_sol")}: **\`${nascer_sol}\`\n:city_sunset: **${client.tls.phrase(alvo, "util.tempo.por_sol")}: **\`${por_sol}\``,
                                     inline: true
                                 },
                                 {
-                                    name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}**`,
-                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(user, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg)}\`\n:eye: **${client.tls.phrase(user, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
+                                    name: `:wind_chime: **${client.tls.phrase(alvo, "util.tempo.vento")}**`,
+                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(alvo, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg)}\`\n:eye: **${client.tls.phrase(alvo, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_sensacao_termica} **${client.tls.phrase(user, "util.tempo.sensacao_termica")}.**`,
-                                    value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
+                                    name: `${emoji_sensacao_termica} **${client.tls.phrase(alvo, "util.tempo.sensacao_termica")}.**`,
+                                    value: `**${client.tls.phrase(alvo, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_umidade} **${client.tls.phrase(user, "util.tempo.umidade_ar")}**`,
-                                    value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.humidity}%${emoji_indica_humidade}\``,
+                                    name: `${emoji_umidade} **${client.tls.phrase(alvo, "util.tempo.umidade_ar")}**`,
+                                    value: `**${client.tls.phrase(alvo, "util.server.atual")}: **\`${res.main.humidity}%${emoji_indica_humidade}\``,
                                     inline: true
                                 },
                                 {
-                                    name: `:compression: **${client.tls.phrase(user, "util.tempo.pressao_ar")}**`,
+                                    name: `:compression: **${client.tls.phrase(alvo, "util.tempo.pressao_ar")}**`,
                                     value: `${pressao_local}`,
                                     inline: true
                                 }
@@ -271,9 +269,9 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                             .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
                             .addFields(
                                 {
-                                    name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
-                                    name: `:thermometer: **${client.tls.phrase(user, "util.tempo.temperatura")}**`,
-                                    value: `${emoji_indica_temp} **${client.tls.phrase(user, "util.server.atual")}**: \`${res.main.temp}°C\``,
+                                    name: `:thermometer: **${client.tls.phrase(alvo, "util.tempo.temperatura")}**`,
+                                    name: `:thermometer: **${client.tls.phrase(alvo, "util.tempo.temperatura")}**`,
+                                    value: `${emoji_indica_temp} **${client.tls.phrase(alvo, "util.server.atual")}**: \`${res.main.temp}°C\``,
                                     inline: true
                                 },
                                 {
@@ -282,23 +280,23 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                                     inline: true
                                 },
                                 {
-                                    name: `:wind_chime: **${client.tls.phrase(user, "util.tempo.vento")}: ${res.wind.speed} km/h**`,
+                                    name: `:wind_chime: **${client.tls.phrase(alvo, "util.tempo.vento")}: ${res.wind.speed} km/h**`,
                                     value: "⠀",
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_sensacao_termica} **${client.tls.phrase(user, "util.tempo.sensacao_termica")}.**`,
-                                    value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
+                                    name: `${emoji_sensacao_termica} **${client.tls.phrase(alvo, "util.tempo.sensacao_termica")}.**`,
+                                    value: `**${client.tls.phrase(alvo, "util.server.atual")}: **\`${res.main.feels_like}°C\``,
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_umidade} **${client.tls.phrase(user, "util.tempo.umidade_ar")}**`,
-                                    value: `**${client.tls.phrase(user, "util.server.atual")}: **\`${res.main.humidity}%${emoji_indica_humidade}\``,
+                                    name: `${emoji_umidade} **${client.tls.phrase(alvo, "util.tempo.umidade_ar")}**`,
+                                    value: `**${client.tls.phrase(alvo, "util.server.atual")}: **\`${res.main.humidity}%${emoji_indica_humidade}\``,
                                     inline: true
                                 },
                                 {
-                                    name: `${emoji_ceu_atual} **${client.tls.phrase(user, "util.tempo.ceu_momento")}**`,
-                                    value: `${emoji_nuvens} **${client.tls.phrase(user, "util.tempo.nuvens")}: **\`${res.clouds.all}%\``,
+                                    name: `${emoji_ceu_atual} **${client.tls.phrase(alvo, "util.tempo.ceu_momento")}**`,
+                                    value: `${emoji_nuvens} **${client.tls.phrase(alvo, "util.tempo.nuvens")}: **\`${res.clouds.all}%\``,
                                     inline: true
                                 }
                             )
@@ -307,19 +305,19 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                     if (interaction)
                         return client.reply(interaction, {
                             embeds: [embed_clima],
-                            flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
+                            flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                         }, true)
                     else
-                        return client.sendDM(user, { embeds: [embed_clima] }, true)
+                        return client.sendModule(alvo, { embeds: [embed_clima] }, internal_module)
                 })
         }) // Erro com a API de clima
         .catch(() => {
             if (interaction)
                 return interaction.editReply({
-                    content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
+                    content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")),
                     flags: "Ephemeral"
                 })
             else
-                return client.sendDM(user, { content: client.tls.phrase(user, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, true)
+                return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module)
         })
 }

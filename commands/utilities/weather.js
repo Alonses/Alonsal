@@ -43,6 +43,7 @@ module.exports = {
 
         await client.deferedReply(interaction, client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null)
 
-        require('../../core/formatters/chunks/model_weather')({ client, user, interaction, user_command })
+        alvo = user
+        require('../../core/formatters/chunks/model_weather')({ client, alvo, interaction, user_command })
     }
 }

@@ -20,27 +20,20 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
     else {
 
         // Opções de limitação para o canal de voz
-        if (alvo.includes("voice_channel_limit")) {
-            valor_label = `${alvo}|${valor.value}`
+        if (alvo === "voice_trigger_channel_limit") {
+            valor_label = `${alvo}|${valor.value}.${data.submenu}`
 
-            if (alvo.includes("guild") || alvo.includes("user")) {
-                if (valor.value !== 0) nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
-                else {
-                    nome_label = valor.name
-                    emoji_label = client.emoji(13)
-                }
-            } else
-                if (valor.value.split(".")[0] !== 0) nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
-                else {
-                    nome_label = valor.name
-                    emoji_label = client.emoji(13)
-                }
+            if (valor.value !== 0) nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
+            else {
+                nome_label = valor.name
+                emoji_label = client.emoji(13)
+            }
         } else {
             valor_label = `${alvo}|${valor.split(".")[0]}`
             nome_label = client.tls.phrase(user, `menu.times.${valor.split(".")[1]}`)
         }
 
-        if (data.submenu)
+        if (data.submenu && alvo !== "voice_trigger_channel_limit")
             valor_label = `${alvo}|${valor.split(".")[0]}.${data.submenu}`
     }
 

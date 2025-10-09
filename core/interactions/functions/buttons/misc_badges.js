@@ -12,8 +12,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar e notificar
     // 2 -> Confirmar silenciosamente
 
-    // Cancelando a atribuição da badge
-    if (!operacao)
+    if (!operacao) // Cancelando a atribuição da badge
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     const id_alvo = interaction.customId.split("|")[2].split(".")[0]

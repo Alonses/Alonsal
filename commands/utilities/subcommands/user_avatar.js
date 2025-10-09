@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const embed = client.create_embed({
         title: `> ${user_alvo.username}`,
-        color: user_c.misc.color,
+        color: user_c.misc.embed_color,
         image: url_avatar,
         description: { tls: "util.avatar.download_avatar" }
     }, user)

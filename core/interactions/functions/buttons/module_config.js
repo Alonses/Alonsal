@@ -1,12 +1,12 @@
-const { getModule, dropModule } = require('../../../database/schemas/User_modules')
-const { atualiza_modulos } = require('../../../auto/triggers/user_modules')
+const { getModule, dropModule } = require('../../../database/schemas/Module')
+const { atualiza_modulos } = require('../../../auto/triggers/modules')
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const operacao = parseInt(dados.split(".")[1])
-    const timestamp = parseInt(dados.split(".")[2])
+    const hash = dados.split(".")[2]
 
-    const modulo = await getModule(user.uid, timestamp)
+    const modulo = await getModule(hash)
 
     if (!modulo)
         return interaction.update({
@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar
 
     if (!operacao) { // Excluindo o módulo salvo em cache
-        await dropModule(user.uid, modulo.type, timestamp)
+        await dropModule(hash)
 
         client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
     } else {
@@ -39,8 +39,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }, user)
 
             const row = client.create_buttons([
-                { id: "module_history_button", name: { tls: "menu.botoes.completo" }, emoji: '📰', type: 2, data: `1|${timestamp}` },
-                { id: "module_history_button", name: { tls: "menu.botoes.resumido" }, emoji: '🔖', type: 0, data: `2|${timestamp}` }
+                { id: "module_history_button", name: { tls: "menu.botoes.completo" }, emoji: '📰', type: 2, data: `1|${hash}` },
+                { id: "module_history_button", name: { tls: "menu.botoes.resumido" }, emoji: '🔖', type: 0, data: `2|${hash}` }
             ], interaction, user)
 
             return interaction.update({
@@ -49,6 +49,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 components: [row],
                 flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
             })
+        }
+
+        // Redirecionando para configuração do canal para envio dos módulos em servidores
+        if (modulo.misc.scope === "guild") {
+            dados = `${interaction.user.id}.12.${hash}`
+            return require('./module_button')({ client, user, interaction, dados })
         }
 
         // Ativando o módulo

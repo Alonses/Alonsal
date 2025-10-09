@@ -1,5 +1,5 @@
 const { listAllGuildWarns } = require('../../../database/schemas/Guild_warns')
-const { listAllUserPreWarns, listAllCachedUserPreWarns } = require('../../../database/schemas/User_pre_warns')
+const { listAllUserPreWarns, listAllCachedUserPreWarns, removeUserPreWarn } = require('../../../database/schemas/User_pre_warns')
 const { listAllUserWarns, getUserWarn, listAllUserCachedHierarchyWarns } = require('../../../database/schemas/User_warns')
 
 const { atualiza_pre_warns } = require('../../../auto/triggers/guild_pre_warns')
@@ -18,7 +18,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 0) { // Operação cancelada
 
         // Excluindo a última anotação de advertência registrada em cache
-        user_notes[user_notes.length - 1].delete()
+        const ultima_nota = user_notes[user_notes.length - 1]
+        await removeUserPreWarn(ultima_nota.uid, ultima_nota.sid, ultima_nota.timestamp)
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.warn.advertencia_cancelada", client.emoji(0)),

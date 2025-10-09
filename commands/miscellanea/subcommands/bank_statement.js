@@ -29,7 +29,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const embed = client.create_embed({
         title: titulo_embed,
-        color: user_interno.misc.color
+        color: user_interno.misc.embed_color
     })
 
     if (interaction.user.id === alvo.id) {
@@ -37,6 +37,7 @@ module.exports = async ({ client, user, interaction }) => {
         const movimentacoes = await getUserStatements(user_interno.uid)
 
         movimentacoes.forEach(movimentacao => {
+
             // Traduzindo a movimentação conforme o idioma do usuário
             let traducao = movimentacao.operation
 
@@ -50,6 +51,13 @@ module.exports = async ({ client, user, interaction }) => {
 
         if (extrato !== "")
             extrato = `${client.defaultEmoji("metrics")} **${client.tls.phrase(user, "misc.b_historico.movimentacoes")}**\`\`\`${extrato}\`\`\``
+
+        if (interaction.user.id === alvo.id) {
+            if (client.cached.subscribers.has(user.uid)) // Assinante
+                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_assinante", null, [user.misc.subscriber.expires ? `<t:${user.misc.subscriber.expires}:f>` : `\`${client.tls.phrase(user, "misc.assinante.assinatura_infinita")}\``, client.getSubscriberDiscount()])}`
+            else // Não assinante
+                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_nao_assinante", null, client.getSubscriberDiscount())}`
+        }
 
         embed.setFooter({
             text: client.tls.phrase(user, "misc.banco.dica_rodape"),

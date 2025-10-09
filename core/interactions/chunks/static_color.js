@@ -4,7 +4,7 @@ module.exports = async ({ client, user, interaction, valor }) => {
 
     let entrada = interaction.options?.getString("color") || valor
 
-    if (user.misc.color === colorsMap[entrada][1])
+    if (user.misc.embed_color === colorsMap[entrada][1])
         return client.tls.reply(interaction, user, "misc.color.cor_ativa", true, 7)
 
     let cor_demonstracao = entrada === "random" ? client.embed_color("RANDOM") : colorsMap[entrada][0]
@@ -18,11 +18,11 @@ module.exports = async ({ client, user, interaction, valor }) => {
         title: { tls: "misc.color.titulo" },
         color: cor_demonstracao,
         thumbnail: interaction.user.avatarURL({ dynamic: true }),
-        description: `\`\`\`${client.tls.phrase(user, "misc.color.descricao")}\`\`\`${nota_cor_aleatoria}`,
+        description: `${client.tls.phrase(user, "misc.color.descricao")}${nota_cor_aleatoria}`,
         fields: [
             {
                 name: `:money_with_wings: **${client.tls.phrase(user, "misc.color.preco")}**`,
-                value: `\`B$ ${colorsPriceMap[colorsMap[entrada][1]]}\``,
+                value: `\`B$ ${client.cached.subscribers.has(user.uid) ? `${colorsPriceMap[colorsMap[entrada][1]] * client.cached.subscriber_discount} (${client.getSubscriberDiscount()}% OFF 🌟)` : colorsPriceMap[colorsMap[entrada][1]]}\``,
                 inline: false
             }
         ],

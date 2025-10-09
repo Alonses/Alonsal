@@ -14,7 +14,6 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
         canal_servidor.permissionOverwrites.edit(interaction.user.id, { ViewChannel: false })
 
         // Apagando o ticket de denúncia do usuário
-        dropTicket(interaction.guild.id, interaction.user.id)
-        // canal_servidor.delete()
+        dropTicket(client.encrypt(interaction.guild.id), client.encrypt(interaction.user.id))
     }, 10000)
 }

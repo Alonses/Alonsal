@@ -1,6 +1,6 @@
 const { verifyUserParty } = require("../../database/schemas/User_voice_channel_party")
 
-module.exports = async ({ client, user, interaction }) => {
+module.exports = async ({ client, user, interaction, partyLotada }) => {
 
     // Coletando dados da party do membro no servidor
     const guild = await client.getGuild(interaction.guild.id)
@@ -8,7 +8,7 @@ module.exports = async ({ client, user, interaction }) => {
     let descricao = guild?.voice_channels.preferences.allow_preferences ? client.tls.phrase(user, "mode.voice_channels.custom_on") : client.tls.phrase(user, "mode.voice_channels.custom_off")
 
     if (userParty.length > 0) { // Listando todos os membros permitidos a acessar o canal privado
-        descricao += `\n:passport_control: **${client.tls.phrase(user, "mode.voice_channels.usuarios_autorizados")} (${userParty.length}${user.misc.voice_channels.global_config ? " 🔀 🌐" : ""}):**\n`
+        descricao += `\n:passport_control: **${client.tls.phrase(user, "mode.voice_channels.usuarios_autorizados")} (${userParty.length} ${user.misc.voice_channels.global_config ? "/ 🔀 🌐" : `/ ${client.cached.subscribers.has(user.uid) ? 30 : 10}`}):**\n`
         let users_permitidos = []
 
         userParty.forEach(user => {
@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction }) => {
         row.push({ id: "user_voice_channels_preferences", name: { tls: "menu.botoes.limpar_membros" }, type: 1, emoji: client.emoji(62), data: "4" })
 
     client.reply(interaction, {
-        content: "",
+        content: partyLotada?.length > 0 ? client.tls.phrase(user, "mode.voice_channels.limite_usuarios_autorizados", 75, client.list(partyLotada, null, true)) : "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"

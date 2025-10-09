@@ -27,8 +27,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 4 -> Escolher o número de avisos prévios
     // 5 -> Escolher o canal de avisos para advertências completadas
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 4) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 4) {
 
         // Escolher o número de avisos prévios
         const valores = []
@@ -108,9 +113,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             flags: "Ephemeral"
         })
     }
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel das advertências com hierarquia
     require('../../chunks/panel_guild_hierarchy_warns')({ client, user, interaction, pagina_guia })

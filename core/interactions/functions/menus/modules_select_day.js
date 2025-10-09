@@ -1,13 +1,12 @@
-const { getModule } = require("../../../database/schemas/User_modules")
+const { getModule } = require("../../../database/schemas/Module")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const timestamp = parseInt(dados.split(".")[1])
-    const dia = parseInt(dados.split(".")[2])
+    const hash = dados.split(".")[1]
 
     // Alterando o dia do módulo
-    const modulo = await getModule(user.uid, timestamp)
-    modulo.stats.days = dia
+    const modulo = await getModule(hash)
+    modulo.stats.days = parseInt(dados.split(".")[2])
 
     await modulo.save()
 

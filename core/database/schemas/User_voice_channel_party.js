@@ -13,11 +13,15 @@ const schema = new mongoose.Schema({
 const model = mongoose.model("User_voice_channel_party", schema)
 
 async function verifyPartyMember(uid, sid, mid) {
+    return await model.exists({ uid: uid, sid: sid, mid: mid })
+}
 
-    if (!await model.exists({ uid: uid, sid: sid, mid: mid }))
-        await model.create({ uid: uid, sid: sid, mid: mid })
-    else
-        await model.deleteOne({ uid: uid, sid: sid, mid: mid })
+async function registerPartyMember(uid, sid, mid) {
+    await model.create({ uid: uid, sid: sid, mid: mid })
+}
+
+async function dropPartyMember(uid, sid, mid) {
+    await model.deleteMany({ uid: uid, sid: sid, mid: mid })
 }
 
 async function verifyUserParty(uid, sid, global_config) {
@@ -44,5 +48,7 @@ module.exports.User_voice_channel_party = model
 module.exports = {
     verifyPartyMember,
     verifyUserParty,
-    dropVoiceChannelParty
+    dropVoiceChannelParty,
+    registerPartyMember,
+    dropPartyMember
 }

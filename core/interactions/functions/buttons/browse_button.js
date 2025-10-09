@@ -27,6 +27,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return require(`./role_assigner`)({ client, user, interaction, dados, pagina })
     }
 
+    if (cached.includes("module_button")) // Menu de navegação de canais para módulos de servidores
+        dados = `${interaction.user.id}.12.${cached.split(".")[5]}`
+
     // Redirecionando o evento
     require(`./${reback}`)({ client, user, interaction, dados, pagina })
 }

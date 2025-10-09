@@ -221,7 +221,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         botoes.push(
             { id: "guild_panel_button", name: { tls: "manu.painel.rankeamento" }, type: guild.conf.ranking ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.ranking), data: '13', disabled: c_buttons[13] },
             { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros" }, type: 1, emoji: client.emoji(41), data: '0', disabled: c_buttons[14] },
-            { id: "guild_panel_button", name: { tls: "manu.painel.misterioso" }, type: client.execute("functions", "emoji_button.type_button", 0), emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
+            { id: "guild_panel_button", name: { tls: "manu.painel.misterioso" }, type: 1, emoji: client.execute("functions", "emoji_button.emoji_button", 3), data: '15', disabled: true },
         )
 
     botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_guild`, disabled: c_menu[1] })

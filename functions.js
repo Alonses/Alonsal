@@ -23,6 +23,7 @@ const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
 const menu_navigation = require('./core/functions/menu_navigation')
 
+const { getModule } = require('./core/database/schemas/Module')
 const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
 const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
 const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
@@ -189,6 +190,13 @@ function internal_functions(client) {
     }
 
     client.getBot = () => { return getBot(client.x.id) }
+
+    client.getSubscriberDiscount = (valor) => {
+
+        // Retorna o valor de desconto convertido para um número inteiro até 100
+        const desconto = valor || client.cached.subscriber_discount
+        return client.locale(((desconto - 1) * -1) * 100)
+    }
 
     client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
@@ -421,16 +429,19 @@ function internal_functions(client) {
     // Sincroniza as ações moderativas em servidores com o network habilitado
     client.network = async (guild, caso, id_alvo) => { return network({ client, guild, caso, id_alvo }) }
 
-    client.getNetWorkGuildNames = async (user, link, interaction) => {
+    client.getNetWorkGuildNames = async (user, link, interaction, ignore_guild) => {
 
+        // Lista todos os servidores que estão no link do Network informado
         const servers_link = []
 
         let servers_cache = await getNetworkedGuilds(link)
         for (let i = 0; i < servers_cache.length; i++) {
-            if (servers_cache[i].sid !== interaction.guild.id) {
-                const nome_servidor = (await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")
-                servers_link.push(`\`${nome_servidor}\``)
-            }
+
+            if (ignore_guild) { // Ignora a guild onde a interação foi feita
+                if (servers_cache[i].sid !== interaction.guild.id)
+                    servers_link.push(`\`${(await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")}\``)
+            } else // Lista todas as guilds que estão no link
+                servers_link.push(`\`${(await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")}\``)
         }
 
         return client.list(servers_link, 500)
@@ -442,7 +453,7 @@ function internal_functions(client) {
     }
 
     // Envia uma notificação em um canal
-    client.notify = async (id_alvo, conteudo) => {
+    client.notify = async (id_alvo, conteudo, objeto) => {
 
         if (!id_alvo) return
 
@@ -452,7 +463,20 @@ function internal_functions(client) {
         // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
         if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
 
-        canal.send(conteudo)
+        if (objeto && objeto?.rotative.active) {
+
+            // Enviando o conteúdo no canal informado e tentando editar a mensagem anterior
+            canal.messages.fetch(client.decifer(objeto.rotative.mid))
+                .then(message => { message.edit(conteudo) })
+                .catch(async () => {
+
+                    const m = await canal.send(conteudo)
+
+                    // Salvando o ID da mensagem enviada como módulo
+                    await client.updateModuleValue(objeto.hash, "rotative.mid", client.encrypt(m.id))
+                })
+        } else
+            canal.send(conteudo)
     }
 
     client.permissions = async (interaction, id_alvo, permissao, canal) => {
@@ -582,9 +606,7 @@ function internal_functions(client) {
     }
 
     // Envia uma notificação em DM para o usuário
-    client.sendDM = async (user, dados, force) => {
-
-        let notifications = false
+    client.sendDM = async (user, dados, force, internal_module) => {
 
         // Descriptografando o ID do usuário para envio em DM
         const id_user = (user.uid).length > 20 ? client.decifer(user.uid) : user.uid
@@ -599,16 +621,40 @@ function internal_functions(client) {
             const user_interno = await client.discord.users.fetch(id_user)
                 .catch(() => { return null })
 
-            if (user_interno)
-                user_interno.send(dados) // Enviando conteúdo na DM do usuário
-                    .catch(() => notifications = 1)
-        }
+            if (user_interno) {
+                if (internal_module?.rotative?.mid) {
 
-        // Usuário com DM bloqueada
-        if (notifications) {
-            user.conf.notify = false
-            user.save()
+                    const channel = await user_interno.createDM()
+                    channel.messages.fetch(client.decifer(internal_module.rotative.mid))
+                        .then(message => {
+                            message.edit(dados)
+                                .catch(async () => {
+                                    await user_interno.send(dados) // Enviando conteúdo na DM do usuário
+                                        .then(async m => {
+
+                                            // Salvando o ID da mensagem enviada como módulo
+                                            await client.updateModuleValue(internal_module.hash, "rotative.mid", client.encrypt(m.id))
+                                        })
+                                        .catch()
+                                })
+                        })
+                } else
+                    await user_interno.send(dados) // Enviando conteúdo na DM do usuário
+                        .then(async m => {
+                            // Salvando o ID da mensagem enviada como módulo
+                            await client.updateModuleValue(internal_module.hash, "rotative.mid", client.encrypt(m.id))
+                        })
+                        .catch()
+            }
         }
+    }
+
+    client.sendModule = async (alvo, dados, internal_module) => {
+
+        // Decide para qual destino será enviado o módulo
+        if (internal_module.misc.scope === "user") client.sendDM(alvo, dados, true, internal_module)
+        else client.notify(client.decifer(internal_module.misc.cid), dados, internal_module)
+
     }
 
     // Aleatoriza o texto de entrada
@@ -621,7 +667,7 @@ function internal_functions(client) {
         return arr
     }
 
-    client.switcher = ({ guild, user, operations, operacao }) => {
+    client.switcher = ({ dado, operations, operacao }) => {
 
         // Inverte o valor de botões liga/desliga
         const local = (operations[operacao].action).split(".")
@@ -632,11 +678,11 @@ function internal_functions(client) {
                 acc[key] = !acc[key]
 
             return acc[key]
-        }, guild ? guild : user)
+        }, dado)
 
         const pagina_guia = operations[operacao].page
 
-        return { guild, user, pagina_guia }
+        return { dado, pagina_guia }
     }
 
     client.timed_message = async (interaction, message, time) => {
@@ -676,6 +722,23 @@ function internal_functions(client) {
         }
 
         return Math.floor(new Date().getTime() / 1000)
+    }
+
+    client.updateModuleValue = async (hash, chave, value) => {
+
+        // Atualiza o módulo com o conteúdo que foi enviado
+        const modulo = await getModule(hash)
+        const local = chave.split(".")
+
+        // Vasculha o objeto do módulo a procura do valor para alterar
+        local.reduce((acc, key, index) => {
+            if (index === local.length - 1)
+                acc[key] = value
+
+            return acc[key]
+        }, modulo)
+
+        await modulo.save()
     }
 
     client.updateGuildIddleTimestamp = async (id_guild) => {

@@ -9,13 +9,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     // 1 -> Confirmar
     // 2 -> Escolher outra cor
 
-    if (!operacao) return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
+    if (!operacao)
+        return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     if (operacao === 1) {
 
         // Atribuindo a cor customizada ao usuário
         let cor = dados.split(".")[2]
-        const preco = dados.includes("-") ? colorsPriceMap[4] : colorsPriceMap[colorsMap[cor][1]]
+        let preco = dados.includes("-") ? colorsPriceMap[4] : colorsPriceMap[colorsMap[cor][1]]
+
+        if (client.cached.subscribers.has(user.uid)) // Aplicando o desconto de usuário assinante
+            preco = preco * client.cached.subscriber_discount
 
         // Cor customizada
         if (dados.includes("-"))
@@ -31,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         user.misc.money -= preco
 
         // Salvando a cor de embed customizada
-        user.misc.color = !dados.includes("-") ? colorsMap[cor][0] : dados.split("-")[1]
+        user.misc.embed_color = !dados.includes("-") ? colorsMap[cor][0] : dados.split("-")[1]
         await user.save()
 
         // Registrando as movimentações de bufunfas para o usuário
@@ -51,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const cores = [], cor_cache = dados.split(".")[2]
 
         Object.keys(colorsMap).forEach(cor => {
-            if (user.misc.color !== colorsMap[cor][0] && cor_cache !== cor)
+            if (user.misc.embed_color !== colorsMap[cor][0] && cor_cache !== cor)
                 cores.push(cor)
         })
 

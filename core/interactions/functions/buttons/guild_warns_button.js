@@ -50,8 +50,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 16 -> Tempo de expiração das advertências
     // 20 e 21 -> Sub menu com opções para gerenciar penalidades no servidor
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 1) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 1) {
 
         if (advertencias.length < 2)
             return interaction.update({
@@ -213,11 +218,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // Sincroniza as advertências criadas
     if (operacao === 6) atualiza_warns()
 
-    // Alterando a página 
+    // Alterando a página
     if (operacao === 15) pagina_guia = 1
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel das advertências
     require('../../chunks/panel_guild_warns')({ client, user, interaction, pagina_guia })

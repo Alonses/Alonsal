@@ -122,6 +122,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     botoes.push({ id: "navigation_button_panel", name: '▶', type: 0, data: `${pagina}.1.panel_personal`, disabled: c_menu[1] })
 
     client.reply(interaction, {
+        content: "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction, user)],
         flags: "Ephemeral"

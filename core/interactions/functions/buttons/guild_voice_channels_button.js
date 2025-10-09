@@ -1,20 +1,7 @@
-const { ChannelType } = require('discord.js')
-
-const { voice_names } = require('../../../formatters/patterns/guild')
-const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
-
 const { registryVoiceChannel } = require('../../../database/schemas/User_voice_channel')
+const { getGuildVoiceTrigger, listAllGuildVoiceTriggers } = require('../../../database/schemas/Voice_triggers')
 
-// 1 -> Ativar ou desativar os canais de voz dinâmicos
-// 2 -> Altera o canal gatilho
-// 3 -> Altera a categoria dos canais de voz dinâmicos
-// 4 -> Altera o tempo de expiração dos canais de voz
-// 5 -> Altera o status de som de pop up ao mutar membros
-
-// 6 -> Converte o canal de voz atual do membro em um canal dinâmico
-// 7 -> Confirma a alteração do canal atual para canal de voz dinâmico
-
-// 20 -> Sub menu para editar preferências dos canais no servidor
+const { voiceChannelTimeout } = require('../../../formatters/patterns/timeout')
 
 const operations = {
     1: { action: "conf.voice_channels", page: 0 },
@@ -24,15 +11,32 @@ const operations = {
     25: { action: "voice_channels.preferences.allow_preferences", page: 1 }
 }
 
-module.exports = async ({ client, user, interaction, dados, pagina }) => {
+module.exports = async ({ client, user, interaction, dados }) => {
 
-    let operacao = parseInt(dados.split(".")[1]), reback = "panel_guild_voice_channels"
-    let guild = await client.getGuild(interaction.guild.id)
-    let pagina_guia = 0
+    const operacao = parseInt(dados.split(".")[1])
+    let guild = await client.getGuild(interaction.guild.id), reback = "panel_guild_voice_channels"
+
+    // Tratamento dos cliques
+
+    // 1 -> Ativar ou desativar os canais de voz dinâmicos
+    // 4 -> Altera o tempo de expiração dos canais de voz
+    // 5 -> Altera o status de som de pop up ao mutar membros
+
+    // 6 -> Converte o canal de voz atual do membro em um canal dinâmico
+    // 7 -> Confirma a alteração do canal atual para canal de voz dinâmico
+
+    // 20 -> Sub menu para editar preferências dos canais no servidor
+    // 25 -> Define se as customizações dos usuários serão aplicadas aos canais
+
+    // 30 -> Sub menu para listar outros ativadores de canais de voz dinâmicos
+    // 31 -> Cria um novo trigger no servidor
 
     if (operations[operacao]) {
-        ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-        await guild.save()
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
     } else if (operacao === 4) {
 
         // Submenu para escolher o tempo de expiração dos canais de voz dinâmicos
@@ -54,49 +58,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             components: [client.create_menus({ interaction, user, data }), row],
             flags: "Ephemeral"
         })
-
-    } else if (operacao == 2 || operacao == 3) {
-
-        if (!guild.voice_channels.channel) operacao = 2
-        else if (!guild.voice_channels.category) operacao = 3
-
-        let alvo = "guild_voice_channels#channel"
-        let canal = client.decifer(guild.voice_channels.channel)
-        let cached_channel_type = ChannelType.GuildVoice
-
-        if (operacao == 3) {
-            alvo = "guild_voice_channels#category"
-            canal = client.decifer(guild.voice_channels.category)
-            cached_channel_type = ChannelType.GuildCategory
-        }
-
-        if (operacao > 1) { // Definindo o canal ativador ou categoria para os canais de voz dinâmicos
-            const data = {
-                title: { tls: operacao == 2 ? "menu.menus.escolher_canal_ativador" : "menu.menus.escolher_categoria_canais" },
-                pattern: "choose_channel",
-                alvo: alvo,
-                reback: "browse_button.guild_voice_channel_button",
-                operation: operacao,
-                values: await client.getGuildChannels(interaction, user, cached_channel_type, canal)
-            }
-
-            // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
-            if (data.values.length < pagina * 24) pagina--
-
-            const row = client.menu_navigation(user, data, pagina || 0)
-            let botoes = [
-                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: operacao }
-            ]
-
-            if (row.length > 0) // Botões de navegação
-                botoes = botoes.concat(row)
-
-            return client.reply(interaction, {
-                components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
-                flags: "Ephemeral"
-            })
-        }
 
     } else if (operacao == 6 || operacao == 7) {
 
@@ -152,64 +113,74 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 }
             }
         }
-    } else if (operacao === 21) {
 
-        // Define preferências do tamanho dos canais dinâmicos do servidor
-        const guild = await client.getGuild(interaction.guild.id)
-        let limite_canal = [], reback = "panel_guild_voice_channels.1"
+    } else if (operacao === 30) {
 
-        for (let i = 2; i <= 20; i++) {
-            if (i !== parseInt(guild.voice_channels.preferences.user_limit))
-                limite_canal.push({ name: i, value: i })
-        }
+        // Sub menu para poder configurar outros ativadores de voz no servidor
+        const triggers = await listAllGuildVoiceTriggers(client.encrypt(interaction.guild.id))
 
-        if (guild?.voice_channels.preferences.user_limit !== "0")
-            limite_canal.unshift({ name: client.tls.phrase(user, "menu.botoes.remover_limite"), value: 0 })
+        // Submenu para navegar pelos strikes do servidor
+        let botoes = [], segunda_linha = [], row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_voice_channels.0" }]
 
-        const data = {
-            title: { tls: "menu.menus.escolher_limite_usuarios" },
-            pattern: "numbers",
-            alvo: "guild_voice_channel_limit",
-            values: limite_canal
-        }
+        if (triggers.length < 1) {
+            const trigger = await getGuildVoiceTrigger(client, client.encrypt(interaction.guild.id))
 
-        // Atualizando a mensagem original com o painel de controle do canal de voz
-        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+            botoes.push({ id: "voice_trigger_configure_button", name: "1°", type: 1, emoji: client.emoji("mc_approve"), data: `0|${trigger.hash}` })
+        } else
+            triggers.forEach(trigger => {
 
-        return client.reply(interaction, {
-            components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
+                const botao = { id: "voice_trigger_configure_button", name: `${trigger.config.category_nick ? client.decifer(trigger.config.category_nick) : client.tls.phrase(user, "mode.spam.sem_categoria")}`, type: 1, emoji: client.emoji(trigger.config.active ? "mc_approve" : "mc_oppose"), data: `0|${trigger.hash}` }
+
+                if (botoes.length < 5) botoes.push(botao)
+                else segunda_linha.push(botao)
+            })
+
+        if (triggers.length < (guild.misc.subscription.active ? 10 : 2)) // Botão para adicionar um novo trigger
+            row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.novo_ativador" }, type: 2, emoji: client.emoji(43), data: 31 })
+
+        const embed = client.create_embed({
+            title: { tls: "mode.voice_channels.configurando_ativadores" },
+            description: { tls: "mode.voice_channels.descricao_ativadores", replace: `${client.emoji(48)} **${client.tls.phrase(user, "menu.botoes.ativadores")} ( ${triggers.length} / ${guild.misc.subscription.active ? 10 : 2} )**` },
+            footer: {
+                text: { tls: "mode.warn.customizacao_rodape" },
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            }
+        }, user)
+
+        const obj = {
+            content: "",
+            embeds: [embed],
+            components: [client.create_buttons(botoes, interaction, user)],
             flags: "Ephemeral"
-        })
-
-    } else if (operacao === 23) {
-
-        // Define quais nomes serão utilizados para gerar os canais de voz
-        const guild = await client.getGuild(interaction.guild.id)
-        let nomes_canal = [], reback = "panel_guild_voice_channels.1"
-
-        Object.keys(voice_names).forEach(key => {
-            if (guild.voice_channels.preferences.voice_names !== key)
-                nomes_canal.push({ name: key, value: key, emoji: voice_names[key] })
-        })
-
-        const data = {
-            title: { tls: "menu.menus.escolher_nome_canais" },
-            pattern: "channel_names",
-            alvo: "guild_voice_channel_names",
-            values: nomes_canal
         }
 
-        // Atualizando a mensagem original com o painel de controle do canal de voz
-        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+        if (segunda_linha.length > 0) // Acrescentando a segunda linha de triggers para seleção
+            obj.components.push(client.create_buttons(segunda_linha, interaction, user))
 
-        return client.reply(interaction, {
-            components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
-            flags: "Ephemeral"
-        })
+        // Linha de botões para navegação no menu
+        obj.components.push(client.create_buttons(row, interaction, user))
+
+        return interaction.update(obj)
+
+    } else if (operacao === 31) {
+
+        // Criando um novo trigger no servidor
+        const guild = await client.getGuild(interaction.guild.id)
+        const triggers = await listAllGuildVoiceTriggers(client.encrypt(interaction.guild.id))
+
+        // Criando um novo trigger no servidor
+        if (triggers.length < guild.misc.subscription.active ? 10 : 3) {
+            const trigger = await getGuildVoiceTrigger(client, client.encrypt(interaction.guild.id))
+            dados = `0.0.${trigger.hash}`
+
+            return require('./voice_trigger_configure_button')({ client, user, interaction, dados })
+        } else
+            return client.reply(interaction, {
+                content: client.tls.phrase(user, "mode.voice_channels.limite_triggers", client.emoji(0)),
+                flags: "Ephemeral"
+            })
     }
 
-    if (operacao >= 20) pagina_guia = 1
-
     // Redirecionando a função para o painel dos canais de voz dinâmicos
-    require('../../chunks/panel_guild_voice_channels')({ client, user, interaction, pagina_guia })
+    require('../../chunks/panel_guild_voice_channels')({ client, user, interaction })
 }

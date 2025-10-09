@@ -3,7 +3,7 @@ const fetch = (...args) =>
 
 const { AttachmentBuilder } = require('discord.js')
 
-module.exports = async ({ client, user, interaction, user_command }) => {
+module.exports = async ({ client, alvo, interaction, user_command, internal_module }) => {
 
     fetch(`${process.env.url_apisal}/curiosidades`)
         .then(response => response.json())
@@ -22,16 +22,16 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}`,
                                 files: [file],
-                                flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
+                                flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
-                        else client.sendDM(user, { content: `〽️ | ${descricao_curio}`, files: [file] }, true)
+                        else client.sendModule(alvo, { content: `〽️ | ${descricao_curio}`, files: [file] }, internal_module)
                     } else // Gifs
                         if (interaction)
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}\n${res.data_curio}`,
-                                flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
+                                flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
-                        else client.sendDM(user, { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, true)
+                        else client.sendModule(alvo, { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, internal_module)
 
                     return
                 }
@@ -39,8 +39,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             if (interaction) // Enviando um texto normal sem arquivos anexados
                 interaction.reply({
                     content: `〽️ | ${descricao_curio}`,
-                    flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
+                    flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                 })
-            else client.sendDM(user, { content: `〽️ | ${descricao_curio}` }, true)
+            else client.sendModule(user, { content: `〽️ | ${descricao_curio}` }, internal_module)
         })
 }

@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction }) => {
     // Convertendo do RGB para HEX
     const new_color = rgbToHex(rgb.r, rgb.g, rgb.b)
 
-    if (user.misc.color === new_color)
+    if (user.misc.embed_color === new_color)
         return client.tls.reply(interaction, user, "misc.color.cor_ativa", true, 7)
 
     // Enviando o embed para validação

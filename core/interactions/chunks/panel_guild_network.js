@@ -4,7 +4,7 @@ const { getNetworkedGuilds } = require("../../database/schemas/Guild")
 
 const { banMessageEraser } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, user, interaction, pagina_guia }) => {
+module.exports = async ({ client, user, interaction, pagina_guia, networkLotado }) => {
 
     const ephemeral = "Ephemeral"
     await client.deferedResponse({ interaction, ephemeral })
@@ -92,11 +92,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         }
     }, user)
 
-    if (pagina === 2) // Página com a lista de servidores do network
+    if (pagina === 2) { // Página com a lista de servidores do network
         embed.setFields(
             {
                 name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores_link")}: ${servidores_link}**`,
+                value: "⠀",
                 inline: true
             },
             {
@@ -110,12 +110,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             },
             {
-                name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
+                name: `:link: **${client.tls.phrase(user, "mode.network.servidores_link")} ( \`${servidores_link} / ${guild.misc?.subscription.active ? 30 : 10}\` )**`,
                 value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: false
             }
         )
-    else {
+    } else {
         embed.setFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
@@ -165,7 +165,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         componentes.push(client.create_buttons(row, interaction, user))
 
     interaction.editReply({
-        content: retorno_aviso,
+        content: networkLotado?.length > 0 ? client.tls.phrase(user, "mode.network.limite_servidores", 75, client.list(networkLotado)) : retorno_aviso,
         embeds: [embed],
         components: componentes,
         flags: "Ephemeral"

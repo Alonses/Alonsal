@@ -1,7 +1,7 @@
+const { ChannelType } = require('discord.js')
+
 // 1 -> Ativar ou desativar os convites rastreados
 // 2 -> Altera o tipo de filtro dos convites rastreados
-
-const { ChannelType } = require('discord.js')
 
 const operations = {
     1: { action: "conf.nuke_invites", page: 0 },
@@ -14,8 +14,11 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     let guild = await client.getGuild(interaction.guild.id)
 
     if (operations[operacao]) {
-        ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-        await guild.save()
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
     } else if (operacao === 3) {
 
         let canal = guild.nuke_invites.channel ? guild.nuke_invites.channel : guild.logger.channel, alvo = "guild_tracked_invites#channel"

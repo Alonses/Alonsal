@@ -62,7 +62,7 @@ module.exports = {
                 const datas_pula = retorno.data
                 const pula_obj = {
                     title: "game.pula.estatisticas_pula",
-                    color: user_pula.misc.color,
+                    color: user_pula.misc.embed_color,
                     image: "https://m.gjcdn.net/game-header/1300/613946-crop0_236_1366_606-xqiv88ik-v4.webp"
                 }
 

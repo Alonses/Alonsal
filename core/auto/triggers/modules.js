@@ -1,6 +1,6 @@
 const { writeFileSync, readFile } = require('fs')
 
-const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/User_modules.js")
+const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/Module.js")
 
 const { week_days, moduleTypes } = require('../../formatters/patterns/user.js')
 const formata_horas = require('../../formatters/formata_horas.js')
@@ -10,8 +10,9 @@ let trava_modulo = false
 
 async function atualiza_modulos() {
 
+    // Atualizando o arquivo de módulos configurados
     const dados = await getActiveModules()
-    writeFileSync("./files/data/user_modules.txt", JSON.stringify(dados))
+    writeFileSync("./files/data/modules.txt", JSON.stringify(dados))
 }
 
 async function requisita_modulo(client) {
@@ -22,7 +23,7 @@ async function requisita_modulo(client) {
     const data1 = new Date()
     const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
 
-    readFile('./files/data/user_modules.txt', 'utf8', (err, data) => {
+    readFile('./files/data/modules.txt', 'utf8', (err, data) => {
 
         data = JSON.parse(data)
 
@@ -32,24 +33,15 @@ async function requisita_modulo(client) {
         for (let i = 0; i < data.length; i++) {
             // Verificando se o horário está correto
             if (data[i].stats.days == 2 && data[i].stats.hour === horario)
-                lista_modulos.push({
-                    uid: data[i].uid,
-                    type: data[i].type
-                })
+                lista_modulos.push(data[i])
 
             // Verificando se o horário e o dia estão corretos
             else if (data[i].stats.days < 4 && (data[i].stats.hour === horario && week_days[data[i].stats.days].includes(dia)))
-                lista_modulos.push({
-                    uid: data[i].uid,
-                    type: data[i].type
-                })
+                lista_modulos.push(data[i])
 
             else if (data[i].stats.days > 2 && data[i].stats.hour === horario)
                 if ((data[i].stats.days - 4) === dia) // Um dia específico
-                    lista_modulos.push({
-                        uid: data[i].uid,
-                        type: data[i].type
-                    })
+                    lista_modulos.push(data[i])
         }
 
         if (lista_modulos.length > 0)
@@ -66,12 +58,13 @@ executa_modulo = async (client) => {
     if (!trava_modulo) {
         trava_modulo = true
 
-        const user = await client.getUser(lista_modulos[0].uid)
+        const alvo = await (lista_modulos[0].misc.scope === "user" ? client.getUser(lista_modulos[0].uid) : client.getGuild(client.decifer(lista_modulos[0].misc.sid)))
+        const internal_module = lista_modulos[0]
 
-        if (lista_modulos[0].type === 2) {
+        if (internal_module.type === 2) {
 
-            if (lista_modulos[0].data === 0) // Sem definição do tipo de envio
-                await client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.faltando_tipo") }, true)
+            if (internal_module.data === 0) // Sem definição do tipo de envio
+                if (lista_modulos[0].misc.scope === "user") await client.sendDM(alvo, { content: client.tls.phrase(alvo, "misc.modulo.faltando_tipo") }, true)
 
             // Definindo qual tipo de anúncio do history será
             let dados = {
@@ -80,16 +73,16 @@ executa_modulo = async (client) => {
             }
 
             // History no modo resumido
-            if (lista_modulos[0].data === 2 || !lista_modulos[0].data) {
+            if (internal_module.data === 2 || !internal_module.data) {
                 dados = {
                     data: "",
                     especifico: "acon=1"
                 }
             }
 
-            await require('../../formatters/chunks/model_history')({ client, user, dados })
-        } else if (moduleTypes[lista_modulos[0].type]) // Executando o módulo selecionado
-            await require(`../../formatters/chunks/model_${moduleTypes[lista_modulos[0].type]}`)({ client, user })
+            await require('../../formatters/chunks/model_history.js')({ client, alvo, dados, internal_module })
+        } else if (moduleTypes[internal_module.type]) // Executando o módulo selecionado
+            await require(`../../formatters/chunks/model_${moduleTypes[internal_module.type]}`)({ client, alvo, internal_module })
 
         lista_modulos.shift()
 
@@ -113,13 +106,20 @@ async function cobra_modulo(client) {
     // Somando todos os módulos ativos em chaves únicas por ID de usuário
     active_modules.forEach(modulo => {
 
-        // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário
+        // Desativando o módulo vitrine caso o dono não tenha mais status de assinante
+        if (!client.cached.subscribers.has(modulo.uid) && modulo.rotative.active) {
+            modulo.rotative.active = false
+            modulo.rotative.mid = null
+            modulo.save()
+        }
+
+        // Considera apenas os módulos que são ativos no dia corrente e desconta do usuário conforme nível de subscrição do usuário
         if (modulo.stats.days == 2 || week_days[modulo.stats.days]?.includes(data1.getDay()) || modulo.stats.days - 4 === data1.getDay()) {
             if (users[modulo.uid]) {
-                users[modulo.uid] += modulo.stats.price
+                users[modulo.uid] += client.cached.subscribers.has(modulo.uid) ? modulo.stats.price * client.cached.subscriber_discount : modulo.stats.price
                 modules[modulo.uid]++
             } else {
-                users[modulo.uid] = modulo.stats.price
+                users[modulo.uid] = client.cached.subscribers.has(modulo.uid) ? modulo.stats.price * client.cached.subscriber_discount : modulo.stats.price
                 modules[modulo.uid] = 1
             }
         }

@@ -39,7 +39,7 @@ module.exports = async ({ client, user, interaction }) => {
                 // Exibindo o banner do usuário
                 const embed = client.create_embed({
                     title: `> ${user_alvo.username}`,
-                    color: user_c.misc.embed,
+                    color: user_c.misc.embed_color,
                     image: url_banner,
                     description: { tls: "util.avatar.download_banner" }
                 }, user)

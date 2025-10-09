@@ -19,11 +19,13 @@ async function getUserBadges(uid) {
 }
 
 async function createBadge(uid, badge_id, timestamp) {
-    await model.create({
-        uid: uid,
-        badge: badge_id,
-        timestamp: timestamp
-    })
+
+    if (!await model.exists({ uid: uid, badge: badge_id }))
+        await model.create({
+            uid: uid,
+            badge: badge_id,
+            timestamp: timestamp
+        })
 }
 
 async function removeBadge(uid, badge_id) {

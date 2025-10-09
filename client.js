@@ -4,8 +4,7 @@ const idioma = require('./core/data/language')
 const translate = require('./core/formatters/translate')
 const { client_data } = require('./setup')
 
-/* --------------------------------------------------------------- */
-
+// Instância do cliente Discord
 const cli = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -35,7 +34,7 @@ class CeiraClient {
             ranking_value: 0,
             regex: /[A-Za-z0-9--]+\.[A-Za-z0-9]{2,10}(?:\/[^\s/]+)*\/?\s/gi,
             game_stores: /epicgames.com|store.steam|gog.com|humblebundle.com|ubisoft.com|store.ubi.com|xbox.com|play.google|beta.bandainamcoent|microsoft.com/,
-            fixed_badges: {},
+            fixed_badges: new Map(),
             warns: new Map(),
             join_guilds: new Map(),
             voice_channels: new Map(),
@@ -43,6 +42,7 @@ class CeiraClient {
             forca_sessao: new Map(),
             iddleGuilds: new Map(),
             ranked_guilds: new Map(),
+            subscribers: new Map(),
             rank: {
                 bank: []
             }
@@ -50,11 +50,12 @@ class CeiraClient {
     }
 
     avatar() {
-        return this.discord.user.avatarURL({ dynamic: true })
+        return this.discord.user.avatarURL({ dynamic: true }) || null
     }
 
     channels(type) {
 
+        // Filtrando o canal pelo tipo solicitado
         if (type) return this.discord.channels.cache.filter((c) => c.type === type)
 
         return this.discord.channels.cache
@@ -62,22 +63,16 @@ class CeiraClient {
 
     guilds(id_guild) {
 
-        let guilds_cache = this.discord.guilds.cache
-        let guilds
+        const guilds_cache = this.discord.guilds.cache
 
-        if (id_guild)
-            guilds_cache.forEach(guild => {
-                if (guild.id === id_guild)
-                    guilds = guild
-            })
-        else
-            guilds = guilds_cache
+        // Filtrando a guild pelo ID solicitado
+        if (id_guild) return guilds_cache.get(id_guild) || null
 
-        return guilds
+        return guilds_cache
     }
 
     id() {
-        return this.discord.user.id
+        return this.discord.user?.id || null
     }
 
     login(token) {
@@ -85,11 +80,11 @@ class CeiraClient {
     }
 
     user() {
-        return this.discord.user
+        return this.discord.user || null
     }
 
     username() {
-        return this.discord.user.username
+        return this.discord.user?.username || null
     }
 }
 

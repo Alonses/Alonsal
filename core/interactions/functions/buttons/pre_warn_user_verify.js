@@ -61,7 +61,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Exibindo os detalhes da advertência escolhida
         const embed = client.create_embed({
             title: { tls: "mode.anotacoes.verificando" },
-            color: user.misc.color,
             description: { tls: "mode.warn.descricao_advertencia", replace: [user_note.relatory, motivo_remocao] },
             fields: [
                 {

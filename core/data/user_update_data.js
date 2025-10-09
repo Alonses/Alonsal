@@ -1,4 +1,4 @@
-const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/User_modules")
+const { dropAllUserModules, shutdownAllUserModules } = require("../database/schemas/Module")
 const { dropAllUserGuildRanks } = require("../database/schemas/User_rank_guild")
 const { dropUnknownRankServers, dropUserRankServer } = require("../database/schemas/User_rank_guild")
 const { dropAllUserStatements } = require("../database/schemas/User_statements")
@@ -50,10 +50,8 @@ async function clear_data({ client, user, interaction, operador, caso }) {
                 user.social.pula_predios = null
             }
 
-            if (alvos[i] === 3) { // Excluindo as cores dos embeds
-                user.misc.color = "#29BB8E"
-                user.misc.embed = "#29BB8E"
-            }
+            if (alvos[i] === 3) // Excluindo a cor do embed
+                user.misc.embed_color = "#29BB8E"
 
             if (alvos[i] === 4) // Removendo a badge fixada
                 user.misc.fixed_badge = null

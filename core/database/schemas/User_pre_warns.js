@@ -96,6 +96,15 @@ async function dropAllGuildPreWarns(sid) {
     })
 }
 
+async function dropUserNote(uid, sid, timestamp) {
+
+    await model.deleteOne({
+        uid: uid,
+        sid: sid,
+        timestamp: timestamp
+    })
+}
+
 module.exports.User_pre_warn = model
 module.exports = {
     getUserPreWarn,
@@ -105,5 +114,6 @@ module.exports = {
     removeUserPreWarn,
     listAllCachedUserPreWarns,
     dropAllUserGuildPreWarns,
-    dropAllGuildPreWarns
+    dropAllGuildPreWarns,
+    dropUserNote
 }

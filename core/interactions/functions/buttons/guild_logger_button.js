@@ -40,8 +40,13 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 9 -> Página 1 ( configurações do log de eventos )
     // 10 -> Página 2 ( opções do registrador )
 
-    if (operations[operacao]) ({ guild, pagina_guia } = client.switcher({ guild, operations, operacao }))
-    else if (operacao === 2 || operacao === 6) {
+    if (operations[operacao]) {
+
+        let dado = guild;
+        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        await dado.save()
+
+    } else if (operacao === 2 || operacao === 6) {
 
         const eventos = []
         let lista_eventos = guild.logger, alvo = "guild_logger#events", digito = 0
@@ -135,9 +140,6 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 9) pagina_guia = 1
     if (operacao === 10) pagina_guia = 2
-
-    // Salvando os dados atualizados
-    if (operations[operacao]) await guild.save()
 
     // Redirecionando a função para o painel do log de eventos
     require('../../chunks/panel_guild_logger')({ client, user, interaction, operacao, pagina_guia })

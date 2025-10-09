@@ -12,6 +12,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     const infos_sv = client.create_embed({
         title: interaction.guild.name,
+        description: { tls: guild.misc.subscription.active ? "misc.assinante.servidor_impulsionado" : "misc.assinante.servidor_sem_impulso" },
         fields: [
             {
                 name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
@@ -181,11 +182,12 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     b_disabled[operador] = true
     c_buttons[operador] = 2
 
-    const row = client.create_buttons([
+    const row = [
         { id: "server_info_button", name: { tls: "util.lastfm.geral" }, type: c_buttons[0], emoji: '🌐', data: "0", disabled: b_disabled[0] },
         { id: "server_info_button", name: { tls: "menu.botoes.moderacao" }, type: c_buttons[1], emoji: client.emoji("aln_reporter"), data: "1", disabled: b_disabled[1] },
-        { id: "server_info_button", name: { tls: "menu.botoes.estatisticas" }, type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] }
-    ], interaction, user)
+        { id: "server_info_button", name: { tls: "menu.botoes.estatisticas" }, type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] },
+        { id: "server_subscription", name: { tls: `menu.botoes.${guild.misc.subscription.active ? "impulso" : "impulsionar"}` }, type: 1, emoji: '⚡', data: "0" }
+    ]
 
     // Servidor com imagem personalizada
     if (interaction.guild.iconURL({ size: 2048 }))
@@ -195,7 +197,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     client.reply(interaction, {
         embeds: [infos_sv],
-        components: [row],
+        components: [client.create_buttons(row, interaction, user)],
         flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 }

@@ -18,7 +18,6 @@ const schema = new mongoose.Schema({
         pula_predios: { type: String, default: null }
     },
     profile: {
-        // avatar: { type: String, default: null },
         about: { type: String, default: null },
         join: { type: Boolean, default: true },
         creation: { type: Boolean, default: true },
@@ -31,18 +30,21 @@ const schema = new mongoose.Schema({
         }
     },
     misc: {
-        color: { type: String, default: "#29BB8E" },
-        daily: { type: String, default: null },
         money: { type: Number, default: 0 },
-        embed: { type: String, default: "#29BB8E" },
+        daily: { type: String, default: null },
         locale: { type: String, default: null },
         weather: { type: Boolean, default: true },
         fixed_badge: { type: Number, default: null },
         second_lang: { type: String, default: null },
+        embed_color: { type: String, default: "#29BB8E" },
         voice_channels: {
             always_private: { type: Boolean, default: false },
             user_limit: { type: String, default: 0 },
             global_config: { type: Boolean, default: false }
+        },
+        subscriber: {
+            active: { type: Boolean, default: false },
+            expires: { type: Number, default: null }
         }
     },
     conf: {
@@ -130,10 +132,17 @@ async function dropUser(uid) {
 }
 
 // Lista todos os usuários com badges fixadas
-async function getUserWithFixedBadges() {
+async function getUsersWithFixedBadges() {
 
     return await model.find({
         "misc.fixed_badge": { $ne: null }
+    })
+}
+
+// Lista todos os usuários com assinaturas ativas
+async function getUsersWithActiveSubscription() {
+    return await model.find({
+        "misc.subscriber.active": true
     })
 }
 
@@ -145,6 +154,7 @@ module.exports = {
     getRankMoney,
     getUnknowUsers,
     getOutdatedUsers,
-    getUserWithFixedBadges,
+    getUsersWithFixedBadges,
+    getUsersWithActiveSubscription,
     getEncryptedUser
 }

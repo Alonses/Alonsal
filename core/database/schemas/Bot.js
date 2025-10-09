@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
         ranking: { type: Number, default: 5 },
         alondioma: { type: String, default: null },
         last_interaction: { type: Number, default: null },
+        subscriber_discount: { type: Number, default: 0.2 },
         spam: { type: Number, default: 0 },
         bufunfas: { type: Number, default: 0 }
     },

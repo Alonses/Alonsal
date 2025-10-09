@@ -59,8 +59,8 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
 
             let fixed_badge = ""
 
-            if (client.cached.fixed_badges[user_interno.uid]) // Procurando a Badge fixada do usuário
-                fixed_badge = busca_badges(client, badgeTypes.SINGLE, client.cached.fixed_badges[user_interno.uid]).emoji
+            if (client.cached.fixed_badges.has(user_interno.uid)) // Procurando a Badge fixada do usuário
+                fixed_badge = busca_badges(client, badgeTypes.SINGLE, client.cached.fixed_badges.get(user_interno.uid)).emoji
 
             const nome_usuario = user_interno.nickname ? client.decifer(user_interno.nickname) : client.tls.phrase(user, "util.steam.undefined")
 

@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 title: res.nome,
                 thumbnail: res.foto,
                 description: `- "${res.texto}"`
-            })
+            }, user)
 
             interaction.reply({
                 embeds: [embed],

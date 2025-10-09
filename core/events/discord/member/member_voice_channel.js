@@ -1,29 +1,38 @@
 const { ChannelType, PermissionsBitField, OverwriteType } = require("discord.js")
 
-const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 const { verifyUserParty } = require("../../../database/schemas/User_voice_channel_party")
+const { listAllGuildVoiceTriggers, getVoiceTriggerByChannelId } = require("../../../database/schemas/Voice_triggers")
+const { verifyUserVoiceChannel, registryVoiceChannel, verifyVoiceChannel, dropVoiceChannel } = require("../../../database/schemas/User_voice_channel")
 
-const voice_channel_config = require("../../../interactions/chunks/voice_channel_config")
-
-const { voiceChannelTimeout } = require("../../../formatters/patterns/timeout")
 const { voice_names } = require("../../../formatters/patterns/guild")
+const { voiceChannelTimeout } = require("../../../formatters/patterns/timeout")
 
 module.exports = async ({ client, guild, oldState, newState }) => {
 
     const id_user = oldState.id
+    const guild_triggers = await listAllGuildVoiceTriggers(client.encrypt(guild.sid), true)
+    let triggers = []
+
+    // Listando todos os triggers do servidor para verificação
+    guild_triggers.forEach(trigger => { triggers.push(client.decifer(trigger.config.channel)) })
 
     // Membro do servidor entrou no canal ativador
-    if (newState.channelId === client.decifer(guild.voice_channels.channel)) {
+    if (triggers.includes(newState.channelId)) {
 
-        let user_voice = await verifyUserVoiceChannel(client.encrypt(id_user), client.encrypt(guild.sid))
+        let user_voice = await verifyUserVoiceChannel(client.encrypt(id_user), client.encrypt(guild.sid), client.encrypt(newState.channelId))
+        const user_old_voice = await verifyVoiceChannel(client.encrypt(oldState.channelId), client.encrypt(guild.sid))
+
+        // Verificando se o membro saiu de um canal gerado por outro trigger
+        if (user_old_voice && client.decifer(user_old_voice?.conf.trigger) !== newState.channelId) verificar_ausencia_canal(client, oldState.channelId, oldState.channelId, guild, id_user, triggers)
 
         // Verificando se já existe um canal criado para o membro no servidor
         if (!user_voice) {
 
             const user_voice_channel = await registryVoiceChannel(client.encrypt(id_user), client.encrypt(guild.sid))
+            const trigger = await getVoiceTriggerByChannelId(client.encrypt(guild.sid), client.encrypt(newState.channelId))
 
             // Verificando se a categoria informada existe
-            if (await client.getGuildChannel(client.decifer(guild.voice_channels.category))) {
+            if (await client.getGuildChannel(client.decifer(trigger.config.category))) {
 
                 const cached_guild = await client.guilds(guild.sid)
 
@@ -31,14 +40,14 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 const user = await client.getUser(id_user)
 
                 // Escolhendo um nome aleatório conforme o tema definido no servidor
-                const chave_nome = guild.voice_channels.preferences.voice_names === "all" ? client.random(voice_names, null, true, "all") : guild.voice_channels.preferences.voice_names
+                const chave_nome = trigger.config.preferences.voice_names === "all" ? client.random(voice_names, null, true, "all") : trigger.config.preferences.voice_names
                 const nome_canal = client.tls.phrase(user, `voice_channels.${chave_nome}`)
 
                 const obj = {
                     name: `${client.defaultEmoji("person")} ${nome_canal}`,
                     type: ChannelType.GuildVoice,
-                    parent: client.decifer(guild.voice_channels.category),
-                    userLimit: guild?.voice_channels.preferences.allow_preferences ? user?.misc.voice_channels.user_limit : guild?.voice_channels.preferences.user_limit || 0,
+                    parent: client.decifer(trigger.config.category),
+                    userLimit: guild?.voice_channels.preferences.allow_preferences ? user?.misc.voice_channels.user_limit : trigger.config.preferences.user_limit || 0,
                     permissionOverwrites: [
                         {
                             id: guild.sid,
@@ -47,10 +56,10 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                     ]
                 }
 
-                if (!guild.voice_channels.preferences.allow_text) // Desautorizando os membros a enviarem mensagens no canal de voz
+                if (!trigger.config.preferences.allow_text) // Desautorizando os membros a enviarem mensagens no canal de voz
                     obj.permissionOverwrites.push({ id: guild.sid, deny: [PermissionsBitField.Flags.SendMessages] })
 
-                if (guild.voice_channels.preferences.always_private || (user?.misc.voice_channels.always_private && guild.voice_channels.preferences.allow_preferences)) {
+                if (trigger.config.preferences.always_private || (user?.misc.voice_channels.always_private && guild.voice_channels.preferences.allow_preferences)) {
                     obj.permissionOverwrites.push(
                         {
                             id: guild.sid,
@@ -90,11 +99,12 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                         setTimeout(() => { // Movendo o membro para o novo canal
                             guild_member.voice.setChannel(new_voice_channel.id)
-                                .catch(() => verificar_ausencia_canal(client, new_voice_channel.id, new_voice_channel.id, guild))
+                                .catch(() => verificar_ausencia_canal(client, new_voice_channel.id, new_voice_channel.id, guild, null, triggers))
                         }, 500)
 
                         // Atualizandos os dados do canal no banco de dados
                         user_voice_channel.cid = client.encrypt(new_voice_channel.id)
+                        user_voice_channel.conf.trigger = client.encrypt(newState.channelId)
                         await user_voice_channel.save()
 
                         // Salvando o canal de voz dinâmico em cache
@@ -109,19 +119,19 @@ module.exports = async ({ client, guild, oldState, newState }) => {
         } else { // Membro já criou um canal, movendo ele para o canal criado se entrar no canal ativador novamente
             const guild_member = await client.getMemberGuild(guild.sid, id_user)
             guild_member.voice.setChannel(client.decifer(user_voice.cid))
-                .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild, id_user))
+                .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild, id_user, triggers))
         }
     } else if (oldState.channelId !== newState.channelId) // Verifica se o canal possui ausencia de membros
-        verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild, id_user)
+        verificar_ausencia_canal(client, oldState.channelId, newState.channelId, guild, id_user, triggers)
 }
 
-async function verificar_ausencia_canal(client, channel_id, new_channel, guild, id_user) {
+async function verificar_ausencia_canal(client, channel_id, new_channel, guild, id_user, triggers) {
 
     // Dono original saiu do canal dinâmico
     const voice_channel = await verifyVoiceChannel(client.encrypt(channel_id), client.encrypt(guild.sid))
 
     // Verificando se o canal dinâmico existe e se o novo canal de entrada é diferente do canal ativador no servidor
-    if (voice_channel && new_channel !== client.decifer(guild.voice_channels.channel)) {
+    if (voice_channel && !triggers.includes(new_channel)) {
 
         const guild_channel = await client.getGuildChannel(channel_id)
 
@@ -130,7 +140,7 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
 
             // Removendo o canal do cache e do banco de dados
             client.cached.voice_channels.delete(`${voice_channel.cid}.${voice_channel.sid}`)
-            voice_channel.delete()
+            dropVoiceChannel(voice_channel.uid, voice_channel.sid)
 
             // Alterando o nome do canal para informar a exclusão
             await guild_channel.edit({
@@ -154,7 +164,7 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
     }
 
     // Verificando se já existe algum canal criado e o membro
-    if (voice_channel && new_channel === client.decifer(guild.voice_channels.channel)) return mover_membro(client, voice_channel)
+    if (voice_channel && triggers.includes(new_channel)) return mover_membro(client, voice_channel)
 }
 
 async function mover_membro(client, voice_channel) {
@@ -182,6 +192,6 @@ async function transferir_controles({ client, guild_channel, voice_channel }) {
     setTimeout(() => {
         // Atualizando o card de mensagem para o novo dono do canal
         const dados = `${guild_channel.id}.${guild_channel.guild.id}`, update = true
-        voice_channel_config({ client, user, dados, update })
+        require("../../../interactions/chunks/voice_channel_config")({ client, user, dados, update })
     }, 1000)
 }
