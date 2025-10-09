@@ -111,8 +111,10 @@ module.exports = async ({ client, message, caso }) => {
 
     // Bônus por subir de nível
     if (parseInt(guild_user.ixp / 1000) !== parseInt(xp_anterior / 1000)) {
+
         user_data.misc.money += 250
         await user_data.save()
+
         client.registryStatement(user_data.uid, "misc.b_historico.nivel", true, 250)
         client.journal("gerado", 250)
     }
@@ -142,34 +144,39 @@ const sincroniza_xp = async (guild_user) => {
  */
 async function verifica_servers() {
 
+    // Sem membros salvos na fila
+    if (members_xp.length === 0) return
+
     // Copia e limpa a fila de usuários
     const array_copia = [...members_xp]
     members_xp = []
 
-    if (array_copia.length > 0) {
-        for (const id_user of array_copia) {
+    for (const id_user of array_copia) {
 
-            // Busca todos os servidores do usuário
-            const servers = await getUserRankServers(id_user)
-            let user_global = await getUserGlobalRank(id_user)
-            let maior = 0
+        // Busca todos os servidores do usuário
+        const servers = await getUserRankServers(id_user)
+        let user_global = await getUserGlobalRank(id_user)
+        let maior = 0
 
-            if (servers && servers.length > 0) {
-                for (const servidor of servers) {
-                    if (servidor.ixp > maior) {
-                        maior = servidor.ixp
-                        user_global.xp = servidor.ixp
-                        user_global.sid = servidor.sid
-                    }
+        if (servers && servers.length > 0) {
+            for (const servidor of servers) {
+                if (servidor.ixp > maior) {
+                    maior = servidor.ixp
+                    user_global.xp = servidor.ixp
+                    user_global.sid = servidor.sid
+
+                    // Atualizando o nickname do usuário
+                    if (!user_global.nickname && servidor.nickname)
+                        user_global.nickname = servidor.nickname
                 }
-
-                // Exclui usuário se XP global estiver zerado
-                if (user_global.xp === 0)
-                    await user_global.delete()
-                else
-                    await user_global.save()
-
             }
+
+            // Exclui usuário se XP global estiver zerado
+            if (user_global.xp === 0)
+                await user_global.delete()
+            else
+                await user_global.save()
+
         }
     }
 }

@@ -589,6 +589,21 @@
         },
         {
             "type": 2,
+            "text": "Blinding Lights - The Weeknd",
+            "link": "https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b?si=d9f4e0a7f7204485"
+        },
+        {
+            "type": 2,
+            "text": "Save Your Tears - The Weeknd",
+            "link": "https://open.spotify.com/track/5QO79kh1waicV47BqGRL3g?si=03144c48a055400c"
+        },
+        {
+            "type": 2,
+            "text": "Act Naturally - Buck Owens",
+            "link": "https://open.spotify.com/track/762yvPz59OMgb7gGLws6Vi?si=4a22afd6546a411e"
+        },
+        {
+            "type": 2,
             "text": "/data"
         },
         {
@@ -740,7 +755,7 @@
             "text": "na versão version_repl!"
         },
         {
-            "type": 0,
+            "type": 2,
             "text": "commands_repl comandos disparados!"
         },
         {
