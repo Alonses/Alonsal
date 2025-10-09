@@ -7,11 +7,19 @@ const { getModulesPrice } = require('../../../core/database/schemas/Module')
 const { modulePrices } = require('../../../core/formatters/patterns/user')
 
 const formata_horas = require('../../../core/formatters/formata_horas')
+const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
 
     const type = parseInt(interaction.options.getString("choice"))
     let locale_cache = false, defered = false
+
+    if (interaction.options.getString("type")) // Falta de permissão para gerenciar mensagens
+        if (interaction.options.getString("type") === "guild" && !await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageMessages]))
+            return interaction.reply({
+                content: "🛂 | Você não pode criar um módulo de servidor sem possuir a permissão para `Gerenciar mensagens`, por gentileza, crie um módulo para uso pessoal.",
+                flags: "Ephemeral"
+            })
 
     // Impedindo que o módulo de games seja configurado em escopo de servidor por fora da configuração através do panel guild
     if (type === 6 && interaction.options.getString("type") === "guild")
