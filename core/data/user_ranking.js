@@ -1,5 +1,5 @@
 const { atualiza_user_eraser } = require('../auto/triggers/user_eraser')
-const { getUserGlobalRank } = require('../database/schemas/User_rank_global')
+const { getUserGlobalRank, dropUserGlobalRank } = require('../database/schemas/User_rank_global')
 const { getUserRankServer, getUserRankServers } = require('../database/schemas/User_rank_guild')
 
 const { CHECKS } = require('../formatters/patterns/user')
@@ -158,25 +158,24 @@ async function verifica_servers() {
         let user_global = await getUserGlobalRank(id_user)
         let maior = 0
 
-        if (servers && servers.length > 0) {
-            for (const servidor of servers) {
-                if (servidor.ixp > maior) {
-                    maior = servidor.ixp
-                    user_global.xp = servidor.ixp
-                    user_global.sid = servidor.sid
+        if (user_global) {
+            if (servers && servers.length > 0) {
+                for (const servidor of servers) {
+                    if (servidor.ixp > maior) {
+                        maior = servidor.ixp
+                        user_global.xp = servidor.ixp
+                        user_global.sid = servidor.sid
 
-                    // Atualizando o nickname do usuário
-                    if (!user_global.nickname && servidor.nickname)
-                        user_global.nickname = servidor.nickname
+                        // Atualizando o nickname do usuário
+                        if (!user_global.nickname && servidor.nickname)
+                            user_global.nickname = servidor.nickname
+                    }
                 }
+
+                // Exclui usuário se XP global estiver zerado
+                if (user_global.xp === 0) await dropUserGlobalRank(id_user)
+                else await user_global.save()
             }
-
-            // Exclui usuário se XP global estiver zerado
-            if (user_global.xp === 0)
-                await user_global.delete()
-            else
-                await user_global.save()
-
         }
     }
 }
