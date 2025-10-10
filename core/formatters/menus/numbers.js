@@ -20,7 +20,7 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
     else {
 
         // Opções de limitação para o canal de voz
-        if (alvo === "voice_trigger_channel_limit") {
+        if (alvo.includes("channel_limit") && alvo.includes("voice")) {
             valor_label = `${alvo}|${valor.value}.${data.submenu}`
 
             if (valor.value !== 0) nome_label = `${valor.name} ${client.tls.phrase(user, "manu.guild_data.membros")}`
@@ -29,6 +29,7 @@ module.exports = ({ client, user, alvo, valor, data, i }) => {
                 emoji_label = client.emoji(13)
             }
         } else {
+
             valor_label = `${alvo}|${valor.split(".")[0]}`
             nome_label = client.tls.phrase(user, `menu.times.${valor.split(".")[1]}`)
         }

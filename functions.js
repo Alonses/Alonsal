@@ -473,7 +473,7 @@ function internal_functions(client) {
                     const m = await canal.send(conteudo)
 
                     // Salvando o ID da mensagem enviada como módulo
-                    await client.updateModuleValue(objeto.hash, "rotative.mid", client.encrypt(m.id))
+                    await client.updateModuleValue(objeto?.hash, "rotative.mid", client.encrypt(m.id))
                 })
         } else
             canal.send(conteudo)
@@ -633,7 +633,7 @@ function internal_functions(client) {
                                         .then(async m => {
 
                                             // Salvando o ID da mensagem enviada como módulo
-                                            await client.updateModuleValue(internal_module.hash, "rotative.mid", client.encrypt(m.id))
+                                            await client.updateModuleValue(internal_module?.hash, "rotative.mid", client.encrypt(m.id))
                                         })
                                         .catch()
                                 })
@@ -642,7 +642,7 @@ function internal_functions(client) {
                     await user_interno.send(dados) // Enviando conteúdo na DM do usuário
                         .then(async m => {
                             // Salvando o ID da mensagem enviada como módulo
-                            await client.updateModuleValue(internal_module.hash, "rotative.mid", client.encrypt(m.id))
+                            await client.updateModuleValue(internal_module?.hash, "rotative.mid", client.encrypt(m.id))
                         })
                         .catch()
             }
@@ -725,6 +725,9 @@ function internal_functions(client) {
     }
 
     client.updateModuleValue = async (hash, chave, value) => {
+
+        // Sem hash ou chave informada, cancelando a operação
+        if (!hash || !chave) return
 
         // Atualiza o módulo com o conteúdo que foi enviado
         const modulo = await getModule(hash)
