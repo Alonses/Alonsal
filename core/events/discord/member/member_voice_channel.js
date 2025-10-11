@@ -183,7 +183,11 @@ async function mover_membro(client, voice_channel) {
 
 async function transferir_controles({ client, guild_channel, voice_channel }) {
 
-    const new_channel_owner = [...guild_channel.members.keys()][0]
+    const new_channel_owner = [...guild_channel?.members.keys()][0]
+
+    // Verificando se não há um novo dono para o canal
+    if (!new_channel_owner) return
+
     const user = await client.getUser(new_channel_owner)
 
     voice_channel.uid = client.encrypt(new_channel_owner)
