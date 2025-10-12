@@ -16,4 +16,7 @@ module.exports = async ({ client }) => {
     await dailyReset(client.id()) // Reinicia as estatítisticas do relatório diário
     await cobra_modulo(client) // Cobra pelos módulos ativos dos usuários
     await verifica_renda_passiva(client) // Verifica a renda passiva dos impulsionadores
+
+    // Limpando os servidores com tempos de inatividade atualizados salvos em cache
+    client.cached.iddleGuilds.clear()
 }
