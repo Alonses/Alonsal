@@ -58,6 +58,11 @@ internal_clock = (client, tempo_restante) => {
 
     setTimeout(() => { // Sincronizando os dados do bot
 
+        const horario_agora = new Date()
+
+        if (horario_agora.getHours() === 0 && horario_agora.getMinutes() === 0) // Meia noite
+            require('./await_journal')({ client }) // Enviando o relatório diário
+
         if (client.x.modules) requisita_modulo(client) // Verificando se há modulos agendados para o horário atual
         verifica_warns(client) // Sincronizando as advertências temporárias
         verifica_pre_warns(client) // Sincronizando as anotações de advertências temporárias

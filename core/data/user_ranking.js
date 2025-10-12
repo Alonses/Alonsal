@@ -120,7 +120,7 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     // Registra no relatório
-    client.journal(caso)
+    client.journal(caso, 1)
     await guild_user.save()
 
     // Adiciona usuário na fila de ranking global para sincronização

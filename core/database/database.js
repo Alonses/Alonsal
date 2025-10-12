@@ -14,15 +14,15 @@ async function setup(uri) {
         await mongoose.connect(uri, options)
         console.log("🟣 | Banco conectado")
     } catch (err) {
-        console.log("🔴 | Erro ao conectar no Banco")
-        console.log(err)
+        console.error("🔴 | Erro ao conectar no Banco")
+        console.error(err)
         process.exit(1)
     }
 }
 
 mongoose.connection.on('error', err => {
-    console.log("🔴 | Um erro ocorreu no Banco de dados")
-    console.log(err)
+    console.error("🔴 | Um erro ocorreu no Banco de dados")
+    console.error(err)
 })
 
 module.exports.setup = setup

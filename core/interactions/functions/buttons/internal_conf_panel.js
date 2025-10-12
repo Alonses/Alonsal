@@ -59,6 +59,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 name: `${client.execute("functions", "emoji_button.emoji_button", bot.conf.guild_timeout)} **Ignorar guild**`,
                 value: `\`\`\`Ouvir eventos vindos da guild principal.\`\`\``,
                 inline: true
+            },
+            { name: "⠀", value: "⠀", inline: false },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", bot.conf.relatorio)} **Relatório diário**`,
+                value: `\`\`\`Enviar o relatório de uso do Alonsal diariamente.\`\`\``,
+                inline: true
+            },
+            {
+                name: `${client.execute("functions", "emoji_button.emoji_button", bot.conf.daily_announce)} **Anúncio diário**`,
+                value: `\`\`\`Anunciar jogos gratuitos diariamente.\`\`\``,
+                inline: true
             }
         )
 
@@ -72,6 +83,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         row = client.create_buttons([
             { id: "return_button", name: "Retornar", type: 0, emoji: client.emoji(19), data: "panel_geral" },
+            { id: "internal_switch", name: "Relatório diário", type: bot.conf.relatorio ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.relatorio), data: "relatorio" },
+            { id: "internal_switch", name: "Anúncio diário", type: bot.conf.daily_announce ? 2 : 1, emoji: client.execute("functions", "emoji_button.emoji_button", bot.conf.daily_announce), data: "daily_announce" },
             { id: "internal_conf_panel", name: "Sincronizar Idioma", type: 1, emoji: client.emoji(37), data: "z|update_language" },
             { id: "internal_conf_panel", name: "Enviar jogos gratuitos", type: 1, emoji: client.emoji(29), data: "z|send_announce" }
         ], interaction)

@@ -30,7 +30,6 @@ module.exports = async ({ client }) => {
         client.idioma.listAll()
     }, 2000)
 
-    require('../auto/await_journal')({ client })
     require('../auto/await_announces')({ client })
 }
 

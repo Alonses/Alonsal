@@ -91,7 +91,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                 await cached_guild.channels.create(obj).then(async new_voice_channel => {
 
                     // Atualizando as estatísticas de canais dinâmicos criados no dia
-                    client.journal("voice_channel")
+                    client.journal("voice_channel", 1)
 
                     // Permissões do bot no servidor
                     const membro_sv = await client.getMemberGuild(guild.sid, client.id())

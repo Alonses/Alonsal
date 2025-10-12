@@ -24,5 +24,5 @@ module.exports = (client, err, local) => {
         client.notify(process.env.channel_error, { embeds: [embed] })
 
     // Registra no journal do sistema
-    client.journal("epic_embed")
+    client.journal("epic_embed", 1)
 }
