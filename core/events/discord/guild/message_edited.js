@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
     }
 
     // Sem texto incluso na mensagem antiga
-    if (alteracoes.antigo.length < 1) alteracoes.antigo = `❌ ${client.tls.phrase(guild, "mode.logger.sem_texto")}`
+    if ((alteracoes?.antigo).length < 1) alteracoes.antigo = `❌ ${client.tls.phrase(guild, "mode.logger.sem_texto")}`
 
     // Relatório resumido das alterações entre as mensagens
     // if (alteracoes.antigo.length > 50 || alteracoes.novo.length > 50) {
