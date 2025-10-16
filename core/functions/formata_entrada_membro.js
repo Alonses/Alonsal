@@ -5,7 +5,7 @@ module.exports = ({ client, data }) => {
     const user_guild = data.member
     const embed = data.embed
 
-    if (user_guild.joinedTimestamp) // Verifica se há dados de entrada no servidor para o membro
+    if (user_guild?.joinedTimestamp) // Verifica se há dados de entrada no servidor para o membro
         embed.addFields(
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "util.user.entrada")}**`,
