@@ -15,8 +15,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, user)
 
     const row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `data.${escolha}` },
-        { id: "data_confirm_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1.${escolha}` },
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `data.${escolha}` },
+        { id: "data_confirm_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1.${escolha}` },
         { id: "data_confirm_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: '0' }
     ], interaction, user)
 

@@ -13,7 +13,8 @@ const { dropUserGlobalRank } = require('../../database/schemas/User_rank_global.
 
 async function atualiza_user_eraser(client) {
 
-    let dados = await getOutdatedUsers(client.timestamp())
+    const timestamp_atual = client.execute("timestamp")
+    let dados = await getOutdatedUsers(timestamp_atual)
 
     // Atualizando o status de exclusão do usuário
     for (let i = 0; i < dados.length; i++) {
@@ -29,7 +30,7 @@ async function atualiza_user_eraser(client) {
     // Salvando os usuários marcados para exclusão no cache do bot
     writeFileSync("./files/data/erase_user.txt", JSON.stringify(dados))
 
-    dados = await getGuildOutdatedUsers(client.timestamp())
+    dados = await getGuildOutdatedUsers(timestamp_atual)
 
     // Atualizando o status de exclusão por servidor para o usuário
     for (let i = 0; i < dados.length; i++) {
@@ -55,13 +56,15 @@ async function verifica_user_eraser(client) {
         // Interrompe a operação caso não haja advertências salvas em cache
         if (data.length < 1) return
 
+        const timestamp_atual = client.execute("timestamp")
+
         for (let i = 0; i < data.length; i++) {
 
             const usuario = data[i]
             const id_user = usuario.uid
 
             // Apenas realiza a ação 2 semanas após usuário ser movido para exclusão
-            if (client.timestamp() > (usuario.erase.erase_on + 1209600)) {
+            if (timestamp_atual > (usuario.erase.erase_on + 1209600)) {
 
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário
                 await dropAllUserTasks(id_user)
@@ -103,13 +106,15 @@ async function verifica_user_eraser(client) {
         // Interrompe a operação caso não haja advertências salvas em cache
         if (data.length < 1) return
 
+        const timestamp_atual = client.execute("timestamp")
+
         for (let i = 0; i < data.length; i++) {
 
             const usuario = data[i]
             const id_user = usuario.uid, id_guild = usuario.sid
 
             // Apenas realiza a ação após 1 semana do usuário ser movido para exclusão no servidor
-            if (client.timestamp() > (usuario.erase.erase_on + 604800)) {
+            if (timestamp_atual > (usuario.erase.erase_on + 604800)) {
 
                 // Excluindo todas as tarefas e grupos relacionadas ao usuário no servidor
                 await dropAllGuildUserGroups(id_user, id_guild)

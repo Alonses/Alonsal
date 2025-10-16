@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Verificando as permissões para ver membros banidos do servidor
-    if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.BanMembers]))
+    if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.BanMembers] }))
         return interaction.update({
             content: client.tls.phrase(user, "mode.report.sem_permissao_migrate", 7),
             flags: "Ephemeral"
@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let list = [], adicionados = 0
 
     // Verificando se o usuário possui a badge de reporter e concedendo caso não possua
-    client.registryBadge(user, badges.REPORTER)
+    client.execute("registryBadge", { user, id_badge: badges.REPORTER })
 
     // Coletando os usuários que foram banidos no servidor
     interaction.guild.bans.fetch()
@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                     // Adicionando o usuário caso
                     alvo.relatory = client.encrypt(list[i].reason)
                     alvo.nick = client.encrypt(list[i].user.username)
-                    alvo.timestamp = client.timestamp()
+                    alvo.timestamp = client.execute("timestamp")
                     alvo.issuer = client.encrypt(interaction.user.id)
 
                     adicionados++

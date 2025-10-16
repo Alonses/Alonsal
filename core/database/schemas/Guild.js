@@ -198,7 +198,7 @@ async function disableGuildFeatures(client, sid) {
     guild.network.link = null
 
     // Registrando a exclusão de dados do servidor
-    guild.erase.timestamp = client.timestamp() + defaultEraser[guild?.erase.timeout || 5]
+    guild.erase.timestamp = client.execute("timestamp") + defaultEraser[guild?.erase.timeout || 5]
     guild.erase.valid = true
 
     await guild.save()
@@ -244,7 +244,7 @@ async function getRankHosters(client) {
     })
 
     // Retornando apenas os dois primeiros
-    return [await client.getUser(rank[0].uid), await client.getUser(rank[1].uid)]
+    return [await client.execute("getUser", { id_user: rank[0].uid }), await client.execute("getUser", { id_user: rank[1].uid })]
 }
 
 async function getTimedGuilds() {

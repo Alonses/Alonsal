@@ -73,7 +73,7 @@ dispara_status = (client, status_apisal) => {
                 fields: [
                     {
                         name: ":globe_with_meridians: **Servidores**",
-                        value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.locale(client.guilds().size)}\`\n:card_box: **Canais: **\`${client.locale(canais_texto)}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.locale(members)}\``,
+                        value: `${client.defaultEmoji("heart")} **Ativo: **\`${client.execute("locale", { valor: client.guilds().size })}\`\n:card_box: **Canais: **\`${client.execute("locale", { valor: canais_texto })}\`\n${client.defaultEmoji("person")} **Usuários: **\`${client.execute("locale", { valor: members })}\``,
                         inline: true
                     },
                     { name: "⠀", value: "⠀", inline: true },
@@ -103,7 +103,11 @@ dispara_status = (client, status_apisal) => {
 
             console.log("🟢 | Status enviado")
 
-            client.notify(process.env.channel_status, { embeds: [embed] }) // Avisa que está online em um canal
+            // Avisando que o bot está online em um canal
+            client.execute("notify", {
+                id_canal: process.env.channel_status,
+                conteudo: { embeds: [embed] }
+            })
         }, 3000)
     }
 }

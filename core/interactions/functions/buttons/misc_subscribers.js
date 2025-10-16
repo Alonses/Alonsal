@@ -16,9 +16,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (!operacao) // Cancelando a atribuição da assinatura
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
-    const id_alvo = interaction.customId.split("|")[2].split(".")[0]
+    const id_user = interaction.customId.split("|")[2].split(".")[0]
     const tempo_assinatura = parseInt(interaction.customId.split("|")[2].split(".")[1])
-    const alvo = await client.getUser(id_alvo)
+    const alvo = await client.execute("getUser", { id_user })
 
     // Atualizando os dados da assinatura do usuário 
     alvo.misc.subscriber.active = true
@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     client.cached.subscribers.set(alvo.uid, true)
 
     // Atribuindo a badge de assinante ao usuário
-    await createBadge(id_alvo, badges.DONATER, client.timestamp())
+    await createBadge(id_user, badges.DONATER, client.execute("timestamp"))
 
     // Atualizando a lista de usuários assinantes em cache
     setTimeout(() => {
@@ -39,12 +39,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     else expiracao = `<t:${tempo_assinatura}:D>`
 
     if (operacao === 1) { // Atribuindo e notificando
-        client.discord.users.fetch(id_alvo, false).then(async () => {
+        client.discord.users.fetch(id_user, false).then(async () => {
 
-            client.sendDM(alvo, { content: client.tls.phrase(alvo, "misc.assinante.notifica_user", client.emoji("emojis_dancantes"), expiracao) })
+            client.execute("sendDM", { user: alvo, dados: { content: client.tls.phrase(alvo, "misc.assinante.notifica_user", client.emoji("emojis_dancantes"), expiracao) } })
 
             interaction.update({
-                content: `${client.emoji("emojis_dancantes")} | Assinatura de <@${id_alvo}> atribuída com sucesso até ${expiracao}!`,
+                content: `${client.emoji("emojis_dancantes")} | Assinatura de <@${id_user}> atribuída com sucesso até ${expiracao}!`,
                 embeds: [],
                 components: [],
                 flags: "Ephemeral"
@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
     } else // Atribuindo silenciosamente
         interaction.update({
-            content: `${client.emoji("emojis_dancantes")} | Assinatura de <@${id_alvo}> atribuída com sucesso até ${expiracao}!`,
+            content: `${client.emoji("emojis_dancantes")} | Assinatura de <@${id_user}> atribuída com sucesso até ${expiracao}!`,
             embeds: [],
             components: [],
             flags: "Ephemeral"

@@ -36,11 +36,11 @@ module.exports = async ({ client, guild, oldState, newState }) => {
 
                 const cached_guild = await client.guilds(guild.sid)
 
-                const guild_member = await client.getMemberGuild(guild.sid, id_user)
-                const user = await client.getUser(id_user)
+                const guild_member = await client.execute("getMemberGuild", { interaction: guild.sid, id_user })
+                const user = await client.execute("getUser", { id_user })
 
                 // Escolhendo um nome aleatório conforme o tema definido no servidor
-                const chave_nome = trigger.config.preferences.voice_names === "all" ? client.random(voice_names, null, true, "all") : trigger.config.preferences.voice_names
+                const chave_nome = trigger.config.preferences.voice_names === "all" ? client.execute("random", { intervalo: voice_names, raw: true, ignore: "all" }) : trigger.config.preferences.voice_names
                 const nome_canal = client.tls.phrase(user, `voice_channels.${chave_nome}`)
 
                 const obj = {
@@ -94,7 +94,7 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                     client.journal("voice_channel", 1)
 
                     // Permissões do bot no servidor
-                    const membro_sv = await client.getMemberGuild(guild.sid, client.id())
+                    const membro_sv = await client.execute("getMemberGuild", { interaction: guild.sid, id_user: client.id() })
                     if (membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers)) {
 
                         setTimeout(() => { // Movendo o membro para o novo canal
@@ -110,14 +110,14 @@ module.exports = async ({ client, guild, oldState, newState }) => {
                         // Salvando o canal de voz dinâmico em cache
                         client.cached.voice_channels.set(`${client.encrypt(new_voice_channel.id)}.${client.encrypt(new_voice_channel.guild.id)}`, true)
 
-                        const user = await client.getUser(id_user)
+                        const user = await client.execute("getUser", { id_user })
                         const dados = `${new_voice_channel.id}.${guild.sid}`
                         require("../../../interactions/chunks/voice_channel_config")({ client, user, dados })
                     }
                 })
             }
         } else { // Membro já criou um canal, movendo ele para o canal criado se entrar no canal ativador novamente
-            const guild_member = await client.getMemberGuild(guild.sid, id_user)
+            const guild_member = await client.execute("getMemberGuild", { interaction: guild.sid, id_user })
             guild_member.voice.setChannel(client.decifer(user_voice.cid))
                 .catch(() => () => verificar_ausencia_canal(client, client.decifer(user_voice.cid), client.decifer(user_voice.cid), guild, id_user, triggers))
         }
@@ -147,10 +147,13 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
                 name: `${client.emoji(13)} ${guild_channel.name.split(" ")[1]}`
             })
 
-            const user = await client.getUser(id_user)
+            const user = await client.execute("getUser", { id_user })
 
             // Notificando sobre a exclusão do canal no chat de mensagens
-            client.notify(guild_channel.id, { content: client.tls.phrase(user, "mode.voice_channels.aviso_exclusao", 13, client.timestamp() + voiceChannelTimeout[guild.voice_channels.timeout]) })
+            client.execute("notify", {
+                id_canal: guild_channel.id,
+                conteudo: { content: client.tls.phrase(user, "mode.voice_channels.aviso_exclusao", 13, client.execute("timestamp") + voiceChannelTimeout[guild.voice_channels.timeout]) }
+            })
 
             setTimeout(() => {
                 guild_channel.delete()
@@ -170,7 +173,7 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
 async function mover_membro(client, voice_channel) {
 
     // Movendo o membro de volta ao canal que ele havia criado
-    const guild_member = await client.getMemberGuild(client.decifer(voice_channel.sid), client.decifer(voice_channel.uid))
+    const guild_member = await client.execute("getMemberGuild", { interaction: client.decifer(voice_channel.sid), id_user: client.decifer(voice_channel.uid) })
 
     setTimeout(() => {
         guild_member.voice.setChannel(client.decifer(voice_channel.cid))
@@ -188,7 +191,7 @@ async function transferir_controles({ client, guild_channel, voice_channel }) {
     // Verificando se não há um novo dono para o canal
     if (!new_channel_owner) return
 
-    const user = await client.getUser(new_channel_owner)
+    const user = await client.execute("getUser", { id_user: new_channel_owner })
 
     voice_channel.uid = client.encrypt(new_channel_owner)
     await voice_channel.save()

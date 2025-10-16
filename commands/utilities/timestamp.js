@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const formata_horas = require('../../core/formatters/formata_horas')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("timestamp")
@@ -80,6 +78,7 @@ module.exports = {
 
         let titulo = client.tls.phrase(user, "util.timestamp.timestamp_1")
         let timestamp, aviso = "", conversao_invalida = false, conversao_valida = "", retorno
+        const timestamp_atual = client.execute("timestamp")
 
         if (interaction.options.getSubcommand() === "custom") { // Entrada customizada
 
@@ -87,14 +86,14 @@ module.exports = {
             let timer = parseInt(interaction.options.getString("timer")) || 0
 
             if (!entrada)
-                entrada = client.timestamp() + timer // Iniciando o timestamp 
+                entrada = timestamp_atual + timer // Iniciando o timestamp 
 
             if (!isNaN(entrada)) {
                 titulo = client.tls.phrase(user, "util.timestamp.timestamp_crono")
                 retorno = entrada
 
                 timestamp = new Date(entrada)
-                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
+                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${client.execute("formata_horas", { horas: timestamp.getHours(), minutos: timestamp.getMinutes(), segundos: timestamp.getSeconds() })}`
 
                 conversao_invalida = false
             } else if (!entrada.includes("-")) { // De timestamp para data normal
@@ -102,7 +101,7 @@ module.exports = {
                 titulo = client.tls.phrase(user, "util.timestamp.timestamp_2")
                 retorno = entrada
 
-                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${formata_horas(timestamp.getHours(), timestamp.getMinutes(), timestamp.getSeconds())}`
+                timestamp = `${timestamp.getFullYear()}-${("0" + (timestamp.getMonth() + 1)).slice(-2)}-${("0" + timestamp.getDate()).slice(-2)} ${client.execute("formata_horas", { horas: timestamp.getHours(), minutos: timestamp.getMinutes(), segundos: timestamp.getSeconds() })}`
 
                 if ((timestamp instanceof Date && !isNaN(timestamp)) || timestamp.split("-")[0] === "NaN")
                     conversao_invalida = true
@@ -117,7 +116,7 @@ module.exports = {
             if (conversao_invalida)
                 conversao_valida = `\`${data}\` -> \`${timestamp}\``
         } else {
-            retorno = client.timestamp()
+            retorno = timestamp_atual
             titulo = client.tls.phrase(user, "util.timestamp.timestamp_now")
         }
 

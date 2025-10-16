@@ -16,7 +16,7 @@ module.exports = async ({ client, guild }) => {
     const server_info = `\n\n:busts_in_silhouette: **Members** ( \`${guild.memberCount - 1}\` )\n:placard: **Channels** ( \`${canais}\` )`
 
     // Verificando permissão para do registro de auditoria, não registra o usuário que adicionou o bot
-    if (await client.permissions(guild, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (await client.execute("permissions", { interaction: guild, id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         // Resgatando informações sobre o usuário que adicionou o bot ao servidor
         guild.fetchAuditLogs({ type: AuditLogEvent.BotAdd, limit: 1 }).then(async log => {
@@ -32,7 +32,7 @@ module.exports = async ({ client, guild }) => {
                     await internal_guild.save()
                 }
 
-                const inviter = await client.getUser(user.id)
+                const inviter = await client.execute("getUser", { id_user: user.id })
 
                 if (!inviter.hoster) { // Envia um Embed ao usuário que adicionou o bot ao servidor
                     const row = client.create_buttons([
@@ -46,7 +46,7 @@ module.exports = async ({ client, guild }) => {
                         description: `${client.tls.phrase(inviter, "inic.ping.boas_vindas")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(inviter, "inic.ping.idioma_dica_server")}`
                     }, inviter)
 
-                    client.sendDM(inviter, { embeds: [embed], components: [row] }, true)
+                    client.execute("sendDM", { user: inviter, dados: { embeds: [embed], components: [row] }, force: true })
                 }
 
                 // Atualizando os dados do usuário para não avisar mais o mesmo em DM
@@ -66,5 +66,8 @@ module.exports = async ({ client, guild }) => {
         timestamp: true
     })
 
-    client.notify(process.env.channel_server, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: process.env.channel_server,
+        conteudo: { embeds: [embed] }
+    })
 }

@@ -20,11 +20,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     botoes = client.shuffleArray(botoes)
 
     const row = client.create_buttons([
-        { id: `data_finalize_button${escopo}`, name: botoes[0], type: 1, data: `1.${define_button(opcao, botoes[0])}.${dados}` },
-        { id: `data_finalize_button${escopo}`, name: botoes[1], type: 1, data: `2.${define_button(opcao, botoes[1])}.${dados}` },
-        { id: `data_finalize_button${escopo}`, name: botoes[2], type: 1, data: `3.${define_button(opcao, botoes[2])}.${dados}` },
+        { id: `data_finalize_button${escopo}`, name: botoes[0], type: 0, data: `1.${define_button(opcao, botoes[0])}.${dados}` },
+        { id: `data_finalize_button${escopo}`, name: botoes[1], type: 0, data: `2.${define_button(opcao, botoes[1])}.${dados}` },
+        { id: `data_finalize_button${escopo}`, name: botoes[2], type: 0, data: `3.${define_button(opcao, botoes[2])}.${dados}` },
         { id: `data_finalize_button${escopo}`, name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: '0' },
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "data" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "data" }
     ], interaction, user)
 
     interaction.update({

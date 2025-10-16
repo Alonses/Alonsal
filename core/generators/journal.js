@@ -20,32 +20,32 @@ module.exports = async ({ client }) => {
         fields: [
             {
                 name: ":gear: **Comandos**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.cmd.ativacoes)}\`\n:octagonal_sign: **Erros:** \`${client.locale(bot.cmd.erros)}\``,
+                value: `:dart: **Hoje:** \`${client.execute("locale", { valor: bot.cmd.ativacoes })}\`\n:octagonal_sign: **Erros:** \`${client.execute("locale", { valor: bot.cmd.erros })}\``,
                 inline: true
             },
             {
                 name: ":medal: **Experiência**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.exp.exp_concedido)}\``,
+                value: `:dart: **Hoje:** \`${client.execute("locale", { valor: bot.exp.exp_concedido })}\``,
                 inline: true
             },
             {
                 name: ":e_mail: **Mensagens**",
-                value: `:dart: **Hoje:** \`${client.locale(bot.exp.msgs_lidas)}\`\n:white_check_mark: **Válidas:** \`${client.locale(bot.exp.msgs_validas)}\``,
+                value: `:dart: **Hoje:** \`${client.execute("locale", { valor: bot.exp.msgs_lidas })}\`\n:white_check_mark: **Válidas:** \`${client.execute("locale", { valor: bot.exp.msgs_validas })}\``,
                 inline: true
             },
             {
                 name: `${client.emoji("icon_slash_commands")} **Interações**`,
-                value: `:mouse_three_button: **Botões:** \`${(client.locale(bot.cmd.botoes))}\`\n:card_box: **Menus: **\`${client.locale(bot.cmd.menus)}\`\n${client.emoji("icon_voice_channel")} **Faladeros:** \`${client.locale(bot.cmd.voice_channels)}\``,
+                value: `:mouse_three_button: **Botões:** \`${(client.execute("locale", { valor: bot.cmd.botoes }))}\`\n:card_box: **Menus: **\`${client.execute("locale", { valor: bot.cmd.menus })}\`\n${client.emoji("icon_voice_channel")} **Faladeros:** \`${client.execute("locale", { valor: bot.cmd.voice_channels })}\``,
                 inline: true
             },
             {
                 name: ":globe_with_meridians: **Servidores**",
-                value: `:diamond_shape_with_a_dot_inside: **Ativo em:** \`${client.locale(client.guilds().size)}\`\n:busts_in_silhouette: **Usuários: **\`${client.locale(members)}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.locale(canais_texto)}\``,
+                value: `:diamond_shape_with_a_dot_inside: **Ativo em:** \`${client.execute("locale", { valor: client.guilds().size })}\`\n:busts_in_silhouette: **Usuários: **\`${client.execute("locale", { valor: members })}\`\n${client.defaultEmoji("paper")} **Canais: **\`${client.execute("locale", { valor: canais_texto })}\``,
                 inline: true
             },
             {
                 name: ":bank: Bufunfas",
-                value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.locale(bot.bfu.gerado)}\`\n:money_with_wings: **Movimentado:** \`${client.locale(bot.bfu.movido)}\`\n:dollar: **Recolhido:** \`${client.locale(bot.bfu.reback)}\``,
+                value: `${client.emoji("mc_esmeralda")} **Distribuídas:** \`${client.execute("locale", { valor: bot.bfu.gerado })}\`\n:money_with_wings: **Movimentado:** \`${client.execute("locale", { valor: bot.bfu.movido })}\`\n:dollar: **Recolhido:** \`${client.execute("locale", { valor: bot.bfu.reback })}\``,
                 inline: true
             },
             {

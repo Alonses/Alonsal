@@ -25,8 +25,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 1) {
 
         let botoes = [
-            { id: "role_assigner", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.global` },
-            { id: "role_assigner", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: "10.global" }
+            { id: "role_assigner", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.global` },
+            { id: "role_assigner", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "10.global" }
         ]
 
         return client.reply(interaction, {
@@ -36,7 +36,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Permissão para atualizar os cargos de membros do servidor
-        if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: PermissionsBitField.Flags.ManageRoles }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 flags: "Ephemeral"
@@ -50,22 +50,22 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             reback: "browse_button.role_assigner",
             operation: operacao,
             submenu: caso,
-            values: await client.getGuildRoles(interaction)
+            values: await client.execute("getGuildRoles", { interaction })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.${caso}` },
-            { id: "role_assigner", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `2.${caso}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.${caso}` },
+            { id: "role_assigner", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: `2.${caso}` }
         ]
 
         if (cargos.atribute)
             botoes.push({ id: "role_assigner", name: { tls: "menu.botoes.remover_todos" }, type: 3, emoji: client.emoji(13), data: `4.${caso}` })
 
         const multi_select = true
-        let row = client.menu_navigation(user, data, pagina || 0)
+        let row = client.execute("menu_navigation", { user, data, pagina })
 
         const obj = {
             components: [client.create_menus({ interaction, user, data, pagina, multi_select }), client.create_buttons(botoes, interaction, user)],
@@ -80,7 +80,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 3) {
 
         // Permissão para atualizar os cargos de membros do servidor
-        if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: PermissionsBitField.Flags.ManageRoles }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 flags: "Ephemeral"
@@ -100,7 +100,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (cargos.ignore && cargos?.ignore !== "all") // Opção coringa para ignorar membros que já possuírem algum cargo
             data.values.push({ name: client.tls.phrase(user, "mode.roles.se_possuir_cargo"), id: "all" })
 
-        const cargos_server = await client.getGuildRoles(interaction)
+        const cargos_server = await client.execute("getGuildRoles", { interaction })
 
         cargos_server.forEach(cargo => {
             if (cargos.atribute) {
@@ -112,10 +112,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (data.values.length < pagina * 24) pagina--
 
         const multi_select = true
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.global` },
-            { id: "role_assigner", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "3.global" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.global` },
+            { id: "role_assigner", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "3.global" }
         ]
 
         if (cargos.ignore)

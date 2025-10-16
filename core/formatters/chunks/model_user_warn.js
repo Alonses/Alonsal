@@ -9,14 +9,15 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     const descricao_warn = interaction.options.getString("reason")
     const guild_warns = await listAllGuildWarns(client.encrypt(interaction.guild.id))
+    const timestamp_atual = client.execute("timestamp")
 
     let texto_rodape = "⠀", user_warn, id_warn = "warn_create"
 
     if (!guild.warn.hierarchy.status) {
-        if (user_warns.length < guild_warns.length) user_warn = await getUserWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), client.timestamp())
+        if (user_warns.length < guild_warns.length) user_warn = await getUserWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), timestamp_atual)
         else user_warn = user_warns[user_warns.length - 1]
     } else {
-        user_warn = await getUserPreWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), client.timestamp())
+        user_warn = await getUserPreWarn(client.encrypt(guild_member.id), client.encrypt(interaction.guild.id), timestamp_atual)
         id_warn = "pre_warn_create"
     }
 
@@ -29,7 +30,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     user_warn.nick = client.encrypt(guild_member.user.username)
     user_warn.assigner = client.encrypt(interaction.user.id)
     user_warn.assigner_nick = client.encrypt(interaction.user.username)
-    user_warn.timestamp = client.timestamp()
+    user_warn.timestamp = timestamp_atual
 
     await user_warn.save()
 
@@ -53,7 +54,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
     if (!guild.warn.hierarchy.status) {
 
         // Verificando se existem advertências para as próximas punições do usuário
-        const indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+        const indice_matriz = client.execute("verifyMatrixIndex", { guild_config: guild_warns }) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
         embed.addFields(
             {
@@ -63,7 +64,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "menu.botoes.penalidade")}**`,
-                value: client.verifyAction(guild_warns[indice_warn], user),
+                value: client.execute("verifyAction", { action: guild_warns[indice_warn], source: user }),
                 inline: true
             }
         )
@@ -82,7 +83,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             },
             {
                 name: `${warns_recebidos.length + 1}° ${client.tls.phrase(user, "mode.anotacoes.adv_concessao")}`,
-                value: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.anotacoes.penalidades")}:**\n${client.verifyAction(guild_warns[indice_warn], user)}`,
+                value: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.anotacoes.penalidades")}:**\n${client.execute("verifyAction", { action: guild_warns[indice_warn], source: user })}`,
                 inline: false
             }
         )
@@ -94,7 +95,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
             embed.addFields(
                 {
                     name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
-                    value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
+                    value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${timestamp_atual + spamTimeoutMap[guild.warn.reset]}:f> )`,
                     inline: true
                 }
             )
@@ -108,7 +109,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
         embed.addFields(
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(user, "menu.botoes.expiracao")}**`,
-                value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${client.timestamp() + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
+                value: `**${client.tls.phrase(user, "mode.warn.remocao_em")} \`${client.tls.phrase(user, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${timestamp_atual + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
                 inline: true
             }
         )
@@ -123,7 +124,7 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     // Criando os botões para o menu de advertências
     const row = client.create_buttons([
-        { id: id_warn, name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${guild_member.id}` },
+        { id: id_warn, name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${guild_member.id}` },
         { id: id_warn, name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${guild_member.id}` }
     ], interaction, user)
 

@@ -1,7 +1,5 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { emoji_button } = require("../../functions/emoji_button")
-
 const { getGuildStrike } = require("../../database/schemas/Guild_strikes")
 
 const { loggerMap } = require("../../formatters/patterns/guild")
@@ -13,7 +11,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const strike = await getGuildStrike(interaction.guild.id, id_strike)
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
     let b_cargos = false
 
     const embed = client.create_embed({
@@ -42,12 +40,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${emoji_button(membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             },
             { name: "⠀", value: "⠀", inline: true }
@@ -76,16 +74,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const botoes = [
-        { id: "strike_configure_button", name: { tls: "menu.botoes.penalidade" }, type: 1, emoji: loggerMap[strike.action] || loggerMap["none"], data: `1.${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.tempo_mute" }, type: 1, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "mode.anuncio.cargo" }, type: 1, emoji: client.defaultEmoji("role"), data: `2.${id_strike}`, disabled: b_cargos },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.cargo_temporario" }, type: client.execute("functions", "emoji_button.type_button", strike.timed_role.status), emoji: client.execute("functions", "emoji_button.emoji_button", strike.timed_role.status), data: `20|${id_strike}`, disabled: !strike.role }
+        { id: "strike_configure_button", name: { tls: "menu.botoes.penalidade" }, type: 0, emoji: loggerMap[strike.action] || loggerMap["none"], data: `1.${id_strike}` },
+        { id: "strike_configure_button", name: { tls: "menu.botoes.tempo_mute" }, type: 0, emoji: client.defaultEmoji("time"), data: `3.${id_strike}` },
+        { id: "strike_configure_button", name: { tls: "mode.anuncio.cargo" }, type: 0, emoji: client.defaultEmoji("role"), data: `2.${id_strike}`, disabled: b_cargos },
+        { id: "strike_configure_button", name: { tls: "menu.botoes.cargo_temporario" }, type: strike.timed_role.status, emoji: client.execute("button_emoji", strike.timed_role.status), data: `20|${id_strike}`, disabled: !strike.role }
     ]
 
     const row = [
-        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "4" },
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "4" },
         { id: "strike_remove", name: { tls: "menu.botoes.excluir_strike" }, type: 3, emoji: client.emoji(13), data: `2|${id_strike}` },
-        { id: "strike_configure_button", name: { tls: "menu.botoes.expiracao_cargo" }, type: 1, emoji: client.defaultEmoji("time"), data: `21|${id_strike}` }
+        { id: "strike_configure_button", name: { tls: "menu.botoes.expiracao_cargo" }, type: 0, emoji: client.defaultEmoji("time"), data: `21|${id_strike}` }
     ]
 
     const obj = {

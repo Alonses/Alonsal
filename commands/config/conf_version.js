@@ -23,6 +23,6 @@ module.exports = {
             flags: "Ephemeral"
         })
 
-        client.notify(process.env.channel_feeds, { content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\`` })
+        client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: `:placard: | A Versão do ${client.username()} foi atualizada para \`${bot.persis.version}\`` } })
     }
 }

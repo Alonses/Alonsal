@@ -11,12 +11,15 @@ module.exports = async ({ client, message }) => {
     if (!guild.logger.message_delete || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    if (!await client.permissions(message, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!await client.execute("permissions", { message, id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         guild.logger.message_delete = false
         guild.save()
 
-        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
+        return client.execute("notify", {
+            id_canal: guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.logger.permissao", 7) }
+        })
     }
 
     // Coletando dados sobre o evento
@@ -39,7 +42,7 @@ module.exports = async ({ client, message }) => {
             texto = client.tls.phrase(guild, "mode.logger.mode_exclusao", 13, [message.url, message.author.id])
 
     if (message.content) // Mensagem com texto escrito
-        texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.replace(message.content, null, ["`", "'"])}\`\`\``
+        texto += `\n**${client.tls.phrase(guild, "mode.logger.conteudo_excluido")}:** \`\`\`${client.execute("replace", { string: message.content, especifico: ["`", "'"] })}\`\`\``
 
     const embed = client.create_embed({
         title: { tls: "mode.logger.mensagem_excluida" },
@@ -74,5 +77,8 @@ module.exports = async ({ client, message }) => {
 
     embed.setDescription(texto)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

@@ -114,11 +114,12 @@ async function getOutdatedUsers(timestamp) {
 async function getUnknowUsers(client) {
 
     const users = await model.find({ "erase.erase_on": null })
+    const timestamp_atual = client.execute("timestamp")
 
     for (let i = 0; i < users.length; i++) {
 
         const usuario = users[i]
-        usuario.erase.erase_on = client.timestamp() + 2419200
+        usuario.erase.erase_on = timestamp_atual + 2419200
 
         await usuario.save()
     }

@@ -39,8 +39,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }, user)
 
             const row = client.create_buttons([
-                { id: "module_history_button", name: { tls: "menu.botoes.completo" }, emoji: '📰', type: 2, data: `1|${hash}` },
-                { id: "module_history_button", name: { tls: "menu.botoes.resumido" }, emoji: '🔖', type: 0, data: `2|${hash}` }
+                { id: "module_history_button", name: { tls: "menu.botoes.completo" }, emoji: '📰', type: 1, data: `1|${hash}` },
+                { id: "module_history_button", name: { tls: "menu.botoes.resumido" }, emoji: '🔖', type: 2, data: `2|${hash}` }
             ], interaction, user)
 
             return interaction.update({

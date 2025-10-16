@@ -12,11 +12,12 @@ async function atualiza_user_subscription(client) {
 async function verifica_subscribers(client) {
 
     const dados = await getUsersWithActiveSubscription()
+    const timestamp_atual = client.execute("timestamp")
 
     dados.forEach(async user => {
 
         // Desativando a assinatura do usuário
-        if (user.misc.subscriber.expires && client.timestamp() > user.misc.subscriber.expires) {
+        if (user.misc.subscriber.expires && timestamp_atual > user.misc.subscriber.expires) {
             user.misc.subscriber.active = false
             await user.save()
         }

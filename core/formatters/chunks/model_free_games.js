@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
 
     if (games.length < 1) // Sem games para anunciar no momento
         if (interaction) return client.tls.reply(interaction, user, "mode.anuncio.sem_games", true, client.emoji("this_cannot_be_happening"))
-        else client.sendDM(user, { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, true)
+        else client.execute("sendDM", { user, dados: { content: client.tls.phrase(user, "mode.anuncio.sem_games", client.emoji("this_cannot_be_happening")) }, force: true })
 
     for (let i = 0; i < pagina; i++)
         for (let x = 0; x < limitador; x++)
@@ -22,13 +22,15 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
 
     if (interaction)
         if (games.length > limitador)
-            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.proximo" }, emoji: client.emoji(41), type: 0, data: `1.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.proximo" }, emoji: client.emoji(41), type: 2, data: `1.${pagina}` })
         else if ((pagina * limitador) < original_size && games.length !== original_size)
-            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.inicio" }, emoji: client.emoji(57), type: 0, data: `0.${pagina}` })
+            objeto_jogos.push({ id: "free_games", name: { tls: "menu.botoes.inicio" }, emoji: client.emoji(57), type: 2, data: `0.${pagina}` })
+
+    const timestamp_atual = client.execute("timestamp")
 
     games.forEach(game => {
         // Jogo com tempo válido para resgate
-        if (game.expira > client.timestamp()) {
+        if (game.expira > timestamp_atual) {
             const nome_jogo = game.nome.length > 20 ? `${game.nome.slice(0, 20)}...` : game.nome
             const matches = game.link.match(client.cached.game_stores)
             let preco = `R$ ${game.preco}`, logo_plataforma = client.emoji(redes[matches[0]][0])
@@ -39,8 +41,8 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
             if (jogos_disponiveis.length < limitador) {
 
                 // Verificando a expiração do game e alterando a exibição
-                const emoji = game.expira - client.timestamp() < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
-                const expiracao = game.expira - client.timestamp() < 172800 ? `\n( ${client.defaultEmoji("running")} ${client.tls.phrase(user, "menu.botoes.expirando")} <t:${game.expira}:R> )` : ""
+                const emoji = game.expira - timestamp_atual < 172800 ? client.defaultEmoji("running") : client.defaultEmoji("gamer")
+                const expiracao = game.expira - timestamp_atual < 172800 ? `\n( ${client.defaultEmoji("running")} ${client.tls.phrase(user, "menu.botoes.expirando")} <t:${game.expira}:R> )` : ""
                 jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${client.tls.phrase(user, "mode.anuncio.ate_data")} <t:${game.expira}:D> ]${expiracao}`)
 
                 objeto_jogos.push({
@@ -81,6 +83,6 @@ module.exports = async ({ client, user, interaction, pagina_guia, user_command }
                 iconURL: client.avatar()
             })
 
-        client.sendDM(user, { embeds: [embed], components: [row] }, true)
+        client.execute("sendDM", { user, dados: { embeds: [embed], components: [row] }, force: true })
     }
 }

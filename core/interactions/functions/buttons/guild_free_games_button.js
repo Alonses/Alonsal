@@ -35,12 +35,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Enviando um anúncio com os titulos de graça no momento
-        const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
+        const canal = client.discord.channels.cache.get(guild.games.channel)
 
-        if (canal_alvo) {
+        if (canal) {
 
             // Permissão para enviar mensagens no canal
-            if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+            if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal })) {
 
                 // Enviando os games para anunciar no servidor
                 const guild_channel = guild.games.channel
@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 3) {
 
         // Desabilitando o botão de escolher cargos se não tiver permissão
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles] }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 flags: "Ephemeral"
@@ -78,16 +78,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_free_games#role",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
-            values: await client.getGuildRoles(interaction, guild.games.role, true)
+            values: await client.execute("getGuildRoles", { interaction, ignore_role: guild.games.role, allow_mods: true })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "3" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "3" }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -107,16 +107,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_free_games#channel",
             reback: "browse_button.guild_free_games_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.games.channel)
+            values: await client.execute("getGuildChannels", {
+                interaction,
+                user,
+                tipo: ChannelType.GuildText,
+                id_configurado: guild.games.channel
+            })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+            { id: "guild_free_games_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "4" }
         ]
 
         if (row.length > 0) // Botões de navegação

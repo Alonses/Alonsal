@@ -80,7 +80,7 @@ envia_logger = (client, user_alvo, attachment) => {
                         if (user_alvo.avatarURL({ dynamic: true }))
                             embed.setImage(user_alvo.avatarURL({ dynamic: true }))
 
-                    client.notify(internal_guild.logger.channel, objeto)
+                    client.execute("notify", { id_canal: internal_guild.logger.channel, conteudo: objeto })
                 }
             }
         })

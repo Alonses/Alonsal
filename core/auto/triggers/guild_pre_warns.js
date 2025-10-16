@@ -30,6 +30,7 @@ async function verifica_pre_warns(client) {
         if (data.length < 1) return
 
         const guilds_map = {}
+        const timestamp_atual = client.execute("timestamp")
 
         for (let i = 0; i < data.length; i++) {
 
@@ -40,10 +41,10 @@ async function verifica_pre_warns(client) {
                 guilds_map[warn.sid] = guild
 
             // Verificando se a anotação de advertência ultrapassou o tempo de exclusão
-            if (client.timestamp() > (warn.timestamp + defaultEraser[guild.warn.hierarchy.reset])) {
+            if (timestamp_atual > (warn.timestamp + defaultEraser[guild.warn.hierarchy.reset])) {
 
                 // Atualiza o tempo de inatividade do servidor
-                client.updateGuildIddleTimestamp(warn.sid)
+                client.execute("updateGuildIddleTimestamp", { sid: warn.sid })
 
                 // Excluindo o registro da anotação de advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserPreWarn(warn.uid, warn.sid, warn.timestamp)

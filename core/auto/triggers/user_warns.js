@@ -30,6 +30,7 @@ async function verifica_warns(client) {
         if (data.length < 1) return
 
         const guilds_map = {}
+        const timestamp_atual = client.execute("timestamp")
 
         for (let i = 0; i < data.length; i++) {
 
@@ -40,14 +41,14 @@ async function verifica_warns(client) {
                 guilds_map[warn.sid] = guild
 
             // Verificando se a advertência ultrapassou o tempo de exclusão
-            if (client.timestamp() > (warn.timestamp + spamTimeoutMap[guild.warn.reset])) {
+            if (timestamp_atual > (warn.timestamp + spamTimeoutMap[guild.warn.reset])) {
 
                 // Atualiza o tempo de inatividade do servidor
-                client.updateGuildIddleTimestamp(warn.sid)
+                client.execute("updateGuildIddleTimestamp", { sid: warn.sid })
 
                 // Excluindo o registro da advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserWarn(warn.uid, warn.sid, warn.timestamp)
-                client.verifyUserWarnRoles(warn.uid, warn.sid)
+                client.execute("verifyUserWarnRoles", { uid: warn.uid, sid: warn.sid })
             }
         }
 

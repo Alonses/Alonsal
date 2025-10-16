@@ -95,7 +95,7 @@ module.exports = {
 
         for (let i = 1; i < qtd_dados + 1; i++) {
 
-            const num = client.random(qtd_faces)
+            const num = client.execute("random", { intervalo: qtd_faces })
             somatoria += num
 
             if (i < qtd_dados)
@@ -112,9 +112,9 @@ module.exports = {
         }
 
         if (acrescimo > 0)
-            somatoria = `[ ${somatoria} ] + ${acrescimo} ⇁ ${client.locale(somatoria + acrescimo)}`
+            somatoria = `[ ${somatoria} ] + ${acrescimo} ⇁ ${client.execute("locale", { valor: somatoria + acrescimo })}`
         else
-            somatoria = client.locale(somatoria)
+            somatoria = client.execute("locale", { valor: somatoria })
 
         interaction.reply({
             content: `${client.emoji("dice")} ${qtd_dados}d${qtd_faces} | \`${somatoria}\` |\n\`\`\`${faces.join("")}\`\`\``,

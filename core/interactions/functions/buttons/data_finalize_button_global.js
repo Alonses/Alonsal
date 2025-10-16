@@ -19,8 +19,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
+    const timestamp_atual = client.execute("timestamp")
+
     // Movendo o usuário para exclusão automática
-    user.erase.erase_on = client.timestamp()
+    user.erase.erase_on = timestamp_atual
     user.erase.forced = true
 
     await user.save()
@@ -29,7 +31,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     atualiza_user_eraser(client)
 
     client.reply(interaction, {
-        content: client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7, client.timestamp() + 1209600),
+        content: client.tls.phrase(user, "manu.data.aviso_movido_exclusao", 7, timestamp_atual + 1209600),
         components: [],
         flags: "Ephemeral"
     })

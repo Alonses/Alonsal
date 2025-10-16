@@ -14,18 +14,16 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row_2 = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "listas_navegar" }
     ], interaction, user)
 
-    if (lista)
-        nome_lista = lista.name
-    else
-        return interaction.update({
-            content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
-            embeds: [],
-            components: [row_2],
-            flags: "Ephemeral"
-        })
+    if (lista) nome_lista = lista.name
+    else return interaction.update({
+        content: client.tls.phrase(user, "util.tarefas.lista_inexistente", 1),
+        embeds: [],
+        components: [row_2],
+        flags: "Ephemeral"
+    })
 
     // Atualiza os dados das tarefas e listas
     client.atualiza_dados(task, interaction)
@@ -53,9 +51,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Criando os botões para as funções de gestão de tarefas
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "tarefas_remover" },
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "tarefas_remover" },
         { id: "tasks_delete_task", name: { tls: "menu.botoes.apagar" }, type: 3, emoji: client.emoji(13), data: `1|${task.timestamp}` },
-        { id: "tasks_delete_task", name: { tls: "menu.botoes.cancelar" }, emoji: client.emoji(0), type: 1, data: 0 }
+        { id: "tasks_delete_task", name: { tls: "menu.botoes.cancelar" }, emoji: client.emoji(0), type: 0, data: 0 }
     ], interaction, user)
 
     interaction.update({

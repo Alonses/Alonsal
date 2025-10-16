@@ -3,29 +3,29 @@ const { getReport } = require('../../../core/database/schemas/User_reports')
 module.exports = async ({ client, user, interaction }) => {
 
     let user_alvo = interaction.options.getUser("user")
-    let id_alvo
+    let id_user
 
     if (!user_alvo)
         return client.tls.reply(interaction, user, "mode.report.sem_usuario", true, client.emoji(0))
 
     if (typeof user_alvo === "object")
-        id_alvo = user_alvo.id
+        id_user = user_alvo.id
 
-    if (id_alvo === interaction.user.id) // Impede que o usuário se auto reporte
+    if (id_user === interaction.user.id) // Impede que o usuário se auto reporte
         return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
 
-    if (id_alvo === client.id()) // Impede que o usuário reporte o bot
+    if (id_user === client.id()) // Impede que o usuário reporte o bot
         return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
 
-    if (isNaN(id_alvo) || id_alvo.length < 18) // ID inválido
+    if (isNaN(id_user) || id_user.length < 18) // ID inválido
         return client.tls.reply(interaction, user, "mode.report.id_invalido", true, client.defaultEmoji("types"))
 
-    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+    const membro_guild = await client.execute("getMemberGuild", { interaction, id_user })
 
     if (membro_guild?.user.bot) // Impede que outros bots sejam reportados
         return client.tls.reply(interaction, user, "mode.report.usuario_bot", true, client.emoji(0))
 
-    const alvo = await getReport(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
+    const alvo = await getReport(client.encrypt(id_user), client.encrypt(interaction.guild.id))
 
     // Atribuindo o reporte ao usuário que disparou o comando
     alvo.issuer = client.encrypt(interaction.user.id)
@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction }) => {
     alvo.archived = false
     alvo.nick = client.encrypt(user_alvo.username)
     alvo.relatory = client.encrypt(interaction.options.getString("reason"))
-    alvo.timestamp = client.timestamp()
+    alvo.timestamp = client.execute("timestamp")
 
     const guild = await client.getGuild(interaction.guild.id)
     let auto_ban = ""
@@ -50,7 +50,7 @@ module.exports = async ({ client, user, interaction }) => {
         fields: [
             {
                 name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_user}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${id_user}> )`,
                 inline: true
             },
             {
@@ -78,11 +78,11 @@ module.exports = async ({ client, user, interaction }) => {
     let botoes = []
 
     if (guild.network.link) // Habilitando opção de enviar o aviso apenas aos servidores do network
-        botoes.push({ id: "report_user", name: { tls: "menu.botoes.anunciar_ao_network" }, type: 0, emoji: client.emoji(36), data: `3|${id_alvo}` })
+        botoes.push({ id: "report_user", name: { tls: "menu.botoes.anunciar_ao_network" }, type: 2, emoji: client.emoji(36), data: `3|${id_user}` })
 
     botoes.push(
-        { id: "report_user", name: { tls: "menu.botoes.apenas_confirmar" }, type: 1, emoji: '📫', data: `2|${id_alvo}` },
-        { id: "report_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
+        { id: "report_user", name: { tls: "menu.botoes.apenas_confirmar" }, type: 0, emoji: '📫', data: `2|${id_user}` },
+        { id: "report_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_user}` }
     )
 
     return interaction.reply({

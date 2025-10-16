@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     let botoes = [], descr_rodape
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Desabilitando o log de eventos caso o bot não possa ver o registro de auditoria do servidor
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog)) {
@@ -40,8 +40,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         description: { tls: "mode.logger.descricao" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note)} **Death note**\n${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.logger)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                value: `${client.execute("button_emoji", guild?.death_note.note)} **Death note**\n${idioma} **${client.tls.phrase(user, "mode.anuncio.idioma")}**`,
                 inline: true
             },
             {
@@ -56,7 +56,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**`,
                 inline: false
             }
         ],
@@ -86,8 +86,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             .setDescription(client.tls.phrase(user, "mode.death_note.descricao"))
             .setFields(
                 {
-                    name: `${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note)} **Death note**`,
-                    value: `${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.death_note.notify)} **${client.tls.phrase(user, "menu.botoes.notificacoes")}**`,
+                    name: `${client.execute("button_emoji", guild?.death_note.note)} **Death note**`,
+                    value: `${client.emoji(20)} ${client.execute("button_emoji", guild?.death_note.notify)} **${client.tls.phrase(user, "menu.botoes.notificacoes")}**`,
                     inline: true
                 },
                 {
@@ -105,28 +105,28 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (pagina === 0)
         botoes.push(
-            { id: "guild_logger_button", name: { tls: "manu.painel.log_eventos" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.logger), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
-            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos" }, type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-            { id: "guild_logger_button", name: "Death note", type: 1, emoji: client.emoji(41), data: "10" },
-            { id: "guild_logger_button", name: { tls: "menu.botoes.ajustes" }, type: 1, emoji: client.emoji(41), data: "9" }
+            { id: "guild_logger_button", name: { tls: "manu.painel.log_eventos" }, type: guild?.conf.logger, emoji: client.execute("button_emoji", guild?.conf.logger), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog) },
+            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos" }, type: 0, emoji: client.defaultEmoji("telephone"), data: "2" },
+            { id: "guild_logger_button", name: "Death note", type: 0, emoji: client.emoji(41), data: "10" },
+            { id: "guild_logger_button", name: { tls: "menu.botoes.ajustes" }, type: 0, emoji: client.emoji(41), data: "9" }
         )
     else if (pagina === 1)
         botoes.push(
-            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" },
-            { id: "guild_logger_button", name: { tls: "mode.anuncio.idioma" }, type: 1, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
+            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "3" },
+            { id: "guild_logger_button", name: { tls: "mode.anuncio.idioma" }, type: 0, emoji: languagesMap[guild.lang.slice(0, 2)][3], data: "4" }
         )
     else
         botoes.push(
-            { id: "guild_logger_button", name: "Death note", type: client.execute("functions", "emoji_button.type_button", guild?.death_note.note), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.death_note.note), data: "5" },
-            { id: "guild_logger_button", name: { tls: "menu.botoes.notificacoes" }, type: client.execute("functions", "emoji_button.type_button", guild?.death_note.notify), emoji: client.emoji(20), data: "7" },
-            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos" }, type: 1, emoji: client.defaultEmoji("warn"), data: "6" },
-            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "8" },
+            { id: "guild_logger_button", name: "Death note", type: guild?.death_note.note, emoji: client.execute("button_emoji", guild?.death_note.note), data: "5" },
+            { id: "guild_logger_button", name: { tls: "menu.botoes.notificacoes" }, type: guild?.death_note.notify, emoji: client.emoji(20), data: "7" },
+            { id: "guild_logger_button", name: { tls: "mode.logger.eventos_ouvidos" }, type: 0, emoji: client.defaultEmoji("warn"), data: "6" },
+            { id: "guild_logger_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "8" },
         )
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_logger.0" }], interaction, user)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_logger.0" }], interaction, user)],
         flags: "Ephemeral"
     })
 }

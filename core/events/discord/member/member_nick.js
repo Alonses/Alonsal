@@ -48,5 +48,8 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

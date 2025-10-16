@@ -15,19 +15,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (!operacao) // Cancelando a atribuição da badge
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
-    const id_alvo = interaction.customId.split("|")[2].split(".")[0]
+    const id_user = interaction.customId.split("|")[2].split(".")[0]
     const badge_alvo = parseInt(interaction.customId.split("|")[2].split(".")[1])
 
     // Atribuindo a badge ao usuário
-    await createBadge(id_alvo, badge_alvo, client.timestamp())
+    await createBadge(id_user, badge_alvo, client.execute("timestamp"))
     const badge = busca_badges(client, badgeTypes.SINGLE, badge_alvo)
 
-    client.discord.users.fetch(id_alvo, false).then(async (user_interno) => {
-        const alvo = await client.getUser(id_alvo)
+    client.discord.users.fetch(id_user, false).then(async (user_interno) => {
+        const alvo = await client.execute("getUser", { id_user })
 
         // Atribuindo e notificando
         if (operacao === 1) {
-            client.sendDM(alvo, { content: client.tls.phrase(alvo, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) })
+            client.execute("sendDM", { user: alvo, dados: { content: client.tls.phrase(alvo, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) } })
 
             interaction.update({
                 content: `${client.emoji("emojis_dancantes")} | Badge \`${badge.name}\` ${badge.emoji} atribuída ao usuário ${user_interno}!`,

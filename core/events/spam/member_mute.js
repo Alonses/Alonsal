@@ -5,8 +5,13 @@ const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz, user_messages, mensagens_spam, user, user_guild, guild_bot, tempo_timeout }) => {
 
     // Verificando se a hierarquia do bot é maior que a do membro e se o bot pode mutar membros
-    if (!await client.permissions(message, client.id(), [PermissionsBitField.Flags.MuteMembers]) || guild_bot.roles.highest.position <= user_guild.roles.highest.position)
-        return client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), `<@${user_guild.id}>`) })
+    if (!await client.execute("permissions", { message, id_user: client.id(), permissions: [PermissionsBitField.Flags.MuteMembers] }) || guild_bot.roles.highest.position <= user_guild.roles.highest.position)
+        return client.execute("notify", {
+            id_canal: guild.spam.channel || guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.spam.falta_permissoes_2", client.defaultEmoji("guard"), `<@${user_guild.id}>`) }
+        })
+
+    const timestamp_atual = client.execute("timestamp")
 
     // Criando o embed de aviso para os moderadores
     const embed = client.create_embed({
@@ -21,7 +26,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
             },
             {
                 name: `${client.defaultEmoji("calendar")} **${client.tls.phrase(guild, "mode.spam.vigencia")}**`,
-                value: `**${client.tls.phrase(guild, "mode.warn.expira_em")} \`${client.tls.phrase(guild, `menu.times.${tempo_timeout}`)}\`**\n( <t:${client.timestamp() + tempo_timeout}:f> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.expira_em")} \`${client.tls.phrase(guild, `menu.times.${tempo_timeout}`)}\`**\n( <t:${timestamp_atual + tempo_timeout}:f> )`,
                 inline: true
             }
         ]
@@ -50,7 +55,10 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
             if (guild.spam.notify) // Servidor com ping de spam ativado
                 obj.content = `@here ${obj.content}`
 
-            client.notify(guild.spam.channel || guild.logger.channel, obj)
+            client.execute("notify", {
+                id_canal: guild.spam.channel || guild.logger.channel,
+                conteudo: obj
+            })
 
             let msg_user = `${client.tls.phrase(user, "mode.spam.silenciado", null, await client.guilds().get(guild.sid).name)} \`\`\`${mensagens_spam}\`\`\``
 
@@ -69,7 +77,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
                     },
                     {
                         name: "⠀",
-                        value: `( <t:${client.timestamp() + tempo_timeout}:f> )`,
+                        value: `( <t:${timestamp_atual + tempo_timeout}:f> )`,
                         inline: true
                     }
                 ]
@@ -82,7 +90,7 @@ module.exports = async ({ client, message, guild, strike_aplicado, indice_matriz
                     inline: true
                 })
 
-            client.sendDM(user, { embeds: [embed_user] }, true)
+            client.execute("sendDM", { user, dados: { embeds: [embed_user] }, force: true })
         })
         .catch(console.error)
 }

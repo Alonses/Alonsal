@@ -59,6 +59,7 @@ internal_clock = (client, tempo_restante) => {
     setTimeout(() => { // Sincronizando os dados do bot
 
         const horario_agora = new Date()
+        const timestamp_atual = client.execute("timestamp")
 
         if (horario_agora.getHours() === 0 && horario_agora.getMinutes() === 0) // Meia noite
             require('./await_journal')({ client }) // Enviando o relatório diário
@@ -68,14 +69,14 @@ internal_clock = (client, tempo_restante) => {
         verifica_pre_warns(client) // Sincronizando as anotações de advertências temporárias
         verifica_roles(client) // Sincronizando os cargos temporários
 
-        if (client.timestamp() % 600 < 60) { // 10 Minutos
+        if (timestamp_atual % 600 < 60) { // 10 Minutos
             sync_dynamic_badges(client) // Sincronizando as badges que são dinâmicas
             verifica_eraser(client) // Verificando se há dados de servidores que se expiraram
             verifica_user_eraser(client) // Verificando se há dados de usuários que se expiraram
             verifica_subscribers(client) // Verificando os usuários que possuem assinatura ativa
         }
 
-        if (client.timestamp() % 1800 < 60) { // 30 Minutos
+        if (timestamp_atual % 1800 < 60) { // 30 Minutos
             if (client.x.ranking) verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
             if (client.x.modules) atualiza_modulos()
         }

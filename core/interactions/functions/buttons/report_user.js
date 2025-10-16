@@ -58,18 +58,18 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     // Verificando se o usuário possui a badge de reporter e concedendo caso não possua
-    client.registryBadge(user, badges.REPORTER)
+    client.execute("registryBadge", { user, id_badge: badges.REPORTER })
 
     // Verificando se a opção de banir o usuário ao fazer um report está ativa
     if (guild?.reports.auto_ban) {
 
-        const bot_member = await client.getMemberGuild(interaction, client.id())
+        const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
         // Permissões para banir outros membros
         if (!bot_member.permissions.has(PermissionsBitField.Flags.BanMembers))
             texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_permissao", 7)}`
 
-        const guild_member = await client.getMemberGuild(interaction, alvo.uid)
+        const guild_member = await client.execute("getMemberGuild", { interaction, id_user: alvo.uid })
 
         if (!guild_member) texto_retorno += `\n${client.tls.phrase(user, "mode.report.auto_ban_nao_encontrado", client.defaultEmoji("guard"))}`
         else {

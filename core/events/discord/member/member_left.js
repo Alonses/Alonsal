@@ -5,26 +5,29 @@ const { dropUserGuild } = require('../../../database/schemas/User_guilds.js')
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
-    const user = await client.getUser(dados.user.id)
+    const user = await client.execute("getUser", { id_user: dados.user.id })
 
     // Removendo o servidor salvo em cache do usuário
     if (user.conf?.cached_guilds) dropUserGuild(user.uid, dados.guild.id)
 
     if (guild.conf.nuke_invites && guild.nuke_invites.type) // Buscando pelos convites do usuário que saiu do servidor
-        client.checkUserInvites(guild, dados.user.id)
+        client.execute("checkUserInvites", { guild, id_user: dados.user.id })
 
     // Verificando se a guild habilitou o logger
     if (!guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    if (!await client.permissions(dados, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!await client.execute("permissions", { interaction: dados, id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         guild.logger.member_left = false
         guild.logger.member_kick = false
         guild.logger.member_ban_add = false
         guild.save()
 
-        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
+        return client.execute("notify", {
+            id_canal: guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.logger.permissao", 7) }
+        })
     }
 
     // Verificando se o usuário foi expulso do servidor
@@ -67,10 +70,13 @@ module.exports = async (client, dados) => {
 
     // Data de entrada do membro no servidor
     const user_guild = dados
-    embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
+    embed = client.execute("formata_entrada_membro", { client, guild, user_guild, embed })
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

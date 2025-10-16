@@ -11,17 +11,26 @@ module.exports = async ({ client, user, interaction, guild, user_warn, guild_mem
 
     // Verificando se a hierarquia do membro que ativou o report é maior que o do alvo e se pode banir membros
     if (interaction.member.roles.highest.position <= guild_member.roles.highest.position || !interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers))
-        return client.notify(guild.warn.channel, { content: client.tls.phrase(guild, "events.ban.falta_permissao", [7, 0], user_warn.uid) })
+        return client.execute("notify", {
+            id_canal: guild.warn.channel,
+            conteudo: { content: client.tls.phrase(guild, "events.ban.falta_permissao", [7, 0], user_warn.uid) }
+        })
 
     // Verificando se a hierarquia do bot é maior que o do alvo e se pode banir membros
     if (bot_member.roles.highest.position <= guild_member.roles.highest.position || !bot_member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
 
         // Bot não possui permissões para moderar membros
         if (!bot_member.permissions.has(PermissionsBitField.Flags.BanMembers))
-            return client.notify(guild.warn.channel, { content: client.tls.phrase(guild, "events.ban.sem_permissao_ban", [7, 0], user_warn.uid) })
+            return client.execute("notify", {
+                id_canal: guild.warn.channel,
+                conteudo: { content: client.tls.phrase(guild, "events.ban.sem_permissao_ban", [7, 0], user_warn.uid) }
+            })
 
         // Usuário alvo possui mais hierarquia que o bot
-        return client.notify(guild.warn.channel, { content: client.tls.phrase(guild, "events.ban.sem_permissao_ban_hierarquia", [7, 0], user_warn.uid) })
+        return client.execute("notify", {
+            id_canal: guild.warn.channel,
+            conteudo: { content: client.tls.phrase(guild, "events.ban.sem_permissao_ban_hierarquia", [7, 0], user_warn.uid) }
+        })
     }
 
     // Banindo o membro

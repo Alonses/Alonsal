@@ -1,10 +1,7 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const direcao_cardial = require("../../functions/cardinal_direction")
-
 const getCountryISO3 = require("country-iso-2-to-3")
-const formata_horas = require('../formata_horas')
 
 module.exports = async ({ client, alvo, interaction, user_command, internal_module }) => {
 
@@ -16,11 +13,11 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
     // Requisições manuais
     if (interaction) {
         // Verifica se não há entrada customizada e se o usuário não possui um local padrão
-        if (interaction.options.data.length < 1 && !internal_module.misc.locale)
+        if (interaction.options.data.length < 1 && !alvo?.misc.locale)
             return client.tls.editReply(interaction, alvo, "util.tempo.error_locale", true, 2)
 
         // Usa o local padrão caso não tenha entrada definida
-        pesquisa = interaction.options.getString("place") || client.decifer(user.misc.locale)
+        pesquisa = interaction.options.getString("place") || client.decifer(alvo.misc.locale)
         pesquisa_bruta = `\"${pesquisa.replaceAll("\"", "")}"`
 
         url_completa = `${process.env.url_weather}appid=${process.env.key_weather}&q=${pesquisa}&units=metric&lang=${lang_min}`
@@ -60,6 +57,9 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                 .then(response => response.json())
                 .then(async res_hora => {
 
+                    // Verifica se o usuário quer o modo resumido ou detalhado
+                    const modo_resumido = internal_module ? internal_module.misc.resumed : !alvo.misc.weather
+
                     let dados_att = new Date((res.dt) * 1000)
                     dados_att = `${("0" + dados_att.getHours()).substr(-2)}:${("0" + dados_att.getMinutes()).substr(-2)} (*)`
 
@@ -98,14 +98,16 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                     let nascer_sol = new Date((res.sys.sunrise + res.timezone + 10800) * 1000)
                     let por_sol = new Date((res.sys.sunset + res.timezone + 10800) * 1000)
 
-                    nascer_sol = formata_horas(nascer_sol.getHours(), nascer_sol.getMinutes())
-                    por_sol = formata_horas(por_sol.getHours(), por_sol.getMinutes())
+                    if (!modo_resumido) {
+                        nascer_sol = client.execute("formata_horas", { horas: nascer_sol.getHours(), minutos: nascer_sol.getMinutes() })
+                        por_sol = client.execute("formata_horas", { horas: por_sol.getHours(), minutos: por_sol.getMinutes() })
+                    }
 
                     let tempo_atual = res.weather[0].description // Clima atual
                     tempo_atual = tempo_atual.charAt(0).toUpperCase() + tempo_atual.slice(1)
 
-                    const minutos = formata_horas(horario_local.getMinutes()) // Preservar o digito 0
-                    const hora = formata_horas(horario_local.getHours()) // Preservar o digito 0
+                    const minutos = client.execute("formata_horas", { minutos: horario_local.getMinutes() }) // Preservar o digito 0
+                    const hora = client.execute("formata_horas", { horas: horario_local.getHours() }) // Preservar o digito 0
                     const dia = horario_local.getDate()
 
                     let mes = horario_local.toLocaleString(lang_min, { month: 'long' })
@@ -200,7 +202,7 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                     }
 
                     // Dados para rajadas de vento
-                    if (res.wind.gust && !internal_module.misc.resumed) {
+                    if (res.wind.gust && !modo_resumido) {
                         if (cabecalho_fix !== "")
                             cabecalho_fix += "\n------------------------------"
 
@@ -226,8 +228,8 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                         footer: { text: nota_rodape }
                     }, alvo)
 
-                    // Máximos de informações para o clima
-                    if (!internal_module.misc.resumed) {
+                    // Máximo de informações para o clima
+                    if (!modo_resumido) {
                         embed_clima
                             .setThumbnail(`http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`)
                             .setDescription(`${horario_local} | **${tempo_atual}**${cabecalho_fix}${rodape_cabecalho}`)
@@ -244,7 +246,7 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                                 },
                                 {
                                     name: `:wind_chime: **${client.tls.phrase(alvo, "util.tempo.vento")}**`,
-                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(alvo, "util.tempo.direcao")}: ** \`${direcao_cardial(res.wind.deg)}\`\n:eye: **${client.tls.phrase(alvo, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
+                                    value: `:airplane: **Vel.: **\`${res.wind.speed} km/h\`\n:compass: **${client.tls.phrase(alvo, "util.tempo.direcao")}: ** \`${client.execute("cardinal_direction", { grau: res.wind.deg })}\`\n:eye: **${client.tls.phrase(alvo, "util.tempo.visibilidade")}: ** \`${res.visibility / 100}%${emoji_indica_visibilidade}\``,
                                     inline: true
                                 },
                                 {

@@ -67,7 +67,7 @@ module.exports = {
 deleteMessages = async ({ client, user, interaction, qtd_msg }) => {
 
     if (interaction.guild) { // Verificando se o bot pode gerenciar as mensagens do servidor
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageMessages]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageMessages] }))
             return client.tls.reply(interaction, user, "mode.clear.permissao", true, 3)
 
         interaction.channel.bulkDelete(qtd_msg, true)

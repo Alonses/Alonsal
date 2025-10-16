@@ -2,7 +2,7 @@ const { PermissionsBitField, ChannelType } = require('discord.js')
 
 module.exports = async ({ client, user, interaction, guild }) => {
 
-    let canal_alvo
+    let canal
 
     // Canal de texto para enviar os relatórios de warns
     if (interaction.options.getChannel("value")) {
@@ -12,21 +12,21 @@ module.exports = async ({ client, user, interaction, guild }) => {
             return client.tls.reply(interaction, user, "mode.report.tipo_canal", true, client.defaultEmoji("types"))
 
         // Atribuindo o canal passado para o warn
-        canal_alvo = interaction.options.getChannel("value")
-        guild.warn.channel = canal_alvo.id
+        canal = interaction.options.getChannel("value")
+        guild.warn.channel = canal.id
     }
 
     // Sem canal informado no comando e nenhum canal salvo no cache do bot
-    if (!canal_alvo && !guild.warn.channel)
+    if (!canal && !guild.warn.channel)
         return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
     else {
         if (!guild.warn.channel) // Sem canal salvo em cache
             return client.tls.reply(interaction, user, "mode.logger.mencao_canal", true, 1)
 
-        if (typeof canal_alvo !== "object") // Restaurando o canal do cache
-            canal_alvo = await client.channels().get(guild.warn.channel)
+        if (typeof canal !== "object") // Restaurando o canal do cache
+            canal = await client.channels().get(guild.warn.channel)
 
-        if (!canal_alvo) { // Canal salvo em cache foi apagado
+        if (!canal) { // Canal salvo em cache foi apagado
             guild.conf.warn = false
             await guild.save()
 
@@ -34,7 +34,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         }
 
         // Sem permissão para ver ou escrever no canal mencionado
-        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo))
+        if (!await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal }))
             return client.tls.reply(interaction, user, "mode.logger.falta_escrita_visualizacao", true, 1)
     }
 
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, guild }) => {
         guild.conf.warn = true
 
     // Se usado sem mencionar categoria, desliga o sistema de warns
-    if (!canal_alvo)
+    if (!canal)
         guild.conf.warn = false
 
     await guild.save()

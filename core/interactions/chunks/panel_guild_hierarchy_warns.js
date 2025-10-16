@@ -5,13 +5,13 @@ const { listAllGuildWarns } = require("../../database/schemas/Guild_warns")
 const { defaultEraser } = require('../../formatters/patterns/timeout')
 const { default_emoji } = require('../../../files/json/text/emojis.json')
 
-module.exports = async ({ client, user, interaction, pagina_guia }) => {
+module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     let texto_rodape = client.tls.phrase(user, "manu.painel.rodape")
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
     const advertencias = await listAllGuildWarns(interaction.guild.id)
 
     const embed = client.create_embed({
@@ -19,8 +19,8 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         description: { tls: "mode.hierarquia.descricao_painel_config" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.status)} **${client.tls.phrase(user, "menu.botoes.usar_hierarquia")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.anotacoes")}: \`${guild.warn.hierarchy.strikes}\`**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length} / 5\`**`,
+                name: `${client.execute("button_emoji", guild.warn.hierarchy.status)} **${client.tls.phrase(user, "menu.botoes.usar_hierarquia")}**`,
+                value: `${client.execute("button_emoji", guild.warn.hierarchy.timed)} **${client.tls.phrase(user, "mode.warn.com_validade")}**\n${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.anotacoes")}: \`${guild.warn.hierarchy.strikes}\`**\n${client.emoji(47)} **${client.tls.phrase(user, "mode.warn.advertencias")}: \`${advertencias.length} / 5\`**`,
                 inline: true
             },
             {
@@ -35,12 +35,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             }
         ],
@@ -51,15 +51,15 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     }, user)
 
     const botoes = [
-        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.usar_hierarquia" }, type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.status), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.status), data: "1", disabled: !guild.warn.hierarchy.channel },
-        { id: "guild_hierarchy_warns_button", name: { tls: "mode.warn.com_validade" }, type: client.execute("functions", "emoji_button.type_button", guild.warn.hierarchy.timed), emoji: client.execute("functions", "emoji_button.emoji_button", guild.warn.hierarchy.timed), data: "2" },
-        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.avisos_previos" }, type: 1, emoji: default_emoji["numbers"][guild.warn.hierarchy.strikes], data: "4" }
+        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.usar_hierarquia" }, type: guild.warn.hierarchy.status, emoji: client.execute("button_emoji", guild.warn.hierarchy.status), data: "1", disabled: !guild.warn.hierarchy.channel },
+        { id: "guild_hierarchy_warns_button", name: { tls: "mode.warn.com_validade" }, type: guild.warn.hierarchy.timed, emoji: client.execute("button_emoji", guild.warn.hierarchy.timed), data: "2" },
+        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.avisos_previos" }, type: 0, emoji: default_emoji["numbers"][guild.warn.hierarchy.strikes], data: "4" }
     ]
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_warns.0" },
-        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.painel_de_controle" }, type: 1, emoji: client.defaultEmoji("telephone"), data: "5" },
-        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "6" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_warns.0" },
+        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.painel_de_controle" }, type: 0, emoji: client.defaultEmoji("telephone"), data: "5" },
+        { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.expiracao" }, type: 0, emoji: client.defaultEmoji("time"), data: "6" }
     ]
 
     client.reply(interaction, {

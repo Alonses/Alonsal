@@ -47,7 +47,7 @@ requisita_anuncio = (client, aguardar_tempo) => {
 gera_anuncio = async (client, proxima_att) => {
 
     if (process.env.client_1 === client.id())
-        client.notify(process.env.channel_feeds, { content: ":video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos" })
+        client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos" } })
 
     fetch(`${process.env.url_apisal}/games?reload=1`) // Forçando o update da API
         .then(response => response.json())
@@ -55,17 +55,17 @@ gera_anuncio = async (client, proxima_att) => {
 
             // Status desconhecido ou sem link de anúncio
             if (objetos_anunciados.status === "501" || objetos_anunciados.status === "404")
-                return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL." })
+                return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":stop_sign: | Houve um problema com o anúncio automático, verifique a APISAL." } })
 
             if (objetos_anunciados.length === 0)
-                return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Não há jogos gratuitos disponíveis na Epic Games atualmente." })
+                return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":stop_sign: | Não há jogos gratuitos disponíveis na Epic Games atualmente." } })
 
             if (await verifyGame(objetos_anunciados[0])) // Verificando se há jogos repetidos informados
-                return client.notify(process.env.channel_feeds, { content: ":stop_sign: | Envio de anúncio de jogos cancelado, há jogos repetidos sendo enviados." })
+                return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":stop_sign: | Envio de anúncio de jogos cancelado, há jogos repetidos sendo enviados." } })
 
             // Registrando os games no banco
             objetos_anunciados.forEach(async game => {
-                game.expira = client.timestamp(game.expira, game.hora_expira)
+                game.expira = client.execute("timestamp", { entrada: game.expira, hora_entrada: game.hora_expira })
 
                 await createGame(game)
             })
@@ -82,7 +82,7 @@ gera_anuncio = async (client, proxima_att) => {
 }
 
 next_att = (client, tempo_restante) => {
-    tempo_restante = Math.floor(client.timestamp() + (tempo_restante / 1000))
+    tempo_restante = Math.floor(client.execute("timestamp") + (tempo_restante / 1000))
 
-    client.notify(process.env.channel_feeds, { content: `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n( <t:${tempo_restante}:F> )` })
+    client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n( <t:${tempo_restante}:F> )` } })
 }

@@ -27,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Botão para retornar ao painel de configuração do canal de voz
     const row = client.create_buttons([
-        { id: "user_voice_channel", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `0.${id_canal}` }
+        { id: "user_voice_channel", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `0.${id_canal}` }
     ], interaction, user)
 
     if (escolha === 1) {
@@ -73,7 +73,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Submenu para confirmar a visilibidade do canal para todos os membros poderem ver novamente
         const botoes = [
-            { id: "user_voice_channel", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `8.${id_canal}` },
+            { id: "user_voice_channel", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `8.${id_canal}` },
             { id: "user_voice_channel", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0.${id_canal}` }
         ]
 
@@ -90,7 +90,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (escolha === 5 && guild?.voice_channels.preferences.mute_popup) { // Enviando um som no canal mutado
 
-            const num = client.random(client.countFiles("./files/songs/voice_channel", "ogg") - 1)
+            const num = client.execute("random", { intervalo: client.countFiles("./files/songs/voice_channel", "ogg") - 1 })
             conecta_canal_voz(guild_channel, `./files/songs/voice_channel/mute_${num}.ogg`)
         }
 

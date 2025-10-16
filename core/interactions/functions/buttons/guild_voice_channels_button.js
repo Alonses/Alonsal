@@ -51,7 +51,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }
         ], interaction, user)
 
         return client.reply(interaction, {
@@ -74,8 +74,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             }, user)
 
             const botoes = [
-                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "7" }
+                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+                { id: "guild_voice_channels_button", name: { tls: "menu.botoes.confirmar" }, type: 0, emoji: client.emoji(10), data: "7" }
             ]
 
             return client.reply(interaction, {
@@ -105,7 +105,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                             user_voice_channel.cid = client.encrypt(guild_channel.id)
                             await user_voice_channel.save()
 
-                            const user = await client.getUser(interaction.user.id)
+                            const user = await client.execute("getUser", { id_user: interaction.user.id })
                             const dados = `${guild_channel.id}.${interaction.guild.id}`
                             require("../../../interactions/chunks/voice_channel_config")({ client, user, dados })
                         })
@@ -120,23 +120,23 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const triggers = await listAllGuildVoiceTriggers(client.encrypt(interaction.guild.id))
 
         // Submenu para navegar pelos strikes do servidor
-        let botoes = [], segunda_linha = [], row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_voice_channels.0" }]
+        let botoes = [], segunda_linha = [], row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_voice_channels.0" }]
 
         if (triggers.length < 1) {
             const trigger = await getGuildVoiceTrigger(client, client.encrypt(interaction.guild.id))
 
-            botoes.push({ id: "voice_trigger_configure_button", name: "1°", type: 1, emoji: client.emoji("mc_approve"), data: `0|${trigger.hash}` })
+            botoes.push({ id: "voice_trigger_configure_button", name: "1°", type: 0, emoji: client.emoji("mc_approve"), data: `0|${trigger.hash}` })
         } else
             triggers.forEach(trigger => {
 
-                const botao = { id: "voice_trigger_configure_button", name: `${trigger.config.category_nick ? client.decifer(trigger.config.category_nick) : client.tls.phrase(user, "mode.spam.sem_categoria")}`, type: 1, emoji: client.emoji(trigger.config.active ? "mc_approve" : "mc_oppose"), data: `0|${trigger.hash}` }
+                const botao = { id: "voice_trigger_configure_button", name: `${trigger.config.category_nick ? client.decifer(trigger.config.category_nick) : client.tls.phrase(user, "mode.spam.sem_categoria")}`, type: 0, emoji: client.emoji(trigger.config.active ? "mc_approve" : "mc_oppose"), data: `0|${trigger.hash}` }
 
                 if (botoes.length < 5) botoes.push(botao)
                 else segunda_linha.push(botao)
             })
 
         if (triggers.length < (guild.misc.subscription.active ? 10 : 2)) // Botão para adicionar um novo trigger
-            row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.novo_ativador" }, type: 2, emoji: client.emoji(43), data: 31 })
+            row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.novo_ativador" }, type: 1, emoji: client.emoji(43), data: 31 })
 
         const embed = client.create_embed({
             title: { tls: "mode.voice_channels.configurando_ativadores" },

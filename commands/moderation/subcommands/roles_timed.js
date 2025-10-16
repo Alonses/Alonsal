@@ -5,10 +5,10 @@ const { getUserRole } = require('../../../core/database/schemas/User_roles.js')
 module.exports = async ({ client, user, interaction }) => {
 
     // Permissão para atualizar os cargos de membros do servidor
-    if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers]))
+    if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers] }))
         return client.tls.reply(interaction, user, "mode.roles.sem_permissao", true, 7)
 
-    if (!await client.rolePermissions(interaction, interaction.options.getRole("role").id, [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator])) // Cargo informado não é válido
+    if (!await client.execute("rolePermissions", { interaction, id_role: interaction.options.getRole("role").id, permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] })) // Cargo informado não é válido
         return interaction.reply({
             content: ":passport_control: | Selecione um cargo que não contenha permissões de moderação e não seja gerenciado pelo discord (como por impulsos).",
             flags: "Ephemeral"
@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     const cached_role = client.getGuildRole(interaction, interaction.options.getRole("role").id)
-    const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
+    const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     if (cached_role.position > bot_member.roles.highest.position)
         return interaction.reply({
@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     const user_alvo = interaction.options.getUser("user")
-    const role = await getUserRole(user_alvo.id, interaction.guild.id, client.timestamp())
+    const role = await getUserRole(user_alvo.id, interaction.guild.id, client.execute("timestamp"))
 
     if (guild.timed_roles.timeout) // Sincroniza o cargo temporário com o tempo minimo do servidor
         role.timeout = guild.timed_roles.timeout

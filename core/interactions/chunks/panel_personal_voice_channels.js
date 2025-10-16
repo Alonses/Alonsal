@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, partyLotada }) => {
             users_permitidos.push(`<@${client.decifer(user.mid)}>`)
         })
 
-        descricao += client.list(users_permitidos, null, true)
+        descricao += client.execute("list", { valores: users_permitidos, raw: true })
     }
 
     const embed = client.create_embed({
@@ -23,12 +23,12 @@ module.exports = async ({ client, user, interaction, partyLotada }) => {
         description: { tls: "mode.voice_channels.descricao_edicao_canais_user", replace: descricao },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.misc.voice_channels.always_private)} ${client.tls.phrase(user, "menu.botoes.canal_privado")}\n${user?.misc.voice_channels.user_limit < 1 ? "🗽" : "🚧"} ${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")} `,
+                name: `${client.execute("button_emoji", user?.misc.voice_channels.always_private)} ${client.tls.phrase(user, "menu.botoes.canal_privado")}\n${user?.misc.voice_channels.user_limit < 1 ? "🗽" : "🚧"} ${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")} `,
                 value: user.misc.voice_channels.user_limit < 1 ? `\`${client.tls.phrase(user, "util.canal.sem_limite")}\`` : `\`${user.misc.voice_channels.user_limit} ${client.tls.phrase(user, "mode.voice_channels.usuarios")}\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user.misc.voice_channels.global_config)} ${client.tls.phrase(user, "menu.botoes.global")}`,
+                name: `${client.execute("button_emoji", user.misc.voice_channels.global_config)} ${client.tls.phrase(user, "menu.botoes.global")}`,
                 value: "⠀",
                 inline: true
             }
@@ -40,21 +40,21 @@ module.exports = async ({ client, user, interaction, partyLotada }) => {
     }, user)
 
     const botoes = [
-        { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.canal_privado" }, type: client.execute("functions", "emoji_button.type_button", user?.misc.voice_channels.always_private), emoji: client.emoji(18), data: "2" },
-        { id: "user_voice_channels_preferences", name: { tls: "mode.voice_channels.usuarios_autorizados" }, type: 1, emoji: client.emoji(7), data: "1" },
-        { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.global" }, type: client.execute("functions", "emoji_button.type_button", user?.misc.voice_channels.global_config), emoji: client.emoji(32), data: "8" }
+        { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.canal_privado" }, type: user?.misc.voice_channels.always_private, emoji: client.emoji(18), data: "2" },
+        { id: "user_voice_channels_preferences", name: { tls: "mode.voice_channels.usuarios_autorizados" }, type: 0, emoji: client.emoji(7), data: "1" },
+        { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.global" }, type: user?.misc.voice_channels.global_config, emoji: client.emoji(32), data: "8" }
     ]
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_personal.1" },
-        { id: "user_voice_channels_preferences", name: { tls: "mode.voice_channels.limite_usuarios" }, type: 1, emoji: user.misc.voice_channels.user_limit < 1 ? "🗽" : "🚧", data: "3" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_personal.1" },
+        { id: "user_voice_channels_preferences", name: { tls: "mode.voice_channels.limite_usuarios" }, type: 0, emoji: user.misc.voice_channels.user_limit < 1 ? "🗽" : "🚧", data: "3" }
     ]
 
     if (userParty?.length > 0) // Verificando se há mais membros autorizados a acessar o canal pré-configurado
-        row.push({ id: "user_voice_channels_preferences", name: { tls: "menu.botoes.limpar_membros" }, type: 1, emoji: client.emoji(62), data: "4" })
+        row.push({ id: "user_voice_channels_preferences", name: { tls: "menu.botoes.limpar_membros" }, type: 0, emoji: client.emoji(62), data: "4" })
 
     client.reply(interaction, {
-        content: partyLotada?.length > 0 ? client.tls.phrase(user, "mode.voice_channels.limite_usuarios_autorizados", 75, client.list(partyLotada, null, true)) : "",
+        content: partyLotada?.length > 0 ? client.tls.phrase(user, "mode.voice_channels.limite_usuarios_autorizados", 75, client.execute("list", { valores: partyLotada, raw: true })) : "",
         embeds: [embed],
         components: [client.create_buttons(botoes, interaction, user), client.create_buttons(row, interaction, user)],
         flags: "Ephemeral"

@@ -23,7 +23,7 @@ async function registryStatement(client, uid, operation, type, value) {
         operation: operation,
         type: type,
         value: value,
-        timestamp: client.timestamp()
+        timestamp: client.execute("timestamp")
     })
 }
 

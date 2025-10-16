@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Validando se o usuário tem dinheiro suficiente
         if (user.misc.money < preco)
             return interaction.update({
-                content: client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos"), client.locale(preco)),
+                content: client.tls.phrase(user, "misc.color.sem_money", client.emoji("emojis_negativos"), client.execute("locale", { valor: preco })),
                 flags: "Ephemeral"
             })
 
@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         const row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `static_color.${cor_cache}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `static_color.${cor_cache}` }
         ], interaction, user)
 
         interaction.update({

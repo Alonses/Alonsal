@@ -50,16 +50,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_reports#channel",
             reback: "browse_button.guild_reports_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.reports.channel)
+            values: await client.execute("getGuildChannels", {
+                interaction,
+                user,
+                tipo: ChannelType.GuildText,
+                id_configurado: guild.reports.channel
+            })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
-            { id: "guild_reports_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "3" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.2` },
+            { id: "guild_reports_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "3" }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -85,15 +90,15 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (guild.reports.role)
             data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_cargo"), id: "none" })
 
-        data.values = data.values.concat(await client.getGuildRoles(interaction, guild.reports.role, true))
+        data.values = data.values.concat(await client.execute("getGuildRoles", { interaction, ignore_role: guild.reports.role, allow_mods: true }))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
-            { id: "guild_reports_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "6" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.2` },
+            { id: "guild_reports_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "6" }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -118,7 +123,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.1` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.1` }
         ], interaction, user)
 
         return interaction.update({

@@ -23,7 +23,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "misc.daily.error", true, 9, tempo_restante)
         }
 
-        const bufunfa = client.random(600, 1200)
+        const bufunfa = client.execute("random", { intervalo: 600, base: 1200 })
 
         user.misc.money += bufunfa
         user.misc.daily = data_atual
@@ -34,7 +34,7 @@ module.exports = {
         await client.journal("gerado", bufunfa)
 
         interaction.reply({
-            content: `${client.tls.phrase(user, "misc.daily.daily", 14, client.locale(bufunfa))} ${client.emoji("emojis_dancantes")}`,
+            content: `${client.tls.phrase(user, "misc.daily.daily", 14, client.execute("locale", { valor: bufunfa }))} ${client.emoji("emojis_dancantes")}`,
             flags: "Ephemeral"
         })
     }

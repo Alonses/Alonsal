@@ -32,7 +32,10 @@ async function loadAll(client) {
                 await bot.save()
 
                 if (client.id() === process.env.client_1 && process.env.channel_feeds) // Notifica no canal apenas para o bot principal
-                    client.notify(process.env.channel_feeds, { content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` })
+                    client.execute("notify", {
+                        id_canal: process.env.channel_feeds,
+                        conteudo: { content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` }
+                    })
                 else console.log(`🈂️ | Pacote de traduções do ${client.username()} sincronizado com o commit ${cod_commit}`)
 
                 fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
@@ -46,7 +49,10 @@ async function loadAll(client) {
                             fetch(idioma.download_url)
                                 .then(res => res.json())
                                 .then(res => { writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res)) })
-                                .catch(() => client.notify(process.env.channel_feeds, { content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\`` }))
+                                .catch(() => client.execute("notify", {
+                                    id_canal: process.env.channel_feeds,
+                                    conteudo: { content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\`` }
+                                }))
                         }
                     })
             }

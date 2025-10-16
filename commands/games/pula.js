@@ -36,7 +36,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         let alvo = interaction.options.getUser("user") || interaction.user
-        const user_pula = await client.getUser(alvo.id)
+        const user_pula = await client.execute("getUser", { id_user: alvo.id })
 
         // user_pula -> Dados do usuário alvo
         // user -> Dados do usuário que disparou o comando
@@ -67,12 +67,12 @@ module.exports = {
                 }
 
                 if (parseInt(datas_pula.recorde) > 0)
-                    pula_obj.description = { tls: "game.pula.recorde", replace: [client.locale(datas_pula.recorde), (datas_pula.distancia_percorrida / 1000).toFixed(2)] }
+                    pula_obj.description = { tls: "game.pula.recorde", replace: [client.execute("locale", { valor: datas_pula.recorde }), (datas_pula.distancia_percorrida / 1000).toFixed(2)] }
 
                 pula_obj.fields = [
                     {
                         name: `${client.emoji("pula_2")} **${client.tls.phrase(user, "game.pula.gerais")}**`,
-                        value: `:part_alternation_mark: **${client.tls.phrase(user, "game.pula.pulos")}:** \`${client.locale(datas_pula.pulos)}\`\n:rocket: **${client.tls.phrase(user, "game.pula.mods_ativos")}:** \`${client.locale(datas_pula.mods)}\`\n:skull_crossbones: **${client.tls.phrase(user, "game.pula.mortes")}:** \`${client.locale(datas_pula.mortes)}\``,
+                        value: `:part_alternation_mark: **${client.tls.phrase(user, "game.pula.pulos")}:** \`${client.execute("locale", { valor: datas_pula.pulos })}\`\n:rocket: **${client.tls.phrase(user, "game.pula.mods_ativos")}:** \`${client.execute("locale", { valor: datas_pula.mods })}\`\n:skull_crossbones: **${client.tls.phrase(user, "game.pula.mortes")}:** \`${client.execute("locale", { valor: datas_pula.mortes })}\``,
                         inline: true,
                     },
                     {
@@ -82,17 +82,17 @@ module.exports = {
                     },
                     {
                         name: `${client.emoji("mc_esmeralda")} **${client.tls.phrase(user, "game.pula.moedas")}**`,
-                        value: `:bank: **${client.tls.phrase(user, "game.pula.coletadas")}:** \`${client.locale(datas_pula.moedas_coletadas)}\`\n:money_with_wings: **${client.tls.phrase(user, "game.pula.gastas")}:** \`${client.locale(datas_pula.moedas_gastas)}\`\n:moneybag: **${client.tls.phrase(user, "game.pula.guardadas")}:** \`${client.locale(datas_pula.moedas)}\``,
+                        value: `:bank: **${client.tls.phrase(user, "game.pula.coletadas")}:** \`${client.execute("locale", { valor: datas_pula.moedas_coletadas })}\`\n:money_with_wings: **${client.tls.phrase(user, "game.pula.gastas")}:** \`${client.execute("locale", { valor: datas_pula.moedas_gastas })}\`\n:moneybag: **${client.tls.phrase(user, "game.pula.guardadas")}:** \`${client.execute("locale", { valor: datas_pula.moedas })}\``,
                         inline: true
                     },
                     {
                         name: `:carousel_horse: **${client.tls.phrase(user, "game.pula.eventos")}**`,
-                        value: `:man_playing_water_polo: **${client.tls.phrase(user, "game.pula.aquatico")}:** \`${client.locale(datas_pula.eventos[0])}\`\n:hotsprings: **${client.tls.phrase(user, "game.pula.lava")}:** \`${client.locale(datas_pula.eventos[1])}\`\n:checkered_flag: **${client.tls.phrase(user, "game.pula.concluidos")}:** \`${client.locale(datas_pula.eventos_concluidos)}\``,
+                        value: `:man_playing_water_polo: **${client.tls.phrase(user, "game.pula.aquatico")}:** \`${client.execute("locale", { valor: datas_pula.eventos[0] })}\`\n:hotsprings: **${client.tls.phrase(user, "game.pula.lava")}:** \`${client.execute("locale", { valor: datas_pula.eventos[1] })}\`\n:checkered_flag: **${client.tls.phrase(user, "game.pula.concluidos")}:** \`${client.execute("locale", { valor: datas_pula.eventos_concluidos })}\``,
                         inline: true
                     },
                     {
                         name: "⠀",
-                        value: `:city_dusk: **${client.tls.phrase(user, "game.pula.zona_densa")}:** \`${client.locale(datas_pula.eventos[2])}\`\n:park: **${client.tls.phrase(user, "game.pula.parque")}:** \`${client.locale(datas_pula.eventos[3])}\`\n:house_abandoned: **${client.tls.phrase(user, "game.pula.pisoes")}:** \`${client.locale(datas_pula.pisoes)}\``,
+                        value: `:city_dusk: **${client.tls.phrase(user, "game.pula.zona_densa")}:** \`${client.execute("locale", { valor: datas_pula.eventos[2] })}\`\n:park: **${client.tls.phrase(user, "game.pula.parque")}:** \`${client.execute("locale", { valor: datas_pula.eventos[3] })}\`\n:house_abandoned: **${client.tls.phrase(user, "game.pula.pisoes")}:** \`${client.execute("locale", { valor: datas_pula.pisoes })}\``,
                         inline: true
                     },
                     {

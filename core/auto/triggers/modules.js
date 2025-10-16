@@ -3,7 +3,6 @@ const { writeFileSync, readFile } = require('fs')
 const { getActiveModules, shutdownAllUserModules } = require("../../database/schemas/Module.js")
 
 const { week_days, moduleTypes } = require('../../formatters/patterns/user.js')
-const formata_horas = require('../../formatters/formata_horas.js')
 
 const lista_modulos = []
 let trava_modulo = false
@@ -21,7 +20,7 @@ async function requisita_modulo(client) {
     if (!client.x.modules) return
 
     const data1 = new Date()
-    const horario = formata_horas(data1.getHours() == 0 ? '0' : data1.getHours(), data1.getMinutes() === 0 ? '0' : data1.getMinutes()), dia = data1.getDay()
+    const horario = client.execute("formata_horas", { horas: (data1.getHours() == 0 ? '0' : data1.getHours()), minutos: (data1.getMinutes() === 0 ? '0' : data1.getMinutes()) }), dia = data1.getDay()
 
     readFile('./files/data/modules.txt', 'utf8', (err, data) => {
 
@@ -58,13 +57,13 @@ executa_modulo = async (client) => {
     if (!trava_modulo) {
         trava_modulo = true
 
-        const alvo = await (lista_modulos[0].misc.scope === "user" ? client.getUser(lista_modulos[0].uid) : client.getGuild(client.decifer(lista_modulos[0].misc.sid)))
+        const alvo = await (lista_modulos[0].misc.scope === "user" ? client.execute("getUser", { id_user: lista_modulos[0].uid }) : client.getGuild(client.decifer(lista_modulos[0].misc.sid)))
         const internal_module = lista_modulos[0]
 
         if (internal_module.type === 2) {
 
             if (internal_module.data === 0) // Sem definição do tipo de envio
-                if (lista_modulos[0].misc.scope === "user") await client.sendDM(alvo, { content: client.tls.phrase(alvo, "misc.modulo.faltando_tipo") }, true)
+                if (lista_modulos[0].misc.scope === "user") await client.execute("sendDM", { user: alvo, dados: { content: client.tls.phrase(alvo, "misc.modulo.faltando_tipo") }, force: true })
 
             // Definindo qual tipo de anúncio do history será
             let dados = {
@@ -128,7 +127,7 @@ async function cobra_modulo(client) {
     const ids = Object.keys(users)
     ids.forEach(async identificador => {
 
-        const user = await client.getUser(identificador)
+        const user = await client.execute("getUser", { id_user: identificador })
         user.misc.money -= users[identificador]
         let total = users[identificador]
 
@@ -139,7 +138,7 @@ async function cobra_modulo(client) {
             shutdownAllUserModules(identificador)
 
             // Avisando o usuário sobre o desligamento dos módulos
-            return client.sendDM(user, { content: client.tls.phrase(user, "misc.modulo.auto_desativado", client.emoji(30)) }, true)
+            return client.execute("sendDM", { user, dados: { content: client.tls.phrase(user, "misc.modulo.auto_desativado", client.emoji(30)) }, force: true })
         }
 
         // Registrando as movimentações de bufunfas para o usuário

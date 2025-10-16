@@ -11,20 +11,20 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
         canais_reporte = await getReportNetworkChannels(link)
 
     if (canais_reporte.length < 1)
-        return client.notify(process.env.channel_feeds, { content: ":man_guard: | Reporte de usuários não completado, não há canais clientes registrados para receberem a notificação." })
+        return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":man_guard: | Reporte de usuários não completado, não há canais clientes registrados para receberem a notificação." } })
 
     // Coletando os dados em cache do servidor do reporte
     const cached_guild = await client.guilds(client.decifer(alvo.sid))
 
     canais_reporte.forEach(async guild => {
-        const canal_alvo = client.discord.channels.cache.get(guild.reports.channel)
+        const canal = client.discord.channels.cache.get(guild.reports.channel)
 
         if (!guild.lang)
             guild.lang = "pt-br"
 
-        if (canal_alvo) // Enviando os anúncios para os canais
-            if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) // Permissão para enviar mensagens no canal
-                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+        if (canal) // Enviando os anúncios para os canais
+            if (canal.type === ChannelType.GuildText || canal.type === ChannelType.GuildAnnouncement) // Permissão para enviar mensagens no canal
+                if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal })) {
 
                     let escopo_anuncio = `( ${client.defaultEmoji("earth")} ${client.tls.phrase(guild, "mode.report.aviso_global")} )`
 
@@ -61,7 +61,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                             }
                         )
 
-                        canal_alvo.send({ embeds: [embed] })
+                        canal.send({ embeds: [embed] })
 
                     } else if (id_canal === guild.reports.channel) {
 
@@ -73,7 +73,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                                 iconURL: client.avatar()
                             })
 
-                        canal_alvo.send({ content: guild.reports.role ? `<@&${guild.reports.role}>` : "⠀", embeds: [embed] })
+                        canal.send({ content: guild.reports.role ? `<@&${guild.reports.role}>` : "⠀", embeds: [embed] })
                     }
                 }
     })

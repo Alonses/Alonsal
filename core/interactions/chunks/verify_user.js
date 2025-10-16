@@ -5,16 +5,16 @@ const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 
 module.exports = async ({ client, user, interaction, id_cache }) => {
 
-    let id_alvo = id_cache || interaction.options.getUser("user").id
-    const user_alvo = await client.getMemberGuild(interaction, id_alvo) // Dados de membro do servidor
+    let id_user = id_cache || interaction.options.getUser("user").id
+    const user_alvo = await client.execute("getMemberGuild", { interaction, id_user }) // Dados de membro do servidor
         .catch(() => { return null })
 
     // Usuário não faz parte do servidor (caso o usuário saia do servidor enquanto o comando é executado)
     if (!user_alvo) return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
     // Coletando os dados de histórico do usuário
-    const reports = await verifyUserReports(client.encrypt(id_alvo))
-    const user_c = await client.getUser(id_alvo)
+    const reports = await verifyUserReports(client.encrypt(id_user))
+    const user_c = await client.execute("getUser", { id_user })
 
     let apelido = user_alvo.nickname !== null ? user_alvo.nickname : user_alvo.user.username
     let avisos = 0, descricao = `\`\`\`✅ | ${client.tls.phrase(user, "mode.report.sem_report")}\`\`\``
@@ -26,12 +26,12 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
 
     // Avatar do usuário
     const avatar_user = user_alvo.user.avatarURL({ dynamic: true, size: 2048 }), historico = []
-    const strikes = await verifyUserStrikes(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
+    const strikes = await verifyUserStrikes(client.encrypt(id_user), client.encrypt(interaction.guild.id))
 
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    const warns = await listAllUserWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
+    const warns = await listAllUserWarns(client.encrypt(id_user), client.encrypt(interaction.guild.id))
 
-    let indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+    let indice_matriz = client.execute("verifyMatrixIndex", { guild_config: guild_warns }) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Quantificando os relatórios sobre o usuário
     reports.forEach(valor => {
@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
         fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} ${user_name}`,
+                value: `${client.emoji("icon_id")} \`${id_user}\`\n${client.emoji("mc_name_tag")} ${user_name}`,
                 inline: true
             },
             {
@@ -80,12 +80,12 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     const botoes = []
 
     if (strikes?.strikes > 0) // Botão para resetar os strikes do usuário no servidor
-        botoes.push({ id: "user_reset_strikes", name: { tls: "menu.botoes.remover_strikes" }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` })
+        botoes.push({ id: "user_reset_strikes", name: { tls: "menu.botoes.remover_strikes" }, type: 0, emoji: client.emoji(42), data: `2|${id_user}` })
 
     if (warns.length > 0) // Botão para resetar os warns do usuário no servidor
         botoes.push(
-            { id: "user_reset_warns", name: { tls: "menu.botoes.remover_advertencias" }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}` },
-            { id: "panel_guild_browse_warns", name: { tls: "menu.botoes.gerenciar_advertencias" }, type: 1, emoji: client.emoji(41), data: `0|${id_alvo}` }
+            { id: "user_reset_warns", name: { tls: "menu.botoes.remover_advertencias" }, type: 0, emoji: client.emoji(42), data: `2|${id_user}` },
+            { id: "panel_guild_browse_warns", name: { tls: "menu.botoes.gerenciar_advertencias" }, type: 0, emoji: client.emoji(41), data: `0|${id_user}` }
         )
 
     if (botoes.length > 0)

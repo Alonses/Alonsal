@@ -26,7 +26,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operador === 0) {
 
         let dono_sv = interaction.guild.ownerId
-        const dono_membro = await client.getMemberGuild(interaction, dono_sv)
+        const dono_membro = await client.execute("getMemberGuild", { interaction, id_user: dono_sv })
 
         dono_sv = `\`${dono_membro.user.username.replace(/ /g, "")}#${dono_membro.user.discriminator}\``
 
@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         // Exibindo o usuário que adicionou o bot ao servidor
         if (guild.inviter) {
 
-            const inviter_membro = await client.getMemberGuild(interaction, guild.inviter)
+            const inviter_membro = await client.execute("getMemberGuild", { interaction, id_user: guild.inviter })
 
             if (inviter_membro) {
                 let inviter = `\`${inviter_membro.user.username.replace(/ /g, "")}#${inviter_membro.user.discriminator}\``
@@ -160,7 +160,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             },
             {
                 name: `:busts_in_silhouette: **${client.tls.phrase(user, "util.server.membros")}**`,
-                value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${client.locale(qtd_membros)}\`\n:arrow_up: **Max: **\`${client.locale(interaction.guild.maximumMembers)}\``,
+                value: `:bust_in_silhouette: **${client.tls.phrase(user, "util.server.atual")}:** \`${client.execute("locale", { valor: qtd_membros })}\`\n:arrow_up: **Max: **\`${client.execute("locale", { valor: interaction.guild.maximumMembers })}\``,
                 inline: true
             },
             {
@@ -178,15 +178,15 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Liga e desliga os botões conforme a página que o usuário se encontra
     const b_disabled = [false, false, false, false]
-    const c_buttons = [1, 1, 1, 1]
+    const c_buttons = [0, 0, 0, 0]
     b_disabled[operador] = true
-    c_buttons[operador] = 2
+    c_buttons[operador] = 1
 
     const row = [
         { id: "server_info_button", name: { tls: "util.lastfm.geral" }, type: c_buttons[0], emoji: '🌐', data: "0", disabled: b_disabled[0] },
         { id: "server_info_button", name: { tls: "menu.botoes.moderacao" }, type: c_buttons[1], emoji: client.emoji("aln_reporter"), data: "1", disabled: b_disabled[1] },
         { id: "server_info_button", name: { tls: "menu.botoes.estatisticas" }, type: c_buttons[2], emoji: client.defaultEmoji("metrics"), data: "2", disabled: b_disabled[2] },
-        { id: "server_subscription", name: { tls: `menu.botoes.${guild.misc.subscription.active ? "impulso" : "impulsionar"}` }, type: 1, emoji: '⚡', data: "0" }
+        { id: "server_subscription", name: { tls: `menu.botoes.${guild.misc.subscription.active ? "impulso" : "impulsionar"}` }, type: 0, emoji: '⚡', data: "0" }
     ]
 
     // Servidor com imagem personalizada

@@ -17,7 +17,7 @@ module.exports = async ({ client, internal_guild, cached_guild, guild_evento, gu
     const descricao_evento = client.tls.phrase(internal_guild, "mode.network.ban_removido", null, [registroAudita.executor.username, guild_evento.name])
 
     // Atualiza o tempo de inatividade do servidor
-    client.updateGuildIddleTimestamp(internal_guild.sid)
+    client.execute("updateGuildIddleTimestamp", { sid: internal_guild.sid })
 
     // Removendo o banimento do usuário do servidor
     await cached_guild.members.unban(registroAudita.targetId, { reason: `📡 Network | ${descricao_evento}` })

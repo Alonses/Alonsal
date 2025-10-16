@@ -4,7 +4,8 @@ const { listAllUserGroups } = require('../../../core/database/schemas/User_tasks
 module.exports = async ({ client, user, interaction }) => {
 
     // Criando uma nova tarefa
-    let listas, timestamp = client.timestamp()
+    let listas
+    const timestamp = client.execute("timestamp")
 
     // Verificando se o usuário desabilitou as tasks globais
     if (client.decider(user?.conf.global_tasks, 1))

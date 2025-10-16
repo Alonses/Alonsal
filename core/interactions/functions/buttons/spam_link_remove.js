@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
-                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "2" }
+                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "2" }
             ], interaction, user)
 
         return client.reply(interaction, {
@@ -35,8 +35,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const guild = await client.getGuild(interaction.guild.id)
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-        client.notify(process.env.channel_feeds, { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente!\n( \`${client.decifer(link.link).split("").join(" ")}\` )` })
-        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.excluido_manual", [44, 13], client.decifer(link.link).split("").join(" ")) })
+        client.execute("notify", {
+            id_canal: process.env.channel_feeds,
+            conteudo: { content: `:link: :no_entry_sign: | Um link suspeito foi removido manualmente!\n( \`${client.decifer(link.link).split("").join(" ")}\` )` }
+        })
+        client.execute("notify", {
+            id_canal: guild.spam.channel || guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.link_suspeito.excluido_manual", [44, 13], client.decifer(link.link).split("").join(" ")) }
+        })
 
         // Excluindo o link suspeito
         await dropSuspiciousLink(link.link)
@@ -49,7 +55,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         if (links.length > 0) // Verificando se há links suspeitos no servidor
             row = client.create_buttons([
-                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "2" }
+                { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "2" }
             ], interaction, user)
 
         return client.reply(interaction, {

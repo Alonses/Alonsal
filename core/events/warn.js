@@ -5,14 +5,15 @@ const { spamTimeoutMap } = require('../formatters/patterns/timeout')
 
 module.exports = async function ({ client, interaction, user, member_guild, user_warn, hierarquia }) {
 
-    const id_alvo = user_warn.uid
+    const id_user = user_warn.uid
     const guild = await client.getGuild(interaction.guild.id)
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
 
-    const active_user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+    const timestamp_atual = client.execute("timestamp")
+    const active_user_warns = await listAllUserWarns(id_user, interaction.guild.id)
     const indice_warn = active_user_warns.length > guild_warns.length ? guild_warns.length - 1 : active_user_warns.length - 1
 
-    let indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+    let indice_matriz = client.execute("verifyMatrixIndex", { guild_config: guild_warns }) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = client.create_embed({
@@ -22,7 +23,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
         fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_user}\`\n${client.emoji("mc_name_tag")} \`${user_warn.nick}\`\n( <@${id_user}> )`,
                 inline: true
             },
             {
@@ -48,7 +49,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
         embed_guild
             .addFields({
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "menu.botoes.expiracao")}**`,
-                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${client.tls.phrase(guild, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${client.timestamp() + spamTimeoutMap[guild.warn.reset]}:f> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${client.tls.phrase(guild, `menu.times.${spamTimeoutMap[guild.warn.reset]}`)}\`**\n( <t:${timestamp_atual + spamTimeoutMap[guild.warn.reset]}:f> )`,
                 inline: true
             })
             .setFooter({
@@ -66,7 +67,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
 
     embed_guild.addFields({
         name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
-        value: client.verifyAction(guild_warns[indice_warn], guild),
+        value: client.execute("verifyAction", { action: guild_warns[indice_warn], source: guild }),
         inline: true
     })
 
@@ -76,12 +77,12 @@ module.exports = async function ({ client, interaction, user, member_guild, user
     if (guild.warn.timed_channel) interaction.channel.id = guild.warn.timed_channel
 
     // Envia uma mensagem temporária no canal onde foi gerada a advertência
-    client.timed_message(interaction, { content: client.tls.phrase(guild, "mode.warn.anuncio_temporario", null, [id_alvo, `${active_user_warns.length} / ${indice_matriz}`, client.verifyAction(guild_warns[indice_warn], guild), client.timestamp() + 60]) }, 60)
+    client.execute("timed_message", { interaction, message: { content: client.tls.phrase(guild, "mode.warn.anuncio_temporario", null, [id_user, `${active_user_warns.length} / ${indice_matriz}`, client.execute("verifyAction", { action: guild_warns[indice_warn], source: guild }), timestamp_atual + 60]) }, expires: 60 })
 
     // Servidor com anúncio de advertências público configurado
     if (guild.warn?.announce?.status && guild.warn?.announce?.channel) {
         canal_envio = guild.warn.announce.channel
-        texto_embed = `<@${id_alvo}>`
+        texto_embed = `<@${id_user}>`
 
         embed_guild.setDescription(`\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_warn.relatory}\`\`\``)
             .setFooter({
@@ -90,16 +91,19 @@ module.exports = async function ({ client, interaction, user, member_guild, user
             })
     }
 
-    client.notify(canal_envio, {
-        content: texto_embed, // Servidor com ping de advertência ativo
-        embeds: [embed_guild]
+    client.execute("notify", {
+        id_canal: canal_envio,
+        conteudo: {
+            content: texto_embed, // Servidor com ping de advertência ativo
+            embeds: [embed_guild]
+        }
     })
 
     if (guild_warns[indice_warn].action) // Usuário recebeu a uma advertência com penalidade
         if (guild_warns[indice_warn].action !== "none") {
 
-            const guild_member = await client.getMemberGuild(interaction.guild.id, id_alvo)
-            const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
+            const guild_member = await client.execute("getMemberGuild", { interaction, id_user })
+            const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
             // Redirecionando o evento
             require(`./warn/${guild_warns[indice_warn].action.replace("_2", "")}`)({ client, user, interaction, guild, active_user_warns, user_warn, guild_member, bot_member })
@@ -107,7 +111,7 @@ module.exports = async function ({ client, interaction, user, member_guild, user
 
     if (guild_warns[indice_warn].role) { // Advertência atual acrescenta um cargo ao membro
         const dados = guild_warns[indice_warn], acionador = "warn"
-        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, dados, acionador, indice_warn })
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_user, dados, acionador, indice_warn })
     }
 
     if (!hierarquia)

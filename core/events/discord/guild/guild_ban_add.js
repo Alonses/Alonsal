@@ -11,12 +11,15 @@ module.exports = async ({ client, ban }) => {
     if (!guild.logger.member_ban_add || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    if (!await client.permissions(ban, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!await client.execute("permissions", { interaction: ban, id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         guild.logger.member_ban_add = false
         guild.save()
 
-        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
+        return client.execute("notify", {
+            id_canal: guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.logger.permissao", 7) }
+        })
     }
 
     // Coletando dados sobre o evento
@@ -75,5 +78,5 @@ module.exports = async ({ client, ban }) => {
     if (guild.death_note.channel === canal_aviso && guild.death_note.notify)
         obj.content = "@here"
 
-    client.notify(canal_aviso, obj)
+    client.execute("notify", { id_canal: canal_aviso, conteudo: obj })
 }

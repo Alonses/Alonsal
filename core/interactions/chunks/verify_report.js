@@ -70,10 +70,10 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, user)
 
     // Criando os botões para as funções de reporte
-    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `report_browse_user|${pagina}` }]
+    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `report_browse_user|${pagina}` }]
 
     if (alvo.executer || process.env.owner_id.includes(interaction.user.id)) // Botão para remover o reporte do usuário no servidor
-        botoes.push({ id: "report_remove_user", name: { tls: "menu.botoes.remover_reporte" }, type: 1, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}.${pagina}` })
+        botoes.push({ id: "report_remove_user", name: { tls: "menu.botoes.remover_reporte" }, type: 0, emoji: client.emoji(39), data: `2|${id_alvo}.${interaction.guild.id}.${pagina}` })
 
     client.reply(interaction, {
         content: "",

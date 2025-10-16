@@ -37,7 +37,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
 
                     ano_atual - res[i].ano > 1 ? lista_eventos += `${client.tls.phrase(alvo, "util.history.ha")} ${ano_atual - res[i].ano}${client.tls.phrase(alvo, "util.unidades.anos")}\` ] ` : ano_atual - res[i].ano === 1 ? lista_eventos += `${client.tls.phrase(alvo, "util.history.ano_passado")}\` ] ` : lista_eventos += `${client.tls.phrase(alvo, "util.history.este_ano")}\` ] `
 
-                    lista_eventos += `${client.execute("formatters", "formata_texto", res[i].acontecimento)}\n`
+                    lista_eventos += `${client.execute("formata_texto", { string: res[i].acontecimento })}\n`
                 }
 
                 if (dados === "") dados = client.tls.phrase(alvo, "util.history.hoje")
@@ -80,13 +80,13 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                 ], interaction, alvo)
 
                 const acontecimento = client.create_embed({
-                    title: client.execute("formatters", "formata_texto", res.acontecimento),
+                    title: client.execute("formata_texto", { string: res.acontecimento }),
                     author: {
                         name: "History",
                         iconURL: "https://1000marcas.net/wp-content/uploads/2021/04/History-Channel-Logo-1536x960.png"
                     },
                     image: res.imagem,
-                    description: client.execute("formatters", "formata_texto", res.descricao)
+                    description: client.execute("formata_texto", { string: res.descricao })
                 }, alvo)
 
                 if (interaction)

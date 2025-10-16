@@ -41,8 +41,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const guild = await client.getGuild(interaction.guild.id)
 
         // Notificando sobre a adição de um novo link suspeito ao banco do Alonsal e ao servidor original
-        client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente!\n( \`${novo_link.split("").join(" ")}\` )` })
-        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(user, "mode.link_suspeito.adicionado_manualmente", [44, 10], novo_link.split("").join(" ")) })
+        client.execute("notify", {
+            id_canal: process.env.channel_feeds,
+            conteudo: { content: `:link: :inbox_tray: | Um novo link suspeito foi adicionado manualmente!\n( \`${novo_link.split("").join(" ")}\` )` }
+        })
+        client.execute("notify", {
+            id_canal: guild.spam.channel || guild.logger.channel,
+            conteudo: { content: client.tls.phrase(user, "mode.link_suspeito.adicionado_manualmente", [44, 10], novo_link.split("").join(" ")) }
+        })
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "mode.link_suspeito.aviso_adicao", [44, 10], guild.spam.channel || guild.logger.channel),
@@ -92,8 +98,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina)
-        let botoes = [{ id: "spam_link_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "2" }]
+        const row = client.execute("menu_navigation", { user, data, pagina })
+        let botoes = [{ id: "spam_link_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "2" }]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -109,7 +115,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Sub menu para gerenciar se o link suspeito será excluído ou não
         const row = client.create_buttons([
-            { id: "spam_link_remove", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${timestamp}.${client.decifer(link.sid)}` },
+            { id: "spam_link_remove", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${timestamp}.${client.decifer(link.sid)}` },
             { id: "spam_link_remove", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
         ], interaction, user)
 

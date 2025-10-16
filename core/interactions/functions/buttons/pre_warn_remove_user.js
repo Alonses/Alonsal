@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (anotacoes_server.length > 0) {
             row = client.create_buttons([
-                { id: "return_button", name: { tls: "menu.botoes.ver_usuarios" }, type: 0, emoji: client.emoji(19), data: "remove_pre_warn" }
+                { id: "return_button", name: { tls: "menu.botoes.ver_usuarios" }, type: 2, emoji: client.emoji(19), data: "remove_pre_warn" }
             ], interaction, user)
 
             obj.components.push(row)
@@ -65,9 +65,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 timestamp: true
             }, guild)
 
-            client.notify(guild.warn.channel, {
-                content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
-                embeds: [embed]
+            client.execute("notify", {
+                id_canal: guild.warn.channel,
+                conteudo: {
+                    content: guild.warn.notify ? "@here" : "", // Servidor com ping de advertência ativo
+                    embeds: [embed]
+                }
             })
         }
 
@@ -77,7 +80,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Criando os botões para o menu de remoção de anotações de advertências do servidor
         const row = client.create_buttons([
-            { id: "pre_warn_remove_user", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
+            { id: "pre_warn_remove_user", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${id_alvo}.${interaction.guild.id}` },
             { id: "pre_warn_remove_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${interaction.guild.id}` }
         ], interaction, user)
 
@@ -113,7 +116,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             flags: "Ephemeral"
         }
 
-        let row = client.menu_navigation(user, data, pagina || 0)
+        let row = client.execute("menu_navigation", { user, data, pagina })
 
         if (row.length > 0) // Botões de navegação
             obj.components.push(client.create_buttons(row, interaction))

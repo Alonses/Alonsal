@@ -8,12 +8,15 @@ module.exports = async ({ client, invite }) => {
     if (!guild.logger.invite_deleted || !guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    if (!await client.permissions(invite, client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!await client.execute("permissions", { interaction: invite, id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         guild.logger.invite_deleted = false
         guild.save()
 
-        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
+        return client.execute("notify", {
+            id_canal: guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.logger.permissao", 7) }
+        })
     }
 
     // Coletando dados sobre o evento
@@ -44,5 +47,8 @@ module.exports = async ({ client, invite }) => {
         timestamp: true
     }, guild)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

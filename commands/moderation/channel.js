@@ -56,7 +56,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Permissões para gerenciar canais e cargos necessária para a função de bloqueio do chat do servidor
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles] }))
             return client.tls.reply(interaction, user, "mode.ticket.permissao", true, 3)
 
         const channel = await client.getGuildChannel(interaction.channel.id)
@@ -67,7 +67,7 @@ module.exports = {
     async menu({ client, user, interaction }) {
 
         // Verificando se o bot pode gerenciar as mensagens do servidor
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageMessages]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageMessages] }))
             return client.tls.reply(interaction, user, "mode.clear.permissao", true, 3)
 
         // Excluindo as mensagens do usuário alvo

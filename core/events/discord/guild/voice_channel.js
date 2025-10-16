@@ -27,5 +27,8 @@ module.exports = async ({ client, oldState, newState }) => {
         }
     }, guild)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

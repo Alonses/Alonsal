@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction }) => {
             resultado = resultado.toFixed(6)
 
         return client.reply(interaction, {
-            content: `${client.tls.phrase(user, "util.calc.resultado", emoji_res)}: \`${client.locale(resultado)}\``,
+            content: `${client.tls.phrase(user, "util.calc.resultado", emoji_res)}: \`${client.execute("locale", { valor: resultado })}\``,
             flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
         }, true)
     } catch {

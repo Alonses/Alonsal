@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction }) => {
         return client.tls.reply(interaction, user, "util.tarefas.lista_repetida", true, client.emoji(0))
 
     // Criando uma nova lista de tarefas
-    createGroup(user.uid, client.encrypt(interaction.options.getString("description")), client.encrypt(interaction.guild.id), client.timestamp())
+    createGroup(user.uid, client.encrypt(interaction.options.getString("description")), client.encrypt(interaction.guild.id), client.execute("timestamp"))
 
     client.tls.reply(interaction, user, "util.tarefas.lista_criada", client.decider(user?.conf.ghost_mode, 0), client.defaultEmoji("paper"))
 }

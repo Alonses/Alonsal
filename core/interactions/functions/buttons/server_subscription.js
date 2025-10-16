@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operacao === 10) // Redirecionando o usuário para os benefícios do suporte
         return require("../../../formatters/chunks/model_support")({ client, user, interaction })
 
-    let row = [{ id: "server_info_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: '0' }], data_impulso
+    let row = [{ id: "server_info_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: '0' }], data_impulso
     const guild = await client.getGuild(interaction.guild.id)
 
     if (guild.misc.subscription.expires) data_impulso = `<t:${guild.misc.subscription.expires}:f>`
@@ -25,19 +25,19 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     if (!operacao) {
         if (guild.misc?.subscription.id_owner === user.uid) // Verificando se o impulsionar é o usuário atual
-            row.push({ id: "server_subscription", name: { tls: "menu.botoes.remover_impulso" }, type: 1, emoji: "❌", data: 1 })
+            row.push({ id: "server_subscription", name: { tls: "menu.botoes.remover_impulso" }, type: 0, emoji: "❌", data: 1 })
         else if (!guild.misc?.subscription.active && client.cached.subscribers.has(user.uid))
-            row.push({ id: "server_subscription", name: { tls: "menu.botoes.impulsionar_servidor" }, type: 1, emoji: "⚡", data: 2 })
+            row.push({ id: "server_subscription", name: { tls: "menu.botoes.impulsionar_servidor" }, type: 0, emoji: "⚡", data: 2 })
     }
 
     if (!client.cached.subscribers.has(user.uid)) // Verificando se o usuário da interação é um assinante
-        row.push({ id: "server_subscription", name: { tls: "menu.botoes.virar_assinante" }, type: 1, emoji: "🏆", data: 10 })
+        row.push({ id: "server_subscription", name: { tls: "menu.botoes.virar_assinante" }, type: 2, emoji: "🏆", data: 10 })
 
     if (operacao === 1 || operacao === 2) {
 
         // Sub-menu para confirmar a remoção do impulso
         row = [
-            { id: "server_subscription", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: operacao + 10 },
+            { id: "server_subscription", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: operacao + 10 },
             { id: "server_subscription", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: 0 }
         ]
 
@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.assinante.vinculado_servidor", 74),
             embeds: [],
-            components: [client.create_buttons([{ id: "server_subscription", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: '0' }], interaction, user)],
+            components: [client.create_buttons([{ id: "server_subscription", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: '0' }], interaction, user)],
             flags: "Ephemeral"
         })
 
@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return interaction.update({
             content: client.tls.phrase(user, "misc.assinante.vinculado_servidor", 73),
             embeds: [],
-            components: [client.create_buttons([{ id: "server_subscription", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: '0' }], interaction, user)],
+            components: [client.create_buttons([{ id: "server_subscription", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: '0' }], interaction, user)],
             flags: "Ephemeral"
         })
     }

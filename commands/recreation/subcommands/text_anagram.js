@@ -53,7 +53,7 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
             iconURL: interaction.user.avatarURL({ dynamic: true })
         },
         footer: {
-            text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.locale(result)} ${combinacoes}`
+            text: `${client.tls.phrase(user, "dive.anagrama.sequencia")} ${client.execute("locale", { valor: result })} ${combinacoes}`
         }
     }, user)
 

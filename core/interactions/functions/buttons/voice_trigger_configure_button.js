@@ -76,16 +76,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 reback: `browse_button.voice_trigger_configure_button`,
                 operation: operacao,
                 submenu: `${hash_trigger}.${operacao}`,
-                values: await client.getGuildChannels(interaction, user, cached_channel_type, canal)
+                values: await client.execute("getGuildChannels", {
+                    interaction,
+                    user,
+                    tipo: cached_channel_type,
+                    id_configurado: canal
+                })
             }
 
             // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
             if (data.values.length < pagina * 24) pagina--
 
-            const row = client.menu_navigation(user, data, pagina || 0)
+            const row = client.execute("menu_navigation", { user, data, pagina })
             let botoes = [
-                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-                { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `${operacao}.${hash_trigger}` }
+                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+                { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: `${operacao}.${hash_trigger}` }
             ]
 
             if (!trigger.config.channel || !trigger.config.category) // Botão para cancelar a configuração do trigger
@@ -122,7 +127,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
-        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }]
 
         return client.reply(interaction, {
             components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
@@ -148,7 +153,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
-        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }]
 
         return client.reply(interaction, {
             components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
@@ -159,7 +164,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Sub menu para confirmar a exclusão do trigger
         const row = client.create_buttons([
-            { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `26.${hash_trigger}` },
+            { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `26.${hash_trigger}` },
             { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: reback }
         ], interaction, user)
 

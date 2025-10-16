@@ -4,7 +4,7 @@ const fetch = (...args) =>
 module.exports = async ({ client, user, interaction }) => {
 
     let user_alvo = interaction.options.getUser("user") || interaction.user
-    const user_c = await client.getUser(user_alvo.id)
+    const user_c = await client.execute("getUser", { id_user: user_alvo.id })
 
     let response = fetch(`https://discord.com/api/v8/users/${user_alvo.id}`, {
         method: 'GET',

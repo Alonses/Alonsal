@@ -11,8 +11,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         return client.tls.report(interaction, user, "menu.botoes.operacao_cancelada", true, 11, interaction.customId)
 
     // Transferindo Bufunfas entre usuários
-    const id_alvo = dados.split(".")[2].split("[")[0]
-    const alvo = await client.getUser(id_alvo)
+    const id_user = dados.split(".")[2].split("[")[0]
+    const alvo = await client.execute("getUser", { id_user })
     const bufunfas = parseFloat(dados.split("[")[1])
 
     user.misc.money -= bufunfas
@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     setTimeout(async () => { // Registrando as movimentações de bufunfas para os usuários
 
-        const user_i = await client.getCachedUser(id_alvo)
+        const user_i = await client.getCachedUser(id_user)
 
         await client.registryStatement(user.uid, `misc.b_historico.deposito_enviado|${user_i.username}`, false, bufunfas)
         await client.registryStatement(alvo.uid, `misc.b_historico.deposito_recebido|${interaction.user.username}`, true, bufunfas)
@@ -31,12 +31,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, 2000)
 
     interaction.update({
-        content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.locale(bufunfas), id_alvo]),
+        content: client.tls.phrase(user, "misc.pay.sucesso", [9, 10], [client.execute("locale", { valor: bufunfas }), id_user]),
         embeds: [],
         components: [],
         flags: client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     })
 
     // Notificando o usuário que recebeu as Bufunfas
-    client.sendDM(alvo, { content: client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes"), [user.uid, client.locale(bufunfas)]) })
+    client.execute("sendDM", { user: alvo, dados: { content: client.tls.phrase(alvo, "misc.pay.notifica", client.emoji("emojis_dancantes"), [user.uid, client.execute("locale", { valor: bufunfas })]) } })
 }

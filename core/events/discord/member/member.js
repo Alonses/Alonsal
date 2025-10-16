@@ -3,21 +3,24 @@ const { PermissionsBitField } = require('discord.js')
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados[0].guild.id)
-    const user_alvo = dados[0].user
+    const id_user = (dados[0].user).id
 
     if (guild.network.member_punishment && guild.conf.network) // Network de servidores
-        client.network(guild, "mute", user_alvo.id)
+        client.network(guild, "mute", id_user)
 
     // Verificando se a guild habilitou o logger
     if (!guild.conf.logger) return
 
     // Permissão para ver o registro de auditoria, desabilitando o logger
-    if (!await client.permissions(dados[0], client.id(), PermissionsBitField.Flags.ViewAuditLog)) {
+    if (!await client.execute("permissions", { interaction: dados[0], id_user: client.id(), permissions: PermissionsBitField.Flags.ViewAuditLog })) {
 
         guild.logger.member_role = false
         guild.save()
 
-        return client.notify(guild.logger.channel, { content: client.tls.phrase(guild, "mode.logger.permissao", 7) })
+        return client.execute("notify", {
+            id_canal: guild.logger.channel,
+            conteudo: { content: client.tls.phrase(guild, "mode.logger.permissao", 7) }
+        })
     }
 
     // Verificando qual atributo foi atualizado
@@ -44,7 +47,7 @@ module.exports = async (client, dados) => {
             return require('./member_role')({ client, guild, registroAudita, dados })
     }
 
-    const user = await client.getUser(user_alvo.id)
+    const user = await client.execute("getUser", { id_user })
 
     // Membro atualizou a foto de perfil
     if (client.encrypt(user.profile.avatar) !== client.encrypt(dados[1].user.avatarURL({ dynamic: true })) && guild.logger.member_image)

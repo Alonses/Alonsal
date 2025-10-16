@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1) {
 
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles] }))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 flags: "Ephemeral"
@@ -37,16 +37,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             alvo: "guild_tickets#category",
             reback: "browse_button.guild_tickets_button",
             operation: operacao,
-            values: await client.getGuildChannels(interaction, user, ChannelType.GuildCategory, client.decifer(guild.tickets.category))
+            values: await client.execute("getGuildChannels", {
+                interaction,
+                user,
+                tipo: ChannelType.GuildCategory,
+                id_configurado: client.decifer(guild.tickets.category)
+            })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-            { id: "guild_tickets_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "2" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+            { id: "guild_tickets_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "2" }
         ]
 
         if (row.length > 0) // Botões de navegação

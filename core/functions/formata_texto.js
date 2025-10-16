@@ -1,6 +1,8 @@
-const { cases } = require("./patterns/general")
+const { cases } = require("../formatters/patterns/general")
 
-module.exports = (string) => {
+module.exports = ({ client, data }) => {
+
+    let string = data.string
 
     if (!string) return "`Sem texto`"
 

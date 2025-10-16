@@ -50,6 +50,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (indice_warn < 1) indice_warn = 0
 
     const notas_requeridas = guild_warns[indice_warn].strikes !== 0 ? guild_warns[indice_warn].strikes : guild.warn.hierarchy.strikes
+    const timestamp_atual = client.execute("timestamp")
 
     // Embed de aviso para o servidor onde foi aplicada a advertência
     const embed_guild = client.create_embed({
@@ -81,7 +82,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         embed_guild
             .addFields({
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "menu.botoes.expiracao")}**`,
-                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${client.tls.phrase(guild, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${client.timestamp() + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${client.tls.phrase(guild, `menu.times.${defaultEraser[guild.warn.hierarchy.reset]}`)}\`**\n( <t:${timestamp_atual + defaultEraser[guild.warn.hierarchy.reset]}:f> )`,
                 inline: false
             })
             .setFooter({
@@ -93,8 +94,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (guild.warn.timed_channel) interaction.channel.id = guild.warn.timed_channel
 
     // Envia uma mensagem temporária no canal onde foi gerada a anotação de advertência
-    client.timed_message(interaction, { content: client.tls.phrase(guild, "mode.anotacoes.ping_anotacao", [id_alvo, notas_recebidas.length, notas_recebidas, client.timestamp() + 60]) }, 60)
-    client.notify(guild.warn.hierarchy.channel, { embeds: [embed_guild] })
+    client.execute("timed_message", { interaction, message: { content: client.tls.phrase(guild, "mode.anotacoes.ping_anotacao", [id_alvo, notas_recebidas.length, notas_recebidas, timestamp_atual + 60]) }, expires: 60})
+    client.execute("notify", {
+        id_canal: guild.warn.hierarchy.channel,
+        conteudo: { embeds: [embed_guild] }
+    })
 
     client.reply(interaction, {
         content: client.tls.phrase(user, "mode.warn.advertencia_registrada", 63),
@@ -109,7 +113,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (notas_recebidas.length >= notas_requeridas) {
 
         // Criando um card de advertência hierárquica ao membro
-        const hierarchy_warn = await getUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), client.timestamp())
+        const hierarchy_warn = await getUserWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp_atual)
 
         hierarchy_warn.hierarchy = true
         hierarchy_warn.save()
@@ -131,7 +135,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
                 },
                 {
                     name: `${client.emoji("banidos")} **${client.tls.phrase(guild, "menu.botoes.penalidade")}**`,
-                    value: client.verifyAction(guild_warns[indice_warn], guild),
+                    value: client.execute("verifyAction", { action: guild_warns[indice_warn], source: guild }),
                     inline: true
                 }
             ],
@@ -139,11 +143,14 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }, guild)
 
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 1, emoji: client.emoji(10), data: `1|${id_alvo}.${indice_warn}` },
             { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia" }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${indice_warn}` }
         ]
 
         // Enviando o card para os moderadores poderem autorizar a aplicação da advertência
-        client.notify(guild.warn.hierarchy.channel, { embeds: [embed], components: [client.create_buttons(rows, interaction, guild)] })
+        client.execute("notify", {
+            id_canal: guild.warn.hierarchy.channel,
+            conteudo: { embeds: [embed], components: [client.create_buttons(rows, interaction, guild)] }
+        })
     }
 }

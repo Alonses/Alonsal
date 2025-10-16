@@ -1,14 +1,18 @@
 /**
  * Gera os botões de navegação para menus paginados
  * @param {object} client - Instância do client
- * @param {object} user - Usuário atual
- * @param {object} dados - Dados do menu
- * @param {number} pagina - Página atual
+ * @param {object} data - Dados do menu
  * @returns {Array} Array de botões para navegação
  */
-module.exports = (client, user, dados, pagina) => {
+module.exports = ({ client, data }) => {
+
+    const user = data.user
+    const pagina = data?.pagina || 0
+    const dados = data.data
+
     const itensPorPagina = 25
-    const totalPaginas = Math.ceil(dados.values.length / itensPorPagina)
+
+    const totalPaginas = Math.ceil((dados.values).length / itensPorPagina)
     const row = []
 
     // Desabilita os botões conforme a página atual

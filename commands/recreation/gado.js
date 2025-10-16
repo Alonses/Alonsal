@@ -46,7 +46,7 @@ module.exports = {
             return client.tls.reply(interaction, user, "dive.gado.error_2", true, 67)
 
         // Permissões do Alonso para enviar mensagem e ver o canal onde o comando foi usado
-        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction))
+        if (!await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal: interaction }))
             return client.tls.reply(interaction, user, "dive.gado.permissao", true, 7)
 
         let frase_gado = client.tls.phrase(user, "dive.gado.frases", null, `\`${alvo.username}\``)
@@ -56,7 +56,7 @@ module.exports = {
 
             // Gerando o canvas do gado
             const operador = frase_gado.split("|")[0] || "0"
-            let url_img = `./files/img/gado/gado_${gado[operador][client.random(gado[operador])]}.png`
+            let url_img = `./files/img/gado/gado_${gado[operador][client.execute("random", { intervalo: gado[operador] })]}.png`
             frase_gado = frase_gado.split("|")[1]
 
             if (process.env.id_bool.includes(alvo.id)) url_img = "./files/img/gado/bool_1.png"

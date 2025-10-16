@@ -16,7 +16,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
         objeto_anunciado[0].tipo = "game"
 
     // Um item anunciado
-    texto_formatado = client.replace(game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], [nome_games(objeto_anunciado), `<t:${objeto_anunciado[0].expira}:D>`, valor_total, plataforma])
+    texto_formatado = client.execute("replace", { string: game["anuncio"][`anuncio_${objeto_anunciado[0].tipo}_1`], valores: [nome_games(objeto_anunciado), `<t:${objeto_anunciado[0].expira}:D>`, valor_total, plataforma] })
 
     if (objeto_anunciado.length > 1) { // Vários itens anunciados
         const jogos_disponiveis = []
@@ -31,7 +31,7 @@ function model_games(client, objeto_anunciado, plataforma, idioma_definido) {
             jogos_disponiveis.push(`- \`${game.nome}\`\n[ ${logo_plataforma} \`${preco}\` | ${mode["anuncio"]["ate_data"]} <t:${game.expira}:D> ]`)
         })
 
-        texto_formatado = `${client.replace(mode["anuncio"]["games_gratuitos"], client.emoji("emojis_dancantes"))}\n\n${jogos_disponiveis.join("\n\n")}`
+        texto_formatado = `${client.execute("replace", { string: mode["anuncio"]["games_gratuitos"], valores: client.emoji("emojis_dancantes") })}\n\n${jogos_disponiveis.join("\n\n")}`
     }
 
     return texto_formatado

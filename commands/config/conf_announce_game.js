@@ -53,7 +53,7 @@ module.exports = {
             tipo: interaction.options.getString("tipo"),
             link: interaction.options.getString("link"),
             preco: interaction.options.getNumber("preço"),
-            expira: client.timestamp(interaction.options.getString("expiração"), interaction.options.getString("horario")),
+            expira: client.execute("timestamp", { entrada: interaction.options.getString("expiração"), hora_entrada: interaction.options.getString("horario") }),
             thumbnail: interaction.options.getAttachment("imagem")
         }
 

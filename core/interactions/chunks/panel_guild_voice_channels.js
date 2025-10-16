@@ -17,14 +17,14 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     const embed = client.create_embed({
         title: `> ${client.tls.phrase(user, "mode.voice_channels.title_voice")} 🔊`,
         description: { tls: "mode.voice_channels.descricao_modulo" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**`,
+                name: `${client.execute("button_emoji", guild.conf.voice_channels)} **${client.tls.phrase(user, "mode.report.status")}**\n${client.execute("button_emoji", guild.voice_channels.preferences.mute_popup)} **${client.tls.phrase(user, "menu.botoes.mute_popup")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -34,18 +34,18 @@ module.exports = async ({ client, user, interaction }) => {
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.allow_preferences)} **${client.tls.phrase(user, "menu.botoes.customizacoes")}**`,
+                name: `${client.execute("button_emoji", guild.voice_channels.preferences.allow_preferences)} **${client.tls.phrase(user, "menu.botoes.customizacoes")}**`,
                 value: `${client.emoji(48)} **Ativadores ( ${ativadores} / ${guild.misc.subscription.active ? 10 : 2} )**`,
                 inline: true
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.Connect))} **${client.tls.phrase(user, "mode.voice_channels.conectar_canal")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ManageChannels))} **${client.tls.phrase(user, "mode.network.gerenciar_canais")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.Connect))} **${client.tls.phrase(user, "mode.voice_channels.conectar_canal")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers))} **${client.tls.phrase(user, "mode.voice_channels.mover_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.Speak))} **${client.tls.phrase(user, "mode.voice_channels.falar_canal")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.MoveMembers))} **${client.tls.phrase(user, "mode.voice_channels.mover_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.Speak))} **${client.tls.phrase(user, "mode.voice_channels.falar_canal")}**`,
                 inline: true
             }
         ],
@@ -67,20 +67,20 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Página de configuração gerais do canais de voz dinâmicos
     const botoes = [
-        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.voice_channels), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
-        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.mute_popup" }, type: client.execute("functions", "emoji_button.type_button", guild?.voice_channels.preferences.mute_popup), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.voice_channels.preferences.mute_popup), data: "5", disabled: mute_disabled },
-        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "4" },
-        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.customizacoes" }, type: client.execute("functions", "emoji_button.type_button", guild?.voice_channels.preferences.allow_preferences), emoji: client.emoji(60), data: "25" }
+        { id: "guild_voice_channels_button", name: { tls: "mode.voice_channels.faladeros" }, type: guild?.conf.voice_channels, emoji: client.execute("button_emoji", guild?.conf.voice_channels), data: "1", disabled: falta_permissoes },
+        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.mute_popup" }, type: guild?.voice_channels.preferences.mute_popup, emoji: client.execute("button_emoji", guild?.voice_channels.preferences.mute_popup), data: "5", disabled: mute_disabled },
+        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.expiracao" }, type: 0, emoji: client.defaultEmoji("time"), data: "4" },
+        { id: "guild_voice_channels_button", name: { tls: "menu.botoes.customizacoes" }, type: guild?.voice_channels.preferences.allow_preferences, emoji: client.emoji(60), data: "25" }
     ]
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.3" },
-        { id: "guild_voice_channels_button", name: "Ativadores", type: 1, emoji: client.emoji(48), data: "30" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild.3" },
+        { id: "guild_voice_channels_button", name: "Ativadores", type: 0, emoji: client.emoji(48), data: "30" }
     ]
 
     // Verificando se o usuário está conectado em um canal de voz
     if (interaction.member.voice.channel && !client.cached.voice_channels.has(`${client.encrypt(interaction.member.voice.channel.id)}.${client.encrypt(interaction.guild.id)}`, true))
-        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.converter_canal" }, type: 1, emoji: "👾", data: "6" })
+        row.push({ id: "guild_voice_channels_button", name: { tls: "menu.botoes.converter_canal" }, type: 0, emoji: "👾", data: "6" })
 
     client.reply(interaction, {
         content: "",

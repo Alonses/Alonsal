@@ -9,7 +9,7 @@ module.exports = {
 	async execute({ client, user, interaction, user_command }) {
 
 		interaction.reply({
-			content: gifs[client.random(gifs)],
+			content: gifs[client.execute("random", { intervalo: gifs })],
 			flags: client.decider(user?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
 		})
 	}

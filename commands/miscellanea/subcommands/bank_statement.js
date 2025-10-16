@@ -4,7 +4,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const date1 = new Date()
     let alvo = interaction.options.getUser("user") || interaction.user
-    let user_interno = await client.getUser(alvo.id)
+    let user_interno = await client.execute("getUser", { id_user: alvo.id })
 
     if (alvo.id === client.id())
         user_interno.misc.money = 1000000000000
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction }) => {
                 if (movimentacao.operation.split(".").length > 2) // Modelo com string traduzível
                     traducao = client.tls.phrase(user, movimentacao.operation.split("|")[0], null, movimentacao.operation.includes("|") ? movimentacao.operation.split("|")[1] : null)
 
-                extrato += `${!movimentacao.type ? "🔴 -" : "🟢 +"}B$ ${client.locale(movimentacao.value)}, ${traducao}\n`
+                extrato += `${!movimentacao.type ? "🔴 -" : "🟢 +"}B$ ${client.execute("locale", { valor: movimentacao.value })}, ${traducao}\n`
             }
         })
 
@@ -54,9 +54,9 @@ module.exports = async ({ client, user, interaction }) => {
 
         if (interaction.user.id === alvo.id) {
             if (client.cached.subscribers.has(user.uid)) // Assinante
-                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_assinante", null, [user.misc.subscriber.expires ? `<t:${user.misc.subscriber.expires}:f>` : `\`${client.tls.phrase(user, "misc.assinante.assinatura_infinita")}\``, client.getSubscriberDiscount()])}`
+                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_assinante", null, [user.misc.subscriber.expires ? `<t:${user.misc.subscriber.expires}:f>` : `\`${client.tls.phrase(user, "misc.assinante.assinatura_infinita")}\``, client.execute("getSubscriberDiscount")])}`
             else // Não assinante
-                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_nao_assinante", null, client.getSubscriberDiscount())}`
+                extrato = `${extrato}${client.tls.phrase(user, "misc.assinante.frase_nao_assinante", null, client.execute("getSubscriberDiscount"))}`
         }
 
         embed.setFooter({
@@ -65,7 +65,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
     }
 
-    embed.setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$ ${client.locale(user_interno.misc.money)}\`\`\`\n${daily}\n\n${extrato}`)
+    embed.setDescription(`:bank: ${client.tls.phrase(user, "misc.banco.bufunfas")}\`\`\`${lang}\nB$ ${client.execute("locale", { valor: user_interno.misc.money })}\`\`\`\n${daily}\n\n${extrato}`)
 
     interaction.reply({
         embeds: [embed],

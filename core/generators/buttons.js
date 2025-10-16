@@ -3,12 +3,12 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 function create_buttons(client, lista, interaction, alvo_traducao) {
 
     const row_buttons = new ActionRowBuilder()
-    const tipos = [ButtonStyle.Primary, ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
+    const tipos = [ButtonStyle.Secondary, ButtonStyle.Success, ButtonStyle.Primary, ButtonStyle.Danger, ButtonStyle.Link] // Tipos de botão disponíveis
 
     // Cores de botões
-    // 0 -> Azul
-    // 1 -> Cinza
-    // 2 -> Verde
+    // 0 -> Cinza
+    // 1 -> Verde
+    // 2 -> Azul
     // 3 -> Vermelho
     // 4 -> Cinza ( link )
 
@@ -21,10 +21,17 @@ function create_buttons(client, lista, interaction, alvo_traducao) {
         else texto = dados.name // Utilizando os nome sem tradução
 
         dados.name = texto.length > 25 ? `${texto.slice(0, 25)}...` : texto
+        let cor_botao = dados.type
+
+        if (cor_botao === true || cor_botao === false)
+            cor_botao = cor_botao === true ? 1 : 0
+
+        if (cor_botao === null || cor_botao === undefined)
+            cor_botao = 0
 
         const botao = new ButtonBuilder()
             .setLabel(dados.name)
-            .setStyle(tipos[dados.type])
+            .setStyle(tipos[cor_botao])
 
         if (dados.type === 4) // Botão de link
             botao.setURL(dados.value)

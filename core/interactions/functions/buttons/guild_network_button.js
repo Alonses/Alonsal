@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             niveis_permissao.push(PermissionsBitField.Flags.ModerateMembers)
 
         // Verificando se o bot possui permissões requeridas conforme os recursos ativos
-        if (!await client.permissions(interaction, client.id(), niveis_permissao))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: niveis_permissao }))
             return client.reply(interaction, {
                 content: client.tls.phrase(user, "manu.painel.sem_permissoes", 7),
                 flags: "Ephemeral"
@@ -75,7 +75,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             values: eventos
         }
 
-        const botoes = client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_network" }], interaction, user)
+        const botoes = client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_network" }], interaction, user)
         const multi_select = true
 
         return interaction.update({
@@ -90,7 +90,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Listando todos os servidores que o usuário é moderador
         // Selecionando os servidores para vincular ao network
         const permissions = [PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.ModerateMembers]
-        const guilds = await client.getMemberGuildsByPermissions({ interaction, user, permissions })
+        const guilds = await client.execute("getMemberGuildsByPermissions", { interaction, user, permissions })
 
         if (guilds.length < 1)
             return interaction.editReply({
@@ -112,8 +112,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         if (data.values.length < pagina * 24) pagina--
 
         const multi_select = true
-        const row = client.menu_navigation(user, data, pagina || 0)
-        let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+        const row = client.execute("menu_navigation", { user, data, pagina })
+        let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }]
 
         if (row.length > 0) // Botões de navegação
             botoes = botoes.concat(row)
@@ -132,7 +132,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             fields: [
                 {
                     name: `:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")}:**`,
-                    value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction, true) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                    value: guild.network.link ? await client.execute("getNetworkGuildNames", { user, link: guild.network.link, interaction, ignore: true }) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                     inline: true
                 }
             ],
@@ -143,7 +143,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }, user)
 
         const botoes = [
-            { id: "guild_network_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: "11" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "11" },
             { id: "guild_network_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
         ]
 
@@ -168,15 +168,20 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.network.channel))
+        data.values = data.values.concat(await client.execute("getGuildChannels", {
+            interaction,
+            user,
+            tipo: ChannelType.GuildText,
+            id_configurado: guild.network.channel
+        }))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.1` },
-            { id: "guild_network_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "5" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.1` },
+            { id: "guild_network_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "5" }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -201,7 +206,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.1` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.1` }
         ], interaction, user)
 
         return interaction.update({

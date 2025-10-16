@@ -34,7 +34,7 @@ module.exports = async function ({ client, message, guild }) {
         // Checking if he is a moderator on the server ignores members with manage permissions if the server does not allow Alonsal to manage moderators
         if (!guild?.spam.manage_mods && user_guild.permissions.has(PermissionsBitField.Flags.KickMembers || PermissionsBitField.Flags.BanMembers)) return
     } else
-        user_guild = await client.getMemberGuild(message, message.author.id)
+        user_guild = await client.execute("getMemberGuild", { message, id_user: message.author.id })
 
     if (usersmap.has(message.author.id)) {
 
@@ -109,9 +109,9 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
         else nerf_map.set(`${message.author.id}.${message.guild.id}`, true)
 
     // Atualiza o tempo de inatividade do servidor
-    client.updateGuildIddleTimestamp(message.guild.id)
+    client.execute("updateGuildIddleTimestamp", { sid: message.guild.id })
 
-    let user_guild = await client.getMemberGuild(message, message.author.id)
+    let user_guild = await client.execute("getMemberGuild", { message, id_user: message.author.id })
     let tempo_timeout = spamTimeoutMap[2]
 
     let strikes = await listAllGuildStrikes(message.guild.id)
@@ -145,9 +145,9 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     }
 
     // Redirecting the event
-    const guild_bot = await client.getMemberGuild(guild.sid, client.id())
+    const guild_bot = await client.execute("getMemberGuild", { interaction: guild.sid, id_user: client.id() })
     const user_messages = cached_messages[`${message.author.id}.${guild.sid}`]
-    const user = await client.getUser(message.author.id)
+    const user = await client.execute("getUser", { id_user: message.author.id })
     let mensagens_spam = []
 
     // Listando as mensagens que foram consideradas como spam e formatando a visualização
@@ -156,7 +156,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     mensagens_spam = mensagens_spam.length > 1000 ? `${mensagens_spam.slice(0, 1000)}\n.\n.\n.` : mensagens_spam
 
     // Coletando o indice que expulsa ou bane o membro do servidor através dos Strikes
-    const indice_matriz = client.verifyMatrixIndex(strikes)
+    const indice_matriz = client.execute("verifyMatrixIndex", { guild_config: strikes })
 
     // Strike não possui penalidade, definindo para apenas notificar
     if (!strike_aplicado?.action) strike_aplicado = { action: "member_warn" }
@@ -165,8 +165,8 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, indice_matriz, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })
 
     if (strike_aplicado.role) { // Current Strike adds a role
-        const interaction = message, dados = strike_aplicado, acionador = "spam", id_alvo = message.author.id
-        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, dados, acionador })
+        const interaction = message, dados = strike_aplicado, acionador = "spam", id_user = message.author.id
+        require('../auto/triggers/user_assign_role')({ client, guild, interaction, id_user, dados, acionador })
     }
 
     setTimeout(() => { // Search sent messages to delete sent after spam validation
@@ -185,14 +185,20 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
         if (link?.length > 0 && !await verifySuspiciousLink(link)) {
 
             if (!links_oficiais.includes(link[0].split("/")[0])) {
-                const registrados = await registerSuspiciousLink(client, link[0], client.encrypt(guild.sid), client.timestamp()) || []
+                const registrados = await registerSuspiciousLink(client, link[0], client.encrypt(guild.sid), client.execute("timestamp")) || []
 
                 // Registering suspicious links that are not saved yet and notifying about the addition of a new suspicious link to the Alonsal database and the original server
                 if (registrados.length > 0) {
-                    client.notify(process.env.channel_feeds, { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` })
+                    client.execute("notify", {
+                        id_canal: process.env.channel_feeds,
+                        conteudo: { content: `:link: :inbox_tray: | Um novo link suspeito foi salvo!\n( \`${registrados.join("\n")}\` )` }
+                    })
 
                     if (guild.spam.suspicious_links) // Checking if the server has the suspicious links registry active
-                        client.notify(guild.spam.channel || guild.logger.channel, { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) })
+                        client.execute("notify", {
+                            id_canal: guild.spam.channel || guild.logger.channel,
+                            conteudo: { content: client.tls.phrase(guild, "mode.link_suspeito.detectado", [44, 43], registrados.join("\n")) }
+                        })
                 }
             }
         }
@@ -206,15 +212,15 @@ remove_spam = (client, id_user, id_guild, user_message) => {
     const guild = client.guilds(id_guild)
 
     // Filters all messages on the server that were sent by the user in the last minute
-    guild.channels.cache.forEach(async channel => {
+    guild.channels.cache.forEach(async canal => {
 
-        if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.SendMessages], channel) && (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.PublicThread))
-            await channel.messages.fetch({ limit: 15 })
+        if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.SendMessages], canal }) && (canal.type === ChannelType.GuildText || canal.type === ChannelType.GuildVoice || canal.type === ChannelType.GuildAnnouncement || canal.type === ChannelType.PublicThread))
+            await canal.messages.fetch({ limit: 15 })
                 .then(async messages => {
 
                     const userMessages = [] // Listing messages sent in the last minute
                     messages.filter(m => m.author.id === id_user && (m.createdTimestamp > user_message.createdTimestamp - 60000) || m.createdTimestamp === user_message.createdTimestamp && m.deletable).forEach(msg => userMessages.push(msg))
-                    channel.bulkDelete(userMessages)
+                    canal.bulkDelete(userMessages)
                         .catch(() => console.error)
 
                     cached_messages[`${id_user}.${id_guild}`] = []

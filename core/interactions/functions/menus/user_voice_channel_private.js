@@ -64,7 +64,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             .then(() => {
 
                 // Informando ao usuário sobre a alteração do limite de membros do canal concluída
-                client.tls.reply(interaction, user, "mode.voice_channels.aviso_canal_privado", true, 7, client.list(users.map(id => `<@${id}>`), null, true))
+                client.tls.reply(interaction, user, "mode.voice_channels.aviso_canal_privado", true, 7, client.execute("list", { valores: users.map(id => `<@${id}>`), raw: true }))
 
                 dados = id_canal
                 const update = true

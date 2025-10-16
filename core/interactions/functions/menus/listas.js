@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para retornar até as listas do usuário
     let row_2 = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "listas_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "listas_navegar" }
     ], interaction, user)
 
     if (!task)
@@ -44,7 +44,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Botão para levar o usuário até a lista que foi incluída a tarefa
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.ver_lista" }, type: 1, emoji: client.defaultEmoji("paper"), data: `k.${timestamp_lista}` }
+        { id: "return_button", name: { tls: "menu.botoes.ver_lista" }, type: 0, emoji: client.defaultEmoji("paper"), data: `k.${timestamp_lista}` }
     ], interaction, user)
 
     interaction.update({

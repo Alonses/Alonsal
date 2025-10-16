@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     let counter = 0
 
     user_warns.forEach(warn => {
-        botoes.push({ id: "warn_user_verify", name: `${counter + 1}°`, emoji: client.defaultEmoji("guard"), type: 1, data: `9|${warn.uid}.${warn.timestamp}` })
+        botoes.push({ id: "warn_user_verify", name: `${counter + 1}°`, emoji: client.defaultEmoji("guard"), type: 0, data: `9|${warn.uid}.${warn.timestamp}` })
         counter++
     })
 

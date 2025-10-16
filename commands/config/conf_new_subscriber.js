@@ -18,9 +18,10 @@ module.exports = {
         if (!client.x.owners.includes(interaction.user.id)) return
 
         let id_alvo = interaction.options.getUser("usuario").id
-        expiracao = client.timestamp(interaction.options.getString("expiração"))
+        expiracao = client.execute("timestamp", { entrada: interaction.options.getString("expiração") })
+        const timestamp_atual = client.execute("timestamp")
 
-        if (expiracao < client.timestamp() && interaction.options.getString("expiração") !== "0")
+        if (expiracao < timestamp_atual && interaction.options.getString("expiração") !== "0")
             return interaction.reply({ content: ":octagonal_sign: | Informe uma data maior do que hoje para a expiração da assinatura no formato `31/12`!", flags: "Ephemeral" })
 
         // Formatando o tempo da expiração
@@ -45,7 +46,7 @@ module.exports = {
                 },
                 {
                     name: `${client.defaultEmoji("time")} **Aplicação**`,
-                    value: `<t:${client.timestamp()}:f>`,
+                    value: `<t:${timestamp_atual}:f>`,
                     inline: true
                 }
             ],
@@ -54,8 +55,8 @@ module.exports = {
 
         // Criando os botões para o menu de badges
         const row = client.create_buttons([
-            { id: "misc_subscribers", name: { tls: "menu.botoes.confirmar_notificando" }, type: 2, emoji: client.emoji(6), data: `1|${id_alvo}.${expiracao}` },
-            { id: "misc_subscribers", name: { tls: "menu.botoes.apenas_confirmar" }, type: 1, emoji: client.emoji(31), data: `2|${id_alvo}.${expiracao}` },
+            { id: "misc_subscribers", name: { tls: "menu.botoes.confirmar_notificando" }, type: 1, emoji: client.emoji(6), data: `1|${id_alvo}.${expiracao}` },
+            { id: "misc_subscribers", name: { tls: "menu.botoes.apenas_confirmar" }, type: 0, emoji: client.emoji(31), data: `2|${id_alvo}.${expiracao}` },
             { id: "misc_subscribers", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: 0 }
         ], interaction, user)
 

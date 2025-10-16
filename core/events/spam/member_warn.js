@@ -36,7 +36,10 @@ module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_me
     // Servidor com ping de spam ativado
     if (guild.spam.notify) obj.content = `@here ${obj.content}`
 
-    client.notify(guild.spam.channel || guild.logger.channel, obj)
+    client.execute("notify", {
+        id_canal: guild.spam.channel || guild.logger.channel,
+        conteudo: obj
+    })
 
     const embed_user = client.create_embed({
         title: `${client.tls.phrase(user, "mode.spam.spam_titulo_user")} ( ${(strike_aplicado?.rank || 0) + 1} / ${indice_matriz} )`,
@@ -57,5 +60,5 @@ module.exports = async ({ client, guild, strike_aplicado, indice_matriz, user_me
         msg_user += `\n${client.defaultEmoji("detective")} | ${client.tls.phrase(user, "mode.spam.aviso_links")}`
 
     embed_user.setDescription(msg_user)
-    client.sendDM(user, { embeds: [embed_user] }, true)
+    client.execute("sendDM", { user, dados: { embeds: [embed_user] }, force: true })
 }

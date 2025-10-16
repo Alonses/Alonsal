@@ -27,11 +27,13 @@ async function verifica_eraser(client) {
         // Interrompe a operação caso não haja advertências salvas em cache
         if (data.length < 1) return
 
+        const timestamp_atual = client.execute("timestamp")
+
         for (let i = 0; i < data.length; i++) {
 
             const servidor = data[i]
 
-            if (client.timestamp() > servidor.erase.timestamp) {
+            if (timestamp_atual > servidor.erase.timestamp) {
 
                 // Excluindo todos os rankings registrados no servidor
                 await dropAllRankGuild(servidor.sid)

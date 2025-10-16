@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     // 11 -> (Des)ativa o módulo de tempo com retorno resumido
 
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "modulos" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "modulos" }
     ], interaction, user)
 
     const modulo = await getModule(hash)
@@ -76,14 +76,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data }), client.create_buttons([
-                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `verify_module.${hash}` }
+                { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `verify_module.${hash}` }
             ], interaction, user)],
             flags: "Ephemeral"
         })
     } else if (operacao === 0) {
 
         const botoes = [
-            { id: "module_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `5|${hash}` },
+            { id: "module_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `5|${hash}` },
             { id: "module_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `6|${hash}` }
         ]
 
@@ -132,15 +132,20 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, user, ChannelType.GuildText, modulo.misc.cid))
+        data.values = data.values.concat(await client.execute("getGuildChannels", {
+            interaction,
+            user,
+            tipo: ChannelType.GuildText,
+            id_configurado: modulo.misc.cid
+        }))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "module_button.0" },
-            { id: "module_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `12.${hash}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "module_button.0" },
+            { id: "module_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: `12.${hash}` }
         ]
 
         if (row.length > 0) // Botões de navegação

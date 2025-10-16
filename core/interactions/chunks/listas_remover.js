@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, autor_original, pagina }) =
         flags: autor_original || client.decider(user?.conf.ghost_mode, 0) ? "Ephemeral" : null
     }
 
-    let row = client.menu_navigation(user, data, pagina || 0)
+    let row = client.execute("menu_navigation", { user, data, pagina })
 
     if (row.length > 0) // Botões de navegação
         obj.components.push(client.create_buttons(row, interaction))

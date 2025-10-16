@@ -15,6 +15,7 @@ async function verifica_roles(client) {
     readFile('./files/data/user_timed_roles.txt', 'utf8', async (err, data) => {
 
         data = JSON.parse(data)
+        const timestamp_atual = client.execute("timestamp")
 
         // Interrompe a operação caso não haja cargos salvos em cache
         if (data.length < 1) return
@@ -24,10 +25,10 @@ async function verifica_roles(client) {
             const role = data[i]
 
             // Verificando se o cargo ultrapassou o tempo de exclusão
-            if (client.timestamp() > role.timestamp) {
+            if (timestamp_atual > role.timestamp) {
 
                 // Atualiza o tempo de inatividade do servidor
-                client.updateGuildIddleTimestamp(role.sid)
+                client.execute("updateGuildIddleTimestamp", { sid: role.sid })
 
                 // Excluindo o vinculo do cargo com o membro
                 await dropUserTimedRole(role.uid, role.sid, role.rid)
@@ -44,7 +45,7 @@ async function verifica_roles(client) {
                 if (!guild) return
 
                 const cached_role = guild.roles.cache.get(role.rid)
-                const membro_guild = await client.getMemberGuild(role.sid, role.uid)
+                const membro_guild = await client.execute("getMemberGuild", { interaction: role.sid, id_user: role.uid })
 
                 if (cached_role && membro_guild)
                     membro_guild.roles.remove(cached_role).catch(console.error)

@@ -34,8 +34,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 1) {
 
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
-            { id: "role_timed_assigner", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `10.${user_alvo}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
+            { id: "role_timed_assigner", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `10.${user_alvo}` }
         ]
 
         return client.reply(interaction, {
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao === 2) {
 
         // Permissão para atualizar os cargos de membros do servidor
-        if (!await client.permissions(interaction, client.id(), PermissionsBitField.Flags.ManageRoles))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: PermissionsBitField.Flags.ManageRoles }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.anuncio.permissao_cargos", 7),
                 flags: "Ephemeral"
@@ -59,16 +59,16 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             reback: "browse_button.role_timed_assigner",
             operation: operacao,
             submenu: `${user_alvo}.${operacao}`,
-            values: await client.getGuildRoles(interaction, cargo.rid)
+            values: await client.execute("getGuildRoles", { interaction, ignore_role: cargo.rid })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
-            { id: "role_timed_assigner", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `2.${user_alvo}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}|${user_alvo}` },
+            { id: "role_timed_assigner", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: `2.${user_alvo}` }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -94,7 +94,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([{
-            id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}|${user_alvo}`
+            id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}|${user_alvo}`
         }], interaction, user)
 
         return interaction.update({
@@ -106,7 +106,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 10) { // Atribuindo o cargo selecionado ao membro
 
         // Cargo informado possui permissões moderativas
-        if (!await client.rolePermissions(interaction, cargo.rid, [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator]))
+        if (!await client.execute("rolePermissions", { interaction, id_role: cargo.rid, permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_moderativo", 7),
                 flags: "Ephemeral"
@@ -120,7 +120,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         const role = client.getGuildRole(interaction, cargo.rid)
-        const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
+        const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
         if (role.position > bot_member.roles.highest.position)
             return interaction.update({
@@ -129,12 +129,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Adicionado o cargo temporário ao membro
-        const membro_guild = await client.getMemberGuild(interaction, cargo.uid)
+        const membro_guild = await client.execute("getMemberGuild", { interaction, id_user: cargo.uid })
         membro_guild.roles.add(role).then(async () => {
 
             // Atualizando os status do cargo para poder cronometrar
             cargo.valid = true
-            cargo.timestamp = client.timestamp() + defaultRoleTimes[cargo.timeout]
+            cargo.timestamp = client.execute("timestamp") + defaultRoleTimes[cargo.timeout]
             await cargo.save()
 
             let motivo = ""
@@ -167,7 +167,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             }, guild)
 
             // Enviando o aviso ao canal do servidor
-            client.notify(guild.timed_roles.channel, { content: `${membro_guild}`, embeds: [embed] })
+            client.execute("notify", {
+                id_canal: guild.timed_roles.channel,
+                conteudo: { content: `${membro_guild}`, embeds: [embed] }
+            })
             atualiza_roles()
 
             return interaction.update({

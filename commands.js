@@ -7,7 +7,7 @@ let commands = [], comandos_privados = []
 
 function slash_commands(client) {
 
-    client.cached.timestamp = client.timestamp()
+    client.cached.timestamp = client.execute("timestamp")
     client.discord.commands = new Collection()
 
     // Linkando os comandos slash disponíveis

@@ -57,7 +57,7 @@ module.exports = {
         const user_c = await getUserRankServer(client.encrypt(alvo.id), client.encrypt(interaction.guild.id))
 
         // Validando se o usuário tem o ranking habilitado
-        if (!await client.verifyUserRanking(alvo.id))
+        if (!await client.execute("verifyUserRanking", { id_user: alvo.id }))
             return client.tls.reply(interaction, user, "mode.ranking.error", true, 5)
 
         user_c.nickname = client.encrypt(alvo.username)

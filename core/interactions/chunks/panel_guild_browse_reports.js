@@ -86,7 +86,7 @@ module.exports = async ({ client, user, interaction, pagina }) => {
 
                     obj.components = [client.create_menus({ interaction, user, data, pagina })]
 
-                    let row = client.menu_navigation(user, data, pagina)
+                    let row = client.execute("menu_navigation", { user, data, pagina })
 
                     if (row.length > 0) // Botões de navegação
                         obj.components.push(client.create_buttons(row, interaction))

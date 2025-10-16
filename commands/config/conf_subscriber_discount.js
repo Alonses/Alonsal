@@ -21,16 +21,16 @@ module.exports = {
         client.cached.subscriber_discount = desconto_calculado
 
         const bot = await client.getBot()
-        const valor_antigo = client.getSubscriberDiscount(bot.persis.subscriber_discount)
+        const valor_antigo = client.execute("getSubscriberDiscount", { valor: bot.persis.subscriber_discount })
 
         bot.persis.subscriber_discount = desconto_calculado
         await bot.save()
 
         interaction.reply({
-            content: `:bank: | O valor descontado dos recursos para assinantes foi alterado de \`${valor_antigo}%\` para \`${client.locale(novo_valor)}%\`.`,
+            content: `:bank: | O valor descontado dos recursos para assinantes foi alterado de \`${valor_antigo}%\` para \`${client.execute("locale", { valor: novo_valor })}%\`.`,
             flags: "Ephemeral"
         })
 
-        client.notify(process.env.channel_feeds, { content: `:bank: | Desconto em recursos do Alonsal alterado de \`${valor_antigo}%\` para \`${novo_valor}%\` para assinantes.` })
+        client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: `:bank: | Desconto em recursos do Alonsal alterado de \`${valor_antigo}%\` para \`${novo_valor}%\` para assinantes.` } })
     }
 }

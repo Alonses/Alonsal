@@ -8,8 +8,8 @@ module.exports = async ({ client, user, interaction }) => {
 
     const users = [], users_ids = [], id_membros_guild = []
     const usuarios_reportados = await getReportedUsers()
-    const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id, "warn")
-    const user_notes = await client.getSingleWarnedGuildUser(interaction.guild.id, "pre_warn")
+    const warned_users = await client.execute("getSingleWarnedGuildUser", { id_guild: interaction.guild.id, escopo: "warn" })
+    const user_notes = await client.execute("getSingleWarnedGuildUser", { id_guild: interaction.guild.id, escopo: "pre_warn" })
 
     interaction.guild.members.fetch()
         .then(async membros => {
@@ -65,10 +65,10 @@ module.exports = async ({ client, user, interaction }) => {
                 b_disabled[3] = true
 
             const botoes = [
-                { id: "guild_verify_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "3" },
-                { id: "guild_verify_button", name: { tls: "mode.warn.advertencias" }, type: 1, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
-                { id: "guild_verify_button", name: { tls: "menu.botoes.anotacoes" }, type: 1, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
-                { id: "guild_verify_button", name: { tls: "mode.report.reportados" }, type: 1, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
+                { id: "guild_verify_button", name: { tls: "menu.botoes.atualizar" }, type: 2, emoji: client.emoji(42), data: "3" },
+                { id: "guild_verify_button", name: { tls: "mode.warn.advertencias" }, type: 0, emoji: client.emoji(0), data: "1", disabled: b_disabled[0] },
+                { id: "guild_verify_button", name: { tls: "menu.botoes.anotacoes" }, type: 0, emoji: client.defaultEmoji("pen"), data: "4", disabled: b_disabled[3] },
+                { id: "guild_verify_button", name: { tls: "mode.report.reportados" }, type: 0, emoji: client.defaultEmoji("guard"), data: "2", disabled: b_disabled[1] }
             ]
 
             return interaction.editReply({

@@ -1,8 +1,8 @@
 const { PermissionsBitField } = require('discord.js')
 
-async function create_profile({ client, interaction, user, id_alvo, operador }) {
+async function create_profile({ client, interaction, user, id_user, operador }) {
 
-    let user_alvo = await client.getMemberGuild(interaction, id_alvo), operacao = 0
+    let user_alvo = await client.execute("getMemberGuild", { interaction, id_user }), operacao = 0
     const membro_sv = user_alvo
 
     if (!user_alvo) // Usuário foi removido do cache do bot
@@ -14,7 +14,7 @@ async function create_profile({ client, interaction, user, id_alvo, operador }) 
     user_alvo = user_alvo.user
 
     if (typeof operador !== "undefined") operacao = operador
-    const user_data = await client.getUser(id_alvo)
+    const user_data = await client.execute("getUser", { id_user })
 
     let apelido = membro_sv.nickname || user_alvo.username, tipo_user = "🤖", nota_rodape = ""
     let nome_usuario = `\`${user_alvo.username.replace(/ /g, "")}#${user_alvo.discriminator}\``

@@ -42,7 +42,7 @@ async function getGuildVoiceTrigger(client, sid, hash) {
         await model.create({
             sid: sid,
             hash: hash,
-            timestamp: client.timestamp()
+            timestamp: client.execute("timestamp")
         })
     }
 
@@ -110,7 +110,7 @@ async function updateTriggerChannels(client) {
             const trigger = await model.create({
                 sid: client.encrypt(guildData.sid),
                 hash: randomString(15, client, true),
-                timestamp: client.timestamp()
+                timestamp: client.execute("timestamp")
             })
 
             trigger.config.channel = guildData.voice_channels.channel

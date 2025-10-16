@@ -8,7 +8,7 @@ let paginas, pagina, last_update
 module.exports = async ({ client, user, interaction, dados, autor_original }) => {
 
     const usernames = [], bufunfas = [], ids = []
-    const date1 = new Date()
+    const date1 = new Date(), timestamp_atual = client.execute("timestamp")
     let rodape = interaction.user.username, i = 0, user_alvo_data = interaction.options?.getUser("user") || null
 
     if (user_alvo_data) // Redirecionando o usuário para o banco padrão
@@ -16,13 +16,13 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     if (!last_update) { // Utiliza os dados do cache
         client.cached.rank.bank = await getRankMoney()
-        last_update = client.timestamp()
+        last_update = timestamp_atual
     }
 
     // Atualiza os dados do cache para o ranking do banco
-    if (last_update && client.timestamp() > last_update + 10000) {
+    if (last_update && timestamp_atual > last_update + 10000) {
         client.cached.rank.bank = await getRankMoney()
-        last_update = client.timestamp()
+        last_update = timestamp_atual
     }
 
     // Trazendo os dados do cache para o bot
@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             else usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${((client.decifer(user_int.nick))?.replace(/ /g, "") || client.tls.phrase(user, "util.steam.undefined"))}\` ${fixed_badge}`)
 
             ids.push(`\`${client.decifer(user_int.uid)}\``)
-            bufunfas.push(`\`B$ ${client.locale(parseInt(user_int.misc.money))}\``)
+            bufunfas.push(`\`B$ ${client.execute("locale", { valor: parseInt(user_int.misc.money) })}\``)
 
             i++
         }
@@ -112,11 +112,11 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     if (paginas > 1) {
         row = client.create_buttons([
-            { id: "rank_bank_button", name: '⏪', type: 1, data: `1|${pagina}.rank_bank_navegar`, disabled: b_disabled[0] },
-            { id: "rank_bank_button", name: '◀️', type: 1, data: `2|${pagina}.rank_bank_navegar`, disabled: b_disabled[1] },
-            { id: "rank_bank_button", name: '🔘', type: 0, data: `3|${pagina}.rank_bank_navegar`, disabled: b_disabled[2] },
-            { id: "rank_bank_button", name: '▶️', type: 1, data: `4|${pagina}.rank_bank_navegar`, disabled: b_disabled[3] },
-            { id: "rank_bank_button", name: '⏩', type: 1, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }
+            { id: "rank_bank_button", name: '⏪', type: 0, data: `1|${pagina}.rank_bank_navegar`, disabled: b_disabled[0] },
+            { id: "rank_bank_button", name: '◀️', type: 0, data: `2|${pagina}.rank_bank_navegar`, disabled: b_disabled[1] },
+            { id: "rank_bank_button", name: '🔘', type: 2, data: `3|${pagina}.rank_bank_navegar`, disabled: b_disabled[2] },
+            { id: "rank_bank_button", name: '▶️', type: 0, data: `4|${pagina}.rank_bank_navegar`, disabled: b_disabled[3] },
+            { id: "rank_bank_button", name: '⏩', type: 0, data: `5|${pagina}.rank_bank_navegar`, disabled: b_disabled[4] }
         ], interaction)
 
         obj.components = [row]

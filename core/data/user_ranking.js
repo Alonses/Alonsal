@@ -13,10 +13,11 @@ let members_xp = []
 module.exports = async ({ client, message, caso }) => {
 
     // Identifica o usuário alvo
-    const id_alvo = message.user?.id || message.author?.id
+    const id_user = message.user?.id || message.author?.id
     let cached_erase = false
 
-    const user_data = await client.getUser(id_alvo)
+    const user_data = await client.execute("getUser", { id_user })
+    const timestamp_atual = client.execute("timestamp")
 
     // Usuário forçou exclusão de dados
     if (user_data.erase.forced) return
@@ -27,7 +28,7 @@ module.exports = async ({ client, message, caso }) => {
         cached_erase = true
     }
 
-    user_data.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.timeout]
+    user_data.erase.erase_on = timestamp_atual + defaultUserEraser[user_data.erase.timeout]
 
     // Ignora se não foi acionado em um servidor
     if (!message.guild) {
@@ -36,7 +37,7 @@ module.exports = async ({ client, message, caso }) => {
     }
 
     // Dados do usuário no servidor
-    let guild_user = await getUserRankServer(client.encrypt(id_alvo), client.encrypt(message.guild.id))
+    let guild_user = await getUserRankServer(client.encrypt(id_user), client.encrypt(message.guild.id))
 
     // Usuário interagiu novamente no servidor, remove etiqueta de exclusão
     if (guild_user.erase.valid) {
@@ -54,7 +55,7 @@ module.exports = async ({ client, message, caso }) => {
     if (cached_erase) atualiza_user_eraser(client)
 
     // Verifica se o usuário tem ranking habilitado
-    if (!await client.verifyUserRanking(id_alvo)) return
+    if (!await client.execute("verifyUserRanking", { id_user })) return
 
     // Atualiza nickname criptografado
     guild_user.nickname = message.user?.username || message.author?.username
@@ -91,7 +92,7 @@ module.exports = async ({ client, message, caso }) => {
     const xp_anterior = guild_user.ixp
 
     // Recalcula tempo de inatividade
-    guild_user.erase.erase_on = client.timestamp() + defaultUserEraser[user_data.erase.guild_timeout]
+    guild_user.erase.erase_on = timestamp_atual + defaultUserEraser[user_data.erase.guild_timeout]
 
     // Verifica se o servidor tem ranking habilitado
     if (client.cached.ranked_guilds.has(client.encrypt(message.guild.id))) {

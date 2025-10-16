@@ -6,9 +6,9 @@ const { getRoleAssigner } = require("../../database/schemas/Guild_role_assigner"
 
 const { defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador, indice_warn }) => {
+module.exports = async ({ client, guild, interaction, id_user, dados, acionador, indice_warn }) => {
 
-    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+    const membro_guild = await client.execute("getMemberGuild", { interaction, id_user })
 
     if (acionador === "join") {
 
@@ -16,12 +16,12 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
         const cargos = await getRoleAssigner(interaction.guild.id, "join")
 
         // Checking bot permissions on the server
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers])) return
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers] })) return
 
         cargos.atribute.split(".").forEach(async cargo => {
 
             // Verificando se o membro ainda não possui o cargo
-            if (!await client.hasRole(interaction, cargo, id_alvo)) {
+            if (!await client.hasRole(interaction, cargo, id_user)) {
 
                 // Assigning the role to the user who received the strike
                 const role = client.getGuildRole(interaction, cargo)
@@ -34,10 +34,10 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
     } else {
 
         // Verificando se o membro ainda não possui o cargo
-        if (!await client.hasRole(interaction, dados.role, id_alvo)) {
+        if (!await client.hasRole(interaction, dados.role, id_user)) {
 
             // Checking bot permissions on the server
-            if (await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator])) {
+            if (await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator] })) {
 
                 // Assigning the role to the user who received the strike
                 const role = client.getGuildRole(interaction, dados.role)
@@ -48,7 +48,7 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                     // Strike com um cargo temporário vinculado
                     if (dados.timed_role.status) {
 
-                        const cargo = await getUserRole(client.encrypt(id_alvo), client.encrypt(guild.sid), client.timestamp() + defaultRoleTimes[dados.timed_role.timeout])
+                        const cargo = await getUserRole(client.encrypt(id_user), client.encrypt(guild.sid), client.execute("timestamp") + defaultRoleTimes[dados.timed_role.timeout])
 
                         cargo.nick = client.encrypt(membro_guild.user.username)
                         cargo.rid = client.encrypt(dados.role)
@@ -86,13 +86,19 @@ module.exports = async ({ client, guild, interaction, id_alvo, dados, acionador,
                         }, guild)
 
                         // Enviando o aviso ao canal do servidor
-                        client.notify(acionador === "spam" ? guild.spam.channel : guild.warn.channel, { embeds: [embed_timed_role] })
+                        client.execute("notify", {
+                            id_canal: acionador === "spam" ? guild.spam.channel : guild.warn.channel,
+                            conteudo: { embeds: [embed_timed_role] }
+                        })
                         atualiza_roles()
                     }
                 }
             } else
-                client.notify(guild.spam.channel || guild.logger.channel, { // No permission to manage roles
-                    content: client.tls.phrase(guild, acionador === "spam" ? "mode.spam.sem_permissao_cargos" : "mode.warn.sem_permissao_cargos", 7),
+                client.execute("notify", {
+                    id_canal: guild.spam.channel || guild.logger.channel,
+                    conteudo: { // No permission to manage roles
+                        content: client.tls.phrase(guild, acionador === "spam" ? "mode.spam.sem_permissao_cargos" : "mode.warn.sem_permissao_cargos", 7),
+                    }
                 })
         }
     }

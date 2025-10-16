@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Criando os botões para o menu de remoção de strikes
         const row = client.create_buttons([
-            { id: "strike_remove", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}` },
+            { id: "strike_remove", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${id_alvo}` },
             { id: "strike_remove", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}` }
         ], interaction, user)
 

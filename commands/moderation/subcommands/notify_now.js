@@ -9,13 +9,13 @@ module.exports = async ({ client, user, interaction }) => {
     if (!guild.games.channel || !guild.games.role)
         return client.tls.reply(interaction, user, "mode.anuncio.configuracao", true, 11)
 
-    const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
+    const canal = client.discord.channels.cache.get(guild.games.channel)
 
-    if (canal_alvo) {
-        if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
+    if (canal) {
+        if (canal.type === ChannelType.GuildText || canal.type === ChannelType.GuildAnnouncement) {
 
             // Permissão para enviar mensagens no canal
-            if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+            if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal })) {
 
                 if (guild.conf.games) // Módulo de anúncios de games ativado
                     client.tls.reply(interaction, user, "mode.anuncio.anuncio_enviado_duplicatas", true, 29, `<#${guild.games.channel}>`)

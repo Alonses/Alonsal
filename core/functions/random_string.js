@@ -22,7 +22,7 @@ function randomString(len, client, hash_case) {
     let result = ''
 
     for (let i = 0; i < len; i++) {
-        const randomPoz = client.random(charSet.length)
+        const randomPoz = client.execute("random", { intervalo: charSet.length })
         result += charSet[randomPoz]
     }
 

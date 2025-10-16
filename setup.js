@@ -6,6 +6,7 @@ const update_commands = 0 // Força atualização dos comandos slash
 let modo_develop = 0
 let silent = 0
 const limited = 0
+const debug_mode = 0
 const delete_slash = 0 // Limpa comandos slash locais e globais
 
 // Atualizando os comandos do bot principal
@@ -29,6 +30,7 @@ const client_data = {
     debug_mode: 0,
     daily_announce: 0,
     modo_develop,
+    debug_mode,
     delete_slash,
     force_update: update_commands,
     status: (silent || modo_develop) ? 0 : 1,

@@ -8,12 +8,12 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
     const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
-    const indice_matriz = client.verifyMatrixIndex(strikes_guild)
+    const indice_matriz = client.execute("verifyMatrixIndex", { guild_config: strikes_guild })
 
     let botoes = [], descr_rodape
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Desabilitando o anti-spam caso não haja canais de aviso selecionados, sem permissão para gerenciar mensagens e castigar membros
     if (!guild.spam.channel && !guild.logger.channel || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers)) {
@@ -38,13 +38,13 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         description: `\`\`\`${descricao}\`\`\``,
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes)} **Strikes**\n${client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links)} **${client.tls.phrase(user, "mode.spam.links_suspeitos")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods)} **${client.tls.phrase(user, "mode.spam.gerenciar_moderadores")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.spam)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                value: `${client.execute("button_emoji", guild?.spam.strikes)} **Strikes**\n${client.execute("button_emoji", guild?.spam.suspicious_links)} **${client.tls.phrase(user, "mode.spam.links_suspeitos")}**\n${client.execute("button_emoji", guild?.spam.manage_mods)} **${client.tls.phrase(user, "mode.spam.gerenciar_moderadores")}**`,
                 inline: true
             },
             {
                 name: `${client.emoji(64)} **Strikes:** \`${strikes_guild.length} / 5\`${indice_matriz ? `\n${client.emoji(54)} **${client.tls.phrase(user, "mode.warn.expulsao_no")} \`${indice_matriz}°\`**` : ""}`,
-                value: `${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.repeticoes")}:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
+                value: `${client.emoji(47)} **${client.tls.phrase(user, "menu.botoes.repeticoes")}:** \`${guild.spam.trigger_amount}\`\n${client.emoji(20)} ${client.execute("button_emoji", guild?.spam.notify)} **${client.tls.phrase(user, "mode.spam.mencoes")}**`,
                 inline: true
             },
             {
@@ -75,39 +75,39 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     embed.addFields(
         {
             name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))} **${client.tls.phrase(user, "mode.network.gerenciar_mensagens")}**`,
+            value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages))} **${client.tls.phrase(user, "mode.network.gerenciar_mensagens")}**`,
             inline: true
         },
         {
             name: "⠀",
-            value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+            value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
             inline: true
         }
     )
 
     if (pagina === 0)
         botoes.push(
-            { id: "guild_anti_spam_button", name: { tls: "manu.painel.anti_spam" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.spam), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
-            { id: "guild_anti_spam_button", name: "Strikes", type: client.execute("functions", "emoji_button.type_button", guild?.spam.strikes), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
-            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.recursos" }, type: 1, emoji: client.emoji(41), data: "10" },
-            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.ajustes" }, type: 1, emoji: client.emoji(41), data: "9" }
+            { id: "guild_anti_spam_button", name: { tls: "manu.painel.anti_spam" }, type: guild?.conf.spam, emoji: client.execute("button_emoji", guild?.conf.spam), data: "1", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
+            { id: "guild_anti_spam_button", name: "Strikes", type: guild?.spam.strikes, emoji: client.execute("button_emoji", guild?.spam.strikes), data: "2", disabled: strikes_guild.length < 1 ? true : false },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.recursos" }, type: 0, emoji: client.emoji(41), data: "10" },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.ajustes" }, type: 0, emoji: client.emoji(41), data: "9" }
         )
     else if (pagina === 1) // Página de recursos do Anti-spam ( Links suspeitos, punição de adms )
         botoes.push(
-            { id: "guild_anti_spam_button", name: { tls: "mode.spam.links_suspeitos" }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.suspicious_links), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
-            { id: "guild_anti_spam_button", name: { tls: "mode.spam.gerenciar_moderadores" }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.manage_mods), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.manage_mods), data: "8" }
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.links_suspeitos" }, type: guild?.spam.suspicious_links, emoji: client.execute("button_emoji", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.gerenciar_moderadores" }, type: guild?.spam.manage_mods, emoji: client.execute("button_emoji", guild?.spam.manage_mods), data: "8" }
         )
     else // Página de configurações do Anti-spam
         botoes.push(
-            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.repeticoes" }, type: 1, emoji: client.emoji(47), data: "5" },
-            { id: "guild_anti_spam_button", name: { tls: "mode.spam.mencoes" }, type: client.execute("functions", "emoji_button.type_button", guild?.spam.notify), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.spam.notify), data: "7" },
-            { id: "guild_anti_spam_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "6" }
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.repeticoes" }, type: 0, emoji: client.emoji(47), data: "5" },
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.mencoes" }, type: guild?.spam.notify, emoji: client.execute("button_emoji", guild?.spam.notify), data: "7" },
+            { id: "guild_anti_spam_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "6" }
         )
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" },
-        { id: "guild_anti_spam_button", name: "Strikes", type: 1, emoji: client.defaultEmoji("guard"), data: "4" },
-        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.varredura" }, type: 1, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.0" : "panel_guild_anti_spam.0" },
+        { id: "guild_anti_spam_button", name: "Strikes", type: 0, emoji: client.defaultEmoji("guard"), data: "4" },
+        { id: "guild_anti_spam_button", name: { tls: "menu.botoes.varredura" }, type: 0, emoji: guild.spam.scanner.links ? "🔗" : "🌟", data: "25" },
         { id: "guild_anti_spam_channels", name: { tls: "menu.botoes.verificar_servidor" }, type: 3, emoji: client.defaultEmoji("judge"), data: 0 }
     ]
 

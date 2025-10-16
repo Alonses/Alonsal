@@ -6,7 +6,7 @@ const { guildPermissions } = require("../../../formatters/patterns/guild")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
-    const id_alvo = dados.split(".")[2]
+    const id_user = dados.split(".")[2]
     let operacao = parseInt(dados.split(".")[1])
     const id_warn = parseInt(dados.split(".")[3])
 
@@ -22,7 +22,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Verificando se o membro já ultrapassou o número de anotações necessárias para cada advertência 
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
-    let user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
+    let user_warns = await listAllUserWarns(id_user, interaction.guild.id)
 
     let indice_warn = user_warns.length > guild_warns.length ? user_warns.length - 1 : user_warns.length
     if (indice_warn < 1) indice_warn = 0
@@ -35,7 +35,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             })
 
     // Rascunhos de advertências salvas em cache
-    user_warns = await listAllUserCachedHierarchyWarns(id_alvo, interaction.guild.id)
+    user_warns = await listAllUserCachedHierarchyWarns(id_user, interaction.guild.id)
 
     if (user_warns.length < 1) return
 
@@ -45,7 +45,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         const ultimo_warn = user_warns[user_warns.length - 1]
         await removeUserWarn(ultimo_warn.uid, ultimo_warn.sid, ultimo_warn.timestamp)
 
-        const user_notes = await listAllUserPreWarns(id_alvo, interaction.guild.id)
+        const user_notes = await listAllUserPreWarns(id_user, interaction.guild.id)
         user_notes.forEach(async note => {
 
             // Removendo a anotação do membroa       
@@ -64,8 +64,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `${alvo_confirma}|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `${alvo_confirma}|${id_user}.${id_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `${alvo_cancela}|${id_user}.${id_warn}` }
         ]
 
         return interaction.update({
@@ -76,7 +76,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Aplicando a advertência
         const user_warn = user_warns[user_warns.length - 1]
-        const user_notes = await listAllUserPreWarns(id_alvo, interaction.guild.id)
+        const user_notes = await listAllUserPreWarns(id_user, interaction.guild.id)
 
         let registro_notas = []
 
@@ -90,13 +90,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
         user_warn.valid = true
         user_warn.assigner = interaction.user.id
         user_warn.assigner_nick = interaction.user.username
-        user_warn.timestamp = client.timestamp()
+        user_warn.timestamp = client.execute("timestamp")
         user_warn.relatory = registro_notas.join("\n\n")
 
         await user_warn.save()
 
         const hierarquia = true
-        const member_guild = await client.getMemberGuild(interaction, id_alvo)
+        const member_guild = await client.execute("getMemberGuild", { interaction, id_user })
 
         interaction.update({ content: client.tls.phrase(user, "mode.anotacoes.advertencia_aplicada", 10), components: [] })
         return require('../../../events/warn')({ client, interaction, user, member_guild, user_warn, hierarquia })
@@ -105,8 +105,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Botões de cancelamento para retorno aos botões principais
         const rows = [
-            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_warn}` },
-            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia" }, type: 3, emoji: client.emoji(0), data: `2|${id_alvo}.${id_warn}` }
+            { id: "warn_activate", name: { tls: "menu.botoes.conceder_advertencia" }, type: 1, emoji: client.emoji(10), data: `1|${id_user}.${id_warn}` },
+            { id: "warn_activate", name: { tls: "menu.botoes.cancelar_advertencia" }, type: 3, emoji: client.emoji(0), data: `2|${id_user}.${id_warn}` }
         ]
 
         return interaction.update({ components: [client.create_buttons(rows, interaction, user)] })

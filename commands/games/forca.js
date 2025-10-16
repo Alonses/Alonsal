@@ -17,7 +17,7 @@ module.exports = {
         // Ignorando acionamento do jogo da forca em DM
         if (!interaction.guild) return
 
-        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], interaction))
+        if (!await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.AttachFiles], canal: interaction }))
             return client.tls.reply(interaction, user, "game.forca.sem_permissao", true, 7)
 
         if (!client.cached.forca_sessao.has(client.encrypt(interaction.user.id))) {
@@ -129,7 +129,7 @@ function verifica_chute(client, message, entrada, id_jogo, user) {
 async function verifica_palavra(client, interaction, id_jogo, user, entrada) {
 
     // Verifica se a palavra foi completa ou se o chute foi certeiro
-    if (entrada === client.cached.forca.get(id_jogo).word || client.replace(client.cached.forca.get(id_jogo).descobertas, null, ["`", ""]).replaceAll(" ", "") === client.cached.forca.get(id_jogo).word) {
+    if (entrada === client.cached.forca.get(id_jogo).word || client.execute("replace", { string: client.cached.forca.get(id_jogo).descobertas, especifico: ["`", ""] }).replaceAll(" ", "") === client.cached.forca.get(id_jogo).word) {
         interaction.channel.send({ content: `${client.emoji("emojis_negativos")} ${client.tls.phrase(user, "game.forca.acertou")} \`${client.cached.forca.get(id_jogo).word}\`\n\n${client.tls.phrase(user, "game.forca.bufunfas")}` })
 
         client.cached.forca.get(id_jogo).finalizado = true
@@ -137,7 +137,7 @@ async function verifica_palavra(client, interaction, id_jogo, user, entrada) {
         client.cached.forca_sessao.forEach(async user_interno => {
 
             if (user_interno.id_game === id_jogo) { // Distribuindo as recompensas aos membros da partida
-                const user_data = await client.getUser(user_interno.uid)
+                const user_data = await client.execute("getUser", { id_user: user_interno.uid })
 
                 user_data.misc.money += 50
                 await user_data.save()
@@ -180,7 +180,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     if (jogadores_sessao > 1) jogadores_sessao = client.tls.phrase(user, "game.forca.jogadores_sessao", null, jogadores_sessao)
     else jogadores_sessao = client.tls.phrase(user, "game.forca.jogador_sessao")
 
-    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], interaction)) {
+    if (!await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal: interaction })) {
 
         // Exclui a sessão e encerra o jogo
         client.cached.forca.delete(id_jogo)
@@ -209,7 +209,7 @@ async function retorna_jogo(client, interaction, id_jogo, user) {
     if (!client.cached.forca.get(id_jogo).embed) {
 
         const row = [
-            { id: "forca_button", name: { tls: "menu.botoes.juntar_se" }, type: 0, emoji: client.emoji(25), data: `1.${id_jogo}` },
+            { id: "forca_button", name: { tls: "menu.botoes.juntar_se" }, type: 1, emoji: client.emoji(25), data: `1.${id_jogo}` },
             { id: "forca_button", name: { tls: "menu.botoes.sair_da_sessao" }, type: 3, emoji: client.emoji(30), data: `2.${id_jogo}` }
         ]
 

@@ -6,7 +6,6 @@ const { getModulesPrice } = require('../../../core/database/schemas/Module')
 
 const { modulePrices } = require('../../../core/formatters/patterns/user')
 
-const formata_horas = require('../../../core/formatters/formata_horas')
 const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, user, interaction }) => {
@@ -15,7 +14,7 @@ module.exports = async ({ client, user, interaction }) => {
     let locale_cache = false, defered = false
 
     if (interaction.options.getString("type")) // Falta de permissão para gerenciar mensagens
-        if (interaction.options.getString("type") === "guild" && !await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageMessages]))
+        if (interaction.options.getString("type") === "guild" && !await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageMessages] }))
             return interaction.reply({
                 content: "🛂 | Você não pode criar um módulo de servidor sem possuir a permissão para `Gerenciar mensagens`, por gentileza, crie um módulo para uso pessoal.",
                 flags: "Ephemeral"
@@ -117,8 +116,8 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
         locale_cache = true
 
     corpo_modulo.stats.days = interaction.options.getString("when")
-    corpo_modulo.stats.hour = formata_horas(interaction.options.getInteger("hour") || '0', interaction.options.getInteger("minute") || '0')
-    corpo_modulo.stats.timestamp = client.timestamp()
+    corpo_modulo.stats.hour = client.execute("formata_horas", { horas: interaction.options.getInteger("hour") || '0', minutos: interaction.options.getInteger("minute") || '0' })
+    corpo_modulo.stats.timestamp = client.execute("timestamp")
     corpo_modulo.misc.scope = interaction.options.getString("type") || "user"
 
     if (corpo_modulo.misc.scope === "guild") // Salvando o ID do servidor que o módulo pertencerá
@@ -135,7 +134,7 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
 
     const embed = client.create_embed({
         title: { tls: "misc.modulo.cabecalho_menu" },
-        description: { tls: "misc.modulo.descricao", replace: [client.cached.subscribers.has(user.uid) ? client.locale(corpo_modulo.stats.price * client.cached.subscriber_discount) : corpo_modulo.stats.price, montante] },
+        description: { tls: "misc.modulo.descricao", replace: [client.cached.subscribers.has(user.uid) ? client.execute("locale", { valor: corpo_modulo.stats.price * client.cached.subscriber_discount }) : corpo_modulo.stats.price, montante] },
         fields: [
             {
                 name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,
@@ -149,7 +148,7 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
             },
             {
                 name: `${client.defaultEmoji("money")} **${client.tls.phrase(user, "misc.modulo.valor")}**`,
-                value: `\`B$ ${client.cached.subscribers.has(user.uid) ? `${client.locale(corpo_modulo.stats.price * client.cached.subscriber_discount)} (${client.getSubscriberDiscount()}% OFF 🌟)` : corpo_modulo.stats.price}\``,
+                value: `\`B$ ${client.cached.subscribers.has(user.uid) ? `${client.execute("locale", { valor: corpo_modulo.stats.price * client.cached.subscriber_discount })} (${client.execute("getSubscriberDiscount")}% OFF 🌟)` : corpo_modulo.stats.price}\``,
                 inline: true
             }
         ],
@@ -161,7 +160,7 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
 
     // Confirmando a criação do módulo
     const row = client.create_buttons([
-        { id: "module_config", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${corpo_modulo.hash}` },
+        { id: "module_config", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${corpo_modulo.hash}` },
         { id: "module_config", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${corpo_modulo.hash}` }
     ], interaction, user)
 

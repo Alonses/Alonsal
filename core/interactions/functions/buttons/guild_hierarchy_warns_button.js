@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" }
         ], interaction, user)
 
         return interaction.update({
@@ -71,15 +71,19 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, user, ChannelType.GuildText, canal))
+        data.values = data.values.concat(await client.execute("getGuildChannels", {
+            interaction,
+            user, tipo: ChannelType.GuildText,
+            id_configurado: canal
+        }))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" },
-            { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: operacao }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" },
+            { id: "guild_hierarchy_warns_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: operacao }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -105,7 +109,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_hierarchy_warns" }
         ], interaction, user)
 
         return interaction.update({

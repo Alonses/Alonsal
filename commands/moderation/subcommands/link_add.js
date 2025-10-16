@@ -18,7 +18,7 @@ module.exports = async ({ client, user, interaction }) => {
     if (await verifySuspiciousLink(link)) // Link já existe
         return client.tls.reply(interaction, user, "mode.link_suspeito.link_ja_registrado", true, client.emoji(0))
 
-    const timestamp = client.timestamp()
+    const timestamp = client.execute("timestamp")
     await registerCachedSuspiciousLink(link, client.encrypt(interaction.guild.id), timestamp)
 
     const embed = client.create_embed({
@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     // Criando os botões para excluir o link suspeito
     const row = client.create_buttons([
-        { id: "spam_link_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1.${timestamp}` },
+        { id: "spam_link_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1.${timestamp}` },
         { id: "spam_link_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0.${timestamp}` }
     ], interaction, user)
 

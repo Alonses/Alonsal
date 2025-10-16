@@ -22,6 +22,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         await interaction.deferUpdate({ flags: "Ephemeral" })
 
-        client.verifyUserGuilds(user, interaction.user.id, interaction)
+        client.execute("verifyUserGuilds", { user, id_alvo: interaction.user.id, interaction })
     }
 }

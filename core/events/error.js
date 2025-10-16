@@ -21,7 +21,7 @@ module.exports = (client, err, local) => {
 
     // Notifica canal de erro, se definido
     if (process.env.channel_error)
-        client.notify(process.env.channel_error, { embeds: [embed] })
+        client.execute("notify", { id_canal: process.env.channel_error, conteudo: { embeds: [embed] } })
 
     // Registra no journal do sistema
     client.journal("epic_embed", 1)

@@ -40,7 +40,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
             flags: "Ephemeral"
         })
 
-        timestamp = parseInt(client.timestamp() + (updates[0] * 1.5) + 1)
+        timestamp = parseInt(client.execute("timestamp") + (updates[0] * 1.5) + 1)
         alterar_users(client, user, interaction, 0)
     } else
         interaction.update({
@@ -57,7 +57,7 @@ module.exports = async ({ client, user, interaction, force_stop }) => {
 
 async function alterar_users(client, user, interaction, contador) {
 
-    let member = await client.getMemberGuild(interaction.guild.id, membros_sv[0]) // Coleta
+    let member = await client.execute("getMemberGuild", { interaction, id_user: membros_sv[0] }) // Coleta
 
     if (!member.user.bot) { // Atualiza apenas usuários que não são bots
 
@@ -96,7 +96,7 @@ async function alterar_users(client, user, interaction, contador) {
         membros_sv.shift()
 
         if (membros_sv.length > 0) {
-            if ((timestamp - client.timestamp()) < 600)
+            if ((timestamp - client.execute("timestamp")) < 600)
                 interaction.editReply({ content: client.tls.phrase(user, "mode.roles.atualizando_usuarios", emoji_dancante, [contador, updates[0], timestamp]) })
             else if (!segundo_plano) {
 
@@ -104,7 +104,7 @@ async function alterar_users(client, user, interaction, contador) {
                 segundo_plano = true
                 interaction.editReply({ content: client.tls.phrase(user, "mode.roles.pin_segundo_plano", emoji_dancante, timestamp) })
 
-                client.sendDM(user, { content: client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante, timestamp) })
+                client.execute("sendDM", { user, dados: { content: client.tls.phrase(user, "mode.roles.movido_segundo_plano", emoji_dancante, timestamp) } })
             }
 
             alterar_users(client, user, interaction, contador)
@@ -118,7 +118,7 @@ async function alterar_users(client, user, interaction, contador) {
                 })
 
             segundo_plano = false
-            client.sendDM(user, { content: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]) })
+            client.execute("sendDM", { user, dados: { content: client.tls.phrase(user, "mode.roles.concluido", 59, [updates[1], updates[2], updates[4], updates[3]]) } })
         }
     }, 1500)
 }

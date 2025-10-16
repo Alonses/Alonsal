@@ -4,15 +4,15 @@ const { registerUserGuild } = require('../../../database/schemas/User_guilds')
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
-    const user = await client.getUser(dados.user.id)
+    const user = await client.execute("getUser", { id_user: dados.user.id })
 
     if (user.conf?.cached_guilds) // Salvando o novo servidor ao usuário
         await registerUserGuild(user.uid, dados.guild.id)
 
     if (client.cached.join_guilds.has(dados.guild.id)) { // Servidores com cargos na entrada
 
-        const acionador = "join", interaction = dados, id_alvo = dados.user.id
-        require('../../../auto/triggers/user_assign_role')({ client, guild, interaction, id_alvo, acionador })
+        const acionador = "join", interaction = dados, id_user = dados.user.id
+        require('../../../auto/triggers/user_assign_role')({ client, guild, interaction, id_user, acionador })
     }
 
     if (guild?.reports.notify) { // Notificando o servidor sobre a entrada de um usuário que possui reportes
@@ -53,5 +53,8 @@ module.exports = async (client, dados) => {
     const url_avatar = dados.user.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

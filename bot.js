@@ -33,10 +33,11 @@ client.discord.once("clientReady", async () => {
 	await require("./core/events/status")({ client })
 
 	// Pre-saving ranked guilds on cache
-	client.updateRankedGuilds()
+	client.execute("updateRankedGuilds")
+	const timestamp_atual = client.execute("timestamp")
 
 	console.log(`🟢 | Caldeiras do(a) ${client.username()} aquecidas, pronto para operar`)
-	console.log(`⏱️  | Tempo de inicialização: ${client.timestamp() - client.cached.timestamp > 1 ? `${client.timestamp() - client.cached.timestamp} segundos` : '1 segundo'}`)
+	console.log(`⏱️  | Tempo de inicialização: ${timestamp_atual - client.cached.timestamp > 1 ? `${timestamp_atual - client.cached.timestamp} segundos` : '1 segundo'}`)
 })
 
 client.discord.on("messageCreate", async message => {
@@ -59,7 +60,7 @@ client.discord.on("messageCreate", async message => {
 
 	// Responding to the user who just ping the bot
 	if (message.content.includes(client.id()) && message.content.length === 21)
-		if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], message))
+		if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal: message }))
 			return message.reply({
 				content: client.tls.phrase(user, "inic.inicio.apresentacao", client.emoji("emojis_dancantes")),
 				components: [client.create_buttons([{ name: { tls: "inic.inicio.convidar" }, type: 4, emoji: client.emoji("mc_coracao"), value: `https://discord.com/oauth2/authorize?client_id=${client.id()}&scope=bot&permissions=2550136990` }], message, user)]
@@ -88,7 +89,7 @@ client.discord.on("messageCreate", async message => {
 		// Syncing user data
 		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
 
-			const user_guild = await client.getMemberGuild(message, message.author.id)
+			const user_guild = await client.execute("getMemberGuild", { message, id_user: message.author.id })
 
 			if (user_guild?.user) {
 				user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
@@ -112,10 +113,10 @@ client.discord.on("interactionCreate", async interaction => {
 	// Prevents the bot from responding to interactions while updating commands
 	if (client.x.force_update) return
 
-	const user = await client.getUser(interaction.user.id)
+	const user = await client.execute("getUser", { id_user: interaction.user.id })
 
 	// Atualiza o tempo de inatividade do servidor
-	if (interaction.guild) client.updateGuildIddleTimestamp(interaction.guild.id)
+	if (interaction.guild) client.execute("updateGuildIddleTimestamp", { sid: interaction.guild.id })
 
 	// Prevents the bot from interacting with other members when in develop mode
 	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
@@ -132,7 +133,7 @@ client.discord.on("interactionCreate", async interaction => {
 	if (!interaction.isChatInputCommand() && !interaction.isContextMenuCommand()) return
 
 	// Automatically sets the user's language if they don't have a default language
-	if (!user.lang && interaction.guild) await client.verifyUserLanguage(user, interaction.guild.id)
+	if (!user.lang && interaction.guild) await client.execute("verifyUserLanguage", { user, id_guild: interaction.guild.id })
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
@@ -160,7 +161,7 @@ client.discord.on("interactionCreate", async interaction => {
 		await require("./core/events/log")({ client, interaction })
 
 		// Updating the last interaction
-		client.cached.last_interaction = client.timestamp()
+		client.cached.last_interaction = client.execute("timestamp")
 	} catch (err) {
 		await client.error(err, "Slash Command")
 		client.tls.reply(interaction, user, "inic.error.epic_embed_fail", true, client.emoji(0))

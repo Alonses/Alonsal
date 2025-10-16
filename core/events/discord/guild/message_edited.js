@@ -15,8 +15,8 @@ module.exports = async (client, message) => {
 
     // const alteracoes = comparar_edicoes(formata_text(message[0].content), formata_text(message[1].content))
     const alteracoes = {
-        antigo: client.replace(message[0].content, null, ["`", "'"]),
-        novo: client.replace(message[1].content, null, ["`", "'"])
+        antigo: client.execute("replace", { string: message[0].content, especifico: ["`", "'"] }),
+        novo: client.execute("replace", { string: message[1].content, especifico: ["`", "'"] })
     }
 
     // Sem texto incluso na mensagem antiga
@@ -63,5 +63,8 @@ module.exports = async (client, message) => {
 
     embed.setDescription(texto)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }

@@ -6,8 +6,10 @@ const { badgeTypes } = require("../../../formatters/patterns/user")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
+    const timestamp_atual = client.execute("timestamp")
+
     // Bloqueia novos votos após o encerramento
-    if (client.timestamp() >= 1692460800) {
+    if (timestamp_atual >= 1692460800) {
 
         const verify_user = await verifyUser(interaction.user.id)
         let texto = client.tls.phrase(user, "inic.vote.encerrada", client.emoji("mc_approve"))
@@ -25,7 +27,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const dados_voto = await registryVote(interaction.user.id)
 
     dados_voto.vote = vote
-    dados_voto.timestamp = client.timestamp()
+    dados_voto.timestamp = timestamp_atual
 
     await dados_voto.save()
 
@@ -45,7 +47,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         badge_bonus = `\n\n${client.tls.phrase(user, "inic.vote.badge_concedida", null, [badge.emoji, badge.name])} </badge fix:1018609879512006794>!`
 
         // Atribuindo a badge ao usuário
-        await createBadge(interaction.user.id, 9, client.timestamp())
+        await createBadge(interaction.user.id, 9, timestamp_atual)
     }
 
     interaction.reply({

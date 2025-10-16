@@ -16,7 +16,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
 
     // Permissões do bot no servidor
     const servidores_link = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length : 0
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Verificando as permissões necessárias conforme os casos
     if (!membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))
@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
         description: { tls: "mode.network.descricao" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: `${client.emoji(32)} **${client.tls.phrase(user, "mode.network.servidores_link")}: ${servidores_link}**`,
                 inline: true
             },
@@ -95,7 +95,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
     if (pagina === 2) { // Página com a lista de servidores do network
         embed.setFields(
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -111,7 +111,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
             },
             {
                 name: `:link: **${client.tls.phrase(user, "mode.network.servidores_link")} ( \`${servidores_link} / ${guild.misc?.subscription.active ? 30 : 10}\` )**`,
-                value: guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
+                value: guild.network.link ? await client.execute("getNetworkGuildNames", { user, link: guild.network.link, interaction }) : client.tls.phrase(user, "manu.guild_data.sem_servidores"),
                 inline: false
             }
         )
@@ -119,12 +119,12 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
         embed.setFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.BanMembers))} **${client.tls.phrase(user, "mode.network.banir_membros")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.KickMembers))} **${client.tls.phrase(user, "mode.network.expulsar_membros")}**`,
                 inline: true
             }
         )
@@ -132,28 +132,28 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
 
     if (pagina === 0)
         botoes.push(
-            { id: "guild_network_button", name: "Network", type: client.execute("functions", "emoji_button.type_button", guild?.conf.network), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.network), data: "1" },
-            { id: "guild_network_button", name: { tls: "mode.network.eventos_sincronizados" }, type: 1, emoji: client.defaultEmoji("telephone"), data: "2" },
-            { id: "guild_network_button", name: { tls: "mode.network.servidores" }, type: 1, emoji: client.emoji(32), data: "3" },
-            { id: "guild_network_button", name: { tls: "menu.botoes.ajustes" }, type: 1, emoji: client.emoji(41), data: "9" }
+            { id: "guild_network_button", name: "Network", type: guild?.conf.network, emoji: client.execute("button_emoji", guild?.conf.network), data: "1" },
+            { id: "guild_network_button", name: { tls: "mode.network.eventos_sincronizados" }, type: 0, emoji: client.defaultEmoji("telephone"), data: "2" },
+            { id: "guild_network_button", name: { tls: "mode.network.servidores" }, type: 0, emoji: client.emoji(32), data: "3" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.ajustes" }, type: 0, emoji: client.emoji(41), data: "9" }
         )
     else if (pagina === 1) {
         botoes.push(
-            { id: "guild_network_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "5" },
-            { id: "guild_network_button", name: { tls: "menu.botoes.exclusao" }, type: 1, emoji: client.emoji(13), data: "6" }
+            { id: "guild_network_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "5" },
+            { id: "guild_network_button", name: { tls: "menu.botoes.exclusao" }, type: 0, emoji: client.emoji(13), data: "6" }
         )
 
         if (servidores_link > 1) // Network com mais de um servidor
-            botoes.push({ id: "guild_network_button", name: { tls: "mode.network.quebrar_vinculo" }, type: 1, emoji: client.emoji(44), data: "4" })
+            botoes.push({ id: "guild_network_button", name: { tls: "mode.network.quebrar_vinculo" }, type: 0, emoji: client.emoji(44), data: "4" })
     }
 
     // Botões de retorno e estilo de sincronização permitida
-    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_network.0" }]
+    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: pagina < 1 ? "panel_guild.1" : "panel_guild_network.0" }]
 
     if (pagina !== 2)
         row.push(
-            { id: "guild_network_button", name: { tls: "menu.botoes.ver_network" }, type: 1, emoji: client.emoji(36), data: "12", disabled: servidores_link > 1 ? false : true },
-            { id: "guild_network_button", name: { tls: "menu.botoes.filtro_acoes" }, type: 1, emoji: guild.network.scanner.type ? emoji_pessoa : client.emoji("icon_integration"), data: "10" }
+            { id: "guild_network_button", name: { tls: "menu.botoes.ver_network" }, type: 0, emoji: client.emoji(36), data: "12", disabled: servidores_link > 1 ? false : true },
+            { id: "guild_network_button", name: { tls: "menu.botoes.filtro_acoes" }, type: 0, emoji: guild.network.scanner.type ? emoji_pessoa : client.emoji("icon_integration"), data: "10" }
         )
 
     const componentes = []
@@ -165,7 +165,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
         componentes.push(client.create_buttons(row, interaction, user))
 
     interaction.editReply({
-        content: networkLotado?.length > 0 ? client.tls.phrase(user, "mode.network.limite_servidores", 75, client.list(networkLotado)) : retorno_aviso,
+        content: networkLotado?.length > 0 ? client.tls.phrase(user, "mode.network.limite_servidores", 75, client.execute("list", { valores: networkLotado })) : retorno_aviso,
         embeds: [embed],
         components: componentes,
         flags: "Ephemeral"

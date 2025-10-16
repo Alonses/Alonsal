@@ -9,7 +9,7 @@ module.exports = async ({ client }) => {
     if (client.x.relatorio) { // Envia o relatório de uso do bot diariamente caso habilitado
         const embed = await require('../generators/journal')({ client })
 
-        await client.notify(process.env.channel_stats, { embeds: [embed] })
+        await client.execute("notify", { id_canal: process.env.channel_stats, conteudo: { embeds: [embed] } })
     }
 
     await servidores_inativos(client) // Verifica os servidores inativos para remover o bot automaticamente

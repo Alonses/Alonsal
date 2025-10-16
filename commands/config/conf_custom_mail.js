@@ -26,24 +26,24 @@ module.exports = {
             anexo: interaction.options.getAttachment("imagem")
         }
 
-        const canal_alvo = await client.channels().get(corpo_mail.canal)
+        const canal = await client.channels().get(corpo_mail.canal)
 
-        if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
-            if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo)) {
+        if (canal.type === ChannelType.GuildText || canal.type === ChannelType.GuildAnnouncement) {
+            if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal })) {
                 if (corpo_mail.anexo) {
                     const img_anexo = new AttachmentBuilder(corpo_mail.anexo.attachment)
 
-                    canal_alvo.send({
+                    canal.send({
                         content: corpo_mail.texto,
                         files: [img_anexo]
                     })
                 } else
-                    canal_alvo.send({
+                    canal.send({
                         content: corpo_mail.texto
                     })
 
                 interaction.reply({
-                    content: `:white_check_mark: | Mensagem enviada para o canal ${canal_alvo} com sucesso`,
+                    content: `:white_check_mark: | Mensagem enviada para o canal ${canal} com sucesso`,
                     flags: "Ephemeral"
                 })
             } else

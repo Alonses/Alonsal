@@ -12,7 +12,7 @@ module.exports = {
 
         if (interaction.user.id !== client.x.owners[0] || client.x.owners.includes(interaction.options.getString("usuario"))) return
 
-        const user_alvo = await client.getUser(interaction.options.getString("usuario"))
+        const user_alvo = await client.execute("getUser", { id_user: interaction.options.getString("usuario") })
 
         // Ativa ou desativa o banimento do membro
         user_alvo.conf.banned = !user_alvo.conf.banned

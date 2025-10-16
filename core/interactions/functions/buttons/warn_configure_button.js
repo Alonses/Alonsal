@@ -44,7 +44,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para escoler a penalidade da advertência
         const eventos = []
-        const guild_bot = await client.getMemberGuild(interaction.guild.id, client.id())
+        const guild_bot = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
         if (warn.action) // Warn com penalidade definida
             eventos.push({ type: "none", status: false, id_alvo: id_warn })
@@ -69,7 +69,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         const botoes = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }
         ], interaction, user)
 
         return interaction.update({
@@ -86,7 +86,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             cargos.push({ name: client.tls.phrase(user, "menu.botoes.nenhum_cargo"), id: "none" })
 
         // Listando todos os cargos do servidor
-        cargos = cargos.concat(await client.getGuildRoles(interaction, client.decifer(warn.role)))
+        cargos = cargos.concat(await client.execute("getGuildRoles", { interaction, ignore_role: client.decifer(warn.role) }))
 
         const data = {
             title: { tls: "menu.menus.escolher_cargo" },
@@ -101,10 +101,10 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback },
-            { id: "warn_configure_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: `2.${id_warn}` }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback },
+            { id: "warn_configure_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: `2.${id_warn}` }
         ]
 
         if (row.length > 0) // Botões de navegação
@@ -131,7 +131,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }
         ], interaction, user)
 
         return interaction.update({
@@ -155,7 +155,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }
         ], interaction, user)
 
         return interaction.update({
@@ -185,7 +185,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }
         ], interaction, user)
 
         return interaction.update({

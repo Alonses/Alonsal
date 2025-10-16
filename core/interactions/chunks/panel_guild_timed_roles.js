@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     // Permissões do bot no servidor
-    const bot_member = await client.getMemberGuild(interaction, client.id())
+    const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Desabilitando os tickets caso o bot não possa gerenciar os canais e cargos do servidor
     if (!bot_member.permissions.has([PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles])) {
@@ -32,12 +32,12 @@ module.exports = async ({ client, user, interaction }) => {
             { name: "⠀", value: "⠀", inline: false },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", bot_member.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.moderar_membros")}**`,
+                value: `${client.execute("button_emoji", bot_member.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.moderar_membros")}**`,
                 inline: true
             },
             {
                 name: "⠀",
-                value: `${client.execute("functions", "emoji_button.emoji_button", bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
+                value: `${client.execute("button_emoji", bot_member.permissions.has(PermissionsBitField.Flags.ManageRoles))} **${client.tls.phrase(user, "mode.network.gerenciar_cargos")}**`,
                 inline: true
             }
         ],
@@ -48,14 +48,14 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const botoes = [
-        { id: "guild_timed_roles_button", name: { tls: "menu.botoes.expiracao" }, type: 1, emoji: client.defaultEmoji("time"), data: "1" },
-        { id: "guild_timed_roles_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "2" }
+        { id: "guild_timed_roles_button", name: { tls: "menu.botoes.expiracao" }, type: 0, emoji: client.defaultEmoji("time"), data: "1" },
+        { id: "guild_timed_roles_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "2" }
     ]
 
     client.reply(interaction, {
         content: "",
         embeds: [embed],
-        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" }], interaction, user)],
+        components: [client.create_buttons(botoes, interaction, user), client.create_buttons([{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild.2" }], interaction, user)],
         flags: "Ephemeral"
     })
 }

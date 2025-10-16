@@ -14,25 +14,25 @@ module.exports = async ({ client, user, interaction }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
 
-    const guild_member = await client.getMemberGuild(interaction.guild.id, interaction.options.getUser("user").id)
-    const bot_member = await client.getMemberGuild(interaction.guild.id, client.id())
+    const guild_member = await client.execute("getMemberGuild", { interaction, id_user: interaction.options.getUser("user").id })
+    const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     let user_alvo = interaction.options.getUser("user")
-    let id_alvo, user_warns
+    let id_user, user_warns
 
     if (typeof user_alvo === "object")
-        id_alvo = user_alvo.id
+        id_user = user_alvo.id
 
-    if (id_alvo === interaction.user.id) // Impede que o usuário se auto reporte
+    if (id_user === interaction.user.id) // Impede que o usuário se auto reporte
         return client.tls.reply(interaction, user, "mode.report.auto_reporte", true, client.emoji(0))
 
-    if (id_alvo === client.id()) // Impede que o usuário reporte o bot
+    if (id_user === client.id()) // Impede que o usuário reporte o bot
         return client.tls.reply(interaction, user, "mode.report.reportar_bot", true, client.emoji(0))
 
-    if (isNaN(id_alvo) || id_alvo.length < 18) // ID inválido
+    if (isNaN(id_user) || id_user.length < 18) // ID inválido
         return client.tls.reply(interaction, user, "mode.report.id_invalido", true, client.defaultEmoji("types"))
 
-    const membro_guild = await client.getMemberGuild(interaction, id_alvo)
+    const membro_guild = await client.execute("getMemberGuild", { interaction, id_user })
 
     if (!guild_member) // Membro saiu do servidor antes de acionar o comando
         return client.tls.reply(interaction, user, "mode.warn.membro_desconhecido", true, 1)

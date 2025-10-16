@@ -13,7 +13,7 @@ module.exports = {
 
         const votos = await getVotes()
 
-        if (client.timestamp() < 1692460800)
+        if (client.execute("timestamp") < 1692460800)
             interaction.reply({
                 content: `${client.emoji("emojis_dancantes")} | Votos computados até o momento: \`${votos?.qtd || 0}\`\n${client.defaultEmoji("calendar")} | Contabilizando até <t:1692460800:f>`,
                 flags: "Ephemeral"

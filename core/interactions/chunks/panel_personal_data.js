@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
     const ranking = [], guilds_ranking = await getUserRankServers(user.uid)
 
     let dados_conhecidos = "", nota_servidores = "", reback = pagina === 1 ? "panel_personal_data.0" : "panel_personal.0"
-    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }]
 
     // Listando os servidores que o usuário possui ranking
     if (guilds_ranking)
@@ -64,18 +64,18 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
         title: `> ${client.tls.phrase(user, "manu.data.dados_salvos")} ${client.defaultEmoji("person")}`,
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
+                name: `${client.execute("button_emoji", user?.conf.ghost_mode)} **${client.tls.phrase(user, "manu.data.ghostmode")}**`,
+                value: `${client.execute("button_emoji", user?.conf.public_badges)} **${client.tls.phrase(user, "manu.data.badges_publicas")}**\n${client.execute("button_emoji", user?.conf.resumed)} **${client.tls.phrase(user, "manu.painel.modo_compacto")}**`,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**\n${client.execute("functions", "emoji_button.emoji_button", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
+                name: `${client.execute("button_emoji", user?.conf.notify)} **${client.tls.phrase(user, "manu.data.notificacoes")}**`,
+                value: `${client.execute("button_emoji", !user?.misc.weather)} **${client.tls.phrase(user, "manu.data.clima_resumido")}**\n${client.execute("button_emoji", user?.conf.cached_guilds)} **${client.tls.phrase(user, "manu.painel.servidores_conhecidos")}**`,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.ranking)} **${client.tls.phrase(user, "manu.data.ranking")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", user?.conf.global_tasks)} **${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
+                name: `${client.execute("button_emoji", user?.conf.ranking)} **${client.tls.phrase(user, "manu.data.ranking")}**`,
+                value: `${client.execute("button_emoji", user?.conf.global_tasks)} **${client.tls.phrase(user, "manu.data.tarefas_globais")}**`,
                 inline: true
             }
         ],
@@ -98,16 +98,16 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
 
     botoes.push(
         { id: "data_menu_button", name: { tls: "menu.botoes.central_exclusao" }, type: 3, emoji: client.emoji(13), data: '1' },
-        { id: "data_user_button", name: { tls: "menu.botoes.definir_inatividade" }, type: 1, emoji: client.defaultEmoji("time"), data: "5" }
+        { id: "data_user_button", name: { tls: "menu.botoes.definir_inatividade" }, type: 3, emoji: client.defaultEmoji("time"), data: "5" }
     )
 
     if (pagina === 0)
-        botoes.push({ id: "data_user_button", name: { tls: "menu.botoes.mais_detalhes" }, type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_user_button", name: { tls: "menu.botoes.mais_detalhes" }, type: 0, emoji: client.defaultEmoji("paper"), data: "1" })
 
     if (pagina === 1)
         botoes.push(
-            { id: "data_menu_button", name: { tls: "menu.botoes.telemetria" }, type: 1, emoji: client.emoji(36), data: '2' },
-            { id: "data_menu_button", name: { tls: "menu.botoes.sincronizar_servidores" }, type: 1, emoji: client.defaultEmoji("earth"), data: '3' }
+            { id: "data_menu_button", name: { tls: "menu.botoes.telemetria" }, type: 0, emoji: client.emoji(36), data: '2' },
+            { id: "data_menu_button", name: { tls: "menu.botoes.sincronizar_servidores" }, type: 0, emoji: client.defaultEmoji("earth"), data: '3' }
         )
 
     client.reply(interaction, {

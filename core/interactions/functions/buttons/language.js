@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Botão para retornar até a tela principal do help
     let row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "browse_help" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "browse_help" }
     ], interaction, user)
 
     interaction.update({

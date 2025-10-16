@@ -14,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const guild = await client.getGuild(interaction.guild.id)
     const guild_warns = await listAllGuildWarns(interaction.guild.id)
 
-    let indice_matriz = client.verifyMatrixIndex(guild_warns) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
+    let indice_matriz = client.execute("verifyMatrixIndex", { guild_config: guild_warns }) // Indice marcador do momento de expulsão/banimento do membro pelas advertências
 
     // Verificando se existem advertências para as próximas punições do usuário
     let indice_warn = user_warns.length > guild_warns.length ? guild_warns.length - 1 : user_warns.length
@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.emoji("banidos")} **${client.tls.phrase(user, "mode.hierarquia.proxima_warn")}**`,
-                value: client.verifyAction(guild_warns[indice_warn - 1], user),
+                value: client.execute("verifyAction", { action: guild_warns[indice_warn - 1], source: user }),
                 inline: false
             }
         ],
@@ -53,9 +53,9 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de anotações
     let botoes = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `pre_warn_browse_user|${pagina}` },
-        { id: "pre_warn_remove_user", name: { tls: "menu.botoes.remover_anotacoes" }, type: 1, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
-        { id: "panel_guild_browse_pre_warns", name: { tls: "menu.botoes.gerenciar_anotacoes" }, type: 1, emoji: client.emoji(41), data: `11|${id_alvo}` }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `pre_warn_browse_user|${pagina}` },
+        { id: "pre_warn_remove_user", name: { tls: "menu.botoes.remover_anotacoes" }, type: 0, emoji: client.emoji(42), data: `2|${id_alvo}.${interaction.guild.id}` },
+        { id: "panel_guild_browse_pre_warns", name: { tls: "menu.botoes.gerenciar_anotacoes" }, type: 0, emoji: client.emoji(41), data: `11|${id_alvo}` }
     ]
 
     client.reply(interaction, {

@@ -12,8 +12,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
     if (params.url) texto_entrada = params.url
 
-    alvo = interaction.options.getUser("user") || interaction.user
-    const user_alvo = await client.getUser(alvo.id)
+    const id_user = interaction.options.getUser("user").id || interaction.user.id
+    const user_alvo = await client.execute("getUser", { id_user })
 
     // user_alvo -> usuário marcado pelo comando
     // user -> usuário que disparou o comando
@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             texto_entrada = client.decifer(user_alvo.social.lastfm)
 
     // Aumentando o tempo de duração da resposta
-    await client.deferedReply(interaction, interaction.user.id === alvo.id ? user_command || null : "Ephemeral")
+    await client.deferedReply(interaction, interaction.user.id === id_user ? user_command || null : "Ephemeral")
 
     fetch(`${process.env.url_apisal}/lastfm?profile=${texto_entrada}&now=true`)
         .then(response => response.json())
@@ -58,7 +58,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             client.reply(interaction, {
                 embeds: [embed],
                 components: [client.create_buttons(row, interaction, user)],
-                flags: interaction.user.id === alvo.id ? user_command || null : "Ephemeral"
+                flags: interaction.user.id === id_user ? user_command || null : "Ephemeral"
             }, true)
         })
         .catch(() => {

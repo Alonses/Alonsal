@@ -65,7 +65,7 @@ module.exports = {
         let jooj = ["pedra", "papel", "tesoura", "pedra"]
 
         const escolha = interaction.options.getString("choice")
-            ?? jooj[client.random(2)]
+            ?? jooj[client.execute("random", { intervalo: 2 })]
 
         const bet = interaction.options.getNumber("bet") ?? 0
 
@@ -75,7 +75,7 @@ module.exports = {
         const emojis = [":rock:", ":roll_of_paper:", ":scissors:", ":rock:"]
 
         let player = jooj.indexOf(escolha)
-        let bot = client.random(2), ganhador = ":thumbsdown:", profit = -bet
+        let bot = client.execute("random", { intervalo: 2 }), ganhador = ":thumbsdown:", profit = -bet
 
         if (player === 0) player = 3
         if (bot === 0) bot = 3

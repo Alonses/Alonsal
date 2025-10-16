@@ -27,10 +27,10 @@ module.exports = {
             return client.tls.reply(interaction, user, "dive.nick.permissao_1", true, client.emoji(0))
 
         // Libera a função apenas se puder editar o apelido de outros usuários
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageNicknames, PermissionsBitField.Flags.ChangeNickname]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageNicknames, PermissionsBitField.Flags.ChangeNickname] }))
             return client.tls.reply(interaction, user, "dive.nick.permissao_2", true, client.emoji(0))
 
-        const user_alvo = await client.getMemberGuild(interaction, interaction.user.id)
+        const user_alvo = await client.execute("getMemberGuild", { interaction, id_user: interaction.user.id })
         const apelido = user_alvo.nickname || user_alvo.user.username
 
         user_alvo.setNickname(client.shuffleArray(apelido.split("")).join("").trim())

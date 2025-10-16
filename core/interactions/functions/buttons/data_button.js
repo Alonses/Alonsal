@@ -29,8 +29,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }, user)
 
         const row = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "data" },
-            { id: "data_confirm_button", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: "3" },
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "data" },
+            { id: "data_confirm_button", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "3" },
             { id: "data_confirm_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
         ]
 
@@ -43,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     const row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "dados_navegar" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "dados_navegar" }
     ], interaction, user)
 
     interaction.update({

@@ -11,7 +11,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     const canais_clientes = await (guild_channel ? getSpecificGameChannel(guild_channel) : getGameChannels())
 
     if (canais_clientes.length < 1)
-        return client.notify(process.env.channel_feeds, { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." })
+        return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":video_game: :octagonal_sign: | Anúncio de games cancelado, não há canais clientes registrados para receberem a atualização." } })
 
     // Verificando se a plataforma informada é válida
     const matches = objetos_anunciados[0].link.match(client.cached.game_stores)
@@ -63,7 +63,7 @@ module.exports = async ({ client, interaction, objetos_anunciados, guild_channel
     if (canais_clientes.length === 1)
         aviso = ":white_check_mark: | Aviso de Jogos gratuitos enviado para `1` canal cliente"
 
-    client.notify(process.env.channel_feeds, { content: aviso })
+    client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: aviso } })
 
     if (interaction)
         interaction.editReply({
@@ -83,20 +83,20 @@ async function fragmenta_envio(client, obj_anuncio, indice) {
         let idioma_definido = dados.lang ?? "pt-br"
         if (idioma_definido === "al-br") idioma_definido = "pt-br"
 
-        const canal_alvo = client.discord.channels.cache.get(dados.games.channel)
+        const canal = client.discord.channels.cache.get(dados.games.channel)
 
-        if (canal_alvo) { // Enviando os anúncios para os canais
-            if (canal_alvo.type === ChannelType.GuildText || canal_alvo.type === ChannelType.GuildAnnouncement) {
+        if (canal) { // Enviando os anúncios para os canais
+            if (canal.type === ChannelType.GuildText || canal.type === ChannelType.GuildAnnouncement) {
 
                 // Permissão para enviar mensagens no canal
-                if (await client.permissions(null, client.id(), [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal_alvo)) {
+                if (await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel], canal })) {
 
                     // Enviando o anúncio
                     for (let i = 0; i <= indice; i++) {
 
                         // Formatando para enviar vários embeds caso necessário
                         const corpo_anuncio = formatar_modelo(client, obj_anuncio, client, dados, i, idioma_definido)
-                        canal_alvo.send(corpo_anuncio)
+                        canal.send(corpo_anuncio)
                     }
                 }
             }

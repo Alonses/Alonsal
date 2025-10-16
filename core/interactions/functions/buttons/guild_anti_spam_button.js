@@ -51,14 +51,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Submenu para navegar pelos strikes do servidor
         let botoes = [], row = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_anti_spam.0" }
         ], indice_matriz = 5
 
         if (strikes.length < 1) {
             await getGuildStrike(interaction.guild.id, 0)
 
             botoes.push({
-                id: "strike_configure_button", name: "1°", type: 1, emoji: client.emoji(39), data: `9|0`
+                id: "strike_configure_button", name: "1°", type: 0, emoji: client.emoji(39), data: `9|0`
             })
         } else
             strikes.forEach(strike => {
@@ -72,7 +72,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
-            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike" }, type: 2, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
+            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike" }, type: 1, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
         let texto_aviso_indice = ""
 
@@ -106,7 +106,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         }
 
         let row = client.create_buttons([
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_anti_spam.2" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_anti_spam.2" }
         ], interaction, user)
 
         return interaction.update({
@@ -130,15 +130,20 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             data.values.push({ name: client.tls.phrase(user, "manu.guild_data.remover_canal"), id: "none" })
 
         // Listando os canais do servidor
-        data.values = data.values.concat(await client.getGuildChannels(interaction, user, ChannelType.GuildText, guild.spam.channel))
+        data.values = data.values.concat(await client.execute("getGuildChannels", {
+            interaction,
+            user,
+            tipo: ChannelType.GuildText,
+            id_configurado: guild.spam.channel
+        }))
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
         if (data.values.length < pagina * 24) pagina--
 
-        const row = client.menu_navigation(user, data, pagina || 0)
+        const row = client.execute("menu_navigation", { user, data, pagina })
         let botoes = [
-            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `${reback}.2` },
-            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "4" }
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `${reback}.2` },
+            { id: "guild_anti_spam_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "4" }
         ]
 
         if (row.length > 0) // Botões de navegação

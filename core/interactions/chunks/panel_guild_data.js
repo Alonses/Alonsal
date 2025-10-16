@@ -19,10 +19,10 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     await client.deferedResponse({ interaction, ephemeral })
 
     let dados = ""
-    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.0" }]
+    let botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild.0" }]
 
     if (pagina === 1)
-        botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild_data.0" }]
+        botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_data.0" }]
 
     if (guild.inviter)
         dados += `\n${client.emoji("aln_hoster")} **${client.tls.phrase(user, "manu.data.hoster_alonsal")}**\n${client.emoji("icon_id")} \`${guild.inviter}\`\n<@${guild.inviter}>\n`
@@ -41,25 +41,25 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     if (network > 0) {
         dados += `\n${client.emoji(36)} **Network**\n\`${network > 1 ? client.tls.phrase(user, "manu.guild_data.network_servidores", null, network) : client.tls.phrase(user, "manu.guild_data.network_unico")}\``
-        dados += `\n\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")} ( \`${network} / ${guild.misc?.subscription.active ? "29" : "9"}\`)**\n${guild.network.link ? await client.getNetWorkGuildNames(user, guild.network.link, interaction, true) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
+        dados += `\n\n:link: **${client.tls.phrase(user, "manu.guild_data.outros_servidores")} ( \`${network} / ${guild.misc?.subscription.active ? "29" : "9"}\`)**\n${guild.network.link ? await client.execute("getNetworkGuildNames", { user, link: guild.network.link, interaction, ignore: true }) : client.tls.phrase(user, "manu.guild_data.sem_servidores")}\n`
     }
 
     const embed = client.create_embed({
         title: { tls: "manu.guild_data.dados_servidor_titulo" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.network)} **Network**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.logger)} **${client.tls.phrase(user, "manu.painel.log_eventos")}**`,
+                value: `${client.execute("button_emoji", guild?.conf.network)} **Network**\n${client.execute("button_emoji", guild?.conf.tickets)} **${client.tls.phrase(user, "manu.painel.denuncias_server")}**`,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.voice_channels)} **Faladeiros dinâmicos**`,
+                name: `${client.execute("button_emoji", guild?.conf.warn)} **${client.tls.phrase(user, "mode.warn.advertencias")}**`,
+                value: `${client.execute("button_emoji", guild?.conf.reports)} **${client.tls.phrase(user, "manu.painel.reports_externos")}**\n${client.execute("button_emoji", guild?.conf.voice_channels)} **Faladeiros dinâmicos**`,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**\n${client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
+                name: `${client.execute("button_emoji", guild?.conf.spam)} **${client.tls.phrase(user, "manu.painel.anti_spam")}**`,
+                value: `${client.execute("button_emoji", guild?.conf.games)} **${client.tls.phrase(user, "manu.painel.anuncio_games")}**\n${client.execute("button_emoji", guild?.conf.nuke_invites)} **${client.tls.phrase(user, "manu.painel.convites_rastreados")}**`,
                 inline: true
             }
         ],
@@ -83,17 +83,17 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
         embed.setDescription(client.tls.phrase(user, "manu.guild_data.resumo_expandido", null, tempo_exclusao))
     }
 
-    botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "0" })
+    botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "0" })
 
     // Verificando se o membro possui permissões para gerenciar o tempo de exclusão do servidor
-    if (await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageGuild]))
+    if (await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageGuild] }))
         botoes.push(
             { id: "data_guild_button", name: { tls: "menu.botoes.definir_exclusao" }, type: 3, emoji: client.defaultEmoji("time"), data: "2" },
             { id: "data_guild_button", name: { tls: "menu.botoes.definir_inatividade" }, type: 3, emoji: client.defaultEmoji("running"), data: "3" }
         )
 
     if (pagina === 0)
-        botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.mais_detalhes" }, type: 1, emoji: client.defaultEmoji("paper"), data: "1" })
+        botoes.push({ id: "data_guild_button", name: { tls: "menu.botoes.mais_detalhes" }, type: 0, emoji: client.defaultEmoji("paper"), data: "1" })
 
     interaction.editReply({
         content: "",

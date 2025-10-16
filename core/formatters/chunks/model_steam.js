@@ -14,8 +14,8 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     if (params.url)
         texto_entrada = params.url
 
-    alvo = interaction.options.getUser("user") || interaction.user
-    const user_alvo = await client.getUser(alvo.id)
+    const id_user = interaction.options.getUser("user")?.id || interaction.user.id
+    const user_alvo = await client.execute("getUser", { id_user })
 
     // user_alvo -> usuário marcado pelo comando
     // user -> usuário que disparou o comando
@@ -263,7 +263,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
                 if (res.includes("Member since ")) {
                     anos_servico = res.split("Member since ")[1]
-                    anos_servico = client.execute("formatters", "formata_data", anos_servico.split(".\">")[0].replace(",", ""))
+                    anos_servico = client.execute("formata_data", { ano: anos_servico.split(".\">")[0].replace(",", "") })
                 }
 
                 if (reviews_user === "-" || jogos_perfeitos === "-" || porcentagem_conquistas === "-" || conquistas_user === "-" || insignias_user === "-" || jogos_user === "-" || status === "-" || insignias_user === "-" || tempo_semanas === "-")

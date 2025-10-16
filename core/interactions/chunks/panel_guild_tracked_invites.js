@@ -5,14 +5,14 @@ module.exports = async ({ client, user, interaction }) => {
     const guild = await client.getGuild(interaction.guild.id)
 
     // Permissões do bot no servidor
-    const membro_sv = await client.getMemberGuild(interaction, client.id())
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     const embed = client.create_embed({
         title: `> ${client.tls.phrase(user, "manu.painel.convites_rastreados")} :link: :busts_in_silhouette:`,
         description: { tls: "mode.invites.descricao_funcionamento" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.conf.nuke_invites)} **${client.tls.phrase(user, "mode.report.status")}**`,
+                name: `${client.execute("button_emoji", guild.conf.nuke_invites)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
                 inline: true
             },
@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction }) => {
             },
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
-                value: `${client.execute("functions", "emoji_button.emoji_button", membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))} **${client.tls.phrase(user, "mode.network.gerenciar_servidor")}**`,
+                value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ManageGuild))} **${client.tls.phrase(user, "mode.network.gerenciar_servidor")}**`,
                 inline: true
             }
         ],
@@ -39,10 +39,10 @@ module.exports = async ({ client, user, interaction }) => {
     }, user)
 
     const botoes = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "panel_guild.2" },
-        { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados" }, type: client.execute("functions", "emoji_button.type_button", guild?.conf.nuke_invites), emoji: client.execute("functions", "emoji_button.emoji_button", guild?.conf.nuke_invites), data: "1" },
-        { id: "guild_tracked_invites_button", name: { tls: "menu.botoes.varredura" }, type: 1, emoji: guild.nuke_invites.type ? "🌟" : "👟", data: "2" },
-        { id: "guild_tracked_invites_button", name: { tls: "mode.report.canal_de_avisos" }, type: 1, emoji: client.defaultEmoji("channel"), data: "3" }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild.2" },
+        { id: "guild_tracked_invites_button", name: { tls: "manu.painel.convites_rastreados" }, type: guild?.conf.nuke_invites, emoji: client.execute("button_emoji", guild?.conf.nuke_invites), data: "1" },
+        { id: "guild_tracked_invites_button", name: { tls: "menu.botoes.varredura" }, type: 0, emoji: guild.nuke_invites.type ? "🌟" : "👟", data: "2" },
+        { id: "guild_tracked_invites_button", name: { tls: "mode.report.canal_de_avisos" }, type: 0, emoji: client.defaultEmoji("channel"), data: "3" }
     ]
 
     client.reply(interaction, {

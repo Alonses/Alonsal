@@ -70,10 +70,10 @@ module.exports = async ({ client, user, interaction, pagina_guia, caso, defer, a
                 usernames.push(`${medals[i] || ":medal:"} #${i + 1} \`${(nome_usuario).replace(/ /g, "")}\` ${fixed_badge}`)
 
             ids.push(user_interno.uid)
-            experiencias.push(`\`${client.locale(parseInt(user_interno.xp))} EXP\``)
+            experiencias.push(`\`${client.execute("locale", { valor: parseInt(user_interno.xp) })} EXP\``)
 
             if (escopo === "server")
-                levels.push(`\`${client.locale(Math.floor(user_interno.xp / 1000))}\` - \`${((user_interno.xp % 1000) / 1000).toFixed(2)}%\``)
+                levels.push(`\`${client.execute("locale", { valor: Math.floor(user_interno.xp / 1000) })}\` - \`${((user_interno.xp % 1000) / 1000).toFixed(2)}%\``)
 
             // Verifica se a entrada é um ID
             if (!user_alvo_data) i++
@@ -104,7 +104,7 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
     const embed = client.create_embed({
         title: nome_embed,
         thumbnail: interaction.guild.iconURL({ size: 2048 }),
-        description: client.replace(`\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, client.cached.ranking_value),
+        description: client.execute("replace", { string: `\`\`\`fix\n${descricao_banner}   >✳️> auto_replX EXP <✳️<\`\`\``, valores: client.cached.ranking_value }),
         fields: [
             {
                 name: `${client.emoji("mc_wax")} ${client.tls.phrase(user, "dive.rank.enceirados")}`,
@@ -144,11 +144,11 @@ async function retorna_ranking({ client, user, interaction, ids, usernames, expe
 
     if (paginas > 1) { // Ranking com várias páginas de navegação
         row = client.create_buttons([
-            { id: "rank_button", name: '⏪', type: 1, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] },
-            { id: "rank_button", name: '◀️', type: 1, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] },
-            { id: "rank_button", name: '🔘', type: 0, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] },
-            { id: "rank_button", name: '▶️', type: 1, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] },
-            { id: "rank_button", name: '⏩', type: 1, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }
+            { id: "rank_button", name: '⏪', type: 0, data: `1|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[0] },
+            { id: "rank_button", name: '◀️', type: 0, data: `2|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[1] },
+            { id: "rank_button", name: '🔘', type: 2, data: `3|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[2] },
+            { id: "rank_button", name: '▶️', type: 0, data: `4|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[3] },
+            { id: "rank_button", name: '⏩', type: 0, data: `5|${pagina}.${escopo}.rank_navegar`, disabled: b_disabled[4] }
         ], interaction)
 
         obj.components = [row]
@@ -162,7 +162,7 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
     if (usuario_alvo.length === 0)
         usuario_alvo.push(0)
 
-    const user_a = await client.getUser(user_alvo_data.id)
+    const user_a = await client.execute("getUser", { id_user: user_alvo_data.id })
     let fixed_badge = busca_badges(client, badgeTypes.FIXED, user_a) || ""
 
     if (fixed_badge) fixed_badge = fixed_badge.emoji
@@ -173,12 +173,12 @@ async function retorna_card_alvo({ client, user, interaction, usuario_alvo, user
         fields: [
             {
                 name: `:postal_horn: ${client.tls.phrase(user, "dive.rank.experiencia")}`,
-                value: `\`${client.locale(parseInt(usuario_alvo[0]))} EXP\``,
+                value: `\`${client.execute("locale", { valor: parseInt(usuario_alvo[0]) })} EXP\``,
                 inline: true
             },
             {
                 name: `:beginner: ${client.tls.phrase(user, "dive.rank.nivel")}`,
-                value: `\`${client.locale(parseInt(usuario_alvo[0] / 1000))}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
+                value: `\`${client.execute("locale", { valor: parseInt(usuario_alvo[0] / 1000) })}\` - \`${((usuario_alvo[0] % 1000) / 1000).toFixed(2)}%\``,
                 inline: true
             }
         ],

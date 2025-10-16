@@ -40,21 +40,21 @@ async function gera_painel(client, user, guild, id_canal, canal_guild, voice_cha
 
     let aviso_card = "", users_liberados = [`<@${client.decifer(user.uid)}>`]
     const botoes = [
-        { id: "user_voice_channel", name: { tls: "menu.botoes.limitar_canal" }, type: 1, emoji: client.defaultEmoji("metrics"), data: `1.${id_canal}.${client.decifer(voice_channel.uid)}` },
-        { id: "user_voice_channel", name: { tls: "menu.botoes.privar_canal" }, type: 1, emoji: "🔒", data: `2.${id_canal}.${client.decifer(voice_channel.uid)}` }
+        { id: "user_voice_channel", name: { tls: "menu.botoes.limitar_canal" }, type: 0, emoji: client.defaultEmoji("metrics"), data: `1.${id_canal}.${client.decifer(voice_channel.uid)}` },
+        { id: "user_voice_channel", name: { tls: "menu.botoes.privar_canal" }, type: 0, emoji: "🔒", data: `2.${id_canal}.${client.decifer(voice_channel.uid)}` }
     ]
 
     // Botões para (des)privar o canal de voz
     if (!canal_guild.permissionsFor(canal_guild.guild.id).has(PermissionsBitField.Flags.ViewChannel)) {
 
-        botoes.push({ id: "user_voice_channel", name: { tls: "menu.botoes.tornar_publico" }, type: 2, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
+        botoes.push({ id: "user_voice_channel", name: { tls: "menu.botoes.tornar_publico" }, type: 1, emoji: "🔓", data: `3.${id_canal}.${client.decifer(voice_channel.uid)}` })
 
         canal_guild.permissionOverwrites.cache.forEach(permissao => {
             if (permissao.id != canal_guild.guild.id && permissao.id !== client.id() && permissao.id !== client.decifer(user.uid))
                 users_liberados.push(`<@${permissao.id}>`)
         })
 
-        aviso_card = client.tls.phrase(user, "mode.voice_channels.canal_privado", null, [users_liberados.length, client.list(users_liberados, null, true)])
+        aviso_card = client.tls.phrase(user, "mode.voice_channels.canal_privado", null, [users_liberados.length, client.execute("list", { valores: users_liberados, raw: true })])
     }
 
     if (voice_channel.conf.mute) {
@@ -63,7 +63,7 @@ async function gera_painel(client, user, guild, id_canal, canal_guild, voice_cha
 
         botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.desmutar" }, type: 3, emoji: client.emoji("fabio"), data: `6.${id_canal}` })
     } else
-        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.mutar" }, type: 0, emoji: client.emoji("jacquin2"), data: `5.${id_canal}` })
+        botoes.unshift({ id: "user_voice_channel", name: { tls: "menu.botoes.mutar" }, type: 2, emoji: client.emoji("jacquin2"), data: `5.${id_canal}` })
 
     // Criando o embed de botões para configuração do canal pelo membro
     const embed = client.create_embed({
@@ -76,7 +76,7 @@ async function gera_painel(client, user, guild, id_canal, canal_guild, voice_cha
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", guild.voice_channels.preferences.allow_text)} ${client.tls.phrase(user, "menu.botoes.permitir_texto")}`,
+                name: `${client.execute("button_emoji", guild.voice_channels.preferences.allow_text)} ${client.tls.phrase(user, "menu.botoes.permitir_texto")}`,
                 value: "⠀",
                 inline: true
             },

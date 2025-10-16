@@ -9,21 +9,21 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // 2 -> Badges
     // 3 -> Histórico de reportes
 
-    let id_alvo, operador = 0
+    let id_user, operador = 0
 
     // Coletando os dados do usuário
     if (dados) {
         operador = parseInt(dados.split(".")[1])
-        id_alvo = dados.split(".")[2]
+        id_user = dados.split(".")[2]
     } else
-        id_alvo = interaction.options.getUser("user")?.id || interaction.user.id
+        id_user = interaction.options.getUser("user")?.id || interaction.user.id
 
-    const membro_sv = await client.getMemberGuild(interaction, id_alvo)
+    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user })
 
     if (!membro_sv) // Usuário fora do servidor (pode ser gerado por menus de contexto)
         return client.tls.reply(interaction, user, "mode.report.usuario_nao_encontrado", true, 1)
 
-    const infos_user = await client.create_profile({ interaction, user, id_alvo, operador })
+    const infos_user = await client.create_profile({ interaction, user, id_user, operador })
 
     if (!membro_sv) { // Usuário foi removido do cache do bot
         interaction.update({
@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             },
             {
                 name: `:shield: **${client.tls.phrase(user, "menu.botoes.permissoes")}**`,
-                value: client.list(membro_sv.permissions.toArray(), 2000),
+                value: client.execute("list", { valores: membro_sv.permissions.toArray(), max: 2000 }),
                 inline: false
             }
         )
@@ -58,13 +58,13 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     // Badges do usuário
     if (operador === 2) {
 
-        const internal_user = await client.getUser(client.encrypt(id_alvo))
+        const internal_user = await client.execute("getUser", { id_user: client.encrypt(id_user) })
 
         // Informando ao usuário do comando que essa guia está desativada para ele
         if (!autor_original && !internal_user?.conf.public_badges)
             return client.tls.reply(interaction, user, "manu.data.nao_compartilha_badges", true, 18)
 
-        let id_badges = await client.getUserBadges(client.encrypt(id_alvo))
+        let id_badges = await client.getUserBadges(client.encrypt(id_user))
         let badges = await buildAllBadges(client, user, id_badges)
         // let achievements = busca_achievements(client, all, user.id, interaction)
 
@@ -96,7 +96,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
     if (operador === 3) {
 
         // Coletando os dados de histórico do usuário
-        const reports = await verifyUserReports(client.encrypt(id_alvo))
+        const reports = await verifyUserReports(client.encrypt(id_user))
         let avisos_reportes = 0, descricao_reportes, historico = []
 
         // Quantificando os relatórios sobre o usuário
@@ -130,17 +130,17 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Desabilitando a guia de badges caso o usuário tenha escondido
     if (!autor_original) {
-        const internal_user = await client.getUser(id_alvo)
+        const internal_user = await client.execute("getUser", { id_user })
 
         if (!internal_user?.conf.public_badges)
             b_disabled[2] = true
     }
 
     const row = client.create_buttons([
-        { id: "user_info_button", name: { tls: "menu.botoes.perfil" }, type: c_buttons[0], emoji: '👤', data: `0|${id_alvo}`, disabled: b_disabled[0] },
-        { id: "user_info_button", name: { tls: "menu.botoes.permissoes" }, type: c_buttons[1], emoji: '🏷️', data: `1|${id_alvo}`, disabled: b_disabled[1] },
-        { id: "user_info_button", name: "Badges", type: c_buttons[2], emoji: '🏆', data: `2|${id_alvo}`, disabled: b_disabled[2] },
-        { id: "user_info_button", name: { tls: "menu.botoes.historico" }, type: c_buttons[3], emoji: '📠', data: `3|${id_alvo}`, disabled: b_disabled[3] }
+        { id: "user_info_button", name: { tls: "menu.botoes.perfil" }, type: c_buttons[0], emoji: '👤', data: `0|${id_user}`, disabled: b_disabled[0] },
+        { id: "user_info_button", name: { tls: "menu.botoes.permissoes" }, type: c_buttons[1], emoji: '🏷️', data: `1|${id_user}`, disabled: b_disabled[1] },
+        { id: "user_info_button", name: "Badges", type: c_buttons[2], emoji: '🏆', data: `2|${id_user}`, disabled: b_disabled[2] },
+        { id: "user_info_button", name: { tls: "menu.botoes.historico" }, type: c_buttons[3], emoji: '📠', data: `3|${id_user}`, disabled: b_disabled[3] }
     ], interaction, user)
 
     const obj = {

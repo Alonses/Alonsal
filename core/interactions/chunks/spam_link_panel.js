@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, user)
 
     const row = client.create_buttons([
-        { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `2.${pagina}` },
+        { id: "spam_link_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `2.${pagina}` },
         { id: "spam_link_button", name: { tls: "menu.botoes.remover_link" }, type: 3, emoji: client.emoji(13), data: `5|${timestamp}` }
     ], interaction, user)
 

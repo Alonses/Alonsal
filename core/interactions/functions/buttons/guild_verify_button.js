@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 1 || operacao === 4) {
 
-        const warned_users = await client.getSingleWarnedGuildUser(interaction.guild.id, operacao === 4 ? "pre_warn" : "warn")
+        const warned_users = await client.execute("getSingleWarnedGuildUser", { id_guild: interaction.guild.id, escopo: (operacao === 4 ? "pre_warn" : "warn") })
 
         const obj = {
             content: warned_users.length > 0 ? client.tls.phrase(user, "mode.report.escolher_usuario") : client.tls.phrase(user, "mode.warn.sem_usuarios", 1),
@@ -64,8 +64,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             }
 
             obj.embeds = [embed]
-            obj.components = [client.create_menus({ interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19) }], interaction, user)]
-            let row = client.menu_navigation(user, data, pagina)
+            obj.components = [client.create_menus({ interaction, user, data, pagina }), client.create_buttons([{ id: "chunks_panel_guild_verify", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19) }], interaction, user)]
+            let row = client.execute("menu_navigation", { user, data, pagina })
 
             if (row.length > 0) // Botões de navegação
                 obj.components.push(client.create_buttons(row, interaction))
@@ -132,7 +132,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                         obj.embeds = [embed]
                         obj.components = [client.create_menus({ interaction, user, data, pagina })]
 
-                        let row = client.menu_navigation(user, data, pagina)
+                        let row = client.execute("menu_navigation", { user, data, pagina })
 
                         if (row.length > 0) // Botões de navegação
                             obj.components.push(client.create_buttons(row, interaction))

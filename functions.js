@@ -1,11 +1,8 @@
-const { PermissionsBitField, ChannelType } = require('discord.js')
-
 const { readdirSync } = require('fs')
 
 const { alea_hex } = require('./core/functions/hex_color')
 
 const { getBot } = require('./core/database/schemas/Bot')
-const { getUser, getEncryptedUser } = require('./core/database/schemas/User')
 
 const { create_buttons } = require('./core/generators/buttons')
 const { create_embed } = require('./core/generators/embed')
@@ -13,26 +10,15 @@ const { create_menus } = require('./core/generators/menus')
 const { create_profile } = require('./core/generators/profile')
 
 const { registryStatement } = require('./core/database/schemas/User_statements')
-const { createBadge, getUserBadges } = require('./core/database/schemas/User_badges')
-const { getGuild, getNetworkedGuilds, listAllRankedGuilds } = require('./core/database/schemas/Guild')
+const { getUserBadges } = require('./core/database/schemas/User_badges')
+const { getGuild } = require('./core/database/schemas/Guild')
 
-const { busca_badges } = require('./core/data/user_badges')
 const { data_encrypt, data_decipher } = require('./core/data/crypto')
 
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
-const menu_navigation = require('./core/functions/menu_navigation')
-
-const { getModule } = require('./core/database/schemas/Module')
-const { listAllGuildWarns } = require('./core/database/schemas/Guild_warns')
-const { checkUserGuildPreWarned } = require('./core/database/schemas/User_pre_warns')
-const { registerUserGuild, listAllUserGuilds } = require('./core/database/schemas/User_guilds')
-const { checkUserGuildWarned, listAllUserWarns } = require('./core/database/schemas/User_warns')
 
 const { palette } = require('./core/formatters/patterns/color')
-const { loggerMap } = require('./core/formatters/patterns/guild')
-const { badgeTypes, languagesMap } = require('./core/formatters/patterns/user')
-const { spamTimeoutMap, defaultRoleTimes, defaultUserEraser } = require('./core/formatters/patterns/timeout')
 const { aliases, default_emoji, emojis_dancantes, emojis_negativos } = require('./files/json/text/emojis.json')
 
 function internal_functions(client) {
@@ -49,41 +35,6 @@ function internal_functions(client) {
         }
     }
 
-    // Apagando os convites criados pelo usuário que foi expulso/banido do servidor
-    client.checkUserInvites = async (guild, id_user) => {
-
-        // Canal para envio da notificação dos convites rastreados
-        const canal_notifica = guild.nuke_invites.channel ? guild.nuke_invites.channel : guild.logger.channel
-
-        // Notificando sobre a falta de permissões e desligando o recurso no servidor
-        if (!await client.permissions(guild.sid, client.id(), [PermissionsBitField.Flags.ManageGuild])) {
-
-            guild.conf.nuke_invites = false
-            guild.save()
-
-            return client.notify(canal_notifica, { content: client.tls.phrase(guild, "mode.invites.sem_permissao_2", 7) })
-        }
-
-        // Excluindo os convites que o membro expulso/banido criou
-        const cached_guild = await client.guilds(guild.sid)
-        cached_guild.invites.fetch().then(invites => {
-
-            let convites = 0
-
-            invites.each(i => {
-                if (i.inviterId === id_user) {
-                    i.delete()
-                    convites++
-                }
-            })
-
-            if (convites > 0) { // Enviando a notificação de convites rastreados excluídos
-                const convites_formatado = `${convites} ${convites > 1 ? client.tls.phrase(guild, "mode.invites.convites") : client.tls.phrase(guild, "mode.invites.convite")}`
-                client.notify(canal_notifica, { content: client.tls.phrase(guild, "mode.invites.exclusao", 44, convites_formatado) })
-            }
-        })
-    }
-
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
     client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
@@ -91,11 +42,9 @@ function internal_functions(client) {
 
     client.create_embed = (data, alvo) => { return create_embed({ client, alvo, data }) }
 
-    client.create_menus = ({ interaction, user, data, pagina, multi_select, guild }) => {
-        return create_menus({ client, interaction, user, data, pagina, multi_select, guild })
-    }
+    client.create_menus = ({ interaction, user, data, pagina, multi_select, guild }) => { return create_menus({ client, interaction, user, data, pagina, multi_select, guild }) }
 
-    client.create_profile = ({ interaction, user, id_alvo, operador }) => { return create_profile({ client, interaction, user, id_alvo, operador }) }
+    client.create_profile = ({ interaction, user, id_user, operador }) => { return create_profile({ client, interaction, user, id_user, operador }) }
 
     // Verifica se um valor foi passado, caso contrário retorna o valor padrão esperado
     client.decider = (entrada, padrao) => { return !entrada ? padrao : entrada }
@@ -106,7 +55,7 @@ function internal_functions(client) {
         return data_decipher(entrada)
     }
 
-    client.defaultEmoji = (caso) => { return default_emoji[caso][client.random(default_emoji[caso])] }
+    client.defaultEmoji = (caso) => { return default_emoji[caso][client.execute("random", { intervalo: default_emoji[caso] })] }
 
     client.deferedReply = async (interaction, data) => {
 
@@ -141,13 +90,13 @@ function internal_functions(client) {
         let id_emoji = dados
 
         if (typeof dados === "object") // Escolhendo um emoji do Array com vários emojis
-            if (dados[0].length > 15) dados = id_emoji[client.random(dados)]
+            if (dados[0].length > 15) dados = id_emoji[client.execute("random", { intervalo: dados })]
 
         // Emojis customizados
         if (isNaN(parseInt(dados))) { // Emoji por nome próprio do JSON de emojis
 
-            if (dados == "emojis_dancantes") dados = emojis_dancantes[client.random(emojis_dancantes)]
-            else if (dados == "emojis_negativos") dados = emojis_negativos[client.random(emojis_negativos)]
+            if (dados == "emojis_dancantes") dados = emojis_dancantes[client.execute("random", { intervalo: emojis_dancantes })]
+            else if (dados == "emojis_negativos") dados = emojis_negativos[client.execute("random", { intervalo: emojis_negativos })]
             else dados = aliases[dados]
 
             return client.formatEmoji(dados, client.discord.emojis.cache.get(dados))
@@ -172,372 +121,44 @@ function internal_functions(client) {
         return emoji.animated ? formatado.replace("<:", "<a:") : formatado
     }
 
-    client.execute = (folder, funcao, data) => { // Executa funções dinâmicas utilizando os dados fornecidos
+    client.execute = (funcao, data) => {
 
-        if (!funcao.includes(".")) return require(`./core/${folder}/${funcao}`)(data)
-        else return require(`./core/${folder}/${funcao.split(".")[0]}`)[funcao.split(".")[1]](data)
-    }
+        if (client.x.debug_mode) {
+            console.log("---------------------------\n🟡 | client.execute ->", funcao)
+            console.trace()
+        }
 
-    client.extractSuspiciousLink = (text) => { // Extrai os links formatados do texto original
-
-        const links = []
-        text = text.split("(")
-        text.shift()
-
-        for (let i = 0; i < text.length; i++) links.push(text[i].split(")")[0])
-
-        return links
+        // Executa funções importadas previamente com os dados informados
+        try {
+            if (client[funcao]) return client[funcao]({ client, data })
+            else console.error(`🛑 | A função "${funcao}" não existe.`)
+        } catch (err) {
+            console.error(`🛑 | Erro ao executar a função "${funcao}":`, err)
+        }
     }
 
     client.getBot = () => { return getBot(client.x.id) }
 
-    client.getSubscriberDiscount = (valor) => {
-
-        // Retorna o valor de desconto convertido para um número inteiro até 100
-        const desconto = valor || client.cached.subscriber_discount
-        return client.locale(((desconto - 1) * -1) * 100)
-    }
-
     client.getGuild = (id_guild) => { return getGuild(id_guild) }
 
-    client.getGuildChannel = async (id_alvo) => {
-        return await client.discord.channels.cache.get(id_alvo)
-    }
+    client.getGuildChannel = async (id_alvo) => { return await client.discord.channels.cache.get(id_alvo) }
 
-    client.getGuildChannels = async (interaction, user, tipo, id_configurado) => { // Lista todos os canais de um tipo especifico no servidor
-
-        const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
-        const canais_alvo = []
-
-        if (!id_configurado) id_configurado = ""
-
-        canais.map(channel => {
-            if (channel.id !== id_configurado && channel.id !== interaction.channel.id && channel.id !== interaction.channel.parentId)
-                canais_alvo.push({ id: channel.id, name: channel.name })
-        })
-
-        // Ordenando alfabeticamente os canais
-        const ordenado = canais_alvo.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
-
-        if (id_configurado !== interaction.channel.id && id_configurado !== interaction.channel.parentId) { // Adicionando o local atual do comando no inicio do array
-
-            if (tipo === ChannelType.GuildText) // Usado por canais
-                ordenado.unshift({ id: interaction.channel.id, name: { tls: "menu.botoes.local_atual", alvo: user }, emoji: "🎯" })
-            else if (interaction.channel.parentId) // Usado por categorias
-                ordenado.unshift({ id: interaction.channel.parentId, name: { tls: "menu.botoes.local_atual", alvo: user }, emoji: "🎯" })
-        }
-
-        return ordenado
-    }
-
-    client.getGuildRole = (interaction, id_cargo) => {
-        // Retorna o cargo solicitado
-        return interaction.guild.roles.cache.find((r) => r.id === id_cargo)
-    }
-
-    client.getGuildRoles = async (interaction, id_atual, permitir_mods) => {
-        const roles = []
-        const id_ignorar = id_atual || null
-
-        interaction.guild.roles.cache.forEach(role => {
-            if (role.id !== interaction.guild.id && role.id !== id_ignorar && role.editable) { // Adiciona apenas cargos customizados
-
-                // Não inclui cargos que possuem permissões moderativas
-                if ((!role.permissions.has(PermissionsBitField.Flags.ManageMessages) && !role.permissions.has(PermissionsBitField.Flags.ModerateMembers) && !role.permissions.has(PermissionsBitField.Flags.Administrator)) || permitir_mods)
-                    roles.push({ id: role.id, name: role.name })
-            }
-        })
-
-        // Ordenando alfabeticamente os cargos
-        return roles.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
-    }
-
-    client.getUser = async (id_user) => {
-
-        if (!id_user) return
-
-        const cript_user_id = client.encrypt(id_user)
-        let user = await getUser(id_user)
-
-        if (user && id_user.length < 20) {
-
-            // Criptografando outros dados sensíveis do usuário
-            user.uid = cript_user_id
-
-            if (user.nick)
-                user.nick = client.encrypt(user.nick)
-
-            if (user.profile.avatar)
-                user.profile.avatar = client.encrypt(user.profile.avatar)
-
-            if (user?.misc.locale > 0)
-                user.misc.locale = client.encrypt(user.misc.locale)
-
-            if (user?.social.steam > 0)
-                user.social.steam = client.encrypt(user.social.steam)
-
-            if (user?.social.lastfm > 0)
-                user.social.lastfm = client.encrypt(user.social.lastfm)
-
-            if (user?.profile.about > 0)
-                user.profile.about = client.encrypt(user.profile.about)
-
-            user.save()
-        } else { // ID já criptografado
-
-            if (id_user.length < 20)
-                id_user = cript_user_id
-
-            user = await getEncryptedUser(id_user)
-        }
-
-        return user
-    }
+    // Retorna o cargo solicitado
+    client.getGuildRole = (interaction, id_cargo) => { return interaction.guild.roles.cache.find((r) => r.id === id_cargo) }
 
     client.getUserBadges = (id_user) => { return getUserBadges(id_user) }
-
-    // Retorna o membro do servidor
-    client.getMemberGuild = async (interaction, id_alvo) => {
-
-        let membro
-
-        if (interaction.guild) // Coletando a partir de uma interação ou evento
-            membro = interaction.guild.members.fetch(id_alvo)
-                .catch(() => { return null })
-        else if (interaction.members)// Coletando direto da guild
-            membro = interaction.members.fetch(id_alvo)
-                .catch(() => { return null })
-        else {
-            // Procurando a guild e o membro usando um ID do servidor
-            const guild = await client.guilds(interaction)
-
-            if (guild)
-                membro = guild.members.fetch(id_alvo)
-                    .catch(() => { return null })
-        }
-
-        return membro
-    }
-
-    client.getMemberGuildsByPermissions = async ({ interaction, user, permissions }) => {
-
-        const guilds_user = []
-        let servidores = await listAllUserGuilds(user.uid)
-
-        if (servidores.length < 1) // Membro não possui servidores salvos em cache
-            servidores = await client.guilds()
-
-        for await (let server of servidores) {
-
-            const guild = server.sid ? await client.guilds(server.sid) : server[1]
-
-            if (guild?.id) // verificando se o servidor possui os dados corretos
-                if (guild.id !== interaction.guild.id) {
-                    const membro_guild = await guild.members.fetch(user.uid)
-                        .catch(() => { return null })
-
-                    if (membro_guild) { // Listando as guilds que o usuário é moderador
-                        if (membro_guild.permissions.has(permissions)) {
-                            const internal_guild = await client.getGuild(guild.id)
-                            internal_guild.name = guild.name
-
-                            guilds_user.push(internal_guild)
-                        }
-
-                        // Registrando os servidores que o usuário faz parte
-                        registerUserGuild(user.uid, guild.id)
-                    }
-                }
-        }
-
-        // Ordenando alfabeticamente os servidores
-        return guilds_user.sort((a, b) => (client.normalizeString(a.name) > client.normalizeString(b.name)) ? 1 : ((client.normalizeString(b.name) > client.normalizeString(a.name)) ? -1 : 0))
-    }
 
     // Busca pelo usuário em cache
     client.getCachedUser = (id_alvo) => { return client.discord.users.fetch(id_alvo) }
 
-    client.getSingleWarnedGuildUser = async (id_guild, escopo) => {
-
-        const warned_users = await (escopo === "warn" ? checkUserGuildWarned(id_guild) : checkUserGuildPreWarned(id_guild)), usuarios_validos = []
-        let warned_cache = []
-
-        for (let i = 0; i < warned_users.length; i++)
-            if (!warned_cache.includes(warned_users[i].uid)) {
-                warned_cache.push(warned_users[i].uid)
-                usuarios_validos.push(warned_users[i])
-            }
-
-        return usuarios_validos
-    }
-
-    client.guildAction = (warn, chave_traduz) => {
-
-        // Verifica se a ação do servidor é silenciar um membro, caso positivo, retorna o tempo de mute do servidor
-        return warn.action === "member_mute" ? `\n${client.defaultEmoji("time")} **${client.tls.phrase(chave_traduz, "mode.spam.tempo")}:** \`${client.tls.phrase(chave_traduz, `menu.times.${spamTimeoutMap[warn.timeout]}`)}\`` : ""
-    }
-
     // Registra os eventos no diário do bot
     client.journal = async (caso, quantia) => { require('./core/auto/edit_journal')({ client, caso, quantia }) }
-
-    // Cria uma lista com vírgulas e & no último elemento
-    client.list = (valores, tamanho_maximo, raw) => {
-
-        let lista = ""
-
-        if (valores.length > 1) {
-            for (let i = 0; i < valores.length; i++) {
-                if (!valores[i + 1]) lista += " & "
-
-                if (!raw) lista += `\`${valores[i]}\``
-                else lista += valores[i]
-
-                if (valores[i + 2]) lista += ", "
-            }
-        } else // Apenas um elemento
-            lista += raw ? valores[0] : `\`${valores[0]}\``
-
-        if (tamanho_maximo)
-            if (lista.length > tamanho_maximo) lista = `${lista.slice(0, tamanho_maximo)}...`
-
-        return lista
-    }
-
-    client.listLanguages = (language) => {
-
-        const idiomas = []
-
-        Object.keys(languagesMap).forEach(lang => {
-            if (lang !== language.slice(0, 2)) idiomas.push(lang)
-        })
-
-        return idiomas
-    }
-
-    // Converte o valor numério para um formato específico
-    client.locale = (valor, locale) => {
-
-        if (!locale) locale = "pt-br"
-
-        return valor.toLocaleString(locale)
-    }
-
-    client.menu_navigation = (user, data, pagina) => {
-        return menu_navigation(client, user, data, pagina)
-    }
 
     // Sincroniza as ações moderativas em servidores com o network habilitado
     client.network = async (guild, caso, id_alvo) => { return network({ client, guild, caso, id_alvo }) }
 
-    client.getNetWorkGuildNames = async (user, link, interaction, ignore_guild) => {
-
-        // Lista todos os servidores que estão no link do Network informado
-        const servers_link = []
-
-        let servers_cache = await getNetworkedGuilds(link)
-        for (let i = 0; i < servers_cache.length; i++) {
-
-            if (ignore_guild) { // Ignora a guild onde a interação foi feita
-                if (servers_cache[i].sid !== interaction.guild.id)
-                    servers_link.push(`\`${(await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")}\``)
-            } else // Lista todas as guilds que estão no link
-                servers_link.push(`\`${(await client.guilds(servers_cache[i].sid))?.name || client.tls.phrase(user, "menu.invalid.servidor_desconhecido")}\``)
-        }
-
-        return client.list(servers_link, 500)
-    }
-
     // Remove emojis e caracteres especiais da string
-    client.normalizeString = (string) => {
-        return string.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}\p{P}\p{Z}{^$=+±\\'|`\\~<>}]/gu, "")
-    }
-
-    // Envia uma notificação em um canal
-    client.notify = async (id_alvo, conteudo, objeto) => {
-
-        if (!id_alvo) return
-
-        const canal = await client.getGuildChannel(id_alvo)
-        if (!canal) return
-
-        // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
-
-        if (objeto && objeto?.rotative.active) {
-
-            // Enviando o conteúdo no canal informado e tentando editar a mensagem anterior
-            canal.messages.fetch(client.decifer(objeto.rotative.mid))
-                .then(message => { message.edit(conteudo) })
-                .catch(async () => {
-
-                    const m = await canal.send(conteudo)
-
-                    // Salvando o ID da mensagem enviada como módulo
-                    await client.updateModuleValue(objeto?.hash, "rotative.mid", client.encrypt(m.id))
-                })
-        } else
-            canal.send(conteudo)
-    }
-
-    client.permissions = async (interaction, id_alvo, permissao, canal) => {
-
-        if (interaction) {
-            // Permissões do usuário no servidor
-            const membro_sv = await client.getMemberGuild(interaction, id_alvo)
-
-            if (!membro_sv) return false // Membro não localizado
-
-            // Verificando se o usuário possui a permissão
-            if (membro_sv.permissions.has(permissao)) return true
-        } else // Permissões em canais específicos
-            if (canal.channel) {
-                if (canal.channel.permissionsFor(id_alvo).has(permissao)) return true
-            } else if (canal.permissionsFor(id_alvo)?.has(permissao)) return true
-
-        return false
-    }
-
-    // Retorna um valor aleatório
-    client.random = (intervalo, base, raw, ignore) => {
-        if (typeof base === "undefined") base = 0 // Valor minimo aceitável
-
-        if (typeof intervalo === "object") {
-
-            // Retorna a chave do intervalo passado ao invés do indice no array
-            if (raw) {
-
-                let resultado
-
-                do { // Entra em loop enquanto o valor for igual ao ignorado
-                    resultado = Object.keys(intervalo)[(base + Math.round(Object.keys(intervalo).length * Math.random())) - 1]
-                } while (resultado === ignore || !resultado) // Prevenindo resultado nulo
-
-                return resultado
-            }
-
-            intervalo = intervalo.length - 1 // Recebendo um array de dados
-        }
-
-        return base + Math.round(intervalo * Math.random())
-    }
-
-    client.registryBadge = async (user, id_badge) => {
-
-        const all_badges = [], badges_user = await getUserBadges(user.uid)
-
-        // Listando todas as badges que o usuário possui
-        if (badges_user.length > 0)
-            badges_user.forEach(valor => { all_badges.push(parseInt(valor.badge)) })
-
-        if (!all_badges.includes(id_badge)) {
-
-            // Atribuindo a badge reporter ao usuário
-            await createBadge(user.uid, id_badge, client.timestamp())
-            const badge = busca_badges(client, badgeTypes.SINGLE, id_badge)
-
-            client.sendDM(user, { content: client.tls.phrase(user, "dive.badges.new_badge", client.emoji("emojis_dancantes"), [badge.name, badge.emoji]) })
-        }
-    }
+    client.normalizeString = (string) => { return string.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}\p{P}\p{Z}{^$=+±\\'|`\\~<>}]/gu, "") }
 
     // Registra a experiência recebida pelo membro
     client.registryExperience = (message, caso) => {
@@ -549,27 +170,6 @@ function internal_functions(client) {
 
     // Registra uma movimentação bancária do usuário
     client.registryStatement = (user, traducao, caso, valor) => { return registryStatement(client, user, traducao, caso, valor) }
-
-    // Substitui partes do texto por outros valores
-    client.replace = (string, valores, especifico) => {
-
-        if (!especifico) {
-            if (valores && typeof valores === "object") { // Array com vários dados para alterar
-                if (valores.length > 0)
-                    while (valores.length > 0) {
-                        string = string.replace("auto_repl", valores[0])
-                        valores.shift()
-                    }
-                else // Recebendo um objeto diferente de array
-                    string = string.replace("auto_repl", valores)
-
-            } else // Apenas um valor para substituição
-                string = string.replaceAll("auto_repl", valores)
-        } else
-            string = string.replaceAll(especifico[0], especifico[1])
-
-        return string
-    }
 
     client.reply = (interaction, obj, defered) => {
 
@@ -584,77 +184,18 @@ function internal_functions(client) {
         else return interaction.reply(obj)
     }
 
-    client.rolePermissions = async (interaction, role_id, permissions) => {
+    client.hasRole = async (interaction, role_id, id_user) => {
 
-        const cached_role = client.getGuildRole(interaction, role_id)
-
-        // Verificando as permissões do cargo informado
-        for (let i = 0; i < permissions.length; i++)
-            if (cached_role.permissions.has(permissions[i])) return false
-
-        // Cargo everyone ou cargo proprietário do discord selecionado
-        if (cached_role.id === interaction.guild.id || !cached_role.editable) return false
-
-        return true
-    }
-
-    client.hasRole = async (interaction, role_id, user_id) => {
-
-        const user_member = await client.getMemberGuild(interaction.guild.id, user_id)
+        const user_member = await client.execute("getMemberGuild", { interaction, id_user })
         if (user_member.roles.cache.has(role_id)) return true
         return false
-    }
-
-    // Envia uma notificação em DM para o usuário
-    client.sendDM = async (user, dados, force, internal_module) => {
-
-        // Descriptografando o ID do usuário para envio em DM
-        const id_user = (user.uid).length > 20 ? client.decifer(user.uid) : user.uid
-
-        // Previne que o bot envie DM's para si mesmo
-        if (id_user === client.id()) return
-        if (force) user.conf.notify = 1
-
-        // Notificando o usuário alvo caso ele receba notificações em DM do bot
-        if (client.decider(user?.conf?.notify, 1)) {
-
-            const user_interno = await client.discord.users.fetch(id_user)
-                .catch(() => { return null })
-
-            if (user_interno) {
-                if (internal_module?.rotative?.mid) {
-
-                    const channel = await user_interno.createDM()
-                    channel.messages.fetch(client.decifer(internal_module.rotative.mid))
-                        .then(message => {
-                            message.edit(dados)
-                                .catch(async () => {
-                                    await user_interno.send(dados) // Enviando conteúdo na DM do usuário
-                                        .then(async m => {
-
-                                            // Salvando o ID da mensagem enviada como módulo
-                                            await client.updateModuleValue(internal_module?.hash, "rotative.mid", client.encrypt(m.id))
-                                        })
-                                        .catch()
-                                })
-                        })
-                } else
-                    await user_interno.send(dados) // Enviando conteúdo na DM do usuário
-                        .then(async m => {
-                            // Salvando o ID da mensagem enviada como módulo
-                            await client.updateModuleValue(internal_module?.hash, "rotative.mid", client.encrypt(m.id))
-                        })
-                        .catch()
-            }
-        }
     }
 
     client.sendModule = async (alvo, dados, internal_module) => {
 
         // Decide para qual destino será enviado o módulo
-        if (internal_module.misc.scope === "user") client.sendDM(alvo, dados, true, internal_module)
-        else client.notify(client.decifer(internal_module.misc.cid), dados, internal_module)
-
+        if (internal_module.misc.scope === "user") client.execute("sendDM", { user: alvo, dados, force: true, internal_module })
+        else client.execute("notify", { id_canal: client.decifer(internal_module.misc.cid), conteudo: dados, objeto: internal_module })
     }
 
     // Aleatoriza o texto de entrada
@@ -685,197 +226,27 @@ function internal_functions(client) {
         return { dado, pagina_guia }
     }
 
-    client.timed_message = async (interaction, message, time) => {
-
-        const canal = await client.getGuildChannel(interaction.channel.id)
-        if (!canal) return
-
-        // Verificando se o bot possui permissões para enviar mensagens ou ver o canal
-        if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal)) return
-
-        canal.send(message) // Envia a mensagem e apaga a mesma após um tempo
-            .then(m => setTimeout(() => { m.delete().catch(() => console.error) }, (time - 1) * 1000))
-    }
-
-    client.timestamp = (entrada, hora_entrada) => {
-
-        if (entrada || hora_entrada) { // Informou um dia e horário ( utilizado pelos anúncios de games )
-
-            let tempo_timestamped
-
-            // Invertendo o mês com o dia
-            if (entrada.includes("/")) {
-                entrada = `${entrada.split("/")[1]}/${entrada.split("/")[0]}`
-
-                let hora = hora_entrada || ""
-
-                const ano_atual = new Date().getFullYear()
-                tempo_timestamped = new Date(`${entrada}/${ano_atual} ${hora}`)
-
-                if (entrada.split("/")[0] < 2 && new Date().getMonth() >= 8)
-                    tempo_timestamped = new Date(`${entrada}/${ano_atual + 1}`)
-            } else
-                tempo_timestamped = new Date(entrada) // Entrada de string bruta com padrão utilizado pelo Discord
-
-            // Retorna o dia e o horário informado em timestamp
-            return Math.floor(tempo_timestamped.getTime() / 1000)
-        }
-
-        return Math.floor(new Date().getTime() / 1000)
-    }
-
-    client.updateModuleValue = async (hash, chave, value) => {
-
-        // Sem hash ou chave informada, cancelando a operação
-        if (!hash || !chave) return
-
-        // Atualiza o módulo com o conteúdo que foi enviado
-        const modulo = await getModule(hash)
-        const local = chave.split(".")
-
-        // Vasculha o objeto do módulo a procura do valor para alterar
-        local.reduce((acc, key, index) => {
-            if (index === local.length - 1)
-                acc[key] = value
-
-            return acc[key]
-        }, modulo)
-
-        await modulo.save()
-    }
-
-    client.updateGuildIddleTimestamp = async (id_guild) => {
-
-        if (!client.cached.iddleGuilds.has(id_guild)) {
-
-            const guild = await client.getGuild(id_guild)
-
-            // Atualizando o tempo de inatividade do servidor
-            guild.iddle.timestamp = client.timestamp() + defaultUserEraser[guild.iddle.timeout]
-            guild.save()
-
-            client.cached.iddleGuilds.set(id_guild, true)
-        }
-    }
-
-    client.updateRankedGuilds = async () => {
-
-        client.cached.ranked_guilds.clear()
-
-        // Salva em cache todos os servidores que possuem rankeamento ativo
-        const guilds = await listAllRankedGuilds()
-
-        guilds.forEach(guild => {
-            client.cached.ranked_guilds.set(client.encrypt(guild.sid), true)
-        })
-    }
-
     client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {
 
         // Retorna o texto formatado para membros e bots (usado em cards do log de eventos)
         return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${user.id !== client.id() ? client.tls.phrase(escopo, "util.user.bot") : client.tls.phrase(escopo, "util.user.alonsal")} )` : ""}**`
     }
 
-    client.verifyAction = (obj, traduz) => {
+    client.importFunctions = async () => {
 
-        // Listando as penalidades que o usuário receberá com a advertência
-        let acao_advertencia = `${loggerMap[obj.action] || loggerMap["none"]} \`${client.tls.phrase(traduz, `menu.events.${obj.action || "none"}`)}\`${client.guildAction(obj, traduz)}`
+        // Importa todas as funções internas do bot
+        for (const file of readdirSync(`${__dirname}/core/functions`).filter(file => file.endsWith('.js'))) {
 
-        if (obj.role) // Advertência com cargo aplicado
-            acao_advertencia += `\n:label: <@&${obj.role}>${obj.timed_role.status ? ` ( \`${client.defaultEmoji("time")} ${client.tls.phrase(traduz, `menu.times.${defaultRoleTimes[obj.timed_role.timeout]}`)}\` )` : ""}`
-
-        return acao_advertencia
-    }
-
-    client.verifyMatrixIndex = (guild_config) => {
-
-        let indice_matriz
-
-        guild_config.forEach(config => {
-            if ((config.action === "member_kick_2" || config.action === "member_ban") && !indice_matriz)
-                indice_matriz = config.rank + 1
-        })
-
-        return indice_matriz || guild_config.length
-    }
-
-    // Salva todos os servidores que um usuário esta em cache
-    client.verifyUserGuilds = async (user, id_alvo, interaction) => {
-
-        const servidores = await client.guilds()
-        let qtd_servidores = 0
-
-        for await (let server of servidores) {
-
-            const guild = server[1]
-            const membro_guild = await guild.members.fetch(id_alvo)
-                .catch(() => { return null })
-
-            if (membro_guild) { // Registrando os servidores que o usuário faz parte
-                registerUserGuild(id_alvo, guild.id)
-                qtd_servidores++
-            }
+            const funcao = require(`${__dirname}/core/functions/${file}`)
+            client[file.replace(".js", "")] = funcao
         }
-
-        if (interaction)
-            interaction.editReply({
-                content: client.tls.phrase(user, "manu.data.salvos_cache", 61, qtd_servidores),
-                flags: "Ephemeral"
-            })
     }
 
-    // Updates the user's default language if they do not have one
-    client.verifyUserLanguage = async (user, id_guild) => {
-
-        const guild = await client.getGuild(id_guild)
-        user.lang = guild.lang ?? "pt-br"
-        await user.save()
-    }
-
-    // Valida se o usuário possui ranking ativo
-    client.verifyUserRanking = async (id_user) => {
-
-        let user = await client.getUser(id_user)
-        let user_ranking = true
-
-        if (typeof user.conf.ranking !== "undefined") user_ranking = user.conf.ranking
-
-        return user_ranking
-    }
-
-    // Verificando as advertências do usuário e os cargos 
-    client.verifyUserWarnRoles = async (id_user, id_guild) => {
-
-        const guild = await client.guilds(client.decifer(id_guild))
-        const guild_warns = await listAllGuildWarns(id_guild)
-        const user_warns = await listAllUserWarns(id_user, id_guild)
-
-        let i = 0
-
-        guild_warns.forEach(async guild_warn => {
-
-            if (guild_warn.role) {
-
-                // Permissões do bot no servidor
-                const membro_sv = await client.getMemberGuild(client.decifer(id_guild), client.id())
-                const membro_guild = await client.getMemberGuild(client.decifer(id_guild), client.decifer(id_user))
-
-                if (!membro_sv || !membro_guild) return // Sem dados
-
-                // Removendo o cargo do usuário que recebeu a advertência
-                if (membro_sv.permissions.has(PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator)) {
-                    if (i >= user_warns.length || user_warns.length === 0) {
-
-                        let role = guild.roles.cache.get(client.decifer(guild_warn.role))
-
-                        if (role.editable) // Verificando se o cargo é editável
-                            membro_guild.roles.remove(role).catch(console.error)
-                    }
-                }
-            }
-
-            i++
-        })
+    // Importando as funções internas do bot para o cache
+    try {
+        client.importFunctions()
+    } catch (err) {
+        console.error("🛑 | Erro ao importar as funções internas do bot:", err)
     }
 
     console.log(`🟢 | Funções internas vinculadas com sucesso.`)

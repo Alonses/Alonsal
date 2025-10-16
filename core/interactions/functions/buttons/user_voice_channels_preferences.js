@@ -33,7 +33,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Botão para retornar ao painel de configuração do canal de voz
         const row = client.create_buttons([
-            { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "0" }
+            { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "0" }
         ], interaction, user)
 
         return interaction.update({
@@ -60,7 +60,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }
 
         // Atualizando a mensagem original com o painel de controle do canal de voz
-        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: reback }]
+        const botoes = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: reback }]
 
         return client.reply(interaction, {
             components: [client.create_menus({ interaction, user, data }), client.create_buttons(botoes, interaction, user)],
@@ -71,7 +71,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Submenu para confirmar a remocação de acesso ao canal dinâmico pré-configurado
         const botoes = [
-            { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: "5" },
+            { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: "5" },
             { id: "user_voice_channels_preferences", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: "0" }
         ]
 

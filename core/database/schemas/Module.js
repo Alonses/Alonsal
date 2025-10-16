@@ -121,7 +121,7 @@ async function getModulesPrice(client, uid) {
         total += client.cached.subscribers.has(uid) ? element.stats.price * client.cached.subscriber_discount : element.stats.price
     })
 
-    return client.locale(total)
+    return client.execute("locale", { valor: total })
 }
 
 module.exports.Module = model

@@ -78,9 +78,9 @@ async function verifyDynamicBadge(client, alvo, badge_id) {
 
     if (users[top_users[0].uid]) { // Verificando se o primeiro colocado possui a badge dinâmica enviada
         if (!users[top_users[0].uid].includes(badge_id))
-            createBadge(top_users[0].uid, badge_id, client.timestamp())
+            createBadge(top_users[0].uid, badge_id, client.execute("timestamp"))
     } else
-        createBadge(top_users[0].uid, badge_id, client.timestamp())
+        createBadge(top_users[0].uid, badge_id, client.execute("timestamp"))
 
     // Verificando se o segundo colocado possui a badge dinâmica e removendo-a
     if (users[top_users[1].uid] && users[top_users[1].uid].includes(badge_id)) {

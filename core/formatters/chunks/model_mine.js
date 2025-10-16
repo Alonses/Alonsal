@@ -130,7 +130,7 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                 nota_rodape = client.tls.phrase(alvo, "util.minecraft.nota_rodape")
 
                 if (nota_rodape.includes("item_repl"))
-                    nota_rodape = client.replace(nota_rodape, pesquisa)
+                    nota_rodape = client.execute("replace", { string: nota_rodape, valores: pesquisa })
 
                 embed.setFooter({
                     text: nota_rodape
@@ -154,7 +154,7 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                 embed.addFields(
                     {
                         name: `${client.emoji("mc_logo_wikipedia")} ${client.tls.phrase(alvo, "util.minecraft.wiki_sobre", null, dados_item.name)}`,
-                        value: `\`\`\`fix\n${client.execute("formatters", "formata_texto", (dados_item.wiki.descricao.split("\">")[0]).length > 500 ? `${(dados_item.wiki.descricao.split("\">")[0]).slice(0, 500)}...` : dados_item.wiki.descricao.split("\">")[0])}\`\`\`\n${link_artigo}`,
+                        value: `\`\`\`fix\n${client.execute("formata_texto", { string: ((dados_item.wiki.descricao.split("\">")[0]).length > 500 ? `${(dados_item.wiki.descricao.split("\">")[0]).slice(0, 500)}...` : dados_item.wiki.descricao.split("\">")[0]) })}\`\`\`\n${link_artigo}`,
                         inline: false
                     }
                 )

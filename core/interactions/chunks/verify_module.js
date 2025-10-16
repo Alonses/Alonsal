@@ -1,7 +1,5 @@
 const { getModule, getModulesPrice } = require('../../database/schemas/Module')
 
-const formata_horas = require('../../formatters/formata_horas')
-
 module.exports = async ({ client, user, interaction, dados }) => {
 
     // Exibindo os dados de alguma tarefa selecionada
@@ -16,7 +14,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         })
 
     const montante = await getModulesPrice(client, user.uid)
-    const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${modulo.stats.days}`)} ${formata_horas(modulo.stats.hour.split(":")[0], modulo.stats.hour.split(":")[1])}`
+    const ativacao_modulo = `${client.tls.phrase(user, `misc.modulo.ativacao_${modulo.stats.days}`)} ${client.execute("formata_horas", { horas: modulo.stats.hour.split(":")[0], minutos: modulo.stats.hour.split(":")[1] })}`
     let modulo_vitrine = ""
 
     // Módulo de servidor sem configuração de canal para anúncio
@@ -31,7 +29,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     const embed = client.create_embed({
         title: { tls: modulo.misc.scope === "user" ? "misc.modulo.visualizar_modulo" : "misc.modulo.visualizar_modulo_servidor" },
-        description: { tls: "misc.modulo.descricao", replace: [client.cached.subscribers.has(user.uid) ? client.locale(modulo.stats.price * client.cached.subscriber_discount) : modulo.stats.price, montante, modulo_vitrine] },
+        description: { tls: "misc.modulo.descricao", replace: [client.cached.subscribers.has(user.uid) ? client.execute("locale", { valor: modulo.stats.price * client.cached.subscriber_discount }) : modulo.stats.price, montante, modulo_vitrine] },
         fields: [
             {
                 name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,
@@ -45,7 +43,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("money")} **${client.tls.phrase(user, "misc.modulo.valor")}**`,
-                value: `\`B$ ${client.cached.subscribers.has(user.uid) ? `${client.locale(modulo.stats.price * client.cached.subscriber_discount)} (${client.getSubscriberDiscount()}% OFF 🌟)` : modulo.stats.price}\``,
+                value: `\`B$ ${client.cached.subscribers.has(user.uid) ? `${client.execute("locale", { valor: modulo.stats.price * client.cached.subscriber_discount })} (${client.execute("getSubscriberDiscount")}% OFF 🌟)` : modulo.stats.price}\``,
                 inline: true
             }
         ],
@@ -66,22 +64,22 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de gestão de tarefas
     let botoes = [
-        { id: "module_button", name: { tls: "menu.botoes.alterar_frequencia" }, emoji: client.defaultEmoji("calendar"), type: 1, data: `3|${modulo.hash}` },
-        { id: "module_button", name: { tls: `menu.botoes.${modulo.stats.active ? "desativar" : "ativar"}` }, emoji: client.emoji(modulo.stats.active ? 21 : 20), type: client.execute("functions", "emoji_button.type_button", modulo.stats.active), data: `1|${modulo.hash}` },
-        { id: "module_button", name: { tls: "menu.botoes.vitrine" }, type: client.execute("functions", "emoji_button.type_button", modulo.rotative.active), emoji: client.emoji(6), data: `10|${modulo.hash}`, disabled: !client.cached.subscribers.has(user.uid) },
+        { id: "module_button", name: { tls: "menu.botoes.alterar_frequencia" }, emoji: client.defaultEmoji("calendar"), type: 0, data: `3|${modulo.hash}` },
+        { id: "module_button", name: { tls: `menu.botoes.${modulo.stats.active ? "desativar" : "ativar"}` }, emoji: client.emoji(modulo.stats.active ? 21 : 20), type: modulo.stats.active, data: `1|${modulo.hash}` },
+        { id: "module_button", name: { tls: "menu.botoes.vitrine" }, type: modulo.rotative.active, emoji: client.emoji(6), data: `10|${modulo.hash}`, disabled: !client.cached.subscribers.has(user.uid) },
         { id: "module_button", name: { tls: "menu.botoes.apagar" }, type: 3, emoji: client.emoji(13), data: `0|${modulo.hash}` }
     ]
 
-    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "modulos" }]
+    const row = [{ id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "modulos" }]
 
     if (modulo.misc.scope === "guild")
-        row.push({ id: "module_button", name: { tls: "menu.botoes.escolher_canal" }, type: 1, emoji: client.defaultEmoji('channel'), data: `12|${modulo.hash}` })
+        row.push({ id: "module_button", name: { tls: "menu.botoes.escolher_canal" }, type: 0, emoji: client.defaultEmoji('channel'), data: `12|${modulo.hash}` })
 
     if (modulo.type === 2) // Módulo do History sem tipo de retorno definido
-        row.push({ id: "module_config", name: { tls: "menu.botoes.definir_retorno" }, type: 1, emoji: client.defaultEmoji('paper'), data: `1|${modulo.hash}` })
+        row.push({ id: "module_config", name: { tls: "menu.botoes.definir_retorno" }, type: 0, emoji: client.defaultEmoji('paper'), data: `1|${modulo.hash}` })
 
     if (modulo.type === 0) // Módulo de tempo com retorno reduzido
-        row.push({ id: "module_button", name: { tls: "menu.botoes.modo_resumido" }, type: client.execute("functions", "emoji_button.type_button", modulo.misc.resumed), emoji: client.emoji(48), data: `11|${modulo.hash}` })
+        row.push({ id: "module_button", name: { tls: "menu.botoes.modo_resumido" }, type: modulo.misc.resumed, emoji: client.emoji(48), data: `11|${modulo.hash}` })
 
     interaction.update({
         content: "",

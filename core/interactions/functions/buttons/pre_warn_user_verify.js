@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         removeUserPreWarn(client.encrypt(id_alvo), client.encrypt(interaction.guild.id), timestamp)
 
         if (user_warns.length - 1 > 0)
-            row.push({ id: "pre_warn_user_verify", name: { tls: "menu.botoes.remover_outras" }, type: 0, emoji: client.emoji(41), data: `11|${id_alvo}` })
+            row.push({ id: "pre_warn_user_verify", name: { tls: "menu.botoes.remover_outras" }, type: 2, emoji: client.emoji(41), data: `11|${id_alvo}` })
 
         const obj = {
             content: client.tls.phrase(user, "mode.warn.advertencia_removida", 10),
@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Criando os botões para o menu de remoção de strikes
         const row = client.create_buttons([
-            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${timestamp}` },
+            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${id_alvo}.${timestamp}` },
             { id: "pre_warn_user_verify", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `9|${id_alvo}.${timestamp}` }
         ], interaction, user)
 
@@ -86,8 +86,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
         }, user)
 
         const botoes = [
-            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `11|${id_alvo}.${timestamp}` },
-            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.remover_anotacao" }, type: 1, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
+            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `11|${id_alvo}.${timestamp}` },
+            { id: "pre_warn_user_verify", name: { tls: "menu.botoes.remover_anotacao" }, type: 0, emoji: client.emoji(13), data: `3.${id_alvo}.${timestamp}` }
         ]
 
         return interaction.update({

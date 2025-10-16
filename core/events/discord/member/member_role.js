@@ -7,9 +7,9 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     registroAudita.changes[0].new.forEach(role => { cargos.push(`<@&${role.id}>`) })
 
     if (registroAudita.changes[0].key === "$add")
-        texto = `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${client.list(cargos, null, true)}`
+        texto = `\n**:sparkle: ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:** ${client.execute("list", { valores: cargos, raw: true })}`
     else
-        texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${client.list(cargos, null, true)}`
+        texto = `\n**:no_entry_sign: ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:** ${client.execute("list", { valores: cargos, raw: true })}`
 
     let embed = client.create_embed({
         title: { tls: "mode.logger.cargo_atualizado" },
@@ -35,13 +35,13 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     // Data de entrada do membro no servidor
     const user_guild = new_member
-    embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
+    embed = client.execute("formata_entrada_membro", { client, guild, user_guild, embed })
 
     // Listando as permissões do usuário
     embed.addFields(
         {
             name: `:shield: **${client.tls.phrase(guild, "mode.logger.permissoes_apos")}**`,
-            value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:**\n${client.list(alteracoes.adicoes, 2000)}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:**\n${client.list(alteracoes.remocoes, 2000)}` : ""}` : `\`❌ ${client.tls.phrase(guild, "mode.logger.sem_permissoes_vinculadas")}\``,
+            value: alteracoes.adicoes.length > 0 || alteracoes.remocoes.length > 0 ? `${alteracoes.adicoes.length > 0 ? `**🌟 ${client.tls.phrase(guild, "mode.logger.cargo_adicionado")}:**\n${client.execute("list", { valores: alteracoes.adicoes, max: 2000 })}\n` : ""}${alteracoes.remocoes.length > 0 ? `**\n❌ ${client.tls.phrase(guild, "mode.logger.cargo_removido")}:**\n${client.execute("list", { valores: alteracoes.remocoes, max: 2000 })}` : ""}` : `\`❌ ${client.tls.phrase(guild, "mode.logger.sem_permissoes_vinculadas")}\``,
             inline: false
         }
     )
@@ -49,7 +49,10 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
-    client.notify(guild.logger.channel, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: guild.logger.channel,
+        conteudo: { embeds: [embed] }
+    })
 }
 
 function comparar_diferencas(antigo, novo) {

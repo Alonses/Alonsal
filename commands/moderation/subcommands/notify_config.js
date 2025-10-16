@@ -33,15 +33,15 @@ module.exports = async ({ client, user, interaction }) => {
     if (!dados.lang)
         dados.lang = guild.lang
 
-    const canal_alvo = client.discord.channels.cache.get(guild.games.channel)
+    const canal = client.discord.channels.cache.get(guild.games.channel)
 
     // Verificando permissões para enviar mensagens no canal
-    if (!await client.permissions(null, client.id(), [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal_alvo))
+    if (!await client.execute("permissions", { id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages], canal }))
         return client.tls.reply(interaction, user, "mode.anuncio.permissao_envio", true, client.defaultEmoji("guard"))
 
     const row = client.create_buttons([
-        { id: "misc_notify_button", name: { tls: "menu.botoes.ativar" }, type: 0, emoji: client.emoji(20), data: `1|${interaction.guild.id}.${dados.lang}` },
-        { id: "misc_notify_button", name: { tls: "menu.botoes.ativar_anunciando" }, type: 2, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}.${dados.lang}` },
+        { id: "misc_notify_button", name: { tls: "menu.botoes.ativar" }, type: 1, emoji: client.emoji(20), data: `1|${interaction.guild.id}.${dados.lang}` },
+        { id: "misc_notify_button", name: { tls: "menu.botoes.ativar_anunciando" }, type: 1, emoji: client.defaultEmoji("channel"), data: `2|${interaction.guild.id}.${dados.lang}` },
         { id: "misc_notify_button", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(13), data: `0|${interaction.guild.id}` }
     ], interaction, user)
 

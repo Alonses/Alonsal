@@ -33,8 +33,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Criando os botões para as funções de advertências
     const row = client.create_buttons([
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: `remove_warn|${pagina}` },
-        { id: "pre_warn_remove_user", name: { tls: "menu.botoes.confirmar" }, type: 2, emoji: client.emoji(10), data: `1|${id_alvo}.${id_guild}` },
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: `remove_warn|${pagina}` },
+        { id: "pre_warn_remove_user", name: { tls: "menu.botoes.confirmar" }, type: 1, emoji: client.emoji(10), data: `1|${id_alvo}.${id_guild}` },
         { id: "pre_warn_remove_user", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: `0|${id_alvo}.${id_guild}` }
     ], interaction, user)
 

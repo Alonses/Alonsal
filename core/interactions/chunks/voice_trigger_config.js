@@ -22,17 +22,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
         description: { tls: "mode.voice_channels.descricao_trigger", replace: ativadores_semelhantes > 1 ? client.tls.phrase(user, "mode.voice_channels.ativadores_duplicados") : "" },
         fields: [
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", trigger?.config.preferences.always_private)} ${client.tls.phrase(user, "menu.botoes.sempre_privado")}\n${trigger?.config.preferences.user_limit < 1 ? "🗽" : "🚧"} ${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")}`,
+                name: `${client.execute("button_emoji", trigger?.config.preferences.always_private)} ${client.tls.phrase(user, "menu.botoes.sempre_privado")}\n${trigger?.config.preferences.user_limit < 1 ? "🗽" : "🚧"} ${client.tls.phrase(user, "mode.voice_channels.limite_usuarios")}`,
                 value: trigger?.config.preferences.user_limit < 1 ? `\`${client.tls.phrase(user, "util.canal.sem_limite")}\`` : `\`${trigger?.config.preferences.user_limit} ${client.tls.phrase(user, "mode.voice_channels.usuarios")}\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", trigger?.config.preferences.allow_text)} ${client.tls.phrase(user, "menu.botoes.permitir_texto")}\n${client.emoji("mc_name_tag")} ${client.tls.phrase(user, "mode.voice_channels.temas_nomes")}`,
+                name: `${client.execute("button_emoji", trigger?.config.preferences.allow_text)} ${client.tls.phrase(user, "menu.botoes.permitir_texto")}\n${client.emoji("mc_name_tag")} ${client.tls.phrase(user, "mode.voice_channels.temas_nomes")}`,
                 value: `\`${voice_names[trigger?.config.preferences.voice_names]} ${client.tls.phrase(user, `mode.voice_channels.nicknames.${trigger?.config.preferences.voice_names}`)}\``,
                 inline: true
             },
             {
-                name: `${client.execute("functions", "emoji_button.emoji_button", trigger.config.active)} \`${client.tls.phrase(user, trigger.config.active ? "mode.voice_channels.habilitado" : "mode.voice_channels.desligado")}\``,
+                name: `${client.execute("button_emoji", trigger.config.active)} \`${client.tls.phrase(user, trigger.config.active ? "mode.voice_channels.habilitado" : "mode.voice_channels.desligado")}\``,
                 value: "⠀",
                 inline: true
             },
@@ -54,17 +54,17 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }, user)
 
     const botoes = [
-        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.sempre_privado" }, type: client.execute("functions", "emoji_button.type_button", trigger?.config.preferences.always_private), emoji: client.emoji(18), data: `22.${hash_trigger}` },
-        { id: "voice_trigger_configure_button", name: { tls: "mode.voice_channels.limite_usuarios" }, type: 1, emoji: trigger?.config.preferences.user_limit < 1 ? "🗽" : "🚧", data: `21.${hash_trigger}` },
-        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.permitir_texto" }, type: client.execute("functions", "emoji_button.type_button", trigger?.config.preferences.allow_text), emoji: client.emoji(31), data: `24.${hash_trigger}` },
-        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.nomes" }, type: 1, emoji: client.emoji("mc_name_tag"), data: `23.${hash_trigger}` }
+        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.sempre_privado" }, type: trigger?.config.preferences.always_private, emoji: client.emoji(18), data: `22.${hash_trigger}` },
+        { id: "voice_trigger_configure_button", name: { tls: "mode.voice_channels.limite_usuarios" }, type: 0, emoji: trigger?.config.preferences.user_limit < 1 ? "🗽" : "🚧", data: `21.${hash_trigger}` },
+        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.permitir_texto" }, type: trigger?.config.preferences.allow_text, emoji: client.emoji(31), data: `24.${hash_trigger}` },
+        { id: "voice_trigger_configure_button", name: { tls: "menu.botoes.nomes" }, type: 0, emoji: client.emoji("mc_name_tag"), data: `23.${hash_trigger}` }
     ]
 
     const row = [
-        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 0, emoji: client.emoji(19), data: "guild_voice_channels_button.30" },
-        { id: "voice_trigger_configure_button", name: { tls: trigger.config.active ? "menu.botoes.desativar" : "menu.botoes.ativar" }, type: client.execute("functions", "emoji_button.type_button", trigger.config.active), emoji: client.emoji(trigger.config.active ? "mc_oppose" : "mc_approve"), data: `1.${hash_trigger}` },
-        { id: "voice_trigger_configure_button", name: { tls: "mode.voice_channels.canal_ativador" }, type: 1, emoji: client.defaultEmoji("channel"), data: `2.${hash_trigger}` },
-        { id: "voice_trigger_configure_button", name: { tls: "util.server.categoria" }, type: 1, emoji: client.defaultEmoji("channel"), data: `3.${hash_trigger}` }
+        { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "guild_voice_channels_button.30" },
+        { id: "voice_trigger_configure_button", name: { tls: trigger.config.active ? "menu.botoes.desativar" : "menu.botoes.ativar" }, type: trigger.config.active, emoji: client.emoji(trigger.config.active ? "mc_oppose" : "mc_approve"), data: `1.${hash_trigger}` },
+        { id: "voice_trigger_configure_button", name: { tls: "mode.voice_channels.canal_ativador" }, type: 0, emoji: client.defaultEmoji("channel"), data: `2.${hash_trigger}` },
+        { id: "voice_trigger_configure_button", name: { tls: "util.server.categoria" }, type: 0, emoji: client.defaultEmoji("channel"), data: `3.${hash_trigger}` }
     ]
 
     if ((await listAllGuildVoiceTriggers(client.encrypt(interaction.guild.id))).length > 1)

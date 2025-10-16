@@ -60,16 +60,16 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         embed.addFields(
             {
                 name: `${client.defaultEmoji("time")} **${client.tls.phrase(guild, "mode.logger.tempo_castigo")}**`,
-                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${formatado}\`**\n( <t:${parseInt(client.timestamp() + (timeout / 1000))}:f> )`,
+                value: `**${client.tls.phrase(guild, "mode.warn.remocao_em")} \`${formatado}\`**\n( <t:${parseInt(client.execute("timestamp") + (timeout / 1000))}:f> )`,
                 inline: false
             }
         )
     } else {
 
-        const user_guild = await client.getMemberGuild(guild.sid, user_alvo.id)
+        const user_guild = await client.execute("getMemberGuild", { interaction: guild.sid, id_user: user_alvo.id })
 
         // Data de entrada do membro no servidor
-        embed = client.execute("formatters", "formata_entrada_membro", { client, guild, user_guild, embed })
+        embed = client.execute("formata_entrada_membro", { client, guild, user_guild, embed })
     }
 
     const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
@@ -83,5 +83,5 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
     if (guild.death_note.channel === canal_aviso && guild.death_note.notify)
         obj.content = "@here"
 
-    client.notify(canal_aviso, obj)
+    client.execute("notify", { id_canal: canal_aviso, conteudo: obj })
 }

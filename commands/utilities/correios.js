@@ -31,7 +31,7 @@ module.exports = {
                             let data_evento = new Date(eventos[i].dtHrCriado).getTime() / 1000
                             let datas_eventos = ""
 
-                            if (client.timestamp() - data_evento < 1209600)
+                            if (client.execute("timestamp") - data_evento < 1209600)
                                 datas_eventos = `<t:${data_evento}:R> | `
 
                             datas_eventos += `<t:${data_evento}:F>`

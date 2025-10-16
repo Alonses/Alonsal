@@ -122,8 +122,11 @@ module.exports = {
     async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento
-        if (interaction.options.getSubcommand() === "item")
-            return require('../../core/formatters/chunks/model_mine')({ client, user, interaction, user_command })
+        if (interaction.options.getSubcommand() === "item") {
+
+            const alvo = user
+            return require('../../core/formatters/chunks/model_mine')({ client, alvo, interaction, user_command })
+        }
 
         require(`./subcommands/mine_${interaction.options.getSubcommand()}`)({ client, user, interaction, user_command })
     }

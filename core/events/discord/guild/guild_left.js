@@ -17,7 +17,10 @@ module.exports = async ({ client, guild }) => {
         timestamp: true
     })
 
-    client.notify(process.env.channel_server, { embeds: [embed] })
+    client.execute("notify", {
+        id_canal: process.env.channel_server,
+        conteudo: { embeds: [embed] }
+    })
 
     verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
 }

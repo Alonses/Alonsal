@@ -71,7 +71,7 @@ module.exports = {
         const embed = client.create_embed({
             title: "> Nova mensagem! :mailbox_with_mail:",
             color: "branco",
-            description: `-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.replace(corpo_mensagem.text, null, ["`", "'"])}\`\n${conteudo_texto}`,
+            description: `-----------------------\nEnviado por ${client.emoji("icon_id")} \`${interaction.user.id}\`\n<@${interaction.user.id}>\n\n Mensagem: \`${client.execute("replace", { string: corpo_mensagem.text, especifico: ["`", "'"] })}\`\n${conteudo_texto}`,
             timestamp: true,
             footer: {
                 text: `Autor: ${interaction.user.username}`,
@@ -84,7 +84,7 @@ module.exports = {
             embed.setImage(corpo_mensagem.file.attachment)
 
         client.tls.reply(interaction, user, "manu.mail.sucesso_1", true, 31)
-        client.notify(process.env.channel_mail, { embeds: [embed] })
+        client.execute("notify", { id_canal: process.env.channel_mail, conteudo: { embeds: [embed] } })
     }
 }
 

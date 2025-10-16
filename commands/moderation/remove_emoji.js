@@ -42,7 +42,7 @@ module.exports = {
     async execute({ client, user, interaction }) {
 
         // Verificando se o bot pode gerenciar emojis e stickers
-        if (!await client.permissions(interaction, client.id(), [PermissionsBitField.Flags.ManageGuildExpressions]))
+        if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageGuildExpressions] }))
             return client.tls.reply(interaction, user, "mode.emojis.permissao", true, 3)
 
         const dados = interaction.options.getString("name")

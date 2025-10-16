@@ -23,7 +23,10 @@ module.exports = async ({ client, interaction }) => {
             await bot.save()
 
             if (client.id() === process.env.client_1) // Notifica apenas caso seja o bot principal
-                client.notify(process.env.channel_feeds, { content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` })
+                client.execute("notify", {
+                    id_canal: process.env.channel_feeds,
+                    conteudo: { content: `:sa: | Pacote de traduções do ${client.username()} sincronizado com o commit \`${cod_commit}\`` }
+                })
 
             fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
                 .then(res => res.json())

@@ -11,7 +11,7 @@ module.exports = async ({ client, user, interaction }) => {
     let user_moderador = false, guild
 
     // Verificando se o usuário possui permissões para gerenciar os canais do servidor
-    if (await client.permissions(interaction, interaction.user.id, [PermissionsBitField.Flags.ManageChannels])) {
+    if (await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageChannels] })) {
         guild = await client.getGuild(interaction.guild.id)
         user_moderador = true
     }
@@ -49,7 +49,7 @@ module.exports = async ({ client, user, interaction }) => {
 
     const embed = client.create_embed({
         title: { tls: "misc.modulo.titulo" },
-        description: { tls: "misc.modulo.descricao_lista", replace: [modulos.length > 1 ? `\`${modulos.length} ${client.tls.phrase(user, "misc.modulo.modulos_configurados")}` : client.tls.phrase(user, "misc.modulo.modulo_configurado"), `${montante}${client.cached.subscribers.has(user.uid) ? ` (${client.getSubscriberDiscount()}% OFF 🌟)` : ""}`, descricao_modulos] },
+        description: { tls: "misc.modulo.descricao_lista", replace: [modulos.length > 1 ? `\`${modulos.length} ${client.tls.phrase(user, "misc.modulo.modulos_configurados")}` : client.tls.phrase(user, "misc.modulo.modulo_configurado"), `${montante}${client.cached.subscribers.has(user.uid) ? ` (${client.execute("getSubscriberDiscount")}% OFF 🌟)` : ""}`, descricao_modulos] },
         footer: { text: { tls: "misc.modulo.selecionar_modulo" }, iconURL: interaction.user.avatarURL({ dynamic: true }) }
     }, user)
 
@@ -67,7 +67,7 @@ module.exports = async ({ client, user, interaction }) => {
         data.values = data.values.concat(modulos_guild)
 
     const row = client.create_buttons([
-        { id: "modules_list", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "0" }
+        { id: "modules_list", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "0" }
     ], interaction, user)
 
     const obj = {

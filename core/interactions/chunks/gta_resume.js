@@ -28,7 +28,7 @@ module.exports = async ({ client, user, interaction }) => {
             }, user)
 
             const row = client.create_buttons([
-                { id: "gta_resume", name: { tls: "menu.botoes.atualizar" }, type: 1, emoji: client.emoji(42), data: "0" }
+                { id: "gta_resume", name: { tls: "menu.botoes.atualizar" }, type: 0, emoji: client.emoji(42), data: "0" }
             ], interaction, user)
 
             client.reply(interaction, {
