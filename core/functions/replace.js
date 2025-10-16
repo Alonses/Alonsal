@@ -1,7 +1,7 @@
 module.exports = ({ client, data }) => {
 
     // Substitui partes do texto por outros valores
-    const string = data.string || ""
+    let string = data.string || ""
     const valores = data.valores || null // Valor ou array de valores para substituir
     const especifico = data.especifico || null // Array com valor específico a ser substituído [valor_antigo, valor_novo]
 
