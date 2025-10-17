@@ -29,21 +29,21 @@ module.exports = async ({ client, data }) => {
                         message.edit(dados)
                             .catch(async () => {
                                 await user_interno.send(dados) // Enviando conteúdo na DM do usuário
+                                    .catch(console.error)
                                     .then(async m => {
 
                                         // Salvando o ID da mensagem enviada como módulo
                                         await client.execute("updateModuleValue", { hash: internal_module?.hash, chave: "rotative.mid", value: client.encrypt(m.id) })
                                     })
-                                    .catch()
                             })
                     })
             } else
                 await user_interno.send(dados) // Enviando conteúdo na DM do usuário
+                    .catch(console.error)
                     .then(async m => {
                         // Salvando o ID da mensagem enviada como módulo
                         await client.execute("updateModuleValue", { hash: internal_module?.hash, chave: "rotative.mid", value: client.encrypt(m.id) })
                     })
-                    .catch()
         }
     }
 }
