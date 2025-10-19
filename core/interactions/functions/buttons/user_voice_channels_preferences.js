@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (operations[operacao]) {
 
         let dado = user;
-        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        ({ dado, pagina_guia } = client.execute("switcher", { dado, operations, operacao }))
         await dado.save()
 
     } else if (operacao == 1) {

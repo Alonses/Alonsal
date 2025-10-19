@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
     if (params.url)
         texto_entrada = params.url
 
-    const id_user = interaction.options.getUser("user").id || interaction.user.id
+    const id_user = interaction.options.getUser("user")?.id || interaction.user.id
     const user_alvo = await client.execute("getUser", { id_user })
 
     // user_alvo -> usuário marcado pelo comando
@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
                 descricao_status = `💿 ${client.tls.phrase(user, "util.lastfm.obsessao")}:\n${res.obsessao}\n-----------------------\n`
 
             if (res.scrobble_atual) // Usuário está ouvindo agora atualmente
-                descricao_status += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}`
+                descricao_status += `🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${client.execute("formata_texto", { string: res.scrobble_atual.faixa })}`
 
             if (descricao_status.length > 0)
                 descricao_status = `\`\`\`fix\n${descricao_status}\`\`\``

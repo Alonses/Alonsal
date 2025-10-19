@@ -34,7 +34,7 @@ module.exports = async ({ client, invite }) => {
         description: { tls: "mode.logger.convite_excluido", emoji: 68 },
         fields: [
             {
-                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor"),
+                name: client.execute("user_title", { user: registroAudita.executor, scope: guild, tls: "mode.logger.autor" }),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             },

@@ -2,8 +2,7 @@ const { listAllUserGuilds, registerUserGuild } = require("../database/schemas/Us
 
 module.exports = async ({ client, data }) => {
 
-    const user = data.user
-    const interaction = data.interaction
+    const { user, interaction } = data
     const permissions = data.permissions || []
 
     const guilds_user = []

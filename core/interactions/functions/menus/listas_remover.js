@@ -25,7 +25,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         })
 
     // Atualiza os dados das tarefas e listas
-    client.atualiza_dados(lista, interaction)
+    client.execute("sincroniza_tarefas", { alvo: lista, interaction })
 
     const row = client.create_buttons([
         { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "listas_remover" },

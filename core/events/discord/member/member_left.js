@@ -60,7 +60,7 @@ module.exports = async (client, dados) => {
         color: "salmao",
         fields: [
             {
-                name: client.user_title(user_alvo, guild, "util.server.membro"),
+                name: client.execute("user_title", { user: user_alvo, scope: guild, tls: "util.server.membro" }),
                 value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
                 inline: true
             }

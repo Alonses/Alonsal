@@ -34,11 +34,11 @@ module.exports = async ({ client, guild, user, dados }) => {
     envia_logger(client, user_alvo, attachment)
 }
 
-envia_logger = (client, user_alvo, attachment) => {
+envia_logger = (client, user, attachment) => {
 
-    if (!usersmap.has(user_alvo.id)) {
+    if (!usersmap.has(user.id)) {
 
-        usersmap.set(user_alvo.id, { cached: true })
+        usersmap.set(user.id, { cached: true })
         const guilds = client.guilds()
 
         guilds.forEach(async guild => {
@@ -48,10 +48,10 @@ envia_logger = (client, user_alvo, attachment) => {
 
             // Notificando a guild sobre a alteração do avatar de um membro
             if (internal_guild.logger.member_image && internal_guild.conf.logger) {
-                const user = await guild.members.fetch(user_alvo.id)
+                const user_guild = await guild.members.fetch(user.id)
                     .catch(() => { return null })
 
-                if (user) {
+                if (user_guild) {
 
                     const embed = client.create_embed({
                         title: { tls: "mode.logger.titulo_avatar" },
@@ -59,8 +59,8 @@ envia_logger = (client, user_alvo, attachment) => {
                         description: { tls: "mode.logger.novo_avatar", emoji: 35 },
                         fields: [
                             {
-                                name: client.user_title(user_alvo, internal_guild, "util.server.membro"),
-                                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
+                                name: client.execute("user_title", { user, scope: internal_guild, tls: "util.server.membro" }),
+                                value: `${client.emoji("icon_id")} \`${user.id}\`\n${client.emoji("mc_name_tag")} \`${user.username}\`\n( <@${user.id}> )`,
                                 inline: true
                             }
                         ],
@@ -77,8 +77,8 @@ envia_logger = (client, user_alvo, attachment) => {
                         objeto.files = [attachment]
 
                     } else // Enviando apenas a nova foto de perfil do usuário
-                        if (user_alvo.avatarURL({ dynamic: true }))
-                            embed.setImage(user_alvo.avatarURL({ dynamic: true }))
+                        if (user.avatarURL({ dynamic: true }))
+                            embed.setImage(user.avatarURL({ dynamic: true }))
 
                     client.execute("notify", { id_canal: internal_guild.logger.channel, conteudo: objeto })
                 }
@@ -86,7 +86,7 @@ envia_logger = (client, user_alvo, attachment) => {
         })
 
         setTimeout(() => {
-            usersmap.delete(user_alvo.id)
+            usersmap.delete(user.id)
         }, 10000)
     }
 }

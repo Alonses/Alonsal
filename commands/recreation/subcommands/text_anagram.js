@@ -32,7 +32,7 @@ module.exports = async ({ client, user, interaction, texto_entrada, user_command
     const combinacoes = result > 3 ? client.tls.phrase(user, "dive.anagrama.combinacoes") : client.tls.phrase(user, "dive.anagrama.combinacao")
 
     for (let i = 0; i < repeticoes; i++) {
-        anagrama_formado.push(await client.shuffleArray(fatori_fix).join(''))
+        anagrama_formado.push(await client.execute("shuffleArray", { arr: fatori_fix }).join(''))
 
         exib_formatado += `**-** \`${anagrama_formado[i]}\`\n`
         qtd_quebras = exib_formatado.split(anagrama_formado[i])

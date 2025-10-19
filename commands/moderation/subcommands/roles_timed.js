@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     // Membro já possui o cargo mencionado
-    if (await client.hasRole(interaction, interaction.options.getRole("role").id, interaction.options.getUser("user").id))
+    if (await client.execute("hasRole", { interaction, id_role: interaction.options.getRole("role").id, id_user: interaction.options.getUser("user").id }))
         return interaction.reply({
             content: ":passport_control: | Este membro já possui o cargo informado, tente novamente com um cargo que ele ainda não possua.",
             flags: "Ephemeral"

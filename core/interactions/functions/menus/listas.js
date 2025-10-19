@@ -36,8 +36,8 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
             flags: "Ephemeral"
         })
 
-    client.atualiza_dados(task, interaction)
-    client.atualiza_dados(lista, interaction)
+    client.execute("sincroniza_tarefas", { alvo: task, interaction })
+    client.execute("sincroniza_tarefas", { alvo: lista, interaction })
 
     task.g_timestamp = timestamp_lista
     await task.save()

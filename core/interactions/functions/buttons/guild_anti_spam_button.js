@@ -42,7 +42,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operations[operacao]) {
 
         let dado = guild;
-        ({ dado, pagina_guia } = client.switcher({ dado, operations, operacao }))
+        ({ dado, pagina_guia } = client.execute("switcher", { dado, operations, operacao }))
         await dado.save()
 
     } else if (operacao === 4) {
@@ -72,7 +72,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         if (botoes.length < 5) // Botão para adicionar um novo strike
-            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike" }, type: 1, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
+            row.push({ id: "strike_configure_button", name: { tls: "menu.botoes.novo_strike" }, type: 0, emoji: client.emoji(43), data: `9|${strikes.length < 1 ? 1 : strikes.length}` })
 
         let texto_aviso_indice = ""
 

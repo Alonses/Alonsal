@@ -1,9 +1,8 @@
 module.exports = ({ client, data }) => {
 
     // Separando dados
-    const guild = data.guild
+    const { guild, embed } = data
     const user_guild = data.member
-    const embed = data.embed
 
     if (user_guild?.joinedTimestamp) // Verifica se há dados de entrada no servidor para o membro
         embed.addFields(

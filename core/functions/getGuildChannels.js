@@ -3,10 +3,7 @@ const { ChannelType } = require('discord.js')
 module.exports = async ({ client, data }) => {
 
     // Lista todos os canais de um tipo especifico no servidor
-    let interaction = data.interaction
-    let user = data.user
-    let tipo = data.tipo
-    let id_configurado = data?.id_configurado || null
+    let { interaction, user, tipo, id_configurado } = data
 
     const canais = interaction.guild.channels.cache.filter(c => c.type === tipo)
     const canais_alvo = []

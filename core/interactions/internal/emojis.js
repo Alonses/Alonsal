@@ -8,7 +8,7 @@ module.exports = async ({ client, interaction }) => {
         cache_emojis.push(aliases[emoji])
     })
 
-    cache_emojis = client.shuffleArray(cache_emojis)
+    cache_emojis = client.execute("shuffleArray", { arr: cache_emojis })
 
     for (let i = 0; i < cache_emojis.length; i++) {
         if ((emojis_registrados + client.emoji(cache_emojis[i])).length < 2000) {

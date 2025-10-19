@@ -15,9 +15,9 @@ function reply(interaction, user, target, ephemeral, emoji, replace) {
     interaction.reply({ content: phrase, flags: ephemeral })
 }
 
-function editReply(interaction, user, target, ephemeral, emoji) {
+function editReply(interaction, user, target, ephemeral, emoji, replace) {
 
-    let phrase = translate(user, target)
+    let phrase = translate(user, target, replace)
 
     if (!user.conf.resumed) // Ignora os emojis do inicio das frases
         phrase = check_emojis(phrase, emoji)

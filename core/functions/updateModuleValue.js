@@ -2,9 +2,7 @@ const { getModule } = require("../database/schemas/Module")
 
 module.exports = async ({ data }) => {
 
-    const hash = data.hash
-    const chave = data.chave
-    const value = data.value
+    const { hash, chave, value } = data
 
     // Sem hash ou chave informada, cancelando a operação
     if (!hash || !chave) return

@@ -4,8 +4,7 @@ module.exports = async ({ client, data }) => {
 
     // Apaga os convites criados pelo usuário que foi expulso/banido do servidor
     // Canal para envio da notificação dos convites rastreados
-    const guild = data.guild
-    const id_user = data.id_user
+    const { guild, id_user } = data
     const canal_notifica = guild.nuke_invites.channel ? guild.nuke_invites.channel : guild.logger.channel
 
     // Notificando sobre a falta de permissões e desligando o recurso no servidor

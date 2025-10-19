@@ -3,9 +3,7 @@ const { registerUserGuild } = require("../database/schemas/User_guilds")
 module.exports = async ({ client, data }) => {
 
     // Salva todos os servidores que um usuário está no cache do bot
-    const user = data.user
-    const id_alvo = data.id_alvo
-    const interaction = data?.interaction
+    const { user, id_alvo, interaction } = data
 
     const servidores = await client.guilds()
     let qtd_servidores = 0

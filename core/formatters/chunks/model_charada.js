@@ -10,5 +10,5 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
             content: texto,
             flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
         })
-    else client.sendModule(alvo, { content: texto }, internal_module)
+    else client.execute("sendModule", { alvo, dados: { content: texto }, internal_module })
 }

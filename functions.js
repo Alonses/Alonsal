@@ -28,13 +28,6 @@ function internal_functions(client) {
 
     client.error = async (err, local) => { require("./core/events/error")(client, err, local) }
 
-    client.atualiza_dados = async (alvo, interaction) => {
-        if (!alvo.sid) {
-            alvo.sid = interaction.guild.id
-            await alvo.save()
-        }
-    }
-
     // Retorna a quantidade de arquivos com determinada extensão na url especificada
     client.countFiles = (caminho, extensao) => { return readdirSync(caminho).filter(file => file.endsWith(extensao)).length }
 
@@ -182,54 +175,6 @@ function internal_functions(client) {
         // Respondendo as interações
         if (interaction.customId) return interaction.update(obj)
         else return interaction.reply(obj)
-    }
-
-    client.hasRole = async (interaction, role_id, id_user) => {
-
-        const user_member = await client.execute("getMemberGuild", { interaction, id_user })
-        if (user_member.roles.cache.has(role_id)) return true
-        return false
-    }
-
-    client.sendModule = async (alvo, dados, internal_module) => {
-
-        // Decide para qual destino será enviado o módulo
-        if (internal_module.misc.scope === "user") client.execute("sendDM", { user: alvo, dados, force: true, internal_module })
-        else client.execute("notify", { id_canal: client.decifer(internal_module.misc.cid), conteudo: dados, objeto: internal_module })
-    }
-
-    // Aleatoriza o texto de entrada
-    client.shuffleArray = (arr) => {
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]]
-        }
-
-        return arr
-    }
-
-    client.switcher = ({ dado, operations, operacao }) => {
-
-        // Inverte o valor de botões liga/desliga
-        const local = (operations[operacao].action).split(".")
-
-        // Vasculha o objeto do servidor a procura do valor para alterar
-        local.reduce((acc, key, index) => {
-            if (index === local.length - 1)
-                acc[key] = !acc[key]
-
-            return acc[key]
-        }, dado)
-
-        const pagina_guia = operations[operacao].page
-
-        return { dado, pagina_guia }
-    }
-
-    client.user_title = (user, escopo, chave_traducao, emoji_padrao) => {
-
-        // Retorna o texto formatado para membros e bots (usado em cards do log de eventos)
-        return `${user.bot ? client.emoji("icon_integration") : emoji_padrao ? emoji_padrao : client.defaultEmoji("person")} **${client.tls.phrase(escopo, chave_traducao)}${user.bot ? ` ( ${user.id !== client.id() ? client.tls.phrase(escopo, "util.user.bot") : client.tls.phrase(escopo, "util.user.alonsal")} )` : ""}**`
     }
 
     client.importFunctions = async () => {

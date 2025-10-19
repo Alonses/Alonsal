@@ -2,9 +2,7 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, data }) => {
 
-    const interaction = data.interaction
-    const message = data.message
-    const expires = data.expires
+    const { interaction, message, expires } = data
 
     const canal = await client.getGuildChannel(interaction.channel.id)
     if (!canal) return

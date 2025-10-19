@@ -5,9 +5,7 @@ const { badgeTypes } = require("../formatters/patterns/user")
 
 module.exports = async ({ client, data }) => {
 
-    const user = data.user
-    const id_badge = data.id_badge
-
+    const { user, id_badge } = data
     const all_badges = [], badges_user = await getUserBadges(user.uid)
 
     // Listando todas as badges que o usuário possui

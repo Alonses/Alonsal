@@ -1,7 +1,7 @@
 module.exports = async ({ client, guild, registroAudita, dados }) => {
 
     let texto, cargos = []
-    const user_alvo = dados[0].user, old_member = dados[0], new_member = dados[1]
+    const user = dados[0].user, old_member = dados[0], new_member = dados[1]
 
     // Listando a alteração de cargo
     registroAudita.changes[0].new.forEach(role => { cargos.push(`<@&${role.id}>`) })
@@ -17,12 +17,12 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         description: texto,
         fields: [
             {
-                name: client.user_title(user_alvo, guild, "util.server.membro"),
-                value: `${client.emoji("icon_id")} \`${user_alvo.id}\`\n${client.emoji("mc_name_tag")} \`${user_alvo.username}\`\n( <@${user_alvo.id}> )`,
+                name: client.execute("user_title", { user, scope: guild, tls: "util.server.membro" }),
+                value: `${client.emoji("icon_id")} \`${user.id}\`\n${client.emoji("mc_name_tag")} \`${user.username}\`\n( <@${user.id}> )`,
                 inline: true
             },
             {
-                name: client.user_title(registroAudita.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
+                name: client.execute("user_title", { user: registroAudita.executor, scope: guild, tls: "mode.logger.autor", emoji: client.defaultEmoji("guard") }),
                 value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                 inline: true
             }
@@ -46,7 +46,7 @@ module.exports = async ({ client, guild, registroAudita, dados }) => {
         }
     )
 
-    const url_avatar = user_alvo.avatarURL({ dynamic: true, size: 2048 })
+    const url_avatar = user.avatarURL({ dynamic: true, size: 2048 })
     if (url_avatar) embed.setThumbnail(url_avatar)
 
     client.execute("notify", {

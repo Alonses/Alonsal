@@ -1,6 +1,6 @@
 const { cases } = require("../formatters/patterns/general")
 
-module.exports = ({ client, data }) => {
+module.exports = ({ data }) => {
 
     let string = data.string
 

@@ -24,7 +24,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         // Removendo os warns e os cargos de advertências do usuário no servidor
         await dropAllUserGuildWarns(client.encrypt(id_alvo), client.encrypt(interaction.guild.id))
-        client.execute("verifyUserWarnRoles", { uid: client.encrypt(id_alvo), sid: client.encrypt(interaction.guild.id) })
+        client.execute("verifyUserWarnRoles", { id_user: client.encrypt(id_alvo), id_guild: client.encrypt(interaction.guild.id) })
 
         // Verificando se há outros usuários com advertência no servidor para poder continuar editando
         let advertencias_server = await checkUserGuildWarned(client.encrypt(id_guild)), row

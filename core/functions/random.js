@@ -1,9 +1,7 @@
 module.exports = ({ data }) => {
 
-    let intervalo = data.intervalo
-    let base = data?.base || 0
-    const raw = data?.raw || false // Retorna a chave do array ao invés do valor
-    const ignore = data?.ignore || false // Ignora um valor específico
+    let { intervalo, base } = data
+    const { raw, ignore } = data
 
     if (typeof base === "undefined") base = 0 // Valor minimo aceitável
 

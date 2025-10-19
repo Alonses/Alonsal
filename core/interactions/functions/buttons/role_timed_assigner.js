@@ -113,7 +113,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             })
 
         // Membro já possui o cargo mencionado
-        if (await client.hasRole(interaction, cargo.rid, cargo.uid))
+        if (await client.execute("hasRole", { interaction, id_role: cargo.rid, id_user: cargo.uid }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_ja_concedido", 7),
                 flags: "Ephemeral"

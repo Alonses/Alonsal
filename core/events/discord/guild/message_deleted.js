@@ -49,7 +49,7 @@ module.exports = async ({ client, message }) => {
         color: "salmao",
         fields: [
             {
-                name: client.user_title(message.author, guild, "mode.logger.autor"),
+                name: client.execute("user_title", { user: message.author, scope: guild, tls: "mode.logger.autor" }),
                 value: `${client.emoji("icon_id")} \`${message.author.id}\`\n${client.emoji("mc_name_tag")} \`${message.author.username}\`\n( <@${message.author.id}> )`,
                 inline: true
             },
@@ -66,7 +66,7 @@ module.exports = async ({ client, message }) => {
         if (message.author.id !== registroAudita.executorId && message.id === registroAudita.targetId)
             embed.addFields(
                 {
-                    name: client.user_title(registroAudita.executor, guild, "mode.logger.excluido", client.defaultEmoji("guard")),
+                    name: client.execute("user_title", { user: registroAudita.executor, scope: guild, tls: "mode.logger.excluido", emoji: client.defaultEmoji("guard") }),
                     value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
                     inline: false
                 }

@@ -46,7 +46,7 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
         nome_lista = lista.name
 
     // Atualiza os dados das tarefas e listas
-    client.atualiza_dados(task, interaction)
+    client.execute("sincroniza_tarefas", { alvo: task, interaction })
 
     const embed = client.create_embed({
         title: { tls: "util.tarefas.sua_tarefa" },

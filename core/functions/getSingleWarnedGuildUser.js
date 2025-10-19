@@ -3,14 +3,13 @@ const { checkUserGuildPreWarned } = require("../database/schemas/User_pre_warns"
 
 module.exports = async ({ client, data }) => {
 
-    if (!data?.escopo) {
+    const { id_guild, escopo } = data
+
+    if (!escopo) {
         console.error("🛑 | Escopo não informado ao solicitar um rascunho de advertência do usuário")
         console.trace()
         process.exit(1)
     }
-
-    const id_guild = data.id_guild
-    const escopo = data.escopo
 
     const warned_users = await (escopo === "warn" ? checkUserGuildWarned(id_guild) : checkUserGuildPreWarned(id_guild)), usuarios_validos = []
     let warned_cache = []

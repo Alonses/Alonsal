@@ -24,14 +24,14 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                                 files: [file],
                                 flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
-                        else client.sendModule(alvo, { content: `〽️ | ${descricao_curio}`, files: [file] }, internal_module)
+                        else client.execute("sendModule", { alvo, dados: { content: `〽️ | ${descricao_curio}`, files: [file] }, internal_module })
                     } else // Gifs
                         if (interaction)
                             interaction.reply({
                                 content: `〽️ | ${descricao_curio}\n${res.data_curio}`,
                                 flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                             })
-                        else client.sendModule(alvo, { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, internal_module)
+                        else client.execute("sendModule", { alvo, dados: { content: `〽️ | ${descricao_curio}\n${res.data_curio}` }, internal_module })
 
                     return
                 }
@@ -41,6 +41,6 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                     content: `〽️ | ${descricao_curio}`,
                     flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                 })
-            else client.sendModule(user, { content: `〽️ | ${descricao_curio}` }, internal_module)
+            else client.execute("sendModule", { alvo, dados: { content: `〽️ | ${descricao_curio}` }, internal_module })
         })
 }

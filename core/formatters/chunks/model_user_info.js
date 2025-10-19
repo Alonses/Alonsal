@@ -124,9 +124,9 @@ module.exports = async ({ client, user, interaction, dados, autor_original }) =>
 
     // Liga e desliga os botões conforme a página que o usuário se encontra
     const b_disabled = [false, false, false, false]
-    const c_buttons = [1, 1, 1, 1]
+    const c_buttons = [0, 0, 0, 0]
     b_disabled[operador] = true
-    c_buttons[operador] = 2
+    c_buttons[operador] = 1
 
     // Desabilitando a guia de badges caso o usuário tenha escondido
     if (!autor_original) {

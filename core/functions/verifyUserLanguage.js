@@ -1,7 +1,6 @@
 module.exports = async ({ client, data }) => {
 
-    const id_guild = data.id_guild
-    const user = data.user
+    const { id_guild, user } = data
 
     // Updates the user's default language if they do not have one
     const guild = await client.getGuild(id_guild)

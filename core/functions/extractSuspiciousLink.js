@@ -5,7 +5,8 @@
  * @param {object} params.data - Dados contendo o texto
  * @returns {Array<string>} Array de links extraídos
  */
-module.exports = ({ client, data }) => {
+module.exports = ({ data }) => {
+
     const text = data.text || ""
 
     // Sem texto informado

@@ -1,8 +1,6 @@
 module.exports = async ({ client, data }) => {
 
-    const interaction = data.interaction
-    const id_role = data.id_role
-    const permissions = data.permissions
+    const { interaction, id_role, permissions } = data
 
     const cached_role = client.getGuildRole(interaction, id_role)
 

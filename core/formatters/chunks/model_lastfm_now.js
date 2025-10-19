@@ -12,7 +12,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
 
     if (params.url) texto_entrada = params.url
 
-    const id_user = interaction.options.getUser("user").id || interaction.user.id
+    const id_user = interaction.options.getUser("user")?.id || interaction.user.id
     const user_alvo = await client.execute("getUser", { id_user })
 
     // user_alvo -> usuário marcado pelo comando
@@ -52,7 +52,7 @@ module.exports = async ({ client, user, interaction, user_command }) => {
             const embed = client.create_embed({
                 title: `${res.nome} ${client.tls.phrase(user, "util.lastfm.ouvindo_agora_card")}`,
                 image: res.scrobble_atual.cover,
-                description: `\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${res.scrobble_atual.faixa}\`\`\``
+                description: `\`\`\`fix\n🎶 ${client.tls.phrase(user, "util.lastfm.em_scrobble")}:\n${res.scrobble_atual.curtida} ${client.execute("formata_texto", { string: res.scrobble_atual.faixa })}\`\`\``
             }, user_alvo)
 
             client.reply(interaction, {

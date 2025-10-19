@@ -17,7 +17,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     for (let i = 0; i < 2; i++)
         botoes.push(randomString(5, client))
 
-    botoes = client.shuffleArray(botoes)
+    botoes = client.execute("shuffleArray", { arr: botoes })
 
     const row = client.create_buttons([
         { id: `data_finalize_button${escopo}`, name: botoes[0], type: 0, data: `1.${define_button(opcao, botoes[0])}.${dados}` },

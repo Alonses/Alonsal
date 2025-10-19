@@ -26,41 +26,41 @@ module.exports = {
                             "pt-BR": 'Insira um item',
                             "ru": 'поиск элемента'
                         })))
-        // .addSubcommand(subcommand =>
-        //     subcommand.setName("chunk")
-        //         .setDescription("⌠🎲⌡ See your position in the current chunk")
-        //         .setDescriptionLocalizations({
-        //             "de": '⌠🎲⌡ Sehen Sie sich Ihre Position im aktuellen Block an',
-        //             "es-ES": '⌠🎲⌡ Ver su posición en el fragmento actual',
-        //             "fr": '⌠🎲⌡ Voir votre position dans le morceau actuel',
-        //             "it": '⌠🎲⌡ Visualizza la tua posizione nel blocco corrente',
-        //             "pt-BR": '⌠🎲⌡ Veja sua posição na chunk atual',
-        //             "ru": '⌠🎲⌡ Посмотрите свою позицию в текущем фрагменте',
-        //         })
-        //         .addIntegerOption(option =>
-        //             option.setName("x")
-        //                 .setDescription("The x position")
-        //                 .setDescriptionLocalizations({
-        //                     "de": 'Die x-Position',
-        //                     "es-ES": 'La posición de x',
-        //                     "fr": 'La position de x',
-        //                     "it": 'La posizione di x',
-        //                     "pt-BR": 'A posição x',
-        //                     "ru": 'Позиция х'
-        //                 })
-        //                 .setRequired(true))
-        //         .addIntegerOption(option =>
-        //             option.setName("z")
-        //                 .setDescription("The z position in the current dimension")
-        //                 .setDescriptionLocalizations({
-        //                     "de": 'Die z-Position',
-        //                     "es-ES": 'La posición de z',
-        //                     "fr": 'La position de z',
-        //                     "it": 'La posizione di z',
-        //                     "pt-BR": 'A posição z',
-        //                     "ru": 'Положение z'
-        //                 })
-        //                 .setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand.setName("chunk")
+                .setDescription("⌠🎲⌡ See your position in the current chunk")
+                .setDescriptionLocalizations({
+                    "de": '⌠🎲⌡ Sehen Sie sich Ihre Position im aktuellen Block an',
+                    "es-ES": '⌠🎲⌡ Ver su posición en el fragmento actual',
+                    "fr": '⌠🎲⌡ Voir votre position dans le morceau actuel',
+                    "it": '⌠🎲⌡ Visualizza la tua posizione nel blocco corrente',
+                    "pt-BR": '⌠🎲⌡ Veja sua posição na chunk atual',
+                    "ru": '⌠🎲⌡ Посмотрите свою позицию в текущем фрагменте',
+                })
+                .addIntegerOption(option =>
+                    option.setName("x")
+                        .setDescription("The x position")
+                        .setDescriptionLocalizations({
+                            "de": 'Die x-Position',
+                            "es-ES": 'La posición de x',
+                            "fr": 'La position de x',
+                            "it": 'La posizione di x',
+                            "pt-BR": 'A posição x',
+                            "ru": 'Позиция х'
+                        })
+                        .setRequired(true))
+                .addIntegerOption(option =>
+                    option.setName("z")
+                        .setDescription("The z position in the current dimension")
+                        .setDescriptionLocalizations({
+                            "de": 'Die z-Position',
+                            "es-ES": 'La posición de z',
+                            "fr": 'La position de z',
+                            "it": 'La posizione di z',
+                            "pt-BR": 'A posição z',
+                            "ru": 'Положение z'
+                        })
+                        .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("portal")
                 .setDescription("⌠🎲⌡ View the coordinate for a portal")

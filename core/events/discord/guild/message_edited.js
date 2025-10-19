@@ -38,7 +38,7 @@ module.exports = async (client, message) => {
         color: "branco",
         fields: [
             {
-                name: client.user_title(message[0].author, guild, "mode.logger.autor"),
+                name: client.execute("user_title", { user: message[0].author, scope: guild, tls: "mode.logger.autor" }),
                 value: `${client.emoji("icon_id")} \`${message[0].author.id}\`\n${client.emoji("mc_name_tag")} \`${message[0].author.username}\`\n( <@${message[0].author.id}> )`,
                 inline: true
             },

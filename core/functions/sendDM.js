@@ -2,10 +2,10 @@
 module.exports = async ({ client, data }) => {
 
     // Envia uma notificação em DM para o usuário
-    let user = data.user
-    let dados = data.dados || ''
-    let force = data.force || false
-    let internal_module = data.internal_module || null
+    let { user, dados, force, internal_module } = data
+
+    // Sem dados para enviar ao usuário
+    if (!dados) return
 
     // Descriptografando o ID do usuário para envio em DM
     const id_user = (user.uid).length > 20 ? client.decifer(user.uid) : user.uid

@@ -13,5 +13,5 @@ module.exports = async ({ client, alvo, internal_module }) => {
     else
         frase = client.tls.phrase(alvo, "modu.frases.noite")
 
-    client.sendModule(alvo, { content: frase }, internal_module)
+    client.execute("sendModule", { alvo, dados: { content: frase }, internal_module })
 }

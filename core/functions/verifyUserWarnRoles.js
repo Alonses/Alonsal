@@ -6,8 +6,7 @@ const { listAllUserWarns } = require('../database/schemas/User_warns')
 module.exports = async ({ client, data }) => {
 
     // Separando dados
-    const id_user = data.uid
-    const id_guild = data.sid
+    const { id_user, id_guild } = data
 
     // Verifica as advertências do usuário e os cargos que foram vinculados
     const guild = await client.guilds(client.decifer(id_guild))

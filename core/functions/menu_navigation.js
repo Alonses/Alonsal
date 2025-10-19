@@ -7,8 +7,8 @@
 module.exports = ({ client, data }) => {
 
     const user = data.user
-    const pagina = data?.pagina || 0
     const dados = data.data
+    const pagina = data?.pagina || 0
 
     const itensPorPagina = 25
 

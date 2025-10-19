@@ -48,7 +48,7 @@ async function verifica_warns(client) {
 
                 // Excluindo o registro da advertência caso tenha zerado e verificando os cargos do usuário
                 await removeUserWarn(warn.uid, warn.sid, warn.timestamp)
-                client.execute("verifyUserWarnRoles", { uid: warn.uid, sid: warn.sid })
+                client.execute("verifyUserWarnRoles", { id_user: warn.uid, id_guild: warn.sid })
             }
         }
 

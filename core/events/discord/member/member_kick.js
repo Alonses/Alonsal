@@ -37,12 +37,12 @@ module.exports = async ({ client, guild, user_alvo, registroAudita2 }) => {
         description: `${client.tls.phrase(guild, "mode.logger.membro_expulso_desc", client.emoji("mc_writable_book"))}${razao}`,
         fields: [
             {
-                name: client.user_title(user_alvo, guild, "util.server.membro"),
+                name: client.execute("user_title", { user: user_alvo, scope: guild, tls: "util.server.membro" }),
                 value: `${client.emoji("icon_id")} \`${registroAudita2.targetId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.target.username}\`\n( <@${registroAudita2.targetId}> )`,
                 inline: true
             },
             {
-                name: client.user_title(registroAudita2.executor, guild, "mode.logger.autor", client.defaultEmoji("guard")),
+                name: client.execute("user_title", { user: registroAudita2.executor, scope: guild, tls: "mode.logger.autor", emoji: client.defaultEmoji("guard") }),
                 value: `${client.emoji("icon_id")} \`${registroAudita2.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita2.executor.username}\`\n( <@${registroAudita2.executorId}> )`,
                 inline: true
             }

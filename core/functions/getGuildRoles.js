@@ -2,8 +2,7 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, data }) => {
 
-    const interaction = data.interaction
-    const ignore_role = data.ignore_role
+    const { interaction, ignore_role } = data
     const permitir_mods = data?.allow_mods || null
 
     const roles = []

@@ -2,13 +2,11 @@ const { PermissionsBitField } = require('discord.js')
 
 module.exports = async ({ client, data }) => {
 
-    const id_alvo = data.id_canal
-    const conteudo = data.conteudo
-    const objeto = data?.objeto || null
+    const { id_canal, conteudo, objeto } = data
 
-    if (!id_alvo) return
+    if (!id_canal) return
 
-    const canal = await client.getGuildChannel(id_alvo)
+    const canal = await client.getGuildChannel(id_canal)
     if (!canal) return
 
     // Verificando se o bot possui permissões para enviar mensagens ou ver o canal

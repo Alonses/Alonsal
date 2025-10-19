@@ -23,7 +23,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Removendo a advertência do usuário e verificando os cargos do mesmo
         await removeUserWarn(user_warn.uid, user_warn.sid, user_warn.timestamp)
-        client.execute("verifyUserWarnRoles", { uid: client.encrypt(id_alvo), sid: client.encrypt(interaction.guild.id) })
+        client.execute("verifyUserWarnRoles", { id_user: client.encrypt(id_alvo), id_guild: client.encrypt(interaction.guild.id) })
 
         if (user_warns.length - 1 > 0)
             row.push({ id: "panel_guild_browse_warns", name: { tls: "menu.botoes.remover_outras" }, type: 2, emoji: client.emoji(41), data: `0|${id_alvo}` })

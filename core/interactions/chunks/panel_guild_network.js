@@ -93,7 +93,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
     }, user)
 
     if (pagina === 2) { // Página com a lista de servidores do network
-        embed.setFields(
+        embed.addFields(
             {
                 name: `${client.execute("button_emoji", guild?.conf.network)} **${client.tls.phrase(user, "mode.report.status")}**`,
                 value: "⠀",
@@ -116,7 +116,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
             }
         )
     } else {
-        embed.setFields(
+        embed.addFields(
             {
                 name: `${client.emoji(7)} **${client.tls.phrase(user, "mode.network.permissoes_no_servidor")}**`,
                 value: `${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ViewAuditLog))} **${client.tls.phrase(user, "mode.network.registro_auditoria")}**\n${client.execute("button_emoji", membro_sv.permissions.has(PermissionsBitField.Flags.ModerateMembers))} **${client.tls.phrase(user, "mode.network.castigar_membros")}**`,

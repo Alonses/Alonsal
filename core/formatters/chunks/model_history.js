@@ -8,7 +8,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
             content: client.tls.phrase(alvo, "util.history.erro_eventos"),
             flags: "Ephemeral"
         })
-    else client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.history.erro_eventos") }, internal_module)
+    else client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.history.erro_eventos") }, internal_module })
 
     return
 
@@ -27,7 +27,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                             flags: "Ephemeral"
                         })
                     else
-                        return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.history.sem_evento") }, internal_module)
+                        return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.history.sem_evento") }, internal_module })
 
                 let lista_eventos = "", data_eventos = ""
                 const ano_atual = new Date().getFullYear()
@@ -58,7 +58,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                         embeds: [embed_eventos],
                         flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     }, true)
-                else return client.sendModule(alvo, { embeds: [embed_eventos] }, internal_module)
+                else return client.execute("sendModule", { alvo, dados: { embeds: [embed_eventos] }, internal_module })
             })
     } else {
 
@@ -73,7 +73,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                             content: client.tls.phrase(alvo, "util.history.sem_entradas_valor"),
                             flags: "Ephemeral"
                         })
-                    else return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.history.sem_evento") }, internal_module)
+                    else return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.history.sem_evento") }, internal_module })
 
                 const row = client.create_buttons([
                     { name: { tls: "menu.botoes.mais_detalhes" }, value: res.fonte, type: 4, emoji: "🌐" }
@@ -106,7 +106,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                         components: [row],
                         flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                     }, true)
-                else client.sendModule(alvo, { embeds: [acontecimento], components: [row] }, internal_module)
+                else client.execute("sendModule", { alvo, dados: { embeds: [acontecimento], components: [row] }, internal_module })
             })
             .catch(() => {
                 if (interaction)
@@ -114,7 +114,7 @@ module.exports = async ({ client, alvo, dados, interaction, user_command, intern
                         content: client.tls.phrase(alvo, "util.history.erro_eventos"),
                         flags: "Ephemeral"
                     })
-                else client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.history.erro_eventos") }, internal_module)
+                else client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.history.erro_eventos") }, internal_module })
             })
     }
 }

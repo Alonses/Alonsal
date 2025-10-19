@@ -46,11 +46,11 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                     })
             } else {
                 if (res.cod === '404' || res.cod === '400')
-                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, internal_module)
+                    return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.tempo.aviso_2", client.emoji("emojis_negativos"), pesquisa) }, internal_module })
                 else if (res.cod === '429') // Erro da API
-                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module)
+                    return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module })
                 else if (res.id === '1873107')
-                    return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.error_2", client.emoji("emojis_negativos")) }, internal_module)
+                    return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.tempo.error_2", client.emoji("emojis_negativos")) }, internal_module })
             }
 
             fetch(`${process.env.url_time}key=${process.env.key_time}&format=json&by=position&lat=${res.coord.lat}&lng=${res.coord.lon}`) // Buscando o horário local
@@ -310,7 +310,7 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                             flags: client.decider(alvo?.conf.ghost_mode || user_command, 0) ? "Ephemeral" : null
                         }, true)
                     else
-                        return client.sendModule(alvo, { embeds: [embed_clima] }, internal_module)
+                        return client.execute("sendModule", { alvo, dados: { embeds: [embed_clima] }, internal_module })
                 })
         }) // Erro com a API de clima
         .catch(() => {
@@ -320,6 +320,6 @@ module.exports = async ({ client, alvo, interaction, user_command, internal_modu
                     flags: "Ephemeral"
                 })
             else
-                return client.sendModule(alvo, { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module)
+                return client.execute("sendModule", { alvo, dados: { content: client.tls.phrase(alvo, "util.tempo.aviso_3", client.emoji("emojis_negativos")) }, internal_module })
         })
 }

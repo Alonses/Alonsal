@@ -18,13 +18,13 @@ module.exports = async ({ client, guild, interaction, id_user, dados, acionador,
         // Checking bot permissions on the server
         if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers] })) return
 
-        cargos.atribute.split(".").forEach(async cargo => {
+        cargos.atribute.split(".").forEach(async id_role => {
 
             // Verificando se o membro ainda não possui o cargo
-            if (!await client.hasRole(interaction, cargo, id_user)) {
+            if (!await client.execute("hasRole", { interaction, id_role, id_user })) {
 
                 // Assigning the role to the user who received the strike
-                const role = client.getGuildRole(interaction, cargo)
+                const role = client.getGuildRole(interaction, id_role)
 
                 if (role.editable) // Checking if the role is editable
                     await membro_guild.roles.add(role).catch(console.error)
@@ -34,7 +34,7 @@ module.exports = async ({ client, guild, interaction, id_user, dados, acionador,
     } else {
 
         // Verificando se o membro ainda não possui o cargo
-        if (!await client.hasRole(interaction, dados.role, id_user)) {
+        if (!await client.execute("hasRole", { interaction, id_role: dados.role, id_user })) {
 
             // Checking bot permissions on the server
             if (await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.Administrator] })) {
