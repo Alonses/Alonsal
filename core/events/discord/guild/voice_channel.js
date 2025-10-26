@@ -1,3 +1,5 @@
+const { AuditLogEvent, PermissionsBitField } = require('discord.js')
+
 module.exports = async ({ client, oldState, newState }) => {
 
     // Verificando se o autor da mensagem editada é o bot ou se o bot está ignorando a guild principal
@@ -26,14 +28,33 @@ module.exports = async ({ client, oldState, newState }) => {
 
         frase = client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49], [oldState.id, oldState.channelId, newState.channelId])
 
+        // Verificando permissões para acessar o registro de auditória
+        if (await client.execute("permissions", { message: newState, id_user: client.id(), permissions: [PermissionsBitField.Flags.ViewAuditLog] })) {
+
+            // Coletando dados sobre o evento
+            const fetchedLogs = await oldState.guild.fetchAuditLogs({
+                type: AuditLogEvent.MemberMove,
+                limit: 1
+            })
+
+            const registroAudita = fetchedLogs.entries.first()
+            frase = client.tls.phrase(guild, "mode.logger.canal_movido", [48, 49], [registroAudita.executorId, oldState.id, oldState.channelId, newState.channelId])
+
+            fields.push({
+                name: client.execute("user_title", { user: registroAudita.executor, scope: guild, tls: "mode.logger.autor", emoji: client.defaultEmoji("guard") }),
+                value: `${client.emoji("icon_id")} \`${registroAudita.executorId}\`\n${client.emoji("mc_name_tag")} \`${registroAudita.executor.username}\`\n( <@${registroAudita.executorId}> )`,
+                inline: true
+            })
+        }
+
         fields.push(
             {
-                name: `${client.emoji(30)} ${client.tls.phrase(guild, "mode.canal.canal_antigo")}`,
+                name: `${client.emoji(30)} ${client.tls.phrase(guild, "mode.logger.canal_antigo")}`,
                 value: `${client.emoji("icon_id")} \`${oldState.channelId}\`\n${`:placard: \`${canal_antigo.name}\`\n( <#${oldState.channelId}> )`}`,
                 inline: true
             },
             {
-                name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.canal.canal_novo")}`,
+                name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.logger.canal_novo")}`,
                 value: `${client.emoji("icon_id")} \`${newState.channelId}\`\n${`:placard: \`${canal_novo.name}\`\n( <#${newState.channelId}> )`}`,
                 inline: true
             }
@@ -43,7 +64,7 @@ module.exports = async ({ client, oldState, newState }) => {
     // Entrada e saída de canal
     if (!newState.channelId || !oldState.channelId)
         fields.push({
-            name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.canal.canal_antigo")}`,
+            name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.logger.canal_antigo")}`,
             value: `${client.emoji("icon_id")} \`${guild_channel.id}\`\n${`:placard: \`${guild_channel.name}\`\n( <#${guild_channel.id}> )`}`,
             inline: true
         })
