@@ -42,9 +42,9 @@ function create_menus({ client, interaction, user, data, pagina, multi_select, g
             }
         else
             itens_menu.push({
-                label: "Não há nada neste campo!",
+                label: client.tls.phrase(user, "menu.invalid.titulo"),
                 emoji: "🛑",
-                description: "Você acessou um recurso, mas não tem nada aqui...",
+                description: client.tls.phrase(user, "menu.invalid.descricao"),
                 value: "invalid"
             })
     }

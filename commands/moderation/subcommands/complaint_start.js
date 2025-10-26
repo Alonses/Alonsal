@@ -40,5 +40,5 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
 
         channel.cid = client.encrypt(new_channel.id)
         channel.save()
-    }).catch((err) => console.log(err), client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
+    }).catch((err) => console.error(err), client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
 }

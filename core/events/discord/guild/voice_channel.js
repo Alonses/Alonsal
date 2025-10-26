@@ -13,13 +13,45 @@ module.exports = async ({ client, oldState, newState }) => {
 
     let frase
 
+    // Coletando dados do canal de voz que ocorreu o evento para exibição
+    const guild_channel = await client.getGuildChannel(oldState?.channelId || newState?.channelId), fields = []
+
     if (newState.channelId === null) frase = client.tls.phrase(guild, "mode.logger.canal_saida", [48, 30], [oldState.id, oldState.channelId])
     else if (oldState.channelId === null) frase = client.tls.phrase(guild, "mode.logger.canal_entrada", [48, 50], [oldState.id, newState.channelId])
-    else frase = client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49], [oldState.id, oldState.channelId, newState.channelId])
+    else if (oldState.channelId !== newState.channelId) {
+
+        // Troca entre canais de voz no servidor
+        const canal_antigo = await client.getGuildChannel(oldState.channelId)
+        const canal_novo = await client.getGuildChannel(newState.channelId)
+
+        frase = client.tls.phrase(guild, "mode.logger.canal_troca", [48, 49], [oldState.id, oldState.channelId, newState.channelId])
+
+        fields.push(
+            {
+                name: `${client.emoji(30)} ${client.tls.phrase(guild, "mode.canal.canal_antigo")}`,
+                value: `${client.emoji("icon_id")} \`${oldState.channelId}\`\n${`:placard: \`${canal_antigo.name}\`\n( <#${oldState.channelId}> )`}`,
+                inline: true
+            },
+            {
+                name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.canal.canal_novo")}`,
+                value: `${client.emoji("icon_id")} \`${newState.channelId}\`\n${`:placard: \`${canal_novo.name}\`\n( <#${newState.channelId}> )`}`,
+                inline: true
+            }
+        )
+    }
+
+    // Entrada e saída de canal
+    if (!newState.channelId || !oldState.channelId)
+        fields.push({
+            name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.canal.canal_antigo")}`,
+            value: `${client.emoji("icon_id")} \`${guild_channel.id}\`\n${`:placard: \`${guild_channel.name}\`\n( <#${guild_channel.id}> )`}`,
+            inline: true
+        })
 
     const embed = client.create_embed({
         title: { tls: "mode.logger.canal_voz" },
         color: "pastel",
+        fields,
         description: frase,
         timestamp: true,
         footer: {

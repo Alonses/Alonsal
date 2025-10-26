@@ -16,14 +16,14 @@ module.exports = async ({ client, user, interaction }) => {
     if (interaction.options.getString("type")) // Falta de permissão para gerenciar mensagens
         if (interaction.options.getString("type") === "guild" && !await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageMessages] }))
             return interaction.reply({
-                content: "🛂 | Você não pode criar um módulo de servidor sem possuir a permissão para `Gerenciar mensagens`, por gentileza, crie um módulo para uso pessoal.",
+                content: client.tls.phrase(user, "misc.modulo.falta_permissao_server", 7),
                 flags: "Ephemeral"
             })
 
     // Impedindo que o módulo de games seja configurado em escopo de servidor por fora da configuração através do panel guild
     if (type === 6 && interaction.options.getString("type") === "guild")
         return interaction.reply({
-            content: "❌ | Esse tipo de módulo não pode ser ativo em servidores, para isso, utilize o comando </panel guild:1107163338930126869> e vá até a guia `🎮 Anúncio de Games`.",
+            content: client.tls.phrase(user, "misc.modulo.tipo_invalido_games", client.emoji(0)),
             flags: "Ephemeral"
         })
 
@@ -138,7 +138,7 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
         fields: [
             {
                 name: `${client.defaultEmoji("types")} **${client.tls.phrase(user, "misc.modulo.tipo")}**`,
-                value: `\`${client.tls.phrase(user, `misc.modulo.modulo_${corpo_modulo.type}`)}\`${type === 0 ? `${locale_cache ? `\n🔀 Local: \`${client.decifer(user.misc.locale)}\`` : `\n🏙 Local: \`${local_data}\``}` : ""}`,
+                value: `\`${client.tls.phrase(user, `misc.modulo.modulo_${corpo_modulo.type}`)}\`${type === 0 ? `${locale_cache ? `\n🔀 ${client.tls.phrase(user, "util.rastreio.local")}: \`${client.decifer(user.misc.locale)}\`` : `\n🏙 ${client.tls.phrase(user, "util.rastreio.local")}: \`${local_data}\``}` : ""}`,
                 inline: true
             },
             {

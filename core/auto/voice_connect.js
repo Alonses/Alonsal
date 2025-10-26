@@ -13,7 +13,7 @@ async function conecta_canal_voz(voice_channel, som) {
         await entersState(connection, VoiceConnectionStatus.Ready, 30_000)
     } catch (err) {
         connection.destroy()
-        return console.log('Erro ao conectar no canal de voz: ' + err.message)
+        return console.error('🛑 | Erro ao conectar no canal de voz: ' + err.message)
     }
 
     // Criando o player
@@ -35,7 +35,7 @@ async function conecta_canal_voz(voice_channel, som) {
     const subscription = connection.subscribe(player)
 
     if (!subscription)
-        return console.log('Falha ao subscrever o player à conexão.')
+        return console.error('🛑 | Falha ao subscrever o player à conexão.')
 
     // Desconectando após terminar o som
     player.on(AudioPlayerStatus.Idle, () => {
