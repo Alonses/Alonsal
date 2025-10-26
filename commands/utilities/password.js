@@ -49,7 +49,7 @@ module.exports = {
         ], interaction, user)
 
         const embed = client.create_embed({
-            titl: `> :lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`,
+            title: `> :lock_with_ink_pen: ${client.tls.phrase(user, "util.password.titulo")}`,
             description: `:passport_control: **${client.tls.phrase(user, "util.password.primaria")}**\n\`\`\`${randomString(tamanho, client)}\`\`\`\n :gift: **${client.tls.phrase(user, "util.password.bonus")}**\n\`\`\`${bonus}\`\`\``,
             footer: {
                 text: client.tls.phrase(user, "util.password.rodape", null, tamanho)
