@@ -64,7 +64,7 @@ module.exports = async ({ client, oldState, newState }) => {
     // Entrada e saída de canal
     if (!newState.channelId || !oldState.channelId)
         fields.push({
-            name: `${client.emoji(43)} ${client.tls.phrase(guild, newState?.channelId ? "mode.logger.canal_antigo" : "mode.logger.canal_novo" )}`,
+            name: `${client.emoji(newState?.channelId ? 43 : 30)} ${client.tls.phrase(guild, newState?.channelId ? "mode.logger.canal_novo" : "mode.logger.canal_antigo")}`,
             value: `${client.emoji("icon_id")} \`${guild_channel.id}\`\n${`:placard: \`${guild_channel.name}\`\n( <#${guild_channel.id}> )`}`,
             inline: true
         })
@@ -74,10 +74,7 @@ module.exports = async ({ client, oldState, newState }) => {
         color: "pastel",
         fields,
         description: frase,
-        timestamp: true,
-        footer: {
-            text: `${client.tls.phrase(guild, "mode.logger.id_membro")} ${oldState.id}`
-        }
+        timestamp: true
     }, guild)
 
     client.execute("notify", {
