@@ -64,7 +64,7 @@ module.exports = async ({ client, oldState, newState }) => {
     // Entrada e saída de canal
     if (!newState.channelId || !oldState.channelId)
         fields.push({
-            name: `${client.emoji(43)} ${client.tls.phrase(guild, "mode.logger.canal_antigo")}`,
+            name: `${client.emoji(43)} ${client.tls.phrase(guild, newState?.channelId ? "mode.logger.canal_antigo" : "mode.logger.canal_novo" )}`,
             value: `${client.emoji("icon_id")} \`${guild_channel.id}\`\n${`:placard: \`${guild_channel.name}\`\n( <#${guild_channel.id}> )`}`,
             inline: true
         })
