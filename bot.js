@@ -73,9 +73,8 @@ client.discord.on("messageCreate", async message => {
 		const link = `${message.content} `.match(client.cached.regex)
 		let link_malicioso = false
 
-		// Filtro de links únicos considerados maliciosos
-		if (links_maliciosos.includes(link[0].split("/")[0]))
-			link_malicioso = true
+		if (link) // Filtro de links únicos considerados maliciosos
+			if (links_maliciosos.includes(link[0].split("/")[0])) link_malicioso = true
 
 		if (link_malicioso || link) // Checking the text for a malicious link
 			if (link_malicioso || await verifySuspiciousLink(link)) {
