@@ -14,6 +14,8 @@ const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 const { verifica_chute } = require('./commands/games/forca')
 
+const { links_maliciosos } = require("./core/formatters/patterns/anti_spam")
+
 let client = new CeiraClient()
 internal_functions(client) // Registers the internal functions
 slash_commands(client) // Updates the slash commands
@@ -69,9 +71,14 @@ client.discord.on("messageCreate", async message => {
 	if (guild.conf.spam) { // Server anti-spam system
 
 		const link = `${message.content} `.match(client.cached.regex)
+		let link_malicioso = false
 
-		if (link) // Checking the text for a malicious link
-			if (await verifySuspiciousLink(link)) {
+		// Filtro de links únicos considerados maliciosos
+		if (links_maliciosos.includes(link[0].split("/")[0]))
+			link_malicioso = true
+
+		if (link_malicioso || link) // Checking the text for a malicious link
+			if (link_malicioso || await verifySuspiciousLink(link)) {
 				const suspect_link = true
 				return nerfa_spam({ client, message, guild, suspect_link })
 			}

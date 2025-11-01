@@ -69,15 +69,6 @@ const networkCases = {
     "mute": "member_punishment"
 }
 
-const links_oficiais = [
-    "youtu.be",
-    "youtube.com",
-    "google.com",
-    "tenor.com",
-    "discordapp.com",
-    "discordapp.net"
-]
-
 const voice_names = {
     "all": "🎰",
     "nicknames": "🔖",
@@ -95,6 +86,5 @@ module.exports = {
     guildActions,
     operation_codes,
     networkCases,
-    links_oficiais,
     voice_names
 }

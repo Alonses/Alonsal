@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const { links_oficiais } = require("../../formatters/patterns/guild")
+const { links_oficiais } = require("../../formatters/patterns/anti_spam")
 
 // sid -> Server ID
 

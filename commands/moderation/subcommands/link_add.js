@@ -1,6 +1,6 @@
 const { verifySuspiciousLink, registerCachedSuspiciousLink } = require("../../../core/database/schemas/Spam_links")
 
-const { links_oficiais } = require("../../../core/formatters/patterns/guild")
+const { links_oficiais } = require("../../../core/formatters/patterns/anti_spam")
 
 module.exports = async ({ client, user, interaction }) => {
 

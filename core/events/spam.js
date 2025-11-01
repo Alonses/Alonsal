@@ -5,7 +5,7 @@ const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Gui
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 
 const { spamTimeoutMap } = require("../formatters/patterns/timeout")
-const { links_oficiais } = require("../formatters/patterns/guild")
+const { links_oficiais } = require("../formatters/patterns/anti_spam")
 
 const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
 const cached_messages = {}
