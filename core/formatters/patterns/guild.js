@@ -76,7 +76,8 @@ const voice_names = {
     "phonetic": "📞",
     "cities": "🏫",
     "aliens": "👽",
-    "villains": "🧛‍♀️"
+    "villains": "🧛‍♀️",
+    "pokemons": "🐦"
 }
 
 module.exports = {

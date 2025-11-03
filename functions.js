@@ -180,11 +180,8 @@ function internal_functions(client) {
     client.importFunctions = async () => {
 
         // Importa todas as funções internas do bot
-        for (const file of readdirSync(`${__dirname}/core/functions`).filter(file => file.endsWith('.js'))) {
-
-            const funcao = require(`${__dirname}/core/functions/${file}`)
-            client[file.replace(".js", "")] = funcao
-        }
+        for (const file of readdirSync(`${__dirname}/core/functions`).filter(file => file.endsWith('.js')))
+            client[file.replace(".js", "")] = require(`${__dirname}/core/functions/${file}`)
     }
 
     // Importando as funções internas do bot para o cache

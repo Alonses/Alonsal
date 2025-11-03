@@ -8,6 +8,7 @@ const dispara_anuncio = require('../auto/send_announcement')
  * @param {object} params.client - Instância do client
  * @param {object} params.guild_channel - Canal da guild
  */
+
 async function free_games({ client, guild_channel }) {
     try {
         // Verifica e remove games expirados

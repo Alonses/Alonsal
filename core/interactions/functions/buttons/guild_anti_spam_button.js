@@ -63,7 +63,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         } else
             strikes.forEach(strike => {
 
-                const cor_botao = strike.rank > indice_matriz ? 3 : 1
+                const cor_botao = strike.rank > indice_matriz ? 3 : 0
 
                 botoes.push({ id: "strike_configure_button", name: `${strike.rank + 1}°`, type: cor_botao, emoji: strike.action ? loggerMap[strike.action] : client.emoji(39), data: `9|${strike.rank}` })
 
