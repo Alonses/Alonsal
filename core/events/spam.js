@@ -13,15 +13,22 @@ const cached_messages = {}
 module.exports = async function ({ client, message, guild }) {
 
     let user_guild
+    const attachments = []
 
-    if (guild.spam.scanner.links) { // Verificando se a mensagem não contém link (apenas links ativos para filtrar)
-        const link = `${message.content} `.match(client.cached.regex)
+    if (message.attachments) // Verificando se a mensagem contém anexos
+        message.attachments.forEach(attach => {
+            attachments.push(attach.attachment)
+        })
 
-        if (!link) return
-    }
+    if (attachments.length < 1)
+        if (guild.spam.scanner.links) { // Verificando se a mensagem não contém link (apenas links ativos para filtrar)
+            const link = `${message.content} `.match(client.cached.regex)
+
+            if (!link) return
+        }
 
     // Tempo minimo para manter as mensagens salvas em cache no servidor
-    let tempo_spam = guild.spam.trigger_amount < 5 ? 60000 : guild.spam.trigger_amount * 12000
+    let tempo_spam = guild.spam.trigger_amount < 5 ? 120000 : guild.spam.trigger_amount * 25000
 
     if (usersrole.has(message.author.id)) {
         const userdata = usersrole.get(message.author.id)
@@ -151,7 +158,7 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
     let mensagens_spam = []
 
     // Listando as mensagens que foram consideradas como spam e formatando a visualização
-    user_messages.forEach(internal_message => { mensagens_spam.push(`[ ${client.defaultEmoji("time")} ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]; ${client.defaultEmoji("place")} : ${internal_message.channel.name}\n-> ${internal_message.content?.length > 180 ? `${internal_message.content.slice(0, 180)}...` : internal_message.content}`) })
+    user_messages.forEach(internal_message => { mensagens_spam.push(`[ ${client.defaultEmoji("time")} ${new Date(internal_message.createdTimestamp).toLocaleTimeString()} ]; ${client.defaultEmoji("place")} : ${internal_message.channel.name}\n-> ${internal_message.content?.length > 180 ? `${internal_message.content.slice(0, 180)}...` : internal_message?.content || client.tls.phrase(guild, "mode.spam.arquivos_anexo")}`) })
     mensagens_spam = mensagens_spam.join("\n\n")
     mensagens_spam = mensagens_spam.length > 1000 ? `${mensagens_spam.slice(0, 1000)}\n.\n.\n.` : mensagens_spam
 

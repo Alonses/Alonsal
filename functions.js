@@ -154,12 +154,7 @@ function internal_functions(client) {
     client.normalizeString = (string) => { return string.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}\p{P}\p{Z}{^$=+±\\'|`\\~<>}]/gu, "") }
 
     // Registra a experiência recebida pelo membro
-    client.registryExperience = (message, caso) => {
-
-        if (!client.x.ranking) return
-
-        require('./core/data/user_ranking')({ client, message, caso })
-    }
+    client.registryExperience = (message, caso) => { require('./core/data/user_ranking')({ client, message, caso }) }
 
     // Registra uma movimentação bancária do usuário
     client.registryStatement = (user, traducao, caso, valor) => { return registryStatement(client, user, traducao, caso, valor) }

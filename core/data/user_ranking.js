@@ -12,6 +12,12 @@ let members_xp = []
  */
 module.exports = async ({ client, message, caso }) => {
 
+    // Registra no relatório diário o evento
+    client.journal(caso, 1)
+
+    // Cancela a operação caso o ranking esteja desligado
+    if (!client.x.ranking) return
+
     // Identifica o usuário alvo
     const id_user = message.user?.id || message.author?.id
     let cached_erase = false
@@ -120,8 +126,6 @@ module.exports = async ({ client, message, caso }) => {
         client.journal("gerado", 250)
     }
 
-    // Registra no relatório
-    client.journal(caso, 1)
     await guild_user.save()
 
     // Adiciona usuário na fila de ranking global para sincronização
