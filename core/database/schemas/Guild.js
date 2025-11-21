@@ -156,8 +156,7 @@ async function getSpecificGameChannel(gcid) {
 
     // Busca apenas o servidor com o canal ativo
     return model.find({
-        "games.channel": gcid,
-        "conf.games": true
+        "games.channel": gcid
     })
 }
 
