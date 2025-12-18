@@ -1,50 +1,14 @@
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { createGame, verifyInvalidGames, verifyGame } = require('../database/schemas/Game')
+const { createGame, verifyGame } = require('../database/schemas/Game')
 
 const dispara_anuncio = require('./send_announcement')
 
-module.exports = async ({ client }) => {
-
-    if (client.id() !== process.env.client_1) return
-
-    const date1 = new Date() // Ficará esperando até quinta feira ao meio dia para executar a rotina
-    let controle = 0
-
-    // Previne que o bot dispare anúncios indesejados se for atualizado após o meio dia das quintas
-    if (date1.getDay() === 4 && date1.getHours() > 13)
-        controle = 7
-
-    const dias = [4, 3, 2, 1, controle, 6, 5]
-    let tempo_restante = (dias[date1.getDay()] * 86400000) + ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
-
-    // Atualiza semanalmente
-    let frequencia = 604800000
-
-    // Atualização diária
-    if (client.x.daily_announce) {
-        tempo_restante = ((12 - date1.getHours()) * 3600000) + ((60 - date1.getMinutes()) * 60000) + ((60 - date1.getSeconds()) * 1000)
-        frequencia = 86400000
-
-        if (date1.getHours() > 13) // Espera até a conclusão da próxima frequência para poder enviar o anúncio
-            tempo_restante = frequencia + tempo_restante
-    }
-
-    setTimeout(() => {
-        gera_anuncio(client, frequencia)
-        requisita_anuncio(client, frequencia)
-    }, tempo_restante)
-}
-
-requisita_anuncio = (client, aguardar_tempo) => {
-    setTimeout(() => {
-        gera_anuncio(client, aguardar_tempo)
-        requisita_anuncio(client, aguardar_tempo)
-    }, aguardar_tempo)
-}
-
 gera_anuncio = async (client, proxima_att) => {
+
+    // Apenas o bot principal realiza os anúncios automáticos
+    if (client.id() !== process.env.client_1) return
 
     if (process.env.client_1 === client.id())
         client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":video_game: :sparkles: | Disparando automaticamente os anúncios de jogos gratuitos" } })
@@ -70,8 +34,6 @@ gera_anuncio = async (client, proxima_att) => {
                 await createGame(game)
             })
 
-            // Verificando pelos games que já expiraram
-            verifyInvalidGames()
             dispara_anuncio({ client, objetos_anunciados })
         })
         .catch(err => {

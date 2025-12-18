@@ -29,8 +29,6 @@ module.exports = async ({ client }) => {
     setTimeout(() => {
         client.idioma.listAll()
     }, 2000)
-
-    require('../auto/await_announces')({ client })
 }
 
 dispara_status = (client, status_apisal) => {

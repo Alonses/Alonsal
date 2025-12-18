@@ -8,11 +8,12 @@ const { requisita_modulo, atualiza_modulos } = require("./triggers/modules")
 const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
 
 const { verifica_servers } = require("../data/user_ranking")
+const { verifyInvalidGames } = require('../database/schemas/Game')
 const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
 const { atualiza_fixed_badges } = require('./triggers/user_fixed_badges')
-const { atualiza_user_subscription, verifica_subscribers } = require('./triggers/user_subscription')
 const { verifica_eraser, atualiza_eraser } = require("./triggers/guild_eraser")
 const { verifica_pre_warns, atualiza_pre_warns } = require('./triggers/guild_pre_warns')
+const { atualiza_user_subscription, verifica_subscribers } = require('./triggers/user_subscription')
 const { verifica_canais_dinamicos, atualiza_voice_channels } = require('./triggers/guild_voice_channels')
 
 module.exports = async ({ client }) => {
@@ -20,9 +21,7 @@ module.exports = async ({ client }) => {
     // Sincronizando as configurações de recursos
     const bot = await client.getBot()
 
-    Object.keys(bot.conf).forEach(valor => {
-        client.x[valor] = bot.conf[valor]
-    })
+    Object.keys(bot.conf).forEach(valor => { client.x[valor] = bot.conf[valor] })
 
     if (!existsSync(`./files/data/`)) // Criando a pasta de dados para poder salvar em cache
         mkdirSync(`./files/data/`, { recursive: true })
@@ -79,6 +78,21 @@ internal_clock = (client, tempo_restante) => {
         if (timestamp_atual % 1800 < 60) { // 30 Minutos
             if (client.x.ranking) verifica_servers() // Sincronizando o ranking global dos usuários que ganharam XP
             if (client.x.modules) atualiza_modulos()
+
+            verifyInvalidGames() // Verifica os games que já expiraram
+        }
+
+        // Verificando o horário e dia para envio de jogos gratuitos
+        if (horario_agora.getHours() === 13 && horario_agora.getMinutes() === 1) { // 13:01
+
+            let proxima_att = 604800000 // Padrão semanal
+
+            if (client.x.daily_announce) { // Todos os dias
+
+                proxima_att = 86400000 // Diário
+                gera_anuncio(client, proxima_att)
+            } else if (horario_agora.getDay() === 4) // Apenas em quintas-feiras
+                gera_anuncio(client, proxima_att)
         }
 
         internal_clock(client, 60000)
