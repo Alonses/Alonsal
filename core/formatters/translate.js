@@ -149,15 +149,45 @@ lista_emojis = (emojis_lista) => {
 
 ajusta_traducao = (idioma, frase) => {
 
-    let blocos = frase.split(" ")
-
     // Busca as traduções para o item solicitado
-    let { data } = require(`../../files/languages/${idioma}.json`)
+    const { data } = require(`../../files/languages/${idioma}.json`)
 
-    for (let i = 0; i < blocos.length; i++) // Altera o trecho para a tradução
-        if (data[blocos[i]]) blocos[i] = data[blocos[i]]
+    // Ordenando pelas chaves maiores primeiro (frases)
+    const chaves = Object.keys(data).sort(
+        (a, b) => b.length - a.length
+    )
 
-    return blocos.join(" ")
+    let retorno = frase
+
+    for (const chave of chaves) {
+
+        // Escapa caracteres especiais para regex
+        const chaveEscapada = chave.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+
+        const regex = new RegExp(
+            `(?<![\\p{L}])${chaveEscapada}(?![\\p{L}])`,
+            "giu"
+        )
+
+        // Traduzindo o trecho/palavra conforme o idioma secundário, mantendo a capitalização conforme o texto original
+        retorno = retorno.replace(regex, match => ajustar_capitalizacao(match, data[chave]));
+    }
+
+    return retorno
+}
+
+ajustar_capitalizacao = (original, traduzido) => {
+
+    // Tudo em maiúsculo
+    if (original === original.toUpperCase())
+        return traduzido.toUpperCase()
+
+    // Apenas a primeira letra em maiúsculo
+    if (original[0] === original[0].toUpperCase() && original.slice(1) === original.slice(1).toLowerCase())
+        return traduzido[0].toUpperCase() + traduzido.slice(1)
+
+    // Tudo em minúsculo
+    return traduzido.toLowerCase()
 }
 
 module.exports = {
