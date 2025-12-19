@@ -1,21 +1,21 @@
 require('dotenv').config()
 
 // ---------------------------------------------------------------
-// Alterna entre modo normal e modo de testes
-const update_commands = 0 // Força atualização dos comandos slash
+// Switches between normal and development mode
+const update_commands = 0 // Forces the update of slash commands globally
 let modo_develop = 0
 let silent = 0
 const limited = 0
 const debug_mode = 0
-const delete_slash = 0 // Limpa comandos slash locais e globais
+const delete_slash = 0 // Clear the local and global slash commands
 
-// Atualizando os comandos do bot principal
+// Update the commands of the main bot
 if (update_commands) {
     modo_develop = 0
     silent = 1
 }
 
-// Validando se as variáveis de ambiente solicitadas existem e retornando um valor padrão se não existirem
+// Validating if the requested environment variables exist and returning a default value if they don't
 function getEnvVar(name) {
     if (!process.env[name]) {
         console.warn(`🛑 | Variável de ambiente '${name}' não definida. Não é possível iniciar sem esse valor informado.`)
@@ -41,9 +41,11 @@ const client_data = {
     voice_channels: !modo_develop,
     guild_timeout: 0,
 
-    owners: getEnvVar('owner_id').split(',').map(o => o.trim()).filter(Boolean),
     id: modo_develop ? getEnvVar('client_2') : getEnvVar('client_1'),
     token: modo_develop ? getEnvVar('token_2') : getEnvVar('token_1'),
+    owners: getEnvVar('owner_id').split(',').map(o => o.trim()).filter(Boolean),
+    id_enceirados: getEnvVar('ids_enceirados').split(',').map(e => e.trim()).filter(Boolean),
+    guild_emojis: getEnvVar('guild_emojis').split(',').map(g => g.trim()).filter(Boolean)
 }
 
 module.exports.client_data = client_data
