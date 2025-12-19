@@ -48,3 +48,5 @@ next_att = (client, tempo_restante) => {
 
     client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: `:video_game: :sparkles: | Próxima atualização de jogos gratuitos em\n( <t:${tempo_restante}:F> )` } })
 }
+
+module.exports.gera_anuncio = gera_anuncio

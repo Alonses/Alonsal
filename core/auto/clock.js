@@ -7,6 +7,7 @@ const { verifica_roles, atualiza_roles } = require("./triggers/user_roles")
 const { requisita_modulo, atualiza_modulos } = require("./triggers/modules")
 const { verifica_user_eraser, atualiza_user_eraser } = require("./triggers/user_eraser")
 
+const { gera_anuncio } = require('./await_announces')
 const { verifica_servers } = require("../data/user_ranking")
 const { verifyInvalidGames } = require('../database/schemas/Game')
 const { atualiza_join_guilds } = require('./triggers/guild_join_roles')
