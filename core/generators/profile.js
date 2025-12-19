@@ -51,10 +51,11 @@ async function create_profile({ client, interaction, user, id_user, operador }) 
     if (!tipo_user.includes("🛡️") && !user_data.bot)
         tipo_user = client.defaultEmoji("person")
 
-    if (user_data.uid === client.id())
+    if (id_user === client.id())
         nota_rodape = client.tls.phrase(user, "util.user.alonsal")
 
-    if (process.env.ids_enceirados.includes(user_data.uid)) {
+    // Usuário está marcado como enceirado
+    if (client.x.ids_enceirados && client.x.ids_enceirados?.includes(id_user)) {
         if (nota_rodape !== "") nota_rodape += ", "
 
         nota_rodape += client.tls.phrase(user, "util.user.enceirado")
@@ -65,12 +66,12 @@ async function create_profile({ client, interaction, user, id_user, operador }) 
         fields: [
             {
                 name: `${client.emoji("icon_mention")} ${nome_usuario}`,
-                value: `( <@${client.decifer(user_data.uid)}> )`,
+                value: `( <@${id_user}> )`,
                 inline: true
             },
             {
                 name: `${client.emoji("icon_id")} **${client.tls.phrase(user, "mode.report.identificador")}**`,
-                value: `\`${client.decifer(user_data.uid)}\``,
+                value: `\`${id_user}\``,
                 inline: true
             }
         ],

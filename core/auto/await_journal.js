@@ -5,9 +5,9 @@ const { verifica_renda_passiva } = require('./triggers/user_passive_income')
 
 module.exports = async ({ client }) => {
     try {
-        if (client.x.relatorio) {
+        if (client.x.relatorio && process.env.channel_journal) {
             const embed = await require('../generators/journal')({ client })
-            await client.execute('notify', { id_canal: process.env.channel_stats, conteudo: { embeds: [embed] } })
+            await client.execute('notify', { id_canal: process.env.channel_journal, conteudo: { embeds: [embed] } })
         }
 
         // Executando as verificações diárias em parelelo

@@ -9,7 +9,8 @@ async function servidores_inativos(client) {
     // Verificando os servidores onde o bot expirou o prazo de inatividade
     guilds.forEach(guild => {
 
-        if (guild.iddle.timestamp)
+        // Verificando se há dados sobre o tempo de expiração e se o servidor não é um servidor interno para emojis
+        if (guild.iddle.timestamp && !client.x.guild_emojis.includes(guild.sid))
             if (timestamp_atual > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
 
                 // Saindo do servidor com inatividade confirmada

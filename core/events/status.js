@@ -33,7 +33,7 @@ module.exports = async ({ client }) => {
 
 dispara_status = (client, status_apisal) => {
 
-    if (process.env.channel_stats) {
+    if (process.env.channel_status) {
         setTimeout(async () => {
 
             const bot = await client.getBot()
