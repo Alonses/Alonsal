@@ -44,7 +44,7 @@ const client_data = {
     id: modo_develop ? getEnvVar('client_2') : getEnvVar('client_1'),
     token: modo_develop ? getEnvVar('token_2') : getEnvVar('token_1'),
     owners: getEnvVar('owner_id').split(',').map(o => o.trim()).filter(Boolean),
-    id_enceirados: getEnvVar('ids_enceirados').split(',').map(e => e.trim()).filter(Boolean),
+    ids_enceirados: getEnvVar('ids_enceirados').split(',').map(e => e.trim()).filter(Boolean),
     guild_emojis: getEnvVar('guild_emojis').split(',').map(g => g.trim()).filter(Boolean)
 }
 
