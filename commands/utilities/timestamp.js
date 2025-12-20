@@ -1,5 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const TIMESTAMP_CHOICES = [
+    { name: '+5 M', value: '5' },
+    { name: '+10 M', value: '10' },
+    { name: '+30 M', value: '30' },
+    { name: '+1 H', value: '60' },
+    { name: '+2 H', value: '120' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("timestamp")
@@ -47,13 +55,7 @@ module.exports = {
                             "pt-BR": 'Uma data rápida para marcar',
                             "ru": 'Бронирование быстрой даты'
                         })
-                        .addChoices(
-                            { name: '+5 M', value: '5' },
-                            { name: '+10 M', value: '10' },
-                            { name: '+30 M', value: '30' },
-                            { name: '+1 H', value: '60' },
-                            { name: '+2 H', value: '120' }
-                        )))
+                        .addChoices(...TIMESTAMP_CHOICES)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("now")

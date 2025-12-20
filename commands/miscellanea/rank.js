@@ -1,5 +1,11 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
+const TYPE_CHOICES = [
+    { name: '👾 Server', value: 'server' },
+    { name: '🌐 Global', value: 'global' },
+    { name: '🏦 Bank', value: 'bank' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("rank")
@@ -31,11 +37,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(
-                    { name: '👾 Server', value: 'server' },
-                    { name: '🌐 Global', value: 'global' },
-                    { name: '🏦 Bank', value: 'bank' }
-                )
+                .addChoices(...TYPE_CHOICES)
                 .setRequired(true))
         .addIntegerOption(option =>
             option.setName("page")

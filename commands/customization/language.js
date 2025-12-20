@@ -1,6 +1,17 @@
 const { SlashCommandBuilder } = require('discord.js')
 
 const { languagesMap } = require('../../core/formatters/patterns/user')
+const LANGUAGE_CHOICES = [
+    { name: '🏴 Alonsês', value: 'al' },
+    { name: '🇩🇪 Deutsch', value: 'de' },
+    { name: '🇺🇸 English', value: 'en' },
+    { name: '🇪🇸 Español', value: 'es' },
+    { name: '🇫🇷 Français', value: 'fr' },
+    { name: '🔆 Hopês', value: 'hp' },
+    { name: '🇮🇹 Italiano', value: 'it' },
+    { name: '🇧🇷 Português', value: 'pt' },
+    { name: '🇷🇺 Русский', value: 'ru' }
+]
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -41,17 +52,7 @@ module.exports = {
                     "pt-BR": 'Qual o novo idioma?',
                     "ru": 'Каким будет новый язык?'
                 })
-                .addChoices(
-                    { name: '🏴 Alonsês', value: 'al' },
-                    { name: '🇩🇪 Deutsch', value: 'de' },
-                    { name: '🇺🇸 English', value: 'en' },
-                    { name: '🇪🇸 Español', value: 'es' },
-                    { name: '🇫🇷 Français', value: 'fr' },
-                    { name: '🔆 Hopês', value: 'hp' },
-                    { name: '🇮🇹 Italiano', value: 'it' },
-                    { name: '🇧🇷 Português', value: 'pt' },
-                    { name: '🇷🇺 Русский', value: 'ru' }
-                )
+                .addChoices(...LANGUAGE_CHOICES)
                 .setRequired(true)),
     async execute({ client, user, interaction }) {
 

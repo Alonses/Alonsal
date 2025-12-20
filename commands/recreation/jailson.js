@@ -1,5 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const TYPE_CHOICES = [
+	{ name: '💬 Phrase', value: 'phrase' },
+	{ name: '👾 Gif', value: 'gif' }
+]
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("jailson")
@@ -31,10 +36,7 @@ module.exports = {
 					"pt-BR": 'Escolha uma operação',
 					"ru": 'Выберите операцию'
 				})
-				.addChoices(
-					{ name: '💬 Phrase', value: 'phrase' },
-					{ name: '👾 Gif', value: 'gif' }
-				)
+				.addChoices(...TYPE_CHOICES)
 				.setRequired(true)),
 	async execute({ client, user, interaction, user_command }) {
 

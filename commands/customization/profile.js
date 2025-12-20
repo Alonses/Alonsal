@@ -1,5 +1,12 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
+const LINK_CHOICES = [
+    { name: '🎮 Steam', value: 'steam' },
+    { name: '🎶 LastFM', value: 'lastfm' },
+    { name: '🗽 Locale', value: 'locale' },
+    { name: '🚀 Pula Prédios', value: 'pula' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("profile")
@@ -79,12 +86,7 @@ module.exports = {
                             "pt-BR": 'Escolha uma operação',
                             "ru": 'Выберите операцию'
                         })
-                        .addChoices(
-                            { name: '🎮 Steam', value: 'steam' },
-                            { name: '🎶 LastFM', value: 'lastfm' },
-                            { name: '🗽 Locale', value: 'locale' },
-                            { name: '🚀 Pula Prédios', value: 'pula' }
-                        )
+                        .addChoices(...LINK_CHOICES)
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("value")

@@ -1,5 +1,16 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
+const TYPE_CHOICES = [
+    { name: '⏳ Available', value: 'a' },
+    { name: '✅ Completed', value: 'f' },
+    { name: '📝 Lists', value: 'l' }
+]
+
+const OPERATION_CHOICES = [
+    { name: '🔖 Task', value: 'task' },
+    { name: '📝 List', value: 'list' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("tasks")
@@ -43,11 +54,7 @@ module.exports = {
                             "pt-BR": 'Escolha uma operação',
                             "ru": 'Выберите операцию'
                         })
-                        .addChoices(
-                            { name: '⏳ Available', value: 'a' },
-                            { name: '✅ Completed', value: 'f' },
-                            { name: '📝 Lists', value: 'l' }
-                        )
+                        .addChoices(...TYPE_CHOICES)
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand.setName("add")
@@ -87,10 +94,7 @@ module.exports = {
                             "pt-BR": 'Escolha uma operação',
                             "ru": 'Выберите операцию'
                         })
-                        .addChoices(
-                            { name: '🔖 Task', value: 'task' },
-                            { name: '📝 List', value: 'list' }
-                        )
+                        .addChoices(...OPERATION_CHOICES)
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("description")
@@ -149,10 +153,7 @@ module.exports = {
                             "pt-BR": 'Escolha uma operação',
                             "ru": 'Выберите операцию'
                         })
-                        .addChoices(
-                            { name: '🔖 Task', value: 'task' },
-                            { name: '📝 List', value: 'list' }
-                        )
+                        .addChoices(...OPERATION_CHOICES)
                         .setRequired(true)))
         .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {

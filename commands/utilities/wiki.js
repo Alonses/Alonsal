@@ -3,6 +3,16 @@ const fetch = (...args) =>
 
 const { SlashCommandBuilder } = require('discord.js')
 
+const LANGUAGE_CHOICES = [
+    { name: '🇩🇪 Deutsch', value: 'de-de' },
+    { name: '🇺🇸 English', value: 'en-us' },
+    { name: '🇪🇸 Español', value: 'es-es' },
+    { name: '🇫🇷 Français', value: 'fr-fr' },
+    { name: '🇮🇹 Italiano', value: 'it-it' },
+    { name: '🇧🇷 Português', value: 'pt-br' },
+    { name: '🇷🇺 Русский', value: 'ru-ru' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("wiki")
@@ -54,15 +64,7 @@ module.exports = {
                     "pt-BR": 'Em qual idioma?',
                     "ru": 'На каком языке?'
                 })
-                .addChoices(
-                    { name: '🇩🇪 Deutsch', value: 'de-de' },
-                    { name: '🇺🇸 English', value: 'en-us' },
-                    { name: '🇪🇸 Español', value: 'es-es' },
-                    { name: '🇫🇷 Français', value: 'fr-fr' },
-                    { name: '🇮🇹 Italiano', value: 'it-it' },
-                    { name: '🇧🇷 Português', value: 'pt-br' },
-                    { name: '🇷🇺 Русский', value: 'ru-ru' }
-                )),
+                .addChoices(...LANGUAGE_CHOICES)),
     async execute({ client, user, interaction, user_command }) {
 
         let idioma_definido = user.lang === "al-br" ? "pt-br" : user.lang

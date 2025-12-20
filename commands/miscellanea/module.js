@@ -1,5 +1,33 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const MODULE_CHOICES = [
+    { name: '🌩️ Weather', value: '0' },
+    { name: '🖊️ Phrase', value: '1' },
+    // { name: '🏯 Historical events', value: '2' },
+    { name: '🃏 Jokes', value: '3' },
+    { name: '〽️ Curiosities', value: '4' },
+    { name: '💎 Minecraft Item', value: '5' },
+    { name: '🎮 Free Games', value: '6' }
+]
+
+const DAY_CHOICES = [
+    { name: '🏭 Working days', value: '0' },
+    { name: '🛹 Weekends', value: '1' },
+    { name: '📆 Daily', value: '2' },
+    { name: '🛵 Sunday', value: '4' },
+    { name: '💀 Monday', value: '5' },
+    { name: '🤡 Tuesday', value: '6' },
+    { name: '🐸 Wednesday', value: '7' },
+    { name: '🚀 Thursday', value: '8' },
+    { name: '🍺 Friday', value: '9' },
+    { name: '🕺 Saturday', value: '10' }
+]
+
+const TYPE_CHOICES = [
+    { name: '👤 Personal', value: 'user' },
+    { name: '🌐 Server', value: 'guild' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("module")
@@ -51,15 +79,7 @@ module.exports = {
                             "pt-BR": 'Qual a sua escolha?',
                             "ru": 'Каков ваш выбор?'
                         })
-                        .addChoices(
-                            { name: '🌩️ Weather', value: '0' },
-                            { name: '🖊️ Phrase', value: '1' },
-                            // { name: '🏯 Historical events', value: '2' },
-                            { name: '🃏 Jokes', value: '3' },
-                            { name: '〽️ Curiosities', value: '4' },
-                            { name: '💎 Minecraft Item', value: '5' },
-                            { name: '🎮 Free Games', value: '6' }
-                        )
+                        .addChoices(...MODULE_CHOICES)
                         .setRequired(true))
                 .addIntegerOption(option =>
                     option.setName("hour")
@@ -123,18 +143,7 @@ module.exports = {
                             "pt-BR": 'Em quais dias?',
                             "ru": 'В какие дни?'
                         })
-                        .addChoices(
-                            { name: '🏭 Working days', value: '0' },
-                            { name: '🛹 Weekends', value: '1' },
-                            { name: '📆 Daily', value: '2' },
-                            { name: '🛵 Sunday', value: '4' },
-                            { name: '💀 Monday', value: '5' },
-                            { name: '🤡 Tuesday', value: '6' },
-                            { name: '🐸 Wednesday', value: '7' },
-                            { name: '🚀 Thursday', value: '8' },
-                            { name: '🍺 Friday', value: '9' },
-                            { name: '🕺 Saturday', value: '10' }
-                        )
+                        .addChoices(...DAY_CHOICES)
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName("place")
@@ -174,10 +183,7 @@ module.exports = {
                             "pt-BR": 'Para o servidor ou para uso pessoal?',
                             "ru": 'Для сервера или личного пользования?'
                         })
-                        .addChoices(
-                            { name: '👤 Personal', value: 'user' },
-                            { name: '🌐 Server', value: 'guild' }
-                        )))
+                        .addChoices(...TYPE_CHOICES)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("list")

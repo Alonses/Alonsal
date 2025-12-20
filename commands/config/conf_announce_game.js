@@ -3,6 +3,10 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
 const { createGame, verifyInvalidGames } = require('../../core/database/schemas/Game')
 
 const dispara_anuncio = require('../../core/auto/send_announcement')
+const TYPE_CHOICES = [
+    { name: 'Jogo', value: 'jogo' },
+    { name: 'DLC/Expansão', value: 'dlc' }
+]
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,10 +38,7 @@ module.exports = {
         .addStringOption(option =>
             option.setName("tipo")
                 .setDescription("O tipo do conteudo")
-                .addChoices(
-                    { name: 'Jogo', value: 'jogo' },
-                    { name: 'DLC/Expansão', value: 'dlc' },
-                ))
+                .addChoices(...TYPE_CHOICES))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
     async execute({ client, user, interaction }) {
 

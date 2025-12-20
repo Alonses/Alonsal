@@ -2,6 +2,11 @@ const { SlashCommandBuilder } = require('discord.js')
 
 const { atualiza_fixed_badges } = require('../../core/auto/triggers/user_fixed_badges')
 
+const OPTION_CHOICES = [
+    { name: '🔖 Fix', value: 'fix' },
+    { name: '❌ Remove', value: 'remove' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("badge")
@@ -33,10 +38,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(
-                    { name: '🔖 Fix', value: 'fix' },
-                    { name: '❌ Remove', value: 'remove' }
-                )
+                .addChoices(...OPTION_CHOICES)
                 .setRequired(true)),
     async execute({ client, user, interaction }) {
 

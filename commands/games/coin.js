@@ -1,5 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const OPTION_CHOICES = [
+    { name: '🟡', value: '0' },
+    { name: '👑', value: '1' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("coin")
@@ -31,10 +36,7 @@ module.exports = {
                     "pt-BR": 'Cara ou coroa?',
                     "ru": 'Орел или решка?'
                 })
-                .addChoices(
-                    { name: '🟡', value: '0' },
-                    { name: '👑', value: '1' }
-                )
+                .addChoices(...OPTION_CHOICES)
                 .setRequired(true))
         .addNumberOption(option =>
             option.setName('bet')

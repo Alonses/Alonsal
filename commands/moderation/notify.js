@@ -1,5 +1,16 @@
 const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
+const LANGUAGE_CHOICES = [
+    { name: '🏴 Alonsês', value: 'al-br' },
+    { name: '🇩🇪 Deutsch', value: 'de-de' },
+    { name: '🇺🇸 English', value: 'en-us' },
+    { name: '🇪🇸 Español', value: 'es-es' },
+    { name: '🇫🇷 Français', value: 'fr-fr' },
+    { name: '🇮🇹 Italiano', value: 'it-it' },
+    { name: '🇧🇷 Português', value: 'pt-br' },
+    { name: '🇷🇺 Русский', value: 'ru-ru' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("notify")
@@ -81,16 +92,7 @@ module.exports = {
                             "pt-BR": 'O idioma que será utilizado',
                             "ru": 'Язык, который будет использоваться'
                         })
-                        .addChoices(
-                            { name: '🏴 Alonsês', value: 'al-br' },
-                            { name: '🇩🇪 Deutsch', value: 'de-de' },
-                            { name: '🇺🇸 English', value: 'en-us' },
-                            { name: '🇪🇸 Español', value: 'es-es' },
-                            { name: '🇫🇷 Français', value: 'fr-fr' },
-                            { name: '🇮🇹 Italiano', value: 'it-it' },
-                            { name: '🇧🇷 Português', value: 'pt-br' },
-                            { name: '🇷🇺 Русский', value: 'ru-ru' }
-                        )
+                        .addChoices(...LANGUAGE_CHOICES)
                 ))
         .addSubcommand(subcommand =>
             subcommand.setName("now")

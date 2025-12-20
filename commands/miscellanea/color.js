@@ -1,5 +1,22 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const COLOR_CHOICES = [
+    { name: '🎈 Red B$ 300', value: 'red' },
+    { name: '🐶 Brown B$ 300', value: 'brown' },
+    { name: '🎃 Orange B$ 300', value: 'orange' },
+    { name: '🎁 Yellow B$ 300', value: 'yellow' },
+    { name: '🎄 Green B$ 300', value: 'green' },
+    { name: '👽 Cyan B$ 300', value: 'cyan' },
+    { name: '🧪 Turquoise B$ 300', value: 'turquoise' },
+    { name: '💎 Blue B$ 300', value: 'blue' },
+    { name: '🔮 Purple B$ 300', value: 'purple' },
+    { name: '🌸 Magenta B$ 300', value: 'magenta' },
+    { name: '🧻 White B$ 400', value: 'white' },
+    { name: '🛒 Gray B$ 400', value: 'gray' },
+    { name: '🎮 Black B$ 400', value: 'black' },
+    { name: '💥 Random B$ 500', value: 'random' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("color")
@@ -35,22 +52,7 @@ module.exports = {
                             "pt-BR": 'Alterar a cor do seu perfil',
                             "ru": 'Изменить цвет профиля'
                         })
-                        .addChoices(
-                            { name: '🎈 Red B$ 300', value: 'red' },
-                            { name: '🐶 Brown B$ 300', value: 'brown' },
-                            { name: '🎃 Orange B$ 300', value: 'orange' },
-                            { name: '🎁 Yellow B$ 300', value: 'yellow' },
-                            { name: '🎄 Green B$ 300', value: 'green' },
-                            { name: '👽 Cyan B$ 300', value: 'cyan' },
-                            { name: '🧪 Turquoise B$ 300', value: 'turquoise' },
-                            { name: '💎 Blue B$ 300', value: 'blue' },
-                            { name: '🔮 Purple B$ 300', value: 'purple' },
-                            { name: '🌸 Magenta B$ 300', value: 'magenta' },
-                            { name: '🧻 White B$ 400', value: 'white' },
-                            { name: '🛒 Gray B$ 400', value: 'gray' },
-                            { name: '🎮 Black B$ 400', value: 'black' },
-                            { name: '💥 Random B$ 500', value: 'random' }
-                        )
+                        .addChoices(...COLOR_CHOICES)
                         .setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand

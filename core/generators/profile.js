@@ -55,7 +55,7 @@ async function create_profile({ client, interaction, user, id_user, operador }) 
         nota_rodape = client.tls.phrase(user, "util.user.alonsal")
 
     // Usuário está marcado como enceirado
-    if (client.x.ids_enceirados && client.x.ids_enceirados?.includes(id_user)) {
+    if (user_data.misc.enceirado) {
         if (nota_rodape !== "") nota_rodape += ", "
 
         nota_rodape += client.tls.phrase(user, "util.user.enceirado")

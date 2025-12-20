@@ -1,5 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const TYPE_CHOICES = [
+    { name: '🔊 Speaks', value: 'speaks' },
+    { name: '🧾 Menu', value: 'menu' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("faustop")
@@ -31,10 +36,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(
-                    { name: '🔊 Speaks', value: 'speaks' },
-                    { name: '🧾 Menu', value: 'menu' }
-                )
+                .addChoices(...TYPE_CHOICES)
                 .setRequired(true)),
     async execute({ client, user, interaction, user_command }) {
 

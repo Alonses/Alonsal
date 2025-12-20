@@ -1,5 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const OPTION_CHOICES = [
+    { name: '🗿', value: 'pedra' },
+    { name: '🧻', value: 'papel' },
+    { name: '✂️', value: 'tesoura' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("jokenpo")
@@ -31,11 +37,7 @@ module.exports = {
                     "pt-BR": 'Qual a sua escolha?',
                     "ru": 'Каков ваш выбор?'
                 })
-                .addChoices(
-                    { name: '🗿', value: 'pedra' },
-                    { name: '🧻', value: 'papel' },
-                    { name: '✂️', value: 'tesoura' }
-                ))
+                .addChoices(...OPTION_CHOICES))
         .addNumberOption(option =>
             option.setName('bet')
                 .setNameLocalizations({

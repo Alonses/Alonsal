@@ -17,7 +17,12 @@ module.exports = {
 
         if (!client.x.owners.includes(interaction.user.id)) return
 
-        let id_alvo = interaction.options.getUser("usuario").id
+        let targetUserId = interaction.options.getUser("usuario")
+
+        // Usuário mencionado ao invés de informado apenas o ID
+        if (targetUserId.includes("<@"))
+            targetUserId = targetUserId.replace("<@", "").replace("!", "").replace(">", "")
+
         expiracao = client.execute("timestamp", { entrada: interaction.options.getString("expiração") })
         const timestamp_atual = client.execute("timestamp")
 
@@ -36,7 +41,7 @@ module.exports = {
             fields: [
                 {
                     name: `${client.defaultEmoji("person")} **Assinante**`,
-                    value: `<@${id_alvo}>`,
+                    value: `<@${targetUserId}>`,
                     inline: true
                 },
                 {
@@ -55,8 +60,8 @@ module.exports = {
 
         // Criando os botões para o menu de badges
         const row = client.create_buttons([
-            { id: "misc_subscribers", name: { tls: "menu.botoes.confirmar_notificando" }, type: 1, emoji: client.emoji(6), data: `1|${id_alvo}.${expiracao}` },
-            { id: "misc_subscribers", name: { tls: "menu.botoes.apenas_confirmar" }, type: 0, emoji: client.emoji(31), data: `2|${id_alvo}.${expiracao}` },
+            { id: "misc_subscribers", name: { tls: "menu.botoes.confirmar_notificando" }, type: 1, emoji: client.emoji(6), data: `1|${targetUserId}.${expiracao}` },
+            { id: "misc_subscribers", name: { tls: "menu.botoes.apenas_confirmar" }, type: 0, emoji: client.emoji(31), data: `2|${targetUserId}.${expiracao}` },
             { id: "misc_subscribers", name: { tls: "menu.botoes.cancelar" }, type: 3, emoji: client.emoji(0), data: 0 }
         ], interaction, user)
 

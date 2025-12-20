@@ -1,5 +1,18 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const CONVERT_CHOICES = [
+    { name: '1️⃣ binary', value: 'binary' },
+    { name: '📻 morse', value: 'morse' },
+    { name: '🐱 hieroglyphics', value: 'hieroglyphics' },
+    { name: '🔆 hopês', value: 'generic.hp' },
+    { name: '🏴‍☠️ alonsês', value: 'generic.al' }
+]
+
+const OPERATION_CHOICES = [
+    { name: 'Encode', value: '0' },
+    { name: 'Decode', value: '1' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("translate")
@@ -39,13 +52,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(
-                    { name: '1️⃣ binary', value: 'binary' },
-                    { name: '📻 morse', value: 'morse' },
-                    { name: '🐱 hieroglyphics', value: 'hieroglyphics' },
-                    { name: '🔆 hopês', value: 'generic.hp' },
-                    { name: '🏴‍☠️ alonsês', value: 'generic.al' }
-                )
+                .addChoices(...CONVERT_CHOICES)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("text")
@@ -103,10 +110,7 @@ module.exports = {
                     "pt-BR": 'Forçar uma operação',
                     "ru": 'форсировать операцию'
                 })
-                .addChoices(
-                    { name: 'Encode', value: '0' },
-                    { name: 'Decode', value: '1' }
-                )),
+                .addChoices(...OPERATION_CHOICES)),
     async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando para a opção respectiva

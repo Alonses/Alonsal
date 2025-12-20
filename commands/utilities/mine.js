@@ -1,5 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const OPERATION_CHOICES = [
+    { name: '🍀 Overworld', value: '0' },
+    { name: '🔥 Nether', value: '1' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("mine")
@@ -115,10 +120,7 @@ module.exports = {
                             "pt-BR": 'Para onde deseja ir?',
                             "ru": 'Куда ты хочешь пойти?'
                         })
-                        .addChoices(
-                            { name: '🍀 Overworld', value: '0' },
-                            { name: '🔥 Nether', value: '1' }
-                        ))),
+                        .addChoices(...OPERATION_CHOICES))),
     async execute({ client, user, interaction, user_command }) {
 
         // Redirecionando o evento

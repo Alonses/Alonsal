@@ -37,6 +37,7 @@ const schema = new mongoose.Schema({
         fixed_badge: { type: Number, default: null },
         second_lang: { type: String, default: null },
         embed_color: { type: String, default: "#29BB8E" },
+        enceirado: { type: Boolean, default: false },
         voice_channels: {
             always_private: { type: Boolean, default: false },
             user_limit: { type: String, default: 0 },

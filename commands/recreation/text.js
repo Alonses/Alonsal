@@ -1,5 +1,14 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const CONVERTER_CHOICES = [
+    { name: '📠 Anagram', value: 'anagram' },
+    { name: '◀️ Reverse', value: 'reverse' },
+    { name: '⏫ Upper', value: 'upper' },
+    { name: '🔠 Sans', value: 'sans' },
+    { name: '😁 Emoji', value: 'emoji' },
+    { name: '🔢 Counter', value: 'counter' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("text")
@@ -38,14 +47,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(
-                    { name: '📠 Anagram', value: 'anagram' },
-                    { name: '◀️ Reverse', value: 'reverse' },
-                    { name: '⏫ Upper', value: 'upper' },
-                    { name: '🔠 Sans', value: 'sans' },
-                    { name: '😁 Emoji', value: 'emoji' },
-                    { name: '🔢 Counter', value: 'counter' }
-                )
+                .addChoices(...CONVERTER_CHOICES)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("text")

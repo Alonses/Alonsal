@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('c_ignore_user')
-        .setDescription('⌠🤖⌡ (Des)ativa as respostas do bot para determinado usuário')
+        .setName('c_user_ceira')
+        .setDescription('⌠🤖⌡ (Des)ativa a marcação de enceirado para determinado usuário')
         .addStringOption(option =>
             option.setName('usuario')
                 .setDescription('O ID do usuário')
@@ -20,10 +20,6 @@ module.exports = {
         if (targetUserId.includes("<@"))
             targetUserId = targetUserId.replace("<@", "").replace("!", "").replace(">", "")
 
-        // Não permita ignorar usuários que são proprietários do bot
-        if (client.x.owners.includes(targetUserId))
-            return interaction.reply({ content: ':no_entry: | Não é possível ignorar um proprietário do bot.', flags: 'Ephemeral' })
-
         try {
             const targetUser = await client.execute('getUser', { id_user: targetUserId })
 
@@ -31,15 +27,15 @@ module.exports = {
                 return interaction.reply({ content: ':warning: | Usuário não encontrado.', flags: 'Ephemeral' })
 
             // Garantir que a configuração exista
-            targetUser.conf = targetUser.conf || {}
+            targetUser.misc = targetUser.misc || {}
 
-            // Alterna o estado de 'banned' (ignorar respostas do bot)
-            targetUser.conf.banned = !Boolean(targetUser.conf.banned)
+            // Alterna o estado de 'enceirado' (usuário enceirado)
+            targetUser.misc.enceirado = !Boolean(targetUser.misc.enceirado)
             await targetUser.save()
 
-            const content = targetUser.conf.banned
-                ? `${client.emoji('pare_agr')} | O usuário <@${targetUserId}> será ignorado pelo bot a partir de agora!`
-                : `${client.emoji('dog_panelaco')} | O usuário <@${targetUserId}> não será mais ignorado pelo bot.`
+            const content = targetUser.misc.enceirado
+                ? `${client.emoji('mc_wax')} | O usuário <@${targetUserId}> agora é um enceirado!`
+                : `${client.emoji('dog_panelaco')} | O usuário <@${targetUserId}> não é mais um enceirado.`
 
             return interaction.reply({ content, flags: 'Ephemeral' })
         } catch (err) {

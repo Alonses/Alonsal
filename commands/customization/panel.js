@@ -1,5 +1,43 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
+const PERSONAL_CHOICES = [
+    { name: '🧾 Your data', value: 'data' },
+    { name: '👻 Ghostmode', value: '0' },
+    { name: '🔔 DM notifications', value: '1' },
+    { name: '🏆 Ranking', value: '2' },
+    { name: '🔊 Voice channels', value: 'voice_channels' },
+    { name: '🕶 Public badges', value: '3' },
+    { name: '🌩 Weather summary', value: '4' },
+    { name: '🌐 Global tasks', value: '5' },
+    { name: '💬 Compact mode', value: '6' },
+    { name: '🌎 Cached Servers', value: '7' }
+]
+
+const GUILD_CHOICES = [
+    { name: '🧾 Guild data', value: 'data' },
+    { name: '📜 Event log', value: 'logger' },
+    { name: '📜 Event log Configs', value: 'logger.1' },
+    { name: '💀 Death note', value: 'logger.2' },
+    { name: '🛑 Warns', value: 'warns' },
+    { name: '🛑 Warns Pings', value: 'warns.1' },
+    { name: '🛑 Warns Configs', value: 'warns.2' },
+    { name: '👑 Hierarchy Warns', value: 'hierarchy_warns.0' },
+    { name: '📛 Anti-Spam', value: 'anti_spam' },
+    { name: '📛 Anti-Spam Resources', value: 'anti_spam.1' },
+    { name: '📛 Anti-Spam Configs', value: 'anti_spam.2' },
+    { name: '📡 Network', value: 'network' },
+    { name: '📡 Network Configs', value: 'network.1' },
+    { name: '💂 External reports', value: 'external_reports' },
+    { name: '💂 External reports Configs', value: 'external_reports.2' },
+    { name: '🔨 AutoBan', value: 'external_reports.1' },
+    { name: '🏆 Guild ranking', value: 'ranking' },
+    { name: '🎮 Free Games ad', value: 'free_games' },
+    { name: '⌚ Timed roles', value: 'timed_roles' },
+    { name: '💂 In-server reports', value: 'tickets' },
+    { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
+    { name: '🔊 Voice channels', value: 'voice_channels' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("panel")
@@ -48,18 +86,7 @@ module.exports = {
                             "pt-BR": 'Uma função para configurar',
                             "ru": 'Функция для настройки'
                         })
-                        .addChoices(
-                            { name: '🧾 Your data', value: 'data' },
-                            { name: '👻 Ghostmode', value: '0' },
-                            { name: '🔔 DM notifications', value: '1' },
-                            { name: '🏆 Ranking', value: '2' },
-                            { name: '🔊 Voice channels', value: 'voice_channels' },
-                            { name: '🕶 Public badges', value: '3' },
-                            { name: '🌩 Weather summary', value: '4' },
-                            { name: '🌐 Global tasks', value: '5' },
-                            { name: '💬 Compact mode', value: '6' },
-                            { name: '🌎 Cached Servers', value: '7' },
-                        )))
+                        .addChoices(...PERSONAL_CHOICES)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName("guild")
@@ -91,30 +118,7 @@ module.exports = {
                             "pt-BR": 'Uma função para configurar',
                             "ru": 'Функция для настройки'
                         })
-                        .addChoices(
-                            { name: '🧾 Guild data', value: 'data' },
-                            { name: '📜 Event log', value: 'logger' },
-                            { name: '📜 Event log Configs', value: 'logger.1' },
-                            { name: '💀 Death note', value: 'logger.2' },
-                            { name: '🛑 Warns', value: 'warns' },
-                            { name: '🛑 Warns Pings', value: 'warns.1' },
-                            { name: '🛑 Warns Configs', value: 'warns.2' },
-                            { name: '👑 Hierarchy Warns', value: 'hierarchy_warns.0' },
-                            { name: '📛 Anti-Spam', value: 'anti_spam' },
-                            { name: '📛 Anti-Spam Resources', value: 'anti_spam.1' },
-                            { name: '📛 Anti-Spam Configs', value: 'anti_spam.2' },
-                            { name: '📡 Network', value: 'network' },
-                            { name: '📡 Network Configs', value: 'network.1' },
-                            { name: '💂 External reports', value: 'external_reports' },
-                            { name: '💂 External reports Configs', value: 'external_reports.2' },
-                            { name: '🔨 AutoBan', value: 'external_reports.1' },
-                            { name: '🏆 Guild ranking', value: 'ranking' },
-                            { name: '🎮 Free Games ad', value: 'free_games' },
-                            { name: '⌚ Timed roles', value: 'timed_roles' },
-                            { name: '💂 In-server reports', value: 'tickets' },
-                            { name: '🔗 Tracked Invitations', value: 'tracked_invites' },
-                            { name: '🔊 Voice channels', value: 'voice_channels' }
-                        )))
+                        .addChoices(...GUILD_CHOICES)))
         .setContexts(InteractionContextType.Guild),
     async execute({ client, user, interaction }) {
 

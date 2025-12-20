@@ -1,5 +1,28 @@
 const { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js')
 
+const TAB_CHOICES = [
+    { name: '📜 Event log', value: 'log' },
+    { name: '💀 Death note', value: 'death_note' },
+    { name: '📛 Anti-Spam', value: 'spam' },
+    { name: '🛑 Warn', value: 'warn' },
+    { name: '📻 External reports', value: 'report' },
+    { name: '⌚ Timed roles', value: 'timed_roles' },
+    { name: '💬 Tickets', value: 'ticket' },
+    { name: '🔊 Voice channels', value: 'voice_channels' }
+]
+
+const LANGUAGE_CHOICES = [
+    { name: '🏴 Alonsês', value: 'pt-al' },
+    { name: '🇩🇪 Deutsch', value: 'de-de' },
+    { name: '🇺🇸 English', value: 'en-us' },
+    { name: '🇪🇸 Español', value: 'es-es' },
+    { name: '🇫🇷 Français', value: 'fr-fr' },
+    { name: '🔆 Hopês', value: 'pt-hp' },
+    { name: '🇮🇹 Italiano', value: 'it-it' },
+    { name: '🇧🇷 Português', value: 'pt-br' },
+    { name: '🇷🇺 Русский', value: 'ru-ru' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("conf")
@@ -34,16 +57,7 @@ module.exports = {
                             "pt-BR": 'Escolha uma operação',
                             "ru": 'Выберите операцию'
                         })
-                        .addChoices(
-                            { name: '📜 Event log', value: 'log' },
-                            { name: '💀 Death note', value: 'death_note' },
-                            { name: '📛 Anti-Spam', value: 'spam' },
-                            { name: '🛑 Warn', value: 'warn' },
-                            { name: '📻 External reports', value: 'report' },
-                            { name: '⌚ Timed roles', value: 'timed_roles' },
-                            { name: '💬 Tickets', value: 'ticket' },
-                            { name: '🔊 Voice channels', value: 'voice_channels' }
-                        )
+                        .addChoices(...TAB_CHOICES)
                         .setRequired(true))
                 .addChannelOption(option =>
                     option.setName("value")
@@ -94,17 +108,7 @@ module.exports = {
                             "pt-BR": 'O idioma que será utilizado',
                             "ru": 'Язык, который будет использоваться'
                         })
-                        .addChoices(
-                            { name: '🏴 Alonsês', value: 'pt-al' },
-                            { name: '🇩🇪 Deutsch', value: 'de-de' },
-                            { name: '🇺🇸 English', value: 'en-us' },
-                            { name: '🇪🇸 Español', value: 'es-es' },
-                            { name: '🇫🇷 Français', value: 'fr-fr' },
-                            { name: '🔆 Hopês', value: 'pt-hp' },
-                            { name: '🇮🇹 Italiano', value: 'it-it' },
-                            { name: '🇧🇷 Português', value: 'pt-br' },
-                            { name: '🇷🇺 Русский', value: 'ru-ru' }
-                        )
+                        .addChoices(...LANGUAGE_CHOICES)
                         .setRequired(true)))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
         .setContexts(InteractionContextType.Guild),

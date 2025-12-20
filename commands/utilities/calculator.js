@@ -1,5 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+const OPERATION_CHOICES = [
+    { name: '🕛 Ray', value: '0' },
+    { name: '🚫 Diameter', value: '1' },
+    { name: '⭕ Perimeter', value: '2' },
+    { name: '⚪ Area', value: '3' }
+]
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("calculator")
@@ -91,12 +98,7 @@ module.exports = {
                             "pt-BR": 'O tipo da sua entrada',
                             "ru": 'тип ввода'
                         })
-                        .addChoices(
-                            { name: '🕛 Ray', value: '0' },
-                            { name: '🚫 Diameter', value: '1' },
-                            { name: '⭕ Perimeter', value: '2' },
-                            { name: '⚪ Area', value: '3' }
-                        )
+                        .addChoices(...OPERATION_CHOICES)
                         .setRequired(true))
                 .addNumberOption(option =>
                     option.setName("value")
