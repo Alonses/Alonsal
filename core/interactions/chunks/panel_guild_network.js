@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
     }
 
     Object.keys(guild.network).forEach(evento => {
-        if (evento !== "link" && evento !== "channel") {
+        if (evento.includes("member_")) {
             if (guild.network[evento])
                 eventos.ativos++ // Apenas eventos ativos
 

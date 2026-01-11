@@ -61,7 +61,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         const eventos = []
 
         Object.keys(guild.network).forEach(evento => {
-            if (evento !== "link" && evento !== "channel")
+            if (evento.includes("member_"))
                 eventos.push({ type: evento, status: guild.network[evento] })
         })
 
