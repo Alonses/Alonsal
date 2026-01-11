@@ -87,14 +87,14 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         await interaction.deferUpdate({ flags: "Ephemeral" })
 
-        // Listando todos os servidores que o usuário é moderador
+        // Listando todos os servidores onde o usuário é moderador
         // Selecionando os servidores para vincular ao network
         const permissions = [PermissionsBitField.Flags.BanMembers, PermissionsBitField.Flags.ModerateMembers]
         const guilds = await client.execute("getMemberGuildsByPermissions", { interaction, user, permissions })
 
         if (guilds.length < 1)
             return interaction.editReply({
-                content: client.tls.phrase(user, "mode.network.sem_servidores"),
+                content: client.tls.phrase(user, "mode.network.sem_servidores", 7),
                 flags: "Ephemeral"
             })
 

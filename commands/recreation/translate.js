@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
 
-const CONVERT_CHOICES = [
+const CONVERTER_CHOICES = [
     { name: '1️⃣ binary', value: 'binary' },
     { name: '📻 morse', value: 'morse' },
     { name: '🐱 hieroglyphics', value: 'hieroglyphics' },
@@ -52,7 +52,7 @@ module.exports = {
                     "pt-BR": 'Escolha uma operação',
                     "ru": 'Выберите операцию'
                 })
-                .addChoices(...CONVERT_CHOICES)
+                .addChoices(...CONVERTER_CHOICES)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName("text")

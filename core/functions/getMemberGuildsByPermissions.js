@@ -1,4 +1,4 @@
-const { listAllUserGuilds, registerUserGuild } = require("../database/schemas/User_guilds")
+const { listAllUserGuilds, registerUserGuild, dropUserGuild } = require("../database/schemas/User_guilds")
 
 module.exports = async ({ client, data }) => {
 
@@ -13,12 +13,16 @@ module.exports = async ({ client, data }) => {
 
     for await (let server of servidores) {
 
-        const guild = server.sid ? await client.guilds(server.sid) : server[1]
+        const guild = server.sid ? await client.guilds(client.decifer(server.sid)) : server[1]
 
         if (guild?.id) // verificando se o servidor possui os dados corretos
             if (guild.id !== interaction.guild.id) {
-                const membro_guild = await guild.members.fetch(user.uid)
-                    .catch(() => { return null })
+                const membro_guild = await guild.members.fetch(client.decifer(user.uid))
+                    .catch(() => {
+                        // Removendo o servidor vinculado ao usuário por não encontrá-lo
+                        dropUserGuild(user.uid, client.encrypt(guild.id))
+                        return null
+                    })
 
                 if (membro_guild) { // Listando as guilds que o usuário é moderador
                     if (membro_guild.permissions.has(permissions)) {
@@ -29,7 +33,7 @@ module.exports = async ({ client, data }) => {
                     }
 
                     // Registrando os servidores que o usuário faz parte
-                    registerUserGuild(user.uid, guild.id)
+                    registerUserGuild(user.uid, client.encrypt(guild.id))
                 }
             }
     }

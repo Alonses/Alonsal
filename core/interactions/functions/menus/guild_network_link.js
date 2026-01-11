@@ -39,17 +39,17 @@ module.exports = async ({ client, user, interaction }) => {
     }
 
     // Vinculando os servidores ao link do network
-    for (const guild of network.add) {
+    for (const internal_guild of network.add) {
 
         if (guildsNetwork < limite_network) {
 
-            guild.conf.network = true
-            guild.network.link = guild.network.link
-            await guild.save()
+            internal_guild.conf.network = true
+            internal_guild.network.link = guild.network.link
+            await internal_guild.save()
 
             guildsNetwork++
 
-        } else networkLotado.push((await client.guilds(guild.sid))?.name)
+        } else networkLotado.push((await client.guilds(internal_guild.sid))?.name)
     }
 
     // Redirecionando o evento

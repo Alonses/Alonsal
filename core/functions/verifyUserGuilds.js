@@ -15,7 +15,7 @@ module.exports = async ({ client, data }) => {
             .catch(() => { return null })
 
         if (membro_guild) { // Registrando os servidores que o usuário faz parte
-            registerUserGuild(id_alvo, guild.id)
+            registerUserGuild(user.uid, client.encrypt(guild.id))
             qtd_servidores++
         }
     }
