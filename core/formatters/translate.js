@@ -110,7 +110,7 @@ function translate(alvo, target, replace) {
     if (Array.isArray(phrase)) // Verifica se não há mensagens diferentes para o mesmo retorno
         phrase = phrase[Math.floor((phrase.length - 1) * Math.random())]
 
-    if (alvo.misc?.second_lang) // Corrigindo a tradução para o idioma secundário ativo
+    if (alvo?.misc?.second_lang) // Corrigindo a tradução para o idioma secundário ativo
         phrase = ajusta_traducao(alvo.misc.second_lang, phrase)
 
     if (phrase && phrase.includes("auto_repl")) // Substitui automaticamente os valores caso haja replaces inclusos na string
