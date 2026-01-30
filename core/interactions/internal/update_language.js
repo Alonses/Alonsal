@@ -41,7 +41,10 @@ module.exports = async ({ client, interaction }) => {
                             .then(res => {
                                 writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res))
                             })
-                            .catch(() => {
+                            .catch((err) => {
+
+                                client.error(err, "Alondioma")
+
                                 return interaction.editReply({
                                     content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\``,
                                     flags: "Ephemeral"

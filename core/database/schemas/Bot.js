@@ -38,6 +38,7 @@ const schema = new mongoose.Schema({
         daily_announce: { type: Boolean, default: false },
         logger: { type: Boolean, default: true },
         guild_timeout: { type: Boolean, default: false },
+        guild_joins: { type: Boolean, default: false },
         relatorio: { type: Boolean, default: true }
     }
 })

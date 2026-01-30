@@ -10,6 +10,12 @@ module.exports = async ({ client, guild }) => {
     // Desligando as funções do servidor
     await disableGuildFeatures(client, guild.id)
 
+    // Verificando qual usuário mais convidou o bot
+    verifyDynamicBadge(client, "hoster", badges.HOSTER)
+
+    // Verificando se o bot deve notificar ao sair de servidores
+    if (!bot.x.guild_joins) return
+
     const embed = client.create_embed({
         title: "> 🔴 Server update",
         color: "vermelho",
@@ -21,6 +27,4 @@ module.exports = async ({ client, guild }) => {
         id_canal: process.env.channel_server,
         conteudo: { embeds: [embed] }
     })
-
-    verifyDynamicBadge(client, "hoster", badges.HOSTER) // Verificando qual usuário mais convidou o bot
 }

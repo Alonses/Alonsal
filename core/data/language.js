@@ -49,10 +49,15 @@ async function loadAll(client) {
                             fetch(idioma.download_url)
                                 .then(res => res.json())
                                 .then(res => { writeFileSync(`./files/languages/${idioma.name}`, JSON.stringify(res)) })
-                                .catch(() => client.execute("notify", {
-                                    id_canal: process.env.channel_feeds,
-                                    conteudo: { content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\`` }
-                                }))
+                                .catch((err) => {
+
+                                    client.error(err, "Alondioma")
+
+                                    client.execute("notify", {
+                                        id_canal: process.env.channel_feeds,
+                                        conteudo: { content: `${client.emoji("mc_wax")} | Houve um problema ao sincronizar a tradução com o repositório do \`Alondioma\`` }
+                                    })
+                                })
                         }
                     })
             }

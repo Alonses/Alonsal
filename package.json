@@ -17,7 +17,7 @@
     "country-iso-2-to-3": "^1.1.0",
     "discord.js": "^14.21.0",
     "dotenv": "^16.0.3",
-    "ffmpeg-static": "^5.2.0",
+    "ffmpeg-static": "^5.3.0",
     "i18n-country-code": "^1.0.1",
     "mathjs": "^11.5.0",
     "mongoose": "^8.19.1",
