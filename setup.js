@@ -18,7 +18,7 @@ if (update_commands) {
 // Validating if the requested environment variables exist and returning a default value if they don't
 function getEnvVar(name) {
     if (!process.env[name]) {
-        console.warn(`🛑 | Variável de ambiente '${name}' não definida. Não é possível iniciar sem esse valor informado.`)
+        console.warn(`🛑 | Variável de ambiente '${name}' não definida. Não é possível iniciar sem esse valor definido.`)
         process.exit(1)
     }
 

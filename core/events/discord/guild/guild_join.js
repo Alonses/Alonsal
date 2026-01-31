@@ -60,7 +60,7 @@ module.exports = async ({ client, guild }) => {
     }
 
     // Verificando se o bot deve notificar ao entrar em servidores
-    if (!bot.x.guild_joins) return
+    if (!client.x.guild_joins) return
 
     const embed = client.create_embed({
         title: "> 🟢 Server update",
