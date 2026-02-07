@@ -140,7 +140,7 @@ async function verificar_ausencia_canal(client, channel_id, new_channel, guild, 
 
             // Removendo o canal do cache e do banco de dados
             client.cached.voice_channels.delete(`${voice_channel.cid}.${voice_channel.sid}`)
-            dropVoiceChannel(voice_channel.uid, voice_channel.sid)
+            dropVoiceChannel(voice_channel.uid, voice_channel.cid)
 
             // Alterando o nome do canal para informar a exclusão
             await guild_channel.edit({

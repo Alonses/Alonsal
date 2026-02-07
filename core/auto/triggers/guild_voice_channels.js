@@ -25,10 +25,13 @@ async function verifica_canais_dinamicos(client) {
             })
 
             setTimeout(() => {
-                dropVoiceChannel(canal.uid, canal.sid)
+                dropVoiceChannel(canal.uid, canal.cid)
                 guild_channel.delete()
             }, 5000)
         }
+
+        // Canal não existe mais, porém ainda está registrado no banco de dados
+        if (!guild_channel) dropVoiceChannel(canal.uid, canal.cid)
     })
 }
 

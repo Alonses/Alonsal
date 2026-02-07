@@ -41,10 +41,10 @@ async function registryVoiceChannel(uid, sid) {
     return model.findOne({ uid: uid, sid: sid })
 }
 
-async function dropVoiceChannel(uid, sid) {
+async function dropVoiceChannel(uid, cid) {
     await model.findOneAndDelete({
         uid: uid,
-        sid: sid
+        cid: cid
     })
 }
 
