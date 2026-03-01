@@ -7,7 +7,7 @@ module.exports = async ({ client, user, interaction }) => {
     ], interaction, user)
 
     const embed = client.create_embed({
-        title: "inic.ping.titulo",
+        title: { tls: "inic.ping.titulo" },
         image: "https://i.imgur.com/N8AFVTH.png",
         description: `${client.tls.phrase(user, "inic.ping.boas_vindas_tutorial")}\n\n${client.defaultEmoji("earth")} | ${client.tls.phrase(user, "inic.ping.idioma_dica")}`
     }, user)

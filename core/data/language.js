@@ -38,7 +38,7 @@ async function loadAll(client) {
                     })
                 else console.log(`🈂️ | Pacote de traduções do ${client.username()} sincronizado com o commit ${cod_commit}`)
 
-                fetch("https://api.github.com/repos/Alonses/Alondioma/contents/")
+                fetch("https://api.github.com/repos/Alonses/Alondioma/contents/bot/")
                     .then(res => res.json())
                     .then(content => {
                         for (let i = 0; i < content.length; i++) {

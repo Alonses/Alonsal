@@ -47,7 +47,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         if (guild.warn.notify_exclusion) { // Embed de aviso que o membro teve uma advertência apagada
             const embed = client.create_embed({
-                title: "mode.anotacoes.reiniciadas",
+                title: { tls: "mode.anotacoes.reiniciadas" },
                 color: "salmao",
                 description: { tls: "mode.anotacoes.reinciadas_descricao", replace: id_alvo },
                 fields: [
