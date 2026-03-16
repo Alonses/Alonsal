@@ -9,13 +9,14 @@ function slash_commands(client) {
 
     client.cached.timestamp = client.execute("timestamp")
     client.discord.commands = new Collection()
+    const ignored_folders = ["experimental", "legacy"]
 
     // Linkando os comandos slash disponíveis
     if (!client.x.delete_slash) {
         for (const folder of readdirSync(`${__dirname}/commands/`)) {
             for (const file of readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'))) {
 
-                if (folder !== "experimental" || client.x.modo_develop) {
+                if (!ignored_folders.includes(folder) || client.x.modo_develop) {
                     const command = require(`./commands/${folder}/${file}`)
 
                     if (!client.x.modo_develop)
@@ -35,7 +36,7 @@ function slash_commands(client) {
             // Comandos do menu de contexto
             if (existsSync(`${__dirname}/commands/${folder}/context`)) {
                 for (const file of readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
-                    if (folder !== "experimental" || client.x.modo_develop) {
+                    if (!ignored_folders.includes(folder) || client.x.modo_develop) {
                         const command = require(`./commands/${folder}/context/${file}`)
 
                         if ('menu_data' in command && 'menu' in command)
@@ -98,7 +99,7 @@ function slash_commands(client) {
                 // Comandos do menu de contexto
                 if (existsSync(`${__dirname}/commands/${folder}/context`)) {
                     for (const file of readdirSync(`${__dirname}/commands/${folder}/context`).filter(file => file.endsWith('.js'))) {
-                        if (folder !== "experimental" || client.x.modo_develop) {
+                        if (!ignored_folders.includes(folder) || client.x.modo_develop) {
                             const command = require(`./commands/${folder}/context/${file}`)
 
                             if ('menu_data' in command && 'menu' in command)
