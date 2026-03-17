@@ -36,9 +36,12 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
             }
         ]
     }).then(async new_channel => {
-        client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel.id)
+        client.tls.editReply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel.id)
 
+        // Notificando o usuário no novo canal de denúncias
         channel.cid = client.encrypt(new_channel.id)
         channel.save()
-    }).catch((err) => console.error(err), client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
+
+        return client.execute("notify", { id_canal: new_channel.id, conteudo: { content: client.tls.phrase(user, "mode.denuncia.canal_iniciado", 25, interaction.user.id) } })
+    }).catch(() => client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
 }
