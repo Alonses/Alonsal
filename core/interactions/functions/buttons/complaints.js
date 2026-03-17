@@ -48,7 +48,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
         // Retornando ao botão para poder solicitar exclusão do canal
         const row = client.create_buttons([
-            { id: "complaints", name: { tls: "menu.botoes.excluir_canal" }, type: 3, emoji: client.emoji(13), data: `0|${channel}.${guild}` }
+            { id: "complaints", name: { tls: "manu.guild_data.remover_canal" }, type: 3, emoji: client.emoji(13), data: `0|${channel}.${guild}` }
         ], interaction, user)
 
         client.reply(interaction, { components: [row] })
