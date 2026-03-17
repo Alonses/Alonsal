@@ -1,4 +1,5 @@
 const { PermissionsBitField } = require("discord.js")
+const { getTicket } = require("../../../database/schemas/User_tickets")
 
 module.exports = async ({ client, user, interaction, dados }) => {
 
@@ -7,12 +8,13 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const guild = dados.split(".")[3]
 
     // Verificando as permissões do membro que ativou o botão de exclusão no canal de denuncias
-    if (!await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageChannels] }))
+    if (!await client.execute("permissions", { interaction, id_user: interaction.user.id, permissions: [PermissionsBitField.Flags.ManageChannels] }) && operacao !== 3)
         return client.tls.reply(interaction, user, "mode.denuncia.sem_permissao", true, 3)
 
     // 0 -> Botões de confirmação para excluir o canal de denúncia
     // 1 -> Confirma exclusão
     // 2 -> Cancela exclusão
+    // 3 -> Botão in-chat para inciar um canal de denúncias
 
     if (operacao === 0) {
 
@@ -42,7 +44,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             guild_channel.delete()
         }, 10000)
 
-    } else {
+    } else if (operacao === 2) {
 
         // Retornando ao botão para poder solicitar exclusão do canal
         const row = client.create_buttons([
@@ -50,5 +52,15 @@ module.exports = async ({ client, user, interaction, dados }) => {
         ], interaction, user)
 
         client.reply(interaction, { components: [row] })
+
+    } else if (operacao === 3) {
+
+        // Botão para iniciar um canal de denuncia novo
+        const channel = await getTicket(client.encrypt(interaction.guild.id), client.encrypt(interaction.user.id))
+
+        // Buscando os dados do canal no servidor
+        const canal_servidor = interaction.guild.channels.cache.find(c => c.id === client.decifer(channel.cid))
+
+        return require("../../../../commands/moderation/subcommands/complaint_start")({ client, user, interaction, channel, canal_servidor })
     }
 }

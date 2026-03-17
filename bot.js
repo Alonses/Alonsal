@@ -125,8 +125,8 @@ client.discord.on("interactionCreate", async interaction => {
 	if (interaction.guild) client.execute("updateGuildIddleTimestamp", { sid: interaction.guild.id })
 
 	// Prevents the bot from interacting with other members when in develop mode
-	// if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
-	// 	return client.tls.reply(interaction, user, "inic.error.testes", true, 60)
+	if (!process.env.owner_id.includes(interaction.user.id) && client.x.modo_develop)
+		return client.tls.reply(interaction, user, "inic.error.testes", true, 60)
 
 	if (user.conf?.banned || false) return // Ignoring users
 
