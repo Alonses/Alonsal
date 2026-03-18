@@ -19,12 +19,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     // 10 -> Confirmar a atribuição de cargo para o membro
 
-    const cargo = await getTimedRoleAssigner(user_alvo, interaction.guild.id)
+    const cargo = await getTimedRoleAssigner(client.encrypt(user_alvo), client.encrypt(interaction.guild.id))
 
     if (operacao === 0) {
 
         // Excluindo o cargo salvo em cache para configuração
-        removeCachedUserRole(user_alvo, interaction.guild.id)
+        removeCachedUserRole(client.encrypt(user_alvo), client.encrypt(interaction.guild.id))
 
         return client.reply(interaction, {
             content: client.tls.phrase(user, "menu.botoes.operacao_cancelada", 11),
@@ -59,7 +59,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             reback: "browse_button.role_timed_assigner",
             operation: operacao,
             submenu: `${user_alvo}.${operacao}`,
-            values: await client.execute("getGuildRoles", { interaction, ignore_role: cargo.rid })
+            values: await client.execute("getGuildRoles", { interaction, ignore_role: client.decifer(cargo.rid) })
         }
 
         // Subtrai uma página do total ( em casos de exclusão de itens e pagina em cache )
@@ -105,21 +105,21 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
     if (operacao === 10) { // Atribuindo o cargo selecionado ao membro
 
-        // Cargo informado possui permissões moderativas
-        if (!await client.execute("rolePermissions", { interaction, id_role: cargo.rid, permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] }))
+        // Verificando se o cargo informado não possui permissões moderativas
+        if (await client.execute("rolePermissions", { interaction, id_role: client.decifer(cargo.rid), permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_moderativo", 7),
                 flags: "Ephemeral"
             })
 
         // Membro já possui o cargo mencionado
-        if (await client.execute("hasRole", { interaction, id_role: cargo.rid, id_user: cargo.uid }))
+        if (await client.execute("hasRole", { interaction, id_role: client.decifer(cargo.rid), id_user: user_alvo }))
             return interaction.update({
                 content: client.tls.phrase(user, "mode.timed_roles.cargo_ja_concedido", 7),
                 flags: "Ephemeral"
             })
 
-        const role = client.getGuildRole(interaction, cargo.rid)
+        const role = client.getGuildRole(interaction, client.decifer(cargo.rid))
         const bot_member = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
         if (role.position > bot_member.roles.highest.position)
@@ -128,8 +128,8 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 flags: "Ephemeral"
             })
 
-        // Adicionado o cargo temporário ao membro
-        const membro_guild = await client.execute("getMemberGuild", { interaction, id_user: cargo.uid })
+        // Adicionando o cargo temporário ao membro
+        const membro_guild = await client.execute("getMemberGuild", { interaction, id_user: user_alvo })
         membro_guild.roles.add(role).then(async () => {
 
             // Atualizando os status do cargo para poder cronometrar
@@ -141,7 +141,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             const guild = await client.getGuild(interaction.guild.id)
 
             if (cargo.relatory)
-                motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
+                motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${client.decifer(cargo.relatory)}\`\`\``
 
             const embed = client.create_embed({
                 title: { tls: "mode.timed_roles.titulo_cargo_concedido" },
@@ -150,7 +150,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 fields: [
                     {
                         name: `${client.defaultEmoji("playing")} **${client.tls.phrase(guild, "mode.anuncio.cargo")}**`,
-                        value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${cargo.rid}>`,
+                        value: `${client.emoji("mc_name_tag")} \`${role.name}\`\n<@&${client.decifer(cargo.rid)}>`,
                         inline: true
                     },
                     {
@@ -160,7 +160,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                     },
                     {
                         name: `${client.defaultEmoji("person")} **${client.tls.phrase(guild, "mode.warn.moderador")}**`,
-                        value: `${client.emoji("icon_id")} \`${cargo.assigner}\`\n${client.emoji("mc_name_tag")} \`${cargo.assigner_nick}\`\n( <@${cargo.assigner}> )`,
+                        value: `${client.emoji("icon_id")} \`${client.decifer(cargo.assigner)}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(cargo.assigner_nick)}\`\n( <@${client.decifer(cargo.assigner)}> )`,
                         inline: true
                     }
                 ]
@@ -174,7 +174,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
             atualiza_roles()
 
             return interaction.update({
-                content: client.tls.phrase(user, "mode.timed_role.cargo_concedido", 10, [cargo.rid, cargo.uid, cargo.timestamp]),
+                content: client.tls.phrase(user, "mode.timed_role.cargo_concedido", 10, [client.decifer(cargo.rid), user_alvo, cargo.timestamp]),
                 embeds: [],
                 components: [],
                 flags: "Ephemeral"

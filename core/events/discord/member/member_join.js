@@ -1,10 +1,16 @@
+const { syncTimedRole } = require('../../../functions/syncTimedRole')
 const { verifyUserReports } = require('../../../database/schemas/User_reports')
 const { registerUserGuild } = require('../../../database/schemas/User_guilds')
+const { listAllUserGuildRoles } = require('../../../database/schemas/User_roles')
 
 module.exports = async (client, dados) => {
 
     const guild = await client.getGuild(dados.guild.id)
     const user = await client.execute("getUser", { id_user: dados.user.id })
+
+    // Verificando se o novo usuário possui cargos temporários atribuidos no servidor
+    const user_roles = await listAllUserGuildRoles(client.encrypt(dados.user.id), client.encrypt(dados.guild.id))
+    if (user_roles?.length > 0) syncTimedRole({ client, dados, user_roles })
 
     if (user.conf?.cached_guilds) // Salvando o novo servidor ao usuário
         await registerUserGuild(user.uid, dados.guild.id)

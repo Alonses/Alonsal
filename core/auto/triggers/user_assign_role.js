@@ -57,10 +57,10 @@ module.exports = async ({ client, guild, interaction, id_user, dados, acionador,
                         cargo.assigner = client.encrypt(client.id())
                         cargo.assigner_nick = client.encrypt(client.username())
 
-                        cargo.relatory = acionador === "spam" ? client.tls.phrase(guild, "mode.timed_roles.rodape_spam", null, dados.rank + 1) : client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1)
+                        cargo.relatory = client.encrypt(acionador === "spam" ? client.tls.phrase(guild, "mode.timed_roles.rodape_spam", null, dados.rank + 1) : client.tls.phrase(guild, "mode.timed_roles.rodape_warn", null, indice_warn + 1))
                         cargo.save()
 
-                        const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${cargo.relatory}\`\`\``
+                        const motivo = `\n\`\`\`fix\n💂‍♂️ ${client.tls.phrase(guild, "mode.timed_roles.nota_moderador")}\n\n${client.decifer(cargo.relatory)}\`\`\``
 
                         const embed_timed_role = client.create_embed({
                             title: { tls: "mode.timed_roles.titulo_cargo_concedido" },
@@ -90,6 +90,7 @@ module.exports = async ({ client, guild, interaction, id_user, dados, acionador,
                             id_canal: acionador === "spam" ? guild.spam.channel : guild.warn.channel,
                             conteudo: { embeds: [embed_timed_role] }
                         })
+
                         atualiza_roles()
                     }
                 }

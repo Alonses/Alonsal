@@ -8,7 +8,8 @@ module.exports = async ({ client, user, interaction }) => {
     if (!await client.execute("permissions", { interaction, id_user: client.id(), permissions: [PermissionsBitField.Flags.ManageRoles, PermissionsBitField.Flags.ModerateMembers] }))
         return client.tls.reply(interaction, user, "mode.roles.sem_permissao", true, 7)
 
-    if (!await client.execute("rolePermissions", { interaction, id_role: interaction.options.getRole("role").id, permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] })) // Cargo informado não é válido
+    // Verificando se o cargo informado não possui permissões moderativas
+    if (await client.execute("rolePermissions", { interaction, id_role: interaction.options.getRole("role").id, permissions: [PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers, PermissionsBitField.Flags.Administrator] }))
         return interaction.reply({
             content: ":passport_control: | Selecione um cargo que não contenha permissões de moderação e não seja gerenciado pelo discord (como por impulsos).",
             flags: "Ephemeral"
@@ -40,20 +41,20 @@ module.exports = async ({ client, user, interaction }) => {
         })
 
     const user_alvo = interaction.options.getUser("user")
-    const role = await getUserRole(user_alvo.id, interaction.guild.id, client.execute("timestamp"))
+    const role = await getUserRole(client.encrypt(user_alvo.id), client.encrypt(interaction.guild.id), client.execute("timestamp"))
 
     if (guild.timed_roles.timeout) // Sincroniza o cargo temporário com o tempo minimo do servidor
         role.timeout = guild.timed_roles.timeout
 
-    role.rid = interaction.options.getRole("role").id
-    role.nick = user_alvo.username
+    role.rid = client.encrypt(interaction.options.getRole("role").id)
+    role.nick = client.encrypt(user_alvo.username)
 
     // Salvando dados do moderador que acionou o comando
-    role.assigner = interaction.user.id
-    role.assigner_nick = interaction.user.username
+    role.assigner = client.encrypt(interaction.user.id)
+    role.assigner_nick = client.encrypt(interaction.user.username)
 
     if (interaction.options?.getString("reason"))
-        role.relatory = interaction.options.getString("reason")
+        role.relatory = client.encrypt(interaction.options.getString("reason"))
 
     await role.save()
 

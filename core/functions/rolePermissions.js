@@ -6,10 +6,10 @@ module.exports = async ({ client, data }) => {
 
     // Verificando se o cargo informado possui as permissões solicitadas
     for (let i = 0; i < permissions.length; i++)
-        if (cached_role.permissions.has(permissions[i])) return false
+        if (cached_role.permissions.has(permissions[i])) return true
 
     // Cargo everyone ou cargo proprietário do discord selecionado
     if (cached_role.id === interaction.guild.id || !cached_role.editable) return false
 
-    return true
+    return false
 }
