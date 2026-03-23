@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, InteractionContextType } = require('discord.js')
 
-const { getTicket } = require('../../core/database/schemas/User_tickets')
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("complaint")
@@ -61,12 +59,12 @@ module.exports = {
         if (!guild.conf.tickets)
             return client.tls.reply(interaction, user, "mode.denuncia.desativado", true, 3)
 
-        const channel = await getTicket(client.encrypt(interaction.guild.id), client.encrypt(interaction.user.id))
-
-        // Buscando os dados do canal no servidor
-        const canal_servidor = interaction.guild.channels.cache.find(c => c.id === client.decifer(channel.cid))
+        if (interaction.options.getSubcommand() === "start") {
+            const dados = "0.3.0.0" // Redirecionando o evento
+            return require("../../core/interactions/functions/buttons/complaints")({ client, user, interaction, dados })
+        }
 
         // Solicitando a função e executando
-        require(`./subcommands/complaint_${interaction.options.getSubcommand()}`)({ client, user, interaction, channel, canal_servidor })
+        require(`./subcommands/complaint_${interaction.options.getSubcommand()}`)({ client, user, interaction })
     }
 }

@@ -4,7 +4,7 @@ const { getUserStrikes } = require("../database/schemas/User_strikes")
 const { listAllGuildStrikes, getGuildStrike } = require("../database/schemas/Guild_strikes")
 const { registerSuspiciousLink, verifySuspiciousLink } = require("../database/schemas/Spam_links")
 
-const { spamTimeoutMap } = require("../formatters/patterns/timeout")
+const { spamTimeoutMap, defaultEraser } = require("../formatters/patterns/timeout")
 const { links_oficiais } = require("../formatters/patterns/anti_spam")
 
 const usersmap = new Map(), usersrole = new Map(), nerf_map = new Map()
@@ -167,6 +167,10 @@ async function nerfa_spam({ client, message, guild, suspect_link }) {
 
     // Strike não possui penalidade, definindo para apenas notificar
     if (!strike_aplicado?.action) strike_aplicado = { action: "member_warn" }
+
+    // Expulsão de membros novatos está ativa e o membro está qualificado para ser expulso por não ter muito tempo no servidor
+    if (guild.spam.auto_kick.status && (client.execute("timestamp") - Math.floor(user_guild.joinedTimestamp / 1000)) < defaultEraser[guild.spam.auto_kick.timeout])
+        strike_aplicado.action = "member_kick"
 
     // Redirecionando o evento para as penalidades e avisos aos moderadores
     await require(`./spam/${strike_aplicado.action.replace("_2", "")}`)({ client, message, guild, strike_aplicado, indice_matriz, mensagens_spam, user_messages, user, user_guild, guild_bot, tempo_timeout })

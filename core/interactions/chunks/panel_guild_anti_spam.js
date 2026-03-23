@@ -2,6 +2,8 @@ const { PermissionsBitField } = require("discord.js")
 
 const { listAllGuildStrikes } = require("../../database/schemas/Guild_strikes")
 
+const { defaultEraser } = require("../../formatters/patterns/timeout")
+
 module.exports = async ({ client, user, interaction, pagina_guia }) => {
 
     const pagina = pagina_guia || 0
@@ -53,6 +55,11 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
                 inline: true
             },
             {
+                name: `${client.emoji(54)} ${client.execute("button_emoji", guild?.spam.auto_kick.status)} **${client.tls.phrase(user, "mode.spam.expulsar_novatos")}**`,
+                value: guild.spam.auto_kick.status ? `\`${client.defaultEmoji("time")} Se entrou no servidor antes de ${client.tls.phrase(user, `menu.times.${defaultEraser[guild.spam.auto_kick.timeout]}`)}\`` : `\`${client.tls.phrase(user, "status.desativado")}\``,
+                inline: false
+            },
+            {
                 name: `${client.emoji(60)} **${client.tls.phrase(user, "mode.spam.tipo_varredura")}**`,
                 value: guild.spam.scanner.links ? `\`${client.tls.phrase(user, "mode.spam.apenas_links")}\`` : `\`${client.tls.phrase(user, "mode.spam.qualquer_entrada")}\``,
                 inline: false
@@ -95,7 +102,9 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     else if (pagina === 1) // Página de recursos do Anti-spam ( Links suspeitos, punição de adms )
         botoes.push(
             { id: "guild_anti_spam_button", name: { tls: "mode.spam.links_suspeitos" }, type: guild?.spam.suspicious_links, emoji: client.execute("button_emoji", guild?.spam.suspicious_links), data: "3", disabled: !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers) },
-            { id: "guild_anti_spam_button", name: { tls: "mode.spam.gerenciar_moderadores" }, type: guild?.spam.manage_mods, emoji: client.execute("button_emoji", guild?.spam.manage_mods), data: "8" }
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.gerenciar_moderadores" }, type: guild?.spam.manage_mods, emoji: client.execute("button_emoji", guild?.spam.manage_mods), data: "8" },
+            { id: "guild_anti_spam_button", name: { tls: "mode.spam.expulsar_novatos" }, type: guild?.spam.auto_kick.status, emoji: client.execute("button_emoji", guild?.spam.auto_kick.status), data: "20" },
+            { id: "guild_anti_spam_button", name: "Tempo no servidor", type: 0, emoji: client.defaultEmoji("time"), data: "21" }
         )
     else // Página de configurações do Anti-spam
         botoes.push(

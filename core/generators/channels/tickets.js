@@ -44,4 +44,5 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
 
         return client.execute("notify", { id_canal: new_channel.id, conteudo: { content: client.tls.phrase(user, "mode.denuncia.canal_iniciado", 25, interaction.user.id) } })
     }).catch(() => client.tls.reply(interaction, user, "mode.denuncia.erro_1", true, 4))
+
 }

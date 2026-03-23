@@ -100,6 +100,10 @@ const schema = new mongoose.Schema({
         channel: { type: String, default: null },
         scanner: {
             links: { type: Boolean, default: false }
+        },
+        auto_kick: {
+            status: { type: Boolean, default: false },
+            timeout: { type: Number, default: 4 }
         }
     },
     network: {

@@ -38,6 +38,10 @@ module.exports = async ({ client, channel }) => {
     if (guild.conf.voice_channels && registroAudita.executorId === client.id())
         tipo_canal += `\n\n⚡ ${client.tls.phrase(guild, "mode.logger.canal_dinamico")}\n${client.defaultEmoji("time")} ${client.tls.phrase(guild, "mode.logger.canal_dinamico_remocao", null, voiceChannelTimeout[guild.voice_channels.timeout])}`
 
+    // Verificando se o canal foi gerado por meio de um ticket
+    if (client.encrypt(channel?.parentId) === guild?.tickets?.category)
+        tipo_canal = `\n\n🎟️ ${client.tls.phrase(guild, "mode.logger.canal_ticket")}`
+
     const embed = client.create_embed({
         title: { tls: "mode.logger.canal_criado" },
         color: "turquesa",

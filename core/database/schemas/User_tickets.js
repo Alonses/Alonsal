@@ -25,6 +25,10 @@ async function getTicket(sid, uid) {
     })
 }
 
+async function verifyMemberTicket(sid, mid) {
+    return await model.exists({ sid: sid, mid: mid })
+}
+
 // Apaga o ticket de denúncia do servidor
 async function dropTicket(sid, uid) {
     await model.findOneAndDelete({
@@ -50,6 +54,7 @@ async function dropAllUserTickets(uid) {
 module.exports.User_tickets = model
 module.exports = {
     getTicket,
+    verifyMemberTicket,
     dropTicket,
     dropAllGuildTickets,
     dropAllUserTickets

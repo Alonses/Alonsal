@@ -3,6 +3,7 @@ const { ChannelType } = require('discord.js')
 const { listAllGuildStrikes, getGuildStrike } = require('../../../database/schemas/Guild_strikes')
 
 const { loggerMap } = require('../../../formatters/patterns/guild')
+const { defaultEraser } = require('../../../formatters/patterns/timeout')
 
 // 1 -> Ativar ou desativar o módulo anti-spam
 // 2 -> Ativar ou desativar os strikes
@@ -11,12 +12,16 @@ const { loggerMap } = require('../../../formatters/patterns/guild')
 // 8 -> Ativar ou desativar a punição de moderadores no servidor
 // 25 -> Altera o tipo de varredura do anti-spam
 
+// 20 -> Ativar ou desativar a expulsão de novatos
+// 21 -> Escolher tempo minimo para novatos serem expulsos
+
 const operations = {
     1: { action: "conf.spam", page: 0 },
     2: { action: "spam.strikes", page: 0 },
     3: { action: "spam.suspicious_links", page: 1 },
     7: { action: "spam.notify", page: 2 },
     8: { action: "spam.manage_mods", page: 1 },
+    20: { action: "spam.auto_kick.status", page: 1 },
     25: { action: "spam.scanner.links", page: 0 }
 }
 
@@ -151,6 +156,29 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
 
         return interaction.update({
             components: [client.create_menus({ interaction, user, data, pagina }), client.create_buttons(botoes, interaction, user)],
+            flags: "Ephemeral"
+        })
+
+    } else if (operacao === 21) {
+
+        // Escolhendo o tempo minimo para considerar um membro novato para expulsão no servidor
+        const valores = []
+        Object.keys(defaultEraser).forEach(key => { if (parseInt(key) !== guild.spam.auto_kick.timeout) valores.push(`${key}.${defaultEraser[key]}`) })
+
+        const data = {
+            title: { tls: "mode.spam.definir_tempo" },
+            pattern: "numbers",
+            alvo: "guild_spam_auto_kick_timeout",
+            submenu: operacao,
+            values: valores
+        }
+
+        let row = client.create_buttons([
+            { id: "return_button", name: { tls: "menu.botoes.retornar" }, type: 2, emoji: client.emoji(19), data: "panel_guild_anti_spam.1" }
+        ], interaction, user)
+
+        return interaction.update({
+            components: [client.create_menus({ interaction, user, data }), row],
             flags: "Ephemeral"
         })
     }
