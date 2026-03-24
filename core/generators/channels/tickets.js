@@ -14,6 +14,7 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
         return client.tls.reply(interaction, user, "mode.denuncia.canal_aberto", true, 48, client.decifer(channel.cid))
     }
 
+    await interaction.deferUpdate({ flags: "Ephemeral" })
     const guild = await client.getGuild(interaction.guild.id)
 
     // Criando o canal e atribuindo ele aos usuários especificos/ categoria escolhida
@@ -36,7 +37,12 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
             }
         ]
     }).then(async new_channel => {
-        client.tls.reply(interaction, user, "mode.denuncia.introducao", true, 7, new_channel.id)
+
+        interaction.editReply({
+            content: client.tls.phrase(user, "mode.denuncia.introducao", 7, new_channel.id),
+            components: [],
+            flags: "Ephemeral"
+        })
 
         // Notificando o usuário no novo canal de denúncias
         channel.cid = client.encrypt(new_channel.id)
