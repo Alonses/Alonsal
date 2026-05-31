@@ -24,10 +24,10 @@ async function servidores_inativos(client) {
 
     // Aviso sobre desconectamento enviado ao chat de feeds 
     if (lista_servidores.length > 0) {
-        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\`${!caso ? " considerado inativo" : ""}.`
+        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\`${!client.x.shutdown ? " considerado inativo" : ""}.`
 
         if (lista_servidores.length > 1)
-            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\`${!caso ? " considerados inativos" : ""}.`
+            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\`${!client.x.shutdown ? " considerados inativos" : ""}.`
 
         client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: texto } })
 
