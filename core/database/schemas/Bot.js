@@ -84,9 +84,26 @@ async function dropBot(bit) {
     })
 }
 
+async function drop_all_guilds(client, servers) {
+
+    // Desconecta o bot de todos os servidores informados
+    const guild = servers[0]
+
+    if (!client.x.guild_emojis.includes(guild.id))
+        await guild.leave()
+
+    servers.shift()
+
+    if (servers.length > 0)
+        setTimeout(() => {
+            drop_all_guilds(client, servers)
+        }, 1000)
+}
+
 module.exports.User = model
 module.exports = {
     getBot,
     dropBot,
-    dailyReset
+    dailyReset,
+    drop_all_guilds
 }

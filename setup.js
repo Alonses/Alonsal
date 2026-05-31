@@ -27,6 +27,7 @@ function getEnvVar(name) {
 
 const client_data = {
     sharding: 0,
+    shutdown: 1, // Desconecta de todos os servidores que não são considerados de configuração
     debug_mode: 0,
     daily_announce: 0,
     modo_develop,

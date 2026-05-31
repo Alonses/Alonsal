@@ -1,3 +1,4 @@
+const { drop_all_guilds } = require("../../database/schemas/Bot")
 const { listAllGuilds, dropGuild } = require("../../database/schemas/Guild")
 
 async function servidores_inativos(client) {
@@ -23,14 +24,17 @@ async function servidores_inativos(client) {
 
     // Aviso sobre desconectamento enviado ao chat de feeds 
     if (lista_servidores.length > 0) {
-        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\` considerado inativo.`
+        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\`${!caso ? " considerado inativo" : ""}.`
 
         if (lista_servidores.length > 1)
-            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\` considerados inativos.`
+            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\`${!caso ? " considerados inativos" : ""}.`
 
         client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: texto } })
 
-        disconnect_iddle_guilds(lista_servidores)
+        if (client.x.shutdown) // Desconecta de todos os servidores
+            drop_all_guilds(client, lista_servidores)
+        else // Desconecta apenas de servidores considerados inativos
+            disconnect_iddle_guilds(lista_servidores)
     }
 }
 
