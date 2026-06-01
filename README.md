@@ -100,10 +100,3 @@ Aqui vão nossos agradecimentos pelas pessoas por trás das funções utilizadas
 - [IntriguingTiles](https://github.com/IntriguingTiles/cleverbot-free) pelo pacote dedicado as conversações do cleverbot, usada pelo Alonsal para simular uma IA.
 
 Todos os direitos vão diretamente para eles por fornecerem conteúdos de forma pública e possibilitar o funcionamento do bot. Obrigado!
-
-<h2>✅ Teste agora mesmo! ✅</h2>
-
-Basta convidar o Alonsal para um servidor e voalá, todos os comandos estarão disponíveis para uso! <br>
-Para sugerir comandos, melhorias ou reportar bugs, utilize o comando `/mail`
-
-[Clique aqui](https://discord.com/oauth2/authorize?client_id=833349943539531806&scope=bot&permissions=2550136990) para convidar o Alonsal hoje mesmo e descobrir as maravilhas da Ceira™️ Solutions!
