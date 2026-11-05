@@ -1,7 +1,7 @@
 module.exports = async ({ client, user, interaction, dados }) => {
 
     const guild = await client.getGuild(interaction.guild.id)
-    guild.tickets.category = client.encrypt(dados)
+    guild.tickets.category = dados
 
     await guild.save()
 

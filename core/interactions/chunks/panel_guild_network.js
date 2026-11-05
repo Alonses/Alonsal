@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require("discord.js")
 
-const { getNetworkedGuilds } = require("../../database/schemas/Guild")
+const { getNetworkSids } = require("../../database/schemas/Guild")
 
 const { banMessageEraser } = require("../../formatters/patterns/timeout")
 
@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, pagina_guia, networkLotado 
     let retorno_aviso = "", ant_network = guild.conf.network
 
     // Permissões do bot no servidor
-    const servidores_link = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length : 0
+    const servidores_link = guild.network.link ? (await getNetworkSids(guild.network.link)).length : 0
     const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Verificando as permissões necessárias conforme os casos

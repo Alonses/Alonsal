@@ -1,6 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { operation_codes } = require('../../formatters/patterns/guild')
+const { getGuildConf } = require('../../database/schemas/Guild')
 
 // Funções sem guias de configuração ( inserir código da função )
 const direct_functions = [13]
@@ -101,7 +102,7 @@ module.exports = async ({ client, user, interaction, operador, pagina_guia }) =>
             }
         }
 
-    const guild = await client.getGuild(interaction.guild.id)
+    const guild = await getGuildConf(interaction.guild.id)
 
     const embed = client.create_embed({
         title: `${client.tls.phrase(user, "manu.painel.cabecalho_menu_servidor")} :globe_with_meridians:`,

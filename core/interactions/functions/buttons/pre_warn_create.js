@@ -44,7 +44,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Verificando se o membro já ultrapassou o número de anotações necessárias para cada advertência 
     const guild_warns = await listAllGuildWarns(client.encrypt(interaction.guild.id))
-    const user_warns = await listAllUserWarns(client.encrypt(id_alvo, interaction.guild.id))
+    const user_warns = await listAllUserWarns(id_alvo, interaction.guild.id)
 
     let indice_warn = user_warns.length > guild_warns.length ? user_warns.length - 1 : user_warns.length
     if (indice_warn < 1) indice_warn = 0
@@ -56,11 +56,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const embed_guild = client.create_embed({
         title: `${!guild.warn.hierarchy.status ? client.tls.phrase(guild, "mode.warn.titulo_advertencia") : client.tls.phrase(guild, "mode.anotacoes.titulo_nova_anotacao")} :inbox_tray:`,
         color: "salmao",
-        description: `${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${client.decifer(user_note.relatory)}\`\`\``,
+        description: `${client.tls.phrase(guild, "mode.warn.usuario_nova_advertencia")}!\n\`\`\`fix\n📠 | ${client.tls.phrase(guild, "mode.warn.descricao_fornecida")}\n\n${user_note.relatory}\`\`\``,
         fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")}                 \`${user_note.nick}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
@@ -125,7 +125,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             fields: [
                 {
                     name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_note.nick)}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_note.nick}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {

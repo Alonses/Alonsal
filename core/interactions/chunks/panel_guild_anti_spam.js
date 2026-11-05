@@ -4,18 +4,20 @@ const { listAllGuildStrikes } = require("../../database/schemas/Guild_strikes")
 
 const { defaultEraser } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, user, interaction, pagina_guia }) => {
+module.exports = async ({ client, user, interaction, pagina_guia, guild: guild_cache }) => {
 
     const pagina = pagina_guia || 0
 
-    const guild = await client.getGuild(interaction.guild.id)
-    const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
+    // Consultas independentes executadas em paralelo, reaproveitando a guild já carregada pelo botão de origem
+    const [guild, strikes_guild, membro_sv] = await Promise.all([
+        guild_cache || client.getGuild(interaction.guild.id),
+        listAllGuildStrikes(interaction.guild.id),
+        client.execute("getMemberGuild", { interaction, id_user: client.id() })
+    ])
+
     const indice_matriz = client.execute("verifyMatrixIndex", { guild_config: strikes_guild })
 
     let botoes = [], descr_rodape
-
-    // Permissões do bot no servidor
-    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
 
     // Desabilitando o anti-spam caso não haja canais de aviso selecionados, sem permissão para gerenciar mensagens e castigar membros
     if (!guild.spam.channel && !guild.logger.channel || !membro_sv.permissions.has(PermissionsBitField.Flags.ManageMessages, PermissionsBitField.Flags.ModerateMembers)) {

@@ -10,19 +10,12 @@ const schema = new mongoose.Schema({
     cid: { type: String, default: null }
 })
 
+schema.index({ sid: 1, uid: 1 })
+
 const model = mongoose.model("User_tickets", schema)
 
 async function getTicket(sid, uid) {
-    if (!await model.exists({ sid: sid, uid: uid }))
-        await model.create({
-            sid: sid,
-            uid: uid
-        })
-
-    return model.findOne({
-        sid: sid,
-        uid: uid
-    })
+    return (await model.findOne({ sid: sid, uid: uid })) || model.create({ sid: sid, uid: uid })
 }
 
 async function verifyMemberTicket(sid, mid) {

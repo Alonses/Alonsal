@@ -11,8 +11,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     if (trigger.config.category && !trigger.config.category_nick) {
 
         // Atualizando o trigger com o nome da categoria ao ser editado caso não possua
-        const canal = await client.getGuildChannel(client.decifer(trigger.config.category))
-        trigger.config.category_nick = client.encrypt(canal?.name || client.tls.phrase(user, "util.steam.undefined"))
+        const canal = await client.getGuildChannel(trigger.config.category)
+        trigger.config.category_nick = canal?.name || client.tls.phrase(user, "util.steam.undefined")
 
         await trigger.save()
     }
@@ -38,12 +38,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "mode.voice_channels.canal_ativador")}**`,
-                value: `${trigger.config.channel ? `${client.emoji("icon_id")} \`${client.decifer(trigger.config.channel)}\`\n( <#${client.decifer(trigger.config.channel)}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
+                value: `${trigger.config.channel ? `${client.emoji("icon_id")} \`${trigger.config.channel}\`\n( <#${trigger.config.channel}> )` : `\`❌ ${client.tls.phrase(user, "mode.network.sem_canal")}\``}`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("channel")} **${client.tls.phrase(user, "util.server.categoria")}**`,
-                value: `${client.emoji("icon_id")} \`${client.decifer(trigger.config.category)}\`\n( <#${client.decifer(trigger.config.category)}> )`,
+                value: `${client.emoji("icon_id")} \`${trigger.config.category}\`\n( <#${trigger.config.category}> )`,
                 inline: true
             }
         ],

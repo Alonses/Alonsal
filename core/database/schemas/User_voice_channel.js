@@ -18,6 +18,9 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ uid: 1, sid: 1 })
+schema.index({ cid: 1, sid: 1 })
+
 const model = mongoose.model("User_voice_channel", schema)
 
 async function verifyUserVoiceChannel(uid, sid, trigger) {
@@ -48,6 +51,11 @@ async function dropVoiceChannel(uid, cid) {
     })
 }
 
+// Remove o registro pelo _id, inclusive registros sem cid (canal que não chegou a ser criado)
+async function dropVoiceChannelById(id) {
+    await model.deleteOne({ _id: id })
+}
+
 async function listAllVoiceChannels() {
     return model.find({})
 }
@@ -58,5 +66,6 @@ module.exports = {
     verifyVoiceChannel,
     registryVoiceChannel,
     dropVoiceChannel,
+    dropVoiceChannelById,
     listAllVoiceChannels
 }

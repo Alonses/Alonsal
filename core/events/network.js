@@ -6,7 +6,7 @@ const { networkCases } = require('../formatters/patterns/guild')
 
 const network_map = new Map()
 
-module.exports = async ({ client, guild, caso, id_alvo }) => {
+module.exports = async ({ client, guild, caso, id_alvo, registroAudita }) => {
 
     if (client.x.debug_mode && registroAudita.executorId === client.x.owners[0]) return
 

@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction }) => {
                     flags: "Ephemeral"
                 })
 
-            user.misc.locale = client.encrypt(interaction.options.getString("value"))
+            user.misc.locale = client.encryptText(interaction.options.getString("value"))
             await user.save()
 
             interaction.editReply({

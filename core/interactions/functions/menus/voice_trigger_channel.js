@@ -15,7 +15,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
-    trigger.config.channel = client.encrypt(dados.split(".")[0])
+    trigger.config.channel = dados.split(".")[0]
     await trigger.save()
 
     // Redirecionando o evento

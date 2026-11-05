@@ -4,7 +4,7 @@ require('dotenv').config()
 // Switches between normal and development mode
 const update_commands = 0 // Forces the update of slash commands globally
 let modo_develop = 0
-let silent = 0
+let silent = 1
 const limited = 0
 const debug_mode = 0
 const delete_slash = 0 // Clear the local and global slash commands

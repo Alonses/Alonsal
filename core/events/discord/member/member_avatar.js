@@ -14,7 +14,7 @@ module.exports = async ({ client, guild, user, dados }) => {
         const context = canvas.getContext('2d')
 
         // Carregando as imagens de perfil do usuário
-        foto_antiga = await Canvas.loadImage(user.profile.avatar)
+        foto_antiga = await Canvas.loadImage(client.decifer(user.profile.avatar))
         foto_nova = await Canvas.loadImage(user_alvo.displayAvatarURL())
 
         context.strokeStyle = '#29BB8E';
@@ -28,7 +28,7 @@ module.exports = async ({ client, guild, user, dados }) => {
         attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'new_avatar.png' })
     } catch { }
 
-    user.profile.avatar = client.encrypt(user_alvo.avatarURL({ dynamic: true }))
+    user.profile.avatar = client.encryptText(user_alvo.avatarURL({ dynamic: true }))
     await user.save() // Atualizando a foto de perfil do usuário
 
     envia_logger(client, user_alvo, attachment)

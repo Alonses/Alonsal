@@ -151,5 +151,5 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
         })
     }
 
-    require('../../chunks/strike_configure')({ client, user, interaction, dados })
+    require('../../chunks/strike_configure')({ client, user, interaction, dados, strike })
 }

@@ -1,19 +1,40 @@
 const mongoose = require("mongoose")
 
+const { data_encrypt, data_encrypt_random, data_decipher } = require("../../data/crypto")
 const { randomString } = require("../../functions/random_string")
 const { listAllVoicedGuilds } = require("./Guild")
 
 // sid -> Server ID
+// Os dados são gravados cifrados e lidos já decifrados:
+// IDs usam cifra determinística (permite buscas) e textos usam cifra aleatória
+
+const encryptId = value => {
+    if (value === null || value === undefined || value === "") return value
+
+    const text = String(value)
+    return text.startsWith("d.") ? text : data_encrypt(text)
+}
+
+const encryptContent = value => {
+    if (value === null || value === undefined || value === "") return value
+
+    const text = String(value)
+    return text.startsWith("r.") ? text : data_encrypt_random(text)
+}
+
+const decrypt = value => typeof value === "string" ? data_decipher(value) : value
+
+const discordId = { type: String, default: null, set: encryptId, get: decrypt }
 
 const schema = new mongoose.Schema({
-    sid: { type: String, default: null },
+    sid: discordId,
     hash: { type: String, default: null },
     timestamp: { type: Number, default: null },
     config: {
         active: { type: Boolean, default: true },
-        channel: { type: String, default: null },
-        category: { type: String, default: null },
-        category_nick: { type: String, default: null },
+        channel: discordId,
+        category: discordId,
+        category_nick: { type: String, default: null, set: encryptContent, get: decrypt },
         preferences: {
             user_limit: { type: Number, default: 0 },
             allow_text: { type: Boolean, default: false },
@@ -22,6 +43,8 @@ const schema = new mongoose.Schema({
         }
     }
 })
+
+schema.index({ sid: 1, hash: 1 })
 
 const model = mongoose.model("Voice_trigger", schema)
 
@@ -38,17 +61,10 @@ async function getGuildVoiceTrigger(client, sid, hash) {
         hash = new_hash
     }
 
-    if (!await model.exists({ sid: sid, hash: hash })) {
-        await model.create({
-            sid: sid,
-            hash: hash,
-            timestamp: client.execute("timestamp")
-        })
-    }
-
-    return model.findOne({
+    return (await model.findOne({ sid: sid, hash: hash })) || model.create({
         sid: sid,
-        hash: hash
+        hash: hash,
+        timestamp: client.execute("timestamp")
     })
 }
 

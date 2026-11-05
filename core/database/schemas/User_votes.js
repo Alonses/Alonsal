@@ -8,17 +8,12 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
+schema.index({ uid: 1 })
+
 const model = mongoose.model("User_vote", schema)
 
 async function registryVote(uid) {
-    if (!await model.exists({ uid: uid }))
-        await model.create({
-            uid: uid
-        })
-
-    return model.findOne({
-        uid: uid
-    })
+    return (await model.findOne({ uid: uid })) || model.create({ uid: uid })
 }
 
 async function getVotes() {

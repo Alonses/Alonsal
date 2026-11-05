@@ -1,33 +1,47 @@
 const mongoose = require("mongoose")
 
+const { data_encrypt, data_encrypt_random, data_decipher } = require("../../data/crypto")
+
 // uid -> User ID
 // sid -> Server ID
+// Os dados são gravados cifrados e lidos já decifrados:
+// IDs usam cifra determinística (permite buscas) e textos usam cifra aleatória (IV único por gravação)
+
+const encryptId = value => {
+    if (value === null || value === undefined || value === "") return value
+
+    const text = String(value)
+    return text.startsWith("d.") ? text : data_encrypt(text)
+}
+
+const encryptContent = value => {
+    if (value === null || value === undefined || value === "") return value
+    return data_encrypt_random(String(value))
+}
+
+const decrypt = value => typeof value === "string" ? data_decipher(value) : value
+
+const discordId = { type: String, default: null, set: encryptId, get: decrypt }
+const secretText = { type: String, default: null, set: encryptContent, get: decrypt }
 
 const schema = new mongoose.Schema({
-    uid: { type: String, default: null },
-    sid: { type: String, default: null },
-    nick: { type: String, default: null },
-    issuer: { type: String, default: null },
-    issuer_nick: { type: String, default: null },
-    relatory: { type: String, default: null },
+    uid: discordId,
+    sid: discordId,
+    nick: secretText,
+    issuer: discordId,
+    issuer_nick: secretText,
+    relatory: secretText,
     timestamp: { type: Number, default: null },
     archived: { type: Boolean, default: false },
     auto: { type: Boolean, default: true }
 })
 
+schema.index({ uid: 1, sid: 1 })
+
 const model = mongoose.model("User_reports", schema)
 
 async function getReport(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid }))
-        await model.create({
-            uid: uid,
-            sid: sid
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid
-    })
+    return (await model.findOne({ uid: uid, sid: sid })) || model.create({ uid: uid, sid: sid })
 }
 
 async function dropReport(uid, sid) {

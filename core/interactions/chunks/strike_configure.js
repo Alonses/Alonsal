@@ -5,13 +5,16 @@ const { getGuildStrike } = require("../../database/schemas/Guild_strikes")
 const { loggerMap } = require("../../formatters/patterns/guild")
 const { spamTimeoutMap, defaultRoleTimes } = require("../../formatters/patterns/timeout")
 
-module.exports = async ({ client, user, interaction, dados }) => {
+module.exports = async ({ client, user, interaction, dados, strike: strike_cache }) => {
 
     const id_strike = dados.split(".")[2]
-    const strike = await getGuildStrike(interaction.guild.id, id_strike)
 
-    // Permissões do bot no servidor
-    const membro_sv = await client.execute("getMemberGuild", { interaction, id_user: client.id() })
+    // Consultas independentes executadas em paralelo, reaproveitando o strike já carregado pelo botão de origem
+    const [strike, membro_sv] = await Promise.all([
+        strike_cache || getGuildStrike(interaction.guild.id, id_strike),
+        client.execute("getMemberGuild", { interaction, id_user: client.id() })
+    ])
+
     let b_cargos = false
 
     const embed = client.create_embed({

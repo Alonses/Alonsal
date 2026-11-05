@@ -5,8 +5,6 @@ module.exports = async ({ client, user, interaction, dados }) => {
     const escolha = parseInt(dados.split(".")[1])
     const id_alvo = parseInt(dados.split(".")[2])
 
-    const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
-
     // Tratamento dos cliques
     // 0 -> Cancela
     // 1 -> Confirma
@@ -22,6 +20,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     if (escolha === 2) {
+
+        const strikes_guild = await listAllGuildStrikes(interaction.guild.id)
 
         if (strikes_guild[strikes_guild.length - 1].rank !== id_alvo)
             return interaction.update({

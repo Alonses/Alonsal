@@ -1,11 +1,25 @@
 const mongoose = require("mongoose")
 
+const { data_encrypt, data_decipher } = require("../../data/crypto")
 const { defaultEraser } = require("../../formatters/patterns/timeout")
 
+// IDs do Discord são gravados cifrados (determinístico, para permitir buscas) e lidos já em formato numérico.
+// O setter é idempotente: valores já cifrados não são cifrados novamente. Valores vazios passam direto.
+const encryptId = value => {
+    if (value === null || value === undefined || value === "") return value
+
+    const text = String(value)
+    return text.startsWith("d.") ? text : data_encrypt(text)
+}
+
+const decryptId = value => typeof value === "string" ? data_decipher(value) : value
+
+const discordId = { type: String, default: null, set: encryptId, get: decryptId }
+
 const schema = new mongoose.Schema({
-    sid: { type: String, default: null },
+    sid: discordId,
     lang: { type: String, default: "pt-br" },
-    inviter: { type: String, default: null },
+    inviter: discordId,
     erase: {
         valid: { type: Boolean, default: false },
         timeout: { type: Number, default: 5 },
@@ -16,11 +30,11 @@ const schema = new mongoose.Schema({
         timestamp: { type: String, default: null }
     },
     games: {
-        channel: { type: String, default: null },
-        role: { type: String, default: null }
+        channel: discordId,
+        role: discordId
     },
     tickets: {
-        category: { type: String, default: null }
+        category: discordId
     },
     voice_channels: {
         timeout: { type: String, default: 0 },
@@ -34,36 +48,36 @@ const schema = new mongoose.Schema({
         notify: { type: Boolean, default: true },
         notify_exclusion: { type: Boolean, default: true },
         timed: { type: Boolean, default: false },
-        channel: { type: String, default: null },
+        channel: discordId,
         timeout: { type: Number, default: 2 },
         reset: { type: Number, default: 7 },
         erase_ban_messages: { type: Number, default: 0 },
-        timed_channel: { type: String, default: null },
+        timed_channel: discordId,
         announce: {
             status: { type: Boolean, default: false },
-            channel: { type: String, default: null }
+            channel: discordId
         },
         hierarchy: {
             status: { type: Boolean, default: false },
             strikes: { type: Number, default: 3 },
             timed: { type: Boolean, default: false },
             reset: { type: Number, default: 4 },
-            channel: { type: String, default: null }
+            channel: discordId
         }
     },
     reports: {
-        channel: { type: String, default: null },
+        channel: discordId,
         auto_ban: { type: Boolean, default: false },
         notify: { type: Boolean, default: false },
-        role: { type: String, default: null },
+        role: discordId,
         erase_ban_messages: { type: Number, default: 0 }
     },
     nuke_invites: {
         type: { type: Boolean, default: false },
-        channel: { type: String, default: null }
+        channel: discordId
     },
     logger: {
-        channel: { type: String, default: null },
+        channel: discordId,
         message_edit: { type: Boolean, default: true },
         message_delete: { type: Boolean, default: true },
         member_nick: { type: Boolean, default: false },
@@ -84,7 +98,7 @@ const schema = new mongoose.Schema({
     death_note: {
         note: { type: Boolean, default: false },
         notify: { type: Boolean, default: true },
-        channel: { type: String, default: null },
+        channel: discordId,
         member_punishment: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
@@ -97,7 +111,7 @@ const schema = new mongoose.Schema({
         manage_mods: { type: Boolean, default: false },
         trigger_amount: { type: Number, default: 5 },
         suspicious_links: { type: Boolean, default: false },
-        channel: { type: String, default: null },
+        channel: discordId,
         scanner: {
             links: { type: Boolean, default: false }
         },
@@ -107,8 +121,8 @@ const schema = new mongoose.Schema({
         }
     },
     network: {
-        link: { type: String, default: null },
-        channel: { type: String, default: null },
+        link: discordId,
+        channel: discordId,
         member_punishment: { type: Boolean, default: true },
         member_ban_add: { type: Boolean, default: true },
         member_kick: { type: Boolean, default: true },
@@ -119,12 +133,13 @@ const schema = new mongoose.Schema({
     },
     timed_roles: {
         timeout: { type: Number, default: 5 },
-        channel: { type: String, default: null }
+        channel: discordId
     },
     misc: {
         second_lang: { type: String, default: null },
         subscription: {
-            id_owner: { type: String, default: null },
+            // Já armazena o uid cifrado do usuário (comparado diretamente com user.uid)
+            id_owner: { type: String, default: null, set: encryptId },
             active: { type: Boolean, default: false },
             expires: { type: Number, default: null }
         }
@@ -143,17 +158,43 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ sid: 1 })
+schema.index({ inviter: 1 })
+schema.index({ "games.channel": 1 })
+schema.index({ "network.link": 1 })
+
+// Cache curto com os sids de cada link de network (consulta leve, sem hidratar os documentos).
+// É limpo sempre que um servidor é salvo, então vínculos novos ou removidos aparecem na hora.
+const network_sids = new Map()
+const NETWORK_TTL = 60 * 1000
+
+schema.post("save", () => network_sids.clear())
+
 const model = mongoose.model("Guild", schema)
 
-async function getGuild(sid) {
-    if (!await model.exists({ sid: sid }))
-        await model.create({
-            sid: sid
+function getNetworkSids(link) {
+
+    const cached = network_sids.get(link)
+    if (cached && cached.expires > Date.now()) return cached.promise
+
+    const promise = model.find({ "network.link": link }, { sid: 1, _id: 0 }).lean()
+        .then(docs => docs.map(doc => data_decipher(doc.sid)))
+        .catch(err => {
+            network_sids.delete(link)
+            throw err
         })
 
-    return model.findOne({
-        sid: sid
-    })
+    network_sids.set(link, { promise, expires: Date.now() + NETWORK_TTL })
+    return promise
+}
+
+async function getGuild(sid) {
+    return (await model.findOne({ sid: sid })) || model.create({ sid: sid })
+}
+
+// Leitura leve apenas das chaves de ativação, sem hidratar o documento (usada em painéis de navegação)
+async function getGuildConf(sid) {
+    return (await model.findOne({ sid: sid }, { conf: 1 }).lean()) || (await model.create({ sid: sid })).toObject()
 }
 
 async function getSpecificGameChannel(gcid) {
@@ -320,6 +361,8 @@ module.exports = {
     getReportNetworkChannels,
     getGameChannelById,
     getNetworkedGuilds,
+    getNetworkSids,
+    getGuildConf,
     getRankHosters,
     getTimedGuilds,
     getTimedPreGuilds,

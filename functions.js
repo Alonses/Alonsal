@@ -13,7 +13,7 @@ const { registryStatement } = require('./core/database/schemas/User_statements')
 const { getUserBadges } = require('./core/database/schemas/User_badges')
 const { getGuild } = require('./core/database/schemas/Guild')
 
-const { data_encrypt, data_decipher } = require('./core/data/crypto')
+const { data_encrypt, data_encrypt_random, data_decipher } = require('./core/data/crypto')
 
 const network = require('./core/events/network')
 const translate = require('./core/formatters/translate')
@@ -103,6 +103,13 @@ function internal_functions(client) {
         if (!valor) return null
 
         return data_encrypt(valor)
+    }
+
+    // Cifra com IV aleatório, apenas para dados que nunca são buscados ou comparados
+    client.encryptText = (valor) => {
+        if (!valor) return null
+
+        return data_encrypt_random(valor)
     }
 
     client.formatEmoji = (id, emoji) => {

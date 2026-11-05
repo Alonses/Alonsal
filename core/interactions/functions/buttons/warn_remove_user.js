@@ -54,7 +54,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 fields: [
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warn[0].nick)}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warn[0].nick}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {

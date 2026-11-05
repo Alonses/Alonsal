@@ -124,7 +124,7 @@ async function gera_card_modulo(client, interaction, user, type, defered, locale
         corpo_modulo.misc.sid = client.encrypt(interaction.guild.id)
 
     // Salvando local padrão do módulo 
-    if (local_data) corpo_modulo.misc.locale = client.encrypt(local_data)
+    if (local_data) corpo_modulo.misc.locale = client.encryptText(local_data)
     else if (locale_cache) corpo_modulo.misc.locale = user.misc.locale
 
     await corpo_modulo.save()

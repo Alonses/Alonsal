@@ -27,6 +27,9 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ uid: 1 })
+schema.index({ hash: 1 })
+
 const model = mongoose.model("Module", schema)
 
 async function getActiveModules() {

@@ -37,7 +37,7 @@ module.exports = async ({ client, user, interaction, id_cache }) => {
     reports.forEach(valor => {
         avisos++
 
-        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${client.decifer(valor.relatory)}`)
+        historico.push(`-> ${new Date(valor.timestamp * 1000).toLocaleString("pt-BR")} | ${valor.relatory}`)
     })
 
     if (avisos > 0)

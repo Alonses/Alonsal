@@ -15,21 +15,14 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ sid: 1, rank: 1 })
+
 const model = mongoose.model("Guild_warns", schema)
 
 // Procurando por uma advertência
 async function getGuildWarn(sid, rank) {
 
-    if (!await model.exists({ sid: sid, rank: rank }))
-        await model.create({
-            sid: sid,
-            rank: rank
-        })
-
-    return model.findOne({
-        sid: sid,
-        rank: rank
-    })
+    return (await model.findOne({ sid: sid, rank: rank })) || model.create({ sid: sid, rank: rank })
 }
 
 // Listando todas as advertências do servidor

@@ -14,7 +14,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
         return client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: ":man_guard: | Reporte de usuários não completado, não há canais clientes registrados para receberem a notificação." } })
 
     // Coletando os dados em cache do servidor do reporte
-    const cached_guild = await client.guilds(client.decifer(alvo.sid))
+    const cached_guild = await client.guilds(alvo.sid)
 
     canais_reporte.forEach(async guild => {
         const canal = client.discord.channels.cache.get(guild.reports.channel)
@@ -36,11 +36,11 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                     const embed = client.create_embed({
                         title: `> ${client.tls.phrase(guild, "mode.report.novo_reporte")} ${client.defaultEmoji("guard")} ${escopo_anuncio}`,
                         color: "salmao",
-                        description: `${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${client.decifer(alvo.relatory)}\`\`\``,
+                        description: `${network_descricao}\n\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``,
                         fields: [
                             {
                                 name: `:bust_in_silhouette: **${client.tls.phrase(guild, "mode.report.usuario")}**`,
-                                value: `${client.emoji("icon_id")} \`${client.decifer(alvo.uid)}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(alvo.nick)}\`\n( <@${client.decifer(alvo.uid)}> )`,
+                                value: `${client.emoji("icon_id")} \`${alvo.uid}\`\n${client.emoji("mc_name_tag")} \`${alvo.nick}\`\n( <@${alvo.uid}> )`,
                                 inline: true
                             }
                         ]
@@ -51,12 +51,12 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
                         embed.addFields(
                             {
                                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(guild, "mode.report.reportador")}**`,
-                                value: `${client.emoji("icon_id")} \`${client.decifer(alvo.issuer)}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(alvo.issuer_nick)}\`\n( <@${client.decifer(alvo.issuer)}> )`,
+                                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n${client.emoji("mc_name_tag")} \`${alvo.issuer_nick}\`\n( <@${alvo.issuer}> )`,
                                 inline: true
                             },
                             {
                                 name: ":globe_with_meridians: **Server**",
-                                value: `${client.emoji("icon_id")} \`${client.decifer(alvo.sid)}\`\n( \`${cached_guild.name}\` )\n<t:${alvo.timestamp}:R>`,
+                                value: `${client.emoji("icon_id")} \`${alvo.sid}\`\n( \`${cached_guild.name}\` )\n<t:${alvo.timestamp}:R>`,
                                 inline: true
                             }
                         )
@@ -67,7 +67,7 @@ module.exports = async ({ client, alvo, id_canal, link }) => {
 
                         // Enviando apenas para o servidor com notificações de entrada ativas
                         embed.setTitle(`${client.tls.phrase(guild, "mode.report.reporte_registrado")} ${client.defaultEmoji("guard")}`)
-                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${client.decifer(alvo.relatory)}\`\`\``)
+                            .setDescription(`${client.tls.phrase(guild, "mode.report.historico")}\n\`\`\`${client.tls.phrase(guild, "mode.warn.descricao_fornecida", 4)}\n\n${alvo.relatory}\`\`\``)
                             .setFooter({
                                 text: client.tls.phrase(guild, "mode.report.rodape_historico"),
                                 iconURL: client.avatar()

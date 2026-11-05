@@ -10,22 +10,13 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
+schema.index({ uid: 1, sid: 1, name: 1 })
+
 const model = mongoose.model("User_tasks_groups", schema)
 
 async function createGroup(uid, name, sid, timestamp) {
-    if (!await model.exists({ uid: uid, sid: sid, name: name }))
-        await model.create({
-            uid: uid,
-            name: name,
-            sid: sid,
-            timestamp: timestamp
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid,
-        name: name
-    })
+    const q = { uid: uid, sid: sid, name: name }
+    return (await model.findOne(q)) || model.create({ ...q, timestamp: timestamp })
 }
 
 async function getUserGroup(uid, timestamp) {

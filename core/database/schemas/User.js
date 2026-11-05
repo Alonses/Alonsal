@@ -25,6 +25,7 @@ const schema = new mongoose.Schema({
         lastfm: { type: Boolean, default: false },
         steam: { type: Boolean, default: false },
         thumbnail: { type: String, default: null },
+        avatar: { type: String, default: null },
         cache: {
             about: { type: String, default: null }
         }
@@ -60,39 +61,23 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ uid: 1 })
+schema.index({ "erase.erase_on": 1 })
+
 const model = mongoose.model("User", schema)
 
 async function checkUser(uid) {
 
     // Verifica se há registros do usuário informado no banco
-    if (await model.exists({ uid: uid }))
-        return model.findOne({
-            uid: uid
-        })
-
-    return false
+    return (await model.findOne({ uid: uid })) || false
 }
 
 async function getUser(uid) {
-
-    if (!await model.exists({ uid: uid }))
-        return false
-
-    return model.findOne({
-        uid: uid
-    })
+    return (await model.findOne({ uid: uid })) || false
 }
 
 async function getEncryptedUser(uid) {
-
-    if (!await model.exists({ uid: uid }))
-        await model.create({
-            uid: uid
-        })
-
-    return model.findOne({
-        uid: uid
-    })
+    return (await model.findOne({ uid: uid })) || model.create({ uid: uid })
 }
 
 async function getRankMoney() {
@@ -148,11 +133,22 @@ async function getUsersWithActiveSubscription() {
     })
 }
 
+// Atualiza campos específicos sem carregar nem salvar o documento inteiro (evita ParallelSaveError)
+async function updateUserFields(uid, fields, increments) {
+    const update = {}
+
+    if (fields && Object.keys(fields).length) update.$set = fields
+    if (increments && Object.keys(increments).length) update.$inc = increments
+
+    return model.updateOne({ uid: uid }, update)
+}
+
 module.exports.User = model
 module.exports = {
     getUser,
     checkUser,
     dropUser,
+    updateUserFields,
     getRankMoney,
     getUnknowUsers,
     getOutdatedUsers,

@@ -49,7 +49,20 @@ module.exports = async (client, dados) => {
 
     const user = await client.execute("getUser", { id_user })
 
+    const avatar_novo = dados[1].user.avatarURL({ dynamic: true }) || null
+    const avatar_salvo = client.decifer(user.profile.avatar)
+
+    // Sem foto registrada: apenas sincroniza, sem anunciar
+    if (!avatar_salvo) {
+        if (avatar_novo) {
+            user.profile.avatar = client.encryptText(avatar_novo)
+            await user.save()
+        }
+
+        return
+    }
+
     // Membro atualizou a foto de perfil
-    if (client.encrypt(user.profile.avatar) !== client.encrypt(dados[1].user.avatarURL({ dynamic: true })) && guild.logger.member_image)
+    if (avatar_salvo !== avatar_novo && guild.logger.member_image)
         return require('./member_avatar')({ client, guild, user, dados })
 }

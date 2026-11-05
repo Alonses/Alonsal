@@ -20,17 +20,37 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ uid: 1, sid: 1 }, { unique: true })
+schema.index({ sid: 1, xp: -1 })
+schema.index({ "erase.erase_on": 1 })
+
 const model = mongoose.model("User_rank_guild", schema)
 
-async function getRankServer(sid) {
-    if (!await model.exists({ sid: sid }))
-        return null
+// Upsert atômico: evita documentos duplicados quando várias interações chegam ao mesmo tempo
+async function upsertRankServer(uid, sid) {
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
-    return model.find({
+    try {
+        return await model.findOneAndUpdate({ uid: uid, sid: sid }, { $setOnInsert: { uid: uid, sid: sid } }, options)
+    } catch (err) {
+        if (err.code !== 11000) throw err
+        return model.findOne({ uid: uid, sid: sid })
+    }
+}
+
+// Aplica ganho de XP e demais campos de forma atômica, retornando o documento já atualizado
+async function applyRankServerUpdate(uid, sid, update) {
+    return model.findOneAndUpdate({ uid: uid, sid: sid }, update, { new: true })
+}
+
+async function getRankServer(sid) {
+    const users = await model.find({
         sid: sid
     }).sort({
         xp: -1
     }).limit(50)
+
+    return users.length ? users : null
 }
 
 async function listRankGuild(sid) {
@@ -50,25 +70,15 @@ async function getAllUsers() {
 }
 
 async function getUserRankServers(uid) {
-    if (!await model.exists({ uid: uid }))
-        return
-
-    return model.find({
+    const servers = await model.find({
         uid: uid
     })
+
+    return servers.length ? servers : undefined
 }
 
 async function getUserRankServer(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid }))
-        await model.create({
-            uid: uid,
-            sid: sid
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid
-    })
+    return upsertRankServer(uid, sid)
 }
 
 // Buscando os usuários que estão desatualizados no escopo de servidor para exclusão dos dados
@@ -85,6 +95,11 @@ async function createRankServer(uid, server_id, experience) {
         sid: server_id,
         xp: experience
     })
+}
+
+// Iguala o XP interno ao XP em todos os servidores do usuário com uma única operação
+async function syncRankServersIxp(uid) {
+    return model.updateMany({ uid: uid }, [{ $set: { ixp: "$xp" } }])
 }
 
 async function dropUserRankServer(uid, sid) {
@@ -151,6 +166,8 @@ module.exports = {
     getRankServer,
     listRankGuild,
     getUserRankServer,
+    applyRankServerUpdate,
+    syncRankServersIxp,
     getUserRankServers,
     getGuildOutdatedUsers,
     createRankServer,

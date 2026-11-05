@@ -15,8 +15,8 @@ module.exports = async ({ client, user, interaction, dados }) => {
             flags: "Ephemeral"
         })
 
-    trigger.config.category = client.encrypt(dados.split(".")[0])
-    trigger.config.category_nick = client.encrypt(canal.name)
+    trigger.config.category = dados.split(".")[0]
+    trigger.config.category_nick = canal.name
     await trigger.save()
 
     // Redirecionando o evento

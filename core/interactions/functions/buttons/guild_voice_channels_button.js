@@ -129,7 +129,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
         } else
             triggers.forEach(trigger => {
 
-                const botao = { id: "voice_trigger_configure_button", name: `${trigger.config.category_nick ? client.decifer(trigger.config.category_nick) : client.tls.phrase(user, "mode.spam.sem_categoria")}`, type: 0, emoji: client.emoji(trigger.config.active ? "mc_approve" : "mc_oppose"), data: `0|${trigger.hash}` }
+                const botao = { id: "voice_trigger_configure_button", name: `${trigger.config.category_nick || client.tls.phrase(user, "mode.spam.sem_categoria")}`, type: 0, emoji: client.emoji(trigger.config.active ? "mc_approve" : "mc_oppose"), data: `0|${trigger.hash}` }
 
                 if (botoes.length < 5) botoes.push(botao)
                 else segunda_linha.push(botao)

@@ -56,11 +56,11 @@ module.exports = async ({ client, user, interaction, dados }) => {
             const embed = client.create_embed({
                 title: { tls: "mode.warn.advertencia_removida_titulo" },
                 color: "salmao",
-                description: `${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [client.decifer(user_warn.relatory), motivo_remocao])}${warns_restantes}`,
+                description: `${client.tls.phrase(guild, "mode.warn.descricao_advertencia_removida", null, id_alvo)}${client.tls.phrase(user, "mode.warn.descricao_advertencia", null, [user_warn.relatory, motivo_remocao])}${warns_restantes}`,
                 fields: [
                     {
                         name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${client.decifer(user_warns[0].nick)}\`\n( <@${id_alvo}> )`,
+                        value: `${client.emoji("icon_id")} \`${id_alvo}\`\n${client.emoji("mc_name_tag")} \`${user_warns[0].nick}\`\n( <@${id_alvo}> )`,
                         inline: true
                     },
                     {
@@ -110,16 +110,16 @@ module.exports = async ({ client, user, interaction, dados }) => {
         // Exibindo os detalhes da advertência escolhida
         const embed = client.create_embed({
             title: { tls: "mode.warn.titulo_verificando_advertencia" },
-            description: { tls: "mode.warn.descricao_advertencia", replace: [client.decifer(user_warn.relatory), motivo_remocao] },
+            description: { tls: "mode.warn.descricao_advertencia", replace: [user_warn.relatory, motivo_remocao] },
             fields: [
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick ? client.decifer(user_warn.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_warn.nick ? user_warn.nick : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.moderador")}**`,
-                    value: `${client.emoji("icon_id")} \`${client.decifer(user_warn.assigner)}\`\n\`${user_warn.assigner_nick ? client.decifer(user_warn.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${client.decifer(user_warn.assigner)}> )`,
+                    value: `${client.emoji("icon_id")} \`${user_warn.assigner}\`\n\`${user_warn.assigner_nick ? user_warn.assigner_nick : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${user_warn.assigner}> )`,
                     inline: true
                 },
                 {

@@ -17,22 +17,14 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
+schema.index({ uid: 1, sid: 1, timestamp: 1 })
+
 const model = mongoose.model("User_role", schema)
 
 async function getUserRole(uid, sid, timestamp) {
 
-    if (!await model.exists({ uid: uid, sid: sid, timestamp: timestamp }))
-        await model.create({
-            uid: uid,
-            sid: sid,
-            timestamp: timestamp
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid,
-        timestamp: timestamp
-    })
+    const q = { uid: uid, sid: sid, timestamp: timestamp }
+    return (await model.findOne(q)) || model.create(q)
 }
 
 async function getTimedRoleAssigner(uid, sid) {

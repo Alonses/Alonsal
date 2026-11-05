@@ -12,24 +12,14 @@ const schema = new mongoose.Schema({
     concluded: { type: Boolean, default: false }
 })
 
+schema.index({ uid: 1, timestamp: 1 })
+
 const model = mongoose.model("User_tasks", schema)
 
 async function createTask(uid, sid, text, timestamp) {
 
-    if (!await model.exists({ uid: uid, sid: sid, text: text, timestamp: timestamp }))
-        await model.create({
-            uid: uid,
-            sid: sid,
-            text: text,
-            timestamp: timestamp
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid,
-        text: text,
-        timestamp: timestamp
-    })
+    const q = { uid: uid, sid: sid, text: text, timestamp: timestamp }
+    return (await model.findOne(q)) || model.create(q)
 }
 
 async function getTask(uid, timestamp) {

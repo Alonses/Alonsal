@@ -41,7 +41,7 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
                 interaction,
                 user,
                 tipo: ChannelType.GuildCategory,
-                id_configurado: client.decifer(guild.tickets.category)
+                id_configurado: guild.tickets.category
             })
         }
 

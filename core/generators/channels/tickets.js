@@ -21,7 +21,7 @@ module.exports = async ({ client, user, interaction, channel, canal_servidor }) 
     interaction.guild.channels.create({
         name: `💂‍♂️│${interaction.user.username}`,
         type: ChannelType.GuildText,
-        parent: client.decifer(guild.tickets.category),
+        parent: guild.tickets.category,
         permissionOverwrites: [
             {
                 id: interaction.guild.id,

@@ -28,7 +28,7 @@ module.exports = async ({ client }) => {
         mkdirSync(`./files/data/`, { recursive: true })
 
     const date1 = new Date() // Trava o cronometro em um intervalo de 60 segundos
-    const tempo_restante = 10 - date1.getSeconds()
+    const tempo_restante = ((10 - date1.getSeconds() + 60) % 60) * 1000
 
     atualiza_warns()
     atualiza_pre_warns()

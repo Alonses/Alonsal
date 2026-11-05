@@ -9,11 +9,11 @@ const schema = new mongoose.Schema({
     strikes: { type: Number, default: 0 }
 })
 
+schema.index({ uid: 1, sid: 1 })
+
 const model = mongoose.model("User_strikes", schema)
 
 async function verifyUserStrikes(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid })) return null
-
     return model.findOne({
         uid: uid,
         sid: sid
@@ -21,16 +21,7 @@ async function verifyUserStrikes(uid, sid) {
 }
 
 async function getUserStrikes(uid, sid) {
-    if (!await model.exists({ uid: uid, sid: sid }))
-        await model.create({
-            uid: uid,
-            sid: sid
-        })
-
-    return model.findOne({
-        uid: uid,
-        sid: sid
-    })
+    return (await model.findOne({ uid: uid, sid: sid })) || model.create({ uid: uid, sid: sid })
 }
 
 // Apagando todos os strikes registrados no servidor de um membro

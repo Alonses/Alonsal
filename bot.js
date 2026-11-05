@@ -9,7 +9,7 @@ const database = require('./core/database/database')
 
 const { nerfa_spam } = require('./core/events/spam')
 const { getBot } = require('./core/database/schemas/Bot')
-const { checkUser } = require('./core/database/schemas/User')
+const { checkUser, updateUserFields } = require('./core/database/schemas/User')
 const { getUserRankServer } = require('./core/database/schemas/User_rank_guild')
 const { verifySuspiciousLink } = require('./core/database/schemas/Spam_links')
 const { verifica_chute } = require('./commands/games/forca')
@@ -92,21 +92,26 @@ client.discord.on("messageCreate", async message => {
 		// Ignoring banned users and those moved to data deletion
 		if (!user_rank_guild || user.conf?.banned || user.erase.valid || user_rank_guild.erase.valid) return
 
-		// Syncing user data
-		if (!user.profile.avatar || !user.profile.avatar?.includes(message.author.avatar)) {
+		// Syncing user data (users with the default avatar only sync when a saved avatar must be cleared)
+		const avatar_salvo = client.decifer(user.profile.avatar)
+
+		if (message.author.avatar ? !avatar_salvo?.includes(message.author.avatar) : !!avatar_salvo) {
 
 			const user_guild = await client.execute("getMemberGuild", { message, id_user: message.author.id })
 
 			if (user_guild?.user) {
-				user.profile.avatar = client.encrypt(user_guild.user.avatarURL({ dynamic: true }))
+				user.profile.avatar = client.encryptText(user_guild.user.avatarURL({ dynamic: true }))
 
-				await user.save()
+				updateUserFields(user.uid, { "profile.avatar": user.profile.avatar })
+					.catch(err => console.error("🛑 | Erro ao sincronizar o avatar:", err))
 			}
 		}
 
 		if (!user.nick) {
 			user.nick = client.encrypt(message.author.username)
-			await user.save()
+
+			updateUserFields(user.uid, { nick: user.nick })
+				.catch(err => console.error("🛑 | Erro ao sincronizar o apelido:", err))
 		}
 
 		// Updating users' XP, experience received by the user
@@ -143,16 +148,22 @@ client.discord.on("interactionCreate", async interaction => {
 
 	const command = client.discord.commands.get(interaction.commandName.toLowerCase())
 
-	// Removing the user data deletion label
+	// Removing the user data deletion label and syncing the nickname without delaying the command
+	const user_updates = {}
+
 	if (user.erase.valid) {
 		user.erase.forced = false
-		await user.save()
+		user_updates["erase.forced"] = false
 	}
 
 	if (!user.nick) {
 		user.nick = client.encrypt(interaction.user.username)
-		await user.save()
+		user_updates.nick = user.nick
 	}
+
+	if (Object.keys(user_updates).length > 0)
+		updateUserFields(user.uid, user_updates)
+			.catch(err => console.error("🛑 | Erro ao sincronizar dados do usuário:", err))
 
 	if (!command) return
 	const action = interaction.isContextMenuCommand() ? command.menu : command.execute

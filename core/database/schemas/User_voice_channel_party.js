@@ -10,6 +10,8 @@ const schema = new mongoose.Schema({
     mid: { type: String, default: null }
 })
 
+schema.index({ uid: 1, sid: 1, mid: 1 })
+
 const model = mongoose.model("User_voice_channel_party", schema)
 
 async function verifyPartyMember(uid, sid, mid) {

@@ -65,12 +65,12 @@ module.exports = async ({ client, user, interaction, dados }) => {
             fields: [
                 {
                     name: `${client.defaultEmoji("person")} **${client.tls.phrase(user, "util.server.membro")}**`,
-                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick ? client.decifer(user.nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
+                    value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${user_note.nick ? user_note.nick : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${id_alvo}> )`,
                     inline: true
                 },
                 {
                     name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.warn.moderador")}**`,
-                    value: `${client.emoji("icon_id")} \`${client.decifer(user_note.assigner)}\`\n\`${user_note.assigner_nick ? client.decifer(user_note.assigner_nick) : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${client.decifer(user_note.assigner)}> )`,
+                    value: `${client.emoji("icon_id")} \`${user_note.assigner}\`\n\`${user_note.assigner_nick ? user_note.assigner_nick : client.tls.phrase(user, "mode.warn.sem_nome")}\`\n( <@${user_note.assigner}> )`,
                     inline: true
                 },
                 {

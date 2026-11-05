@@ -59,12 +59,12 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     } else if (operacao == 2 || operacao == 3) {
 
         let alvo = "voice_trigger#channel"
-        let canal = client.decifer(trigger.config.channel)
+        let canal = trigger.config.channel
         let cached_channel_type = ChannelType.GuildVoice
 
         if (operacao == 3) {
             alvo = "voice_trigger#category"
-            canal = client.decifer(trigger.config.category)
+            canal = trigger.config.category
             cached_channel_type = ChannelType.GuildCategory
         }
 

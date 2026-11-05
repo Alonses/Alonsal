@@ -10,30 +10,30 @@ module.exports = async ({ client, user, interaction, dados }) => {
 
     // Atribuindo um nome ao moderador que criou o reporte no servidor
     if (!alvo.issuer_nick) {
-        const cached_issuer = await client.getCachedUser(client.decifer(alvo.issuer))
+        const cached_issuer = await client.getCachedUser(alvo.issuer)
 
-        alvo.issuer_nick = client.encrypt(cached_issuer.username)
+        alvo.issuer_nick = cached_issuer.username
         await alvo.save()
     }
 
     const embed = client.create_embed({
         title: { tls: "mode.report.remover_reporte" },
         color: "salmao",
-        description: { tls: "mode.report.remover_reporte_desc", replace: client.decifer(alvo.relatory) },
+        description: { tls: "mode.report.remover_reporte_desc", replace: alvo.relatory },
         fields: [
             {
                 name: `:bust_in_silhouette: **${client.tls.phrase(user, "mode.report.usuario")}**`,
-                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${alvo.nick ? (client.decifer(alvo.nick).length > 20 ? `${client.decifer(alvo.nick).slice(0, 20)}...` : client.decifer(alvo.nick)) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${id_alvo}> )`,
+                value: `${client.emoji("icon_id")} \`${id_alvo}\`\n\`${alvo.nick ? (alvo.nick.length > 20 ? `${alvo.nick.slice(0, 20)}...` : alvo.nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${id_alvo}> )`,
                 inline: true
             },
             {
                 name: `${client.defaultEmoji("guard")} **${client.tls.phrase(user, "mode.report.reportador")}**`,
-                value: `${client.emoji("icon_id")} \`${client.decifer(alvo.issuer)}\`\n\`${alvo.issuer_nick ? (client.decifer(alvo.issuer_nick).length > 20 ? `${client.decifer(alvo.issuer_nick).slice(0, 20)}...` : client.decifer(alvo.issuer_nick)) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${client.decifer(alvo.issuer)}> )`,
+                value: `${client.emoji("icon_id")} \`${alvo.issuer}\`\n\`${alvo.issuer_nick ? (alvo.issuer_nick.length > 20 ? `${alvo.issuer_nick.slice(0, 20)}...` : alvo.issuer_nick) : client.tls.phrase(user, "mode.report.apelido_desconhecido")}\`\n( <@${alvo.issuer}> )`,
                 inline: true
             },
             {
                 name: ":globe_with_meridians: **Server**",
-                value: `${client.emoji("icon_id")} \`${client.decifer(alvo.sid)}\`\n<t:${alvo.timestamp}:R>`,
+                value: `${client.emoji("icon_id")} \`${alvo.sid}\`\n<t:${alvo.timestamp}:R>`,
                 inline: true
             }
         ],

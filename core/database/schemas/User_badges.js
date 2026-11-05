@@ -10,6 +10,8 @@ const schema = new mongoose.Schema({
     timestamp: { type: Number, default: null }
 })
 
+schema.index({ uid: 1, badge: 1 })
+
 const model = mongoose.model("User_badges", schema)
 
 async function getUserBadges(uid) {

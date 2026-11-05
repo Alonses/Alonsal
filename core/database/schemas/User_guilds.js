@@ -8,6 +8,9 @@ const schema = new mongoose.Schema({
     sid: { type: String, default: null }
 })
 
+schema.index({ uid: 1, sid: 1 })
+schema.index({ sid: 1 })
+
 const model = mongoose.model("User_guild", schema)
 
 async function registerUserGuild(uid, sid) {
@@ -26,11 +29,10 @@ async function listAllUserGuilds(uid) {
 
 // Remove o registro de um servidor do usuário
 async function dropUserGuild(uid, sid) {
-    if (await model.exists({ uid: uid, sid: sid }))
-        await model.findOneAndDelete({
-            uid: uid,
-            sid: sid
-        })
+    await model.findOneAndDelete({
+        uid: uid,
+        sid: sid
+    })
 }
 
 // Remove todos os registros com o servidor informado

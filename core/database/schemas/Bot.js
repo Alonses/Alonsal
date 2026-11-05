@@ -43,17 +43,17 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.index({ bit: 1 })
+
 const model = mongoose.model("Bot", schema)
 
 async function getBot(bit) {
-    if (!await model.exists({ bit: bit }))
-        await model.create({
-            bit: bit
-        })
+    return (await model.findOne({ bit: bit })) || model.create({ bit: bit })
+}
 
-    return model.findOne({
-        bit: bit
-    })
+// Incrementa o contador de comandos em uma única operação atômica
+async function incrementBotCommands(bit) {
+    return model.updateOne({ bit: bit }, { $inc: { "persis.commands": 1 } }, { upsert: true })
 }
 
 async function dailyReset(bit) {
@@ -89,15 +89,16 @@ async function drop_all_guilds(client, servers) {
     // Desconecta o bot de todos os servidores informados
     const guild = servers[0]
 
-    if (!client.x.guild_emojis.includes(guild.id))
-        await guild.leave()
+    if (!client.x.guild_emojis.includes(guild?.id))
+        await guild?.leave()
+            .catch(() => { console.log("servidor desconhecido") })
 
     servers.shift()
 
     if (servers.length > 0)
         setTimeout(() => {
             drop_all_guilds(client, servers)
-        }, 1000)
+        }, 500)
 }
 
 module.exports.User = model
@@ -105,5 +106,6 @@ module.exports = {
     getBot,
     dropBot,
     dailyReset,
+    incrementBotCommands,
     drop_all_guilds
 }

@@ -19,7 +19,7 @@ module.exports = async ({ client, user, interaction, dados }) => {
     }
 
     // Alterando o sobre do usuário
-    user.profile.about = client.encrypt(user.profile.cache.about)
+    user.profile.about = client.encryptText(user.profile.cache.about)
     user.profile.cache.about = null
 
     await user.save()

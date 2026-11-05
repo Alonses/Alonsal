@@ -10,16 +10,25 @@ async function servidores_inativos(client) {
     // Verificando os servidores onde o bot expirou o prazo de inatividade
     guilds.forEach(guild => {
 
-        // Verificando se há dados sobre o tempo de expiração e se o servidor não é um servidor interno para emojis
-        if (guild.iddle.timestamp && !client.x.guild_emojis.includes(guild.sid))
-            if (timestamp_atual > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
+        if (client.x.shutdown) {
 
-                // Saindo do servidor com inatividade confirmada
-                const cached_guild = client.discord.guilds.cache.get(guild.sid)
+            // Desconecta de todos os servidores
+            const cached_guild = client.discord.guilds.cache.get(guild.sid)
+            lista_servidores.push(cached_guild)
 
-                if (cached_guild)
-                    lista_servidores.push(cached_guild)
-            }
+        } else {
+
+            // Verificando se há dados sobre o tempo de expiração e se o servidor não é um servidor interno para emojis
+            if (guild.iddle.timestamp && !client.x.guild_emojis.includes(guild.sid))
+                if (timestamp_atual > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
+
+                    // Saindo do servidor com inatividade confirmada
+                    const cached_guild = client.discord.guilds.cache.get(guild.sid)
+
+                    if (cached_guild)
+                        lista_servidores.push(cached_guild)
+                }
+        }
     })
 
     // Aviso sobre desconectamento enviado ao chat de feeds 

@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js')
 
 const { listRankGuild } = require('../../database/schemas/User_rank_guild')
-const { getNetworkedGuilds } = require('../../database/schemas/Guild')
+const { getNetworkSids } = require('../../database/schemas/Guild')
 const { checkUserGuildReported } = require('../../database/schemas/User_reports')
 const { listAllGuildWarns } = require('../../database/schemas/Guild_warns')
 const { defaultEraser, defaultUserEraser } = require('../../formatters/patterns/timeout')
@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction, pagina_guia }) => {
     const reportes = await checkUserGuildReported(client.encrypt(interaction.guild.id))
 
     const guild = await client.getGuild(interaction.guild.id), pagina = pagina_guia || 0
-    const network = guild.network.link ? (await getNetworkedGuilds(guild.network.link)).length - 1 : 0
+    const network = guild.network.link ? (await getNetworkSids(guild.network.link)).length - 1 : 0
 
     const ephemeral = "Ephemeral"
     await client.deferedResponse({ interaction, ephemeral })

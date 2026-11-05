@@ -11,20 +11,13 @@ const schema = new mongoose.Schema({
     status: { type: Boolean, default: false }
 })
 
+schema.index({ sid: 1, type: 1 })
+
 const model = mongoose.model("Guild_role_assigner", schema)
 
 async function getRoleAssigner(sid, type) {
 
-    if (!await model.exists({ sid: sid, type: type }))
-        await model.create({
-            sid: sid,
-            type: type
-        })
-
-    return model.findOne({
-        sid: sid,
-        type: type
-    })
+    return (await model.findOne({ sid: sid, type: type })) || model.create({ sid: sid, type: type })
 }
 
 async function getActiveRoleAssigner(type) {

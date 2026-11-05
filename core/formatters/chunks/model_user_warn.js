@@ -26,10 +26,10 @@ module.exports = async ({ client, user, interaction, guild, user_warns, guild_me
 
     // Atualizando os dados da advertência do usuário
     user_warn.valid = false
-    user_warn.relatory = client.encrypt(descricao_warn)
-    user_warn.nick = client.encrypt(guild_member.user.username)
-    user_warn.assigner = client.encrypt(interaction.user.id)
-    user_warn.assigner_nick = client.encrypt(interaction.user.username)
+    user_warn.relatory = descricao_warn
+    user_warn.nick = guild_member.user.username
+    user_warn.assigner = interaction.user.id
+    user_warn.assigner_nick = interaction.user.username
     user_warn.timestamp = timestamp_atual
 
     await user_warn.save()

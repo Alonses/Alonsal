@@ -186,5 +186,5 @@ module.exports = async ({ client, user, interaction, dados, pagina }) => {
     if (operacao === 10) pagina_guia = 1
 
     // Redirecionando a função para o painel de anti-spam
-    require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, pagina_guia })
+    require('../../chunks/panel_guild_anti_spam')({ client, user, interaction, pagina_guia, guild })
 }

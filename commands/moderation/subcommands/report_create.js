@@ -28,12 +28,12 @@ module.exports = async ({ client, user, interaction }) => {
     const alvo = await getReport(client.encrypt(id_user), client.encrypt(interaction.guild.id))
 
     // Atribuindo o reporte ao usuário que disparou o comando
-    alvo.issuer = client.encrypt(interaction.user.id)
-    alvo.issuer_nick = client.encrypt(interaction.user.username)
+    alvo.issuer = interaction.user.id
+    alvo.issuer_nick = interaction.user.username
 
     alvo.archived = false
-    alvo.nick = client.encrypt(user_alvo.username)
-    alvo.relatory = client.encrypt(interaction.options.getString("reason"))
+    alvo.nick = user_alvo.username
+    alvo.relatory = interaction.options.getString("reason")
     alvo.timestamp = client.execute("timestamp")
 
     const guild = await client.getGuild(interaction.guild.id)

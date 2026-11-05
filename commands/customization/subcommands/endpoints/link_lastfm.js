@@ -10,7 +10,7 @@ module.exports = async ({ client, user, interaction }) => {
             if (res.includes("Página não encontrada"))
                 return client.tls.editReply(interaction, user, "util.lastfm.error_1", true, 1)
 
-            user.social.lastfm = client.encrypt(interaction.options.getString("value"))
+            user.social.lastfm = client.encryptText(interaction.options.getString("value"))
             await user.save()
 
             interaction.editReply({

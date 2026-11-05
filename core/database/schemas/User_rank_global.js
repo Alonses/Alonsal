@@ -9,6 +9,9 @@ const schema = new mongoose.Schema({
     xp: { type: Number, default: 0 }
 })
 
+schema.index({ uid: 1 }, { unique: true })
+schema.index({ xp: -1 })
+
 const model = mongoose.model("User_rank_global", schema)
 
 async function getRankGlobal() {
@@ -17,18 +20,23 @@ async function getRankGlobal() {
     }).limit(50)
 }
 
-async function getUserGlobalRank(uid, xp, nickname, sid) {
-    if (!await model.exists({ uid: uid }))
-        return model.create({
-            uid: uid,
-            xp: xp,
-            nickname: nickname,
-            sid: sid
-        })
+// Grava o XP global em uma única operação atômica (cria o registro se não existir)
+async function setUserGlobalRank(uid, xp, sid, nickname) {
+    const options = { upsert: true, setDefaultsOnInsert: true }
 
-    return model.findOne({
-        uid: uid
-    })
+    try {
+        await model.updateOne({ uid: uid }, { $set: { xp: xp, sid: sid } }, options)
+    } catch (err) {
+        if (err.code !== 11000) throw err
+        await model.updateOne({ uid: uid }, { $set: { xp: xp, sid: sid } })
+    }
+
+    if (nickname)
+        await model.updateOne({ uid: uid, nickname: null }, { $set: { nickname: nickname } })
+}
+
+async function getUserGlobalRank(uid, xp, nickname, sid) {
+    return (await model.findOne({ uid: uid })) || model.create({ uid: uid, xp: xp, nickname: nickname, sid: sid })
 }
 
 async function findUserGlobalRankIndex(uid) {
@@ -47,6 +55,7 @@ module.exports.User_rank_global = model
 module.exports = {
     getRankGlobal,
     getUserGlobalRank,
+    setUserGlobalRank,
     dropUserGlobalRank,
     findUserGlobalRankIndex
 }

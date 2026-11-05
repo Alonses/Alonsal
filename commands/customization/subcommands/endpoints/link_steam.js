@@ -13,7 +13,7 @@ module.exports = async ({ client, user, interaction }) => {
                     flags: "Ephemeral"
                 })
 
-            user.social.steam = client.encrypt(interaction.options.getString("value"))
+            user.social.steam = client.encryptText(interaction.options.getString("value"))
             await user.save()
 
             interaction.editReply({

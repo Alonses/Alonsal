@@ -1,3 +1,5 @@
+const { incrementBotCommands } = require("../database/schemas/Bot")
+
 /**
  * Registra o uso de comandos e experiência do usuário
  * @param {object} params
@@ -6,17 +8,10 @@
  */
 module.exports = async ({ client, interaction }) => {
 
-    // Verifica se o relatório está habilitado
+    // Contabiliza o uso de uma interação sem bloquear a resposta ao usuário
     if (client.x.relatorio)
-        try {
-            // Contabiliza o uso de uma interação
-            const bot = await client.getBot()
-
-            bot.persis.commands++
-            await bot.save()
-        } catch (error) {
-            console.error("🛑 | Erro ao salvar relatório de comandos:", error)
-        }
+        incrementBotCommands(client.x.id)
+            .catch(error => console.error("🛑 | Erro ao salvar relatório de comandos:", error))
 
     // Registra experiência recebida pelo usuário
     client.registryExperience(interaction, "comando")
