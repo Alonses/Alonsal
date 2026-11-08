@@ -10,40 +10,29 @@ async function servidores_inativos(client) {
     // Verificando os servidores onde o bot expirou o prazo de inatividade
     guilds.forEach(guild => {
 
-        if (client.x.shutdown) {
+        // Verificando se há dados sobre o tempo de expiração e se o servidor não é um servidor interno para emojis
+        if (guild.iddle.timestamp && !client.x.guild_emojis.includes(guild.sid))
+            if (timestamp_atual > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
 
-            // Desconecta de todos os servidores
-            const cached_guild = client.discord.guilds.cache.get(guild.sid)
-            lista_servidores.push(cached_guild)
+                // Saindo do servidor com inatividade confirmada
+                const cached_guild = client.discord.guilds.cache.get(guild.sid)
 
-        } else {
-
-            // Verificando se há dados sobre o tempo de expiração e se o servidor não é um servidor interno para emojis
-            if (guild.iddle.timestamp && !client.x.guild_emojis.includes(guild.sid))
-                if (timestamp_atual > guild.iddle.timestamp && !guild.inviter && !guild.conf.games && !guild.network.link && !guild.conf.voice_channels) {
-
-                    // Saindo do servidor com inatividade confirmada
-                    const cached_guild = client.discord.guilds.cache.get(guild.sid)
-
-                    if (cached_guild)
-                        lista_servidores.push(cached_guild)
-                }
-        }
+                if (cached_guild)
+                    lista_servidores.push(cached_guild)
+            }
     })
 
     // Aviso sobre desconectamento enviado ao chat de feeds 
     if (lista_servidores.length > 0) {
-        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\`${!client.x.shutdown ? " considerado inativo" : ""}.`
+        let texto = `:globe_with_meridians: :zzz: | Desconectando de \`1 servidor\` considerado inativo`
 
         if (lista_servidores.length > 1)
-            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\`${!client.x.shutdown ? " considerados inativos" : ""}.`
+            texto = `:globe_with_meridians: :zzz: | Desconectando de \`${lista_servidores.length} servidores\` considerados inativos`
 
         client.execute("notify", { id_canal: process.env.channel_feeds, conteudo: { content: texto } })
 
-        if (client.x.shutdown) // Desconecta de todos os servidores
-            drop_all_guilds(client, lista_servidores)
-        else // Desconecta apenas de servidores considerados inativos
-            disconnect_iddle_guilds(lista_servidores)
+        // Desconecta apenas de servidores considerados inativos
+        disconnect_iddle_guilds(lista_servidores)
     }
 }
 
